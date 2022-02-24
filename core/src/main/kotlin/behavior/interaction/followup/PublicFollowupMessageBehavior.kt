@@ -1,10 +1,10 @@
-package dev.kord.core.behavior.interaction
+package dev.kord.core.behavior.interaction.followup
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
-import dev.kord.core.entity.interaction.EphemeralFollowupMessage
+import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
@@ -14,40 +14,50 @@ import kotlin.contracts.contract
 
 /**
  * The behavior of a [Discord Followup Message](https://discord.com/developers/docs/interactions/slash-commands#followup-messages)
- * This followup message is visible to *only* to the user who made the interaction.
+ * This followup message is visible to all users in the channel.
  */
 
-public interface EphemeralFollowupMessageBehavior : FollowupMessageBehavior {
+public interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): EphemeralFollowupMessageBehavior {
-        return EphemeralFollowupMessageBehavior(id, applicationId, token, channelId, kord, strategy.supply(kord))
+    /**
+     * Requests to delete this followup message.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    public suspend fun delete() {
+        kord.rest.interaction.deleteFollowupMessage(applicationId, token, id)
+    }
+
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicFollowupMessageBehavior {
+        return PublicFollowupMessageBehavior(id, applicationId, token, channelId, kord, strategy.supply(kord))
     }
 }
 
 /**
  * Requests to edit this followup message.
  *
- * @return The edited [EphemeralFollowupMessage] of the interaction response.
+ * @return The edited [PublicFollowupMessage] of the interaction response.
  *
  * @throws RestRequestException if something went wrong during the request.
  */
-public suspend inline fun EphemeralFollowupMessageBehavior.edit(
+public suspend inline fun PublicFollowupMessageBehavior.edit(
     builder: FollowupMessageModifyBuilder.() -> Unit,
-): EphemeralFollowupMessage {
+): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder)
-    return EphemeralFollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
+    return PublicFollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
 }
 
 
-public fun EphemeralFollowupMessageBehavior(
+public fun PublicFollowupMessageBehavior(
     id: Snowflake,
     applicationId: Snowflake,
     token: String,
     channelId: Snowflake,
     kord: Kord,
     supplier: EntitySupplier
-): EphemeralFollowupMessageBehavior = object : EphemeralFollowupMessageBehavior {
+): PublicFollowupMessageBehavior = object : PublicFollowupMessageBehavior {
     override val applicationId: Snowflake
         get() = applicationId
     override val token: String

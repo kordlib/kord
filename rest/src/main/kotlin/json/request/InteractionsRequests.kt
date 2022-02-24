@@ -54,6 +54,12 @@ public data class AutoCompleteResponseCreateRequest<T>(
     val data: DiscordAutoComplete<T>
 )
 
+@Serializable
+public data class ModalResponseCreateRequest(
+    val type: InteractionResponseType,
+    val data: DiscordModal
+)
+
 public data class MultipartInteractionResponseCreateRequest(
     val request: InteractionResponseCreateRequest,
     val files: Optional<List<NamedFile>> = Optional.Missing()

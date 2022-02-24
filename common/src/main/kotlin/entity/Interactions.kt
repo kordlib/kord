@@ -99,6 +99,7 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
     public object Role : ApplicationCommandOptionType(8)
     public object Mentionable : ApplicationCommandOptionType(9)
     public object Number : ApplicationCommandOptionType(10)
+    public object Attachment : ApplicationCommandOptionType(11)
     public class Unknown(type: Int) : ApplicationCommandOptionType(type)
 
     internal object Serializer : KSerializer<ApplicationCommandOptionType> {
@@ -118,6 +119,7 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
                 8 -> Role
                 9 -> Mentionable
                 10 -> Number
+                11 -> Attachment
                 else -> Unknown(type)
             }
         }
@@ -182,11 +184,12 @@ public sealed class Choice<out T> {
 
 @Serializable
 public data class ResolvedObjects(
-    val members: Optional<Map<Snowflake, DiscordGuildMember>> = Optional.Missing(),
+    val members: Optional<Map<Snowflake, DiscordInteractionGuildMember>> = Optional.Missing(),
     val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing(),
-    val messages: Optional<Map<Snowflake, DiscordMessage>> = Optional.Missing()
+    val messages: Optional<Map<Snowflake, DiscordMessage>> = Optional.Missing(),
+    val attachments: Optional<Map<Snowflake, DiscordAttachment>> = Optional.Missing()
 )
 
 @Serializable
@@ -254,6 +257,7 @@ public sealed class InteractionType(public val type: Int) {
     public object Component : InteractionType(3)
 
     public object AutoComplete : InteractionType(4)
+    public object ModalSubmit : InteractionType(5)
     public class Unknown(type: Int) : InteractionType(type)
 
     override fun toString(): String = when (this) {
@@ -261,6 +265,7 @@ public sealed class InteractionType(public val type: Int) {
         ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
         Component -> "InteractionType.ComponentInvoke($type)"
         AutoComplete -> "InteractionType.AutoComplete($type)"
+        ModalSubmit -> "InteractionType.ModalSubmit($type)"
         is Unknown -> "InteractionType.Unknown($type)"
     }
 
@@ -275,6 +280,7 @@ public sealed class InteractionType(public val type: Int) {
                 2 -> ApplicationCommand
                 3 -> Component
                 4 -> AutoComplete
+                5 -> ModalSubmit
                 else -> Unknown(type)
             }
         }
@@ -300,6 +306,7 @@ public data class InteractionCallbackData(
     @SerialName("component_type")
     val componentType: Optional<ComponentType> = Optional.Missing(),
     val values: Optional<List<String>> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 @Serializable(with = Option.Serializer::class)
@@ -369,6 +376,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.Mentionable,
                 ApplicationCommandOptionType.Role,
                 ApplicationCommandOptionType.String,
+                ApplicationCommandOptionType.Attachment,
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
@@ -496,6 +504,15 @@ public sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.Mentionable
     }
 
+    public data class AttachmentArgument(
+        override val name: String,
+        override val value: Snowflake,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
+    ) : CommandArgument<Snowflake>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Attachment
+    }
+
     /**
      * Representation of a partial user input of an auto completed argument.
      *
@@ -504,7 +521,7 @@ public sealed class CommandArgument<out T> : Option() {
      * @property value whatever the user already typed into the argument field
      * @property focused always true, since this is an auto complete argument
      */
-    public class AutoCompleteArgument(
+    public data class AutoCompleteArgument(
         override val name: String,
         override val type: ApplicationCommandOptionType,
         override val value: String,
@@ -551,6 +568,12 @@ public sealed class CommandArgument<out T> : Option() {
                     )
                     is IntegerArgument -> encodeLongElement(descriptor, 1, value.value)
                     is NumberArgument -> encodeDoubleElement(descriptor, 1, value.value)
+                    is AttachmentArgument -> encodeSerializableElement(
+                        descriptor,
+                        1,
+                        Snowflake.serializer(),
+                        value.value
+                    )
                     is AutoCompleteArgument, is StringArgument -> encodeStringElement(
                         descriptor,
                         1,
@@ -598,6 +621,9 @@ public sealed class CommandArgument<out T> : Option() {
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
                 ApplicationCommandOptionType.User -> UserArgument(
+                    name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
+                )
+                ApplicationCommandOptionType.Attachment -> AttachmentArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
                 ApplicationCommandOptionType.SubCommand,
@@ -673,6 +699,7 @@ public sealed class InteractionResponseType(public val type: Int) {
     public object DeferredUpdateMessage : InteractionResponseType(6)
     public object UpdateMessage : InteractionResponseType(7)
     public object ApplicationCommandAutoCompleteResult : InteractionResponseType(8)
+    public object Modal : InteractionResponseType(9)
     public class Unknown(type: Int) : InteractionResponseType(type)
 
     internal object Serializer : KSerializer<InteractionResponseType> {
@@ -688,6 +715,7 @@ public sealed class InteractionResponseType(public val type: Int) {
                 6 -> DeferredUpdateMessage
                 7 -> UpdateMessage
                 8 -> ApplicationCommandAutoCompleteResult
+                9 -> Modal
                 else -> Unknown(type)
             }
         }
@@ -748,4 +776,12 @@ public data class DiscordGuildApplicationCommandPermission(
 @Serializable
 public data class DiscordAutoComplete<T>(
     val choices: List<Choice<T>>
+)
+
+@Serializable
+public data class DiscordModal(
+    val title: String,
+    @SerialName("custom_id")
+    val customId: String,
+    val components: List<DiscordComponent>,
 )

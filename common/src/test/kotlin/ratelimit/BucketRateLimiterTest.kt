@@ -3,7 +3,6 @@ package ratelimit
 import dev.kord.common.ratelimit.BucketRateLimiter
 import fixed
 import kotlinx.coroutines.test.currentTime
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlin.test.BeforeTest
@@ -13,10 +12,10 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class BucketRateLimiterTest {
 
-    val interval = 1_000_000.milliseconds
-    val instant = Clock.System.now()
-    val clock = Clock.fixed(instant)
-    lateinit var rateLimiter: BucketRateLimiter
+    private val interval = 1_000_000.milliseconds
+    private val instant = Clock.System.now()
+    private val clock = Clock.fixed(instant)
+    private lateinit var rateLimiter: BucketRateLimiter
 
     @BeforeTest
     fun setup() {
@@ -31,7 +30,7 @@ class BucketRateLimiterTest {
     }
 
     @Test
-    fun `a bucket rate limiter does ratelimit when over capacity`(): Unit = runBlockingTest {
+    fun `a bucket rate limiter does ratelimit when over capacity`(): Unit = runTest {
         rateLimiter.consume()
         rateLimiter.consume()
 

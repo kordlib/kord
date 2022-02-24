@@ -3,6 +3,7 @@ package dev.kord.core.cache.data
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.map
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
@@ -12,7 +13,7 @@ public data class GuildScheduledEventData(
     val id: Snowflake,
     val guildId: Snowflake,
     val channelId: Snowflake?,
-    val creatorId: Snowflake?,
+    val creatorId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val name: String,
     val description: Optional<String> = Optional.Missing(),
     val scheduledStartTime: Instant,

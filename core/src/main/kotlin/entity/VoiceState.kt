@@ -35,6 +35,8 @@ public class VoiceState(
 
     public val isSelfMuted: Boolean get() = data.selfMute
 
+    public val isSelfVideo: Boolean get() = data.selfVideo
+
     public val isSuppressed: Boolean get() = data.suppress
 
     public val requestToSpeakTimestamp: String? get() = data.requestToSpeakTimestamp

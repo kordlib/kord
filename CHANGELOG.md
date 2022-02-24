@@ -1,3 +1,24 @@
+# 0.8.0-M10
+
+## Additions
+
+* Forms support (#531)
+* Add support for attachment options in chat input interactions (#524)
+*  add error 40060 40004(#532 #523)
+
+## Fixes
+
+* fix locale typos (#541)
+* Add missing default value for strategy for getWebhookWithTokenOrNull (#539)
+
+## Changes
+
+* Change members resolved objects to DiscordInteractionGuildMember (#502)
+
+## Dependencies
+
+* Upgrade gradle to 7.4 and its wrapper
+
 # 0.8.0-M9
 
 ## Fixes

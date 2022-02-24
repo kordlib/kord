@@ -135,20 +135,37 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    @PublishedApi
-    internal suspend inline fun <reified T, Builder : BaseChoiceBuilder<T>> createBuilderAutoCompleteInteractionResponse(
+    public suspend fun createModalInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        builder: Builder,
-        builderFunction: Builder.() -> Unit
-    ) {
-        // TODO We can remove this cast when we change the type of BaseChoiceBuilder.choices to MutableList<Choice<T>>.
-        //  This can be done once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
-        //  Until then this cast is necessary to get the right serializer through reified generics.
-        @Suppress("UNCHECKED_CAST")
-        val choices = (builder.apply(builderFunction).choices ?: emptyList()) as List<Choice<T>>
+        modal: DiscordModal
+    ): Unit = call(Route.InteractionResponseCreate) {
+        interactionIdInteractionToken(interactionId, interactionToken)
+        body(
+            ModalResponseCreateRequest.serializer(),
+            ModalResponseCreateRequest(
+                InteractionResponseType.Modal,
+                modal
+            )
+        )
+    }
 
-        return createAutoCompleteInteractionResponse(interactionId, interactionToken, DiscordAutoComplete(choices))
+    public suspend inline fun createModalInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        title: String,
+        customId: String,
+        builder: ModalBuilder.() -> Unit,
+    ) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        return createModalInteractionResponse(
+            interactionId,
+            interactionToken,
+            ModalBuilder(title, customId).apply(builder).toRequest()
+        )
     }
 
     public suspend inline fun createIntAutoCompleteInteractionResponse(
@@ -200,6 +217,21 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             StringChoiceBuilder("<auto-complete>", ""),
             builderFunction
         )
+    }
+
+    public suspend inline fun <reified T, Builder : BaseChoiceBuilder<T>> createBuilderAutoCompleteInteractionResponse(
+        interactionId: Snowflake,
+        interactionToken: String,
+        builder: Builder,
+        builderFunction: Builder.() -> Unit
+    ) {
+        // TODO We can remove this cast when we change the type of BaseChoiceBuilder.choices to MutableList<Choice<T>>.
+        //  This can be done once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
+        //  Until then this cast is necessary to get the right serializer through reified generics.
+        @Suppress("UNCHECKED_CAST")
+        val choices = (builder.apply(builderFunction).choices ?: emptyList()) as List<Choice<T>>
+
+        return createAutoCompleteInteractionResponse(interactionId, interactionToken, DiscordAutoComplete(choices))
     }
 
     public suspend fun getInteractionResponse(applicationId: Snowflake, interactionToken: String): DiscordMessage =
@@ -629,7 +661,15 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
+    @Deprecated(
+        "Renamed to 'deferMessage'.",
+        ReplaceWith("this.deferMessage(interactionId, interactionToken, ephemeral)"),
+    )
     public suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
+        deferMessage(interactionId, interactionToken, ephemeral)
+    }
+
+    public suspend fun deferMessage(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
         val flags = if (ephemeral) MessageFlags(Ephemeral) else null
         val request = InteractionResponseCreateRequest(
             type = InteractionResponseType.DeferredChannelMessageWithSource,
@@ -637,6 +677,11 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
                 flags?.let { InteractionApplicationCommandCallbackData(flags = Optional(it)) }
             ).coerceToMissing()
         )
+        createInteractionResponse(interactionId, interactionToken, request)
+    }
+
+    public suspend fun deferMessageUpdate(interactionId: Snowflake, interactionToken: String) {
+        val request = InteractionResponseCreateRequest(type = InteractionResponseType.DeferredUpdateMessage)
         createInteractionResponse(interactionId, interactionToken, request)
     }
 }
