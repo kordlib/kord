@@ -2,16 +2,16 @@ package dev.kord.core.entity
 
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.channel.BaseVoiceChannelBehavior
 import dev.kord.core.cache.data.VoiceStateData
 import dev.kord.core.entity.channel.VoiceChannel
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toSnowflakeOrNull
 
 public class VoiceState(
     public val data: VoiceStateData,
@@ -57,8 +57,7 @@ public class VoiceState(
     public suspend fun getChannel(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
-     * Requests to get the voice channel through the [strategy],
-     * returns null if the [VoiceChannel] isn't present.
+     * Requests to get the voice channel, returns null if the [VoiceChannel] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */

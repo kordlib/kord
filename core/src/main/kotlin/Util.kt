@@ -27,17 +27,6 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
-internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
-    this == null -> null
-    else -> Snowflake(this)
-}
-
-internal fun ULong?.toSnowflakeOrNull(): Snowflake? = when {
-    this == null -> null
-    else -> Snowflake(this)
-}
-
-internal fun Int.toInstant() = Instant.fromEpochMilliseconds(toLong())
 internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
