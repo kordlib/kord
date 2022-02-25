@@ -22,6 +22,8 @@ include("core")
 include("voice")
 include("bom")
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
