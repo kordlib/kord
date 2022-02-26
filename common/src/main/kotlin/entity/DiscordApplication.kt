@@ -163,11 +163,11 @@ public data class ApplicationFlags internal constructor(val code: Int) {
         }
 
         public operator fun ApplicationFlag.unaryMinus() {
-            this@Builder.code = (this@Builder.code and this.code.inv())
+            this@Builder.code = this@Builder.code and this.code.inv()
         }
 
         public operator fun ApplicationFlags.unaryMinus() {
-            this@Builder.code = (this@Builder.code and this.code.inv())
+            this@Builder.code = this@Builder.code and this.code.inv()
         }
 
         public fun flags(): ApplicationFlags = ApplicationFlags(code)
