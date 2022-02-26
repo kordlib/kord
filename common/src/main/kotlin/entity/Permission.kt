@@ -16,9 +16,10 @@ import kotlin.contracts.contract
 @Serializable(with = Permissions.Companion::class)
 public data class Permissions(val code: DiscordBitSet) {
     /**
-     *  Returns this [Permissions] as a [Set] of [Permission]
+     * Returns this [Permissions] as a [Set] of [Permission]s, not including any [unknown][Permission.Unknown]
+     * permissions.
      */
-    val values: Set<Permission> = Permission.values.filter { it.code in code }.toSet()
+    val values: Set<Permission> get() = Permission.values.filter { it.code in code }.toSet()
 
     public operator fun plus(permission: Permission): Permissions = Permissions(code + permission.code)
 
@@ -121,6 +122,26 @@ public fun Permissions(permissions: Iterable<Permissions>): Permissions = Permis
 /** A [Permission](https://discord.com/developers/docs/topics/permissions) in Discord. */
 public sealed class Permission(public val code: DiscordBitSet) {
     protected constructor(vararg values: Long) : this(DiscordBitSet(values))
+
+    /**
+     * A fallback [Permission] for permissions that haven't been added to Kord yet.
+     *
+     * You can use this to check if an instance of [Permissions] does [contain][Permissions.contains] an unknown
+     * permission:
+     *
+     * ```kotlin
+     * val permissions: Permissions = ...
+     * // 1 << 63 as an example for some new permission
+     * val hasNewPermission = Permission.Unknown(1L shl 63) in permissions
+     * ```
+     *
+     * See [here](https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags) for a
+     * listing of the bitwise permission flags.
+     */
+    public class Unknown : Permission {
+        public constructor(code: DiscordBitSet) : super(code)
+        public constructor(vararg values: Long) : super(*values)
+    }
 
     /** Allows creation of instant invites. */
     public object CreateInstantInvite : Permission(1L shl 0)
