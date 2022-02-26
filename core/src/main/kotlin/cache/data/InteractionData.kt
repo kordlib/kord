@@ -88,7 +88,8 @@ public data class ApplicationInteractionData(
     val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing(),
     val customId: Optional<String> = Optional.Missing(),
     val componentType: Optional<ComponentType> = Optional.Missing(),
-    val values: Optional<List<String>> = Optional.Missing()
+    val values: Optional<List<String>> = Optional.Missing(),
+    val components: Optional<List<ComponentData>> = Optional.Missing()
 ) {
     public companion object {
 
@@ -107,6 +108,7 @@ public data class ApplicationInteractionData(
                     customId,
                     componentType,
                     values = values,
+                    components = components.mapList { ComponentData.from(it) }
                 )
             }
         }

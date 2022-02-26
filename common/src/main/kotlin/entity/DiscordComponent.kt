@@ -11,13 +11,17 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonContentPolymorphicSerializer
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 /**
- * Represent a [intractable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
+ * Represent a [interactable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
  *
  * @property type the [ComponentType] of the component
  * @property style the [ButtonStyle] of the component (if it is a button)
- * @property style the text that appears on the button (if the component is a button)
  * @property emoji an [DiscordPartialEmoji] that appears on the button (if the component is a button)
  * @property customId a developer-defined identifier for the button, max 100 characters
  * @property url a url for link-style buttons
@@ -27,36 +31,103 @@ import kotlinx.serialization.encoding.Encoder
  * @property placeholder the placeholder text for the select menu
  * @property minValues the minimum amount of [options] allowed
  * @property maxValues the maximum amount of [options] allowed
+ * @property minLength the minimum input length for a text input, min 0, max 4000.
+ * @property maxLength the maximum input length for a text input, min 1, max 4000.
+ * @property required whether this component is required to be filled, default false.
+ * @property value a pre-filled value for this component, max 4000 characters.
  */
+@Serializable(with = DiscordComponent.Serializer::class)
+public sealed class DiscordComponent {
+    public abstract val type: ComponentType
+    public abstract val label: Optional<String>
+    public abstract val emoji: Optional<DiscordPartialEmoji>
+    @SerialName("custom_id")
+    public abstract val customId: Optional<String>
+    public abstract val url: Optional<String>
+    public abstract val disabled: OptionalBoolean
+    public abstract val components: Optional<List<DiscordComponent>>
+    public abstract val options: Optional<List<DiscordSelectOption>>
+    public abstract val placeholder: Optional<String>
+    @SerialName("min_values")
+    public abstract val minValues: OptionalInt
+    @SerialName("max_values")
+    public abstract val maxValues: OptionalInt
+    @SerialName("min_length")
+    public abstract val minLength: OptionalInt
+    @SerialName("max_length")
+    public abstract val maxLength: OptionalInt
+    public abstract val required: OptionalBoolean
+    public abstract val value: Optional<String>
+
+    internal object Serializer : JsonContentPolymorphicSerializer<DiscordComponent>(DiscordComponent::class) {
+        override fun selectDeserializer(element: JsonElement): KSerializer<out DiscordComponent> {
+            val componentType = element.jsonObject["type"]?.jsonPrimitive?.intOrNull ?: error("Missing component type ID!")
+
+            return when (componentType) {
+                ComponentType.TextInput.value -> DiscordTextInputComponent.serializer()
+                else -> DiscordChatComponent.serializer()
+            }
+        }
+    }
+}
 
 @Serializable
-public data class DiscordComponent(
-    val type: ComponentType,
-    val style: Optional<ButtonStyle> = Optional.Missing(),
-    val label: Optional<String> = Optional.Missing(),
-    val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+public data class DiscordChatComponent(
+     override val type: ComponentType,
+     val style: Optional<ButtonStyle> = Optional.Missing(),
+     override val label: Optional<String> = Optional.Missing(),
+     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
     @SerialName("custom_id")
-    val customId: Optional<String> = Optional.Missing(),
-    val url: Optional<String> = Optional.Missing(),
-    val disabled: OptionalBoolean = OptionalBoolean.Missing,
-    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
-    val placeholder: Optional<String> = Optional.Missing(),
+     override val customId: Optional<String> = Optional.Missing(),
+     override val url: Optional<String> = Optional.Missing(),
+     override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+     override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+     override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
+     override val placeholder: Optional<String> = Optional.Missing(),
     @SerialName("min_values")
-    val minValues: OptionalInt = OptionalInt.Missing,
+     override val minValues: OptionalInt = OptionalInt.Missing,
     @SerialName("max_values")
-    val maxValues: OptionalInt = OptionalInt.Missing,
-)
+     override val maxValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("min_length")
+     override val minLength: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_length")
+     override val maxLength: OptionalInt = OptionalInt.Missing,
+     override val required: OptionalBoolean = OptionalBoolean.Missing,
+     override val value: Optional<String> = Optional.Missing()
+) : DiscordComponent()
+
+@Serializable
+public data class DiscordTextInputComponent(
+     override val type: ComponentType,
+    public val style: Optional<TextInputStyle> = Optional.Missing(),
+     override val label: Optional<String> = Optional.Missing(),
+     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+    @SerialName("custom_id")
+     override val customId: Optional<String> = Optional.Missing(),
+     override val url: Optional<String> = Optional.Missing(),
+     override val disabled: OptionalBoolean = OptionalBoolean.Missing,
+     override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+     override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
+     override val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("min_values")
+     override val minValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_values")
+     override val maxValues: OptionalInt = OptionalInt.Missing,
+    @SerialName("min_length")
+     override val minLength: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_length")
+     override val maxLength: OptionalInt = OptionalInt.Missing,
+     override val required: OptionalBoolean = OptionalBoolean.Missing,
+     override val value: Optional<String> = Optional.Missing()
+) : DiscordComponent()
 
 /**
  * Representation of different [DiscordComponent] types.
  *
  * @property value the raw type value used by the Discord API
  */
-
 @Serializable(with = ComponentType.Serializer::class)
 public sealed class ComponentType(public val value: Int) {
-
     /**
      * Fallback type used for types that haven't been added to Kord yet.
      */
@@ -77,6 +148,11 @@ public sealed class ComponentType(public val value: Int) {
      */
     public object SelectMenu : ComponentType(3)
 
+    /**
+     * 	A text input object.
+     */
+    public object TextInput : ComponentType(4)
+
     public companion object Serializer : KSerializer<ComponentType> {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ComponentType", PrimitiveKind.INT)
 
@@ -85,6 +161,7 @@ public sealed class ComponentType(public val value: Int) {
                 1 -> ActionRow
                 2 -> Button
                 3 -> SelectMenu
+                4 -> TextInput
                 else -> Unknown(value)
             }
 
@@ -99,7 +176,6 @@ public sealed class ComponentType(public val value: Int) {
  *
  * @see ComponentType.Button
  */
-
 @Serializable(with = ButtonStyle.Serializer::class)
 public sealed class ButtonStyle(public val value: Int) {
 
@@ -139,7 +215,7 @@ public sealed class ButtonStyle(public val value: Int) {
     public object Link : ButtonStyle(5)
 
     public companion object Serializer : KSerializer<ButtonStyle> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ButtonStyle", PrimitiveKind.INT)
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Button", PrimitiveKind.INT)
 
         override fun deserialize(decoder: Decoder): ButtonStyle =
             when (val value = decoder.decodeInt()) {
@@ -152,5 +228,41 @@ public sealed class ButtonStyle(public val value: Int) {
             }
 
         override fun serialize(encoder: Encoder, value: ButtonStyle): Unit = encoder.encodeInt(value.value)
+    }
+}
+
+/**
+ * Representation of different TextInputStyles.
+ *
+ * @see ComponentType.TextInput
+ */
+@Serializable(with = TextInputStyle.Serializer::class)
+public sealed class TextInputStyle(public val value: Int) {
+    /**
+     * A fallback style used for styles that haven't been added to Kord yet.
+     */
+    public class Unknown(value: Int) : TextInputStyle(value)
+
+    /**
+     * A single-line input.
+     */
+    public object Short : TextInputStyle(1)
+
+    /**
+     * A multi-line input.
+     */
+    public object Paragraph : TextInputStyle(2)
+
+    internal companion object Serializer : KSerializer<TextInputStyle> {
+        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("TextInput", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): TextInputStyle =
+            when (val value = decoder.decodeInt()) {
+                1 -> Short
+                2 -> Paragraph
+                else -> Unknown(value)
+            }
+
+        override fun serialize(encoder: Encoder, value: TextInputStyle): Unit = encoder.encodeInt(value.value)
     }
 }
