@@ -16,7 +16,7 @@ public data class StoreChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, TopGuildChannel, StoreChannelBehavior {
+) : CategorizableChannel, StoreChannelBehavior {
 
 
     override suspend fun asChannel(): StoreChannel = this
