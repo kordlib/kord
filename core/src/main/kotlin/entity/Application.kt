@@ -7,7 +7,10 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.ApplicationData
+import dev.kord.core.cache.data.BaseApplicationData
+import dev.kord.core.cache.data.PartialApplicationData
 import dev.kord.core.cache.data.TeamData
+import dev.kord.core.event.guild.InviteCreateEvent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
@@ -19,28 +22,20 @@ import java.util.*
 )
 public typealias ApplicationInfo = Application
 
-/**
- * The details of an
- * [Application](https://discord.com/developers/docs/resources/application#application-object-application-structure).
- */
-public class Application(
-    public val data: ApplicationData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : KordEntity, Strategizable {
 
-    override val id: Snowflake
-        get() = data.id
+public sealed class BaseApplication(
+    final override val kord: Kord,
+    final override val supplier: EntitySupplier,
+) : KordEntity, Strategizable {
+    public abstract val data: BaseApplicationData
+
+    final override val id: Snowflake get() = data.id
 
     public val name: String get() = data.name
 
     public val iconHash: String? get() = data.icon
 
     public val description: String get() = data.description
-
-    public val isPublic: Boolean get() = data.botPublic
-
-    public val requireCodeGrant: Boolean get() = data.botRequireCodeGrant
 
     /**
      * The rpc origins of this application, empty if disabled.
@@ -59,10 +54,6 @@ public class Application(
 
     public val verifyKey: String get() = data.verifyKey
 
-    public val teamId: Snowflake? get() = data.team?.id
-
-    public val team: Team? get() = data.team?.let { Team(TeamData.from(it), kord) }
-
     public val guildId: Snowflake? get() = data.guildId.value
 
     public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
@@ -75,6 +66,39 @@ public class Application(
 
     public val flags: ApplicationFlags? get() = data.flags.value
 
+
+    public suspend fun getOwnerOrNull(): User? = ownerId?.let { supplier.getUserOrNull(it) }
+
+    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+
+
+    abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): BaseApplication
+
+
+    final override fun hashCode(): Int = Objects.hash(id)
+
+    final override fun equals(other: Any?): Boolean = other is BaseApplication && this.id == other.id
+}
+
+
+/**
+ * The details of an
+ * [Application](https://discord.com/developers/docs/resources/application#application-object-application-structure).
+ */
+public class Application(
+    public override val data: ApplicationData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier,
+) : BaseApplication(kord, supplier) {
+
+    public val isPublic: Boolean get() = data.botPublic
+
+    public val requireCodeGrant: Boolean get() = data.botRequireCodeGrant
+
+    public val teamId: Snowflake? get() = data.team?.id
+
+    public val team: Team? get() = data.team?.let { Team(TeamData.from(it), kord) }
+
     @Deprecated(
         "'ownerId' might not be present, use 'getOwnerOrNull' instead.",
         ReplaceWith("this.getOwnerOrNull()"),
@@ -82,26 +106,33 @@ public class Application(
     )
     public suspend fun getOwner(): User = supplier.getUser(ownerId!!)
 
-    public suspend fun getOwnerOrNull(): User? = ownerId?.let { supplier.getUserOrNull(it) }
-
-    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
-
     /**
      * Returns a new [Application] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Application =
         Application(data, kord, strategy.supply(kord))
 
-    override fun hashCode(): Int = Objects.hash(id)
-
-    override fun equals(other: Any?): Boolean = when (other) {
-        is Application -> other.id == id
-        is PartialApplication -> other.id == id
-        else -> false
-    }
-
     override fun toString(): String {
         return "Application(data=$data, kord=$kord, supplier=$supplier)"
     }
+}
 
+
+/**
+ * The partial details of an
+ * [Application](https://discord.com/developers/docs/resources/application#application-object-application-structure)
+ * sent in [InviteCreateEvent]s.
+ */
+public class PartialApplication(
+    public override val data: PartialApplicationData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier,
+) : BaseApplication(kord, supplier) {
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): PartialApplication =
+        PartialApplication(data, kord, strategy.supply(kord))
+
+    override fun toString(): String {
+        return "PartialApplication(data=$data, kord=$kord, supplier=$supplier)"
+    }
 }

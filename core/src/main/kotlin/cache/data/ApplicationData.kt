@@ -1,9 +1,6 @@
 package dev.kord.core.cache.data
 
-import dev.kord.common.entity.ApplicationFlags
-import dev.kord.common.entity.DiscordApplication
-import dev.kord.common.entity.DiscordTeam
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapSnowflake
@@ -16,27 +13,46 @@ import kotlinx.serialization.Serializable
 )
 public typealias ApplicationInfoData = ApplicationData
 
+
+public sealed interface BaseApplicationData {
+    public val id: Snowflake
+    public val name: String
+    public val icon: String?
+    public val description: String
+    public val rpcOrigins: Optional<List<String>>
+    public val termsOfServiceUrl: Optional<String>
+    public val privacyPolicyUrl: Optional<String>
+    public val ownerId: OptionalSnowflake
+    public val summary: String
+    public val verifyKey: String
+    public val guildId: OptionalSnowflake
+    public val primarySkuId: OptionalSnowflake
+    public val slug: Optional<String>
+    public val coverImage: Optional<String>
+    public val flags: Optional<ApplicationFlags>
+}
+
 @Serializable
 public data class ApplicationData(
-    val id: Snowflake,
-    val name: String,
-    val icon: String?,
-    val description: String,
-    val rpcOrigins: Optional<List<String>> = Optional.Missing(),
+    override val id: Snowflake,
+    override val name: String,
+    override val icon: String?,
+    override val description: String,
+    override val rpcOrigins: Optional<List<String>> = Optional.Missing(),
     val botPublic: Boolean,
     val botRequireCodeGrant: Boolean,
-    val termsOfServiceUrl: Optional<String> = Optional.Missing(),
-    val privacyPolicyUrl: Optional<String> = Optional.Missing(),
-    val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val summary: String,
-    val verifyKey: String,
+    override val termsOfServiceUrl: Optional<String> = Optional.Missing(),
+    override val privacyPolicyUrl: Optional<String> = Optional.Missing(),
+    override val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
+    override val summary: String,
+    override val verifyKey: String,
     val team: DiscordTeam?,
-    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val slug: Optional<String> = Optional.Missing(),
-    val coverImage: Optional<String> = Optional.Missing(),
-    val flags: Optional<ApplicationFlags> = Optional.Missing(),
-) {
+    override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    override val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
+    override val slug: Optional<String> = Optional.Missing(),
+    override val coverImage: Optional<String> = Optional.Missing(),
+    override val flags: Optional<ApplicationFlags> = Optional.Missing(),
+) : BaseApplicationData {
     public companion object {
 
         public fun from(entity: DiscordApplication): ApplicationData = with(entity) {
@@ -54,6 +70,49 @@ public data class ApplicationData(
                 summary,
                 verifyKey,
                 team,
+                guildId,
+                primarySkuId,
+                slug,
+                coverImage,
+                flags,
+            )
+        }
+    }
+}
+
+
+@Serializable
+public data class PartialApplicationData(
+    override val id: Snowflake,
+    override val name: String,
+    override val icon: String?,
+    override val description: String,
+    override val rpcOrigins: Optional<List<String>> = Optional.Missing(),
+    override val termsOfServiceUrl: Optional<String> = Optional.Missing(),
+    override val privacyPolicyUrl: Optional<String> = Optional.Missing(),
+    override val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
+    override val summary: String,
+    override val verifyKey: String,
+    override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    override val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
+    override val slug: Optional<String> = Optional.Missing(),
+    override val coverImage: Optional<String> = Optional.Missing(),
+    override val flags: Optional<ApplicationFlags> = Optional.Missing(),
+) : BaseApplicationData {
+    public companion object {
+
+        public fun from(entity: DiscordPartialApplication): PartialApplicationData = with(entity) {
+            PartialApplicationData(
+                id,
+                name,
+                icon,
+                description,
+                rpcOrigins,
+                termsOfServiceUrl,
+                privacyPolicyUrl,
+                owner.mapSnowflake { it.id },
+                summary,
+                verifyKey,
                 guildId,
                 primarySkuId,
                 slug,
