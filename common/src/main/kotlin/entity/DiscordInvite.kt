@@ -12,7 +12,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-public sealed interface DiscordInviteBase {
+public sealed interface BaseDiscordInvite {
     public val code: String
     public val guild: Optional<DiscordPartialGuild>
     public val channel: DiscordChannel?
@@ -52,7 +52,7 @@ public data class DiscordInvite(
     val stageInstance: Optional<DiscordStageInstance> = Optional.Missing(),
     @SerialName("guild_scheduled_event")
     override val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing(),
-) : DiscordInviteBase
+) : BaseDiscordInvite
 
 @Serializable
 public data class DiscordInviteWithMetadata(
@@ -82,7 +82,7 @@ public data class DiscordInviteWithMetadata(
     val temporary: Boolean,
     @SerialName("created_at")
     val createdAt: Instant,
-) : DiscordInviteBase
+) : BaseDiscordInvite
 
 @Serializable
 public data class DiscordPartialInvite(
