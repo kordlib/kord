@@ -60,13 +60,13 @@ public interface CategorizableChannelBehavior : TopGuildChannelBehavior {
      * Retrieve the [CategorizableChannel] associated with this behaviour from the provided [EntitySupplier]
      *
      * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the user wasn't present.
+     * @throws [EntityNotFoundException] if the channel wasn't present.
      */
     override suspend fun fetchChannel(): CategorizableChannel = super.fetchChannel() as CategorizableChannel
 
     /**
      * Retrieve the [CategorizableChannel] associated with this behaviour from the provided [EntitySupplier]
-     * returns null if the [CategorizableChannel] isn't present.
+     * returns null if the channel isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
