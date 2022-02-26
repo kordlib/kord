@@ -9,7 +9,6 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.ApplicationData
 import dev.kord.core.cache.data.BaseApplicationData
 import dev.kord.core.cache.data.PartialApplicationData
-import dev.kord.core.cache.data.TeamData
 import dev.kord.core.event.guild.InviteCreateEvent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -97,7 +96,7 @@ public class Application(
 
     public val teamId: Snowflake? get() = data.team?.id
 
-    public val team: Team? get() = data.team?.let { Team(TeamData.from(it), kord) }
+    public val team: Team? get() = data.team?.let { Team(it, kord) }
 
     @Deprecated(
         "'ownerId' might not be present, use 'getOwnerOrNull' instead.",
