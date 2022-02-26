@@ -99,10 +99,10 @@ public data class ApplicationFlags internal constructor(val code: Int) {
     public operator fun plus(flags: ApplicationFlags): ApplicationFlags = ApplicationFlags(this.code or flags.code)
 
     public operator fun minus(flag: ApplicationFlag): ApplicationFlags =
-        ApplicationFlags(this.code xor (this.code and flag.code))
+        ApplicationFlags(this.code and flag.code.inv())
 
     public operator fun minus(flags: ApplicationFlags): ApplicationFlags =
-        ApplicationFlags(this.code xor (this.code and flags.code))
+        ApplicationFlags(this.code and flags.code.inv())
 
 
     public inline fun copy(builder: Builder.() -> Unit): ApplicationFlags {
@@ -136,11 +136,11 @@ public data class ApplicationFlags internal constructor(val code: Int) {
         }
 
         public operator fun ApplicationFlag.unaryMinus() {
-            this@Builder.code = (this@Builder.code xor (this@Builder.code and this.code))
+            this@Builder.code = (this@Builder.code and this.code.inv())
         }
 
         public operator fun ApplicationFlags.unaryMinus() {
-            this@Builder.code = (this@Builder.code xor (this@Builder.code and this.code))
+            this@Builder.code = (this@Builder.code and this.code.inv())
         }
 
         public fun flags(): ApplicationFlags = ApplicationFlags(code)
