@@ -6,7 +6,8 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.request.RestRequestException
 
-public interface PublicMessageInteractionResponseBehavior : PublicInteractionResponseBehavior,
+public interface PublicMessageInteractionResponseBehavior :
+    PublicInteractionResponseBehavior,
     MessageInteractionResponseBehavior {
 
     /**
@@ -18,9 +19,8 @@ public interface PublicMessageInteractionResponseBehavior : PublicInteractionRes
         kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
     }
 
-    public override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicMessageInteractionResponseBehavior {
-        return PublicMessageInteractionResponseBehavior(applicationId, token, kord, strategy.supply(kord))
-    }
+    public override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicMessageInteractionResponseBehavior =
+        PublicMessageInteractionResponseBehavior(applicationId, token, kord, strategy.supply(kord))
 }
 
 public fun PublicMessageInteractionResponseBehavior(
@@ -28,13 +28,9 @@ public fun PublicMessageInteractionResponseBehavior(
     token: String,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier,
-): PublicMessageInteractionResponseBehavior =
-    object : PublicMessageInteractionResponseBehavior {
-        override val applicationId: Snowflake = applicationId
-
-        override val token: String = token
-
-        override val kord: Kord = kord
-
-        override val supplier: EntitySupplier = supplier
-    }
+): PublicMessageInteractionResponseBehavior = object : PublicMessageInteractionResponseBehavior {
+    override val applicationId: Snowflake = applicationId
+    override val token: String = token
+    override val kord: Kord = kord
+    override val supplier: EntitySupplier = supplier
+}

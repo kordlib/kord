@@ -8,6 +8,7 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
@@ -37,6 +38,8 @@ public sealed interface InteractionResponseBehavior : KordObject, Strategizable 
      */
     public suspend fun getFollowupMessage(messageId: Snowflake): PublicFollowupMessage =
         supplier.getFollowupMessage(applicationId, token, messageId)
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionResponseBehavior
 }
 
 /**

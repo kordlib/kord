@@ -7,7 +7,11 @@ import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public sealed interface  MessageInteractionResponseBehavior : InteractionResponseBehavior
+public interface MessageInteractionResponseBehavior : InteractionResponseBehavior {
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageInteractionResponseBehavior
+}
+
 /**
  * Requests to edit this interaction response.
  *
@@ -22,4 +26,3 @@ public suspend inline fun MessageInteractionResponseBehavior.edit(
     val message = kord.rest.interaction.modifyInteractionResponse(applicationId, token, builder)
     return Message(message.toData(), kord)
 }
-
