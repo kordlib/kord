@@ -39,19 +39,10 @@ public sealed interface InteractionResponseBehavior : KordObject, Strategizable 
         supplier.getFollowupMessage(applicationId, token, messageId)
 }
 
-@Deprecated(
-    "Renamed to 'followUpPublic'",
-    ReplaceWith("this.followUpPublic { builder() }", "dev.kord.core.behavior.interaction.followUpPublic"),
-)
-public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return followUpPublic(builder)
-}
-
 /**
  * Follows up an interaction response without the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral].
  */
-public suspend inline fun InteractionResponseBehavior.followUpPublic(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
+public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val message = kord.rest.interaction.createFollowupMessage(applicationId, token, ephemeral = false, builder)
     return PublicFollowupMessage(Message(message.toData(), kord), applicationId, token, kord)
