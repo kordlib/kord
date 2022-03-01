@@ -81,8 +81,9 @@ public interface ActionInteractionBehavior : InteractionBehavior {
 /**
  * Responds to the interaction with a public message.
  *
- * @param builder [InteractionResponseCreateBuilder] used to create a public response.
+ * @param builder [InteractionResponseCreateBuilder] used to create the public response.
  * @return [PublicMessageInteractionResponseBehavior] public response to the interaction.
+ * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun ActionInteractionBehavior.respondPublic(
     builder: InteractionResponseCreateBuilder.() -> Unit
@@ -96,8 +97,9 @@ public suspend inline fun ActionInteractionBehavior.respondPublic(
 /**
  * Responds to the interaction with an [ephemeral][MessageFlag.Ephemeral] message.
  *
- * @param builder [InteractionResponseCreateBuilder] used to create an ephemeral response.
+ * @param builder [InteractionResponseCreateBuilder] used to create the ephemeral response.
  * @return [EphemeralMessageInteractionResponseBehavior] ephemeral response to the interaction.
+ * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun ActionInteractionBehavior.respondEphemeral(
     builder: InteractionResponseCreateBuilder.() -> Unit

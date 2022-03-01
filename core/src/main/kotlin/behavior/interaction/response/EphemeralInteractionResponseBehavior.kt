@@ -1,10 +1,12 @@
 package dev.kord.core.behavior.interaction.response
 
+import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * The behavior of an ephemeral Discord Interaction Response
- * This response is visible to *only* to the user who made the interaction.
+ * An [InteractionResponseBehavior] for an ephemeral response to an [Interaction].
+ *
+ * The response is only visible to the [user][Interaction.user] who invoked the interaction.
  */
 public sealed interface EphemeralInteractionResponseBehavior : InteractionResponseBehavior {
 

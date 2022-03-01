@@ -23,7 +23,7 @@ public interface PublicMessageInteractionResponseBehavior :
         kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
     }
 
-    public override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicMessageInteractionResponseBehavior =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicMessageInteractionResponseBehavior =
         PublicMessageInteractionResponseBehavior(applicationId, token, kord, strategy.supply(kord))
 }
 

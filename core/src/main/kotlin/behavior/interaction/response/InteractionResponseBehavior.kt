@@ -5,6 +5,7 @@ import dev.kord.core.KordObject
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
@@ -15,10 +16,21 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * The behavior of a [Discord ActionInteraction Response](https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction)
+ * A handle for operations that can follow an
+ * [Interaction Response](https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction).
  */
 public sealed interface InteractionResponseBehavior : KordObject, Strategizable {
+
+    /**
+     * Copied from the [Interaction] the response is for.
+     * @see [Interaction.applicationId].
+     */
     public val applicationId: Snowflake
+
+    /**
+     * Copied from the [Interaction] the response is for.
+     * @see [Interaction.token].
+     */
     public val token: String
 
     /**
