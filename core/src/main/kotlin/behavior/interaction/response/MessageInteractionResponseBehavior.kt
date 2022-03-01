@@ -7,7 +7,7 @@ import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public interface MessageInteractionResponseBehavior : InteractionResponseBehavior {
+public interface MessageInteractionResponseBehavior : FollowupableInteractionResponseBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageInteractionResponseBehavior
 }

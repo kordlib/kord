@@ -5,7 +5,7 @@ import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-public interface PopupInteractionResponseBehavior : InteractionResponseBehavior {
+public interface PopupInteractionResponseBehavior : FollowupableInteractionResponseBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PopupInteractionResponseBehavior =
         PopupInteractionResponseBehavior(applicationId, token, kord, strategy.supply(kord))

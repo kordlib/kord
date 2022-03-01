@@ -57,6 +57,15 @@ public sealed interface InteractionResponseBehavior : KordObject, Strategizable 
 /**
  * Follows up an interaction response without the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral].
  */
+@Deprecated(
+    "Followups are no longer supported for all 'InteractionResponseBehavior' types.",
+    ReplaceWith(
+        "(this as FollowupableInteractionResponseBehavior).followUpPublic { builder() }",
+        "dev.kord.core.behavior.interaction.response.FollowupableInteractionResponseBehavior",
+        "dev.kord.core.behavior.interaction.response.followUpPublic",
+    ),
+    DeprecationLevel.ERROR,
+)
 public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val message = kord.rest.interaction.createFollowupMessage(applicationId, token, ephemeral = false, builder)
@@ -66,6 +75,14 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
 /**
  * Follows up an interaction response with the [Ephemeral flag][dev.kord.common.entity.MessageFlag.Ephemeral].
  */
+@Deprecated(
+    "Followups are no longer supported for all 'InteractionResponseBehavior' types.",
+    ReplaceWith(
+        "(this as FollowupableInteractionResponseBehavior).followUpEphemeral { builder() }",
+        "dev.kord.core.behavior.interaction.response.FollowupableInteractionResponseBehavior",
+    ),
+    DeprecationLevel.ERROR,
+)
 public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder: FollowupMessageCreateBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val message = kord.rest.interaction.createFollowupMessage(applicationId, token, ephemeral = true, builder)
