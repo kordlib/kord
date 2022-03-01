@@ -2,9 +2,7 @@ package dev.kord.core.behavior.interaction.response
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.ActionInteractionBehavior
-import dev.kord.core.behavior.interaction.InteractionBehavior
-import dev.kord.core.behavior.interaction.respondPublic
+import dev.kord.core.behavior.interaction.*
 import dev.kord.core.entity.interaction.response.PublicMessageInteractionResponse
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -14,22 +12,22 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * An [InteractionResponseBehavior] returned when using [ActionInteractionBehavior.respondPublic] or
- * [DeferredPublicMessageInteractionResponseBehavior.respond].
+ * An [InteractionResponseBehavior] returned when using [respondPublic][ActionInteractionBehavior.respondPublic],
+ * [respond][DeferredPublicMessageInteractionResponseBehavior.respond],
+ * [deferPublicMessageUpdate][ComponentInteractionBehavior.deferPublicMessageUpdate] or
+ * [updatePublicMessage][ComponentInteractionBehavior.updatePublicMessage].
  *
- * This is the handle to a public response message, it supports
- * [editing][PublicMessageInteractionResponseBehavior.edit], [deleting][delete] and sending followup messages to the
- * interaction.
+ * This is the handle to a public message, it supports [editing][PublicMessageInteractionResponseBehavior.edit],
+ * [deleting][delete] and sending followup messages to the interaction.
  *
- * The response message is visible to all users in the [channel][InteractionBehavior.channel] the interaction was sent
- * from.
+ * The message is visible to all users in the [channel][InteractionBehavior.channel] the interaction was sent from.
  */
 public interface PublicMessageInteractionResponseBehavior :
     PublicInteractionResponseBehavior,
     MessageInteractionResponseBehavior {
 
     /**
-     * Requests to delete the response message.
+     * Requests to delete the message.
      *
      * Returns a [FollowupableInteractionResponseBehavior] that can still be used to send followup messages to the
      * interaction.

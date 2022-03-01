@@ -3,8 +3,7 @@ package dev.kord.core.behavior.interaction.response
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.ActionInteractionBehavior
-import dev.kord.core.behavior.interaction.respondEphemeral
+import dev.kord.core.behavior.interaction.*
 import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.entity.interaction.response.EphemeralMessageInteractionResponse
 import dev.kord.core.supplier.EntitySupplier
@@ -15,13 +14,15 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * An [InteractionResponseBehavior] returned when using [ActionInteractionBehavior.respondEphemeral] or
- * [DeferredEphemeralMessageInteractionResponseBehavior.respond].
+ * An [InteractionResponseBehavior] returned when using [respondEphemeral][ActionInteractionBehavior.respondEphemeral],
+ * [respond][DeferredEphemeralMessageInteractionResponseBehavior.respond],
+ * [deferEphemeralMessageUpdate][ComponentInteractionBehavior.deferEphemeralMessageUpdate] or
+ * [updateEphemeralMessage][ComponentInteractionBehavior.updateEphemeralMessage].
  *
- * This is the handle to an [ephemeral][MessageFlag.Ephemeral] response message, it supports
+ * This is the handle to an [ephemeral][MessageFlag.Ephemeral] message, it supports
  * [editing][EphemeralMessageInteractionResponseBehavior.edit] and sending followup messages to the interaction.
  *
- * The response message is only visible to the [user][Interaction.user] who invoked the interaction.
+ * The message is only visible to the [user][Interaction.user] who invoked the interaction.
  */
 public interface EphemeralMessageInteractionResponseBehavior :
     EphemeralInteractionResponseBehavior,

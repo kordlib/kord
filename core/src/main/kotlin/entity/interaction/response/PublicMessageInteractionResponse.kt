@@ -8,9 +8,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * A [PublicMessageInteractionResponseBehavior] that holds the response [message].
+ * A [PublicMessageInteractionResponseBehavior] that holds the [message] this is a handle to.
  *
- * @param message The response message. To use the message behavior your application must be authorized as a bot.
+ * @param message The message. To use the message behavior your application must be authorized as a bot.
  */
 public class PublicMessageInteractionResponse(
     message: Message,

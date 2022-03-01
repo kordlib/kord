@@ -68,9 +68,8 @@ public interface ActionInteractionBehavior : InteractionBehavior {
     }
 
     /**
-     * Acknowledges the interaction with the intent of responding with an [ephemeral][MessageFlag.Ephemeral]
-     * message later by calling [respond][DeferredEphemeralMessageInteractionResponseBehavior.respond] on the returned
-     * object.
+     * Acknowledges the interaction with the intent of responding with an [ephemeral][MessageFlag.Ephemeral] message
+     * later by calling [respond][DeferredEphemeralMessageInteractionResponseBehavior.respond] on the returned object.
      *
      * There will be a 'loading' animation that is only visible to the [user][Interaction.user] who invoked the
      * interaction.
