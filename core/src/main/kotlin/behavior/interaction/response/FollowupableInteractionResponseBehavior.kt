@@ -13,6 +13,7 @@ import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
+import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -55,6 +56,8 @@ public suspend inline fun FollowupableInteractionResponseBehavior.followUp(
  *
  * The response message is visible to all users in the [channel][InteractionBehavior.channel] the interaction was sent
  * from.
+ *
+ * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun FollowupableInteractionResponseBehavior.followUpPublic(
     builder: FollowupMessageCreateBuilder.() -> Unit,
@@ -71,6 +74,8 @@ public suspend inline fun FollowupableInteractionResponseBehavior.followUpPublic
  * Follows up an interaction response by sending a [FollowupMessage] with the [Ephemeral flag][MessageFlag.Ephemeral].
  *
  * The followup message is only visible to the [user][Interaction.user] who invoked the interaction.
+ *
+ * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun FollowupableInteractionResponseBehavior.followUpEphemeral(
     builder: FollowupMessageCreateBuilder.() -> Unit,

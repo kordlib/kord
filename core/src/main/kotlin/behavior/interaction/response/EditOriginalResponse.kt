@@ -9,6 +9,10 @@ import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+// internal utility functions to avoid duplications in DeferredMessageInteractionResponseBehavior.respond() and
+// MessageInteractionResponseBehavior.edit() since they are using the same 'Edit Original Interaction Response' endpoint
+// https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response
+
 
 @PublishedApi
 internal suspend inline fun InteractionResponseBehavior.editOriginalResponse(

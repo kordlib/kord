@@ -7,6 +7,12 @@ import dev.kord.core.entity.Message
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * An [EphemeralMessageInteractionResponseBehavior] that holds the response [message].
+ *
+ * @param message The response message. Any rest calls made through the message behavior, e.g. `message.delete()`, will
+ * throw since ephemeral messages are not accessible through bot authorization.
+ */
 public class EphemeralMessageInteractionResponse(
     message: Message,
     override val applicationId: Snowflake,

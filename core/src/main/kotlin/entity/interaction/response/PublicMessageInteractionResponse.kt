@@ -7,6 +7,11 @@ import dev.kord.core.entity.Message
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * A [PublicMessageInteractionResponseBehavior] that holds the response [message].
+ *
+ * @param message The response message. To use the message behavior your application must be authorized as a bot.
+ */
 public class PublicMessageInteractionResponse(
     message: Message,
     override val applicationId: Snowflake,

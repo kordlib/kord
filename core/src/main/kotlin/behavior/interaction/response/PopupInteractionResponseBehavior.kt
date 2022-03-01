@@ -2,9 +2,16 @@ package dev.kord.core.behavior.interaction.response
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.interaction.ModalParentInteractionBehavior
+import dev.kord.core.behavior.interaction.modal
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * An [InteractionResponseBehavior] returned when using [ModalParentInteractionBehavior.modal].
+ *
+ * This handle supports sending followup messages to the interaction.
+ */
 public interface PopupInteractionResponseBehavior : FollowupableInteractionResponseBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PopupInteractionResponseBehavior =

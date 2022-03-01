@@ -1,5 +1,7 @@
 package dev.kord.core.behavior.interaction.response
 
+import dev.kord.core.behavior.interaction.InteractionBehavior
+import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
