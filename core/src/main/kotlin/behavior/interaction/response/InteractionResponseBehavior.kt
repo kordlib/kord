@@ -60,7 +60,7 @@ public sealed interface InteractionResponseBehavior : KordObject, Strategizable 
 @Deprecated(
     "Followups are no longer supported for all 'InteractionResponseBehavior' types.",
     ReplaceWith(
-        "(this as FollowupableInteractionResponseBehavior).followUpPublic { builder() }",
+        "if (this is FollowupableInteractionResponseBehavior) this.followUpPublic { builder() }",
         "dev.kord.core.behavior.interaction.response.FollowupableInteractionResponseBehavior",
         "dev.kord.core.behavior.interaction.response.followUpPublic",
     ),
@@ -78,7 +78,7 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
 @Deprecated(
     "Followups are no longer supported for all 'InteractionResponseBehavior' types.",
     ReplaceWith(
-        "(this as FollowupableInteractionResponseBehavior).followUpEphemeral { builder() }",
+        "if (this is FollowupableInteractionResponseBehavior) this.followUpEphemeral { builder() }",
         "dev.kord.core.behavior.interaction.response.FollowupableInteractionResponseBehavior",
     ),
     DeprecationLevel.ERROR,
