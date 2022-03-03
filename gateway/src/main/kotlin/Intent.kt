@@ -151,6 +151,9 @@ public sealed class Intent(public val code: DiscordBitSet) {
      */
     public object DirectMessageTyping : Intent(1 shl 14)
 
+    @PrivilegedIntent
+    public object MessageContent : Intent(1 shl 15)
+
     /**
      * Enables the following events:
      * - [GuildScheduledEventCreate]
@@ -160,6 +163,8 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [GuildScheduledEventUserRemove]
      */
     public object GuildScheduledEvents : Intent(1 shl 16)
+
+
 
     public companion object {
         @OptIn(PrivilegedIntent::class)
