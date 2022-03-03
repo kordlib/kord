@@ -8,45 +8,26 @@ import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.cache.data.BaseInviteData
 import dev.kord.core.cache.data.InviteData
+import dev.kord.core.cache.data.InviteWithMetadataData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
-import kotlin.time.DurationUnit
+import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toDuration
 
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).
  */
-public class Invite(
-    public val data: InviteData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier
+public open class Invite(
+    public open val data: BaseInviteData,
+    final override val kord: Kord,
+    final override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordObject, Strategizable {
-
-    public inner class Metadata(public val data: InviteData.Metadata) {
-
-        /** Number of times this invite has been used. */
-        public val uses: Int get() = data.uses
-
-        /** Max number of times this invite can be used. */
-        public val maxUses: Int get() = data.maxUses
-
-        /** Duration after which the invite expires. */
-        public val maxAge: Duration get() = data.maxAge.toDuration(DurationUnit.SECONDS)
-
-        /** Whether this invite only grants temporary membership. */
-        public val temporary: Boolean get() = data.temporary
-
-        /** When this invite was created */
-        public val createdAt: Instant get() = data.createdAt
-    }
-
-    /** Extra information about this invite. */
-    public val metadata: Metadata? get() = data.metadata.value?.let { Metadata(it) }
 
     /**
      * The unique code of this invite.
@@ -103,7 +84,8 @@ public class Invite(
      */
     @Suppress("DEPRECATION")
     @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
-    public val targetUserType: dev.kord.common.entity.TargetUserType? get() = data.targetUserType.value
+    public val targetUserType: dev.kord.common.entity.TargetUserType?
+        get() = (data as? InviteData)?.targetUserType?.value
 
     /**
      * Approximate count of total members.
@@ -178,8 +160,37 @@ public class Invite(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Invite =
         Invite(data, kord, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "Invite(data=$data, kord=$kord, supplier=$supplier)"
-    }
+    override fun toString(): String = "Invite(data=$data, kord=$kord, supplier=$supplier)"
+}
 
+/**
+ * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite) with
+ * [extra information](https://discord.com/developers/docs/resources/invite#invite-metadata-object).
+ */
+public class InviteWithMetadata(
+    override val data: InviteWithMetadataData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier,
+) : Invite(data, kord, supplier) {
+
+    /** Number of times this invite has been used. */
+    public val uses: Int get() = data.uses
+
+    /** Max number of times this invite can be used. */
+    public val maxUses: Int get() = data.maxUses
+
+    /** Duration after which the invite expires. */
+    public val maxAge: Duration get() = data.maxAge.toDuration(unit = SECONDS)
+
+    /** Whether this invite only grants temporary membership. */
+    public val temporary: Boolean get() = data.temporary
+
+    /** When this invite was created. */
+    public val createdAt: Instant get() = data.createdAt
+
+    /** Returns a new [InviteWithMetadata] with the given [strategy]. */
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteWithMetadata =
+        InviteWithMetadata(data, kord, strategy.supply(kord))
+
+    override fun toString(): String = "InviteWithMetadata(data=$data, kord=$kord, supplier=$supplier)"
 }

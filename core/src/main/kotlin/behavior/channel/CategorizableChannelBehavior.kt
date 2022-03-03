@@ -3,8 +3,8 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.InviteData
-import dev.kord.core.entity.Invite
+import dev.kord.core.cache.data.InviteWithMetadataData
+import dev.kord.core.entity.InviteWithMetadata
 import dev.kord.core.entity.channel.CategorizableChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -28,14 +28,14 @@ public interface CategorizableChannelBehavior : TopGuildChannelBehavior {
      * The returned flow is lazily executed, any [RestRequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    public val invites: Flow<Invite>
+    public val invites: Flow<InviteWithMetadata>
         get() = flow {
             val responses = kord.rest.channel.getChannelInvites(id)
 
             for (response in responses) {
-                val data = InviteData.from(response)
+                val data = InviteWithMetadataData.from(response)
 
-                emit(Invite(data, kord))
+                emit(InviteWithMetadata(data, kord))
             }
         }
 
@@ -104,15 +104,15 @@ internal fun CategorizableChannelBehavior(
 }
 
 /**
- * Request to create an [Invite] for this channel.
+ * Request to create an [InviteWithMetadata] for this channel.
  *
- * @return the created [Invite].
+ * @return the created [InviteWithMetadata].
  * @throws RestRequestException if something went wrong during the request.
  */
-public suspend inline fun CategorizableChannelBehavior.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): Invite {
+public suspend inline fun CategorizableChannelBehavior.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): InviteWithMetadata {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.createInvite(id, builder)
-    val data = InviteData.from(response)
+    val data = InviteWithMetadataData.from(response)
 
-    return Invite(data, kord)
+    return InviteWithMetadata(data, kord)
 }

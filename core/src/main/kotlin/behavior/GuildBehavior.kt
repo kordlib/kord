@@ -177,17 +177,18 @@ public interface GuildBehavior : KordEntity, Strategizable {
             .map { VoiceState(it, kord) }
 
     /**
-     * Requests to get the present voice states of this guild.
+     * Requests to get the [invites][InviteWithMetadata] for this guild.
      *
      * This property is not resolvable through cache and will always use the [RestClient] instead.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    public val invites: Flow<Invite>
+    public val invites: Flow<InviteWithMetadata>
         get() = flow {
             kord.rest.guild.getGuildInvites(id).forEach {
-                emit(Invite(InviteData.from(it), kord))
+                val data = InviteWithMetadataData.from(it)
+                emit(InviteWithMetadata(data, kord))
             }
         }
 
