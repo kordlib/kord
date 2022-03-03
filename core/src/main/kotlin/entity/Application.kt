@@ -49,8 +49,6 @@ public sealed class BaseApplication(
 
     public val owner: UserBehavior? get() = ownerId?.let { UserBehavior(it, kord) }
 
-    public val summary: String get() = data.summary
-
     public val verifyKey: String get() = data.verifyKey
 
     public val guildId: Snowflake? get() = data.guildId.value

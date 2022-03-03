@@ -22,7 +22,6 @@ public sealed interface BaseDiscordApplication {
     public val termsOfServiceUrl: Optional<String>
     public val privacyPolicyUrl: Optional<String>
     public val owner: Optional<DiscordUser>
-    public val summary: String
     public val verifyKey: String
     public val guildId: OptionalSnowflake
     public val primarySkuId: OptionalSnowflake
@@ -52,7 +51,6 @@ public data class DiscordApplication(
     @SerialName("privacy_policy_url")
     override val privacyPolicyUrl: Optional<String> = Optional.Missing(),
     override val owner: Optional<DiscordUser> = Optional.Missing(),
-    override val summary: String,
     @SerialName("verify_key")
     override val verifyKey: String,
     val team: DiscordTeam?,
@@ -84,7 +82,6 @@ public data class DiscordPartialApplication(
     @SerialName("privacy_policy_url")
     override val privacyPolicyUrl: Optional<String> = Optional.Missing(),
     override val owner: Optional<DiscordUser> = Optional.Missing(),
-    override val summary: String,
     @SerialName("verify_key")
     override val verifyKey: String,
     @SerialName("guild_id")

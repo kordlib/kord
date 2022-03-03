@@ -23,7 +23,6 @@ public sealed interface BaseApplicationData {
     public val termsOfServiceUrl: Optional<String>
     public val privacyPolicyUrl: Optional<String>
     public val ownerId: OptionalSnowflake
-    public val summary: String
     public val verifyKey: String
     public val guildId: OptionalSnowflake
     public val primarySkuId: OptionalSnowflake
@@ -44,7 +43,6 @@ public data class ApplicationData(
     override val termsOfServiceUrl: Optional<String> = Optional.Missing(),
     override val privacyPolicyUrl: Optional<String> = Optional.Missing(),
     override val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
-    override val summary: String,
     override val verifyKey: String,
     val team: TeamData?,
     override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -67,7 +65,6 @@ public data class ApplicationData(
                 termsOfServiceUrl,
                 privacyPolicyUrl,
                 owner.mapSnowflake { it.id },
-                summary,
                 verifyKey,
                 team?.let { TeamData.from(it) },
                 guildId,
@@ -91,7 +88,6 @@ public data class PartialApplicationData(
     override val termsOfServiceUrl: Optional<String> = Optional.Missing(),
     override val privacyPolicyUrl: Optional<String> = Optional.Missing(),
     override val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
-    override val summary: String,
     override val verifyKey: String,
     override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     override val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -111,7 +107,6 @@ public data class PartialApplicationData(
                 termsOfServiceUrl,
                 privacyPolicyUrl,
                 owner.mapSnowflake { it.id },
-                summary,
                 verifyKey,
                 guildId,
                 primarySkuId,
