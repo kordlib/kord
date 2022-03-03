@@ -20,9 +20,9 @@ public abstract class RestService(@PublishedApi internal val requestHandler: Req
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        val builder = RequestBuilder(baseUrl, route)
+        val requestBuilder = RequestBuilder(route)
             .apply(builder)
-        val interceptedBuilder = requestHandler.intercept(builder)
+        val interceptedBuilder = requestHandler.intercept(requestBuilder)
         return requestHandler.handle(interceptedBuilder.build())
     }
 }

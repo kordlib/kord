@@ -6,7 +6,7 @@ import dev.kord.rest.route.Route
 import io.ktor.http.*
 import kotlinx.serialization.SerializationStrategy
 
-public class RequestBuilder<T>(public var baseUrl: String = Route.baseUrl,public var route: Route<T>, keySize: Int = 2) {
+public class RequestBuilder<T>(public var route: Route<T>,public var baseUrl: String = Route.baseUrl, keySize: Int = 2) {
 
     public val keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
 
