@@ -109,9 +109,7 @@ public class Application(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Application =
         Application(data, kord, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "Application(data=$data, kord=$kord, supplier=$supplier)"
-    }
+    override fun toString(): String = "Application(data=$data, kord=$kord, supplier=$supplier)"
 }
 
 
@@ -129,7 +127,5 @@ public class PartialApplication(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PartialApplication =
         PartialApplication(data, kord, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "PartialApplication(data=$data, kord=$kord, supplier=$supplier)"
-    }
+    override fun toString(): String = "PartialApplication(data=$data, kord=$kord, supplier=$supplier)"
 }
