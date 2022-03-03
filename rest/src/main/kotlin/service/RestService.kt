@@ -12,19 +12,17 @@ import kotlin.contracts.contract
 public abstract class RestService(@PublishedApi internal val requestHandler: RequestHandler) {
 
     @PublishedApi
-    internal suspend inline fun <T> call(route: Route<T>, builder: RequestBuilder<T>.() -> Unit = {}): T {
+    internal suspend inline fun <T> call(
+        route: Route<T>,
+        builder: RequestBuilder<T>.() -> Unit = {},
+        baseUrl: String = Route.baseUrl
+    ): T {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        val request = RequestBuilder(route)
+        val builder = RequestBuilder(baseUrl, route)
             .apply(builder)
-            .apply {
-                unencodedHeader(UserAgent, KordConstants.USER_AGENT)
-                if (route.requiresAuthorizationHeader) {
-                    unencodedHeader(Authorization, "Bot ${requestHandler.token}")
-                }
-            }
-            .build()
-        return requestHandler.handle(request)
+        val interceptedBuilder = requestHandler.intercept(builder)
+        return requestHandler.handle(interceptedBuilder.build())
     }
 }

@@ -10,6 +10,7 @@ import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
 public sealed class Request<B : Any, R> {
+    public abstract val baseUrl: String
     public abstract val route: Route<R>
     public abstract val routeParams: Map<Route.Key, String>
     public abstract val headers: StringValues
@@ -60,6 +61,7 @@ public sealed class RequestIdentifier {
 public data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
 
 public class JsonRequest<B : Any, R>(
+    override val baseUrl: String,
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,
@@ -70,6 +72,7 @@ public class JsonRequest<B : Any, R>(
 }
 
 public class MultipartRequest<B : Any, R>(
+    override val baseUrl: String,
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,

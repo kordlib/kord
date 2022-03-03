@@ -2,6 +2,7 @@ package dev.kord.rest.request
 
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.ratelimit.*
+import dev.kord.rest.route.Route
 import dev.kord.rest.route.optional
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -39,7 +40,9 @@ public class KtorRequestHandler(
     override val token: String
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
-
+    override suspend fun <T> intercept(builder: RequestBuilder<T>): RequestBuilder<T> {
+        return builder.defaultInterception(builder.route, token)
+    }
     override tailrec suspend fun <B : Any, R> handle(request: Request<B, R>): R {
         val response = requestRateLimiter.consume(request) {
             val httpRequest = client.createRequest(request)
@@ -76,7 +79,7 @@ public class KtorRequestHandler(
         headers.appendAll(request.headers)
 
         url {
-            url.takeFrom(dev.kord.rest.route.Route.baseUrl)
+            url.takeFrom(request.baseUrl)
             encodedPath += request.path
             parameters.appendAll(request.parameters)
         }
