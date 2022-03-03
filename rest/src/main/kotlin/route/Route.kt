@@ -386,6 +386,9 @@ public sealed class Route<T>(
     public object GuildChannelsPatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/channels", NoStrategy)
 
+    public object ActiveThreadsGet :
+        Route<ListThreadsResponse>(HttpMethod.Get, "/guilds/$GuildId/threads/active", ListThreadsResponse.serializer())
+
     public object GuildMemberGet :
         Route<DiscordGuildMember>(HttpMethod.Get, "/guilds/$GuildId/members/$UserId", DiscordGuildMember.serializer())
 
