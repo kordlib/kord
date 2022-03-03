@@ -50,7 +50,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * ```kotlin
      * val deferred = interaction.deferEphemeralResponse()
      * val response = deferred.respond { ... }
-     * response.followUpPublic { ... }
+     * response.createPublicFollowup { ... }
      * ```
      */
     @Deprecated(
@@ -112,7 +112,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * ```kotlin
      * val deferred = interaction.deferPublicResponse()
      * val response = deferred.respond { ... }
-     * response.followUpEphemeral { ... }
+     * response.createEphemeralFollowup { ... }
      * ```
      */
     @Deprecated(

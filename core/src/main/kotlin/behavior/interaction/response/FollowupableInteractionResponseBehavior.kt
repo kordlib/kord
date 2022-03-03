@@ -18,8 +18,8 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * An [InteractionResponseBehavior] that supports sending followup messages to the interaction by using [followUpPublic]
- * or [followUpEphemeral].
+ * An [InteractionResponseBehavior] that supports sending followup messages to the interaction by using
+ * [createPublicFollowup] or [createEphemeralFollowup].
  */
 public interface FollowupableInteractionResponseBehavior : InteractionResponseBehavior {
 
@@ -40,14 +40,17 @@ public fun FollowupableInteractionResponseBehavior(
 }
 
 @Deprecated(
-    "Renamed to 'followUpPublic'.",
-    ReplaceWith("this.followUpPublic { builder() }", "dev.kord.core.behavior.interaction.response.followUpPublic"),
+    "Renamed to 'createPublicFollowup'.",
+    ReplaceWith(
+        "this.createPublicFollowup { builder() }",
+        "dev.kord.core.behavior.interaction.response.createPublicFollowup",
+    ),
 )
 public suspend inline fun FollowupableInteractionResponseBehavior.followUp(
     builder: FollowupMessageCreateBuilder.() -> Unit,
 ): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return followUpPublic(builder)
+    return createPublicFollowup(builder)
 }
 
 /**
@@ -59,7 +62,7 @@ public suspend inline fun FollowupableInteractionResponseBehavior.followUp(
  *
  * @throws RestRequestException if something went wrong during the request.
  */
-public suspend inline fun FollowupableInteractionResponseBehavior.followUpPublic(
+public suspend inline fun FollowupableInteractionResponseBehavior.createPublicFollowup(
     builder: FollowupMessageCreateBuilder.() -> Unit,
 ): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -70,6 +73,20 @@ public suspend inline fun FollowupableInteractionResponseBehavior.followUpPublic
     return PublicFollowupMessage(message, applicationId, token, kord)
 }
 
+@Deprecated(
+    "Renamed to 'createEphemeralFollowup'.",
+    ReplaceWith(
+        "this.createEphemeralFollowup { builder() }",
+        "dev.kord.core.behavior.interaction.response.createEphemeralFollowup",
+    ),
+)
+public suspend inline fun FollowupableInteractionResponseBehavior.followUpEphemeral(
+    builder: FollowupMessageCreateBuilder.() -> Unit,
+): EphemeralFollowupMessage {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return createEphemeralFollowup(builder)
+}
+
 /**
  * Follows up an interaction response by sending a [FollowupMessage] with the [Ephemeral flag][MessageFlag.Ephemeral].
  *
@@ -77,7 +94,7 @@ public suspend inline fun FollowupableInteractionResponseBehavior.followUpPublic
  *
  * @throws RestRequestException if something went wrong during the request.
  */
-public suspend inline fun FollowupableInteractionResponseBehavior.followUpEphemeral(
+public suspend inline fun FollowupableInteractionResponseBehavior.createEphemeralFollowup(
     builder: FollowupMessageCreateBuilder.() -> Unit,
 ): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
