@@ -29,14 +29,12 @@ public interface PublicMessageInteractionResponseBehavior :
     /**
      * Requests to delete the message.
      *
-     * Returns a [FollowupableInteractionResponseBehavior] that can still be used to send followup messages to the
-     * interaction.
+     * This [PublicMessageInteractionResponseBehavior] can still be used to send followup messages to the interaction.
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun delete(): FollowupableInteractionResponseBehavior {
+    public suspend fun delete() {
         kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
-        return FollowupableInteractionResponseBehavior(applicationId, token, kord)
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicMessageInteractionResponseBehavior =
