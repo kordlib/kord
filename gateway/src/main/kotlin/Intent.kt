@@ -2,6 +2,7 @@ package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
+import dev.kord.gateway.Intent.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -268,12 +269,15 @@ public data class Intents internal constructor(val code: DiscordBitSet) {
         public val all: Intents
             get() = Intents(Intent.values)
 
+        @PrivilegedIntent
+        public val privileged: Intents
+            get() = Intents(GuildPresences, GuildMembers, MessageContent)
+
         @OptIn(PrivilegedIntent::class)
         public val nonPrivileged: Intents
             get() = Intents {
                 +all
-                -Intent.GuildPresences
-                -Intent.GuildMembers
+                -privileged
             }
 
         public val none: Intents = Intents()
@@ -292,7 +296,10 @@ public data class Intents internal constructor(val code: DiscordBitSet) {
 
         public operator fun Intent.unaryMinus() {
             this@IntentsBuilder.code.remove(code)
+        }
 
+        public operator fun Intents.unaryMinus() {
+            this@IntentsBuilder.code.remove(code)
         }
 
         public fun flags(): Intents = Intents(code)
