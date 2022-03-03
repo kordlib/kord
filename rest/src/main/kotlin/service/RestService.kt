@@ -14,8 +14,8 @@ public abstract class RestService(@PublishedApi internal val requestHandler: Req
     @PublishedApi
     internal suspend inline fun <T> call(
         route: Route<T>,
+        baseUrl: String = Route.baseUrl,
         builder: RequestBuilder<T>.() -> Unit = {},
-        baseUrl: String = Route.baseUrl
     ): T {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
