@@ -165,26 +165,27 @@ public sealed class Intent(public val code: DiscordBitSet) {
     public object GuildScheduledEvents : Intent(1 shl 16)
 
 
-
     public companion object {
         @OptIn(PrivilegedIntent::class)
         public val values: Set<Intent>
             get() = setOf(
-                DirectMessageTyping,
-                GuildIntegrations,
-                GuildEmojis,
-                DirectMessageTyping,
-                DirectMessages,
-                DirectMessagesReactions,
-                GuildBans,
                 Guilds,
-                GuildVoiceStates,
-                GuildMessages,
-                GuildMessageReactions,
+                GuildMembers,
+                GuildBans,
+                GuildEmojis,
+                GuildIntegrations,
                 GuildWebhooks,
                 GuildInvites,
+                GuildVoiceStates,
                 GuildPresences,
-                GuildMembers
+                GuildMessages,
+                GuildMessageReactions,
+                GuildMessageTyping,
+                DirectMessages,
+                DirectMessagesReactions,
+                DirectMessageTyping,
+                MessageContent,
+                GuildScheduledEvents,
             )
     }
 }
