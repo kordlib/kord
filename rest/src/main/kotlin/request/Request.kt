@@ -61,24 +61,24 @@ public sealed class RequestIdentifier {
 public data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
 
 public class JsonRequest<B : Any, R>(
-    override val baseUrl: String,
-    override val route: Route<R>,
-    override val routeParams: Map<Route.Key, String>,
-    override val parameters: StringValues,
-    override val headers: StringValues,
-    override val body: RequestBody<B>?
-) : Request<B, R>() {
-    override val files: List<NamedFile>? = null
-}
-
-public class MultipartRequest<B : Any, R>(
-    override val baseUrl: String,
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,
     override val headers: StringValues,
     override val body: RequestBody<B>?,
-    override val files: List<NamedFile> = emptyList()
+    override val baseUrl: String = Route.baseUrl
+) : Request<B, R>() {
+    override val files: List<NamedFile>? = null
+}
+
+public class MultipartRequest<B : Any, R>(
+    override val route: Route<R>,
+    override val routeParams: Map<Route.Key, String>,
+    override val parameters: StringValues,
+    override val headers: StringValues,
+    override val body: RequestBody<B>?,
+    override val files: List<NamedFile> = emptyList(),
+    override val baseUrl: String = Route.baseUrl
 ) : Request<B, R>() {
 
     public val data: List<PartData> = formData {
