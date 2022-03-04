@@ -61,6 +61,7 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 @Deprecated(
     "This is an internal utility function.",
     ReplaceWith("this.toList().sorted()", "kotlinx.coroutines.flow.toList"),
+    DeprecationLevel.ERROR,
 )
 public fun <T : Entity> Flow<T>.sorted(): Flow<T> = internalSorted()
 
@@ -77,6 +78,7 @@ internal fun <T : Comparable<T>> Flow<T>.internalSorted(): Flow<T> = flow {
 @Deprecated(
     "Use the function with the same name from kotlinx.coroutines.flow instead.",
     ReplaceWith("this.firstOrNull(predicate)", "kotlinx.coroutines.flow.firstOrNull"),
+    DeprecationLevel.ERROR,
 )
 public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
     filter { predicate(it) }.coroutinesFirstOrNull()
@@ -89,9 +91,10 @@ public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: s
 @Deprecated(
     "This is an internal utility function.",
     ReplaceWith("this.firstOrNull(predicate) != null", "kotlinx.coroutines.flow.firstOrNull"),
+    DeprecationLevel.ERROR,
 )
 public suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
-    firstOrNull(predicate) != null
+    coroutinesFirstOrNull { predicate(it) } != null
 
 // TODO rename this to `any` once the public version is fully deprecated and removed, use import alias for now
 /**
