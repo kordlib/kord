@@ -15,7 +15,7 @@ public data class GuildScheduledEventData(
     val channelId: Snowflake?,
     val creatorId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val name: String,
-    val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing(),
     val scheduledStartTime: Instant,
     val scheduledEndTime: Instant?,
     val privacyLevel: GuildScheduledEventPrivacyLevel,
