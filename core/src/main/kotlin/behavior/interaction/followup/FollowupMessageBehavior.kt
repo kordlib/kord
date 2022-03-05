@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.interaction.followup
 
-import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.toData
@@ -11,6 +10,7 @@ import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
@@ -33,6 +33,7 @@ public interface FollowupMessageBehavior : KordEntity, Strategizable {
 
     public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): FollowupMessageBehavior
 }
 
 /**
@@ -49,11 +50,5 @@ public suspend inline fun FollowupMessageBehavior.edit(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.interaction.modifyFollowupMessage(applicationId, token, id, builder)
 
-    val isEphemeral = response.flags.value?.contains(MessageFlag.Ephemeral) ?: false
-    val message = Message(response.toData(), kord)
-
-    return when {
-        isEphemeral -> EphemeralFollowupMessage(message, applicationId, token, kord)
-        else -> PublicFollowupMessage(message, applicationId, token, kord)
-    }
+    return FollowupMessage(Message(response.toData(), kord), applicationId, token, kord)
 }

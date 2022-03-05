@@ -6,6 +6,7 @@ import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.interaction.followup.EphemeralFollowupMessage
+import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
@@ -21,21 +22,20 @@ public sealed interface InteractionResponseBehavior : KordObject, Strategizable 
     public val token: String
 
     /**
-     * Returns a followup message for an interaction response or `null` if it was not found. Does not support ephemeral
-     * followups.
+     * Returns a followup message for an interaction response or `null` if it was not found.
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun getFollowupMessageOrNull(messageId: Snowflake): PublicFollowupMessage? =
+    public suspend fun getFollowupMessageOrNull(messageId: Snowflake): FollowupMessage? =
         supplier.getFollowupMessageOrNull(applicationId, token, messageId)
 
     /**
-     * Returns a followup message for an interaction response. Does not support ephemeral followups.
+     * Returns a followup message for an interaction response.
      *
      * @throws RestRequestException if something went wrong during the request.
      * @throws EntityNotFoundException if the followup message was not found.
      */
-    public suspend fun getFollowupMessage(messageId: Snowflake): PublicFollowupMessage =
+    public suspend fun getFollowupMessage(messageId: Snowflake): FollowupMessage =
         supplier.getFollowupMessage(applicationId, token, messageId)
 }
 
