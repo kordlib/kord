@@ -24,7 +24,7 @@ public typealias ApplicationInfo = Application
 
 public sealed class BaseApplication(
     final override val kord: Kord,
-    final override val supplier: EntitySupplier,
+    final override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordEntity, Strategizable {
     public abstract val data: BaseApplicationData
 
