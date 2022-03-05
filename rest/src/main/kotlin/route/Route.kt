@@ -17,7 +17,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.json.Json
 
 internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
-internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v9"
+internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v10"
 
 public sealed interface ResponseMapper<T> {
     public fun deserialize(json: Json, body: String): T

@@ -42,7 +42,7 @@ public data class DiscordGuildScheduledEvent(
     @SerialName("creator_id")
     val creatorId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val name: String,
-    val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing(),
     @SerialName("scheduled_start_time")
     val scheduledStartTime: Instant,
     @SerialName("scheduled_end_time")

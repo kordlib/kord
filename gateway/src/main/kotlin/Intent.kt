@@ -2,6 +2,7 @@ package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
+import dev.kord.gateway.Intent.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -151,6 +152,9 @@ public sealed class Intent(public val code: DiscordBitSet) {
      */
     public object DirectMessageTyping : Intent(1 shl 14)
 
+    @PrivilegedIntent
+    public object MessageContent : Intent(1 shl 15)
+
     /**
      * Enables the following events:
      * - [GuildScheduledEventCreate]
@@ -161,25 +165,28 @@ public sealed class Intent(public val code: DiscordBitSet) {
      */
     public object GuildScheduledEvents : Intent(1 shl 16)
 
+
     public companion object {
         @OptIn(PrivilegedIntent::class)
         public val values: Set<Intent>
             get() = setOf(
-                DirectMessageTyping,
-                GuildIntegrations,
-                GuildEmojis,
-                DirectMessageTyping,
-                DirectMessages,
-                DirectMessagesReactions,
-                GuildBans,
                 Guilds,
-                GuildVoiceStates,
-                GuildMessages,
-                GuildMessageReactions,
+                GuildMembers,
+                GuildBans,
+                GuildEmojis,
+                GuildIntegrations,
                 GuildWebhooks,
                 GuildInvites,
+                GuildVoiceStates,
                 GuildPresences,
-                GuildMembers
+                GuildMessages,
+                GuildMessageReactions,
+                GuildMessageTyping,
+                DirectMessages,
+                DirectMessagesReactions,
+                DirectMessageTyping,
+                MessageContent,
+                GuildScheduledEvents,
             )
     }
 }
@@ -262,12 +269,15 @@ public data class Intents internal constructor(val code: DiscordBitSet) {
         public val all: Intents
             get() = Intents(Intent.values)
 
+        @PrivilegedIntent
+        public val privileged: Intents
+            get() = Intents(GuildPresences, GuildMembers, MessageContent)
+
         @OptIn(PrivilegedIntent::class)
         public val nonPrivileged: Intents
             get() = Intents {
                 +all
-                -Intent.GuildPresences
-                -Intent.GuildMembers
+                -privileged
             }
 
         public val none: Intents = Intents()
@@ -286,7 +296,10 @@ public data class Intents internal constructor(val code: DiscordBitSet) {
 
         public operator fun Intent.unaryMinus() {
             this@IntentsBuilder.code.remove(code)
+        }
 
+        public operator fun Intents.unaryMinus() {
+            this@IntentsBuilder.code.remove(code)
         }
 
         public fun flags(): Intents = Intents(code)

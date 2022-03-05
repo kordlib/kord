@@ -26,18 +26,8 @@ import kotlinx.datetime.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
+import kotlinx.coroutines.flow.firstOrNull as coroutinesFirstOrNull
 
-internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
-    this == null -> null
-    else -> Snowflake(this)
-}
-
-internal fun ULong?.toSnowflakeOrNull(): Snowflake? = when {
-    this == null -> null
-    else -> Snowflake(this)
-}
-
-internal fun Int.toInstant() = Instant.fromEpochMilliseconds(toLong())
 internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
@@ -68,10 +58,16 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 }
 
 
-public fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
-    for (entity in toList().sorted()) {
-        emit(entity)
-    }
+@Deprecated(
+    "This is an internal utility function.",
+    ReplaceWith("this.toList().sorted()", "kotlinx.coroutines.flow.toList"),
+    DeprecationLevel.ERROR,
+)
+public fun <T : Entity> Flow<T>.sorted(): Flow<T> = internalSorted()
+
+// TODO rename to `sorted` once the public version is fully deprecated and removed, use import alias for now
+internal fun <T : Comparable<T>> Flow<T>.internalSorted(): Flow<T> = flow {
+    toList().sorted().forEach { emit(it) }
 }
 
 /**
@@ -79,15 +75,34 @@ public fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
  * and then cancels flow's collection.
  * Returns `null` if the flow was empty.
  */
+@Deprecated(
+    "Use the function with the same name from kotlinx.coroutines.flow instead.",
+    ReplaceWith("this.firstOrNull(predicate)", "kotlinx.coroutines.flow.firstOrNull"),
+    DeprecationLevel.ERROR,
+)
 public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
-    filter { predicate(it) }.firstOrNull()
+    filter { predicate(it) }.coroutinesFirstOrNull()
 
 /**
  * The terminal operator that returns `true` if any of the elements match [predicate].
  * The flow's collection is cancelled when a match is found.
  */
+@Suppress("DEPRECATION")
+@Deprecated(
+    "This is an internal utility function.",
+    ReplaceWith("this.firstOrNull(predicate) != null", "kotlinx.coroutines.flow.firstOrNull"),
+    DeprecationLevel.ERROR,
+)
 public suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
-    firstOrNull(predicate) != null
+    coroutinesFirstOrNull { predicate(it) } != null
+
+// TODO rename this to `any` once the public version is fully deprecated and removed, use import alias for now
+/**
+ * The terminal operator that returns `true` if any of the elements match [predicate].
+ * The flow's collection is cancelled when a match is found.
+ */
+internal suspend inline fun <T : Any> Flow<T>.internalAny(crossinline predicate: suspend (T) -> Boolean): Boolean =
+    coroutinesFirstOrNull { predicate(it) } != null
 
 /**
  * The non-terminal operator that returns a new flow that will emit values of the second [flow] only after the first

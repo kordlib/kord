@@ -9,7 +9,6 @@ import dev.kord.core.entity.Role
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.indexOfFirstOrNull
-import dev.kord.core.sorted
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.role.RoleModifyBuilder
@@ -20,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import dev.kord.core.internalSorted as sorted
 
 /**
  * The behavior of a [Discord Role](https://discord.com/developers/docs/topics/permissions#role-object) associated to a [guild].

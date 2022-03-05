@@ -17,7 +17,6 @@ dependencies {
     api(libs.kord.cache.api)
     api(libs.kord.cache.map)
 
-    @Suppress("UnstableApiUsage")
     samplesImplementation(libs.slf4j.simple)
     testImplementation(libs.mockk)
     testImplementation(libs.bundles.test.implementation)

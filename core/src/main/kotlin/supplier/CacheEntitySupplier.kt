@@ -7,7 +7,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.any
 import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
 import dev.kord.core.cache.idGt
@@ -20,12 +19,13 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
-import dev.kord.core.entity.interaction.followup.PublicFollowupMessage
+import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
+import dev.kord.core.internalAny as any
 
 /**
  * [EntitySupplier] that uses a [DataCache] to resolve entities.
@@ -455,13 +455,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): PublicFollowupMessage? {
+    ): FollowupMessage? {
         val data = cache.query<MessageData> {
             idEq(MessageData::applicationId, applicationId)
             idEq(MessageData::id, messageId)
         }.singleOrNull() ?: return null
 
-        return PublicFollowupMessage(Message(data, kord), applicationId, interactionToken, kord)
+        return FollowupMessage(Message(data, kord), applicationId, interactionToken, kord)
     }
 
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? {

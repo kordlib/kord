@@ -12,9 +12,9 @@ import dev.kord.rest.json.request.FollowupMessageCreateRequest
 import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
 
 /**
- * Message builder for creating persistent messages following up interaction responses.
+ * Message builder for creating messages following up interaction responses.
  */
-public class FollowupMessageCreateBuilder(public var ephemeral: Boolean) :
+public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
     MessageCreateBuilder,
     RequestBuilder<MultipartFollowupMessageCreateRequest> {
 

@@ -23,7 +23,6 @@ import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.sorted
 import dev.kord.core.supplier.*
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.gateway.Gateway
@@ -32,6 +31,7 @@ import dev.kord.gateway.RequestGuildMembers
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
 import dev.kord.gateway.start
 import dev.kord.rest.Image
+import kotlinx.coroutines.flow.toList
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
@@ -87,7 +87,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to get all present channels in this guild in an unspecified order,
-     * call [sorted] to get a consistent order.
+     * call [toList()][toList].[sorted()][sorted] on the returned [Flow] to get a consistent order.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
@@ -880,7 +880,8 @@ public suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChann
  *
  * This request will execute regardless of the consumption of the return value.
  *
- * @return the roles of this guild after the update in an unspecified order, call [sorted] to get a consistent order.
+ * @return the roles of this guild after the update in an unspecified order, call [toList()][toList].[sorted()][sorted]
+ * on the returned [Flow] to get a consistent order.
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */

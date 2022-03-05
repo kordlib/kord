@@ -9,13 +9,10 @@ import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Region
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.exception.GatewayNotFoundException
-import dev.kord.core.firstOrNull
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.voice.VoiceConnection
-import dev.kord.voice.VoiceConnectionBuilder
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import java.util.*
 
 /**
@@ -64,13 +61,13 @@ public class VoiceChannel(
     /**
      * returns a new [VoiceChannel] with the given [strategy].
      *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.cacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceChannel =
         VoiceChannel(data, kord, strategy.supply(kord))
 
     override suspend fun asChannel(): VoiceChannel = this
-    
+
     override suspend fun asChannelOrNull(): VoiceChannel = this
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
