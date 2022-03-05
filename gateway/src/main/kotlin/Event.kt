@@ -52,12 +52,9 @@ public sealed class Event {
         override fun deserialize(decoder: Decoder): Event? {
             var op: OpCode? = null
             var data: Event? = null
+            var sequence: Int? = null
+            var eventName: String? = null
 
-            @Suppress("UNUSED_VARIABLE")
-            var sequence: Int? = null //this isn't actually unused but seems to be a compiler bug
-
-            @Suppress("UNUSED_VARIABLE")
-            var eventName: String? = null //this isn't actually unused but seems to be a compiler bug
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
                     when (val index =
@@ -65,7 +62,6 @@ public sealed class Event {
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
                             op = OpCode.serializer().deserialize(decoder)
-                            @Suppress("NON_EXHAUSTIVE_WHEN")
                             when (op) {
                                 OpCode.HeartbeatACK -> data = HeartbeatACK
                                 OpCode.Reconnect -> data = Reconnect
