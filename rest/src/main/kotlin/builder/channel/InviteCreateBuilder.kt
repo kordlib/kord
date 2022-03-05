@@ -9,7 +9,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.InviteCreateRequest
 import kotlin.time.Duration
-import kotlin.time.DurationUnit
+import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toDuration
 
 @KordDsl
@@ -28,7 +28,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
      * The duration before invite expiry, or 0 for never. Between 0 and 604800 seconds (7 days). 24 hours by default.
      */
     public var maxAge: Duration?
-        get() = _maxAge.value?.toDuration(DurationUnit.SECONDS)
+        get() = _maxAge.value?.toDuration(unit = SECONDS)
         set(value) {
             _maxAge = when (value) {
                 null -> OptionalInt.Missing
@@ -109,10 +109,10 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
         )
 
         return InviteCreateRequest(
-            temporary = _temporary,
             maxAge = _maxAge,
-            unique = _unique,
             maxUses = _maxUses,
+            temporary = _temporary,
+            unique = _unique,
             targetUser = _targetUser,
             targetUserType = _targetUser.map { @Suppress("DEPRECATION") dev.kord.common.entity.TargetUserType.Stream },
             targetType = target,

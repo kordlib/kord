@@ -22,7 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import kotlin.time.Duration
-import kotlin.time.DurationUnit
+import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toDuration
 
 /**
@@ -87,7 +87,7 @@ public class InviteCreateEvent(
     /**
      * How long the invite is valid for.
      */
-    public val maxAge: Duration get() = data.maxAge.toDuration(DurationUnit.SECONDS)
+    public val maxAge: Duration get() = data.maxAge.toDuration(unit = SECONDS)
 
     /**
      * The maximum number of times the invite can be used.
