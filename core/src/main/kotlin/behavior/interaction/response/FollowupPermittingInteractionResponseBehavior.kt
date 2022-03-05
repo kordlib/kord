@@ -21,18 +21,18 @@ import kotlin.contracts.contract
  * An [InteractionResponseBehavior] that supports sending followup messages to the interaction by using
  * [createPublicFollowup] or [createEphemeralFollowup].
  */
-public interface FollowupableInteractionResponseBehavior : InteractionResponseBehavior {
+public interface FollowupPermittingInteractionResponseBehavior : InteractionResponseBehavior {
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): FollowupableInteractionResponseBehavior =
-        FollowupableInteractionResponseBehavior(applicationId, token, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): FollowupPermittingInteractionResponseBehavior =
+        FollowupPermittingInteractionResponseBehavior(applicationId, token, kord, strategy.supply(kord))
 }
 
-public fun FollowupableInteractionResponseBehavior(
+public fun FollowupPermittingInteractionResponseBehavior(
     applicationId: Snowflake,
     token: String,
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier,
-): FollowupableInteractionResponseBehavior = object : FollowupableInteractionResponseBehavior {
+): FollowupPermittingInteractionResponseBehavior = object : FollowupPermittingInteractionResponseBehavior {
     override val applicationId: Snowflake = applicationId
     override val token: String = token
     override val kord: Kord = kord
@@ -46,7 +46,7 @@ public fun FollowupableInteractionResponseBehavior(
         "dev.kord.core.behavior.interaction.response.createPublicFollowup",
     ),
 )
-public suspend inline fun FollowupableInteractionResponseBehavior.followUp(
+public suspend inline fun FollowupPermittingInteractionResponseBehavior.followUp(
     builder: FollowupMessageCreateBuilder.() -> Unit,
 ): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -62,7 +62,7 @@ public suspend inline fun FollowupableInteractionResponseBehavior.followUp(
  *
  * @throws RestRequestException if something went wrong during the request.
  */
-public suspend inline fun FollowupableInteractionResponseBehavior.createPublicFollowup(
+public suspend inline fun FollowupPermittingInteractionResponseBehavior.createPublicFollowup(
     builder: FollowupMessageCreateBuilder.() -> Unit,
 ): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -80,7 +80,7 @@ public suspend inline fun FollowupableInteractionResponseBehavior.createPublicFo
         "dev.kord.core.behavior.interaction.response.createEphemeralFollowup",
     ),
 )
-public suspend inline fun FollowupableInteractionResponseBehavior.followUpEphemeral(
+public suspend inline fun FollowupPermittingInteractionResponseBehavior.followUpEphemeral(
     builder: FollowupMessageCreateBuilder.() -> Unit,
 ): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -94,7 +94,7 @@ public suspend inline fun FollowupableInteractionResponseBehavior.followUpEpheme
  *
  * @throws RestRequestException if something went wrong during the request.
  */
-public suspend inline fun FollowupableInteractionResponseBehavior.createEphemeralFollowup(
+public suspend inline fun FollowupPermittingInteractionResponseBehavior.createEphemeralFollowup(
     builder: FollowupMessageCreateBuilder.() -> Unit,
 ): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }

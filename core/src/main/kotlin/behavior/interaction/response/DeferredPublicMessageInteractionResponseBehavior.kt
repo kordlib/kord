@@ -33,14 +33,14 @@ public interface DeferredPublicMessageInteractionResponseBehavior :
      * The 'loading' animation will stop and any attempt to call
      * [respond][DeferredPublicMessageInteractionResponseBehavior.respond] hereafter will fail.
      *
-     * Returns a [FollowupableInteractionResponseBehavior] that can still be used to send followup messages to the
+     * Returns a [FollowupPermittingInteractionResponseBehavior] that can still be used to send followup messages to the
      * interaction.
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun delete(): FollowupableInteractionResponseBehavior {
+    public suspend fun delete(): FollowupPermittingInteractionResponseBehavior {
         kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
-        return FollowupableInteractionResponseBehavior(applicationId, token, kord)
+        return FollowupPermittingInteractionResponseBehavior(applicationId, token, kord)
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): DeferredPublicMessageInteractionResponseBehavior =

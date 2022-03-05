@@ -20,7 +20,7 @@ import kotlin.contracts.contract
  * This is the handle to a message, it supports [editing][MessageInteractionResponseBehavior.edit] and sending followup
  * messages to the interaction.
  */
-public interface MessageInteractionResponseBehavior : FollowupableInteractionResponseBehavior {
+public interface MessageInteractionResponseBehavior : FollowupPermittingInteractionResponseBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageInteractionResponseBehavior
 }

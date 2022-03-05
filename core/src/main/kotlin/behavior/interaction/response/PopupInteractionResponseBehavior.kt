@@ -12,7 +12,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  *
  * This handle supports sending followup messages to the interaction.
  */
-public interface PopupInteractionResponseBehavior : FollowupableInteractionResponseBehavior {
+public interface PopupInteractionResponseBehavior : FollowupPermittingInteractionResponseBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PopupInteractionResponseBehavior =
         PopupInteractionResponseBehavior(applicationId, token, kord, strategy.supply(kord))
