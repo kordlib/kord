@@ -47,7 +47,7 @@ public class KordRestOnlyBuilder(public val token: String) {
      * }
      * ```
      */
-    public fun requestHandler(handlerBuilder: (resources: ClientResources) -> RequestHandler) {
+    public fun requestHandler(handlerBuilder: (resources: ClientResources) -> RequestHandler): KordRestOnlyBuilder = apply {
         this.handlerBuilder = handlerBuilder
     }
 
