@@ -41,8 +41,6 @@ public class ApplicationInfo(
 
     public val owner: UserBehavior get() = UserBehavior(ownerId, kord)
 
-    public val summary: String get() = data.summary
-
     public val verifyKey: String get() = data.verifyKey
 
     public val teamId: Snowflake? get() = data.team?.id
