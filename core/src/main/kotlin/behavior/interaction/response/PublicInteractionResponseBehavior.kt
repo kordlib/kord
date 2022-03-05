@@ -1,16 +1,15 @@
 package dev.kord.core.behavior.interaction.response
 
-import dev.kord.common.entity.Snowflake
-import dev.kord.core.Kord
-import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
-import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.behavior.interaction.InteractionBehavior
+import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.request.RestRequestException
-
 
 /**
- * The behavior of a public Discord Interaction Response
- * This response is visible to all users in the channel.
+ * An [InteractionResponseBehavior] for a public response to an [Interaction].
+ *
+ * The response is visible to all users in the [channel][InteractionBehavior.channel] the interaction was sent from.
  */
+public sealed interface PublicInteractionResponseBehavior : InteractionResponseBehavior {
 
-public sealed interface PublicInteractionResponseBehavior : InteractionResponseBehavior
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicInteractionResponseBehavior
+}

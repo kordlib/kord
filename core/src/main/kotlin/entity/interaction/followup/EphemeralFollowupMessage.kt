@@ -11,10 +11,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
  * Holds the followup [Message] resulting from an ephemeral followup message
  * and behaves on it through [EphemeralFollowupMessageBehavior].
  *
- * @param message The message created by this followup.
- * To use the message behavior your application must be authorized as a bot.
- * Note: Any rest calls made through the [message] object e.g: `message.delete()` will throw since the message
- * is deleted once the client receives it.
+ * @param message The message created by this followup. Any rest calls made through the message behavior, e.g.
+ * `message.delete()`, will throw since ephemeral messages are not accessible through bot authorization.
  */
 public class EphemeralFollowupMessage(
     message: Message,
