@@ -31,19 +31,20 @@ internal suspend inline fun InteractionResponseBehavior.editOriginalResponseWith
 ): MessageInteractionResponse {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
-    val message = editOriginalResponse(builder)
-
-    return when (this) {
-        is PublicInteractionResponseBehavior ->
-            PublicMessageInteractionResponse(message, applicationId, token, kord)
-
-        is EphemeralInteractionResponseBehavior ->
-            EphemeralMessageInteractionResponse(message, applicationId, token, kord)
-
+    val public = when (this) {
+        is PublicInteractionResponseBehavior -> true
+        is EphemeralInteractionResponseBehavior -> false
         else -> error(
             "This function can't be called on an InteractionResponseBehavior that implements neither " +
                     "PublicInteractionResponseBehavior nor EphemeralInteractionResponseBehavior."
         )
+    }
+
+    val message = editOriginalResponse(builder)
+
+    return when {
+        public -> PublicMessageInteractionResponse(message, applicationId, token, kord)
+        else -> EphemeralMessageInteractionResponse(message, applicationId, token, kord)
     }
 }
 
