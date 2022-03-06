@@ -313,6 +313,7 @@ public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>)
 
 @OptIn(PrivilegedIntent::class, KordPreview::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
+// see https://discord.com/developers/docs/topics/gateway#list-of-intents
 
     /*
      * events requiring a single intent:
