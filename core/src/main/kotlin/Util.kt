@@ -302,10 +302,14 @@ internal fun paginateThreads(
     request,
 )
 
+
 public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
 
-public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit = events.forEach { enableEvent(it) }
-public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit = events.forEach { enableEvent(it) }
+public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
+    events.forEach { enableEvent(it) }
+
+public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
+    events.forEach { enableEvent(it) }
 
 @OptIn(PrivilegedIntent::class, KordPreview::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
@@ -317,6 +321,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     GuildCreateEvent::class,
     GuildUpdateEvent::class,
     GuildDeleteEvent::class,
+
     RoleCreateEvent::class,
     RoleUpdateEvent::class,
     RoleDeleteEvent::class,
@@ -374,17 +379,24 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
 
     MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
 
+
     BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
+
 
     EmojisUpdateEvent::class -> +GuildEmojis
 
+
     IntegrationsUpdateEvent::class -> +GuildIntegrations
+
 
     WebhookUpdateEvent::class -> +GuildWebhooks
 
+
     InviteCreateEvent::class, InviteDeleteEvent::class -> +GuildInvites
 
+
     VoiceStateUpdateEvent::class -> +GuildVoiceStates
+
 
     PresenceUpdateEvent::class -> +GuildPresences
 
@@ -434,5 +446,4 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
 
 
     else -> Unit
-
 }
