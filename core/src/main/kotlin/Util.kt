@@ -16,6 +16,7 @@ import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Intent.*
+import dev.kord.gateway.Intent
 import dev.kord.gateway.Intents
 import dev.kord.gateway.MessageDelete
 import dev.kord.gateway.PrivilegedIntent
@@ -303,14 +304,38 @@ internal fun paginateThreads(
 )
 
 
+/**
+ * Adds the necessary [Intent]s to receive the specified type of event.
+ *
+ * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
+ * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ */
 public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
 
+/**
+ * Adds the necessary [Intent]s to receive the specified types of [events].
+ *
+ * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
+ * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ */
 public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
     events.forEach { enableEvent(it) }
 
+/**
+ * Adds the necessary [Intent]s to receive the specified types of [events].
+ *
+ * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
+ * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ */
 public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
     events.forEach { enableEvent(it) }
 
+/**
+ * Adds the necessary [Intent]s to receive the specified type of [event].
+ *
+ * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
+ * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ */
 @OptIn(PrivilegedIntent::class, KordPreview::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
 // see https://discord.com/developers/docs/topics/gateway#list-of-intents
