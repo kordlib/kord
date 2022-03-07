@@ -1,11 +1,13 @@
 package dev.kord.core
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.*
+import dev.kord.core.event.channel.thread.*
 import dev.kord.core.event.guild.*
 import dev.kord.core.event.message.*
 import dev.kord.core.event.role.RoleCreateEvent
@@ -14,6 +16,7 @@ import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Intent.*
+import dev.kord.gateway.Intent
 import dev.kord.gateway.Intents
 import dev.kord.gateway.MessageDelete
 import dev.kord.gateway.PrivilegedIntent
@@ -300,15 +303,51 @@ internal fun paginateThreads(
     request,
 )
 
+
+/**
+ * Adds the necessary [Intent]s to receive the specified type of event.
+ *
+ * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
+ * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ */
 public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
 
-public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit = events.forEach { enableEvent(it) }
-public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit = events.forEach { enableEvent(it) }
+/**
+ * Adds the necessary [Intent]s to receive the specified types of [events].
+ *
+ * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
+ * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ */
+public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
+    events.forEach { enableEvent(it) }
 
-@OptIn(PrivilegedIntent::class)
+/**
+ * Adds the necessary [Intent]s to receive the specified types of [events].
+ *
+ * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
+ * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ */
+public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
+    events.forEach { enableEvent(it) }
+
+/**
+ * Adds the necessary [Intent]s to receive the specified type of [event].
+ *
+ * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
+ * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ */
+@OptIn(PrivilegedIntent::class, KordPreview::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
+// see https://discord.com/developers/docs/topics/gateway#list-of-intents
+
+    /*
+     * events requiring a single intent:
+     */
+
     GuildCreateEvent::class,
+    GuildUpdateEvent::class,
     GuildDeleteEvent::class,
+
     RoleCreateEvent::class,
     RoleUpdateEvent::class,
     RoleDeleteEvent::class,
@@ -317,47 +356,104 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     CategoryCreateEvent::class,
     DMChannelCreateEvent::class,
     NewsChannelCreateEvent::class,
+    StageChannelCreateEvent::class,
     StoreChannelCreateEvent::class,
     TextChannelCreateEvent::class,
+    UnknownChannelCreateEvent::class,
     VoiceChannelCreateEvent::class,
 
     ChannelUpdateEvent::class,
     CategoryUpdateEvent::class,
     DMChannelUpdateEvent::class,
     NewsChannelUpdateEvent::class,
+    StageChannelUpdateEvent::class,
     StoreChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
+    UnknownChannelUpdateEvent::class,
     VoiceChannelUpdateEvent::class,
 
     ChannelDeleteEvent::class,
     CategoryDeleteEvent::class,
     DMChannelDeleteEvent::class,
     NewsChannelDeleteEvent::class,
+    StageChannelDeleteEvent::class,
     StoreChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
+    UnknownChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,
 
-    ChannelPinsUpdateEvent::class,
-    -> {
+    ThreadChannelCreateEvent::class,
+    NewsChannelThreadCreateEvent::class,
+    TextChannelThreadCreateEvent::class,
+    UnknownChannelThreadCreateEvent::class,
+
+    ThreadUpdateEvent::class,
+    NewsChannelThreadUpdateEvent::class,
+    TextChannelThreadUpdateEvent::class,
+    UnknownChannelThreadUpdateEvent::class,
+
+    ThreadChannelDeleteEvent::class,
+    NewsChannelThreadDeleteEvent::class,
+    TextChannelThreadDeleteEvent::class,
+    UnknownChannelThreadDeleteEvent::class,
+
+    ThreadListSyncEvent::class,
+
+    ThreadMemberUpdateEvent::class,
+    -> +Guilds
+
+
+    MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
+
+
+    BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
+
+
+    EmojisUpdateEvent::class -> +GuildEmojis
+
+
+    IntegrationsUpdateEvent::class -> +GuildIntegrations
+
+
+    WebhookUpdateEvent::class -> +GuildWebhooks
+
+
+    InviteCreateEvent::class, InviteDeleteEvent::class -> +GuildInvites
+
+
+    VoiceStateUpdateEvent::class -> +GuildVoiceStates
+
+
+    PresenceUpdateEvent::class -> +GuildPresences
+
+
+    MessageBulkDeleteEvent::class -> +GuildMessages
+
+
+    GuildScheduledEventEvent::class,
+    GuildScheduledEventCreateEvent::class,
+    GuildScheduledEventUpdateEvent::class,
+    GuildScheduledEventDeleteEvent::class,
+
+    GuildScheduledEventUserEvent::class,
+    GuildScheduledEventUserAddEvent::class,
+    GuildScheduledEventUserRemoveEvent::class,
+    -> +GuildScheduledEvents
+
+
+    /*
+     * events requiring multiple intents:
+     */
+
+    ChannelPinsUpdateEvent::class -> {
         +Guilds
         +DirectMessages
     }
 
-    MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
-
-    BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
-
-    EmojisUpdateEvent::class -> +GuildEmojis
-
-    IntegrationsUpdateEvent::class -> +GuildIntegrations
-
-    WebhookUpdateEvent::class -> +GuildWebhooks
-
-    InviteCreateEvent::class, InviteDeleteEvent::class -> +GuildInvites
-
-    VoiceStateUpdateEvent::class -> +GuildVoiceStates
-
-    PresenceUpdateEvent::class -> +GuildPresences
+    ThreadMembersUpdateEvent::class -> {
+        +Guilds
+        +GuildMembers
+    }
 
     MessageCreateEvent::class, MessageUpdateEvent::class, MessageDelete::class -> {
         +GuildMessages
@@ -369,8 +465,11 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
         +DirectMessagesReactions
     }
 
-    TypingStartEvent::class -> +GuildMessageTyping
+    TypingStartEvent::class -> {
+        +GuildMessageTyping
+        +DirectMessageTyping
+    }
+
 
     else -> Unit
-
 }

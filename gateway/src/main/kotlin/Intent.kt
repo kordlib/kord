@@ -30,7 +30,8 @@ import kotlin.contracts.contract
 public annotation class PrivilegedIntent
 
 /**
- * Values that enable a group of events as [defined by Discord](https://github.com/discord/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents).
+ * Values that enable a group of events as
+ * [defined by Discord](https://discord.com/developers/docs/topics/gateway#gateway-intents).
  */
 public sealed class Intent(public val code: DiscordBitSet) {
     protected constructor(vararg code: Long) : this(DiscordBitSet(code))
@@ -39,6 +40,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
     /**
      * Enables the following events:
      * - [GuildCreate]
+     * - [GuildUpdate]
      * - [GuildDelete]
      * - [GuildRoleCreate]
      * - [GuildRoleUpdate]
@@ -47,6 +49,13 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [ChannelUpdate]
      * - [ChannelDelete]
      * - [ChannelPinsUpdate]
+     * - [ThreadCreate]
+     * - [ThreadUpdate]
+     * - [ThreadDelete]
+     * - [ThreadListSync]
+     * - [ThreadMemberUpdate]
+     * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
+     * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
      */
     public object Guilds : Intent(1 shl 0)
 
@@ -55,6 +64,8 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [GuildMemberAdd]
      * - [GuildMemberUpdate]
      * - [GuildMemberRemove]
+     * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
+     * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
      */
     @PrivilegedIntent
     public object GuildMembers : Intent(1 shl 1)
@@ -86,8 +97,8 @@ public sealed class Intent(public val code: DiscordBitSet) {
 
     /**
      * Enables the following events:
-     * - INVITE_CREATE
-     * - INVITE_DELETE
+     * - [InviteCreate]
+     * - [InviteDelete]
      */
     public object GuildInvites : Intent(1 shl 6)
 
@@ -118,7 +129,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [MessageReactionAdd]
      * - [MessageReactionRemove]
      * - [MessageReactionRemoveAll]
-     * - MESSAGE_REACTION_REMOVE_EMOJI
+     * - [MessageReactionRemoveEmoji]
      */
     public object GuildMessageReactions : Intent(1 shl 10)
 
@@ -130,10 +141,10 @@ public sealed class Intent(public val code: DiscordBitSet) {
 
     /**
      * Enables the following events:
-     * - [ChannelCreate]
-     * - [ChannelDelete]
+     * - [MessageCreate]
      * - [MessageUpdate]
      * - [MessageDelete]
+     * - [ChannelPinsUpdate]
      */
     public object DirectMessages : Intent(1 shl 12)
 
@@ -142,7 +153,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [MessageReactionAdd]
      * - [MessageReactionRemove]
      * - [MessageReactionRemoveAll]
-     * - MESSAGE_REACTION_REMOVE_EMOJI
+     * - [MessageReactionRemoveEmoji]
      */
     public object DirectMessagesReactions : Intent(1 shl 13)
 

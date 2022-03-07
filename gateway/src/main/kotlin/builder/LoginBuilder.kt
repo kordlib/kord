@@ -15,8 +15,13 @@ public class LoginBuilder {
     public var intents: Intents = Intents.nonPrivileged
     public var name: String = "Kord"
 
-    public fun presence(builder: PresenceBuilder.() -> Unit) {
+    public inline fun presence(builder: PresenceBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         this.presence = PresenceBuilder().apply(builder).toPresence()
+    }
+
+    public inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        this.intents = Intents(builder)
     }
 }
