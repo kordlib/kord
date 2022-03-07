@@ -19,6 +19,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 
+/**
+ * The rest only Kord builder. You probably want to invoke the [DSL builder][Kord.restOnly] instead.
+ */
 @KordExperimental
 public class KordRestOnlyBuilder(public val token: String) {
 
