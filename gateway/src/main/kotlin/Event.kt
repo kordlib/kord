@@ -607,7 +607,7 @@ public data class DiscordDeletedInvite(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("guild_id")
-    val guildId: Snowflake,
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val code: String,
 )
 
@@ -620,19 +620,28 @@ public data class DiscordCreatedInvite(
     val createdAt: String,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val inviter: Optional<DiscordInviteUser> = Optional.Missing(),
+    val inviter: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("max_age")
     val maxAge: Int,
     @SerialName("max_uses")
     val maxUses: Int,
+    @SerialName("target_type")
+    val targetType: Optional<InviteTargetType> = Optional.Missing(),
     @SerialName("target_user")
-    val targetUser: Optional<DiscordInviteUser> = Optional.Missing(),
+    val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("target_application")
+    val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
+    @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     @SerialName("target_user_type")
-    val targetUserType: Optional<TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
 )
 
+@Deprecated(
+    "Use 'DiscordUser' instead, All missing fields have defaults.",
+    ReplaceWith("DiscordUser", "dev.kord.common.entity.DiscordUser"),
+)
 @Serializable
 public data class DiscordInviteUser(
     val id: Snowflake,

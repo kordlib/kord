@@ -270,7 +270,9 @@ public sealed class Permission(public val code: DiscordBitSet) {
     /** Allows for sending messages in threads. */
     public object SendMessagesInThreads : Permission(1L shl 38)
 
-    /** Allows for using Activities (applications with the `EMBEDDED` flag) in a voice channel. */
+    /**
+     * Allows for using Activities (applications with the [Embedded][ApplicationFlag.Embedded] flag) in a voice channel.
+     */
     public object UseEmbeddedActivities : Permission(1L shl 39)
 
     /**

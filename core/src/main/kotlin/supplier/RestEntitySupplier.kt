@@ -277,9 +277,9 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      * @throws RestRequestException when the request failed.
      */
-    public suspend fun getApplicationInfo(): ApplicationInfo {
+    public suspend fun getApplicationInfo(): Application {
         val response = application.getCurrentApplicationInfo()
-        return ApplicationInfo(ApplicationInfoData.from(response), kord)
+        return Application(ApplicationData.from(response), kord)
     }
 
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? = catchNotFound {

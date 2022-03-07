@@ -3,8 +3,6 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.InviteData
-import dev.kord.core.entity.Invite
 import dev.kord.core.entity.PermissionOverwrite
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
@@ -12,12 +10,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.ChannelPermissionModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import dev.kord.rest.service.RestClient
 import dev.kord.rest.service.editMemberPermissions
 import dev.kord.rest.service.editRolePermission
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.withIndex
 import java.util.*
 import kotlin.contracts.InvocationKind
@@ -29,25 +24,6 @@ import kotlin.contracts.contract
  * 'Top' channels are those that do not require a parent channel to be created, and can be found at the top of the UI's hierarchy.
  */
 public interface TopGuildChannelBehavior : GuildChannelBehavior {
-
-    /**
-     * Requests to get the invites of this channel.
-     *
-     * This property is not resolvable through cache and will always use the [RestClient] instead.
-     *
-     * The returned flow is lazily executed, any [RequestException] will be thrown on
-     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
-     */
-    public val invites: Flow<Invite>
-        get() = flow {
-            val responses = kord.rest.channel.getChannelInvites(id)
-
-            for (response in responses) {
-                val data = InviteData.from(response)
-
-                emit(Invite(data, kord))
-            }
-        }
 
     /**
      * Requests to get this behavior as a [TopGuildChannel].
@@ -99,8 +75,7 @@ public interface TopGuildChannelBehavior : GuildChannelBehavior {
     }
 
     /**
-     * Requests to get the position of this channel in the [guild], as displayed in Discord,
-     *.
+     * Requests to get the position of this channel in the [guild], as displayed in Discord.
      *
      * @throws [RequestException] if something went wrong during the request.
      */

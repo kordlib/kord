@@ -166,14 +166,18 @@ public sealed class Route<T>(
         )
 
     public object InvitesGet :
-        Route<List<DiscordInvite>>(
+        Route<List<DiscordInviteWithMetadata>>(
             HttpMethod.Get,
             "/channels/$ChannelId/invites",
-            ListSerializer(DiscordInvite.serializer())
+            ListSerializer(DiscordInviteWithMetadata.serializer())
         )
 
     public object InvitePost :
-        Route<DiscordInvite>(HttpMethod.Post, "/channels/$ChannelId/invites", DiscordInvite.serializer())
+        Route<DiscordInviteWithMetadata>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/invites",
+            DiscordInviteWithMetadata.serializer(),
+        )
 
     public object ReactionPut :
         Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/@me", NoStrategy)
@@ -474,10 +478,10 @@ public sealed class Route<T>(
         )
 
     public object GuildInvitesGet :
-        Route<List<DiscordInvite>>(
+        Route<List<DiscordInviteWithMetadata>>(
             HttpMethod.Get,
             "/guilds/$GuildId/invites",
-            ListSerializer(DiscordInvite.serializer())
+            ListSerializer(DiscordInviteWithMetadata.serializer()),
         )
 
     public object GuildIntegrationGet :
@@ -665,7 +669,7 @@ public sealed class Route<T>(
      */
 
     public object CurrentApplicationInfo :
-        Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
+        Route<DiscordApplication>(HttpMethod.Get, "/oauth2/applications/@me", DiscordApplication.serializer())
 
 
     /*

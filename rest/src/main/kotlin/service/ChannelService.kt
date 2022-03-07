@@ -52,9 +52,10 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         keys[Route.ChannelId] = channelId
     }
 
-    public suspend fun getChannelInvites(channelId: Snowflake): List<DiscordInvite> = call(Route.InvitesGet) {
-        keys[Route.ChannelId] = channelId
-    }
+    public suspend fun getChannelInvites(channelId: Snowflake): List<DiscordInviteWithMetadata> =
+        call(Route.InvitesGet) {
+            keys[Route.ChannelId] = channelId
+        }
 
     public suspend fun getChannel(channelId: Snowflake): DiscordChannel = call(Route.ChannelGet) {
         keys[Route.ChannelId] = channelId
@@ -193,7 +194,7 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
     public suspend inline fun createInvite(
         channelId: Snowflake,
         builder: InviteCreateBuilder.() -> Unit = {},
-    ): DiscordInvite {
+    ): DiscordInviteWithMetadata {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
