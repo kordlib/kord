@@ -26,7 +26,11 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * Call [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
     @Suppress("DEPRECATION")
-    @Deprecated("Renamed to 'deferEphemeralMessage'.", ReplaceWith("this.deferEphemeralMessage()"))
+    @Deprecated(
+        "Renamed to 'deferEphemeralMessage'.",
+        ReplaceWith("this.deferEphemeralMessage()"),
+        DeprecationLevel.ERROR,
+    )
     public suspend fun acknowledgeEphemeral(): EphemeralMessageInteractionResponseBehavior = deferEphemeralMessage()
 
     /**
@@ -108,7 +112,11 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * Call [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
     @Suppress("DEPRECATION")
-    @Deprecated("Renamed to 'deferPublicMessage'.", ReplaceWith("this.deferPublicMessage()"))
+    @Deprecated(
+        "Renamed to 'deferPublicMessage'.",
+        ReplaceWith("this.deferPublicMessage()"),
+        DeprecationLevel.ERROR,
+    )
     public suspend fun acknowledgePublic(): PublicMessageInteractionResponseBehavior = deferPublicMessage()
 
     /**
