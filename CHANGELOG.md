@@ -1,10 +1,30 @@
+# 0.8.0-M11
+
+## Changes
+
+* Switch to v10 for rest (#550)
+* Invite and Application revamp (#530)
+* Update enableEvent() (#553)
+* Invite and Application revamp (#530)
+* Revamp interaction implementations (#543 #533 #546)
+* Documentation: clarify the usage of `Kord.restOnly`
+* Update Permissions (#544)
+
+## Additions
+
+* Add selfVideo property (#545)
+
+## Fixes
+
+* Fix GuildScheduledEvents json representation and modify function (#549)
+
 # 0.8.0-M10
 
 ## Additions
 
 * Forms support (#531)
 * Add support for attachment options in chat input interactions (#524)
-*  add error 40060 40004(#532 #523)
+* Add error 40060 40004(#532 #523)
 
 ## Fixes
 
