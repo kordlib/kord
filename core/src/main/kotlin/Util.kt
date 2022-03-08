@@ -310,6 +310,9 @@ internal fun paginateThreads(
  *
  * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
  * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
  */
 public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
 
@@ -319,6 +322,9 @@ public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit
  *
  * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
  * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
  */
 public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
     events.forEach { enableEvent(it) }
@@ -329,6 +335,9 @@ public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event
  *
  * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
  * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
  */
 public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
     events.forEach { enableEvent(it) }
@@ -338,6 +347,9 @@ public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>)
  *
  * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
  * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
  */
 @OptIn(PrivilegedIntent::class, KordPreview::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
