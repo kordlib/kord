@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.*
@@ -305,36 +306,50 @@ internal fun paginateThreads(
 
 
 /**
- * Adds the necessary [Intent]s to receive the specified type of event.
+ * Adds the necessary [Intent]s to receive the specified type of event in all variations and with all data available.
  *
- * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
- * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
+ * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
  */
 public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
 
 /**
- * Adds the necessary [Intent]s to receive the specified types of [events].
+ * Adds the necessary [Intent]s to receive the specified types of [events] in all variations and with all data
+ * available.
  *
- * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
- * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
+ * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
  */
 public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
     events.forEach { enableEvent(it) }
 
 /**
- * Adds the necessary [Intent]s to receive the specified types of [events].
+ * Adds the necessary [Intent]s to receive the specified types of [events] in all variations and with all data
+ * available.
  *
- * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
- * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
+ * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
  */
 public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
     events.forEach { enableEvent(it) }
 
 /**
- * Adds the necessary [Intent]s to receive the specified type of [event].
+ * Adds the necessary [Intent]s to receive the specified type of [event] in all variations and with all data available.
  *
- * Might add multiple intents if this is required to receive all events e.g. [MessageCreateEvent] will add the
- * [GuildMessages] and [DirectMessages] intents to receive messages in Guilds and DMs.
+ * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
+ * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
  */
 @OptIn(PrivilegedIntent::class, KordPreview::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
@@ -427,7 +442,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     PresenceUpdateEvent::class -> +GuildPresences
 
 
-    MessageBulkDeleteEvent::class -> +GuildMessages
+    MessageBulkDeleteEvent::class -> +GuildMessages // no message content
 
 
     GuildScheduledEventEvent::class,
@@ -455,9 +470,16 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
         +GuildMembers
     }
 
-    MessageCreateEvent::class, MessageUpdateEvent::class, MessageDelete::class -> {
+    MessageCreateEvent::class, MessageUpdateEvent::class -> {
         +GuildMessages
         +DirectMessages
+        +MessageContent
+    }
+
+    MessageDelete::class -> {
+        +GuildMessages
+        +DirectMessages
+        // no message content
     }
 
     ReactionAddEvent::class, ReactionRemoveEvent::class, ReactionRemoveAllEvent::class, ReactionRemoveEmojiEvent::class -> {
