@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.time.Duration.Companion.seconds
 
 public class DefaultGatewayBuilder {
-    public var url: String = "wss://gateway.discord.gg/?v=9&encoding=json&compress=zlib-stream"
+    public var url: String = "wss://gateway.discord.gg/?v=10&encoding=json&compress=zlib-stream"
     public var client: HttpClient? = null
     public var reconnectRetry: Retry? = null
     public var sendRateLimiter: RateLimiter? = null
