@@ -95,14 +95,55 @@ public data class DiscordPartialApplication(
 ) : BaseDiscordApplication
 
 public enum class ApplicationFlag(public val code: Int) {
+
+    /**
+     * Intent required for bots in **100 or more servers** to receive
+     * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update).
+     */
     GatewayPresence(1 shl 12),
+
+    /**
+     * Intent required for bots in under 100 servers to receive
+     * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update), found in Bot
+     * Settings.
+     */
     GatewayPresenceLimited(1 shl 13),
+
+    /**
+     * Intent required for bots in **100 or more servers** to receive member-related events like `GuildMemberAdd`.
+     *
+     * See list of member-related events under
+     * [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
+     */
     GatewayGuildMembers(1 shl 14),
+
+    /**
+     * Intent required for bots in under 100 servers to receive member-related events like `GuildMemberAdd`, found in
+     * Bot Settings.
+     *
+     * See list of member-related events under
+     * [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
+     */
     GatewayGuildMembersLimited(1 shl 15),
+
+    /** Indicates unusual growth of an app that prevents verification. */
     VerificationPendingGuildLimit(1 shl 16),
+
+    /** Indicates if an app is embedded within the Discord client (currently unavailable publicly). */
     Embedded(1 shl 17),
+
+    /**
+     * Intent required for bots in **100 or more servers** to receive
+     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
+     */
     GatewayMessageContent(1 shl 18),
+
+    /**
+     * Intent required for bots in under 100 servers to receive
+     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found in Bot Settings.
+     */
     GatewayMessageContentLimited(1 shl 19);
+
 
     public operator fun plus(flag: ApplicationFlag): ApplicationFlags = ApplicationFlags(this.code or flag.code)
 
