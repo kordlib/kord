@@ -148,7 +148,7 @@ suspend fun main() {
 ### Rest
 
 A low level mapping of Discord's REST API. Requests follow
-Discord's [rate limits](https://discordapp.com/developers/docs/topics/rate-limits).
+Discord's [rate limits](https://discord.com/developers/docs/topics/rate-limits).
 
 ```kotlin
 suspend fun main() {
@@ -168,7 +168,7 @@ suspend fun main() {
 
 ### Gateway
 
-A low level mapping of [Discord's Gateway](https://discordapp.com/developers/docs/topics/gateway), which maintains the
+A low level mapping of [Discord's Gateway](https://discord.com/developers/docs/topics/gateway), which maintains the
 connection and rate limits commands.
 
 ```kotlin
