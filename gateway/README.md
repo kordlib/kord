@@ -18,7 +18,7 @@ suspend fun main(args: Array<String>) {
         dispatcher = Dispatchers.Default
     }
 
-    gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.IO).onEach {
+    gateway.events.filterIsInstance<MessageCreate>().onEach {
         val words = it.message.content.split(' ')
         when (words.firstOrNull()) {
             "!close" -> gateway.stop()

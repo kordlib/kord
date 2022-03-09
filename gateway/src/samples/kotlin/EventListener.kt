@@ -7,9 +7,7 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
 import io.ktor.client.features.websocket.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
@@ -30,7 +28,7 @@ suspend fun main(args: Array<String>) {
         sendRateLimiter = BucketRateLimiter(120, 60.seconds)
     }
 
-    gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.Default).onEach {
+    gateway.events.filterIsInstance<MessageCreate>().onEach {
         val words = it.message.content.split(' ')
         when (words.firstOrNull()) {
             "!close" -> gateway.stop()
