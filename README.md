@@ -60,7 +60,6 @@ repositories {
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
-
 }
 ```
 
@@ -77,7 +76,6 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-
 }
 ```
 
@@ -162,7 +160,6 @@ suspend fun main() {
             description = "Hello embed!"
         }
     }
-
 }
 ```
 
@@ -197,7 +194,7 @@ A mapping of [Discord's Voice Connection](https://discord.com/developers/docs/to
 suspend fun main() {
     val kord = Kord("your token")
     val voiceChannel = kord.getChannelOf<VoiceChannel>(id = Snowflake(1))!!
-    
+
     voiceChannel.connect {
         audioProvider { AudioFrame.fromData(/* your opus encoded audio */) }
     }
