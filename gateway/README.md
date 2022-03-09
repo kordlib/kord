@@ -8,30 +8,35 @@ A low-level implementation of discord's [gateway](https://discordapp.com/develop
 suspend fun main(args: Array<String>) {
     val token = args.firstOrNull() ?: error("token required")
 
-    val gateway = DefaultGateway { //optional builder showing the defaults
-        url = "wss://gateway.discord.gg/"
+    val gateway = DefaultGateway { // optional builder for custom configuration
         client = HttpClient(CIO) {
             install(WebSockets)
             install(JsonFeature)
         }
-
-        retry = LinearRetry(2.seconds, 20.seconds, 10)
-        rateLimiter = BucketRateLimiter(120, Duration.ofSeconds(60).toKotlinDuration())
+        reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
+        sendRateLimiter = BucketRateLimiter(120, 60.seconds)
+        dispatcher = Dispatchers.Default
     }
 
     gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.IO).onEach {
         val words = it.message.content.split(' ')
         when (words.firstOrNull()) {
             "!close" -> gateway.stop()
-            "!restart" -> gateway.restart()
             "!detach" -> gateway.detach()
             "!status" -> when (words.getOrNull(1)) {
-                "playing" -> gateway.send(UpdateStatus(status = Status.Online, afk = false, game = Activity("Kord", ActivityType.Game)))
+                "playing" -> gateway.editPresence {
+                    status = PresenceStatus.Online
+                    afk = false
+                    playing("Kord")
+                }
             }
         }
-    }.launchIn(GlobalScope)
+    }.launchIn(gateway)
 
-    gateway.start(token)
+    gateway.start(token) {
+        @OptIn(PrivilegedIntent::class)
+        intents += Intent.MessageContent
+    }
 }
 ```
 ## Installation
@@ -52,7 +57,6 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-
 }
 ```
 
@@ -69,7 +73,6 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-
 }
 ```
 
