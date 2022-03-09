@@ -139,7 +139,10 @@ suspend fun main() {
         response.delete()
     }
 
-    client.login()
+    client.login {
+        @OptIn(PrivilegedIntent::class)
+        intents += Intent.MessageContent
+    }
 }
 ```
 
@@ -151,12 +154,13 @@ Discord's [rate limits](https://discord.com/developers/docs/topics/rate-limits).
 ```kotlin
 suspend fun main() {
     val rest = RestClient("your bot token")
+    val channelId = Snowflake(605212557522763787)
 
-    rest.channel.createMessage("605212557522763787") {
+    rest.channel.createMessage(channelId) {
         content = "Hello Kord!"
 
         embed {
-            color = Color.BLUE
+            color = Color(red = 0, green = 0, blue = 255)
             description = "Hello embed!"
         }
     }
@@ -179,9 +183,12 @@ suspend fun main() {
             "!close" -> gateway.stop()
             "!detach" -> gateway.detach()
         }
-    }.launchIn(gateway)
+    }
 
-    gateway.start("your bot token")
+    gateway.start("your bot token") {
+        @OptIn(PrivilegedIntent::class)
+        intents += Intent.MessageContent
+    }
 }
 ```
 
