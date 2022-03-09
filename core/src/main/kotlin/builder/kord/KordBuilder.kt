@@ -1,6 +1,7 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
+import dev.kord.common.KordConstants
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.ratelimit.BucketRateLimiter
 import dev.kord.core.ClientResources
@@ -30,6 +31,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.HttpHeaders.Authorization
+import io.ktor.http.HttpHeaders.UserAgent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -185,6 +187,7 @@ public class KordBuilder(public val token: String) {
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
         val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}") {
+            header(UserAgent, KordConstants.UserAgent)
             header(Authorization, "Bot $token")
         }
         val responseBody = response.readText()
