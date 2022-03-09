@@ -125,10 +125,10 @@ abstractions, we'd recommend using this.
 
 ```kotlin
 suspend fun main() {
-    val client = Kord("your bot token")
+    val kord = Kord("your bot token")
     val pingPong = ReactionEmoji.Unicode("\uD83C\uDFD3")
 
-    client.on<MessageCreateEvent> {
+    kord.on<MessageCreateEvent> {
         if (message.content != "!ping") return@on
 
         val response = message.channel.createMessage("Pong!")
@@ -139,7 +139,7 @@ suspend fun main() {
         response.delete()
     }
 
-    client.login {
+    kord.login {
         @OptIn(PrivilegedIntent::class)
         intents += Intent.MessageContent
     }
