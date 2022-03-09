@@ -8,8 +8,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.*
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
@@ -297,8 +296,36 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     @SerialName("id")
     public object Id : AuditLogChangeKey<Snowflake>("id", serializer())
 
+    /**
+     * The actual supertype is [AuditLogChangeKey<Int | String>][AuditLogChangeKey] but Kotlin does not support union
+     * types yet.
+     */
     @SerialName("type")
-    public object Type : AuditLogChangeKey<ChannelType>("type", serializer())
+    public object Type : AuditLogChangeKey<Any>("type", IntOrStringSerializer) {
+        // TODO use union type if Kotlin ever introduces them
+
+        // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
+        // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
+        private object IntOrStringSerializer : KSerializer<Any> {
+            private val backingSerializer = JsonPrimitive.serializer()
+
+            override val descriptor: SerialDescriptor get() = backingSerializer.descriptor
+
+            override fun serialize(encoder: Encoder, value: Any) {
+                val jsonPrimitive = when (value) {
+                    is Int -> JsonPrimitive(value)
+                    is String -> JsonPrimitive(value)
+                    else -> error("IntOrStringSerializer can only serialize Int or String")
+                }
+                encoder.encodeSerializableValue(backingSerializer, jsonPrimitive)
+            }
+
+            override fun deserialize(decoder: Decoder): Any {
+                val jsonPrimitive = decoder.decodeSerializableValue(backingSerializer)
+                return if (jsonPrimitive.isString) jsonPrimitive.content else jsonPrimitive.int
+            }
+        }
+    }
 
     @SerialName("enable_emoticons")
     public object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
