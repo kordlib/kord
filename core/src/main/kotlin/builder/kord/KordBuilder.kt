@@ -21,9 +21,7 @@ import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import dev.kord.rest.json.response.BotGatewayResponse
 import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
-import dev.kord.rest.request.KtorRequestHandler
-import dev.kord.rest.request.RequestHandler
-import dev.kord.rest.request.isError
+import dev.kord.rest.request.*
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
@@ -157,6 +155,23 @@ public class KordBuilder(public val token: String) {
      */
     public fun requestHandler(handlerBuilder: (resources: ClientResources) -> RequestHandler) {
         this.handlerBuilder = handlerBuilder
+    }
+
+    /**
+     * Enables stack trace recovery on the currently defined [RequestHandler].
+     *
+     * @throws IllegalStateException if the [RequestHandler] is not a [KtorRequestHandler]
+     *
+     * @see StackTraceRecoveringKtorRequestHandler
+     * @see withStackTraceRecovery
+     */
+    public fun enableStackTraceRecovery() {
+        val parentBuilder = handlerBuilder
+        requestHandler {
+            val ktorRequestHandler = parentBuilder(it) as? KtorRequestHandler
+                ?: error("Stack trace recovery only works with KtorRequestHandlers")
+            ktorRequestHandler.withStackTraceRecovery()
+        }
     }
 
     /**
