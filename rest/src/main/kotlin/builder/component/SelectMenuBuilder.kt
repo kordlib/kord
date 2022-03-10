@@ -35,7 +35,7 @@ public class SelectMenuBuilder(
     private var _placeholder: Optional<String> = Optional.Missing()
 
     /**
-     * Custom placeholder if no value is selected, max 100 characters.
+     * Custom placeholder if no value is selected, max 150 characters.
      *
      * [Option defaults][SelectOptionBuilder.default] have priority over placeholders,
      * if any option is marked as default then that label will be shown instead.
