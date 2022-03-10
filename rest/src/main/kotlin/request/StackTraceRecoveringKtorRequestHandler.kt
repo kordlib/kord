@@ -27,7 +27,7 @@ public class StackTraceRecoveringKtorRequestHandler(private val delegate: KtorRe
         } catch (e: Throwable) {
             throw stacktrace.apply {
                 sanitizeStackTrace()
-                cause = e
+                initCause(e)
             }
         }
     }
@@ -39,8 +39,6 @@ public class StackTraceRecoveringKtorRequestHandler(private val delegate: KtorRe
  * @see StackTraceRecoveringKtorRequestHandler
  */
 public class ContextException internal constructor() : RuntimeException() {
-    override var cause: Throwable? = null
-        internal set
 
     internal fun sanitizeStackTrace() {
         // Remove artifacts of stack trace capturing
