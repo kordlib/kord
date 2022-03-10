@@ -14,23 +14,27 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Representation of a [Guild Scheduled Event Structure](ADD LINK).
+ * Representation of a
+ * [Guild Scheduled Event Structure](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure).
  *
- * @property id the id of the event
- * @property guildId the id of the guild the event is on
- * @property channelId the id of the channel the event is in
+ * @property id the id of the scheduled event
+ * @property guildId the guild id which the scheduled event belongs to
+ * @property channelId the channel id in which the scheduled event will be hosted, or `null` if [entityType] is
+ * [External][ScheduledEntityType.External]
  * @property creatorId the id of the user that created the scheduled event
- * @property name the name of the event
- * @property description the description of the event
- * @property scheduledStartTime the [Instant] in which the event will start
- * @property scheduledEndTime the [Instant] in which the event wil stop, if any
- * @property privacyLevel the [event privacy level][GuildScheduledEventPrivacyLevel]
- * @property status the [event status][GuildScheduledEventStatus]
- * @property entityType the [ScheduledEntityType] of the event
- * @property entityId entity id
- * @property entityMetadata [metadata][GuildScheduledEventEntityMetadata] for the event
+ * @property name the name of the scheduled event
+ * @property description the description of the scheduled event
+ * @property scheduledStartTime the [Instant] in which the scheduled event will start
+ * @property scheduledEndTime the [Instant] in which the scheduled event will end, if any
+ * @property privacyLevel the [privacy level][GuildScheduledEventPrivacyLevel] of the scheduled event
+ * @property status the [status][GuildScheduledEventStatus] of the scheduled event
+ * @property entityType the [type][ScheduledEntityType] of the scheduled event
+ * @property entityId the id of an entity associated with a guild scheduled event
+ * @property entityMetadata additional [metadata][GuildScheduledEventEntityMetadata] for the guild scheduled event
  * @property creator the [user][DiscordUser] that created the scheduled event
- * @property userCount users subscribed to the event
+ * @property userCount the number of users subscribed to the scheduled event
+ * @property image the [cover image hash](https://discord.com/developers/docs/reference#image-formatting) of the
+ * scheduled event
  */
 @Serializable
 public data class DiscordGuildScheduledEvent(
@@ -59,6 +63,7 @@ public data class DiscordGuildScheduledEvent(
     val creator: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("user_count")
     val userCount: OptionalInt = OptionalInt.Missing,
+    val image: Optional<String?> = Optional.Missing(),
 )
 
 /** Privacy level of a [DiscordGuildScheduledEvent]. */

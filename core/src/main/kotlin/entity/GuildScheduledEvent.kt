@@ -15,7 +15,9 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
 
 /**
- * An instance of a [Guild scheduled event](ADD LINK) belonging to a specific guild.
+ * An instance of a
+ * [Guild scheduled event](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event)
+ * belonging to a specific guild.
  */
 public class GuildScheduledEvent(
     public val data: GuildScheduledEventData,
@@ -30,19 +32,20 @@ public class GuildScheduledEvent(
         get() = data.id
 
     /**
-     * The id of the guild this event is on.
+     * The id of the guild this event belongs to.
      */
     public override val guildId: Snowflake
         get() = data.guildId
 
     /**
-     * The id of the channel this event is in, if any.
+     * The id of the channel this event will be hosted in, or `null` if [entityType] is
+     * [External][ScheduledEntityType.External].
      */
     public val channelId: Snowflake?
         get() = data.channelId
 
     /**
-     * The id of the user that created the scheduled event.
+     * The id of the user that created this event.
      *
      * This is only available for events created after 2021-10-25.
      */
@@ -85,21 +88,23 @@ public class GuildScheduledEvent(
     public val status: GuildScheduledEventStatus
         get() = data.status
 
+    /** The id of an entity associated with this event. */
     public val entityId: Snowflake?
         get() = data.entityId
 
     /**
-     * The [scheduled entity type][ScheduledEntityType] for this event.
+     * The [type][ScheduledEntityType] of this event.
      */
     public val entityType: ScheduledEntityType
         get() = data.entityType
 
     /**
-     * The [entity metadata][GuildScheduledEventEntityMetadata] for the scheduled event
+     * Additional [metadata][GuildScheduledEventEntityMetadata] for this event.
      */
     public val entityMetadata: GuildScheduledEventEntityMetadata?
         get() = data.entityMetadata
 
+    /** The [user][User] that created this event. */
     public val creator: User?
         get() = data.creator.unwrap { User(it, kord, supplier) }
 
@@ -109,8 +114,11 @@ public class GuildScheduledEvent(
     public val userCount: Int?
         get() = data.userCount.value
 
+    /** The cover image hash of this event. */
+    public val imageHash: String? get() = data.image.value
+
     /**
-     * Requests the [Guild] this event is on.
+     * Requests the [Guild] this event belongs to.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
@@ -118,7 +126,7 @@ public class GuildScheduledEvent(
     public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
-     * Requests the [Guild] this event is on,
+     * Requests the [Guild] this event belongs to,
      * returns null if the [Guild] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -126,16 +134,17 @@ public class GuildScheduledEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
-     * Requests the [TopGuildChannel] this event is in,
-     * returns null if the [TopGuildChannel] isn't present or not set.
+     * Requests the [TopGuildChannel] this event will be hosted in,
+     * returns null if the [TopGuildChannel] isn't present or [entityType] is [External][ScheduledEntityType.External].
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getChannelOrNull(): TopGuildChannel? = data.channelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
-     * Requests the channel this event is in, if it is of type [T],
-     * returns `null` if the channel is not set, not present or not of type [T]
+     * Requests the channel this event will be hosted in, if it is of type [T],
+     * returns `null` if [entityType] is [External][ScheduledEntityType.External], the channel is not present or not of
+     * type [T].
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
