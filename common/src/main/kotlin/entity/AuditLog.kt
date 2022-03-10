@@ -298,31 +298,27 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
 
     /**
      * The actual supertype is [AuditLogChangeKey<Int | String>][AuditLogChangeKey] but Kotlin does not support union
-     * types yet.
+     * types yet. [Int]s are instead converted to a [String].
      */
     @SerialName("type")
-    public object Type : AuditLogChangeKey<Any>("type", IntOrStringSerializer) {
-        // TODO use union type if Kotlin ever introduces them
+    public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer) {
+        // TODO use union type `String | Int` if Kotlin ever introduces them
 
         // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
         // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
-        private object IntOrStringSerializer : KSerializer<Any> {
+        private object IntOrStringSerializer : KSerializer<String> {
             private val backingSerializer = JsonPrimitive.serializer()
 
             override val descriptor: SerialDescriptor get() = backingSerializer.descriptor
 
-            override fun serialize(encoder: Encoder, value: Any) {
-                val jsonPrimitive = when (value) {
-                    is Int -> JsonPrimitive(value)
-                    is String -> JsonPrimitive(value)
-                    else -> error("IntOrStringSerializer can only serialize Int or String")
-                }
+            override fun serialize(encoder: Encoder, value: String) {
+                val jsonPrimitive = value.toIntOrNull()?.let { JsonPrimitive(it) } ?: JsonPrimitive(value)
                 encoder.encodeSerializableValue(backingSerializer, jsonPrimitive)
             }
 
-            override fun deserialize(decoder: Decoder): Any {
+            override fun deserialize(decoder: Decoder): String {
                 val jsonPrimitive = decoder.decodeSerializableValue(backingSerializer)
-                return if (jsonPrimitive.isString) jsonPrimitive.content else jsonPrimitive.int
+                return if (jsonPrimitive.isString) jsonPrimitive.content else jsonPrimitive.int.toString()
             }
         }
     }
