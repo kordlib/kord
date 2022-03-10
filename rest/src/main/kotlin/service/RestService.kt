@@ -19,7 +19,7 @@ public abstract class RestService(@PublishedApi internal val requestHandler: Req
         val request = RequestBuilder(route)
             .apply(builder)
             .apply {
-                unencodedHeader(UserAgent, KordConstants.UserAgent)
+                unencodedHeader(UserAgent, KordConstants.USER_AGENT)
                 if (route.requiresAuthorizationHeader) {
                     unencodedHeader(Authorization, "Bot ${requestHandler.token}")
                 }
