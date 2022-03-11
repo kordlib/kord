@@ -124,6 +124,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Unknown application command. */
     UnknownApplicationCommand(10063),
 
+    /** Unknown voice state. */
+    UnknownVoiceState(10065),
+
     /** Unknown application command permissions. */
     UnknownApplicationCommandPermissions(10066),
 
