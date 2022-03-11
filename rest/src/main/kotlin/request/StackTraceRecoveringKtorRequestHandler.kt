@@ -24,7 +24,7 @@ public class StackTraceRecoveringKtorRequestHandler(private val delegate: KtorRe
 
         return try {
             delegate.handle(request)
-        } catch (e: Throwable) {
+        } catch (e: Exception) {
             throw stacktrace.apply {
                 sanitizeStackTrace()
                 initCause(e)
@@ -42,7 +42,8 @@ public class ContextException internal constructor() : RuntimeException() {
 
     internal fun sanitizeStackTrace() {
         // Remove artifacts of stack trace capturing
-        // at dev.kord.rest.request.StackTraceRecoveringKtorRequestHandler.handle(StackTraceRecoveringKtorRequestHandler.kt:7)
+        // This is the stack trace element is the creation of the ContextException
+        // at dev.kord.rest.request.StackTraceRecoveringKtorRequestHandler.handle(StackTraceRecoveringKtorRequestHandler.kt:23)
         stackTrace = stackTrace.copyOfRange(1, stackTrace.size)
     }
 }

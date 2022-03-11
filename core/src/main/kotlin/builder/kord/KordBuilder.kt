@@ -75,6 +75,16 @@ public class KordBuilder(public val token: String) {
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
 
     /**
+     * Enables stack trace recovery on the currently defined [RequestHandler].
+     *
+     * @throws IllegalStateException if the [RequestHandler] is not a [KtorRequestHandler]
+     *
+     * @see StackTraceRecoveringKtorRequestHandler
+     * @see withStackTraceRecovery
+     */
+    private var stackTraceRecovery: Boolean = false
+
+    /**
      * Enable adding a [Runtime.addShutdownHook] to log out of the [Gateway] when the process is killed.
      */
     public var enableShutdownHook: Boolean = true
@@ -158,23 +168,6 @@ public class KordBuilder(public val token: String) {
     }
 
     /**
-     * Enables stack trace recovery on the currently defined [RequestHandler].
-     *
-     * @throws IllegalStateException if the [RequestHandler] is not a [KtorRequestHandler]
-     *
-     * @see StackTraceRecoveringKtorRequestHandler
-     * @see withStackTraceRecovery
-     */
-    public fun enableStackTraceRecovery() {
-        val parentBuilder = handlerBuilder
-        requestHandler {
-            val ktorRequestHandler = parentBuilder(it) as? KtorRequestHandler
-                ?: error("Stack trace recovery only works with KtorRequestHandlers")
-            ktorRequestHandler.withStackTraceRecovery()
-        }
-    }
-
-    /**
      * Configures the [DataCache] for caching.
      *
      *  ```
@@ -245,7 +238,17 @@ public class KordBuilder(public val token: String) {
 
         val resources =
             ClientResources(token, applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy)
-        val rest = RestClient(handlerBuilder(resources))
+        val rawRequestHandler = handlerBuilder(resources)
+        val requestHandler = if (stackTraceRecovery) {
+            if (rawRequestHandler is KtorRequestHandler) {
+                rawRequestHandler.withStackTraceRecovery()
+            } else {
+                error("stackTraceRecovery only works with KtorRequestHandlers, please set stackTraceRecovery = false or use a different RequestHandler")
+            }
+        } else {
+            rawRequestHandler
+        }
+        val rest = RestClient(requestHandler)
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
         val gateway = run {
