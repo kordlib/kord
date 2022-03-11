@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -364,23 +365,24 @@ public data class DiscordWebhooksUpdateData(
  * A representation of the [Discord Voice State structure](https://discord.com/developers/docs/resources/voice#voice-state-object).
  * Used to represent a user's voice connection status.
  *
- * @param guildId the guild id this voice state is for.
- * @param channelId the channel id this user is connection to.
+ * @param guildId The guild id this voice state is for.
+ * @param channelId The channel id this user is connected to.
  * @param userId The user id this voice state is for.
- * @param member the guild member this voice state is for.
+ * @param member The guild member this voice state is for.
  * @param sessionId The session id for this voice state.
  * @param deaf Whether this user is deafened by the server.
  * @param mute Whether this user is muted by the server.
  * @param selfDeaf Whether this user is locally deafened.
- * @param selfMute Whether this is locally muted
+ * @param selfMute Whether this user is locally muted.
  * @param selfStream Whether this user is stream using "Go Live".
  * @param selfVideo Whether this user's camera is enabled.
  * @param suppress Whether this user is muted by the current user.
+ * @param requestToSpeakTimestamp The time at which the user requested to speak.
  */
 @Serializable
 public data class DiscordVoiceState(
     @SerialName("guild_id") val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    @SerialName("channel_id") val channelId: Snowflake?,
+    @SerialName("channel_id") val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("user_id") val userId: Snowflake,
     @SerialName("guild_member") val member: Optional<DiscordGuildMember> = Optional.Missing(),
     @SerialName("session_id") val sessionId: String,
@@ -391,7 +393,7 @@ public data class DiscordVoiceState(
     @SerialName("self_video") val selfVideo: Boolean,
     @SerialName("self_stream") val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
-    @SerialName("request_to_speak_timestamp") val requestToSpeakTimestamp: String?
+    @SerialName("request_to_speak_timestamp") val requestToSpeakTimestamp: Optional<Instant> = Optional.Missing(),
 )
 
 /**

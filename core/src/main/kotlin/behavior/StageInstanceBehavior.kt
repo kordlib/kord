@@ -7,12 +7,15 @@ import dev.kord.core.cache.data.StageInstanceData
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.StageInstance
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.entity.channel.StageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.json.request.StageInstanceUpdateRequest
 
 public interface StageInstanceBehavior : KordEntity, Strategizable {
+
+    /** The id of the associated [StageChannel]. */
     public val channelId: Snowflake
 
     public suspend fun delete(reason: String? = null): Unit = kord.rest.stageInstance.deleteStageInstance(channelId, reason)
@@ -25,7 +28,7 @@ public interface StageInstanceBehavior : KordEntity, Strategizable {
     }
 
     /**
-     * Requests to get the this behavior as a [StageInstance] if it's not an instance of a [StageInstance].
+     * Requests to get this behavior as a [StageInstance] if it's not an instance of a [StageInstance].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
@@ -33,8 +36,8 @@ public interface StageInstanceBehavior : KordEntity, Strategizable {
     public suspend fun asStageInstance(): StageInstance = supplier.getStageInstance(channelId)
 
     /**
-     * Requests to get this behavior as a [StageInstance] if its not an instance of a [StageInstance],
-     * returns null if the user isn't present.
+     * Requests to get this behavior as a [StageInstance] if it's not an instance of a [StageInstance],
+     * returns null if the stage instance isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */

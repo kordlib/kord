@@ -5,6 +5,8 @@
   "deaf": false,
   "mute": false,
   "self_deaf": false,
+  "self_video": true,
   "self_mute": true,
-  "suppress": false
+  "suppress": false,
+  "request_to_speak_timestamp": "2021-03-31T18:45:31.297561+00:00"
 }

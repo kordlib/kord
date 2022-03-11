@@ -3,6 +3,7 @@ package live
 import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.Guild
@@ -205,7 +206,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                 VoiceStateUpdate(
                     DiscordVoiceState(
                         guildId = it.optionalSnowflake(),
-                        channelId = null,
+                        channelId = OptionalSnowflake.Missing,
                         userId = randomId(),
                         sessionId = "",
                         deaf = false,
@@ -214,7 +215,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         selfMute = false,
                         selfVideo = false,
                         suppress = false,
-                        requestToSpeakTimestamp = null
+                        requestToSpeakTimestamp = Optional.Missing(),
                     ),
                     0
                 )
