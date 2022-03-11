@@ -131,7 +131,7 @@ public data class GuildRoleCreateRequest(
     @SerialName("unicode_emoji")
     val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val mentionable: OptionalBoolean = OptionalBoolean.Missing,
-    @Deprecated("This is not part of Discord's current documentation.")
+    /** Only use this when creating a guild. */
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
 ) {
     @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), DeprecationLevel.ERROR)
