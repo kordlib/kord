@@ -309,10 +309,18 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
         private object IntOrStringSerializer : KSerializer<String> {
             private val backingSerializer = JsonPrimitive.serializer()
 
-            @OptIn(ExperimentalSerializationApi::class)
-            override val descriptor = SerialDescriptor(
+            /*
+             * Delegating serializers should not reuse descriptors:
+             * https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md#delegating-serializers
+             *
+             * however `SerialDescriptor("...", backingSerializer.descriptor)` will throw since
+             * `JsonPrimitive.serializer().kind` is `PrimitiveKind.STRING` (`SerialDescriptor()` does not allow
+             * `PrimitiveKind`)
+             * -> use `PrimitiveSerialDescriptor("...", PrimitiveKind.STRING)` instead
+             */
+            override val descriptor = PrimitiveSerialDescriptor(
                 serialName = "dev.kord.common.entity.AuditLogChangeKey.Type.IntOrString",
-                original = backingSerializer.descriptor,
+                PrimitiveKind.STRING,
             )
 
             override fun serialize(encoder: Encoder, value: String) {
