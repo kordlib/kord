@@ -8,10 +8,21 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
+import kotlin.DeprecationLevel.WARNING
 
 /**
  * An instance of a Discord Store Channel associated to a guild.
  */
+@Suppress("DEPRECATION")
+@Deprecated(
+    """
+    Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+    removed on March 10, 2022.
+    
+    See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+    """,
+    level = WARNING,
+)
 public data class StoreChannel(
     override val data: ChannelData,
     override val kord: Kord,
