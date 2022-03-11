@@ -46,7 +46,6 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
 
         checkLiveEntityType(LiveDmChannel::class, DmChannel(kord = kord, data = data))
         checkLiveEntityType(LiveGuildMessageChannel::class, NewsChannel(kord = kord, data = data))
-        checkLiveEntityType(LiveGuildChannel::class, StoreChannel(kord = kord, data = data))
         checkLiveEntityType(LiveGuildMessageChannel::class, TextChannel(kord = kord, data = data))
         checkLiveEntityType(LiveVoiceChannel::class, VoiceChannel(kord = kord, data = data))
     }
