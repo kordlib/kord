@@ -1,6 +1,7 @@
 package dev.kord.voice.handlers
 
 import dev.kord.common.annotation.KordVoice
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
 import dev.kord.voice.VoiceConnection
@@ -32,22 +33,27 @@ internal class VoiceUpdateEventHandler(
         on<VoiceStateUpdate> { event ->
             if (!event.isRelatedToConnection(connection)) return@on
 
-            // we're not in a voice channel anymore. anything might've happened
-            // discord doesn't tell us whether the channel was deleted or if we were just moved
-            // let's just detach in 5 seconds and let it be cancelled if we join a new voice channel in that time.
-            if (event.voiceState.channelId == null) {
-                voiceUpdateLogger.trace { "detected a change to a null voice channel for guild ${connection.data.guildId}. waiting ${CONNECTION_DETACH_DURATION_IN_MILLIS}ms before shutdown to see if we were moved." }
+            when (event.voiceState.channelId) {
 
-                detachJob?.cancel()
-                detachJob = launch {
-                    delay(CONNECTION_DETACH_DURATION_IN_MILLIS)
+                // we're not in a voice channel anymore. anything might've happened
+                // discord doesn't tell us whether the channel was deleted or if we were just moved
+                // let's just detach in 5 seconds and let it be cancelled if we join a new voice channel in that time.
+                OptionalSnowflake.Missing -> {
+                    voiceUpdateLogger.trace { "detected a change to a null voice channel for guild ${connection.data.guildId}. waiting ${CONNECTION_DETACH_DURATION_IN_MILLIS}ms before shutdown to see if we were moved." }
 
-                    connection.shutdown()
+                    detachJob?.cancel()
+                    detachJob = launch {
+                        delay(CONNECTION_DETACH_DURATION_IN_MILLIS)
+
+                        connection.shutdown()
+                    }
                 }
-            } else if (event.voiceState.channelId != null) {
-                voiceUpdateLogger.trace { "detected a voice channel change for guild ${connection.data.guildId}, cancelling detachment." }
-                detachJob?.cancel()
-                detachJob = null
+
+                is OptionalSnowflake.Value -> {
+                    voiceUpdateLogger.trace { "detected a voice channel change for guild ${connection.data.guildId}, cancelling detachment." }
+                    detachJob?.cancel()
+                    detachJob = null
+                }
             }
         }
 
