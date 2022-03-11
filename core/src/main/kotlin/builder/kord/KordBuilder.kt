@@ -187,7 +187,7 @@ public class KordBuilder(public val token: String) {
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
         val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}") {
-            header(UserAgent, KordConstants.UserAgent)
+            header(UserAgent, KordConstants.USER_AGENT)
             header(Authorization, "Bot $token")
         }
         val responseBody = response.readText()
