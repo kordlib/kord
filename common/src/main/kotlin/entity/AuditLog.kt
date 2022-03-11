@@ -309,7 +309,11 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
         private object IntOrStringSerializer : KSerializer<String> {
             private val backingSerializer = JsonPrimitive.serializer()
 
-            override val descriptor: SerialDescriptor get() = backingSerializer.descriptor
+            @OptIn(ExperimentalSerializationApi::class)
+            override val descriptor = SerialDescriptor(
+                serialName = "dev.kord.common.entity.AuditLogChangeKey.Type.IntOrString",
+                original = backingSerializer.descriptor,
+            )
 
             override fun serialize(encoder: Encoder, value: String) {
                 val jsonPrimitive = value.toIntOrNull()?.let { JsonPrimitive(it) } ?: JsonPrimitive(value)
