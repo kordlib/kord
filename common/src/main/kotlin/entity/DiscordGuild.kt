@@ -382,7 +382,7 @@ public data class DiscordWebhooksUpdateData(
 @Serializable
 public data class DiscordVoiceState(
     @SerialName("guild_id") val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    @SerialName("channel_id") val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("channel_id") val channelId: Snowflake?,
     @SerialName("user_id") val userId: Snowflake,
     @SerialName("guild_member") val member: Optional<DiscordGuildMember> = Optional.Missing(),
     @SerialName("session_id") val sessionId: String,
@@ -393,7 +393,7 @@ public data class DiscordVoiceState(
     @SerialName("self_video") val selfVideo: Boolean,
     @SerialName("self_stream") val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
-    @SerialName("request_to_speak_timestamp") val requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing(),
+    @SerialName("request_to_speak_timestamp") val requestToSpeakTimestamp: Instant?,
 )
 
 /**

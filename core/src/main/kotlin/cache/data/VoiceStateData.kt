@@ -4,7 +4,6 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordVoiceState
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapSnowflake
@@ -22,7 +21,7 @@ public data class VoiceStateData(
      (And not just because this code would break).
      */
     val guildId: Snowflake,
-    val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val channelId: Snowflake?,
     val userId: Snowflake,
     val memberId: OptionalSnowflake = OptionalSnowflake.Missing,
     val sessionId: String,
@@ -33,7 +32,7 @@ public data class VoiceStateData(
     val suppress: Boolean,
     val selfVideo: Boolean,
     val selfStream: OptionalBoolean = OptionalBoolean.Missing,
-    val requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing(),
+    val requestToSpeakTimestamp: Instant?,
 ) {
     public companion object {
         public val description: DataDescription<VoiceStateData, String> = description(VoiceStateData::id)
