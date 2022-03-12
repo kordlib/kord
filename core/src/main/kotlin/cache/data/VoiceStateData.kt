@@ -33,7 +33,7 @@ public data class VoiceStateData(
     val suppress: Boolean,
     val selfVideo: Boolean,
     val selfStream: OptionalBoolean = OptionalBoolean.Missing,
-    val requestToSpeakTimestamp: Optional<Instant> = Optional.Missing(),
+    val requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing(),
 ) {
     public companion object {
         public val description: DataDescription<VoiceStateData, String> = description(VoiceStateData::id)
