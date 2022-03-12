@@ -23,7 +23,7 @@ public fun Channel.live(
 ): LiveChannel = when (this) {
     is DmChannel -> this.live(coroutineScope)
     is NewsChannel -> this.live(coroutineScope)
-    is StoreChannel -> this.live(coroutineScope)
+    is @Suppress("DEPRECATION") StoreChannel -> this.live(coroutineScope)
     is TextChannel -> this.live(coroutineScope)
     is VoiceChannel -> this.live(coroutineScope)
     else -> error("unsupported channel type")

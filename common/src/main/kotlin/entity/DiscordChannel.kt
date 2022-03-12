@@ -13,6 +13,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.WARNING
 
 /**
  * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
@@ -104,6 +105,15 @@ public sealed class ChannelType(public val value: Int) {
     public object GuildNews : ChannelType(5)
 
     /** A channel in which game developers can sell their game on Discord. */
+    @Deprecated(
+        """
+        Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+        removed on March 10, 2022.
+        
+        See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+        """,
+        level = WARNING,
+    )
     public object GuildStore : ChannelType(6)
 
     public object PublicNewsThread : ChannelType(10)
@@ -126,7 +136,7 @@ public sealed class ChannelType(public val value: Int) {
             3 -> GroupDM
             4 -> GuildCategory
             5 -> GuildNews
-            6 -> GuildStore
+            6 -> @Suppress("DEPRECATION") GuildStore
             10 -> PublicNewsThread
             11 -> PublicGuildThread
             12 -> PrivateThread
