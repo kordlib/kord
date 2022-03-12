@@ -75,6 +75,11 @@ public final class dev/kord/common/DiscordTimestampStyle : java/lang/Enum {
 	public static fun values ()[Ldev/kord/common/DiscordTimestampStyle;
 }
 
+public final class dev/kord/common/KordConstants {
+	public static final field INSTANCE Ldev/kord/common/KordConstants;
+	public static final field USER_AGENT Ljava/lang/String;
+}
+
 public final class dev/kord/common/Locale {
 	public static final field Companion Ldev/kord/common/Locale$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
@@ -3297,9 +3302,9 @@ public final class dev/kord/common/entity/DiscordGuildRole$Companion {
 
 public final class dev/kord/common/entity/DiscordGuildScheduledEvent {
 	public static final field Companion Ldev/kord/common/entity/DiscordGuildScheduledEvent$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component10 ()Ldev/kord/common/entity/GuildScheduledEventStatus;
 	public final fun component11 ()Ldev/kord/common/entity/ScheduledEntityType;
@@ -3307,6 +3312,7 @@ public final class dev/kord/common/entity/DiscordGuildScheduledEvent {
 	public final fun component13 ()Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;
 	public final fun component14 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component15 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component16 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
@@ -3315,8 +3321,8 @@ public final class dev/kord/common/entity/DiscordGuildScheduledEvent {
 	public final fun component7 ()Lkotlinx/datetime/Instant;
 	public final fun component8 ()Lkotlinx/datetime/Instant;
 	public final fun component9 ()Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)Ldev/kord/common/entity/DiscordGuildScheduledEvent;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordGuildScheduledEvent;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordGuildScheduledEvent;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordGuildScheduledEvent;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Ldev/kord/common/entity/GuildScheduledEventStatus;Ldev/kord/common/entity/ScheduledEntityType;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/GuildScheduledEventEntityMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordGuildScheduledEvent;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getCreator ()Ldev/kord/common/entity/optional/Optional;
@@ -3327,6 +3333,7 @@ public final class dev/kord/common/entity/DiscordGuildScheduledEvent {
 	public final fun getEntityType ()Ldev/kord/common/entity/ScheduledEntityType;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getImage ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getPrivacyLevel ()Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;
 	public final fun getScheduledEndTime ()Lkotlinx/datetime/Instant;
@@ -4715,20 +4722,22 @@ public final class dev/kord/common/entity/DiscordShard$Companion : kotlinx/seria
 
 public final class dev/kord/common/entity/DiscordStageInstance {
 	public static final field Companion Ldev/kord/common/entity/DiscordStageInstance$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;Z)V
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;ZLdev/kord/common/entity/Snowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;ZLdev/kord/common/entity/Snowflake;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()Ldev/kord/common/entity/StageInstancePrivacyLevel;
 	public final fun component6 ()Z
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;Z)Ldev/kord/common/entity/DiscordStageInstance;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordStageInstance;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;ZILjava/lang/Object;)Ldev/kord/common/entity/DiscordStageInstance;
+	public final fun component7 ()Ldev/kord/common/entity/Snowflake;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;ZLdev/kord/common/entity/Snowflake;)Ldev/kord/common/entity/DiscordStageInstance;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordStageInstance;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/StageInstancePrivacyLevel;ZLdev/kord/common/entity/Snowflake;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordStageInstance;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDiscoverableDisabled ()Z
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildScheduledEventId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPrivacyLevel ()Ldev/kord/common/entity/StageInstancePrivacyLevel;
 	public final fun getTopic ()Ljava/lang/String;
@@ -5379,14 +5388,14 @@ public final class dev/kord/common/entity/DiscordVoiceServerUpdateData$Companion
 
 public final class dev/kord/common/entity/DiscordVoiceState {
 	public static final field Companion Ldev/kord/common/entity/DiscordVoiceState$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLjava/lang/String;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLkotlinx/datetime/Instant;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLkotlinx/datetime/Instant;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLkotlinx/datetime/Instant;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component10 ()Z
 	public final fun component11 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component12 ()Z
-	public final fun component13 ()Ljava/lang/String;
+	public final fun component13 ()Lkotlinx/datetime/Instant;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
@@ -5395,15 +5404,15 @@ public final class dev/kord/common/entity/DiscordVoiceState {
 	public final fun component7 ()Z
 	public final fun component8 ()Z
 	public final fun component9 ()Z
-	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLjava/lang/String;)Ldev/kord/common/entity/DiscordVoiceState;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordVoiceState;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLjava/lang/String;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordVoiceState;
+	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLkotlinx/datetime/Instant;)Ldev/kord/common/entity/DiscordVoiceState;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordVoiceState;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ZZZZZLdev/kord/common/entity/optional/OptionalBoolean;ZLkotlinx/datetime/Instant;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordVoiceState;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDeaf ()Z
 	public final fun getGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getMember ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getMute ()Z
-	public final fun getRequestToSpeakTimestamp ()Ljava/lang/String;
+	public final fun getRequestToSpeakTimestamp ()Lkotlinx/datetime/Instant;
 	public final fun getSelfDeaf ()Z
 	public final fun getSelfMute ()Z
 	public final fun getSelfStream ()Ldev/kord/common/entity/optional/OptionalBoolean;

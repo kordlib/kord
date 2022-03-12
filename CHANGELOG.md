@@ -1,3 +1,21 @@
+# 0.8.0-M12
+
+## Changes
+
+* As of 0.8.0-M12 Message Content Intent is required to receive message related events.
+* Deprecate store channels (#564).
+* Hotfix: revert nullable to optional changes in VoiceState (#567).
+* nullable requestToSpeakTimestamp (#566).
+* Fix oversights in #561 (#565).
+* Discord docs updates (#540 #561).
+
+## Additions
+
+* User Agent header (#558 #562).
+* Unsafe deferred responding (#557).
+* Use gateway v10 (#554).
+* Audit Log Change Key "type" to string values (#559).
+
 # 0.8.0-M11
 
 ## Changes
