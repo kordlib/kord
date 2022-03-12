@@ -24,7 +24,7 @@ public class VoiceState(
     public val guildId: Snowflake get() = data.guildId
 
     /** The channel id this user is connected to. */
-    public val channelId: Snowflake? get() = data.channelId.value
+    public val channelId: Snowflake? get() = data.channelId
 
     /** The user id this voice state is for. */
     public val userId: Snowflake get() = data.userId
@@ -54,7 +54,7 @@ public class VoiceState(
     public val isSuppressed: Boolean get() = data.suppress
 
     /** The [Instant] at which the user requested to speak. */
-    public val requestToSpeakTimestamp: Instant? get() = data.requestToSpeakTimestamp.value
+    public val requestToSpeakTimestamp: Instant? get() = data.requestToSpeakTimestamp
 
     /** Discord does not support anger detection. */
     @Deprecated("I can't see any steam...", ReplaceWith("this.isSelfStreaming"), DeprecationLevel.ERROR)
