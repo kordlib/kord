@@ -426,7 +426,7 @@ public class Kord(
          * replaced with a no-op implementation.
          */
         @KordExperimental
-        public inline fun restOnly(token: String, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord {
+        public inline fun restOnly(token: String? = null, builder: KordRestOnlyBuilder.() -> Unit = {}): Kord {
             contract {
                 callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
             }

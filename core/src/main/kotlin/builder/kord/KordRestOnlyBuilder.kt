@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
  * The rest only Kord builder. You probably want to invoke the [DSL builder][Kord.restOnly] instead.
  */
 @KordExperimental
-public class KordRestOnlyBuilder(public val token: String) {
+public class KordRestOnlyBuilder(public var token: String? = null) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
         { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = it.token) }
@@ -32,8 +32,6 @@ public class KordRestOnlyBuilder(public val token: String) {
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
      */
     public var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
-
-    public var customToken: Boolean = false
 
     /**
      * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation
@@ -62,7 +60,7 @@ public class KordRestOnlyBuilder(public val token: String) {
      */
     public fun build(): Kord {
         val client = httpClient.configure()
-        val botId =  if(!customToken)getBotIdFromToken(token) else Snowflake.min
+        val botId =  if( token != null) getBotIdFromToken(token) else Snowflake.min
         val resources = ClientResources(
             token,
             applicationId ?: botId ,
