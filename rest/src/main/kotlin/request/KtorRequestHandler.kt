@@ -38,10 +38,10 @@ public class KtorRequestHandler(
     override val token: String
 ) : RequestHandler {
     private val logger = KotlinLogging.logger("[R]:[KTOR]:[${requestRateLimiter.javaClass.simpleName}]")
-    override suspend fun <T> intercept(builder: RequestBuilder<T>): RequestBuilder<T> {
+    override suspend fun <T> intercept(builder: RequestBuilder<T>, context: Any?): RequestBuilder<T> {
         return builder.defaultInterception(builder.route, token)
     }
-    override tailrec suspend fun <B : Any, R> handle(request: Request<B, R>): R {
+    override tailrec suspend fun <B : Any, R> handle(request: Request<B, R>, context: Any?): R {
         val response = requestRateLimiter.consume(request) {
             val httpRequest = client.createRequest(request)
             val response = httpRequest.execute()
@@ -55,7 +55,7 @@ public class KtorRequestHandler(
         return when {
             response.isRateLimit -> {
                 logger.debug { response.logString(body) }
-                handle(request)
+                handle(request, context)
             }
             response.isError -> {
                 logger.debug { response.logString(body) }

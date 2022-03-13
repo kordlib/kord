@@ -20,9 +20,9 @@ public interface RequestHandler {
      * @throws RestRequestException when a non-rate limit error response is returned.
      */
     @Throws(RestRequestException::class)
-    public suspend fun <B : Any, R> handle(request: Request<B, R>): R
+    public suspend fun <B : Any, R> handle(request: Request<B, R>, context: Any? = null): R
 
-    public suspend fun <T> intercept(builder: RequestBuilder<T>): RequestBuilder<T> {
+    public suspend fun <T> intercept(builder: RequestBuilder<T>, context: Any? = null): RequestBuilder<T> {
         return builder
     }
 }

@@ -81,7 +81,7 @@ object FakeGateway : Gateway {
 }
 
 class CrashingHandler(val client: HttpClient, override val token: String) : RequestHandler {
-    override suspend fun <B : Any, R> handle(request: Request<B, R>): R {
+    override suspend fun <B : Any, R> handle(request: Request<B, R>, context: Any?): R {
         if (request.route != Route.CurrentUserGet) throw IllegalStateException("shouldn't do a request")
         val response = client.request<HttpStatement> {
             method = request.route.method
