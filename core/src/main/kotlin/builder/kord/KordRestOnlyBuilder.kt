@@ -23,7 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
  * The rest only Kord builder. You probably want to invoke the [DSL builder][Kord.restOnly] instead.
  */
 @KordExperimental
-public class KordRestOnlyBuilder(public var token: String? = null) {
+public class KordRestOnlyBuilder(public val token: String? = null) {
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
         { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = it.token) }
@@ -62,7 +62,7 @@ public class KordRestOnlyBuilder(public var token: String? = null) {
         val client = httpClient.configure()
         val botId =  if( token != null) getBotIdFromToken(token) else Snowflake.min
         val resources = ClientResources(
-            token,
+            token = token ?: "",
             applicationId ?: botId ,
             Shards(0),
             client,
