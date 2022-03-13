@@ -1,5 +1,6 @@
 package dev.kord.rest.request
 
+import dev.kord.common.KordConstants
 import dev.kord.rest.route.Route
 import io.ktor.http.*
 
@@ -26,6 +27,7 @@ public interface RequestHandler {
 
 public fun  <T> RequestBuilder<T>.defaultInterception(route: Route<T>, token: String): RequestBuilder<T> {
         if (route.requiresAuthorizationHeader) {
+            unencodedHeader(HttpHeaders.UserAgent, KordConstants.USER_AGENT)
             unencodedHeader(HttpHeaders.Authorization, "Bot $token")
         }
     return this

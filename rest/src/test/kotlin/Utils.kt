@@ -6,7 +6,7 @@ import dev.kord.rest.route.Route
 
 
 internal fun <T> RequestBuilder(route: Route<T>, keySize: Int = 2, request: RequestBuilder<T>.() -> Unit): Request<*,T> {
-    val builder = RequestBuilder(route, keySize)
+    val builder = RequestBuilder(route, keySize = keySize)
     builder.request()
     return builder.build()
 }

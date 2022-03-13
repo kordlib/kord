@@ -2,11 +2,9 @@ package dev.kord.rest.request
 
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.ratelimit.*
-import dev.kord.rest.route.Route
 import dev.kord.rest.route.optional
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
