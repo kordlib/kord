@@ -33,6 +33,8 @@ public class KordRestOnlyBuilder(public val token: String) {
      */
     public var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
 
+    public var customToken: Boolean = false
+
     /**
      * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation
      * will be used when not set.
@@ -60,16 +62,16 @@ public class KordRestOnlyBuilder(public val token: String) {
      */
     public fun build(): Kord {
         val client = httpClient.configure()
-
+        val botId =  if(!customToken)getBotIdFromToken(token) else Snowflake.min
         val resources = ClientResources(
             token,
-            applicationId ?: getBotIdFromToken(token),
+            applicationId ?: botId ,
             Shards(0),
             client,
             EntitySupplyStrategy.rest,
         )
         val rest = RestClient(handlerBuilder(resources))
-        val selfId = getBotIdFromToken(token)
+        val selfId = botId
 
         return Kord(
             resources,
