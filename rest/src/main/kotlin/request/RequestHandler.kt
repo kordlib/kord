@@ -22,7 +22,9 @@ public interface RequestHandler {
     @Throws(RestRequestException::class)
     public suspend fun <B : Any, R> handle(request: Request<B, R>): R
 
-    public suspend fun <T> intercept(builder: RequestBuilder<T>): RequestBuilder<T>
+    public suspend fun <T> intercept(builder: RequestBuilder<T>): RequestBuilder<T> {
+        return builder
+    }
 }
 
 public fun  <T> RequestBuilder<T>.defaultInterception(route: Route<T>, token: String): RequestBuilder<T> {
