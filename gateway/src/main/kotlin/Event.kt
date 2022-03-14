@@ -427,15 +427,19 @@ public sealed class Event {
                     sequence
                 )
                 "GUILD_SCHEDULED_EVENT_USER_ADD" -> GuildScheduledEventUserAdd(
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    data = decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        GuildScheduledEventUserAdd.Data.serializer(),
+                    ),
                     sequence
                 )
                 "GUILD_SCHEDULED_EVENT_USER_REMOVE" -> GuildScheduledEventUserRemove(
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    data = decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        GuildScheduledEventUserRemove.Data.serializer(),
+                    ),
                     sequence
                 )
 
@@ -734,19 +738,31 @@ public data class GuildScheduledEventUpdate(val event: DiscordGuildScheduledEven
 public data class GuildScheduledEventDelete(val event: DiscordGuildScheduledEvent, override val sequence: Int?) :
     DispatchEvent()
 
-public data class GuildScheduledEventUserAdd(
-    val eventId: Snowflake,
-    val userId: Snowflake,
-    val guildId: Snowflake,
-    override val sequence: Int?,
-) : DispatchEvent()
+public data class GuildScheduledEventUserAdd(val data: Data, override val sequence: Int?) : DispatchEvent() {
 
-public data class GuildScheduledEventUserRemove(
-    val eventId: Snowflake,
-    val userId: Snowflake,
-    val guildId: Snowflake,
-    override val sequence: Int?,
-) : DispatchEvent()
+    @Serializable
+    public data class Data(
+        @SerialName("guild_scheduled_event_id")
+        val guildScheduledEventId: Snowflake,
+        @SerialName("user_id")
+        val userId: Snowflake,
+        @SerialName("guild_id")
+        val guildId: Snowflake,
+    )
+}
+
+public data class GuildScheduledEventUserRemove(val data: Data, override val sequence: Int?) : DispatchEvent() {
+
+    @Serializable
+    public data class Data(
+        @SerialName("guild_scheduled_event_id")
+        val guildScheduledEventId: Snowflake,
+        @SerialName("user_id")
+        val userId: Snowflake,
+        @SerialName("guild_id")
+        val guildId: Snowflake,
+    )
+}
 
 @Serializable
 public data class DiscordThreadListSync(
