@@ -57,7 +57,7 @@ public sealed class BaseChoiceBuilder<T>(
     // TODO We can change these types to Optional<MutableList<Choice<T>>> and MutableList<Choice<T>> once
     //  https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
     //  The bug from that issue prevents you from setting BaseChoiceBuilder<*>.choices to `null`.
-    internal var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
+    protected var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     public var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 
     public abstract fun choice(name: String, value: T)
@@ -76,6 +76,7 @@ public sealed class BaseChoiceBuilder<T>(
 /**
  * Builder for numeric options.
  */
+@KordDsl
 public sealed class NumericOptionBuilder<T : Number>(
     name: String,
     description: String,
@@ -110,7 +111,7 @@ public sealed class NumericOptionBuilder<T : Number>(
 }
 
 
-@Deprecated("Replaced by IntOptionBuilder", ReplaceWith("IntOptionBuilder"))
+@Deprecated("Replaced by IntOptionBuilder", ReplaceWith("IntOptionBuilder"), DeprecationLevel.ERROR)
 public typealias IntChoiceBuilder = IntOptionBuilder
 
 @KordDsl
@@ -123,7 +124,7 @@ public class IntOptionBuilder(name: String, description: String) :
     }
 }
 
-@Deprecated("Replaced by IntOptionBuilder", ReplaceWith("NumberOptionBuilder"))
+@Deprecated("Replaced by IntOptionBuilder", ReplaceWith("NumberOptionBuilder"), DeprecationLevel.ERROR)
 public typealias NumberChoiceBuilder = NumberOptionBuilder
 
 @KordDsl
