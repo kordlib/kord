@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandOption
 import dev.kord.common.entity.ApplicationCommandOptionType
@@ -15,12 +16,16 @@ import kotlin.contracts.contract
 
 @KordDsl
 public sealed class OptionsBuilder(
-    public var name: String,
-    public var description: String,
+    public override var name: String,
+    public override var description: String,
     public val type: ApplicationCommandOptionType,
-) : RequestBuilder<ApplicationCommandOption> {
+) : LocalizedNameBuilder, LocalizedDescriptionBuilder, RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
     public var default: Boolean? by ::_default.delegate()
+    internal var _nameLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing()
+    public override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations.delegate()
+    internal var _descriptionLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing()
+    public override var descriptionLocalizations: MutableMap<Locale, String>? by ::_descriptionLocalizations.delegate()
 
     internal var _required: OptionalBoolean = OptionalBoolean.Missing
     public var required: Boolean? by ::_required.delegate()
@@ -39,7 +44,9 @@ public sealed class OptionsBuilder(
     override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
         type,
         name,
+        _nameLocalizations,
         description,
+        _descriptionLocalizations,
         _default,
         _required,
         autocomplete = _autocomplete
@@ -58,12 +65,33 @@ public sealed class BaseChoiceBuilder<T>(
     private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     public var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 
-    public abstract fun choice(name: String, value: T)
+    public abstract fun choice(name: String, value: T, nameLocalizations: Optional<Map<Locale, String>>)
+
+    /**
+     * Registers a new choice with [name] representing value and applies [localizationsBuilder] to it
+     *
+     * @see ChoiceLocalizationsBuilder
+     */
+    public inline fun choice(name: String, value: T, localizationsBuilder: ChoiceLocalizationsBuilder.() -> Unit = {}) {
+        val localizations = ChoiceLocalizationsBuilder(name)
+            .apply(localizationsBuilder)
+            .nameLocalizations
+            ?: emptyMap()
+        val optional = if (localizations.isEmpty()) {
+            Optional.Missing()
+        } else {
+            Optional(localizations)
+        }
+
+        return choice(name, value, optional)
+    }
 
     override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
         type,
         name,
+        _nameLocalizations,
         description,
+        _descriptionLocalizations,
         choices = _choices,
         required = _required,
         default = _default,
@@ -71,13 +99,22 @@ public sealed class BaseChoiceBuilder<T>(
     )
 }
 
+/**
+ * Builder to register name localizations for a choice.
+ *
+ * @see LocalizedNameBuilder
+ */
+public class ChoiceLocalizationsBuilder(override val name: String?) : LocalizedNameBuilder {
+    override var nameLocalizations: MutableMap<Locale, String>? = mutableMapOf()
+}
+
 @KordDsl
 public class IntChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Long>(name, description, ApplicationCommandOptionType.Integer) {
 
-    override fun choice(name: String, value: Long) {
+    override fun choice(name: String, value: Long, nameLocalizations: Optional<Map<Locale, String>>) {
         if (choices == null) choices = mutableListOf()
-        choices!!.add(Choice.IntChoice(name, value))
+        choices!!.add(Choice.IntChoice(name, nameLocalizations, value))
     }
 }
 
@@ -85,9 +122,9 @@ public class IntChoiceBuilder(name: String, description: String) :
 @KordDsl
 public class NumberChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Double>(name, description, ApplicationCommandOptionType.Number) {
-    override fun choice(name: String, value: Double) {
+    override fun choice(name: String, value: Double, nameLocalizations: Optional<Map<Locale, String>>) {
         if (choices == null) choices = mutableListOf()
-        choices!!.add(Choice.NumberChoice(name, value))
+        choices!!.add(Choice.NumberChoice(name, nameLocalizations, value))
     }
 
 }
@@ -96,9 +133,9 @@ public class NumberChoiceBuilder(name: String, description: String) :
 public class StringChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
 
-    override fun choice(name: String, value: String) {
+    override fun choice(name: String, value: String, nameLocalizations: Optional<Map<Locale, String>>) {
         if (choices == null) choices = mutableListOf()
-        choices!!.add(Choice.StringChoice(name, value))
+        choices!!.add(Choice.StringChoice(name, nameLocalizations, value))
     }
 }
 
@@ -122,7 +159,9 @@ public class ChannelBuilder(name: String, description: String) :
     override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
         type,
         name,
+        _nameLocalizations,
         description,
+        _descriptionLocalizations,
         _default,
         _required,
         autocomplete = _autocomplete,
@@ -151,7 +190,9 @@ public sealed class BaseCommandOptionBuilder(
     override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
         type,
         name,
+        _nameLocalizations,
         description,
+        _descriptionLocalizations,
         options = _options.mapList { it.toRequest() }
     )
 }
