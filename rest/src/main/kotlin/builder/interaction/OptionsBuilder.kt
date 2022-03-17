@@ -57,7 +57,7 @@ public sealed class BaseChoiceBuilder<T>(
     // TODO We can change these types to Optional<MutableList<Choice<T>>> and MutableList<Choice<T>> once
     //  https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
     //  The bug from that issue prevents you from setting BaseChoiceBuilder<*>.choices to `null`.
-    protected var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
+    internal var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     public var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 
     public abstract fun choice(name: String, value: T)
