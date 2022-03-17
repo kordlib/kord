@@ -111,11 +111,11 @@ public sealed class NumericOptionBuilder<T : Number>(
 }
 
 
-@Deprecated("Replaced by IntOptionBuilder", ReplaceWith("IntOptionBuilder"), DeprecationLevel.ERROR)
-public typealias IntChoiceBuilder = IntOptionBuilder
+@Deprecated("Replaced by IntegerOptionBuilder", ReplaceWith("IntegerOptionBuilder"), DeprecationLevel.ERROR)
+public typealias IntChoiceBuilder = IntegerOptionBuilder
 
 @KordDsl
-public class IntOptionBuilder(name: String, description: String) :
+public class IntegerOptionBuilder(name: String, description: String) :
     NumericOptionBuilder<Long>(name, description, ApplicationCommandOptionType.Integer) {
 
     override fun choice(name: String, value: Long) {
@@ -124,7 +124,7 @@ public class IntOptionBuilder(name: String, description: String) :
     }
 }
 
-@Deprecated("Replaced by IntOptionBuilder", ReplaceWith("NumberOptionBuilder"), DeprecationLevel.ERROR)
+@Deprecated("Replaced by NumberOptionBuilder", ReplaceWith("NumberOptionBuilder"), DeprecationLevel.ERROR)
 public typealias NumberChoiceBuilder = NumberOptionBuilder
 
 @KordDsl
