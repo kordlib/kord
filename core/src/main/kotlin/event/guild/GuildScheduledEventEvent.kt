@@ -8,6 +8,7 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.CoroutineScope
 
@@ -18,7 +19,7 @@ import kotlinx.coroutines.CoroutineScope
  * @see GuildScheduledEventUpdateEvent
  * @see GuildScheduledEventDeleteEvent
  */
-public interface GuildScheduledEventEvent : Event, CoroutineScope, Strategizable {
+public sealed interface GuildScheduledEventEvent : Event, CoroutineScope, Strategizable {
 
     /**
      * The [GuildScheduledEvent].
@@ -63,4 +64,6 @@ public interface GuildScheduledEventEvent : Event, CoroutineScope, Strategizable
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getChannelOrNull(): TopGuildChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildScheduledEventEvent
 }
