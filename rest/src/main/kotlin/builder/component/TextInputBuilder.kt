@@ -12,7 +12,9 @@ import dev.kord.common.entity.optional.delegate.delegate
 /**
  * A builder for a [Discord Text Input](https://discord.com/developers/docs/interactions/message-components#text-inputs).
  *
- * @param customId The identifier for the menu, max 100 characters.
+ * @param style The [style][TextInputStyle] of the input.
+ * @param customId The identifier for the input, max 100 characters.
+ * @param label The label for this component, max 45 characters.
  */
 @KordDsl
 public class TextInputBuilder(
