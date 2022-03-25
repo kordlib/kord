@@ -12,8 +12,8 @@ import kotlin.time.Duration
  * @param interval The [Duration] of each interval.
  */
 public abstract class IntervalRateLimiter(
-    protected val limit: Int,
-    protected val interval: Duration,
+    public val limit: Int,
+    public val interval: Duration,
 ) : RateLimiter {
 
     /** Remaining number of [consume] invocations allowed in the current interval. */
@@ -28,7 +28,7 @@ public abstract class IntervalRateLimiter(
         require(interval.isFinite()) { "interval must be finite but was $interval" }
     }
 
-    private val mutex: Mutex = Mutex()
+    private val mutex = Mutex()
 
     /**
      * Acquires a permit for a single action. Suspends until the next [interval] if [limit] permits have already been
