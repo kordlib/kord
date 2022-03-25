@@ -3,12 +3,9 @@ package dev.kord.rest.builder.interaction
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
-import dev.kord.common.entity.DiscordApplicationCommand
-import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
-import dev.kord.rest.service.InteractionService
 
 @KordDsl
 public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
@@ -23,6 +20,7 @@ public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             name = state.name,
+            nameLocalizations = state.nameLocalizations,
             defaultPermission = state.defaultPermission
         )
     }
@@ -41,6 +39,7 @@ public class UserCommandCreateBuilder(override var name: String) : ApplicationCo
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
             name = name,
+            nameLocalizations = state.nameLocalizations,
             type = type,
             defaultPermission = state.defaultPermission
         )

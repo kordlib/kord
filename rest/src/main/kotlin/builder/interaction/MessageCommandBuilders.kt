@@ -21,6 +21,7 @@ public class MessageCommandModifyBuilder : ApplicationCommandModifyBuilder {
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             name = state.name,
+            nameLocalizations = state.nameLocalizations,
             defaultPermission = state.defaultPermission
         )
 
@@ -43,6 +44,7 @@ public class MessageCommandCreateBuilder(override var name: String) : Applicatio
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
             name = name,
+            nameLocalizations = state.nameLocalizations,
             type = type,
             defaultPermission = state.defaultPermission
         )

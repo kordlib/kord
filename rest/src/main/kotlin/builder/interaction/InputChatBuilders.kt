@@ -96,7 +96,7 @@ public inline fun RootInputChatBuilder.group(name: String, description: String, 
 @KordDsl
 public class ChatInputCreateBuilder(
     override var name: String,
-    public override var description: String,
+    override var description: String,
 ) : LocalizedDescriptionCreateBuilder, ApplicationCommandCreateBuilder, RootInputChatBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 
@@ -113,8 +113,10 @@ public class ChatInputCreateBuilder(
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
             name,
+            state.nameLocalizations,
             type,
             Optional.Value(description),
+            state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultPermission
         )
@@ -142,7 +144,9 @@ public class ChatInputModifyBuilder : LocalizedDescriptionModifyBuilder, Applica
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             state.name,
+            state.nameLocalizations,
             state.description,
+            state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultPermission
         )
