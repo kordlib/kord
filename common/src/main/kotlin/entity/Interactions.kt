@@ -166,10 +166,19 @@ public sealed class Choice<out T> {
     ) : Choice<String>()
 
     internal class Serializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
+        private val nameLocalizationsSerializer = run {
+            val mapSerializer = MapSerializer(
+                Locale.serializer(),
+                String.serializer()
+            )
+
+            Optional.serializer(mapSerializer)
+        }
+
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
-            element<String>("value")
-            element<Map<Locale, String>?>("name_localizations")
+            element<JsonPrimitive>("value")
+            element<Optional<Map<Locale, String>>>("name_localizations", isOptional = true)
         }
 
         override fun deserialize(decoder: Decoder): Choice<*> {
@@ -182,12 +191,7 @@ public sealed class Choice<out T> {
                         0 -> name = decodeStringElement(descriptor, index)
                         1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
                         2 -> {
-                            val mapSerializer = MapSerializer(
-                                Locale.serializer(),
-                                String.serializer()
-                            )
-                            val serializer = Optional.serializer(mapSerializer)
-                            nameLocalizations = decodeSerializableElement(descriptor, index, serializer)
+                            nameLocalizations = decodeSerializableElement(descriptor, index, nameLocalizationsSerializer)
                         }
 
                         CompositeDecoder.DECODE_DONE -> break
@@ -211,12 +215,7 @@ public sealed class Choice<out T> {
                     else -> encodeStringElement(descriptor, 1, value.value.toString())
                 }
                 if (value.nameLocalizations !is Optional.Missing) {
-                    val mapSerializer = MapSerializer(
-                        Locale.serializer(),
-                        String.serializer()
-                    )
-                    val serializer = Optional.serializer(mapSerializer)
-                    encodeSerializableElement(descriptor, 2, serializer, value.nameLocalizations)
+                    encodeSerializableElement(descriptor, 2, nameLocalizationsSerializer, value.nameLocalizations)
                 }
             }
         }
