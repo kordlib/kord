@@ -1,5 +1,6 @@
 package dev.kord.core.entity.application
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.ApplicationCommandOptionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.filterList
@@ -15,8 +16,18 @@ import dev.kord.rest.service.InteractionService
 
 public sealed interface ChatInputCommandCommand : ApplicationCommand, ChatInputCommandBehavior {
 
+    /**
+     * The description of the command.
+     */
     public val description: String?
         get() = data.description
+
+    /**
+     * A map containing all localizations of [description].
+     */
+    public val descriptionLocalizations: Map<Locale, String>
+        get() = data.descriptionLocalizations ?: emptyMap()
+
     /**
      * The groups of this command, each group contains at least one [sub command][ChatInputSubCommand].
      */
