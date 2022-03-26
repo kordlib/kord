@@ -22,10 +22,10 @@ public sealed class OptionsBuilder(
 ) : LocalizedNameBuilder, LocalizedDescriptionBuilder, RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
     public var default: Boolean? by ::_default.delegate()
-    internal var _nameLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing()
-    override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations.delegate()
-    internal var _descriptionLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing()
-    override var descriptionLocalizations: MutableMap<Locale, String>? by ::_descriptionLocalizations.delegate()
+    internal var _nameLocalizations: MutableMap<Locale, String>? = null
+    override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations
+    internal var _descriptionLocalizations: MutableMap<Locale, String>? = null
+    override var descriptionLocalizations: MutableMap<Locale, String>? by ::_descriptionLocalizations
 
     internal var _required: OptionalBoolean = OptionalBoolean.Missing
     public var required: Boolean? by ::_required.delegate()
@@ -65,7 +65,7 @@ public sealed class BaseChoiceBuilder<T>(
     private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     public var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 
-    public abstract fun choice(name: String, value: T, nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing())
+    public abstract fun choice(name: String, value: T, nameLocalizations: Map<Locale, String>? = null)
 
     /**
      * Registers a new choice with [name] representing value and applies [localizationsBuilder] to it
@@ -97,15 +97,15 @@ public sealed class BaseChoiceBuilder<T>(
  */
 public class ChoiceLocalizationsBuilder(override var name: String) : LocalizedNameCreateBuilder {
     @PublishedApi
-    internal var _nameLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing()
-    override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations.delegate()
+    internal var _nameLocalizations: MutableMap<Locale, String>? = null
+    override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations
 }
 
 @KordDsl
 public class IntChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Long>(name, description, ApplicationCommandOptionType.Integer) {
 
-    override fun choice(name: String, value: Long, nameLocalizations: Optional<Map<Locale, String>>) {
+    override fun choice(name: String, value: Long, nameLocalizations: Map<Locale, String>?) {
         if (choices == null) choices = mutableListOf()
         choices!!.add(Choice.IntChoice(name, nameLocalizations, value))
     }
@@ -115,7 +115,7 @@ public class IntChoiceBuilder(name: String, description: String) :
 @KordDsl
 public class NumberChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<Double>(name, description, ApplicationCommandOptionType.Number) {
-    override fun choice(name: String, value: Double, nameLocalizations: Optional<Map<Locale, String>>) {
+    override fun choice(name: String, value: Double, nameLocalizations: Map<Locale, String>?) {
         if (choices == null) choices = mutableListOf()
         choices!!.add(Choice.NumberChoice(name, nameLocalizations, value))
     }
@@ -126,7 +126,7 @@ public class NumberChoiceBuilder(name: String, description: String) :
 public class StringChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
 
-    override fun choice(name: String, value: String, nameLocalizations: Optional<Map<Locale, String>>) {
+    override fun choice(name: String, value: String, nameLocalizations: Map<Locale, String>?) {
         if (choices == null) choices = mutableListOf()
         choices!!.add(Choice.StringChoice(name, nameLocalizations, value))
     }

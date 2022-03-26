@@ -14,7 +14,7 @@ public class MessageCommandModifyBuilder : ApplicationCommandModifyBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 
     override var name: String? by state::name.delegate()
-    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations
 
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
 
@@ -37,7 +37,7 @@ public class MessageCommandCreateBuilder(override var name: String) : Applicatio
 
     private val state = ApplicationCommandModifyStateHolder()
 
-    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations
 
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
 

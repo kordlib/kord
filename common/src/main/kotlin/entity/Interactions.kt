@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.value
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
@@ -22,13 +23,13 @@ public data class DiscordApplicationCommand(
     val applicationId: Snowflake,
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing(),
+    val nameLocalizations: Map<Locale, String>? = null,
     /**
      * Don't trust the docs: This is nullable on non chat input commands.
      */
     val description: String?,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Optional<Map<Locale, String>> = Optional.Missing(),
+    val descriptionLocalizations: Map<Locale, String>? = null,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
@@ -66,10 +67,10 @@ public data class ApplicationCommandOption(
     val type: ApplicationCommandOptionType,
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing(),
+    val nameLocalizations: Map<Locale, String>? = null,
     val description: String,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Optional<Map<Locale, String>> = Optional.Missing(),
+    val descriptionLocalizations: Map<Locale, String>? = null,
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
     @OptIn(KordExperimental::class)
@@ -141,29 +142,30 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
 
 }
 
-private val LocalizationSerializer = Optional.serializer(MapSerializer(Locale.serializer(), String.serializer()))
+private val LocalizationSerializer =
+    MapSerializer(Locale.serializer(), String.serializer()).nullable
 
 @Serializable(Choice.Serializer::class)
 public sealed class Choice<out T> {
     public abstract val name: String
-    public abstract val nameLocalizations: Optional<Map<Locale, String>>
+    public abstract val nameLocalizations: Map<Locale, String>?
     public abstract val value: T
 
     public data class IntChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>>,
+        override val nameLocalizations: Map<Locale, String>?,
         override val value: Long
     ) : Choice<Long>()
 
     public data class NumberChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>>,
+        override val nameLocalizations: Map<Locale, String>?,
         override val value: Double
     ) : Choice<Double>()
 
     public data class StringChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>>,
+        override val nameLocalizations: Map<Locale, String>?,
         override val value: String
     ) : Choice<String>()
 
@@ -171,12 +173,12 @@ public sealed class Choice<out T> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
             element<JsonPrimitive>("value")
-            element<Optional<Map<Locale, String>>>("name_localizations", isOptional = true)
+            element<Map<Locale, String>>("name_localizations", isOptional = true)
         }
 
         override fun deserialize(decoder: Decoder): Choice<*> {
             lateinit var name: String
-            var nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing()
+            var nameLocalizations: Map<Locale, String>? = null
             lateinit var value: JsonPrimitive
             decoder.decodeStructure(descriptor) {
                 while (true) {
@@ -205,9 +207,7 @@ public sealed class Choice<out T> {
                     is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
                     else -> encodeStringElement(descriptor, 1, value.value.toString())
                 }
-                if (value.nameLocalizations !is Optional.Missing) {
-                    encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
-                }
+                encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
             }
         }
     }
