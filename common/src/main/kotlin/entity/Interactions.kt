@@ -141,6 +141,8 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
 
 }
 
+private val LocalizationSerializer = Optional.serializer(MapSerializer(Locale.serializer(), String.serializer()))
+
 @Serializable(Choice.Serializer::class)
 public sealed class Choice<out T> {
     public abstract val name: String
@@ -168,33 +170,25 @@ public sealed class Choice<out T> {
     internal class Serializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
-            element<String>("value")
-            element<Map<Locale, String>?>("name_localizations")
+            element<JsonPrimitive>("value")
+            element<Optional<Map<Locale, String>>>("name_localizations", isOptional = true)
         }
 
         override fun deserialize(decoder: Decoder): Choice<*> {
             lateinit var name: String
             var nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing()
             lateinit var value: JsonPrimitive
-            with(decoder.beginStructure(descriptor) as JsonDecoder) {
+            decoder.decodeStructure(descriptor) {
                 while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
                         0 -> name = decodeStringElement(descriptor, index)
-                        1 -> value = decodeJsonElement().jsonPrimitive
-                        2 -> {
-                            val mapSerializer = MapSerializer(
-                                Locale.serializer(),
-                                String.serializer()
-                            )
-                            val serializer = Optional.serializer(mapSerializer)
-                            nameLocalizations = decodeSerializableElement(descriptor, 2, serializer)
-                        }
+                        1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
+                        2 -> nameLocalizations = decodeSerializableElement(descriptor, index, LocalizationSerializer)
 
                         CompositeDecoder.DECODE_DONE -> break
                         else -> throw SerializationException("unknown index: $index")
                     }
                 }
-                endStructure(descriptor)
             }
             return when {
                 value.longOrNull != null -> IntChoice(name, nameLocalizations, value.long)
@@ -212,12 +206,7 @@ public sealed class Choice<out T> {
                     else -> encodeStringElement(descriptor, 1, value.value.toString())
                 }
                 if (value.nameLocalizations !is Optional.Missing) {
-                    val mapSerializer = MapSerializer(
-                        Locale.serializer(),
-                        String.serializer()
-                    )
-                    val serializer = Optional.serializer(mapSerializer)
-                    encodeSerializableElement(descriptor, 2, serializer, value.nameLocalizations)
+                    encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
                 }
             }
         }

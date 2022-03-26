@@ -4,16 +4,17 @@ import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 
 /**
- * Builder which has a localisable name.
- *
- * @property name the default name
- * @property nameLocalizations a [MutableMap] containing localized versions of [name]
+ * Builder that has a localizable name.
  *
  * @see Locale
  */
 @KordDsl
 public interface LocalizedNameBuilder {
+
+    /** The default name. */
     public val name: String?
+
+    /** A [MutableMap] containing localized versions of [name]. */
     public var nameLocalizations: MutableMap<Locale, String>?
 
     /**
@@ -26,32 +27,33 @@ public interface LocalizedNameBuilder {
 }
 
 /**
- * Builder for creating an entity with a localized [name],
+ * Builder for creating an entity with a localized [name].
  */
 @KordDsl
 public interface LocalizedNameCreateBuilder : LocalizedNameBuilder {
-    public override var name: String
+    override var name: String
 }
 
 /**
- * Builder for modifying an entity with a localized [name],
+ * Builder for modifying an entity with a localized [name].
  */
 @KordDsl
 public interface LocalizedNameModifyBuilder : LocalizedNameBuilder {
-    public override var name: String?
+    override var name: String?
 }
 
 /**
- * Builder which has a localisable description.
- *
- * @property description the default name
- * @property descriptionLocalizations a [MutableMap] containing localized versions of [description]
+ * Builder that has a localizable description.
  *
  * @see Locale
  */
 @KordDsl
 public interface LocalizedDescriptionBuilder {
+
+    /** The default description. */
     public val description: String?
+
+    /** A [MutableMap] containing localized versions of [description]. */
     public var descriptionLocalizations: MutableMap<Locale, String>?
 
     /**
@@ -64,17 +66,17 @@ public interface LocalizedDescriptionBuilder {
 }
 
 /**
- * Builder for creating an entity with a localized [description],
+ * Builder for creating an entity with a localized [description].
  */
 @KordDsl
 public interface LocalizedDescriptionCreateBuilder : LocalizedDescriptionBuilder {
-    public override var description: String
+    override var description: String
 }
 
 /**
- * Builder for modifying an entity with a localized [description],
+ * Builder for modifying an entity with a localized [description].
  */
 @KordDsl
 public interface LocalizedDescriptionModifyBuilder : LocalizedDescriptionBuilder {
-    public override var description: String?
+    override var description: String?
 }
