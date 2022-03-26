@@ -100,8 +100,8 @@ public class ChatInputCreateBuilder(
 ) : LocalizedDescriptionCreateBuilder, ApplicationCommandCreateBuilder, RootInputChatBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 
-    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations
-    override var descriptionLocalizations: MutableMap<Locale, String>? by state::descriptionLocalizations
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
+    override var descriptionLocalizations: MutableMap<Locale, String>? by state::descriptionLocalizations.delegate()
 
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.ChatInput
@@ -132,10 +132,10 @@ public class ChatInputModifyBuilder : LocalizedDescriptionModifyBuilder, Applica
 
     private val state = ApplicationCommandModifyStateHolder()
     override var name: String? by state::name.delegate()
-    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var description: String? by state::description.delegate()
-    override var descriptionLocalizations: MutableMap<Locale, String>? by state::descriptionLocalizations
+    override var descriptionLocalizations: MutableMap<Locale, String>? by state::descriptionLocalizations.delegate()
 
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
 

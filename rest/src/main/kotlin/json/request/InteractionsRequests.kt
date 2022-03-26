@@ -12,11 +12,11 @@ import kotlinx.serialization.Serializable
 public data class ApplicationCommandCreateRequest(
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Map<Locale, String>? = null,
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Null(),
     val type: ApplicationCommandType,
     val description: Optional<String> = Optional.Missing(),
     @SerialName("description_localizations")
-    val descriptionLocalizations: Map<Locale, String>? = null,
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Null(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
@@ -26,10 +26,10 @@ public data class ApplicationCommandCreateRequest(
 public data class ApplicationCommandModifyRequest(
     val name: Optional<String> = Optional.Missing(),
     @SerialName("name_localizations")
-    val nameLocalizations: Map<Locale, String>? = null,
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Null(),
     val description: Optional<String> = Optional.Missing(),
     @SerialName("description_localizations")
-    val descriptionLocalizations: Map<Locale, String>? = null,
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Null(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing

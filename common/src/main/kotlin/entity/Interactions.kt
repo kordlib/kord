@@ -23,13 +23,13 @@ public data class DiscordApplicationCommand(
     val applicationId: Snowflake,
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Map<Locale, String>? = null,
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Null(),
     /**
      * Don't trust the docs: This is nullable on non chat input commands.
      */
     val description: String?,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Map<Locale, String>? = null,
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Null(),
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
@@ -67,10 +67,10 @@ public data class ApplicationCommandOption(
     val type: ApplicationCommandOptionType,
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Map<Locale, String>? = null,
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Null(),
     val description: String,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Map<Locale, String>? = null,
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Null(),
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
     @OptIn(KordExperimental::class)
@@ -143,29 +143,29 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
 }
 
 private val LocalizationSerializer =
-    MapSerializer(Locale.serializer(), String.serializer()).nullable
+    Optional.serializer(MapSerializer(Locale.serializer(), String.serializer()).nullable)
 
 @Serializable(Choice.Serializer::class)
 public sealed class Choice<out T> {
     public abstract val name: String
-    public abstract val nameLocalizations: Map<Locale, String>?
+    public abstract val nameLocalizations: Optional<Map<Locale, String>?>
     public abstract val value: T
 
     public data class IntChoice(
         override val name: String,
-        override val nameLocalizations: Map<Locale, String>?,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: Long
     ) : Choice<Long>()
 
     public data class NumberChoice(
         override val name: String,
-        override val nameLocalizations: Map<Locale, String>?,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: Double
     ) : Choice<Double>()
 
     public data class StringChoice(
         override val name: String,
-        override val nameLocalizations: Map<Locale, String>?,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: String
     ) : Choice<String>()
 
@@ -178,7 +178,7 @@ public sealed class Choice<out T> {
 
         override fun deserialize(decoder: Decoder): Choice<*> {
             lateinit var name: String
-            var nameLocalizations: Map<Locale, String>? = null
+            var nameLocalizations: Optional<Map<Locale, String>?> = Optional.Null()
             lateinit var value: JsonPrimitive
             decoder.decodeStructure(descriptor) {
                 while (true) {

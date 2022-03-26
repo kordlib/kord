@@ -26,7 +26,7 @@ public sealed interface ChatInputCommandCommand : ApplicationCommand, ChatInputC
      * A map containing all localizations of [description].
      */
     public val descriptionLocalizations: Map<Locale, String>
-        get() = data.descriptionLocalizations ?: emptyMap()
+        get() = data.descriptionLocalizations.value ?: emptyMap()
 
     /**
      * The groups of this command, each group contains at least one [sub command][ChatInputSubCommand].

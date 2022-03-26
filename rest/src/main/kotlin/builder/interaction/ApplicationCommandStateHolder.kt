@@ -13,10 +13,10 @@ import kotlinx.serialization.SerialName
 internal class ApplicationCommandModifyStateHolder {
 
     var name: Optional<String> = Optional.Missing()
-    var nameLocalizations: MutableMap<Locale, String>? = null
+    var nameLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Null()
 
     var description: Optional<String> = Optional.Missing()
-    var descriptionLocalizations: MutableMap<Locale, String>? = null
+    var descriptionLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Null()
 
     var options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
 

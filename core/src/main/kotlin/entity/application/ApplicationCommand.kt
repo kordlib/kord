@@ -38,7 +38,7 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
      * A map containing all localizations of [name].
      */
     public val nameLocalizations: Map<Locale, String>
-        get() = data.nameLocalizations ?: emptyMap()
+        get() = data.nameLocalizations.value ?: emptyMap()
 
     /**
      * auto-incrementing version identifier updated during substantial record changes.
