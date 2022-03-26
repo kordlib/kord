@@ -65,11 +65,7 @@ public sealed class BaseChoiceBuilder<T>(
     private var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
     public var choices: MutableList<Choice<*>>? by ::_choices.delegate()
 
-    public abstract fun choice(
-        name: String,
-        value: T,
-        nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing(),
-    )
+    public abstract fun choice(name: String, value: T, nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing())
 
     /**
      * Registers a new choice with [name] representing value and applies [localizationsBuilder] to it
