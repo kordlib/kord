@@ -96,7 +96,7 @@ public inline fun RootInputChatBuilder.group(name: String, description: String, 
 @KordDsl
 public class ChatInputCreateBuilder(
     override var name: String,
-    public override var description: String,
+    override var description: String,
 ) : LocalizedDescriptionCreateBuilder, ApplicationCommandCreateBuilder, RootInputChatBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 

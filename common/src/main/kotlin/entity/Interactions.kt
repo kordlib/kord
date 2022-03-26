@@ -176,25 +176,24 @@ public sealed class Choice<out T> {
             lateinit var name: String
             var nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing()
             lateinit var value: JsonPrimitive
-            with(decoder.beginStructure(descriptor) as JsonDecoder) {
+            decoder.decodeStructure(descriptor) {
                 while (true) {
                     when (val index = decodeElementIndex(descriptor)) {
                         0 -> name = decodeStringElement(descriptor, index)
-                        1 -> value = decodeJsonElement().jsonPrimitive
+                        1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
                         2 -> {
                             val mapSerializer = MapSerializer(
                                 Locale.serializer(),
                                 String.serializer()
                             )
                             val serializer = Optional.serializer(mapSerializer)
-                            nameLocalizations = decodeSerializableElement(descriptor, 2, serializer)
+                            nameLocalizations = decodeSerializableElement(descriptor, index, serializer)
                         }
 
                         CompositeDecoder.DECODE_DONE -> break
                         else -> throw SerializationException("unknown index: $index")
                     }
                 }
-                endStructure(descriptor)
             }
             return when {
                 value.longOrNull != null -> IntChoice(name, nameLocalizations, value.long)
