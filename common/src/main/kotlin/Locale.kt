@@ -10,7 +10,7 @@ import kotlinx.serialization.encoding.Encoder
 import java.util.Locale as JLocale
 
 /**
- * Representation of a locale [supported by Discord](https://discord.com/developers/docs/reference#Locales).
+ * Representation of a locale [supported by Discord](https://discord.com/developers/docs/reference#locales).
  *
  * @property language an ISO 639-1 language code representing the language
  * @property country an ISO 3166 country code representing the country
