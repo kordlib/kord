@@ -27,6 +27,7 @@ This will generate a file named "BuildConfigGenerated.kt" that looks like:
 package dev.kord.common
 
 internal const val BUILD_CONFIG_GENERATED_LIBRARY_VERSION: String = "<version>"
+internal const val BUILD_CONFIG_GENERATED_COMMIT_HASH: String = "<commit hash>"
 */
 buildConfig {
     packageName("dev.kord.common")
@@ -37,9 +38,6 @@ buildConfig {
         internalVisibility = true
     }
 
-    buildConfigField(
-        type = "String",
-        name = "BUILD_CONFIG_GENERATED_LIBRARY_VERSION",
-        value = "\"${Library.version}\"",
-    )
+    buildConfigField(type = "String", name = "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", value = "\"${Library.version}\"")
+    buildConfigField(type = "String", name = "BUILD_CONFIG_GENERATED_COMMIT_HASH", value = "\"$commitHash\"")
 }

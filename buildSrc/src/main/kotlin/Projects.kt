@@ -1,10 +1,23 @@
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.project
+import org.gradle.api.Project
+import java.io.ByteArrayOutputStream
 
 /**
  * whether the process has been invoked by JitPack
  */
 val isJitPack get() = "true" == System.getenv("JITPACK")
+
+val Project.commitHash: String
+    get() = try {
+        ByteArrayOutputStream().use { out ->
+            exec {
+                commandLine("git", "rev-parse", "--short", "HEAD")
+                standardOutput = out
+            }
+            out.toString().trim()
+        }
+    } catch (e: Throwable) {
+        System.getenv("GITHUB_SHA") ?: "unknown"
+    }
 
 object Library {
     const val name = "kord"
