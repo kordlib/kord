@@ -82,7 +82,7 @@ public class KordBuilder(public val token: String) {
      * @see StackTraceRecoveringKtorRequestHandler
      * @see withStackTraceRecovery
      */
-    private var stackTraceRecovery: Boolean = false
+    public var stackTraceRecovery: Boolean = false
 
     /**
      * Enable adding a [Runtime.addShutdownHook] to log out of the [Gateway] when the process is killed.
