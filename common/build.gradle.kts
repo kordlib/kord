@@ -7,6 +7,10 @@ plugins {
     id("com.github.gmazzo.buildconfig") version "3.0.3"
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     api(libs.kotlinx.datetime)
 
