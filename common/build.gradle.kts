@@ -1,3 +1,9 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
 plugins {
     `kord-module`
     `kord-sampled-module`
@@ -5,11 +11,6 @@ plugins {
 
     // see https://github.com/gmazzo/gradle-buildconfig-plugin
     id("com.github.gmazzo.buildconfig") version "3.0.3"
-}
-
-repositories {
-    gradlePluginPortal()
-    mavenCentral()
 }
 
 dependencies {
