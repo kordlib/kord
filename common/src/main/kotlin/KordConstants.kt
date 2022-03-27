@@ -8,6 +8,7 @@ public object KordConstants {
     /** Kord's version. */
     public val KORD_VERSION: String = BUILD_CONFIG_GENERATED_LIBRARY_VERSION
 
+    /** The hash of the commit from which this Kord version was built. */
     public val KORD_COMMIT_HASH: String = BUILD_CONFIG_GENERATED_COMMIT_HASH
 
     /** URL for Kord's GitHub repository. */
