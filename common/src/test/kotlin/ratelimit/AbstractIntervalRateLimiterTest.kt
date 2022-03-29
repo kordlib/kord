@@ -12,7 +12,7 @@ import kotlin.time.Duration.Companion.INFINITE
 import kotlin.time.Duration.Companion.ZERO
 import kotlin.time.Duration.Companion.seconds
 
-abstract class IntervalRateLimiterTest {
+abstract class AbstractIntervalRateLimiterTest {
 
     private val limit = 120
     private val interval = 60.seconds

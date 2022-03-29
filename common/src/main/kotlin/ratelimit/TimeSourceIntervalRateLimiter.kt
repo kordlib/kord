@@ -5,18 +5,11 @@ import kotlin.time.Duration
 import kotlin.time.TimeMark
 import kotlin.time.TimeSource
 
-/**
- * An implementation of [IntervalRateLimiter] that uses a [TimeSource] for measuring intervals.
- *
- * @param limit The maximum number of [consume] invocations allowed for each interval.
- * @param interval The [Duration] of each interval.
- * @param timeSource The [TimeSource] for measuring intervals, [TimeSource.Monotonic] by default.
- */
-public class TimeSourceIntervalRateLimiter(
+internal class TimeSourceIntervalRateLimiter(
     limit: Int,
     interval: Duration,
-    private val timeSource: TimeSource = TimeSource.Monotonic,
-) : IntervalRateLimiter(limit, interval) {
+    private val timeSource: TimeSource,
+) : AbstractIntervalRateLimiter(limit, interval) {
 
     private var intervalStart = DISTANT_PAST_MARK
 

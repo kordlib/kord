@@ -4,17 +4,11 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlin.time.Duration
 
-/**
- * A [RateLimiter] that restricts the number of [consume] invocations in [intervals][interval] to a given [limit].
- * Exceeding this limit results in suspension until the next interval.
- *
- * @param limit The maximum number of [consume] invocations allowed for each interval.
- * @param interval The [Duration] of each interval.
- */
-public abstract class IntervalRateLimiter(
-    public val limit: Int,
-    public val interval: Duration,
-) : RateLimiter {
+/** Abstract base class for implementing [IntervalRateLimiter]. */
+public abstract class AbstractIntervalRateLimiter(
+    final override val limit: Int,
+    final override val interval: Duration,
+) : IntervalRateLimiter {
 
     /** Remaining number of [consume] invocations allowed in the current interval. */
     protected var remaining: Int = limit
@@ -30,10 +24,6 @@ public abstract class IntervalRateLimiter(
 
     private val mutex = Mutex()
 
-    /**
-     * Acquires a permit for a single action. Suspends until the next [interval] if [limit] permits have already been
-     * acquired in the current interval.
-     */
     final override suspend fun consume() {
         mutex.withLock { consumeUnderLock() }
     }
