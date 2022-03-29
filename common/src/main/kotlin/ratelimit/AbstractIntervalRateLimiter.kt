@@ -28,6 +28,6 @@ public abstract class AbstractIntervalRateLimiter(
         mutex.withLock { consumeUnderLock() }
     }
 
-    /** Version of [consume] that is called under a lock, e.g. editing vars is thread-safe in this method. */
+    /** Variant of [consume] that is called under a lock, e.g. editing vars is thread-safe in this method. */
     protected abstract suspend fun consumeUnderLock()
 }
