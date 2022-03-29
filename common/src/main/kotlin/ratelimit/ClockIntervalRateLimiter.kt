@@ -15,7 +15,7 @@ internal class ClockIntervalRateLimiter(
 
     private fun enterNextInterval(now: Instant) {
         // limit - 1, this is already the first 'consume' call in the next interval
-        remaining = limit - 1
+        remainingConsumes = limit - 1
         intervalEnd = now + interval
     }
 
@@ -32,7 +32,7 @@ internal class ClockIntervalRateLimiter(
                 delayUntilNextInterval(now)
                 enterNextInterval(now = clock.now())
             }
-            else -> remaining -= 1
+            else -> remainingConsumes -= 1
         }
     }
 }

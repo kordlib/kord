@@ -11,10 +11,10 @@ public abstract class AbstractIntervalRateLimiter(
 ) : IntervalRateLimiter {
 
     /** Remaining number of [consume] invocations allowed in the current interval. */
-    protected var remaining: Int = limit
+    protected var remainingConsumes: Int = limit
 
     /** Whether no more [consume] invocations are allowed in the current interval. */
-    protected val limitIsExceeded: Boolean get() = remaining == 0
+    protected val limitIsExceeded: Boolean get() = remainingConsumes == 0
 
     init {
         require(limit > 0) { "limit must be positive but was $limit" }

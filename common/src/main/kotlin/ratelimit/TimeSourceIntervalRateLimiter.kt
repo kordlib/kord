@@ -15,7 +15,7 @@ internal class TimeSourceIntervalRateLimiter(
 
     private fun enterNextInterval() {
         // limit - 1, this is already the first 'consume' call in the next interval
-        remaining = limit - 1
+        remainingConsumes = limit - 1
         intervalStart = timeSource.markNow()
     }
 
@@ -32,7 +32,7 @@ internal class TimeSourceIntervalRateLimiter(
                 delayUntilNextInterval(elapsed)
                 enterNextInterval()
             }
-            else -> remaining -= 1
+            else -> remainingConsumes -= 1
         }
     }
 
