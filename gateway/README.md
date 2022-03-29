@@ -14,7 +14,7 @@ suspend fun main(args: Array<String>) {
             install(JsonFeature)
         }
         reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
-        sendRateLimiter = BucketRateLimiter(120, 60.seconds)
+        sendRateLimiter = IntervalRateLimiter(120, 60.seconds)
         dispatcher = Dispatchers.Default
     }
 

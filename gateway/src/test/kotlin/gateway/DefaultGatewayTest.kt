@@ -3,7 +3,7 @@ package gateway
 import dev.kord.common.entity.ActivityType
 import dev.kord.common.entity.DiscordBotActivity
 import dev.kord.common.entity.PresenceStatus
-import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.gateway.*
 import dev.kord.gateway.retry.LinearRetry
 import io.ktor.client.*
@@ -37,7 +37,7 @@ class DefaultGatewayTest {
             }
 
             reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
-            sendRateLimiter = BucketRateLimiter(120, 60.seconds)
+            sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
         }
 
         gateway.events.filterIsInstance<MessageCreate>().flowOn(Dispatchers.Default).onEach {
