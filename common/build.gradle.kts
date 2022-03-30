@@ -28,6 +28,7 @@ package dev.kord.common
 
 internal const val BUILD_CONFIG_GENERATED_LIBRARY_VERSION: String = "<version>"
 internal const val BUILD_CONFIG_GENERATED_COMMIT_HASH: String = "<commit hash>"
+internal const val BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH: String = "<short commit hash>"
 */
 buildConfig {
     packageName("dev.kord.common")
@@ -38,6 +39,7 @@ buildConfig {
         internalVisibility = true
     }
 
-    buildConfigField(type = "String", name = "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", value = "\"${Library.version}\"")
-    buildConfigField(type = "String", name = "BUILD_CONFIG_GENERATED_COMMIT_HASH", value = "\"$commitHash\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"${Library.version}\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"${Library.commitHash}\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"${Library.shortCommitHash}\"")
 }

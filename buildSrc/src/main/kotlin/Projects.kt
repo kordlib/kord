@@ -1,23 +1,7 @@
-import org.gradle.api.Project
-import java.io.ByteArrayOutputStream
-
 /**
  * whether the process has been invoked by JitPack
  */
 val isJitPack get() = "true" == System.getenv("JITPACK")
-
-val Project.commitHash: String
-    get() = try {
-        ByteArrayOutputStream().use { out ->
-            exec {
-                commandLine("git", "rev-parse", "--short", "HEAD")
-                standardOutput = out
-            }
-            out.toString().trim()
-        }
-    } catch (e: Throwable) {
-        System.getenv("GITHUB_SHA") ?: "unknown"
-    }
 
 object Library {
     const val name = "kord"
@@ -35,6 +19,11 @@ object Library {
             }
 
         }
+
+    val commitHash get() = System.getenv("GITHUB_SHA") ?: "unknown"
+
+    // this environment variable isn't available out of the box, we set it ourselves
+    val shortCommitHash get() = System.getenv("SHORT_SHA") ?: "unknown"
 
     const val description = "Idiomatic Kotlin Wrapper for The Discord API"
     const val projectUrl = "https://github.com/kordlib/kord"
