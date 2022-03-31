@@ -11,7 +11,7 @@ import dev.kord.core.entity.channel.StageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.json.request.StageInstanceUpdateRequest
+import dev.kord.rest.builder.stage.StageInstanceModifyBuilder
 
 public interface StageInstanceBehavior : KordEntity, Strategizable {
 
@@ -20,8 +20,10 @@ public interface StageInstanceBehavior : KordEntity, Strategizable {
 
     public suspend fun delete(reason: String? = null): Unit = kord.rest.stageInstance.deleteStageInstance(channelId, reason)
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Replaced by 'edit'.", ReplaceWith("this.edit {\nthis@edit.topic = topic\n}"))
     public suspend fun update(topic: String): StageInstance {
-        val instance = kord.rest.stageInstance.updateStageInstance(channelId, StageInstanceUpdateRequest(topic))
+        val instance = kord.rest.stageInstance.updateStageInstance(channelId, dev.kord.rest.json.request.StageInstanceUpdateRequest(topic))
         val data = StageInstanceData.from(instance)
 
         return StageInstance(data, kord, supplier)
@@ -63,6 +65,13 @@ public interface StageInstanceBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StageInstanceBehavior =
         StageInstanceBehavior(id, channelId, kord, strategy.supply(kord))
 }
+
+public suspend inline fun StageInstanceBehavior.edit(builder: StageInstanceModifyBuilder.() -> Unit): StageInstance {
+    val instance = kord.rest.stageInstance.modifyStageInstance(channelId, builder)
+    val data = StageInstanceData.from(instance)
+    return StageInstance(data, kord, supplier)
+}
+
 
 internal fun StageInstanceBehavior(id: Snowflake, channelId: Snowflake, kord: Kord, supplier: EntitySupplier) =
     object : StageInstanceBehavior {
