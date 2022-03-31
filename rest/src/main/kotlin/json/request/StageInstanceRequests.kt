@@ -18,5 +18,13 @@ public data class StageInstanceCreateRequest(
     val sendStartNotification: OptionalBoolean = OptionalBoolean.Missing,
 )
 
+@Deprecated("Replaced by 'StageInstanceModifyRequest'.")
 @Serializable
 public data class StageInstanceUpdateRequest(val topic: String)
+
+@Serializable
+public data class StageInstanceModifyRequest(
+    val topic: Optional<String> = Optional.Missing(),
+    @SerialName("privacy_level")
+    val privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing(),
+)
