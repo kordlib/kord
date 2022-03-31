@@ -186,6 +186,9 @@ public sealed class GuildFeature(public val value: String) {
 
     public class Unknown(value: String) : GuildFeature(value)
 
+    /** Guild has access to set an animated guild banner image. */
+    public object AnimatedBanner : GuildFeature("ANIMATED_BANNER")
+
     /** Guild has access to set an invite splash background */
     public object InviteSplash : GuildFeature("INVITE_SPLASH")
 
@@ -257,6 +260,7 @@ public sealed class GuildFeature(public val value: String) {
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
 
         override fun deserialize(decoder: Decoder): GuildFeature = when (val value = decoder.decodeString()) {
+            "ANIMATED_BANNER" -> AnimatedBanner
             "INVITE_SPLASH" -> InviteSplash
             "VIP_REGIONS" -> VIPRegions
             "VANITY_URL" -> VanityUrl
