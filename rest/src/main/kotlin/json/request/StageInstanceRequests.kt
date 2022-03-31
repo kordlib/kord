@@ -18,7 +18,10 @@ public data class StageInstanceCreateRequest(
     val sendStartNotification: OptionalBoolean = OptionalBoolean.Missing,
 )
 
-@Deprecated("Replaced by 'StageInstanceModifyRequest'.")
+@Deprecated(
+    "Replaced by 'StageInstanceModifyRequest'.",
+    ReplaceWith("StageInstanceModifyRequest", "dev.kord.rest.json.request.StageInstanceModifyRequest"),
+)
 @Serializable
 public data class StageInstanceUpdateRequest(val topic: String)
 
