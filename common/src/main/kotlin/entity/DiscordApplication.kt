@@ -28,6 +28,9 @@ public sealed interface BaseDiscordApplication {
     public val slug: Optional<String>
     public val coverImage: Optional<String>
     public val flags: Optional<ApplicationFlags>
+    public val tags: Optional<List<String>>
+    public val installParams: Optional<InstallParams>
+    public val customInstallUrl: Optional<String>
 }
 
 /**
@@ -62,6 +65,11 @@ public data class DiscordApplication(
     @SerialName("cover_image")
     override val coverImage: Optional<String> = Optional.Missing(),
     override val flags: Optional<ApplicationFlags> = Optional.Missing(),
+    override val tags: Optional<List<String>> = Optional.Missing(),
+    @SerialName("install_params")
+    override val installParams: Optional<InstallParams> = Optional.Missing(),
+    @SerialName("custom_install_url")
+    override val customInstallUrl: Optional<String> = Optional.Missing(),
 ) : BaseDiscordApplication
 
 /**
@@ -92,6 +100,11 @@ public data class DiscordPartialApplication(
     @SerialName("cover_image")
     override val coverImage: Optional<String> = Optional.Missing(),
     override val flags: Optional<ApplicationFlags> = Optional.Missing(),
+    override val tags: Optional<List<String>> = Optional.Missing(),
+    @SerialName("install_params")
+    override val installParams: Optional<InstallParams> = Optional.Missing(),
+    @SerialName("custom_install_url")
+    override val customInstallUrl: Optional<String> = Optional.Missing(),
 ) : BaseDiscordApplication
 
 public enum class ApplicationFlag(public val code: Int) {
@@ -233,3 +246,11 @@ public fun ApplicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags 
 public fun ApplicationFlags(flags: Iterable<ApplicationFlags>): ApplicationFlags = ApplicationFlags {
     flags.forEach { +it }
 }
+
+@Serializable
+public data class InstallParams(
+    /** The scopes to add the application to the server with. */
+    val scopes: List<String>,
+    /** The permissions to request for the bot role. */
+    val permissions: Permissions,
+)
