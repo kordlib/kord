@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import dev.kord.common.entity.Permission.ManageThreads
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -83,6 +84,7 @@ public data class DiscordChannel(
 
 @Serializable(with = ChannelType.Serializer::class)
 public sealed class ChannelType(public val value: Int) {
+
     /** The default code for unknown values. */
     public class Unknown(value: Int) : ChannelType(value)
 
@@ -98,10 +100,16 @@ public sealed class ChannelType(public val value: Int) {
     /** A direct message between multiple users. */
     public object GroupDM : ChannelType(3)
 
-    /** An organization category. */
+    /**
+     * An [organizational category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101)
+     * that contains up to 50 channels.
+     */
     public object GuildCategory : ChannelType(4)
 
-    /** A channel that users can follow and crosspost into their own server. */
+    /**
+     * A channel that
+     * [users can follow and crosspost into their own server](https://support.discord.com/hc/en-us/articles/360032008192).
+     */
     public object GuildNews : ChannelType(5)
 
     /** A channel in which game developers can sell their game on Discord. */
@@ -116,12 +124,22 @@ public sealed class ChannelType(public val value: Int) {
     )
     public object GuildStore : ChannelType(6)
 
+    /** A temporary sub-channel within a [GuildNews] channel. */
     public object PublicNewsThread : ChannelType(10)
 
+    /** A temporary sub-channel within a [GuildText] channel. */
     public object PublicGuildThread : ChannelType(11)
 
+    /**
+     * A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and those with the
+     * [ManageThreads] permission.
+     */
     public object PrivateThread : ChannelType(12)
 
+    /**
+     * A voice channel for
+     * [hosting events with an audience](https://support.discord.com/hc/en-us/articles/1500005513722).
+     */
     public object GuildStageVoice : ChannelType(13)
 
 
