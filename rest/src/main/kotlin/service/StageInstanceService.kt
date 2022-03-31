@@ -9,6 +9,8 @@ import dev.kord.rest.json.request.StageInstanceModifyRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 public class StageInstanceService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
@@ -29,6 +31,8 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
         topic: String,
         builder: StageInstanceCreateBuilder.() -> Unit = {},
     ): DiscordStageInstance {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
         val appliedBuilder = StageInstanceCreateBuilder(channelId, topic).apply(builder)
         return createStageInstance(appliedBuilder.toRequest(), appliedBuilder.reason)
     }
@@ -48,6 +52,8 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
         channelId: Snowflake,
         builder: StageInstanceModifyBuilder.() -> Unit,
     ): DiscordStageInstance {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
         val appliedBuilder = StageInstanceModifyBuilder().apply(builder)
         return modifyStageInstance(channelId, appliedBuilder.toRequest(), appliedBuilder.reason)
     }

@@ -41,6 +41,8 @@ public suspend inline fun StageChannelBehavior.createStageInstance(
     topic: String,
     builder: StageInstanceCreateBuilder.() -> Unit = {},
 ): StageInstance {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
     val instance = kord.rest.stageInstance.createStageInstance(id, topic, builder)
     val data = StageInstanceData.from(instance)
     return StageInstance(data, kord, supplier)

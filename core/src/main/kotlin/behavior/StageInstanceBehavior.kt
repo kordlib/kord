@@ -12,6 +12,8 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.stage.StageInstanceModifyBuilder
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 public interface StageInstanceBehavior : KordEntity, Strategizable {
 
@@ -67,6 +69,8 @@ public interface StageInstanceBehavior : KordEntity, Strategizable {
 }
 
 public suspend inline fun StageInstanceBehavior.edit(builder: StageInstanceModifyBuilder.() -> Unit): StageInstance {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
     val instance = kord.rest.stageInstance.modifyStageInstance(channelId, builder)
     val data = StageInstanceData.from(instance)
     return StageInstance(data, kord, supplier)
