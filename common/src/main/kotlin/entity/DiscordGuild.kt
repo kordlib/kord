@@ -65,7 +65,7 @@ public data class DiscordUnavailableGuild(
  * @param maxPresences The maximum number of presences for the guild (the default value, currently 25000, is in effect when `null` is returned).
  * @param maxMembers The maximum number of members for the guild.
  * @param vanityUrlCode The vanity url code for the guild.
- * @param description The description for the guild, if the guild is discoverable.
+ * @param description The description for the guild.
  * @param banner The banner hash.
  * @param premiumTier The [PremiumTier] (Server Boost level).
  * @param premiumSubscriptionCount The number of boosts this guild currently has.
