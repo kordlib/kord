@@ -142,6 +142,12 @@ public sealed class ChannelType(public val value: Int) {
      */
     public object GuildStageVoice : ChannelType(13)
 
+    /**
+     * The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-Student-Hubs-FAQ)
+     * containing the listed servers.
+     */
+    public object GuildDirectory : ChannelType(14)
+
 
     internal object Serializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor
