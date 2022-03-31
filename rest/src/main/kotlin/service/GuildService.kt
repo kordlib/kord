@@ -192,8 +192,15 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             auditLogReason(reason)
         }
 
-    public suspend fun getGuildBans(guildId: Snowflake): List<BanResponse> = call(Route.GuildBansGet) {
+    public suspend fun getGuildBans(
+        guildId: Snowflake,
+        position: Position.BeforeOrAfter? = null,
+        limit: Int? = null,
+    ): List<BanResponse> = call(Route.GuildBansGet) {
         keys[Route.GuildId] = guildId
+
+        limit?.let { parameter("limit", it) }
+        position?.let { parameter(it.key, it.value) }
     }
 
     public suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): BanResponse = call(Route.GuildBanGet) {

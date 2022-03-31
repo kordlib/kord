@@ -288,7 +288,7 @@ public interface EntitySupplier {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    public fun getGuildBans(guildId: Snowflake): Flow<Ban>
+    public fun getGuildBans(guildId: Snowflake, limit: Int? = null): Flow<Ban>
 
     /**
      * Requests the [members][Member] of the [Guild] with the given [guildId].

@@ -161,10 +161,16 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             emit(Role(RoleData.from(guildId, roleData), kord))
     }
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> = flow {
-        for (banData in guild.getGuildBans(guildId))
-            emit(Ban(BanData.from(guildId, banData), kord))
-    }
+    // maxBatchSize: see https://discord.com/developers/docs/resources/guild#get-guild-bans
+    override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> =
+        limitedPagination(limit, maxBatchSize = 1000) { batchSize ->
+            paginateForwards(batchSize, idSelector = { it.user.id }) { after ->
+                guild.getGuildBans(guildId, position = after, limit = batchSize)
+            }
+        }.map {
+            val data = BanData.from(guildId, it)
+            Ban(data, kord)
+        }
 
     // maxBatchSize: see https://discord.com/developers/docs/resources/guild#list-guild-members
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> =
