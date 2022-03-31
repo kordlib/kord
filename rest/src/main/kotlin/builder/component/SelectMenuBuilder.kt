@@ -45,8 +45,8 @@ public class SelectMenuBuilder(
     /**
      * Adds a new option to the select menu with the given [label] and [value] and configured by the [builder].
      *
-     * @param label The user-facing name of the option, max 25 characters.
-     * @param value The dev-define value of the option, max 100 characters.
+     * @param label The user-facing name of the option, max 100 characters.
+     * @param value The dev-defined value of the option, max 100 characters.
      */
     public inline fun option(label: String, value: String, builder: SelectOptionBuilder.() -> Unit = {}) {
         contract {
