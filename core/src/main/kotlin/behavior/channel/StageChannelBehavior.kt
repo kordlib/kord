@@ -12,8 +12,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.StageVoiceChannelModifyBuilder
 import dev.kord.rest.builder.guild.CurrentVoiceStateModifyBuilder
 import dev.kord.rest.builder.guild.VoiceStateModifyBuilder
+import dev.kord.rest.builder.stage.StageInstanceCreateBuilder
 import dev.kord.rest.request.RestRequestException
-import dev.kord.rest.service.createStageInstance
 import dev.kord.rest.service.modifyCurrentVoiceState
 import dev.kord.rest.service.modifyVoiceState
 import dev.kord.rest.service.patchStageVoiceChannel
@@ -31,17 +31,19 @@ public interface StageChannelBehavior : BaseVoiceChannelBehavior {
         return StageChannelBehavior(id, guildId, kord, strategy.supply(kord))
     }
 
-    public suspend fun createStageInstance(topic: String): StageInstance {
-        val instance = kord.rest.stageInstance.createStageInstance(id, topic)
-        val data = StageInstanceData.from(instance)
-
-        return StageInstance(data, kord, supplier)
-    }
-
     public suspend fun getStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
 
     public suspend fun getStageInstance(): StageInstance = supplier.getStageInstance(id)
 
+}
+
+public suspend inline fun StageChannelBehavior.createStageInstance(
+    topic: String,
+    builder: StageInstanceCreateBuilder.() -> Unit = {},
+): StageInstance {
+    val instance = kord.rest.stageInstance.createStageInstance(id, topic, builder)
+    val data = StageInstanceData.from(instance)
+    return StageInstance(data, kord, supplier)
 }
 
 /**
