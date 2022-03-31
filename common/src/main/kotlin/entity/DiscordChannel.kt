@@ -47,7 +47,7 @@ public data class DiscordChannel(
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
     val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
-    val name: Optional<String> = Optional.Missing(),
+    val name: Optional<String?> = Optional.Missing(),
     val topic: Optional<String?> = Optional.Missing(),
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("last_message_id")

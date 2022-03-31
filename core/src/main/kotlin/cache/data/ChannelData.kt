@@ -14,7 +14,7 @@ public data class ChannelData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val position: OptionalInt = OptionalInt.Missing,
     val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
-    val name: Optional<String> = Optional.Missing(),
+    val name: Optional<String?> = Optional.Missing(),
     val topic: Optional<String?> = Optional.Missing(),
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
