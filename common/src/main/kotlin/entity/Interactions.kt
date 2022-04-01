@@ -173,7 +173,7 @@ public sealed class Choice<out T> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
             element<JsonPrimitive>("value")
-            element<Map<Locale, String>>("name_localizations", isOptional = true)
+            element<Map<Locale, String>?>("name_localizations", isOptional = true)
         }
 
         override fun deserialize(decoder: Decoder): Choice<*> {
