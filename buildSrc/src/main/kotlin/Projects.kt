@@ -1,6 +1,3 @@
-import org.gradle.kotlin.dsl.DependencyHandlerScope
-import org.gradle.kotlin.dsl.project
-
 /**
  * whether the process has been invoked by JitPack
  */
@@ -22,6 +19,11 @@ object Library {
             }
 
         }
+
+    val commitHash get() = System.getenv("GITHUB_SHA") ?: "unknown"
+
+    // this environment variable isn't available out of the box, we set it ourselves
+    val shortCommitHash get() = System.getenv("SHORT_SHA") ?: "unknown"
 
     const val description = "Idiomatic Kotlin Wrapper for The Discord API"
     const val projectUrl = "https://github.com/kordlib/kord"
