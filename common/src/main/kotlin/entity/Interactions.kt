@@ -68,7 +68,11 @@ public data class ApplicationCommandOption(
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("channel_types")
-    val channelTypes: Optional<List<ChannelType>> = Optional.Missing()
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    @SerialName("min_value")
+    val minValue: Optional<JsonPrimitive> = Optional.Missing(),
+    @SerialName("max_value")
+    val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
 )
 
 /**
