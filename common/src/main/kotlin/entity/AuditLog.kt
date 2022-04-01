@@ -165,6 +165,9 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     @SerialName("icon_hash")
     public object IconHash : AuditLogChangeKey<String>("icon_hash", serializer())
 
+    @SerialName("image_hash")
+    public object ImageHash : AuditLogChangeKey<String>("image_hash", serializer())
+
     @SerialName("splash_hash")
     public object SplashHash : AuditLogChangeKey<String>("splash_hash", serializer())
 
@@ -392,6 +395,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
             return when (name) {
                 "name" -> Name
                 "icon_hash" -> IconHash
+                "image_hash" -> ImageHash
                 "splash_hash" -> SplashHash
                 "owner_id" -> OwnerId
                 "region" -> Region
