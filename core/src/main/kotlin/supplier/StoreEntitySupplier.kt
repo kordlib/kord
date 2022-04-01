@@ -108,8 +108,8 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getGuildBanOrNull(guildId, userId)) { it.data }
     }
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> {
-        return storeOnEach(supplier.getGuildBans(guildId)) { it.data }
+    override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> {
+        return storeOnEach(supplier.getGuildBans(guildId, limit)) { it.data }
     }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
