@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.ApplicationFlags
+import dev.kord.common.entity.InstallParams
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
@@ -62,6 +63,15 @@ public sealed class BaseApplication(
     public val coverImageHash: String? get() = data.coverImage.value
 
     public val flags: ApplicationFlags? get() = data.flags.value
+
+    /** Tags describing the content and functionality of the application. */
+    public val tags: List<String> get() = data.tags.value.orEmpty()
+
+    /** Settings for the application's default in-app authorization link, if enabled. */
+    public val installParams: InstallParams? get() = data.installParams.value
+
+    /** The application's default custom authorization link, if enabled. */
+    public val customInstallUrl: String? get() = data.customInstallUrl.value
 
 
     public suspend fun getOwnerOrNull(): User? = ownerId?.let { supplier.getUserOrNull(it) }
