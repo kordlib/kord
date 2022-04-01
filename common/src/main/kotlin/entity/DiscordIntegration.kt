@@ -10,7 +10,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
 
 @Serializable
 public data class DiscordIntegration(
@@ -50,7 +49,7 @@ public data class IntegrationApplication(
     val name: String,
     val icon: String?,
     val description: String,
-    @Deprecated("This is deprecated and will always be empty.", level = ERROR)
+    @Deprecated("This is deprecated and will always be empty.")
     val summary: String,
     val bot: Optional<DiscordUser> = Optional.Missing(),
 )
