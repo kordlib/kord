@@ -103,6 +103,6 @@ public data class DiscordThreadMember(
     @SerialName("user_id")
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("join_timestamp")
-    val joinTimestamp: String,
+    val joinTimestamp: Instant,
     val flags: Int
 )
