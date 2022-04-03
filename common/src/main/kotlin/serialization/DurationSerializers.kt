@@ -18,10 +18,8 @@ public sealed class DurationSerializer(private val unit: DurationUnit, name: Str
     final override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("dev.kord.common.serialization.$name", PrimitiveKind.LONG)
 
-    protected abstract fun Duration.convert(): Long
-
     final override fun serialize(encoder: Encoder, value: Duration) {
-        encoder.encodeLong(value.convert())
+        encoder.encodeLong(value.toLong(unit))
     }
 
     final override fun deserialize(decoder: Decoder): Duration {
@@ -31,36 +29,22 @@ public sealed class DurationSerializer(private val unit: DurationUnit, name: Str
 
 
 /** Serializer that encodes and decodes [Duration]s in [whole nanoseconds][Duration.inWholeNanoseconds]. */
-public object DurationInWholeNanosecondsSerializer : DurationSerializer(NANOSECONDS, "DurationInWholeNanoseconds") {
-    override fun Duration.convert(): Long = inWholeNanoseconds
-}
+public object DurationInWholeNanosecondsSerializer : DurationSerializer(NANOSECONDS, "DurationInWholeNanoseconds")
 
 /** Serializer that encodes and decodes [Duration]s in [whole microseconds][Duration.inWholeMicroseconds]. */
-public object DurationInWholeMicrosecondsSerializer : DurationSerializer(MICROSECONDS, "DurationInWholeMicroseconds") {
-    override fun Duration.convert(): Long = inWholeMicroseconds
-}
+public object DurationInWholeMicrosecondsSerializer : DurationSerializer(MICROSECONDS, "DurationInWholeMicroseconds")
 
 /** Serializer that encodes and decodes [Duration]s in [whole milliseconds][Duration.inWholeMilliseconds]. */
-public object DurationInWholeMillisecondsSerializer : DurationSerializer(MILLISECONDS, "DurationInWholeMilliseconds") {
-    override fun Duration.convert(): Long = inWholeMilliseconds
-}
+public object DurationInWholeMillisecondsSerializer : DurationSerializer(MILLISECONDS, "DurationInWholeMilliseconds")
 
 /** Serializer that encodes and decodes [Duration]s in [whole seconds][Duration.inWholeSeconds]. */
-public object DurationInWholeSecondsSerializer : DurationSerializer(SECONDS, "DurationInWholeSeconds") {
-    override fun Duration.convert(): Long = inWholeSeconds
-}
+public object DurationInWholeSecondsSerializer : DurationSerializer(SECONDS, "DurationInWholeSeconds")
 
 /** Serializer that encodes and decodes [Duration]s in [whole minutes][Duration.inWholeMinutes]. */
-public object DurationInWholeMinutesSerializer : DurationSerializer(MINUTES, "DurationInWholeMinutes") {
-    override fun Duration.convert(): Long = inWholeMinutes
-}
+public object DurationInWholeMinutesSerializer : DurationSerializer(MINUTES, "DurationInWholeMinutes")
 
 /** Serializer that encodes and decodes [Duration]s in [whole hours][Duration.inWholeHours]. */
-public object DurationInWholeHoursSerializer : DurationSerializer(HOURS, "DurationInWholeHours") {
-    override fun Duration.convert(): Long = inWholeHours
-}
+public object DurationInWholeHoursSerializer : DurationSerializer(HOURS, "DurationInWholeHours")
 
 /** Serializer that encodes and decodes [Duration]s in [whole days][Duration.inWholeDays]. */
-public object DurationInWholeDaysSerializer : DurationSerializer(DAYS, "DurationInWholeDays") {
-    override fun Duration.convert(): Long = inWholeDays
-}
+public object DurationInWholeDaysSerializer : DurationSerializer(DAYS, "DurationInWholeDays")
