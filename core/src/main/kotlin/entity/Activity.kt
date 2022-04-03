@@ -4,7 +4,6 @@ import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ActivityData
-import dev.kord.core.toInstant
 import kotlinx.datetime.Instant
 
 public class Activity(public val data: ActivityData) {
@@ -12,13 +11,13 @@ public class Activity(public val data: ActivityData) {
     public val name: String get() = data.name
     public val type: ActivityType get() = data.type
     public val url: String? get() = data.url.value
-    public val start: Instant? get() = data.timestamps.value?.start.value?.toInstant()
+    public val start: Instant? get() = data.timestamps.value?.start?.value
 
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("stop was renamed to end.", ReplaceWith("end"), DeprecationLevel.ERROR)
     public val stop: Instant? by ::end
 
-    public val end: Instant? get() = data.timestamps.value?.end.value?.toInstant()
+    public val end: Instant? get() = data.timestamps.value?.end?.value
 
     public val applicationId: Snowflake? get() = data.applicationId.value
 

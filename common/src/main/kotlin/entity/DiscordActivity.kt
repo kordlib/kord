@@ -2,14 +2,16 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalLong
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
+import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer as InEpochMilliseconds
 
 @Serializable
 public data class DiscordBotActivity(
@@ -24,7 +26,8 @@ public data class DiscordActivity(
     val type: ActivityType,
     val url: Optional<String?> = Optional.Missing(),
     @SerialName("created_at")
-    val createdAt: Long,
+    @Serializable(with = InstantInEpochMillisecondsSerializer::class)
+    val createdAt: Instant,
     val timestamps: Optional<DiscordActivityTimestamps> = Optional.Missing(),
     @SerialName("application_id")
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -77,8 +80,8 @@ public typealias DiscordActivityTimeStamps = DiscordActivityTimestamps
 
 @Serializable
 public data class DiscordActivityTimestamps(
-    val start: OptionalLong = OptionalLong.Missing,
-    val end: OptionalLong = OptionalLong.Missing
+    val start: Optional<@Serializable(InEpochMilliseconds::class) Instant> = Optional.Missing(),
+    val end: Optional<@Serializable(InEpochMilliseconds::class) Instant> = Optional.Missing(),
 )
 
 @Serializable
