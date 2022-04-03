@@ -220,11 +220,12 @@ public sealed class ArchiveDuration(public val duration: Duration) {
     }
 
     public companion object {
-        public val values: Set<ArchiveDuration> = setOf(
-            Hour,
-            Day,
-            ThreeDays,
-            Week,
-        )
+        public val values: Set<ArchiveDuration>
+            get() = setOf(
+                Hour,
+                Day,
+                ThreeDays,
+                Week,
+            )
     }
 }
