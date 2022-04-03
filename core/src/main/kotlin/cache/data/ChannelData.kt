@@ -27,7 +27,7 @@ public data class ChannelData(
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
-    val lastPinTimestamp: Optional<String?> = Optional.Missing(),
+    val lastPinTimestamp: Optional<Instant?> = Optional.Missing(),
     val rtcRegion: Optional<String?> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
     val threadMetadata: Optional<ThreadMetadataData> = Optional.Missing(),

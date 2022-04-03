@@ -71,7 +71,7 @@ public data class DiscordChannel(
     @SerialName("parent_id")
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("last_pin_timestamp")
-    val lastPinTimestamp: Optional<String?> = Optional.Missing(),
+    val lastPinTimestamp: Optional<Instant?> = Optional.Missing(),
     @SerialName("rtc_region")
     val rtcRegion: Optional<String?> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),

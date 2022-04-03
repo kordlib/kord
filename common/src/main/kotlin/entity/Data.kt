@@ -14,12 +14,7 @@ public data class DiscordPinsUpdateData(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("last_pin_timestamp")
-    /*
-    Do not trust the docs:
-    2020-11-06 Docs mention this being optional only, but unpinning a channel results
-    in this field being null.
-    */
-    val lastPinTimestamp: Optional<String?> = Optional.Missing()
+    val lastPinTimestamp: Optional<Instant?> = Optional.Missing(),
 )
 
 @Serializable
