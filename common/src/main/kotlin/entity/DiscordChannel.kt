@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInWholeMinutesSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -15,6 +16,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.WARNING
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 import dev.kord.common.serialization.DurationInWholeSecondsSerializer as InWholeSeconds
 
 /**
@@ -196,34 +198,33 @@ public data class DiscordThreadMetadata(
 )
 
 @Serializable(with = ArchiveDuration.Serializer::class)
-public sealed class ArchiveDuration(public val duration: Int) {
-    public class Unknown(duration: Int) : ArchiveDuration(duration)
-    public object Hour : ArchiveDuration(60)
-    public object Day : ArchiveDuration(1440)
-    public object ThreeDays : ArchiveDuration(4320)
-    public object Week : ArchiveDuration(10080)
+public sealed class ArchiveDuration(public val duration: Duration) {
+    public class Unknown(duration: Duration) : ArchiveDuration(duration)
+    public object Hour : ArchiveDuration(60.minutes)
+    public object Day : ArchiveDuration(1440.minutes)
+    public object ThreeDays : ArchiveDuration(4320.minutes)
+    public object Week : ArchiveDuration(10080.minutes)
 
     public object Serializer : KSerializer<ArchiveDuration> {
+
+        override val descriptor: SerialDescriptor get() = DurationInWholeMinutesSerializer.descriptor
+
         override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val value = decoder.decodeInt()
+            val value = decoder.decodeSerializableValue(DurationInWholeMinutesSerializer)
             return values.firstOrNull { it.duration == value } ?: Unknown(value)
         }
 
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("AutoArchieveDuration", PrimitiveKind.INT)
-
         override fun serialize(encoder: Encoder, value: ArchiveDuration) {
-            encoder.encodeInt(value.duration)
+            encoder.encodeSerializableValue(DurationInWholeMinutesSerializer, value.duration)
         }
     }
 
     public companion object {
-        public val values: Set<ArchiveDuration>
-            get() = setOf(
-                Hour,
-                Day,
-                ThreeDays,
-                Week,
-            )
+        public val values: Set<ArchiveDuration> = setOf(
+            Hour,
+            Day,
+            ThreeDays,
+            Week,
+        )
     }
 }

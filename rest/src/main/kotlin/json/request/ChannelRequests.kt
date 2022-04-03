@@ -45,7 +45,7 @@ public data class ChannelModifyPatchRequest(
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val archived: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("auto_archive_duration")
-    val autoArchiveDuration: OptionalInt = OptionalInt.Missing,
+    val autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val locked: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("rtc_region")
     val rtcRegion: Optional<String?> = Optional.Missing(),
