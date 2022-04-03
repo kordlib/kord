@@ -14,7 +14,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import java.util.*
 
 /**
@@ -54,7 +53,7 @@ public class Member(
     /**
      * When the user used their Nitro boost on the server.
      */
-    public val premiumSince: Instant? get() = memberData.premiumSince.value?.toInstant()
+    public val premiumSince: Instant? get() = memberData.premiumSince.value
 
     /**
      * The ids of the [roles][Role] that apply to this user.

@@ -19,7 +19,7 @@ public data class DiscordGuildMember(
     @SerialName("joined_at")
     val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing(),
     val deaf: OptionalBoolean = OptionalBoolean.Missing,
     val mute: OptionalBoolean = OptionalBoolean.Missing,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
@@ -41,7 +41,7 @@ public data class DiscordInteractionGuildMember(
     @SerialName("joined_at")
     val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing(),
     val permissions: Permissions,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
@@ -62,7 +62,7 @@ public data class DiscordAddedGuildMember(
     @SerialName("joined_at")
     val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing(),
     val deaf: Boolean,
     val mute: Boolean,
     @SerialName("guild_id")
@@ -90,7 +90,7 @@ public data class DiscordUpdatedGuildMember(
     @SerialName("joined_at")
     val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing(),
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
     @SerialName("communication_disabled_until")
