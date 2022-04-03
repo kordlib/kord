@@ -282,7 +282,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object Uses : AuditLogChangeKey<Int>("uses", serializer())
 
     @SerialName("max_age")
-    public object MaxAges : AuditLogChangeKey<Int>("max_age", serializer())
+    public object MaxAges : AuditLogChangeKey<Duration>("max_age", DurationInWholeSecondsSerializer)
 
     @SerialName("temporary")
     public object Temporary : AuditLogChangeKey<Boolean>("temporary", serializer())

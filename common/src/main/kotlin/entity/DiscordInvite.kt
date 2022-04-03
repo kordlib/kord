@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.serialization.DurationInWholeSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -11,6 +12,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.time.Duration
 
 public sealed interface BaseDiscordInvite {
     public val code: String
@@ -78,7 +80,8 @@ public data class DiscordInviteWithMetadata(
     @SerialName("max_uses")
     val maxUses: Int,
     @SerialName("max_age")
-    val maxAge: Int,
+    @Serializable(with = DurationInWholeSecondsSerializer::class)
+    val maxAge: Duration,
     val temporary: Boolean,
     @SerialName("created_at")
     val createdAt: Instant,
