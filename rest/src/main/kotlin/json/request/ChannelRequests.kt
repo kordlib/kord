@@ -8,6 +8,8 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.time.Duration
+import dev.kord.common.serialization.DurationInWholeSecondsSerializer as InWholeSeconds
 
 @Serializable
 public data class ChannelModifyPutRequest(
@@ -33,7 +35,7 @@ public data class ChannelModifyPatchRequest(
     val topic: Optional<String?> = Optional.Missing(),
     val nsfw: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: OptionalInt? = OptionalInt.Missing,
+    val rateLimitPerUser: Optional<@Serializable(InWholeSeconds::class) Duration?> = Optional.Missing(),
     val bitrate: OptionalInt? = OptionalInt.Missing,
     @SerialName("user_limit")
     val userLimit: OptionalInt? = OptionalInt.Missing,

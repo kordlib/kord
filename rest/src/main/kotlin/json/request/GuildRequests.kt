@@ -15,6 +15,8 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.time.Duration
+import dev.kord.common.serialization.DurationInWholeSecondsSerializer as InWholeSeconds
 
 @Serializable
 public data class GuildCreateRequest(
@@ -45,7 +47,7 @@ public data class GuildChannelCreateRequest(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<Int> = Optional.Missing(),
+    val rateLimitPerUser: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
     val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing(),

@@ -14,6 +14,8 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.WARNING
+import kotlin.time.Duration
+import dev.kord.common.serialization.DurationInWholeSecondsSerializer as InWholeSeconds
 
 /**
  * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
@@ -29,7 +31,7 @@ import kotlin.DeprecationLevel.WARNING
  * @param lastMessageId The id of the last message sent in this channel (may not point to an existing or valid message).
  * @param bitrate The bitrate (in bits) of the voice channel.
  * @param userLimit The user limit of the voice channel.
- * @param rateLimitPerUser amount of seconds a user has to wait before sending another message; bots,
+ * @param rateLimitPerUser amount of time a user has to wait before sending another message; bots,
  * as well as users with the permission [Permission.ManageMessages] or [Permission.ManageChannels] are unaffected.
  * @param recipients The recipients of the DM.
  * @param icon The icon hash.
@@ -56,7 +58,7 @@ public data class DiscordChannel(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: OptionalInt = OptionalInt.Missing,
+    val rateLimitPerUser: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
     val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")

@@ -3,12 +3,14 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.serialization.DurationInWholeSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
+import kotlin.time.Duration
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
@@ -237,7 +239,8 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object ApplicationId : AuditLogChangeKey<Snowflake>("application_id", serializer())
 
     @SerialName("rate_limit_per_user")
-    public object RateLimitPerUser : AuditLogChangeKey<Int>("rate_limit_per_user", serializer())
+    public object RateLimitPerUser :
+        AuditLogChangeKey<Duration>("rate_limit_per_user", DurationInWholeSecondsSerializer)
 
     @SerialName("permissions")
     public object Permissions : AuditLogChangeKey<CommonPermissions>("permissions", serializer())
