@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.optional
 import dev.kord.common.entity.optional.optionalInt
 import dev.kord.gateway.*
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -111,8 +112,10 @@ class CommandTest {
         val status = PresenceStatus.Online
         val afk = false
 
-        val updateStatus =
-            json.encodeToString(Command.SerializationStrategy, UpdateStatus(since, activities, status, afk))
+        val updateStatus = json.encodeToString(
+            Command.SerializationStrategy,
+            UpdateStatus(Instant.fromEpochMilliseconds(since), activities, status, afk),
+        )
 
         val json = json.encodeToString(JsonObject.serializer(), buildJsonObject {
             put("op", OpCode.StatusUpdate.code)
