@@ -3,6 +3,7 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.serialization.DurationInWholeDaysSerializer
 import dev.kord.common.serialization.DurationInWholeSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
@@ -348,7 +349,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object ExpireBehavior : AuditLogChangeKey<IntegrationExpireBehavior>("expire_behavior", serializer())
 
     @SerialName("expire_grace_period")
-    public object ExpireGracePeriod : AuditLogChangeKey<Int>("expire_grace_period", serializer())
+    public object ExpireGracePeriod : AuditLogChangeKey<Duration>("expire_grace_period", DurationInWholeDaysSerializer)
 
     @SerialName("user_limit")
     public object UserLimit : AuditLogChangeKey<Int>("user_limit", serializer())
