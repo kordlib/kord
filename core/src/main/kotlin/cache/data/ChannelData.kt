@@ -77,7 +77,7 @@ public data class ChannelData(
 @Serializable
 public data class ThreadMetadataData(
     val archived: Boolean,
-    val archiveTimestamp: String,
+    val archiveTimestamp: Instant,
     val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
     val invitable: OptionalBoolean = OptionalBoolean.Missing,

@@ -213,7 +213,7 @@ public sealed class OverwriteType(public val value: Int) {
 public data class DiscordThreadMetadata(
     val archived: Boolean,
     @SerialName("archive_timestamp")
-    val archiveTimestamp: String,
+    val archiveTimestamp: Instant,
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
