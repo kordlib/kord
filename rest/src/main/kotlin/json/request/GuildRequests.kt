@@ -33,7 +33,7 @@ public data class GuildCreateRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: OptionalInt = OptionalInt.Missing,
+    val afkTimeout: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
     @SerialName("system_channel_id")
     val systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
 )
@@ -230,7 +230,7 @@ public data class GuildModifyRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: OptionalInt = OptionalInt.Missing,
+    val afkTimeout: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,

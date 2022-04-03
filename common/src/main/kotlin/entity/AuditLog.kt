@@ -183,7 +183,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object AfkChannelId : AuditLogChangeKey<Snowflake>("afk_channel_id", serializer())
 
     @SerialName("afk_timeout")
-    public object AfkTimeout : AuditLogChangeKey<Int>("afk_timeout", serializer())
+    public object AfkTimeout : AuditLogChangeKey<Duration>("afk_timeout", DurationInWholeSecondsSerializer)
 
     @SerialName("mfa_level")
     public object MFALevel : AuditLogChangeKey<CommonMFALevel>("mfa_level", serializer())

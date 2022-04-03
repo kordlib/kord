@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInWholeSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -13,6 +14,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.time.Duration
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -40,7 +42,7 @@ public data class DiscordUnavailableGuild(
  * @param permissions The total permissions for [DiscordUser] in the guild (excludes [overwrites][Overwrite]).
  * @param region [DiscordVoiceRegion] id for the guild.
  * @param afkChannelId The id of afk channel.
- * @param afkTimeout The afk timeout in seconds.
+ * @param afkTimeout The afk timeout.
  * @param widgetEnabled True if the server widget is enabled.
  * @param widgetChannelId The channel id that the widget will generate an invite to, or `null` if set to no invite.
  * @param verificationLevel [VerificationLevel] required for the guild.
@@ -93,7 +95,9 @@ public data class DiscordGuild(
         ReplaceWith("DiscordChannel#rtcRegion")
     ) val region: String,
     @SerialName("afk_channel_id") val afkChannelId: Snowflake?,
-    @SerialName("afk_timeout") val afkTimeout: Int,
+    @SerialName("afk_timeout")
+    @Serializable(with = DurationInWholeSecondsSerializer::class)
+    val afkTimeout: Duration,
     @SerialName("widget_enabled") val widgetEnabled: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("widget_channel_id") val widgetChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("verification_level") val verificationLevel: VerificationLevel,
