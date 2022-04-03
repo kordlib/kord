@@ -349,7 +349,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         roles = emptyList(),
                         deaf = false,
                         mute = false,
-                        joinedAt = ""
+                        joinedAt = Instant.fromEpochMilliseconds(0),
                     ),
                     0
                 )
@@ -376,7 +376,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             discriminator = "",
                             avatar = null
                         ),
-                        joinedAt = ""
+                        joinedAt = Instant.fromEpochMilliseconds(0),
                     ),
                     0
                 )

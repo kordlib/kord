@@ -44,7 +44,7 @@ public class Member(
     /**
      * When the user joined this [guild].
      */
-    public val joinedAt: Instant get() = memberData.joinedAt.toInstant()
+    public val joinedAt: Instant get() = memberData.joinedAt
 
     /**
      * The guild-specific nickname of the user, if present.
