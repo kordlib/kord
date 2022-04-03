@@ -489,7 +489,7 @@ public data class DiscordEmbed(
     val type: Optional<EmbedType> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<String> = Optional.Missing(),
+    val timestamp: Optional<Instant> = Optional.Missing(),
     val color: OptionalInt = OptionalInt.Missing,
     val footer: Optional<Footer> = Optional.Missing(),
     val image: Optional<Image> = Optional.Missing(),

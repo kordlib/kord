@@ -11,7 +11,6 @@ import dev.kord.core.KordObject
 import dev.kord.core.cache.data.*
 import dev.kord.rest.builder.message.EmbedBuilder
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 
 internal const val embedDeprecationMessage = """
 Embed types should be considered deprecated and might be removed in a future API version.
@@ -50,7 +49,7 @@ public data class Embed(val data: EmbedData, override val kord: Kord) : KordObje
     /**
      * The timestamp, if present. Unrelated to the creation time of the embed.
      */
-    val timestamp: Instant? get() = data.timestamp.value?.toInstant()
+    val timestamp: Instant? get() = data.timestamp.value
 
     /**
      * The color of the embed, if present.
