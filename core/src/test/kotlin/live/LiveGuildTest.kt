@@ -14,6 +14,7 @@ import dev.kord.gateway.*
 import equality.randomId
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
@@ -559,7 +560,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             avatar = null
                         ),
                         content = "",
-                        timestamp = "",
+                        timestamp = Instant.fromEpochMilliseconds(0),
                         editedTimestamp = null,
                         tts = false,
                         mentionEveryone = false,

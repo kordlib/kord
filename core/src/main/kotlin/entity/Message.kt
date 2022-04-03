@@ -31,7 +31,6 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import java.util.Objects
 
 /**
@@ -127,8 +126,7 @@ public class Message(
      *
      * Returns null if the message was never edited.
      */
-    public val editedTimestamp: Instant?
-        get() = data.editedTimestamp?.toInstant()
+    public val editedTimestamp: Instant? get() = data.editedTimestamp
 
     /**
      * The embedded content of this message.
@@ -266,7 +264,7 @@ public class Message(
     /**
      * The instant when this message was created.
      */
-    public val timestamp: Instant get() = data.timestamp.toInstant()
+    public val timestamp: Instant get() = data.timestamp
 
     /**
      * Whether this message was send using `\tts`.
