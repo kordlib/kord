@@ -1,9 +1,8 @@
 package dev.kord.rest.json.response
 
-import dev.kord.common.serialization.DurationInWholeMillisecondsSerializer
+import dev.kord.common.serialization.DurationInWholeMilliseconds
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.time.Duration
 
 @Serializable
 public data class GatewayResponse(val url: String)
@@ -21,8 +20,7 @@ public data class SessionStartLimitResponse(
     val total: Int,
     val remaining: Int,
     @SerialName("reset_after")
-    @Serializable(with = DurationInWholeMillisecondsSerializer::class)
-    val resetAfter: Duration,
+    val resetAfter: DurationInWholeMilliseconds,
     @SerialName("max_concurrency")
     val maxConcurrency: Int
 )

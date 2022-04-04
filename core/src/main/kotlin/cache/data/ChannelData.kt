@@ -4,10 +4,9 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import dev.kord.common.serialization.DurationInWholeSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-import kotlin.time.Duration
-import dev.kord.common.serialization.DurationInWholeSecondsSerializer as InWholeSeconds
 
 @Serializable
 public data class ChannelData(
@@ -22,7 +21,7 @@ public data class ChannelData(
     val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val bitrate: OptionalInt = OptionalInt.Missing,
     val userLimit: OptionalInt = OptionalInt.Missing,
-    val rateLimitPerUser: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInWholeSeconds> = Optional.Missing(),
     val recipients: Optional<List<Snowflake>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,

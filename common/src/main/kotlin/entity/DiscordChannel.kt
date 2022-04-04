@@ -5,6 +5,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInWholeMinutesSerializer
+import dev.kord.common.serialization.DurationInWholeSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -17,7 +18,6 @@ import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.WARNING
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
-import dev.kord.common.serialization.DurationInWholeSecondsSerializer as InWholeSeconds
 
 /**
  * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
@@ -60,7 +60,7 @@ public data class DiscordChannel(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInWholeSeconds> = Optional.Missing(),
     val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")

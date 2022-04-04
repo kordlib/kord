@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInWholeSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -15,8 +16,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.time.Duration
-import dev.kord.common.serialization.DurationInWholeSecondsSerializer as InWholeSeconds
 
 @Serializable
 public data class GuildCreateRequest(
@@ -33,7 +32,7 @@ public data class GuildCreateRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
+    val afkTimeout: Optional<DurationInWholeSeconds> = Optional.Missing(),
     @SerialName("system_channel_id")
     val systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
 )
@@ -47,7 +46,7 @@ public data class GuildChannelCreateRequest(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInWholeSeconds> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
     val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing(),
@@ -230,7 +229,7 @@ public data class GuildModifyRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
+    val afkTimeout: Optional<DurationInWholeSeconds> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,

@@ -2,15 +2,14 @@ package dev.kord.rest.json.request
 
 import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.optional.*
+import dev.kord.common.serialization.DurationInWholeSeconds
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.time.Duration
-import dev.kord.common.serialization.DurationInWholeSecondsSerializer as InWholeSeconds
 
 @Serializable
 public data class InviteCreateRequest(
     @SerialName("max_age")
-    val maxAge: Optional<@Serializable(InWholeSeconds::class) Duration> = Optional.Missing(),
+    val maxAge: Optional<DurationInWholeSeconds> = Optional.Missing(),
     @SerialName("max_uses")
     val maxUses: OptionalInt = OptionalInt.Missing,
     val temporary: OptionalBoolean = OptionalBoolean.Missing,

@@ -4,7 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.serialization.DurationInWholeSecondsSerializer
+import dev.kord.common.serialization.DurationInWholeSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -14,7 +14,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.time.Duration
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -95,9 +94,7 @@ public data class DiscordGuild(
         ReplaceWith("DiscordChannel#rtcRegion")
     ) val region: String,
     @SerialName("afk_channel_id") val afkChannelId: Snowflake?,
-    @SerialName("afk_timeout")
-    @Serializable(with = DurationInWholeSecondsSerializer::class)
-    val afkTimeout: Duration,
+    @SerialName("afk_timeout") val afkTimeout: DurationInWholeSeconds,
     @SerialName("widget_enabled") val widgetEnabled: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("widget_channel_id") val widgetChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("verification_level") val verificationLevel: VerificationLevel,

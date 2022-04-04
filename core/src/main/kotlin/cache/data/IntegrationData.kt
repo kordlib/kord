@@ -2,9 +2,8 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.serialization.DurationInWholeDaysSerializer
+import dev.kord.common.serialization.DurationInWholeDays
 import kotlinx.serialization.Serializable
-import kotlin.time.Duration
 
 @Serializable
 public data class IntegrationData(
@@ -17,8 +16,7 @@ public data class IntegrationData(
     val roleId: Snowflake,
     val enableEmoticons: OptionalBoolean = OptionalBoolean.Missing,
     val expireBehavior: IntegrationExpireBehavior,
-    @Serializable(with = DurationInWholeDaysSerializer::class)
-    val expireGracePeriod: Duration,
+    val expireGracePeriod: DurationInWholeDays,
     val user: DiscordUser,
     val account: IntegrationsAccountData,
     val syncedAt: String,

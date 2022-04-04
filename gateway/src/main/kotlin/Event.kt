@@ -4,8 +4,11 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.serialization.DurationInWholeSecondsSerializer
-import kotlinx.serialization.*
+import dev.kord.common.serialization.DurationInWholeSeconds
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -18,7 +21,6 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
-import kotlin.time.Duration
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -628,8 +630,7 @@ public data class DiscordCreatedInvite(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val inviter: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("max_age")
-    @Serializable(with = DurationInWholeSecondsSerializer::class)
-    val maxAge: Duration,
+    val maxAge: DurationInWholeSeconds,
     @SerialName("max_uses")
     val maxUses: Int,
     @SerialName("target_type")
