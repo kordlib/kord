@@ -47,7 +47,7 @@ fun VersionCatalogBuilder.cache() {
 }
 
 fun VersionCatalogBuilder.kotlinx() {
-    library("kotlinx-datetime", "org.jetbrains.kotlinx", "kotlinx-datetime").version("0.3.1")
+    library("kotlinx-datetime", "org.jetbrains.kotlinx", "kotlinx-datetime").version("0.3.2")
 }
 
 fun VersionCatalogBuilder.ktor() {
@@ -79,11 +79,11 @@ fun VersionCatalogBuilder.common() {
 fun VersionCatalogBuilder.tests() {
     val junit5 = version("junit5", "5.8.2")
 
-    library("mockk", "io.mockk", "mockk").version("1.12.1")
+    library("mockk", "io.mockk", "mockk").version("1.12.3")
     library("kotlinx-coroutines-test", "org.jetbrains.kotlinx", "kotlinx-coroutines-test").versionRef("kotlinx-coroutines")
     library("junit-jupiter-api", "org.junit.jupiter", "junit-jupiter-api").versionRef(junit5)
 
-    library("slf4j-simple", "org.slf4j", "slf4j-simple").version("1.7.30")
+    library("slf4j-simple", "org.slf4j", "slf4j-simple").version("1.7.36")
     library("junit-jupiter-engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef(junit5)
 
     bundle("test-implementation", listOf("mockk", "kotlinx-coroutines-test", "junit-jupiter-api"))
