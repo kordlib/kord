@@ -4,7 +4,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.serialization.DurationInWholeSeconds
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -630,7 +630,7 @@ public data class DiscordCreatedInvite(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val inviter: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("max_age")
-    val maxAge: DurationInWholeSeconds,
+    val maxAge: DurationInSeconds,
     @SerialName("max_uses")
     val maxUses: Int,
     @SerialName("target_type")

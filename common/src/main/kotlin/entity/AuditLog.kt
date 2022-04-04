@@ -3,8 +3,8 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
-import dev.kord.common.serialization.DurationInWholeDaysSerializer
-import dev.kord.common.serialization.DurationInWholeSecondsSerializer
+import dev.kord.common.serialization.DurationInDaysSerializer
+import dev.kord.common.serialization.DurationInSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
@@ -184,7 +184,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object AfkChannelId : AuditLogChangeKey<Snowflake>("afk_channel_id", serializer())
 
     @SerialName("afk_timeout")
-    public object AfkTimeout : AuditLogChangeKey<Duration>("afk_timeout", DurationInWholeSecondsSerializer)
+    public object AfkTimeout : AuditLogChangeKey<Duration>("afk_timeout", DurationInSecondsSerializer)
 
     @SerialName("mfa_level")
     public object MFALevel : AuditLogChangeKey<CommonMFALevel>("mfa_level", serializer())
@@ -240,8 +240,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object ApplicationId : AuditLogChangeKey<Snowflake>("application_id", serializer())
 
     @SerialName("rate_limit_per_user")
-    public object RateLimitPerUser :
-        AuditLogChangeKey<Duration>("rate_limit_per_user", DurationInWholeSecondsSerializer)
+    public object RateLimitPerUser : AuditLogChangeKey<Duration>("rate_limit_per_user", DurationInSecondsSerializer)
 
     @SerialName("permissions")
     public object Permissions : AuditLogChangeKey<CommonPermissions>("permissions", serializer())
@@ -283,7 +282,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object Uses : AuditLogChangeKey<Int>("uses", serializer())
 
     @SerialName("max_age")
-    public object MaxAges : AuditLogChangeKey<Duration>("max_age", DurationInWholeSecondsSerializer)
+    public object MaxAges : AuditLogChangeKey<Duration>("max_age", DurationInSecondsSerializer)
 
     @SerialName("temporary")
     public object Temporary : AuditLogChangeKey<Boolean>("temporary", serializer())
@@ -349,7 +348,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object ExpireBehavior : AuditLogChangeKey<IntegrationExpireBehavior>("expire_behavior", serializer())
 
     @SerialName("expire_grace_period")
-    public object ExpireGracePeriod : AuditLogChangeKey<Duration>("expire_grace_period", DurationInWholeDaysSerializer)
+    public object ExpireGracePeriod : AuditLogChangeKey<Duration>("expire_grace_period", DurationInDaysSerializer)
 
     @SerialName("user_limit")
     public object UserLimit : AuditLogChangeKey<Int>("user_limit", serializer())

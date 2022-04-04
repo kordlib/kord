@@ -4,8 +4,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.serialization.DurationInWholeMinutesSerializer
-import dev.kord.common.serialization.DurationInWholeSeconds
+import dev.kord.common.serialization.DurationInMinutesSerializer
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -60,7 +60,7 @@ public data class DiscordChannel(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<DurationInWholeSeconds> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")
@@ -207,15 +207,15 @@ public sealed class ArchiveDuration(public val duration: Duration) {
 
     public object Serializer : KSerializer<ArchiveDuration> {
 
-        override val descriptor: SerialDescriptor get() = DurationInWholeMinutesSerializer.descriptor
+        override val descriptor: SerialDescriptor get() = DurationInMinutesSerializer.descriptor
 
         override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val value = decoder.decodeSerializableValue(DurationInWholeMinutesSerializer)
+            val value = decoder.decodeSerializableValue(DurationInMinutesSerializer)
             return values.firstOrNull { it.duration == value } ?: Unknown(value)
         }
 
         override fun serialize(encoder: Encoder, value: ArchiveDuration) {
-            encoder.encodeSerializableValue(DurationInWholeMinutesSerializer, value.duration)
+            encoder.encodeSerializableValue(DurationInMinutesSerializer, value.duration)
         }
     }
 

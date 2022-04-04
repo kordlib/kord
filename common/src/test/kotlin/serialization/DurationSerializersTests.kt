@@ -78,51 +78,51 @@ abstract class DurationSerializerTest(
 }
 
 
-class DurationInWholeNanosecondsSerializerTest : DurationSerializerTest(
+class DurationInNanosecondsSerializerTest : DurationSerializerTest(
     json = "84169",
     duration = 84169.nanoseconds,
     durationToRound = 84169.48.nanoseconds,
-    serializer = DurationInWholeNanosecondsSerializer,
+    serializer = DurationInNanosecondsSerializer,
 )
 
-class DurationInWholeMicrosecondsSerializerTest : DurationSerializerTest(
+class DurationInMicrosecondsSerializerTest : DurationSerializerTest(
     json = "25622456",
     duration = 25622456.microseconds,
     durationToRound = 25622456.4.microseconds,
-    serializer = DurationInWholeMicrosecondsSerializer,
+    serializer = DurationInMicrosecondsSerializer,
 )
 
-class DurationInWholeMillisecondsSerializerTest : DurationSerializerTest(
+class DurationInMillisecondsSerializerTest : DurationSerializerTest(
     json = "3495189",
     duration = 3495189.milliseconds,
     durationToRound = 3495189.24.milliseconds,
-    serializer = DurationInWholeMillisecondsSerializer,
+    serializer = DurationInMillisecondsSerializer,
 )
 
-class DurationInWholeSecondsSerializerTest : DurationSerializerTest(
+class DurationInSecondsSerializerTest : DurationSerializerTest(
     json = "987465",
     duration = 987465.seconds,
     durationToRound = 987465.489.seconds,
-    serializer = DurationInWholeSecondsSerializer,
+    serializer = DurationInSecondsSerializer,
 )
 
-class DurationInWholeMinutesSerializerTest : DurationSerializerTest(
+class DurationInMinutesSerializerTest : DurationSerializerTest(
     json = "24905",
     duration = 24905.minutes,
     durationToRound = 24905.164.minutes,
-    serializer = DurationInWholeMinutesSerializer,
+    serializer = DurationInMinutesSerializer,
 )
 
-class DurationInWholeHoursSerializerTest : DurationSerializerTest(
+class DurationInHoursSerializerTest : DurationSerializerTest(
     json = "7245",
     duration = 7245.hours,
     durationToRound = 7245.24.hours,
-    serializer = DurationInWholeHoursSerializer,
+    serializer = DurationInHoursSerializer,
 )
 
-class DurationInWholeDaysSerializerTest : DurationSerializerTest(
+class DurationInDaysSerializerTest : DurationSerializerTest(
     json = "92",
     duration = 92.days,
     durationToRound = 92.12.days,
-    serializer = DurationInWholeDaysSerializer,
+    serializer = DurationInDaysSerializer,
 )

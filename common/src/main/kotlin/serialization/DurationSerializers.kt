@@ -13,8 +13,8 @@ import kotlin.time.DurationUnit.*
 import kotlin.time.toDuration
 
 
-/** Serializer that encodes and decodes [Duration]s. */
-public sealed class DurationSerializer(private val unit: DurationUnit, name: String) : KSerializer<Duration> {
+/** Serializer that encodes and decodes [Duration]s as a [Long] number of the specified [unit]. */
+public sealed class DurationAsLongSerializer(public val unit: DurationUnit, name: String) : KSerializer<Duration> {
 
     final override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("dev.kord.common.serialization.$name", PrimitiveKind.LONG)
@@ -32,61 +32,61 @@ public sealed class DurationSerializer(private val unit: DurationUnit, name: Str
 // nanoseconds
 
 /** Serializer that encodes and decodes [Duration]s in [whole nanoseconds][Duration.inWholeNanoseconds]. */
-public object DurationInWholeNanosecondsSerializer : DurationSerializer(NANOSECONDS, "DurationInWholeNanoseconds")
+public object DurationInNanosecondsSerializer : DurationAsLongSerializer(NANOSECONDS, "DurationInNanoseconds")
 
-/** A [Duration] that is [serializable][Serializable] with [DurationInWholeNanosecondsSerializer]. */
-public typealias DurationInWholeNanoseconds = @Serializable(with = DurationInWholeNanosecondsSerializer::class) Duration
+/** A [Duration] that is [serializable][Serializable] with [DurationInNanosecondsSerializer]. */
+public typealias DurationInNanoseconds = @Serializable(with = DurationInNanosecondsSerializer::class) Duration
 
 
 // microseconds
 
 /** Serializer that encodes and decodes [Duration]s in [whole microseconds][Duration.inWholeMicroseconds]. */
-public object DurationInWholeMicrosecondsSerializer : DurationSerializer(MICROSECONDS, "DurationInWholeMicroseconds")
+public object DurationInMicrosecondsSerializer : DurationAsLongSerializer(MICROSECONDS, "DurationInMicroseconds")
 
-/** A [Duration] that is [serializable][Serializable] with [DurationInWholeMicrosecondsSerializer]. */
-public typealias DurationInWholeMicroseconds = @Serializable(with = DurationInWholeMicrosecondsSerializer::class) Duration
+/** A [Duration] that is [serializable][Serializable] with [DurationInMicrosecondsSerializer]. */
+public typealias DurationInMicroseconds = @Serializable(with = DurationInMicrosecondsSerializer::class) Duration
 
 
 // milliseconds
 
 /** Serializer that encodes and decodes [Duration]s in [whole milliseconds][Duration.inWholeMilliseconds]. */
-public object DurationInWholeMillisecondsSerializer : DurationSerializer(MILLISECONDS, "DurationInWholeMilliseconds")
+public object DurationInMillisecondsSerializer : DurationAsLongSerializer(MILLISECONDS, "DurationInMilliseconds")
 
-/** A [Duration] that is [serializable][Serializable] with [DurationInWholeMillisecondsSerializer]. */
-public typealias DurationInWholeMilliseconds = @Serializable(with = DurationInWholeMillisecondsSerializer::class) Duration
+/** A [Duration] that is [serializable][Serializable] with [DurationInMillisecondsSerializer]. */
+public typealias DurationInMilliseconds = @Serializable(with = DurationInMillisecondsSerializer::class) Duration
 
 
 // seconds
 
 /** Serializer that encodes and decodes [Duration]s in [whole seconds][Duration.inWholeSeconds]. */
-public object DurationInWholeSecondsSerializer : DurationSerializer(SECONDS, "DurationInWholeSeconds")
+public object DurationInSecondsSerializer : DurationAsLongSerializer(SECONDS, "DurationInSeconds")
 
-/** A [Duration] that is [serializable][Serializable] with [DurationInWholeSecondsSerializer]. */
-public typealias DurationInWholeSeconds = @Serializable(with = DurationInWholeSecondsSerializer::class) Duration
+/** A [Duration] that is [serializable][Serializable] with [DurationInSecondsSerializer]. */
+public typealias DurationInSeconds = @Serializable(with = DurationInSecondsSerializer::class) Duration
 
 
 // minutes
 
 /** Serializer that encodes and decodes [Duration]s in [whole minutes][Duration.inWholeMinutes]. */
-public object DurationInWholeMinutesSerializer : DurationSerializer(MINUTES, "DurationInWholeMinutes")
+public object DurationInMinutesSerializer : DurationAsLongSerializer(MINUTES, "DurationInMinutes")
 
-/** A [Duration] that is [serializable][Serializable] with [DurationInWholeMinutesSerializer]. */
-public typealias DurationInWholeMinutes = @Serializable(with = DurationInWholeMinutesSerializer::class) Duration
+/** A [Duration] that is [serializable][Serializable] with [DurationInMinutesSerializer]. */
+public typealias DurationInMinutes = @Serializable(with = DurationInMinutesSerializer::class) Duration
 
 
 // hours
 
 /** Serializer that encodes and decodes [Duration]s in [whole hours][Duration.inWholeHours]. */
-public object DurationInWholeHoursSerializer : DurationSerializer(HOURS, "DurationInWholeHours")
+public object DurationInHoursSerializer : DurationAsLongSerializer(HOURS, "DurationInHours")
 
-/** A [Duration] that is [serializable][Serializable] with [DurationInWholeHoursSerializer]. */
-public typealias DurationInWholeHours = @Serializable(with = DurationInWholeHoursSerializer::class) Duration
+/** A [Duration] that is [serializable][Serializable] with [DurationInHoursSerializer]. */
+public typealias DurationInHours = @Serializable(with = DurationInHoursSerializer::class) Duration
 
 
 // days
 
 /** Serializer that encodes and decodes [Duration]s in [whole days][Duration.inWholeDays]. */
-public object DurationInWholeDaysSerializer : DurationSerializer(DAYS, "DurationInWholeDays")
+public object DurationInDaysSerializer : DurationAsLongSerializer(DAYS, "DurationInDays")
 
-/** A [Duration] that is [serializable][Serializable] with [DurationInWholeDaysSerializer]. */
-public typealias DurationInWholeDays = @Serializable(with = DurationInWholeDaysSerializer::class) Duration
+/** A [Duration] that is [serializable][Serializable] with [DurationInDaysSerializer]. */
+public typealias DurationInDays = @Serializable(with = DurationInDaysSerializer::class) Duration
