@@ -2,6 +2,7 @@ package dev.kord.common.serialization
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -14,13 +15,29 @@ import kotlin.time.toDuration
 
 
 /** Serializer that encodes and decodes [Duration]s as a [Long] number of the specified [unit]. */
-public sealed class DurationAsLongSerializer(public val unit: DurationUnit, name: String) : KSerializer<Duration> {
+public sealed class DurationAsLongSerializer(
+    public val unit: DurationUnit,
+    private val name: String,
+) : KSerializer<Duration> {
 
     final override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("dev.kord.common.serialization.$name", PrimitiveKind.LONG)
 
     final override fun serialize(encoder: Encoder, value: Duration) {
-        encoder.encodeLong(value.toLong(unit))
+        when (val valueAsLong = value.toLong(unit)) {
+
+            Long.MIN_VALUE, Long.MAX_VALUE -> throw SerializationException(
+                if (value.isInfinite()) {
+                    "Infinite Durations cannot be serialized, got $value"
+                } else {
+                    "The Duration $value expressed as a number of ${
+                        unit.name.lowercase()
+                    } does not fit in the range of Long type and therefore cannot be serialized with ${name}Serializer"
+                }
+            )
+
+            else -> encoder.encodeLong(valueAsLong)
+        }
     }
 
     final override fun deserialize(decoder: Decoder): Duration {
