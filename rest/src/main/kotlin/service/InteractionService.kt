@@ -22,9 +22,10 @@ import kotlin.contracts.contract
 
 public class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    public suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
+    public suspend fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean? = null): List<DiscordApplicationCommand> =
         call(Route.GlobalApplicationCommandsGet) {
             keys[Route.ApplicationId] = applicationId
+            withLocalizations?.let { parameter("with_localizations", it) }
         }
 
     public suspend fun createGlobalApplicationCommand(
@@ -60,8 +61,10 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend fun getGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
+        withLocalizations: Boolean? = null
     ): List<DiscordApplicationCommand> = call(Route.GuildApplicationCommandsGet) {
         applicationIdGuildId(applicationId, guildId)
+        withLocalizations?.let { parameter("with_localizations", it) }
     }
 
     public suspend fun createGuildApplicationCommand(

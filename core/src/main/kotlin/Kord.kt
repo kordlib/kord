@@ -94,7 +94,7 @@ public class Kord(
     /**
      * Global commands made by the bot under this Kord instance.
      */
-
+    @Deprecated("Replace with function call for localizations")
     public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
@@ -433,9 +433,11 @@ public class Kord(
             return KordRestOnlyBuilder(token).apply(builder).build()
         }
     }
-
-    public fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> {
-        return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId)
+    public fun getGlobalApplicationCommands(withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand> {
+        return defaultSupplier.getGlobalApplicationCommands(resources.applicationId, withLocalizations)
+    }
+    public fun getGuildApplicationCommands(guildId: Snowflake, withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> {
+        return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId, withLocalizations)
     }
 
     public suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
