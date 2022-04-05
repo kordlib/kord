@@ -7,7 +7,7 @@ plugins {
     id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.8.0"
     id("org.jetbrains.dokka")
 
-    id("org.ajoberstar.git-publish") version "4.1.0"
+    id("org.ajoberstar.git-publish") version "3.0.1"
 
     signing
     `maven-publish`
