@@ -4,9 +4,12 @@ import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
 import dev.kord.common.serialization.InstantInEpochSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.time.Duration.Companion.nanoseconds
 
 private val EPOCH = Instant.fromEpochSeconds(0)
 
@@ -21,7 +24,7 @@ abstract class InstantSerializerTest(
 
     private val mirroredInstant = EPOCH - (instant - EPOCH)
 
-    private fun serialize(instant: Instant) = Json.encodeToString(serializer, instant)
+    protected fun serialize(instant: Instant) = Json.encodeToString(serializer, instant)
     private fun deserialize(json: String) = Json.decodeFromString(serializer, json)
 
 
@@ -63,7 +66,31 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     json = "796514689159",
     instant = Instant.fromEpochMilliseconds(796514689159),
     serializer = InstantInEpochMillisecondsSerializer,
-)
+) {
+    private val futureInstantExactlyAtLimit = Instant.fromEpochMilliseconds(Long.MAX_VALUE)
+    private val pastInstantExactlyAtLimit = Instant.fromEpochMilliseconds(Long.MIN_VALUE)
+
+    @Test
+    fun `future Instant exactly at limit can be serialized`() {
+        assertEquals(expected = Long.MAX_VALUE.toString(), actual = serialize(futureInstantExactlyAtLimit))
+    }
+
+    @Test
+    fun `past Instant exactly at limit can be serialized`() {
+        assertEquals(expected = Long.MIN_VALUE.toString(), actual = serialize(pastInstantExactlyAtLimit))
+    }
+
+
+    @Test
+    fun `future Instant over limit cannot be serialized`() {
+        assertFailsWith<SerializationException> { serialize(futureInstantExactlyAtLimit + 1.nanoseconds) }
+    }
+
+    @Test
+    fun `past Instant over limit cannot be serialized`() {
+        assertFailsWith<SerializationException> { serialize(pastInstantExactlyAtLimit - 1.nanoseconds) }
+    }
+}
 
 class InstantInEpochSecondsSerializerTest : InstantSerializerTest(
     json = "3992794563",
