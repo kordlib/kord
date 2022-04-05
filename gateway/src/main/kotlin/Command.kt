@@ -4,9 +4,8 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
+import dev.kord.common.serialization.InstantInEpochMilliseconds
 import kotlinx.atomicfu.atomic
-import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
@@ -125,8 +124,7 @@ public data class GuildMembersChunkData(
 public data class DiscordPresence(
     val status: PresenceStatus,
     val afk: Boolean,
-    @Serializable(with = InstantInEpochMillisecondsSerializer::class)
-    val since: Instant? = null,
+    val since: InstantInEpochMilliseconds? = null,
     val game: DiscordBotActivity? = null,
 )
 
@@ -201,8 +199,7 @@ public data class UpdateVoiceStatus(
 
 @Serializable
 public data class UpdateStatus(
-    @Serializable(with = InstantInEpochMillisecondsSerializer::class)
-    val since: Instant?,
+    val since: InstantInEpochMilliseconds?,
     val activities: List<DiscordBotActivity>,
     val status: PresenceStatus,
     val afk: Boolean,

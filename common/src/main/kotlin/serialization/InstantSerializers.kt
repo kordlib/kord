@@ -2,12 +2,15 @@ package dev.kord.common.serialization
 
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+
+// epoch milliseconds
 
 /** Serializer that encodes and decodes [Instant]s in [epoch milliseconds][Instant.toEpochMilliseconds]. */
 public object InstantInEpochMillisecondsSerializer : KSerializer<Instant> {
@@ -24,6 +27,11 @@ public object InstantInEpochMillisecondsSerializer : KSerializer<Instant> {
     }
 }
 
+/** An [Instant] that is [serializable][Serializable] with [InstantInEpochMillisecondsSerializer]. */
+public typealias InstantInEpochMilliseconds = @Serializable(with = InstantInEpochMillisecondsSerializer::class) Instant
+
+
+// epoch seconds
 
 /** Serializer that encodes and decodes [Instant]s in [epoch seconds][Instant.epochSeconds]. */
 public object InstantInEpochSecondsSerializer : KSerializer<Instant> {
@@ -39,3 +47,6 @@ public object InstantInEpochSecondsSerializer : KSerializer<Instant> {
         return Instant.fromEpochSeconds(decoder.decodeLong())
     }
 }
+
+/** An [Instant] that is [serializable][Serializable] with [InstantInEpochSecondsSerializer]. */
+public typealias InstantInEpochSeconds = @Serializable(with = InstantInEpochSecondsSerializer::class) Instant
