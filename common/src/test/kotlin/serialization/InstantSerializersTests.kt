@@ -15,30 +15,46 @@ abstract class InstantSerializerTest(
     private val instant: Instant,
     private val serializer: KSerializer<Instant>,
 ) {
+    init {
+        require(instant > EPOCH)
+    }
+
+    private val mirroredInstant = EPOCH - (instant - EPOCH)
+
+    private fun serialize(instant: Instant) = Json.encodeToString(serializer, instant)
+    private fun deserialize(json: String) = Json.decodeFromString(serializer, json)
+
 
     @Test
     fun `epoch Instant can be serialized`() {
-        val serialized = Json.encodeToString(serializer, EPOCH)
-        assertEquals(expected = "0", actual = serialized)
+        assertEquals(expected = "0", actual = serialize(EPOCH))
     }
 
     @Test
     fun `epoch Instant can be deserialized`() {
-        val deserialized = Json.decodeFromString(serializer, "0")
-        assertEquals(expected = EPOCH, actual = deserialized)
+        assertEquals(expected = EPOCH, actual = deserialize("0"))
     }
 
 
     @Test
-    fun `Instant can be serialized`() {
-        val serialized = Json.encodeToString(serializer, instant)
-        assertEquals(expected = json, actual = serialized)
+    fun `future Instant can be serialized`() {
+        assertEquals(expected = json, actual = serialize(instant))
     }
 
     @Test
-    fun `Instant can be deserialized`() {
-        val deserialized = Json.decodeFromString(serializer, json)
-        assertEquals(expected = instant, actual = deserialized)
+    fun `future Instant can be deserialized`() {
+        assertEquals(expected = instant, actual = deserialize(json))
+    }
+
+
+    @Test
+    fun `past Instant can be serialized`() {
+        assertEquals(expected = "-$json", actual = serialize(mirroredInstant))
+    }
+
+    @Test
+    fun `past Instant can be deserialized`() {
+        assertEquals(expected = mirroredInstant, actual = deserialize("-$json"))
     }
 }
 
