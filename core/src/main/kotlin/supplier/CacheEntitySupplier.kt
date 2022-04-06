@@ -394,7 +394,15 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         idEq(ApplicationCommandData::guildId, guildId)
         idEq(ApplicationCommandData::applicationId, applicationId)
     }.asFlow()
-        .filter { (it.nameLocalizations is Optional.Missing) == withLocalizations }
+        .map {
+            when (withLocalizations) {
+                true, null -> it
+                false -> it.copy(
+                    nameLocalizations = Optional.Missing(),
+                    descriptionLocalizations = Optional.Missing(),
+                )
+            }
+        }
         .map { GuildApplicationCommand(it, kord.rest.interaction) }
 
 
@@ -430,7 +438,15 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             idEq(ApplicationCommandData::guildId, null)
             idEq(ApplicationCommandData::applicationId, applicationId)
         }.asFlow()
-            .filter { (it.nameLocalizations is Optional.Missing) == withLocalizations }
+            .map {
+                when (withLocalizations) {
+                    true, null -> it
+                    false -> it.copy(
+                        nameLocalizations = Optional.Missing(),
+                        descriptionLocalizations = Optional.Missing(),
+                    )
+                }
+            }
             .map { GlobalApplicationCommand(it, kord.rest.interaction) }
 
     override fun getGuildApplicationCommandPermissions(

@@ -198,7 +198,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Application commands for this guild only.
      */
-    @Deprecated("Use function call")
+    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"))
     public val commands: Flow<GuildApplicationCommand>
         get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
