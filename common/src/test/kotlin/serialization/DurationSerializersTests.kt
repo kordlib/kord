@@ -30,6 +30,7 @@ abstract class DurationSerializerTest(
 
         if (serializer.unit < MILLISECONDS) {
             require(durationThatWouldOverflowInTargetUnit != null)
+            require(durationThatWouldOverflowInTargetUnit.isPositive())
             require(largeJson == null)
         } else {
             require(durationThatWouldOverflowInTargetUnit == null)
