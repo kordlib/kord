@@ -247,9 +247,9 @@ public interface GuildBehavior : KordEntity, Strategizable {
             }
     }
 
-    public fun getApplicationCommands(withLocalizations: Boolean? = null) {
+    public fun getApplicationCommands(withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> =
         supplier.getGuildApplicationCommands(kord.resources.applicationId, id, withLocalizations)
-    }
+
     public suspend fun getApplicationCommand(commandId: Snowflake): GuildApplicationCommand =
         supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)
 
