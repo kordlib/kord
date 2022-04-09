@@ -39,7 +39,7 @@ import kotlinx.serialization.encoding.Encoder
  * ```
  */
 @Serializable(with = OptionalSerializer::class)
-public sealed class Optional<out T> private constructor() {
+public sealed class Optional<out T> {
 
     /**
      * The value this optional wraps.
