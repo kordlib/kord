@@ -47,11 +47,11 @@ fun VersionCatalogBuilder.cache() {
 }
 
 fun VersionCatalogBuilder.kotlinx() {
-    library("kotlinx-datetime", "org.jetbrains.kotlinx", "kotlinx-datetime").version("0.3.1")
+    library("kotlinx-datetime", "org.jetbrains.kotlinx", "kotlinx-datetime").version("0.3.2")
 }
 
 fun VersionCatalogBuilder.ktor() {
-    val ktor = version("ktor", "1.6.7")
+    val ktor = version("ktor", "1.6.8")
 
     library("ktor-client-json", "io.ktor", "ktor-client-json").versionRef(ktor)
     library("ktor-client-serialization", "io.ktor", "ktor-client-serialization").versionRef(ktor)
@@ -67,10 +67,10 @@ fun VersionCatalogBuilder.ktor() {
 }
 
 fun VersionCatalogBuilder.common() {
-    version("kotlinx-coroutines", "1.6.0")
+    version("kotlinx-coroutines", "1.6.1")
     library("kotlinx-serialization", "org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.3.2")
     library("kotlinx-coroutines", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").versionRef("kotlinx-coroutines")
-    library("kotlinx-atomicfu", "org.jetbrains.kotlinx", "atomicfu").version("0.17.0")
+    library("kotlinx-atomicfu", "org.jetbrains.kotlinx", "atomicfu").version("0.17.1")
     library("kotlin-logging", "io.github.microutils", "kotlin-logging").version("2.1.21")
 
     bundle("common", listOf("kotlinx-serialization", "kotlinx-coroutines", "kotlinx-atomicfu", "kotlin-logging"))
@@ -79,11 +79,11 @@ fun VersionCatalogBuilder.common() {
 fun VersionCatalogBuilder.tests() {
     val junit5 = version("junit5", "5.8.2")
 
-    library("mockk", "io.mockk", "mockk").version("1.12.1")
+    library("mockk", "io.mockk", "mockk").version("1.12.3")
     library("kotlinx-coroutines-test", "org.jetbrains.kotlinx", "kotlinx-coroutines-test").versionRef("kotlinx-coroutines")
     library("junit-jupiter-api", "org.junit.jupiter", "junit-jupiter-api").versionRef(junit5)
 
-    library("slf4j-simple", "org.slf4j", "slf4j-simple").version("1.7.30")
+    library("slf4j-simple", "org.slf4j", "slf4j-simple").version("1.7.36")
     library("junit-jupiter-engine", "org.junit.jupiter", "junit-jupiter-engine").versionRef(junit5)
 
     bundle("test-implementation", listOf("mockk", "kotlinx-coroutines-test", "junit-jupiter-api"))
