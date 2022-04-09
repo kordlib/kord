@@ -94,7 +94,7 @@ public class Kord(
     /**
      * Global commands made by the bot under this Kord instance.
      */
-    @Deprecated("Replace with function call for localizations")
+    @Deprecated("Replace with function call for localizations", ReplaceWith("getGlobalApplicationCommands()"))
     public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
