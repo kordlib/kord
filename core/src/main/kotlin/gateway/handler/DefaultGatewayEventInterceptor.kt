@@ -4,7 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.core.Kord
 import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.gateway.ShardEvent
-import io.ktor.util.*
+import io.ktor.util.logging.*
 import kotlinx.coroutines.CoroutineScope
 import mu.KotlinLogging
 import dev.kord.core.event.Event as CoreEvent

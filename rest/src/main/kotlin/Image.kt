@@ -22,11 +22,12 @@ public class Image private constructor(public val data: ByteArray, public val fo
         }
 
         public suspend fun fromUrl(client: HttpClient, url: String): Image = with(Dispatchers.IO) {
-            val call = client.request<HttpResponse>(url) { method = HttpMethod.Get }
+            val call = client.request(url) { method = HttpMethod.Get }
             val contentType = call.headers["Content-Type"]
                 ?: error("expected 'Content-Type' header in image request")
 
-            val bytes = call.content.toByteArray()
+            @Suppress("EXPERIMENTAL_API_USAGE")
+            val bytes = call.bodyAsChannel().toByteArray()
 
             Image(bytes, Format.fromContentType(contentType))
         }

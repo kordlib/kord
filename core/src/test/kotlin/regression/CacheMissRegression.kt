@@ -23,14 +23,12 @@ import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
-import io.ktor.client.HttpClient
-import io.ktor.client.request.forms.MultiPartFormDataContent
-import io.ktor.client.request.request
-import io.ktor.client.statement.HttpStatement
-import io.ktor.client.statement.readText
-import io.ktor.content.TextContent
-import io.ktor.http.ContentType
-import io.ktor.http.takeFrom
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
+import io.ktor.content.*
+import io.ktor.http.*
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -83,7 +81,7 @@ object FakeGateway : Gateway {
 class CrashingHandler(val client: HttpClient, override val token: String) : RequestHandler {
     override suspend fun <B : Any, R> handle(request: Request<B, R>): R {
         if (request.route != Route.CurrentUserGet) throw IllegalStateException("shouldn't do a request")
-        val response = client.request<HttpStatement> {
+        val response = client.prepareRequest {
             method = request.route.method
             headers.appendAll(request.headers)
 
@@ -102,12 +100,12 @@ class CrashingHandler(val client: HttpClient, override val token: String) : Requ
                             "payload_json",
                             parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body)
                         )
-                        this.body = MultiPartFormDataContent(request.data)
+                        setBody(MultiPartFormDataContent(request.data))
                     }
 
                     is JsonRequest<*, *> -> {
                         val json = parser.encodeToString(it.strategy as SerializationStrategy<Any>, it.body)
-                        this.body = TextContent(json, ContentType.Application.Json)
+                        setBody(TextContent(json, ContentType.Application.Json))
                     }
                 }
             }
@@ -115,7 +113,7 @@ class CrashingHandler(val client: HttpClient, override val token: String) : Requ
 
         }.execute()
 
-        return request.route.mapper.deserialize(parser, response.readText())
+        return request.route.mapper.deserialize(parser, response.bodyAsText())
     }
 }
 

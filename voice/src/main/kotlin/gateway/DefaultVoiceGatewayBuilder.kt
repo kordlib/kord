@@ -6,10 +6,11 @@ import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.websocket.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.time.Duration.Companion.seconds
@@ -28,7 +29,9 @@ public class DefaultVoiceGatewayBuilder(
     public fun build(): DefaultVoiceGateway {
         val client = client ?: HttpClient(CIO) {
             install(WebSockets)
-            install(JsonFeature)
+            install(ContentNegotiation) {
+                json()
+            }
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
 

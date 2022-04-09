@@ -9,7 +9,7 @@ dependencies {
     api(projects.gateway)
 
     api(libs.ktor.client.json)
-    api(libs.ktor.client.serialization)
+    api(libs.bundles.ktor.client.serialization)
     api(libs.ktor.client.cio)
     api(libs.ktor.network)
 }

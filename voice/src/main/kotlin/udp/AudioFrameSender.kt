@@ -4,11 +4,12 @@ package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.FrameInterceptorConfiguration
+import io.ktor.network.sockets.*
 import io.ktor.util.network.*
 
 @KordVoice
 public data class AudioFrameSenderConfiguration(
-    val server: NetworkAddress,
+    val server: SocketAddress,
     val ssrc: UInt,
     val key: ByteArray,
     val interceptorConfiguration: FrameInterceptorConfiguration
