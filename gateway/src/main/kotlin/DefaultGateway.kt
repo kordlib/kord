@@ -159,7 +159,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
 
     private suspend fun readSocket() {
-        socket.incoming.asFlow().buffer(Channel.UNLIMITED).collectLatest {
+        socket.incoming.asFlow().buffer(Channel.UNLIMITED).collect {
             when (it) {
                 is Frame.Binary, is Frame.Text -> read(it)
                 else -> { /*ignore*/
