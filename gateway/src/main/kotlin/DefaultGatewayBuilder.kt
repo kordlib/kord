@@ -1,6 +1,6 @@
 package dev.kord.gateway
 
-import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
@@ -30,8 +30,8 @@ public class DefaultGatewayBuilder {
             install(JsonFeature)
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
-        val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, 60.seconds)
-        val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, 5.seconds)
+        val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)
+        val identifyRateLimiter = identifyRateLimiter ?: IntervalRateLimiter(limit = 1, interval = 5.seconds)
 
         client.requestPipeline.intercept(HttpRequestPipeline.Render) {
             // CIO adds this header even if no extensions are used, which causes it to be empty

@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package ratelimit
 
 import dev.kord.common.ratelimit.BucketRateLimiter
