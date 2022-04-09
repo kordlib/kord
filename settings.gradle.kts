@@ -51,7 +51,7 @@ fun VersionCatalogBuilder.kotlinx() {
 }
 
 fun VersionCatalogBuilder.ktor() {
-    val ktor = version("ktor", "1.6.7")
+    val ktor = version("ktor", "1.6.8")
 
     library("ktor-client-json", "io.ktor", "ktor-client-json").versionRef(ktor)
     library("ktor-client-serialization", "io.ktor", "ktor-client-serialization").versionRef(ktor)
