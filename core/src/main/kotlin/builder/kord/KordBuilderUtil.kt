@@ -33,7 +33,7 @@ internal fun HttpClient?.configure(): HttpClient {
     return HttpClient(CIO) {
         defaultConfig()
         install(ContentNegotiation) {
-            json()
+            json(json)
         }
     }
 }
