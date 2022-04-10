@@ -128,9 +128,11 @@ public sealed class NumericOptionBuilder<T : Number>(
     public var maxValue: T? by ::_maxValue.delegate()
 
     override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
-        type,
-        name,
-        description,
+        type = type,
+        name = name,
+        nameLocalizations = _nameLocalizations,
+        description = description,
+        descriptionLocalizations = _descriptionLocalizations,
         choices = _choices,
         required = _required,
         default = _default,
