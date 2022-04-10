@@ -8,8 +8,7 @@ import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.*
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
@@ -166,6 +165,9 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     @SerialName("icon_hash")
     public object IconHash : AuditLogChangeKey<String>("icon_hash", serializer())
 
+    @SerialName("image_hash")
+    public object ImageHash : AuditLogChangeKey<String>("image_hash", serializer())
+
     @SerialName("splash_hash")
     public object SplashHash : AuditLogChangeKey<String>("splash_hash", serializer())
 
@@ -297,8 +299,44 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     @SerialName("id")
     public object Id : AuditLogChangeKey<Snowflake>("id", serializer())
 
+    /**
+     * The actual supertype is [AuditLogChangeKey<Int | String>][AuditLogChangeKey] but Kotlin does not support union
+     * types yet. [Int]s are instead converted to a [String].
+     */
     @SerialName("type")
-    public object Type : AuditLogChangeKey<ChannelType>("type", serializer())
+    public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer) {
+        // TODO use union type `String | Int` if Kotlin ever introduces them
+
+        // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
+        // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
+        private object IntOrStringSerializer : KSerializer<String> {
+            private val backingSerializer = JsonPrimitive.serializer()
+
+            /*
+             * Delegating serializers should not reuse descriptors:
+             * https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md#delegating-serializers
+             *
+             * however `SerialDescriptor("...", backingSerializer.descriptor)` will throw since
+             * `JsonPrimitive.serializer().kind` is `PrimitiveKind.STRING` (`SerialDescriptor()` does not allow
+             * `PrimitiveKind`)
+             * -> use `PrimitiveSerialDescriptor("...", PrimitiveKind.STRING)` instead
+             */
+            override val descriptor = PrimitiveSerialDescriptor(
+                serialName = "dev.kord.common.entity.AuditLogChangeKey.Type.IntOrString",
+                PrimitiveKind.STRING,
+            )
+
+            override fun serialize(encoder: Encoder, value: String) {
+                val jsonPrimitive = value.toIntOrNull()?.let { JsonPrimitive(it) } ?: JsonPrimitive(value)
+                encoder.encodeSerializableValue(backingSerializer, jsonPrimitive)
+            }
+
+            override fun deserialize(decoder: Decoder): String {
+                val jsonPrimitive = decoder.decodeSerializableValue(backingSerializer)
+                return if (jsonPrimitive.isString) jsonPrimitive.content else jsonPrimitive.int.toString()
+            }
+        }
+    }
 
     @SerialName("enable_emoticons")
     public object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
@@ -357,6 +395,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
             return when (name) {
                 "name" -> Name
                 "icon_hash" -> IconHash
+                "image_hash" -> ImageHash
                 "splash_hash" -> SplashHash
                 "owner_id" -> OwnerId
                 "region" -> Region

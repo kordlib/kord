@@ -11,14 +11,16 @@ import kotlinx.serialization.encoding.Encoder
 
 
 /**
- * A _Stage Instance_ holds information about a live stage.
+ * A [_Stage Instance_](https://discord.com/developers/docs/resources/stage-instance) holds information about a live
+ * stage.
  *
- * @property id The id of this Stage instance
- * @property guildId The guild id of the associated Stage channel
- * @property channelId The id of the associated Stage channel
- * @property topic The topic of the Stage instance (1-120 characters)
- * @property privacyLevel The [privacy level][StageInstancePrivacyLevel] of the Stage instance
- * @property discoverableDisabled Whether or not Stage Discovery is disabled
+ * @property id The id of this Stage instance.
+ * @property guildId The guild id of the associated Stage channel.
+ * @property channelId The id of the associated Stage channel.
+ * @property topic The topic of the Stage instance.
+ * @property privacyLevel The [privacy level][StageInstancePrivacyLevel] of the Stage instance.
+ * @property discoverableDisabled Whether or not Stage Discovery is disabled.
+ * @property guildScheduledEventId The id of the scheduled event for this Stage instance.
  */
 @Serializable
 public data class DiscordStageInstance(
@@ -32,7 +34,9 @@ public data class DiscordStageInstance(
     val privacyLevel: StageInstancePrivacyLevel,
     @Deprecated("Stages are no longer discoverable")
     @SerialName("discoverable_disabled")
-    val discoverableDisabled: Boolean
+    val discoverableDisabled: Boolean,
+    @SerialName("guild_scheduled_event_id")
+    val guildScheduledEventId: Snowflake?,
 )
 
 /**

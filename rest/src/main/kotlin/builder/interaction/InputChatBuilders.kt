@@ -49,10 +49,10 @@ public inline fun BaseInputChatBuilder.attachment(name: String, description: Str
     options!!.add(AttachmentBuilder(name, description).apply(builder))
 }
 
-public inline fun BaseInputChatBuilder.number(name: String, description: String, builder: NumberChoiceBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.number(name: String, description: String, builder: NumberOptionBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
-    options!!.add(NumberChoiceBuilder(name, description).apply(builder))
+    options!!.add(NumberOptionBuilder(name, description).apply(builder))
 }
 
 public inline fun BaseInputChatBuilder.string(
@@ -65,10 +65,10 @@ public inline fun BaseInputChatBuilder.string(
     options!!.add(StringChoiceBuilder(name, description).apply(builder))
 }
 
-public inline fun BaseInputChatBuilder.int(name: String, description: String, builder: IntChoiceBuilder.() -> Unit = {}) {
+public inline fun BaseInputChatBuilder.int(name: String, description: String, builder: IntegerOptionBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     if (options == null) options = mutableListOf()
-    options!!.add(IntChoiceBuilder(name, description).apply(builder))
+    options!!.add(IntegerOptionBuilder(name, description).apply(builder))
 }
 
 public inline fun BaseInputChatBuilder.boolean(name: String, description: String, builder: BooleanBuilder.() -> Unit = {}) {

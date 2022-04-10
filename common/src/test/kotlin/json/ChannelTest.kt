@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 private fun file(name: String): String {
     val loader = ChannelTest::class.java.classLoader
-    return loader.getResource("json/channel/$name.json").readText()
+    return loader.getResource("json/channel/$name.json")!!.readText()
 }
 
 class ChannelTest {
@@ -130,23 +130,6 @@ class ChannelTest {
             bitrate.value shouldBe 64000
             userLimit.value shouldBe 0
             parentId.value?.toString() shouldBe null
-        }
-    }
-
-
-    @Test
-    fun `StoreChannel serialization`() {
-        val channel = Json.decodeFromString(DiscordChannel.serializer(), file("storechannel"))
-
-        with(channel) {
-            id.toString() shouldBe "41771983423143937"
-            guildId.value!!.toString() shouldBe "41771983423143937"
-            name.value shouldBe "buy dota-2"
-            type.value shouldBe 6
-            position.asNullable shouldBe 0
-            permissionOverwrites.value!! shouldBe emptyList()
-            nsfw.asNullable shouldBe false
-            parentId shouldBe null
         }
     }
 }

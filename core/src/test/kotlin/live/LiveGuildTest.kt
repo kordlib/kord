@@ -214,7 +214,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         selfMute = false,
                         selfVideo = false,
                         suppress = false,
-                        requestToSpeakTimestamp = null
+                        requestToSpeakTimestamp = null,
                     ),
                     0
                 )

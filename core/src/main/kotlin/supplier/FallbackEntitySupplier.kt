@@ -76,8 +76,8 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? =
         first.getGuildBanOrNull(guildId, userId) ?: second.getGuildBanOrNull(guildId, userId)
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> =
-        first.getGuildBans(guildId).switchIfEmpty(second.getGuildBans(guildId))
+    override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> =
+        first.getGuildBans(guildId, limit).switchIfEmpty(second.getGuildBans(guildId, limit))
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> =
         first.getGuildMembers(guildId, limit).switchIfEmpty(second.getGuildMembers(guildId, limit))

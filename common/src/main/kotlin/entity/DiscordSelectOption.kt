@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 /**
  * Represent a [select option structure](https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure).
  *
- * @param label the user-facing name of the option, max 25 characters
- * @param value the dev-define value of the option, max 100 characters
- * @param description an additional description of the option, max 50 characters
+ * @param label the user-facing name of the option
+ * @param value the dev-defined value of the option
+ * @param description an additional description of the option
  * @param emoji the emoji to show in the option
  * @param default whether to render this option as selected by default
  */

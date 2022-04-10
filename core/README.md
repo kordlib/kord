@@ -8,23 +8,27 @@ in a non-blocking, coroutine focused, event-driven design.
 
 ```kotlin
 suspend fun main() {
-    val kord = Kord(token)
+    val kord = Kord("your bot token")
 
     // Flow style
     kord.events
-            .filterIsInstance<MessageCreateEvent>()
-            .filter { it.message.author?.isBot == false }
-            .filter { it.message.content == "!ping" }
-            .onEach { it.message.channel.createMessage("pong") }
-            .launchIn(kord)
+        .filterIsInstance<MessageCreateEvent>()
+        .map { it.message }
+        .filter { it.author?.isBot == false }
+        .filter { it.content == "!ping" }
+        .onEach { it.channel.createMessage("pong") }
+        .launchIn(kord)
 
     // Simplified style
     kord.on<MessageCreateEvent> {
-        if(message.author?.isBot == true) return@on
+        if (message.author?.isBot == true) return@on
         if (message.content == "!ping") message.channel.createMessage("pong")
     }
 
-    kord.login()
+    kord.login {
+        @OptIn(PrivilegedIntent::class)
+        intents += Intent.MessageContent
+    }
 }
 ```
 ## Installation
@@ -44,7 +48,6 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-
 }
 ```
 
@@ -61,7 +64,6 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-
 }
 ```
 

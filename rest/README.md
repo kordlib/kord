@@ -8,9 +8,9 @@ A low-level implementation of discord's rest api.
 suspend fun main(args: Array<String>) {
     val token = args.firstOrNull() ?: error("token required")
 
-    val client = RestClient(ExclusionRequestHandler(token))
+    val rest = RestClient(KtorRequestHandler(token))
 
-    val username = client.user.getCurrentUser().username
+    val username = rest.user.getCurrentUser().username
     println("using $username's token")
 }
 ``` 
@@ -33,7 +33,6 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-
 }
 ```
 
@@ -50,7 +49,6 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-
 }
 ```
 

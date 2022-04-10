@@ -29,6 +29,9 @@ public sealed interface BaseApplicationData {
     public val slug: Optional<String>
     public val coverImage: Optional<String>
     public val flags: Optional<ApplicationFlags>
+    public val tags: Optional<List<String>>
+    public val installParams: Optional<InstallParams>
+    public val customInstallUrl: Optional<String>
 }
 
 @Serializable
@@ -50,6 +53,9 @@ public data class ApplicationData(
     override val slug: Optional<String> = Optional.Missing(),
     override val coverImage: Optional<String> = Optional.Missing(),
     override val flags: Optional<ApplicationFlags> = Optional.Missing(),
+    override val tags: Optional<List<String>> = Optional.Missing(),
+    override val installParams: Optional<InstallParams> = Optional.Missing(),
+    override val customInstallUrl: Optional<String> = Optional.Missing(),
 ) : BaseApplicationData {
     public companion object {
 
@@ -72,6 +78,9 @@ public data class ApplicationData(
                 slug,
                 coverImage,
                 flags,
+                tags,
+                installParams,
+                customInstallUrl,
             )
         }
     }
@@ -94,6 +103,9 @@ public data class PartialApplicationData(
     override val slug: Optional<String> = Optional.Missing(),
     override val coverImage: Optional<String> = Optional.Missing(),
     override val flags: Optional<ApplicationFlags> = Optional.Missing(),
+    override val tags: Optional<List<String>> = Optional.Missing(),
+    override val installParams: Optional<InstallParams> = Optional.Missing(),
+    override val customInstallUrl: Optional<String> = Optional.Missing(),
 ) : BaseApplicationData {
     public companion object {
 
@@ -113,6 +125,9 @@ public data class PartialApplicationData(
                 slug,
                 coverImage,
                 flags,
+                tags,
+                installParams,
+                customInstallUrl,
             )
         }
     }

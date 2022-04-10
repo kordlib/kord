@@ -67,17 +67,17 @@ public class SelectMenuComponent(override val data: ComponentData) : Component {
 public class SelectOption(public val data: SelectOptionData) {
 
     /**
-     * The user-facing name of the option, max 25 characters.
+     * The user-facing name of the option.
      */
     public val label: String get() = data.label
 
     /**
-     * The dev-define value of the option, max 100 characters.
+     * The dev-defined value of the option.
      */
     public val value: String get() = data.value
 
     /**
-     * An additional description of the option, max 50 characters. Null if not set.
+     * An additional description of the option. Null if not set.
      */
     public val description: String? get() = data.description.value
 

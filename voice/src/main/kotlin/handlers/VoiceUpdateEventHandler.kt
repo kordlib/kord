@@ -44,7 +44,7 @@ internal class VoiceUpdateEventHandler(
 
                     connection.shutdown()
                 }
-            } else if (event.voiceState.channelId != null) {
+            } else {
                 voiceUpdateLogger.trace { "detected a voice channel change for guild ${connection.data.guildId}, cancelling detachment." }
                 detachJob?.cancel()
                 detachJob = null

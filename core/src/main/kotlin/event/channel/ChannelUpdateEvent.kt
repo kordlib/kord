@@ -2,12 +2,10 @@ package dev.kord.core.event.channel
 
 import dev.kord.core.Kord
 import dev.kord.core.entity.channel.*
-import dev.kord.core.entity.channel.thread.NewsChannelThread
-import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.event.Event
 import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
+import kotlin.DeprecationLevel.WARNING
 
 
 public interface ChannelUpdateEvent : Event {
@@ -50,6 +48,16 @@ public class NewsChannelUpdateEvent(
     }
 }
 
+@Suppress("DEPRECATION")
+@Deprecated(
+    """
+    Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+    removed on March 10, 2022.
+    
+    See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+    """,
+    level = WARNING,
+)
 public class StoreChannelUpdateEvent(
     override val channel: StoreChannel,
     override val old: StoreChannel?,

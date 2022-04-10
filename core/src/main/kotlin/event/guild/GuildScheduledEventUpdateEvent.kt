@@ -4,7 +4,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.entity.GuildScheduledEvent
-import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
@@ -46,6 +45,6 @@ public data class GuildScheduledEventUpdateEvent(
      */
     override suspend fun getChannelOrNull(): TopGuildChannel? = super.getChannelOrNull()
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildScheduledEventUpdateEvent =
         copy(supplier = strategy.supply(kord))
 }

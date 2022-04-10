@@ -198,9 +198,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Ban(data, kord)
     }
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> = cache.query<BanData> {
-        idEq(BanData::guildId, guildId)
-    }.asFlow().map { Ban(it, kord) }
+    override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> {
+        checkLimit(limit)
+        return cache.query<BanData> { idEq(BanData::guildId, guildId) }
+            .asFlow()
+            .map { Ban(it, kord) }
+            .limit(limit)
+    }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
         checkLimit(limit)

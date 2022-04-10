@@ -5,9 +5,14 @@ import com.iwebpp.crypto.TweetNaclFast.SecretBox.boxzerobytesLength
 import com.iwebpp.crypto.TweetNaclFast.SecretBox.zerobytesLength
 import dev.kord.voice.io.MutableByteArrayCursor
 
+// https://datatracker.ietf.org/doc/html/rfc6716#section-3.2.1
+private const val OPUS_MAX_LENGTH = 1276
+
 internal class XSalsa20Poly1305Encryption(private val key: ByteArray) {
-    private val m: ByteArray = ByteArray(984)
-    private val c: ByteArray = ByteArray(984)
+    // this class is only used internally and is used for encrypting opus packets.
+    // we can know the maximum sized buffer required to store any opus packet.
+    private val m: ByteArray = ByteArray(OPUS_MAX_LENGTH + zerobytesLength)
+    private val c: ByteArray = ByteArray(OPUS_MAX_LENGTH + zerobytesLength)
 
     fun box(message: ByteArray, mOffset: Int, mLength: Int, nonce: ByteArray, output: MutableByteArrayCursor): Boolean {
         m.fill(0)

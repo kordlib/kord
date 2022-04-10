@@ -174,7 +174,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createIntAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        builderFunction: IntChoiceBuilder.() -> Unit
+        builderFunction: IntegerOptionBuilder.() -> Unit
     ) {
         contract {
             callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
@@ -183,7 +183,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createBuilderAutoCompleteInteractionResponse(
             interactionId,
             interactionToken,
-            IntChoiceBuilder("<auto-complete>", ""),
+            IntegerOptionBuilder("<auto-complete>", ""),
             builderFunction
         )
     }
@@ -191,7 +191,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createNumberAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        builderFunction: NumberChoiceBuilder.() -> Unit
+        builderFunction: NumberOptionBuilder.() -> Unit
     ) {
         contract {
             callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE)
@@ -200,7 +200,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createBuilderAutoCompleteInteractionResponse(
             interactionId,
             interactionToken,
-            NumberChoiceBuilder("<auto-complete>", ""),
+            NumberOptionBuilder("<auto-complete>", ""),
             builderFunction
         )
     }

@@ -2,8 +2,9 @@ package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.KordConstants
+import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.cache.CachingGateway
@@ -21,9 +22,7 @@ import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import dev.kord.rest.json.response.BotGatewayResponse
 import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
-import dev.kord.rest.request.KtorRequestHandler
-import dev.kord.rest.request.RequestHandler
-import dev.kord.rest.request.isError
+import dev.kord.rest.request.*
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
@@ -51,8 +50,8 @@ public operator fun DefaultGateway.Companion.invoke(
         url = "wss://gateway.discord.gg/"
         client = resources.httpClient
         reconnectRetry = retry
-        sendRateLimiter = BucketRateLimiter(120, 60.seconds)
-        identifyRateLimiter = BucketRateLimiter(1, 5.seconds)
+        sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
+        identifyRateLimiter = IntervalRateLimiter(limit = 1, interval = 5.seconds)
     }
 }
 
@@ -63,7 +62,7 @@ public class KordBuilder(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
-            val rateLimiter = BucketRateLimiter(1, 5.seconds)
+            val rateLimiter = IntervalRateLimiter(limit = 1, interval = 5.seconds)
             shards.map {
                 DefaultGateway {
                     client = resources.httpClient
@@ -75,6 +74,16 @@ public class KordBuilder(public val token: String) {
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
         { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = token) }
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
+
+    /**
+     * Enables stack trace recovery on the currently defined [RequestHandler].
+     *
+     * @throws IllegalStateException if the [RequestHandler] is not a [KtorRequestHandler]
+     *
+     * @see StackTraceRecoveringKtorRequestHandler
+     * @see withStackTraceRecovery
+     */
+    public var stackTraceRecovery: Boolean = false
 
     /**
      * Enable adding a [Runtime.addShutdownHook] to log out of the [Gateway] when the process is killed.
@@ -187,7 +196,8 @@ public class KordBuilder(public val token: String) {
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
         val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}") {
-            header(UserAgent, KordConstants.UserAgent)
+            @OptIn(KordExperimental::class)
+            header(UserAgent, KordConstants.USER_AGENT)
             header(Authorization, "Bot $token")
         }
         val responseBody = response.readText()
@@ -230,7 +240,17 @@ public class KordBuilder(public val token: String) {
 
         val resources =
             ClientResources(token, applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy)
-        val rest = RestClient(handlerBuilder(resources))
+        val rawRequestHandler = handlerBuilder(resources)
+        val requestHandler = if (stackTraceRecovery) {
+            if (rawRequestHandler is KtorRequestHandler) {
+                rawRequestHandler.withStackTraceRecovery()
+            } else {
+                error("stackTraceRecovery only works with KtorRequestHandlers, please set stackTraceRecovery = false or use a different RequestHandler")
+            }
+        } else {
+            rawRequestHandler
+        }
+        val rest = RestClient(requestHandler)
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
         val gateway = run {

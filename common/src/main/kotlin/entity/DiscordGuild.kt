@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -64,7 +65,7 @@ public data class DiscordUnavailableGuild(
  * @param maxPresences The maximum number of presences for the guild (the default value, currently 25000, is in effect when `null` is returned).
  * @param maxMembers The maximum number of members for the guild.
  * @param vanityUrlCode The vanity url code for the guild.
- * @param description The description for the guild, if the guild is discoverable.
+ * @param description The description for the guild.
  * @param banner The banner hash.
  * @param premiumTier The [PremiumTier] (Server Boost level).
  * @param premiumSubscriptionCount The number of boosts this guild currently has.
@@ -185,6 +186,9 @@ public sealed class GuildFeature(public val value: String) {
 
     public class Unknown(value: String) : GuildFeature(value)
 
+    /** Guild has access to set an animated guild banner image. */
+    public object AnimatedBanner : GuildFeature("ANIMATED_BANNER")
+
     /** Guild has access to set an invite splash background */
     public object InviteSplash : GuildFeature("INVITE_SPLASH")
 
@@ -256,6 +260,7 @@ public sealed class GuildFeature(public val value: String) {
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
 
         override fun deserialize(decoder: Decoder): GuildFeature = when (val value = decoder.decodeString()) {
+            "ANIMATED_BANNER" -> AnimatedBanner
             "INVITE_SPLASH" -> InviteSplash
             "VIP_REGIONS" -> VIPRegions
             "VANITY_URL" -> VanityUrl
@@ -364,18 +369,19 @@ public data class DiscordWebhooksUpdateData(
  * A representation of the [Discord Voice State structure](https://discord.com/developers/docs/resources/voice#voice-state-object).
  * Used to represent a user's voice connection status.
  *
- * @param guildId the guild id this voice state is for.
- * @param channelId the channel id this user is connection to.
+ * @param guildId The guild id this voice state is for.
+ * @param channelId The channel id this user is connected to.
  * @param userId The user id this voice state is for.
- * @param member the guild member this voice state is for.
+ * @param member The guild member this voice state is for.
  * @param sessionId The session id for this voice state.
  * @param deaf Whether this user is deafened by the server.
  * @param mute Whether this user is muted by the server.
  * @param selfDeaf Whether this user is locally deafened.
- * @param selfMute Whether this is locally muted
+ * @param selfMute Whether this user is locally muted.
  * @param selfStream Whether this user is stream using "Go Live".
  * @param selfVideo Whether this user's camera is enabled.
  * @param suppress Whether this user is muted by the current user.
+ * @param requestToSpeakTimestamp The time at which the user requested to speak.
  */
 @Serializable
 public data class DiscordVoiceState(
@@ -391,7 +397,7 @@ public data class DiscordVoiceState(
     @SerialName("self_video") val selfVideo: Boolean,
     @SerialName("self_stream") val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
-    @SerialName("request_to_speak_timestamp") val requestToSpeakTimestamp: String?
+    @SerialName("request_to_speak_timestamp") val requestToSpeakTimestamp: Instant?,
 )
 
 /**

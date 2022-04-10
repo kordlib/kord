@@ -10,6 +10,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
+import kotlin.DeprecationLevel.WARNING
 
 @KordDsl
 public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
@@ -156,6 +157,15 @@ public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRe
 }
 
 @KordDsl
+@Deprecated(
+    """
+    Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+    removed on March 10, 2022.
+    
+    See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+    """,
+    level = WARNING,
+)
 public class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 

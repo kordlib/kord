@@ -126,14 +126,18 @@ public data class GuildRoleCreateRequest(
     val name: Optional<String> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
     val color: Optional<Color> = Optional.Missing(),
-    @SerialName("hoist")
-    val separate: OptionalBoolean = OptionalBoolean.Missing,
-    val icon: Optional<String> = Optional.Missing(),
+    val hoist: OptionalBoolean = OptionalBoolean.Missing,
+    val icon: Optional<String?> = Optional.Missing(),
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String> = Optional.Missing(),
+    val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val mentionable: OptionalBoolean = OptionalBoolean.Missing,
+    /** Only use this when creating a guild with roles. */
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
-)
+) {
+    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), DeprecationLevel.ERROR)
+    public val separate: OptionalBoolean
+        get() = hoist
+}
 
 
 @Serializable(with = GuildRolePositionModifyRequest.Serializer::class)
@@ -166,13 +170,16 @@ public data class GuildRoleModifyRequest(
     val name: Optional<String?> = Optional.Missing(),
     val permissions: Optional<Permissions?> = Optional.Missing(),
     val color: Optional<Color?> = Optional.Missing(),
-    @SerialName("hoist")
-    val separate: OptionalBoolean? = OptionalBoolean.Missing,
-    val icon: Optional<String> = Optional.Missing(),
+    val hoist: OptionalBoolean? = OptionalBoolean.Missing,
+    val icon: Optional<String?> = Optional.Missing(),
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String> = Optional.Missing(),
+    val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val mentionable: OptionalBoolean? = OptionalBoolean.Missing,
-)
+) {
+    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), DeprecationLevel.ERROR)
+    public val separate: OptionalBoolean?
+        get() = hoist
+}
 
 @Serializable
 public data class GuildIntegrationCreateRequest(val type: Int, val id: String)
