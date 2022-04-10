@@ -13,11 +13,11 @@ public data class ApplicationCommandData(
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
     val applicationId: Snowflake,
     val name: String,
-    val nameLocalizations: Optional<Map<Locale, String>?>,
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val description: String?,
-    val descriptionLocalizations: Optional<Map<Locale, String>?>,
-    val guildId: OptionalSnowflake,
-    val options: Optional<List<ApplicationCommandOptionData>>,
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 ) {
