@@ -21,7 +21,7 @@ public sealed class OptionsBuilder(
     override var name: String,
     override var description: String,
     public val type: ApplicationCommandOptionType,
-) : LocalizedNameBuilder, LocalizedDescriptionBuilder, RequestBuilder<ApplicationCommandOption> {
+) : LocalizedNameCreateBuilder, LocalizedDescriptionCreateBuilder, RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
     public var default: Boolean? by ::_default.delegate()
     internal var _nameLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing()
