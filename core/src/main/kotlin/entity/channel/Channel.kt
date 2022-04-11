@@ -1,5 +1,6 @@
 package dev.kord.core.entity.channel
 
+import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ChannelType.*
 import dev.kord.common.entity.Snowflake
@@ -25,6 +26,9 @@ public interface Channel : ChannelBehavior {
      * The type of this channel.
      */
     public val type: ChannelType get() = data.type
+
+    /** The flags of this channel, if present. */
+    public val flags: ChannelFlags? get() = data.flags.value
 
     /**
      * Returns a new [Channel] with the given [strategy].
