@@ -29,7 +29,8 @@ import kotlin.contracts.contract
  * @param name The name of the channel.
  * @param topic The channel topic.
  * @param nsfw Whether the channel is nsfw.
- * @param lastMessageId The id of the last message sent in this channel (may not point to an existing or valid message).
+ * @param lastMessageId The id of the last message sent in this channel (or thread for
+ * [GuildForum][ChannelType.GuildForum] channels) (may not point to an existing or valid message or thread).
  * @param bitrate The bitrate (in bits) of the voice channel.
  * @param userLimit The user limit of the voice channel.
  * @param rateLimitPerUser amount of seconds a user has to wait before sending another message; bots,
@@ -40,6 +41,7 @@ import kotlin.contracts.contract
  * @param applicationId The application id of the group DM creator if it is bot-created.
  * @param parentId The id of the parent category for a channel.
  * @param lastPinTimestamp When the last pinned message was pinned.
+ * @param flags The channel flags.
  */
 @Serializable
 public data class DiscordChannel(
@@ -81,7 +83,8 @@ public data class DiscordChannel(
     val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing(),
     @SerialName("default_auto_archive_duration")
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
-    val member: Optional<DiscordThreadMember> = Optional.Missing()
+    val member: Optional<DiscordThreadMember> = Optional.Missing(),
+    val flags: Optional<ChannelFlags> = Optional.Missing(),
 )
 
 @Serializable(with = ChannelType.Serializer::class)
