@@ -305,6 +305,8 @@ public data class InteractionCallbackData(
     val name: Optional<String> = Optional.Missing(),
     val resolved: Optional<ResolvedObjects> = Optional.Missing(),
     val options: Optional<List<Option>> = Optional.Missing(),
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("custom_id")
     val customId: Optional<String> = Optional.Missing(),
     @SerialName("component_type")

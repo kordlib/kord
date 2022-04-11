@@ -23,6 +23,14 @@ public sealed interface ApplicationCommandInteraction : ActionInteraction, Appli
     /** The type of the invoked command. */
     public val invokedCommandType: ApplicationCommandType get() = data.data.type.value!!
 
+    /**
+     * The id of the guild the invoked command is registered to, `null` if the command is global.
+     *
+     * This is unrelated to the difference between [GlobalInteraction]s and [GuildInteraction]s, a global command can
+     * produce both [GlobalInteraction]s and [GuildInteraction]s.
+     */
+    public val invokedCommandGuildId: Snowflake? get() = data.data.guildId.value
+
     public val resolvedObjects: ResolvedObjects?
         get() = data.data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
 
