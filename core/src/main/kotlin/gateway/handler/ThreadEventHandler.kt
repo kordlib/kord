@@ -5,6 +5,7 @@ import dev.kord.cache.api.put
 import dev.kord.cache.api.query
 import dev.kord.cache.api.remove
 import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.*
@@ -38,6 +39,16 @@ public class ThreadEventHandler(
     public suspend fun handle(event: ThreadCreate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? {
         val channelData = event.channel.toData()
         cache.put(channelData)
+
+        // update lastMessageId for forum channels when thread is created
+        // (same for other channels when message is created)
+        val parentId = channelData.parentId?.value!!
+        cache.query<ChannelData> {
+            ChannelData::type eq ChannelType.GuildForum
+            idEq(ChannelData::id, parentId)
+        }.update {
+            it.copy(lastMessageId = channelData.id.optionalSnowflake())
+        }
 
         val coreEvent = when (val channel = Channel.from(channelData, kord)) {
             is NewsChannelThread -> NewsChannelThreadCreateEvent(channel, shard, coroutineScope)
