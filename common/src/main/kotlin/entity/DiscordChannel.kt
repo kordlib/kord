@@ -165,6 +165,7 @@ public sealed class ChannelType(public val value: Int) {
             11 -> PublicGuildThread
             12 -> PrivateThread
             13 -> GuildStageVoice
+            14 -> GuildDirectory
             else -> Unknown(code)
         }
 
