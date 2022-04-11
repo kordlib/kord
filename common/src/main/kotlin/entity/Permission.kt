@@ -179,7 +179,10 @@ public sealed class Permission(public val code: DiscordBitSet) {
      */
     public object ViewChannel : Permission(1L shl 10)
 
-    /** Allows for sending messages in a channel (does not allow sending messages in threads). */
+    /**
+     * Allows for sending messages in a channel and creating threads in a forum (does not allow sending messages in
+     * threads).
+     */
     public object SendMessages : Permission(1L shl 11)
 
     /** Allows for sending of `/tts` messages. */
