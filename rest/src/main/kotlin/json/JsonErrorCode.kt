@@ -145,6 +145,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Unknown Guild Scheduled Event User. */
     UnknownGuildScheduledEventUser(10071),
 
+    /** Unknown Tag. */
+    UnknownTag(10087),
+
     /** Bots cannot use this endpoint. */
     NonBotEndpoint(20001),
 
@@ -247,6 +250,12 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of edits to messages older than 1 hour reached. Try again later. */
     MaxOldMessageEdits(30046),
 
+    /** Maximum number of pinned threads in a forum channel has been reached. */
+    MaxPinnedThreadsInForumChannel(30047),
+
+    /** Maximum number of tags in a forum channel has been reached. */
+    MaxTagsInForumChannel(30048),
+
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
 
@@ -279,6 +288,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Interaction has already been acknowledged. */
     InteractionAlreadyAcknowledged(40060),
+
+    /** Tag names must be unique. */
+    TagNamesMustBeUnique(40061),
 
     /** Missing access. */
     MissingAccess(50001),
