@@ -39,7 +39,8 @@ public interface MemberBehavior : KordEntity, UserBehavior {
      * The raw mention for this member's nickname.
      */
     @Deprecated(
-        "Nickname mentions are deprecated and handled the same way as regular user mentions, see https://discord.com/developers/docs/reference#message-formatting-formats",
+        "Nickname mentions are deprecated and should be handled the same way as regular user mentions, " +
+                "see https://discord.com/developers/docs/reference#message-formatting-formats",
         ReplaceWith("this.mention"),
     )
     public val nicknameMention: String get() = "<@!$id>"
