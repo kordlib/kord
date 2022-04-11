@@ -148,6 +148,9 @@ public sealed class ChannelType(public val value: Int) {
      */
     public object GuildDirectory : ChannelType(14)
 
+    /** A channel that can only contain threads. */
+    public object GuildForum : ChannelType(15)
+
 
     internal object Serializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor
@@ -166,6 +169,7 @@ public sealed class ChannelType(public val value: Int) {
             12 -> PrivateThread
             13 -> GuildStageVoice
             14 -> GuildDirectory
+            15 -> GuildForum
             else -> Unknown(code)
         }
 
