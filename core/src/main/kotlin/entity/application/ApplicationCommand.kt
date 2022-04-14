@@ -1,5 +1,6 @@
 package dev.kord.core.entity.application
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
@@ -7,7 +8,8 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.behavior.ApplicationCommandBehavior
 import dev.kord.core.behavior.GlobalApplicationCommandBehavior
 import dev.kord.core.behavior.GuildApplicationCommandBehavior
-import dev.kord.core.cache.data.*
+import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.ApplicationCommandParameterData
 import dev.kord.rest.service.InteractionService
 
 /**
@@ -26,8 +28,17 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     override val applicationId: Snowflake
         get() = data.applicationId
 
+    /**
+     * The name of the command
+     */
     public val name: String
         get() = data.name
+
+    /**
+     * A map containing all localizations of [name].
+     */
+    public val nameLocalizations: Map<Locale, String>
+        get() = data.nameLocalizations.value ?: emptyMap()
 
     /**
      * auto-incrementing version identifier updated during substantial record changes.

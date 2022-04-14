@@ -1,5 +1,6 @@
 package dev.kord.rest.json.request
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -10,8 +11,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class ApplicationCommandCreateRequest(
     val name: String,
+    @SerialName("name_localizations")
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val type: ApplicationCommandType,
     val description: Optional<String> = Optional.Missing(),
+    @SerialName("description_localizations")
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
@@ -20,7 +25,11 @@ public data class ApplicationCommandCreateRequest(
 @Serializable
 public data class ApplicationCommandModifyRequest(
     val name: Optional<String> = Optional.Missing(),
+    @SerialName("name_localizations")
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
+    @SerialName("description_localizations")
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing

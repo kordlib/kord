@@ -13,15 +13,15 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-public interface ApplicationCommandCreateBuilder : RequestBuilder<ApplicationCommandCreateRequest> {
-    public var name: String
+public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
+    RequestBuilder<ApplicationCommandCreateRequest> {
     public var defaultPermission: Boolean?
     public val type: ApplicationCommandType
 }
 
 @KordDsl
-public interface ApplicationCommandModifyBuilder : RequestBuilder<ApplicationCommandModifyRequest> {
-    public var name: String?
+public interface ApplicationCommandModifyBuilder : LocalizedNameModifyBuilder,
+    RequestBuilder<ApplicationCommandModifyRequest> {
     public var defaultPermission: Boolean?
 }
 

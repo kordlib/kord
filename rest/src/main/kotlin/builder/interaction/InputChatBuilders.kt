@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.optional.Optional
@@ -95,11 +96,12 @@ public inline fun RootInputChatBuilder.group(name: String, description: String, 
 @KordDsl
 public class ChatInputCreateBuilder(
     override var name: String,
-    public var description: String,
-) : ApplicationCommandCreateBuilder, RootInputChatBuilder {
+    override var description: String,
+) : LocalizedDescriptionCreateBuilder, ApplicationCommandCreateBuilder, RootInputChatBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 
-
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
+    override var descriptionLocalizations: MutableMap<Locale, String>? by state::descriptionLocalizations.delegate()
 
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.ChatInput
@@ -111,8 +113,10 @@ public class ChatInputCreateBuilder(
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
             name,
+            state.nameLocalizations,
             type,
             Optional.Value(description),
+            state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultPermission
         )
@@ -123,12 +127,15 @@ public class ChatInputCreateBuilder(
 
 
 @KordDsl
-public class ChatInputModifyBuilder : ApplicationCommandModifyBuilder, RootInputChatBuilder {
+public class ChatInputModifyBuilder : LocalizedDescriptionModifyBuilder, ApplicationCommandModifyBuilder,
+    RootInputChatBuilder {
 
     private val state = ApplicationCommandModifyStateHolder()
     override var name: String? by state::name.delegate()
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
-    public var description: String? by state::description.delegate()
+    override var description: String? by state::description.delegate()
+    override var descriptionLocalizations: MutableMap<Locale, String>? by state::descriptionLocalizations.delegate()
 
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
 
@@ -137,7 +144,9 @@ public class ChatInputModifyBuilder : ApplicationCommandModifyBuilder, RootInput
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             state.name,
+            state.nameLocalizations,
             state.description,
+            state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultPermission
         )
