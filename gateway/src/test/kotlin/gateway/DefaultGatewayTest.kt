@@ -8,15 +8,17 @@ import dev.kord.gateway.*
 import dev.kord.gateway.retry.LinearRetry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.websocket.*
-import kotlinx.coroutines.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.websocket.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.serialization.json.Json
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import kotlin.time.Duration.Companion.seconds
@@ -31,8 +33,8 @@ class DefaultGatewayTest {
         val gateway = DefaultGateway {
             client = HttpClient(CIO) {
                 install(WebSockets)
-                install(JsonFeature) {
-                    serializer = KotlinxSerializer(Json)
+                install(ContentNegotiation) {
+                    json()
                 }
             }
 

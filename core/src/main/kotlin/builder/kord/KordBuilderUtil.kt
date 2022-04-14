@@ -1,26 +1,20 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.common.entity.Snowflake
-import io.ktor.client.HttpClient
-import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.websocket.*
-import io.ktor.client.request.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.websocket.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-import java.util.Base64
+import java.util.*
 
 internal fun HttpClientConfig<*>.defaultConfig() {
     expectSuccess = false
 
-    install(JsonFeature)
+    install(ContentNegotiation) {
+        json()
+    }
     install(WebSockets)
 }
 
@@ -38,8 +32,8 @@ internal fun HttpClient?.configure(): HttpClient {
 
     return HttpClient(CIO) {
         defaultConfig()
-        install(JsonFeature) {
-            serializer = KotlinxSerializer(json)
+        install(ContentNegotiation) {
+            json(json)
         }
     }
 }

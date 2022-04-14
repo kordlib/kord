@@ -1,7 +1,7 @@
 package dev.kord.voice.gateway
 
 import dev.kord.common.annotation.KordVoice
-import io.ktor.util.*
+import io.ktor.util.logging.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*

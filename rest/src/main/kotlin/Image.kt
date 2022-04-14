@@ -1,10 +1,8 @@
 package dev.kord.rest
 
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import io.ktor.http.*
-import io.ktor.util.*
 import kotlinx.coroutines.Dispatchers
 import java.util.*
 
@@ -22,11 +20,11 @@ public class Image private constructor(public val data: ByteArray, public val fo
         }
 
         public suspend fun fromUrl(client: HttpClient, url: String): Image = with(Dispatchers.IO) {
-            val call = client.request<HttpResponse>(url) { method = HttpMethod.Get }
+            val call = client.get(url)
             val contentType = call.headers["Content-Type"]
                 ?: error("expected 'Content-Type' header in image request")
 
-            val bytes = call.content.toByteArray()
+            val bytes = call.body<ByteArray>()
 
             Image(bytes, Format.fromContentType(contentType))
         }
