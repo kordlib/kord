@@ -236,7 +236,7 @@ public data class Locale(val language: String, val country: String? = null) {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Locale", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, value: Locale) {
-            encoder.encodeString("${value.language}${if (value.country != null) "_${value.country}" else ""}")
+            encoder.encodeString("${value.language}${if (value.country != null) "-${value.country}" else ""}")
         }
 
         override fun deserialize(decoder: Decoder): Locale = fromString(decoder.decodeString())
