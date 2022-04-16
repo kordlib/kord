@@ -72,7 +72,7 @@ fun VersionCatalogBuilder.common() {
     version("kotlinx-coroutines", "1.6.1")
     library("kotlinx-serialization", "org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.3.2")
     library("kotlinx-coroutines", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").versionRef("kotlinx-coroutines")
-    library("kotlinx-atomicfu", "org.jetbrains.kotlinx", "atomicfu").version("0.17.1")
+    library("kotlinx-atomicfu", "org.jetbrains.kotlinx", "atomicfu").version("0.17.2")
     library("kotlin-logging", "io.github.microutils", "kotlin-logging").version("2.1.21")
 
     bundle("common", listOf("kotlinx-serialization", "kotlinx-coroutines", "kotlinx-atomicfu", "kotlin-logging"))
