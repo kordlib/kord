@@ -17,8 +17,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
 import kotlin.time.Duration
-import kotlin.time.DurationUnit.SECONDS
-import kotlin.time.toDuration
 
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).
@@ -180,7 +178,7 @@ public class InviteWithMetadata(
     public val maxUses: Int get() = data.maxUses
 
     /** Duration after which the invite expires. */
-    public val maxAge: Duration get() = data.maxAge.toDuration(unit = SECONDS)
+    public val maxAge: Duration get() = data.maxAge
 
     /** Whether this invite only grants temporary membership. */
     public val temporary: Boolean get() = data.temporary

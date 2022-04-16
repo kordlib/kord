@@ -6,7 +6,6 @@ import dev.kord.common.entity.ExplicitContentFilter
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.VerificationLevel
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
@@ -23,6 +22,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.random.Random
 import kotlin.random.nextULong
+import kotlin.time.Duration
 
 @KordDsl
 public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildCreateRequest> {
@@ -75,12 +75,12 @@ public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildC
      */
     public var afkChannelId: Snowflake? by ::_afkChannelId.delegate()
 
-    private var _afkTimeout: OptionalInt = OptionalInt.Missing
+    private var _afkTimeout: Optional<Duration> = Optional.Missing()
 
     /**
-     * The afk timeout in seconds.
+     * The afk timeout.
      */
-    public var afkTimeout: Int? by ::_afkTimeout.delegate()
+    public var afkTimeout: Duration? by ::_afkTimeout.delegate()
 
     private var _systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
 

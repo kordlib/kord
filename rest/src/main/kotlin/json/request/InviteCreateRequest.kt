@@ -1,17 +1,15 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.entity.InviteTargetType
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.*
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 public data class InviteCreateRequest(
     @SerialName("max_age")
-    val maxAge: OptionalInt = OptionalInt.Missing,
+    val maxAge: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("max_uses")
     val maxUses: OptionalInt = OptionalInt.Missing,
     val temporary: OptionalBoolean = OptionalBoolean.Missing,
@@ -31,7 +29,7 @@ public data class InviteCreateRequest(
 ) {
     @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"))
     public val age: OptionalInt
-        get() = maxAge
+        get() = maxAge.value?.inWholeSeconds?.toInt()?.optionalInt() ?: OptionalInt.Missing
 
     @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"))
     public val uses: OptionalInt

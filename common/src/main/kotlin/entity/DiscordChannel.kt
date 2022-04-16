@@ -5,6 +5,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInMinutesSerializer
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -15,6 +17,8 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.WARNING
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
@@ -30,7 +34,7 @@ import kotlin.DeprecationLevel.WARNING
  * @param lastMessageId The id of the last message sent in this channel (may not point to an existing or valid message).
  * @param bitrate The bitrate (in bits) of the voice channel.
  * @param userLimit The user limit of the voice channel.
- * @param rateLimitPerUser amount of seconds a user has to wait before sending another message; bots,
+ * @param rateLimitPerUser amount of time a user has to wait before sending another message; bots,
  * as well as users with the permission [Permission.ManageMessages] or [Permission.ManageChannels] are unaffected.
  * @param recipients The recipients of the DM.
  * @param icon The icon hash.
@@ -57,7 +61,7 @@ public data class DiscordChannel(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: OptionalInt = OptionalInt.Missing,
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")
@@ -219,24 +223,24 @@ public data class DiscordThreadMetadata(
 )
 
 @Serializable(with = ArchiveDuration.Serializer::class)
-public sealed class ArchiveDuration(public val duration: Int) {
-    public class Unknown(duration: Int) : ArchiveDuration(duration)
-    public object Hour : ArchiveDuration(60)
-    public object Day : ArchiveDuration(1440)
-    public object ThreeDays : ArchiveDuration(4320)
-    public object Week : ArchiveDuration(10080)
+public sealed class ArchiveDuration(public val duration: Duration) {
+    public class Unknown(duration: Duration) : ArchiveDuration(duration)
+    public object Hour : ArchiveDuration(60.minutes)
+    public object Day : ArchiveDuration(1440.minutes)
+    public object ThreeDays : ArchiveDuration(4320.minutes)
+    public object Week : ArchiveDuration(10080.minutes)
 
     public object Serializer : KSerializer<ArchiveDuration> {
+
+        override val descriptor: SerialDescriptor get() = DurationInMinutesSerializer.descriptor
+
         override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val value = decoder.decodeInt()
+            val value = decoder.decodeSerializableValue(DurationInMinutesSerializer)
             return values.firstOrNull { it.duration == value } ?: Unknown(value)
         }
 
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("AutoArchieveDuration", PrimitiveKind.INT)
-
         override fun serialize(encoder: Encoder, value: ArchiveDuration) {
-            encoder.encodeInt(value.duration)
+            encoder.encodeSerializableValue(DurationInMinutesSerializer, value.duration)
         }
     }
 

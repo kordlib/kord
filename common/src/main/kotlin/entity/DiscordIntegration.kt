@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.serialization.DurationInDays
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -25,7 +26,7 @@ public data class DiscordIntegration(
     @SerialName("expire_behavior")
     val expireBehavior: IntegrationExpireBehavior,
     @SerialName("expire_grace_period")
-    val expireGracePeriod: Int,
+    val expireGracePeriod: DurationInDays,
     val user: DiscordUser,
     val account: DiscordIntegrationsAccount,
     @SerialName("synced_at")

@@ -11,6 +11,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
 import kotlin.DeprecationLevel.WARNING
+import kotlin.time.Duration
 
 @KordDsl
 public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
@@ -32,8 +33,8 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _rateLimitPerUser: OptionalInt? = OptionalInt.Missing
-    public var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>> = Optional.Missing()
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
@@ -140,8 +141,8 @@ public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRe
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _rateLimitPerUser: OptionalInt? = OptionalInt.Missing
-    public var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
     public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
@@ -151,8 +152,9 @@ public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRe
         position = _position,
         topic = _topic,
         nsfw = _nsfw,
+        parentId = _parentId,
+        rateLimitPerUser = _rateLimitPerUser,
         permissionOverwrites = _permissionOverwrites,
-        parentId = _parentId
     )
 }
 

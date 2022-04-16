@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -78,7 +79,7 @@ public data class DiscordInviteWithMetadata(
     @SerialName("max_uses")
     val maxUses: Int,
     @SerialName("max_age")
-    val maxAge: Int,
+    val maxAge: DurationInSeconds,
     val temporary: Boolean,
     @SerialName("created_at")
     val createdAt: Instant,

@@ -22,6 +22,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.seconds
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
@@ -39,7 +40,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                     name = "",
                     ownerId = randomId(),
                     region = "",
-                    afkTimeout = 0,
+                    afkTimeout = 0.seconds,
                     verificationLevel = VerificationLevel.None,
                     defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
                     explicitContentFilter = ExplicitContentFilter.Disabled,
@@ -697,7 +698,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         ownerId = randomId(),
                         region = "",
                         afkChannelId = null,
-                        afkTimeout = 0,
+                        afkTimeout = 0.seconds,
                         verificationLevel = VerificationLevel.None,
                         defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
                         explicitContentFilter = ExplicitContentFilter.Disabled,
@@ -741,7 +742,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         ownerId = randomId(),
                         region = "",
                         afkChannelId = null,
-                        afkTimeout = 0,
+                        afkTimeout = 0.seconds,
                         verificationLevel = VerificationLevel.None,
                         defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
                         explicitContentFilter = ExplicitContentFilter.Disabled,

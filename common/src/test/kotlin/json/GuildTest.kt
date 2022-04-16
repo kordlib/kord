@@ -3,6 +3,7 @@ package json
 import dev.kord.common.entity.*
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.seconds
 
 
 private fun file(name: String): String {
@@ -40,7 +41,7 @@ class GuildTest {
             @Suppress("DEPRECATION")
             region shouldBe "us-west"
             afkChannelId shouldBe null
-            afkTimeout shouldBe 300
+            afkTimeout shouldBe 300.seconds
             systemChannelId shouldBe null
             widgetEnabled shouldBe true
             widgetChannelId shouldBe null

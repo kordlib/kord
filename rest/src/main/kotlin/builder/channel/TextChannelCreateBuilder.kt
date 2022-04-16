@@ -11,6 +11,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
+import kotlin.time.Duration
 
 @KordDsl
 public class TextChannelCreateBuilder(public var name: String) :
@@ -21,8 +22,8 @@ public class TextChannelCreateBuilder(public var name: String) :
     private var _topic: Optional<String> = Optional.Missing()
     public var topic: String? by ::_topic.delegate()
 
-    private var _rateLimitPerUser: OptionalInt = OptionalInt.Missing
-    public var rateLimitPerUser: Int? by ::_rateLimitPerUser.delegate()
+    private var _rateLimitPerUser: Optional<Duration> = Optional.Missing()
+    public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _position: OptionalInt = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
@@ -36,11 +37,11 @@ public class TextChannelCreateBuilder(public var name: String) :
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
-        name,
-        ChannelType.GuildText,
-        _topic,
-        _rateLimitPerUser,
-        _position,
+        name = name,
+        type = ChannelType.GuildText,
+        topic = _topic,
+        rateLimitPerUser = _rateLimitPerUser,
+        position = _position,
         parentId = _parentId,
         nsfw = _nsfw,
         permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),

@@ -5,6 +5,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -33,7 +34,7 @@ public data class ChannelModifyPatchRequest(
     val topic: Optional<String?> = Optional.Missing(),
     val nsfw: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: OptionalInt? = OptionalInt.Missing,
+    val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
     val bitrate: OptionalInt? = OptionalInt.Missing,
     @SerialName("user_limit")
     val userLimit: OptionalInt? = OptionalInt.Missing,
@@ -43,7 +44,7 @@ public data class ChannelModifyPatchRequest(
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val archived: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("auto_archive_duration")
-    val autoArchiveDuration: OptionalInt = OptionalInt.Missing,
+    val autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val locked: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("rtc_region")
     val rtcRegion: Optional<String?> = Optional.Missing(),

@@ -2,6 +2,7 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -73,7 +74,7 @@ public data class InviteWithMetadataData(
     override val guildScheduledEvent: Optional<GuildScheduledEventData> = Optional.Missing(),
     val uses: Int,
     val maxUses: Int,
-    val maxAge: Int,
+    val maxAge: DurationInSeconds,
     val temporary: Boolean,
     val createdAt: Instant,
 ) : BaseInviteData {

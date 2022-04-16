@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -31,7 +32,7 @@ public data class GuildCreateRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: OptionalInt = OptionalInt.Missing,
+    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("system_channel_id")
     val systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
 )
@@ -45,7 +46,7 @@ public data class GuildChannelCreateRequest(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<Int> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
     val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing(),
@@ -228,7 +229,7 @@ public data class GuildModifyRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: OptionalInt = OptionalInt.Missing,
+    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
