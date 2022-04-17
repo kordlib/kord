@@ -219,11 +219,12 @@ public data class Locale(val language: String, val country: String? = null) {
          * Decodes the language from a `languageCode-countryCode` or `languageCode` format.
          *
          * This does not validate the actually languages and countries, it just validates the format.
+         *
+         * @throws IllegalArgumentException if [string] is not a valid format.
          */
         public fun fromString(string: String): Locale {
-            val match = languageTagFormat.matchEntire(string) ?: error("$string is not a valid Locale")
-            val (language) = match.destructured
-            val country = match.groupValues[2]
+            val match = requireNotNull(languageTagFormat.matchEntire(string)) { "$string is not a valid Locale" }
+            val (language, country) = match.destructured
 
             return ALL.firstOrNull { (l, c) ->
                 language == l && country == (c ?: "")
@@ -235,7 +236,7 @@ public data class Locale(val language: String, val country: String? = null) {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Locale", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, value: Locale) {
-            encoder.encodeString("${value.language}${if (value.country != null) "-${value.country}" else ""}")
+            encoder.encodeString("${value.language}${value.country?.let { "-$it" } ?: ""}")
         }
 
         override fun deserialize(decoder: Decoder): Locale = fromString(decoder.decodeString())
