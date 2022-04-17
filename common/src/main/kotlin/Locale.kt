@@ -227,7 +227,7 @@ public data class Locale(val language: String, val country: String? = null) {
 
             return ALL.firstOrNull { (l, c) ->
                 language == l && country == (c ?: "")
-            } ?: Locale(language, country)
+            } ?: Locale(language, country.takeIf { it.isNotEmpty() })
         }
     }
 
