@@ -59,9 +59,9 @@ public interface LocalizedDescriptionBuilder {
     /**
      * Registers a localization of [description] in [locale].
      */
-    public fun description(locale: Locale, name: String) {
+    public fun description(locale: Locale, description: String) {
         if (descriptionLocalizations == null) descriptionLocalizations = mutableMapOf()
-        descriptionLocalizations!![locale] = name
+        descriptionLocalizations!![locale] = description
     }
 }
 
