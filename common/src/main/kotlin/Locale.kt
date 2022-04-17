@@ -247,4 +247,4 @@ public data class Locale(val language: String, val country: String? = null) {
  * Converts this into a [Locale].
  */
 public val JLocale.kLocale: Locale
-    get() = Locale(language, country)
+    get() = Locale(language, country.takeIf { it.isNotEmpty() })
