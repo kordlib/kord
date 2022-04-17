@@ -212,12 +212,11 @@ public data class Locale(val language: String, val country: String? = null) {
             KOREAN,
         )
 
-        // We accept both "_" and "-" as a separator, because Discord doesn't really document it
-        // https://regex101.com/r/fVPdR8/2
-        private val languageTagFormat = "(\\w{2})(?:[_\\-](\\w{2}))?".toRegex()
+        // https://regex101.com/r/KCHTj8/1
+        private val languageTagFormat = "([a-z]{2})(?:-([A-Z]{2}))?".toRegex()
 
         /**
-         * Decodes the language from a `languageCode_countryCode` or `languageCode` format.
+         * Decodes the language from a `languageCode-countryCode` or `languageCode` format.
          *
          * This does not validate the actually languages and countries, it just validates the format.
          */
