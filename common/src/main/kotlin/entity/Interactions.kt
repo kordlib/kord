@@ -181,26 +181,28 @@ public sealed class Choice<out T> {
             element<Map<Locale, String>?>("name_localizations", isOptional = true)
         }
 
-        override fun deserialize(decoder: Decoder): Choice<*> {
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+
             lateinit var name: String
             var nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing()
             lateinit var value: JsonPrimitive
-            decoder.decodeStructure(descriptor) {
-                while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        0 -> name = decodeStringElement(descriptor, index)
-                        1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
-                        2 -> nameLocalizations = decodeSerializableElement(descriptor, index, LocalizationSerializer)
 
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> throw SerializationException("unknown index: $index")
-                    }
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> name = decodeStringElement(descriptor, index)
+                    1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
+                    2 -> nameLocalizations = decodeSerializableElement(descriptor, index, LocalizationSerializer)
+
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("unknown index: $index")
                 }
             }
-            return when {
-                value.longOrNull != null -> IntChoice(name, nameLocalizations, value.long)
-                value.doubleOrNull != null -> NumberChoice(name, nameLocalizations, value.double)
-                else -> StringChoice(name, nameLocalizations, value.toString())
+
+            when {
+                value.isString -> StringChoice(name, nameLocalizations, value.content)
+                else -> value.longOrNull?.let { IntChoice(name, nameLocalizations, it) }
+                    ?: value.doubleOrNull?.let { NumberChoice(name, nameLocalizations, it) }
+                    ?: throw SerializationException("Illegal choice value: $value")
             }
         }
 
