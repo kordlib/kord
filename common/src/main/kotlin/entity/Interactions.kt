@@ -173,7 +173,8 @@ public sealed class Choice<out T> {
         override val value: String
     ) : Choice<String>()
 
-    internal class Serializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
+    internal object Serializer : KSerializer<Choice<*>> {
+
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
             element<JsonPrimitive>("value")
