@@ -206,17 +206,18 @@ public sealed class Choice<out T> {
             }
         }
 
-        override fun serialize(encoder: Encoder, value: Choice<*>) {
-            encoder.encodeStructure(descriptor) {
-                encodeStringElement(descriptor, 0, value.name)
-                when (value) {
-                    is IntChoice -> encodeLongElement(descriptor, 1, value.value)
-                    is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
-                    else -> encodeStringElement(descriptor, 1, value.value.toString())
-                }
-                if (value.nameLocalizations !is Optional.Missing) {
-                    encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
-                }
+        override fun serialize(encoder: Encoder, value: Choice<*>) = encoder.encodeStructure(descriptor) {
+
+            encodeStringElement(descriptor, 0, value.name)
+
+            when (value) {
+                is IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
+                is StringChoice -> encodeStringElement(descriptor, 1, value.value)
+            }
+
+            if (value.nameLocalizations !is Optional.Missing) {
+                encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
             }
         }
     }
