@@ -1,6 +1,5 @@
 package dev.kord.rest.builder.message.create
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordMessageReference
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
@@ -52,7 +51,6 @@ public class UserMessageCreateBuilder
 
     override val files: MutableList<NamedFile> = mutableListOf()
 
-    @OptIn(KordPreview::class)
     override fun toRequest(): MultipartMessageCreateRequest {
         return MultipartMessageCreateRequest(
             MessageCreateRequest(

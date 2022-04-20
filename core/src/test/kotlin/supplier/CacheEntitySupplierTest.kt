@@ -1,4 +1,4 @@
-package dev.kord.core.supplier
+package supplier
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
@@ -7,8 +7,8 @@ import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.cache.KordCacheBuilder
 import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Gateway
-import dev.kord.gateway.PrivilegedIntent
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
@@ -22,16 +22,16 @@ import org.junit.jupiter.api.Test
 internal class CacheEntitySupplierTest {
 
     @Test
-    @OptIn(PrivilegedIntent::class, KordUnsafe::class, KordExperimental::class)
+    @OptIn(KordUnsafe::class, KordExperimental::class)
     fun `cache does not throw when accessing unregistered entities`(): Unit = runBlocking {
         val kord = Kord(
-                ClientResources("", Snowflake(0u), Shards(0), HttpClient(), EntitySupplyStrategy.cache, ),
-                KordCacheBuilder().build(),
-                DefaultMasterGateway(mapOf(0 to Gateway.none())),
-                RestClient(KtorRequestHandler("")),
-                Snowflake(0u),
-                MutableSharedFlow(),
-                Dispatchers.Default
+            ClientResources("", Snowflake(0u), Shards(0), HttpClient(), EntitySupplyStrategy.cache),
+            KordCacheBuilder().build(),
+            DefaultMasterGateway(mapOf(0 to Gateway.none())),
+            RestClient(KtorRequestHandler("")),
+            Snowflake(0u),
+            MutableSharedFlow(),
+            Dispatchers.Default
         )
 
         kord.unsafe.guild(Snowflake(0u)).regions.toList()
