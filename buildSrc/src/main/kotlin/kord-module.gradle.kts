@@ -29,17 +29,19 @@ tasks {
     }
 
     withType<JavaCompile> {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = Jvm.target
+        targetCompatibility = Jvm.target
     }
 
     withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = Jvm.target
+            allWarningsAsErrors = true
             freeCompilerArgs = listOf(
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
                 CompilerArguments.contracts,
+                CompilerArguments.progressive,
             )
         }
     }

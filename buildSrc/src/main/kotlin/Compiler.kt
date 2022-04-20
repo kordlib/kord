@@ -3,6 +3,7 @@ object CompilerArguments {
     const val time = "-opt-in=kotlin.time.ExperimentalTime"
     const val stdLib = "-opt-in=kotlin.ExperimentalStdlibApi"
     const val contracts = "-opt-in=kotlin.contracts.ExperimentalContracts"
+    const val progressive = "-progressive"
 }
 
 object Jvm {
