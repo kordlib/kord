@@ -65,7 +65,6 @@ public class GuildChannelSwapBuilder(public var channelId: Snowflake) {
     @KordExperimental
     public var lockPermissionsToParent: Boolean? = null
 
-    @OptIn(KordExperimental::class)
     public fun toRequest(): ChannelPositionSwapRequest = ChannelPositionSwapRequest(
         channelId, _position, lockPermissionsToParent, parentId
     )

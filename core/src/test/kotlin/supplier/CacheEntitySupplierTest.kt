@@ -1,6 +1,5 @@
 package supplier
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
@@ -22,7 +21,7 @@ import org.junit.jupiter.api.Test
 internal class CacheEntitySupplierTest {
 
     @Test
-    @OptIn(KordUnsafe::class, KordExperimental::class)
+    @OptIn(KordUnsafe::class)
     fun `cache does not throw when accessing unregistered entities`(): Unit = runBlocking {
         val kord = Kord(
             ClientResources("", Snowflake(0u), Shards(0), HttpClient(), EntitySupplyStrategy.cache),

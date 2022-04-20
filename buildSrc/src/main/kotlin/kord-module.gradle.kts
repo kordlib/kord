@@ -41,6 +41,11 @@ tasks {
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
                 CompilerArguments.contracts,
+
+                CompilerArguments.kordPreview,
+                CompilerArguments.kordExperimental,
+                CompilerArguments.kordVoice,
+
                 CompilerArguments.progressive,
             )
         }

@@ -1,6 +1,5 @@
 package dev.kord.core
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
@@ -348,7 +347,7 @@ public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>)
  * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
  * than one event.
  */
-@OptIn(PrivilegedIntent::class, KordPreview::class)
+@OptIn(PrivilegedIntent::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
 // see https://discord.com/developers/docs/topics/gateway#list-of-intents
 

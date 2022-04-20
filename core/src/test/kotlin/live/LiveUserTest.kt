@@ -1,6 +1,5 @@
 package live
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.UserData
@@ -20,7 +19,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
 @Disabled
 class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {

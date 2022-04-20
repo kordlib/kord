@@ -78,7 +78,6 @@ public data class ApplicationCommandOption(
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    @OptIn(KordExperimental::class)
     val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
