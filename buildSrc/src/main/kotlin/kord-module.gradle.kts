@@ -21,6 +21,9 @@ dependencies {
 
 kotlin {
     explicitApi()
+
+    // allow ExperimentalCoroutinesApi for `runTest {}`
+    sourceSets["test"].languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
 }
 
 tasks {
@@ -38,7 +41,6 @@ tasks {
             jvmTarget = Jvm.target
             allWarningsAsErrors = true
             freeCompilerArgs = listOf(
-                CompilerArguments.coroutines,
                 CompilerArguments.time,
                 CompilerArguments.contracts,
 

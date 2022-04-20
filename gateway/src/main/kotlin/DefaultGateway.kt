@@ -290,6 +290,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         socket.send(Frame.Text(json))
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
     public companion object {
