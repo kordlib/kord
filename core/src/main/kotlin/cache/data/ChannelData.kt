@@ -20,7 +20,7 @@ public data class ChannelData(
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val bitrate: OptionalInt = OptionalInt.Missing,
-    val userLimit: OptionalInt? = OptionalInt.Missing,
+    val userLimit: OptionalInt = OptionalInt.Missing,
     val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val recipients: Optional<List<Snowflake>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
