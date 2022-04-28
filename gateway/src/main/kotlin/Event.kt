@@ -4,7 +4,10 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -118,6 +121,11 @@ public sealed class Event {
                     Resumed(sequence)
                 }
                 "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
+                "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
+                    decoder.decodeSerializableElement(
+                        descriptor, index, DiscordGuildApplicationCommandPermissions.serializer()
+                    ), sequence
+                )
                 "CHANNEL_CREATE" -> ChannelCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -568,6 +576,11 @@ public data class InvalidSession(val resumable: Boolean) : Event() {
         }
     }
 }
+
+public data class ApplicationCommandPermissionsUpdate(
+    val permissions: DiscordGuildApplicationCommandPermissions,
+    override val sequence: Int?
+) : DispatchEvent()
 
 public data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()

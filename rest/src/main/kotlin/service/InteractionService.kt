@@ -1,5 +1,6 @@
 package dev.kord.rest.service
 
+import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.*
 import dev.kord.common.entity.MessageFlag.Ephemeral
 import dev.kord.common.entity.optional.Optional
@@ -14,6 +15,7 @@ import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
+import io.ktor.http.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
@@ -342,18 +344,23 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-        request: ApplicationCommandPermissionsEditRequest,
+        token: String,
+        request: ApplicationCommandPermissionsEditRequest
     ): DiscordGuildApplicationCommandPermissions = call(Route.ApplicationCommandPermissionsPut) {
         applicationIdGuildIdCommandId(applicationId, guildId, commandId)
+        urlEncodedHeader(HttpHeaders.Authorization, "Bearer $token")
         body(ApplicationCommandPermissionsEditRequest.serializer(), request)
     }
 
+    @KordUnsafe
     public suspend fun bulkEditApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
+        token: String,
         request: List<PartialDiscordGuildApplicationCommandPermissions>,
     ): List<DiscordGuildApplicationCommandPermissions> = call(Route.ApplicationCommandPermissionsBatchPut) {
         applicationIdGuildId(applicationId, guildId)
+        urlEncodedHeader(HttpHeaders.Authorization, "Bearer $token")
         body(ListSerializer(PartialDiscordGuildApplicationCommandPermissions.serializer()), request)
     }
 
@@ -366,7 +373,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return createGlobalApplicationCommand(
             applicationId,
-            ChatInputCreateBuilder(name, description).apply(builder).toRequest()
+            ChatInputCreateBuilderImpl(name, description).apply(builder).toRequest()
         )
     }
 
@@ -400,14 +407,14 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
 
     public suspend inline fun createGlobalApplicationCommands(
         applicationId: Snowflake,
-        builder: MultiApplicationCommandBuilder.() -> Unit
+        builder: GlobalMultiApplicationCommandBuilder.() -> Unit
     ): List<DiscordApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return createGlobalApplicationCommands(
             applicationId,
-            MultiApplicationCommandBuilder().apply(builder).build()
+            GlobalMultiApplicationCommandBuilder().apply(builder).build()
         )
     }
 
@@ -421,7 +428,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return modifyGlobalApplicationCommand(
             applicationId,
             commandId,
-            ChatInputModifyBuilder().apply(builder).toRequest()
+            ChatInputModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
@@ -463,7 +470,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createGuildApplicationCommand(
             applicationId,
             guildId,
-            ChatInputCreateBuilder(name, description).apply(builder).toRequest()
+            ChatInputCreateBuilderImpl(name, description).apply(builder).toRequest()
         )
     }
 
@@ -502,7 +509,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
-        builder: MultiApplicationCommandBuilder.() -> Unit
+        builder: GuildMultiApplicationCommandBuilder.() -> Unit
     ): List<DiscordApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -510,7 +517,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createGuildApplicationCommands(
             applicationId,
             guildId,
-            MultiApplicationCommandBuilder().apply(builder).build()
+            GuildMultiApplicationCommandBuilder().apply(builder).build()
         )
     }
 
@@ -526,7 +533,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             applicationId,
             guildId,
             commandId,
-            ChatInputModifyBuilder().apply(builder).toRequest()
+            ChatInputModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
@@ -633,16 +640,19 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
+    @KordUnsafe
     public suspend inline fun bulkEditApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
+        token: String,
         builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit = {}
     ): List<DiscordGuildApplicationCommandPermissions> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return bulkEditApplicationCommandPermissions(
             applicationId,
             guildId,
-            ApplicationCommandPermissionsBulkModifyBuilder().apply(builder).toRequest()
+            token,
+            ApplicationCommandPermissionsBulkModifyBuilder(guildId).apply(builder).toRequest()
         )
     }
 
@@ -650,6 +660,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
+        token: String,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
     ): DiscordGuildApplicationCommandPermissions {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -657,7 +668,8 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             applicationId,
             guildId,
             commandId,
-            ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
+            token,
+            ApplicationCommandPermissionsModifyBuilder(guildId).apply(builder).toRequest()
         )
     }
 

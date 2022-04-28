@@ -3,11 +3,7 @@ package dev.kord.core.cache.data
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.mapList
-import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -19,6 +15,8 @@ public data class ApplicationCommandData(
     val description: String?,
     val guildId: OptionalSnowflake,
     val options: Optional<List<ApplicationCommandOptionData>>,
+    val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 ) {
@@ -36,6 +34,8 @@ public data class ApplicationCommandData(
                     description,
                     guildId,
                     options.mapList { ApplicationCommandOptionData.from(it) },
+                    defaultMemberPermissions,
+                    dmPermissions,
                     defaultPermission,
                     version
                 )

@@ -13,6 +13,10 @@ public data class ApplicationCommandCreateRequest(
     val type: ApplicationCommandType,
     val description: Optional<String> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    public var defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @SerialName("dm_permission")
+    public var dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
@@ -22,6 +26,10 @@ public data class ApplicationCommandModifyRequest(
     val name: Optional<String> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    public var defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @SerialName("dm_permission")
+    public var dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )

@@ -2,12 +2,15 @@ package dev.kord.core.entity.application
 
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.value
 import dev.kord.core.behavior.ApplicationCommandBehavior
 import dev.kord.core.behavior.GlobalApplicationCommandBehavior
 import dev.kord.core.behavior.GuildApplicationCommandBehavior
-import dev.kord.core.cache.data.*
+import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.ApplicationCommandParameterData
 import dev.kord.rest.service.InteractionService
 
 /**
@@ -35,6 +38,11 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     public val version: Snowflake get() = data.version
 
     /**
+     * Set of [Permissions] required to execute this command unless a server admin changed them.
+     */
+    public val defaultMemberPermissions: Permissions? get() = data.defaultMemberPermissions.value
+
+    /**
      * whether the command is enabled by default when the app is added to a guild.
      */
     public val defaultPermission: Boolean? get() = data.defaultPermission.discordBoolean
@@ -43,7 +51,12 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
 }
 
 
-public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicationCommandBehavior
+public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicationCommandBehavior {
+    /**
+     * Whether this command can be executed in dms or not
+     */
+    public val dmPermission: Boolean? get() = data.dmPermission.value
+}
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,

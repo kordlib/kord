@@ -810,7 +810,8 @@ public sealed class Route<T>(
         Route<DiscordGuildApplicationCommandPermissions>(
             HttpMethod.Put,
             "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
+            DiscordGuildApplicationCommandPermissions.serializer(),
+            false
         )
 
     public object ApplicationCommandPermissionsBatchPut :

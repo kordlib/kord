@@ -6,7 +6,7 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-public class MultiApplicationCommandBuilder {
+public sealed class MultiApplicationCommandBuilder {
     public val commands: MutableList<ApplicationCommandCreateBuilder> = mutableListOf()
 
     public inline fun message(name: String, builder: MessageCommandCreateBuilder.() -> Unit = {}) {
@@ -19,12 +19,21 @@ public class MultiApplicationCommandBuilder {
         commands += UserCommandCreateBuilder(name).apply(builder)
     }
 
-    public inline fun input(name: String, description: String, builder: ChatInputCreateBuilder.() -> Unit = {}) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        commands += ChatInputCreateBuilder(name, description).apply(builder)
-    }
-
     public fun build(): List<ApplicationCommandCreateRequest> {
         return commands.map { it.toRequest() }
+    }
+}
+
+public class GlobalMultiApplicationCommandBuilder : MultiApplicationCommandBuilder() {
+    public inline fun input(name: String, description: String, builder: GlobalChatInputCreateBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        commands += ChatInputCreateBuilderImpl(name, description).apply(builder)
+    }
+}
+
+public class GuildMultiApplicationCommandBuilder : MultiApplicationCommandBuilder() {
+    public inline fun input(name: String, description: String, builder: ChatInputCreateBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        commands += ChatInputCreateBuilderImpl(name, description).apply(builder)
     }
 }

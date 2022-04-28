@@ -13,14 +13,7 @@ import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
-import dev.kord.core.entity.application.GlobalApplicationCommand
-import dev.kord.core.entity.application.GlobalChatInputCommand
-import dev.kord.core.entity.application.GlobalMessageCommand
-import dev.kord.core.entity.application.GlobalUserCommand
-import dev.kord.core.entity.application.GuildApplicationCommand
-import dev.kord.core.entity.application.GuildChatInputCommand
-import dev.kord.core.entity.application.GuildMessageCommand
-import dev.kord.core.entity.application.GuildUserCommand
+import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
@@ -29,40 +22,17 @@ import dev.kord.core.gateway.MasterGateway
 import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.gateway.start
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.supplier.getGlobalApplicationCommandOf
-import dev.kord.core.supplier.getGlobalApplicationCommandOfOrNull
-import dev.kord.core.supplier.getGuildApplicationCommandOf
-import dev.kord.core.supplier.getGuildApplicationCommandOfOrNull
+import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
-import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
-import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
-import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
+import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.buffer
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
 import kotlin.contracts.InvocationKind
@@ -613,19 +583,22 @@ public class Kord(
     public suspend inline fun editApplicationCommandPermissions(
         guildId: Snowflake,
         commandId: Snowflake,
+        token: String,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        rest.interaction.editApplicationCommandPermissions(resources.applicationId, guildId, commandId, builder)
+        rest.interaction.editApplicationCommandPermissions(resources.applicationId, guildId, commandId, token, builder)
     }
 
 
+    @KordUnsafe
     public suspend inline fun bulkEditApplicationCommandPermissions(
         guildId: Snowflake,
+        token: String,
         builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, builder)
+        rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, token, builder)
     }
 }
 

@@ -27,7 +27,12 @@ public data class DiscordApplicationCommand(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    val defaultMemberPermissions: Optional<Permissions> = Optional.Missing(),
+    @SerialName("dm_permissions")
+    val dmPermissions: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
+    @Deprecated("danger default_permission will soon be deprecated. You can instead set default_member_permissions to \"0\" to disable the command by default and/or set dm_permission to false to disable globally-scoped commands inside of DMs with your app")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 )
@@ -759,6 +764,7 @@ public data class DiscordGuildApplicationCommandPermission(
     public sealed class Type(public val value: Int) {
         public object Role : Type(1)
         public object User : Type(2)
+        public object Channel : Type(3)
         public class Unknown(value: Int) : Type(value)
 
         public object Serializer : KSerializer<Type> {

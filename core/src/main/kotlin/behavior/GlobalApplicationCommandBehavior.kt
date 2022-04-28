@@ -1,6 +1,5 @@
 package dev.kord.core.behavior
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
@@ -36,14 +35,16 @@ public interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
     /**
      * Updates the permissions for this command on the guild corresponding to [guildId].
      *
+     * @param token a Bearer token with the `applications.commands.permissions.update` scope
      * @throws [RestRequestException] when something goes wrong during the request.
      */
     public suspend fun editPermissions(
         guildId: Snowflake,
+        token: String,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
     ) {
-        val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
-        service.editApplicationCommandPermissions(applicationId, guildId, id, request)
+        val request = ApplicationCommandPermissionsModifyBuilder(guildId).apply(builder).toRequest()
+        service.editApplicationCommandPermissions(applicationId, guildId, id, token, request)
     }
 }
 
@@ -60,10 +61,11 @@ public interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
      * @throws [RestRequestException] when something goes wrong during the request.
      */
     public suspend fun editPermissions(
+        token: String,
         builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
     ) {
-        val request = ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
-        service.editApplicationCommandPermissions(applicationId, guildId, id, request)
+        val request = ApplicationCommandPermissionsModifyBuilder(guildId).apply(builder).toRequest()
+        service.editApplicationCommandPermissions(applicationId, guildId, id, token, request)
     }
 
     override suspend fun delete() {
