@@ -1,6 +1,7 @@
 package dev.kord.common
 
 import dev.kord.common.annotation.KordExperimental
+import dev.kord.common.annotation.KordUnsafe
 import kotlinx.atomicfu.atomic
 
 @KordExperimental
@@ -18,6 +19,7 @@ public object KordConfiguration {
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
     @KordExperimental
+    @set:KordUnsafe
     public var REST_VERSION: Int
         get() = REST.value
         set(value) {
@@ -34,6 +36,7 @@ public object KordConfiguration {
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
     @KordExperimental
+    @set:KordUnsafe
     public var GATEWAY_VERSION: Int
         get() = GATEWAY.value
         set(value) {
@@ -51,6 +54,7 @@ public object KordConfiguration {
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
     @KordExperimental
+    @set:KordUnsafe
     public var VOICE_GATEWAY_VERSION: Int
         get() = VOICE.value
         set(value) {
