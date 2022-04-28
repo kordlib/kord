@@ -59,7 +59,7 @@ public data class DiscordChannel(
     val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val bitrate: OptionalInt = OptionalInt.Missing,
     @SerialName("user_limit")
-    val userLimit: OptionalInt? = OptionalInt.Missing,
+    val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
     val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
