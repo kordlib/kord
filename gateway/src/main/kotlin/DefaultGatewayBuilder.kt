@@ -1,15 +1,16 @@
 package dev.kord.gateway
 
-import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.websocket.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,11 +28,13 @@ public class DefaultGatewayBuilder {
     public fun build(): DefaultGateway {
         val client = client ?: HttpClient(CIO) {
             install(WebSockets)
-            install(JsonFeature)
+            install(ContentNegotiation) {
+                json()
+            }
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
-        val sendRateLimiter = sendRateLimiter ?: BucketRateLimiter(120, 60.seconds)
-        val identifyRateLimiter = identifyRateLimiter ?: BucketRateLimiter(1, 5.seconds)
+        val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)
+        val identifyRateLimiter = identifyRateLimiter ?: IntervalRateLimiter(limit = 1, interval = 5.seconds)
 
         client.requestPipeline.intercept(HttpRequestPipeline.Render) {
             // CIO adds this header even if no extensions are used, which causes it to be empty

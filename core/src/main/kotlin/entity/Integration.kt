@@ -19,7 +19,6 @@ import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.days
 
 /**
  * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
@@ -95,10 +94,9 @@ public class Integration(
         get() = data.expireBehavior
 
     /**
-     * The grace period in days before expiring subscribers.
+     * The grace period before expiring subscribers.
      */
-    public val expireGracePeriod: Duration
-        get() = data.expireGracePeriod.days
+    public val expireGracePeriod: Duration get() = data.expireGracePeriod
 
     /**
      * The id of the [user][User] for this integration.

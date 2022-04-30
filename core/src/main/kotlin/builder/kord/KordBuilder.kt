@@ -4,7 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.common.KordConstants
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.cache.CachingGateway
@@ -50,8 +50,8 @@ public operator fun DefaultGateway.Companion.invoke(
         url = "wss://gateway.discord.gg/"
         client = resources.httpClient
         reconnectRetry = retry
-        sendRateLimiter = BucketRateLimiter(120, 60.seconds)
-        identifyRateLimiter = BucketRateLimiter(1, 5.seconds)
+        sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
+        identifyRateLimiter = IntervalRateLimiter(limit = 1, interval = 5.seconds)
     }
 }
 
@@ -62,7 +62,7 @@ public class KordBuilder(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
-            val rateLimiter = BucketRateLimiter(1, 5.seconds)
+            val rateLimiter = IntervalRateLimiter(limit = 1, interval = 5.seconds)
             shards.map {
                 DefaultGateway {
                     client = resources.httpClient
@@ -195,12 +195,12 @@ public class KordBuilder(public val token: String) {
      * Requests the gateway info for the bot, or throws a [KordInitializationException] when something went wrong.
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
-        val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}") {
+        val response = get("${Route.baseUrl}${Route.GatewayBotGet.path}") {
             @OptIn(KordExperimental::class)
             header(UserAgent, KordConstants.USER_AGENT)
             header(Authorization, "Bot $token")
         }
-        val responseBody = response.readText()
+        val responseBody = response.bodyAsText()
         if (response.isError) {
             val message = buildString {
                 append("Something went wrong while initializing Kord")

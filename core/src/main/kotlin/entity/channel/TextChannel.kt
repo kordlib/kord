@@ -1,6 +1,7 @@
 package dev.kord.core.entity.channel
 
-import dev.kord.common.entity.optional.getOrThrow
+import dev.kord.common.entity.Permission.ManageChannels
+import dev.kord.common.entity.Permission.ManageMessages
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
@@ -9,6 +10,7 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
+import kotlin.time.Duration
 
 /**
  * An instance of a Discord Text Channel associated to a guild.
@@ -25,9 +27,11 @@ public class TextChannel(
     public val isNsfw: Boolean get() = data.nsfw.discordBoolean
 
     /**
-     * The amount of seconds a user has to wait before sending another message.
+     * The amount of time a user has to wait before sending another message.
+     *
+     * Bots, as well as users with the permission [ManageMessages] or [ManageChannels], are unaffected.
      */
-    public val userRateLimit: Int get() = data.rateLimitPerUser.getOrThrow()
+    public val userRateLimit: Duration? get() = data.rateLimitPerUser.value
 
     /**
      * returns a new [TextChannel] with the given [strategy].

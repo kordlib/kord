@@ -159,9 +159,10 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
-        guildId: Snowflake
-    ): Flow<GuildApplicationCommand> = first.getGuildApplicationCommands(applicationId, guildId)
-        .switchIfEmpty(second.getGuildApplicationCommands(applicationId, guildId))
+        guildId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GuildApplicationCommand> = first.getGuildApplicationCommands(applicationId, guildId, withLocalizations)
+        .switchIfEmpty(second.getGuildApplicationCommands(applicationId, guildId, withLocalizations))
 
 
     override suspend fun getGuildApplicationCommandOrNull(
@@ -183,9 +184,9 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         )
 
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> =
-        first.getGlobalApplicationCommands(applicationId)
-            .switchIfEmpty(second.getGlobalApplicationCommands(applicationId))
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
+        first.getGlobalApplicationCommands(applicationId, withLocalizations)
+            .switchIfEmpty(second.getGlobalApplicationCommands(applicationId, withLocalizations))
 
 
     override suspend fun getApplicationCommandPermissionsOrNull(

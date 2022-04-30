@@ -1,6 +1,8 @@
 package dev.kord.core.entity.channel.thread
 
 import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.Permission.ManageChannels
+import dev.kord.common.entity.Permission.ManageMessages
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.unwrap
@@ -14,6 +16,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
+import kotlin.time.Duration
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
@@ -80,11 +83,11 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     public val createTimestamp: Instant? get() = threadData.createTimestamp.value
 
     /**
-     * amount of seconds a user has to wait before sending another message
-     * bots, users with the permission [Manage Messages][dev.kord.common.entity.Permission.ManageMessages] or
-     * [Manage Messages][dev.kord.common.entity.Permission.ManageChannels]  are unaffected.
+     * The amount of time a user has to wait before sending another message.
+     *
+     * Bots, as well as users with the permission [ManageMessages] or [ManageChannels], are unaffected.
      */
-    public val rateLimitPerUser: Int? get() = data.rateLimitPerUser.value
+    public val rateLimitPerUser: Duration? get() = data.rateLimitPerUser.value
 
     /**
      * member count for this thread.

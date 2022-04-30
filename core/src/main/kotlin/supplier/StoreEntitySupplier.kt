@@ -197,9 +197,10 @@ public class StoreEntitySupplier(
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
-        guildId: Snowflake
+        guildId: Snowflake,
+        withLocalizations: Boolean?
     ): Flow<GuildApplicationCommand> {
-        return storeOnEach(supplier.getGuildApplicationCommands(applicationId, guildId)) { it.data }
+        return storeOnEach(supplier.getGuildApplicationCommands(applicationId, guildId, withLocalizations)) { it.data }
     }
 
     override suspend fun getGuildApplicationCommandOrNull(
@@ -217,8 +218,8 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getGlobalApplicationCommandOrNull(applicationId, commandId)) { it.data }
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> {
-        return storeOnEach(supplier.getGlobalApplicationCommands(applicationId)) { it.data }
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> {
+        return storeOnEach(supplier.getGlobalApplicationCommands(applicationId, withLocalizations)) { it.data }
     }
 
     override suspend fun getApplicationCommandPermissionsOrNull(

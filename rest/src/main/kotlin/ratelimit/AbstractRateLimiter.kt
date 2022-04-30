@@ -1,6 +1,6 @@
 package dev.kord.rest.ratelimit
 
-import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
@@ -18,7 +18,7 @@ import kotlin.time.Duration.Companion.minutes
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
-    internal val autoBanRateLimiter = BucketRateLimiter(25000, 10.minutes)
+    internal val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
     internal val globalSuspensionPoint = atomic(Reset(clock.now()))
     internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
     internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()

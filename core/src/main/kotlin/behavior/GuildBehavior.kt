@@ -198,7 +198,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Application commands for this guild only.
      */
-
+    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"))
     public val commands: Flow<GuildApplicationCommand>
         get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
@@ -247,6 +247,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
             }
     }
 
+    public fun getApplicationCommands(withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> =
+        supplier.getGuildApplicationCommands(kord.resources.applicationId, id, withLocalizations)
 
     public suspend fun getApplicationCommand(commandId: Snowflake): GuildApplicationCommand =
         supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)

@@ -6,7 +6,6 @@ import dev.kord.common.entity.ExplicitContentFilter
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.VerificationLevel
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
@@ -14,6 +13,7 @@ import dev.kord.rest.Image
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildModifyRequest
 import java.util.*
+import kotlin.time.Duration
 
 @KordDsl
 public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
@@ -37,8 +37,8 @@ public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
     private var _afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var afkChannelId: Snowflake? by ::_afkChannelId.delegate()
 
-    private var _afkTimeout: OptionalInt = OptionalInt.Missing
-    public var afkTimeout: Int? by ::_afkTimeout.delegate()
+    private var _afkTimeout: Optional<Duration> = Optional.Missing()
+    public var afkTimeout: Duration? by ::_afkTimeout.delegate()
 
     private var _icon: Optional<Image?> = Optional.Missing()
     public var icon: Image? by ::_icon.delegate()

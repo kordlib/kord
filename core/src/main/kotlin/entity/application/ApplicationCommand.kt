@@ -1,5 +1,6 @@
 package dev.kord.core.entity.application
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Permissions
@@ -29,8 +30,17 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     override val applicationId: Snowflake
         get() = data.applicationId
 
+    /**
+     * The name of the command
+     */
     public val name: String
         get() = data.name
+
+    /**
+     * A map containing all localizations of [name].
+     */
+    public val nameLocalizations: Map<Locale, String>
+        get() = data.nameLocalizations.value ?: emptyMap()
 
     /**
      * auto-incrementing version identifier updated during substantial record changes.

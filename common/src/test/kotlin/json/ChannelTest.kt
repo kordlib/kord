@@ -4,6 +4,7 @@ import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.optional.value
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.seconds
 
 private fun file(name: String): String {
     val loader = ChannelTest::class.java.classLoader
@@ -106,7 +107,7 @@ class ChannelTest {
             type.value shouldBe 0
             position.asNullable!! shouldBe 6
             permissionOverwrites.value shouldBe emptyList()
-            rateLimitPerUser.asNullable shouldBe 2
+            rateLimitPerUser.value shouldBe 2.seconds
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
             lastMessageId.value?.toString() shouldBe "155117677105512449"

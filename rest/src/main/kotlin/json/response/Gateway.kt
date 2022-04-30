@@ -1,5 +1,6 @@
 package dev.kord.rest.json.response
 
+import dev.kord.common.serialization.DurationInMilliseconds
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,7 +20,7 @@ public data class SessionStartLimitResponse(
     val total: Int,
     val remaining: Int,
     @SerialName("reset_after")
-    val resetAfter: Int,
+    val resetAfter: DurationInMilliseconds,
     @SerialName("max_concurrency")
     val maxConcurrency: Int
 )

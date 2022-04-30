@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.Permissions
@@ -13,6 +14,7 @@ public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 
     override var name: String? by state::name.delegate()
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
@@ -20,6 +22,7 @@ public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             name = state.name,
+            nameLocalizations = state.nameLocalizations,
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = state.defaultPermission
         )
@@ -30,9 +33,9 @@ public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
 public class UserCommandCreateBuilder(override var name: String) : ApplicationCommandCreateBuilder {
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.User
-
-
     private val state = ApplicationCommandModifyStateHolder()
+
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
@@ -40,6 +43,7 @@ public class UserCommandCreateBuilder(override var name: String) : ApplicationCo
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
             name = name,
+            nameLocalizations = state.nameLocalizations,
             type = type,
             defaultMemberPermissions = state.defaultMemberPermissions,
             dmPermission = state.dmPermission,

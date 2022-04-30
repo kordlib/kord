@@ -16,25 +16,22 @@ import kotlin.time.toDuration
 public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     override var reason: String? = null
 
-    private var _maxAge: OptionalInt = OptionalInt.Missing
+    private var _maxAge: Optional<Duration> = Optional.Missing()
 
     /**
      * The duration of invite in seconds before expiry, or 0 for never. 86400 (24 hours) by default.
      */
     @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"))
-    public var age: Int? by ::_maxAge.delegate()
+    public var age: Int?
+        get() = _maxAge.value?.inWholeSeconds?.toInt()
+        set(value) {
+            _maxAge = value?.toDuration(unit = SECONDS)?.optional() ?: Optional.Missing()
+        }
 
     /**
      * The duration before invite expiry, or 0 for never. Between 0 and 604800 seconds (7 days). 24 hours by default.
      */
-    public var maxAge: Duration?
-        get() = _maxAge.value?.toDuration(unit = SECONDS)
-        set(value) {
-            _maxAge = when (value) {
-                null -> OptionalInt.Missing
-                else -> OptionalInt.Value(value.inWholeSeconds.coerceIn(intValues).toInt())
-            }
-        }
+    public var maxAge: Duration? by ::_maxAge.delegate()
 
     private var _maxUses: OptionalInt = OptionalInt.Missing
 
@@ -124,4 +121,3 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
 
 private inline val OptionalSnowflake.isMissing get() = this == OptionalSnowflake.Missing
 private inline val OptionalSnowflake.isPresent get() = this != OptionalSnowflake.Missing
-private inline val intValues get() = Int.MIN_VALUE.toLong()..Int.MAX_VALUE.toLong()

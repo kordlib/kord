@@ -4,7 +4,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
-import io.ktor.util.*
+import io.ktor.util.logging.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*

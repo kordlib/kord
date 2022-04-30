@@ -432,8 +432,8 @@ class RestServiceTest {
             group("test-group", "automated test") {
                 subCommand("test-sub-command", "automated test") {
                     int("integer", "test choice") {
-                        choice("one", 1)
-                        choice("two", 2)
+                        choice("one", 1,)
+                        choice("two", 2,)
                     }
                 }
             }

@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 import java.util.*
+import kotlin.time.Duration
 
 /**
  * An instance of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
@@ -60,9 +61,9 @@ public class Guild(
         }
 
     /**
-     * The afk timeout in seconds.
+     * The afk timeout.
      */
-    public val afkTimeout: Int get() = data.afkTimeout
+    public val afkTimeout: Duration get() = data.afkTimeout
 
     /**
      *  The id of the guild creator if it is bot-created.

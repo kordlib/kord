@@ -5,9 +5,13 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.mapList
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonClassDiscriminator
 
 @Serializable
+@OptIn(ExperimentalSerializationApi::class)
+@JsonClassDiscriminator("_type") // would otherwise conflict with `type` property
 public sealed class ComponentData {
     public abstract val type: ComponentType
     public abstract val label: Optional<String>

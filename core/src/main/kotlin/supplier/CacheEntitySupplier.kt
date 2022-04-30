@@ -392,11 +392,22 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
-        guildId: Snowflake
+        guildId: Snowflake,
+        withLocalizations: Boolean?
     ): Flow<GuildApplicationCommand> = cache.query<ApplicationCommandData> {
         idEq(ApplicationCommandData::guildId, guildId)
         idEq(ApplicationCommandData::applicationId, applicationId)
-    }.asFlow().map { GuildApplicationCommand(it, kord.rest.interaction) }
+    }.asFlow()
+        .map {
+            when (withLocalizations) {
+                true, null -> it
+                false -> it.copy(
+                    nameLocalizations = Optional.Missing(),
+                    descriptionLocalizations = Optional.Missing(),
+                )
+            }
+        }
+        .map { GuildApplicationCommand(it, kord.rest.interaction) }
 
 
     override suspend fun getGuildApplicationCommandOrNull(
@@ -426,11 +437,21 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GlobalApplicationCommand(data, kord.rest.interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> =
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
         cache.query<ApplicationCommandData> {
             idEq(ApplicationCommandData::guildId, null)
             idEq(ApplicationCommandData::applicationId, applicationId)
-        }.asFlow().map { GlobalApplicationCommand(it, kord.rest.interaction) }
+        }.asFlow()
+            .map {
+                when (withLocalizations) {
+                    true, null -> it
+                    false -> it.copy(
+                        nameLocalizations = Optional.Missing(),
+                        descriptionLocalizations = Optional.Missing(),
+                    )
+                }
+            }
+            .map { GlobalApplicationCommand(it, kord.rest.interaction) }
 
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,

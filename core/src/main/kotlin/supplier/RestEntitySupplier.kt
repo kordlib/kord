@@ -397,9 +397,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
-        guildId: Snowflake
+        guildId: Snowflake,
+        withLocalizations: Boolean?
     ): Flow<GuildApplicationCommand> = flow {
-        for (command in interaction.getGuildApplicationCommands(applicationId, guildId)) {
+        for (command in interaction.getGuildApplicationCommands(applicationId, guildId, withLocalizations)) {
             val data = ApplicationCommandData.from(command)
             emit(GuildApplicationCommand(data, interaction))
         }
@@ -415,8 +416,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GlobalApplicationCommand(data, interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> = flow {
-        for (command in interaction.getGlobalApplicationCommands(applicationId)) {
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> = flow {
+        for (command in interaction.getGlobalApplicationCommands(applicationId, withLocalizations)) {
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, interaction))
         }

@@ -1,16 +1,15 @@
 import dev.kord.common.entity.PresenceStatus
-import dev.kord.common.ratelimit.BucketRateLimiter
+import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.gateway.*
 import dev.kord.gateway.retry.LinearRetry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.json.*
-import io.ktor.client.features.json.serializer.*
-import io.ktor.client.features.websocket.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.websocket.*
+import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.seconds
 
 suspend fun main(args: Array<String>) {
@@ -19,13 +18,13 @@ suspend fun main(args: Array<String>) {
     val gateway = DefaultGateway {
         client = HttpClient(CIO) {
             install(WebSockets)
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(Json)
+            install(ContentNegotiation) {
+                json()
             }
         }
 
         reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
-        sendRateLimiter = BucketRateLimiter(120, 60.seconds)
+        sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
     }
 
     gateway.events.filterIsInstance<MessageCreate>().onEach {

@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.interaction
 
+import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.ApplicationCommandType
@@ -126,9 +127,8 @@ public inline fun RootInputChatBuilder.group(
 }
 
 @KordDsl
-public interface ChatInputCreateBuilder : ApplicationCommandCreateBuilder, RootInputChatBuilder {
-    public var description: String
-}
+public interface ChatInputCreateBuilder : LocalizedDescriptionCreateBuilder, ApplicationCommandCreateBuilder,
+    RootInputChatBuilder
 
 @KordDsl
 public interface GlobalChatInputCreateBuilder : ChatInputCreateBuilder, GlobalApplicationCommandCreateBuilder
@@ -140,6 +140,8 @@ internal class ChatInputCreateBuilderImpl(
 ) : GlobalChatInputCreateBuilder {
     private val state = ApplicationCommandModifyStateHolder()
 
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
+    override var descriptionLocalizations: MutableMap<Locale, String>? by state::descriptionLocalizations.delegate()
 
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.ChatInput
@@ -155,8 +157,10 @@ internal class ChatInputCreateBuilderImpl(
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
             name,
+            state.nameLocalizations,
             type,
             Optional.Value(description),
+            state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultMemberPermissions,
             state.dmPermission,
@@ -168,9 +172,8 @@ internal class ChatInputCreateBuilderImpl(
 }
 
 @KordDsl
-public interface ChatInputModifyBuilder : ApplicationCommandModifyBuilder, RootInputChatBuilder {
-    public var description: String?
-}
+public interface ChatInputModifyBuilder : LocalizedDescriptionModifyBuilder, ApplicationCommandModifyBuilder,
+    RootInputChatBuilder
 
 @KordDsl
 public interface GlobalChatInputModifyBuilder : ChatInputModifyBuilder, GlobalApplicationCommandModifyBuilder
@@ -180,8 +183,10 @@ public class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
 
     private val state = ApplicationCommandModifyStateHolder()
     override var name: String? by state::name.delegate()
+    override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var description: String? by state::description.delegate()
+    override var descriptionLocalizations: MutableMap<Locale, String>? by state::descriptionLocalizations.delegate()
 
     override var options: MutableList<OptionsBuilder>? by state::options.delegate()
 
@@ -193,7 +198,9 @@ public class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             state.name,
+            state.nameLocalizations,
             state.description,
+            state.descriptionLocalizations,
             state.options.mapList { it.toRequest() },
             state.defaultMemberPermissions,
             state.dmPermission,

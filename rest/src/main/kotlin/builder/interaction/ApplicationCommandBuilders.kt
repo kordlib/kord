@@ -10,8 +10,9 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-public interface ApplicationCommandCreateBuilder : RequestBuilder<ApplicationCommandCreateRequest> {
-    public var name: String
+public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
+    RequestBuilder<ApplicationCommandCreateRequest> {
+
     public var defaultMemberPermissions: Permissions?
 
     @Deprecated("danger default_permission will soon be deprecated. You can instead set default_member_permissions to \"0\" to disable the command by default and/or set dm_permission to false to disable globally-scoped commands inside of DMs with your app")
@@ -32,8 +33,8 @@ public interface GlobalApplicationCommandModifyBuilder : ApplicationCommandModif
 }
 
 @KordDsl
-public interface ApplicationCommandModifyBuilder : RequestBuilder<ApplicationCommandModifyRequest> {
-    public var name: String?
+public interface ApplicationCommandModifyBuilder : LocalizedNameModifyBuilder,
+    RequestBuilder<ApplicationCommandModifyRequest> {
 
     @Deprecated("danger default_permission will soon be deprecated. You can instead set default_member_permissions to \"0\" to disable the command by default and/or set dm_permission to false to disable globally-scoped commands inside of DMs with your app")
     public var defaultPermission: Boolean?

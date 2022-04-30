@@ -4,6 +4,7 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
@@ -14,13 +15,13 @@ public data class ChannelData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val position: OptionalInt = OptionalInt.Missing,
     val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
-    val name: Optional<String> = Optional.Missing(),
+    val name: Optional<String?> = Optional.Missing(),
     val topic: Optional<String?> = Optional.Missing(),
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val bitrate: OptionalInt = OptionalInt.Missing,
     val userLimit: OptionalInt = OptionalInt.Missing,
-    val rateLimitPerUser: OptionalInt = OptionalInt.Missing,
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val recipients: Optional<List<Snowflake>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
