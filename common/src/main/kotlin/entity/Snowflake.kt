@@ -142,6 +142,8 @@ public class Snowflake : Comparable<Snowflake> {
     override fun equals(other: Any?): Boolean = other is Snowflake && this.value == other.value
 
     public companion object {
+        // see https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
+
         private const val DISCORD_EPOCH_LONG = 1420070400000L
 
         private const val TIMESTAMP_SHIFT = 22
