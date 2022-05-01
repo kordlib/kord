@@ -38,7 +38,7 @@ public data class DiscordApplicationCommand(
     @SerialName("dm_permissions")
     val dmPermissions: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
-    @Deprecated("danger default_permission will soon be deprecated. You can instead set default_member_permissions to \"0\" to disable the command by default and/or set dm_permission to false to disable globally-scoped commands inside of DMs with your app")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 )

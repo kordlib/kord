@@ -25,7 +25,7 @@ internal class ApplicationCommandModifyStateHolder {
     var dmPermission: OptionalBoolean? = OptionalBoolean.Missing
 
 
-    @Deprecated("danger default_permission will soon be deprecated. You can instead set default_member_permissions to \"0\" to disable the command by default and/or set dm_permission to false to disable globally-scoped commands inside of DMs with your app")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     var defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 

@@ -18,6 +18,8 @@ public class MessageCommandModifyBuilder : ApplicationCommandModifyBuilder {
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
+
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest {
@@ -43,6 +45,8 @@ public class MessageCommandCreateBuilder(override var name: String) : Applicatio
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
+
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandCreateRequest {

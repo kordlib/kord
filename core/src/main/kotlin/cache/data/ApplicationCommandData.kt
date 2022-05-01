@@ -20,6 +20,7 @@ public data class ApplicationCommandData(
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
     val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 ) {
