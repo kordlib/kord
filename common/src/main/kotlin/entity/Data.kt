@@ -2,7 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.serialization.InstantInEpochSeconds
+import dev.kord.common.serialization.InstantInEpochSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -25,6 +25,7 @@ public data class DiscordTyping(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("user_id")
     val userId: Snowflake,
-    val timestamp: InstantInEpochSeconds,
+    @Serializable(with = InstantInEpochSecondsSerializer::class)
+    val timestamp: Instant,
     val member: Optional<DiscordGuildMember> = Optional.Missing()
 )

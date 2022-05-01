@@ -37,8 +37,11 @@ public object InstantInEpochMillisecondsSerializer : KSerializer<Instant> {
     }
 }
 
-/** An [Instant] that is [serializable][Serializable] with [InstantInEpochMillisecondsSerializer]. */
-public typealias InstantInEpochMilliseconds = @Serializable(with = InstantInEpochMillisecondsSerializer::class) Instant
+// TODO use this typealias instead of annotating types/properties with
+//  @Serializable(with = InstantInEpochMillisecondsSerializer::class) once
+//  https://github.com/Kotlin/kotlinx.serialization/issues/1895 is fixed
+// /** An [Instant] that is [serializable][Serializable] with [InstantInEpochMillisecondsSerializer]. */
+// public typealias InstantInEpochMilliseconds = @Serializable(with = InstantInEpochMillisecondsSerializer::class) Instant
 
 
 // epoch seconds
@@ -59,5 +62,8 @@ public object InstantInEpochSecondsSerializer : KSerializer<Instant> {
     }
 }
 
-/** An [Instant] that is [serializable][Serializable] with [InstantInEpochSecondsSerializer]. */
-public typealias InstantInEpochSeconds = @Serializable(with = InstantInEpochSecondsSerializer::class) Instant
+// TODO use this typealias instead of annotating types/properties with
+//  @Serializable(with = InstantInEpochSecondsSerializer::class) once
+//  https://github.com/Kotlin/kotlinx.serialization/issues/1895 is fixed
+// /** An [Instant] that is [serializable][Serializable] with [InstantInEpochSecondsSerializer]. */
+// public typealias InstantInEpochSeconds = @Serializable(with = InstantInEpochSecondsSerializer::class) Instant
