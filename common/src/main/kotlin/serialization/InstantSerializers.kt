@@ -16,27 +16,20 @@ import kotlinx.serialization.encoding.Encoder
 /** Serializer that encodes and decodes [Instant]s in [epoch milliseconds][Instant.toEpochMilliseconds]. */
 public object InstantInEpochMillisecondsSerializer : KSerializer<Instant> {
 
+    private val VALID_RANGE =
+        Instant.fromEpochMilliseconds(Long.MIN_VALUE)..Instant.fromEpochMilliseconds(Long.MAX_VALUE)
+
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("dev.kord.common.serialization.InstantInEpochMilliseconds", PrimitiveKind.LONG)
 
     override fun serialize(encoder: Encoder, value: Instant) {
 
-        // if the result of toEpochMilliseconds() doesn't fit in the range of Long type, it is coerced into that range
-        val valueInMillis = value.toEpochMilliseconds()
-
-        val atLimit = when (valueInMillis) {
-            Long.MIN_VALUE, Long.MAX_VALUE -> true
-            else -> false
-        }
-
-        // construct Instant from valueInMillis and compare with original Instant to check
-        // whether valueInMillis was exactly at limit or coerced into the range of Long type
-        if (atLimit && (Instant.fromEpochMilliseconds(valueInMillis) != value)) throw SerializationException(
+        if (value !in VALID_RANGE) throw SerializationException(
             "The Instant $value expressed as a number of milliseconds from the epoch Instant does not fit in the " +
                     "range of Long type and therefore cannot be serialized with InstantInEpochMillisecondsSerializer"
         )
 
-        encoder.encodeLong(valueInMillis)
+        encoder.encodeLong(value.toEpochMilliseconds())
     }
 
     override fun deserialize(decoder: Decoder): Instant {
@@ -57,7 +50,7 @@ public object InstantInEpochSecondsSerializer : KSerializer<Instant> {
         PrimitiveSerialDescriptor("dev.kord.common.serialization.InstantInEpochSeconds", PrimitiveKind.LONG)
 
     override fun serialize(encoder: Encoder, value: Instant) {
-        // epochSeconds always fits in the range of Long type and never coerces -> no need to check for overflow
+        // epochSeconds always fits in the range of Long type and never coerces -> no need for range check
         encoder.encodeLong(value.epochSeconds)
     }
 

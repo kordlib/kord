@@ -71,6 +71,23 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     private val pastInstantExactlyAtLimit = Instant.fromEpochMilliseconds(Long.MIN_VALUE)
 
     @Test
+    fun `future Instant under limit can be serialized`() {
+        assertEquals(
+            expected = (Long.MAX_VALUE - 1).toString(),
+            actual = serialize(futureInstantExactlyAtLimit - 1.nanoseconds),
+        )
+    }
+
+    @Test
+    fun `past Instant under limit can be serialized`() {
+        assertEquals(
+            expected = Long.MIN_VALUE.toString(),
+            actual = serialize(pastInstantExactlyAtLimit + 1.nanoseconds),
+        )
+    }
+
+
+    @Test
     fun `future Instant exactly at limit can be serialized`() {
         assertEquals(expected = Long.MAX_VALUE.toString(), actual = serialize(futureInstantExactlyAtLimit))
     }
