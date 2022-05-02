@@ -814,6 +814,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 when (val value = decoder.decodeInt()) {
                     1 -> Role
                     2 -> User
+                    3 -> Channel
                     else -> Unknown(value)
                 }
 

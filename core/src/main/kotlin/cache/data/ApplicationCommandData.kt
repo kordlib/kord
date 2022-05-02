@@ -41,7 +41,7 @@ public data class ApplicationCommandData(
                     guildId,
                     options.mapList { ApplicationCommandOptionData.from(it) },
                     defaultMemberPermissions,
-                    dmPermissions,
+                    dmPermission,
                     defaultPermission,
                     version
                 )
