@@ -28,14 +28,7 @@ public class InteractionEventHandler(
             is ApplicationCommandUpdate -> handle(event, shard, kord, coroutineScope)
             is ApplicationCommandDelete -> handle(event, shard, kord, coroutineScope)
             is ApplicationCommandPermissionsUpdate -> {
-                val data = GuildApplicationCommandPermissionsData(
-                    event.permissions.id,
-                    event.permissions.applicationId,
-                    event.permissions.guildId,
-                    event.permissions.permissions.map {
-                        GuildApplicationCommandPermissionData.from(it)
-                    }
-                )
+                val data = GuildApplicationCommandPermissionsData.from(event.permissions)
                 ApplicationCommandPermissionsUpdateEvent(
                     ApplicationCommandPermissions(data),
                     kord, shard, coroutineScope

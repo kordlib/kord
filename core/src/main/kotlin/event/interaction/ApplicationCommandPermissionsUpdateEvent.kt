@@ -11,5 +11,5 @@ public class ApplicationCommandPermissionsUpdateEvent(
     public val permissions: ApplicationCommandPermissions,
     override val kord: Kord,
     override val shard: Int,
-    public val coroutineScope: CoroutineScope = CoroutineScope(kord.coroutineContext + SupervisorJob(kord.coroutineContext.job)),
+    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord),
 ) : Event, CoroutineScope by coroutineScope

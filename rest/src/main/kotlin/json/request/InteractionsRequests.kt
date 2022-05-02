@@ -19,9 +19,9 @@ public data class ApplicationCommandCreateRequest(
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
-    public var defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
     @SerialName("dm_permission")
-    public var dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
@@ -37,9 +37,9 @@ public data class ApplicationCommandModifyRequest(
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
-    public var defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
     @SerialName("dm_permission")
-    public var dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
