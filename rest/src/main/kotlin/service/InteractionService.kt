@@ -383,28 +383,28 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun createGlobalMessageCommandApplicationCommand(
         applicationId: Snowflake,
         name: String,
-        builder: MessageCommandCreateBuilder.() -> Unit = {}
+        builder: GlobalMessageCommandCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return createGlobalApplicationCommand(
             applicationId,
-            MessageCommandCreateBuilder(name).apply(builder).toRequest()
+            MessageCommandCreateBuilderImpl(name).apply(builder).toRequest()
         )
     }
 
     public suspend inline fun createGlobalUserCommandApplicationCommand(
         applicationId: Snowflake,
         name: String,
-        builder: UserCommandCreateBuilder.() -> Unit = {}
+        builder: GlobalUserCommandCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return createGlobalApplicationCommand(
             applicationId,
-            UserCommandCreateBuilder(name).apply(builder).toRequest()
+            UserCommandCreateBuilderImpl(name).apply(builder).toRequest()
         )
     }
 
@@ -438,27 +438,27 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun modifyGlobalMessageApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: MessageCommandModifyBuilder.() -> Unit
+        builder: GlobalMessageCommandModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return modifyGlobalApplicationCommand(
             applicationId,
             commandId,
-            MessageCommandModifyBuilder().apply(builder).toRequest()
+            MessageCommandModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
     public suspend inline fun modifyGlobalUserApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: UserCommandModifyBuilder.() -> Unit
+        builder: GlobalUserCommandModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyGlobalApplicationCommand(
             applicationId,
             commandId,
-            UserCommandModifyBuilder().apply(builder).toRequest()
+            UserCommandModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
@@ -489,7 +489,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createGuildApplicationCommand(
             applicationId,
             guildId,
-            MessageCommandCreateBuilder(name).apply(builder).toRequest()
+            MessageCommandCreateBuilderImpl(name).apply(builder).toRequest()
         )
     }
 
@@ -505,7 +505,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createGuildApplicationCommand(
             applicationId,
             guildId,
-            UserCommandCreateBuilder(name).apply(builder).toRequest()
+            UserCommandCreateBuilderImpl(name).apply(builder).toRequest()
         )
     }
 
@@ -552,7 +552,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             applicationId,
             guildId,
             commandId,
-            MessageCommandModifyBuilder().apply(builder).toRequest()
+            MessageCommandModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
@@ -567,7 +567,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             applicationId,
             guildId,
             commandId,
-            UserCommandModifyBuilder().apply(builder).toRequest()
+            UserCommandModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 

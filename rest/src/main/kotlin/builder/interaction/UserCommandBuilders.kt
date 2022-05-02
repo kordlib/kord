@@ -9,7 +9,13 @@ import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
 
 @KordDsl
-public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
+public interface UserCommandModifyBuilder : ApplicationCommandModifyBuilder
+
+@KordDsl
+public interface GlobalUserCommandModifyBuilder : UserCommandModifyBuilder, GlobalApplicationCommandModifyBuilder
+
+@PublishedApi
+internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
 
     private val state = ApplicationCommandModifyStateHolder()
 
@@ -17,6 +23,7 @@ public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
+    override var dmPermission: Boolean? by state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
@@ -25,6 +32,7 @@ public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
         return ApplicationCommandModifyRequest(
             name = state.name,
             nameLocalizations = state.nameLocalizations,
+            dmPermission = state.dmPermission,
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = state.defaultPermission
         )
@@ -32,7 +40,12 @@ public class UserCommandModifyBuilder : ApplicationCommandModifyBuilder {
 }
 
 @KordDsl
-public class UserCommandCreateBuilder(override var name: String) : ApplicationCommandCreateBuilder {
+public interface UserCommandCreateBuilder : ApplicationCommandCreateBuilder
+
+public interface GlobalUserCommandCreateBuilder : UserCommandCreateBuilder, GlobalApplicationCommandCreateBuilder
+
+@PublishedApi
+internal class UserCommandCreateBuilderImpl(override var name: String) : GlobalUserCommandCreateBuilder {
     override val type: ApplicationCommandType
         get() = ApplicationCommandType.User
     private val state = ApplicationCommandModifyStateHolder()
@@ -40,6 +53,7 @@ public class UserCommandCreateBuilder(override var name: String) : ApplicationCo
     override var nameLocalizations: MutableMap<Locale, String>? by state::nameLocalizations.delegate()
 
     override var defaultMemberPermissions: Permissions? by state::defaultMemberPermissions.delegate()
+    override var dmPermission: Boolean? by state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by state::defaultPermission.delegate()
