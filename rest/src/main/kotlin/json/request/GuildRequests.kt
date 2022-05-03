@@ -54,6 +54,8 @@ public data class GuildChannelCreateRequest(
     val parentId: OptionalSnowflake = OptionalSnowflake.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("default_auto_archive_duration")
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
 )
 
 @Serializable
