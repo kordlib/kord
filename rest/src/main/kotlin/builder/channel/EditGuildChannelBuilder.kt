@@ -102,6 +102,9 @@ public class StageVoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _name: Optional<String> = Optional.Missing()
     public var name: String? by ::_name.delegate()
 
+    private var _rtcRegion: Optional<String?> = Optional.Missing()
+    public var rtcRegion: String? by ::_rtcRegion.delegate()
+
     private var _position: OptionalInt? = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
@@ -114,12 +117,17 @@ public class StageVoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
+    private var _bitrate: OptionalInt? = OptionalInt.Missing
+    public var bitrate: Int? by ::_bitrate.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
         position = _position,
         parentId = _parentId,
+        bitrate = _bitrate,
         topic = _topic,
-        permissionOverwrites = _permissionOverwrites
+        permissionOverwrites = _permissionOverwrites,
+        rtcRegion = _rtcRegion,
     )
 
 }
