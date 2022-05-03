@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
@@ -39,6 +40,14 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+
+    /**
+     * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
+     * channel, to automatically archive the thread after recent activity.
+     */
+    public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
         position = _position,
@@ -46,7 +55,8 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         nsfw = _nsfw,
         rateLimitPerUser = _rateLimitPerUser,
         permissionOverwrites = _permissionOverwrites,
-        parentId = _parentId
+        parentId = _parentId,
+        defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
     )
 
 }
@@ -158,6 +168,14 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+
+    /**
+     * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
+     * channel, to automatically archive the thread after recent activity.
+     */
+    public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
         position = _position,
@@ -166,6 +184,7 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         parentId = _parentId,
         rateLimitPerUser = _rateLimitPerUser,
         permissionOverwrites = _permissionOverwrites,
+        defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
     )
 }
 
