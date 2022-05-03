@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.VideoQualityMode
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -90,6 +91,11 @@ public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _userLimit: OptionalInt? = OptionalInt.Missing
     public var userLimit: Int? by ::_userLimit.delegate()
 
+    private var _videoQualityMode: Optional<VideoQualityMode?> = Optional.Missing()
+
+    /** The camera [video quality mode][VideoQualityMode] of the voice channel. */
+    public var videoQualityMode: VideoQualityMode? by ::_videoQualityMode.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
         position = _position,
@@ -98,7 +104,8 @@ public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         userLimit = _userLimit,
         topic = _topic,
         permissionOverwrites = _permissionOverwrites,
-        rtcRegion = _rtcRegion
+        rtcRegion = _rtcRegion,
+        videoQualityMode = _videoQualityMode,
     )
 
 }
