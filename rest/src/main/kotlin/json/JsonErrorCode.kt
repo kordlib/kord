@@ -393,6 +393,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Cannot delete a channel required for Community guilds. */
     CannotDeleteRequiredCommunityChannel(50074),
 
+    /** Cannot edit stickers within a message. */
+    CannotEditStickersWithinMessage(50080),
+
     /** Invalid sticker sent. */
     InvalidStickerSent(50081),
 
