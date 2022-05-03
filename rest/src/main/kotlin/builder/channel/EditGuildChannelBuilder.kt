@@ -36,7 +36,7 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
@@ -52,7 +52,8 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
 }
 
 @KordDsl
-public class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
@@ -71,7 +72,7 @@ public class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchR
     public var parentId: Snowflake? by ::_parentId.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     private var _bitrate: OptionalInt? = OptionalInt.Missing
     public var bitrate: Int? by ::_bitrate.delegate()
@@ -94,7 +95,8 @@ public class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchR
 
 
 @KordDsl
-public class StageVoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class StageVoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
@@ -110,7 +112,7 @@ public class StageVoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyP
     public var parentId: Snowflake? by ::_parentId.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
@@ -123,7 +125,8 @@ public class StageVoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyP
 }
 
 @KordDsl
-public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
@@ -145,7 +148,7 @@ public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRe
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
@@ -168,7 +171,8 @@ public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRe
     """,
     level = WARNING,
 )
-public class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class StoreChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
@@ -178,7 +182,7 @@ public class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchR
     public var position: Int? by ::_position.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
