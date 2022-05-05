@@ -56,7 +56,7 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
      * whether the command is enabled by default when the app is added to a guild.
      */
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
-    public val defaultPermission: Boolean? get() = data.defaultPermission?.discordBoolean
+    public val defaultPermission: Boolean? get() = data.defaultPermission.value
 
 
 }
