@@ -64,9 +64,9 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
 
 public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicationCommandBehavior {
     /**
-     * Whether this command can be executed in dms or not
+     * Whether this command is available in DMs with the application.
      */
-    public val dmPermission: Boolean? get() = data.dmPermission.value
+    public val dmPermission: Boolean get() = data.dmPermission.orElse(true)
 }
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,
