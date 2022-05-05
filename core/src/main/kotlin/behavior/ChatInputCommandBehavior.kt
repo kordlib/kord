@@ -18,7 +18,6 @@ public interface ChatInputCommandBehavior : ApplicationCommandBehavior {
 
 public interface GuildChatInputCommandBehavior : ChatInputCommandBehavior, GuildApplicationCommandBehavior {
 
-     @OptIn(KordUnsafe::class)
      override suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): GuildChatInputCommand {
           val request = ChatInputModifyBuilderImpl().apply { builder() }.toRequest()
           val response = service.modifyGuildApplicationCommand(applicationId, guildId, id, request)
