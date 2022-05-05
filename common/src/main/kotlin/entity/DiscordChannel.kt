@@ -71,7 +71,7 @@ public data class DiscordChannel(
     @SerialName("parent_id")
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("last_pin_timestamp")
-    val lastPinTimestamp: Optional<String?> = Optional.Missing(),
+    val lastPinTimestamp: Optional<Instant?> = Optional.Missing(),
     @SerialName("rtc_region")
     val rtcRegion: Optional<String?> = Optional.Missing(),
     @SerialName("video_quality_mode")
@@ -248,7 +248,7 @@ public sealed class VideoQualityMode(public val value: Int) {
 public data class DiscordThreadMetadata(
     val archived: Boolean,
     @SerialName("archive_timestamp")
-    val archiveTimestamp: String,
+    val archiveTimestamp: Instant,
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing,

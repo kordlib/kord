@@ -5,6 +5,7 @@ package dev.kord.core.cache.data
 import dev.kord.common.entity.DiscordEmbed
 import dev.kord.common.entity.EmbedType
 import dev.kord.common.entity.optional.*
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -14,7 +15,7 @@ public data class EmbedData(
     val type: Optional<EmbedType> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<String> = Optional.Missing(),
+    val timestamp: Optional<Instant> = Optional.Missing(),
     val color: OptionalInt = OptionalInt.Missing,
     val footer: Optional<EmbedFooterData> = Optional.Missing(),
     val image: Optional<EmbedImageData> = Optional.Missing(),

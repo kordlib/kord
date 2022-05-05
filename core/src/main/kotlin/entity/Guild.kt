@@ -25,7 +25,6 @@ import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import java.util.*
 import kotlin.time.Duration
 
@@ -191,8 +190,7 @@ public class Guild(
     /**
      * The time at which this guild was joined, if present.
      */
-    public val joinedTime: Instant?
-        get() = data.joinedAt.value?.toInstant()
+    public val joinedTime: Instant? get() = data.joinedAt.value
 
     /**
      * The id of the owner.

@@ -15,8 +15,6 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
-import kotlin.coroutines.CoroutineContext
 
 public class ChannelPinsUpdateEvent(
     public val data: ChannelPinsUpdateEventData,
@@ -30,7 +28,7 @@ public class ChannelPinsUpdateEvent(
 
     public val guildId: Snowflake? get() = data.guildId.value
 
-    public val lastPinTimestamp: Instant? get() = data.lastPinTimestamp.value?.toInstant()
+    public val lastPinTimestamp: Instant? get() = data.lastPinTimestamp.value
 
     public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
 

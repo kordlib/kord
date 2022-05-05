@@ -16,8 +16,8 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
-import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intent
+import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intents
 import dev.kord.gateway.MessageDelete
 import dev.kord.gateway.PrivilegedIntent
@@ -31,8 +31,6 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
 import kotlinx.coroutines.flow.firstOrNull as coroutinesFirstOrNull
-
-internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {

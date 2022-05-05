@@ -24,7 +24,6 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import dev.kord.core.internalAny as any
 
 /**
@@ -329,10 +328,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return flow {
             val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
                 .toCollection()
-                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp?.toInstant() }
+                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
                 .asFlow()
                 .filter {
-                    val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+                    val time = it.threadMetadata.value?.archiveTimestamp
                     it.threadMetadata.value?.archived == true
                             && time != null
                             && (before == null || time < before)
@@ -350,10 +349,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return flow {
             val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
                 .toCollection()
-                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp?.toInstant() }
+                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
                 .asFlow()
                 .filter {
-                    val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+                    val time = it.threadMetadata.value?.archiveTimestamp
                     it.threadMetadata.value?.archived == true
                             && time != null
                             && (before == null || time < before)

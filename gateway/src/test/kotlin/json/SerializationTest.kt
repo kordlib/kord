@@ -4,6 +4,7 @@ import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.UserPremium
 import dev.kord.common.entity.optional.value
 import dev.kord.gateway.*
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 import kotlin.time.Duration.Companion.seconds
@@ -87,7 +88,7 @@ class SerializationTest {
         with(event.pins) {
             guildId.value?.toString() shouldBe "41771983423143937"
             channelId.toString() shouldBe "399942396007890945"
-            lastPinTimestamp.value shouldBe "2015-04-26T06:26:56.936000+00:00"
+            lastPinTimestamp.value shouldBe Instant.parse("2015-04-26T06:26:56.936000+00:00")
 
         }
     }
