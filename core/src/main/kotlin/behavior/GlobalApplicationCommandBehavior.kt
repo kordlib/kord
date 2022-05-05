@@ -2,7 +2,6 @@ package dev.kord.core.behavior
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.InteractionService
 
@@ -31,21 +30,6 @@ public interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
     override suspend fun delete() {
         service.deleteGlobalApplicationCommand(applicationId, id)
     }
-
-    /**
-     * Updates the permissions for this command on the guild corresponding to [guildId].
-     *
-     * @param token a Bearer token with the `applications.commands.permissions.update` scope
-     * @throws [RestRequestException] when something goes wrong during the request.
-     */
-    public suspend fun editPermissions(
-        guildId: Snowflake,
-        token: String,
-        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
-    ) {
-        val request = ApplicationCommandPermissionsModifyBuilder(guildId).apply(builder).toRequest()
-        service.editApplicationCommandPermissions(applicationId, guildId, id, token, request)
-    }
 }
 
 
@@ -54,19 +38,6 @@ public interface GlobalApplicationCommandBehavior : ApplicationCommandBehavior {
  */
 public interface GuildApplicationCommandBehavior : ApplicationCommandBehavior {
     public val guildId: Snowflake
-
-    /**
-     * Updates the permissions for this command on the guild.
-     *
-     * @throws [RestRequestException] when something goes wrong during the request.
-     */
-    public suspend fun editPermissions(
-        token: String,
-        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
-    ) {
-        val request = ApplicationCommandPermissionsModifyBuilder(guildId).apply(builder).toRequest()
-        service.editApplicationCommandPermissions(applicationId, guildId, id, token, request)
-    }
 
     override suspend fun delete() {
         service.deleteGuildApplicationCommand(applicationId, guildId, id)

@@ -1,6 +1,5 @@
 package dev.kord.rest.service
 
-import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.*
 import dev.kord.common.entity.MessageFlag.Ephemeral
 import dev.kord.common.entity.optional.Optional
@@ -15,10 +14,10 @@ import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
-import io.ktor.http.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
+import kotlin.collections.set
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -343,30 +342,6 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationIdGuildIdCommandId(applicationId, guildId, commandId)
     }
 
-    public suspend fun editApplicationCommandPermissions(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        commandId: Snowflake,
-        token: String,
-        request: ApplicationCommandPermissionsEditRequest
-    ): DiscordGuildApplicationCommandPermissions = call(Route.ApplicationCommandPermissionsPut) {
-        applicationIdGuildIdCommandId(applicationId, guildId, commandId)
-        urlEncodedHeader(HttpHeaders.Authorization, "Bearer $token")
-        body(ApplicationCommandPermissionsEditRequest.serializer(), request)
-    }
-
-    @KordUnsafe
-    public suspend fun bulkEditApplicationCommandPermissions(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        token: String,
-        request: List<PartialDiscordGuildApplicationCommandPermissions>,
-    ): List<DiscordGuildApplicationCommandPermissions> = call(Route.ApplicationCommandPermissionsBatchPut) {
-        applicationIdGuildId(applicationId, guildId)
-        urlEncodedHeader(HttpHeaders.Authorization, "Bearer $token")
-        body(ListSerializer(PartialDiscordGuildApplicationCommandPermissions.serializer()), request)
-    }
-
     public suspend inline fun createGlobalChatInputApplicationCommand(
         applicationId: Snowflake,
         name: String,
@@ -640,39 +615,6 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             interactionToken,
             messageId,
             FollowupMessageModifyBuilder().apply(builder).toRequest()
-        )
-    }
-
-    @KordUnsafe
-    public suspend inline fun bulkEditApplicationCommandPermissions(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        token: String,
-        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit = {}
-    ): List<DiscordGuildApplicationCommandPermissions> {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return bulkEditApplicationCommandPermissions(
-            applicationId,
-            guildId,
-            token,
-            ApplicationCommandPermissionsBulkModifyBuilder(guildId).apply(builder).toRequest()
-        )
-    }
-
-    public suspend inline fun editApplicationCommandPermissions(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        commandId: Snowflake,
-        token: String,
-        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
-    ): DiscordGuildApplicationCommandPermissions {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return editApplicationCommandPermissions(
-            applicationId,
-            guildId,
-            commandId,
-            token,
-            ApplicationCommandPermissionsModifyBuilder(guildId).apply(builder).toRequest()
         )
     }
 

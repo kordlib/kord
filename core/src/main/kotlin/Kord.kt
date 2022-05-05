@@ -27,7 +27,10 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
+import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
+import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
+import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
@@ -580,27 +583,6 @@ public class Kord(
                 emit(GuildApplicationCommand(data, rest.interaction))
             }
         }
-    }
-
-    public suspend inline fun editApplicationCommandPermissions(
-        guildId: Snowflake,
-        commandId: Snowflake,
-        token: String,
-        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
-    ) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        rest.interaction.editApplicationCommandPermissions(resources.applicationId, guildId, commandId, token, builder)
-    }
-
-
-    @KordUnsafe
-    public suspend inline fun bulkEditApplicationCommandPermissions(
-        guildId: Snowflake,
-        token: String,
-        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
-    ) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, token, builder)
     }
 }
 
