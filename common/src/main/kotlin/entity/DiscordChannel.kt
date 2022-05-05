@@ -74,6 +74,8 @@ public data class DiscordChannel(
     val lastPinTimestamp: Optional<String?> = Optional.Missing(),
     @SerialName("rtc_region")
     val rtcRegion: Optional<String?> = Optional.Missing(),
+    @SerialName("video_quality_mode")
+    val videoQualityMode: Optional<VideoQualityMode> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
     @SerialName("message_count")
     val messageCount: OptionalInt = OptionalInt.Missing,
@@ -205,6 +207,39 @@ public sealed class OverwriteType(public val value: Int) {
 
         override fun serialize(encoder: Encoder, value: OverwriteType) {
             encoder.encodeInt(value.value)
+        }
+    }
+}
+
+@Serializable(with = VideoQualityMode.Serializer::class)
+public sealed class VideoQualityMode(public val value: Int) {
+
+    final override fun equals(other: Any?): Boolean =
+        this === other || (other is VideoQualityMode && other.value == this.value)
+
+    final override fun hashCode(): Int = value
+
+
+    /** An unknown Video Quality Mode. */
+    public class Unknown(value: Int) : VideoQualityMode(value)
+
+    /** Discord chooses the quality for optimal performance. */
+    public object Auto : VideoQualityMode(1)
+
+    /** 720p. */
+    public object Full : VideoQualityMode(2)
+
+
+    internal object Serializer : KSerializer<VideoQualityMode> {
+        override val descriptor =
+            PrimitiveSerialDescriptor("dev.kord.common.entity.VideoQualityMode", PrimitiveKind.INT)
+
+        override fun serialize(encoder: Encoder, value: VideoQualityMode) = encoder.encodeInt(value.value)
+
+        override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> Auto
+            2 -> Full
+            else -> Unknown(value)
         }
     }
 }

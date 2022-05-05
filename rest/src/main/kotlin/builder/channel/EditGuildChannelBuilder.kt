@@ -1,8 +1,10 @@
 package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.VideoQualityMode
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -36,8 +38,16 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+
+    /**
+     * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
+     * channel, to automatically archive the thread after recent activity.
+     */
+    public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
@@ -46,13 +56,15 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         nsfw = _nsfw,
         rateLimitPerUser = _rateLimitPerUser,
         permissionOverwrites = _permissionOverwrites,
-        parentId = _parentId
+        parentId = _parentId,
+        defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
     )
 
 }
 
 @KordDsl
-public class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
@@ -71,13 +83,18 @@ public class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchR
     public var parentId: Snowflake? by ::_parentId.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     private var _bitrate: OptionalInt? = OptionalInt.Missing
     public var bitrate: Int? by ::_bitrate.delegate()
 
     private var _userLimit: OptionalInt? = OptionalInt.Missing
     public var userLimit: Int? by ::_userLimit.delegate()
+
+    private var _videoQualityMode: Optional<VideoQualityMode?> = Optional.Missing()
+
+    /** The camera [video quality mode][VideoQualityMode] of the voice channel. */
+    public var videoQualityMode: VideoQualityMode? by ::_videoQualityMode.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
@@ -87,18 +104,23 @@ public class VoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchR
         userLimit = _userLimit,
         topic = _topic,
         permissionOverwrites = _permissionOverwrites,
-        rtcRegion = _rtcRegion
+        rtcRegion = _rtcRegion,
+        videoQualityMode = _videoQualityMode,
     )
 
 }
 
 
 @KordDsl
-public class StageVoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class StageVoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
     public var name: String? by ::_name.delegate()
+
+    private var _rtcRegion: Optional<String?> = Optional.Missing()
+    public var rtcRegion: String? by ::_rtcRegion.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
@@ -110,20 +132,26 @@ public class StageVoiceChannelModifyBuilder : AuditRequestBuilder<ChannelModifyP
     public var parentId: Snowflake? by ::_parentId.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+
+    private var _bitrate: OptionalInt? = OptionalInt.Missing
+    public var bitrate: Int? by ::_bitrate.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
         position = _position,
         parentId = _parentId,
+        bitrate = _bitrate,
         topic = _topic,
-        permissionOverwrites = _permissionOverwrites
+        permissionOverwrites = _permissionOverwrites,
+        rtcRegion = _rtcRegion,
     )
 
 }
 
 @KordDsl
-public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
@@ -145,7 +173,15 @@ public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRe
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+
+    /**
+     * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
+     * channel, to automatically archive the thread after recent activity.
+     */
+    public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
@@ -155,6 +191,7 @@ public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRe
         parentId = _parentId,
         rateLimitPerUser = _rateLimitPerUser,
         permissionOverwrites = _permissionOverwrites,
+        defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
     )
 }
 
@@ -168,7 +205,8 @@ public class NewsChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRe
     """,
     level = WARNING,
 )
-public class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class StoreChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
     private var _name: Optional<String> = Optional.Missing()
@@ -178,7 +216,7 @@ public class StoreChannelModifyBuilder : AuditRequestBuilder<ChannelModifyPatchR
     public var position: Int? by ::_position.delegate()
 
     private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
-    public var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
