@@ -371,7 +371,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         name: String,
         description: String,
-        builder: ChatInputCreateBuilder.() -> Unit = {}
+        builder: GlobalChatInputCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return createGlobalApplicationCommand(
@@ -424,7 +424,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend inline fun modifyGlobalChatInputApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: ChatInputModifyBuilder.() -> Unit
+        builder: GlobalChatInputModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 

@@ -2,7 +2,6 @@ package dev.kord.rest.builder.interaction
 
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.optional.Optional
@@ -178,8 +177,8 @@ public interface ChatInputModifyBuilder : LocalizedDescriptionModifyBuilder, App
 @KordDsl
 public interface GlobalChatInputModifyBuilder : ChatInputModifyBuilder, GlobalApplicationCommandModifyBuilder
 
-@KordUnsafe
-public class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
+@PublishedApi
+internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
 
     private val state = ApplicationCommandModifyStateHolder()
     override var name: String? by state::name.delegate()
