@@ -27,10 +27,7 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
-import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
-import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
+import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
@@ -465,7 +462,7 @@ public class Kord(
     public suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,
-        builder: ChatInputCreateBuilder.() -> Unit = {},
+        builder: GlobalChatInputCreateBuilder.() -> Unit = {},
     ): GlobalChatInputCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val response = rest.interaction.createGlobalChatInputApplicationCommand(
@@ -480,7 +477,7 @@ public class Kord(
 
     public suspend inline fun createGlobalMessageCommand(
         name: String,
-        builder: MessageCommandCreateBuilder.() -> Unit = {},
+        builder: GlobalMessageCommandCreateBuilder.() -> Unit = {},
     ): GlobalMessageCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val response =
@@ -491,7 +488,7 @@ public class Kord(
 
     public suspend inline fun createGlobalUserCommand(
         name: String,
-        builder: UserCommandCreateBuilder.() -> Unit = {},
+        builder: GlobalUserCommandCreateBuilder.() -> Unit = {},
     ): GlobalUserCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val response =
