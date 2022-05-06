@@ -785,14 +785,6 @@ public data class DiscordGuildApplicationCommandPermissions(
     val permissions: List<DiscordGuildApplicationCommandPermission>
 )
 
-
-@Serializable
-public data class PartialDiscordGuildApplicationCommandPermissions(
-    val id: Snowflake,
-    val permissions: List<DiscordGuildApplicationCommandPermission>
-)
-
-
 @Serializable
 public data class DiscordGuildApplicationCommandPermission(
     val id: Snowflake,

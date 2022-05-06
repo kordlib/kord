@@ -128,8 +128,3 @@ public data class MultipartFollowupMessageModifyRequest(
     val request: FollowupMessageModifyRequest,
     val files: Optional<List<NamedFile>> = Optional.Missing()
 )
-
-@Serializable
-public data class ApplicationCommandPermissionsEditRequest(
-    val permissions: List<DiscordGuildApplicationCommandPermission>
-)
