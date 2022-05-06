@@ -16,12 +16,31 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     public var defaultPermission: Boolean?
     public val type: ApplicationCommandType
+
+    /**
+     * Disables the command for everyone by default.
+     *
+     * **This does not ensure normal users cannot execute the command, any server owner can change this setting**
+     */
+    public fun disableCommand() {
+        defaultMemberPermissions = Permissions()
+    }
 }
 
 @KordDsl
 public interface GlobalApplicationCommandCreateBuilder : ApplicationCommandCreateBuilder,
     RequestBuilder<ApplicationCommandCreateRequest> {
     public var dmPermission: Boolean?
+
+    /**
+     * Disables the command for everyone by default.
+     *
+     * **This only ensures that DM users cannot execute the command, any server owner can change this setting**
+     */
+    override fun disableCommand() {
+        super.disableCommand()
+        dmPermission = false
+    }
 }
 
 @KordDsl
