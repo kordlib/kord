@@ -66,7 +66,7 @@ public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicatio
     /**
      * Whether this command is available in DMs with the application.
      */
-    public val dmPermission: Boolean get() = data.dmPermission.orElse(true)
+    public val dmPermission: Boolean get() = data.dmPermission?.value ?: true
 }
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,

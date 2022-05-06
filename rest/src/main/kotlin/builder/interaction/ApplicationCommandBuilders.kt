@@ -53,6 +53,8 @@ public interface GlobalApplicationCommandModifyBuilder : ApplicationCommandModif
 public interface ApplicationCommandModifyBuilder : LocalizedNameModifyBuilder,
     RequestBuilder<ApplicationCommandModifyRequest> {
 
+    public var defaultMemberPermissions: Permissions?
+
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     public var defaultPermission: Boolean?
 }
