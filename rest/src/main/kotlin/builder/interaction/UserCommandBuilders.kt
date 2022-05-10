@@ -42,6 +42,7 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
 @KordDsl
 public interface UserCommandCreateBuilder : ApplicationCommandCreateBuilder
 
+@KordDsl
 public interface GlobalUserCommandCreateBuilder : UserCommandCreateBuilder, GlobalApplicationCommandCreateBuilder
 
 @PublishedApi

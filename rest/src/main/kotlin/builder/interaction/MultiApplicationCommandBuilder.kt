@@ -13,7 +13,30 @@ public sealed class MultiApplicationCommandBuilder {
         return commands.map { it.toRequest() }
     }
 }
+public inline fun MultiApplicationCommandBuilder.input(
+    name: String,
+    description: String,
+    builder: ChatInputCreateBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    commands += ChatInputCreateBuilderImpl(name, description).apply(builder)
+}
 
+public inline fun MultiApplicationCommandBuilder.message(
+    name: String,
+    builder: MessageCommandCreateBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    commands += MessageCommandCreateBuilderImpl(name).apply(builder)
+}
+
+
+public inline fun MultiApplicationCommandBuilder.user(name: String, builder: UserCommandCreateBuilder.() -> Unit = {}) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    commands += UserCommandCreateBuilderImpl(name).apply(builder)
+}
+
+@KordDsl
 public class GlobalMultiApplicationCommandBuilder : MultiApplicationCommandBuilder() {
     public inline fun input(name: String, description: String, builder: GlobalChatInputCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -32,6 +55,7 @@ public class GlobalMultiApplicationCommandBuilder : MultiApplicationCommandBuild
     }
 }
 
+@KordDsl
 public class GuildMultiApplicationCommandBuilder : MultiApplicationCommandBuilder() {
     public inline fun input(name: String, description: String, builder: ChatInputCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
