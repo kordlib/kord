@@ -22,7 +22,7 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
      *
      * **This does not ensure normal users cannot execute the command, any server owner can change this setting**
      */
-    public fun disableCommand() {
+    public fun disableCommandInGuilds() {
         defaultMemberPermissions = Permissions()
     }
 }
@@ -31,16 +31,6 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
 public interface GlobalApplicationCommandCreateBuilder : ApplicationCommandCreateBuilder,
     RequestBuilder<ApplicationCommandCreateRequest> {
     public var dmPermission: Boolean?
-
-    /**
-     * Disables the command for everyone by default.
-     *
-     * **This only ensures that DM users cannot execute the command, any server owner can change this setting**
-     */
-    override fun disableCommand() {
-        super.disableCommand()
-        dmPermission = false
-    }
 }
 
 @KordDsl
