@@ -499,7 +499,7 @@ public class Kord(
 
 
     public suspend inline fun createGlobalApplicationCommands(
-        builder: MultiApplicationCommandBuilder.() -> Unit,
+        builder: GlobalMultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GlobalApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
