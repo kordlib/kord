@@ -123,6 +123,11 @@ public sealed class Event {
                     Resumed(sequence)
                 }
                 "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
+                "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
+                    decoder.decodeSerializableElement(
+                        descriptor, index, DiscordGuildApplicationCommandPermissions.serializer()
+                    ), sequence
+                )
                 "CHANNEL_CREATE" -> ChannelCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -573,6 +578,11 @@ public data class InvalidSession(val resumable: Boolean) : Event() {
         }
     }
 }
+
+public data class ApplicationCommandPermissionsUpdate(
+    val permissions: DiscordGuildApplicationCommandPermissions,
+    override val sequence: Int?
+) : DispatchEvent()
 
 public data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
