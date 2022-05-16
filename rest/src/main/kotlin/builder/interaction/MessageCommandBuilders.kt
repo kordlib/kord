@@ -27,7 +27,7 @@ internal class MessageCommandModifyBuilderImpl : GlobalMessageCommandModifyBuild
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
-    override var defaultPermission: Boolean? by state::defaultPermission.delegate()
+    override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
@@ -35,7 +35,7 @@ internal class MessageCommandModifyBuilderImpl : GlobalMessageCommandModifyBuild
             nameLocalizations = state.nameLocalizations,
             dmPermission = state.dmPermission,
             defaultMemberPermissions = state.defaultMemberPermissions,
-            defaultPermission = state.defaultPermission
+            defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
         )
 
     }
@@ -62,7 +62,7 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
-    override var defaultPermission: Boolean? by state::defaultPermission.delegate()
+    override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
@@ -71,7 +71,7 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
             type = type,
             dmPermission = state.dmPermission,
             defaultMemberPermissions = state.defaultMemberPermissions,
-            defaultPermission = state.defaultPermission
+            defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
         )
     }
 }
