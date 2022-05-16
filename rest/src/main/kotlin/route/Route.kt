@@ -806,6 +806,7 @@ public sealed class Route<T>(
             DiscordGuildApplicationCommandPermissions.serializer()
         )
 
+
     /*
      * Guild Scheduled Event:
      * https://discord.com/developers/docs/resources/guild-scheduled-event
