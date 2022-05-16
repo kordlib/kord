@@ -1,5 +1,11 @@
 package dev.kord.rest.request
 
+import dev.kord.common.KordConstants
+import dev.kord.common.annotation.KordExperimental
+import io.ktor.client.plugins.*
+import io.ktor.http.HttpHeaders.Authorization
+import io.ktor.http.HttpHeaders.UserAgent
+
 /**
  * Handles Discord API requests.
  */
@@ -16,4 +22,11 @@ public interface RequestHandler {
      */
     @Throws(RestRequestException::class)
     public suspend fun <B : Any, R> handle(request: Request<B, R>): R
+    public suspend fun <T> intercept(builder: RequestBuilder<T>): RequestBuilder<T> = builder.apply {
+            @OptIn(KordExperimental::class)
+            unencodedHeader(UserAgent, KordConstants.USER_AGENT)
+            if (route.requiresAuthorizationHeader) {
+                unencodedHeader(Authorization, "Bot $token")
+            }
+        }
 }
