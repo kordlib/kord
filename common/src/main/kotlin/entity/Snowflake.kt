@@ -63,7 +63,7 @@ public class Snowflake : Comparable<Snowflake> {
             .shl(TIMESTAMP_SHIFT)
     )
 
-    private val millisecondsSinceDiscordEpoch get() = value shr TIMESTAMP_SHIFT
+    private inline val millisecondsSinceDiscordEpoch get() = value shr TIMESTAMP_SHIFT
 
     /**
      * A [String] representation of this Snowflake's [value].
@@ -140,6 +140,7 @@ public class Snowflake : Comparable<Snowflake> {
     override fun hashCode(): Int = value.hashCode()
 
     override fun equals(other: Any?): Boolean = other is Snowflake && this.value == other.value
+
 
     public companion object {
         // see https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
