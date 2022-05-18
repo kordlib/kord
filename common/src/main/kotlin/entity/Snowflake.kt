@@ -116,16 +116,40 @@ public class Snowflake : Comparable<Snowflake> {
         get() = value.and(INCREMENT_MASK).toUShort()
 
 
-    /** Returns [timestamp] for use in destructuring declarations. */
+    /**
+     * Returns [timestamp] for use in destructuring declarations.
+     *
+     * ```kotlin
+     * val (timestamp, workerId, processId, increment) = snowflake
+     * ```
+     */
     public operator fun component1(): Instant = timestamp
 
-    /** Returns [workerId] for use in destructuring declarations. */
+    /**
+     * Returns [workerId] for use in destructuring declarations.
+     *
+     * ```kotlin
+     * val (timestamp, workerId, processId, increment) = snowflake
+     * ```
+     */
     public operator fun component2(): UByte = workerId
 
-    /** Returns [processId] for use in destructuring declarations. */
+    /**
+     * Returns [processId] for use in destructuring declarations.
+     *
+     * ```kotlin
+     * val (timestamp, workerId, processId, increment) = snowflake
+     * ```
+     */
     public operator fun component3(): UByte = processId
 
-    /** Returns [increment] for use in destructuring declarations. */
+    /**
+     * Returns [increment] for use in destructuring declarations.
+     *
+     * ```kotlin
+     * val (timestamp, workerId, processId, increment) = snowflake
+     * ```
+     */
     public operator fun component4(): UShort = increment
 
 
