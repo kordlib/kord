@@ -5,6 +5,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
+import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -122,6 +123,11 @@ public sealed class Event {
                     Resumed(sequence)
                 }
                 "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
+                "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
+                    decoder.decodeSerializableElement(
+                        descriptor, index, DiscordGuildApplicationCommandPermissions.serializer()
+                    ), sequence
+                )
                 "CHANNEL_CREATE" -> ChannelCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -573,6 +579,11 @@ public data class InvalidSession(val resumable: Boolean) : Event() {
     }
 }
 
+public data class ApplicationCommandPermissionsUpdate(
+    val permissions: DiscordGuildApplicationCommandPermissions,
+    override val sequence: Int?
+) : DispatchEvent()
+
 public data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
@@ -625,7 +636,7 @@ public data class DiscordCreatedInvite(
     val channelId: Snowflake,
     val code: String,
     @SerialName("created_at")
-    val createdAt: String,
+    val createdAt: Instant,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val inviter: Optional<DiscordUser> = Optional.Missing(),

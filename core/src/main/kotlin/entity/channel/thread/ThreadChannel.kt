@@ -15,7 +15,6 @@ import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import kotlin.time.Duration
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
@@ -68,7 +67,7 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     /**
      * The timestamp when the thread's archive status was last changed.
      */
-    public val archiveTimestamp: Instant get() = threadData.archiveTimestamp.toInstant()
+    public val archiveTimestamp: Instant get() = threadData.archiveTimestamp
 
     /**
      * The time in which the thread will be auto archived after inactivity.

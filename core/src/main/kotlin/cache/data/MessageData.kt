@@ -5,6 +5,7 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 internal val MessageData.authorId get() = author.id
@@ -16,8 +17,8 @@ public data class MessageData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val author: UserData,
     val content: String,
-    val timestamp: String,
-    val editedTimestamp: String? = null,
+    val timestamp: Instant,
+    val editedTimestamp: Instant? = null,
     val tts: Boolean,
     val mentionEveryone: Boolean,
     val mentions: List<Snowflake>,

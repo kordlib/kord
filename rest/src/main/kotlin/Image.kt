@@ -3,16 +3,12 @@ package dev.kord.rest
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.request.*
+import io.ktor.util.*
 import kotlinx.coroutines.Dispatchers
-import java.util.*
 
 public class Image private constructor(public val data: ByteArray, public val format: Format) {
 
-    public val dataUri: String
-        get() {
-            val hash = Base64.getEncoder().encodeToString(data)
-            return "data:image/${format.extensions.first()};base64,$hash"
-        }
+    public val dataUri: String get() = "data:image/${format.extensions.first()};base64,${data.encodeBase64()}"
 
     public companion object {
         public fun raw(data: ByteArray, format: Format): Image {

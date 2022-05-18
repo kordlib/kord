@@ -17,9 +17,9 @@ public data class DiscordGuildMember(
     val nick: Optional<String?> = Optional.Missing(),
     val roles: List<Snowflake>,
     @SerialName("joined_at")
-    val joinedAt: String,
+    val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing(),
     val deaf: OptionalBoolean = OptionalBoolean.Missing,
     val mute: OptionalBoolean = OptionalBoolean.Missing,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
@@ -39,9 +39,9 @@ public data class DiscordInteractionGuildMember(
     val nick: Optional<String?> = Optional.Missing(),
     val roles: List<Snowflake>,
     @SerialName("joined_at")
-    val joinedAt: String,
+    val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing(),
     val permissions: Permissions,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
@@ -60,9 +60,9 @@ public data class DiscordAddedGuildMember(
     val nick: Optional<String?> = Optional.Missing(),
     val roles: List<Snowflake>,
     @SerialName("joined_at")
-    val joinedAt: String,
+    val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing(),
     val deaf: Boolean,
     val mute: Boolean,
     @SerialName("guild_id")
@@ -88,9 +88,9 @@ public data class DiscordUpdatedGuildMember(
     val user: DiscordUser,
     val nick: Optional<String?> = Optional.Missing(),
     @SerialName("joined_at")
-    val joinedAt: String,
+    val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<String?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing(),
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
     @SerialName("communication_disabled_until")
@@ -103,6 +103,6 @@ public data class DiscordThreadMember(
     @SerialName("user_id")
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("join_timestamp")
-    val joinTimestamp: String,
+    val joinTimestamp: Instant,
     val flags: Int
 )

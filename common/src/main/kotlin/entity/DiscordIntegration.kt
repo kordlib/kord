@@ -3,6 +3,7 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.serialization.DurationInDays
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -30,7 +31,7 @@ public data class DiscordIntegration(
     val user: DiscordUser,
     val account: DiscordIntegrationsAccount,
     @SerialName("synced_at")
-    val syncedAt: String,
+    val syncedAt: Instant,
     val subscriberCount: Int,
     val revoked: Boolean,
     val application: IntegrationApplication

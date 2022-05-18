@@ -1,5 +1,6 @@
 package dev.kord.core.entity.channel
 
+import dev.kord.common.entity.VideoQualityMode
 import dev.kord.common.entity.optional.getOrThrow
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -39,6 +40,9 @@ public class VoiceChannel(
      * The region name of the voice channel
      */
     public val rtcRegion: String? get() = data.rtcRegion.value
+
+    /** The camera [video quality mode][VideoQualityMode] of the voice channel. */
+    public val videoQualityMode: VideoQualityMode? get() = data.videoQualityMode.value
 
     /**
      * Requests to get the [voice region][Region] of this channel.

@@ -5,6 +5,8 @@ import dev.kord.cache.api.put
 import dev.kord.cache.api.remove
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.GuildApplicationCommandPermissionData
+import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.idEq
 import dev.kord.core.entity.application.*
@@ -25,6 +27,13 @@ public class InteractionEventHandler(
             is ApplicationCommandCreate -> handle(event, shard, kord, coroutineScope)
             is ApplicationCommandUpdate -> handle(event, shard, kord, coroutineScope)
             is ApplicationCommandDelete -> handle(event, shard, kord, coroutineScope)
+            is ApplicationCommandPermissionsUpdate -> {
+                val data = GuildApplicationCommandPermissionsData.from(event.permissions)
+                ApplicationCommandPermissionsUpdateEvent(
+                    ApplicationCommandPermissions(data),
+                    kord, shard, coroutineScope
+                )
+            }
             else -> null
         }
 

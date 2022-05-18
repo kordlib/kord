@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -74,9 +75,9 @@ public data class DiscordMessage(
     val author: DiscordUser,
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
     val content: String,
-    val timestamp: String,
+    val timestamp: Instant,
     @SerialName("edited_timestamp")
-    val editedTimestamp: String?,
+    val editedTimestamp: Instant?,
     val tts: Boolean,
     @SerialName("mention_everyone")
     val mentionEveryone: Boolean,
@@ -248,9 +249,9 @@ public data class DiscordPartialMessage(
     val author: Optional<DiscordUser> = Optional.Missing(),
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
     val content: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<String> = Optional.Missing(),
+    val timestamp: Optional<Instant> = Optional.Missing(),
     @SerialName("edited_timestamp")
-    val editedTimestamp: Optional<String?> = Optional.Missing(),
+    val editedTimestamp: Optional<Instant?> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("mention_everyone")
     val mentionEveryone: OptionalBoolean = OptionalBoolean.Missing,
@@ -488,7 +489,7 @@ public data class DiscordEmbed(
     val type: Optional<EmbedType> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<String> = Optional.Missing(),
+    val timestamp: Optional<Instant> = Optional.Missing(),
     val color: OptionalInt = OptionalInt.Missing,
     val footer: Optional<Footer> = Optional.Missing(),
     val image: Optional<Image> = Optional.Missing(),

@@ -108,7 +108,7 @@ public data class DiscordGuild(
     @SerialName("system_channel_id") val systemChannelId: Snowflake?,
     @SerialName("system_channel_flags") val systemChannelFlags: SystemChannelFlags,
     @SerialName("rules_channel_id") val rulesChannelId: Snowflake?,
-    @SerialName("joined_at") val joinedAt: Optional<String> = Optional.Missing(),
+    @SerialName("joined_at") val joinedAt: Optional<Instant> = Optional.Missing(),
     val large: OptionalBoolean = OptionalBoolean.Missing,
     val unavailable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("member_count") val memberCount: OptionalInt = OptionalInt.Missing,
