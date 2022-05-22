@@ -2,11 +2,10 @@ package entity
 
 import dev.kord.common.entity.Snowflake
 import kotlinx.datetime.Clock
-import kotlinx.datetime.DateTimeUnit.Companion.MILLISECOND
 import kotlinx.datetime.Instant
-import kotlinx.datetime.minus
-import kotlinx.datetime.plus
 import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.nanoseconds
 
 class SnowflakeTest {
 
@@ -56,7 +55,8 @@ class SnowflakeTest {
         val snowflake = Snowflake(instant)
 
         // snowflake timestamps have a millisecond accuracy -> allow +/-1 millisecond from original instant
-        val validTimeRange = instant.minus(1, MILLISECOND)..instant.plus(1, MILLISECOND)
+        val delta = 1.milliseconds - 1.nanoseconds
+        val validTimeRange = (instant - delta)..(instant + delta)
 
         assertContains(validTimeRange, snowflake.timestamp)
     }
@@ -69,5 +69,21 @@ class SnowflakeTest {
     @Test
     fun `max Snowflake's timeMark has not passed`() {
         assertFalse(Snowflake.max.timeMark.hasPassedNow())
+    }
+
+    @Test
+    fun `Snowflake can be destructured`() {
+        val snowflake = Snowflake(0b110010110111_10111_01101_101100111101_u)
+        val (timestamp, worker, process, increment) = snowflake
+
+        assertEquals(snowflake.timestamp, timestamp)
+        assertEquals(snowflake.workerId, worker)
+        assertEquals(snowflake.processId, process)
+        assertEquals(snowflake.increment, increment)
+
+        assertEquals(Instant.fromEpochMilliseconds(0b110010110111 + 1420070400000), timestamp)
+        assertEquals(0b10111u, worker)
+        assertEquals(0b01101u, process)
+        assertEquals(0b101100111101u, increment)
     }
 }
