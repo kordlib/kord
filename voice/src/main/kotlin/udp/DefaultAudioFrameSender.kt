@@ -31,7 +31,7 @@ public class DefaultAudioFrameSender(
     override suspend fun start(configuration: AudioFrameSenderConfiguration): Unit = coroutineScope {
         var sequence: UShort = Random.nextBits(UShort.SIZE_BITS).toUShort()
 
-        val packetProvider = DefaultAudioPackerProvider(configuration.key, data.nonceStrategy)
+        val packetProvider = DefaultAudioPacketProvider(configuration.key, data.nonceStrategy)
 
         val frames = Channel<AudioFrame?>(Channel.RENDEZVOUS)
         with(data.provider) { launch { provideFrames(frames) } }
