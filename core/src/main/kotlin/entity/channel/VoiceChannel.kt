@@ -1,5 +1,6 @@
 package dev.kord.core.entity.channel
 
+import dev.kord.common.entity.VideoQualityMode
 import dev.kord.common.entity.optional.getOrThrow
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -9,12 +10,12 @@ import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Region
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.firstOrNull
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import java.util.*
 
 /**
@@ -42,6 +43,9 @@ public class VoiceChannel(
      */
     public val rtcRegion: String? get() = data.rtcRegion.value
 
+    /** The camera [video quality mode][VideoQualityMode] of the voice channel. */
+    public val videoQualityMode: VideoQualityMode? get() = data.videoQualityMode.value
+
     /**
      * Requests to get the [voice region][Region] of this channel.
      *
@@ -63,7 +67,7 @@ public class VoiceChannel(
     /**
      * returns a new [VoiceChannel] with the given [strategy].
      *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.cacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceChannel =
         VoiceChannel(data, kord, strategy.supply(kord))

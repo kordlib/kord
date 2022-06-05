@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package dev.kord.core.behavior.channel
 
 import dev.kord.common.entity.Snowflake
@@ -13,13 +15,23 @@ import dev.kord.rest.builder.channel.StoreChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchStoreChannel
 import java.util.*
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
  * The behavior of a Discord Store Channel associated to a guild.
  */
-public interface StoreChannelBehavior : TopGuildChannelBehavior {
+@Deprecated(
+    """
+    Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+    removed on March 10, 2022.
+    
+    See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+    """,
+    level = WARNING,
+)
+public interface StoreChannelBehavior : CategorizableChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [StoreChannel].
@@ -58,13 +70,22 @@ public interface StoreChannelBehavior : TopGuildChannelBehavior {
     /**
      * returns a new [StoreChannelBehavior] with the given [strategy].
      *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.cacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StoreChannelBehavior =
         StoreChannelBehavior(guildId, id, kord, strategy)
 
 }
 
+@Deprecated(
+    """
+    Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+    removed on March 10, 2022.
+    
+    See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+    """,
+    level = WARNING,
+)
 public fun StoreChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
@@ -96,6 +117,15 @@ public fun StoreChannelBehavior(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
+@Deprecated(
+    """
+    Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+    removed on March 10, 2022.
+    
+    See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+    """,
+    level = WARNING,
+)
 public suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.() -> Unit): StoreChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val response = kord.rest.channel.patchStoreChannel(id, builder)

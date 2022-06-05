@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.Snowflake
@@ -30,6 +31,14 @@ public class NewsChannelCreateBuilder(public var name: String) :
     private var _position: OptionalInt = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
+
+    /**
+     * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
+     * channel, to automatically archive the thread after recent activity.
+     */
+    public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
+
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
@@ -39,6 +48,7 @@ public class NewsChannelCreateBuilder(public var name: String) :
         parentId = _parentId,
         position = _position,
         permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
-        type = ChannelType.GuildNews
+        type = ChannelType.GuildNews,
+        defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
     )
 }

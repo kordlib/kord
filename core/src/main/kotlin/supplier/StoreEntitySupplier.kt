@@ -12,7 +12,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
-import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.entity.interaction.followup.FollowupMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
@@ -108,8 +108,8 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getGuildBanOrNull(guildId, userId)) { it.data }
     }
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> {
-        return storeOnEach(supplier.getGuildBans(guildId)) { it.data }
+    override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> {
+        return storeOnEach(supplier.getGuildBans(guildId, limit)) { it.data }
     }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
@@ -197,9 +197,10 @@ public class StoreEntitySupplier(
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
-        guildId: Snowflake
+        guildId: Snowflake,
+        withLocalizations: Boolean?
     ): Flow<GuildApplicationCommand> {
-        return storeOnEach(supplier.getGuildApplicationCommands(applicationId, guildId)) { it.data }
+        return storeOnEach(supplier.getGuildApplicationCommands(applicationId, guildId, withLocalizations)) { it.data }
     }
 
     override suspend fun getGuildApplicationCommandOrNull(
@@ -217,8 +218,8 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getGlobalApplicationCommandOrNull(applicationId, commandId)) { it.data }
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> {
-        return storeOnEach(supplier.getGlobalApplicationCommands(applicationId)) { it.data }
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> {
+        return storeOnEach(supplier.getGlobalApplicationCommands(applicationId, withLocalizations)) { it.data }
     }
 
     override suspend fun getApplicationCommandPermissionsOrNull(
@@ -239,7 +240,7 @@ public class StoreEntitySupplier(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): PublicFollowupMessage? {
+    ): FollowupMessage? {
         return storeAndReturn(supplier.getFollowupMessageOrNull(applicationId, interactionToken, messageId)) {
             it.message.data
         }

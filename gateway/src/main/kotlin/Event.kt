@@ -4,7 +4,12 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.*
+import dev.kord.common.serialization.DurationInSeconds
+import kotlinx.datetime.Instant
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -52,12 +57,9 @@ public sealed class Event {
         override fun deserialize(decoder: Decoder): Event? {
             var op: OpCode? = null
             var data: Event? = null
+            var sequence: Int? = null
+            var eventName: String? = null
 
-            @Suppress("UNUSED_VARIABLE")
-            var sequence: Int? = null //this isn't actually unused but seems to be a compiler bug
-
-            @Suppress("UNUSED_VARIABLE")
-            var eventName: String? = null //this isn't actually unused but seems to be a compiler bug
             with(decoder.beginStructure(descriptor)) {
                 loop@ while (true) {
                     when (val index =
@@ -65,7 +67,6 @@ public sealed class Event {
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
                             op = OpCode.serializer().deserialize(decoder)
-                            @Suppress("NON_EXHAUSTIVE_WHEN")
                             when (op) {
                                 OpCode.HeartbeatACK -> data = HeartbeatACK
                                 OpCode.Reconnect -> data = Reconnect
@@ -122,6 +123,11 @@ public sealed class Event {
                     Resumed(sequence)
                 }
                 "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
+                "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
+                    decoder.decodeSerializableElement(
+                        descriptor, index, DiscordGuildApplicationCommandPermissions.serializer()
+                    ), sequence
+                )
                 "CHANNEL_CREATE" -> ChannelCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -431,15 +437,19 @@ public sealed class Event {
                     sequence
                 )
                 "GUILD_SCHEDULED_EVENT_USER_ADD" -> GuildScheduledEventUserAdd(
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    data = decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        GuildScheduledEventUserMetadata.serializer(),
+                    ),
                     sequence
                 )
                 "GUILD_SCHEDULED_EVENT_USER_REMOVE" -> GuildScheduledEventUserRemove(
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
-                    decoder.decodeSerializableElement(descriptor, index, Snowflake.serializer()),
+                    data = decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        GuildScheduledEventUserMetadata.serializer(),
+                    ),
                     sequence
                 )
 
@@ -569,6 +579,11 @@ public data class InvalidSession(val resumable: Boolean) : Event() {
     }
 }
 
+public data class ApplicationCommandPermissionsUpdate(
+    val permissions: DiscordGuildApplicationCommandPermissions,
+    override val sequence: Int?
+) : DispatchEvent()
+
 public data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
@@ -611,7 +626,7 @@ public data class DiscordDeletedInvite(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("guild_id")
-    val guildId: Snowflake,
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val code: String,
 )
 
@@ -621,22 +636,31 @@ public data class DiscordCreatedInvite(
     val channelId: Snowflake,
     val code: String,
     @SerialName("created_at")
-    val createdAt: String,
+    val createdAt: Instant,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val inviter: Optional<DiscordInviteUser> = Optional.Missing(),
+    val inviter: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("max_age")
-    val maxAge: Int,
+    val maxAge: DurationInSeconds,
     @SerialName("max_uses")
     val maxUses: Int,
+    @SerialName("target_type")
+    val targetType: Optional<InviteTargetType> = Optional.Missing(),
     @SerialName("target_user")
-    val targetUser: Optional<DiscordInviteUser> = Optional.Missing(),
+    val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    @SerialName("target_application")
+    val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
+    @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
     @SerialName("target_user_type")
-    val targetUserType: Optional<TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
 )
 
+@Deprecated(
+    "Use 'DiscordUser' instead, All missing fields have defaults.",
+    ReplaceWith("DiscordUser", "dev.kord.common.entity.DiscordUser"),
+)
 @Serializable
 public data class DiscordInviteUser(
     val id: Snowflake,
@@ -730,18 +754,24 @@ public data class GuildScheduledEventDelete(val event: DiscordGuildScheduledEven
     DispatchEvent()
 
 public data class GuildScheduledEventUserAdd(
-    val eventId: Snowflake,
-    val userId: Snowflake,
-    val guildId: Snowflake,
+    val data: GuildScheduledEventUserMetadata,
     override val sequence: Int?,
 ) : DispatchEvent()
 
 public data class GuildScheduledEventUserRemove(
-    val eventId: Snowflake,
-    val userId: Snowflake,
-    val guildId: Snowflake,
+    val data: GuildScheduledEventUserMetadata,
     override val sequence: Int?,
 ) : DispatchEvent()
+
+@Serializable
+public data class GuildScheduledEventUserMetadata(
+    @SerialName("guild_scheduled_event_id")
+    val guildScheduledEventId: Snowflake,
+    @SerialName("user_id")
+    val userId: Snowflake,
+    @SerialName("guild_id")
+    val guildId: Snowflake,
+)
 
 @Serializable
 public data class DiscordThreadListSync(

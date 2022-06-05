@@ -17,7 +17,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.json.Json
 
 internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
-internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v9"
+internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v10"
 
 public sealed interface ResponseMapper<T> {
     public fun deserialize(json: Json, body: String): T
@@ -166,14 +166,18 @@ public sealed class Route<T>(
         )
 
     public object InvitesGet :
-        Route<List<DiscordInvite>>(
+        Route<List<DiscordInviteWithMetadata>>(
             HttpMethod.Get,
             "/channels/$ChannelId/invites",
-            ListSerializer(DiscordInvite.serializer())
+            ListSerializer(DiscordInviteWithMetadata.serializer())
         )
 
     public object InvitePost :
-        Route<DiscordInvite>(HttpMethod.Post, "/channels/$ChannelId/invites", DiscordInvite.serializer())
+        Route<DiscordInviteWithMetadata>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/invites",
+            DiscordInviteWithMetadata.serializer(),
+        )
 
     public object ReactionPut :
         Route<Unit>(HttpMethod.Put, "/channels/$ChannelId/messages/$MessageId/reactions/$Emoji/@me", NoStrategy)
@@ -474,10 +478,10 @@ public sealed class Route<T>(
         )
 
     public object GuildInvitesGet :
-        Route<List<DiscordInvite>>(
+        Route<List<DiscordInviteWithMetadata>>(
             HttpMethod.Get,
             "/guilds/$GuildId/invites",
-            ListSerializer(DiscordInvite.serializer())
+            ListSerializer(DiscordInviteWithMetadata.serializer()),
         )
 
     public object GuildIntegrationGet :
@@ -665,7 +669,7 @@ public sealed class Route<T>(
      */
 
     public object CurrentApplicationInfo :
-        Route<ApplicationInfoResponse>(HttpMethod.Get, "/oauth2/applications/@me", ApplicationInfoResponse.serializer())
+        Route<DiscordApplication>(HttpMethod.Get, "/oauth2/applications/@me", DiscordApplication.serializer())
 
 
     /*
@@ -800,20 +804,6 @@ public sealed class Route<T>(
             HttpMethod.Get,
             "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
             DiscordGuildApplicationCommandPermissions.serializer()
-        )
-
-    public object ApplicationCommandPermissionsPut :
-        Route<DiscordGuildApplicationCommandPermissions>(
-            HttpMethod.Put,
-            "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
-        )
-
-    public object ApplicationCommandPermissionsBatchPut :
-        Route<List<DiscordGuildApplicationCommandPermissions>>(
-            HttpMethod.Put,
-            "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
-            ListSerializer(DiscordGuildApplicationCommandPermissions.serializer())
         )
 
 

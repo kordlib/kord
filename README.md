@@ -60,7 +60,6 @@ repositories {
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
-
 }
 ```
 
@@ -77,7 +76,6 @@ repositories {
     mavenCentral()
     // Kord Snapshots Repository (Optional):
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-
 }
 ```
 
@@ -127,10 +125,10 @@ abstractions, we'd recommend using this.
 
 ```kotlin
 suspend fun main() {
-    val client = Kord("your bot token")
+    val kord = Kord("your bot token")
     val pingPong = ReactionEmoji.Unicode("\uD83C\uDFD3")
 
-    client.on<MessageCreateEvent> {
+    kord.on<MessageCreateEvent> {
         if (message.content != "!ping") return@on
 
         val response = message.channel.createMessage("Pong!")
@@ -141,34 +139,37 @@ suspend fun main() {
         response.delete()
     }
 
-    client.login()
+    kord.login {
+        @OptIn(PrivilegedIntent::class)
+        intents += Intent.MessageContent
+    }
 }
 ```
 
 ### Rest
 
 A low level mapping of Discord's REST API. Requests follow
-Discord's [rate limits](https://discordapp.com/developers/docs/topics/rate-limits).
+Discord's [rate limits](https://discord.com/developers/docs/topics/rate-limits).
 
 ```kotlin
 suspend fun main() {
     val rest = RestClient("your bot token")
+    val channelId = Snowflake(605212557522763787)
 
-    rest.channel.createMessage("605212557522763787") {
+    rest.channel.createMessage(channelId) {
         content = "Hello Kord!"
 
         embed {
-            color = Color.BLUE
+            color = Color(red = 0, green = 0, blue = 255)
             description = "Hello embed!"
         }
     }
-
 }
 ```
 
 ### Gateway
 
-A low level mapping of [Discord's Gateway](https://discordapp.com/developers/docs/topics/gateway), which maintains the
+A low level mapping of [Discord's Gateway](https://discord.com/developers/docs/topics/gateway), which maintains the
 connection and rate limits commands.
 
 ```kotlin
@@ -182,9 +183,12 @@ suspend fun main() {
             "!close" -> gateway.stop()
             "!detach" -> gateway.detach()
         }
-    }.launchIn(gateway)
+    }
 
-    gateway.start("your bot token")
+    gateway.start("your bot token") {
+        @OptIn(PrivilegedIntent::class)
+        intents += Intent.MessageContent
+    }
 }
 ```
 
@@ -193,11 +197,24 @@ suspend fun main() {
 
 A mapping of [Discord's Voice Connection](https://discord.com/developers/docs/topics/voice-connections), which maintains the connection and handles audio transmission.
 
+If you want to use voice, you need to enable the voice capability,
+which is only available for Gradle
+
+```kotlin
+dependencies {
+    implementation("dev.kord", "core", "<version>") {
+        capabilities {
+            requireCapability("dev.kord:core-voice:<version>")
+        }
+    }
+}
+```
+
 ```kotlin
 suspend fun main() {
     val kord = Kord("your token")
     val voiceChannel = kord.getChannelOf<VoiceChannel>(id = Snowflake(1))!!
-    
+
     voiceChannel.connect {
         audioProvider { AudioFrame.fromData(/* your opus encoded audio */) }
     }

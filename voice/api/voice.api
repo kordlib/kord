@@ -1095,17 +1095,17 @@ public abstract interface class dev/kord/voice/udp/AudioFrameSender {
 }
 
 public final class dev/kord/voice/udp/AudioFrameSenderConfiguration {
-	public synthetic fun <init> (Ljava/net/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/net/SocketAddress;
+	public synthetic fun <init> (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lio/ktor/network/sockets/SocketAddress;
 	public final fun component2-pVg5ArA ()I
 	public final fun component3 ()[B
 	public final fun component4 ()Ldev/kord/voice/FrameInterceptorConfiguration;
-	public final fun copy-Yuhug_o (Ljava/net/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
-	public static synthetic fun copy-Yuhug_o$default (Ldev/kord/voice/udp/AudioFrameSenderConfiguration;Ljava/net/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;ILjava/lang/Object;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
+	public final fun copy-Yuhug_o (Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
+	public static synthetic fun copy-Yuhug_o$default (Ldev/kord/voice/udp/AudioFrameSenderConfiguration;Lio/ktor/network/sockets/SocketAddress;I[BLdev/kord/voice/FrameInterceptorConfiguration;ILjava/lang/Object;)Ldev/kord/voice/udp/AudioFrameSenderConfiguration;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getInterceptorConfiguration ()Ldev/kord/voice/FrameInterceptorConfiguration;
 	public final fun getKey ()[B
-	public final fun getServer ()Ljava/net/SocketAddress;
+	public final fun getServer ()Lio/ktor/network/sockets/SocketAddress;
 	public final fun getSsrc-pVg5ArA ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1148,7 +1148,7 @@ public final class dev/kord/voice/udp/DefaultAudioPackerProvider : dev/kord/voic
 
 public final class dev/kord/voice/udp/GlobalVoiceUdpSocket : dev/kord/voice/udp/VoiceUdpSocket {
 	public static final field INSTANCE Ldev/kord/voice/udp/GlobalVoiceUdpSocket;
-	public fun discoverIp (Ljava/net/SocketAddress;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun discoverIp (Lio/ktor/network/sockets/InetSocketAddress;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getIncoming ()Lkotlinx/coroutines/flow/SharedFlow;
 	public fun send (Lio/ktor/network/sockets/Datagram;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1243,7 +1243,7 @@ public final class dev/kord/voice/udp/RTPPacketKt {
 
 public abstract interface class dev/kord/voice/udp/VoiceUdpSocket {
 	public static final field Companion Ldev/kord/voice/udp/VoiceUdpSocket$Companion;
-	public abstract fun discoverIp (Ljava/net/SocketAddress;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun discoverIp (Lio/ktor/network/sockets/InetSocketAddress;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getIncoming ()Lkotlinx/coroutines/flow/SharedFlow;
 	public abstract fun send (Lio/ktor/network/sockets/Datagram;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1254,6 +1254,6 @@ public final class dev/kord/voice/udp/VoiceUdpSocket$Companion {
 }
 
 public final class dev/kord/voice/udp/VoiceUdpSocketKt {
-	public static final fun receiveFrom (Ldev/kord/voice/udp/VoiceUdpSocket;Ljava/net/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun receiveFrom (Ldev/kord/voice/udp/VoiceUdpSocket;Lio/ktor/network/sockets/InetSocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

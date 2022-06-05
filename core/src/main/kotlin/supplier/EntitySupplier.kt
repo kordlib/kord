@@ -12,7 +12,7 @@ import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
-import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
@@ -288,7 +288,7 @@ public interface EntitySupplier {
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    public fun getGuildBans(guildId: Snowflake): Flow<Ban>
+    public fun getGuildBans(guildId: Snowflake, limit: Int? = null): Flow<Ban>
 
     /**
      * Requests the [members][Member] of the [Guild] with the given [guildId].
@@ -472,7 +472,7 @@ public interface EntitySupplier {
         limit: Int? = null,
     ): Flow<ThreadChannel>
 
-    public fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake): Flow<GuildApplicationCommand>
+    public fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake, withLocalizations: Boolean? = null): Flow<GuildApplicationCommand>
 
     public suspend fun getGuildApplicationCommandOrNull(
         applicationId: Snowflake,
@@ -503,7 +503,7 @@ public interface EntitySupplier {
         getGlobalApplicationCommandOrNull(applicationId, commandId)
             ?: EntityNotFoundException.applicationCommandNotFound<GlobalApplicationCommand>(commandId)
 
-    public fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand>
+    public fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand>
 
 
     public suspend fun getApplicationCommandPermissionsOrNull(
@@ -527,7 +527,7 @@ public interface EntitySupplier {
     ): Flow<ApplicationCommandPermissions>
 
     /**
-     * Requests a followup message for an interaction response. Does not support ephemeral followups.
+     * Requests a followup message for an interaction response.
      * Returns `null` if the followup message isn't present.
      *
      * @throws RequestException if something went wrong during the request.
@@ -536,10 +536,10 @@ public interface EntitySupplier {
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): PublicFollowupMessage?
+    ): FollowupMessage?
 
     /**
-     * Requests a followup message for an interaction response. Does not support ephemeral followups.
+     * Requests a followup message for an interaction response.
      *
      * @throws RequestException if something went wrong during the request.
      * @throws EntityNotFoundException if the followup message is null.
@@ -548,7 +548,7 @@ public interface EntitySupplier {
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): PublicFollowupMessage =
+    ): FollowupMessage =
         getFollowupMessageOrNull(applicationId, interactionToken, messageId)
             ?: EntityNotFoundException.followupMessageNotFound(interactionToken, messageId)
 

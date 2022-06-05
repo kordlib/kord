@@ -23,7 +23,6 @@ import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.sorted
 import dev.kord.core.supplier.*
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.gateway.Gateway
@@ -48,7 +47,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.Objects
+import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -87,7 +86,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to get all present channels in this guild in an unspecified order,
-     * call [sorted] to get a consistent order.
+     * call [toList()][toList].[sorted()][sorted] on the returned [Flow] to get a consistent order.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
@@ -177,17 +176,18 @@ public interface GuildBehavior : KordEntity, Strategizable {
             .map { VoiceState(it, kord) }
 
     /**
-     * Requests to get the present voice states of this guild.
+     * Requests to get the [invites][InviteWithMetadata] for this guild.
      *
      * This property is not resolvable through cache and will always use the [RestClient] instead.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
-    public val invites: Flow<Invite>
+    public val invites: Flow<InviteWithMetadata>
         get() = flow {
             kord.rest.guild.getGuildInvites(id).forEach {
-                emit(Invite(InviteData.from(it), kord))
+                val data = InviteWithMetadataData.from(it)
+                emit(InviteWithMetadata(data, kord))
             }
         }
 
@@ -197,7 +197,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Application commands for this guild only.
      */
-
+    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"))
     public val commands: Flow<GuildApplicationCommand>
         get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
@@ -246,6 +246,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
             }
     }
 
+    public fun getApplicationCommands(withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> =
+        supplier.getGuildApplicationCommands(kord.resources.applicationId, id, withLocalizations)
 
     public suspend fun getApplicationCommand(commandId: Snowflake): GuildApplicationCommand =
         supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)
@@ -574,7 +576,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     public suspend fun getSticker(stickerId: Snowflake): GuildSticker = supplier.getGuildSticker(id, stickerId)
 
-    public suspend fun getStickerOrNull(stickerId: Snowflake): GuildSticker? = supplier.getGuildStickerOrNull(id, stickerId)
+    public suspend fun getStickerOrNull(stickerId: Snowflake): GuildSticker? =
+        supplier.getGuildStickerOrNull(id, stickerId)
 
     public suspend fun createSticker(name: String, description: String, tags: String, file: NamedFile): GuildSticker {
         val request = MultipartGuildStickerCreateRequest(GuildStickerCreateRequest(name, description, tags), file)
@@ -612,7 +615,6 @@ public fun GuildBehavior(
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildBehavior -> other.id == id
-        is PartialGuild -> other.id == id
         else -> false
     }
 
@@ -620,7 +622,6 @@ public fun GuildBehavior(
         return "GuildBehavior(id=$id, kord=$kord, supplier=$supplier)"
     }
 }
-
 
 
 public suspend inline fun GuildBehavior.createChatInputCommand(
@@ -631,7 +632,6 @@ public suspend inline fun GuildBehavior.createChatInputCommand(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.createGuildChatInputCommand(id, name, description, builder)
 }
-
 
 
 public suspend inline fun GuildBehavior.createMessageCommand(
@@ -652,9 +652,8 @@ public suspend inline fun GuildBehavior.createUserCommand(
 }
 
 
-
 public suspend inline fun GuildBehavior.createApplicationCommands(
-    builder: MultiApplicationCommandBuilder.() -> Unit
+    builder: GuildMultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.createGuildApplicationCommands(id, builder)
@@ -880,7 +879,8 @@ public suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChann
  *
  * This request will execute regardless of the consumption of the return value.
  *
- * @return the roles of this guild after the update in an unspecified order, call [sorted] to get a consistent order.
+ * @return the roles of this guild after the update in an unspecified order, call [toList()][toList].[sorted()][sorted]
+ * on the returned [Flow] to get a consistent order.
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
@@ -1008,13 +1008,6 @@ public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuild
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
-}
-
-public suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
-
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-    kord.bulkEditApplicationCommandPermissions(id, builder)
 }
 
 /**

@@ -1,5 +1,6 @@
 package dev.kord.rest.json.request
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -10,9 +11,18 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class ApplicationCommandCreateRequest(
     val name: String,
+    @SerialName("name_localizations")
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val type: ApplicationCommandType,
     val description: Optional<String> = Optional.Missing(),
+    @SerialName("description_localizations")
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @SerialName("dm_permission")
+    public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
@@ -20,8 +30,17 @@ public data class ApplicationCommandCreateRequest(
 @Serializable
 public data class ApplicationCommandModifyRequest(
     val name: Optional<String> = Optional.Missing(),
+    @SerialName("name_localizations")
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
+    @SerialName("description_localizations")
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @SerialName("dm_permission")
+    public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
@@ -52,6 +71,12 @@ public data class InteractionResponseCreateRequest(
 public data class AutoCompleteResponseCreateRequest<T>(
     val type: InteractionResponseType,
     val data: DiscordAutoComplete<T>
+)
+
+@Serializable
+public data class ModalResponseCreateRequest(
+    val type: InteractionResponseType,
+    val data: DiscordModal
 )
 
 public data class MultipartInteractionResponseCreateRequest(
@@ -102,9 +127,4 @@ public data class FollowupMessageModifyRequest(
 public data class MultipartFollowupMessageModifyRequest(
     val request: FollowupMessageModifyRequest,
     val files: Optional<List<NamedFile>> = Optional.Missing()
-)
-
-@Serializable
-public data class ApplicationCommandPermissionsEditRequest(
-    val permissions: List<DiscordGuildApplicationCommandPermission>
 )

@@ -11,8 +11,8 @@ import dev.kord.common.entity.optional.delegate.delegate
  * A builder for a
  * [Discord Select Option](https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure).
  *
- * @param label The user-facing name of the option, max 25 characters.
- * @param value The dev-define value of the option, max 100 characters.
+ * @param label The user-facing name of the option, max 100 characters.
+ * @param value The dev-defined value of the option, max 100 characters.
  */
 @KordDsl
 public class SelectOptionBuilder(
@@ -23,7 +23,7 @@ public class SelectOptionBuilder(
     private var _description: Optional<String> = Optional.Missing()
 
     /**
-     * An additional description of the option, max 50 characters.
+     * An additional description of the option, max 100 characters.
      */
     public var description: String? by ::_description.delegate()
 

@@ -5,7 +5,7 @@ package dev.kord.rest.builder.component
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
@@ -31,6 +31,8 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
      */
     public var emoji: DiscordPartialEmoji? by ::_emoji.delegate()
 
+    abstract override fun build(): DiscordChatComponent
+
     /**
      * A builder for a button that can create Interactions when clicked.
      *
@@ -41,7 +43,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
         public var style: ButtonStyle,
         public var customId: String,
     ) : ButtonBuilder() {
-        override fun build(): DiscordComponent = DiscordComponent(
+        override fun build(): DiscordChatComponent = DiscordChatComponent(
             ComponentType.Button,
             Optional(style),
             _label,
@@ -60,7 +62,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
     public class LinkButtonBuilder(
         public var url: String,
     ) : ButtonBuilder() {
-        override fun build(): DiscordComponent = DiscordComponent(
+        override fun build(): DiscordChatComponent = DiscordChatComponent(
             ComponentType.Button,
             Optional(ButtonStyle.Link),
             _label,

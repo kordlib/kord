@@ -98,7 +98,6 @@ public data class DiscordOptionallyMemberUser(
 
 
 public enum class UserFlag(public val code: Int) {
-    None(0),
     DiscordEmployee(1 shl 0),
     DiscordPartner(1 shl 1),
     HypeSquad(1 shl 2),
@@ -112,7 +111,8 @@ public enum class UserFlag(public val code: Int) {
     BugHunterLevel2(1 shl 14),
     VerifiedBot(1 shl 16),
     VerifiedBotDeveloper(1 shl 17),
-    DiscordCertifiedModerator(1 shl 18)
+    DiscordCertifiedModerator(1 shl 18),
+    BotHttpInteractions(1 shl 19),
 }
 
 @Serializable(with = UserFlags.UserFlagsSerializer::class)

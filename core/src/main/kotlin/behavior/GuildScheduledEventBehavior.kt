@@ -1,9 +1,9 @@
 package dev.kord.core.behavior
 
-import dev.kord.common.entity.DiscordGuildScheduledEvent
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.cache.data.GuildScheduledEventData
 import dev.kord.core.entity.*
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -105,10 +105,12 @@ internal fun GuildScheduledEventBehavior(
  *
  * @throws RequestException if anything goes wrong during the request
  */
-public suspend inline fun GuildScheduledEventBehavior.edit(builder: ScheduledEventModifyBuilder.() -> Unit): DiscordGuildScheduledEvent {
+public suspend inline fun GuildScheduledEventBehavior.edit(builder: ScheduledEventModifyBuilder.() -> Unit): GuildScheduledEvent {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
 
-    return kord.rest.guild.modifyScheduledEvent(guildId, id, builder)
+    val response = kord.rest.guild.modifyScheduledEvent(guildId, id, builder)
+    val data = GuildScheduledEventData.from(response)
+    return GuildScheduledEvent(data, kord)
 }

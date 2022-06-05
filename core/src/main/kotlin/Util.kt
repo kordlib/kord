@@ -1,11 +1,14 @@
 package dev.kord.core
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.*
+import dev.kord.core.event.channel.thread.*
 import dev.kord.core.event.guild.*
 import dev.kord.core.event.message.*
 import dev.kord.core.event.role.RoleCreateEvent
@@ -13,6 +16,7 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
+import dev.kord.gateway.Intent
 import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intents
 import dev.kord.gateway.MessageDelete
@@ -26,19 +30,7 @@ import kotlinx.datetime.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
-
-internal fun String?.toSnowflakeOrNull(): Snowflake? = when {
-    this == null -> null
-    else -> Snowflake(this)
-}
-
-internal fun ULong?.toSnowflakeOrNull(): Snowflake? = when {
-    this == null -> null
-    else -> Snowflake(this)
-}
-
-internal fun Int.toInstant() = Instant.fromEpochMilliseconds(toLong())
-internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
+import kotlinx.coroutines.flow.firstOrNull as coroutinesFirstOrNull
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
@@ -68,10 +60,16 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 }
 
 
-public fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
-    for (entity in toList().sorted()) {
-        emit(entity)
-    }
+@Deprecated(
+    "This is an internal utility function.",
+    ReplaceWith("this.toList().sorted()", "kotlinx.coroutines.flow.toList"),
+    DeprecationLevel.ERROR,
+)
+public fun <T : Entity> Flow<T>.sorted(): Flow<T> = internalSorted()
+
+// TODO rename to `sorted` once the public version is fully deprecated and removed, use import alias for now
+internal fun <T : Comparable<T>> Flow<T>.internalSorted(): Flow<T> = flow {
+    toList().sorted().forEach { emit(it) }
 }
 
 /**
@@ -79,15 +77,34 @@ public fun <T : Entity> Flow<T>.sorted(): Flow<T> = flow {
  * and then cancels flow's collection.
  * Returns `null` if the flow was empty.
  */
+@Deprecated(
+    "Use the function with the same name from kotlinx.coroutines.flow instead.",
+    ReplaceWith("this.firstOrNull(predicate)", "kotlinx.coroutines.flow.firstOrNull"),
+    DeprecationLevel.ERROR,
+)
 public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
-    filter { predicate(it) }.firstOrNull()
+    filter { predicate(it) }.coroutinesFirstOrNull()
 
 /**
  * The terminal operator that returns `true` if any of the elements match [predicate].
  * The flow's collection is cancelled when a match is found.
  */
+@Suppress("DEPRECATION")
+@Deprecated(
+    "This is an internal utility function.",
+    ReplaceWith("this.firstOrNull(predicate) != null", "kotlinx.coroutines.flow.firstOrNull"),
+    DeprecationLevel.ERROR,
+)
 public suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
-    firstOrNull(predicate) != null
+    coroutinesFirstOrNull { predicate(it) } != null
+
+// TODO rename this to `any` once the public version is fully deprecated and removed, use import alias for now
+/**
+ * The terminal operator that returns `true` if any of the elements match [predicate].
+ * The flow's collection is cancelled when a match is found.
+ */
+internal suspend inline fun <T : Any> Flow<T>.internalAny(crossinline predicate: suspend (T) -> Boolean): Boolean =
+    coroutinesFirstOrNull { predicate(it) } != null
 
 /**
  * The non-terminal operator that returns a new flow that will emit values of the second [flow] only after the first
@@ -285,15 +302,65 @@ internal fun paginateThreads(
     request,
 )
 
+
+/**
+ * Adds the necessary [Intent]s to receive the specified type of event in all variations and with all data available.
+ *
+ * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
+ * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
+ */
 public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
 
-public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit = events.forEach { enableEvent(it) }
-public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit = events.forEach { enableEvent(it) }
+/**
+ * Adds the necessary [Intent]s to receive the specified types of [events] in all variations and with all data
+ * available.
+ *
+ * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
+ * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
+ */
+public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
+    events.forEach { enableEvent(it) }
 
-@OptIn(PrivilegedIntent::class)
+/**
+ * Adds the necessary [Intent]s to receive the specified types of [events] in all variations and with all data
+ * available.
+ *
+ * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
+ * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
+ */
+public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
+    events.forEach { enableEvent(it) }
+
+/**
+ * Adds the necessary [Intent]s to receive the specified type of [event] in all variations and with all data available.
+ *
+ * E.g. [MessageCreateEvent] will add the [GuildMessages], [DirectMessages] and [MessageContent] intents to receive
+ * messages in Guilds and DMs with the full [content][Message.content].
+ *
+ * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
+ * than one event.
+ */
+@OptIn(PrivilegedIntent::class, KordPreview::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
+// see https://discord.com/developers/docs/topics/gateway#list-of-intents
+
+    /*
+     * events requiring a single intent:
+     */
+
     GuildCreateEvent::class,
+    GuildUpdateEvent::class,
     GuildDeleteEvent::class,
+
     RoleCreateEvent::class,
     RoleUpdateEvent::class,
     RoleDeleteEvent::class,
@@ -302,51 +369,118 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     CategoryCreateEvent::class,
     DMChannelCreateEvent::class,
     NewsChannelCreateEvent::class,
+    StageChannelCreateEvent::class,
+    @Suppress("DEPRECATION")
     StoreChannelCreateEvent::class,
     TextChannelCreateEvent::class,
+    UnknownChannelCreateEvent::class,
     VoiceChannelCreateEvent::class,
 
     ChannelUpdateEvent::class,
     CategoryUpdateEvent::class,
     DMChannelUpdateEvent::class,
     NewsChannelUpdateEvent::class,
+    StageChannelUpdateEvent::class,
+    @Suppress("DEPRECATION")
     StoreChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
+    UnknownChannelUpdateEvent::class,
     VoiceChannelUpdateEvent::class,
 
     ChannelDeleteEvent::class,
     CategoryDeleteEvent::class,
     DMChannelDeleteEvent::class,
     NewsChannelDeleteEvent::class,
+    StageChannelDeleteEvent::class,
+    @Suppress("DEPRECATION")
     StoreChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
+    UnknownChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,
 
-    ChannelPinsUpdateEvent::class,
-    -> {
+    ThreadChannelCreateEvent::class,
+    NewsChannelThreadCreateEvent::class,
+    TextChannelThreadCreateEvent::class,
+    UnknownChannelThreadCreateEvent::class,
+
+    ThreadUpdateEvent::class,
+    NewsChannelThreadUpdateEvent::class,
+    TextChannelThreadUpdateEvent::class,
+    UnknownChannelThreadUpdateEvent::class,
+
+    ThreadChannelDeleteEvent::class,
+    NewsChannelThreadDeleteEvent::class,
+    TextChannelThreadDeleteEvent::class,
+    UnknownChannelThreadDeleteEvent::class,
+
+    ThreadListSyncEvent::class,
+
+    ThreadMemberUpdateEvent::class,
+    -> +Guilds
+
+
+    MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
+
+
+    BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
+
+
+    EmojisUpdateEvent::class -> +GuildEmojis
+
+
+    IntegrationsUpdateEvent::class -> +GuildIntegrations
+
+
+    WebhookUpdateEvent::class -> +GuildWebhooks
+
+
+    InviteCreateEvent::class, InviteDeleteEvent::class -> +GuildInvites
+
+
+    VoiceStateUpdateEvent::class -> +GuildVoiceStates
+
+
+    PresenceUpdateEvent::class -> +GuildPresences
+
+
+    MessageBulkDeleteEvent::class -> +GuildMessages // no message content
+
+
+    GuildScheduledEventEvent::class,
+    GuildScheduledEventCreateEvent::class,
+    GuildScheduledEventUpdateEvent::class,
+    GuildScheduledEventDeleteEvent::class,
+
+    GuildScheduledEventUserEvent::class,
+    GuildScheduledEventUserAddEvent::class,
+    GuildScheduledEventUserRemoveEvent::class,
+    -> +GuildScheduledEvents
+
+
+    /*
+     * events requiring multiple intents:
+     */
+
+    ChannelPinsUpdateEvent::class -> {
         +Guilds
         +DirectMessages
     }
 
-    MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
+    ThreadMembersUpdateEvent::class -> {
+        +Guilds
+        +GuildMembers
+    }
 
-    BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
-
-    EmojisUpdateEvent::class -> +GuildEmojis
-
-    IntegrationsUpdateEvent::class -> +GuildIntegrations
-
-    WebhookUpdateEvent::class -> +GuildWebhooks
-
-    InviteCreateEvent::class, InviteDeleteEvent::class -> +GuildInvites
-
-    VoiceStateUpdateEvent::class -> +GuildVoiceStates
-
-    PresenceUpdateEvent::class -> +GuildPresences
-
-    MessageCreateEvent::class, MessageUpdateEvent::class, MessageDelete::class -> {
+    MessageCreateEvent::class, MessageUpdateEvent::class -> {
         +GuildMessages
         +DirectMessages
+        +MessageContent
+    }
+
+    MessageDelete::class -> {
+        +GuildMessages
+        +DirectMessages
+        // no message content
     }
 
     ReactionAddEvent::class, ReactionRemoveEvent::class, ReactionRemoveAllEvent::class, ReactionRemoveEmojiEvent::class -> {
@@ -354,8 +488,11 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
         +DirectMessagesReactions
     }
 
-    TypingStartEvent::class -> +GuildMessageTyping
+    TypingStartEvent::class -> {
+        +GuildMessageTyping
+        +DirectMessageTyping
+    }
+
 
     else -> Unit
-
 }

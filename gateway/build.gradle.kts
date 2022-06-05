@@ -5,12 +5,12 @@ plugins {
 }
 
 dependencies {
-    api(common)
+    api(projects.common)
     implementation(libs.bundles.common)
 
     api(libs.ktor.client.json)
     api(libs.ktor.client.websockets)
-    api(libs.ktor.client.serialization)
+    api(libs.bundles.ktor.client.serialization)
     api(libs.ktor.client.cio)
 
 

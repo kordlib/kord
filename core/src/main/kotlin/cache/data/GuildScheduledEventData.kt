@@ -15,7 +15,7 @@ public data class GuildScheduledEventData(
     val channelId: Snowflake?,
     val creatorId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val name: String,
-    val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing(),
     val scheduledStartTime: Instant,
     val scheduledEndTime: Instant?,
     val privacyLevel: GuildScheduledEventPrivacyLevel,
@@ -25,24 +25,28 @@ public data class GuildScheduledEventData(
     val entityMetadata: GuildScheduledEventEntityMetadata?,
     val creator: Optional<UserData> = Optional.Missing(),
     val userCount: OptionalInt = OptionalInt.Missing,
+    val image: Optional<String?> = Optional.Missing(),
 ) {
     public companion object {
-        public fun from(event: DiscordGuildScheduledEvent): GuildScheduledEventData = GuildScheduledEventData(
-            event.id,
-            event.guildId,
-            event.channelId,
-            event.creatorId,
-            event.name,
-            event.description,
-            event.scheduledStartTime,
-            event.scheduledEndTime,
-            event.privacyLevel,
-            event.status,
-            event.entityId,
-            event.entityType,
-            event.entityMetadata,
-            event.creator.map { UserData.from(it) },
-            event.userCount
-        )
+        public fun from(event: DiscordGuildScheduledEvent): GuildScheduledEventData = with(event) {
+            GuildScheduledEventData(
+                id = id,
+                guildId = guildId,
+                channelId = channelId,
+                creatorId = creatorId,
+                name = name,
+                description = description,
+                scheduledStartTime = scheduledStartTime,
+                scheduledEndTime = scheduledEndTime,
+                privacyLevel = privacyLevel,
+                status = status,
+                entityId = entityId,
+                entityType = entityType,
+                entityMetadata = entityMetadata,
+                creator = creator.map { UserData.from(it) },
+                userCount = userCount,
+                image = image,
+            )
+        }
     }
 }

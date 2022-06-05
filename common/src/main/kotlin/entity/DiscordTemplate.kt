@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -14,9 +15,9 @@ public data class DiscordTemplate(
     val creatorId: Snowflake,
     val creator: DiscordUser,
     @SerialName("created_at")
-    val createdAt: String,
+    val createdAt: Instant,
     @SerialName("updated_at")
-    val updatedAt: String,
+    val updatedAt: Instant,
     @SerialName("source_guild_id")
     val sourceGuildId: Snowflake,
     @SerialName("serialized_source_guild")

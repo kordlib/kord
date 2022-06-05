@@ -1,3 +1,127 @@
+# 0.8.0-M14
+
+## Changes
+
+* Slash commands permissions v2 (#604)
+* Add feature variant for voice (#608)
+* Deserialize timestamps as Instant (#605)
+* Update Channel Builders (#606)
+* Use ktor Base64 functions (#600)
+* Refactor Choice serializer (#598)
+* Nullable user_limit (#602)
+* Stricter Locale parsing (#597)
+
+## Additions
+
+* Add error 50080 (#607)
+
+## Dependencies
+* 
+* Kotlin 1.6.20 -> 1.6.21
+* BinaryValidator 0.8.0 -> 0.9.0
+
+# 0.8.0-M13
+
+## Changes
+
+* Paginate getting bans (#585)
+* Order locales like discord/discord-api-docs#4680 (#573)
+* Update stage instance requests (#581)
+* image_hash audit log change key (#578)
+* Nullable channel name (#579)
+* Make Optional a sealed class again (#588)
+* Deprecate IntegrationApplication.summary (#580)
+* Channel type GUILD_DIRECTORY (#583)
+* Refactor common RateLimiter (#577)
+* Deprecate nickname mentions (#590)
+* Deserialize time as Duration (#586)
+
+## Additions
+
+* Add ANIMATED_BANNER feature (#584)
+* Add strategy to mitigate loss of stacktrace through Ktors SuspendFunctionGun (#563)
+* Add Application default authorization links and tags (#582)
+* Add minValue and maxValue to ApplicationCommandOption (#572)
+* Add Version constant injection (#576)
+* Add support for slash command localizations (#570)
+* Add guild_id to Interaction Data (#591)
+
+## Fixes
+
+* Fix conflict between property name and class discriminator (#595)
+* voice: fix encryption buffer size (#568)
+* Fix Guild Scheduled Event Gateway Events (#569)
+
+## Dependencies
+
+* binaryValidator: 0.6.0 -> 0.8.0
+* Kotlin: 1.6.10 -> 1.6.20
+* Gradle 7.4 -> 7.4.2
+* AtomicFu 0.17.0 -> 0.17.2
+* dateTime 0.3.1 -> 0.3.2
+* coroutines 0.6.0 -> 0.6.1
+* mockk 1.7.30 -> 1.7.36
+* Ktor 1.6.7 -> 2.0.0
+
+# 0.8.0-M12
+
+## Changes
+
+* As of 0.8.0-M12 Message Content Intent is required to receive message related events.
+* Deprecate store channels (#564).
+* Hotfix: revert nullable to optional changes in VoiceState (#567).
+* nullable requestToSpeakTimestamp (#566).
+* Fix oversights in #561 (#565).
+* Discord docs updates (#540 #561).
+
+## Additions
+
+* User Agent header (#558 #562).
+* Unsafe deferred responding (#557).
+* Use gateway v10 (#554).
+* Audit Log Change Key "type" to string values (#559).
+
+# 0.8.0-M11
+
+## Changes
+
+* Switch to v10 for rest (#550)
+* Invite and Application revamp (#530)
+* Update enableEvent() (#553)
+* Invite and Application revamp (#530)
+* Revamp interaction implementations (#543 #533 #546)
+* Documentation: clarify the usage of `Kord.restOnly`
+* Update Permissions (#544)
+
+## Additions
+
+* Add selfVideo property (#545)
+
+## Fixes
+
+* Fix GuildScheduledEvents json representation and modify function (#549)
+
+# 0.8.0-M10
+
+## Additions
+
+* Forms support (#531)
+* Add support for attachment options in chat input interactions (#524)
+* Add error 40060 40004(#532 #523)
+
+## Fixes
+
+* fix locale typos (#541)
+* Add missing default value for strategy for getWebhookWithTokenOrNull (#539)
+
+## Changes
+
+* Change members resolved objects to DiscordInteractionGuildMember (#502)
+
+## Dependencies
+
+* Upgrade gradle to 7.4 and its wrapper
+
 # 0.8.0-M9
 
 ## Fixes

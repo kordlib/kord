@@ -10,7 +10,7 @@ import kotlinx.serialization.encoding.Encoder
 import java.util.Locale as JLocale
 
 /**
- * Representation of a locale [supported by Discord](https://discord.com/developers/docs/reference#Locales).
+ * Representation of a locale [supported by Discord](https://discord.com/developers/docs/reference#locales).
  *
  * @property language an ISO 639-1 language code representing the language
  * @property country an ISO 3166 country code representing the country
@@ -26,59 +26,9 @@ public data class Locale(val language: String, val country: String? = null) {
     public companion object {
 
         /**
-         * English (United States).
-         */
-        public val ENGLISH_UNITED_STATES: Locale = Locale("en", "US")
-
-        /**
-         * English (Great Britain).
-         */
-        public val ENGLISH_GREAT_BRITAN: Locale = Locale("en", "GB")
-
-        /**
-         * Bulgarian.
-         */
-        public val BULGARIAN: Locale = Locale("bg")
-
-        /**
-         * Chinese (China).
-         */
-        public val CHINESE_CHINA: Locale = Locale("zh", "CN")
-
-        /**
-         * Chinese (Taiwan).
-         */
-        public val CHINESE_TAIWAN: Locale = Locale("zh", "TW")
-
-        /**
-         * Croatian.
-         */
-        public val CROATIAN: Locale = Locale("hr")
-
-        /**
-         * Czech.
-         */
-        public val CZECH: Locale = Locale("cs")
-
-        /**
          * Danish.
          */
         public val DANISH: Locale = Locale("da")
-
-        /**
-         * Dutch.
-         */
-        public val DUTCH: Locale = Locale("nl")
-
-        /**
-         * Finnish.
-         */
-        public val FINNISH: Locale = Locale("fi")
-
-        /**
-         * French.
-         */
-        public val FRENCH: Locale = Locale("fr")
 
         /**
          * German.
@@ -86,19 +36,29 @@ public data class Locale(val language: String, val country: String? = null) {
         public val GERMAN: Locale = Locale("de")
 
         /**
-         * Greek.
+         * English (Great Britain).
          */
-        public val GREEK: Locale = Locale("el")
+        public val ENGLISH_GREAT_BRITAIN: Locale = Locale("en", "GB")
 
         /**
-         * Hindi.
+         * English (United States).
          */
-        public val HINDI: Locale = Locale("hi")
+        public val ENGLISH_UNITED_STATES: Locale = Locale("en", "US")
 
         /**
-         * Hungarian.
+         * Spanish (Spain).
          */
-        public val HUNGARIAN: Locale = Locale("hu")
+        public val SPANISH_SPAIN: Locale = Locale("es", "ES")
+
+        /**
+         * French.
+         */
+        public val FRENCH: Locale = Locale("fr")
+
+        /**
+         * Croatian.
+         */
+        public val CROATIAN: Locale = Locale("hr")
 
         /**
          * Italian.
@@ -106,19 +66,19 @@ public data class Locale(val language: String, val country: String? = null) {
         public val ITALIAN: Locale = Locale("it")
 
         /**
-         * Japanese.
-         */
-        public val JAPENESE: Locale = Locale("ja")
-
-        /**
-         * Korean.
-         */
-        public val KOREAN: Locale = Locale("ko")
-
-        /**
          * Lithuanian.
          */
         public val LITHUANIAN: Locale = Locale("lt")
+
+        /**
+         * Hungarian.
+         */
+        public val HUNGARIAN: Locale = Locale("hu")
+
+        /**
+         * Dutch.
+         */
+        public val DUTCH: Locale = Locale("nl")
 
         /**
          * Norwegian.
@@ -141,14 +101,9 @@ public data class Locale(val language: String, val country: String? = null) {
         public val ROMANIAN: Locale = Locale("ro")
 
         /**
-         * Russian.
+         * Finnish.
          */
-        public val RUSSIAN: Locale = Locale("ru")
-
-        /**
-         * Spanish (Spain).
-         */
-        public val SPANISH_SPAIN: Locale = Locale("es", "ES")
+        public val FINNISH: Locale = Locale("fi")
 
         /**
          * Swedish.
@@ -156,9 +111,9 @@ public data class Locale(val language: String, val country: String? = null) {
         public val SWEDISH: Locale = Locale("sv", "SE")
 
         /**
-         * Thai.
+         * Vietnamese.
          */
-        public val THAI: Locale = Locale("th")
+        public val VIETNAMESE: Locale = Locale("vi")
 
         /**
          * Turkish.
@@ -166,67 +121,114 @@ public data class Locale(val language: String, val country: String? = null) {
         public val TURKISH: Locale = Locale("tr")
 
         /**
+         * Czech.
+         */
+        public val CZECH: Locale = Locale("cs")
+
+        /**
+         * Greek.
+         */
+        public val GREEK: Locale = Locale("el")
+
+        /**
+         * Bulgarian.
+         */
+        public val BULGARIAN: Locale = Locale("bg")
+
+        /**
+         * Russian.
+         */
+        public val RUSSIAN: Locale = Locale("ru")
+
+        /**
          * Ukrainian.
          */
         public val UKRAINIAN: Locale = Locale("uk")
 
         /**
-         * Vietnamese.
+         * Hindi.
          */
-        public val VIETNAMESE: Locale = Locale("vi")
+        public val HINDI: Locale = Locale("hi")
+
+        /**
+         * Thai.
+         */
+        public val THAI: Locale = Locale("th")
+
+        /**
+         * Chinese (China).
+         */
+        public val CHINESE_CHINA: Locale = Locale("zh", "CN")
+
+        /**
+         * Japanese.
+         */
+        public val JAPANESE: Locale = Locale("ja")
+
+        /**
+         * Chinese (Taiwan).
+         */
+        public val CHINESE_TAIWAN: Locale = Locale("zh", "TW")
+
+        /**
+         * Korean.
+         */
+        public val KOREAN: Locale = Locale("ko")
 
 
         /**
          * All languages [supported by Discord](https://discord.com/developers/docs/reference#Locales).
          */
         public val ALL: List<Locale> = listOf(
-            ENGLISH_UNITED_STATES, ENGLISH_GREAT_BRITAN,
-            BULGARIAN,
-            CHINESE_CHINA, CHINESE_TAIWAN,
-            CROATIAN,
-            CZECH,
             DANISH,
-            DUTCH,
-            FINNISH,
-            FRENCH,
             GERMAN,
-            GREEK,
-            HINDI,
-            HUNGARIAN,
+            ENGLISH_GREAT_BRITAIN,
+            ENGLISH_UNITED_STATES,
+            SPANISH_SPAIN,
+            FRENCH,
+            CROATIAN,
             ITALIAN,
-            JAPENESE,
-            KOREAN,
             LITHUANIAN,
+            HUNGARIAN,
+            DUTCH,
             NORWEGIAN,
             POLISH,
             PORTUGUESE_BRAZIL,
             ROMANIAN,
-            RUSSIAN,
-            SPANISH_SPAIN,
+            FINNISH,
             SWEDISH,
-            THAI,
+            VIETNAMESE,
             TURKISH,
+            CZECH,
+            GREEK,
+            BULGARIAN,
+            RUSSIAN,
             UKRAINIAN,
-            VIETNAMESE
+            HINDI,
+            THAI,
+            CHINESE_CHINA,
+            JAPANESE,
+            CHINESE_TAIWAN,
+            KOREAN,
         )
 
-        // We accept both "_" and "-" as a separator, because Discord doesn't really document it
-        // https://regex101.com/r/fVPdR8/2
-        private val languageTagFormat = "(\\w{2})(?:[_\\-](\\w{2}))?".toRegex()
+        // https://regex101.com/r/KCHTj8/1
+        private val languageTagFormat = "([a-z]{2})(?:-([A-Z]{2}))?".toRegex()
 
         /**
-         * Decodes the language from a `languageCode_countryCode` or `languageCode` format.
+         * Decodes the language from a `languageCode-countryCode` or `languageCode` format.
          *
          * This does not validate the actually languages and countries, it just validates the format.
+         *
+         * @throws IllegalArgumentException if [string] is not a valid format.
          */
         public fun fromString(string: String): Locale {
-            val match = languageTagFormat.matchEntire(string) ?: error("$string is not a valid Locale")
-            val (language) = match.destructured
-            val country = match.groupValues[2]
+            val match = requireNotNull(languageTagFormat.matchEntire(string)) { "$string is not a valid Locale" }
+            val (language, country) = match.destructured
 
             return ALL.firstOrNull { (l, c) ->
                 language == l && country == (c ?: "")
-            } ?: Locale(language, country)
+            } ?: Locale(language, country.ifBlank { null })
         }
     }
 
@@ -234,7 +236,7 @@ public data class Locale(val language: String, val country: String? = null) {
         override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Locale", PrimitiveKind.STRING)
 
         override fun serialize(encoder: Encoder, value: Locale) {
-            encoder.encodeString("${value.language}${if (value.country != null) "_${value.country}" else ""}")
+            encoder.encodeString("${value.language}${value.country?.let { "-$it" } ?: ""}")
         }
 
         override fun deserialize(decoder: Decoder): Locale = fromString(decoder.decodeString())
@@ -245,4 +247,4 @@ public data class Locale(val language: String, val country: String? = null) {
  * Converts this into a [Locale].
  */
 public val JLocale.kLocale: Locale
-    get() = Locale(language, country)
+    get() = Locale(language, country.ifBlank { null })

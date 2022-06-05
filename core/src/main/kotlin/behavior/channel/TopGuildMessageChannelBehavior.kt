@@ -24,7 +24,7 @@ import kotlin.contracts.contract
  * 'Top' channels are those that do not require a parent channel to be created, and can be found at the top of the UI's hierarchy.
  *
  */
-public interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, GuildMessageChannelBehavior {
+public interface TopGuildMessageChannelBehavior : CategorizableChannelBehavior, GuildMessageChannelBehavior {
 
     /**
      * Requests to get all webhooks for this channel.
@@ -50,7 +50,7 @@ public interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, Guild
      * @throws [ClassCastException] if the channel isn't a guild message channel.
      */
     override suspend fun asChannel(): TopGuildMessageChannel =
-        super<TopGuildChannelBehavior>.asChannel() as TopGuildMessageChannel
+        super<CategorizableChannelBehavior>.asChannel() as TopGuildMessageChannel
 
     /**
      * Requests to get this behavior as a [TopGuildMessageChannel],
@@ -59,7 +59,7 @@ public interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, Guild
      * @throws [RequestException] if something went wrong during the request.
      */
     override suspend fun asChannelOrNull(): TopGuildMessageChannel? =
-        super<TopGuildChannelBehavior>.asChannelOrNull() as? TopGuildMessageChannel
+        super<CategorizableChannelBehavior>.asChannelOrNull() as? TopGuildMessageChannel
 
     /**
      * Retrieve the [TopGuildMessageChannel] associated with this behaviour from the provided [EntitySupplier]
@@ -68,7 +68,7 @@ public interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, Guild
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
     override suspend fun fetchChannel(): TopGuildMessageChannel =
-        super<TopGuildChannelBehavior>.fetchChannel() as TopGuildMessageChannel
+        super<CategorizableChannelBehavior>.fetchChannel() as TopGuildMessageChannel
 
 
     /**
@@ -78,7 +78,7 @@ public interface TopGuildMessageChannelBehavior : TopGuildChannelBehavior, Guild
      * @throws [RequestException] if anything went wrong during the request.
      */
     override suspend fun fetchChannelOrNull(): TopGuildMessageChannel? =
-        super<TopGuildChannelBehavior>.fetchChannelOrNull() as? TopGuildMessageChannel
+        super<CategorizableChannelBehavior>.fetchChannelOrNull() as? TopGuildMessageChannel
 
     /**
      * Returns a new [TopGuildMessageChannelBehavior] with the given [strategy].

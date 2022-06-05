@@ -2,6 +2,7 @@ package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
+import dev.kord.gateway.Intent.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -29,7 +30,8 @@ import kotlin.contracts.contract
 public annotation class PrivilegedIntent
 
 /**
- * Values that enable a group of events as [defined by Discord](https://github.com/discord/discord-api-docs/blob/feature/gateway-intents/docs/topics/Gateway.md#gateway-intents).
+ * Values that enable a group of events as
+ * [defined by Discord](https://discord.com/developers/docs/topics/gateway#gateway-intents).
  */
 public sealed class Intent(public val code: DiscordBitSet) {
     protected constructor(vararg code: Long) : this(DiscordBitSet(code))
@@ -38,6 +40,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
     /**
      * Enables the following events:
      * - [GuildCreate]
+     * - [GuildUpdate]
      * - [GuildDelete]
      * - [GuildRoleCreate]
      * - [GuildRoleUpdate]
@@ -46,6 +49,13 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [ChannelUpdate]
      * - [ChannelDelete]
      * - [ChannelPinsUpdate]
+     * - [ThreadCreate]
+     * - [ThreadUpdate]
+     * - [ThreadDelete]
+     * - [ThreadListSync]
+     * - [ThreadMemberUpdate]
+     * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
+     * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
      */
     public object Guilds : Intent(1 shl 0)
 
@@ -54,6 +64,8 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [GuildMemberAdd]
      * - [GuildMemberUpdate]
      * - [GuildMemberRemove]
+     * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
+     * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
      */
     @PrivilegedIntent
     public object GuildMembers : Intent(1 shl 1)
@@ -85,8 +97,8 @@ public sealed class Intent(public val code: DiscordBitSet) {
 
     /**
      * Enables the following events:
-     * - INVITE_CREATE
-     * - INVITE_DELETE
+     * - [InviteCreate]
+     * - [InviteDelete]
      */
     public object GuildInvites : Intent(1 shl 6)
 
@@ -117,7 +129,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [MessageReactionAdd]
      * - [MessageReactionRemove]
      * - [MessageReactionRemoveAll]
-     * - MESSAGE_REACTION_REMOVE_EMOJI
+     * - [MessageReactionRemoveEmoji]
      */
     public object GuildMessageReactions : Intent(1 shl 10)
 
@@ -129,10 +141,10 @@ public sealed class Intent(public val code: DiscordBitSet) {
 
     /**
      * Enables the following events:
-     * - [ChannelCreate]
-     * - [ChannelDelete]
+     * - [MessageCreate]
      * - [MessageUpdate]
      * - [MessageDelete]
+     * - [ChannelPinsUpdate]
      */
     public object DirectMessages : Intent(1 shl 12)
 
@@ -141,7 +153,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [MessageReactionAdd]
      * - [MessageReactionRemove]
      * - [MessageReactionRemoveAll]
-     * - MESSAGE_REACTION_REMOVE_EMOJI
+     * - [MessageReactionRemoveEmoji]
      */
     public object DirectMessagesReactions : Intent(1 shl 13)
 
@@ -150,6 +162,9 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [TypingStart]
      */
     public object DirectMessageTyping : Intent(1 shl 14)
+
+    @PrivilegedIntent
+    public object MessageContent : Intent(1 shl 15)
 
     /**
      * Enables the following events:
@@ -161,25 +176,28 @@ public sealed class Intent(public val code: DiscordBitSet) {
      */
     public object GuildScheduledEvents : Intent(1 shl 16)
 
+
     public companion object {
         @OptIn(PrivilegedIntent::class)
         public val values: Set<Intent>
             get() = setOf(
-                DirectMessageTyping,
-                GuildIntegrations,
-                GuildEmojis,
-                DirectMessageTyping,
-                DirectMessages,
-                DirectMessagesReactions,
-                GuildBans,
                 Guilds,
-                GuildVoiceStates,
-                GuildMessages,
-                GuildMessageReactions,
+                GuildMembers,
+                GuildBans,
+                GuildEmojis,
+                GuildIntegrations,
                 GuildWebhooks,
                 GuildInvites,
+                GuildVoiceStates,
                 GuildPresences,
-                GuildMembers
+                GuildMessages,
+                GuildMessageReactions,
+                GuildMessageTyping,
+                DirectMessages,
+                DirectMessagesReactions,
+                DirectMessageTyping,
+                MessageContent,
+                GuildScheduledEvents,
             )
     }
 }
@@ -262,12 +280,15 @@ public data class Intents internal constructor(val code: DiscordBitSet) {
         public val all: Intents
             get() = Intents(Intent.values)
 
+        @PrivilegedIntent
+        public val privileged: Intents
+            get() = Intents(GuildPresences, GuildMembers, MessageContent)
+
         @OptIn(PrivilegedIntent::class)
         public val nonPrivileged: Intents
             get() = Intents {
                 +all
-                -Intent.GuildPresences
-                -Intent.GuildMembers
+                -privileged
             }
 
         public val none: Intents = Intents()
@@ -286,7 +307,10 @@ public data class Intents internal constructor(val code: DiscordBitSet) {
 
         public operator fun Intent.unaryMinus() {
             this@IntentsBuilder.code.remove(code)
+        }
 
+        public operator fun Intents.unaryMinus() {
+            this@IntentsBuilder.code.remove(code)
         }
 
         public fun flags(): Intents = Intents(code)

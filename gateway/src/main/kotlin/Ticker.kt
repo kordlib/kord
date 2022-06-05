@@ -1,6 +1,6 @@
 package dev.kord.gateway
 
-import io.ktor.util.error
+import io.ktor.util.logging.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach

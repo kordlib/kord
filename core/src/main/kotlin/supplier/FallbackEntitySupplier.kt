@@ -9,7 +9,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
-import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.switchIfEmpty
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
@@ -76,8 +76,8 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? =
         first.getGuildBanOrNull(guildId, userId) ?: second.getGuildBanOrNull(guildId, userId)
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> =
-        first.getGuildBans(guildId).switchIfEmpty(second.getGuildBans(guildId))
+    override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> =
+        first.getGuildBans(guildId, limit).switchIfEmpty(second.getGuildBans(guildId, limit))
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> =
         first.getGuildMembers(guildId, limit).switchIfEmpty(second.getGuildMembers(guildId, limit))
@@ -159,9 +159,10 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
-        guildId: Snowflake
-    ): Flow<GuildApplicationCommand> = first.getGuildApplicationCommands(applicationId, guildId)
-        .switchIfEmpty(second.getGuildApplicationCommands(applicationId, guildId))
+        guildId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GuildApplicationCommand> = first.getGuildApplicationCommands(applicationId, guildId, withLocalizations)
+        .switchIfEmpty(second.getGuildApplicationCommands(applicationId, guildId, withLocalizations))
 
 
     override suspend fun getGuildApplicationCommandOrNull(
@@ -183,9 +184,9 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         )
 
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> =
-        first.getGlobalApplicationCommands(applicationId)
-            .switchIfEmpty(second.getGlobalApplicationCommands(applicationId))
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
+        first.getGlobalApplicationCommands(applicationId, withLocalizations)
+            .switchIfEmpty(second.getGlobalApplicationCommands(applicationId, withLocalizations))
 
 
     override suspend fun getApplicationCommandPermissionsOrNull(
@@ -208,7 +209,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): PublicFollowupMessage? = first.getFollowupMessageOrNull(applicationId, interactionToken, messageId)
+    ): FollowupMessage? = first.getFollowupMessageOrNull(applicationId, interactionToken, messageId)
         ?: second.getFollowupMessageOrNull(applicationId, interactionToken, messageId)
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =

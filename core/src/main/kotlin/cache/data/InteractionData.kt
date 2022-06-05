@@ -61,7 +61,8 @@ public data class ResolvedObjectsData(
     val users: Optional<Map<Snowflake, UserData>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing(),
-    val messages: Optional<Map<Snowflake, MessageData>> = Optional.Missing()
+    val messages: Optional<Map<Snowflake, MessageData>> = Optional.Missing(),
+    val attachments: Optional<Map<Snowflake, AttachmentData>> = Optional.Missing()
 ) {
     public companion object {
         public fun from(data: ResolvedObjects, guildId: Snowflake?): ResolvedObjectsData {
@@ -70,7 +71,8 @@ public data class ResolvedObjectsData(
                 channels = data.channels.mapValues { ChannelData.from(it.value) },
                 roles = data.roles.mapValues { RoleData.from(guildId!!, it.value) },
                 users = data.users.mapValues { it.value.toData() },
-                messages = data.messages.mapValues { it.value.toData() }
+                messages = data.messages.mapValues { it.value.toData() },
+                attachments = data.attachments.mapValues { AttachmentData.from(it.value) }
             )
         }
     }
@@ -84,15 +86,17 @@ public data class ApplicationInteractionData(
     val name: Optional<String> = Optional.Missing(),
     val options: Optional<List<OptionData>> = Optional.Missing(),
     val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing(),
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val customId: Optional<String> = Optional.Missing(),
     val componentType: Optional<ComponentType> = Optional.Missing(),
-    val values: Optional<List<String>> = Optional.Missing()
+    val values: Optional<List<String>> = Optional.Missing(),
+    val components: Optional<List<ComponentData>> = Optional.Missing()
 ) {
     public companion object {
 
         public fun from(
             data: InteractionCallbackData,
-            guildId: Snowflake?
+            interactionGuildId: Snowflake?, // this is the id of the guild the interaction was triggered in
         ): ApplicationInteractionData {
             return with(data) {
                 ApplicationInteractionData(
@@ -100,11 +104,13 @@ public data class ApplicationInteractionData(
                     type,
                     targetId,
                     name,
-                    options.map { it.map { OptionData.from(it) } },
-                    resolved.map { ResolvedObjectsData.from(it, guildId) },
+                    options.map { it.map { option -> OptionData.from(option) } },
+                    resolved.map { ResolvedObjectsData.from(it, interactionGuildId) },
+                    guildId, // this is the id of the guild the command is registered to
                     customId,
                     componentType,
                     values = values,
+                    components = components.mapList { ComponentData.from(it) }
                 )
             }
         }

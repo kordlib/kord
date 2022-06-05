@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -31,7 +32,7 @@ public data class GuildCreateRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: OptionalInt = OptionalInt.Missing,
+    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("system_channel_id")
     val systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
 )
@@ -45,7 +46,7 @@ public data class GuildChannelCreateRequest(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<Int> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
     val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing(),
@@ -53,6 +54,8 @@ public data class GuildChannelCreateRequest(
     val parentId: OptionalSnowflake = OptionalSnowflake.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("default_auto_archive_duration")
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
 )
 
 @Serializable
@@ -126,14 +129,18 @@ public data class GuildRoleCreateRequest(
     val name: Optional<String> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
     val color: Optional<Color> = Optional.Missing(),
-    @SerialName("hoist")
-    val separate: OptionalBoolean = OptionalBoolean.Missing,
-    val icon: Optional<String> = Optional.Missing(),
+    val hoist: OptionalBoolean = OptionalBoolean.Missing,
+    val icon: Optional<String?> = Optional.Missing(),
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String> = Optional.Missing(),
+    val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val mentionable: OptionalBoolean = OptionalBoolean.Missing,
+    /** Only use this when creating a guild with roles. */
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
-)
+) {
+    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), DeprecationLevel.ERROR)
+    public val separate: OptionalBoolean
+        get() = hoist
+}
 
 
 @Serializable(with = GuildRolePositionModifyRequest.Serializer::class)
@@ -166,13 +173,16 @@ public data class GuildRoleModifyRequest(
     val name: Optional<String?> = Optional.Missing(),
     val permissions: Optional<Permissions?> = Optional.Missing(),
     val color: Optional<Color?> = Optional.Missing(),
-    @SerialName("hoist")
-    val separate: OptionalBoolean? = OptionalBoolean.Missing,
-    val icon: Optional<String> = Optional.Missing(),
+    val hoist: OptionalBoolean? = OptionalBoolean.Missing,
+    val icon: Optional<String?> = Optional.Missing(),
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String> = Optional.Missing(),
+    val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val mentionable: OptionalBoolean? = OptionalBoolean.Missing,
-)
+) {
+    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), DeprecationLevel.ERROR)
+    public val separate: OptionalBoolean?
+        get() = hoist
+}
 
 @Serializable
 public data class GuildIntegrationCreateRequest(val type: Int, val id: String)
@@ -221,7 +231,7 @@ public data class GuildModifyRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: OptionalInt = OptionalInt.Missing,
+    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,

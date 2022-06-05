@@ -1,9 +1,12 @@
 package dev.kord.common.entity
 
+import dev.kord.common.entity.Permission.ManageThreads
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInMinutesSerializer
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -13,6 +16,9 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.WARNING
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 
 /**
  * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
@@ -28,7 +34,7 @@ import kotlinx.serialization.encoding.Encoder
  * @param lastMessageId The id of the last message sent in this channel (may not point to an existing or valid message).
  * @param bitrate The bitrate (in bits) of the voice channel.
  * @param userLimit The user limit of the voice channel.
- * @param rateLimitPerUser amount of seconds a user has to wait before sending another message; bots,
+ * @param rateLimitPerUser amount of time a user has to wait before sending another message; bots,
  * as well as users with the permission [Permission.ManageMessages] or [Permission.ManageChannels] are unaffected.
  * @param recipients The recipients of the DM.
  * @param icon The icon hash.
@@ -46,7 +52,7 @@ public data class DiscordChannel(
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
     val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
-    val name: Optional<String> = Optional.Missing(),
+    val name: Optional<String?> = Optional.Missing(),
     val topic: Optional<String?> = Optional.Missing(),
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("last_message_id")
@@ -55,7 +61,7 @@ public data class DiscordChannel(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: OptionalInt = OptionalInt.Missing,
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")
@@ -65,9 +71,11 @@ public data class DiscordChannel(
     @SerialName("parent_id")
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("last_pin_timestamp")
-    val lastPinTimestamp: Optional<String?> = Optional.Missing(),
+    val lastPinTimestamp: Optional<Instant?> = Optional.Missing(),
     @SerialName("rtc_region")
     val rtcRegion: Optional<String?> = Optional.Missing(),
+    @SerialName("video_quality_mode")
+    val videoQualityMode: Optional<VideoQualityMode> = Optional.Missing(),
     val permissions: Optional<Permissions> = Optional.Missing(),
     @SerialName("message_count")
     val messageCount: OptionalInt = OptionalInt.Missing,
@@ -82,6 +90,7 @@ public data class DiscordChannel(
 
 @Serializable(with = ChannelType.Serializer::class)
 public sealed class ChannelType(public val value: Int) {
+
     /** The default code for unknown values. */
     public class Unknown(value: Int) : ChannelType(value)
 
@@ -97,22 +106,53 @@ public sealed class ChannelType(public val value: Int) {
     /** A direct message between multiple users. */
     public object GroupDM : ChannelType(3)
 
-    /** An organization category. */
+    /**
+     * An [organizational category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101)
+     * that contains up to 50 channels.
+     */
     public object GuildCategory : ChannelType(4)
 
-    /** A channel that users can follow and crosspost into their own server. */
+    /**
+     * A channel that
+     * [users can follow and crosspost into their own server](https://support.discord.com/hc/en-us/articles/360032008192).
+     */
     public object GuildNews : ChannelType(5)
 
     /** A channel in which game developers can sell their game on Discord. */
+    @Deprecated(
+        """
+        Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+        removed on March 10, 2022.
+        
+        See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+        """,
+        level = WARNING,
+    )
     public object GuildStore : ChannelType(6)
 
+    /** A temporary sub-channel within a [GuildNews] channel. */
     public object PublicNewsThread : ChannelType(10)
 
+    /** A temporary sub-channel within a [GuildText] channel. */
     public object PublicGuildThread : ChannelType(11)
 
+    /**
+     * A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and those with the
+     * [ManageThreads] permission.
+     */
     public object PrivateThread : ChannelType(12)
 
+    /**
+     * A voice channel for
+     * [hosting events with an audience](https://support.discord.com/hc/en-us/articles/1500005513722).
+     */
     public object GuildStageVoice : ChannelType(13)
+
+    /**
+     * The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-Student-Hubs-FAQ)
+     * containing the listed servers.
+     */
+    public object GuildDirectory : ChannelType(14)
 
 
     internal object Serializer : KSerializer<ChannelType> {
@@ -126,11 +166,12 @@ public sealed class ChannelType(public val value: Int) {
             3 -> GroupDM
             4 -> GuildCategory
             5 -> GuildNews
-            6 -> GuildStore
+            6 -> @Suppress("DEPRECATION") GuildStore
             10 -> PublicNewsThread
             11 -> PublicGuildThread
             12 -> PrivateThread
             13 -> GuildStageVoice
+            14 -> GuildDirectory
             else -> Unknown(code)
         }
 
@@ -170,11 +211,44 @@ public sealed class OverwriteType(public val value: Int) {
     }
 }
 
+@Serializable(with = VideoQualityMode.Serializer::class)
+public sealed class VideoQualityMode(public val value: Int) {
+
+    final override fun equals(other: Any?): Boolean =
+        this === other || (other is VideoQualityMode && other.value == this.value)
+
+    final override fun hashCode(): Int = value
+
+
+    /** An unknown Video Quality Mode. */
+    public class Unknown(value: Int) : VideoQualityMode(value)
+
+    /** Discord chooses the quality for optimal performance. */
+    public object Auto : VideoQualityMode(1)
+
+    /** 720p. */
+    public object Full : VideoQualityMode(2)
+
+
+    internal object Serializer : KSerializer<VideoQualityMode> {
+        override val descriptor =
+            PrimitiveSerialDescriptor("dev.kord.common.entity.VideoQualityMode", PrimitiveKind.INT)
+
+        override fun serialize(encoder: Encoder, value: VideoQualityMode) = encoder.encodeInt(value.value)
+
+        override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> Auto
+            2 -> Full
+            else -> Unknown(value)
+        }
+    }
+}
+
 @Serializable
 public data class DiscordThreadMetadata(
     val archived: Boolean,
     @SerialName("archive_timestamp")
-    val archiveTimestamp: String,
+    val archiveTimestamp: Instant,
     @SerialName("auto_archive_duration")
     val autoArchiveDuration: ArchiveDuration,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
@@ -184,24 +258,24 @@ public data class DiscordThreadMetadata(
 )
 
 @Serializable(with = ArchiveDuration.Serializer::class)
-public sealed class ArchiveDuration(public val duration: Int) {
-    public class Unknown(duration: Int) : ArchiveDuration(duration)
-    public object Hour : ArchiveDuration(60)
-    public object Day : ArchiveDuration(1440)
-    public object ThreeDays : ArchiveDuration(4320)
-    public object Week : ArchiveDuration(10080)
+public sealed class ArchiveDuration(public val duration: Duration) {
+    public class Unknown(duration: Duration) : ArchiveDuration(duration)
+    public object Hour : ArchiveDuration(60.minutes)
+    public object Day : ArchiveDuration(1440.minutes)
+    public object ThreeDays : ArchiveDuration(4320.minutes)
+    public object Week : ArchiveDuration(10080.minutes)
 
     public object Serializer : KSerializer<ArchiveDuration> {
+
+        override val descriptor: SerialDescriptor get() = DurationInMinutesSerializer.descriptor
+
         override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val value = decoder.decodeInt()
+            val value = decoder.decodeSerializableValue(DurationInMinutesSerializer)
             return values.firstOrNull { it.duration == value } ?: Unknown(value)
         }
 
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("AutoArchieveDuration", PrimitiveKind.INT)
-
         override fun serialize(encoder: Encoder, value: ArchiveDuration) {
-            encoder.encodeInt(value.duration)
+            encoder.encodeSerializableValue(DurationInMinutesSerializer, value.duration)
         }
     }
 

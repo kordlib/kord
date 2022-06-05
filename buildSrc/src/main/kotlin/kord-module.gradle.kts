@@ -89,7 +89,7 @@ tasks {
 
     publishing {
         publications.withType<MavenPublication> {
-            from(components["kotlin"])
+            from(components["java"])
             artifact(sourcesJar.get())
             artifact(dokkaJar.get())
         }

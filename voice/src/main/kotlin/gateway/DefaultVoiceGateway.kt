@@ -6,10 +6,10 @@ import dev.kord.gateway.retry.Retry
 import dev.kord.voice.gateway.handler.HandshakeHandler
 import dev.kord.voice.gateway.handler.HeartbeatHandler
 import io.ktor.client.*
-import io.ktor.client.features.websocket.*
+import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
-import io.ktor.http.cio.websocket.*
-import io.ktor.util.*
+import io.ktor.util.logging.*
+import io.ktor.websocket.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update

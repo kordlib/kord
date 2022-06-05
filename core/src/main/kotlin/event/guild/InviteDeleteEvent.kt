@@ -1,21 +1,20 @@
 package dev.kord.core.event.guild
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
+import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.InviteDeleteData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.channel.TopGuildChannel
+import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
 import dev.kord.core.event.kordCoroutineScope
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 /**
  * Sent when an invite is deleted.
@@ -29,24 +28,24 @@ public class InviteDeleteEvent(
 ) : Event, CoroutineScope by coroutineScope, Strategizable {
 
     /**
-     * The [TopGuildChannel] of the invite.
+     * The id of the [Channel] the invite is for.
      */
     public val channelId: Snowflake get() = data.channelId
 
     /**
-     * The behavior of the [TopGuildChannel] of the invite.
+     * The behavior of the [Channel] the invite is for.
      */
-    public val channel: TopGuildChannelBehavior get() = TopGuildChannelBehavior(guildId = guildId, id = channelId, kord = kord)
+    public val channel: ChannelBehavior get() = ChannelBehavior(id = channelId, kord = kord)
 
     /**
-     * The [Guild] of the invite.
+     * The id of the [Guild] of the invite.
      */
-    public val guildId: Snowflake get() = data.guildId
+    public val guildId: Snowflake? get() = data.guildId.value
 
     /**
      * The behavior of the [Guild] of the invite.
      */
-    public val guild: GuildBehavior get() : GuildBehavior = GuildBehavior(id = guildId, kord = kord)
+    public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(id = it, kord = kord) }
 
     /**
      * The unique invite code.
@@ -54,18 +53,38 @@ public class InviteDeleteEvent(
     public val code: String get() = data.code
 
     /**
-     * Requests to get the [TopGuildChannel] of the invite.
+     * Requests to get the [Channel] this invite is for.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the  wasn't present.
      */
-    public suspend fun getChannel(): TopGuildChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): Channel = supplier.getChannel(channelId)
 
-    public suspend fun getChannelOrNull(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
+    /**
+     * Requests to get the [Channel] this invite is for,
+     * returns null if the channel isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
 
     /**
      * Requests to get the [Guild] of the invite.
      */
-    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+    @Deprecated(
+        "'guildId' might not be present, use 'getGuildOrNull' instead.",
+        ReplaceWith("this.getGuildOrNull()"),
+        DeprecationLevel.ERROR,
+    )
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId!!)
 
-    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+    /**
+     * Requests to get the [Guild] of the invite.
+     * returns null if the guild isn't present, or if invite does not target a guild.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteDeleteEvent =
         InviteDeleteEvent(data, kord, shard, strategy.supply(kord))

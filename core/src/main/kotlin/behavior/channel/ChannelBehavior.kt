@@ -23,7 +23,7 @@ public interface ChannelBehavior : KordEntity, Strategizable {
      * This channel [formatted as a mention](https://discord.com/developers/docs/reference#message-formatting)
      * as used by the Discord API.
      */
-    public val mention: String get() = "<#${id.value}>"
+    public val mention: String get() = "<#$id>"
 
     /**
      * Requests to get this behavior as a [Channel] .

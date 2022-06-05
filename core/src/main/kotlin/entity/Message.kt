@@ -1,5 +1,8 @@
 package dev.kord.core.entity
 
+import cache.data.MessageInteractionData
+import dev.kord.common.entity.InteractionType
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.MessageType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.mapNullable
@@ -10,16 +13,17 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
-import dev.kord.core.behavior.interaction.InteractionResponseBehavior
+import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
 import dev.kord.core.cache.data.MessageData
+import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
+import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.component.Component
 import dev.kord.core.entity.interaction.ActionInteraction
-import dev.kord.core.entity.interaction.FollowupMessage
-import dev.kord.core.entity.interaction.MessageInteraction
+import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -27,7 +31,6 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import java.util.Objects
 
 /**
@@ -38,6 +41,50 @@ public class Message(
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : MessageBehavior {
+
+    /**
+     * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object)
+     *
+     * This is sent on the [Message] object when the message is a response to an [ActionInteraction].
+     */
+    public class Interaction(
+        public val data: MessageInteractionData,
+        override val kord: Kord,
+        override val supplier: EntitySupplier = kord.defaultSupplier
+    ) : KordEntity, Strategizable {
+
+        /** [Id][ActionInteraction.id] of the [ActionInteraction] this message is responding to. */
+        override val id: Snowflake get() = data.id
+
+        /** The [name][ApplicationCommand.name] of the [ApplicationCommand] that triggered this message. */
+        public val name: String get() = data.name
+
+        /** The [UserBehavior] of the [user][ActionInteraction.user] who invoked the [ActionInteraction]. */
+        public val user: UserBehavior get() = UserBehavior(data.user, kord)
+
+        /** The [InteractionType] of the interaction [Interaction]. */
+        public val type: InteractionType get() = data.type
+
+        /**
+         * Requests the [User] of this interaction message.
+         *
+         * @throws RequestException if something went wrong while retrieving the user.
+         * @throws EntityNotFoundException if the user was null.
+         */
+        public suspend fun getUser(): User = supplier.getUser(user.id)
+
+        /**
+         * Requests to get the user of this interaction message,
+         * returns null if the [User] isn't present.
+         *
+         * @throws [RequestException] if anything went wrong during the request.
+         */
+        public suspend fun getUserOrNull(): User? = supplier.getUserOrNull(user.id)
+
+        override fun withStrategy(strategy: EntitySupplyStrategy<*>): Interaction =
+            Interaction(data, kord, strategy.supply(kord))
+    }
+
 
     /**
      * The id of this message.
@@ -79,8 +126,7 @@ public class Message(
      *
      * Returns null if the message was never edited.
      */
-    public val editedTimestamp: Instant?
-        get() = data.editedTimestamp?.toInstant()
+    public val editedTimestamp: Instant? get() = data.editedTimestamp
 
     /**
      * The embedded content of this message.
@@ -189,10 +235,9 @@ public class Message(
     public val mentionedUserBehaviors: Set<UserBehavior> get() = data.mentions.map { UserBehavior(it, kord) }.toSet()
 
     /**
-     * The [MessageInteraction] sent on this message object when it is a response to an [dev.kord.core.entity.interaction.ActionInteraction].
+     * The [Message.Interaction] sent on this message object when it is a response to an [ActionInteraction].
      */
-
-    public val interaction: MessageInteraction? get() = data.interaction.mapNullable { MessageInteraction(it, kord) }.value
+    public val interaction: Interaction? get() = data.interaction.mapNullable { Interaction(it, kord) }.value
 
     /**
      * The [users][User] mentioned in this message.
@@ -219,7 +264,7 @@ public class Message(
     /**
      * The instant when this message was created.
      */
-    public val timestamp: Instant get() = data.timestamp.toInstant()
+    public val timestamp: Instant get() = data.timestamp
 
     /**
      * Whether this message was send using `\tts`.
@@ -231,6 +276,9 @@ public class Message(
      */
     public val type: MessageType get() = data.type
 
+    /** The flags of this message. */
+    public val flags: MessageFlags? get() = data.flags.value
+
     /**
      * The [id][Webhook.id] of the [Webhook] that was used to send this message.
      *
@@ -238,9 +286,13 @@ public class Message(
      */
     public val webhookId: Snowflake? get() = data.webhookId.value
 
-
+    @Deprecated("Replaced with 'actionRows'.", ReplaceWith("this.actionRows"))
     public val components: List<Component>
         get() = data.components.orEmpty().map { Component(it) }
+
+    /** The [ActionRowComponent]s of this message. */
+    public val actionRows: List<ActionRowComponent>
+        get() = data.components.orEmpty().map { ActionRowComponent(it) }
 
     /**
      * Returns itself.

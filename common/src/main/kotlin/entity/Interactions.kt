@@ -8,6 +8,8 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.value
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
@@ -20,15 +22,24 @@ public data class DiscordApplicationCommand(
     @SerialName("application_id")
     val applicationId: Snowflake,
     val name: String,
+    @SerialName("name_localizations")
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     /**
      * Don't trust the docs: This is nullable on non chat input commands.
      */
     val description: String?,
+    @SerialName("description_localizations")
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @SerialName("dm_permission")
+    val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("default_permission")
-    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val version: Snowflake
 )
 
@@ -60,7 +71,11 @@ public sealed class ApplicationCommandType(public val value: Int) {
 public data class ApplicationCommandOption(
     val type: ApplicationCommandOptionType,
     val name: String,
+    @SerialName("name_localizations")
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val description: String,
+    @SerialName("description_localizations")
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
     @OptIn(KordExperimental::class)
@@ -68,7 +83,11 @@ public data class ApplicationCommandOption(
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("channel_types")
-    val channelTypes: Optional<List<ChannelType>> = Optional.Missing()
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    @SerialName("min_value")
+    val minValue: Optional<JsonPrimitive> = Optional.Missing(),
+    @SerialName("max_value")
+    val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
 )
 
 /**
@@ -99,6 +118,7 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
     public object Role : ApplicationCommandOptionType(8)
     public object Mentionable : ApplicationCommandOptionType(9)
     public object Number : ApplicationCommandOptionType(10)
+    public object Attachment : ApplicationCommandOptionType(11)
     public class Unknown(type: Int) : ApplicationCommandOptionType(type)
 
     internal object Serializer : KSerializer<ApplicationCommandOptionType> {
@@ -118,6 +138,7 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
                 8 -> Role
                 9 -> Mentionable
                 10 -> Number
+                11 -> Attachment
                 else -> Unknown(type)
             }
         }
@@ -130,51 +151,78 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
 
 }
 
+private val LocalizationSerializer =
+    Optional.serializer(MapSerializer(Locale.serializer(), String.serializer()).nullable)
+
 @Serializable(Choice.Serializer::class)
 public sealed class Choice<out T> {
     public abstract val name: String
+    public abstract val nameLocalizations: Optional<Map<Locale, String>?>
     public abstract val value: T
 
-    public data class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
-    public data class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
-    public data class StringChoice(override val name: String, override val value: String) : Choice<String>()
+    public data class IntChoice(
+        override val name: String,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val value: Long
+    ) : Choice<Long>()
 
-    internal class Serializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
+    public data class NumberChoice(
+        override val name: String,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val value: Double
+    ) : Choice<Double>()
+
+    public data class StringChoice(
+        override val name: String,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val value: String
+    ) : Choice<String>()
+
+    internal object Serializer : KSerializer<Choice<*>> {
+
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
-            element<String>("value")
+            element<JsonPrimitive>("value")
+            element<Map<Locale, String>?>("name_localizations", isOptional = true)
         }
 
-        override fun deserialize(decoder: Decoder): Choice<*> {
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+
             lateinit var name: String
+            var nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing()
             lateinit var value: JsonPrimitive
-            with(decoder.beginStructure(descriptor) as JsonDecoder) {
-                while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        0 -> name = decodeStringElement(descriptor, index)
-                        1 -> value = decodeJsonElement().jsonPrimitive
 
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> throw SerializationException("unknown index: $index")
-                    }
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> name = decodeStringElement(descriptor, index)
+                    1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
+                    2 -> nameLocalizations = decodeSerializableElement(descriptor, index, LocalizationSerializer)
+
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("unknown index: $index")
                 }
-                endStructure(descriptor)
             }
-            return when {
-                value.longOrNull != null -> IntChoice(name, value.long)
-                value.doubleOrNull != null -> NumberChoice(name, value.double)
-                else -> StringChoice(name, value.toString())
+
+            when {
+                value.isString -> StringChoice(name, nameLocalizations, value.content)
+                else -> value.longOrNull?.let { IntChoice(name, nameLocalizations, it) }
+                    ?: value.doubleOrNull?.let { NumberChoice(name, nameLocalizations, it) }
+                    ?: throw SerializationException("Illegal choice value: $value")
             }
         }
 
-        override fun serialize(encoder: Encoder, value: Choice<*>) {
-            encoder.encodeStructure(descriptor) {
-                encodeStringElement(descriptor, 0, value.name)
-                when (value) {
-                    is IntChoice -> encodeLongElement(descriptor, 1, value.value)
-                    is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
-                    else -> encodeStringElement(descriptor, 1, value.value.toString())
-                }
+        override fun serialize(encoder: Encoder, value: Choice<*>) = encoder.encodeStructure(descriptor) {
+
+            encodeStringElement(descriptor, 0, value.name)
+
+            when (value) {
+                is IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
+                is StringChoice -> encodeStringElement(descriptor, 1, value.value)
+            }
+
+            if (value.nameLocalizations !is Optional.Missing) {
+                encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
             }
         }
     }
@@ -182,11 +230,12 @@ public sealed class Choice<out T> {
 
 @Serializable
 public data class ResolvedObjects(
-    val members: Optional<Map<Snowflake, DiscordGuildMember>> = Optional.Missing(),
+    val members: Optional<Map<Snowflake, DiscordInteractionGuildMember>> = Optional.Missing(),
     val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
     val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing(),
     val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing(),
-    val messages: Optional<Map<Snowflake, DiscordMessage>> = Optional.Missing()
+    val messages: Optional<Map<Snowflake, DiscordMessage>> = Optional.Missing(),
+    val attachments: Optional<Map<Snowflake, DiscordAttachment>> = Optional.Missing()
 )
 
 @Serializable
@@ -254,6 +303,7 @@ public sealed class InteractionType(public val type: Int) {
     public object Component : InteractionType(3)
 
     public object AutoComplete : InteractionType(4)
+    public object ModalSubmit : InteractionType(5)
     public class Unknown(type: Int) : InteractionType(type)
 
     override fun toString(): String = when (this) {
@@ -261,6 +311,7 @@ public sealed class InteractionType(public val type: Int) {
         ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
         Component -> "InteractionType.ComponentInvoke($type)"
         AutoComplete -> "InteractionType.AutoComplete($type)"
+        ModalSubmit -> "InteractionType.ModalSubmit($type)"
         is Unknown -> "InteractionType.Unknown($type)"
     }
 
@@ -275,6 +326,7 @@ public sealed class InteractionType(public val type: Int) {
                 2 -> ApplicationCommand
                 3 -> Component
                 4 -> AutoComplete
+                5 -> ModalSubmit
                 else -> Unknown(type)
             }
         }
@@ -295,11 +347,14 @@ public data class InteractionCallbackData(
     val name: Optional<String> = Optional.Missing(),
     val resolved: Optional<ResolvedObjects> = Optional.Missing(),
     val options: Optional<List<Option>> = Optional.Missing(),
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("custom_id")
     val customId: Optional<String> = Optional.Missing(),
     @SerialName("component_type")
     val componentType: Optional<ComponentType> = Optional.Missing(),
     val values: Optional<List<String>> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing()
 )
 
 @Serializable(with = Option.Serializer::class)
@@ -369,6 +424,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.Mentionable,
                 ApplicationCommandOptionType.Role,
                 ApplicationCommandOptionType.String,
+                ApplicationCommandOptionType.Attachment,
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
@@ -496,6 +552,15 @@ public sealed class CommandArgument<out T> : Option() {
             get() = ApplicationCommandOptionType.Mentionable
     }
 
+    public data class AttachmentArgument(
+        override val name: String,
+        override val value: Snowflake,
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
+    ) : CommandArgument<Snowflake>() {
+        override val type: ApplicationCommandOptionType
+            get() = ApplicationCommandOptionType.Attachment
+    }
+
     /**
      * Representation of a partial user input of an auto completed argument.
      *
@@ -504,7 +569,7 @@ public sealed class CommandArgument<out T> : Option() {
      * @property value whatever the user already typed into the argument field
      * @property focused always true, since this is an auto complete argument
      */
-    public class AutoCompleteArgument(
+    public data class AutoCompleteArgument(
         override val name: String,
         override val type: ApplicationCommandOptionType,
         override val value: String,
@@ -551,6 +616,12 @@ public sealed class CommandArgument<out T> : Option() {
                     )
                     is IntegerArgument -> encodeLongElement(descriptor, 1, value.value)
                     is NumberArgument -> encodeDoubleElement(descriptor, 1, value.value)
+                    is AttachmentArgument -> encodeSerializableElement(
+                        descriptor,
+                        1,
+                        Snowflake.serializer(),
+                        value.value
+                    )
                     is AutoCompleteArgument, is StringArgument -> encodeStringElement(
                         descriptor,
                         1,
@@ -598,6 +669,9 @@ public sealed class CommandArgument<out T> : Option() {
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
                 ApplicationCommandOptionType.User -> UserArgument(
+                    name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
+                )
+                ApplicationCommandOptionType.Attachment -> AttachmentArgument(
                     name, json.decodeFromJsonElement(Snowflake.serializer(), element), focused
                 )
                 ApplicationCommandOptionType.SubCommand,
@@ -673,6 +747,7 @@ public sealed class InteractionResponseType(public val type: Int) {
     public object DeferredUpdateMessage : InteractionResponseType(6)
     public object UpdateMessage : InteractionResponseType(7)
     public object ApplicationCommandAutoCompleteResult : InteractionResponseType(8)
+    public object Modal : InteractionResponseType(9)
     public class Unknown(type: Int) : InteractionResponseType(type)
 
     internal object Serializer : KSerializer<InteractionResponseType> {
@@ -688,6 +763,7 @@ public sealed class InteractionResponseType(public val type: Int) {
                 6 -> DeferredUpdateMessage
                 7 -> UpdateMessage
                 8 -> ApplicationCommandAutoCompleteResult
+                9 -> Modal
                 else -> Unknown(type)
             }
         }
@@ -709,14 +785,6 @@ public data class DiscordGuildApplicationCommandPermissions(
     val permissions: List<DiscordGuildApplicationCommandPermission>
 )
 
-
-@Serializable
-public data class PartialDiscordGuildApplicationCommandPermissions(
-    val id: Snowflake,
-    val permissions: List<DiscordGuildApplicationCommandPermission>
-)
-
-
 @Serializable
 public data class DiscordGuildApplicationCommandPermission(
     val id: Snowflake,
@@ -727,6 +795,7 @@ public data class DiscordGuildApplicationCommandPermission(
     public sealed class Type(public val value: Int) {
         public object Role : Type(1)
         public object User : Type(2)
+        public object Channel : Type(3)
         public class Unknown(value: Int) : Type(value)
 
         public object Serializer : KSerializer<Type> {
@@ -737,6 +806,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 when (val value = decoder.decodeInt()) {
                     1 -> Role
                     2 -> User
+                    3 -> Channel
                     else -> Unknown(value)
                 }
 
@@ -748,4 +818,12 @@ public data class DiscordGuildApplicationCommandPermission(
 @Serializable
 public data class DiscordAutoComplete<T>(
     val choices: List<Choice<T>>
+)
+
+@Serializable
+public data class DiscordModal(
+    val title: String,
+    @SerialName("custom_id")
+    val customId: String,
+    val components: List<DiscordComponent>,
 )

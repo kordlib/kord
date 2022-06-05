@@ -26,6 +26,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
 
 class KordEventDropTest {
 
@@ -64,7 +65,7 @@ class KordEventDropTest {
             DiscordGuild(
                 Snowflake("1337"),
                 "discord guild",
-                afkTimeout = 0,
+                afkTimeout = 0.seconds,
                 defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
                 emojis = emptyList(),
                 explicitContentFilter = ExplicitContentFilter.AllMembers,

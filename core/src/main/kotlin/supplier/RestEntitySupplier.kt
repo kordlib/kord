@@ -14,7 +14,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
-import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
@@ -161,10 +161,16 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             emit(Role(RoleData.from(guildId, roleData), kord))
     }
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> = flow {
-        for (banData in guild.getGuildBans(guildId))
-            emit(Ban(BanData.from(guildId, banData), kord))
-    }
+    // maxBatchSize: see https://discord.com/developers/docs/resources/guild#get-guild-bans
+    override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> =
+        limitedPagination(limit, maxBatchSize = 1000) { batchSize ->
+            paginateForwards(batchSize, idSelector = { it.user.id }) { after ->
+                guild.getGuildBans(guildId, position = after, limit = batchSize)
+            }
+        }.map {
+            val data = BanData.from(guildId, it)
+            Ban(data, kord)
+        }
 
     // maxBatchSize: see https://discord.com/developers/docs/resources/guild#list-guild-members
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> =
@@ -277,9 +283,9 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
      * Entities will be fetched from Discord directly, ignoring any cached values.
      * @throws RestRequestException when the request failed.
      */
-    public suspend fun getApplicationInfo(): ApplicationInfo {
+    public suspend fun getApplicationInfo(): Application {
         val response = application.getCurrentApplicationInfo()
-        return ApplicationInfo(ApplicationInfoData.from(response), kord)
+        return Application(ApplicationData.from(response), kord)
     }
 
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? = catchNotFound {
@@ -391,9 +397,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
-        guildId: Snowflake
+        guildId: Snowflake,
+        withLocalizations: Boolean?
     ): Flow<GuildApplicationCommand> = flow {
-        for (command in interaction.getGuildApplicationCommands(applicationId, guildId)) {
+        for (command in interaction.getGuildApplicationCommands(applicationId, guildId, withLocalizations)) {
             val data = ApplicationCommandData.from(command)
             emit(GuildApplicationCommand(data, interaction))
         }
@@ -409,8 +416,8 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GlobalApplicationCommand(data, interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> = flow {
-        for (command in interaction.getGlobalApplicationCommands(applicationId)) {
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> = flow {
+        for (command in interaction.getGlobalApplicationCommands(applicationId, withLocalizations)) {
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, interaction))
         }
@@ -440,11 +447,11 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): PublicFollowupMessage? = catchNotFound {
+    ): FollowupMessage? = catchNotFound {
         val response = interaction.getFollowupMessage(applicationId, interactionToken, messageId)
         val data = MessageData.from(response)
         val message = Message(data, kord)
-        PublicFollowupMessage(message, applicationId, interactionToken, kord)
+        FollowupMessage(message, applicationId, interactionToken, kord)
     }
 
     override fun getGuildApplicationCommandPermissions(

@@ -2,7 +2,6 @@ package dev.kord.core.event.guild
 
 import dev.kord.core.Kord
 import dev.kord.core.entity.GuildScheduledEvent
-import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -22,6 +21,6 @@ public data class GuildScheduledEventDeleteEvent(
     override val supplier: EntitySupplier = kord.defaultSupplier,
     public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
 ) : GuildScheduledEventEvent, CoroutineScope by coroutineScope {
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildScheduledEventDeleteEvent =
         copy(supplier = strategy.supply(kord))
 }

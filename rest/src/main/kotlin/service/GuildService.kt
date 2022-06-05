@@ -192,8 +192,15 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             auditLogReason(reason)
         }
 
-    public suspend fun getGuildBans(guildId: Snowflake): List<BanResponse> = call(Route.GuildBansGet) {
+    public suspend fun getGuildBans(
+        guildId: Snowflake,
+        position: Position.BeforeOrAfter? = null,
+        limit: Int? = null,
+    ): List<BanResponse> = call(Route.GuildBansGet) {
         keys[Route.GuildId] = guildId
+
+        limit?.let { parameter("limit", it) }
+        position?.let { parameter(it.key, it.value) }
     }
 
     public suspend fun getGuildBan(guildId: Snowflake, userId: Snowflake): BanResponse = call(Route.GuildBanGet) {
@@ -301,9 +308,10 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.GuildId] = guildId
         }
 
-    public suspend fun getGuildInvites(guildId: Snowflake): List<DiscordInvite> = call(Route.GuildInvitesGet) {
-        keys[Route.GuildId] = guildId
-    }
+    public suspend fun getGuildInvites(guildId: Snowflake): List<DiscordInviteWithMetadata> =
+        call(Route.GuildInvitesGet) {
+            keys[Route.GuildId] = guildId
+        }
 
     public suspend fun getGuildIntegrations(guildId: Snowflake): List<DiscordIntegration> =
         call(Route.GuildIntegrationGet) {
@@ -347,13 +355,13 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.IntegrationId] = integrationId
         }
 
-    @Suppress("RedundantSuspendModifier")
+    @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER")
     @DeprecatedSinceKord("0.7.0")
     @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("getGuildWidget(guildId)"), DeprecationLevel.ERROR)
     public suspend fun getGuildEmbed(guildId: Snowflake): Nothing =
         throw Exception("Guild embeds were renamed to widgets.")
 
-    @Suppress("RedundantSuspendModifier")
+    @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER")
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(
         "Guild embeds were renamed to widgets.",

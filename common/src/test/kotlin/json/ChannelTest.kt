@@ -4,10 +4,11 @@ import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.optional.value
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.seconds
 
 private fun file(name: String): String {
     val loader = ChannelTest::class.java.classLoader
-    return loader.getResource("json/channel/$name.json").readText()
+    return loader.getResource("json/channel/$name.json")!!.readText()
 }
 
 class ChannelTest {
@@ -106,7 +107,7 @@ class ChannelTest {
             type.value shouldBe 0
             position.asNullable!! shouldBe 6
             permissionOverwrites.value shouldBe emptyList()
-            rateLimitPerUser.asNullable shouldBe 2
+            rateLimitPerUser.value shouldBe 2.seconds
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
             lastMessageId.value?.toString() shouldBe "155117677105512449"
@@ -130,23 +131,6 @@ class ChannelTest {
             bitrate.value shouldBe 64000
             userLimit.value shouldBe 0
             parentId.value?.toString() shouldBe null
-        }
-    }
-
-
-    @Test
-    fun `StoreChannel serialization`() {
-        val channel = Json.decodeFromString(DiscordChannel.serializer(), file("storechannel"))
-
-        with(channel) {
-            id.toString() shouldBe "41771983423143937"
-            guildId.value!!.toString() shouldBe "41771983423143937"
-            name.value shouldBe "buy dota-2"
-            type.value shouldBe 6
-            position.asNullable shouldBe 0
-            permissionOverwrites.value!! shouldBe emptyList()
-            nsfw.asNullable shouldBe false
-            parentId shouldBe null
         }
     }
 }

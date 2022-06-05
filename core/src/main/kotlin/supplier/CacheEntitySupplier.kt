@@ -7,7 +7,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.any
 import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
 import dev.kord.core.cache.idGt
@@ -20,12 +19,12 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
-import dev.kord.core.entity.interaction.PublicFollowupMessage
+import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
+import dev.kord.core.internalAny as any
 
 /**
  * [EntitySupplier] that uses a [DataCache] to resolve entities.
@@ -198,9 +197,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Ban(data, kord)
     }
 
-    override fun getGuildBans(guildId: Snowflake): Flow<Ban> = cache.query<BanData> {
-        idEq(BanData::guildId, guildId)
-    }.asFlow().map { Ban(it, kord) }
+    override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> {
+        checkLimit(limit)
+        return cache.query<BanData> { idEq(BanData::guildId, guildId) }
+            .asFlow()
+            .map { Ban(it, kord) }
+            .limit(limit)
+    }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
         checkLimit(limit)
@@ -325,10 +328,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return flow {
             val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
                 .toCollection()
-                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp?.toInstant() }
+                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
                 .asFlow()
                 .filter {
-                    val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+                    val time = it.threadMetadata.value?.archiveTimestamp
                     it.threadMetadata.value?.archived == true
                             && time != null
                             && (before == null || time < before)
@@ -346,10 +349,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return flow {
             val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
                 .toCollection()
-                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp?.toInstant() }
+                .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
                 .asFlow()
                 .filter {
-                    val time = it.threadMetadata.value?.archiveTimestamp?.toInstant()
+                    val time = it.threadMetadata.value?.archiveTimestamp
                     it.threadMetadata.value?.archived == true
                             && time != null
                             && (before == null || time < before)
@@ -388,11 +391,22 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getGuildApplicationCommands(
         applicationId: Snowflake,
-        guildId: Snowflake
+        guildId: Snowflake,
+        withLocalizations: Boolean?
     ): Flow<GuildApplicationCommand> = cache.query<ApplicationCommandData> {
         idEq(ApplicationCommandData::guildId, guildId)
         idEq(ApplicationCommandData::applicationId, applicationId)
-    }.asFlow().map { GuildApplicationCommand(it, kord.rest.interaction) }
+    }.asFlow()
+        .map {
+            when (withLocalizations) {
+                true, null -> it
+                false -> it.copy(
+                    nameLocalizations = Optional.Missing(),
+                    descriptionLocalizations = Optional.Missing(),
+                )
+            }
+        }
+        .map { GuildApplicationCommand(it, kord.rest.interaction) }
 
 
     override suspend fun getGuildApplicationCommandOrNull(
@@ -422,11 +436,21 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GlobalApplicationCommand(data, kord.rest.interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake): Flow<GlobalApplicationCommand> =
+    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
         cache.query<ApplicationCommandData> {
             idEq(ApplicationCommandData::guildId, null)
             idEq(ApplicationCommandData::applicationId, applicationId)
-        }.asFlow().map { GlobalApplicationCommand(it, kord.rest.interaction) }
+        }.asFlow()
+            .map {
+                when (withLocalizations) {
+                    true, null -> it
+                    false -> it.copy(
+                        nameLocalizations = Optional.Missing(),
+                        descriptionLocalizations = Optional.Missing(),
+                    )
+                }
+            }
+            .map { GlobalApplicationCommand(it, kord.rest.interaction) }
 
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
@@ -455,13 +479,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): PublicFollowupMessage? {
+    ): FollowupMessage? {
         val data = cache.query<MessageData> {
             idEq(MessageData::applicationId, applicationId)
             idEq(MessageData::id, messageId)
         }.singleOrNull() ?: return null
 
-        return PublicFollowupMessage(Message(data, kord), applicationId, interactionToken, kord)
+        return FollowupMessage(Message(data, kord), applicationId, interactionToken, kord)
     }
 
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? {

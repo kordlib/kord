@@ -124,6 +124,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Unknown application command. */
     UnknownApplicationCommand(10063),
 
+    /** Unknown voice state. */
+    UnknownVoiceState(10065),
+
     /** Unknown application command permissions. */
     UnknownApplicationCommandPermissions(10066),
 
@@ -253,6 +256,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** You are opening direct messages too fast. */
     TooFastDM(40003),
 
+    /** Send messages has been temporarily disabled. */
+    SendMessagesTemporarilyDisabled(40004),
+
     /** Request entity too large. Try sending something smaller in size. */
     RequestEntityTooLarge(40005),
 
@@ -270,6 +276,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** An application command with that name already exists. */
     ApplicationCommandNameExists(40041),
+
+    /** Interaction has already been acknowledged. */
+    InteractionAlreadyAcknowledged(40060),
 
     /** Missing access. */
     MissingAccess(50001),
@@ -292,8 +301,8 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Cannot send messages to this user. */
     CannotSendMessagesToUser(50007),
 
-    /** Cannot send messages in a voice channel. */
-    CannotSendMessagesInVoiceChannel(50008),
+    /** Cannot send messages in a non-text channel. */
+    CannotSendMessagesInNonTextChannel(50008),
 
     /** Channel verification level is too high for you to gain access. */
     ChannelVerificationTooHigh(50009),
@@ -383,6 +392,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Cannot delete a channel required for Community guilds. */
     CannotDeleteRequiredCommunityChannel(50074),
+
+    /** Cannot edit stickers within a message. */
+    CannotEditStickersWithinMessage(50080),
 
     /** Invalid sticker sent. */
     InvalidStickerSent(50081),
@@ -496,6 +508,14 @@ public enum class JsonErrorCode(public val code: Int) {
         )
         @JvmField
         public val InvalidThreadBefore: JsonErrorCode = BeforeValueBeforeThreadCreate
+
+        @Deprecated(
+            "'JsonErrorCode.CannotSendMessagesInVoiceChannel' was renamed to JsonErrorCode.CannotSendMessagesInNonTextChannel",
+            ReplaceWith("JsonErrorCode.CannotSendMessagesInNonTextChannel"),
+            DeprecationLevel.ERROR,
+        )
+        @JvmField
+        public val CannotSendMessagesInVoiceChannel: JsonErrorCode = CannotSendMessagesInNonTextChannel
 
         @Deprecated(
             "Object JsonErrorCode.JsonErrorCodeSerializer is internal now, use JsonErrorCode.serializer() instead.",

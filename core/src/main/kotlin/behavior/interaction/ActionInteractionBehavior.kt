@@ -1,8 +1,13 @@
 package dev.kord.core.behavior.interaction
 
+import dev.kord.common.annotation.KordUnsafe
+import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.interaction.response.*
 import dev.kord.core.entity.Message
+import dev.kord.core.entity.interaction.ActionInteraction
+import dev.kord.core.entity.interaction.Interaction
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -12,30 +17,178 @@ import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-/**
- * The behavior of a [Discord ActionInteraction](https://discord.com/developers/docs/interactions/slash-commands#interaction) which does perform an action
- * (e.g. slash commands and context actions)
- */
+/** The behavior of an [ActionInteraction]. */
 public interface ActionInteractionBehavior : InteractionBehavior {
 
     /**
-     * Acknowledges an interaction ephemerally.
+     * Acknowledges the interaction ephemerally. The user will see a 'loading' animation.
      *
-     * @return [EphemeralInteractionResponseBehavior] Ephemeral acknowledgement of the interaction.
+     * Call [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
-    public suspend fun acknowledgeEphemeral(): EphemeralInteractionResponseBehavior {
-        kord.rest.interaction.acknowledge(id, token, ephemeral = true)
-        return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        "Renamed to 'deferEphemeralMessage'.",
+        ReplaceWith("this.deferEphemeralMessage()"),
+        DeprecationLevel.ERROR,
+    )
+    public suspend fun acknowledgeEphemeral(): EphemeralMessageInteractionResponseBehavior = deferEphemeralMessage()
+
+    /**
+     * Acknowledges the interaction ephemerally with the intent of responding with an [ephemeral][MessageFlag.Ephemeral]
+     * message later by calling [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object. The
+     * user will see a 'loading' animation.
+     *
+     * ## This method is deprecated
+     * Replace code like
+     * ```kotlin
+     * val response = interaction.deferEphemeralMessage()
+     * response.followUpEphemeral { ... }
+     * response.followUp { ... }
+     * ```
+     * or
+     * ```kotlin
+     * val response = interaction.deferEphemeralMessage()
+     * response.edit { ... }
+     * response.followUp { ... }
+     * ```
+     * with
+     * ```kotlin
+     * val deferred = interaction.deferEphemeralResponse()
+     * val response = deferred.respond { ... }
+     * response.createPublicFollowup { ... }
+     * ```
+     */
+    @Deprecated(
+        """
+        Deferring a response now always enforces actually responding before using followups to avoid some strange
+        behavior when using followups before sending an original response.
+        
+        If you need to keep using followups directly after deferring a response you can use
+        'deferEphemeralResponseUnsafe()'.
+        
+        See the documentation of this method for how it should be replaced.
+        """,
+        ReplaceWith("this.deferEphemeralResponse()"),
+    )
+    @OptIn(KordUnsafe::class)
+    public suspend fun deferEphemeralMessage(): EphemeralMessageInteractionResponseBehavior =
+        deferEphemeralResponseUnsafe()
+
+    /**
+     * Acknowledges the interaction with the intent of responding with an [ephemeral][MessageFlag.Ephemeral] message
+     * later by calling [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object.
+     *
+     * There will be a 'loading' animation that is only visible to the [user][Interaction.user] who invoked the
+     * interaction.
+     *
+     * This method is marked as [unsafe][KordUnsafe] since it can result in strange behavior when followups are used
+     * incorrectly, you probably want to use [deferEphemeralResponse] instead.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    @KordUnsafe
+    public suspend fun deferEphemeralResponseUnsafe(): EphemeralMessageInteractionResponseBehavior {
+        kord.rest.interaction.deferMessage(id, token, ephemeral = true)
+        return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 
     /**
-     * Acknowledges an interaction.
+     * Acknowledges the interaction with the intent of responding with an [ephemeral][MessageFlag.Ephemeral] message
+     * later by calling [respond][DeferredEphemeralMessageInteractionResponseBehavior.respond] on the returned object.
      *
-     * @return [PublicInteractionResponseBehavior] public acknowledgement of an interaction.
+     * There will be a 'loading' animation that is only visible to the [user][Interaction.user] who invoked the
+     * interaction.
+     *
+     * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun acknowledgePublic(): PublicInteractionResponseBehavior {
-        kord.rest.interaction.acknowledge(id, token, ephemeral = false)
-        return PublicInteractionResponseBehavior(applicationId, token, kord)
+    public suspend fun deferEphemeralResponse(): DeferredEphemeralMessageInteractionResponseBehavior {
+        kord.rest.interaction.deferMessage(id, token, ephemeral = true)
+        return DeferredEphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
+    }
+
+    /**
+     * Acknowledges the interaction publicly. The user will see a 'loading' animation.
+     *
+     * Call [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
+     */
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        "Renamed to 'deferPublicMessage'.",
+        ReplaceWith("this.deferPublicMessage()"),
+        DeprecationLevel.ERROR,
+    )
+    public suspend fun acknowledgePublic(): PublicMessageInteractionResponseBehavior = deferPublicMessage()
+
+    /**
+     * Acknowledges the interaction publicly with the intent of responding with a public message later by calling
+     * [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object. The user will see a 'loading'
+     * animation.
+     *
+     * ## This method is deprecated
+     * Replace code like
+     * ```kotlin
+     * val response = interaction.deferPublicMessage()
+     * response.followUp { ... }
+     * response.followUpEphemeral { ... }
+     * ```
+     * or
+     * ```kotlin
+     * val response = interaction.deferPublicMessage()
+     * response.edit { ... }
+     * response.followUpEphemeral { ... }
+     * ```
+     * with
+     * ```kotlin
+     * val deferred = interaction.deferPublicResponse()
+     * val response = deferred.respond { ... }
+     * response.createEphemeralFollowup { ... }
+     * ```
+     */
+    @Deprecated(
+        """
+        Deferring a response now always enforces actually responding before using followups to avoid some strange
+        behavior when using followups before sending an original response.
+        
+        If you need to keep using followups directly after deferring a response you can use
+        'deferPublicResponseUnsafe()'.
+        
+        See the documentation of this method for how it should be replaced.
+        """,
+        ReplaceWith("this.deferPublicResponse()"),
+    )
+    @OptIn(KordUnsafe::class)
+    public suspend fun deferPublicMessage(): PublicMessageInteractionResponseBehavior = deferPublicResponseUnsafe()
+
+    /**
+     * Acknowledges the interaction with the intent of responding with a public message later by calling
+     * [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object.
+     *
+     * There will be a 'loading' animation that is visible to all users in the [channel][InteractionBehavior.channel]
+     * the interaction was sent from.
+     *
+     * This method is marked as [unsafe][KordUnsafe] since it can result in strange behavior when followups are used
+     * incorrectly, you probably want to use [deferPublicResponse] instead.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    @KordUnsafe
+    public suspend fun deferPublicResponseUnsafe(): PublicMessageInteractionResponseBehavior {
+        kord.rest.interaction.deferMessage(id, token, ephemeral = false)
+        return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
+    }
+
+    /**
+     * Acknowledges the interaction with the intent of responding with a public message later by calling
+     * [respond][DeferredPublicMessageInteractionResponseBehavior.respond] on the returned object.
+     *
+     * There will be a 'loading' animation that is visible to all users in the [channel][InteractionBehavior.channel]
+     * the interaction was sent from.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun deferPublicResponse(): DeferredPublicMessageInteractionResponseBehavior {
+        kord.rest.interaction.deferMessage(id, token, ephemeral = false)
+        return DeferredPublicMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 
     /**
@@ -54,39 +207,44 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      */
     public suspend fun getOriginalInteractionResponse(): Message =
         kord.with(rest).getOriginalInteraction(applicationId, token)
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ActionInteractionBehavior =
+        ActionInteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 }
 
 
 /**
- * Acknowledges an interaction and responds with [PublicInteractionResponseBehavior].
+ * Responds to the interaction with a public message.
  *
- * @param builder [InteractionResponseCreateBuilder] used to create a public response.
- * @return [PublicInteractionResponseBehavior] public response to the interaction.
+ * @param builder [InteractionResponseCreateBuilder] used to create the public response.
+ * @return [PublicMessageInteractionResponseBehavior] public response to the interaction.
+ * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun ActionInteractionBehavior.respondPublic(
     builder: InteractionResponseCreateBuilder.() -> Unit
-): PublicInteractionResponseBehavior {
+): PublicMessageInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     kord.rest.interaction.createInteractionResponse(id, token, ephemeral = false, builder)
-    return PublicInteractionResponseBehavior(applicationId, token, kord)
+    return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
 }
 
 
 /**
- * Acknowledges an interaction and responds with [EphemeralInteractionResponseBehavior] with ephemeral flag.
+ * Responds to the interaction with an [ephemeral][MessageFlag.Ephemeral] message.
  *
- * @param builder [InteractionResponseCreateBuilder] used to a create an ephemeral response.
- * @return [InteractionResponseBehavior] ephemeral response to the interaction.
+ * @param builder [InteractionResponseCreateBuilder] used to create the ephemeral response.
+ * @return [EphemeralMessageInteractionResponseBehavior] ephemeral response to the interaction.
+ * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun ActionInteractionBehavior.respondEphemeral(
     builder: InteractionResponseCreateBuilder.() -> Unit
-): EphemeralInteractionResponseBehavior {
+): EphemeralMessageInteractionResponseBehavior {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     kord.rest.interaction.createInteractionResponse(id, token, ephemeral = true, builder)
-    return EphemeralInteractionResponseBehavior(applicationId, token, kord)
+    return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
 }
 
-public fun InteractionBehavior(
+public fun ActionInteractionBehavior(
     id: Snowflake,
     channelId: Snowflake,
     token: String,
@@ -94,22 +252,10 @@ public fun InteractionBehavior(
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
 ): ActionInteractionBehavior = object : ActionInteractionBehavior {
-    override val id: Snowflake
-        get() = id
-
-    override val token: String
-        get() = token
-
-    override val applicationId: Snowflake
-        get() = applicationId
-
-    override val kord: Kord
-        get() = kord
-
-    override val channelId: Snowflake
-        get() = channelId
-
-
+    override val id: Snowflake = id
+    override val channelId: Snowflake = channelId
+    override val token: String = token
+    override val applicationId: Snowflake = applicationId
+    override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
-
 }

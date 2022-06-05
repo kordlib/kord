@@ -7,6 +7,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.mapSnowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 public val VoiceStateData.id: String
@@ -20,7 +21,7 @@ public data class VoiceStateData(
      (And not just because this code would break).
      */
     val guildId: Snowflake,
-    val channelId: Snowflake? = null,
+    val channelId: Snowflake?,
     val userId: Snowflake,
     val memberId: OptionalSnowflake = OptionalSnowflake.Missing,
     val sessionId: String,
@@ -28,9 +29,10 @@ public data class VoiceStateData(
     val mute: Boolean,
     val selfDeaf: Boolean,
     val selfMute: Boolean,
-    val selfStream: OptionalBoolean = OptionalBoolean.Missing,
     val suppress: Boolean,
-    val requestToSpeakTimestamp: String?
+    val selfVideo: Boolean,
+    val selfStream: OptionalBoolean = OptionalBoolean.Missing,
+    val requestToSpeakTimestamp: Instant?,
 ) {
     public companion object {
         public val description: DataDescription<VoiceStateData, String> = description(VoiceStateData::id)
@@ -47,6 +49,7 @@ public data class VoiceStateData(
                 selfDeaf = selfDeaf,
                 selfMute = selfMute,
                 selfStream = selfStream,
+                selfVideo = selfVideo,
                 suppress = suppress,
                 requestToSpeakTimestamp = requestToSpeakTimestamp
             )

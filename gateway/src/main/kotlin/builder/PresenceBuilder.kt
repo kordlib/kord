@@ -36,8 +36,7 @@ public class PresenceBuilder {
         game = DiscordBotActivity(name, ActivityType.Competing)
     }
 
-    public fun toUpdateStatus(): UpdateStatus =
-        UpdateStatus(since?.toEpochMilliseconds(), game?.let(::listOf).orEmpty(), status, afk)
+    public fun toUpdateStatus(): UpdateStatus = UpdateStatus(since, game?.let(::listOf).orEmpty(), status, afk)
 
-    public fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since?.toEpochMilliseconds(), game)
+    public fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since, game)
 }

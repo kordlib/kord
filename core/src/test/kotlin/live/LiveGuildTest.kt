@@ -14,6 +14,7 @@ import dev.kord.gateway.*
 import equality.randomId
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
@@ -22,6 +23,7 @@ import java.util.concurrent.TimeUnit
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.seconds
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @OptIn(KordPreview::class)
@@ -39,7 +41,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                     name = "",
                     ownerId = randomId(),
                     region = "",
-                    afkTimeout = 0,
+                    afkTimeout = 0.seconds,
                     verificationLevel = VerificationLevel.None,
                     defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
                     explicitContentFilter = ExplicitContentFilter.Disabled,
@@ -214,7 +216,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         selfMute = false,
                         selfVideo = false,
                         suppress = false,
-                        requestToSpeakTimestamp = null
+                        requestToSpeakTimestamp = null,
                     ),
                     0
                 )
@@ -347,7 +349,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         roles = emptyList(),
                         deaf = false,
                         mute = false,
-                        joinedAt = ""
+                        joinedAt = Instant.fromEpochMilliseconds(0),
                     ),
                     0
                 )
@@ -374,7 +376,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             discriminator = "",
                             avatar = null
                         ),
-                        joinedAt = ""
+                        joinedAt = Instant.fromEpochMilliseconds(0),
                     ),
                     0
                 )
@@ -558,7 +560,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             avatar = null
                         ),
                         content = "",
-                        timestamp = "",
+                        timestamp = Instant.fromEpochMilliseconds(0),
                         editedTimestamp = null,
                         tts = false,
                         mentionEveryone = false,
@@ -697,7 +699,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         ownerId = randomId(),
                         region = "",
                         afkChannelId = null,
-                        afkTimeout = 0,
+                        afkTimeout = 0.seconds,
                         verificationLevel = VerificationLevel.None,
                         defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
                         explicitContentFilter = ExplicitContentFilter.Disabled,
@@ -741,7 +743,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         ownerId = randomId(),
                         region = "",
                         afkChannelId = null,
-                        afkTimeout = 0,
+                        afkTimeout = 0.seconds,
                         verificationLevel = VerificationLevel.None,
                         defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
                         explicitContentFilter = ExplicitContentFilter.Disabled,

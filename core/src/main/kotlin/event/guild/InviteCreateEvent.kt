@@ -1,6 +1,7 @@
 package dev.kord.core.event.guild
 
 import dev.kord.common.annotation.DeprecatedSinceKord
+import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -9,23 +10,17 @@ import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.InviteCreateData
-import dev.kord.core.entity.Guild
-import dev.kord.core.entity.Member
-import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.User
-import dev.kord.core.entity.channel.TopGuildChannel
+import dev.kord.core.cache.data.InviteData
+import dev.kord.core.entity.*
+import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
 import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
 
 /**
  * Sent when a new invite to a channel is created.
@@ -39,12 +34,12 @@ public class InviteCreateEvent(
 ) : Event, CoroutineScope by coroutineScope, Strategizable {
 
     /**
-     * The [TopGuildChannel] the invite is for.
+     * The id of the [Channel] the invite is for.
      */
     public val channelId: Snowflake get() = data.channelId
 
     /**
-     * The behavior of the [TopGuildChannel] the invite is for.
+     * The behavior of the [Channel] the invite is for.
      */
     public val channel: ChannelBehavior get() = ChannelBehavior(id = channelId, kord = kord)
 
@@ -56,10 +51,10 @@ public class InviteCreateEvent(
     /**
      * The time at which the invite was created.
      */
-    public val createdAt: Instant get() = data.createdAt.toInstant()
+    public val createdAt: Instant get() = data.createdAt
 
     /**
-     * The [Guild] of the invite.
+     * The id of the [Guild] of the invite.
      */
     public val guildId: Snowflake? get() = data.guildId.value
 
@@ -69,12 +64,12 @@ public class InviteCreateEvent(
     public val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(id = it, kord = kord) }
 
     /**
-     * The [User] that created the invite, if present.
+     * The id of the [User] that created the invite.
      */
     public val inviterId: Snowflake? get() = data.inviterId.value
 
     /**
-     * The behavior of the [User] that created the invite, if present.
+     * The behavior of the [User] that created the invite.
      */
     public val inviter: UserBehavior? get() = inviterId?.let { UserBehavior(id = it, kord = kord) }
 
@@ -87,9 +82,9 @@ public class InviteCreateEvent(
         }
 
     /**
-     * How long the invite is valid for (in seconds).
+     * How long the invite is valid for.
      */
-    public val maxAge: Duration get() = data.maxAge.seconds
+    public val maxAge: Duration get() = data.maxAge
 
     /**
      * The maximum number of times the invite can be used.
@@ -97,7 +92,36 @@ public class InviteCreateEvent(
     public val maxUses: Int get() = data.maxUses
 
     /**
-     * Whether or not the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).
+     * The [type of target][InviteTargetType] for this voice channel invite.
+     */
+    public val targetType: InviteTargetType? get() = data.targetType.value
+
+    /**
+     * The id of the [User] whose stream to display for this voice channel stream invite.
+     */
+    public val targetUserId: Snowflake? get() = data.targetUserId.value
+
+    /**
+     * The behavior of the [User] whose stream to display for this voice channel stream invite.
+     */
+    public val targetUser: UserBehavior? get() = targetUserId?.let { UserBehavior(id = it, kord) }
+
+    /**
+     * The behavior of the [Member] whose stream to display for this voice channel stream invite.
+     */
+    public val targetMember: MemberBehavior?
+        get() {
+            return MemberBehavior(guildId = guildId ?: return null, id = targetUserId ?: return null, kord)
+        }
+
+    /**
+     * The embedded [application][PartialApplication] to open for this voice channel embedded application invite.
+     */
+    public val targetApplication: PartialApplication?
+        get() = data.targetApplication.value?.let { PartialApplication(it, kord) }
+
+    /**
+     * Whether the invite is temporary (invited users will be kicked on disconnect unless they're assigned a role).
      */
     public val isTemporary: Boolean get() = data.temporary
 
@@ -107,20 +131,20 @@ public class InviteCreateEvent(
     public val uses: Int get() = data.uses
 
     /**
-     * Requests to get the [TopGuildChannel] this invite is for.
+     * Requests to get the [Channel] this invite is for.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
-    public suspend fun getChannel(): TopGuildChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): Channel = supplier.getChannel(channelId)
 
     /**
-     * Requests to get the [Guild] of the invite,
-     * returns null if the guild isn't present.
+     * Requests to get the [Channel] this invite is for,
+     * returns null if the channel isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getChannelOrNUll(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNUll(): Channel? = supplier.getChannelOrNull(channelId)
 
     /**
      * Requests to get the [Guild] of the invite.
@@ -175,13 +199,42 @@ public class InviteCreateEvent(
     }
 
     /**
-     * Requests to get the [User] that created the invite as a [Member] of the [Guild][getGuild],
+     * Requests to get the [User] that created the invite as a [Member] of the [Guild][getGuildOrNull],
      * returns null if the user isn't present, the invite did not target a guild, or no inviter created the event.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getInviterAsMemberOrNull(): Member? {
         return supplier.getMemberOrNull(guildId = guildId ?: return null, userId = inviterId ?: return null)
+    }
+
+    /**
+     * Requests to get the target [User] of this invite,
+     * returns null if the user isn't present or the invite did not target a user.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getTargetUserOrNull(): User? = targetUserId?.let { supplier.getUserOrNull(it) }
+
+    /**
+     * Requests to get the target [User] of this invite as a [Member] of the [Guild][getGuildOrNull],
+     * returns null if the user isn't present, the invite did not target a guild, or the invite did not target a user.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getTargetUserAsMemberOrNull(): Member? {
+        return supplier.getMemberOrNull(guildId = guildId ?: return null, userId = targetUserId ?: return null)
+    }
+
+    /**
+     * Requests to delete this invite.
+     *
+     * @param reason the reason showing up in the audit log
+     */
+    public suspend fun delete(reason: String? = null): Invite {
+        val response = kord.rest.invite.deleteInvite(data.code, reason)
+        val data = InviteData.from(response)
+        return Invite(data, kord)
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =

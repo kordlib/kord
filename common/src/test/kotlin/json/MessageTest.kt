@@ -1,13 +1,14 @@
 package json
 
 import dev.kord.common.entity.*
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
 
 private fun file(name: String): String {
     val loader = ChannelTest::class.java.classLoader
-    return loader.getResource("json/message/$name.json").readText()
+    return loader.getResource("json/message/$name.json")!!.readText()
 }
 
 class MessageTest {
@@ -29,7 +30,7 @@ class MessageTest {
             attachments shouldBe emptyList()
             tts shouldBe false
             embeds shouldBe emptyList()
-            timestamp shouldBe "2017-07-11T17:27:07.299000+00:00"
+            timestamp shouldBe Instant.parse("2017-07-11T17:27:07.299000+00:00")
             mentionEveryone shouldBe false
             id.toString() shouldBe "334385199974967042"
             pinned shouldBe false
@@ -65,7 +66,7 @@ class MessageTest {
             attachments shouldBe emptyList()
             tts shouldBe false
             embeds shouldBe emptyList()
-            timestamp shouldBe "2017-07-11T17:27:07.299000+00:00"
+            timestamp shouldBe Instant.parse("2017-07-11T17:27:07.299000+00:00")
             mentionEveryone shouldBe false
             id.toString() shouldBe "334385199974967042"
             pinned shouldBe false

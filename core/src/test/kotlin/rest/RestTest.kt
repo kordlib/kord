@@ -1,8 +1,7 @@
-package dev.kord.core.rest
+package rest
 
 import dev.kord.common.Color
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
@@ -12,12 +11,10 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
-import dev.kord.core.entity.channel.createInvite
 import dev.kord.rest.Image
 import dev.kord.rest.builder.interaction.group
 import dev.kord.rest.builder.interaction.int
 import dev.kord.rest.builder.interaction.subCommand
-import dev.kord.rest.request.RequestHandler
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
@@ -47,8 +44,6 @@ class RestServiceTest {
 
     private val token = System.getenv("KORD_TEST_TOKEN")
 
-    private lateinit var requestHandler: RequestHandler
-
     private lateinit var kord: Kord
 
     //created guild id
@@ -73,7 +68,7 @@ class RestServiceTest {
 
     @Test
     @Order(1)
-    fun `create guild`() = runBlocking {
+    fun `create guild`(): Unit = runBlocking {
         val region = kord.regions.first()
         val guilds = kord.guilds.toList()
 
@@ -97,23 +92,20 @@ class RestServiceTest {
         }
 
         guild.regions.first()
-
-        Unit
     }
 
     @Test
     @Order(2)
-    fun `create invite`() = runBlocking {
+    fun `create invite`(): Unit = runBlocking {
         val channel = guild.channels.filterIsInstance<TopGuildMessageChannel>().first()
         val invite = channel.createInvite()
 
         guild.getInvite(invite.code)
-        Unit
     }
 
     @Test
     @Order(3)
-    fun `create channel`() = runBlocking {
+    fun `create channel`(): Unit = runBlocking {
         val channel = guild.createTextChannel("BOT TEST RUN") {
             reason = """
                 a multiline
@@ -127,8 +119,6 @@ class RestServiceTest {
         this@RestServiceTest.channel = channel
 
         guild.getChannelOf<TextChannel>(channel.id)
-
-        Unit
     }
 
     @Test
@@ -171,14 +161,14 @@ class RestServiceTest {
         channel.deleteMessage(message.id)
 
         run {
-            val message = channel.createMessage {
+            val referenceMessage = channel.createMessage {
                 content = "TEST"
             }
-            val reply = message.reply {
+            val reply = referenceMessage.reply {
                 content = "TEST REPLY"
             }
 
-            assert(reply.referencedMessage?.id == message.id)
+            assert(reply.referencedMessage?.id == referenceMessage.id)
         }
 
         val messages = channel.messages.toList()
@@ -188,21 +178,19 @@ class RestServiceTest {
 
     @Test
     @Order(6)
-    fun `pinned messages in channel`() = runBlocking {
+    fun `pinned messages in channel`(): Unit = runBlocking {
         val message = channel.createMessage { content = "TEST" }
 
         message.pin()
         channel.pinnedMessages.toList()
 
         message.unpin()
-        Unit
     }
 
     @Test
     @Order(7)
     fun `invites in channel`(): Unit = runBlocking {
         channel.invites.toList()
-        Unit
     }
 
     @Test
@@ -229,7 +217,7 @@ class RestServiceTest {
 
     @Test
     @Order(11)
-    fun `member in guild`() = runBlocking {
+    fun `member in guild`(): Unit = runBlocking {
         guild.members.toList()
         //TODO add member to guild
 
@@ -237,12 +225,11 @@ class RestServiceTest {
 
         guild.editSelfNickname("Kord")
         //deleteGuildMember(guildId, user)
-        Unit
     }
 
     @Test
     @Order(12)
-    fun `roles in guild`() = runBlocking {
+    fun `roles in guild`(): Unit = runBlocking {
         val role = guild.createRole {
             name = "Sudoers"
             permissions = Permissions { +Permission.Administrator }
@@ -264,7 +251,6 @@ class RestServiceTest {
         guild.roles.toList()
 
         role.delete()
-        Unit
     }
 
     @Test
@@ -278,8 +264,6 @@ class RestServiceTest {
         //getGuildBan(guildId, user)
 
         //deleteGuildBan(guildId, user)
-
-        Unit
     }
 
     @Test
@@ -313,13 +297,11 @@ class RestServiceTest {
         val widget = guild.getWidget().edit {
             this.enabled
         }
-
-        Unit
     }
 
     @Test
     @Order(18)
-    fun `user`(): Unit = runBlocking {
+    fun user(): Unit = runBlocking {
         kord.getSelf()
         kord.guilds.toList()
 
@@ -333,8 +315,6 @@ class RestServiceTest {
         // createDM(CreateDMRequest(user)) // works, but can't be tested with bots client id use your own id
 
         //TODO test groups
-
-        Unit
     }
 
     @Test
@@ -349,20 +329,17 @@ class RestServiceTest {
         guild.emojis.toList()
         guild.getEmoji(emoji.id)
         emoji.delete()
-
-        Unit
     }
 
     @Test
     @Order(20)
-    fun `get public guild preview`() = runBlocking {
+    fun `get public guild preview`(): Unit = runBlocking {
         kord.getGuildPreview(publicGuildId)
-        Unit
     }
 
     @Test
     @Order(20)
-    fun `webhooks tests`() = runBlocking {
+    fun `webhooks tests`(): Unit = runBlocking {
         val webhook = channel.createWebhook("Test webhook")
 
         webhook.execute(webhook.token!!) {
@@ -382,7 +359,6 @@ class RestServiceTest {
         }
 
         webhook.delete(reason = "test")
-        Unit
     }
 
     @Test
@@ -449,14 +425,15 @@ class RestServiceTest {
         assertEquals(category.id, currentTextChannel.categoryId)
     }
 
-    @OptIn(KordPreview::class)
-    fun `guild application commands`(): Unit = runBlocking {
-        val command = guild.createChatInputCommand("test", "automated test") {
+    @Test
+    @Order(26)
+    fun `global application commands`(): Unit = runBlocking {
+        val command = kord.createGlobalChatInputCommand("test", "automated test") {
             group("test-group", "automated test") {
                 subCommand("test-sub-command", "automated test") {
                     int("integer", "test choice") {
-                        choice("one", 1)
-                        choice("two", 2)
+                        choice("one", 1,)
+                        choice("two", 2,)
                     }
                 }
             }
@@ -466,18 +443,36 @@ class RestServiceTest {
             }
         }
 
-        assertEquals("test-group", command.name)
+        assertEquals("test", command.name)
         assertEquals("automated test", command.description)
-        assertEquals(1, command.subCommands.size)
+
         assertEquals(1, command.groups.size)
+        val group = command.groups.values.first()
+        assertEquals("test-group", group.name)
+        assertEquals("automated test", group.description)
 
-        assertEquals(1, command.subCommands.values.first().parameters.size)
-        val parameter = command.subCommands.values.first().parameters.values.first()
-        assertEquals(1, parameter.choices.size)
-        assertEquals("1", parameter.choices.values.first())
+        assertEquals(1, group.subcommands.size)
+        val commandInGroup = group.subcommands.values.first()
+        assertEquals("test-sub-command", commandInGroup.name)
+        assertEquals("automated test", commandInGroup.description)
 
-        assertEquals("test-group", command.groups.values.first().name)
-        assertEquals("test-sub-command", command.subCommands.values.first().name)
+        assertEquals(1, commandInGroup.parameters.size)
+        val commandInGroupParameter = commandInGroup.parameters.values.first()
+        assertEquals("integer", commandInGroupParameter.name)
+        assertEquals("test choice", commandInGroupParameter.description)
+        assertEquals(2, commandInGroupParameter.choices.size)
+        assertEquals("1", commandInGroupParameter.choices["one"])
+        assertEquals("2", commandInGroupParameter.choices["two"])
+
+        assertEquals(1, command.subCommands.size)
+        val subCommand = command.subCommands.values.first()
+        assertEquals("test-sub-command", subCommand.name)
+        assertEquals("automated test", subCommand.description)
+
+        assertEquals(1, subCommand.parameters.size)
+        val subCommandParameter = subCommand.parameters.values.first()
+        assertEquals("integer", subCommandParameter.name)
+        assertEquals("test choice", subCommandParameter.description)
 
         val updated = command.edit {
             description = "other description"
@@ -528,49 +523,43 @@ class RestServiceTest {
 
     @Test
     @Order(Int.MAX_VALUE - 2)
-    fun `delete channel`() = runBlocking {
+    fun `delete channel`(): Unit = runBlocking {
         channel.delete()
-        Unit
     }
 
     @Test
     @Order(Int.MAX_VALUE - 1)
-    fun `audit logs`() = runBlocking {
+    fun `audit logs`(): Unit = runBlocking {
         guild.getAuditLogEntries().toList()
-        Unit
     }
 
     @Test
     @Order(Int.MAX_VALUE)
-    fun `delete guild`() = runBlocking {
+    fun `delete guild`(): Unit = runBlocking {
         guild.delete()
-
-        Unit
     }
 
     @Test
-    fun `create role with image icon`() = runBlocking {
+    fun `create role with image icon`(): Unit = runBlocking {
         if (!boostEnabled)
-            return@runBlocking Unit
+            return@runBlocking
         val guild = kord.getGuild(publicGuildId)!!
         guild.createRole {
             name = "Test Image Icon"
             hoist = true
             icon = imageBinary("images/kord_icon.png")
         }
-        return@runBlocking Unit
     }
 
     @Test
-    fun `create role with unicode icon`() = runBlocking {
+    fun `create role with unicode icon`(): Unit = runBlocking {
         if (!boostEnabled)
-            return@runBlocking Unit
+            return@runBlocking
         val guild = kord.getGuild(publicGuildId)!!
         guild.createRole {
             name = "Test Unicode Icon"
             hoist = true
             unicodeEmoji = "\uD83D\uDE04"
         }
-        return@runBlocking Unit
     }
 }

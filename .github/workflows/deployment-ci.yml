@@ -31,6 +31,9 @@ jobs:
         with:
           java-version: 8
 
+      - name: Set SHORT_SHA environment variable to short commit hash
+        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
+
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -64,6 +67,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 8
+
+      - name: Set SHORT_SHA environment variable to short commit hash
+        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2

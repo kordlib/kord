@@ -4,12 +4,14 @@ import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.UserPremium
 import dev.kord.common.entity.optional.value
 import dev.kord.gateway.*
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.seconds
 
 private fun file(name: String): String {
     val loader = SerializationTest::class.java.classLoader
-    return loader.getResource("json/event/$name.json").readText()
+    return loader.getResource("json/event/$name.json")!!.readText()
 }
 
 class SerializationTest {
@@ -86,7 +88,7 @@ class SerializationTest {
         with(event.pins) {
             guildId.value?.toString() shouldBe "41771983423143937"
             channelId.toString() shouldBe "399942396007890945"
-            lastPinTimestamp.value shouldBe "2015-04-26T06:26:56.936000+00:00"
+            lastPinTimestamp.value shouldBe Instant.parse("2015-04-26T06:26:56.936000+00:00")
 
         }
     }
@@ -102,7 +104,7 @@ class SerializationTest {
             type.value shouldBe 0
             position.value shouldBe 6
             permissionOverwrites.value shouldBe emptyList()
-            rateLimitPerUser.value shouldBe 2
+            rateLimitPerUser.value shouldBe 2.seconds
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
             lastMessageId.value?.toString() shouldBe "155117677105512449"
@@ -121,7 +123,7 @@ class SerializationTest {
             type.value shouldBe 0
             position.value shouldBe 6
             permissionOverwrites.value shouldBe emptyList()
-            rateLimitPerUser.value shouldBe 2
+            rateLimitPerUser.value shouldBe 2.seconds
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
             lastMessageId.value?.toString() shouldBe "155117677105512449"
@@ -139,7 +141,7 @@ class SerializationTest {
             type.value shouldBe 0
             position.value shouldBe 6
             permissionOverwrites.value shouldBe emptyList()
-            rateLimitPerUser.value shouldBe 2
+            rateLimitPerUser.value shouldBe 2.seconds
             nsfw.value shouldBe true
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
             lastMessageId.value?.toString() shouldBe "155117677105512449"
