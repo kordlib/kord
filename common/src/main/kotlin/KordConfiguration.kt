@@ -10,8 +10,10 @@ public object KordConfiguration {
     // https://github.com/Kotlin/kotlinx.atomicfu/issues/186
     // TODO use delegation when AtomicFU fixes this
 
+    private const val REST_GATEWAY_DEFAULT = 10
 
-    private val REST = atomic(10)
+
+    private val REST = atomic(REST_GATEWAY_DEFAULT)
 
     /**
      * The [version of Discord's REST API](https://discord.com/developers/docs/reference#api-versioning) Kord uses.
@@ -27,7 +29,7 @@ public object KordConfiguration {
         }
 
 
-    private val GATEWAY = atomic(10)
+    private val GATEWAY = atomic(REST_GATEWAY_DEFAULT)
 
     /**
      * The [version of Discord's Gateway](https://discord.com/developers/docs/topics/gateway#gateways-gateway-versions)
