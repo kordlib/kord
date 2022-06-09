@@ -115,37 +115,33 @@ public data class AuditLogChange<T>(
             element("key", ser.descriptor)
         }
 
-        override fun deserialize(decoder: Decoder): AuditLogChange<T> {
-            var returnVar: AuditLogChange<T>? = null
-            decoder.decodeStructure(descriptor) {
-                var new: JsonElement? = null
-                var old: JsonElement? = null
-                lateinit var key: AuditLogChangeKey<*>
-                while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> key = decodeSerializableElement(
-                            descriptor,
-                            index,
-                            AuditLogChangeKey.Serializer(Unit.serializer())
-                        )
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> throw SerializationException("unknown index: $index")
-                    }
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+            var new: JsonElement? = null
+            var old: JsonElement? = null
+            lateinit var key: AuditLogChangeKey<*>
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    2 -> key = decodeSerializableElement(
+                        descriptor,
+                        index,
+                        AuditLogChangeKey.Serializer(Unit.serializer())
+                    )
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("unknown index: $index")
                 }
-
-                val newVal = new?.let { Json.decodeFromJsonElement(key.serializer, new) }
-                val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
-
-                @Suppress("UNCHECKED_CAST")
-                returnVar = AuditLogChange(
-                    new = newVal,
-                    old = oldVal,
-                    key = key as AuditLogChangeKey<Any?>
-                ) as AuditLogChange<T>
             }
-            return returnVar!!
+
+            val newVal = new?.let { Json.decodeFromJsonElement(key.serializer, new) }
+            val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
+
+            @Suppress("UNCHECKED_CAST")
+            AuditLogChange(
+                new = newVal,
+                old = oldVal,
+                key = key as AuditLogChangeKey<Any?>
+            ) as AuditLogChange<T>
         }
 
         @Suppress("UNCHECKED_CAST")

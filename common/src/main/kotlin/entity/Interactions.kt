@@ -680,34 +680,30 @@ public sealed class CommandArgument<out T> : Option() {
             }
         }
 
-        override fun deserialize(decoder: Decoder): CommandArgument<*> {
-            var returnVar: CommandArgument<*>? = null
-            decoder.decodeStructure(descriptor) {
-                this as JsonDecoder
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+            this as JsonDecoder
 
-                var name = ""
-                var element: JsonElement? = null
-                var type: ApplicationCommandOptionType? = null
-                while (true) {
-                    when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
-                        0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
-                        1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> type = decodeSerializableElement(
-                            descriptor,
-                            index,
-                            ApplicationCommandOptionType.serializer()
-                        )
+            var name = ""
+            var element: JsonElement? = null
+            var type: ApplicationCommandOptionType? = null
+            while (true) {
+                when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
+                    0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
+                    1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    2 -> type = decodeSerializableElement(
+                        descriptor,
+                        index,
+                        ApplicationCommandOptionType.serializer()
+                    )
 
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> error("unknown index: $index")
-                    }
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> error("unknown index: $index")
                 }
-
-                requireNotNull(element)
-                requireNotNull(type)
-                returnVar = deserialize(json, element, name, type, OptionalBoolean.Missing)
             }
-            return returnVar!!
+
+            requireNotNull(element)
+            requireNotNull(type)
+            deserialize(json, element, name, type, OptionalBoolean.Missing)
         }
     }
 }
