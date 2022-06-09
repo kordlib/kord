@@ -116,6 +116,7 @@ public data class AuditLogChange<T>(
         }
 
         override fun deserialize(decoder: Decoder): AuditLogChange<T> {
+            var returnVar: AuditLogChange<T>? = null
             decoder.decodeStructure(descriptor) {
                 var new: JsonElement? = null
                 var old: JsonElement? = null
@@ -138,12 +139,13 @@ public data class AuditLogChange<T>(
                 val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
 
                 @Suppress("UNCHECKED_CAST")
-                return AuditLogChange(
+                returnVar = AuditLogChange(
                     new = newVal,
                     old = oldVal,
                     key = key as AuditLogChangeKey<Any?>
                 ) as AuditLogChange<T>
             }
+            return returnVar!!
         }
 
         @Suppress("UNCHECKED_CAST")

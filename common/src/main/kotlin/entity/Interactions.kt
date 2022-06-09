@@ -681,6 +681,7 @@ public sealed class CommandArgument<out T> : Option() {
         }
 
         override fun deserialize(decoder: Decoder): CommandArgument<*> {
+            var returnVar: CommandArgument<*>? = null
             decoder.decodeStructure(descriptor) {
                 this as JsonDecoder
 
@@ -704,8 +705,9 @@ public sealed class CommandArgument<out T> : Option() {
 
                 requireNotNull(element)
                 requireNotNull(type)
-                return deserialize(json, element, name, type, OptionalBoolean.Missing)
+                returnVar = deserialize(json, element, name, type, OptionalBoolean.Missing)
             }
+            return returnVar!!
         }
     }
 }
