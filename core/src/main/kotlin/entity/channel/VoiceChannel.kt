@@ -76,10 +76,6 @@ public class VoiceChannel(
 
     override suspend fun asChannelOrNull(): VoiceChannel = this
 
-    override suspend fun fetchChannelOrNull(): VoiceChannel? = supplier.getChannelOfOrNull(id)
-
-    override suspend fun fetchChannel(): VoiceChannel = supplier.getChannelOf(id)
-
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
