@@ -8,6 +8,7 @@ import kotlinx.serialization.SerializationStrategy
 
 public class RequestBuilder<T>(public var route: Route<T>, keySize: Int = 2) {
 
+    public var baseUrl: String = Route.baseUrl
     public val keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
 
     public operator fun MutableMap<Route.Key, String>.set(key: Route.Key, value: Snowflake) {
@@ -62,7 +63,7 @@ public class RequestBuilder<T>(public var route: Route<T>, keySize: Int = 2) {
     }
 
     public fun build(): Request<*, T> = when {
-        files.isEmpty() -> JsonRequest(route, keys, parameters.build(), headers.build(), body)
-        else -> MultipartRequest(route, keys, parameters.build(), headers.build(), body, files)
+        files.isEmpty() -> JsonRequest(baseUrl, route, keys, parameters.build(), headers.build(), body)
+        else -> MultipartRequest(baseUrl, route, keys, parameters.build(), headers.build(), body, files)
     }
 }

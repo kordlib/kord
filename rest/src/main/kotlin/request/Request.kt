@@ -9,7 +9,9 @@ import io.ktor.util.*
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
-public sealed class Request<B : Any, R> {
+public sealed class Request<B : Any, R>(
+    public val baseUrl: String
+) {
     public abstract val route: Route<R>
     public abstract val routeParams: Map<Route.Key, String>
     public abstract val headers: StringValues
@@ -60,23 +62,25 @@ public sealed class RequestIdentifier {
 public data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
 
 public class JsonRequest<B : Any, R>(
+    baseUrl: String,
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,
     override val headers: StringValues,
     override val body: RequestBody<B>?
-) : Request<B, R>() {
+) : Request<B, R>(baseUrl) {
     override val files: List<NamedFile>? = null
 }
 
 public class MultipartRequest<B : Any, R>(
+    baseUrl: String,
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,
     override val headers: StringValues,
     override val body: RequestBody<B>?,
     override val files: List<NamedFile> = emptyList()
-) : Request<B, R>() {
+) : Request<B, R>(baseUrl) {
 
     public val data: List<PartData> = formData {
         body?.let {
