@@ -10,7 +10,7 @@ import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
 public sealed class Request<B : Any, R>(
-    public val baseUrl: String
+    public val baseUrl: String = Route.baseUrl
 ) {
     public abstract val route: Route<R>
     public abstract val routeParams: Map<Route.Key, String>
