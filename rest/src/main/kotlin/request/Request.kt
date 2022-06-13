@@ -33,14 +33,17 @@ public val Request<*, *>.identifier: RequestIdentifier
             route,
             routeParams.getValue(Route.GuildId)
         )
+
         Route.ChannelId in routeParams -> RequestIdentifier.MajorParamIdentifier(
             route,
             routeParams.getValue(Route.ChannelId)
         )
+
         Route.WebhookId in routeParams -> RequestIdentifier.MajorParamIdentifier(
             route,
             routeParams.getValue(Route.WebhookId)
         )
+
         else -> RequestIdentifier.RouteIdentifier(route)
     }
 
@@ -62,24 +65,24 @@ public sealed class RequestIdentifier {
 public data class RequestBody<T>(val strategy: SerializationStrategy<T>, val body: T) where T : Any
 
 public class JsonRequest<B : Any, R>(
-    baseUrl: String,
-    override val route: Route<R>,
-    override val routeParams: Map<Route.Key, String>,
-    override val parameters: StringValues,
-    override val headers: StringValues,
-    override val body: RequestBody<B>?
-) : Request<B, R>(baseUrl) {
-    override val files: List<NamedFile>? = null
-}
-
-public class MultipartRequest<B : Any, R>(
-    baseUrl: String,
     override val route: Route<R>,
     override val routeParams: Map<Route.Key, String>,
     override val parameters: StringValues,
     override val headers: StringValues,
     override val body: RequestBody<B>?,
-    override val files: List<NamedFile> = emptyList()
+    baseUrl: String = Route.baseUrl
+) : Request<B, R>(baseUrl) {
+    override val files: List<NamedFile>? = null
+}
+
+public class MultipartRequest<B : Any, R>(
+    override val route: Route<R>,
+    override val routeParams: Map<Route.Key, String>,
+    override val parameters: StringValues,
+    override val headers: StringValues,
+    override val body: RequestBody<B>?,
+    override val files: List<NamedFile> = emptyList(),
+    baseUrl: String = Route.baseUrl
 ) : Request<B, R>(baseUrl) {
 
     public val data: List<PartData> = formData {

@@ -63,7 +63,7 @@ public class RequestBuilder<T>(public var route: Route<T>, keySize: Int = 2) {
     }
 
     public fun build(): Request<*, T> = when {
-        files.isEmpty() -> JsonRequest(baseUrl, route, keys, parameters.build(), headers.build(), body)
-        else -> MultipartRequest(baseUrl, route, keys, parameters.build(), headers.build(), body, files)
+        files.isEmpty() -> JsonRequest(route, keys, parameters.build(), headers.build(), body, baseUrl)
+        else -> MultipartRequest(route, keys, parameters.build(), headers.build(), body, files, baseUrl)
     }
 }
