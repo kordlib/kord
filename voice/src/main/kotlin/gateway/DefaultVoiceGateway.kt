@@ -6,6 +6,7 @@ import dev.kord.gateway.retry.Retry
 import dev.kord.voice.gateway.handler.HandshakeHandler
 import dev.kord.voice.gateway.handler.HeartbeatHandler
 import io.ktor.client.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.util.logging.*
@@ -158,7 +159,15 @@ public class DefaultVoiceGateway(
         }
     }
 
-    private suspend fun webSocket(url: String) = data.client.webSocketSession { url(url) }
+    private suspend fun webSocket(url: String) = data.client.webSocketSession {
+        url(url)
+
+        // workaround until https://youtrack.jetbrains.com/issue/KTOR-4419 is fixed
+        // otherwise the voice connection will die and fail to reconnect
+        timeout {
+            requestTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS
+        }
+    }
 
     private suspend fun resetState(configuration: VoiceGatewayConfiguration) = stateMutex.withLock {
         @Suppress("UNUSED_VARIABLE")
@@ -270,7 +279,6 @@ internal val VoiceGatewayCloseCode.exceptional
         VoiceGatewayCloseCode.UnknownEncryptionMode -> true
         is VoiceGatewayCloseCode.Unknown -> false
     }
-
 
 private fun <T> ReceiveChannel<T>.asFlow() = flow {
     try {
