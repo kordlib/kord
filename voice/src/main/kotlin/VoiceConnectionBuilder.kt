@@ -142,7 +142,7 @@ public class VoiceConnectionBuilder(
             voiceState.sessionId
         ) to VoiceGatewayConfiguration(
             voiceServer.token,
-            "wss://${voiceServer.endpoint}?v=4"
+            "wss://${voiceServer.endpoint}/?v=4"
         )
     }
 
