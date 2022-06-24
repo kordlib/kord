@@ -54,7 +54,6 @@ public sealed class Route<T>(
 ) {
 
     public companion object {
-        @OptIn(KordExperimental::class)
         public val baseUrl: String get() = "https://discord.com/api/v${KordConfiguration.REST_VERSION}"
     }
 

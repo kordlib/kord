@@ -1,7 +1,6 @@
 package dev.kord.voice.handlers
 
 import dev.kord.common.KordConfiguration
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordVoice
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
@@ -63,7 +62,6 @@ internal class VoiceUpdateEventHandler(
 
             voiceUpdateLogger.trace { "changing voice servers for session ${connection.data.sessionId}" }
 
-            @OptIn(KordExperimental::class)
             // update the gateway configuration accordingly
             connection.voiceGatewayConfiguration = connection.voiceGatewayConfiguration.copy(
                 token = voiceServerUpdate.voiceServerUpdateData.token,
