@@ -10,13 +10,13 @@ import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.message.MessageBulkDeleteEvent
 import dev.kord.core.event.message.MessageDeleteEvent
-import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.live.*
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.gateway.*
 import equality.randomId
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Instant
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
@@ -59,7 +59,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                         discriminator = ""
                     ),
                     content = "",
-                    timestamp = "",
+                    timestamp = Instant.fromEpochMilliseconds(0),
                     tts = false,
                     mentionEveryone = false,
                     mentions = emptyList(),

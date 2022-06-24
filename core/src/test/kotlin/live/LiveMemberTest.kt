@@ -19,6 +19,7 @@ import dev.kord.gateway.GuildMemberUpdate
 import equality.randomId
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Instant
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
@@ -51,7 +52,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                     userId = userId,
                     guildId = guildId,
                     roles = emptyList(),
-                    joinedAt = "",
+                    joinedAt = Instant.fromEpochMilliseconds(0),
                     premiumSince = Optional.Missing(),
                     avatar = Optional.Missing(),
                 ),
@@ -83,7 +84,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                             discriminator = "",
                             avatar = null
                         ),
-                        joinedAt = ""
+                        joinedAt = Instant.fromEpochMilliseconds(0),
                     ),
                     0
                 )

@@ -18,10 +18,8 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toInstant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
-import kotlin.coroutines.CoroutineContext
 
 public class TypingStartEvent(
     public val data: TypingStartEventData,
@@ -37,7 +35,7 @@ public class TypingStartEvent(
 
     public val guildId: Snowflake? get() = data.guildId.value
 
-    public val started: Instant get() = data.timestamp.toInstant()
+    public val started: Instant get() = data.timestamp
 
     public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 

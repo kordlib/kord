@@ -7,7 +7,7 @@ import dev.kord.voice.gateway.SessionDescription
 import dev.kord.voice.gateway.VoiceEvent
 import dev.kord.voice.gateway.handler.GatewayEventHandler
 import dev.kord.voice.streams.Streams
-import io.ktor.util.network.*
+import io.ktor.network.sockets.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.Job
@@ -20,14 +20,14 @@ internal class StreamsHandler(
     flow: Flow<VoiceEvent>,
     private val streams: Streams,
 ) : GatewayEventHandler(flow, "HandshakeHandler") {
-    private val server: AtomicRef<NetworkAddress?> = atomic(null)
+    private val server: AtomicRef<SocketAddress?> = atomic(null)
 
     private var streamsJob: Job? by atomic(null)
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun start() = coroutineScope {
         on<Ready> {
-            server.value = NetworkAddress(it.ip, it.port)
+            server.value = InetSocketAddress(it.ip, it.port)
         }
 
         on<SessionDescription> {

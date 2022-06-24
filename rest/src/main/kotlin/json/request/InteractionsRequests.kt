@@ -18,6 +18,11 @@ public data class ApplicationCommandCreateRequest(
     @SerialName("description_localizations")
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @SerialName("dm_permission")
+    public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
@@ -31,6 +36,11 @@ public data class ApplicationCommandModifyRequest(
     @SerialName("description_localizations")
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @SerialName("dm_permission")
+    public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     @SerialName("default_permission")
     val defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 )
@@ -117,9 +127,4 @@ public data class FollowupMessageModifyRequest(
 public data class MultipartFollowupMessageModifyRequest(
     val request: FollowupMessageModifyRequest,
     val files: Optional<List<NamedFile>> = Optional.Missing()
-)
-
-@Serializable
-public data class ApplicationCommandPermissionsEditRequest(
-    val permissions: List<DiscordGuildApplicationCommandPermission>
 )

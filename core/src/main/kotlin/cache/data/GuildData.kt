@@ -5,6 +5,7 @@ import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 private val MessageData.nullableGuildId get() = guildId.value
@@ -39,7 +40,7 @@ public data class GuildData(
     val systemChannelId: Snowflake? = null,
     val systemChannelFlags: SystemChannelFlags,
     val rulesChannelId: Snowflake? = null,
-    val joinedAt: Optional<String> = Optional.Missing(),
+    val joinedAt: Optional<Instant> = Optional.Missing(),
     val large: OptionalBoolean = OptionalBoolean.Missing,
     //val unavailable: OptionalBoolean = OptionalBoolean.Missing, useless?
     val memberCount: OptionalInt = OptionalInt.Missing,

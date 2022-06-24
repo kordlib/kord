@@ -33,8 +33,13 @@ public data class DiscordApplicationCommand(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    @SerialName("dm_permission")
+    val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("default_permission")
-    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val version: Snowflake
 )
 
@@ -173,47 +178,51 @@ public sealed class Choice<out T> {
         override val value: String
     ) : Choice<String>()
 
-    internal class Serializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
+    internal object Serializer : KSerializer<Choice<*>> {
+
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
             element<JsonPrimitive>("value")
             element<Map<Locale, String>?>("name_localizations", isOptional = true)
         }
 
-        override fun deserialize(decoder: Decoder): Choice<*> {
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+
             lateinit var name: String
             var nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing()
             lateinit var value: JsonPrimitive
-            decoder.decodeStructure(descriptor) {
-                while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        0 -> name = decodeStringElement(descriptor, index)
-                        1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
-                        2 -> nameLocalizations = decodeSerializableElement(descriptor, index, LocalizationSerializer)
 
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> throw SerializationException("unknown index: $index")
-                    }
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> name = decodeStringElement(descriptor, index)
+                    1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
+                    2 -> nameLocalizations = decodeSerializableElement(descriptor, index, LocalizationSerializer)
+
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("unknown index: $index")
                 }
             }
-            return when {
-                value.longOrNull != null -> IntChoice(name, nameLocalizations, value.long)
-                value.doubleOrNull != null -> NumberChoice(name, nameLocalizations, value.double)
-                else -> StringChoice(name, nameLocalizations, value.toString())
+
+            when {
+                value.isString -> StringChoice(name, nameLocalizations, value.content)
+                else -> value.longOrNull?.let { IntChoice(name, nameLocalizations, it) }
+                    ?: value.doubleOrNull?.let { NumberChoice(name, nameLocalizations, it) }
+                    ?: throw SerializationException("Illegal choice value: $value")
             }
         }
 
-        override fun serialize(encoder: Encoder, value: Choice<*>) {
-            encoder.encodeStructure(descriptor) {
-                encodeStringElement(descriptor, 0, value.name)
-                when (value) {
-                    is IntChoice -> encodeLongElement(descriptor, 1, value.value)
-                    is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
-                    else -> encodeStringElement(descriptor, 1, value.value.toString())
-                }
-                if (value.nameLocalizations !is Optional.Missing) {
-                    encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
-                }
+        override fun serialize(encoder: Encoder, value: Choice<*>) = encoder.encodeStructure(descriptor) {
+
+            encodeStringElement(descriptor, 0, value.name)
+
+            when (value) {
+                is IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
+                is StringChoice -> encodeStringElement(descriptor, 1, value.value)
+            }
+
+            if (value.nameLocalizations !is Optional.Missing) {
+                encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
             }
         }
     }
@@ -671,32 +680,30 @@ public sealed class CommandArgument<out T> : Option() {
             }
         }
 
-        override fun deserialize(decoder: Decoder): CommandArgument<*> {
-            decoder.decodeStructure(descriptor) {
-                this as JsonDecoder
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+            this as JsonDecoder
 
-                var name = ""
-                var element: JsonElement? = null
-                var type: ApplicationCommandOptionType? = null
-                while (true) {
-                    when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
-                        0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
-                        1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> type = decodeSerializableElement(
-                            descriptor,
-                            index,
-                            ApplicationCommandOptionType.serializer()
-                        )
+            var name = ""
+            var element: JsonElement? = null
+            var type: ApplicationCommandOptionType? = null
+            while (true) {
+                when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
+                    0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
+                    1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    2 -> type = decodeSerializableElement(
+                        descriptor,
+                        index,
+                        ApplicationCommandOptionType.serializer()
+                    )
 
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> error("unknown index: $index")
-                    }
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> error("unknown index: $index")
                 }
-
-                requireNotNull(element)
-                requireNotNull(type)
-                return deserialize(json, element, name, type, OptionalBoolean.Missing)
             }
+
+            requireNotNull(element)
+            requireNotNull(type)
+            deserialize(json, element, name, type, OptionalBoolean.Missing)
         }
     }
 }
@@ -776,14 +783,6 @@ public data class DiscordGuildApplicationCommandPermissions(
     val permissions: List<DiscordGuildApplicationCommandPermission>
 )
 
-
-@Serializable
-public data class PartialDiscordGuildApplicationCommandPermissions(
-    val id: Snowflake,
-    val permissions: List<DiscordGuildApplicationCommandPermission>
-)
-
-
 @Serializable
 public data class DiscordGuildApplicationCommandPermission(
     val id: Snowflake,
@@ -794,6 +793,7 @@ public data class DiscordGuildApplicationCommandPermission(
     public sealed class Type(public val value: Int) {
         public object Role : Type(1)
         public object User : Type(2)
+        public object Channel : Type(3)
         public class Unknown(value: Int) : Type(value)
 
         public object Serializer : KSerializer<Type> {
@@ -804,6 +804,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 when (val value = decoder.decodeInt()) {
                     1 -> Role
                     2 -> User
+                    3 -> Channel
                     else -> Unknown(value)
                 }
 

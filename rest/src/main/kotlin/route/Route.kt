@@ -805,20 +805,6 @@ public sealed class Route<T>(
             DiscordGuildApplicationCommandPermissions.serializer()
         )
 
-    public object ApplicationCommandPermissionsPut :
-        Route<DiscordGuildApplicationCommandPermissions>(
-            HttpMethod.Put,
-            "/applications/$ApplicationId/guilds/$GuildId/commands/$CommandId/permissions",
-            DiscordGuildApplicationCommandPermissions.serializer()
-        )
-
-    public object ApplicationCommandPermissionsBatchPut :
-        Route<List<DiscordGuildApplicationCommandPermissions>>(
-            HttpMethod.Put,
-            "/applications/$ApplicationId/guilds/$GuildId/commands/permissions",
-            ListSerializer(DiscordGuildApplicationCommandPermissions.serializer())
-        )
-
 
     /*
      * Guild Scheduled Event:

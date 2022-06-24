@@ -16,10 +16,9 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
-import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intent
+import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intents
-import dev.kord.gateway.MessageDelete
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
@@ -31,8 +30,6 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
 import kotlinx.coroutines.flow.firstOrNull as coroutinesFirstOrNull
-
-internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
@@ -479,7 +476,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
         +MessageContent
     }
 
-    MessageDelete::class -> {
+    MessageDeleteEvent::class -> {
         +GuildMessages
         +DirectMessages
         // no message content

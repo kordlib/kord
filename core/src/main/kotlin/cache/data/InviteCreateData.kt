@@ -8,13 +8,14 @@ import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.gateway.DiscordCreatedInvite
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
 public data class InviteCreateData(
     val channelId: Snowflake,
     val code: String,
-    val createdAt: String,
+    val createdAt: Instant,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val inviterId: OptionalSnowflake = OptionalSnowflake.Missing,
     val maxAge: DurationInSeconds,

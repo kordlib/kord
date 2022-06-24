@@ -145,7 +145,7 @@ public class VoiceConnectionBuilder(
         ) to VoiceGatewayConfiguration(
             voiceServer.token,
             @OptIn(KordExperimental::class)
-            "wss://${voiceServer.endpoint}?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
+            "wss://${voiceServer.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
         )
     }
 

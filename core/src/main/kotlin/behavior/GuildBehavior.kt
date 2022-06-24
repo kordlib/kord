@@ -31,7 +31,6 @@ import dev.kord.gateway.RequestGuildMembers
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
 import dev.kord.gateway.start
 import dev.kord.rest.Image
-import kotlinx.coroutines.flow.toList
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
@@ -48,7 +47,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.Objects
+import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -577,7 +576,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     public suspend fun getSticker(stickerId: Snowflake): GuildSticker = supplier.getGuildSticker(id, stickerId)
 
-    public suspend fun getStickerOrNull(stickerId: Snowflake): GuildSticker? = supplier.getGuildStickerOrNull(id, stickerId)
+    public suspend fun getStickerOrNull(stickerId: Snowflake): GuildSticker? =
+        supplier.getGuildStickerOrNull(id, stickerId)
 
     public suspend fun createSticker(name: String, description: String, tags: String, file: NamedFile): GuildSticker {
         val request = MultipartGuildStickerCreateRequest(GuildStickerCreateRequest(name, description, tags), file)
@@ -624,7 +624,6 @@ public fun GuildBehavior(
 }
 
 
-
 public suspend inline fun GuildBehavior.createChatInputCommand(
     name: String,
     description: String,
@@ -633,7 +632,6 @@ public suspend inline fun GuildBehavior.createChatInputCommand(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.createGuildChatInputCommand(id, name, description, builder)
 }
-
 
 
 public suspend inline fun GuildBehavior.createMessageCommand(
@@ -654,9 +652,8 @@ public suspend inline fun GuildBehavior.createUserCommand(
 }
 
 
-
 public suspend inline fun GuildBehavior.createApplicationCommands(
-    builder: MultiApplicationCommandBuilder.() -> Unit
+    builder: GuildMultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.createGuildApplicationCommands(id, builder)
@@ -1011,13 +1008,6 @@ public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuild
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
-}
-
-public suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
-
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-    kord.bulkEditApplicationCommandPermissions(id, builder)
 }
 
 /**

@@ -2,6 +2,7 @@ package dev.kord.core.cache.data
 
 import dev.kord.common.entity.DiscordTemplate
 import dev.kord.common.entity.Snowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -12,8 +13,8 @@ public data class TemplateData(
     val usageCount: Int,
     val creatorId: Snowflake,
     val creator: UserData,
-    val createdAt: String,
-    val updatedAt: String,
+    val createdAt: Instant,
+    val updatedAt: Instant,
     val sourceGuildId: Snowflake,
     val serializedSourceGuild: PartialGuildData,
     val isDirty: Boolean?

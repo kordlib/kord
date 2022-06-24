@@ -67,7 +67,7 @@ internal class VoiceUpdateEventHandler(
             // update the gateway configuration accordingly
             connection.voiceGatewayConfiguration = connection.voiceGatewayConfiguration.copy(
                 token = voiceServerUpdate.voiceServerUpdateData.token,
-                endpoint = "wss://${voiceServerUpdate.voiceServerUpdateData.endpoint}?v=${KordConfiguration.VOICE_GATEWAY_VERSION}"
+                endpoint = "wss://${voiceServerUpdate.voiceServerUpdateData.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
             )
 
             // reconnect...

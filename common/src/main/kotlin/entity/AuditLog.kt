@@ -10,7 +10,10 @@ import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.int
 import kotlin.time.Duration
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
@@ -112,35 +115,33 @@ public data class AuditLogChange<T>(
             element("key", ser.descriptor)
         }
 
-        override fun deserialize(decoder: Decoder): AuditLogChange<T> {
-            decoder.decodeStructure(descriptor) {
-                var new: JsonElement? = null
-                var old: JsonElement? = null
-                lateinit var key: AuditLogChangeKey<*>
-                while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> key = decodeSerializableElement(
-                            descriptor,
-                            index,
-                            AuditLogChangeKey.Serializer(Unit.serializer())
-                        )
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> throw SerializationException("unknown index: $index")
-                    }
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+            var new: JsonElement? = null
+            var old: JsonElement? = null
+            lateinit var key: AuditLogChangeKey<*>
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    2 -> key = decodeSerializableElement(
+                        descriptor,
+                        index,
+                        AuditLogChangeKey.Serializer(Unit.serializer())
+                    )
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("unknown index: $index")
                 }
-
-                val newVal = new?.let { Json.decodeFromJsonElement(key.serializer, new) }
-                val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
-
-                @Suppress("UNCHECKED_CAST")
-                return AuditLogChange(
-                    new = newVal,
-                    old = oldVal,
-                    key = key as AuditLogChangeKey<Any?>
-                ) as AuditLogChange<T>
             }
+
+            val newVal = new?.let { Json.decodeFromJsonElement(key.serializer, new) }
+            val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
+
+            @Suppress("UNCHECKED_CAST")
+            AuditLogChange(
+                new = newVal,
+                old = oldVal,
+                key = key as AuditLogChangeKey<Any?>
+            ) as AuditLogChange<T>
         }
 
         @Suppress("UNCHECKED_CAST")
@@ -247,6 +248,9 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
 
     @SerialName("color")
     public object Color : AuditLogChangeKey<CommonColor>("color", serializer())
+
+    @SerialName("command_id")
+    public object CommandId : AuditLogChangeKey<Snowflake>("command_id", serializer())
 
     @SerialName("communication_disabled_until")
     public object CommunicationDisabledUntil : AuditLogChangeKey<Instant>("communication_disabled_until", serializer())
@@ -424,6 +428,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
                 "rate_limit_per_user" -> RateLimitPerUser
                 "permissions" -> Permissions
                 "color" -> Color
+                "command_id" -> CommandId
                 "communication_disabled_until" -> CommunicationDisabledUntil
                 "hoist" -> Hoist
                 "mentionable" -> Mentionable
@@ -510,6 +515,7 @@ public sealed class AuditLogEvent(public val value: Int) {
     public object ThreadCreate : AuditLogEvent(110)
     public object ThreadUpdate : AuditLogEvent(111)
     public object ThreadDelete : AuditLogEvent(112)
+    public object ApplicationCommandPermissionUpdate : AuditLogEvent(121)
 
 
     internal object Serializer : KSerializer<AuditLogEvent> {
@@ -568,6 +574,7 @@ public sealed class AuditLogEvent(public val value: Int) {
             110 -> ThreadCreate
             111 -> ThreadUpdate
             112 -> ThreadDelete
+            121 -> ApplicationCommandPermissionUpdate
             else -> Unknown(value)
         }
     }

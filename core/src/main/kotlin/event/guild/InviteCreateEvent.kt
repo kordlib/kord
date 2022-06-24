@@ -20,7 +20,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import kotlin.time.Duration
 
 /**
@@ -52,7 +51,7 @@ public class InviteCreateEvent(
     /**
      * The time at which the invite was created.
      */
-    public val createdAt: Instant get() = data.createdAt.toInstant()
+    public val createdAt: Instant get() = data.createdAt
 
     /**
      * The id of the [Guild] of the invite.

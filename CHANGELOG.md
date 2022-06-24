@@ -1,3 +1,25 @@
+# 0.8.0-M14
+
+## Changes
+
+* Slash commands permissions v2 (#604)
+* Add feature variant for voice (#608)
+* Deserialize timestamps as Instant (#605)
+* Update Channel Builders (#606)
+* Use ktor Base64 functions (#600)
+* Refactor Choice serializer (#598)
+* Nullable user_limit (#602)
+* Stricter Locale parsing (#597)
+
+## Additions
+
+* Add error 50080 (#607)
+
+## Dependencies
+* 
+* Kotlin 1.6.20 -> 1.6.21
+* BinaryValidator 0.8.0 -> 0.9.0
+
 # 0.8.0-M13
 
 ## Changes

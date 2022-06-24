@@ -4,7 +4,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
 import dev.kord.rest.json.request.VoiceStateModifyRequest
@@ -13,7 +12,7 @@ import kotlinx.datetime.Instant
 public class CurrentVoiceStateModifyBuilder(public val channelId: Snowflake) :
     RequestBuilder<CurrentVoiceStateModifyRequest> {
 
-    private var _requestToSpeakTimestamp: Optional<Instant> = Optional.Missing()
+    private var _requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing()
 
     private var _suppress: OptionalBoolean = OptionalBoolean.Missing
 
@@ -36,7 +35,7 @@ public class CurrentVoiceStateModifyBuilder(public val channelId: Snowflake) :
 
 
     override fun toRequest(): CurrentVoiceStateModifyRequest {
-        return CurrentVoiceStateModifyRequest(channelId, _suppress, _requestToSpeakTimestamp.map { it.toString() })
+        return CurrentVoiceStateModifyRequest(channelId, _suppress, _requestToSpeakTimestamp)
     }
 }
 

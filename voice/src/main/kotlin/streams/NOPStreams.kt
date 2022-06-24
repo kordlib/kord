@@ -4,13 +4,13 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.udp.RTPPacket
-import io.ktor.util.network.*
+import io.ktor.network.sockets.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 @KordVoice
 public object NOPStreams : Streams {
-    override suspend fun listen(key: ByteArray, server: NetworkAddress) {}
+    override suspend fun listen(key: ByteArray, server: SocketAddress) {}
 
     override val incomingAudioPackets: Flow<RTPPacket> = flow { }
     override val incomingAudioFrames: Flow<Pair<UInt, AudioFrame>> = flow { }

@@ -14,7 +14,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -113,8 +112,7 @@ public class Integration(
     /**
      * When this integration was last synced.
      */
-    public val syncedAt: Instant
-        get() = data.syncedAt.toInstant()
+    public val syncedAt: Instant get() = data.syncedAt
 
     /**
      * Requests to get the guild this integration is tied to.

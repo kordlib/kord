@@ -3,11 +3,12 @@ package dev.kord.core.builder.kord
 import dev.kord.common.entity.Snowflake
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.util.*
 import kotlinx.serialization.json.Json
-import java.util.*
 
 internal fun HttpClientConfig<*>.defaultConfig() {
     expectSuccess = false
@@ -16,6 +17,7 @@ internal fun HttpClientConfig<*>.defaultConfig() {
         json()
     }
     install(WebSockets)
+    install(HttpTimeout)
 }
 
 internal fun HttpClient?.configure(): HttpClient {
@@ -39,12 +41,8 @@ internal fun HttpClient?.configure(): HttpClient {
 }
 
 
-internal fun getBotIdFromToken(token: String): Snowflake {
-    try {
-        val bytes = Base64.getDecoder().decode(token.split(""".""").first())
-        return Snowflake(String(bytes))
-    } catch (exception: IllegalArgumentException) {
-        throw IllegalArgumentException("Malformed bot token: '$token'. Make sure that your token is correct.")
-    }
+internal fun getBotIdFromToken(token: String) = try {
+    Snowflake(token.substringBefore('.').decodeBase64String())
+} catch (exception: IllegalArgumentException) {
+    throw IllegalArgumentException("Malformed bot token: '$token'. Make sure that your token is correct.")
 }
-
