@@ -6,6 +6,7 @@ import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
@@ -31,6 +32,7 @@ public class DefaultGatewayBuilder {
             install(ContentNegotiation) {
                 json()
             }
+            install(HttpTimeout)
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
         val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)
