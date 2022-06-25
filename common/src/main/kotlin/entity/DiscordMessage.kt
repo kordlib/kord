@@ -14,7 +14,9 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonContentPolymorphicSerializer
+import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.int
 import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
@@ -121,16 +123,29 @@ public data class DiscordMessage(
 
 @Serializable(with = DiscordMessageNonce.Serializer::class)
 public sealed class DiscordMessageNonce {
-    @Serializable
     public data class IntegerNonce(val nonce: Int) : DiscordMessageNonce()
-    @Serializable
     public data class StringNonce(val nonce: String) : DiscordMessageNonce()
 
-    internal class Serializer : JsonContentPolymorphicSerializer<DiscordMessageNonce>(DiscordMessageNonce::class) {
-        override fun selectDeserializer(element: JsonElement): KSerializer<out DiscordMessageNonce> {
-            return if (element.jsonPrimitive.isString) {
-                StringNonce.serializer()
-            } else IntegerNonce.serializer()
+    internal object Serializer : KSerializer<DiscordMessageNonce> {
+        override val descriptor: SerialDescriptor
+            get() = PrimitiveSerialDescriptor("nonce", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): DiscordMessageNonce {
+            val jsonDecoder = decoder as? JsonDecoder ?: error("Can be deserialized only by JSON")
+            val element = jsonDecoder.decodeJsonElement()
+                .jsonPrimitive
+
+            return when {
+                element.jsonPrimitive.isString -> StringNonce(element.content)
+                else -> IntegerNonce(element.int)
+            }
+        }
+
+        override fun serialize(encoder: Encoder, value: DiscordMessageNonce) {
+            when (value) {
+                is StringNonce -> encoder.encodeString(value.nonce)
+                is IntegerNonce -> encoder.encodeInt(value.nonce)
+            }
         }
     }
 }
