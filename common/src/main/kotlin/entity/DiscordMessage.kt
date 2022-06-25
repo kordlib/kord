@@ -13,6 +13,11 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.json.JsonContentPolymorphicSerializer
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.intOrNull
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -89,7 +94,7 @@ public data class DiscordMessage(
     val attachments: List<DiscordAttachment>,
     val embeds: List<DiscordEmbed>,
     val reactions: Optional<List<Reaction>> = Optional.Missing(),
-    val nonce: Optional<String> = Optional.Missing(),
+    val nonce: Optional<DiscordMessageNonce> = Optional.Missing(),
     val pinned: Boolean,
     @SerialName("webhook_id")
     val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -113,6 +118,22 @@ public data class DiscordMessage(
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val thread: Optional<DiscordChannel> = Optional.Missing()
 )
+
+@Serializable(with = DiscordMessageNonce.Serializer::class)
+public sealed class DiscordMessageNonce {
+    @Serializable
+    public data class IntegerNonce(val nonce: Int) : DiscordMessageNonce()
+    @Serializable
+    public data class StringNonce(val nonce: String) : DiscordMessageNonce()
+
+    internal class Serializer : JsonContentPolymorphicSerializer<DiscordMessageNonce>(DiscordMessageNonce::class) {
+        override fun selectDeserializer(element: JsonElement): KSerializer<out DiscordMessageNonce> {
+            return if (element.jsonPrimitive.isString) {
+                StringNonce.serializer()
+            } else IntegerNonce.serializer()
+        }
+    }
+}
 
 /**
  * @param id id of the sticker
