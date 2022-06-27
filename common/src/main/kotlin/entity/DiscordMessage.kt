@@ -96,7 +96,7 @@ public data class DiscordMessage(
     val attachments: List<DiscordAttachment>,
     val embeds: List<DiscordEmbed>,
     val reactions: Optional<List<Reaction>> = Optional.Missing(),
-    val nonce: Optional<DiscordMessageNonce> = Optional.Missing(),
+    val nonce: Optional<@Serializable(with = NonceAsStringSerializer::class) String> = Optional.Missing(),
     val pinned: Boolean,
     @SerialName("webhook_id")
     val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -121,32 +121,23 @@ public data class DiscordMessage(
     val thread: Optional<DiscordChannel> = Optional.Missing()
 )
 
-@Serializable(with = DiscordMessageNonce.Serializer::class)
-public sealed class DiscordMessageNonce {
-    public data class IntegerNonce(val nonce: Int) : DiscordMessageNonce()
-    public data class StringNonce(val nonce: String) : DiscordMessageNonce()
+internal object NonceAsStringSerializer : KSerializer<String> {
+    override val descriptor: SerialDescriptor
+        get() = PrimitiveSerialDescriptor("nonce", PrimitiveKind.STRING)
 
-    internal object Serializer : KSerializer<DiscordMessageNonce> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("nonce", PrimitiveKind.INT)
+    override fun deserialize(decoder: Decoder): String {
+        val jsonDecoder = decoder as? JsonDecoder ?: error("Can be deserialized only by JSON")
+        val element = jsonDecoder.decodeJsonElement()
+            .jsonPrimitive
 
-        override fun deserialize(decoder: Decoder): DiscordMessageNonce {
-            val jsonDecoder = decoder as? JsonDecoder ?: error("Can be deserialized only by JSON")
-            val element = jsonDecoder.decodeJsonElement()
-                .jsonPrimitive
-
-            return when {
-                element.jsonPrimitive.isString -> StringNonce(element.content)
-                else -> IntegerNonce(element.int)
-            }
+        return when {
+            element.jsonPrimitive.isString -> element.content
+            else -> element.int.toString()
         }
+    }
 
-        override fun serialize(encoder: Encoder, value: DiscordMessageNonce) {
-            when (value) {
-                is StringNonce -> encoder.encodeString(value.nonce)
-                is IntegerNonce -> encoder.encodeInt(value.nonce)
-            }
-        }
+    override fun serialize(encoder: Encoder, value: String) {
+        encoder.encodeString(value)
     }
 }
 
