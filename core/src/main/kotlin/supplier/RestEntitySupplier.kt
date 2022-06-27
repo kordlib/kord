@@ -18,7 +18,7 @@ import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
-import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
+import dev.kord.rest.json.request.GuildScheduledEventUser
 import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
 import dev.kord.rest.json.request.ListThreadsByTimestampRequest
 import dev.kord.rest.request.RestRequestException
@@ -530,7 +530,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         before: Snowflake,
         withMember: Boolean,
         limit: Int?,
-    ): Flow<GuildScheduledEventUsersResponse> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
+    ): Flow<GuildScheduledEventUser> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
         paginateBackwards(batchSize, start = before, idSelector = { it.user.id }) { beforePosition ->
             guild.getScheduledEventUsers(guildId, eventId, beforePosition, withMember, limit = batchSize)
         }
@@ -543,7 +543,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         after: Snowflake,
         withMember: Boolean,
         limit: Int?,
-    ): Flow<GuildScheduledEventUsersResponse> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
+    ): Flow<GuildScheduledEventUser> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
         paginateForwards(batchSize, start = after, idSelector = { it.user.id }) { afterPosition ->
             guild.getScheduledEventUsers(guildId, eventId, afterPosition, withMember, limit = batchSize)
         }

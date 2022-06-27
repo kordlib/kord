@@ -490,7 +490,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         position: Position.BeforeOrAfter? = null,
         withMember: Boolean? = null,
         limit: Int? = null,
-    ): List<GuildScheduledEventUsersResponse> = call(Route.GuildScheduledEventUsersGet) {
+    ): List<GuildScheduledEventUser> = call(Route.GuildScheduledEventUsersGet) {
         keys[Route.GuildId] = guildId
         keys[Route.ScheduledEventId] = eventId
 
@@ -505,7 +505,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         before: Snowflake,
         withMember: Boolean? = null,
         limit: Int? = null,
-    ): List<GuildScheduledEventUsersResponse> = getScheduledEventUsers(
+    ): List<GuildScheduledEventUser> = getScheduledEventUsers(
         guildId,
         eventId,
         Position.Before(before),
@@ -519,7 +519,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         after: Snowflake,
         withMember: Boolean? = null,
         limit: Int? = null,
-    ): List<GuildScheduledEventUsersResponse> = getScheduledEventUsers(
+    ): List<GuildScheduledEventUser> = getScheduledEventUsers(
         guildId,
         eventId,
         Position.After(after),

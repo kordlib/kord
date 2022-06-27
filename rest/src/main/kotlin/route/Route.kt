@@ -4,7 +4,7 @@ import dev.kord.common.KordConfiguration
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
-import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
+import dev.kord.rest.json.request.GuildScheduledEventUser
 import dev.kord.rest.json.response.*
 import io.ktor.http.*
 import kotlinx.serialization.DeserializationStrategy
@@ -826,10 +826,10 @@ public sealed class Route<T>(
         )
 
     public object GuildScheduledEventUsersGet :
-        Route<List<GuildScheduledEventUsersResponse>>(
+        Route<List<GuildScheduledEventUser>>(
             HttpMethod.Get,
             "/guilds/$GuildId/scheduled-events/$ScheduledEventId/users",
-            ListSerializer(GuildScheduledEventUsersResponse.serializer()),
+            ListSerializer(GuildScheduledEventUser.serializer()),
         )
 
     public object GuildScheduledEventPatch :
