@@ -5,6 +5,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.serialization.DurationInDaysSerializer
 import dev.kord.common.serialization.DurationInSecondsSerializer
+import dev.kord.common.serialization.IntOrStringSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
@@ -12,8 +13,6 @@ import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.int
 import kotlin.time.Duration
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
@@ -310,39 +309,11 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
      * The actual supertype is [AuditLogChangeKey<Int | String>][AuditLogChangeKey] but Kotlin does not support union
      * types yet. [Int]s are instead converted to a [String].
      */
+    // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
+    // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
     @SerialName("type")
     public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer) {
         // TODO use union type `String | Int` if Kotlin ever introduces them
-
-        // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
-        // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
-        private object IntOrStringSerializer : KSerializer<String> {
-            private val backingSerializer = JsonPrimitive.serializer()
-
-            /*
-             * Delegating serializers should not reuse descriptors:
-             * https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md#delegating-serializers
-             *
-             * however `SerialDescriptor("...", backingSerializer.descriptor)` will throw since
-             * `JsonPrimitive.serializer().kind` is `PrimitiveKind.STRING` (`SerialDescriptor()` does not allow
-             * `PrimitiveKind`)
-             * -> use `PrimitiveSerialDescriptor("...", PrimitiveKind.STRING)` instead
-             */
-            override val descriptor = PrimitiveSerialDescriptor(
-                serialName = "dev.kord.common.entity.AuditLogChangeKey.Type.IntOrString",
-                PrimitiveKind.STRING,
-            )
-
-            override fun serialize(encoder: Encoder, value: String) {
-                val jsonPrimitive = value.toIntOrNull()?.let { JsonPrimitive(it) } ?: JsonPrimitive(value)
-                encoder.encodeSerializableValue(backingSerializer, jsonPrimitive)
-            }
-
-            override fun deserialize(decoder: Decoder): String {
-                val jsonPrimitive = decoder.decodeSerializableValue(backingSerializer)
-                return if (jsonPrimitive.isString) jsonPrimitive.content else jsonPrimitive.int.toString()
-            }
-        }
     }
 
     @SerialName("enable_emoticons")
