@@ -27,7 +27,7 @@ public data class MessageData(
     val attachments: List<AttachmentData>,
     val embeds: List<EmbedData>,
     val reactions: Optional<List<ReactionData>> = Optional.Missing(),
-    val nonce: Optional<DiscordMessageNonce> = Optional.Missing(),
+    val nonce: Optional<String> = Optional.Missing(),
     val pinned: Boolean,
     val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
     val type: MessageType,
