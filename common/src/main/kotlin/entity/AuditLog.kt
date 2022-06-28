@@ -314,7 +314,6 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     // TODO use union type `String | Int` if Kotlin ever introduces them
     @SerialName("type")
     public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer)
-    }
 
     @SerialName("enable_emoticons")
     public object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
