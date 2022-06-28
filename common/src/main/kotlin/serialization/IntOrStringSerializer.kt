@@ -21,7 +21,7 @@ internal object IntOrStringSerializer : KSerializer<String> {
      * -> use `PrimitiveSerialDescriptor("...", PrimitiveKind.STRING)` instead
      */
     override val descriptor = PrimitiveSerialDescriptor(
-        serialName = "IntOrString",
+        serialName = "dev.kord.common.serialization.IntOrString",
         PrimitiveKind.STRING,
     )
 
