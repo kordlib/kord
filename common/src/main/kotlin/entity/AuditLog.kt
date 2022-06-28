@@ -311,9 +311,9 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
      */
     // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
     // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
+    // TODO use union type `String | Int` if Kotlin ever introduces them
     @SerialName("type")
-    public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer) {
-        // TODO use union type `String | Int` if Kotlin ever introduces them
+    public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer)
     }
 
     @SerialName("enable_emoticons")
