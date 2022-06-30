@@ -8,7 +8,9 @@ import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
+import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
+import dev.kord.core.builder.kord.RestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
@@ -402,6 +404,13 @@ public class Kord(
             }
             return KordRestOnlyBuilder(token).apply(builder).build()
         }
+    }
+
+    public inline fun proxy(builder: KordProxyBuilder.() -> Unit = {}): Kord {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+        return KordProxyBuilder().apply(builder).build()
     }
     public fun getGlobalApplicationCommands(withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand> {
         return defaultSupplier.getGlobalApplicationCommands(resources.applicationId, withLocalizations)
