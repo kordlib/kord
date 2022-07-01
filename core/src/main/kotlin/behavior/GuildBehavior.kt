@@ -84,7 +84,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
      */
     public val cachedThreads: Flow<ThreadChannel>
         get() = kord.cache
-            .query { idEq(ChannelData::guildId, this@GuildBehavior.id) }
+            .query<ChannelData> { idEq(ChannelData::guildId, this@GuildBehavior.id) }
             .asFlow()
             .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
