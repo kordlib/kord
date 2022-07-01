@@ -68,12 +68,25 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * Returns all active public and private threads in this guild
      * Threads are ordered by their id, in descending order.
      *
-     *  The returned flow is lazily executed, any [RequestException] will be thrown on
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
-
      */
     public val activeThreads: Flow<ThreadChannel>
         get() = supplier.getActiveThreads(id)
+
+    /**
+     * Requests to get all threads in this guild that are present in [cache][Kord.cache].
+     *
+     * This property is not resolvable through REST and will always use [Kord.cache] instead.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public val cachedThreads: Flow<ThreadChannel>
+        get() = kord.cache
+            .query { idEq(ChannelData::guildId, this@GuildBehavior.id) }
+            .asFlow()
+            .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
     /**
      * Requests to get all present webhooks for this guild.
