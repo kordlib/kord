@@ -34,9 +34,9 @@ public data class DiscordApplicationCommand(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
-    val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    val defaultMemberPermissions: Permissions?,
     @SerialName("dm_permission")
-    val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,

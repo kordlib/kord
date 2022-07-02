@@ -50,7 +50,7 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     /**
      * Set of [Permissions] required to execute this command unless a server admin changed them.
      */
-    public val defaultMemberPermissions: Permissions? get() = data.defaultMemberPermissions.value
+    public val defaultMemberPermissions: Permissions? get() = data.defaultMemberPermissions
 
     /**
      * whether the command is enabled by default when the app is added to a guild.
@@ -66,7 +66,7 @@ public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicatio
     /**
      * Whether this command is available in DMs with the application.
      */
-    public val dmPermission: Boolean get() = data.dmPermission?.value ?: true
+    public val dmPermission: Boolean get() = data.dmPermission.orElse(true)
 }
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,

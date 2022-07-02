@@ -18,8 +18,8 @@ public data class ApplicationCommandData(
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
-    val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
-    val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val defaultMemberPermissions: Permissions?,
+    val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val version: Snowflake
