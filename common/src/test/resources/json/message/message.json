@@ -27,5 +27,6 @@
   "content": "Supa Hot",
   "channel_id": "290926798999357250",
   "mentions": [],
-  "type": 0
+  "type": 0,
+  "nonce": 1234
 }

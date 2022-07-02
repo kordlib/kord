@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.IntOrStringSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -89,7 +90,7 @@ public data class DiscordMessage(
     val attachments: List<DiscordAttachment>,
     val embeds: List<DiscordEmbed>,
     val reactions: Optional<List<Reaction>> = Optional.Missing(),
-    val nonce: Optional<String> = Optional.Missing(),
+    val nonce: Optional<@Serializable(with = IntOrStringSerializer::class) String> = Optional.Missing(),
     val pinned: Boolean,
     @SerialName("webhook_id")
     val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
