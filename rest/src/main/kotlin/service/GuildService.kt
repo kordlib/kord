@@ -278,6 +278,13 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         }
     }
 
+    public suspend fun modifyGuildMFALevel(guildId: Snowflake, level: MFALevel): GuildMFALevelModifyResponse =
+        call(Route.GuildMFALevelModify) {
+            keys[Route.GuildId] = guildId
+            val request = GuildMFALevelModifyRequest(level)
+            body(GuildMFALevelModifyRequest.serializer(), request)
+        }
+
     public suspend fun deleteGuildRole(guildId: Snowflake, roleId: Snowflake, reason: String? = null): Unit =
         call(Route.GuildRoleDelete) {
             keys[Route.GuildId] = guildId
