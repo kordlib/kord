@@ -93,7 +93,6 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.GuildId] = guildId
             val modifyBuilder = GuildChannelPositionModifyBuilder().apply(builder)
             body(GuildChannelPositionModifyRequest.serializer(), modifyBuilder.toRequest())
-            auditLogReason(modifyBuilder.reason)
         }
     }
 
