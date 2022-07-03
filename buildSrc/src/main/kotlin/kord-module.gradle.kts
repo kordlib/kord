@@ -39,7 +39,6 @@ tasks {
             freeCompilerArgs = listOf(
                 CompilerArguments.coroutines,
                 CompilerArguments.time,
-                CompilerArguments.optIn,
                 CompilerArguments.contracts,
             )
         }
@@ -89,7 +88,7 @@ tasks {
 
     publishing {
         publications.withType<MavenPublication> {
-            from(components["kotlin"])
+            from(components["java"])
             artifact(sourcesJar.get())
             artifact(dokkaJar.get())
         }

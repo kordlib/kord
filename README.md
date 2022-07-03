@@ -197,6 +197,19 @@ suspend fun main() {
 
 A mapping of [Discord's Voice Connection](https://discord.com/developers/docs/topics/voice-connections), which maintains the connection and handles audio transmission.
 
+If you want to use voice, you need to enable the voice capability,
+which is only available for Gradle
+
+```kotlin
+dependencies {
+    implementation("dev.kord", "core", "<version>") {
+        capabilities {
+            requireCapability("dev.kord:core-voice:<version>")
+        }
+    }
+}
+```
+
 ```kotlin
 suspend fun main() {
     val kord = Kord("your token")

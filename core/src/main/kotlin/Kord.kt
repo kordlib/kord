@@ -577,7 +577,7 @@ public class Kord(
 
     public suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
-        builder: MultiApplicationCommandBuilder.() -> Unit,
+        builder: GuildMultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GuildApplicationCommand> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
