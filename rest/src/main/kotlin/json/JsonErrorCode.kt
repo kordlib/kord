@@ -330,6 +330,9 @@ public enum class JsonErrorCode(public val code: Int) {
      */
     ProvidedMessageCountInsufficient(50016),
 
+    /** Invalid MFA Level. */
+    InvalidMFALevel(50017),
+
     /** A message can only be pinned to the channel it was sent in. */
     CannotPinMessageFromAnotherChannel(50019),
 
