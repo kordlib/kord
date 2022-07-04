@@ -166,6 +166,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** This message cannot be edited due to announcement rate limits. */
     AnnouncementRateLimit(20022),
 
+    /** Under minimum age. */
+    UnderMinimumAge(20024),
+
     /** The channel you are writing has hit the write rate limit. */
     ChannelWriteRateLimit(20028),
 
