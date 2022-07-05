@@ -460,6 +460,13 @@ public sealed class Route<T>(
     public object GuildRolePatch :
         Route<DiscordRole>(HttpMethod.Patch, "/guilds/$GuildId/roles/$RoleId", DiscordRole.serializer())
 
+    public object GuildMFALevelModify :
+        Route<GuildMFALevelModifyResponse>(
+            HttpMethod.Post,
+            "/guilds/$GuildId/mfa",
+            GuildMFALevelModifyResponse.serializer(),
+        )
+
     public object GuildRoleDelete :
         Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", NoStrategy)
 
