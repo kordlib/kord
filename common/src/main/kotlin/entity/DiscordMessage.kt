@@ -121,8 +121,6 @@ public data class DiscordMessage(
  * @param name name of the sticker
  * @param description description of the sticker
  * @param tags a comma-separated list of tags for the sticker
- * @param asset sticker asset hash
- * @param previewAsset sticker preview asset hash
  * @param formatType type of sticker format
  */
 @Serializable
@@ -775,6 +773,13 @@ public data class AllRemovedMessageReactions(
 
 @Serializable(with = MessageType.MessageTypeSerializer::class)
 public sealed class MessageType(public val code: Int) {
+
+    override fun equals(other: Any?): Boolean =
+        this === other || (other is MessageType && this.code == other.code)
+
+    override fun hashCode(): Int = code
+
+
     /** The default code for unknown values. */
     public class Unknown(code: Int) : MessageType(code)
     public object Default : MessageType(0)
@@ -784,11 +789,26 @@ public sealed class MessageType(public val code: Int) {
     public object ChannelNameChange : MessageType(4)
     public object ChannelIconChange : MessageType(5)
     public object ChannelPinnedMessage : MessageType(6)
+
+    @Deprecated("Renamed to 'UserJoin'.", ReplaceWith("UserJoin"))
     public object GuildMemberJoin : MessageType(7)
+    public object UserJoin : MessageType(7)
+
+    @Deprecated("Renamed to 'GuildBoost'.", ReplaceWith("GuildBoost"))
     public object UserPremiumGuildSubscription : MessageType(8)
+    public object GuildBoost : MessageType(8)
+
+    @Deprecated("Renamed to 'GuildBoostTier1'.", ReplaceWith("GuildBoostTier1"))
     public object UserPremiumGuildSubscriptionTierOne : MessageType(9)
+    public object GuildBoostTier1 : MessageType(9)
+
+    @Deprecated("Renamed to 'GuildBoostTier2'.", ReplaceWith("GuildBoostTier2"))
     public object UserPremiumGuildSubscriptionTwo : MessageType(10)
+    public object GuildBoostTier2 : MessageType(10)
+
+    @Deprecated("Renamed to 'GuildBoostTier3'.", ReplaceWith("GuildBoostTier3"))
     public object UserPremiumGuildSubscriptionThree : MessageType(11)
+    public object GuildBoostTier3 : MessageType(11)
     public object ChannelFollowAdd : MessageType(12)
     public object GuildDiscoveryDisqualified : MessageType(14)
 
@@ -828,11 +848,11 @@ public sealed class MessageType(public val code: Int) {
                 ChannelNameChange,
                 ChannelIconChange,
                 ChannelPinnedMessage,
-                GuildMemberJoin,
-                UserPremiumGuildSubscription,
-                UserPremiumGuildSubscriptionTierOne,
-                UserPremiumGuildSubscriptionTwo,
-                UserPremiumGuildSubscriptionThree,
+                UserJoin,
+                GuildBoost,
+                GuildBoostTier1,
+                GuildBoostTier2,
+                GuildBoostTier3,
                 ChannelFollowAdd,
                 GuildDiscoveryDisqualified,
                 GuildDiscoveryRequalified,
