@@ -431,6 +431,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** The request body contains invalid JSON. */
     InvalidJsonInRequestBody(50109),
 
+    /** You do not have permission to send this sticker. */
+    StickerPermissionLack(50600),
+
     /** Two factor is required for this operation. */
     Require2FA(60003),
 
