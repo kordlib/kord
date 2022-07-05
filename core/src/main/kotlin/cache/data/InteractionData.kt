@@ -25,7 +25,7 @@ public data class InteractionData(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing(),
-    val appPermissions: Permissions,
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing()
 ) {

@@ -256,7 +256,7 @@ public data class DiscordInteraction(
     @Serializable(with = MaybeMessageSerializer::class)
     val message: Optional<DiscordMessage> = Optional.Missing(),
     @SerialName("app_permissions")
-    val appPermissions: Permissions,
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
     val guildLocale: Optional<Locale> = Optional.Missing(),
