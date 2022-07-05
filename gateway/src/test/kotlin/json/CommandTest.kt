@@ -159,9 +159,9 @@ class CommandTest {
             put("d", buildJsonObject {
                 put("token", token)
                 put("properties", buildJsonObject {
-                    put("\$os", "os")
-                    put("\$browser", "browser")
-                    put("\$device", "device")
+                    put("os", "os")
+                    put("browser", "browser")
+                    put("device", "device")
                 })
                 put("compress", compress)
                 put("large_threshold", largeThreshold)
