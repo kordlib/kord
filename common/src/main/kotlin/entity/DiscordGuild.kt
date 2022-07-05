@@ -239,9 +239,11 @@ public sealed class GuildFeature(public val value: String) {
     public object MoreStickers : GuildFeature("MORE_STICKERS")
 
     /** Guild has access to the three-day archive time for threads */
+    @Deprecated("Thread archive durations are no longer boost locked")
     public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
 
     /** Guild has access to the seven day archive time for threads */
+    @Deprecated("Thread archive durations are no longer boost locked")
     public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
 
     /** Guild has access to create private threads */
@@ -278,8 +280,8 @@ public sealed class GuildFeature(public val value: String) {
             "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
             "MONETIZATION_ENABLED" -> MonetizationEnabled
             "MORE_STICKERS" -> MoreStickers
-            "THREE_DAY_THREAD_ARCHIVE" -> ThreeDayThreadArchive
-            "SEVEN_DAY_THREAD_ARCHIVE" -> SevenDayThreadArchive
+            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") ThreeDayThreadArchive
+            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") SevenDayThreadArchive
             "PRIVATE_THREADS" -> PrivateThreads
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
             "PREVIEW_ENABLED" -> PreviewEnabled
