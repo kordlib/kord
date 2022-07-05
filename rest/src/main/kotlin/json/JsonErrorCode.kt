@@ -250,6 +250,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of edits to messages older than 1 hour reached. Try again later. */
     MaxOldMessageEdits(30046),
 
+    /** Bitrate is too high for channel of this type. */
+    BitrateTooHigh(30052),
+
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
 
