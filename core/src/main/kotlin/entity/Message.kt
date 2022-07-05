@@ -56,7 +56,10 @@ public class Message(
         /** [Id][ActionInteraction.id] of the [ActionInteraction] this message is responding to. */
         override val id: Snowflake get() = data.id
 
-        /** The [name][ApplicationCommand.name] of the [ApplicationCommand] that triggered this message. */
+        /**
+         * The [name][ApplicationCommand.name] of the [ApplicationCommand] that triggered this message.
+         * This name includes subcommands and subcommand groups.
+         */
         public val name: String get() = data.name
 
         /** The [UserBehavior] of the [user][ActionInteraction.user] who invoked the [ActionInteraction]. */

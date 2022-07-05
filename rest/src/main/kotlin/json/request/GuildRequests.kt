@@ -185,6 +185,9 @@ public data class GuildRoleModifyRequest(
 }
 
 @Serializable
+public data class GuildMFALevelModifyRequest(val level: MFALevel)
+
+@Serializable
 public data class GuildIntegrationCreateRequest(val type: Int, val id: String)
 
 @Serializable

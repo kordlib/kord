@@ -1,5 +1,6 @@
 package dev.kord.rest.route
 
+import dev.kord.common.KordConfiguration
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
@@ -15,9 +16,6 @@ import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.json.Json
-
-internal const val REST_VERSION_PROPERTY_NAME = "dev.kord.rest.version"
-internal val restVersion get() = System.getenv(REST_VERSION_PROPERTY_NAME) ?: "v10"
 
 public sealed interface ResponseMapper<T> {
     public fun deserialize(json: Json, body: String): T
@@ -56,7 +54,8 @@ public sealed class Route<T>(
 ) {
 
     public companion object {
-        public val baseUrl: String = "https://discord.com/api/$restVersion"
+        @OptIn(KordExperimental::class)
+        public val baseUrl: String get() = "https://discord.com/api/v${KordConfiguration.REST_VERSION}"
     }
 
 
@@ -460,6 +459,13 @@ public sealed class Route<T>(
 
     public object GuildRolePatch :
         Route<DiscordRole>(HttpMethod.Patch, "/guilds/$GuildId/roles/$RoleId", DiscordRole.serializer())
+
+    public object GuildMFALevelModify :
+        Route<GuildMFALevelModifyResponse>(
+            HttpMethod.Post,
+            "/guilds/$GuildId/mfa",
+            GuildMFALevelModifyResponse.serializer(),
+        )
 
     public object GuildRoleDelete :
         Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", NoStrategy)

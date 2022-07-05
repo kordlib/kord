@@ -1,10 +1,12 @@
 package dev.kord.common.annotation
 
+import kotlin.annotation.AnnotationTarget.*
+
 /**
  * Dsl marker for Kord dsls.
  */
 @DslMarker
-@Target(AnnotationTarget.CLASS)
+@Target(CLASS)
 public annotation class KordDsl
 
 /**
@@ -18,7 +20,7 @@ public annotation class KordDsl
 @MustBeDocumented
 @Retention(value = AnnotationRetention.BINARY)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
+@Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
 public annotation class KordPreview
 
 /**
@@ -33,7 +35,7 @@ public annotation class KordPreview
 @MustBeDocumented
 @Retention(value = AnnotationRetention.BINARY)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
+@Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
 public annotation class KordExperimental
 
 /**
@@ -47,7 +49,7 @@ public annotation class KordExperimental
 @MustBeDocumented
 @Retention(value = AnnotationRetention.BINARY)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
+@Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
 public annotation class KordVoice
 
 /**
@@ -63,21 +65,12 @@ public annotation class KordVoice
 @MustBeDocumented
 @Retention(value = AnnotationRetention.BINARY)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
-@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.TYPEALIAS, AnnotationTarget.PROPERTY)
+@Target(CLASS, PROPERTY, FUNCTION, PROPERTY_SETTER, TYPEALIAS)
 public annotation class KordUnsafe
 
 /**
  * Marks the annotated declaration as deprecated since [version].
  */
 @MustBeDocumented
-@Target(
-    AnnotationTarget.CLASS,
-    AnnotationTarget.FUNCTION,
-    AnnotationTarget.PROPERTY,
-    AnnotationTarget.ANNOTATION_CLASS,
-    AnnotationTarget.CONSTRUCTOR,
-    AnnotationTarget.PROPERTY_SETTER,
-    AnnotationTarget.PROPERTY_GETTER,
-    AnnotationTarget.TYPEALIAS
-)
+@Target(CLASS, ANNOTATION_CLASS, PROPERTY, CONSTRUCTOR, FUNCTION, PROPERTY_GETTER, PROPERTY_SETTER, TYPEALIAS)
 public annotation class DeprecatedSinceKord(val version: String)

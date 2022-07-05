@@ -5,15 +5,14 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ChannelPositionSwapRequest
 import dev.kord.rest.json.request.GuildChannelPositionModifyRequest
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 @KordDsl
-public class GuildChannelPositionModifyBuilder : AuditRequestBuilder<GuildChannelPositionModifyRequest> {
-    override var reason: String? = null
+public class GuildChannelPositionModifyBuilder : RequestBuilder<GuildChannelPositionModifyRequest> {
     public var swaps: MutableList<GuildChannelSwapBuilder> = mutableListOf()
 
     public fun move(pair: Pair<Snowflake, Int>) {

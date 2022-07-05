@@ -1,11 +1,14 @@
 package dev.kord.gateway
 
+import dev.kord.common.KordConfiguration
+import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
@@ -17,7 +20,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.time.Duration.Companion.seconds
 
 public class DefaultGatewayBuilder {
-    public var url: String = "wss://gateway.discord.gg/?v=10&encoding=json&compress=zlib-stream"
+    @OptIn(KordExperimental::class)
+    public var url: String =
+        "wss://gateway.discord.gg/?v=${KordConfiguration.GATEWAY_VERSION}&encoding=json&compress=zlib-stream"
     public var client: HttpClient? = null
     public var reconnectRetry: Retry? = null
     public var sendRateLimiter: RateLimiter? = null
@@ -31,6 +36,7 @@ public class DefaultGatewayBuilder {
             install(ContentNegotiation) {
                 json()
             }
+            install(HttpTimeout)
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
         val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)

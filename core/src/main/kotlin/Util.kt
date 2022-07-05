@@ -19,7 +19,6 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Intent
 import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intents
-import dev.kord.gateway.MessageDelete
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
@@ -477,7 +476,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
         +MessageContent
     }
 
-    MessageDelete::class -> {
+    MessageDeleteEvent::class -> {
         +GuildMessages
         +DirectMessages
         // no message content

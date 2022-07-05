@@ -8,7 +8,6 @@ import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
 import kotlinx.atomicfu.atomic
 import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -97,12 +96,8 @@ internal data class Identify(
 
 @Serializable
 public data class IdentifyProperties(
-    @Required
-    @SerialName("\$os")
     val os: String,
-    @SerialName("\$browser")
     val browser: String,
-    @SerialName("\$device")
     val device: String,
 )
 
