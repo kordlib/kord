@@ -183,12 +183,21 @@ public data class DiscordPartialGuild(
 @Serializable(with = GuildFeature.Serializer::class)
 public sealed class GuildFeature(public val value: String) {
 
-    override fun toString(): String = "GuildFeature(value=$value)"
+    final override fun equals(other: Any?): Boolean =
+        this === other || (other is GuildFeature && this.value == other.value)
 
+    final override fun hashCode(): Int = value.hashCode()
+    final override fun toString(): String = "GuildFeature(value=$value)"
+
+
+    /** An unknown [GuildFeature]. */
     public class Unknown(value: String) : GuildFeature(value)
 
     /** Guild has access to set an animated guild banner image. */
     public object AnimatedBanner : GuildFeature("ANIMATED_BANNER")
+
+    /** Guild has set up auto moderation rules. */
+    public object AutoModeration : GuildFeature("AUTO_MODERATION")
 
     /** Guild has access to set an invite splash background */
     public object InviteSplash : GuildFeature("INVITE_SPLASH")
@@ -258,12 +267,14 @@ public sealed class GuildFeature(public val value: String) {
     /** Guild is able to set role icons */
     public object RoleIcons : GuildFeature("ROLE_ICONS")
 
+
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
 
         override fun deserialize(decoder: Decoder): GuildFeature = when (val value = decoder.decodeString()) {
             "ANIMATED_BANNER" -> AnimatedBanner
+            "AUTO_MODERATION" -> AutoModeration
             "INVITE_SPLASH" -> InviteSplash
             "VIP_REGIONS" -> VIPRegions
             "VANITY_URL" -> VanityUrl
