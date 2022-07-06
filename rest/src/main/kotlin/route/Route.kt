@@ -82,6 +82,7 @@ public sealed class Route<T>(
     public object InteractionToken : Key("{interaction.token}", true)
     public object ScheduledEventId : Key("{event.id}", true)
     public object StickerId : Key("{sticker.id}")
+    public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
 
 
     protected constructor(
@@ -118,6 +119,43 @@ public sealed class Route<T>(
 
     public object AuditLogGet :
         Route<DiscordAuditLog>(HttpMethod.Get, "/guilds/$GuildId/audit-logs", DiscordAuditLog.serializer())
+
+
+    /*
+     * Auto Moderation:
+     * https://discord.com/developers/docs/resources/auto-moderation
+     */
+
+    public object AutoModerationRulesForGuildList :
+        Route<List<DiscordAutoModerationRule>>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/auto-moderation/rules",
+            ListSerializer(DiscordAutoModerationRule.serializer()),
+        )
+
+    public object AutoModerationRuleGet :
+        Route<DiscordAutoModerationRule>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/auto-moderation/rules/$AutoModerationRuleId",
+            DiscordAutoModerationRule.serializer(),
+        )
+
+    public object AutoModerationRuleCreate :
+        Route<DiscordAutoModerationRule>(
+            HttpMethod.Post,
+            "/guilds/$GuildId/auto-moderation/rules",
+            DiscordAutoModerationRule.serializer(),
+        )
+
+    public object AutoModerationRuleModify :
+        Route<DiscordAutoModerationRule>(
+            HttpMethod.Patch,
+            "/guilds/$GuildId/auto-moderation/rules/$AutoModerationRuleId",
+            DiscordAutoModerationRule.serializer(),
+        )
+
+    public object AutoModerationRuleDelete :
+        Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/auto-moderation/rules/$AutoModerationRuleId", NoStrategy)
 
 
     /*

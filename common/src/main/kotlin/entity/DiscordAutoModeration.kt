@@ -181,7 +181,7 @@ public sealed class AutoModerationActionType(public val value: Int) {
      * Timeout user for a specified duration.
      *
      * A [Timeout] action can only be setup for [Keyword][AutoModerationRuleTriggerType.Keyword] rules.
-     * [ModerateMembers][Permission.ModerateMembers] permission is required to use the [Timeout] action type.
+     * The [ModerateMembers][Permission.ModerateMembers] permission is required to use the [Timeout] action type.
      */
     public object Timeout : AutoModerationActionType(3)
 
