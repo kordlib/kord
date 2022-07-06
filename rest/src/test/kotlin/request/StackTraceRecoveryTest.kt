@@ -40,7 +40,7 @@ class StackTraceRecoveryTest {
         } catch (e: Exception) {
             e.printStackTrace()
 
-            val initCause = e.cause ?: error("Missing initCause exception!")
+            val initCause = e.cause ?: error("The thrown exception doesn't have a set cause! Is StackTrace Recovery enabled?")
             initCause.printStackTrace()
 
             //at dev.kord.rest.request.StackTraceRecoveryTest$test stack trace recovery$1.invokeSuspend(StackTraceRecoveryTest.kt:39)
