@@ -120,5 +120,6 @@
       }
     }
   ],
+  "auto_moderation_rules": [],
   "threads" : []
 }
