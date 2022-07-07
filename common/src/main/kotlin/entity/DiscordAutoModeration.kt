@@ -79,8 +79,8 @@ public sealed class AutoModerationRuleTriggerType(public val value: Int) {
 @Serializable
 public data class DiscordAutoModerationRuleTriggerMetadata(
     @SerialName("keyword_filter")
-    val keywordFilter: Optional<List<String>> = Optional.Missing(), // TODO is this really optional?
-    val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(), // TODO is this really optional?
+    val keywordFilter: Optional<List<String>> = Optional.Missing(),
+    val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
 )
 
 @Serializable(with = AutoModerationRuleKeywordPresetType.Serializer::class)
@@ -205,7 +205,7 @@ public sealed class AutoModerationActionType(public val value: Int) {
 @Serializable
 public data class DiscordAutoModerationActionMetadata(
     @SerialName("channel_id")
-    public val channelId: OptionalSnowflake = OptionalSnowflake.Missing, // TODO is this really optional?
+    public val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("duration_seconds")
-    public val durationSeconds: Optional<DurationInSeconds> = Optional.Missing(), // TODO is this really optional?
+    public val durationSeconds: Optional<DurationInSeconds> = Optional.Missing(),
 )
