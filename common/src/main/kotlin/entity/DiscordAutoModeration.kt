@@ -80,37 +80,37 @@ public sealed class AutoModerationRuleTriggerType(public val value: Int) {
 public data class DiscordAutoModerationRuleTriggerMetadata(
     @SerialName("keyword_filter")
     val keywordFilter: Optional<List<String>> = Optional.Missing(), // TODO is this really optional?
-    val presets: Optional<List<AutoModerationKeywordPresetType>> = Optional.Missing(), // TODO is this really optional?
+    val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(), // TODO is this really optional?
 )
 
-@Serializable(with = AutoModerationKeywordPresetType.Serializer::class)
-public sealed class AutoModerationKeywordPresetType(public val value: Int) {
+@Serializable(with = AutoModerationRuleKeywordPresetType.Serializer::class)
+public sealed class AutoModerationRuleKeywordPresetType(public val value: Int) {
 
     final override fun equals(other: Any?): Boolean =
-        this === other || (other is AutoModerationKeywordPresetType && this.value == other.value)
+        this === other || (other is AutoModerationRuleKeywordPresetType && this.value == other.value)
 
     final override fun hashCode(): Int = value
 
 
-    /** An unknown [AutoModerationKeywordPresetType]. */
-    public class Unknown(value: Int) : AutoModerationKeywordPresetType(value)
+    /** An unknown [AutoModerationRuleKeywordPresetType]. */
+    public class Unknown(value: Int) : AutoModerationRuleKeywordPresetType(value)
 
     /** Words that may be considered forms of swearing or cursing. */
-    public object Profanity : AutoModerationKeywordPresetType(1)
+    public object Profanity : AutoModerationRuleKeywordPresetType(1)
 
     /** Words that refer to sexually explicit behavior or activity. */
-    public object SexualContent : AutoModerationKeywordPresetType(2)
+    public object SexualContent : AutoModerationRuleKeywordPresetType(2)
 
     /** Personal insults or words that may be considered hate speech. */
-    public object Slurs : AutoModerationKeywordPresetType(3)
+    public object Slurs : AutoModerationRuleKeywordPresetType(3)
 
 
-    internal object Serializer : KSerializer<AutoModerationKeywordPresetType> {
+    internal object Serializer : KSerializer<AutoModerationRuleKeywordPresetType> {
 
         override val descriptor =
-            PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationKeywordPresetType", PrimitiveKind.INT)
+            PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleKeywordPresetType", PrimitiveKind.INT)
 
-        override fun serialize(encoder: Encoder, value: AutoModerationKeywordPresetType) =
+        override fun serialize(encoder: Encoder, value: AutoModerationRuleKeywordPresetType) =
             encoder.encodeInt(value.value)
 
         override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
