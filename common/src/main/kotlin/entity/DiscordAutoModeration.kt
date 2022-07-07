@@ -156,7 +156,7 @@ public sealed class AutoModerationRuleEventType(public val value: Int) {
 @Serializable
 public data class DiscordAutoModerationAction(
     val type: AutoModerationActionType,
-    val metadata: Optional<DiscordAutoModerationActionMetadata>,
+    val metadata: Optional<DiscordAutoModerationActionMetadata> = Optional.Missing(),
 )
 
 @Serializable(with = AutoModerationActionType.Serializer::class)
