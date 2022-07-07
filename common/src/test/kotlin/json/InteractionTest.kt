@@ -48,6 +48,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.int() shouldBe 1
             arg.string() shouldBe "1"
+            appPermissions shouldBe Permissions("2147483647")
         }
     }
 
@@ -73,6 +74,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.int() shouldBe 1
             arg.string() shouldBe "1"
+            appPermissions shouldBe Permissions("2147483647")
         }
     }
 
@@ -97,6 +99,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.int() shouldBe 1
             arg.string() shouldBe "1"
+            appPermissions shouldBe Permissions("2147483647")
         }
     }
 
@@ -134,6 +137,7 @@ class InteractionTest {
             }
             guildId shouldBe "772904309264089089"
             id shouldBe "847587388497854464"
+            appPermissions shouldBe Permissions("2147483647")
         }
     }
 

@@ -25,6 +25,7 @@ public data class InteractionData(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing(),
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing()
 ) {
@@ -47,6 +48,7 @@ public data class InteractionData(
                     message.map {
                         MessageData.from(it)
                     },
+                    appPermissions,
                     locale,
                     guildLocale
                 )
