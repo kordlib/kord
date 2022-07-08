@@ -1,8 +1,5 @@
-@file:OptIn(KordVoice::class)
-
 package dev.kord.voice.gateway
 
-import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags

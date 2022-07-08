@@ -1,23 +1,15 @@
 package json
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.filterList
 import dev.kord.common.entity.optional.orEmpty
-import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
-import kotlin.coroutines.suspendCoroutine
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 private fun file(name: String): String {
     val loader = InteractionTest::class.java.classLoader
     return loader.getResource("json/interaction/$name.json")!!.readText()
 }
 
-@OptIn(KordPreview::class)
 class InteractionTest {
 
     val json = Json {

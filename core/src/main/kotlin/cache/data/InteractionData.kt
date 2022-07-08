@@ -123,9 +123,7 @@ public data class ApplicationInteractionData(
 @Serializable
 public data class OptionData(
     val name: String,
-    @OptIn(KordExperimental::class)
     val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
-    @OptIn(KordExperimental::class)
     val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val subCommands: Optional<List<SubCommand>> = Optional.Missing(),
     val focused: OptionalBoolean = OptionalBoolean.Missing

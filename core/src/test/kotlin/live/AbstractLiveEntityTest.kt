@@ -1,7 +1,6 @@
 package live
 
 import dev.kord.cache.api.DataCache
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
@@ -31,7 +30,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.time.Duration
 
-@OptIn(KordPreview::class)
 abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     companion object {

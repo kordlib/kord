@@ -2,7 +2,6 @@ package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.KordConstants
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.core.ClientResources
@@ -195,7 +194,6 @@ public class KordBuilder(public val token: String) {
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
         val response = get("${Route.baseUrl}${Route.GatewayBotGet.path}") {
-            @OptIn(KordExperimental::class)
             header(UserAgent, KordConstants.USER_AGENT)
             header(Authorization, "Bot $token")
         }

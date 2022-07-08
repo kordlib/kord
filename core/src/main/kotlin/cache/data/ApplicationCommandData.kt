@@ -42,7 +42,7 @@ public data class ApplicationCommandData(
                     options.mapList { ApplicationCommandOptionData.from(it) },
                     defaultMemberPermissions,
                     dmPermission,
-                    defaultPermission,
+                    @Suppress("DEPRECATION") defaultPermission,
                     version
                 )
             }
