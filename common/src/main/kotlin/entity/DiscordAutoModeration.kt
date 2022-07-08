@@ -81,6 +81,8 @@ public data class DiscordAutoModerationRuleTriggerMetadata(
     @SerialName("keyword_filter")
     val keywordFilter: Optional<List<String>> = Optional.Missing(),
     val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
+    @SerialName("allow_list")
+    val allowList: Optional<List<String>> = Optional.Missing(),
 )
 
 @Serializable(with = AutoModerationRuleKeywordPresetType.Serializer::class)
