@@ -22,11 +22,13 @@ public interface RequestHandler {
      */
     @Throws(RestRequestException::class)
     public suspend fun <B : Any, R> handle(request: Request<B, R>): R
-    public suspend fun <T> intercept(builder: RequestBuilder<T>): RequestBuilder<T> = builder.apply {
+    public suspend fun <T> intercept(builder: RequestBuilder<T>) {
+        builder.apply {
             @OptIn(KordExperimental::class)
             unencodedHeader(UserAgent, KordConstants.USER_AGENT)
             if (route.requiresAuthorizationHeader) {
                 unencodedHeader(Authorization, "Bot $token")
             }
         }
+    }
 }

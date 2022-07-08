@@ -13,7 +13,7 @@ import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
- * The rest only Kord builder. You probably want to invoke the [DSL builder][Kord.restOnly] instead.
+ * The proxy Kord builder. You probably want to invoke the [DSL builder][Kord.proxy] instead.
  */
 @KordExperimental
 public class KordProxyBuilder: RestOnlyBuilder() {

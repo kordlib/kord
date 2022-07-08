@@ -32,7 +32,7 @@ public abstract class RestOnlyBuilder {
      *
      * ```
      * Kord(token) {
-     *     { resources -> KtorRequestHandler(resources.httpClient, ExclusionRequestRateLimiter()) }
+     *   requestHandler  { resources -> KtorRequestHandler(resources.httpClient, ExclusionRequestRateLimiter()) }
      * }
      * ```
      */

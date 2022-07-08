@@ -15,7 +15,8 @@ public abstract class RestService(@PublishedApi internal val requestHandler: Req
         }
         val interceptedBuilder = RequestBuilder(route)
             .apply(builder)
-        val request = requestHandler.intercept(interceptedBuilder).build()
+        requestHandler.intercept(interceptedBuilder)
+        val request = interceptedBuilder.build()
         return requestHandler.handle(request)
     }
 }

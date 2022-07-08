@@ -86,7 +86,7 @@ class CrashingHandler(val client: HttpClient, override val token: String) : Requ
             headers.appendAll(request.headers)
 
             url {
-                url.takeFrom(Route.baseUrl)
+                url.takeFrom(request.baseUrl)
                 encodedPath += request.path
                 parameters.appendAll(request.parameters)
             }
