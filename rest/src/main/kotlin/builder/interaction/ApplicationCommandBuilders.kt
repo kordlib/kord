@@ -18,9 +18,9 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
     public val type: ApplicationCommandType
 
     /**
-     * Disables the command for everyone by default.
+     * Disables the command for everyone except admins by default.
      *
-     * **This does not ensure normal users cannot execute the command, any server owner can change this setting**
+     * **This does not ensure normal users cannot execute the command, any admin can change this setting.**
      */
     public fun disableCommandInGuilds() {
         defaultMemberPermissions = Permissions()
@@ -28,14 +28,12 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
 }
 
 @KordDsl
-public interface GlobalApplicationCommandCreateBuilder : ApplicationCommandCreateBuilder,
-    RequestBuilder<ApplicationCommandCreateRequest> {
+public interface GlobalApplicationCommandCreateBuilder : ApplicationCommandCreateBuilder {
     public var dmPermission: Boolean?
 }
 
 @KordDsl
-public interface GlobalApplicationCommandModifyBuilder : ApplicationCommandModifyBuilder,
-    RequestBuilder<ApplicationCommandModifyRequest> {
+public interface GlobalApplicationCommandModifyBuilder : ApplicationCommandModifyBuilder {
     public var dmPermission: Boolean?
 }
 

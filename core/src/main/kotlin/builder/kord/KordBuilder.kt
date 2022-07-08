@@ -47,7 +47,6 @@ public operator fun DefaultGateway.Companion.invoke(
     retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)
 ): DefaultGateway {
     return DefaultGateway {
-        url = "wss://gateway.discord.gg/"
         client = resources.httpClient
         reconnectRetry = retry
         sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)

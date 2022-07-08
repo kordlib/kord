@@ -10,6 +10,8 @@ import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Region
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.getChannelOf
+import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.first
@@ -23,7 +25,7 @@ public class VoiceChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, VoiceChannelBehavior {
+) : TopGuildMessageChannel, VoiceChannelBehavior {
 
 
     /**

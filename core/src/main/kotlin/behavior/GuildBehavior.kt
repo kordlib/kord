@@ -36,10 +36,7 @@ import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
-import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
-import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
-import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
+import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -656,7 +653,7 @@ public suspend inline fun GuildBehavior.createUserCommand(
 
 
 public suspend inline fun GuildBehavior.createApplicationCommands(
-    builder: MultiApplicationCommandBuilder.() -> Unit
+    builder: GuildMultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.createGuildApplicationCommands(id, builder)
