@@ -51,10 +51,11 @@ public abstract class RestOnlyBuilder {
 
     public fun build(): Kord {
         val client = httpClient.configure()
+        val selfId = applicationId
 
         val resources = ClientResources(
             token,
-            applicationId,
+            selfId,
             Shards(0),
             client,
             EntitySupplyStrategy.rest,
@@ -67,7 +68,7 @@ public abstract class RestOnlyBuilder {
             DataCache.none(),
             DefaultMasterGateway(mapOf(0 to Gateway.none())),
             rest,
-            applicationId,
+            selfId,
             MutableSharedFlow(),
             defaultDispatcher,
         )

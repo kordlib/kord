@@ -13,7 +13,7 @@ public class KordRestOnlyBuilder(public override var token: String) : RestOnlyBu
     private var id: Snowflake? = null
 
     override var applicationId: Snowflake
-        get() = id ?: getBotIdFromToken(token).also { id = it }
+        get() = id ?: getBotIdFromToken(token)
         set(value) {
             id = value
         }
