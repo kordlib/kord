@@ -15,6 +15,7 @@ import kotlin.time.Duration
 @KordDsl
 public sealed class AutoModerationActionBuilder : RequestBuilder<DiscordAutoModerationAction> {
 
+    /** The type of action. */
     public abstract val type: AutoModerationActionType
 
     protected open fun buildMetadata(): Optional<DiscordAutoModerationActionMetadata> = Optional.Missing()
@@ -28,12 +29,12 @@ public sealed class AutoModerationActionBuilder : RequestBuilder<DiscordAutoMode
 @Suppress("CanSealedSubClassBeObject") // keep it as a class in case we want to add more in the future
 @KordDsl
 public class BlockMessageAutoModerationActionBuilder : AutoModerationActionBuilder() {
-
     override val type: BlockMessage get() = BlockMessage
 }
 
 @KordDsl
 public class SendAlertMessageAutoModerationActionBuilder(
+    /** ID of the channel to which user content should be logged. */
     public var channelId: Snowflake,
 ) : AutoModerationActionBuilder() {
 
@@ -45,6 +46,7 @@ public class SendAlertMessageAutoModerationActionBuilder(
 
 @KordDsl
 public class TimeoutAutoModerationActionBuilder(
+    /** The timeout duration. */
     public var duration: Duration,
 ) : AutoModerationActionBuilder() {
 
