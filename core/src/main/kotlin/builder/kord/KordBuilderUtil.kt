@@ -17,7 +17,6 @@ internal fun HttpClientConfig<*>.defaultConfig() {
         json()
     }
     install(WebSockets)
-    install(HttpTimeout)
 }
 
 internal fun HttpClient?.configure(): HttpClient {

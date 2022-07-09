@@ -28,7 +28,6 @@ public class DefaultVoiceGatewayBuilder(
     public fun build(): DefaultVoiceGateway {
         val client = client ?: HttpClient(CIO) {
             install(WebSockets)
-            install(HttpTimeout)
             install(ContentNegotiation) {
                 json()
             }
