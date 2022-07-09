@@ -6,6 +6,7 @@ import dev.kord.common.Locale
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonPrimitive
 
 @Serializable
 public data class ApplicationCommandData(
@@ -59,7 +60,11 @@ public data class ApplicationCommandOptionData(
     val required: OptionalBoolean = OptionalBoolean.Missing,
     val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
-    val channelTypes: Optional<List<ChannelType>> = Optional.Missing()
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    val minValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val minLength: Optional<Int> = Optional.Missing(),
+    val maxLength: Optional<Int> = Optional.Missing()
 ) {
     public companion object {
         public fun from(data: ApplicationCommandOption): ApplicationCommandOptionData {
@@ -72,7 +77,11 @@ public data class ApplicationCommandOptionData(
                     required,
                     choices.mapList { ApplicationCommandOptionChoiceData.from(it) },
                     options.mapList { inner -> from(inner) },
-                    channelTypes
+                    channelTypes,
+                    minValue,
+                    maxValue,
+                    minLength,
+                    maxLength
                 )
             }
         }

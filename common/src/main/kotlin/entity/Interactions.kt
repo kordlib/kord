@@ -87,6 +87,10 @@ public data class ApplicationCommandOption(
     val minValue: Optional<JsonPrimitive> = Optional.Missing(),
     @SerialName("max_value")
     val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
+    @SerialName("min_length")
+    val minLength: Optional<Int> = Optional.Missing(),
+    @SerialName("max_length")
+    val maxLength: Optional<Int> = Optional.Missing()
 )
 
 /**

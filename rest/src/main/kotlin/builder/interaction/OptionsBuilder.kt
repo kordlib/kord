@@ -174,10 +174,38 @@ public class NumberOptionBuilder(name: String, description: String) :
 public class StringChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
 
+    private var _minLength: Optional<Int> = Optional.Missing()
+
+    /**
+     * The minimum string length (minimum of 0).
+     */
+    public var minLength: Int? by ::_minLength.delegate()
+
+    private var _maxLength: Optional<Int> = Optional.Missing()
+
+    /**
+     * The maximum string length (minimum of 1).
+     */
+    public var maxLength: Int? by ::_maxLength.delegate()
+
     override fun choice(name: String, value: String, nameLocalizations: Optional<Map<Locale, String>?>) {
         if (choices == null) choices = mutableListOf()
         choices!!.add(Choice.StringChoice(name, nameLocalizations, value))
     }
+
+    override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
+        type = type,
+        name = name,
+        nameLocalizations = _nameLocalizations,
+        description = description,
+        descriptionLocalizations = _descriptionLocalizations,
+        choices = _choices,
+        required = _required,
+        default = _default,
+        autocomplete = _autocomplete,
+        minLength = _minLength,
+        maxLength = _maxLength
+    )
 }
 
 @KordDsl
