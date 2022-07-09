@@ -2,10 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.value
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
@@ -88,9 +85,9 @@ public data class ApplicationCommandOption(
     @SerialName("max_value")
     val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
     @SerialName("min_length")
-    val minLength: Optional<Int> = Optional.Missing(),
+    val minLength: OptionalInt = OptionalInt.Missing,
     @SerialName("max_length")
-    val maxLength: Optional<Int> = Optional.Missing()
+    val maxLength: OptionalInt = OptionalInt.Missing
 )
 
 /**

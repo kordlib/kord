@@ -63,8 +63,8 @@ public data class ApplicationCommandOptionData(
     val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
     val minValue: Optional<JsonPrimitive> = Optional.Missing(),
     val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
-    val minLength: Optional<Int> = Optional.Missing(),
-    val maxLength: Optional<Int> = Optional.Missing()
+    val minLength: OptionalInt = OptionalInt.Missing,
+    val maxLength: OptionalInt = OptionalInt.Missing
 ) {
     public companion object {
         public fun from(data: ApplicationCommandOption): ApplicationCommandOptionData {
