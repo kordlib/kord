@@ -1,18 +1,27 @@
 package dev.kord.core.builder.kord
 
+import dev.kord.cache.api.DataCache
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
+import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.gateway.Gateway
+import dev.kord.gateway.builder.Shards
 import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 public abstract class RestOnlyBuilder {
     protected var handlerBuilder: (resources: ClientResources) -> RequestHandler =
         { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = it.token) }
+
+    protected abstract val token: String
 
     /**
      * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
@@ -25,7 +34,7 @@ public abstract class RestOnlyBuilder {
      */
     public var httpClient: HttpClient? = null
 
-    public var applicationId: Snowflake? = null
+    public abstract var applicationId: Snowflake
 
     /**
      * Configures the [RequestHandler] for the [RestClient].
@@ -40,5 +49,27 @@ public abstract class RestOnlyBuilder {
         this.handlerBuilder = handlerBuilder
     }
 
-    public abstract fun build(): Kord
+    public fun build(): Kord {
+        val client = httpClient.configure()
+
+        val resources = ClientResources(
+            token,
+            applicationId,
+            Shards(0),
+            client,
+            EntitySupplyStrategy.rest,
+        )
+
+        val rest = RestClient(handlerBuilder(resources))
+
+        return Kord(
+            resources,
+            DataCache.none(),
+            DefaultMasterGateway(mapOf(0 to Gateway.none())),
+            rest,
+            applicationId,
+            MutableSharedFlow(),
+            defaultDispatcher,
+        )
+    }
 }
