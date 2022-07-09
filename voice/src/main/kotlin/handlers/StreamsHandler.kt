@@ -1,6 +1,5 @@
 package dev.kord.voice.handlers
 
-import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.gateway.Close
 import dev.kord.voice.gateway.Ready
 import dev.kord.voice.gateway.SessionDescription
@@ -15,7 +14,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@OptIn(KordVoice::class)
 internal class StreamsHandler(
     flow: Flow<VoiceEvent>,
     private val streams: Streams,

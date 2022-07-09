@@ -161,12 +161,6 @@ public class DefaultVoiceGateway(
 
     private suspend fun webSocket(url: String) = data.client.webSocketSession {
         url(url)
-
-        // workaround until https://youtrack.jetbrains.com/issue/KTOR-4419 is fixed
-        // otherwise the voice connection will die and fail to reconnect
-        timeout {
-            requestTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS
-        }
     }
 
     private suspend fun resetState(configuration: VoiceGatewayConfiguration) = stateMutex.withLock {
@@ -209,6 +203,7 @@ public class DefaultVoiceGateway(
         socket.send(Frame.Text(json))
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
     override suspend fun detach() {

@@ -1,7 +1,6 @@
 package dev.kord.gateway
 
 import dev.kord.common.KordConfiguration
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.retry.LinearRetry
@@ -20,7 +19,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlin.time.Duration.Companion.seconds
 
 public class DefaultGatewayBuilder {
-    @OptIn(KordExperimental::class)
     public var url: String =
         "wss://gateway.discord.gg/?v=${KordConfiguration.GATEWAY_VERSION}&encoding=json&compress=zlib-stream"
     public var client: HttpClient? = null
@@ -36,7 +34,6 @@ public class DefaultGatewayBuilder {
             install(ContentNegotiation) {
                 json()
             }
-            install(HttpTimeout)
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
         val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)

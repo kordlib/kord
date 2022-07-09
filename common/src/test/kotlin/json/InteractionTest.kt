@@ -1,23 +1,15 @@
 package json
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.filterList
 import dev.kord.common.entity.optional.orEmpty
-import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
-import kotlin.coroutines.suspendCoroutine
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 
 private fun file(name: String): String {
     val loader = InteractionTest::class.java.classLoader
     return loader.getResource("json/interaction/$name.json")!!.readText()
 }
 
-@OptIn(KordPreview::class)
 class InteractionTest {
 
     val json = Json {
@@ -48,6 +40,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.int() shouldBe 1
             arg.string() shouldBe "1"
+            appPermissions shouldBe Permissions("2147483647")
         }
     }
 
@@ -73,6 +66,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.int() shouldBe 1
             arg.string() shouldBe "1"
+            appPermissions shouldBe Permissions("2147483647")
         }
     }
 
@@ -97,6 +91,7 @@ class InteractionTest {
             arg.name shouldBe "testint"
             arg.int() shouldBe 1
             arg.string() shouldBe "1"
+            appPermissions shouldBe Permissions("2147483647")
         }
     }
 
@@ -134,6 +129,7 @@ class InteractionTest {
             }
             guildId shouldBe "772904309264089089"
             id shouldBe "847587388497854464"
+            appPermissions shouldBe Permissions("2147483647")
         }
     }
 

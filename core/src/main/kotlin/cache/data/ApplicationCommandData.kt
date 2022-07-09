@@ -6,6 +6,7 @@ import dev.kord.common.Locale
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonPrimitive
 
 @Serializable
 public data class ApplicationCommandData(
@@ -18,8 +19,8 @@ public data class ApplicationCommandData(
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
-    val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
-    val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val defaultMemberPermissions: Permissions?,
+    val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val version: Snowflake
@@ -42,7 +43,7 @@ public data class ApplicationCommandData(
                     options.mapList { ApplicationCommandOptionData.from(it) },
                     defaultMemberPermissions,
                     dmPermission,
-                    defaultPermission,
+                    @Suppress("DEPRECATION") defaultPermission,
                     version
                 )
             }
@@ -59,7 +60,11 @@ public data class ApplicationCommandOptionData(
     val required: OptionalBoolean = OptionalBoolean.Missing,
     val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
-    val channelTypes: Optional<List<ChannelType>> = Optional.Missing()
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    val minValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val minLength: OptionalInt = OptionalInt.Missing,
+    val maxLength: OptionalInt = OptionalInt.Missing
 ) {
     public companion object {
         public fun from(data: ApplicationCommandOption): ApplicationCommandOptionData {
@@ -72,7 +77,11 @@ public data class ApplicationCommandOptionData(
                     required,
                     choices.mapList { ApplicationCommandOptionChoiceData.from(it) },
                     options.mapList { inner -> from(inner) },
-                    channelTypes
+                    channelTypes,
+                    minValue,
+                    maxValue,
+                    minLength,
+                    maxLength
                 )
             }
         }

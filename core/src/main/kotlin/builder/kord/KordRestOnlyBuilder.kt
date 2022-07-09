@@ -17,6 +17,7 @@ import dev.kord.rest.service.RestClient
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
@@ -73,6 +74,7 @@ public class KordRestOnlyBuilder(public val token: String) {
 
         return Kord(
             resources,
+            @OptIn(ExperimentalCoroutinesApi::class)
             DataCache.none(),
             DefaultMasterGateway(mapOf(0 to Gateway.none())),
             rest,

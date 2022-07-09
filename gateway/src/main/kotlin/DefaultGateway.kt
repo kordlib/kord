@@ -231,12 +231,6 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun webSocket(url: String) = data.client.webSocketSession {
-        // workaround until https://youtrack.jetbrains.com/issue/KTOR-4419 is fixed
-        // otherwise the gateway connection will die and fail to reconnect
-        timeout {
-            requestTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS
-        }
-
         url(url)
     }
 
@@ -290,6 +284,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         socket.send(Frame.Text(json))
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
     public companion object {
