@@ -6,11 +6,8 @@ import dev.kord.common.entity.ApplicationCommandOption
 import dev.kord.common.entity.ApplicationCommandOptionType
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Choice
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import kotlinx.serialization.json.JsonPrimitive
 import kotlin.contracts.InvocationKind
@@ -174,10 +171,38 @@ public class NumberOptionBuilder(name: String, description: String) :
 public class StringChoiceBuilder(name: String, description: String) :
     BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
 
+    private var _minLength: OptionalInt = OptionalInt.Missing
+
+    /**
+     * The minimum allowed string length (minimum of `0`, maximum of `6000`).
+     */
+    public var minLength: Int? by ::_minLength.delegate()
+
+    private var _maxLength: OptionalInt = OptionalInt.Missing
+
+    /**
+     * The maximum allowed string length (minimum of `1`, maximum of `6000`).
+     */
+    public var maxLength: Int? by ::_maxLength.delegate()
+
     override fun choice(name: String, value: String, nameLocalizations: Optional<Map<Locale, String>?>) {
         if (choices == null) choices = mutableListOf()
         choices!!.add(Choice.StringChoice(name, nameLocalizations, value))
     }
+
+    override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
+        type = type,
+        name = name,
+        nameLocalizations = _nameLocalizations,
+        description = description,
+        descriptionLocalizations = _descriptionLocalizations,
+        choices = _choices,
+        required = _required,
+        default = _default,
+        autocomplete = _autocomplete,
+        minLength = _minLength,
+        maxLength = _maxLength
+    )
 }
 
 @KordDsl
