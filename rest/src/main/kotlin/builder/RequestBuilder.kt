@@ -2,6 +2,7 @@ package dev.kord.rest.builder
 
 import dev.kord.common.annotation.KordDsl
 
+@KordDsl
 public interface AuditBuilder {
     /**
      * The reason for this request, this will be displayed in the audit log.
