@@ -17,6 +17,7 @@ dependencies {
     implementation(kotlin("serialization"))
     implementation("org.jetbrains.dokka", "dokka-gradle-plugin", "1.7.0")
     implementation("org.jetbrains.kotlinx", "atomicfu-gradle-plugin", "0.18.2")
+    implementation("com.google.devtools.ksp", "symbol-processing-gradle-plugin", "1.7.10-1.0.6")
     implementation(gradleApi())
     implementation(localGroovy())
 }

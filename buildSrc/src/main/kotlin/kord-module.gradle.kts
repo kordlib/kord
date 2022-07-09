@@ -6,6 +6,7 @@ plugins {
     kotlin("plugin.serialization")
     id("org.jetbrains.dokka")
     id("kotlinx-atomicfu")
+    id("com.google.devtools.ksp")
     `maven-publish`
 }
 
@@ -22,8 +23,15 @@ dependencies {
 kotlin {
     explicitApi()
 
-    // allow ExperimentalCoroutinesApi for `runTest {}`
-    sourceSets["test"].languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+    sourceSets.main {
+        // mark ksp src dir
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+
+    sourceSets.test {
+        // allow ExperimentalCoroutinesApi for `runTest {}`
+        languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+    }
 }
 
 tasks {
@@ -38,17 +46,14 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = Jvm.target
-            allWarningsAsErrors = true
-            freeCompilerArgs = listOf(
+            kordJvmOptions()
+            freeCompilerArgs += listOf(
                 CompilerArguments.time,
                 CompilerArguments.contracts,
 
                 CompilerArguments.kordPreview,
                 CompilerArguments.kordExperimental,
                 CompilerArguments.kordVoice,
-
-                CompilerArguments.progressive,
             )
         }
     }

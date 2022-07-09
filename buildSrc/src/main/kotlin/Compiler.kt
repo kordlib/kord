@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+
 object CompilerArguments {
     const val time = "-opt-in=kotlin.time.ExperimentalTime"
     const val contracts = "-opt-in=kotlin.contracts.ExperimentalContracts"
@@ -11,4 +13,10 @@ object CompilerArguments {
 
 object Jvm {
     const val target = "1.8"
+}
+
+fun KotlinJvmOptions.kordJvmOptions() {
+    jvmTarget = Jvm.target
+    allWarningsAsErrors = true
+    freeCompilerArgs += CompilerArguments.progressive
 }

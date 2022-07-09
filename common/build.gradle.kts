@@ -19,6 +19,9 @@ dependencies {
     api(libs.bundles.common)
     testImplementation(libs.bundles.test.implementation)
     testRuntimeOnly(libs.bundles.test.runtime)
+
+    compileOnly(projects.kspAnnotations)
+    ksp(projects.kspProcessors)
 }
 
 /*

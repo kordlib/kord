@@ -53,3 +53,7 @@ configure<GitPublishExtension> {
 
     commitMessage.set("Update Docs")
 }
+
+apiValidation {
+    ignoredProjects += listOf("ksp-annotations", "ksp-processors")
+}
