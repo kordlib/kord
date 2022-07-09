@@ -84,7 +84,7 @@ public class Kord(
     /**
      * A reference to all exposed [unsafe][KordUnsafe] entity constructors for this instance.
      */
-    @OptIn(KordUnsafe::class, KordExperimental::class)
+    @OptIn(KordUnsafe::class)
     public val unsafe: Unsafe = Unsafe(this)
 
     /**

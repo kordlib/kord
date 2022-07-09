@@ -25,6 +25,7 @@ public data class InteractionData(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing(),
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing()
 ) {
@@ -47,6 +48,7 @@ public data class InteractionData(
                     message.map {
                         MessageData.from(it)
                     },
+                    appPermissions,
                     locale,
                     guildLocale
                 )
@@ -121,9 +123,7 @@ public data class ApplicationInteractionData(
 @Serializable
 public data class OptionData(
     val name: String,
-    @OptIn(KordExperimental::class)
     val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
-    @OptIn(KordExperimental::class)
     val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val subCommands: Optional<List<SubCommand>> = Optional.Missing(),
     val focused: OptionalBoolean = OptionalBoolean.Missing

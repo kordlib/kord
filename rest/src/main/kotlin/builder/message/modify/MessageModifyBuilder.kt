@@ -1,6 +1,5 @@
 package dev.kord.rest.builder.message.modify
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
@@ -23,7 +22,6 @@ public sealed interface MessageModifyBuilder {
 
     public var allowedMentions: AllowedMentionsBuilder?
 
-    @OptIn(KordPreview::class)
     public var components: MutableList<MessageComponentBuilder>?
 
 

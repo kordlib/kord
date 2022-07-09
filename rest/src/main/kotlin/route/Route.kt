@@ -54,7 +54,6 @@ public sealed class Route<T>(
 ) {
 
     public companion object {
-        @OptIn(KordExperimental::class)
         public val baseUrl: String get() = "https://discord.com/api/v${KordConfiguration.REST_VERSION}"
     }
 
@@ -459,6 +458,13 @@ public sealed class Route<T>(
 
     public object GuildRolePatch :
         Route<DiscordRole>(HttpMethod.Patch, "/guilds/$GuildId/roles/$RoleId", DiscordRole.serializer())
+
+    public object GuildMFALevelModify :
+        Route<GuildMFALevelModifyResponse>(
+            HttpMethod.Post,
+            "/guilds/$GuildId/mfa",
+            GuildMFALevelModifyResponse.serializer(),
+        )
 
     public object GuildRoleDelete :
         Route<Unit>(HttpMethod.Delete, "/guilds/$GuildId/roles/$RoleId", NoStrategy)

@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     java
     `kord-module`
@@ -31,14 +29,6 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.bundles.test.implementation)
     testRuntimeOnly(libs.bundles.test.runtime)
-}
-
-tasks {
-    withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = freeCompilerArgs + CompilerArguments.stdLib
-        }
-    }
 }
 
 java {

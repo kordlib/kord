@@ -79,6 +79,9 @@ public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _topic: Optional<String?> = Optional.Missing()
     public var topic: String? by ::_topic.delegate()
 
+    private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
+    public var nsfw: Boolean? by ::_nsfw.delegate()
+
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
@@ -99,6 +102,7 @@ public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
         position = _position,
+        nsfw = _nsfw,
         parentId = _parentId,
         bitrate = _bitrate,
         userLimit = _userLimit,

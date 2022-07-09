@@ -25,10 +25,9 @@ public class StackTraceRecoveringKtorRequestHandler(private val delegate: KtorRe
         return try {
             delegate.handle(request)
         } catch (e: Exception) {
-            throw stacktrace.apply {
-                sanitizeStackTrace()
-                initCause(e)
-            }
+            stacktrace.sanitizeStackTrace()
+            e.initCause(stacktrace)
+            throw e
         }
     }
 }

@@ -34,9 +34,9 @@ public data class DiscordApplicationCommand(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
-    val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    val defaultMemberPermissions: Permissions?,
     @SerialName("dm_permission")
-    val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
@@ -78,7 +78,6 @@ public data class ApplicationCommandOption(
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    @OptIn(KordExperimental::class)
     val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
@@ -255,6 +254,8 @@ public data class DiscordInteraction(
     val version: Int,
     @Serializable(with = MaybeMessageSerializer::class)
     val message: Optional<DiscordMessage> = Optional.Missing(),
+    @SerialName("app_permissions")
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
     val guildLocale: Optional<Locale> = Optional.Missing(),

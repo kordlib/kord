@@ -93,7 +93,6 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.GuildId] = guildId
             val modifyBuilder = GuildChannelPositionModifyBuilder().apply(builder)
             body(GuildChannelPositionModifyRequest.serializer(), modifyBuilder.toRequest())
-            auditLogReason(modifyBuilder.reason)
         }
     }
 
@@ -277,6 +276,13 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             auditLogReason(modifyBuilder.reason)
         }
     }
+
+    public suspend fun modifyGuildMFALevel(guildId: Snowflake, level: MFALevel): GuildMFALevelModifyResponse =
+        call(Route.GuildMFALevelModify) {
+            keys[Route.GuildId] = guildId
+            val request = GuildMFALevelModifyRequest(level)
+            body(GuildMFALevelModifyRequest.serializer(), request)
+        }
 
     public suspend fun deleteGuildRole(guildId: Snowflake, roleId: Snowflake, reason: String? = null): Unit =
         call(Route.GuildRoleDelete) {
