@@ -34,7 +34,6 @@ public class DefaultGatewayBuilder {
             install(ContentNegotiation) {
                 json()
             }
-            install(HttpTimeout)
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
         val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)
