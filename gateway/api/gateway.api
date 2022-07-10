@@ -620,6 +620,7 @@ public final class dev/kord/gateway/GatewayConfigurationBuilder {
 
 public final class dev/kord/gateway/GatewayKt {
 	public static final fun editPresence (Ldev/kord/gateway/Gateway;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun getGatewayOnLogger ()Lmu/KLogger;
 	public static final fun requestGuildMembers (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
 	public static final fun requestGuildMembers (Ldev/kord/gateway/Gateway;Ldev/kord/gateway/RequestGuildMembers;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun requestGuildMembers$default (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;

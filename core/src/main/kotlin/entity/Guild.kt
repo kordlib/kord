@@ -51,6 +51,7 @@ public class Guild(
     public val afkChannel: VoiceChannelBehavior?
         get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
 
+    @Deprecated("Use 'cachedThreads' instead.", ReplaceWith("cachedThreads"))
     public val threads: Flow<ThreadChannel>
         get() = flow {
             data.threads.mapList {

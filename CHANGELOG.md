@@ -1,3 +1,54 @@
+# 0.8.0-M15
+
+## Additions
+
+* Add various error codes (#644 #639 #637 #649)
+* Add Kord Proxy Builder (#618)
+* Add `Guild#cachedThreads` to fetch cachedThreads (#634)
+* Add Missing string option length fields (#650)
+* Add nsfw to voice channels create and modify requests (#642)
+* Add app_permissions field (#646)
+* Add Modify Guild MFA Level endpoint (#640)
+* Add API version configuration (#601) 
+* Add Voice text (#614)
+* Snowflake destructuring (#609)
+
+## Changes
+
+* Update Message Type names (#645)
+* Thread archive durations are no longer boost locked (#636)
+* Improve RestClient's stacktrace recovery (#648)
+* Update application command fields (#638)
+* Remove audit log reason from Modify Guild Channel Positions endpoint (#641)
+* Update Identify Connection Properties field names (#643)
+
+## Fixes
+
+* Fix nonce deserialization (#632)
+* Voice: heartbeat nonce is zero (#619)
+* Voice: voice connection dropping unexpectedly (#621)
+* Voice: Fix typo in DefaultAudioPacketProvider declaration (#610)
+* Use core event for MessageDelete in enableEvent (3dbb29f)
+
+## Documentation
+
+* Update docs for Message.Interaction.name (71b185e)
+
+## Dependencies
+
+* Binary compatibility validator 0.9.0 -> 0.10.1
+* Kotlin 1.6.21 -> 1.7.10
+* Dokka 1.6.20 -> 1.7.0
+* AtomicFU 0.17.2 -> 0.18.2
+* gradle-buildconfig-plugin 3.0.3 -> 3.1.0
+* kotlinx-datetime 0.3.2 -> 0.4.0
+* kotlinx.coroutines 1.6.1 -> 1.6.3
+* kotlinx.serialization 1.3.2 -> 1.3.3
+* kotlin-logging 2.1.21 -> 2.1.23
+* Mockk 1.12.3 -> 1.12.4
+* Ktor 2.0.0 -> 2.0.3
+
+
 # 0.8.0-M14
 
 ## Changes
