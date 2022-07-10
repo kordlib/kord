@@ -75,7 +75,7 @@ public class KtorRequestHandler(
         headers.appendAll(request.headers)
 
         url {
-            url.takeFrom(dev.kord.rest.route.Route.baseUrl)
+            url.takeFrom(request.baseUrl)
             encodedPath += request.path
             parameters.appendAll(request.parameters)
         }
