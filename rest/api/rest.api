@@ -923,9 +923,11 @@ public final class dev/kord/rest/builder/interaction/ChoiceLocalizationsBuilder 
 	public fun <init> (Ljava/lang/String;)V
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
+	public final fun get_nameLocalizations ()Ldev/kord/common/entity/optional/Optional;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun setName (Ljava/lang/String;)V
 	public fun setNameLocalizations (Ljava/util/Map;)V
+	public final fun set_nameLocalizations (Ldev/kord/common/entity/optional/Optional;)V
 }
 
 public abstract interface class dev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder : dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder {
@@ -1239,6 +1241,12 @@ public final class dev/kord/rest/builder/interaction/StringChoiceBuilder : dev/k
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
 	public fun choice (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)V
+	public final fun getMaxLength ()Ljava/lang/Integer;
+	public final fun getMinLength ()Ljava/lang/Integer;
+	public final fun setMaxLength (Ljava/lang/Integer;)V
+	public final fun setMinLength (Ljava/lang/Integer;)V
+	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
+	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/builder/interaction/SubCommandBuilder : dev/kord/rest/builder/interaction/BaseCommandOptionBuilder, dev/kord/rest/builder/interaction/BaseInputChatBuilder {
@@ -1912,6 +1920,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field GuildSubscriptionTooLow Ldev/kord/rest/json/JsonErrorCode;
 	public static final field GuildWidgetDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InteractionAlreadyAcknowledged Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InteractionFailedToSend Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAPIVersion Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAccountType Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAuthToken Ldev/kord/rest/json/JsonErrorCode;
@@ -5338,7 +5347,8 @@ public final class dev/kord/rest/request/HttpUtilsKt {
 }
 
 public final class dev/kord/rest/request/JsonRequest : dev/kord/rest/request/Request {
-	public fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;)V
+	public fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/lang/String;)V
+	public synthetic fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getBody ()Ldev/kord/rest/request/RequestBody;
 	public fun getFiles ()Ljava/util/List;
 	public fun getHeaders ()Lio/ktor/util/StringValues;
@@ -5357,6 +5367,7 @@ public final class dev/kord/rest/request/KtorRequestHandler : dev/kord/rest/requ
 	public synthetic fun <init> (Lio/ktor/client/HttpClient;Ldev/kord/rest/ratelimit/RequestRateLimiter;Lkotlinx/datetime/Clock;Lkotlinx/serialization/json/Json;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getToken ()Ljava/lang/String;
 	public fun handle (Ldev/kord/rest/request/Request;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun intercept (Ldev/kord/rest/request/RequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/request/KtorRequestHandlerKt {
@@ -5366,8 +5377,8 @@ public final class dev/kord/rest/request/KtorRequestHandlerKt {
 }
 
 public final class dev/kord/rest/request/MultipartRequest : dev/kord/rest/request/Request {
-	public fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/util/List;)V
-	public synthetic fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/util/List;Ljava/lang/String;)V
+	public synthetic fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getBody ()Ldev/kord/rest/request/RequestBody;
 	public final fun getData ()Ljava/util/List;
 	public fun getFiles ()Ljava/util/List;
@@ -5378,6 +5389,9 @@ public final class dev/kord/rest/request/MultipartRequest : dev/kord/rest/reques
 }
 
 public abstract class dev/kord/rest/request/Request {
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getBaseUrl ()Ljava/lang/String;
 	public abstract fun getBody ()Ldev/kord/rest/request/RequestBody;
 	public abstract fun getFiles ()Ljava/util/List;
 	public abstract fun getHeaders ()Lio/ktor/util/StringValues;
@@ -5407,12 +5421,15 @@ public final class dev/kord/rest/request/RequestBuilder {
 	public final fun build ()Ldev/kord/rest/request/Request;
 	public final fun file (Ldev/kord/rest/NamedFile;)V
 	public final fun file (Ljava/lang/String;Ljava/io/InputStream;)V
+	public final fun getBaseUrl ()Ljava/lang/String;
 	public final fun getKeys ()Ljava/util/Map;
+	public final fun getRoute ()Ldev/kord/rest/route/Route;
 	public final fun header (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun parameter (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;)V
 	public final fun parameter (Ljava/lang/String;Ljava/lang/Object;)V
 	public final fun set (Ljava/util/Map;Ldev/kord/rest/route/Route$Key;Ldev/kord/common/entity/Snowflake;)V
 	public final fun set (Ljava/util/Map;Ldev/kord/rest/route/Route$Key;Ljava/lang/String;)V
+	public final fun setBaseUrl (Ljava/lang/String;)V
 	public final fun unencodedHeader (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun urlEncodedHeader (Ljava/lang/String;Ljava/lang/String;)V
 }
@@ -5420,6 +5437,11 @@ public final class dev/kord/rest/request/RequestBuilder {
 public abstract interface class dev/kord/rest/request/RequestHandler {
 	public abstract fun getToken ()Ljava/lang/String;
 	public abstract fun handle (Ldev/kord/rest/request/Request;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun intercept (Ldev/kord/rest/request/RequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/request/RequestHandler$DefaultImpls {
+	public static fun intercept (Ldev/kord/rest/request/RequestHandler;Ldev/kord/rest/request/RequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class dev/kord/rest/request/RequestIdentifier {
@@ -5467,6 +5489,7 @@ public final class dev/kord/rest/request/StackTraceRecoveringKtorRequestHandler 
 	public fun <init> (Ldev/kord/rest/request/KtorRequestHandler;)V
 	public fun getToken ()Ljava/lang/String;
 	public fun handle (Ldev/kord/rest/request/Request;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun intercept (Ldev/kord/rest/request/RequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/request/StackTraceRecoveringKtorRequestHandlerKt {
@@ -6591,6 +6614,8 @@ public final class dev/kord/rest/service/RestClientKt {
 public abstract class dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun call (Ldev/kord/rest/route/Route;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun call$default (Ldev/kord/rest/service/RestService;Ldev/kord/rest/route/Route;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getRequestHandler ()Ldev/kord/rest/request/RequestHandler;
 }
 
 public final class dev/kord/rest/service/StageInstanceService : dev/kord/rest/service/RestService {

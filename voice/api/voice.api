@@ -993,6 +993,10 @@ public final class dev/kord/voice/gateway/VoiceGatewayConfiguration {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/voice/gateway/VoiceGatewayKt {
+	public static final fun getVoiceGatewayOnLogger ()Lmu/KLogger;
+}
+
 public final class dev/kord/voice/io/ByteArrayCursorsKt {
 	public static final fun mutableCursor (Ldev/kord/voice/io/ByteArrayView;)Ldev/kord/voice/io/MutableByteArrayCursor;
 	public static final fun mutableCursor ([B)Ldev/kord/voice/io/MutableByteArrayCursor;
