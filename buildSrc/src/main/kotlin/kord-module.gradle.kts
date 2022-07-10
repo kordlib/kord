@@ -102,10 +102,4 @@ tasks {
             artifact(dokkaJar.get())
         }
     }
-
-    java {
-        // We don't use java, but this prevents a Gradle warning,
-        // telling you to target the same java version for java and kt
-        sourceCompatibility = JavaVersion.VERSION_1_8
-    }
 }
