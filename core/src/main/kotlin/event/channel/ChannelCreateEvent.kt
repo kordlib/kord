@@ -5,7 +5,7 @@ import dev.kord.core.entity.channel.*
 import dev.kord.core.event.Event
 import dev.kord.core.event.kordCoroutineScope
 import kotlinx.coroutines.CoroutineScope
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 public interface ChannelCreateEvent : Event {
     public val channel: Channel
@@ -43,7 +43,7 @@ public class NewsChannelCreateEvent(
     }
 }
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 @Deprecated(
     """
     Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
@@ -51,7 +51,7 @@ public class NewsChannelCreateEvent(
     
     See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
     """,
-    level = WARNING,
+    level = ERROR,
 )
 public class StoreChannelCreateEvent(
     override val channel: StoreChannel,

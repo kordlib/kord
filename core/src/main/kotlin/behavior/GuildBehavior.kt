@@ -48,6 +48,8 @@ import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import java.util.*
+import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -210,7 +212,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
     /**
      * Application commands for this guild only.
      */
-    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"))
+    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"), level = ERROR)
     public val commands: Flow<GuildApplicationCommand>
         get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
@@ -415,7 +417,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), DeprecationLevel.ERROR)
+    @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), level = HIDDEN)
     public suspend fun modifySelfNickname(newNickname: String? = null): String = editSelfNickname(newNickname)
 
     /**
@@ -699,7 +701,8 @@ public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> U
 
 @Deprecated(
     "emoji name and image are mandatory fields.",
-    ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)")
+    ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"),
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
@@ -731,7 +734,7 @@ public suspend inline fun GuildBehavior.createEmoji(
 @Deprecated(
     "channel name is a mandatory field",
     ReplaceWith("createTextChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
@@ -772,7 +775,7 @@ public suspend inline fun GuildBehavior.createTextChannel(
 @Deprecated(
     "channel name is a mandatory field.",
     ReplaceWith("createVoiceChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
@@ -812,7 +815,7 @@ public suspend inline fun GuildBehavior.createVoiceChannel(
 @Deprecated(
     "channel name is a mandatory field.",
     ReplaceWith("createNewsChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
@@ -852,8 +855,8 @@ public suspend inline fun GuildBehavior.createNewsChannel(
  */
 @Deprecated(
     "channel name is a mandatory field.",
-    ReplaceWith("createCategoryChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING
+    ReplaceWith("this.createCategory(\"name\", builder)"),
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
@@ -922,7 +925,7 @@ public suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositions
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @DeprecatedSinceKord("0.7.0")
-@Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), DeprecationLevel.ERROR)
+@Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), level = HIDDEN)
 public suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role = createRole(builder)
 
 /**

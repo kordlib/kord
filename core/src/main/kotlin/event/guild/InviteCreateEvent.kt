@@ -20,6 +20,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 /**
@@ -153,7 +154,7 @@ public class InviteCreateEvent(
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = DeprecationLevel.ERROR)
+    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = HIDDEN)
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
 
     /**
@@ -171,7 +172,7 @@ public class InviteCreateEvent(
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getInviterOrNull instead.", ReplaceWith("getInviterOrNull()"), level = DeprecationLevel.ERROR)
+    @Deprecated("Use getInviterOrNull instead.", ReplaceWith("getInviterOrNull()"), level = HIDDEN)
     public suspend fun getInviter(): User? = inviterId?.let { supplier.getUser(it) }
 
     /**
@@ -192,7 +193,7 @@ public class InviteCreateEvent(
     @Deprecated(
         "Use getInviterAsMemberOrNull instead.",
         ReplaceWith("getInviterAsMemberOrNull()"),
-        level = DeprecationLevel.ERROR
+        level = HIDDEN,
     )
     public suspend fun getInviterAsMember(): Member? {
         return supplier.getMember(guildId = guildId ?: return null, userId = inviterId ?: return null)

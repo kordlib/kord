@@ -13,6 +13,7 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.*
+import kotlin.DeprecationLevel.HIDDEN
 
 @KordPreview
 public fun TopGuildChannel.live(
@@ -28,7 +29,7 @@ public inline fun TopGuildChannel.live(
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
     "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
-    level = DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveGuildChannel.onCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit): Job =
@@ -41,7 +42,7 @@ public fun LiveGuildChannel.onUpdate(scope: CoroutineScope = this, block: suspen
 @Deprecated(
     "The block is not called when the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public inline fun LiveGuildChannel.onShutDown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit): Job =
@@ -54,7 +55,7 @@ public inline fun LiveGuildChannel.onShutDown(scope: CoroutineScope = this, cros
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveGuildChannel.onDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit): Job =
@@ -63,7 +64,7 @@ public fun LiveGuildChannel.onDelete(scope: CoroutineScope = this, block: suspen
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveGuildChannel.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit): Job =

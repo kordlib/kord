@@ -25,7 +25,7 @@ import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
 import dev.kord.rest.service.InteractionService
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * A class that exposes the creation of `{Entity}Behavior` classes.
@@ -74,7 +74,7 @@ public class Unsafe(private val kord: Kord) {
     public fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
         VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         """
         Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
@@ -82,7 +82,7 @@ public class Unsafe(private val kord: Kord) {
         
         See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
         """,
-        level = WARNING,
+        level = ERROR,
     )
     public fun storeChannel(guildId: Snowflake, id: Snowflake): StoreChannelBehavior =
         StoreChannelBehavior(guildId = guildId, id = id, kord = kord)

@@ -15,6 +15,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.CoroutineScope
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * Sent when an invite is deleted.
@@ -74,7 +75,7 @@ public class InviteDeleteEvent(
     @Deprecated(
         "'guildId' might not be present, use 'getGuildOrNull' instead.",
         ReplaceWith("this.getGuildOrNull()"),
-        DeprecationLevel.ERROR,
+        level = HIDDEN,
     )
     public suspend fun getGuild(): Guild = supplier.getGuild(guildId!!)
 

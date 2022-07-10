@@ -19,6 +19,7 @@ import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.*
+import kotlin.DeprecationLevel.HIDDEN
 
 @KordPreview
 public fun Guild.live(
@@ -166,7 +167,7 @@ public fun LiveGuild.onGuildUpdate(scope: CoroutineScope = this, block: suspend 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveGuild.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit): Job =

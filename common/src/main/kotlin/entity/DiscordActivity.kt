@@ -70,13 +70,6 @@ public class ActivityFlags(public val value: Int) {
     }
 }
 
-@Deprecated(
-    "DiscordActivityTimeStamps was renamed to DiscordActivityTimestamps.",
-    ReplaceWith("DiscordActivityTimestamps"),
-    DeprecationLevel.ERROR,
-)
-public typealias DiscordActivityTimeStamps = DiscordActivityTimestamps
-
 @Serializable
 public data class DiscordActivityTimestamps(
     val start: Optional<@Serializable(with = InstantInEpochMillisecondsSerializer::class) Instant> = Optional.Missing(),

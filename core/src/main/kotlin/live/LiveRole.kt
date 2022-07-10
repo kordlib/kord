@@ -10,6 +10,7 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.*
+import kotlin.DeprecationLevel.HIDDEN
 
 @KordPreview
 public fun Role.live(
@@ -25,7 +26,7 @@ public inline fun Role.live(
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveRole.onDelete(scope: CoroutineScope = this, block: suspend (RoleDeleteEvent) -> Unit): Job =
@@ -38,7 +39,7 @@ public fun LiveRole.onUpdate(scope: CoroutineScope = this, block: suspend (RoleU
 @Deprecated(
     "The block is not called when the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public inline fun LiveRole.onShutdown(scope: CoroutineScope = this, crossinline block: suspend (Event) -> Unit): Job =
@@ -51,7 +52,7 @@ public inline fun LiveRole.onShutdown(scope: CoroutineScope = this, crossinline 
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveRole.onGuildDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit): Job =

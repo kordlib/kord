@@ -14,14 +14,7 @@ import dev.kord.core.event.guild.InviteCreateEvent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.*
-
-@Deprecated(
-    "'ApplicationInfo' was renamed to 'Application'.",
-    ReplaceWith("Application", "dev.kord.core.entity.Application"),
-    DeprecationLevel.ERROR,
-)
-public typealias ApplicationInfo = Application
-
+import kotlin.DeprecationLevel.HIDDEN
 
 public sealed class BaseApplication(
     final override val kord: Kord,
@@ -109,7 +102,7 @@ public class Application(
     @Deprecated(
         "'ownerId' might not be present, use 'getOwnerOrNull' instead.",
         ReplaceWith("this.getOwnerOrNull()"),
-        DeprecationLevel.ERROR,
+        level = HIDDEN,
     )
     public suspend fun getOwner(): User = supplier.getUser(ownerId!!)
 

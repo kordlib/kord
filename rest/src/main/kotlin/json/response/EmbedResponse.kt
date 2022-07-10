@@ -3,6 +3,7 @@ package dev.kord.rest.json.response
 import dev.kord.common.annotation.DeprecatedSinceKord
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
 @DeprecatedSinceKord("0.7.0")
@@ -12,7 +13,7 @@ import kotlinx.serialization.Serializable
         "DiscordGuildWidget(enabled, channelId)",
         "dev.kord.common.entity.DiscordGuildWidget"
     ),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 public data class EmbedResponse(
     val enabled: Boolean,

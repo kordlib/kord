@@ -49,7 +49,7 @@ public interface Channel : ChannelBehavior {
             GuildVoice -> VoiceChannel(data, kord)
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)
-            @Suppress("DEPRECATION") GuildStore -> @Suppress("DEPRECATION") StoreChannel(data, kord)
+            @Suppress("DEPRECATION_ERROR") GuildStore -> @Suppress("DEPRECATION_ERROR") StoreChannel(data, kord)
             PublicNewsThread -> NewsChannelThread(data, kord)
             PrivateThread -> TextChannelThread(data, kord)
             PublicGuildThread -> TextChannelThread(data, kord)

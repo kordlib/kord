@@ -36,6 +36,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -65,7 +66,7 @@ public class Kord(
     /**
      * Global commands made by the bot under this Kord instance.
      */
-    @Deprecated("Replace with function call for localizations", ReplaceWith("getGlobalApplicationCommands()"))
+    @Deprecated("Replace with function call for localizations", ReplaceWith("getGlobalApplicationCommands()"), level = ERROR)
     public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
@@ -168,7 +169,7 @@ public class Kord(
     @Deprecated(
         "guild name is a mandatory field",
         ReplaceWith("createGuild(\"name\", builder)"),
-        DeprecationLevel.WARNING
+        level = ERROR,
     )
     public suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
@@ -179,7 +180,6 @@ public class Kord(
 
     /**
      * Requests to create a new Guild configured through the [builder].
-     * At least the [GuildCreateBuilder.name] has to be set.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @return The newly created Guild.
