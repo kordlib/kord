@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     groovy
     `kotlin-dsl`
@@ -17,4 +19,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx", "atomicfu-gradle-plugin", "0.18.2")
     implementation(gradleApi())
     implementation(localGroovy())
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.languageVersion = "1.5"
 }
