@@ -1070,7 +1070,7 @@ public final class dev/kord/voice/streams/DefaultStreams : dev/kord/voice/stream
 	public synthetic fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/SharedFlow;
 	public fun getSsrcToUser ()Ljava/util/Map;
-	public fun listen ([BLjava/net/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/streams/NOPStreams : dev/kord/voice/streams/Streams {
@@ -1079,7 +1079,7 @@ public final class dev/kord/voice/streams/NOPStreams : dev/kord/voice/streams/St
 	public fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
 	public fun getSsrcToUser ()Ljava/util/Map;
-	public fun listen ([BLjava/net/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/voice/streams/Streams {
@@ -1087,7 +1087,7 @@ public abstract interface class dev/kord/voice/streams/Streams {
 	public abstract fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getIncomingUserStreams ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getSsrcToUser ()Ljava/util/Map;
-	public abstract fun listen ([BLjava/net/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun listen ([BLio/ktor/network/sockets/SocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/voice/udp/AudioFrameSender {
@@ -1141,7 +1141,7 @@ public final class dev/kord/voice/udp/DefaultAudioFrameSenderData {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/voice/udp/DefaultAudioPackerProvider : dev/kord/voice/udp/AudioPacketProvider {
+public final class dev/kord/voice/udp/DefaultAudioPacketProvider : dev/kord/voice/udp/AudioPacketProvider {
 	public fun <init> ([BLdev/kord/voice/encryption/strategies/NonceStrategy;)V
 	public fun provide-jfaDVJw (SII[B)Ldev/kord/voice/io/ByteArrayView;
 }
