@@ -91,6 +91,16 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         auditLogReason(reason)
     }
 
+    public suspend inline fun modifyUntypedAutoModerationRule(
+        guildId: Snowflake,
+        ruleId: Snowflake,
+        builder: UntypedAutoModerationRuleModifyBuilder.() -> Unit,
+    ): DiscordAutoModerationRule {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        val request = UntypedAutoModerationRuleModifyBuilder().apply(builder)
+        return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
+    }
+
     public suspend inline fun modifyKeywordAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,

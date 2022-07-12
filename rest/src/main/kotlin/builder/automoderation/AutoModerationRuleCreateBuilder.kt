@@ -17,7 +17,7 @@ import dev.kord.rest.json.request.AutoModerationRuleCreateRequest
 public sealed class AutoModerationRuleCreateBuilder(
     final override var name: String,
     final override var eventType: AutoModerationRuleEventType,
-) : AutoModerationRuleBuilder, AuditRequestBuilder<AutoModerationRuleCreateRequest> {
+) : TypedAutoModerationRuleBuilder, AuditRequestBuilder<AutoModerationRuleCreateRequest> {
     final override var reason: String? = null
 
     final override fun assignName(name: String) {

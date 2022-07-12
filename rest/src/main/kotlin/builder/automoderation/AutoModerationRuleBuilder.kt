@@ -28,8 +28,13 @@ public sealed interface AutoModerationRuleBuilder : AuditBuilder {
     /** Use this to set [eventType][AutoModerationRuleBuilder.eventType] for [AutoModerationRuleBuilder]. */
     public fun assignEventType(eventType: AutoModerationRuleEventType)
 
-    /** The rule [trigger type][AutoModerationRuleTriggerType]. */
-    public val triggerType: AutoModerationRuleTriggerType
+    /**
+     * The rule [trigger type][AutoModerationRuleTriggerType].
+     *
+     * This might be `null`, if the function that created this builder doesn't know the trigger type based on the
+     * type system.
+     */
+    public val triggerType: AutoModerationRuleTriggerType?
 
     /** The actions which will execute when the rule is triggered. */
     public val actions: MutableList<AutoModerationActionBuilder>?
@@ -81,7 +86,14 @@ public inline fun AutoModerationRuleBuilder.sendAlertMessage(
 }
 
 @KordDsl
-public sealed interface KeywordAutoModerationRuleBuilder : AutoModerationRuleBuilder {
+public sealed interface TypedAutoModerationRuleBuilder : AutoModerationRuleBuilder {
+
+    /** The rule [trigger type][AutoModerationRuleTriggerType]. */
+    override val triggerType: AutoModerationRuleTriggerType
+}
+
+@KordDsl
+public sealed interface KeywordAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
 
     override val triggerType: Keyword get() = Keyword
 
@@ -126,17 +138,17 @@ public inline fun KeywordAutoModerationRuleBuilder.timeout(
 }
 
 @KordDsl
-public sealed interface HarmfulLinkAutoModerationRuleBuilder : AutoModerationRuleBuilder {
+public sealed interface HarmfulLinkAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
     override val triggerType: HarmfulLink get() = HarmfulLink
 }
 
 @KordDsl
-public sealed interface SpamAutoModerationRuleBuilder : AutoModerationRuleBuilder {
+public sealed interface SpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
     override val triggerType: Spam get() = Spam
 }
 
 @KordDsl
-public sealed interface KeywordPresetAutoModerationRuleBuilder : AutoModerationRuleBuilder {
+public sealed interface KeywordPresetAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
 
     override val triggerType: KeywordPreset get() = KeywordPreset
 

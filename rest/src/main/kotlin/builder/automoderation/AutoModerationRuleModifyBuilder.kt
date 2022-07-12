@@ -1,10 +1,7 @@
 package dev.kord.rest.builder.automoderation
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.AutoModerationRuleEventType
-import dev.kord.common.entity.AutoModerationRuleKeywordPresetType
-import dev.kord.common.entity.DiscordAutoModerationRuleTriggerMetadata
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
@@ -54,6 +51,16 @@ public sealed class AutoModerationRuleModifyBuilder :
         exemptRoles = _exemptRoles.map { it.toList() },
         exemptChannels = _exemptChannels.map { it.toList() },
     )
+}
+
+@KordDsl
+public class UntypedAutoModerationRuleModifyBuilder : AutoModerationRuleModifyBuilder() {
+
+    /**
+     * This is always `null`, the function that created this builder doesn't know the
+     * [trigger type][AutoModerationRuleTriggerType] based on the type system.
+     */
+    override val triggerType: Nothing? get() = null
 }
 
 @KordDsl
