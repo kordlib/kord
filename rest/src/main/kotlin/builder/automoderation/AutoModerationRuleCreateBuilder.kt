@@ -1,4 +1,4 @@
-package dev.kord.rest.builder.auto_moderation
+package dev.kord.rest.builder.automoderation
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.AutoModerationRuleEventType

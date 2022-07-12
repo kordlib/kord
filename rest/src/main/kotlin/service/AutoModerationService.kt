@@ -3,7 +3,7 @@ package dev.kord.rest.service
 import dev.kord.common.entity.AutoModerationRuleEventType
 import dev.kord.common.entity.DiscordAutoModerationRule
 import dev.kord.common.entity.Snowflake
-import dev.kord.rest.builder.auto_moderation.*
+import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.json.request.AutoModerationRuleCreateRequest
 import dev.kord.rest.json.request.AutoModerationRuleModifyRequest
 import dev.kord.rest.request.RequestHandler
