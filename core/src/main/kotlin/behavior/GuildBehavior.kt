@@ -4,6 +4,7 @@ import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
+import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
@@ -16,6 +17,10 @@ import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.application.GuildChatInputCommand
 import dev.kord.core.entity.application.GuildMessageCommand
 import dev.kord.core.entity.application.GuildUserCommand
+import dev.kord.core.entity.automoderation.HarmfulLinkAutoModerationRule
+import dev.kord.core.entity.automoderation.KeywordAutoModerationRule
+import dev.kord.core.entity.automoderation.KeywordPresetAutoModerationRule
+import dev.kord.core.entity.automoderation.SpamAutoModerationRule
 import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
@@ -30,6 +35,10 @@ import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
+import dev.kord.rest.builder.automoderation.HarmfulLinkAutoModerationRuleCreateBuilder
+import dev.kord.rest.builder.automoderation.KeywordAutoModerationRuleCreateBuilder
+import dev.kord.rest.builder.automoderation.KeywordPresetAutoModerationRuleCreateBuilder
+import dev.kord.rest.builder.automoderation.SpamAutoModerationRuleCreateBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
@@ -49,6 +58,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.InvocationKind
+import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
 /**
@@ -1047,4 +1057,46 @@ public suspend fun GuildBehavior.createScheduledEvent(
     val data = GuildScheduledEventData.from(event)
 
     return GuildScheduledEvent(data, kord, supplier)
+}
+
+// TODO documentation
+
+public suspend inline fun GuildBehavior.createKeywordAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    builder: KeywordAutoModerationRuleCreateBuilder.() -> Unit,
+): KeywordAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createKeywordAutoModerationRule(guildId = id, name, eventType, builder)
+    return KeywordAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+public suspend inline fun GuildBehavior.createHarmfulLinkAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    builder: HarmfulLinkAutoModerationRuleCreateBuilder.() -> Unit,
+): HarmfulLinkAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createHarmfulLinkAutoModerationRule(guildId = id, name, eventType, builder)
+    return HarmfulLinkAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+public suspend inline fun GuildBehavior.createSpamAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    builder: SpamAutoModerationRuleCreateBuilder.() -> Unit,
+): SpamAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createSpamAutoModerationRule(guildId = id, name, eventType, builder)
+    return SpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+public suspend inline fun GuildBehavior.createKeywordPresetAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    builder: KeywordPresetAutoModerationRuleCreateBuilder.() -> Unit,
+): KeywordPresetAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createKeywordPresetAutoModerationRule(guildId = id, name, eventType, builder)
+    return KeywordPresetAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }
