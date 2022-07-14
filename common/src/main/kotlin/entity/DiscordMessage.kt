@@ -1,10 +1,25 @@
+@file:GenerateKordEnum(
+    name = "MessageStickerType", valueType = INT,
+    // had `public val values: Set<MessageStickerType>` in companion before -> replace with `entries`
+    valuesPropertyName = "values", valuesPropertyDeprecationLevel = WARNING, valuesPropertyType = SET,
+    entries = [
+        Entry("PNG", intValue = 1),
+        Entry("APNG", intValue = 2),
+        Entry("LOTTIE", intValue = 3),
+    ]
+)
+
 package dev.kord.common.entity
 
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.IntOrStringSerializer
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -14,6 +29,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -162,35 +178,6 @@ public data class DiscordStickerItem(
     @SerialName("format_type")
     val formatType: MessageStickerType
 )
-
-@Serializable(with = MessageStickerType.Serializer::class)
-public sealed class MessageStickerType(public val value: Int) {
-    public class Unknown(value: Int) : MessageStickerType(value)
-    public object PNG : MessageStickerType(1)
-    public object APNG : MessageStickerType(2)
-    public object LOTTIE : MessageStickerType(3)
-
-    public companion object {
-        public val values: Set<MessageStickerType> = setOf(PNG, APNG, LOTTIE)
-    }
-
-    internal object Serializer : KSerializer<MessageStickerType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.MessageStickerType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MessageStickerType = when (val value = decoder.decodeInt()) {
-            1 -> PNG
-            2 -> APNG
-            3 -> LOTTIE
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: MessageStickerType) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
 
 /**
  * Represents [a partial message sent in a channel within Discord](https://discord.com/developers/docs/resources/channel#message-object).
