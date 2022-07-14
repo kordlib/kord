@@ -9,6 +9,9 @@ import dev.kord.ksp.*
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import dev.kord.ksp.kordenum.KordEnum.Entry
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -51,6 +54,16 @@ private fun ValueType.toFormat() = when (this) {
 private fun ValueType.toPrimitiveKind() = when (this) {
     INT -> PrimitiveKind.INT::class
     STRING -> PrimitiveKind.STRING::class
+}
+
+private fun ValuesPropertyType.toClassName() = when (this) {
+    NONE -> error("did not expect NONE")
+    SET -> ClassName("kotlin.collections", "Set")
+}
+
+private fun ValuesPropertyType.toFromListConversion() = when (this) {
+    NONE -> error("did not expect NONE")
+    SET -> ".toSet()"
 }
 
 internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
@@ -223,6 +236,29 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                         }
                         addStatement(")")
                         endControlFlow()
+                    }
+                }
+
+                // @Deprecated(
+                //     "Renamed to 'entries'.",
+                //     ReplaceWith("this.entries"),
+                //     level = <valuesPropertyDeprecationLevel>,
+                // )
+                // public val <entriesPropertyName>
+                if (valuesPropertyName != null) {
+                    addProperty(
+                        valuesPropertyName,
+                        valuesPropertyType.toClassName().parameterizedBy(enumName),
+                        PUBLIC,
+                    ) {
+                        addAnnotation<Deprecated> {
+                            addMember("%S", "Renamed to 'entries'.")
+                            addMember("ReplaceWith(%S)", "this.entries")
+                            addMember("level·=·%M", valuesPropertyDeprecationLevel.asMemberName())
+                        }
+                        getter {
+                            addStatement("return entries${valuesPropertyType.toFromListConversion()}")
+                        }
                     }
                 }
             }

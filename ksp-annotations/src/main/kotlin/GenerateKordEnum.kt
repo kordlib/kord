@@ -2,6 +2,7 @@
 
 package dev.kord.ksp
 
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
 import kotlin.DeprecationLevel.WARNING
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.FILE
@@ -24,8 +25,16 @@ annotation class GenerateKordEnum(
     val valueName: String = "value",
     /** [entries] of the kord enum that are [Deprecated]. [Entry.deprecationMessage] is required for these. */
     val deprecatedEntries: Array<Entry> = [],
+
+    /** For migration purposes. */
+    val valuesPropertyName: String = "",
+    /** For migration purposes. */
+    val valuesPropertyType: ValuesPropertyType = NONE,
+    /** For migration purposes. */
+    val valuesPropertyDeprecationLevel: DeprecationLevel = WARNING,
 ) {
     enum class ValueType { INT, STRING }
+    enum class ValuesPropertyType { NONE, SET }
 
     @Target()
     @Retention(SOURCE)

@@ -77,6 +77,13 @@ internal inline fun <reified T> FunSpec.Builder.addParameter(name: String) = add
 internal inline fun PropertySpec.Builder.delegate(builder: CodeBlock.Builder.() -> Unit) =
     delegate(CodeBlock.builder().apply(builder).build())
 
+internal inline fun <reified A : Annotation> PropertySpec.Builder.addAnnotation(
+    builder: AnnotationSpec.Builder.() -> Unit,
+) = addAnnotation(AnnotationSpec.builder(A::class).apply(builder).build())
+
+internal inline fun PropertySpec.Builder.getter(builder: FunSpec.Builder.() -> Unit) =
+    getter(FunSpec.getterBuilder().apply(builder).build())
+
 
 // other
 

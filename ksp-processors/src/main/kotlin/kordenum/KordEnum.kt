@@ -4,6 +4,9 @@ import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSAnnotation
 import com.google.devtools.ksp.symbol.KSType
 import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
@@ -20,6 +23,11 @@ internal class KordEnum(
     val valueName: String,
     val entries: List<Entry>,
     val deprecatedEntries: List<Entry>,
+
+    // for migration purposes
+    val valuesPropertyName: String?,
+    val valuesPropertyType: ValuesPropertyType,
+    val valuesPropertyDeprecationLevel: DeprecationLevel,
 ) {
     internal class Entry(
         val name: String,
@@ -47,10 +55,31 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     val valueName = args[GenerateKordEnum::valueName] as String
     val deprecatedEntries = args[GenerateKordEnum::deprecatedEntries] as List<*>
 
+    val valuesPropertyName = (args[GenerateKordEnum::valuesPropertyName] as String).ifEmpty { null }
+    val valuesPropertyType = args[GenerateKordEnum::valuesPropertyType].toValuesPropertyType()
+    val valuesPropertyDeprecationLevel = args[GenerateKordEnum::valuesPropertyDeprecationLevel].toDeprecationLevel()
+    if (valuesPropertyName != null) {
+        if (valuesPropertyType == NONE) {
+            logger.error("Didn't specify valuesPropertyType", symbol = this)
+            return null
+        }
+    } else {
+        if (valuesPropertyType != NONE) {
+            logger.error("Specified valuesPropertyType", symbol = this)
+            return null
+        }
+        if (valuesPropertyDeprecationLevel != WARNING) {
+            logger.error("Specified valuesPropertyDeprecationLevel", symbol = this)
+            return null
+        }
+    }
+
     return KordEnum(
         name, kDoc, valueType, valueName,
         entries.map { it.toEntryOrNull(valueType, deprecated = false, logger) ?: return null },
         deprecatedEntries.map { it.toEntryOrNull(valueType, deprecated = true, logger) ?: return null },
+
+        valuesPropertyName, valuesPropertyType, valuesPropertyDeprecationLevel,
     )
 }
 
@@ -62,6 +91,13 @@ private fun Any?.toValueType() = when (val name = (this as KSType).declaration.q
 }
 
 private fun Any?.toKDoc() = (this as String).trimIndent().ifBlank { null }
+
+/** Maps [KSType] to [ValuesPropertyType]. */
+private fun Any?.toValuesPropertyType() = when (val name = (this as KSType).declaration.qualifiedName?.asString()) {
+    "dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE" -> NONE
+    "dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET" -> SET
+    else -> error("Unknown GenerateKordEnum.ValuesPropertyType: $name")
+}
 
 /**
  * Maps [KSAnnotation] for [GenerateKordEnum.Entry] to [Entry].
