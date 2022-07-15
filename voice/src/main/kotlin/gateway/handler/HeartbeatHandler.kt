@@ -29,8 +29,8 @@ internal class HeartbeatHandler(
         on<Ready> {
             launch {
                 ticker.tickAt(interval) {
-                    timestamp = timeSource.markNow()
                     send(Heartbeat(timestamp.elapsedNow().inWholeMilliseconds))
+                    timestamp = timeSource.markNow()
                 }
             }
         }

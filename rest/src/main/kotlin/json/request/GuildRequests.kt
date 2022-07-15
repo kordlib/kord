@@ -77,7 +77,7 @@ public data class GuildChannelPositionModifyRequest(
     internal object Serializer : KSerializer<GuildChannelPositionModifyRequest> {
         private val delegate = ListSerializer(ChannelPositionSwapRequest.serializer())
 
-        @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
+        @OptIn(ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
             get() = listSerialDescriptor(ChannelPositionSwapRequest.serializer().descriptor)
 
@@ -148,7 +148,7 @@ public data class GuildRolePositionModifyRequest(val swaps: List<Pair<Snowflake,
 
     internal object Serializer : KSerializer<GuildRolePositionModifyRequest> {
 
-        @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
+        @OptIn(ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
             get() = listSerialDescriptor(RolePosition.serializer().descriptor)
 
@@ -183,6 +183,9 @@ public data class GuildRoleModifyRequest(
     public val separate: OptionalBoolean?
         get() = hoist
 }
+
+@Serializable
+public data class GuildMFALevelModifyRequest(val level: MFALevel)
 
 @Serializable
 public data class GuildIntegrationCreateRequest(val type: Int, val id: String)

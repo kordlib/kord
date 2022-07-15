@@ -26,7 +26,7 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
-    override var defaultPermission: Boolean? by state::defaultPermission.delegate()
+    override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
@@ -34,7 +34,7 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
             nameLocalizations = state.nameLocalizations,
             dmPermission = state.dmPermission,
             defaultMemberPermissions = state.defaultMemberPermissions,
-            defaultPermission = state.defaultPermission
+            defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
         )
     }
 }
@@ -57,7 +57,7 @@ internal class UserCommandCreateBuilderImpl(override var name: String) : GlobalU
     override var dmPermission: Boolean? by state::dmPermission.delegate()
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
-    override var defaultPermission: Boolean? by state::defaultPermission.delegate()
+    override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
@@ -66,7 +66,7 @@ internal class UserCommandCreateBuilderImpl(override var name: String) : GlobalU
             type = type,
             defaultMemberPermissions = state.defaultMemberPermissions,
             dmPermission = state.dmPermission,
-            defaultPermission = state.defaultPermission
+            defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
         )
     }
 }

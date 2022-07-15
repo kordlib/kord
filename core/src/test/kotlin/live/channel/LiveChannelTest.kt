@@ -1,6 +1,5 @@
 package live.channel
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.DiscordUnavailableGuild
@@ -26,7 +25,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
 @Disabled
 abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE>() {

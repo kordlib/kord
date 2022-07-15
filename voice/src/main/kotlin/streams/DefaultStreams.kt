@@ -12,6 +12,7 @@ import dev.kord.voice.io.*
 import dev.kord.voice.udp.PayloadType
 import dev.kord.voice.udp.RTPPacket
 import dev.kord.voice.udp.VoiceUdpSocket
+import io.ktor.network.sockets.*
 import io.ktor.util.network.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
@@ -30,7 +31,7 @@ public class DefaultStreams(
     private val udp: VoiceUdpSocket,
     private val nonceStrategy: NonceStrategy
 ) : Streams {
-    private fun CoroutineScope.listenForIncoming(key: ByteArray, server: NetworkAddress) {
+    private fun CoroutineScope.listenForIncoming(key: ByteArray, server: SocketAddress) {
         udp.incoming
             .filter { it.address == server }
             .mapNotNull { RTPPacket.fromPacket(it.packet) }
@@ -62,7 +63,7 @@ public class DefaultStreams(
             }.launchIn(this)
     }
 
-    override suspend fun listen(key: ByteArray, server: NetworkAddress): Unit = coroutineScope {
+    override suspend fun listen(key: ByteArray, server: SocketAddress): Unit = coroutineScope {
         listenForIncoming(key, server)
         listenForUserFrames()
     }

@@ -3,6 +3,7 @@ package dev.kord.core.builder.kord
 import dev.kord.common.entity.Snowflake
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.serialization.kotlinx.json.*

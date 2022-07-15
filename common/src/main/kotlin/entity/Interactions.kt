@@ -2,10 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.value
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
@@ -34,9 +31,9 @@ public data class DiscordApplicationCommand(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("default_member_permissions")
-    val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    val defaultMemberPermissions: Permissions?,
     @SerialName("dm_permission")
-    val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
@@ -78,7 +75,6 @@ public data class ApplicationCommandOption(
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    @OptIn(KordExperimental::class)
     val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
@@ -88,6 +84,10 @@ public data class ApplicationCommandOption(
     val minValue: Optional<JsonPrimitive> = Optional.Missing(),
     @SerialName("max_value")
     val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
+    @SerialName("min_length")
+    val minLength: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_length")
+    val maxLength: OptionalInt = OptionalInt.Missing
 )
 
 /**
@@ -255,6 +255,8 @@ public data class DiscordInteraction(
     val version: Int,
     @Serializable(with = MaybeMessageSerializer::class)
     val message: Optional<DiscordMessage> = Optional.Missing(),
+    @SerialName("app_permissions")
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
     val guildLocale: Optional<Locale> = Optional.Missing(),
@@ -680,32 +682,30 @@ public sealed class CommandArgument<out T> : Option() {
             }
         }
 
-        override fun deserialize(decoder: Decoder): CommandArgument<*> {
-            decoder.decodeStructure(descriptor) {
-                this as JsonDecoder
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+            this as JsonDecoder
 
-                var name = ""
-                var element: JsonElement? = null
-                var type: ApplicationCommandOptionType? = null
-                while (true) {
-                    when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
-                        0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
-                        1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> type = decodeSerializableElement(
-                            descriptor,
-                            index,
-                            ApplicationCommandOptionType.serializer()
-                        )
+            var name = ""
+            var element: JsonElement? = null
+            var type: ApplicationCommandOptionType? = null
+            while (true) {
+                when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
+                    0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
+                    1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    2 -> type = decodeSerializableElement(
+                        descriptor,
+                        index,
+                        ApplicationCommandOptionType.serializer()
+                    )
 
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> error("unknown index: $index")
-                    }
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> error("unknown index: $index")
                 }
-
-                requireNotNull(element)
-                requireNotNull(type)
-                return deserialize(json, element, name, type, OptionalBoolean.Missing)
             }
+
+            requireNotNull(element)
+            requireNotNull(type)
+            deserialize(json, element, name, type, OptionalBoolean.Missing)
         }
     }
 }

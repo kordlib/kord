@@ -7,6 +7,7 @@ import dev.kord.gateway.GatewayCloseCode.*
 import dev.kord.gateway.handler.*
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
+import io.ktor.client.plugins.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -229,7 +230,9 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
     }
 
-    private suspend fun webSocket(url: String) = data.client.webSocketSession { url(url) }
+    private suspend fun webSocket(url: String) = data.client.webSocketSession {
+        url(url)
+    }
 
     override suspend fun stop() {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
@@ -281,6 +284,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         socket.send(Frame.Text(json))
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
     public companion object {

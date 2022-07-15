@@ -1,5 +1,6 @@
 package dev.kord.voice
 
+import dev.kord.common.KordConfiguration
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
@@ -142,7 +143,7 @@ public class VoiceConnectionBuilder(
             voiceState.sessionId
         ) to VoiceGatewayConfiguration(
             voiceServer.token,
-            "wss://${voiceServer.endpoint}?v=4"
+            "wss://${voiceServer.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
         )
     }
 

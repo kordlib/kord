@@ -1,6 +1,5 @@
 package dev.kord.core
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
@@ -19,7 +18,6 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.gateway.Intent
 import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intents
-import dev.kord.gateway.MessageDelete
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
@@ -349,7 +347,7 @@ public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>)
  * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
  * than one event.
  */
-@OptIn(PrivilegedIntent::class, KordPreview::class)
+@OptIn(PrivilegedIntent::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
 // see https://discord.com/developers/docs/topics/gateway#list-of-intents
 
@@ -477,7 +475,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
         +MessageContent
     }
 
-    MessageDelete::class -> {
+    MessageDeleteEvent::class -> {
         +GuildMessages
         +DirectMessages
         // no message content

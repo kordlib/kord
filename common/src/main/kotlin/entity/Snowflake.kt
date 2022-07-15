@@ -239,7 +239,7 @@ public class Snowflake : Comparable<Snowflake> {
     }
 }
 
-private class SnowflakeTimeMark(private val timestamp: Instant) : TimeMark() {
+private class SnowflakeTimeMark(private val timestamp: Instant) : TimeMark {
 
     override fun elapsedNow(): Duration = Clock.System.now() - timestamp
 }

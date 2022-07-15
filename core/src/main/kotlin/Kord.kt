@@ -8,6 +8,7 @@ import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
+import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
@@ -83,7 +84,7 @@ public class Kord(
     /**
      * A reference to all exposed [unsafe][KordUnsafe] entity constructors for this instance.
      */
-    @OptIn(KordUnsafe::class, KordExperimental::class)
+    @OptIn(KordUnsafe::class)
     public val unsafe: Unsafe = Unsafe(this)
 
     /**
@@ -402,7 +403,26 @@ public class Kord(
             }
             return KordRestOnlyBuilder(token).apply(builder).build()
         }
+
+        /**
+         * Builds a [Kord] instance configured by the [builder].
+         *
+         * The instance only allows for configuration of REST related APIs,
+         * interacting with the [gateway][Kord.gateway] or its [events][Kord.events] will result in no-ops.
+         *
+         * Similarly, [cache][Kord.cache] related functionality has been disabled and
+         * replaced with a no-op implementation.
+         */
+        @KordExperimental
+        public inline fun proxy(applicationId: Snowflake, builder: KordProxyBuilder.() -> Unit = {}): Kord {
+            contract {
+                callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+            }
+            return KordProxyBuilder(applicationId).apply(builder).build()
+        }
     }
+
+
     public fun getGlobalApplicationCommands(withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand> {
         return defaultSupplier.getGlobalApplicationCommands(resources.applicationId, withLocalizations)
     }

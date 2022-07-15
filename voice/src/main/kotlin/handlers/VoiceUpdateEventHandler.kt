@@ -1,5 +1,6 @@
 package dev.kord.voice.handlers
 
+import dev.kord.common.KordConfiguration
 import dev.kord.common.annotation.KordVoice
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
@@ -64,7 +65,7 @@ internal class VoiceUpdateEventHandler(
             // update the gateway configuration accordingly
             connection.voiceGatewayConfiguration = connection.voiceGatewayConfiguration.copy(
                 token = voiceServerUpdate.voiceServerUpdateData.token,
-                endpoint = "wss://${voiceServerUpdate.voiceServerUpdateData.endpoint}?v=4"
+                endpoint = "wss://${voiceServerUpdate.voiceServerUpdateData.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
             )
 
             // reconnect...

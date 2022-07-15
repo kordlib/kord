@@ -3,10 +3,7 @@ package dev.kord.core.behavior
 import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.DiscordUser
-import dev.kord.common.entity.GuildScheduledEventPrivacyLevel
-import dev.kord.common.entity.ScheduledEntityType
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
@@ -36,7 +33,10 @@ import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
-import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
+import dev.kord.rest.builder.interaction.GuildMultiApplicationCommandBuilder
+import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
+import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -68,12 +68,25 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * Returns all active public and private threads in this guild
      * Threads are ordered by their id, in descending order.
      *
-     *  The returned flow is lazily executed, any [RequestException] will be thrown on
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
-
      */
     public val activeThreads: Flow<ThreadChannel>
         get() = supplier.getActiveThreads(id)
+
+    /**
+     * Requests to get all threads in this guild that are present in [cache][Kord.cache].
+     *
+     * This property is not resolvable through REST and will always use [Kord.cache] instead.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public val cachedThreads: Flow<ThreadChannel>
+        get() = kord.cache
+            .query<ChannelData> { idEq(ChannelData::guildId, this@GuildBehavior.id) }
+            .asFlow()
+            .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
     /**
      * Requests to get all present webhooks for this guild.
@@ -294,6 +307,14 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     public suspend fun delete(): Unit = kord.rest.guild.deleteGuild(id)
+
+    /**
+     * Requests to edit this guild's [MFA level][MFALevel] and returns the updated level.
+     * This requires guild ownership.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun editMFALevel(level: MFALevel): MFALevel = kord.rest.guild.modifyGuildMFALevel(id, level).level
 
     /**
      * Requests to leave this guild.

@@ -1,6 +1,5 @@
 package live
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.optionalSnowflake
@@ -26,7 +25,6 @@ import kotlin.test.assertEquals
 import kotlin.time.Duration.Companion.seconds
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
 @Disabled
 class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {

@@ -68,6 +68,10 @@ internal class GuildEventHandler(
             cache.put(ChannelData.from(channel.copy(guildId = this.id.optionalSnowflake()))) //guild id always empty
         }
 
+        for (thread in threads.orEmpty()) {
+            cache.put(ChannelData.from(thread.copy(guildId = this.id.optionalSnowflake()))) //guild id always empty
+        }
+
         for (presence in presences.orEmpty()) {
             cache.put(PresenceData.from(id, presence))
         }
@@ -75,6 +79,7 @@ internal class GuildEventHandler(
         for (voiceState in voiceStates.orEmpty()) {
             cache.put(VoiceStateData.from(id, voiceState))
         }
+
         for (emoji in emojis) {
             cache.put(EmojiData.from(id, emoji.id!!, emoji))
         }

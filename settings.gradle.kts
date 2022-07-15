@@ -47,13 +47,13 @@ fun VersionCatalogBuilder.cache() {
 }
 
 fun VersionCatalogBuilder.kotlinx() {
-    library("kotlinx-datetime", "org.jetbrains.kotlinx", "kotlinx-datetime").version("0.3.2")
+    library("kotlinx-datetime", "org.jetbrains.kotlinx", "kotlinx-datetime").version("0.4.0")
 }
 
 fun VersionCatalogBuilder.ktor() {
-    val ktor = version("ktor", "2.0.0")
+    val ktor = version("ktor", "2.0.3")
 
-    library("ktor-client-json","io.ktor", "ktor-serialization-kotlinx-json").versionRef(ktor)
+    library("ktor-client-json", "io.ktor", "ktor-serialization-kotlinx-json").versionRef(ktor)
     library("ktor-client-content-negotiation", "io.ktor", "ktor-client-content-negotiation").versionRef(ktor)
 
     library("ktor-client-cio", "io.ktor", "ktor-client-cio").versionRef(ktor)
@@ -69,11 +69,11 @@ fun VersionCatalogBuilder.ktor() {
 }
 
 fun VersionCatalogBuilder.common() {
-    version("kotlinx-coroutines", "1.6.1")
-    library("kotlinx-serialization", "org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.3.2")
+    version("kotlinx-coroutines", "1.6.3")
+    library("kotlinx-serialization", "org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.3.3")
     library("kotlinx-coroutines", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").versionRef("kotlinx-coroutines")
-    library("kotlinx-atomicfu", "org.jetbrains.kotlinx", "atomicfu").version("0.17.2")
-    library("kotlin-logging", "io.github.microutils", "kotlin-logging").version("2.1.21")
+    library("kotlinx-atomicfu", "org.jetbrains.kotlinx", "atomicfu").version("0.18.2")
+    library("kotlin-logging", "io.github.microutils", "kotlin-logging").version("2.1.23")
 
     bundle("common", listOf("kotlinx-serialization", "kotlinx-coroutines", "kotlinx-atomicfu", "kotlin-logging"))
 }
@@ -81,7 +81,7 @@ fun VersionCatalogBuilder.common() {
 fun VersionCatalogBuilder.tests() {
     val junit5 = version("junit5", "5.8.2")
 
-    library("mockk", "io.mockk", "mockk").version("1.12.3")
+    library("mockk", "io.mockk", "mockk").version("1.12.4")
     library("kotlinx-coroutines-test", "org.jetbrains.kotlinx", "kotlinx-coroutines-test").versionRef("kotlinx-coroutines")
     library("junit-jupiter-api", "org.junit.jupiter", "junit-jupiter-api").versionRef(junit5)
 

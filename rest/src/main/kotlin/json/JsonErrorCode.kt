@@ -166,6 +166,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** This message cannot be edited due to announcement rate limits. */
     AnnouncementRateLimit(20022),
 
+    /** Under minimum age. */
+    UnderMinimumAge(20024),
+
     /** The channel you are writing has hit the write rate limit. */
     ChannelWriteRateLimit(20028),
 
@@ -247,6 +250,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of edits to messages older than 1 hour reached. Try again later. */
     MaxOldMessageEdits(30046),
 
+    /** Bitrate is too high for channel of this type. */
+    BitrateTooHigh(30052),
+
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
 
@@ -276,6 +282,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** An application command with that name already exists. */
     ApplicationCommandNameExists(40041),
+
+    /** Application interaction failed to send. */
+    InteractionFailedToSend(40043),
 
     /** Interaction has already been acknowledged. */
     InteractionAlreadyAcknowledged(40060),
@@ -329,6 +338,9 @@ public enum class JsonErrorCode(public val code: Int) {
      * Provided too few or too many messages to delete. Must provide at least 2 and fewer than 100 messages to delete.
      */
     ProvidedMessageCountInsufficient(50016),
+
+    /** Invalid MFA Level. */
+    InvalidMFALevel(50017),
 
     /** A message can only be pinned to the channel it was sent in. */
     CannotPinMessageFromAnotherChannel(50019),
@@ -424,6 +436,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** The request body contains invalid JSON. */
     InvalidJsonInRequestBody(50109),
+
+    /** You do not have permission to send this sticker. */
+    StickerPermissionLack(50600),
 
     /** Two factor is required for this operation. */
     Require2FA(60003),
