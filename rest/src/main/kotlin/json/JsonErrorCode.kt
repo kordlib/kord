@@ -437,7 +437,6 @@ public enum class JsonErrorCode(public val code: Int) {
     /** The request body contains invalid JSON. */
     InvalidJsonInRequestBody(50109),
 
-
     /** Ownership cannot be transferred to a bot user. */
     OwnershipCannotBeTransferredToBot(50132),
     
