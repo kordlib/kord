@@ -438,7 +438,7 @@ public enum class JsonErrorCode(public val code: Int) {
     InvalidJsonInRequestBody(50109),
 
     /** Ownership cannot be transferred to a bot user. */
-    BotOwnershipError(50132),
+    OwnershipCannotBeTransferredToBot(50132),
 
     /** You do not have permission to send this sticker. */
     StickerPermissionLack(50600),
