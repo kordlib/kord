@@ -8,14 +8,15 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MemberBehavior
+import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.automoderation.*
-import dev.kord.core.behavior.automoderation.autoModerationRuleIsEqualTo
-import dev.kord.core.behavior.automoderation.hashAutoModerationRule
+import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.cache.data.AutoModerationRuleData
+import dev.kord.core.entity.Member
+import dev.kord.core.entity.Role
+import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-
-// TODO missing vals, AutoModerationAction
 
 public sealed class AutoModerationRule(
     public val data: AutoModerationRuleData,
@@ -25,8 +26,12 @@ public sealed class AutoModerationRule(
 ) : TypedAutoModerationRuleBehavior {
 
     init {
-        expectedTriggerType?.let {
-            require(data.triggerType == it) { "Wrong trigger type, expected $it but got ${data.triggerType}" }
+        if (expectedTriggerType == null) {
+            require(data.triggerType is Unknown) { "Expected unknown trigger type but got ${data.triggerType}" }
+        } else {
+            require(data.triggerType == expectedTriggerType) {
+                "Wrong trigger type, expected $expectedTriggerType but got ${data.triggerType}"
+            }
         }
     }
 
@@ -37,15 +42,33 @@ public sealed class AutoModerationRule(
     /** The rule name. */
     public val name: String get() = data.name
 
+    /** The ID of the [Member] which first created this rule. */
     public val creatorId: Snowflake get() = data.creatorId
+
+    /** The behavior of the [Member] which first created this rule. */
     public val creator: MemberBehavior get() = MemberBehavior(guildId, id = creatorId, kord)
 
+    /** The rule [event type][AutoModerationRuleEventType]. */
     public val eventType: AutoModerationRuleEventType get() = data.eventType
 
-    public val actions: List<Nothing> get() = TODO()
+    /** The actions which will execute when the rule is triggered. */
+    public val actions: List<Nothing> get() = TODO("Add AutoModerationAction")
 
     /** Whether the rule is enabled. */
     public val isEnabled: Boolean get() = data.enabled
+
+    /** The IDs of the [Role]s that should not be affected by the rule. */
+    public val exemptRoleIds: List<Snowflake> get() = data.exemptRoles
+
+    /** The behaviors of the [Role]s that should not be affected by the rule. */
+    public val exemptRoles: List<RoleBehavior> get() = data.exemptRoles.map { RoleBehavior(guildId, id = it, kord) }
+
+    /** The IDs of the [GuildChannel]s that should not be affected by the rule. */
+    public val exemptChannelIds: List<Snowflake> get() = data.exemptChannels
+
+    /** The behaviors of the [GuildChannel]s that should not be affected by the rule. */
+    public val exemptChannels: List<GuildChannelBehavior>
+        get() = data.exemptChannels.map { GuildChannelBehavior(guildId, id = it, kord) }
 
     abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationRule
 
@@ -132,10 +155,6 @@ public class KeywordPresetAutoModerationRule(data: AutoModerationRuleData, kord:
 
 public class UnknownAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = null) {
-
-    init {
-        require(data.triggerType is Unknown) { "Expected unknown trigger type but got ${data.triggerType}" }
-    }
 
     override val triggerType: Unknown get() = data.triggerType as Unknown
 

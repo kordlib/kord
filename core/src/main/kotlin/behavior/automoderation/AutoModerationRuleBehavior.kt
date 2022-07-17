@@ -20,7 +20,7 @@ import kotlin.contracts.contract
 
 public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
 
-    /**	The ID of the [Guild] which this rule belongs to. */
+    /** The ID of the [Guild] which this rule belongs to. */
     public val guildId: Snowflake
 
     /** The behavior of the [Guild] which this rule belongs to. */
