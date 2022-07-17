@@ -34,7 +34,7 @@ public class BlockMessageAutoModerationActionBuilder : AutoModerationActionBuild
 
 @KordDsl
 public class SendAlertMessageAutoModerationActionBuilder(
-    /** ID of the channel to which user content should be logged. */
+    /** The ID of the channel to which user content should be logged. */
     public var channelId: Snowflake,
 ) : AutoModerationActionBuilder() {
 
