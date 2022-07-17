@@ -77,14 +77,14 @@ public class ThreadEventHandler(
         val channel = DeletedThreadChannel(channelData, kord)
         val old = cachedData?.let { Channel.from(cachedData, kord) }
         val coreEvent = when (channel.type) {
-            is ChannelType.PublicNewsThread -> NewsChannelThreadDeleteEvent(
+            ChannelType.GuildNewsThread -> NewsChannelThreadDeleteEvent(
                 channel,
                 old as? NewsChannelThread,
                 shard,
                 coroutineScope = coroutineScope
             )
-            is ChannelType.PrivateThread,
-            is ChannelType.GuildText -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard, coroutineScope)
+            ChannelType.GuildPrivateThread,
+            ChannelType.GuildPublicThread -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard, coroutineScope)
             else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard, coroutineScope)
         }
 

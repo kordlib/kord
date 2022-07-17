@@ -1,12 +1,89 @@
+@file:GenerateKordEnum(
+    name = "ChannelType", valueType = INT,
+    entries = [
+        Entry("GuildText", intValue = 0, kDoc = "A text channel within a server."),
+        Entry("DM", intValue = 1, kDoc = "A direct message between users."),
+        Entry("GuildVoice", intValue = 2, kDoc = "A voice channel within a server."),
+        Entry("GroupDM", intValue = 3, kDoc = "A direct message between multiple users."),
+        Entry(
+            "GuildCategory", intValue = 4,
+            kDoc = """
+            An
+            [organizational·category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101)
+            that contains up to 50 channels.
+            """,
+        ),
+        Entry(
+            "GuildNews", intValue = 5,
+            kDoc = """
+            A channel that
+            [users·can·follow·and·crosspost·into·their·own·server](https://support.discord.com/hc/en-us/articles/360032008192).
+            """,
+        ),
+        Entry("GuildNewsThread", intValue = 10, kDoc = "A temporary sub-channel within a [GuildNews] channel."),
+        Entry("GuildPublicThread", intValue = 11, kDoc = "A temporary sub-channel within a [GuildText] channel."),
+        Entry(
+            "GuildPrivateThread", intValue = 12,
+            kDoc = """
+            A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and those with
+            the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.
+            """,
+        ),
+        Entry(
+            "GuildStageVoice", intValue = 13,
+            kDoc = """
+            A voice channel for
+            [hosting·events·with·an·audience](https://support.discord.com/hc/en-us/articles/1500005513722).
+            """,
+        ),
+        Entry(
+            "GuildDirectory", intValue = 14,
+            kDoc = """
+            The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-Student-Hubs-FAQ)
+            containing the listed servers.
+            """,
+        ),
+    ],
+    deprecatedEntries = [
+        Entry(
+            "GuildStore", intValue = 6, kDoc = "A channel in which game developers can sell their game on Discord.",
+            deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
+                    "Discord and store channels were removed on March 10, 2022.\n\n" +
+                    "See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.",
+            deprecationLevel = WARNING,
+        ),
+        Entry(
+            "PublicNewsThread", intValue = 10,
+            deprecationMessage = "Renamed to 'GuildNewsThread'",
+            replaceWith = ReplaceWith("GuildNewsThread", "dev.kord.common.entity.ChannelType.GuildNewsThread"),
+            deprecationLevel = WARNING,
+        ),
+        Entry(
+            "PublicGuildThread", intValue = 11,
+            deprecationMessage = "Renamed to 'GuildPublicThread'",
+            replaceWith = ReplaceWith("GuildPublicThread", "dev.kord.common.entity.ChannelType.GuildPublicThread"),
+            deprecationLevel = WARNING,
+        ),
+        Entry(
+            "PrivateThread", intValue = 12,
+            deprecationMessage = "Renamed to 'GuildPrivateThread'",
+            replaceWith = ReplaceWith("GuildPrivateThread", "dev.kord.common.entity.ChannelType.GuildPrivateThread"),
+            deprecationLevel = WARNING,
+        ),
+    ],
+)
+
 package dev.kord.common.entity
 
-import dev.kord.common.entity.Permission.ManageThreads
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInMinutesSerializer
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -87,98 +164,6 @@ public data class DiscordChannel(
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val member: Optional<DiscordThreadMember> = Optional.Missing()
 )
-
-@Serializable(with = ChannelType.Serializer::class)
-public sealed class ChannelType(public val value: Int) {
-
-    /** The default code for unknown values. */
-    public class Unknown(value: Int) : ChannelType(value)
-
-    /** A text channel within a server. */
-    public object GuildText : ChannelType(0)
-
-    /** A direct message between users. */
-    public object DM : ChannelType(1)
-
-    /** A voice channel within a server. */
-    public object GuildVoice : ChannelType(2)
-
-    /** A direct message between multiple users. */
-    public object GroupDM : ChannelType(3)
-
-    /**
-     * An [organizational category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101)
-     * that contains up to 50 channels.
-     */
-    public object GuildCategory : ChannelType(4)
-
-    /**
-     * A channel that
-     * [users can follow and crosspost into their own server](https://support.discord.com/hc/en-us/articles/360032008192).
-     */
-    public object GuildNews : ChannelType(5)
-
-    /** A channel in which game developers can sell their game on Discord. */
-    @Deprecated(
-        """
-        Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
-        removed on March 10, 2022.
-        
-        See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
-        """,
-        level = WARNING,
-    )
-    public object GuildStore : ChannelType(6)
-
-    /** A temporary sub-channel within a [GuildNews] channel. */
-    public object PublicNewsThread : ChannelType(10)
-
-    /** A temporary sub-channel within a [GuildText] channel. */
-    public object PublicGuildThread : ChannelType(11)
-
-    /**
-     * A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and those with the
-     * [ManageThreads] permission.
-     */
-    public object PrivateThread : ChannelType(12)
-
-    /**
-     * A voice channel for
-     * [hosting events with an audience](https://support.discord.com/hc/en-us/articles/1500005513722).
-     */
-    public object GuildStageVoice : ChannelType(13)
-
-    /**
-     * The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-Student-Hubs-FAQ)
-     * containing the listed servers.
-     */
-    public object GuildDirectory : ChannelType(14)
-
-
-    internal object Serializer : KSerializer<ChannelType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ChannelType = when (val code = decoder.decodeInt()) {
-            0 -> GuildText
-            1 -> DM
-            2 -> GuildVoice
-            3 -> GroupDM
-            4 -> GuildCategory
-            5 -> GuildNews
-            6 -> @Suppress("DEPRECATION") GuildStore
-            10 -> PublicNewsThread
-            11 -> PublicGuildThread
-            12 -> PrivateThread
-            13 -> GuildStageVoice
-            14 -> GuildDirectory
-            else -> Unknown(code)
-        }
-
-        override fun serialize(encoder: Encoder, value: ChannelType) = encoder.encodeInt(value.value)
-    }
-
-}
 
 @Serializable
 public data class Overwrite(

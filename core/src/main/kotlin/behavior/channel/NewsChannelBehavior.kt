@@ -87,7 +87,7 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
         reason: String? = null
     ): NewsChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread) { this.reason = reason } as NewsChannelThread
+        return unsafeStartThread(name, archiveDuration, ChannelType.GuildNewsThread) { this.reason = reason } as NewsChannelThread
     }
 
     public suspend fun startPublicThreadWithMessage(
