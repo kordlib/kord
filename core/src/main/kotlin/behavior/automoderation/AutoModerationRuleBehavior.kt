@@ -9,7 +9,6 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.automoderation.*
-import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.automoderation.*
 import java.util.Objects

@@ -12,12 +12,22 @@ import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.automoderation.*
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.cache.data.AutoModerationRuleData
+import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * An instance of a [Discord Auto Moderation Rule](https://discord.com/developers/docs/resources/auto-moderation).
+ *
+ * Auto Moderation is a feature which allows each [Guild] to set up rules that trigger based on some criteria. For
+ * example, a rule can trigger whenever a message contains a specific keyword.
+ *
+ * Rules can be configured to automatically execute actions whenever they trigger. For example, if a user tries to send
+ * a message which contains a certain keyword, a rule can trigger and block the message before it is sent.
+ */
 public sealed class AutoModerationRule(
     public val data: AutoModerationRuleData,
     final override val kord: Kord,
@@ -89,7 +99,7 @@ internal fun AutoModerationRule(
     is Unknown -> UnknownAutoModerationRule(data, kord, supplier)
 }
 
-
+/** An [AutoModerationRule] with trigger type [Keyword]. */
 public class KeywordAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = Keyword),
     KeywordAutoModerationRuleBehavior {
@@ -109,7 +119,7 @@ public class KeywordAutoModerationRule(data: AutoModerationRuleData, kord: Kord,
     override fun toString(): String = "KeywordAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
-
+/** An [AutoModerationRule] with trigger type [HarmfulLink]. */
 public class HarmfulLinkAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = HarmfulLink),
     HarmfulLinkAutoModerationRuleBehavior {
@@ -120,7 +130,7 @@ public class HarmfulLinkAutoModerationRule(data: AutoModerationRuleData, kord: K
     override fun toString(): String = "HarmfulLinkAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
-
+/** An [AutoModerationRule] with trigger type [Spam]. */
 public class SpamAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = Spam),
     SpamAutoModerationRuleBehavior {
@@ -131,7 +141,7 @@ public class SpamAutoModerationRule(data: AutoModerationRuleData, kord: Kord, su
     override fun toString(): String = "SpamAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
-
+/** An [AutoModerationRule] with trigger type [KeywordPreset]. */
 public class KeywordPresetAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = KeywordPreset),
     KeywordPresetAutoModerationRuleBehavior {
@@ -152,7 +162,7 @@ public class KeywordPresetAutoModerationRule(data: AutoModerationRuleData, kord:
     override fun toString(): String = "KeywordPresetAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
-
+/** An [AutoModerationRule] with trigger type [Unknown]. */
 public class UnknownAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = null) {
 
