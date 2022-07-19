@@ -29,8 +29,7 @@ private val Entry.warningSuppressedName
         isDeprecated -> "@Suppress(\"${
             when (deprecationLevel) {
                 WARNING -> "DEPRECATION"
-                ERROR -> "DEPRECATION_ERROR"
-                HIDDEN -> TODO("How can we use HIDDEN symbols? (if at all)")
+                ERROR, HIDDEN -> "DEPRECATION_ERROR"
             }
         }\")·$name"
         else -> name
