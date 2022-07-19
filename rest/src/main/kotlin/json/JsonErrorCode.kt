@@ -227,7 +227,7 @@ public enum class JsonErrorCode(public val code: Int) {
     GuildAlreadyHadTemplate(30031),
 
     /** Maximum number of application commands reached. */
-    MaxApplicationCommandsReached(30032),
+    MaxApplicationCommands(30032),
 
     /** Max number of thread participants has been reached (1000). */
     MaxThreadParticipants(30033),
