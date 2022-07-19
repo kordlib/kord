@@ -229,6 +229,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Max number of thread participants has been reached (1000). */
     MaxThreadParticipants(30033),
 
+    /** Max number of daily application command creates has veeb reached (200). */
+    MaxDailyApplicationCommandCreates(30034),
+
     /** Maximum number of bans for non-guild members have been exceeded. */
     MaxNonMemberBans(30035),
 
@@ -273,6 +276,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** The user is banned from this guild. */
     UserBannedFromGuild(40007),
+
+    /** Connection has been revoked. */
+    ConnectionRevoked(40008),
 
     /** Target user is not connected to voice. */
     UserNotInVoice(40032),
@@ -439,6 +445,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Ownership cannot be transferred to a bot user. */
     OwnershipCannotBeTransferredToBot(50132),
+
+    /** Failed to resize the asset below the maximum size: 262144. */
+    FailedToResizeAssetBelowMaximumSize(50133),
     
     /** Uploaded file not found. */
     UnknownUpload(50146),
@@ -502,6 +511,12 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Failed to create stage needed for stage event. */
     FailedToCreateStage(180002),
+
+    /** Message was blocked by automatic moderation. */
+    MessageBlockedByAutomaticModeration(180003),
+
+    /** Title was blocked by automatic moderation. */
+    TitleBlockedByAutomaticModeration(180004),
 
     ;
 
