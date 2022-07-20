@@ -20,6 +20,7 @@ import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -363,7 +364,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
 
     @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER")
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("getGuildWidget(guildId)"), DeprecationLevel.ERROR)
+    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("getGuildWidget(guildId)"), level = HIDDEN)
     public suspend fun getGuildEmbed(guildId: Snowflake): Nothing =
         throw Exception("Guild embeds were renamed to widgets.")
 
@@ -372,7 +373,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
     @Deprecated(
         "Guild embeds were renamed to widgets.",
         ReplaceWith("modifyGuildWidget(guildId, embed)"),
-        DeprecationLevel.ERROR
+        level = HIDDEN,
     )
     public suspend fun modifyGuildEmbed(guildId: Snowflake, embed: Any): Nothing =
         throw Exception("Guild embeds were renamed to widgets.")

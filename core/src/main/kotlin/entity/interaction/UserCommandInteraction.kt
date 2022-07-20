@@ -9,6 +9,7 @@ import dev.kord.core.entity.User
 import dev.kord.core.entity.application.UserCommand
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlin.DeprecationLevel.HIDDEN
 
 /** An [ApplicationCommandInteraction] created when a user uses a [UserCommand]. */
 public sealed interface UserCommandInteraction : ApplicationCommandInteraction {
@@ -16,7 +17,7 @@ public sealed interface UserCommandInteraction : ApplicationCommandInteraction {
     /** The id of the user targeted by the [UserCommand]. */
     public val targetId: Snowflake get() = data.data.targetId.value!!
 
-    @Deprecated("Renamed to 'target'.", ReplaceWith("this.target"), DeprecationLevel.ERROR)
+    @Deprecated("Renamed to 'target'.", ReplaceWith("this.target"), level = HIDDEN)
     public val targetBehavior: UserBehavior
         get() = target
 

@@ -22,6 +22,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
+import kotlin.DeprecationLevel.ERROR
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -650,9 +651,9 @@ public data class DiscordCreatedInvite(
     val targetUser: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_application")
     val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
-    @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
+    @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     @SerialName("target_user_type")
-    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
 )
@@ -660,6 +661,7 @@ public data class DiscordCreatedInvite(
 @Deprecated(
     "Use 'DiscordUser' instead, All missing fields have defaults.",
     ReplaceWith("DiscordUser", "dev.kord.common.entity.DiscordUser"),
+    level = ERROR,
 )
 @Serializable
 public data class DiscordInviteUser(

@@ -21,6 +21,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import java.util.*
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -263,7 +264,7 @@ public suspend inline fun MessageBehavior.edit(builder: UserMessageModifyBuilder
 @Deprecated(
     "'editWebhookMessage' was renamed to 'edit'",
     ReplaceWith("this.edit(webhookId, token, threadId = null) { builder() }", "dev.kord.core.behavior.edit"),
-    DeprecationLevel.ERROR,
+    level = HIDDEN,
 )
 public suspend inline fun MessageBehavior.editWebhookMessage(
     webhookId: Snowflake,

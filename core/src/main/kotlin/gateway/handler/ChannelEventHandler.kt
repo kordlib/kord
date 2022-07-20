@@ -41,7 +41,7 @@ internal class ChannelEventHandler(
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelCreateEvent(channel, shard, coroutineScope)
-            is @Suppress("DEPRECATION") StoreChannel -> @Suppress("DEPRECATION") StoreChannelCreateEvent(channel, shard, coroutineScope)
+            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelCreateEvent(channel, shard, coroutineScope)
             is DmChannel -> DMChannelCreateEvent(channel, shard, coroutineScope)
             is TextChannel -> TextChannelCreateEvent(channel, shard, coroutineScope)
             is StageChannel -> StageChannelCreateEvent(channel, shard, coroutineScope)
@@ -62,7 +62,7 @@ internal class ChannelEventHandler(
         val old = oldData?.let { Channel.from(it, kord) }
         val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelUpdateEvent(channel, old as? NewsChannel, shard, coroutineScope)
-            is @Suppress("DEPRECATION") StoreChannel -> @Suppress("DEPRECATION") StoreChannelUpdateEvent(channel, old as? StoreChannel, shard, coroutineScope)
+            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelUpdateEvent(channel, old as? StoreChannel, shard, coroutineScope)
             is DmChannel -> DMChannelUpdateEvent(channel, old as? DmChannel, shard, coroutineScope)
             is TextChannel -> TextChannelUpdateEvent(channel, old as? TextChannel, shard, coroutineScope)
             is StageChannel -> StageChannelUpdateEvent(channel, old as? StageChannel, shard, coroutineScope)
@@ -82,7 +82,7 @@ internal class ChannelEventHandler(
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelDeleteEvent(channel, shard, coroutineScope)
-            is @Suppress("DEPRECATION") StoreChannel -> @Suppress("DEPRECATION") StoreChannelDeleteEvent(channel, shard, coroutineScope)
+            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelDeleteEvent(channel, shard, coroutineScope)
             is DmChannel -> DMChannelDeleteEvent(channel, shard, coroutineScope)
             is TextChannel -> TextChannelDeleteEvent(channel, shard, coroutineScope)
             is StageChannel -> StageChannelDeleteEvent(channel, shard, coroutineScope)

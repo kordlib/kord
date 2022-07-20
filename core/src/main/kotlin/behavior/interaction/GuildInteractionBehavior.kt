@@ -6,12 +6,12 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.channel.GuildMessageChannel
-import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.interaction.GuildInteraction
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlin.DeprecationLevel.HIDDEN
 
 /** The behavior of a [GuildInteraction]. */
 public interface GuildInteractionBehavior : InteractionBehavior {
@@ -25,7 +25,7 @@ public interface GuildInteractionBehavior : InteractionBehavior {
     /**
      * The [GuildBehavior] for the guild the command was executed in.
      */
-    @Deprecated("Renamed to 'guild'.", ReplaceWith("this.guild"), DeprecationLevel.ERROR)
+    @Deprecated("Renamed to 'guild'.", ReplaceWith("this.guild"), level = HIDDEN)
     public val guildBehavior: GuildBehavior get() = guild
 
     override val channel: GuildMessageChannelBehavior

@@ -1,6 +1,5 @@
 package dev.kord.core.event.guild
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
@@ -15,12 +14,6 @@ import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
-
-
-@DeprecatedSinceKord("0.7.0")
-@Deprecated("Renamed to MembersChunkEvent", ReplaceWith("MembersChunkEvent"), DeprecationLevel.ERROR)
-public typealias MemberChunksEvent = MembersChunkEvent
 
 public class MembersChunkEvent(
     public val data: MembersChunkData,

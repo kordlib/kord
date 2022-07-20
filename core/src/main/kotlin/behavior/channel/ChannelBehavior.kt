@@ -13,6 +13,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.request.RestRequestException
 import java.util.*
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * The behavior of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
@@ -82,7 +83,7 @@ public interface ChannelBehavior : KordEntity, Strategizable {
  * @throws [RequestException] if anything went wrong during the request.
  * @throws [ClassCastException] if the channel is not of type [T]
  */
-@Deprecated("Deprecated in favor of asChannelOfOrNull",ReplaceWith("asChannelOfOrNull(id)"))
+@Deprecated("Deprecated in favor of asChannelOfOrNull", ReplaceWith("this.asChannelOfOrNull<T>()"), level = ERROR)
 public suspend inline fun <reified T: Channel> ChannelBehavior.ofOrNull(): T? = supplier.getChannelOfOrNull(id)
 
 
@@ -93,7 +94,7 @@ public suspend inline fun <reified T: Channel> ChannelBehavior.ofOrNull(): T? = 
  * @throws [EntityNotFoundException] if the [Channel] wasn't present.
  * @throws [ClassCastException] if the channel is not of type  [T].
  */
-@Deprecated("Deprecated in favor of asChannelOfOrNull",ReplaceWith("asChannelOfOrNull(id)"))
+@Deprecated("Deprecated in favor of asChannelOf", ReplaceWith("this.asChannelOf<T>()"), level = ERROR)
 public suspend inline fun <reified T: Channel> ChannelBehavior.of(): T = supplier.getChannelOf(id)
 
 

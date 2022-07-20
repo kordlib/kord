@@ -7,6 +7,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * Detailed error codes sent by the Discord API in the JSON [error response][DiscordErrorResponse].
@@ -530,7 +531,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "JsonErrorCode.OperationOnAchievedThread was renamed to JsonErrorCode.OperationOnArchivedThread.",
             ReplaceWith("JsonErrorCode.OperationOnArchivedThread"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val OperationOnAchievedThread: JsonErrorCode = OperationOnArchivedThread
@@ -538,7 +539,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "JsonErrorCode.InvalidThreadSettings was removed because it was a duplicate of JsonErrorCode.InvalidThreadNotificationSettings.",
             ReplaceWith("JsonErrorCode.InvalidThreadNotificationSettings"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val InvalidThreadSettings: JsonErrorCode = InvalidThreadNotificationSettings
@@ -546,7 +547,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "JsonErrorCode.InvalidThreadBefore was removed because it was a duplicate of JsonErrorCode.BeforeValueBeforeThreadCreate.",
             ReplaceWith("JsonErrorCode.BeforeValueBeforeThreadCreate"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val InvalidThreadBefore: JsonErrorCode = BeforeValueBeforeThreadCreate
@@ -554,7 +555,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "'JsonErrorCode.CannotSendMessagesInVoiceChannel' was renamed to JsonErrorCode.CannotSendMessagesInNonTextChannel",
             ReplaceWith("JsonErrorCode.CannotSendMessagesInNonTextChannel"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val CannotSendMessagesInVoiceChannel: JsonErrorCode = CannotSendMessagesInNonTextChannel
@@ -562,7 +563,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "Object JsonErrorCode.JsonErrorCodeSerializer is internal now, use JsonErrorCode.serializer() instead.",
             ReplaceWith("JsonErrorCode.serializer()", "dev.kord.rest.json.JsonErrorCode"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val JsonErrorCodeSerializer: KSerializer<JsonErrorCode> = Serializer

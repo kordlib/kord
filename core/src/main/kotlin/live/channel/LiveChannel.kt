@@ -16,6 +16,7 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
 import kotlinx.coroutines.*
+import kotlin.DeprecationLevel.HIDDEN
 
 @KordPreview
 public fun Channel.live(
@@ -23,7 +24,7 @@ public fun Channel.live(
 ): LiveChannel = when (this) {
     is DmChannel -> this.live(coroutineScope)
     is NewsChannel -> this.live(coroutineScope)
-    is @Suppress("DEPRECATION") StoreChannel -> this.live(coroutineScope)
+    is @Suppress("DEPRECATION_ERROR") StoreChannel -> this.live(coroutineScope)
     is TextChannel -> this.live(coroutineScope)
     is VoiceChannel -> this.live(coroutineScope)
     else -> error("unsupported channel type")
@@ -88,7 +89,7 @@ public fun LiveChannel.onMessageDelete(scope: CoroutineScope = this, block: susp
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
     "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
-    level = DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveChannel.onChannelCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit): Job =
@@ -101,7 +102,7 @@ public fun LiveChannel.onChannelUpdate(scope: CoroutineScope = this, block: susp
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveChannel.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit): Job =
@@ -110,7 +111,7 @@ public fun LiveChannel.onChannelDelete(scope: CoroutineScope = this, block: susp
 @Deprecated(
     "The block is never called because the guild where the channel is located is already created",
     ReplaceWith("Kord.on<GuildCreateEvent>(block)"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveChannel.onGuildCreate(scope: CoroutineScope = this, block: suspend (GuildCreateEvent) -> Unit): Job =

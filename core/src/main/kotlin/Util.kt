@@ -368,7 +368,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelCreateEvent::class,
     NewsChannelCreateEvent::class,
     StageChannelCreateEvent::class,
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     StoreChannelCreateEvent::class,
     TextChannelCreateEvent::class,
     UnknownChannelCreateEvent::class,
@@ -379,7 +379,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelUpdateEvent::class,
     NewsChannelUpdateEvent::class,
     StageChannelUpdateEvent::class,
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     StoreChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
     UnknownChannelUpdateEvent::class,
@@ -390,7 +390,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelDeleteEvent::class,
     NewsChannelDeleteEvent::class,
     StageChannelDeleteEvent::class,
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     StoreChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
     UnknownChannelDeleteEvent::class,

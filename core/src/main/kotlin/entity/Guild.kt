@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import java.util.*
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 /**
@@ -142,7 +143,7 @@ public class Guild(
     @Deprecated(
         "Embed was renamed to widget.",
         ReplaceWith("widgetChannelId"),
-        DeprecationLevel.ERROR
+        level = HIDDEN,
     )
     public val embedChannelId: Snowflake? by ::widgetChannelId
 
@@ -157,8 +158,8 @@ public class Guild(
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(
         "Embed was renamed to widget.",
-        ReplaceWith("widgetChannelId"),
-        DeprecationLevel.ERROR
+        ReplaceWith("widgetChannel"),
+        level = HIDDEN,
     )
     public val embedChannel: TopGuildChannelBehavior? by ::widgetChannel
 

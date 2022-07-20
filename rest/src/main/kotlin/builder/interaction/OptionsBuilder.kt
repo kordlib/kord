@@ -139,10 +139,6 @@ public sealed class NumericOptionBuilder<T : Number>(
     )
 }
 
-
-@Deprecated("Replaced by IntegerOptionBuilder", ReplaceWith("IntegerOptionBuilder"), DeprecationLevel.ERROR)
-public typealias IntChoiceBuilder = IntegerOptionBuilder
-
 @KordDsl
 public class IntegerOptionBuilder(name: String, description: String) :
     NumericOptionBuilder<Long>(name, description, ApplicationCommandOptionType.Integer) {
@@ -152,9 +148,6 @@ public class IntegerOptionBuilder(name: String, description: String) :
         choices!!.add(Choice.IntChoice(name, nameLocalizations, value))
     }
 }
-
-@Deprecated("Replaced by NumberOptionBuilder", ReplaceWith("NumberOptionBuilder"), DeprecationLevel.ERROR)
-public typealias NumberChoiceBuilder = NumberOptionBuilder
 
 @KordDsl
 public class NumberOptionBuilder(name: String, description: String) :

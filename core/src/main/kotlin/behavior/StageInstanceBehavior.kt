@@ -12,6 +12,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.stage.StageInstanceModifyBuilder
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -22,8 +23,8 @@ public interface StageInstanceBehavior : KordEntity, Strategizable {
 
     public suspend fun delete(reason: String? = null): Unit = kord.rest.stageInstance.deleteStageInstance(channelId, reason)
 
-    @Suppress("DEPRECATION")
-    @Deprecated("Replaced by 'edit'.", ReplaceWith("this.edit {\nthis@edit.topic = topic\n}"))
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated("Replaced by 'edit'.", ReplaceWith("this.edit {\nthis@edit.topic = topic\n}"), level = ERROR)
     public suspend fun update(topic: String): StageInstance {
         val instance = kord.rest.stageInstance.updateStageInstance(channelId, dev.kord.rest.json.request.StageInstanceUpdateRequest(topic))
         val data = StageInstanceData.from(instance)

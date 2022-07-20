@@ -8,6 +8,7 @@ import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.Message
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * An instance of a Discord channel that can use messages.
@@ -30,7 +31,7 @@ public interface MessageChannel : Channel, MessageChannelBehavior {
     @Deprecated(
         "lastPinTimeStamp was renamed to lastPinTimestamp.",
         ReplaceWith("lastPinTimestamp"),
-        DeprecationLevel.ERROR,
+        level = HIDDEN,
     )
     public val lastPinTimeStamp: Instant?
         get() = lastPinTimestamp
