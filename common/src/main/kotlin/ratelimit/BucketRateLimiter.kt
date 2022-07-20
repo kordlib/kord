@@ -1,6 +1,7 @@
 package dev.kord.common.ratelimit
 
 import kotlinx.datetime.Clock
+import kotlin.DeprecationLevel.ERROR
 import kotlin.time.Duration
 
 
@@ -17,6 +18,7 @@ import kotlin.time.Duration
         "IntervalRateLimiter(limit = capacity, interval = refillInterval)",
         "dev.kord.common.ratelimit.IntervalRateLimiter",
     ),
+    level = ERROR,
 )
 public class BucketRateLimiter(
     capacity: Int,

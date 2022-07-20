@@ -17,6 +17,7 @@ import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import java.util.*
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -42,6 +43,7 @@ public interface MemberBehavior : KordEntity, UserBehavior {
         "Nickname mentions are deprecated and should be handled the same way as regular user mentions, " +
                 "see https://discord.com/developers/docs/reference#message-formatting-formats",
         ReplaceWith("this.mention"),
+        level = ERROR,
     )
     public val nicknameMention: String get() = "<@!$id>"
 
@@ -125,7 +127,7 @@ public interface MemberBehavior : KordEntity, UserBehavior {
     /**
      * Requests to get the [Presence] of this member in the [guild].
      *
-     * This property is not resolvable through REST and will always use the [KordCache] instead.
+     * This property is not resolvable through REST and will always use the [Kord.cache] instead.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Presence] wasn't present.
@@ -140,7 +142,7 @@ public interface MemberBehavior : KordEntity, UserBehavior {
      * Requests to get the [Presence] of this member in the [guild],
      * returns null if the [Presence] isn't present.
      *
-     * This property is not resolvable through REST and will always use the [KordCache] instead.
+     * This property is not resolvable through REST and will always use the [Kord.cache] instead.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -156,7 +158,7 @@ public interface MemberBehavior : KordEntity, UserBehavior {
     /**
      * Requests to get the [VoiceState] of this member in the [guild].
      *
-     * This property is not resolvable through REST and will always use the [KordCache] instead.
+     * This property is not resolvable through REST and will always use the [Kord.cache] instead.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [VoiceState] wasn't present.
@@ -171,7 +173,7 @@ public interface MemberBehavior : KordEntity, UserBehavior {
      * Requests to get the [VoiceState] of this member in the [guild],
      * returns null if the [VoiceState] isn't present.
      *
-     * This property is not resolvable through REST and will always use the [KordCache] instead.
+     * This property is not resolvable through REST and will always use the [Kord.cache] instead.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */

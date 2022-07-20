@@ -12,7 +12,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.time.Duration
 
 @KordDsl
@@ -207,7 +207,7 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     
     See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
     """,
-    level = WARNING,
+    level = ERROR,
 )
 public class StoreChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {

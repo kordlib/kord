@@ -9,6 +9,7 @@ import dev.kord.rest.json.request.StageInstanceModifyRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -58,10 +59,11 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
         return modifyStageInstance(channelId, appliedBuilder.toRequest(), appliedBuilder.reason)
     }
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "Replaced by 'modifyStageInstance'.",
         ReplaceWith("this.modifyStageInstance(channelId, request, reason)"),
+        level = ERROR,
     )
     public suspend fun updateStageInstance(
         channelId: Snowflake,
@@ -84,6 +86,7 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
 @Deprecated(
     "Replaced by builder overload.",
     ReplaceWith("this.createStageInstance(channelId, topic) {\nthis@createStageInstance.reason = reason\n}"),
+    level = ERROR,
 )
 public suspend fun StageInstanceService.createStageInstance(
     channelId: Snowflake,
@@ -93,12 +96,13 @@ public suspend fun StageInstanceService.createStageInstance(
     StageInstanceCreateRequest(channelId, topic), reason
 )
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "Replaced by 'modifyStageInstance'.",
     ReplaceWith(
         "this.modifyStageInstance(channelId) {\nthis@modifyStageInstance.topic = topic\nthis@modifyStageInstance.reason = reason\n}"
     ),
+    level = ERROR,
 )
 public suspend fun StageInstanceService.updateStageInstance(
     channelId: Snowflake,

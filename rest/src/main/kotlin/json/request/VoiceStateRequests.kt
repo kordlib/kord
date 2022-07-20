@@ -20,7 +20,7 @@ public data class CurrentVoiceStateModifyRequest(
     @Deprecated(
         "requestToSpeakTimeStamp was renamed to requestToSpeakTimestamp.",
         ReplaceWith("requestToSpeakTimestamp"),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     val requestToSpeakTimeStamp: Optional<String>
         get() = requestToSpeakTimestamp.map { it.toString() }.coerceToMissing()

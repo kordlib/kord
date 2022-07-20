@@ -50,7 +50,7 @@
             deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
                     "Discord and store channels were removed on March 10, 2022.\n\n" +
                     "See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.",
-            deprecationLevel = WARNING,
+            deprecationLevel = ERROR,
         ),
         Entry(
             "PublicNewsThread", intValue = 10,
@@ -93,6 +93,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.WARNING
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes

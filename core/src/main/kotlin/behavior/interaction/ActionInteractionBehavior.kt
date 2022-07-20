@@ -14,6 +14,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.request.RestRequestException
+import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -25,11 +27,11 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      *
      * Call [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "Renamed to 'deferEphemeralMessage'.",
         ReplaceWith("this.deferEphemeralMessage()"),
-        DeprecationLevel.ERROR,
+        level = HIDDEN,
     )
     public suspend fun acknowledgeEphemeral(): EphemeralMessageInteractionResponseBehavior = deferEphemeralMessage()
 
@@ -69,6 +71,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         See the documentation of this method for how it should be replaced.
         """,
         ReplaceWith("this.deferEphemeralResponse()"),
+        level = ERROR,
     )
     @OptIn(KordUnsafe::class)
     public suspend fun deferEphemeralMessage(): EphemeralMessageInteractionResponseBehavior =
@@ -111,11 +114,11 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      *
      * Call [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
      */
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "Renamed to 'deferPublicMessage'.",
         ReplaceWith("this.deferPublicMessage()"),
-        DeprecationLevel.ERROR,
+        level = HIDDEN,
     )
     public suspend fun acknowledgePublic(): PublicMessageInteractionResponseBehavior = deferPublicMessage()
 
@@ -155,6 +158,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         See the documentation of this method for how it should be replaced.
         """,
         ReplaceWith("this.deferPublicResponse()"),
+        level = ERROR,
     )
     @OptIn(KordUnsafe::class)
     public suspend fun deferPublicMessage(): PublicMessageInteractionResponseBehavior = deferPublicResponseUnsafe()
