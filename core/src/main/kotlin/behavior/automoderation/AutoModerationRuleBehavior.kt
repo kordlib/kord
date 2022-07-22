@@ -17,7 +17,7 @@ import java.util.Objects
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
-// TODO documentation, missing vals/funs, factory methods, creation from unsafe
+// TODO factory methods, creation from unsafe
 
 /** The behavior of an [AutoModerationRule]. */
 public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
@@ -30,6 +30,18 @@ public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
 
     /** The rule [trigger type][AutoModerationRuleTriggerType]. */
     public val triggerType: AutoModerationRuleTriggerType?
+
+    /**
+     * Requests to delete this [AutoModerationRule].
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @param reason the reason showing up in the audit log
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun delete(reason: String? = null) {
+        kord.rest.autoModeration.deleteAutoModerationRule(guildId, ruleId = id, reason)
+    }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationRuleBehavior
 }
