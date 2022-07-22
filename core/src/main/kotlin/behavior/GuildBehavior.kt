@@ -5,6 +5,7 @@ import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
+import dev.kord.common.entity.Permission.ManageGuild
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
@@ -56,7 +57,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.*
+import java.util.Objects
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
@@ -320,6 +321,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to edit this guild's [MFA level][MFALevel] and returns the updated level.
+     *
      * This requires guild ownership.
      *
      * @throws RestRequestException if something went wrong during the request.
@@ -1059,8 +1061,15 @@ public suspend fun GuildBehavior.createScheduledEvent(
     return GuildScheduledEvent(data, kord, supplier)
 }
 
-// TODO documentation
+// TODO list rules, get rule (via supplier)
 
+/**
+ * Requests to create a new [KeywordAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun GuildBehavior.createKeywordAutoModerationRule(
     name: String,
     eventType: AutoModerationRuleEventType = MessageSend,
@@ -1071,6 +1080,13 @@ public suspend inline fun GuildBehavior.createKeywordAutoModerationRule(
     return KeywordAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }
 
+/**
+ * Requests to create a new [HarmfulLinkAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun GuildBehavior.createHarmfulLinkAutoModerationRule(
     name: String,
     eventType: AutoModerationRuleEventType = MessageSend,
@@ -1081,6 +1097,13 @@ public suspend inline fun GuildBehavior.createHarmfulLinkAutoModerationRule(
     return HarmfulLinkAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }
 
+/**
+ * Requests to create a new [SpamAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun GuildBehavior.createSpamAutoModerationRule(
     name: String,
     eventType: AutoModerationRuleEventType = MessageSend,
@@ -1091,6 +1114,13 @@ public suspend inline fun GuildBehavior.createSpamAutoModerationRule(
     return SpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }
 
+/**
+ * Requests to create a new [KeywordPresetAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun GuildBehavior.createKeywordPresetAutoModerationRule(
     name: String,
     eventType: AutoModerationRuleEventType = MessageSend,

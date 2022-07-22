@@ -2,6 +2,7 @@ package dev.kord.core.behavior.automoderation
 
 import dev.kord.common.entity.AutoModerationRuleTriggerType
 import dev.kord.common.entity.AutoModerationRuleTriggerType.*
+import dev.kord.common.entity.Permission.ManageGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.AutoModerationRuleData
@@ -11,12 +12,14 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.automoderation.*
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.automoderation.*
+import dev.kord.rest.request.RestRequestException
 import java.util.Objects
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
 // TODO documentation, missing vals/funs, factory methods, creation from unsafe
 
+/** The behavior of an [AutoModerationRule]. */
 public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
 
     /** The ID of the [Guild] which this rule belongs to. */
@@ -36,6 +39,13 @@ internal infix fun AutoModerationRuleBehavior.autoModerationRuleIsEqualTo(other:
 
 internal fun AutoModerationRuleBehavior.hashAutoModerationRule() = Objects.hash(id, guildId)
 
+/**
+ * Requests to edit this [AutoModerationRule] and returns the edited rule.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun AutoModerationRuleBehavior.edit(
     builder: UntypedAutoModerationRuleModifyBuilder.() -> Unit,
 ): AutoModerationRule {
@@ -45,17 +55,26 @@ public suspend inline fun AutoModerationRuleBehavior.edit(
 }
 
 
+/** An [AutoModerationRuleBehavior] with a non-null [triggerType]. */
 public interface TypedAutoModerationRuleBehavior : AutoModerationRuleBehavior {
     override val triggerType: AutoModerationRuleTriggerType
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): TypedAutoModerationRuleBehavior
 }
 
 
+/** The behavior of a [KeywordAutoModerationRule]. */
 public interface KeywordAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
     override val triggerType: Keyword get() = Keyword
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): KeywordAutoModerationRuleBehavior
 }
 
+/**
+ * Requests to edit this [KeywordAutoModerationRule] and returns the edited rule.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun KeywordAutoModerationRuleBehavior.edit(
     builder: KeywordAutoModerationRuleModifyBuilder.() -> Unit,
 ): KeywordAutoModerationRule {
@@ -65,11 +84,19 @@ public suspend inline fun KeywordAutoModerationRuleBehavior.edit(
 }
 
 
+/** The behavior of a [HarmfulLinkAutoModerationRule]. */
 public interface HarmfulLinkAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
     override val triggerType: HarmfulLink get() = HarmfulLink
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): HarmfulLinkAutoModerationRuleBehavior
 }
 
+/**
+ * Requests to edit this [HarmfulLinkAutoModerationRule] and returns the edited rule.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun HarmfulLinkAutoModerationRuleBehavior.edit(
     builder: HarmfulLinkAutoModerationRuleModifyBuilder.() -> Unit,
 ): HarmfulLinkAutoModerationRule {
@@ -79,11 +106,19 @@ public suspend inline fun HarmfulLinkAutoModerationRuleBehavior.edit(
 }
 
 
+/** The behavior of a [SpamAutoModerationRule]. */
 public interface SpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
     override val triggerType: Spam get() = Spam
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): SpamAutoModerationRuleBehavior
 }
 
+/**
+ * Requests to edit this [SpamAutoModerationRule] and returns the edited rule.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun SpamAutoModerationRuleBehavior.edit(
     builder: SpamAutoModerationRuleModifyBuilder.() -> Unit,
 ): SpamAutoModerationRule {
@@ -93,11 +128,19 @@ public suspend inline fun SpamAutoModerationRuleBehavior.edit(
 }
 
 
+/** The behavior of a [KeywordPresetAutoModerationRule]. */
 public interface KeywordPresetAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
     override val triggerType: KeywordPreset get() = KeywordPreset
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): KeywordPresetAutoModerationRuleBehavior
 }
 
+/**
+ * Requests to edit this [KeywordPresetAutoModerationRule] and returns the edited rule.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
 public suspend inline fun KeywordPresetAutoModerationRuleBehavior.edit(
     builder: KeywordPresetAutoModerationRuleModifyBuilder.() -> Unit,
 ): KeywordPresetAutoModerationRule {
