@@ -85,6 +85,22 @@ public class VoiceConnection(
     }
 
     /**
+     * Sends a gateway command to update the connection in the current guild.
+     *
+     * @param channelId the id of the channel to move to.
+     * @param selfMute whether to self mute.
+     * @param selfDeaf whether to self deaf.
+     */
+    public suspend fun move(channelId: Snowflake, selfMute: Boolean = false, selfDeaf: Boolean = false) {
+        gateway.send(
+            UpdateVoiceStatus(
+                guildId = data.guildId,
+                channelId, selfMute, selfDeaf
+            )
+        )
+    }
+
+    /**
      * Disconnects from Discord voice servers, and leaves the voice channel.
      */
     public suspend fun leave() {
