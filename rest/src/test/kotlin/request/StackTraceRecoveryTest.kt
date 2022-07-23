@@ -40,11 +40,11 @@ class StackTraceRecoveryTest {
         } catch (e: Exception) {
             e.printStackTrace()
 
-            val initCause = e.cause ?: error("The thrown exception doesn't have a set cause! Is StackTrace Recovery enabled?")
-            initCause.printStackTrace()
+            val recovered = e.suppressedExceptions.first { it is RecoveredStackTrace }
+            recovered.printStackTrace()
 
-            //at dev.kord.rest.request.StackTraceRecoveryTest$test stack trace recovery$1.invokeSuspend(StackTraceRecoveryTest.kt:39)
-            with(initCause.stackTrace.first()) {
+            // at dev.kord.rest.request.StackTraceRecoveryTest$test stack trace recovery$1.invokeSuspend(StackTraceRecoveryTest.kt:39)
+            with(recovered.stackTrace.first()) {
                 assertEquals(stackTrace.className, className)
                 assertEquals(stackTrace.fileName, fileName)
                 assertEquals(stackTrace.lineNumber + 2, lineNumber) // +2 because capture is two lines deeper
