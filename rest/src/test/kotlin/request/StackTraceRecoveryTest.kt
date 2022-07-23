@@ -37,7 +37,7 @@ class StackTraceRecoveryTest {
         val stackTrace = Thread.currentThread().stackTrace[1] // 1st one would be Thread.run for some reason
         try {
             handler.handle(request)
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             e.printStackTrace()
 
             val recovered = e.suppressedExceptions.first { it is RecoveredStackTrace }

@@ -22,7 +22,7 @@ public class StackTraceRecoveringKtorRequestHandler(private val delegate: KtorRe
 
         return try {
             delegate.handle(request)
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             recoveredStackTrace.sanitizeStackTrace()
             e.addSuppressed(recoveredStackTrace)
             throw e
