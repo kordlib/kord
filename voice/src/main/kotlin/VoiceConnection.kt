@@ -16,6 +16,7 @@ import dev.kord.voice.udp.VoiceUdpSocket
 import kotlinx.coroutines.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.time.Duration
 
 /**
  * Data that represents a [VoiceConnection], these will never change during the lifetime of a [VoiceConnection].
@@ -54,13 +55,14 @@ public class VoiceConnection(
     public val frameInterceptor: FrameInterceptor,
     public val frameSender: AudioFrameSender,
     public val nonceStrategy: NonceStrategy,
+    connectionDetachDuration: Duration
 ) {
     public val scope: CoroutineScope =
         CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))
 
     init {
         with(scope) {
-            launch { VoiceUpdateEventHandler(gateway.events, this@VoiceConnection).start() }
+            launch { VoiceUpdateEventHandler(gateway.events, connectionDetachDuration, this@VoiceConnection).start() }
             launch { StreamsHandler(voiceGateway.events, streams).start() }
             launch { UdpLifeCycleHandler(voiceGateway.events, this@VoiceConnection).start() }
         }
