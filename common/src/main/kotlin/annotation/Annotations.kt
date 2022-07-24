@@ -1,11 +1,13 @@
 package dev.kord.common.annotation
 
+import kotlin.annotation.AnnotationRetention.RUNTIME
 import kotlin.annotation.AnnotationTarget.*
 
 /**
  * Dsl marker for Kord dsls.
  */
 @DslMarker
+@Retention(RUNTIME)
 @Target(CLASS)
 public annotation class KordDsl
 
@@ -72,5 +74,6 @@ public annotation class KordUnsafe
  * Marks the annotated declaration as deprecated since [version].
  */
 @MustBeDocumented
+@Retention(RUNTIME)
 @Target(CLASS, ANNOTATION_CLASS, PROPERTY, CONSTRUCTOR, FUNCTION, PROPERTY_GETTER, PROPERTY_SETTER, TYPEALIAS)
 public annotation class DeprecatedSinceKord(val version: String)
