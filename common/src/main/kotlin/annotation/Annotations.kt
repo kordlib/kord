@@ -20,7 +20,7 @@ public annotation class KordDsl
  * Features marked with this annotation will have its api evaluated and changed over time.
  */
 @MustBeDocumented
-@Retention(value = AnnotationRetention.BINARY)
+@Retention(RUNTIME)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
 public annotation class KordPreview
@@ -35,7 +35,7 @@ public annotation class KordPreview
  * and might not make it into the stable api.
  */
 @MustBeDocumented
-@Retention(value = AnnotationRetention.BINARY)
+@Retention(RUNTIME)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
 public annotation class KordExperimental
@@ -49,7 +49,7 @@ public annotation class KordExperimental
  * into the stable api.
  */
 @MustBeDocumented
-@Retention(value = AnnotationRetention.BINARY)
+@Retention(RUNTIME)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
 public annotation class KordVoice
@@ -65,7 +65,7 @@ public annotation class KordVoice
  * Functionality that is annotated with KordUnsafe should suggest a safer alternative approach in its documentation.
  */
 @MustBeDocumented
-@Retention(value = AnnotationRetention.BINARY)
+@Retention(RUNTIME)
 @RequiresOptIn(level = RequiresOptIn.Level.WARNING)
 @Target(CLASS, PROPERTY, FUNCTION, PROPERTY_SETTER, TYPEALIAS)
 public annotation class KordUnsafe
