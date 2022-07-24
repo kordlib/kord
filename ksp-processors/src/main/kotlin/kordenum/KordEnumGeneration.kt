@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.*
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import com.squareup.kotlinpoet.INT as INT_CLASS_NAME
+import com.squareup.kotlinpoet.SET as SET_CLASS_NAME
+import com.squareup.kotlinpoet.STRING as STRING_CLASS_NAME
 
 private val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
 
@@ -35,9 +38,9 @@ private val Entry.warningSuppressedName
         else -> name
     }
 
-private fun ValueType.toKClass() = when (this) {
-    INT -> Int::class
-    STRING -> String::class
+private fun ValueType.toClassName() = when (this) {
+    INT -> INT_CLASS_NAME
+    STRING -> STRING_CLASS_NAME
 }
 
 private fun ValueType.toEncodingPostfix() = when (this) {
@@ -56,12 +59,12 @@ private fun ValueType.toPrimitiveKind() = when (this) {
 }
 
 private fun ValuesPropertyType.toClassName() = when (this) {
-    NONE -> error("did not expect NONE")
-    SET -> ClassName("kotlin.collections", "Set")
+    NONE -> error("did not expect $this")
+    SET -> SET_CLASS_NAME
 }
 
 private fun ValuesPropertyType.toFromListConversion() = when (this) {
-    NONE -> error("did not expect NONE")
+    NONE -> error("did not expect $this")
     SET -> ".toSet()"
 }
 
@@ -69,7 +72,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 
     val packageName = originatingFile.packageName.asString()
     val enumName = ClassName(packageName, name)
-    val valueKClass = valueType.toKClass()
+    val valueTypeName = valueType.toClassName()
     val encodingPostfix = valueType.toEncodingPostfix()
     val valueFormat = valueType.toFormat()
 
@@ -86,15 +89,14 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
     }
 
-    return fileSpec(packageName, fileName = name) {
+    return FileSpec(packageName, fileName = name) {
         indent("    ")
-        addAnnotation<Suppress> {
-            addMember("%S, %S, %S", "UnusedImport", "RedundantVisibilityModifier", "IncorrectFormatting")
-        }
+        @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Suppress`
+        addAnnotation(Suppress("RedundantVisibilityModifier", "IncorrectFormatting", "ReplaceArrayOfWithLiteral"))
 
         // /** <kDoc> */
         // @Serializable(with = <enumName>.Serializer::class)
-        // public sealed class <enumName>(public val <valueName>: <valueKClass>)
+        // public sealed class <enumName>(public val <valueName>: <valueTypeName)
         addClass(enumName) {
 
             // for ksp incremental processing
@@ -106,9 +108,9 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
             addModifiers(PUBLIC, SEALED)
             primaryConstructor {
-                addParameter(valueName, valueKClass)
+                addParameter(valueName, valueTypeName)
             }
-            addProperty(valueName, valueKClass, PUBLIC) {
+            addProperty(valueName, valueTypeName, PUBLIC) {
                 initializer(valueName)
             }
 
@@ -129,12 +131,12 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 
 
             // /** An unknown [<enumName>]. */
-            // public class Unknown(<valueName>: <valueKClass>) : <enumName>(<valueName>)
+            // public class Unknown(<valueName>: <valueTypeName>) : <enumName>(<valueName>)
             addClass("Unknown") {
                 addKdoc("An unknown [%T].", enumName)
                 addModifiers(PUBLIC)
                 primaryConstructor {
-                    addParameter(valueName, valueKClass)
+                    addParameter(valueName, valueTypeName)
                 }
                 superclass(enumName)
                 addSuperclassConstructorParameter(valueName)
@@ -157,27 +159,13 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
 
             // /** <entry.kDoc> */
-            // @Deprecated(<entry.deprecationMessage>, <entry.replaceWith>, level = <entry.deprecationLevel>)
+            // @Deprecated(<entry.deprecationMessage>, <entry.replaceWith>, <entry.deprecationLevel>)
             // public object <entry.name> : <enumName>(<entry.value>)
             for (entry in deprecatedEntries) {
                 addObject(entry.name) {
                     entry(entry)
-                    addAnnotation<Deprecated> {
-                        addMember("%S", entry.deprecationMessage)
-
-                        // replacement if present
-                        entry.replaceWith?.let { replaceWith ->
-                            addMember("%L", annotationSpec<ReplaceWith> {
-                                addMember("%S", replaceWith.expression)
-                                val imports = replaceWith.imports
-                                if (imports.isNotEmpty()) {
-                                    addMember(imports.joinToString { "%S" }, *imports)
-                                }
-                            })
-                        }
-
-                        addMember("level·=·%M", entry.deprecationLevel.asMemberName())
-                    }
+                    @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
+                    addAnnotation(Deprecated(entry.deprecationMessage, entry.replaceWith, entry.deprecationLevel))
                 }
             }
 
@@ -209,12 +197,12 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 addFunction("deserialize") {
                     addModifiers(OVERRIDE)
                     addParameter<Decoder>("decoder")
-                    beginControlFlow("return when·(val·$valueName·=·decoder.decode$encodingPostfix())")
-                    for (entry in relevantEntriesForSerializerAndCompanion) {
-                        addStatement("$valueFormat·->·${entry.warningSuppressedName}", entry.value)
+                    withControlFlow("return when·(val·$valueName·=·decoder.decode$encodingPostfix())") {
+                        for (entry in relevantEntriesForSerializerAndCompanion) {
+                            addStatement("$valueFormat·->·${entry.warningSuppressedName}", entry.value)
+                        }
+                        addStatement("else·->·Unknown($valueName)")
                     }
-                    addStatement("else·->·Unknown($valueName)")
-                    endControlFlow()
                 }
             }
 
@@ -224,37 +212,36 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 addModifiers(PUBLIC)
 
                 // public val entries
-                addProperty("entries", List::class.asClassName().parameterizedBy(enumName), PUBLIC) {
+                addProperty("entries", LIST.parameterizedBy(enumName), PUBLIC) {
                     delegate {
-                        beginControlFlow("lazy(mode·=·%M)", PUBLICATION.asMemberName())
-                        addStatement("listOf(")
-                        withIndent {
-                            for (entry in relevantEntriesForSerializerAndCompanion) {
-                                addStatement("${entry.warningSuppressedName},")
+                        withControlFlow("lazy(mode·=·%M)", PUBLICATION.asMemberName()) {
+                            addStatement("listOf(")
+                            withIndent {
+                                for (entry in relevantEntriesForSerializerAndCompanion) {
+                                    addStatement("${entry.warningSuppressedName},")
+                                }
                             }
+                            addStatement(")")
                         }
-                        addStatement(")")
-                        endControlFlow()
                     }
                 }
 
-                // @Deprecated(
-                //     "Renamed to 'entries'.",
-                //     ReplaceWith("this.entries"),
-                //     level = <valuesPropertyDeprecationLevel>,
-                // )
-                // public val <entriesPropertyName>
+                // @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), <valuesPropertyDeprecationLevel>)
+                // public val <valuesPropertyName>
                 if (valuesPropertyName != null) {
                     addProperty(
                         valuesPropertyName,
                         valuesPropertyType.toClassName().parameterizedBy(enumName),
                         PUBLIC,
                     ) {
-                        addAnnotation<Deprecated> {
-                            addMember("%S", "Renamed to 'entries'.")
-                            addMember("ReplaceWith(%S)", "this.entries")
-                            addMember("level·=·%M", valuesPropertyDeprecationLevel.asMemberName())
-                        }
+                        @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
+                        addAnnotation(
+                            Deprecated(
+                                "Renamed to 'entries'.",
+                                ReplaceWith("this.entries", imports = emptyArray()),
+                                valuesPropertyDeprecationLevel,
+                            )
+                        )
                         getter {
                             addStatement("return entries${valuesPropertyType.toFromListConversion()}")
                         }

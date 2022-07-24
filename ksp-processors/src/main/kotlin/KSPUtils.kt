@@ -4,8 +4,8 @@ import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSAnnotation
 import kotlin.reflect.KProperty1
 
-internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation() =
-    getSymbolsWithAnnotation(A::class.qualifiedName!!)
+internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(inDepth: Boolean = false) =
+    getSymbolsWithAnnotation(A::class.qualifiedName!!, inDepth)
 
 internal inline fun <reified A : Annotation> KSAnnotation.isOfType() = shortName.asString() == A::class.simpleName!!
         && annotationType.resolve().declaration.qualifiedName?.asString() == A::class.qualifiedName!!

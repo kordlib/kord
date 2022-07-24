@@ -4,12 +4,12 @@ import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSAnnotation
 import com.google.devtools.ksp.symbol.KSType
 import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import dev.kord.ksp.argumentsToMap
 import dev.kord.ksp.get
 import dev.kord.ksp.kordenum.KordEnum.Entry
@@ -34,9 +34,9 @@ internal class KordEnum(
         val kDoc: String?,
         val value: Comparable<*>,
         val isDeprecated: Boolean,
-        val deprecationMessage: String = "",
-        val replaceWith: ReplaceWith? = null,
-        val deprecationLevel: DeprecationLevel = WARNING,
+        val deprecationMessage: String,
+        val replaceWith: ReplaceWith,
+        val deprecationLevel: DeprecationLevel,
     )
 }
 
@@ -76,8 +76,8 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
 
     return KordEnum(
         name, kDoc, valueType, valueName,
-        entries.map { it.toEntryOrNull(valueType, deprecated = false, logger) ?: return null },
-        deprecatedEntries.map { it.toEntryOrNull(valueType, deprecated = true, logger) ?: return null },
+        entries.map { it.toEntryOrNull(valueType, isDeprecated = false, logger) ?: return null },
+        deprecatedEntries.map { it.toEntryOrNull(valueType, isDeprecated = true, logger) ?: return null },
 
         valuesPropertyName, valuesPropertyType, valuesPropertyDeprecationLevel,
     )
@@ -104,7 +104,7 @@ private fun Any?.toValuesPropertyType() = when (val name = (this as KSType).decl
  *
  * Returns `null` if mapping fails.
  */
-private fun Any?.toEntryOrNull(valueType: ValueType, deprecated: Boolean, logger: KSPLogger): Entry? {
+private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logger: KSPLogger): Entry? {
     val args = (this as KSAnnotation).argumentsToMap()
 
     val name = args[GenerateKordEnum.Entry::name] as String
@@ -142,18 +142,11 @@ private fun Any?.toEntryOrNull(valueType: ValueType, deprecated: Boolean, logger
         }
     }
 
-    return if (deprecated) {
+    if (isDeprecated) {
         if (deprecationMessage.isBlank()) {
             logger.error("deprecationMessage is required", symbol = this)
             return null
         }
-
-        Entry(
-            name, kDoc, value, isDeprecated = true,
-            deprecationMessage,
-            replaceWith.takeIf { it.expression.isNotBlank() },
-            deprecationLevel,
-        )
     } else {
         if (deprecationMessage.isNotEmpty()) {
             logger.error("deprecationMessage is not allowed", symbol = this)
@@ -167,9 +160,9 @@ private fun Any?.toEntryOrNull(valueType: ValueType, deprecated: Boolean, logger
             logger.error("deprecationLevel is not allowed", symbol = this)
             return null
         }
-
-        Entry(name, kDoc, value, isDeprecated = false)
     }
+
+    return Entry(name, kDoc, value, isDeprecated, deprecationMessage, replaceWith, deprecationLevel)
 }
 
 /** Maps [KSAnnotation] to [ReplaceWith]. */

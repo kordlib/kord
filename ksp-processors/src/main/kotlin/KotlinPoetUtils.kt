@@ -2,15 +2,11 @@ package dev.kord.ksp
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.MemberName.Companion.member
-import kotlin.reflect.KClass
 
 // standalone
 
-internal inline fun fileSpec(packageName: String, fileName: String, builder: FileSpec.Builder.() -> Unit) =
+internal inline fun FileSpec(packageName: String, fileName: String, builder: FileSpec.Builder.() -> Unit) =
     FileSpec.builder(packageName, fileName).apply(builder).build()
-
-internal inline fun <reified A : Annotation> annotationSpec(builder: AnnotationSpec.Builder.() -> Unit) =
-    AnnotationSpec.builder(A::class).apply(builder).build()
 
 
 // FileSpec.Builder
@@ -18,26 +14,23 @@ internal inline fun <reified A : Annotation> annotationSpec(builder: AnnotationS
 internal inline fun FileSpec.Builder.addClass(className: ClassName, builder: TypeSpec.Builder.() -> Unit) =
     addType(TypeSpec.classBuilder(className).apply(builder).build())
 
-internal inline fun <reified A : Annotation> FileSpec.Builder.addAnnotation(
-    builder: AnnotationSpec.Builder.() -> Unit,
-) = addAnnotation(AnnotationSpec.builder(A::class).apply(builder).build())
+@DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
+internal fun FileSpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =
+    addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
 
 
 // TypeSpec.Builder
 
 internal inline fun <reified A : Annotation> TypeSpec.Builder.addAnnotation(
     builder: AnnotationSpec.Builder.() -> Unit,
-) = addAnnotation(AnnotationSpec.Companion.builder(A::class).apply(builder).build())
+) = addAnnotation(AnnotationSpec.builder(A::class).apply(builder).build())
+
+@DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
+internal fun TypeSpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =
+    addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
 
 internal inline fun TypeSpec.Builder.primaryConstructor(builder: FunSpec.Builder.() -> Unit) =
     primaryConstructor(FunSpec.constructorBuilder().apply(builder).build())
-
-internal inline fun TypeSpec.Builder.addProperty(
-    name: String,
-    type: KClass<*>,
-    vararg modifiers: KModifier,
-    builder: PropertySpec.Builder.() -> Unit,
-) = addProperty(PropertySpec.builder(name, type, *modifiers).apply(builder).build())
 
 internal inline fun <reified T> TypeSpec.Builder.addProperty(
     name: String,
@@ -69,7 +62,14 @@ internal inline fun TypeSpec.Builder.addCompanionObject(name: String? = null, bu
 
 internal inline fun <reified T> FunSpec.Builder.returns() = returns(typeNameOf<T>())
 
-internal inline fun <reified T> FunSpec.Builder.addParameter(name: String) = addParameter(name, typeNameOf<T>())
+internal inline fun <reified T> FunSpec.Builder.addParameter(name: String, vararg modifiers: KModifier) =
+    addParameter(name, typeNameOf<T>(), *modifiers)
+
+internal inline fun FunSpec.Builder.withControlFlow(
+    controlFlow: String,
+    vararg args: Any,
+    builder: FunSpec.Builder.() -> Unit,
+) = beginControlFlow(controlFlow, *args).apply(builder).endControlFlow()
 
 
 // PropertySpec.Builder
@@ -77,12 +77,21 @@ internal inline fun <reified T> FunSpec.Builder.addParameter(name: String) = add
 internal inline fun PropertySpec.Builder.delegate(builder: CodeBlock.Builder.() -> Unit) =
     delegate(CodeBlock.builder().apply(builder).build())
 
-internal inline fun <reified A : Annotation> PropertySpec.Builder.addAnnotation(
-    builder: AnnotationSpec.Builder.() -> Unit,
-) = addAnnotation(AnnotationSpec.builder(A::class).apply(builder).build())
+@DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
+internal fun PropertySpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =
+    addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
 
 internal inline fun PropertySpec.Builder.getter(builder: FunSpec.Builder.() -> Unit) =
     getter(FunSpec.getterBuilder().apply(builder).build())
+
+
+// CodeBlock.Builder
+
+internal inline fun CodeBlock.Builder.withControlFlow(
+    controlFlow: String,
+    vararg args: Any?,
+    builder: CodeBlock.Builder.() -> Unit,
+) = beginControlFlow(controlFlow, *args).apply(builder).endControlFlow()
 
 
 // other

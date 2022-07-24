@@ -1,17 +1,18 @@
-@file:Suppress("unused")
-
 package dev.kord.ksp
 
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
 import kotlin.DeprecationLevel.WARNING
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.FILE
-import dev.kord.ksp.GenerateKordEnum.ValueType.*
 
 /** Generate a kord enum in the same package as this file. */
-@Target(FILE)
-@Retention(SOURCE)
 @Repeatable
+@Retention(SOURCE)
+@Target(FILE)
 annotation class GenerateKordEnum(
     /** Name of the kord enum. */
     val name: String,
@@ -36,8 +37,8 @@ annotation class GenerateKordEnum(
     enum class ValueType { INT, STRING }
     enum class ValuesPropertyType { NONE, SET }
 
-    @Target()
     @Retention(SOURCE)
+    @Target() // only use as argument for `@GenerateKordEnum(...)`
     annotation class Entry(
         /** Name of the entry. */
         val name: String,
