@@ -12,6 +12,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.RequiresOptIn.Level
 import kotlin.annotation.AnnotationRetention.RUNTIME
+import kotlin.annotation.AnnotationTarget.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -21,6 +22,7 @@ import kotlin.contracts.contract
  * See [the official documentation](https://discord.com/developers/docs/topics/gateway#privileged-intents) for more info on
  * how to enable these.
  */
+@MustBeDocumented
 @RequiresOptIn(
     """
     Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without enabling them.
@@ -29,6 +31,7 @@ import kotlin.contracts.contract
 """, Level.ERROR
 )
 @Retention(RUNTIME)
+@Target(CLASS, PROPERTY, FUNCTION)
 public annotation class PrivilegedIntent
 
 /**
