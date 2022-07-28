@@ -13,6 +13,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.request.RestRequestException
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -64,7 +65,7 @@ public sealed interface InteractionResponseBehavior : KordObject, Strategizable 
         "dev.kord.core.behavior.interaction.response.FollowupPermittingInteractionResponseBehavior",
         "dev.kord.core.behavior.interaction.response.createPublicFollowup",
     ),
-    DeprecationLevel.ERROR,
+    level = HIDDEN,
 )
 public suspend inline fun InteractionResponseBehavior.followUp(builder: FollowupMessageCreateBuilder.() -> Unit): PublicFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -82,7 +83,7 @@ public suspend inline fun InteractionResponseBehavior.followUp(builder: Followup
         "dev.kord.core.behavior.interaction.response.FollowupPermittingInteractionResponseBehavior",
         "dev.kord.core.behavior.interaction.response.createEphemeralFollowup",
     ),
-    DeprecationLevel.ERROR,
+    level = HIDDEN,
 )
 public suspend inline fun InteractionResponseBehavior.followUpEphemeral(builder: FollowupMessageCreateBuilder.() -> Unit): EphemeralFollowupMessage {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }

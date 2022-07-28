@@ -5,6 +5,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ActivityData
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 
 public class Activity(public val data: ActivityData) {
 
@@ -14,7 +15,7 @@ public class Activity(public val data: ActivityData) {
     public val start: Instant? get() = data.timestamps.value?.start?.value
 
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("stop was renamed to end.", ReplaceWith("end"), DeprecationLevel.ERROR)
+    @Deprecated("stop was renamed to end.", ReplaceWith("end"), level = HIDDEN)
     public val stop: Instant? by ::end
 
     public val end: Instant? get() = data.timestamps.value?.end?.value
@@ -36,7 +37,7 @@ public class Activity(public val data: ActivityData) {
             )
         }
 
-    public val assets: Assets?
+    public val assets: Assets
         get() = Assets(
             data.assets.value?.largeImage?.value,
             data.assets.value?.largeText?.value,
@@ -44,7 +45,7 @@ public class Activity(public val data: ActivityData) {
             data.assets.value?.smallText?.value
         )
 
-    public val secrets: Secrets?
+    public val secrets: Secrets
         get() = Secrets(
             data.secrets.value?.join?.value,
             data.secrets.value?.join?.value,

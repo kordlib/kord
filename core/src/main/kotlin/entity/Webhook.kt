@@ -17,6 +17,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import java.util.*
+import kotlin.DeprecationLevel.HIDDEN
 
 public data class Webhook(
     val data: WebhookData,
@@ -49,7 +50,7 @@ public data class Webhook(
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = DeprecationLevel.ERROR)
+    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = HIDDEN)
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
 
     /**

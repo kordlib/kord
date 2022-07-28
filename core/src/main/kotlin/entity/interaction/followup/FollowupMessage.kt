@@ -8,13 +8,6 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.supplier.EntitySupplyStrategy
 
-@Deprecated(
-    "'InteractionFollowup' was renamed to 'FollowupMessage'.",
-    ReplaceWith("FollowupMessage", "dev.kord.core.entity.interaction.FollowupMessage"),
-    DeprecationLevel.ERROR,
-)
-public typealias InteractionFollowup = FollowupMessage
-
 /**
  * Holds the followup [Message] resulting from an interaction followup
  * and behaves on it through [FollowupMessageBehavior].

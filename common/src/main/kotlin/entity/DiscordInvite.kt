@@ -12,6 +12,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
 
 public sealed interface BaseDiscordInvite {
     public val code: String
@@ -39,9 +40,9 @@ public data class DiscordInvite(
     override val targetUser: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_application")
     override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     @SerialName("target_user_type")
-    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
     @SerialName("approximate_presence_count")
     override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_member_count")

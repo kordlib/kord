@@ -16,6 +16,7 @@ import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.json.Json
+import kotlin.DeprecationLevel.HIDDEN
 
 public sealed interface ResponseMapper<T> {
     public fun deserialize(json: Json, body: String): T
@@ -547,12 +548,12 @@ public sealed class Route<T>(
         Route<Unit>(HttpMethod.Post, "/guilds/$GuildId/integrations/$IntegrationId/sync", NoStrategy)
 
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetGet"), DeprecationLevel.ERROR)
+    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetGet"), level = HIDDEN)
     public object GuildEmbedGet :
         Route<Nothing>(HttpMethod.Get, "/guilds/$GuildId/embed", NothingSerializer)
 
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetPatch"), DeprecationLevel.ERROR)
+    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetPatch"), level = HIDDEN)
     public object GuildEmbedPatch :
         Route<Nothing>(HttpMethod.Patch, "/guilds/$GuildId/embed", NothingSerializer)
 

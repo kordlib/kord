@@ -16,6 +16,7 @@ import dev.kord.core.entity.interaction.followup.FollowupMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * [EntitySupplier] that delegates to another [EntitySupplier] to resolve entities.
@@ -30,7 +31,7 @@ public class StoreEntitySupplier(
     @Deprecated(
         "Parameter 'kord' is unused, use other constructor instead.",
         ReplaceWith("StoreEntitySupplier(supplier, cache)"),
-        DeprecationLevel.ERROR,
+        level = HIDDEN,
     )
     @Suppress("UNUSED_PARAMETER")
     public constructor(supplier: EntitySupplier, cache: DataCache, kord: Kord) : this(supplier, cache)

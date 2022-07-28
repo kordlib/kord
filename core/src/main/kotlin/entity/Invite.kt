@@ -16,6 +16,8 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 /**
@@ -80,8 +82,8 @@ public open class Invite(
     /**
      * The type of user target for this invite, if present.
      */
-    @Suppress("DEPRECATION")
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     public val targetUserType: dev.kord.common.entity.TargetUserType?
         get() = (data as? InviteData)?.targetUserType?.value
 
@@ -108,7 +110,7 @@ public open class Invite(
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Channel] wasn't present.
      */
-    @Deprecated("Use 'getChannelOrNull' instead.", ReplaceWith("this.getChannelOrNull()"), DeprecationLevel.ERROR)
+    @Deprecated("Use 'getChannelOrNull' instead.", ReplaceWith("this.getChannelOrNull()"), level = HIDDEN)
     public suspend fun getChannel(): Channel? = channelId?.let { supplier.getChannel(it) }
 
     /**
@@ -119,7 +121,7 @@ public open class Invite(
      */
     public suspend fun getChannelOrNull(): Channel? = channelId?.let { supplier.getChannelOrNull(it) }
 
-    @Deprecated("Renamed to 'getInviterOrNull'", ReplaceWith("this.getInviterOrNull()"), DeprecationLevel.ERROR)
+    @Deprecated("Renamed to 'getInviterOrNull'", ReplaceWith("this.getInviterOrNull()"), level = HIDDEN)
     public suspend fun getInviter(): User? = getInviterOrNull()
 
     /**
@@ -130,7 +132,7 @@ public open class Invite(
      */
     public suspend fun getInviterOrNull(): User? = inviterId?.let { supplier.getUserOrNull(it) }
 
-    @Deprecated("Renamed to 'getTargetUserOrNull'", ReplaceWith("this.getTargetUserOrNull()"), DeprecationLevel.ERROR)
+    @Deprecated("Renamed to 'getTargetUserOrNull'", ReplaceWith("this.getTargetUserOrNull()"), level = HIDDEN)
     public suspend fun getTargetUser(): User? = getTargetUserOrNull()
 
     /**

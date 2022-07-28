@@ -12,6 +12,7 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.*
+import kotlin.DeprecationLevel.HIDDEN
 
 @KordPreview
 public fun TopGuildMessageChannel.live(
@@ -27,7 +28,7 @@ public inline fun TopGuildMessageChannel.live(
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
     "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
-    level = DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveGuildMessageChannel.onCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit): Job =
@@ -40,7 +41,7 @@ public fun LiveGuildMessageChannel.onUpdate(scope: CoroutineScope = this, block:
 @Deprecated(
     "The block is not called when the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public inline fun LiveGuildMessageChannel.onShutDown(
@@ -55,7 +56,7 @@ public inline fun LiveGuildMessageChannel.onShutDown(
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveGuildMessageChannel.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit): Job =
@@ -64,7 +65,7 @@ public fun LiveGuildMessageChannel.onChannelDelete(scope: CoroutineScope = this,
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveGuildMessageChannel.onDelete(scope: CoroutineScope = this, block: suspend (GuildDeleteEvent) -> Unit): Job =

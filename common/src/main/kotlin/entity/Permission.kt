@@ -291,7 +291,7 @@ public sealed class Permission(public val code: DiscordBitSet) {
         @Deprecated(
             "Renamed to 'ManageEmojisAndStickers'.",
             ReplaceWith("Permission.ManageEmojisAndStickers", "dev.kord.common.entity.Permission"),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         public val ManageEmojis: ManageEmojisAndStickers
             get() = ManageEmojisAndStickers
@@ -299,7 +299,7 @@ public sealed class Permission(public val code: DiscordBitSet) {
         @Deprecated(
             "Renamed to 'UseApplicationCommands'.",
             ReplaceWith("Permission.UseApplicationCommands", "dev.kord.common.entity.Permission"),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         public val UseSlashCommands: UseApplicationCommands
             get() = UseApplicationCommands
