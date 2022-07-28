@@ -20,10 +20,12 @@ public sealed class AutoModerationRuleCreateBuilder(
 ) : TypedAutoModerationRuleBuilder, AuditRequestBuilder<AutoModerationRuleCreateRequest> {
     final override var reason: String? = null
 
+    /** @suppress */ // don't include in documentation, `name` is overridden to be `var`
     final override fun assignName(name: String) {
         this.name = name
     }
 
+    /** @suppress */ // don't include in documentation, `eventType` is overridden to be `var`
     final override fun assignEventType(eventType: AutoModerationRuleEventType) {
         this.eventType = eventType
     }
@@ -31,6 +33,8 @@ public sealed class AutoModerationRuleCreateBuilder(
     protected open fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> = Optional.Missing()
 
     final override var actions: MutableList<AutoModerationActionBuilder> = mutableListOf()
+
+    /** @suppress */ // don't include in documentation, `actions` is overridden to be `var`
     final override fun assignActions(actions: MutableList<AutoModerationActionBuilder>) {
         this.actions = actions
     }
@@ -63,6 +67,8 @@ public class KeywordAutoModerationRuleCreateBuilder(
 ) : AutoModerationRuleCreateBuilder(name, eventType), KeywordAutoModerationRuleBuilder {
 
     override var keywords: MutableList<String> = mutableListOf()
+
+    /** @suppress */ // don't include in documentation, `keywords` is overridden to be `var`
     override fun assignKeywords(keywords: MutableList<String>) {
         this.keywords = keywords
     }
@@ -90,6 +96,8 @@ public class KeywordPresetAutoModerationRuleCreateBuilder(
 ) : AutoModerationRuleCreateBuilder(name, eventType), KeywordPresetAutoModerationRuleBuilder {
 
     override var presets: MutableList<AutoModerationRuleKeywordPresetType> = mutableListOf()
+
+    /** @suppress */ // don't include in documentation, `presets` is overridden to be `var`
     override fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>) {
         this.presets = presets
     }
