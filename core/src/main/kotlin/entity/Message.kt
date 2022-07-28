@@ -1,6 +1,5 @@
 package dev.kord.core.entity
 
-import cache.data.MessageInteractionData
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.MessageType
@@ -15,6 +14,7 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
 import dev.kord.core.cache.data.MessageData
+import dev.kord.core.cache.data.MessageInteractionData
 import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
