@@ -16,7 +16,7 @@ tasks {
                 pom {
                     name.set(Library.name)
                     description.set(Library.description)
-                    url.set(Library.description)
+                    url.set(Library.projectUrl)
 
                     organization {
                         name.set("Kord")
