@@ -27,15 +27,16 @@ tasks {
         distributionType = ALL
     }
 
-    val dokkaOutputDir = "${rootProject.projectDir}/dokka"
+    val dokkaOutputDir = rootProject.projectDir.resolve("dokka")
 
     clean {
         delete(dokkaOutputDir)
     }
 
-    dokkaHtmlMultiModule.configure {
+    dokkaHtmlMultiModule {
         dependsOn(clean)
-        outputDirectory.set(file(dokkaOutputDir))
+        failOnWarning.set(true)
+        outputDirectory.set(dokkaOutputDir)
     }
 
     gitPublishReset {
