@@ -290,6 +290,7 @@ public class Message(
      */
     public val webhookId: Snowflake? get() = data.webhookId.value
 
+    /** @suppress */
     @Deprecated("Replaced with 'actionRows'.", ReplaceWith("this.actionRows"), level = ERROR)
     public val components: List<Component>
         get() = data.components.orEmpty().map { Component(it) }

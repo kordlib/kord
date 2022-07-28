@@ -435,6 +435,7 @@ public suspend inline fun ChannelService.patchStageVoiceChannel(
     return patchChannel(channelId, StageVoiceChannelModifyBuilder().apply(builder).toRequest())
 }
 
+/** @suppress */
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     """

@@ -3,22 +3,8 @@ package dev.kord.core
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.GlobalApplicationCommandBehavior
-import dev.kord.core.behavior.GuildApplicationCommandBehavior
-import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.GuildEmojiBehavior
-import dev.kord.core.behavior.GuildScheduledEventBehavior
-import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.MessageBehavior
-import dev.kord.core.behavior.RoleBehavior
-import dev.kord.core.behavior.StageInstanceBehavior
-import dev.kord.core.behavior.ThreadMemberBehavior
-import dev.kord.core.behavior.UserBehavior
-import dev.kord.core.behavior.WebhookBehavior
+import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.*
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
@@ -74,6 +60,7 @@ public class Unsafe(private val kord: Kord) {
     public fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
         VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
 
+    /** @suppress */
     @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         """

@@ -69,6 +69,8 @@ public class Snowflake : Comparable<Snowflake> {
 
     /**
      * A [String] representation of this Snowflake's [value].
+     *
+     * @suppress
      */
     @Deprecated("Use toString() instead", ReplaceWith("toString()"), level = ERROR)
     public val asString: String

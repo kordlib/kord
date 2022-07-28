@@ -7,11 +7,13 @@ import dev.kord.core.behavior.channel.StoreChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.*
+import java.util.Objects
 import kotlin.DeprecationLevel.ERROR
 
 /**
  * An instance of a Discord Store Channel associated to a guild.
+ *
+ * @suppress
  */
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
