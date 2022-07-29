@@ -10,6 +10,7 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
+import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -23,7 +24,7 @@ import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
 import dev.kord.rest.json.request.ListThreadsByTimestampRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
-import dev.kord.rest.service.*
+import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import kotlin.contracts.InvocationKind
@@ -41,19 +42,28 @@ import kotlin.math.min
  */
 public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
-    private inline val auditLog: AuditLogService get() = kord.rest.auditLog
-    private inline val channel: ChannelService get() = kord.rest.channel
-    private inline val emoji: EmojiService get() = kord.rest.emoji
-    private inline val guild: GuildService get() = kord.rest.guild
-    private inline val invite: InviteService get() = kord.rest.invite
-    private inline val user: UserService get() = kord.rest.user
-    private inline val voice: VoiceService get() = kord.rest.voice
-    private inline val webhook: WebhookService get() = kord.rest.webhook
-    private inline val application: ApplicationService get() = kord.rest.application
-    private inline val template: TemplateService get() = kord.rest.template
-    private inline val interaction: InteractionService get() = kord.rest.interaction
-    private inline val stageInstance: StageInstanceService get() = kord.rest.stageInstance
-    private inline val sticker: StickerService get() = kord.rest.sticker
+    // order like in docs:
+
+    // interactions
+    private inline val interaction get() = kord.rest.interaction
+
+    // resources
+    private inline val auditLog get() = kord.rest.auditLog
+    private inline val autoModeration get() = kord.rest.autoModeration
+    private inline val channel get() = kord.rest.channel
+    private inline val emoji get() = kord.rest.emoji
+    private inline val guild get() = kord.rest.guild
+    private inline val template get() = kord.rest.template
+    private inline val invite get() = kord.rest.invite
+    private inline val stageInstance get() = kord.rest.stageInstance
+    private inline val sticker get() = kord.rest.sticker
+    private inline val user get() = kord.rest.user
+    private inline val voice get() = kord.rest.voice
+    private inline val webhook get() = kord.rest.webhook
+
+    // topics
+    private inline val application get() = kord.rest.application
+
 
     // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
     override val guilds: Flow<Guild>
@@ -578,6 +588,22 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             emit(GuildSticker(data, kord))
         }
     }
+
+    override fun getAutoModerationRules(guildId: Snowflake): Flow<AutoModerationRule> = flow {
+        val responses = autoModeration.listAutoModerationRulesForGuild(guildId)
+
+        responses.forEach { response ->
+            val data = AutoModerationRuleData.from(response)
+            emit(AutoModerationRule(data, kord))
+        }
+    }
+
+    override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
+        catchNotFound {
+            val response = autoModeration.getAutoModerationRule(guildId, ruleId)
+            val data = AutoModerationRuleData.from(response)
+            AutoModerationRule(data, kord)
+        }
 
     override suspend fun getApplicationCommandPermissionsOrNull(
         applicationId: Snowflake,

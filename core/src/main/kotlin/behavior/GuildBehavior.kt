@@ -18,10 +18,7 @@ import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.application.GuildChatInputCommand
 import dev.kord.core.entity.application.GuildMessageCommand
 import dev.kord.core.entity.application.GuildUserCommand
-import dev.kord.core.entity.automoderation.HarmfulLinkAutoModerationRule
-import dev.kord.core.entity.automoderation.KeywordAutoModerationRule
-import dev.kord.core.entity.automoderation.KeywordPresetAutoModerationRule
-import dev.kord.core.entity.automoderation.SpamAutoModerationRule
+import dev.kord.core.entity.automoderation.*
 import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
@@ -622,6 +619,39 @@ public interface GuildBehavior : KordEntity, Strategizable {
     }
 
     /**
+     * Requests to get all [AutoModerationRule]s currently configured for this guild.
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public val autoModerationRules: Flow<AutoModerationRule>
+        get() = supplier.getAutoModerationRules(guildId = id)
+
+    /**
+     * Requests an [AutoModerationRule] by its [id][ruleId]. Returns `null` if it wasn't found.
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getAutoModerationRuleOrNull(ruleId: Snowflake): AutoModerationRule? =
+        supplier.getAutoModerationRuleOrNull(guildId = id, ruleId)
+
+    /**
+     * Requests an [AutoModerationRule] by its [id][ruleId].
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [AutoModerationRule] wasn't found.
+     */
+    public suspend fun getAutoModerationRule(ruleId: Snowflake): AutoModerationRule =
+        supplier.getAutoModerationRule(guildId = id, ruleId)
+
+
+    /**
      * Returns a new [GuildBehavior] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
@@ -1064,7 +1094,6 @@ public suspend fun GuildBehavior.createScheduledEvent(
     return GuildScheduledEvent(data, kord, supplier)
 }
 
-// TODO list rules, get rule (via supplier)
 
 /**
  * Requests to create a new [KeywordAutoModerationRule] in this guild and returns it.

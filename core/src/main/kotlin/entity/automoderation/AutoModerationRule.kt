@@ -90,7 +90,7 @@ public sealed class AutoModerationRule(
 internal fun AutoModerationRule(
     data: AutoModerationRuleData,
     kord: Kord,
-    supplier: EntitySupplier,
+    supplier: EntitySupplier = kord.defaultSupplier,
 ): AutoModerationRule = when (data.triggerType) {
     Keyword -> KeywordAutoModerationRule(data, kord, supplier)
     HarmfulLink -> HarmfulLinkAutoModerationRule(data, kord, supplier)

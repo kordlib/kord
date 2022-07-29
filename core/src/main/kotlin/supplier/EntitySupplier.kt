@@ -7,6 +7,7 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
+import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildChannel
@@ -609,6 +610,12 @@ public interface EntitySupplier {
     public fun getNitroStickerPacks(): Flow<StickerPack>
 
     public fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker>
+
+    public fun getAutoModerationRules(guildId: Snowflake): Flow<AutoModerationRule>
+    public suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule?
+    public suspend fun getAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule =
+        getAutoModerationRuleOrNull(guildId, ruleId)
+            ?: EntityNotFoundException.autoModerationRuleNotFound(guildId, ruleId)
 }
 
 
