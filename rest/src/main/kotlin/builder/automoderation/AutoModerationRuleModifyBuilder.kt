@@ -16,7 +16,7 @@ public sealed class AutoModerationRuleModifyBuilder :
     private var _name: Optional<String> = Optional.Missing()
     final override var name: String? by ::_name.delegate()
 
-    /** @suppress */ // don't include in documentation, `name` is overridden to be `var`
+    /** @suppress Use `this.name = name` instead. */
     final override fun assignName(name: String) {
         this.name = name
     }
@@ -24,7 +24,7 @@ public sealed class AutoModerationRuleModifyBuilder :
     private var _eventType: Optional<AutoModerationRuleEventType> = Optional.Missing()
     final override var eventType: AutoModerationRuleEventType? by ::_eventType.delegate()
 
-    /** @suppress */ // don't include in documentation, `eventType` is overridden to be `var`
+    /** @suppress Use `this.eventType = eventType` instead. */
     final override fun assignEventType(eventType: AutoModerationRuleEventType) {
         this.eventType = eventType
     }
@@ -34,7 +34,7 @@ public sealed class AutoModerationRuleModifyBuilder :
     private var _actions: Optional<MutableList<AutoModerationActionBuilder>> = Optional.Missing()
     final override var actions: MutableList<AutoModerationActionBuilder>? by ::_actions.delegate()
 
-    /** @suppress */ // don't include in documentation, `actions` is overridden to be `var`
+    /** @suppress Use `this.actions = actions` instead. */
     final override fun assignActions(actions: MutableList<AutoModerationActionBuilder>) {
         this.actions = actions
     }
@@ -77,7 +77,7 @@ public class KeywordAutoModerationRuleModifyBuilder :
     private var _keywords: Optional<MutableList<String>> = Optional.Missing()
     override var keywords: MutableList<String>? by ::_keywords.delegate()
 
-    /** @suppress */ // don't include in documentation, `keywords` is overridden to be `var`
+    /** @suppress Use `this.keywords = keywords` instead. */
     override fun assignKeywords(keywords: MutableList<String>) {
         this.keywords = keywords
     }
@@ -106,7 +106,7 @@ public class KeywordPresetAutoModerationRuleModifyBuilder :
     private var _presets: Optional<MutableList<AutoModerationRuleKeywordPresetType>> = Optional.Missing()
     override var presets: MutableList<AutoModerationRuleKeywordPresetType>? by ::_presets.delegate()
 
-    /** @suppress */ // don't include in documentation, `presets` is overridden to be `var`
+    /** @suppress Use `this.presets = presets` instead. */
     override fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>) {
         this.presets = presets
     }
