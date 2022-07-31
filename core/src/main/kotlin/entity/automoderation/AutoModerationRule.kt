@@ -80,10 +80,25 @@ public sealed class AutoModerationRule(
     public val exemptChannels: List<GuildChannelBehavior>
         get() = data.exemptChannels.map { GuildChannelBehavior(guildId, id = it, kord) }
 
+    /**
+     * Returns `this`.
+     *
+     * @suppress There is no need to call this function. Use `this` directly instead.
+     */
+    abstract override suspend fun asAutoModerationRuleOrNull(): AutoModerationRule
+
+    /**
+     * Returns `this`.
+     *
+     * @suppress There is no need to call this function. Use `this` directly instead.
+     */
+    abstract override suspend fun asAutoModerationRule(): AutoModerationRule
+
     abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationRule
 
     final override fun equals(other: Any?): Boolean = this autoModerationRuleIsEqualTo other
     final override fun hashCode(): Int = hashAutoModerationRule()
+    abstract override fun toString(): String
 }
 
 @PublishedApi
@@ -113,6 +128,9 @@ public class KeywordAutoModerationRule(data: AutoModerationRuleData, kord: Kord,
      */
     public val keywords: List<String> get() = data.triggerMetadata.keywordFilter.orEmpty()
 
+    override suspend fun asAutoModerationRuleOrNull(): KeywordAutoModerationRule = this
+    override suspend fun asAutoModerationRule(): KeywordAutoModerationRule = this
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): KeywordAutoModerationRule =
         KeywordAutoModerationRule(data, kord, strategy.supply(kord))
 
@@ -124,6 +142,9 @@ public class HarmfulLinkAutoModerationRule(data: AutoModerationRuleData, kord: K
     AutoModerationRule(data, kord, supplier, expectedTriggerType = HarmfulLink),
     HarmfulLinkAutoModerationRuleBehavior {
 
+    override suspend fun asAutoModerationRuleOrNull(): HarmfulLinkAutoModerationRule = this
+    override suspend fun asAutoModerationRule(): HarmfulLinkAutoModerationRule = this
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): HarmfulLinkAutoModerationRule =
         HarmfulLinkAutoModerationRule(data, kord, strategy.supply(kord))
 
@@ -134,6 +155,9 @@ public class HarmfulLinkAutoModerationRule(data: AutoModerationRuleData, kord: K
 public class SpamAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = Spam),
     SpamAutoModerationRuleBehavior {
+
+    override suspend fun asAutoModerationRuleOrNull(): SpamAutoModerationRule = this
+    override suspend fun asAutoModerationRule(): SpamAutoModerationRule = this
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): SpamAutoModerationRule =
         SpamAutoModerationRule(data, kord, strategy.supply(kord))
@@ -156,6 +180,9 @@ public class KeywordPresetAutoModerationRule(data: AutoModerationRuleData, kord:
      */
     public val allowList: List<String> get() = data.triggerMetadata.allowList.orEmpty()
 
+    override suspend fun asAutoModerationRuleOrNull(): KeywordPresetAutoModerationRule = this
+    override suspend fun asAutoModerationRule(): KeywordPresetAutoModerationRule = this
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): KeywordPresetAutoModerationRule =
         KeywordPresetAutoModerationRule(data, kord, strategy.supply(kord))
 
@@ -167,6 +194,9 @@ public class UnknownAutoModerationRule(data: AutoModerationRuleData, kord: Kord,
     AutoModerationRule(data, kord, supplier, expectedTriggerType = null) {
 
     override val triggerType: Unknown get() = data.triggerType as Unknown
+
+    override suspend fun asAutoModerationRuleOrNull(): UnknownAutoModerationRule = this
+    override suspend fun asAutoModerationRule(): UnknownAutoModerationRule = this
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): UnknownAutoModerationRule =
         UnknownAutoModerationRule(data, kord, strategy.supply(kord))

@@ -4,12 +4,14 @@ import dev.kord.common.entity.AutoModerationRuleTriggerType
 import dev.kord.common.entity.AutoModerationRuleTriggerType.*
 import dev.kord.common.entity.Permission.ManageGuild
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.AutoModerationRuleData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.automoderation.*
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.request.RestRequestException
@@ -30,6 +32,22 @@ public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
 
     /** The rule [trigger type][AutoModerationRuleTriggerType]. */
     public val triggerType: AutoModerationRuleTriggerType?
+
+    /**
+     * Requests to get this behavior as an [AutoModerationRule]. Returns `null` if it wasn't found.
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    public suspend fun asAutoModerationRuleOrNull(): AutoModerationRule? =
+        supplier.getAutoModerationRuleOrNull(guildId, ruleId = id)
+
+    /**
+     * Requests to get this behavior as an [AutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [AutoModerationRule] wasn't found.
+     */
+    public suspend fun asAutoModerationRule(): AutoModerationRule = supplier.getAutoModerationRule(guildId, ruleId = id)
 
     /**
      * Requests to delete this [AutoModerationRule].
@@ -76,7 +94,28 @@ public interface TypedAutoModerationRuleBehavior : AutoModerationRuleBehavior {
 
 /** The behavior of a [KeywordAutoModerationRule]. */
 public interface KeywordAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
+
     override val triggerType: Keyword get() = Keyword
+
+    /**
+     * Requests to get this behavior as a [KeywordAutoModerationRule].
+     * Returns `null` if it wasn't found or if the rule isn't a [KeywordAutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    override suspend fun asAutoModerationRuleOrNull(): KeywordAutoModerationRule? =
+        super.asAutoModerationRuleOrNull() as? KeywordAutoModerationRule
+
+    /**
+     * Requests to get this behavior as a [KeywordAutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [KeywordAutoModerationRule] wasn't found.
+     * @throws ClassCastException if the rule isn't a [KeywordAutoModerationRule].
+     */
+    override suspend fun asAutoModerationRule(): KeywordAutoModerationRule =
+        super.asAutoModerationRule() as KeywordAutoModerationRule
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): KeywordAutoModerationRuleBehavior
 }
 
@@ -98,7 +137,28 @@ public suspend inline fun KeywordAutoModerationRuleBehavior.edit(
 
 /** The behavior of a [HarmfulLinkAutoModerationRule]. */
 public interface HarmfulLinkAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
+
     override val triggerType: HarmfulLink get() = HarmfulLink
+
+    /**
+     * Requests to get this behavior as a [HarmfulLinkAutoModerationRule].
+     * Returns `null` if it wasn't found or if the rule isn't a [HarmfulLinkAutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    override suspend fun asAutoModerationRuleOrNull(): HarmfulLinkAutoModerationRule? =
+        super.asAutoModerationRuleOrNull() as? HarmfulLinkAutoModerationRule
+
+    /**
+     * Requests to get this behavior as a [HarmfulLinkAutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [HarmfulLinkAutoModerationRule] wasn't found.
+     * @throws ClassCastException if the rule isn't a [HarmfulLinkAutoModerationRule].
+     */
+    override suspend fun asAutoModerationRule(): HarmfulLinkAutoModerationRule =
+        super.asAutoModerationRule() as HarmfulLinkAutoModerationRule
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): HarmfulLinkAutoModerationRuleBehavior
 }
 
@@ -120,7 +180,28 @@ public suspend inline fun HarmfulLinkAutoModerationRuleBehavior.edit(
 
 /** The behavior of a [SpamAutoModerationRule]. */
 public interface SpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
+
     override val triggerType: Spam get() = Spam
+
+    /**
+     * Requests to get this behavior as a [SpamAutoModerationRule].
+     * Returns `null` if it wasn't found or if the rule isn't a [SpamAutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    override suspend fun asAutoModerationRuleOrNull(): SpamAutoModerationRule? =
+        super.asAutoModerationRuleOrNull() as? SpamAutoModerationRule
+
+    /**
+     * Requests to get this behavior as a [SpamAutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [SpamAutoModerationRule] wasn't found.
+     * @throws ClassCastException if the rule isn't a [SpamAutoModerationRule].
+     */
+    override suspend fun asAutoModerationRule(): SpamAutoModerationRule =
+        super.asAutoModerationRule() as SpamAutoModerationRule
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): SpamAutoModerationRuleBehavior
 }
 
@@ -142,7 +223,28 @@ public suspend inline fun SpamAutoModerationRuleBehavior.edit(
 
 /** The behavior of a [KeywordPresetAutoModerationRule]. */
 public interface KeywordPresetAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
+
     override val triggerType: KeywordPreset get() = KeywordPreset
+
+    /**
+     * Requests to get this behavior as a [KeywordPresetAutoModerationRule].
+     * Returns `null` if it wasn't found or if the rule isn't a [KeywordPresetAutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    override suspend fun asAutoModerationRuleOrNull(): KeywordPresetAutoModerationRule? =
+        super.asAutoModerationRuleOrNull() as? KeywordPresetAutoModerationRule
+
+    /**
+     * Requests to get this behavior as a [KeywordPresetAutoModerationRule].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [KeywordPresetAutoModerationRule] wasn't found.
+     * @throws ClassCastException if the rule isn't a [KeywordPresetAutoModerationRule].
+     */
+    override suspend fun asAutoModerationRule(): KeywordPresetAutoModerationRule =
+        super.asAutoModerationRule() as KeywordPresetAutoModerationRule
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): KeywordPresetAutoModerationRuleBehavior
 }
 
