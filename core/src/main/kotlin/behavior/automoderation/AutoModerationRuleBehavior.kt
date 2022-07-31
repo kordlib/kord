@@ -50,6 +50,21 @@ public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
     public suspend fun asAutoModerationRule(): AutoModerationRule = supplier.getAutoModerationRule(guildId, ruleId = id)
 
     /**
+     * Requests to get the [Guild] which this rule belongs to. Returns `null` if it wasn't found.
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
+
+    /**
+     * Requests to get the [Guild] which this rule belongs to.
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the [Guild] wasn't found.
+     */
+    public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
+
+    /**
      * Requests to delete this [AutoModerationRule].
      *
      * This requires the [ManageGuild] permission.
@@ -64,10 +79,10 @@ public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationRuleBehavior
 }
 
-internal infix fun AutoModerationRuleBehavior.autoModerationRuleIsEqualTo(other: Any?) =
+internal fun AutoModerationRuleBehavior.autoModerationRuleEquals(other: Any?) =
     this === other || (other is AutoModerationRuleBehavior && this.id == other.id && this.guildId == other.guildId)
 
-internal fun AutoModerationRuleBehavior.hashAutoModerationRule() = Objects.hash(id, guildId)
+internal fun AutoModerationRuleBehavior.autoModerationRuleHashCode() = Objects.hash(id, guildId)
 
 /**
  * Requests to edit this [AutoModerationRule] and returns the edited rule.

@@ -96,8 +96,8 @@ public sealed class AutoModerationRule(
 
     abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationRule
 
-    final override fun equals(other: Any?): Boolean = this autoModerationRuleIsEqualTo other
-    final override fun hashCode(): Int = hashAutoModerationRule()
+    final override fun equals(other: Any?): Boolean = autoModerationRuleEquals(other)
+    final override fun hashCode(): Int = autoModerationRuleHashCode()
     abstract override fun toString(): String
 }
 
