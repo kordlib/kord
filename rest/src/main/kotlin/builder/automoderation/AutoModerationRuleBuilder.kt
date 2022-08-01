@@ -48,18 +48,8 @@ public sealed interface AutoModerationRuleBuilder : AuditBuilder {
     /** The IDs of the roles that should not be affected by the rule. */
     public var exemptRoles: MutableList<Snowflake>?
 
-    /** Exempt a [role][roleId] from being affected by the rule. */
-    public fun exemptRole(roleId: Snowflake) {
-        exemptRoles?.add(roleId) ?: run { exemptRoles = mutableListOf(roleId) }
-    }
-
     /** The IDs of the channels that should not be affected by the rule. */
     public var exemptChannels: MutableList<Snowflake>?
-
-    /** Exempt a [channel][channelId] from being affected by the rule. */
-    public fun exemptChannel(channelId: Snowflake) {
-        exemptChannels?.add(channelId) ?: run { exemptChannels = mutableListOf(channelId) }
-    }
 }
 
 /** Add a [BlockMessage] action which will execute whenever the rule is triggered. */
@@ -85,12 +75,24 @@ public inline fun AutoModerationRuleBuilder.sendAlertMessage(
     actions?.add(action) ?: assignActions(mutableListOf(action))
 }
 
+/** Exempt a [role][roleId] from being affected by the rule. */
+public fun AutoModerationRuleBuilder.exemptRole(roleId: Snowflake) {
+    exemptRoles?.add(roleId) ?: run { exemptRoles = mutableListOf(roleId) }
+}
+
+/** Exempt a [channel][channelId] from being affected by the rule. */
+public fun AutoModerationRuleBuilder.exemptChannel(channelId: Snowflake) {
+    exemptChannels?.add(channelId) ?: run { exemptChannels = mutableListOf(channelId) }
+}
+
+
 @KordDsl
 public sealed interface TypedAutoModerationRuleBuilder : AutoModerationRuleBuilder {
 
     /** The rule [trigger type][AutoModerationRuleTriggerType]. */
     override val triggerType: AutoModerationRuleTriggerType
 }
+
 
 @KordDsl
 public sealed interface KeywordAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
@@ -108,17 +110,33 @@ public sealed interface KeywordAutoModerationRuleBuilder : TypedAutoModerationRu
 
     /** Use this to set [keywords][KeywordAutoModerationRuleBuilder.keywords] for [KeywordAutoModerationRuleBuilder]. */
     public fun assignKeywords(keywords: MutableList<String>)
+}
 
-    /**
-     * Add a [keyword] to [keywords].
-     *
-     * A keyword can be a phrase which contains multiple words. Wildcard symbols can be used to customize how each
-     * keyword will be matched. See
-     * [keyword matching strategies](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies).
-     */
-    public fun keyword(keyword: String) {
-        keywords?.add(keyword) ?: assignKeywords(mutableListOf(keyword))
-    }
+/**
+ * Add a [Timeout] action which will execute whenever the rule is triggered.
+ *
+ * The [ModerateMembers] permission is required to use this action.
+ *
+ * @param duration the timeout duration.
+ */
+public inline fun KeywordAutoModerationRuleBuilder.timeout(
+    duration: Duration,
+    builder: TimeoutAutoModerationActionBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val action = TimeoutAutoModerationActionBuilder(duration).apply(builder)
+    actions?.add(action) ?: assignActions(mutableListOf(action))
+}
+
+/**
+ * Add a [keyword] to [keywords][KeywordAutoModerationRuleBuilder.keywords].
+ *
+ * A keyword can be a phrase which contains multiple words. Wildcard symbols can be used to customize how each
+ * keyword will be matched. See
+ * [keyword matching strategies](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies).
+ */
+public fun KeywordAutoModerationRuleBuilder.keyword(keyword: String) {
+    keywords?.add(keyword) ?: assignKeywords(mutableListOf(keyword))
 }
 
 /**
@@ -154,31 +172,18 @@ public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
     keyword("*$keyword*")
 }
 
-/**
- * Add a [Timeout] action which will execute whenever the rule is triggered.
- *
- * The [ModerateMembers] permission is required to use this action.
- *
- * @param duration the timeout duration.
- */
-public inline fun KeywordAutoModerationRuleBuilder.timeout(
-    duration: Duration,
-    builder: TimeoutAutoModerationActionBuilder.() -> Unit = {},
-) {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    val action = TimeoutAutoModerationActionBuilder(duration).apply(builder)
-    actions?.add(action) ?: assignActions(mutableListOf(action))
-}
 
 @KordDsl
 public sealed interface HarmfulLinkAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
     override val triggerType: HarmfulLink get() = HarmfulLink
 }
 
+
 @KordDsl
 public sealed interface SpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
     override val triggerType: Spam get() = Spam
 }
+
 
 @KordDsl
 public sealed interface KeywordPresetAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
@@ -194,24 +199,24 @@ public sealed interface KeywordPresetAutoModerationRuleBuilder : TypedAutoModera
      */
     public fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>)
 
-    /** Add a [preset] to [presets]. */
-    public fun preset(preset: AutoModerationRuleKeywordPresetType) {
-        presets?.add(preset) ?: assignPresets(mutableListOf(preset))
-    }
-
     /**
      * Substrings which will be exempt from triggering the [presets].
      *
      * A keyword can be a phrase which contains multiple words.
      */
     public var allowList: MutableList<String>?
+}
 
-    /**
-     * Add a [keyword] to [allowList].
-     *
-     * A keyword can be a phrase which contains multiple words.
-     */
-    public fun allow(keyword: String) {
-        allowList?.add(keyword) ?: run { allowList = mutableListOf(keyword) }
-    }
+/** Add a [preset] to [presets][KeywordPresetAutoModerationRuleBuilder.presets]. */
+public fun KeywordPresetAutoModerationRuleBuilder.preset(preset: AutoModerationRuleKeywordPresetType) {
+    presets?.add(preset) ?: assignPresets(mutableListOf(preset))
+}
+
+/**
+ * Add a [keyword] to [allowList][KeywordPresetAutoModerationRuleBuilder.allowList].
+ *
+ * A keyword can be a phrase which contains multiple words.
+ */
+public fun KeywordPresetAutoModerationRuleBuilder.allow(keyword: String) {
+    allowList?.add(keyword) ?: run { allowList = mutableListOf(keyword) }
 }
