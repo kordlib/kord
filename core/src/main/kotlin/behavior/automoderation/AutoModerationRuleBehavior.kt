@@ -36,6 +36,8 @@ public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
     /**
      * Requests to get this behavior as an [AutoModerationRule]. Returns `null` if it wasn't found.
      *
+     * This requires the [ManageGuild] permission.
+     *
      * @throws RequestException if anything went wrong during the request.
      */
     public suspend fun asAutoModerationRuleOrNull(): AutoModerationRule? =
@@ -43,6 +45,8 @@ public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to get this behavior as an [AutoModerationRule].
+     *
+     * This requires the [ManageGuild] permission.
      *
      * @throws RequestException if anything went wrong during the request.
      * @throws EntityNotFoundException if the [AutoModerationRule] wasn't found.
@@ -116,6 +120,8 @@ public interface KeywordAutoModerationRuleBehavior : TypedAutoModerationRuleBeha
      * Requests to get this behavior as a [KeywordAutoModerationRule].
      * Returns `null` if it wasn't found or if the rule isn't a [KeywordAutoModerationRule].
      *
+     * This requires the [ManageGuild] permission.
+     *
      * @throws RequestException if anything went wrong during the request.
      */
     override suspend fun asAutoModerationRuleOrNull(): KeywordAutoModerationRule? =
@@ -123,6 +129,8 @@ public interface KeywordAutoModerationRuleBehavior : TypedAutoModerationRuleBeha
 
     /**
      * Requests to get this behavior as a [KeywordAutoModerationRule].
+     *
+     * This requires the [ManageGuild] permission.
      *
      * @throws RequestException if anything went wrong during the request.
      * @throws EntityNotFoundException if the [KeywordAutoModerationRule] wasn't found.
@@ -159,6 +167,8 @@ public interface HarmfulLinkAutoModerationRuleBehavior : TypedAutoModerationRule
      * Requests to get this behavior as a [HarmfulLinkAutoModerationRule].
      * Returns `null` if it wasn't found or if the rule isn't a [HarmfulLinkAutoModerationRule].
      *
+     * This requires the [ManageGuild] permission.
+     *
      * @throws RequestException if anything went wrong during the request.
      */
     override suspend fun asAutoModerationRuleOrNull(): HarmfulLinkAutoModerationRule? =
@@ -166,6 +176,8 @@ public interface HarmfulLinkAutoModerationRuleBehavior : TypedAutoModerationRule
 
     /**
      * Requests to get this behavior as a [HarmfulLinkAutoModerationRule].
+     *
+     * This requires the [ManageGuild] permission.
      *
      * @throws RequestException if anything went wrong during the request.
      * @throws EntityNotFoundException if the [HarmfulLinkAutoModerationRule] wasn't found.
@@ -202,6 +214,8 @@ public interface SpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavio
      * Requests to get this behavior as a [SpamAutoModerationRule].
      * Returns `null` if it wasn't found or if the rule isn't a [SpamAutoModerationRule].
      *
+     * This requires the [ManageGuild] permission.
+     *
      * @throws RequestException if anything went wrong during the request.
      */
     override suspend fun asAutoModerationRuleOrNull(): SpamAutoModerationRule? =
@@ -209,6 +223,8 @@ public interface SpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavio
 
     /**
      * Requests to get this behavior as a [SpamAutoModerationRule].
+     *
+     * This requires the [ManageGuild] permission.
      *
      * @throws RequestException if anything went wrong during the request.
      * @throws EntityNotFoundException if the [SpamAutoModerationRule] wasn't found.
@@ -245,6 +261,8 @@ public interface KeywordPresetAutoModerationRuleBehavior : TypedAutoModerationRu
      * Requests to get this behavior as a [KeywordPresetAutoModerationRule].
      * Returns `null` if it wasn't found or if the rule isn't a [KeywordPresetAutoModerationRule].
      *
+     * This requires the [ManageGuild] permission.
+     *
      * @throws RequestException if anything went wrong during the request.
      */
     override suspend fun asAutoModerationRuleOrNull(): KeywordPresetAutoModerationRule? =
@@ -252,6 +270,8 @@ public interface KeywordPresetAutoModerationRuleBehavior : TypedAutoModerationRu
 
     /**
      * Requests to get this behavior as a [KeywordPresetAutoModerationRule].
+     *
+     * This requires the [ManageGuild] permission.
      *
      * @throws RequestException if anything went wrong during the request.
      * @throws EntityNotFoundException if the [KeywordPresetAutoModerationRule] wasn't found.
