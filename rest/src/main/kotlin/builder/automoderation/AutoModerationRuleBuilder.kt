@@ -122,6 +122,39 @@ public sealed interface KeywordAutoModerationRuleBuilder : TypedAutoModerationRu
 }
 
 /**
+ * Add a [keyword] with keyword matching strategy
+ * [Prefix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+ * to [keywords][KeywordAutoModerationRuleBuilder.keywords].
+ *
+ * A keyword can be a phrase which contains multiple words.
+ */
+public fun KeywordAutoModerationRuleBuilder.prefixKeyword(keyword: String) {
+    keyword("$keyword*")
+}
+
+/**
+ * Add a [keyword] with keyword matching strategy
+ * [Suffix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+ * to [keywords][KeywordAutoModerationRuleBuilder.keywords].
+ *
+ * A keyword can be a phrase which contains multiple words.
+ */
+public fun KeywordAutoModerationRuleBuilder.suffixKeyword(keyword: String) {
+    keyword("*$keyword")
+}
+
+/**
+ * Add a [keyword] with keyword matching strategy
+ * [Anywhere](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+ * to [keywords][KeywordAutoModerationRuleBuilder.keywords].
+ *
+ * A keyword can be a phrase which contains multiple words.
+ */
+public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
+    keyword("*$keyword*")
+}
+
+/**
  * Add a [Timeout] action which will execute whenever the rule is triggered.
  *
  * The [ModerateMembers] permission is required to use this action.
