@@ -3,6 +3,8 @@ package dev.kord.core.entity.automoderation
 import dev.kord.common.entity.AutoModerationActionType
 import dev.kord.common.entity.AutoModerationActionType.*
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
+import dev.kord.core.KordObject
 import dev.kord.core.cache.data.AutoModerationActionData
 import dev.kord.core.entity.channel.GuildChannel
 import kotlin.time.Duration
@@ -10,8 +12,9 @@ import kotlin.time.Duration
 /** An action which will execute whenever an [AutoModerationRule] is triggered. */
 public sealed class AutoModerationAction(
     public val data: AutoModerationActionData,
+    final override val kord: Kord,
     expectedActionType: AutoModerationActionType?,
-) {
+) : KordObject {
     init {
         if (expectedActionType == null) {
             require(data.type is Unknown) { "Expected unknown action type but got ${data.type}" }
@@ -24,19 +27,22 @@ public sealed class AutoModerationAction(
 
     /** The type of action. */
     public abstract val type: AutoModerationActionType
+
+    abstract override fun toString(): String
 }
 
-internal fun AutoModerationAction(data: AutoModerationActionData) = when (data.type) {
-    BlockMessage -> BlockMessageAutoModerationAction(data)
-    SendAlertMessage -> SendAlertMessageAutoModerationAction(data)
-    Timeout -> TimeoutAutoModerationAction(data)
-    is Unknown -> UnknownAutoModerationAction(data)
+internal fun AutoModerationAction(data: AutoModerationActionData, kord: Kord) = when (data.type) {
+    BlockMessage -> BlockMessageAutoModerationAction(data, kord)
+    SendAlertMessage -> SendAlertMessageAutoModerationAction(data, kord)
+    Timeout -> TimeoutAutoModerationAction(data, kord)
+    is Unknown -> UnknownAutoModerationAction(data, kord)
 }
 
 /** An [AutoModerationAction] of type [BlockMessage]. */
 public class BlockMessageAutoModerationAction(
     data: AutoModerationActionData,
-) : AutoModerationAction(data, expectedActionType = BlockMessage) {
+    kord: Kord,
+) : AutoModerationAction(data, kord, expectedActionType = BlockMessage) {
 
     override val type: BlockMessage get() = BlockMessage
 
@@ -46,7 +52,8 @@ public class BlockMessageAutoModerationAction(
 /** An [AutoModerationAction] of type [SendAlertMessage]. */
 public class SendAlertMessageAutoModerationAction(
     data: AutoModerationActionData,
-) : AutoModerationAction(data, expectedActionType = SendAlertMessage) {
+    kord: Kord,
+) : AutoModerationAction(data, kord, expectedActionType = SendAlertMessage) {
 
     override val type: SendAlertMessage get() = SendAlertMessage
 
@@ -59,7 +66,8 @@ public class SendAlertMessageAutoModerationAction(
 /** An [AutoModerationAction] of type [Timeout]. */
 public class TimeoutAutoModerationAction(
     data: AutoModerationActionData,
-) : AutoModerationAction(data, expectedActionType = Timeout) {
+    kord: Kord,
+) : AutoModerationAction(data, kord, expectedActionType = Timeout) {
 
     override val type: Timeout get() = Timeout
 
@@ -72,7 +80,8 @@ public class TimeoutAutoModerationAction(
 /** An [AutoModerationAction] of type [Unknown]. */
 public class UnknownAutoModerationAction(
     data: AutoModerationActionData,
-) : AutoModerationAction(data, expectedActionType = null) {
+    kord: Kord,
+) : AutoModerationAction(data, kord, expectedActionType = null) {
 
     override val type: Unknown get() = data.type as Unknown
 

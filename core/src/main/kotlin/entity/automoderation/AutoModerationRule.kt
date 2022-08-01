@@ -62,7 +62,7 @@ public sealed class AutoModerationRule(
     public val eventType: AutoModerationRuleEventType get() = data.eventType
 
     /** The actions which will execute when the rule is triggered. */
-    public val actions: List<AutoModerationAction> get() = data.actions.map { AutoModerationAction(it) }
+    public val actions: List<AutoModerationAction> get() = data.actions.map { AutoModerationAction(it, kord) }
 
     /** Whether the rule is enabled. */
     public val isEnabled: Boolean get() = data.enabled
