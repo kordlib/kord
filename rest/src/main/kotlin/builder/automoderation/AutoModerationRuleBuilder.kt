@@ -31,7 +31,7 @@ public sealed interface AutoModerationRuleBuilder : AuditBuilder {
     /**
      * The rule [trigger type][AutoModerationRuleTriggerType].
      *
-     * This might be `null`, if the function that created this builder doesn't know the trigger type based on the
+     * This might be `null` if the function that created this builder doesn't know the trigger type based on the
      * type system.
      */
     public val triggerType: AutoModerationRuleTriggerType?

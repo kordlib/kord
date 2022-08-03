@@ -6,7 +6,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.AutoModerationActionData
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.GuildMessageChannel
 import kotlin.time.Duration
 
 /** An action which will execute whenever an [AutoModerationRule] is triggered. */
@@ -57,7 +57,7 @@ public class SendAlertMessageAutoModerationAction(
 
     override val type: SendAlertMessage get() = SendAlertMessage
 
-    /** The ID of the [GuildChannel] to which user content should be logged. */
+    /** The ID of the [GuildMessageChannel] to which user content should be logged. */
     public val channelId: Snowflake get() = data.metadata.value!!.channelId.value!!
 
     override fun toString(): String = "SendAlertMessageAutoModerationAction(data=$data)"

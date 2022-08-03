@@ -1,11 +1,9 @@
 package dev.kord.core.gateway
 
 import dev.kord.gateway.Gateway
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.microseconds
 
@@ -28,10 +26,9 @@ public class DefaultMasterGateway(
         }
 
 
-    @OptIn(FlowPreview::class)
-    override val events: Flow<ShardEvent> = gateways.entries.asFlow()
+    override val events: Flow<ShardEvent> = gateways.entries
         .map { (shard, gateway) -> gateway.events.map { ShardEvent(it, gateway, shard) } }
-        .flattenMerge(gateways.size.coerceAtLeast(1))
+        .merge()
 
 
     override fun toString(): String {

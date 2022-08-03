@@ -3,22 +3,9 @@ package dev.kord.core
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.GlobalApplicationCommandBehavior
-import dev.kord.core.behavior.GuildApplicationCommandBehavior
-import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.GuildEmojiBehavior
-import dev.kord.core.behavior.GuildScheduledEventBehavior
-import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.MessageBehavior
-import dev.kord.core.behavior.RoleBehavior
-import dev.kord.core.behavior.StageInstanceBehavior
-import dev.kord.core.behavior.ThreadMemberBehavior
-import dev.kord.core.behavior.UserBehavior
-import dev.kord.core.behavior.WebhookBehavior
+import dev.kord.core.behavior.*
+import dev.kord.core.behavior.automoderation.*
 import dev.kord.core.behavior.channel.*
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
@@ -40,6 +27,25 @@ import kotlin.DeprecationLevel.ERROR
 @KordUnsafe
 @KordExperimental
 public class Unsafe(private val kord: Kord) {
+
+    public fun autoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRuleBehavior =
+        AutoModerationRuleBehavior(guildId, ruleId, kord)
+
+    public fun keywordAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): KeywordAutoModerationRuleBehavior =
+        KeywordAutoModerationRuleBehavior(guildId, ruleId, kord)
+
+    public fun harmfulLinkAutoModerationRule(
+        guildId: Snowflake,
+        ruleId: Snowflake,
+    ): HarmfulLinkAutoModerationRuleBehavior = HarmfulLinkAutoModerationRuleBehavior(guildId, ruleId, kord)
+
+    public fun spamAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): SpamAutoModerationRuleBehavior =
+        SpamAutoModerationRuleBehavior(guildId, ruleId, kord)
+
+    public fun keywordPresetAutoModerationRule(
+        guildId: Snowflake,
+        ruleId: Snowflake,
+    ): KeywordPresetAutoModerationRuleBehavior = KeywordPresetAutoModerationRuleBehavior(guildId, ruleId, kord)
 
     public fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
         MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)

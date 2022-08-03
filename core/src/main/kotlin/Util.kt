@@ -6,6 +6,7 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
+import dev.kord.core.event.automoderation.*
 import dev.kord.core.event.channel.*
 import dev.kord.core.event.channel.thread.*
 import dev.kord.core.event.guild.*
@@ -87,7 +88,6 @@ public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: s
  * The terminal operator that returns `true` if any of the elements match [predicate].
  * The flow's collection is cancelled when a match is found.
  */
-@Suppress("DEPRECATION")
 @Deprecated(
     "This is an internal utility function.",
     ReplaceWith("this.firstOrNull(predicate) != null", "kotlinx.coroutines.flow.firstOrNull"),
@@ -455,6 +455,16 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     -> +GuildScheduledEvents
 
 
+    AutoModerationRuleConfigurationEvent::class,
+    AutoModerationRuleCreateEvent::class,
+    AutoModerationRuleUpdateEvent::class,
+    AutoModerationRuleDeleteEvent::class,
+    -> +AutoModerationConfiguration
+
+
+    AutoModerationActionExecutionEvent::class -> +AutoModerationExecution
+
+
     /*
      * events requiring multiple intents:
      */
@@ -489,6 +499,13 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     TypingStartEvent::class -> {
         +GuildMessageTyping
         +DirectMessageTyping
+    }
+
+    AutoModerationEvent::class -> {
+        // supertype of AutoModerationRuleConfigurationEvent and AutoModerationActionExecutionEvent
+        // -> requires both auto moderation intents
+        +AutoModerationConfiguration
+        +AutoModerationExecution
     }
 
 

@@ -5,7 +5,6 @@ import dev.kord.cache.api.put
 import dev.kord.cache.api.remove
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ApplicationCommandData
-import dev.kord.core.cache.data.GuildApplicationCommandPermissionData
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.cache.idEq
@@ -17,7 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import dev.kord.core.event.Event as CoreEvent
 
 
-public class InteractionEventHandler(
+internal class InteractionEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 

@@ -32,7 +32,7 @@ public interface Gateway : CoroutineScope {
     public val events: SharedFlow<Event>
 
     /**
-     * The duration between the last [Heartbeat] and [HeartbeatACK].
+     * The duration between the last [Heartbeat][Command.Heartbeat] and [HeartbeatACK].
      *
      * This flow will have a [value][StateFlow.value] of `null` if the gateway is not
      * [active][Gateway.start], or no [HeartbeatACK] has been received yet.

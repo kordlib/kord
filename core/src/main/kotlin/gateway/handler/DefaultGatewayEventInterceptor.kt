@@ -17,15 +17,16 @@ public class DefaultGatewayEventInterceptor(
 ) : GatewayEventInterceptor {
 
     private val listeners = listOf(
-        MessageEventHandler(cache),
+        AutoModerationEventHandler(cache),
         ChannelEventHandler(cache),
-        ThreadEventHandler(cache),
         GuildEventHandler(cache),
+        InteractionEventHandler(cache),
         LifeCycleEventHandler(cache),
+        MessageEventHandler(cache),
+        ThreadEventHandler(cache),
         UserEventHandler(cache),
         VoiceEventHandler(cache),
         WebhookEventHandler(cache),
-        InteractionEventHandler(cache)
     )
 
     override suspend fun handle(event: ShardEvent, kord: Kord): CoreEvent? {

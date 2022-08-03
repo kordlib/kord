@@ -10,12 +10,12 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.automoderation.*
-import dev.kord.core.behavior.channel.GuildChannelBehavior
+import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.cache.data.AutoModerationRuleData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Role
-import dev.kord.core.entity.channel.GuildChannel
+import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -73,12 +73,12 @@ public sealed class AutoModerationRule(
     /** The behaviors of the [Role]s that should not be affected by the rule. */
     public val exemptRoles: List<RoleBehavior> get() = data.exemptRoles.map { RoleBehavior(guildId, id = it, kord) }
 
-    /** The IDs of the [GuildChannel]s that should not be affected by the rule. */
+    /** The IDs of the [GuildMessageChannel]s that should not be affected by the rule. */
     public val exemptChannelIds: List<Snowflake> get() = data.exemptChannels
 
-    /** The behaviors of the [GuildChannel]s that should not be affected by the rule. */
-    public val exemptChannels: List<GuildChannelBehavior>
-        get() = data.exemptChannels.map { GuildChannelBehavior(guildId, id = it, kord) }
+    /** The behaviors of the [GuildMessageChannel]s that should not be affected by the rule. */
+    public val exemptChannels: List<GuildMessageChannelBehavior>
+        get() = data.exemptChannels.map { GuildMessageChannelBehavior(guildId, id = it, kord) }
 
     /**
      * Returns `this`.
@@ -98,7 +98,6 @@ public sealed class AutoModerationRule(
 
     final override fun equals(other: Any?): Boolean = autoModerationRuleEquals(other)
     final override fun hashCode(): Int = autoModerationRuleHashCode()
-    abstract override fun toString(): String
 }
 
 @PublishedApi
