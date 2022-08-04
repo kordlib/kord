@@ -23,6 +23,15 @@ version = Library.version
 
 tasks {
     wrapper {
+        // Steps for upgrading Gradle:
+        // 1. update `gradleVersion` and `distributionSha256Sum`
+        //    (use 'Complete (-all) ZIP Checksum' found here: https://gradle.org/release-checksums/)
+        // 2. run `./gradlew wrapper`
+        //    (will update 'gradle/wrapper/gradle-wrapper.properties')
+        // 3. run `./gradlew wrapper` again
+        //    (might update 'gradle/wrapper/gradle-wrapper.jar', 'gradlew' and 'gradlew.bat')
+        // 4. commit all changes
+
         gradleVersion = "7.5"
         distributionType = ALL
         distributionSha256Sum = "97a52d145762adc241bad7fd18289bf7f6801e08ece6badf80402fe2b9f250b1"
