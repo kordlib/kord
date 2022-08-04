@@ -25,6 +25,7 @@ tasks {
     wrapper {
         gradleVersion = "7.5"
         distributionType = ALL
+        distributionSha256Sum = "97a52d145762adc241bad7fd18289bf7f6801e08ece6badf80402fe2b9f250b1"
     }
 
     val dokkaOutputDir = "${rootProject.projectDir}/dokka"
