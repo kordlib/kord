@@ -462,9 +462,6 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     -> +AutoModerationConfiguration
 
 
-    AutoModerationActionExecutionEvent::class -> +AutoModerationExecution
-
-
     /*
      * events requiring multiple intents:
      */
@@ -501,11 +498,17 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
         +DirectMessageTyping
     }
 
+    AutoModerationActionExecutionEvent::class -> {
+        +AutoModerationExecution
+        +MessageContent
+    }
+
     AutoModerationEvent::class -> {
         // supertype of AutoModerationRuleConfigurationEvent and AutoModerationActionExecutionEvent
-        // -> requires both auto moderation intents
+        // -> requires intents for both
         +AutoModerationConfiguration
         +AutoModerationExecution
+        +MessageContent
     }
 
 
