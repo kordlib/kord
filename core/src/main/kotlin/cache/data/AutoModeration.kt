@@ -1,5 +1,7 @@
 package dev.kord.core.cache.data
 
+import dev.kord.cache.api.data.DataDescription
+import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -22,6 +24,9 @@ public data class AutoModerationRuleData(
     val exemptChannels: List<Snowflake>,
 ) {
     public companion object {
+        public val description: DataDescription<AutoModerationRuleData, Snowflake> =
+            description(AutoModerationRuleData::id)
+
         public fun from(rule: DiscordAutoModerationRule): AutoModerationRuleData = with(rule) {
             AutoModerationRuleData(
                 id = id,

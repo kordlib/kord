@@ -23,7 +23,7 @@ internal suspend fun DataCache.registerKordData() = register(
     GuildApplicationCommandPermissionsData.description,
     StickerPackData.description,
     StickerData.description,
-
+    AutoModerationRuleData.description,
 )
 
 /**
@@ -40,6 +40,7 @@ internal suspend fun DataCache.removeKordData() {
     query<WebhookData>().remove()
     query<PresenceData>().remove()
     query<VoiceStateData>().remove()
+    query<AutoModerationRuleData>().remove()
 }
 
 /**

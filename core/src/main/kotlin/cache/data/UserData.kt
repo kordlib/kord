@@ -26,13 +26,12 @@ public data class UserData(
 ) {
     public companion object {
 
-        public val description: DataDescription<UserData, Snowflake>
-            get() = description(UserData::id) {
-                link(UserData::id to MemberData::userId)
-                link(UserData::id to WebhookData::nullableUserId)
-                link(UserData::id to VoiceStateData::userId)
-                link(UserData::id to PresenceData::userId)
-            }
+        public val description: DataDescription<UserData, Snowflake> = description(UserData::id) {
+            link(UserData::id to MemberData::userId)
+            link(UserData::id to WebhookData::nullableUserId)
+            link(UserData::id to VoiceStateData::userId)
+            link(UserData::id to PresenceData::userId)
+        }
 
         public fun from(entity: DiscordUser): UserData = with(entity) {
             UserData(id, username, discriminator, avatar, bot, publicFlags, banner, accentColor)
