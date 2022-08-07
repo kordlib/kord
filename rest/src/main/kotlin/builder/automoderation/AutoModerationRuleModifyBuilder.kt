@@ -7,6 +7,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.AutoModerationRuleModifyRequest
 
+/** An [AutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
 @KordDsl
 public sealed class AutoModerationRuleModifyBuilder :
     AutoModerationRuleBuilder,
@@ -59,6 +60,7 @@ public sealed class AutoModerationRuleModifyBuilder :
     )
 }
 
+/** An [AutoModerationRuleModifyBuilder] with an always `null` [triggerType]. */
 @KordDsl
 public class UntypedAutoModerationRuleModifyBuilder : AutoModerationRuleModifyBuilder() {
 
@@ -69,6 +71,7 @@ public class UntypedAutoModerationRuleModifyBuilder : AutoModerationRuleModifyBu
     override val triggerType: Nothing? get() = null
 }
 
+/** A [KeywordAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
 @KordDsl
 public class KeywordAutoModerationRuleModifyBuilder :
     AutoModerationRuleModifyBuilder(),
@@ -86,18 +89,21 @@ public class KeywordAutoModerationRuleModifyBuilder :
         _keywords.map { DiscordAutoModerationRuleTriggerMetadata(keywordFilter = it.toList().optional()) }
 }
 
+/** A [HarmfulLinkAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
 @Suppress("CanSealedSubClassBeObject") // has state in super class
 @KordDsl
 public class HarmfulLinkAutoModerationRuleModifyBuilder :
     AutoModerationRuleModifyBuilder(),
     HarmfulLinkAutoModerationRuleBuilder
 
+/** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
 @Suppress("CanSealedSubClassBeObject") // has state in super class
 @KordDsl
 public class SpamAutoModerationRuleModifyBuilder :
     AutoModerationRuleModifyBuilder(),
     SpamAutoModerationRuleBuilder
 
+/** A [KeywordPresetAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
 @KordDsl
 public class KeywordPresetAutoModerationRuleModifyBuilder :
     AutoModerationRuleModifyBuilder(),

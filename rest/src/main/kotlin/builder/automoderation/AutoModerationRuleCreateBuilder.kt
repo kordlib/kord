@@ -13,6 +13,7 @@ import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.AutoModerationRuleCreateRequest
 
+/** An [AutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
 @KordDsl
 public sealed class AutoModerationRuleCreateBuilder(
     final override var name: String,
@@ -60,6 +61,7 @@ public sealed class AutoModerationRuleCreateBuilder(
     )
 }
 
+/** A [KeywordAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
 @KordDsl
 public class KeywordAutoModerationRuleCreateBuilder(
     name: String,
@@ -77,18 +79,21 @@ public class KeywordAutoModerationRuleCreateBuilder(
         DiscordAutoModerationRuleTriggerMetadata(keywordFilter = keywords.toList().optional()).optional()
 }
 
+/** A [HarmfulLinkAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
 @KordDsl
 public class HarmfulLinkAutoModerationRuleCreateBuilder(
     name: String,
     eventType: AutoModerationRuleEventType,
 ) : AutoModerationRuleCreateBuilder(name, eventType), HarmfulLinkAutoModerationRuleBuilder
 
+/** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
 @KordDsl
 public class SpamAutoModerationRuleCreateBuilder(
     name: String,
     eventType: AutoModerationRuleEventType,
 ) : AutoModerationRuleCreateBuilder(name, eventType), SpamAutoModerationRuleBuilder
 
+/** A [KeywordPresetAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
 @KordDsl
 public class KeywordPresetAutoModerationRuleCreateBuilder(
     name: String,

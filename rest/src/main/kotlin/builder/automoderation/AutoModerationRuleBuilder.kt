@@ -13,6 +13,16 @@ import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.time.Duration
 
+/**
+ * An [AuditBuilder] for building
+ * [Auto Moderation Rules](https://discord.com/developers/docs/resources/auto-moderation).
+ *
+ * Auto Moderation is a feature which allows each guild to set up rules that trigger based on some criteria. For
+ * example, a rule can trigger whenever a message contains a specific keyword.
+ *
+ * Rules can be configured to automatically execute actions whenever they trigger. For example, if a user tries to send
+ * a message which contains a certain keyword, a rule can trigger and block the message before it is sent.
+ */
 @KordDsl
 public sealed interface AutoModerationRuleBuilder : AuditBuilder {
 
@@ -86,6 +96,7 @@ public fun AutoModerationRuleBuilder.exemptChannel(channelId: Snowflake) {
 }
 
 
+/** An [AutoModerationRuleBuilder] with a non-null [triggerType]. */
 @KordDsl
 public sealed interface TypedAutoModerationRuleBuilder : AutoModerationRuleBuilder {
 
@@ -94,6 +105,7 @@ public sealed interface TypedAutoModerationRuleBuilder : AutoModerationRuleBuild
 }
 
 
+/** An [AutoModerationRuleBuilder] for building rules with trigger type [Keyword]. */
 @KordDsl
 public sealed interface KeywordAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
 
@@ -173,18 +185,21 @@ public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
 }
 
 
+/** An [AutoModerationRuleBuilder] for building rules with trigger type [HarmfulLink]. */
 @KordDsl
 public sealed interface HarmfulLinkAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
     override val triggerType: HarmfulLink get() = HarmfulLink
 }
 
 
+/** An [AutoModerationRuleBuilder] for building rules with trigger type [Spam]. */
 @KordDsl
 public sealed interface SpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
     override val triggerType: Spam get() = Spam
 }
 
 
+/** An [AutoModerationRuleBuilder] for building rules with trigger type [KeywordPreset]. */
 @KordDsl
 public sealed interface KeywordPresetAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
 

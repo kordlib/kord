@@ -20,7 +20,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * An instance of a [Discord Auto Moderation Rule](https://discord.com/developers/docs/resources/auto-moderation).
+ * An instance of an [Auto Moderation Rule](https://discord.com/developers/docs/resources/auto-moderation).
  *
  * Auto Moderation is a feature which allows each [Guild] to set up rules that trigger based on some criteria. For
  * example, a rule can trigger whenever a message contains a specific keyword.

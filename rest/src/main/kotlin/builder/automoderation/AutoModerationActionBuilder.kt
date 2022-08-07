@@ -12,6 +12,10 @@ import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.rest.builder.RequestBuilder
 import kotlin.time.Duration
 
+/**
+ * A [RequestBuilder] for building [actions][DiscordAutoModerationAction] which will execute whenever a
+ * [rule][AutoModerationRuleBuilder] is triggered.
+ */
 @KordDsl
 public sealed class AutoModerationActionBuilder : RequestBuilder<DiscordAutoModerationAction> {
 
@@ -26,12 +30,14 @@ public sealed class AutoModerationActionBuilder : RequestBuilder<DiscordAutoMode
     )
 }
 
+/** An [AutoModerationActionBuilder] for building actions with type [BlockMessage]. */
 @Suppress("CanSealedSubClassBeObject") // keep it as a class in case we want to add more in the future
 @KordDsl
 public class BlockMessageAutoModerationActionBuilder : AutoModerationActionBuilder() {
     override val type: BlockMessage get() = BlockMessage
 }
 
+/** An [AutoModerationActionBuilder] for building actions with type [SendAlertMessage]. */
 @KordDsl
 public class SendAlertMessageAutoModerationActionBuilder(
     /** The ID of the channel to which user content should be logged. */
@@ -44,6 +50,7 @@ public class SendAlertMessageAutoModerationActionBuilder(
         DiscordAutoModerationActionMetadata(channelId = channelId.optionalSnowflake()).optional()
 }
 
+/** An [AutoModerationActionBuilder] for building actions with type [Timeout]. */
 @KordDsl
 public class TimeoutAutoModerationActionBuilder(
     /** The timeout duration. */
