@@ -177,7 +177,7 @@ public class KeywordPresetAutoModerationRule(data: AutoModerationRuleData, kord:
      *
      * A keyword can be a phrase which contains multiple words.
      */
-    public val allowList: List<String> get() = data.triggerMetadata.allowList.orEmpty()
+    public val allowedKeywords: List<String> get() = data.triggerMetadata.allowList.orEmpty()
 
     override suspend fun asAutoModerationRuleOrNull(): KeywordPresetAutoModerationRule = this
     override suspend fun asAutoModerationRule(): KeywordPresetAutoModerationRule = this

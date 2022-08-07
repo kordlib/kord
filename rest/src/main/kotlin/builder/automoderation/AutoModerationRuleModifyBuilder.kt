@@ -111,17 +111,18 @@ public class KeywordPresetAutoModerationRuleModifyBuilder :
         this.presets = presets
     }
 
-    private var _allowList: Optional<MutableList<String>> = Optional.Missing()
-    override var allowList: MutableList<String>? by ::_allowList.delegate()
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
 
     override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> {
         val presets = _presets
-        val allowList = _allowList
+        val allowedKeywords = _allowedKeywords
         return when {
-            presets !is Optional.Missing || allowList !is Optional.Missing -> DiscordAutoModerationRuleTriggerMetadata(
-                presets = presets.map { it.toList() },
-                allowList = allowList.map { it.toList() },
-            ).optional()
+            presets !is Optional.Missing || allowedKeywords !is Optional.Missing ->
+                DiscordAutoModerationRuleTriggerMetadata(
+                    presets = presets.map { it.toList() },
+                    allowList = allowedKeywords.map { it.toList() },
+                ).optional()
 
             else -> Optional.Missing()
         }

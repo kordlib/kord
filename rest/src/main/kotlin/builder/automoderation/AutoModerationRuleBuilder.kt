@@ -204,7 +204,7 @@ public sealed interface KeywordPresetAutoModerationRuleBuilder : TypedAutoModera
      *
      * A keyword can be a phrase which contains multiple words.
      */
-    public var allowList: MutableList<String>?
+    public var allowedKeywords: MutableList<String>?
 }
 
 /** Add a [preset] to [presets][KeywordPresetAutoModerationRuleBuilder.presets]. */
@@ -213,10 +213,10 @@ public fun KeywordPresetAutoModerationRuleBuilder.preset(preset: AutoModerationR
 }
 
 /**
- * Add a [keyword] to [allowList][KeywordPresetAutoModerationRuleBuilder.allowList].
+ * Add a [keyword] to [allowedKeywords][KeywordPresetAutoModerationRuleBuilder.allowedKeywords].
  *
  * A keyword can be a phrase which contains multiple words.
  */
-public fun KeywordPresetAutoModerationRuleBuilder.allow(keyword: String) {
-    allowList?.add(keyword) ?: run { allowList = mutableListOf(keyword) }
+public fun KeywordPresetAutoModerationRuleBuilder.allowKeyword(keyword: String) {
+    allowedKeywords?.add(keyword) ?: run { allowedKeywords = mutableListOf(keyword) }
 }
