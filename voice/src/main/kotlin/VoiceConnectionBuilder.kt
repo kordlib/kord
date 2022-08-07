@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 @KordVoice
 public class VoiceConnectionBuilder(
@@ -95,6 +97,12 @@ public class VoiceConnectionBuilder(
      * A [Streams] implementation to be used. This will override the [receiveVoice] flag.
      */
     public var streams: Streams? = null
+
+    /**
+     * The amount of time the connection should wait before assuming the voice connection has been closed instead of
+     * moved.
+     */
+    public var connectionDetachDuration: Duration = 100.milliseconds
 
     /**
      * A builder to customize the voice connection's underlying [VoiceGateway].
@@ -182,7 +190,8 @@ public class VoiceConnectionBuilder(
             audioProvider,
             frameInterceptor,
             audioSender,
-            nonceStrategy
+            nonceStrategy,
+            connectionDetachDuration
         )
     }
 
