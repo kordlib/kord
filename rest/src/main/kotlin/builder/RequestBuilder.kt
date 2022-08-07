@@ -11,9 +11,9 @@ public interface AuditBuilder {
 }
 
 @KordDsl
-public interface RequestBuilder<out T> {
+public interface RequestBuilder<out T : Any> {
     public fun toRequest(): T
 }
 
 @KordDsl
-public interface AuditRequestBuilder<out T> : AuditBuilder, RequestBuilder<T>
+public interface AuditRequestBuilder<out T : Any> : AuditBuilder, RequestBuilder<T>
