@@ -134,3 +134,24 @@ public class KeywordPresetAutoModerationRuleModifyBuilder :
         }
     }
 }
+
+/** A [MentionSpamAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
+@KordDsl
+public class MentionSpamAutoModerationRuleModifyBuilder :
+    AutoModerationRuleModifyBuilder(),
+    MentionSpamAutoModerationRuleBuilder {
+
+    private var _mentionLimit: OptionalInt = OptionalInt.Missing
+    override var mentionLimit: Int? by ::_mentionLimit.delegate()
+
+    /** @suppress Use `this.mentionLimit = mentionLimit` instead. */
+    override fun assignMentionLimit(mentionLimit: Int) {
+        this.mentionLimit = mentionLimit
+    }
+
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> =
+        when (val limit = _mentionLimit) {
+            OptionalInt.Missing -> Optional.Missing()
+            is OptionalInt.Value -> DiscordAutoModerationRuleTriggerMetadata(mentionTotalLimit = limit).optional()
+        }
+}

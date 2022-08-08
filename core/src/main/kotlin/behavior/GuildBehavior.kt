@@ -33,10 +33,7 @@ import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
-import dev.kord.rest.builder.automoderation.HarmfulLinkAutoModerationRuleCreateBuilder
-import dev.kord.rest.builder.automoderation.KeywordAutoModerationRuleCreateBuilder
-import dev.kord.rest.builder.automoderation.KeywordPresetAutoModerationRuleCreateBuilder
-import dev.kord.rest.builder.automoderation.SpamAutoModerationRuleCreateBuilder
+import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
@@ -1100,6 +1097,9 @@ public suspend fun GuildBehavior.createScheduledEvent(
  *
  * This requires the [ManageGuild] permission.
  *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ *
  * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun GuildBehavior.createKeywordAutoModerationRule(
@@ -1116,6 +1116,9 @@ public suspend inline fun GuildBehavior.createKeywordAutoModerationRule(
  * Requests to create a new [HarmfulLinkAutoModerationRule] in this guild and returns it.
  *
  * This requires the [ManageGuild] permission.
+ *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
  *
  * @throws RestRequestException if something went wrong during the request.
  */
@@ -1134,6 +1137,9 @@ public suspend inline fun GuildBehavior.createHarmfulLinkAutoModerationRule(
  *
  * This requires the [ManageGuild] permission.
  *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ *
  * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun GuildBehavior.createSpamAutoModerationRule(
@@ -1151,6 +1157,9 @@ public suspend inline fun GuildBehavior.createSpamAutoModerationRule(
  *
  * This requires the [ManageGuild] permission.
  *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ *
  * @throws RestRequestException if something went wrong during the request.
  */
 public suspend inline fun GuildBehavior.createKeywordPresetAutoModerationRule(
@@ -1161,4 +1170,27 @@ public suspend inline fun GuildBehavior.createKeywordPresetAutoModerationRule(
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val rule = kord.rest.autoModeration.createKeywordPresetAutoModerationRule(guildId = id, name, eventType, builder)
     return KeywordPresetAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+/**
+ * Requests to create a new [MentionSpamAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ * @param mentionLimit total number of mentions (role & user) allowed per message (maximum of 50).
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    mentionLimit: Int,
+    builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
+): MentionSpamAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration
+        .createMentionSpamAutoModerationRule(guildId = id, name, eventType, mentionLimit, builder)
+    return MentionSpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }

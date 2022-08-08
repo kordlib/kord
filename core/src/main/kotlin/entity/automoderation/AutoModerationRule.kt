@@ -6,6 +6,7 @@ import dev.kord.common.entity.AutoModerationRuleTriggerType
 import dev.kord.common.entity.AutoModerationRuleTriggerType.*
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.RoleBehavior
@@ -110,6 +111,7 @@ internal fun AutoModerationRule(
     HarmfulLink -> HarmfulLinkAutoModerationRule(data, kord, supplier)
     Spam -> SpamAutoModerationRule(data, kord, supplier)
     KeywordPreset -> KeywordPresetAutoModerationRule(data, kord, supplier)
+    MentionSpam -> MentionSpamAutoModerationRule(data, kord, supplier)
     is Unknown -> UnknownAutoModerationRule(data, kord, supplier)
 }
 
@@ -186,6 +188,23 @@ public class KeywordPresetAutoModerationRule(data: AutoModerationRuleData, kord:
         KeywordPresetAutoModerationRule(data, kord, strategy.supply(kord))
 
     override fun toString(): String = "KeywordPresetAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
+}
+
+/** An [AutoModerationRule] with trigger type [MentionSpam]. */
+public class MentionSpamAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
+    AutoModerationRule(data, kord, supplier, expectedTriggerType = MentionSpam),
+    MentionSpamAutoModerationRuleBehavior {
+
+    /** Total number of mentions (role & user) allowed per message. */
+    public val mentionLimit: Int get() = data.triggerMetadata.mentionTotalLimit.value!!
+
+    override suspend fun asAutoModerationRuleOrNull(): MentionSpamAutoModerationRule = this
+    override suspend fun asAutoModerationRule(): MentionSpamAutoModerationRule = this
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): MentionSpamAutoModerationRule =
+        MentionSpamAutoModerationRule(data, kord, strategy.supply(kord))
+
+    override fun toString(): String = "MentionSpamAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
 /** An [AutoModerationRule] with trigger type [Unknown]. */

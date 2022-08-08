@@ -4,6 +4,7 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.map
 import dev.kord.common.serialization.DurationInSeconds
@@ -50,6 +51,7 @@ public data class AutoModerationRuleTriggerMetadataData(
     val keywordFilter: Optional<List<String>> = Optional.Missing(),
     val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
     val allowList: Optional<List<String>> = Optional.Missing(),
+    val mentionTotalLimit: OptionalInt = OptionalInt.Missing,
 ) {
     public companion object {
         public fun from(metadata: DiscordAutoModerationRuleTriggerMetadata): AutoModerationRuleTriggerMetadataData =
@@ -58,6 +60,7 @@ public data class AutoModerationRuleTriggerMetadataData(
                     keywordFilter = keywordFilter,
                     presets = presets,
                     allowList = allowList,
+                    mentionTotalLimit = mentionTotalLimit,
                 )
             }
     }

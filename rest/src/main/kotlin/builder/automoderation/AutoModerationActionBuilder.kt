@@ -53,7 +53,7 @@ public class SendAlertMessageAutoModerationActionBuilder(
 /** An [AutoModerationActionBuilder] for building actions with type [Timeout]. */
 @KordDsl
 public class TimeoutAutoModerationActionBuilder(
-    /** The timeout duration. */
+    /** The timeout duration (maximum of 2419200 seconds (4 weeks)). */
     public var duration: Duration,
 ) : AutoModerationActionBuilder() {
 

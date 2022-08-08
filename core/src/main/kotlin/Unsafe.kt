@@ -47,6 +47,11 @@ public class Unsafe(private val kord: Kord) {
         ruleId: Snowflake,
     ): KeywordPresetAutoModerationRuleBehavior = KeywordPresetAutoModerationRuleBehavior(guildId, ruleId, kord)
 
+    public fun mentionSpamAutoModerationRule(
+        guildId: Snowflake,
+        ruleId: Snowflake,
+    ): MentionSpamAutoModerationRuleBehavior = MentionSpamAutoModerationRuleBehavior(guildId, ruleId, kord)
+
     public fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
         MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
 

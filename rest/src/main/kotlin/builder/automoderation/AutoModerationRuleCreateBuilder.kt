@@ -5,11 +5,8 @@ import dev.kord.common.entity.AutoModerationRuleEventType
 import dev.kord.common.entity.AutoModerationRuleKeywordPresetType
 import dev.kord.common.entity.DiscordAutoModerationRuleTriggerMetadata
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.AutoModerationRuleCreateRequest
 
@@ -115,4 +112,21 @@ public class KeywordPresetAutoModerationRuleCreateBuilder(
             presets = presets.toList().optional(),
             allowList = _allowedKeywords.map { it.toList() },
         ).optional()
+}
+
+/** A [MentionSpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
+@KordDsl
+public class MentionSpamAutoModerationRuleCreateBuilder(
+    name: String,
+    eventType: AutoModerationRuleEventType,
+    override var mentionLimit: Int,
+) : AutoModerationRuleCreateBuilder(name, eventType), MentionSpamAutoModerationRuleBuilder {
+
+    /** @suppress Use `this.mentionLimit = mentionLimit` instead. */
+    override fun assignMentionLimit(mentionLimit: Int) {
+        this.mentionLimit = mentionLimit
+    }
+
+    override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =
+        DiscordAutoModerationRuleTriggerMetadata(mentionTotalLimit = mentionLimit.optionalInt()).optional()
 }

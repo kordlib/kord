@@ -3,6 +3,7 @@ package dev.kord.common.entity
 import dev.kord.common.entity.AutoModerationRuleTriggerType.Keyword
 import dev.kord.common.entity.Permission.ModerateMembers
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.serialization.KSerializer
@@ -60,6 +61,9 @@ public sealed class AutoModerationRuleTriggerType(public val value: Int) {
     /** Check if content contains words from internal pre-defined wordsets. */
     public object KeywordPreset : AutoModerationRuleTriggerType(4)
 
+    /** Check if content contains more mentions than allowed. */
+    public object MentionSpam : AutoModerationRuleTriggerType(5)
+
 
     internal object Serializer : KSerializer<AutoModerationRuleTriggerType> {
 
@@ -73,6 +77,7 @@ public sealed class AutoModerationRuleTriggerType(public val value: Int) {
             2 -> HarmfulLink
             3 -> Spam
             4 -> KeywordPreset
+            5 -> MentionSpam
             else -> Unknown(value)
         }
     }
@@ -85,6 +90,8 @@ public data class DiscordAutoModerationRuleTriggerMetadata(
     val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
     @SerialName("allow_list")
     val allowList: Optional<List<String>> = Optional.Missing(),
+    @SerialName("mention_total_limit")
+    val mentionTotalLimit: OptionalInt = OptionalInt.Missing,
 )
 
 @Serializable(with = AutoModerationRuleKeywordPresetType.Serializer::class)

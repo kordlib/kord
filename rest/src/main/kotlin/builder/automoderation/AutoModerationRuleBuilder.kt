@@ -13,6 +13,10 @@ import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.time.Duration
 
+// the `val propertyName` and `fun assignPropertyName` pattern let us effectively have `var`s with different
+// nullability for getter and setter that allows a common supertype for create and modify builders
+
+
 /**
  * An [AuditBuilder] for building
  * [Auto Moderation Rules](https://discord.com/developers/docs/resources/auto-moderation).
@@ -55,10 +59,10 @@ public sealed interface AutoModerationRuleBuilder : AuditBuilder {
     /** Whether the rule is enabled (`false` by default). */
     public var enabled: Boolean?
 
-    /** The IDs of the roles that should not be affected by the rule. */
+    /** The IDs of the roles that should not be affected by the rule (maximum of 20). */
     public var exemptRoles: MutableList<Snowflake>?
 
-    /** The IDs of the channels that should not be affected by the rule. */
+    /** The IDs of the channels that should not be affected by the rule (maximum of 50). */
     public var exemptChannels: MutableList<Snowflake>?
 }
 
@@ -85,12 +89,12 @@ public inline fun AutoModerationRuleBuilder.sendAlertMessage(
     actions?.add(action) ?: assignActions(mutableListOf(action))
 }
 
-/** Exempt a [role][roleId] from being affected by the rule. */
+/** Exempt a [role][roleId] from being affected by the rule (maximum of 20). */
 public fun AutoModerationRuleBuilder.exemptRole(roleId: Snowflake) {
     exemptRoles?.add(roleId) ?: run { exemptRoles = mutableListOf(roleId) }
 }
 
-/** Exempt a [channel][channelId] from being affected by the rule. */
+/** Exempt a [channel][channelId] from being affected by the rule (maximum of 50). */
 public fun AutoModerationRuleBuilder.exemptChannel(channelId: Snowflake) {
     exemptChannels?.add(channelId) ?: run { exemptChannels = mutableListOf(channelId) }
 }
@@ -129,7 +133,7 @@ public sealed interface KeywordAutoModerationRuleBuilder : TypedAutoModerationRu
  *
  * The [ModerateMembers] permission is required to use this action.
  *
- * @param duration the timeout duration.
+ * @param duration the timeout duration (maximum of 2419200 seconds (4 weeks)).
  */
 public inline fun KeywordAutoModerationRuleBuilder.timeout(
     duration: Duration,
@@ -234,4 +238,21 @@ public fun KeywordPresetAutoModerationRuleBuilder.preset(preset: AutoModerationR
  */
 public fun KeywordPresetAutoModerationRuleBuilder.allowKeyword(keyword: String) {
     allowedKeywords?.add(keyword) ?: run { allowedKeywords = mutableListOf(keyword) }
+}
+
+
+/** An [AutoModerationRuleBuilder] for building rules with trigger type [MentionSpam]. */
+@KordDsl
+public sealed interface MentionSpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
+
+    override val triggerType: MentionSpam get() = MentionSpam
+
+    /** Total number of mentions (role & user) allowed per message (maximum of 50). */
+    public val mentionLimit: Int?
+
+    /**
+     * Use this to set [mentionLimit][MentionSpamAutoModerationRuleBuilder.mentionLimit] for
+     * [MentionSpamAutoModerationRuleBuilder].
+     */
+    public fun assignMentionLimit(mentionLimit: Int)
 }

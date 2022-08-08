@@ -79,6 +79,18 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         return createAutoModerationRule(guildId, request.toRequest(), request.reason)
     }
 
+    public suspend inline fun createMentionSpamAutoModerationRule(
+        guildId: Snowflake,
+        name: String,
+        eventType: AutoModerationRuleEventType,
+        mentionLimit: Int,
+        builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
+    ): DiscordAutoModerationRule {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        val request = MentionSpamAutoModerationRuleCreateBuilder(name, eventType, mentionLimit).apply(builder)
+        return createAutoModerationRule(guildId, request.toRequest(), request.reason)
+    }
+
     public suspend fun modifyAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,
@@ -138,6 +150,16 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
     ): DiscordAutoModerationRule {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         val request = KeywordPresetAutoModerationRuleModifyBuilder().apply(builder)
+        return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
+    }
+
+    public suspend inline fun modifyMentionSpamAutoModerationRule(
+        guildId: Snowflake,
+        ruleId: Snowflake,
+        builder: MentionSpamAutoModerationRuleModifyBuilder.() -> Unit,
+    ): DiscordAutoModerationRule {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        val request = MentionSpamAutoModerationRuleModifyBuilder().apply(builder)
         return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
     }
 
