@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.remove
 import dev.kord.core.Kord
@@ -15,9 +14,7 @@ import dev.kord.gateway.*
 import dev.kord.core.event.Event as CoreEvent
 
 
-public class InteractionEventHandler(
-    cache: DataCache
-) : BaseGatewayEventHandler(cache) {
+public class InteractionEventHandler : BaseGatewayEventHandler() {
 
     override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
         is InteractionCreate -> handle(event, shard, kord)
@@ -57,7 +54,7 @@ public class InteractionEventHandler(
 
     private suspend fun handle(event: ApplicationCommandCreate, shard: Int, kord: Kord): ApplicationCommandCreateEvent {
         val data = ApplicationCommandData.from(event.application)
-        cache.put(data)
+        kord.cache.put(data)
         val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
             is GuildChatInputCommand -> ChatInputCommandCreateEvent(application, kord, shard)
             is GuildMessageCommand -> MessageCommandCreateEvent(application, kord, shard)
@@ -70,7 +67,7 @@ public class InteractionEventHandler(
 
     private suspend fun handle(event: ApplicationCommandUpdate, shard: Int, kord: Kord): ApplicationCommandUpdateEvent {
         val data = ApplicationCommandData.from(event.application)
-        cache.put(data)
+        kord.cache.put(data)
 
         val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
             is GuildChatInputCommand -> ChatInputCommandUpdateEvent(application, kord, shard)
@@ -83,7 +80,7 @@ public class InteractionEventHandler(
 
     private suspend fun handle(event: ApplicationCommandDelete, shard: Int, kord: Kord): ApplicationCommandDeleteEvent {
         val data = ApplicationCommandData.from(event.application)
-        cache.remove<ApplicationCommandData> { idEq(ApplicationCommandData::id, data.id) }
+        kord.cache.remove<ApplicationCommandData> { idEq(ApplicationCommandData::id, data.id) }
         val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
             is GuildChatInputCommand -> ChatInputCommandDeleteEvent(application, kord, shard)
             is GuildMessageCommand -> MessageCommandDeleteEvent(application, kord, shard)

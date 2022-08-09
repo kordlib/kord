@@ -20,7 +20,6 @@ import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.MasterGateway
-import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.gateway.start
 import dev.kord.core.supplier.*
@@ -56,12 +55,8 @@ public class Kord(
     public val selfId: Snowflake,
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
-    interceptorBuilder: () -> GatewayEventInterceptor = {
-        DefaultGatewayEventInterceptor(cache)
-    }
+    private val interceptor: GatewayEventInterceptor,
 ) : CoroutineScope {
-
-    private val interceptor = interceptorBuilder.invoke()
 
     /**
      * Global commands made by the bot under this Kord instance.

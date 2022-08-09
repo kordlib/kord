@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.query
 import dev.kord.cache.api.remove
@@ -16,9 +15,7 @@ import dev.kord.core.event.channel.data.TypingStartEventData
 import dev.kord.gateway.*
 import dev.kord.core.event.Event as CoreEvent
 
-internal class ChannelEventHandler(
-    cache: DataCache
-) : BaseGatewayEventHandler(cache) {
+internal class ChannelEventHandler : BaseGatewayEventHandler() {
 
     override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
         is ChannelCreate -> handle(event, shard, kord)
@@ -31,7 +28,7 @@ internal class ChannelEventHandler(
 
     private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord): ChannelCreateEvent? {
         val data = ChannelData.from(event.channel)
-        cache.put(data)
+        kord.cache.put(data)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelCreateEvent(channel, shard)
@@ -51,8 +48,8 @@ internal class ChannelEventHandler(
 
     private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord): ChannelUpdateEvent? {
         val data = ChannelData.from(event.channel)
-        val oldData = cache.query<ChannelData> { idEq(ChannelData::id, data.id) }.singleOrNull()
-        cache.put(data)
+        val oldData = kord.cache.query<ChannelData> { idEq(ChannelData::id, data.id) }.singleOrNull()
+        kord.cache.put(data)
         val old = oldData?.let { Channel.from(it, kord) }
         val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelUpdateEvent(channel, old as? NewsChannel, shard)
@@ -71,7 +68,7 @@ internal class ChannelEventHandler(
     }
 
     private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord): ChannelDeleteEvent? {
-        cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
+        kord.cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
@@ -93,7 +90,7 @@ internal class ChannelEventHandler(
         with(event.pins) {
             val coreEvent = ChannelPinsUpdateEvent(ChannelPinsUpdateEventData.from(this), kord, shard)
 
-            cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+            kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
                 it.copy(lastPinTimestamp = lastPinTimestamp)
             }
 
@@ -102,7 +99,7 @@ internal class ChannelEventHandler(
 
     private suspend fun handle(event: TypingStart, shard: Int, kord: Kord): TypingStartEvent = with(event.data) {
         member.value?.let {
-            cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
+            kord.cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
         }
 
         TypingStartEvent(TypingStartEventData.from(this), kord, shard)

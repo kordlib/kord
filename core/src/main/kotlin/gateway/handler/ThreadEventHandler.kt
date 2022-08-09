@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.query
 import dev.kord.cache.api.remove
@@ -15,9 +14,7 @@ import dev.kord.core.event.channel.thread.*
 import dev.kord.gateway.*
 import dev.kord.core.event.Event as CoreEvent
 
-public class ThreadEventHandler(
-    cache: DataCache
-) : BaseGatewayEventHandler(cache) {
+public class ThreadEventHandler : BaseGatewayEventHandler() {
 
     override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
         is ThreadCreate -> handle(event, shard, kord)
@@ -31,7 +28,7 @@ public class ThreadEventHandler(
 
     public suspend fun handle(event: ThreadCreate, shard: Int, kord: Kord): ThreadChannelCreateEvent? {
         val channelData = event.channel.toData()
-        cache.put(channelData)
+        kord.cache.put(channelData)
 
         val coreEvent = when (val channel = Channel.from(channelData, kord)) {
             is NewsChannelThread -> NewsChannelThreadCreateEvent(channel, shard)
@@ -44,11 +41,11 @@ public class ThreadEventHandler(
 
     public suspend fun handle(event: ThreadUpdate, shard: Int, kord: Kord): ThreadUpdateEvent? {
         val channelData = event.channel.toData()
-        val oldData = cache.query<ChannelData> {
+        val oldData = kord.cache.query<ChannelData> {
             idEq(ChannelData::id, event.channel.id)
             idEq(ChannelData::guildId, event.channel.guildId.value)
         }.singleOrNull()
-        cache.put(channelData)
+        kord.cache.put(channelData)
 
         val old = oldData?.let { ThreadChannel(it, kord) }
 
@@ -66,7 +63,7 @@ public class ThreadEventHandler(
     public suspend fun handle(event: ThreadDelete, shard: Int, kord: Kord): ThreadChannelDeleteEvent {
 
         val channelData = event.channel.toData()
-        val cachedData = cache.query<ChannelData> { idEq(ChannelData::id, channelData.id) }.singleOrNull()
+        val cachedData = kord.cache.query<ChannelData> { idEq(ChannelData::id, channelData.id) }.singleOrNull()
 
         val channel = DeletedThreadChannel(channelData, kord)
         val old = cachedData?.let { Channel.from(cachedData, kord) }
@@ -77,7 +74,7 @@ public class ThreadEventHandler(
             else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard)
         }
 
-        cache.remove<ChannelData> { idEq(ChannelData::id, channel.id) }
+        kord.cache.remove<ChannelData> { idEq(ChannelData::id, channel.id) }
         return coreEvent
     }
 
@@ -85,10 +82,10 @@ public class ThreadEventHandler(
         val data = ThreadListSyncData.from(event)
 
         data.threads.forEach { thread ->
-            cache.put(thread)
+            kord.cache.put(thread)
         }
         data.members.forEach { member ->
-            cache.put(member)
+            kord.cache.put(member)
         }
 
         return ThreadListSyncEvent(data, kord, shard)
@@ -103,13 +100,13 @@ public class ThreadEventHandler(
     public suspend fun handle(event: ThreadMembersUpdate, shard: Int, kord: Kord): ThreadMembersUpdateEvent {
         val data = ThreadMembersUpdateEventData.from(event)
         for (removedMemberId in data.removedMemberIds.orEmpty()) {
-            cache.remove<ThreadMemberData> {
+            kord.cache.remove<ThreadMemberData> {
                 idEq(ThreadMemberData::userId, removedMemberId)
                 idEq(ThreadMemberData::id, data.id)
             }
         }
         for (addedMember in data.addedMembers.orEmpty()) {
-            cache.put(addedMember)
+            kord.cache.put(addedMember)
         }
         return ThreadMembersUpdateEvent(data, kord, shard)
     }

@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.core.Kord
 import dev.kord.core.gateway.ShardEvent
 import io.ktor.util.logging.*
@@ -9,18 +8,19 @@ import dev.kord.core.event.Event as CoreEvent
 
 private val logger = KotlinLogging.logger { }
 
-public class DefaultGatewayEventInterceptor(cache: DataCache) : GatewayEventInterceptor {
+/** Default implementation of [GatewayEventInterceptor] that also updates [cache][Kord.cache]. */
+public class DefaultGatewayEventInterceptor : GatewayEventInterceptor {
 
     private val listeners = listOf(
-        MessageEventHandler(cache),
-        ChannelEventHandler(cache),
-        ThreadEventHandler(cache),
-        GuildEventHandler(cache),
-        LifeCycleEventHandler(cache),
-        UserEventHandler(cache),
-        VoiceEventHandler(cache),
-        WebhookEventHandler(cache),
-        InteractionEventHandler(cache)
+        MessageEventHandler(),
+        ChannelEventHandler(),
+        ThreadEventHandler(),
+        GuildEventHandler(),
+        LifeCycleEventHandler(),
+        UserEventHandler(),
+        VoiceEventHandler(),
+        WebhookEventHandler(),
+        InteractionEventHandler()
     )
 
     override suspend fun handle(event: ShardEvent, kord: Kord): CoreEvent? {

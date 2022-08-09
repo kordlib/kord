@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.UserData
@@ -12,9 +11,7 @@ import dev.kord.core.event.gateway.ResumedEvent
 import dev.kord.gateway.*
 import dev.kord.core.event.Event as CoreEvent
 
-internal class LifeCycleEventHandler(
-    cache: DataCache
-) : BaseGatewayEventHandler(cache) {
+internal class LifeCycleEventHandler : BaseGatewayEventHandler() {
 
     override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
         is Ready -> handle(event, shard, kord)
@@ -37,7 +34,7 @@ internal class LifeCycleEventHandler(
         val guilds = guilds.map { it.id }.toSet()
         val self = UserData.from(event.data.user)
 
-        cache.put(self)
+        kord.cache.put(self)
 
         ReadyEvent(event.data.version, guilds, User(self, kord), sessionId, kord, shard)
     }

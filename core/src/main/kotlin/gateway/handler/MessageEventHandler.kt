@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.query
 import dev.kord.common.entity.optional.*
@@ -17,9 +16,7 @@ import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
 import dev.kord.core.event.Event as CoreEvent
 
-internal class MessageEventHandler(
-    cache: DataCache
-) : BaseGatewayEventHandler(cache) {
+internal class MessageEventHandler : BaseGatewayEventHandler() {
 
     override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
         is MessageCreate -> handle(event, shard, kord)
@@ -35,35 +32,35 @@ internal class MessageEventHandler(
 
     private suspend fun handle(event: MessageCreate, shard: Int, kord: Kord): MessageCreateEvent = with(event.message) {
         val data = MessageData.from(this)
-        cache.put(data)
+        kord.cache.put(data)
 
-        cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
             it.copy(lastMessageId = data.id.optionalSnowflake())
         }
 
         //get the user data only if it exists and the user isn't a webhook
         val userData = if (webhookId is OptionalSnowflake.Missing) {
-            UserData.from(author).also { cache.put(it) }
+            UserData.from(author).also { kord.cache.put(it) }
         } else null
 
         //get the member and cache the member. We need the user, guild id and member to be present
         val member = if (userData != null && guildId is OptionalSnowflake.Value && member is Optional.Value) {
             val memberData = MemberData.from(author.id, guildId.value!!, member.value!!)
-            cache.put(memberData)
+            kord.cache.put(memberData)
             Member(memberData, userData, kord)
         } else null
 
         //cache interaction user if present.
         if (interaction is Optional.Value) {
             val interactionUserData = UserData.from(interaction.value!!.user)
-            cache.put(interactionUserData)
+            kord.cache.put(interactionUserData)
         }
 
         mentions.forEach {
             val user = UserData.from(it)
-            cache.put(user)
+            kord.cache.put(user)
             it.member.value?.let {
-                cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
             }
         }
 
@@ -71,16 +68,16 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageUpdate, shard: Int, kord: Kord): MessageUpdateEvent = with(event.message) {
-        val query = cache.query<MessageData> { idEq(MessageData::id, id) }
+        val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
 
         mentions.orEmpty().forEach {
             val user = UserData.from(it)
-            cache.put(user)
+            kord.cache.put(user)
             it.member.value?.let {
-                cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
             }
         }
 
@@ -88,7 +85,7 @@ internal class MessageEventHandler(
     }
 
     private suspend fun handle(event: MessageDelete, shard: Int, kord: Kord): MessageDeleteEvent = with(event.message) {
-        val query = cache.query<MessageData> { idEq(MessageData::id, id) }
+        val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
@@ -98,7 +95,7 @@ internal class MessageEventHandler(
 
     private suspend fun handle(event: MessageDeleteBulk, shard: Int, kord: Kord): MessageBulkDeleteEvent =
         with(event.messageBulk) {
-            val query = cache.query<MessageData> { MessageData::id `in` ids }
+            val query = kord.cache.query<MessageData> { MessageData::id `in` ids }
 
             val removed = query.asFlow().map { Message(it, kord) }.toSet()
             query.remove()
@@ -119,7 +116,7 @@ internal class MessageEventHandler(
                 else -> ReactionEmoji.Custom(id, emoji.name!!, emoji.animated.orElse(false))
             }
 
-            cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
                 val isMe = kord.selfId == event.reaction.userId
 
                 val reactions = if (it.reactions.value.isNullOrEmpty()) {
@@ -157,7 +154,7 @@ internal class MessageEventHandler(
                 else -> ReactionEmoji.Custom(id, emoji.name ?: "", emoji.animated.orElse(false))
             }
 
-            cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
                 val oldReactions = it.reactions.value ?: return@update it
                 if (oldReactions.isEmpty()) return@update it
 
@@ -184,7 +181,7 @@ internal class MessageEventHandler(
 
     private suspend fun handle(event: MessageReactionRemoveAll, shard: Int, kord: Kord): ReactionRemoveAllEvent =
         with(event.reactions) {
-            cache.query<MessageData> { idEq(MessageData::id, messageId) }
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = Optional.Missing()) }
 
             ReactionRemoveAllEvent(channelId, messageId, guildId.value, kord, shard)
@@ -192,7 +189,7 @@ internal class MessageEventHandler(
 
     private suspend fun handle(event: MessageReactionRemoveEmoji, shard: Int, kord: Kord): ReactionRemoveEmojiEvent =
         with(event.reaction) {
-            cache.query<MessageData> { idEq(MessageData::id, messageId) }
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
             val data = ReactionRemoveEmojiData.from(this)
