@@ -59,6 +59,7 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 }
 
 
+/** @suppress */
 @Deprecated(
     "This is an internal utility function.",
     ReplaceWith("this.toList().sorted()", "kotlinx.coroutines.flow.toList"),
@@ -75,6 +76,8 @@ internal fun <T : Comparable<T>> Flow<T>.internalSorted(): Flow<T> = flow {
  * The terminal operator that returns the first element emitted by the flow that matches the [predicate]
  * and then cancels flow's collection.
  * Returns `null` if the flow was empty.
+ *
+ * @suppress
  */
 @Deprecated(
     "Use the function with the same name from kotlinx.coroutines.flow instead.",
@@ -87,6 +90,8 @@ public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: s
 /**
  * The terminal operator that returns `true` if any of the elements match [predicate].
  * The flow's collection is cancelled when a match is found.
+ *
+ * @suppress
  */
 @Deprecated(
     "This is an internal utility function.",

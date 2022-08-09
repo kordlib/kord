@@ -1,14 +1,11 @@
 package dev.kord.core.cache.data
 
-import cache.data.MessageInteractionData
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-
-internal val MessageData.authorId get() = author.id
 
 @Serializable
 public data class MessageData(

@@ -85,6 +85,7 @@ public class Unsafe(private val kord: Kord) {
     public fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
         VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
 
+    /** @suppress */
     @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         """

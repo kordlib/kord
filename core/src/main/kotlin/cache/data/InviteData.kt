@@ -30,6 +30,7 @@ public data class InviteData(
     override val targetType: Optional<InviteTargetType> = Optional.Missing(),
     override val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
     override val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
+    /** @suppress */
     @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
     override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,

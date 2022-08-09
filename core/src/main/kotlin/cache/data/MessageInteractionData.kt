@@ -1,4 +1,4 @@
-package cache.data;
+package dev.kord.core.cache.data
 
 import dev.kord.common.entity.DiscordMessageInteraction
 import dev.kord.common.entity.InteractionType

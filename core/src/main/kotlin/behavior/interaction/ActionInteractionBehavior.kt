@@ -59,6 +59,8 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * val response = deferred.respond { ... }
      * response.createPublicFollowup { ... }
      * ```
+     *
+     * @suppress
      */
     @Deprecated(
         """
@@ -146,6 +148,8 @@ public interface ActionInteractionBehavior : InteractionBehavior {
      * val response = deferred.respond { ... }
      * response.createEphemeralFollowup { ... }
      * ```
+     *
+     * @suppress
      */
     @Deprecated(
         """

@@ -709,6 +709,7 @@ public data class DiscordCreatedInvite(
     val targetUser: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_application")
     val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
+    /** @suppress */
     @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     @SerialName("target_user_type")
     val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
@@ -716,6 +717,7 @@ public data class DiscordCreatedInvite(
     val uses: Int,
 )
 
+/** @suppress */
 @Deprecated(
     "Use 'DiscordUser' instead, All missing fields have defaults.",
     ReplaceWith("DiscordUser", "dev.kord.common.entity.DiscordUser"),

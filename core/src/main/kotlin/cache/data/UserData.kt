@@ -37,6 +37,7 @@ public data class UserData(
             UserData(id, username, discriminator, avatar, bot, publicFlags, banner, accentColor)
         }
 
+        /** @suppress */
         @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION_ERROR")
         @Deprecated("'DiscordInviteUser' is deprecated. Use 'DiscordUser' instead.", level = ERROR)
         public fun from(entity: dev.kord.gateway.DiscordInviteUser): UserData = with(entity) {

@@ -21,6 +21,8 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
 
     /**
      * The duration of invite in seconds before expiry, or 0 for never. 86400 (24 hours) by default.
+     *
+     * @suppress
      */
     @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"), level = ERROR)
     public var age: Int?
@@ -38,6 +40,8 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
 
     /**
      * The maximum number of uses, or 0 for unlimited. 0 by default.
+     *
+     * @suppress
      */
     @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"), level = ERROR)
     public var uses: Int? by ::_maxUses.delegate()
@@ -63,6 +67,8 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
 
     /**
      * The target user id for this invite.
+     *
+     * @suppress
      */
     @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"), level = ERROR)
     public var targetUser: Snowflake? by ::_targetUser.delegate()
