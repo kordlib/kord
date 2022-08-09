@@ -10,7 +10,6 @@ import dev.kord.core.entity.User
 import dev.kord.core.event.user.UserUpdateEvent
 import dev.kord.gateway.Event
 import dev.kord.gateway.UserUpdate
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import dev.kord.core.event.Event as CoreEvent
@@ -19,12 +18,12 @@ internal class UserEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, coroutineScope: CoroutineScope): CoreEvent? = when (event) {
-        is UserUpdate -> handle(event, shard, kord, coroutineScope)
+    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
+        is UserUpdate -> handle(event, shard, kord)
         else -> null
     }
 
-    private suspend fun handle(event: UserUpdate, shard: Int, kord: Kord, coroutineScope: CoroutineScope): UserUpdateEvent {
+    private suspend fun handle(event: UserUpdate, shard: Int, kord: Kord): UserUpdateEvent {
         val data = UserData.from(event.user)
 
         val old = cache.query<UserData> { idEq(UserData::id, data.id) }
@@ -33,7 +32,7 @@ internal class UserEventHandler(
         cache.put(data)
         val new = User(data, kord)
 
-        return UserUpdateEvent(old, new, shard, coroutineScope)
+        return UserUpdateEvent(old, new, shard)
     }
 
 }

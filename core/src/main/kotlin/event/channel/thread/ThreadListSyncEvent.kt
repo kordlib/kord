@@ -13,13 +13,10 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlin.coroutines.CoroutineContext
 
 
 public class ThreadListSyncEvent(
@@ -27,8 +24,7 @@ public class ThreadListSyncEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val guildId: Snowflake get() = data.guildId
 

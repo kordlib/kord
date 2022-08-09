@@ -8,11 +8,8 @@ import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class MessageUpdateEvent(
     public val messageId: Snowflake,
@@ -22,8 +19,7 @@ public class MessageUpdateEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     /**
      * The behavior of the message that was updated.

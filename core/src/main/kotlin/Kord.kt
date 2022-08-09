@@ -631,6 +631,6 @@ public inline fun <reified T : Event> Kord.on(
 ): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach { event ->
-            scope.launch(event.coroutineContext) { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
+            scope.launch { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
         }
         .launchIn(scope)

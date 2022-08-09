@@ -12,38 +12,28 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.message.*
 import dev.kord.gateway.*
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
+import dev.kord.core.event.Event as CoreEvent
 
 internal class MessageEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(
-        event: Event,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): dev.kord.core.event.Event? = when (event) {
-        is MessageCreate -> handle(event, shard, kord, coroutineScope)
-        is MessageUpdate -> handle(event, shard, kord, coroutineScope)
-        is MessageDelete -> handle(event, shard, kord, coroutineScope)
-        is MessageDeleteBulk -> handle(event, shard, kord, coroutineScope)
-        is MessageReactionAdd -> handle(event, shard, kord, coroutineScope)
-        is MessageReactionRemove -> handle(event, shard, kord, coroutineScope)
-        is MessageReactionRemoveAll -> handle(event, shard, kord, coroutineScope)
-        is MessageReactionRemoveEmoji -> handle(event, shard, kord, coroutineScope)
+    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
+        is MessageCreate -> handle(event, shard, kord)
+        is MessageUpdate -> handle(event, shard, kord)
+        is MessageDelete -> handle(event, shard, kord)
+        is MessageDeleteBulk -> handle(event, shard, kord)
+        is MessageReactionAdd -> handle(event, shard, kord)
+        is MessageReactionRemove -> handle(event, shard, kord)
+        is MessageReactionRemoveAll -> handle(event, shard, kord)
+        is MessageReactionRemoveEmoji -> handle(event, shard, kord)
         else -> null
     }
 
-    private suspend fun handle(
-        event: MessageCreate,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): MessageCreateEvent = with(event.message) {
+    private suspend fun handle(event: MessageCreate, shard: Int, kord: Kord): MessageCreateEvent = with(event.message) {
         val data = MessageData.from(this)
         cache.put(data)
 
@@ -77,15 +67,10 @@ internal class MessageEventHandler(
             }
         }
 
-        return MessageCreateEvent(Message(data, kord), guildId.value, member, shard, coroutineScope = coroutineScope)
+        MessageCreateEvent(Message(data, kord), guildId.value, member, shard)
     }
 
-    private suspend fun handle(
-        event: MessageUpdate,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): MessageUpdateEvent = with(event.message) {
+    private suspend fun handle(event: MessageUpdate, shard: Int, kord: Kord): MessageUpdateEvent = with(event.message) {
         val query = cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
@@ -99,29 +84,19 @@ internal class MessageEventHandler(
             }
         }
 
-        MessageUpdateEvent(id, channelId, this, old, kord, shard, coroutineScope = coroutineScope)
+        MessageUpdateEvent(id, channelId, this, old, kord, shard)
     }
 
-    private suspend fun handle(
-        event: MessageDelete,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): MessageDeleteEvent = with(event.message) {
+    private suspend fun handle(event: MessageDelete, shard: Int, kord: Kord): MessageDeleteEvent = with(event.message) {
         val query = cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
 
-        return MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard, coroutineScope = coroutineScope)
+        MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard)
     }
 
-    private suspend fun handle(
-        event: MessageDeleteBulk,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): MessageBulkDeleteEvent =
+    private suspend fun handle(event: MessageDeleteBulk, shard: Int, kord: Kord): MessageBulkDeleteEvent =
         with(event.messageBulk) {
             val query = cache.query<MessageData> { MessageData::id `in` ids }
 
@@ -130,23 +105,10 @@ internal class MessageEventHandler(
 
             val ids = ids.asSequence().map { it }.toSet()
 
-            return MessageBulkDeleteEvent(
-                ids,
-                removed,
-                channelId,
-                guildId.value,
-                kord,
-                shard,
-                coroutineScope = coroutineScope
-            )
+            MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard)
         }
 
-    private suspend fun handle(
-        event: MessageReactionAdd,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): ReactionAddEvent =
+    private suspend fun handle(event: MessageReactionAdd, shard: Int, kord: Kord): ReactionAddEvent =
         with(event.reaction) {
             /**
              * Reactions added will *always* have a name, the only case in which name is null is when a guild reaction
@@ -181,24 +143,10 @@ internal class MessageEventHandler(
                 it.copy(reactions = Optional.Value(reactions))
             }
 
-            return ReactionAddEvent(
-                userId,
-                channelId,
-                messageId,
-                guildId.value,
-                reaction,
-                kord,
-                shard,
-                coroutineScope = coroutineScope
-            )
+            ReactionAddEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard)
         }
 
-    private suspend fun handle(
-        event: MessageReactionRemove,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): ReactionRemoveEvent =
+    private suspend fun handle(event: MessageReactionRemove, shard: Int, kord: Kord): ReactionRemoveEvent =
         with(event.reaction) {
             /**
              * Reactions removed will *sometimes* have a name, the only case in which name is null is when a guild reaction
@@ -231,50 +179,24 @@ internal class MessageEventHandler(
                 it.copy(reactions = Optional.Value(reactions))
             }
 
-            return ReactionRemoveEvent(
-                userId,
-                channelId,
-                messageId,
-                guildId.value,
-                reaction,
-                kord,
-                shard,
-                coroutineScope = coroutineScope
-            )
+            ReactionRemoveEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard)
         }
 
-    private suspend fun handle(
-        event: MessageReactionRemoveAll,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): ReactionRemoveAllEvent =
+    private suspend fun handle(event: MessageReactionRemoveAll, shard: Int, kord: Kord): ReactionRemoveAllEvent =
         with(event.reactions) {
             cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = Optional.Missing()) }
 
-            return ReactionRemoveAllEvent(
-                channelId,
-                messageId,
-                guildId.value,
-                kord,
-                shard,
-                coroutineScope = coroutineScope
-            )
+            ReactionRemoveAllEvent(channelId, messageId, guildId.value, kord, shard)
         }
 
-    private suspend fun handle(
-        event: MessageReactionRemoveEmoji,
-        shard: Int,
-        kord: Kord,
-        coroutineScope: CoroutineScope
-    ): ReactionRemoveEmojiEvent =
+    private suspend fun handle(event: MessageReactionRemoveEmoji, shard: Int, kord: Kord): ReactionRemoveEmojiEvent =
         with(event.reaction) {
             cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
             val data = ReactionRemoveEmojiData.from(this)
-            return ReactionRemoveEmojiEvent(data, kord, shard, coroutineScope = coroutineScope)
+            ReactionRemoveEmojiEvent(data, kord, shard)
         }
 
 }

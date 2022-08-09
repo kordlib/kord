@@ -10,11 +10,9 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 import kotlin.DeprecationLevel.HIDDEN
 
 /**
@@ -25,8 +23,7 @@ public class InviteDeleteEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     /**
      * The id of the [Channel] the invite is for.
