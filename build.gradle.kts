@@ -37,15 +37,16 @@ tasks {
         distributionSha256Sum = "db9c8211ed63f61f60292c69e80d89196f9eb36665e369e7f00ac4cc841c2219"
     }
 
-    val dokkaOutputDir = "${rootProject.projectDir}/dokka"
+    val dokkaOutputDir = rootProject.projectDir.resolve("dokka")
 
     clean {
         delete(dokkaOutputDir)
     }
 
-    dokkaHtmlMultiModule.configure {
+    dokkaHtmlMultiModule {
         dependsOn(clean)
-        outputDirectory.set(file(dokkaOutputDir))
+        failOnWarning.set(true)
+        outputDirectory.set(dokkaOutputDir)
     }
 
     gitPublishReset {

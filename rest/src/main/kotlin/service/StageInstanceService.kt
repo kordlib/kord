@@ -59,6 +59,7 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
         return modifyStageInstance(channelId, appliedBuilder.toRequest(), appliedBuilder.reason)
     }
 
+    /** @suppress */
     @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "Replaced by 'modifyStageInstance'.",
@@ -83,6 +84,7 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
         }
 }
 
+/** @suppress */
 @Deprecated(
     "Replaced by builder overload.",
     ReplaceWith("this.createStageInstance(channelId, topic) {\nthis@createStageInstance.reason = reason\n}"),
@@ -96,6 +98,7 @@ public suspend fun StageInstanceService.createStageInstance(
     StageInstanceCreateRequest(channelId, topic), reason
 )
 
+/** @suppress */
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "Replaced by 'modifyStageInstance'.",

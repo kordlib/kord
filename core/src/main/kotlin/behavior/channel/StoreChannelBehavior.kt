@@ -14,13 +14,15 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.StoreChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchStoreChannel
-import java.util.*
+import java.util.Objects
 import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
  * The behavior of a Discord Store Channel associated to a guild.
+ *
+ * @suppress
  */
 @Deprecated(
     """
@@ -77,6 +79,7 @@ public interface StoreChannelBehavior : CategorizableChannelBehavior {
 
 }
 
+/** @suppress */
 @Deprecated(
     """
     Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
@@ -116,6 +119,8 @@ public fun StoreChannelBehavior(
  * @return The edited [StoreChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     """

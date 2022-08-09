@@ -21,6 +21,7 @@ object Library {
         }
 
     val commitHash get() = System.getenv("GITHUB_SHA") ?: "unknown"
+    fun commitHashOrDefault(default: String) = System.getenv("GITHUB_SHA") ?: default
 
     // this environment variable isn't available out of the box, we set it ourselves
     val shortCommitHash get() = System.getenv("SHORT_SHA") ?: "unknown"

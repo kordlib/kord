@@ -81,6 +81,8 @@ public open class Invite(
 
     /**
      * The type of user target for this invite, if present.
+     *
+     * @suppress
      */
     @Suppress("DEPRECATION_ERROR")
     @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)

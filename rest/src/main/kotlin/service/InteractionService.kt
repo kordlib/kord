@@ -620,6 +620,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
+    /** @suppress */
     @Deprecated(
         "Renamed to 'deferMessage'.",
         ReplaceWith("this.deferMessage(interactionId, interactionToken, ephemeral)"),
