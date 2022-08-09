@@ -33,6 +33,7 @@ public class GuildUserCommandInteractionCreateEvent(
     override val interaction: GuildUserCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : GuildApplicationCommandInteractionCreateEvent, UserCommandInteractionCreateEvent
 
 /** An [Event] that fires when a [GlobalUserCommandInteraction] is created. */
@@ -40,6 +41,7 @@ public class GlobalUserCommandInteractionCreateEvent(
     override val interaction: GlobalUserCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : GlobalApplicationCommandInteractionCreateEvent, UserCommandInteractionCreateEvent
 
 
@@ -53,6 +55,7 @@ public class GuildMessageCommandInteractionCreateEvent(
     override val interaction: GuildMessageCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : GuildApplicationCommandInteractionCreateEvent, MessageCommandInteractionCreateEvent
 
 /** An [Event] that fires when a [GlobalMessageCommandInteraction] is created. */
@@ -60,6 +63,7 @@ public class GlobalMessageCommandInteractionCreateEvent(
     override val interaction: GlobalMessageCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : GlobalApplicationCommandInteractionCreateEvent, MessageCommandInteractionCreateEvent
 
 
@@ -73,6 +77,7 @@ public class GuildChatInputCommandInteractionCreateEvent(
     override val interaction: GuildChatInputCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : GuildApplicationCommandInteractionCreateEvent, ChatInputCommandInteractionCreateEvent
 
 /** An [Event] that fires when a [GlobalChatInputCommandInteraction] is created. */
@@ -80,4 +85,5 @@ public class GlobalChatInputCommandInteractionCreateEvent(
     override val interaction: GlobalChatInputCommandInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : GlobalApplicationCommandInteractionCreateEvent, ChatInputCommandInteractionCreateEvent

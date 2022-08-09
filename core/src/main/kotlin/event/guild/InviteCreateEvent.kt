@@ -28,6 +28,7 @@ public class InviteCreateEvent(
     public val data: InviteCreateData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -236,7 +237,7 @@ public class InviteCreateEvent(
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =
-        InviteCreateEvent(data, kord, shard, supplier)
+        InviteCreateEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "InviteCreateEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"

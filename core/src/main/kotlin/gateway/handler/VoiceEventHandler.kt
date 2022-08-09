@@ -18,13 +18,13 @@ import dev.kord.core.event.Event as CoreEvent
 
 internal class VoiceEventHandler : BaseGatewayEventHandler() {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
-        is VoiceStateUpdate -> handle(event, shard, kord)
-        is VoiceServerUpdate -> handle(event, shard, kord)
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: Any?): CoreEvent? = when (event) {
+        is VoiceStateUpdate -> handle(event, shard, kord, context)
+        is VoiceServerUpdate -> handle(event, shard, kord, context)
         else -> null
     }
 
-    private suspend fun handle(event: VoiceStateUpdate, shard: Int, kord: Kord): VoiceStateUpdateEvent {
+    private suspend fun handle(event: VoiceStateUpdate, shard: Int, kord: Kord, context: Any?): VoiceStateUpdateEvent {
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
         val old = kord.cache.query<VoiceStateData> { idEq(VoiceStateData::id, data.id) }
@@ -33,9 +33,9 @@ internal class VoiceEventHandler : BaseGatewayEventHandler() {
         kord.cache.put(data)
         val new = VoiceState(data, kord)
 
-        return VoiceStateUpdateEvent(old, new, shard)
+        return VoiceStateUpdateEvent(old, new, shard, context)
     }
 
-    private fun handle(event: VoiceServerUpdate, shard: Int, kord: Kord): VoiceServerUpdateEvent =
-        with(event.voiceServerUpdateData) { VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard) }
+    private fun handle(event: VoiceServerUpdate, shard: Int, kord: Kord, context: Any?): VoiceServerUpdateEvent =
+        with(event.voiceServerUpdateData) { VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, context) }
 }

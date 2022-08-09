@@ -22,6 +22,7 @@ public data class GuildScheduledEventUpdateEvent(
     public val oldEvent: GuildScheduledEvent?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GuildScheduledEventEvent {
 

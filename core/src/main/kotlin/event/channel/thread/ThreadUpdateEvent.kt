@@ -14,6 +14,7 @@ public class TextChannelThreadUpdateEvent(
     override val channel: TextChannelThread,
     override val old: TextChannelThread?,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ThreadUpdateEvent {
     override fun toString(): String {
         return "TextThreadChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
@@ -25,6 +26,7 @@ public class NewsChannelThreadUpdateEvent(
     override val channel: NewsChannelThread,
     override val old: NewsChannelThread?,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ThreadUpdateEvent {
     override fun toString(): String {
         return "NewsThreadChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
@@ -36,6 +38,7 @@ public class UnknownChannelThreadUpdateEvent(
     override val channel: ThreadChannel,
     override val old: ThreadChannel?,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ThreadUpdateEvent {
     override fun toString(): String {
         return "UnknownChannelThreadUpdateEvent(channel=$channel, old=$old, shard=$shard)"

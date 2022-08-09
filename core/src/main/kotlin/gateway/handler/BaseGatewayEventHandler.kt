@@ -6,6 +6,6 @@ import dev.kord.gateway.Event as GatewayEvent
 
 public abstract class BaseGatewayEventHandler {
 
-    public abstract suspend fun handle(event: GatewayEvent, shard: Int, kord: Kord): CoreEvent?
+    public abstract suspend fun handle(event: GatewayEvent, shard: Int, kord: Kord, context: Any?): CoreEvent?
 
 }

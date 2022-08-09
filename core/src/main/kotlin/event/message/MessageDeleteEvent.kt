@@ -21,6 +21,7 @@ public class MessageDeleteEvent(
     public val message: Message?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -35,7 +36,7 @@ public class MessageDeleteEvent(
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageDeleteEvent =
-        MessageDeleteEvent(messageId, channelId, guildId, message, kord, shard, strategy.supply(kord))
+        MessageDeleteEvent(messageId, channelId, guildId, message, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "MessageDeleteEvent(messageId=$messageId, channelId=$channelId, guildId=$guildId, message=$message, kord=$kord, shard=$shard, supplier=$supplier)"

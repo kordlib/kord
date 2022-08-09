@@ -18,6 +18,7 @@ public class MessageUpdateEvent(
     public val old: Message?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -37,7 +38,7 @@ public class MessageUpdateEvent(
     public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageUpdateEvent =
-        MessageUpdateEvent(messageId, channelId, new, old, kord, shard, strategy.supply(kord))
+        MessageUpdateEvent(messageId, channelId, new, old, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "MessageUpdateEvent(messageId=$messageId, channelId=$channelId, new=$new, old=$old, kord=$kord, shard=$shard, supplier=$supplier)"

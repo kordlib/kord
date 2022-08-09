@@ -14,6 +14,7 @@ public class BanRemoveEvent(
     public val user: User,
     public val guildId: Snowflake,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = user.kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -26,7 +27,7 @@ public class BanRemoveEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): BanRemoveEvent =
-        BanRemoveEvent(user, guildId, shard, strategy.supply(kord))
+        BanRemoveEvent(user, guildId, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "BanRemoveEvent(user=$user, guildId=$guildId, shard=$shard, supplier=$supplier)"

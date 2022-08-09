@@ -12,6 +12,7 @@ public class ThreadMembersUpdateEvent(
     public val data: ThreadMembersUpdateEventData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event {
 
     public val id: Snowflake get() = data.id

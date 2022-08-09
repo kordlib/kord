@@ -8,6 +8,7 @@ public class VoiceStateUpdateEvent(
     public val old: VoiceState?,
     public val state: VoiceState,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event {
     override val kord: Kord get() = state.kord
 

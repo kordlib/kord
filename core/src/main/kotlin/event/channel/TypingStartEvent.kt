@@ -23,6 +23,7 @@ public class TypingStartEvent(
     public val data: TypingStartEventData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -80,13 +81,8 @@ public class TypingStartEvent(
      */
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
-        TypingStartEvent(
-            data,
-            kord,
-            shard,
-            supplier
-        )
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): TypingStartEvent =
+        TypingStartEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "TypingStartEvent(channelId=$channelId, userId=$userId, guildId=$guildId, started=$started, kord=$kord, shard=$shard, supplier=$supplier)"

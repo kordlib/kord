@@ -17,6 +17,7 @@ public class MessageCreateEvent(
     public val guildId: Snowflake?,
     public val member: Member?,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = message.kord.defaultSupplier,
 ) : Event, Strategizable {
     override val kord: Kord get() = message.kord
@@ -30,7 +31,7 @@ public class MessageCreateEvent(
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageCreateEvent =
-        MessageCreateEvent(message, guildId, member, shard, strategy.supply(message.kord))
+        MessageCreateEvent(message, guildId, member, shard, customContext, strategy.supply(message.kord))
 
     override fun toString(): String {
         return "MessageCreateEvent(message=$message, guildId=$guildId, member=$member, shard=$shard, supplier=$supplier)"

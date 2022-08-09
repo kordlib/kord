@@ -8,4 +8,5 @@ public class ThreadMemberUpdateEvent(
     public val member: ThreadMember,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event

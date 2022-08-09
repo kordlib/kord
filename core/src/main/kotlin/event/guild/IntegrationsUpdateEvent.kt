@@ -13,6 +13,7 @@ public class IntegrationsUpdateEvent(
     public val guildId: Snowflake,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -23,7 +24,7 @@ public class IntegrationsUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): IntegrationsUpdateEvent =
-        IntegrationsUpdateEvent(guildId, kord, shard, strategy.supply(kord))
+        IntegrationsUpdateEvent(guildId, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "IntegrationsUpdateEvent(guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"

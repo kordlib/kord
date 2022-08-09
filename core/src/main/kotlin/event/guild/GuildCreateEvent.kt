@@ -7,6 +7,7 @@ import dev.kord.core.event.Event
 public class GuildCreateEvent(
     public val guild: Guild,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event {
     override val kord: Kord get() = guild.kord
 

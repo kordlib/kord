@@ -19,6 +19,7 @@ public class PresenceUpdateEvent(
     public val old: Presence?,
     public val presence: Presence,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = presence.kord.defaultSupplier,
 ) : Event, Strategizable {
     override val kord: Kord get() = presence.kord
@@ -79,7 +80,7 @@ public class PresenceUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PresenceUpdateEvent =
-        PresenceUpdateEvent(oldUser, user, guildId, old, presence, shard, strategy.supply(kord))
+        PresenceUpdateEvent(oldUser, user, guildId, old, presence, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "PresenceUpdateEvent(oldUser=$oldUser, user=$user, guildId=$guildId, old=$old, presence=$presence, shard=$shard, supplier=$supplier)"

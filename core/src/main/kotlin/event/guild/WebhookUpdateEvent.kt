@@ -18,6 +18,7 @@ public class WebhookUpdateEvent(
     public val channelId: Snowflake,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -34,7 +35,7 @@ public class WebhookUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = guild.asGuildOrNull()
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): WebhookUpdateEvent =
-        WebhookUpdateEvent(guildId, channelId, kord, shard, strategy.supply(kord))
+        WebhookUpdateEvent(guildId, channelId, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "WebhookUpdateEvent(guildId=$guildId, channelId=$channelId, kord=$kord, shard=$shard, supplier=$supplier)"

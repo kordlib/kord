@@ -13,6 +13,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public class RoleCreateEvent(
     public val role: Role,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = role.kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -27,7 +28,7 @@ public class RoleCreateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleCreateEvent =
-        RoleCreateEvent(role, shard, strategy.supply(kord))
+        RoleCreateEvent(role, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "RoleCreateEvent(role=$role, shard=$shard, supplier=$supplier)"

@@ -13,6 +13,7 @@ public class ChatInputCommandDeleteEvent(
     override val command: GuildChatInputCommand,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ApplicationCommandDeleteEvent
 
 
@@ -20,6 +21,7 @@ public class UserCommandDeleteEvent(
     override val command: GuildUserCommand,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ApplicationCommandDeleteEvent
 
 
@@ -27,6 +29,7 @@ public class MessageCommandDeleteEvent(
     override val command: GuildMessageCommand,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ApplicationCommandDeleteEvent
 
 
@@ -34,4 +37,5 @@ public class UnknownApplicationCommandDeleteEvent(
     override val command: UnknownGuildApplicationCommand,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ApplicationCommandDeleteEvent

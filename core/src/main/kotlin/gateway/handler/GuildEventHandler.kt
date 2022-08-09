@@ -24,29 +24,29 @@ import dev.kord.core.event.Event as CoreEvent
 
 internal class GuildEventHandler : BaseGatewayEventHandler() {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
-        is GuildCreate -> handle(event, shard, kord)
-        is GuildUpdate -> handle(event, shard, kord)
-        is GuildDelete -> handle(event, shard, kord)
-        is GuildBanAdd -> handle(event, shard, kord)
-        is GuildBanRemove -> handle(event, shard, kord)
-        is GuildEmojisUpdate -> handle(event, shard, kord)
-        is GuildIntegrationsUpdate -> handle(event, shard, kord)
-        is GuildMemberAdd -> handle(event, shard, kord)
-        is GuildMemberRemove -> handle(event, shard, kord)
-        is GuildMemberUpdate -> handle(event, shard, kord)
-        is GuildRoleCreate -> handle(event, shard, kord)
-        is GuildRoleUpdate -> handle(event, shard, kord)
-        is GuildRoleDelete -> handle(event, shard, kord)
-        is GuildMembersChunk -> handle(event, shard, kord)
-        is GuildScheduledEventCreate -> handle(event, shard, kord)
-        is GuildScheduledEventUpdate -> handle(event, shard, kord)
-        is GuildScheduledEventDelete -> handle(event, shard, kord)
-        is GuildScheduledEventUserAdd -> handle(event, shard, kord)
-        is GuildScheduledEventUserRemove -> handle(event, shard, kord)
-        is PresenceUpdate -> handle(event, shard, kord)
-        is InviteCreate -> handle(event, shard, kord)
-        is InviteDelete -> handle(event, shard, kord)
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: Any?): CoreEvent? = when (event) {
+        is GuildCreate -> handle(event, shard, kord, context)
+        is GuildUpdate -> handle(event, shard, kord, context)
+        is GuildDelete -> handle(event, shard, kord, context)
+        is GuildBanAdd -> handle(event, shard, kord, context)
+        is GuildBanRemove -> handle(event, shard, kord, context)
+        is GuildEmojisUpdate -> handle(event, shard, kord, context)
+        is GuildIntegrationsUpdate -> handle(event, shard, kord, context)
+        is GuildMemberAdd -> handle(event, shard, kord, context)
+        is GuildMemberRemove -> handle(event, shard, kord, context)
+        is GuildMemberUpdate -> handle(event, shard, kord, context)
+        is GuildRoleCreate -> handle(event, shard, kord, context)
+        is GuildRoleUpdate -> handle(event, shard, kord, context)
+        is GuildRoleDelete -> handle(event, shard, kord, context)
+        is GuildMembersChunk -> handle(event, shard, kord, context)
+        is GuildScheduledEventCreate -> handle(event, shard, kord, context)
+        is GuildScheduledEventUpdate -> handle(event, shard, kord, context)
+        is GuildScheduledEventDelete -> handle(event, shard, kord, context)
+        is GuildScheduledEventUserAdd -> handle(event, shard, kord, context)
+        is GuildScheduledEventUserRemove -> handle(event, shard, kord, context)
+        is PresenceUpdate -> handle(event, shard, kord, context)
+        is InviteCreate -> handle(event, shard, kord, context)
+        is InviteDelete -> handle(event, shard, kord, context)
         else -> null
     }
 
@@ -81,49 +81,52 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         }
     }
 
-    private suspend fun handle(event: GuildCreate, shard: Int, kord: Kord): GuildCreateEvent {
+    private suspend fun handle(event: GuildCreate, shard: Int, kord: Kord, context: Any?): GuildCreateEvent {
         val data = GuildData.from(event.guild)
         kord.cache.put(data)
         event.guild.cache(kord.cache)
 
-        return GuildCreateEvent(Guild(data, kord), shard)
+        return GuildCreateEvent(Guild(data, kord), shard, context)
     }
 
-    private suspend fun handle(event: GuildUpdate, shard: Int, kord: Kord): GuildUpdateEvent {
+    private suspend fun handle(event: GuildUpdate, shard: Int, kord: Kord, context: Any?): GuildUpdateEvent {
         val data = GuildData.from(event.guild)
         val old = kord.cache.query<GuildData> { idEq(GuildData::id, event.guild.id) }.singleOrNull()
         kord.cache.put(data)
         event.guild.cache(kord.cache)
 
-        return GuildUpdateEvent(Guild(data, kord), old?.let { Guild(it, kord) }, shard)
+        return GuildUpdateEvent(Guild(data, kord), old?.let { Guild(it, kord) }, shard, context)
     }
 
-    private suspend fun handle(event: GuildDelete, shard: Int, kord: Kord): GuildDeleteEvent = with(event.guild) {
-        val query = kord.cache.query<GuildData> { idEq(GuildData::id, id) }
+    private suspend fun handle(event: GuildDelete, shard: Int, kord: Kord, context: Any?): GuildDeleteEvent =
+        with(event.guild) {
+            val query = kord.cache.query<GuildData> { idEq(GuildData::id, id) }
 
-        val old = query.asFlow().map { Guild(it, kord) }.singleOrNull()
-        query.remove()
+            val old = query.asFlow().map { Guild(it, kord) }.singleOrNull()
+            query.remove()
 
-        GuildDeleteEvent(id, unavailable.orElse(false), old, kord, shard)
-    }
+            GuildDeleteEvent(id, unavailable.orElse(false), old, kord, shard, context)
+        }
 
-    private suspend fun handle(event: GuildBanAdd, shard: Int, kord: Kord): BanAddEvent = with(event.ban) {
-        val data = UserData.from(user)
-        kord.cache.put(user)
-        val user = User(data, kord)
+    private suspend fun handle(event: GuildBanAdd, shard: Int, kord: Kord, context: Any?): BanAddEvent =
+        with(event.ban) {
+            val data = UserData.from(user)
+            kord.cache.put(user)
+            val user = User(data, kord)
 
-        BanAddEvent(user, guildId, shard)
-    }
+            BanAddEvent(user, guildId, shard, context)
+        }
 
-    private suspend fun handle(event: GuildBanRemove, shard: Int, kord: Kord): BanRemoveEvent = with(event.ban) {
-        val data = UserData.from(user)
-        kord.cache.put(user)
-        val user = User(data, kord)
+    private suspend fun handle(event: GuildBanRemove, shard: Int, kord: Kord, context: Any?): BanRemoveEvent =
+        with(event.ban) {
+            val data = UserData.from(user)
+            kord.cache.put(user)
+            val user = User(data, kord)
 
-        BanRemoveEvent(user, guildId, shard)
-    }
+            BanRemoveEvent(user, guildId, shard, context)
+        }
 
-    private suspend fun handle(event: GuildEmojisUpdate, shard: Int, kord: Kord): EmojisUpdateEvent =
+    private suspend fun handle(event: GuildEmojisUpdate, shard: Int, kord: Kord, context: Any?): EmojisUpdateEvent =
         with(event.emoji) {
 
             val data = emojis.map { EmojiData.from(guildId, it.id!!, it) }
@@ -138,27 +141,27 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
                 it.copy(emojis = emojis.map { emoji -> emoji.id })
             }
 
-            EmojisUpdateEvent(guildId, emojis.toSet(), old, kord, shard)
+            EmojisUpdateEvent(guildId, emojis.toSet(), old, kord, shard, context)
         }
 
 
-    private fun handle(event: GuildIntegrationsUpdate, shard: Int, kord: Kord): IntegrationsUpdateEvent {
-        return IntegrationsUpdateEvent(event.integrations.guildId, kord, shard)
-    }
+    private fun handle(event: GuildIntegrationsUpdate, shard: Int, kord: Kord, context: Any?): IntegrationsUpdateEvent =
+        IntegrationsUpdateEvent(event.integrations.guildId, kord, shard, context)
 
-    private suspend fun handle(event: GuildMemberAdd, shard: Int, kord: Kord): MemberJoinEvent = with(event.member) {
-        val userData = UserData.from(user.value!!)
-        val memberData = MemberData.from(user.value!!.id, event.member)
+    private suspend fun handle(event: GuildMemberAdd, shard: Int, kord: Kord, context: Any?): MemberJoinEvent =
+        with(event.member) {
+            val userData = UserData.from(user.value!!)
+            val memberData = MemberData.from(user.value!!.id, event.member)
 
-        kord.cache.put(userData)
-        kord.cache.put(memberData)
+            kord.cache.put(userData)
+            kord.cache.put(memberData)
 
-        val member = Member(memberData, userData, kord)
+            val member = Member(memberData, userData, kord)
 
-        return MemberJoinEvent(member, shard)
-    }
+            MemberJoinEvent(member, shard, context)
+        }
 
-    private suspend fun handle(event: GuildMemberRemove, shard: Int, kord: Kord): MemberLeaveEvent =
+    private suspend fun handle(event: GuildMemberRemove, shard: Int, kord: Kord, context: Any?): MemberLeaveEvent =
         with(event.member) {
             val userData = UserData.from(user)
 
@@ -172,10 +175,10 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             val user = User(userData, kord)
             val old = oldData?.let { Member(it, userData, kord) }
 
-            MemberLeaveEvent(user, old, guildId, shard)
+            MemberLeaveEvent(user, old, guildId, shard, context)
         }
 
-    private suspend fun handle(event: GuildMemberUpdate, shard: Int, kord: Kord): MemberUpdateEvent =
+    private suspend fun handle(event: GuildMemberUpdate, shard: Int, kord: Kord, context: Any?): MemberUpdateEvent =
         with(event.member) {
             val userData = UserData.from(user)
             kord.cache.put(userData)
@@ -189,17 +192,17 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             val new = Member(MemberData.from(this), userData, kord)
             kord.cache.put(new.memberData)
 
-            MemberUpdateEvent(new, old, kord, shard)
+            MemberUpdateEvent(new, old, kord, shard, context)
         }
 
-    private suspend fun handle(event: GuildRoleCreate, shard: Int, kord: Kord): RoleCreateEvent {
+    private suspend fun handle(event: GuildRoleCreate, shard: Int, kord: Kord, context: Any?): RoleCreateEvent {
         val data = RoleData.from(event.role)
         kord.cache.put(data)
 
-        return RoleCreateEvent(Role(data, kord), shard)
+        return RoleCreateEvent(Role(data, kord), shard, context)
     }
 
-    private suspend fun handle(event: GuildRoleUpdate, shard: Int, kord: Kord): RoleUpdateEvent {
+    private suspend fun handle(event: GuildRoleUpdate, shard: Int, kord: Kord, context: Any?): RoleUpdateEvent {
         val data = RoleData.from(event.role)
 
         val oldData = kord.cache.query<RoleData> {
@@ -210,52 +213,56 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         val old = oldData?.let { Role(it, kord) }
         kord.cache.put(data)
 
-        return RoleUpdateEvent(Role(data, kord), old, shard)
+        return RoleUpdateEvent(Role(data, kord), old, shard, context)
     }
 
-    private suspend fun handle(event: GuildRoleDelete, shard: Int, kord: Kord): RoleDeleteEvent = with(event.role) {
-        val query = kord.cache.query<RoleData> { idEq(RoleData::id, event.role.id) }
+    private suspend fun handle(event: GuildRoleDelete, shard: Int, kord: Kord, context: Any?): RoleDeleteEvent =
+        with(event.role) {
+            val query = kord.cache.query<RoleData> { idEq(RoleData::id, event.role.id) }
 
-        val old = run {
-            val data = query.singleOrNull() ?: return@run null
-            Role(data, kord)
+            val old = run {
+                val data = query.singleOrNull() ?: return@run null
+                Role(data, kord)
+            }
+
+            query.remove()
+
+            RoleDeleteEvent(guildId, id, old, kord, shard, context)
         }
 
-        query.remove()
+    private suspend fun handle(event: GuildMembersChunk, shard: Int, kord: Kord, context: Any?): MembersChunkEvent =
+        with(event.data) {
+            val presences = presences.orEmpty().map { PresenceData.from(guildId, it) }
+            kord.cache.putAll(presences)
 
-        RoleDeleteEvent(guildId, id, old, kord, shard)
-    }
+            members.map { member ->
+                val memberData = MemberData.from(member.user.value!!.id, guildId, member)
+                kord.cache.put(memberData)
+                val userData = UserData.from(member.user.value!!)
+                kord.cache.put(userData)
+            }
 
-    private suspend fun handle(event: GuildMembersChunk, shard: Int, kord: Kord): MembersChunkEvent = with(event.data) {
-        val presences = presences.orEmpty().map { PresenceData.from(guildId, it) }
-        kord.cache.putAll(presences)
-
-        members.map { member ->
-            val memberData = MemberData.from(member.user.value!!.id, guildId, member)
-            kord.cache.put(memberData)
-            val userData = UserData.from(member.user.value!!)
-            kord.cache.put(userData)
+            MembersChunkEvent(MembersChunkData.from(this), kord, shard, context)
         }
-
-        MembersChunkEvent(MembersChunkData.from(this), kord, shard)
-    }
 
     private suspend fun handle(
         event: GuildScheduledEventCreate,
         shard: Int,
         kord: Kord,
+        context: Any?,
     ): GuildScheduledEventCreateEvent {
         val eventData = GuildScheduledEventData.from(event.event)
         kord.cache.put(eventData)
         val scheduledEvent = GuildScheduledEvent(eventData, kord)
 
-        return GuildScheduledEventCreateEvent(scheduledEvent, kord, shard)
+        return GuildScheduledEventCreateEvent(scheduledEvent, kord, shard, context)
     }
 
     private suspend fun handle(
         event: GuildScheduledEventUpdate,
         shard: Int,
         kord: Kord,
+        context: Any?,
     ): GuildScheduledEventUpdateEvent {
         val eventData = GuildScheduledEventData.from(event.event)
         val oldData = kord.cache.query<GuildScheduledEventData> {
@@ -265,13 +272,14 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord.cache.put(eventData)
         val scheduledEvent = GuildScheduledEvent(eventData, kord)
 
-        return GuildScheduledEventUpdateEvent(scheduledEvent, old, kord, shard)
+        return GuildScheduledEventUpdateEvent(scheduledEvent, old, kord, shard, context)
     }
 
     private suspend fun handle(
         event: GuildScheduledEventDelete,
         shard: Int,
         kord: Kord,
+        context: Any?,
     ): GuildScheduledEventDeleteEvent {
         val query = kord.cache.query<GuildScheduledEvent> {
             idEq(GuildScheduledEvent::id, event.event.id)
@@ -281,23 +289,28 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         val eventData = GuildScheduledEventData.from(event.event)
         val scheduledEvent = GuildScheduledEvent(eventData, kord)
 
-        return GuildScheduledEventDeleteEvent(scheduledEvent, kord, shard)
+        return GuildScheduledEventDeleteEvent(scheduledEvent, kord, shard, context)
     }
 
-    private fun handle(event: GuildScheduledEventUserAdd, shard: Int, kord: Kord): GuildScheduledEventUserAddEvent =
-        with(event.data) {
-            GuildScheduledEventUserAddEvent(guildScheduledEventId, userId, guildId, kord, shard)
-        }
+    private fun handle(
+        event: GuildScheduledEventUserAdd,
+        shard: Int,
+        kord: Kord,
+        context: Any?,
+    ): GuildScheduledEventUserAddEvent = with(event.data) {
+        GuildScheduledEventUserAddEvent(guildScheduledEventId, userId, guildId, kord, shard, context)
+    }
 
     private fun handle(
         event: GuildScheduledEventUserRemove,
         shard: Int,
         kord: Kord,
+        context: Any?,
     ): GuildScheduledEventUserRemoveEvent = with(event.data) {
-        GuildScheduledEventUserRemoveEvent(guildScheduledEventId, userId, guildId, kord, shard)
+        GuildScheduledEventUserRemoveEvent(guildScheduledEventId, userId, guildId, kord, shard, context)
     }
 
-    private suspend fun handle(event: PresenceUpdate, shard: Int, kord: Kord): PresenceUpdateEvent =
+    private suspend fun handle(event: PresenceUpdate, shard: Int, kord: Kord, context: Any?): PresenceUpdateEvent =
         with(event.presence) {
             val data = PresenceData.from(this.guildId.value!!, this)
 
@@ -312,20 +325,21 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
                 .singleOrNull()
                 ?.let { User(it, kord) }
 
-            PresenceUpdateEvent(user, this.user, guildId.value!!, old, new, shard)
+            PresenceUpdateEvent(user, this.user, guildId.value!!, old, new, shard, context)
         }
 
-    private suspend fun handle(event: InviteCreate, shard: Int, kord: Kord): InviteCreateEvent = with(event) {
-        val data = InviteCreateData.from(invite)
+    private suspend fun handle(event: InviteCreate, shard: Int, kord: Kord, context: Any?): InviteCreateEvent =
+        with(event) {
+            val data = InviteCreateData.from(invite)
 
-        invite.inviter.value?.let { kord.cache.put(UserData.from(it)) }
-        invite.targetUser.value?.let { kord.cache.put(UserData.from(it)) }
+            invite.inviter.value?.let { kord.cache.put(UserData.from(it)) }
+            invite.targetUser.value?.let { kord.cache.put(UserData.from(it)) }
 
-        InviteCreateEvent(data, kord, shard)
-    }
+            InviteCreateEvent(data, kord, shard, context)
+        }
 
-    private fun handle(event: InviteDelete, shard: Int, kord: Kord): InviteDeleteEvent = with(event) {
+    private fun handle(event: InviteDelete, shard: Int, kord: Kord, context: Any?): InviteDeleteEvent = with(event) {
         val data = InviteDeleteData.from(invite)
-        InviteDeleteEvent(data, kord, shard)
+        InviteDeleteEvent(data, kord, shard, context)
     }
 }
