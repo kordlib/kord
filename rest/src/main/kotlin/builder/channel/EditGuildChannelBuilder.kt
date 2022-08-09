@@ -199,6 +199,7 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     )
 }
 
+/** @suppress */
 @KordDsl
 @Deprecated(
     """

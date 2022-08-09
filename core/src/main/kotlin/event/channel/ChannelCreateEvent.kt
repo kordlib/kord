@@ -38,6 +38,7 @@ public class NewsChannelCreateEvent(
     }
 }
 
+/** @suppress */
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     """

@@ -24,6 +24,7 @@ public data class InviteCreateData(
     val targetType: Optional<InviteTargetType> = Optional.Missing(),
     val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
     val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
+    /** @suppress */
     @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") dev.kord.common.entity.TargetUserType> = Optional.Missing(),
     val temporary: Boolean,

@@ -40,6 +40,7 @@ public data class DiscordInvite(
     override val targetUser: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_application")
     override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
+    /** @suppress */
     @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     @SerialName("target_user_type")
     val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
