@@ -8,13 +8,17 @@ import dev.kord.core.event.Event as CoreEvent
 
 private val logger = KotlinLogging.logger { }
 
+public typealias CustomContextCreator = suspend (event: ShardEvent, kord: Kord) -> Any?
+
 /**
  * Default implementation of [GatewayEventInterceptor] that also updates [cache][Kord.cache].
  *
- * @param customContextInjector used for creating the value for [customContext][CoreEvent.customContext].
+ * @param customContextCreator This function is invoked once per [handle] call to create an object that is inserted
+ * into [customContext][CoreEvent.customContext]. Note that this object might not be used if this particular [handle]
+ * invocation does not create an [Event][CoreEvent].
  */
 public class DefaultGatewayEventInterceptor(
-    private val customContextInjector: ((ShardEvent, Kord) -> Any?)? = null,
+    private val customContextCreator: CustomContextCreator? = null,
 ) : GatewayEventInterceptor {
 
     private val listeners = listOf(
@@ -31,7 +35,7 @@ public class DefaultGatewayEventInterceptor(
 
     override suspend fun handle(event: ShardEvent, kord: Kord): CoreEvent? {
         return runCatching {
-            val context = customContextInjector?.invoke(event, kord)
+            val context = customContextCreator?.invoke(event, kord)
             for (listener in listeners) {
                 val coreEvent = listener.handle(event.event, event.shard, kord, context)
                 if (coreEvent != null) {

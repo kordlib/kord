@@ -17,7 +17,7 @@ public interface Event {
     public val shard: Int
 
     /**
-     * A custom value that can be inserted when creating events.
+     * A custom object that can be inserted when creating events. By default, this is just `null`.
      *
      * This can be used to associate a custom context with an event, e.g. like this:
      * ```kotlin
@@ -25,7 +25,7 @@ public interface Event {
      *
      * val kord = Kord(token) {
      *     gatewayEventInterceptor = DefaultGatewayEventInterceptor(
-     *         customContextInjector = { event, kord -> YourCustomContext(...) }
+     *         customContextCreator = { event, kord -> YourCustomContext(...) }
      *     )
      * }
      *
