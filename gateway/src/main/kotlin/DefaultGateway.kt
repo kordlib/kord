@@ -7,7 +7,6 @@ import dev.kord.gateway.GatewayCloseCode.*
 import dev.kord.gateway.handler.*
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
-import io.ktor.client.plugins.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -150,8 +149,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun resetState(configuration: GatewayConfiguration) = stateMutex.withLock {
-        @Suppress("UNUSED_VARIABLE")
-        val exhaustive = when (state.value) { //exhaustive state checking
+        when (state.value) {
             is State.Running -> throw IllegalStateException(gatewayRunningError)
             State.Detached -> throw IllegalStateException(gatewayDetachedError)
             State.Stopped -> Unit
@@ -213,7 +211,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         when {
             !discordReason.retry -> {
                 state.update { State.Stopped }
-                throw  IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
+                throw IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
             }
             discordReason.resetSession -> {
                 setStopped()
