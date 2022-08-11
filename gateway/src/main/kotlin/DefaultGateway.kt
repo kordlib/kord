@@ -65,7 +65,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + data.dispatcher
 
-    private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
+    private val compression: Boolean
 
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
@@ -88,9 +88,13 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private val stateMutex = Mutex()
 
     init {
+        val initialUrl = Url(data.url)
+        compression = initialUrl.parameters.contains("compress", "zlib-stream")
+
         val sequence = Sequence()
         SequenceHandler(events, sequence)
-        handshakeHandler = HandshakeHandler(events, ::trySend, sequence, data.identifyRateLimiter, data.reconnectRetry)
+        handshakeHandler =
+            HandshakeHandler(events, initialUrl, ::trySend, sequence, data.identifyRateLimiter, data.reconnectRetry)
         HeartbeatHandler(events, ::trySend, { restart(Close.ZombieConnection) }, { _ping.value = it }, sequence)
         ReconnectHandler(events) { restart(Close.Reconnecting) }
         InvalidSessionHandler(events) { restart(it) }
@@ -102,7 +106,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
             try {
-                socket = webSocket(data.url)
+                socket = data.client.webSocketSession { url(handshakeHandler.gatewayUrl) }
                 /**
                  * https://discord.com/developers/docs/topics/gateway#transport-compression
                  *
@@ -228,10 +232,6 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         } catch (ignore: CancellationException) {
             //reading was stopped from somewhere else, ignore
         }
-    }
-
-    private suspend fun webSocket(url: String) = data.client.webSocketSession {
-        url(url)
     }
 
     override suspend fun stop() {
