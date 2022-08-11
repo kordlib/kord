@@ -10,12 +10,21 @@ private val logger = KotlinLogging.logger { }
 
 public typealias CustomContextCreator = suspend (event: ShardEvent, kord: Kord) -> Any?
 
+/** Used to make sure [customContextCreator] is only invoked when needed. */
+internal class LazyContext(
+    private val event: ShardEvent,
+    private val kord: Kord,
+    private val customContextCreator: CustomContextCreator,
+) {
+    suspend fun get() = customContextCreator(event, kord)
+}
+
 /**
  * Default implementation of [GatewayEventInterceptor] that also updates [cache][Kord.cache].
  *
- * @param customContextCreator This function is invoked once per [handle] call to create an object that is inserted
- * into [customContext][CoreEvent.customContext]. Note that this object might not be used if this particular [handle]
- * invocation does not create an [Event][CoreEvent].
+ * @param customContextCreator This function is invoked inside of [handle] to create an object that is inserted into
+ * [customContext][CoreEvent.customContext]. Note that it will only be invoked if this particular [handle] invocation
+ * actually creates an [Event][CoreEvent].
  */
 public class DefaultGatewayEventInterceptor(
     private val customContextCreator: CustomContextCreator? = null,
@@ -35,7 +44,7 @@ public class DefaultGatewayEventInterceptor(
 
     override suspend fun handle(event: ShardEvent, kord: Kord): CoreEvent? {
         return runCatching {
-            val context = customContextCreator?.invoke(event, kord)
+            val context = customContextCreator?.let { LazyContext(event, kord, it) }
             for (listener in listeners) {
                 val coreEvent = listener.handle(event.event, event.shard, kord, context)
                 if (coreEvent != null) {

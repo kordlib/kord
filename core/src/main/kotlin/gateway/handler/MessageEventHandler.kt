@@ -18,89 +18,102 @@ import dev.kord.core.event.Event as CoreEvent
 
 internal class MessageEventHandler : BaseGatewayEventHandler() {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: Any?): CoreEvent? = when (event) {
-        is MessageCreate -> handle(event, shard, kord, context)
-        is MessageUpdate -> handle(event, shard, kord, context)
-        is MessageDelete -> handle(event, shard, kord, context)
-        is MessageDeleteBulk -> handle(event, shard, kord, context)
-        is MessageReactionAdd -> handle(event, shard, kord, context)
-        is MessageReactionRemove -> handle(event, shard, kord, context)
-        is MessageReactionRemoveAll -> handle(event, shard, kord, context)
-        is MessageReactionRemoveEmoji -> handle(event, shard, kord, context)
-        else -> null
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? =
+        when (event) {
+            is MessageCreate -> handle(event, shard, kord, context)
+            is MessageUpdate -> handle(event, shard, kord, context)
+            is MessageDelete -> handle(event, shard, kord, context)
+            is MessageDeleteBulk -> handle(event, shard, kord, context)
+            is MessageReactionAdd -> handle(event, shard, kord, context)
+            is MessageReactionRemove -> handle(event, shard, kord, context)
+            is MessageReactionRemoveAll -> handle(event, shard, kord, context)
+            is MessageReactionRemoveEmoji -> handle(event, shard, kord, context)
+            else -> null
+        }
+
+    private suspend fun handle(
+        event: MessageCreate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): MessageCreateEvent = with(event.message) {
+        val data = MessageData.from(this)
+        kord.cache.put(data)
+
+        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+            it.copy(lastMessageId = data.id.optionalSnowflake())
+        }
+
+        //get the user data only if it exists and the user isn't a webhook
+        val userData = if (webhookId is OptionalSnowflake.Missing) {
+            UserData.from(author).also { kord.cache.put(it) }
+        } else null
+
+        //get the member and cache the member. We need the user, guild id and member to be present
+        val member = if (userData != null && guildId is OptionalSnowflake.Value && member is Optional.Value) {
+            val memberData = MemberData.from(author.id, guildId.value!!, member.value!!)
+            kord.cache.put(memberData)
+            Member(memberData, userData, kord)
+        } else null
+
+        //cache interaction user if present.
+        if (interaction is Optional.Value) {
+            val interactionUserData = UserData.from(interaction.value!!.user)
+            kord.cache.put(interactionUserData)
+        }
+
+        mentions.forEach {
+            val user = UserData.from(it)
+            kord.cache.put(user)
+            it.member.value?.let {
+                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+            }
+        }
+
+        MessageCreateEvent(Message(data, kord), guildId.value, member, shard, context?.get())
     }
 
-    private suspend fun handle(event: MessageCreate, shard: Int, kord: Kord, context: Any?): MessageCreateEvent =
-        with(event.message) {
-            val data = MessageData.from(this)
-            kord.cache.put(data)
+    private suspend fun handle(
+        event: MessageUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): MessageUpdateEvent = with(event.message) {
+        val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
 
-            kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
-                it.copy(lastMessageId = data.id.optionalSnowflake())
+        val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
+        query.update { it + this }
+
+        mentions.orEmpty().forEach {
+            val user = UserData.from(it)
+            kord.cache.put(user)
+            it.member.value?.let {
+                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
             }
-
-            //get the user data only if it exists and the user isn't a webhook
-            val userData = if (webhookId is OptionalSnowflake.Missing) {
-                UserData.from(author).also { kord.cache.put(it) }
-            } else null
-
-            //get the member and cache the member. We need the user, guild id and member to be present
-            val member = if (userData != null && guildId is OptionalSnowflake.Value && member is Optional.Value) {
-                val memberData = MemberData.from(author.id, guildId.value!!, member.value!!)
-                kord.cache.put(memberData)
-                Member(memberData, userData, kord)
-            } else null
-
-            //cache interaction user if present.
-            if (interaction is Optional.Value) {
-                val interactionUserData = UserData.from(interaction.value!!.user)
-                kord.cache.put(interactionUserData)
-            }
-
-            mentions.forEach {
-                val user = UserData.from(it)
-                kord.cache.put(user)
-                it.member.value?.let {
-                    kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
-                }
-            }
-
-            MessageCreateEvent(Message(data, kord), guildId.value, member, shard, context)
         }
 
-    private suspend fun handle(event: MessageUpdate, shard: Int, kord: Kord, context: Any?): MessageUpdateEvent =
-        with(event.message) {
-            val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
+        MessageUpdateEvent(id, channelId, this, old, kord, shard, context?.get())
+    }
 
-            val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
-            query.update { it + this }
+    private suspend fun handle(
+        event: MessageDelete,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): MessageDeleteEvent = with(event.message) {
+        val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
 
-            mentions.orEmpty().forEach {
-                val user = UserData.from(it)
-                kord.cache.put(user)
-                it.member.value?.let {
-                    kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
-                }
-            }
+        val removed = query.singleOrNull()?.let { Message(it, kord) }
+        query.remove()
 
-            MessageUpdateEvent(id, channelId, this, old, kord, shard, context)
-        }
-
-    private suspend fun handle(event: MessageDelete, shard: Int, kord: Kord, context: Any?): MessageDeleteEvent =
-        with(event.message) {
-            val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
-
-            val removed = query.singleOrNull()?.let { Message(it, kord) }
-            query.remove()
-
-            MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard, context)
-        }
+        MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard, context?.get())
+    }
 
     private suspend fun handle(
         event: MessageDeleteBulk,
         shard: Int,
         kord: Kord,
-        context: Any?,
+        context: LazyContext?,
     ): MessageBulkDeleteEvent = with(event.messageBulk) {
         val query = kord.cache.query<MessageData> { MessageData::id `in` ids }
 
@@ -109,52 +122,56 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
 
         val ids = ids.asSequence().map { it }.toSet()
 
-        MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard, context)
+        MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard, context?.get())
     }
 
-    private suspend fun handle(event: MessageReactionAdd, shard: Int, kord: Kord, context: Any?): ReactionAddEvent =
-        with(event.reaction) {
-            /**
-             * Reactions added will *always* have a name, the only case in which name is null is when a guild reaction
-             * no longer exists (only id is kept). Reacting with a non-existing reaction *should* be impossible.
-             **/
-            val reaction = when (val id = emoji.id) {
-                null -> ReactionEmoji.Unicode(emoji.name!!)
-                else -> ReactionEmoji.Custom(id, emoji.name!!, emoji.animated.orElse(false))
-            }
+    private suspend fun handle(
+        event: MessageReactionAdd,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): ReactionAddEvent = with(event.reaction) {
+        /**
+         * Reactions added will *always* have a name, the only case in which name is null is when a guild reaction
+         * no longer exists (only id is kept). Reacting with a non-existing reaction *should* be impossible.
+         **/
+        val reaction = when (val id = emoji.id) {
+            null -> ReactionEmoji.Unicode(emoji.name!!)
+            else -> ReactionEmoji.Custom(id, emoji.name!!, emoji.animated.orElse(false))
+        }
 
-            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
-                val isMe = kord.selfId == event.reaction.userId
+        kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            val isMe = kord.selfId == event.reaction.userId
 
-                val reactions = if (it.reactions.value.isNullOrEmpty()) {
-                    listOf(ReactionData.from(1, isMe, emoji))
-                } else {
-                    val reactions = it.reactions.orEmpty()
-                    val reactionData = reactions.firstOrNull { reaction ->
-                        if (emoji.id == null) reaction.emojiName == emoji.name
-                        else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
-                    }
-
-                    when (reactionData) {
-                        null -> reactions + ReactionData.from(1, isMe, emoji)
-                        else -> (reactions - reactionData) + reactionData.copy(
-                            count = reactionData.count + 1,
-                            me = isMe
-                        )
-                    }
+            val reactions = if (it.reactions.value.isNullOrEmpty()) {
+                listOf(ReactionData.from(1, isMe, emoji))
+            } else {
+                val reactions = it.reactions.orEmpty()
+                val reactionData = reactions.firstOrNull { reaction ->
+                    if (emoji.id == null) reaction.emojiName == emoji.name
+                    else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
                 }
 
-                it.copy(reactions = Optional.Value(reactions))
+                when (reactionData) {
+                    null -> reactions + ReactionData.from(1, isMe, emoji)
+                    else -> (reactions - reactionData) + reactionData.copy(
+                        count = reactionData.count + 1,
+                        me = isMe
+                    )
+                }
             }
 
-            ReactionAddEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard, context)
+            it.copy(reactions = Optional.Value(reactions))
         }
+
+        ReactionAddEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard, context?.get())
+    }
 
     private suspend fun handle(
         event: MessageReactionRemove,
         shard: Int,
         kord: Kord,
-        context: Any?,
+        context: LazyContext?,
     ): ReactionRemoveEvent = with(event.reaction) {
         /**
          * Reactions removed will *sometimes* have a name, the only case in which name is null is when a guild reaction
@@ -187,31 +204,31 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
             it.copy(reactions = Optional.Value(reactions))
         }
 
-        ReactionRemoveEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard, context)
+        ReactionRemoveEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard, context?.get())
     }
 
     private suspend fun handle(
         event: MessageReactionRemoveAll,
         shard: Int,
         kord: Kord,
-        context: Any?,
+        context: LazyContext?,
     ): ReactionRemoveAllEvent = with(event.reactions) {
         kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
             .update { it.copy(reactions = Optional.Missing()) }
 
-        ReactionRemoveAllEvent(channelId, messageId, guildId.value, kord, shard, context)
+        ReactionRemoveAllEvent(channelId, messageId, guildId.value, kord, shard, context?.get())
     }
 
     private suspend fun handle(
         event: MessageReactionRemoveEmoji,
         shard: Int,
         kord: Kord,
-        context: Any?,
+        context: LazyContext?,
     ): ReactionRemoveEmojiEvent = with(event.reaction) {
         kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
             .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
         val data = ReactionRemoveEmojiData.from(this)
-        ReactionRemoveEmojiEvent(data, kord, shard, context)
+        ReactionRemoveEmojiEvent(data, kord, shard, context?.get())
     }
 }
