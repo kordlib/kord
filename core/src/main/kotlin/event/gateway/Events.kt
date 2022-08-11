@@ -16,7 +16,6 @@ import dev.kord.gateway.GatewayCloseCode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlin.coroutines.CoroutineContext
 
 public sealed class GatewayEvent : Event
 
@@ -145,6 +144,7 @@ public class ReadyEvent(
     public val guildIds: Set<Snowflake>,
     public val self: User,
     public val sessionId: String,
+    public val resumeGatewayUrl: String,
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
@@ -156,11 +156,10 @@ public class ReadyEvent(
     public suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
-        ReadyEvent(gatewayVersion, guildIds, self, sessionId, kord, shard, strategy.supply(kord))
+        ReadyEvent(gatewayVersion, guildIds, self, sessionId, resumeGatewayUrl, kord, shard, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "ReadyEvent(gatewayVersion=$gatewayVersion, guildIds=$guildIds, self=$self, sessionId='$sessionId', kord=$kord, shard=$shard, supplier=$supplier)"
-    }
+    override fun toString(): String = "ReadyEvent(gatewayVersion=$gatewayVersion, guildIds=$guildIds, self=$self, " +
+            "sessionId='$sessionId', resumeGatewayUrl=$resumeGatewayUrl, kord=$kord, shard=$shard, supplier=$supplier)"
 }
 
 public class ResumedEvent(

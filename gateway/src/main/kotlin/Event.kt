@@ -536,6 +536,8 @@ public data class ReadyData(
     val guilds: List<DiscordUnavailableGuild>,
     @SerialName("session_id")
     val sessionId: String,
+    @SerialName("resume_gateway_url")
+    val resumeGatewayUrl: String,
     @SerialName("geo_ordered_rtc_regions")
     val geoOrderedRtcRegions: Optional<JsonElement?> = Optional.Missing(),
     @SerialName("guild_hashes")

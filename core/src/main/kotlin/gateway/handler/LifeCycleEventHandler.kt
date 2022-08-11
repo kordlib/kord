@@ -53,6 +53,7 @@ internal class LifeCycleEventHandler(
                 guilds,
                 User(self, kord),
                 sessionId,
+                resumeGatewayUrl,
                 kord,
                 shard,
                 coroutineScope = coroutineScope
