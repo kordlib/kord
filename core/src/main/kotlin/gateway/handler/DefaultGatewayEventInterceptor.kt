@@ -1,5 +1,6 @@
 package dev.kord.core.gateway.handler
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.gateway.ShardEvent
 import io.ktor.util.logging.*
@@ -26,9 +27,13 @@ internal class LazyContext(
  * [customContext][CoreEvent.customContext]. Note that it will only be invoked if this particular [handle] invocation
  * actually creates an [Event][CoreEvent].
  */
-public class DefaultGatewayEventInterceptor(
-    private val customContextCreator: CustomContextCreator? = null,
+public class DefaultGatewayEventInterceptor @KordPreview public constructor(
+    private val customContextCreator: CustomContextCreator?,
 ) : GatewayEventInterceptor {
+
+    // overload instead of default parameters to allow changes to @KordPreview constructor
+    // without breaking binary compatibility for non preview no-arg constructor
+    public constructor() : this(customContextCreator = null)
 
     private val listeners = listOf(
         MessageEventHandler(),

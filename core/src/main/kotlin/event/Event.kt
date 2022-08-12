@@ -1,5 +1,6 @@
 package dev.kord.core.event
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.gateway.Gateway
 
@@ -38,5 +39,6 @@ public interface Event {
      * kord.login()
      * ```
      */
+    @KordPreview
     public val customContext: Any?
 }
