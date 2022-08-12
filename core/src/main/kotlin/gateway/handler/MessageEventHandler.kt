@@ -21,7 +21,11 @@ internal class MessageEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
+    override suspend fun handle(
+        event: Event,
+        shard: Int,
+        kord: Kord,
+    ): CoreEvent? = when (event) {
         is MessageCreate -> handle(event, shard, kord)
         is MessageUpdate -> handle(event, shard, kord)
         is MessageDelete -> handle(event, shard, kord)
@@ -33,7 +37,11 @@ internal class MessageEventHandler(
         else -> null
     }
 
-    private suspend fun handle(event: MessageCreate, shard: Int, kord: Kord): MessageCreateEvent = with(event.message) {
+    private suspend fun handle(
+        event: MessageCreate,
+        shard: Int,
+        kord: Kord,
+    ): MessageCreateEvent = with(event.message) {
         val data = MessageData.from(this)
         cache.put(data)
 
@@ -70,7 +78,11 @@ internal class MessageEventHandler(
         MessageCreateEvent(Message(data, kord), guildId.value, member, shard)
     }
 
-    private suspend fun handle(event: MessageUpdate, shard: Int, kord: Kord): MessageUpdateEvent = with(event.message) {
+    private suspend fun handle(
+        event: MessageUpdate,
+        shard: Int,
+        kord: Kord,
+    ): MessageUpdateEvent = with(event.message) {
         val query = cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
@@ -87,7 +99,11 @@ internal class MessageEventHandler(
         MessageUpdateEvent(id, channelId, this, old, kord, shard)
     }
 
-    private suspend fun handle(event: MessageDelete, shard: Int, kord: Kord): MessageDeleteEvent = with(event.message) {
+    private suspend fun handle(
+        event: MessageDelete,
+        shard: Int,
+        kord: Kord,
+    ): MessageDeleteEvent = with(event.message) {
         val query = cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val removed = query.singleOrNull()?.let { Message(it, kord) }
@@ -96,7 +112,11 @@ internal class MessageEventHandler(
         MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard)
     }
 
-    private suspend fun handle(event: MessageDeleteBulk, shard: Int, kord: Kord): MessageBulkDeleteEvent =
+    private suspend fun handle(
+        event: MessageDeleteBulk,
+        shard: Int,
+        kord: Kord,
+    ): MessageBulkDeleteEvent =
         with(event.messageBulk) {
             val query = cache.query<MessageData> { MessageData::id `in` ids }
 
@@ -105,10 +125,21 @@ internal class MessageEventHandler(
 
             val ids = ids.asSequence().map { it }.toSet()
 
-            MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard)
+            MessageBulkDeleteEvent(
+                ids,
+                removed,
+                channelId,
+                guildId.value,
+                kord,
+                shard,
+            )
         }
 
-    private suspend fun handle(event: MessageReactionAdd, shard: Int, kord: Kord): ReactionAddEvent =
+    private suspend fun handle(
+        event: MessageReactionAdd,
+        shard: Int,
+        kord: Kord,
+    ): ReactionAddEvent =
         with(event.reaction) {
             /**
              * Reactions added will *always* have a name, the only case in which name is null is when a guild reaction
@@ -143,10 +174,22 @@ internal class MessageEventHandler(
                 it.copy(reactions = Optional.Value(reactions))
             }
 
-            ReactionAddEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard)
+            ReactionAddEvent(
+                userId,
+                channelId,
+                messageId,
+                guildId.value,
+                reaction,
+                kord,
+                shard,
+            )
         }
 
-    private suspend fun handle(event: MessageReactionRemove, shard: Int, kord: Kord): ReactionRemoveEvent =
+    private suspend fun handle(
+        event: MessageReactionRemove,
+        shard: Int,
+        kord: Kord,
+    ): ReactionRemoveEvent =
         with(event.reaction) {
             /**
              * Reactions removed will *sometimes* have a name, the only case in which name is null is when a guild reaction
@@ -179,18 +222,40 @@ internal class MessageEventHandler(
                 it.copy(reactions = Optional.Value(reactions))
             }
 
-            ReactionRemoveEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard)
+            ReactionRemoveEvent(
+                userId,
+                channelId,
+                messageId,
+                guildId.value,
+                reaction,
+                kord,
+                shard,
+            )
         }
 
-    private suspend fun handle(event: MessageReactionRemoveAll, shard: Int, kord: Kord): ReactionRemoveAllEvent =
+    private suspend fun handle(
+        event: MessageReactionRemoveAll,
+        shard: Int,
+        kord: Kord,
+    ): ReactionRemoveAllEvent =
         with(event.reactions) {
             cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = Optional.Missing()) }
 
-            ReactionRemoveAllEvent(channelId, messageId, guildId.value, kord, shard)
+            ReactionRemoveAllEvent(
+                channelId,
+                messageId,
+                guildId.value,
+                kord,
+                shard,
+            )
         }
 
-    private suspend fun handle(event: MessageReactionRemoveEmoji, shard: Int, kord: Kord): ReactionRemoveEmojiEvent =
+    private suspend fun handle(
+        event: MessageReactionRemoveEmoji,
+        shard: Int,
+        kord: Kord,
+    ): ReactionRemoveEmojiEvent =
         with(event.reaction) {
             cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }

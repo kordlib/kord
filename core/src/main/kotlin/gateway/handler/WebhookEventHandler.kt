@@ -18,5 +18,7 @@ internal class WebhookEventHandler(
         }
 
     private fun handle(event: WebhooksUpdate, shard: Int, kord: Kord): WebhookUpdateEvent =
-        with(event.webhooksUpdateData) { WebhookUpdateEvent(guildId, channelId, kord, shard) }
+        with(event.webhooksUpdateData) {
+            WebhookUpdateEvent(guildId, channelId, kord, shard)
+        }
 }

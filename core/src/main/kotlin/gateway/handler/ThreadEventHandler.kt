@@ -19,7 +19,11 @@ public class ThreadEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
+    override suspend fun handle(
+        event: Event,
+        shard: Int,
+        kord: Kord,
+    ): CoreEvent? = when (event) {
         is ThreadCreate -> handle(event, shard, kord)
         is ThreadUpdate -> handle(event, shard, kord)
         is ThreadDelete -> handle(event, shard, kord)
@@ -71,7 +75,11 @@ public class ThreadEventHandler(
         val channel = DeletedThreadChannel(channelData, kord)
         val old = cachedData?.let { Channel.from(cachedData, kord) }
         val coreEvent = when (channel.type) {
-            is ChannelType.PublicNewsThread -> NewsChannelThreadDeleteEvent(channel, old as? NewsChannelThread, shard)
+            is ChannelType.PublicNewsThread -> NewsChannelThreadDeleteEvent(
+                channel,
+                old as? NewsChannelThread,
+                shard,
+            )
             is ChannelType.PrivateThread,
             is ChannelType.GuildText -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard)
             else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard)

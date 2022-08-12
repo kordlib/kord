@@ -20,7 +20,11 @@ internal class ChannelEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
+    override suspend fun handle(
+        event: Event,
+        shard: Int,
+        kord: Kord,
+    ): CoreEvent? = when (event) {
         is ChannelCreate -> handle(event, shard, kord)
         is ChannelUpdate -> handle(event, shard, kord)
         is ChannelDelete -> handle(event, shard, kord)
@@ -89,9 +93,17 @@ internal class ChannelEventHandler(
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelPinsUpdate, shard: Int, kord: Kord): ChannelPinsUpdateEvent =
+    private suspend fun handle(
+        event: ChannelPinsUpdate,
+        shard: Int,
+        kord: Kord,
+    ): ChannelPinsUpdateEvent =
         with(event.pins) {
-            val coreEvent = ChannelPinsUpdateEvent(ChannelPinsUpdateEventData.from(this), kord, shard)
+            val coreEvent = ChannelPinsUpdateEvent(
+                ChannelPinsUpdateEventData.from(this),
+                kord,
+                shard,
+            )
 
             cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
                 it.copy(lastPinTimestamp = lastPinTimestamp)
@@ -100,12 +112,20 @@ internal class ChannelEventHandler(
             coreEvent
         }
 
-    private suspend fun handle(event: TypingStart, shard: Int, kord: Kord): TypingStartEvent = with(event.data) {
+    private suspend fun handle(
+        event: TypingStart,
+        shard: Int,
+        kord: Kord,
+    ): TypingStartEvent = with(event.data) {
         member.value?.let {
             cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
         }
 
-        TypingStartEvent(TypingStartEventData.from(this), kord, shard)
+        TypingStartEvent(
+            TypingStartEventData.from(this),
+            kord,
+            shard,
+        )
     }
 
 }

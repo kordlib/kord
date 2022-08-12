@@ -19,20 +19,21 @@ public class InteractionEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
-        is InteractionCreate -> handle(event, shard, kord)
-        is ApplicationCommandCreate -> handle(event, shard, kord)
-        is ApplicationCommandUpdate -> handle(event, shard, kord)
-        is ApplicationCommandDelete -> handle(event, shard, kord)
-        is ApplicationCommandPermissionsUpdate -> {
-            val data = GuildApplicationCommandPermissionsData.from(event.permissions)
-            ApplicationCommandPermissionsUpdateEvent(
-                ApplicationCommandPermissions(data),
-                kord, shard,
-            )
+    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? =
+        when (event) {
+            is InteractionCreate -> handle(event, shard, kord)
+            is ApplicationCommandCreate -> handle(event, shard, kord)
+            is ApplicationCommandUpdate -> handle(event, shard, kord)
+            is ApplicationCommandDelete -> handle(event, shard, kord)
+            is ApplicationCommandPermissionsUpdate -> {
+                val data = GuildApplicationCommandPermissionsData.from(event.permissions)
+                ApplicationCommandPermissionsUpdateEvent(
+                    ApplicationCommandPermissions(data),
+                    kord, shard,
+                )
+            }
+            else -> null
         }
-        else -> null
-    }
 
     private fun handle(event: InteractionCreate, shard: Int, kord: Kord): InteractionCreateEvent {
         val data = InteractionData.from(event.interaction)
@@ -55,7 +56,11 @@ public class InteractionEventHandler(
         return coreEvent
     }
 
-    private suspend fun handle(event: ApplicationCommandCreate, shard: Int, kord: Kord): ApplicationCommandCreateEvent {
+    private suspend fun handle(
+        event: ApplicationCommandCreate,
+        shard: Int,
+        kord: Kord,
+    ): ApplicationCommandCreateEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.put(data)
         val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
@@ -68,7 +73,11 @@ public class InteractionEventHandler(
     }
 
 
-    private suspend fun handle(event: ApplicationCommandUpdate, shard: Int, kord: Kord): ApplicationCommandUpdateEvent {
+    private suspend fun handle(
+        event: ApplicationCommandUpdate,
+        shard: Int,
+        kord: Kord,
+    ): ApplicationCommandUpdateEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.put(data)
 
@@ -81,7 +90,11 @@ public class InteractionEventHandler(
         return coreEvent
     }
 
-    private suspend fun handle(event: ApplicationCommandDelete, shard: Int, kord: Kord): ApplicationCommandDeleteEvent {
+    private suspend fun handle(
+        event: ApplicationCommandDelete,
+        shard: Int,
+        kord: Kord,
+    ): ApplicationCommandDeleteEvent {
         val data = ApplicationCommandData.from(event.application)
         cache.remove<ApplicationCommandData> { idEq(ApplicationCommandData::id, data.id) }
         val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {

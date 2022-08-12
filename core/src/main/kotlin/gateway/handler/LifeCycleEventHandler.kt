@@ -16,29 +16,43 @@ internal class LifeCycleEventHandler(
     cache: DataCache
 ) : BaseGatewayEventHandler(cache) {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
-        is Ready -> handle(event, shard, kord)
-        is Resumed -> ResumedEvent(kord, shard)
-        Reconnect -> ConnectEvent(kord, shard)
-        is Close -> when (event) {
-            Close.Detach -> DisconnectEvent.DetachEvent(kord, shard)
-            Close.UserClose -> DisconnectEvent.UserCloseEvent(kord, shard)
-            Close.Timeout -> DisconnectEvent.TimeoutEvent(kord, shard)
-            is Close.DiscordClose -> DisconnectEvent.DiscordCloseEvent(kord, shard, event.closeCode, event.recoverable)
-            Close.Reconnecting -> DisconnectEvent.ReconnectingEvent(kord, shard)
-            Close.ZombieConnection -> DisconnectEvent.ZombieConnectionEvent(kord, shard)
-            Close.RetryLimitReached -> DisconnectEvent.RetryLimitReachedEvent(kord, shard)
-            Close.SessionReset -> DisconnectEvent.SessionReset(kord, shard)
+    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? =
+        when (event) {
+            is Ready -> handle(event, shard, kord)
+            is Resumed -> ResumedEvent(kord, shard)
+            Reconnect -> ConnectEvent(kord, shard)
+            is Close -> when (event) {
+                Close.Detach -> DisconnectEvent.DetachEvent(kord, shard)
+                Close.UserClose -> DisconnectEvent.UserCloseEvent(kord, shard)
+                Close.Timeout -> DisconnectEvent.TimeoutEvent(kord, shard)
+                is Close.DiscordClose -> DisconnectEvent.DiscordCloseEvent(
+                    kord,
+                    shard,
+                    event.closeCode,
+                    event.recoverable,
+                )
+                Close.Reconnecting -> DisconnectEvent.ReconnectingEvent(kord, shard)
+                Close.ZombieConnection -> DisconnectEvent.ZombieConnectionEvent(kord, shard)
+                Close.RetryLimitReached -> DisconnectEvent.RetryLimitReachedEvent(kord, shard)
+                Close.SessionReset -> DisconnectEvent.SessionReset(kord, shard)
+            }
+            else -> null
         }
-        else -> null
-    }
 
-    private suspend fun handle(event: Ready, shard: Int, kord: Kord): ReadyEvent = with(event.data) {
-        val guilds = guilds.map { it.id }.toSet()
-        val self = UserData.from(event.data.user)
+    private suspend fun handle(event: Ready, shard: Int, kord: Kord): ReadyEvent =
+        with(event.data) {
+            val guilds = guilds.map { it.id }.toSet()
+            val self = UserData.from(event.data.user)
 
-        cache.put(self)
+            cache.put(self)
 
-        ReadyEvent(event.data.version, guilds, User(self, kord), sessionId, kord, shard)
-    }
+            ReadyEvent(
+                event.data.version,
+                guilds,
+                User(self, kord),
+                sessionId,
+                kord,
+                shard,
+            )
+        }
 }
