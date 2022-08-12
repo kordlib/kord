@@ -13,7 +13,6 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.thread.*
 import dev.kord.core.event.channel.thread.*
 import dev.kord.gateway.*
-import dev.kord.core.event.Event as CoreEvent
 
 public class ThreadEventHandler(
     cache: DataCache
@@ -23,7 +22,7 @@ public class ThreadEventHandler(
         event: Event,
         shard: Int,
         kord: Kord,
-    ): CoreEvent? = when (event) {
+    ): dev.kord.core.event.Event? = when (event) {
         is ThreadCreate -> handle(event, shard, kord)
         is ThreadUpdate -> handle(event, shard, kord)
         is ThreadDelete -> handle(event, shard, kord)

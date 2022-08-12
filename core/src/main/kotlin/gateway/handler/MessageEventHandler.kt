@@ -15,7 +15,6 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
-import dev.kord.core.event.Event as CoreEvent
 
 internal class MessageEventHandler(
     cache: DataCache
@@ -25,7 +24,7 @@ internal class MessageEventHandler(
         event: Event,
         shard: Int,
         kord: Kord,
-    ): CoreEvent? = when (event) {
+    ): dev.kord.core.event.Event? = when (event) {
         is MessageCreate -> handle(event, shard, kord)
         is MessageUpdate -> handle(event, shard, kord)
         is MessageDelete -> handle(event, shard, kord)
