@@ -1,4 +1,6 @@
+import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URL
 
 plugins {
     java
@@ -27,18 +29,18 @@ kotlin {
 }
 
 tasks {
-    tasks.getByName("apiCheck") {
+    getByName("apiCheck") {
         onlyIf { Library.isRelease }
     }
 
     withType<JavaCompile> {
-        sourceCompatibility = Jvm.target
-        targetCompatibility = Jvm.target
+        sourceCompatibility = Jvm.targetString
+        targetCompatibility = Jvm.targetString
     }
 
     withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = Jvm.target
+            jvmTarget = Jvm.targetString
             allWarningsAsErrors = true
             freeCompilerArgs = listOf(
                 CompilerArguments.time,
@@ -57,21 +59,31 @@ tasks {
         useJUnitPlatform()
     }
 
-    dokkaHtml.configure {
-        this.outputDirectory.set(project.projectDir.resolve("dokka").resolve("kord"))
+    // configure both dokkaHtml and dokkaHtmlPartial tasks
+    // (dokkaHtmlMultiModule depends on dokkaHtmlPartial, dokkaJar depends on dokkaHtml)
+    withType<AbstractDokkaLeafTask> {
+        // see https://kotlin.github.io/dokka/<dokka version>/user_guide/gradle/usage/#configuration-options
 
-        dokkaSourceSets {
-            configureEach {
-                platform.set(org.jetbrains.dokka.Platform.jvm)
+        failOnWarning.set(true)
 
-                sourceLink {
-                    localDirectory.set(file("src/main/kotlin"))
-                    remoteUrl.set(uri("https://github.com/kordlib/kord/tree/master/${project.name}/src/main/kotlin/").toURL())
+        dokkaSourceSets.configureEach {
 
-                    remoteLineSuffix.set("#L")
-                }
+            jdkVersion.set(Jvm.targetInt)
 
-                jdkVersion.set(8)
+            sourceLink {
+                localDirectory.set(file("src/main/kotlin"))
+                remoteUrl.set(URL("https://github.com/kordlib/kord/blob/${Library.commitHashOrDefault("0.8.x")}/${project.name}/src/main/kotlin/"))
+                remoteLineSuffix.set("#L")
+            }
+
+            externalDocumentationLink("https://kotlinlang.org/api/kotlinx.coroutines/")
+            externalDocumentationLink("https://kotlinlang.org/api/kotlinx.serialization/")
+            externalDocumentationLink("https://api.ktor.io/")
+
+            // don't list `TweetNaclFast` in docs
+            perPackageOption {
+                matchingRegex.set("""com\.iwebpp\.crypto""")
+                suppress.set(true)
             }
         }
     }

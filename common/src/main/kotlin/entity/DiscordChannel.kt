@@ -118,7 +118,11 @@ public sealed class ChannelType(public val value: Int) {
      */
     public object GuildNews : ChannelType(5)
 
-    /** A channel in which game developers can sell their game on Discord. */
+    /**
+     * A channel in which game developers can sell their game on Discord.
+     *
+     * @suppress
+     */
     @Deprecated(
         """
         Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were

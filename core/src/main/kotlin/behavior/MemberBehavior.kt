@@ -16,7 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import java.util.*
+import java.util.Objects
 import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -38,6 +38,8 @@ public interface MemberBehavior : KordEntity, UserBehavior {
 
     /**
      * The raw mention for this member's nickname.
+     *
+     * @suppress
      */
     @Deprecated(
         "Nickname mentions are deprecated and should be handled the same way as regular user mentions, " +
