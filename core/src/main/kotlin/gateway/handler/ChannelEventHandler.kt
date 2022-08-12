@@ -13,7 +13,6 @@ import dev.kord.core.event.channel.*
 import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
 import dev.kord.core.event.channel.data.TypingStartEventData
 import dev.kord.gateway.*
-import dev.kord.core.event.Event as CoreEvent
 
 internal class ChannelEventHandler : BaseGatewayEventHandler() {
 
@@ -22,7 +21,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): CoreEvent? = when (event) {
+    ): dev.kord.core.event.Event? = when (event) {
         is ChannelCreate -> handle(event, shard, kord, context)
         is ChannelUpdate -> handle(event, shard, kord, context)
         is ChannelDelete -> handle(event, shard, kord, context)

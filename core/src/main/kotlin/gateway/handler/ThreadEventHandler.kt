@@ -12,7 +12,6 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.thread.*
 import dev.kord.core.event.channel.thread.*
 import dev.kord.gateway.*
-import dev.kord.core.event.Event as CoreEvent
 
 internal class ThreadEventHandler : BaseGatewayEventHandler() {
 
@@ -21,7 +20,7 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): CoreEvent? = when (event) {
+    ): dev.kord.core.event.Event? = when (event) {
         is ThreadCreate -> handle(event, shard, kord, context)
         is ThreadUpdate -> handle(event, shard, kord, context)
         is ThreadDelete -> handle(event, shard, kord, context)
