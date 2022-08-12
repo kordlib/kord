@@ -22,7 +22,13 @@ internal class LifeCycleEventHandler : BaseGatewayEventHandler() {
                 Close.Detach -> DisconnectEvent.DetachEvent(kord, shard, context?.get())
                 Close.UserClose -> DisconnectEvent.UserCloseEvent(kord, shard, context?.get())
                 Close.Timeout -> DisconnectEvent.TimeoutEvent(kord, shard, context?.get())
-                is Close.DiscordClose -> DisconnectEvent.DiscordCloseEvent(kord, shard, event.closeCode, event.recoverable, context?.get())
+                is Close.DiscordClose -> DisconnectEvent.DiscordCloseEvent(
+                    kord,
+                    shard,
+                    event.closeCode,
+                    event.recoverable,
+                    context?.get(),
+                )
                 Close.Reconnecting -> DisconnectEvent.ReconnectingEvent(kord, shard, context?.get())
                 Close.ZombieConnection -> DisconnectEvent.ZombieConnectionEvent(kord, shard, context?.get())
                 Close.RetryLimitReached -> DisconnectEvent.RetryLimitReachedEvent(kord, shard, context?.get())
@@ -38,6 +44,14 @@ internal class LifeCycleEventHandler : BaseGatewayEventHandler() {
 
             kord.cache.put(self)
 
-            ReadyEvent(event.data.version, guilds, User(self, kord), sessionId, kord, shard, context?.get())
+            ReadyEvent(
+                event.data.version,
+                guilds,
+                User(self, kord),
+                sessionId,
+                kord,
+                shard,
+                context?.get(),
+            )
         }
 }

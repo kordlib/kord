@@ -17,22 +17,21 @@ import dev.kord.core.event.Event as CoreEvent
 
 internal class ChannelEventHandler : BaseGatewayEventHandler() {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? =
-        when (event) {
-            is ChannelCreate -> handle(event, shard, kord, context)
-            is ChannelUpdate -> handle(event, shard, kord, context)
-            is ChannelDelete -> handle(event, shard, kord, context)
-            is ChannelPinsUpdate -> handle(event, shard, kord, context)
-            is TypingStart -> handle(event, shard, kord, context)
-            else -> null
-        }
-
-    private suspend fun handle(
-        event: ChannelCreate,
+    override suspend fun handle(
+        event: Event,
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): ChannelCreateEvent? {
+    ): CoreEvent? = when (event) {
+        is ChannelCreate -> handle(event, shard, kord, context)
+        is ChannelUpdate -> handle(event, shard, kord, context)
+        is ChannelDelete -> handle(event, shard, kord, context)
+        is ChannelPinsUpdate -> handle(event, shard, kord, context)
+        is TypingStart -> handle(event, shard, kord, context)
+        else -> null
+    }
+
+    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord, context: LazyContext?): ChannelCreateEvent? {
         val data = ChannelData.from(event.channel)
         kord.cache.put(data)
 
@@ -52,12 +51,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
         return coreEvent
     }
 
-    private suspend fun handle(
-        event: ChannelUpdate,
-        shard: Int,
-        kord: Kord,
-        context: LazyContext?,
-    ): ChannelUpdateEvent? {
+    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, context: LazyContext?): ChannelUpdateEvent? {
         val data = ChannelData.from(event.channel)
         val oldData = kord.cache.query<ChannelData> { idEq(ChannelData::id, data.id) }.singleOrNull()
         kord.cache.put(data)
@@ -78,12 +72,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
         return coreEvent
     }
 
-    private suspend fun handle(
-        event: ChannelDelete,
-        shard: Int,
-        kord: Kord,
-        context: LazyContext?,
-    ): ChannelDeleteEvent? {
+    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord, context: LazyContext?): ChannelDeleteEvent? {
         kord.cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 
@@ -107,22 +96,38 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): ChannelPinsUpdateEvent = with(event.pins) {
-        val coreEvent = ChannelPinsUpdateEvent(ChannelPinsUpdateEventData.from(this), kord, shard, context?.get())
+    ): ChannelPinsUpdateEvent =
+        with(event.pins) {
+            val coreEvent = ChannelPinsUpdateEvent(
+                ChannelPinsUpdateEventData.from(this),
+                kord,
+                shard,
+                context?.get(),
+            )
 
-        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
-            it.copy(lastPinTimestamp = lastPinTimestamp)
-        }
-
-        coreEvent
-    }
-
-    private suspend fun handle(event: TypingStart, shard: Int, kord: Kord, context: LazyContext?): TypingStartEvent =
-        with(event.data) {
-            member.value?.let {
-                kord.cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
+            kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+                it.copy(lastPinTimestamp = lastPinTimestamp)
             }
 
-            TypingStartEvent(TypingStartEventData.from(this), kord, shard, context?.get())
+            coreEvent
         }
+
+    private suspend fun handle(
+        event: TypingStart,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): TypingStartEvent = with(event.data) {
+        member.value?.let {
+            kord.cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
+        }
+
+        TypingStartEvent(
+            TypingStartEventData.from(this),
+            kord,
+            shard,
+            context?.get(),
+        )
+    }
+
 }

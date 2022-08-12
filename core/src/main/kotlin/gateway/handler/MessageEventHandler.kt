@@ -18,18 +18,22 @@ import dev.kord.core.event.Event as CoreEvent
 
 internal class MessageEventHandler : BaseGatewayEventHandler() {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? =
-        when (event) {
-            is MessageCreate -> handle(event, shard, kord, context)
-            is MessageUpdate -> handle(event, shard, kord, context)
-            is MessageDelete -> handle(event, shard, kord, context)
-            is MessageDeleteBulk -> handle(event, shard, kord, context)
-            is MessageReactionAdd -> handle(event, shard, kord, context)
-            is MessageReactionRemove -> handle(event, shard, kord, context)
-            is MessageReactionRemoveAll -> handle(event, shard, kord, context)
-            is MessageReactionRemoveEmoji -> handle(event, shard, kord, context)
-            else -> null
-        }
+    override suspend fun handle(
+        event: Event,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): CoreEvent? = when (event) {
+        is MessageCreate -> handle(event, shard, kord, context)
+        is MessageUpdate -> handle(event, shard, kord, context)
+        is MessageDelete -> handle(event, shard, kord, context)
+        is MessageDeleteBulk -> handle(event, shard, kord, context)
+        is MessageReactionAdd -> handle(event, shard, kord, context)
+        is MessageReactionRemove -> handle(event, shard, kord, context)
+        is MessageReactionRemoveAll -> handle(event, shard, kord, context)
+        is MessageReactionRemoveEmoji -> handle(event, shard, kord, context)
+        else -> null
+    }
 
     private suspend fun handle(
         event: MessageCreate,
@@ -114,121 +118,159 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): MessageBulkDeleteEvent = with(event.messageBulk) {
-        val query = kord.cache.query<MessageData> { MessageData::id `in` ids }
+    ): MessageBulkDeleteEvent =
+        with(event.messageBulk) {
+            val query = kord.cache.query<MessageData> { MessageData::id `in` ids }
 
-        val removed = query.asFlow().map { Message(it, kord) }.toSet()
-        query.remove()
+            val removed = query.asFlow().map { Message(it, kord) }.toSet()
+            query.remove()
 
-        val ids = ids.asSequence().map { it }.toSet()
+            val ids = ids.asSequence().map { it }.toSet()
 
-        MessageBulkDeleteEvent(ids, removed, channelId, guildId.value, kord, shard, context?.get())
-    }
+            MessageBulkDeleteEvent(
+                ids,
+                removed,
+                channelId,
+                guildId.value,
+                kord,
+                shard,
+                context?.get(),
+            )
+        }
 
     private suspend fun handle(
         event: MessageReactionAdd,
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): ReactionAddEvent = with(event.reaction) {
-        /**
-         * Reactions added will *always* have a name, the only case in which name is null is when a guild reaction
-         * no longer exists (only id is kept). Reacting with a non-existing reaction *should* be impossible.
-         **/
-        val reaction = when (val id = emoji.id) {
-            null -> ReactionEmoji.Unicode(emoji.name!!)
-            else -> ReactionEmoji.Custom(id, emoji.name!!, emoji.animated.orElse(false))
-        }
-
-        kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
-            val isMe = kord.selfId == event.reaction.userId
-
-            val reactions = if (it.reactions.value.isNullOrEmpty()) {
-                listOf(ReactionData.from(1, isMe, emoji))
-            } else {
-                val reactions = it.reactions.orEmpty()
-                val reactionData = reactions.firstOrNull { reaction ->
-                    if (emoji.id == null) reaction.emojiName == emoji.name
-                    else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
-                }
-
-                when (reactionData) {
-                    null -> reactions + ReactionData.from(1, isMe, emoji)
-                    else -> (reactions - reactionData) + reactionData.copy(
-                        count = reactionData.count + 1,
-                        me = isMe
-                    )
-                }
+    ): ReactionAddEvent =
+        with(event.reaction) {
+            /**
+             * Reactions added will *always* have a name, the only case in which name is null is when a guild reaction
+             * no longer exists (only id is kept). Reacting with a non-existing reaction *should* be impossible.
+             **/
+            val reaction = when (val id = emoji.id) {
+                null -> ReactionEmoji.Unicode(emoji.name!!)
+                else -> ReactionEmoji.Custom(id, emoji.name!!, emoji.animated.orElse(false))
             }
 
-            it.copy(reactions = Optional.Value(reactions))
-        }
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+                val isMe = kord.selfId == event.reaction.userId
 
-        ReactionAddEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard, context?.get())
-    }
+                val reactions = if (it.reactions.value.isNullOrEmpty()) {
+                    listOf(ReactionData.from(1, isMe, emoji))
+                } else {
+                    val reactions = it.reactions.orEmpty()
+                    val reactionData = reactions.firstOrNull { reaction ->
+                        if (emoji.id == null) reaction.emojiName == emoji.name
+                        else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
+                    }
+
+                    when (reactionData) {
+                        null -> reactions + ReactionData.from(1, isMe, emoji)
+                        else -> (reactions - reactionData) + reactionData.copy(
+                            count = reactionData.count + 1,
+                            me = isMe
+                        )
+                    }
+                }
+
+                it.copy(reactions = Optional.Value(reactions))
+            }
+
+            ReactionAddEvent(
+                userId,
+                channelId,
+                messageId,
+                guildId.value,
+                reaction,
+                kord,
+                shard,
+                context?.get(),
+            )
+        }
 
     private suspend fun handle(
         event: MessageReactionRemove,
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): ReactionRemoveEvent = with(event.reaction) {
-        /**
-         * Reactions removed will *sometimes* have a name, the only case in which name is null is when a guild reaction
-         * no longer exists (only id is kept). Removing a non-existing reaction *should* be possible.
-         **/
-        val reaction = when (val id = emoji.id) {
-            null -> ReactionEmoji.Unicode(emoji.name!!)
-            else -> ReactionEmoji.Custom(id, emoji.name ?: "", emoji.animated.orElse(false))
-        }
-
-        kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
-            val oldReactions = it.reactions.value ?: return@update it
-            if (oldReactions.isEmpty()) return@update it
-
-            val me = kord.selfId == event.reaction.userId
-
-            val reactionData = oldReactions.firstOrNull { reaction ->
-                if (emoji.id == null) reaction.emojiName == emoji.name
-                else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
-            } ?: return@update it
-
-            val reactions = when (val count = reactionData.count - 1) {
-                0 -> (oldReactions - reactionData)
-                else -> (oldReactions - reactionData) + reactionData.copy(
-                    count = count,
-                    me = reactionData.me xor me
-                )
+    ): ReactionRemoveEvent =
+        with(event.reaction) {
+            /**
+             * Reactions removed will *sometimes* have a name, the only case in which name is null is when a guild reaction
+             * no longer exists (only id is kept). Removing a non-existing reaction *should* be possible.
+             **/
+            val reaction = when (val id = emoji.id) {
+                null -> ReactionEmoji.Unicode(emoji.name!!)
+                else -> ReactionEmoji.Custom(id, emoji.name ?: "", emoji.animated.orElse(false))
             }
 
-            it.copy(reactions = Optional.Value(reactions))
-        }
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+                val oldReactions = it.reactions.value ?: return@update it
+                if (oldReactions.isEmpty()) return@update it
 
-        ReactionRemoveEvent(userId, channelId, messageId, guildId.value, reaction, kord, shard, context?.get())
-    }
+                val me = kord.selfId == event.reaction.userId
+
+                val reactionData = oldReactions.firstOrNull { reaction ->
+                    if (emoji.id == null) reaction.emojiName == emoji.name
+                    else reaction.emojiId == emoji.id && reaction.emojiName == emoji.name
+                } ?: return@update it
+
+                val reactions = when (val count = reactionData.count - 1) {
+                    0 -> (oldReactions - reactionData)
+                    else -> (oldReactions - reactionData) + reactionData.copy(
+                        count = count,
+                        me = reactionData.me xor me
+                    )
+                }
+
+                it.copy(reactions = Optional.Value(reactions))
+            }
+
+            ReactionRemoveEvent(
+                userId,
+                channelId,
+                messageId,
+                guildId.value,
+                reaction,
+                kord,
+                shard,
+                context?.get(),
+            )
+        }
 
     private suspend fun handle(
         event: MessageReactionRemoveAll,
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): ReactionRemoveAllEvent = with(event.reactions) {
-        kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
-            .update { it.copy(reactions = Optional.Missing()) }
+    ): ReactionRemoveAllEvent =
+        with(event.reactions) {
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
+                .update { it.copy(reactions = Optional.Missing()) }
 
-        ReactionRemoveAllEvent(channelId, messageId, guildId.value, kord, shard, context?.get())
-    }
+            ReactionRemoveAllEvent(
+                channelId,
+                messageId,
+                guildId.value,
+                kord,
+                shard,
+                context?.get(),
+            )
+        }
 
     private suspend fun handle(
         event: MessageReactionRemoveEmoji,
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): ReactionRemoveEmojiEvent = with(event.reaction) {
-        kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
-            .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
+    ): ReactionRemoveEmojiEvent =
+        with(event.reaction) {
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
+                .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
-        val data = ReactionRemoveEmojiData.from(this)
-        ReactionRemoveEmojiEvent(data, kord, shard, context?.get())
-    }
+            val data = ReactionRemoveEmojiData.from(this)
+            ReactionRemoveEmojiEvent(data, kord, shard, context?.get())
+        }
 }
