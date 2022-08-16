@@ -59,7 +59,10 @@ public data class Identify(
     @SerialName("session_id")
     val sessionId: String,
     val token: String
-) : Command()
+) : Command() {
+    override fun toString(): String =
+        "Identify(serverId=$serverId, userId=$userId, sessionId=$sessionId, token=hunter2)"
+}
 
 @Serializable
 public data class Heartbeat(val nonce: Long) : Command()
@@ -92,4 +95,6 @@ public data class Resume(
     val serverId: Snowflake,
     val sessionId: String,
     val token: String
-) : Command()
+) : Command() {
+    override fun toString(): String = "Resume(serverId=$serverId, sessionId=$sessionId, token=hunter2)"
+}

@@ -6,7 +6,6 @@ import dev.kord.gateway.retry.Retry
 import dev.kord.voice.gateway.handler.HandshakeHandler
 import dev.kord.voice.gateway.handler.HeartbeatHandler
 import io.ktor.client.*
-import io.ktor.client.plugins.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.util.logging.*
@@ -59,11 +58,6 @@ public class DefaultVoiceGateway(
 
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
-
-    private val jsonParser = Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
 
     private val stateMutex = Mutex()
 
@@ -144,7 +138,7 @@ public class DefaultVoiceGateway(
         val json = String(frame.data, Charsets.UTF_8)
 
         try {
-            val event = jsonParser.decodeFromString(VoiceEvent.DeserializationStrategy, json)
+            val event = VoiceGatewayJson.decodeFromString(VoiceEvent.DeserializationStrategy, json)
 
             if (event is SessionDescription)
                 defaultVoiceGatewayLogger.trace { "Voice Gateway <<< SESSION_DESCRIPTION" }
@@ -186,20 +180,22 @@ public class DefaultVoiceGateway(
     }
 
     private suspend fun sendUnsafe(command: Command) {
-        val json = Json.encodeToString(Command.SerializationStrategy, command)
-        if (command is Identify) {
-            defaultVoiceGatewayLogger.trace {
-                val copy = command.copy(token = "token")
-                "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
+        val json = VoiceGatewayJson.encodeToString(Command.SerializationStrategy, command)
+
+        defaultVoiceGatewayLogger.trace {
+            val credentialFreeCopy = when (command) {
+                is Identify -> command.copy(token = "hunter2")
+                is Resume -> command.copy(token = "hunter2")
+                is SelectProtocol -> command.copy(data = command.data.copy(address = "ip"))
+                else -> null
             }
-        } else if (command is SelectProtocol) {
-            defaultVoiceGatewayLogger.trace {
-                val copy = command.copy(data = command.data.copy(address = "ip"))
-                "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
-            }
-        } else {
-            defaultVoiceGatewayLogger.trace { "Voice Gateway >>> $json" }
+            val credentialFreeJson = credentialFreeCopy // re-encode copy
+                ?.let { VoiceGatewayJson.encodeToString(Command.SerializationStrategy, it) }
+                ?: json
+
+            "Voice Gateway >>> $credentialFreeJson"
         }
+
         socket.send(Frame.Text(json))
     }
 
@@ -234,6 +230,14 @@ public class DefaultVoiceGateway(
             if (discordReason.exceptional) {
                 throw IllegalStateException("Voice Gateway (${data.guildId.value}) closed: ${reason.code} ${reason.message}")
             }
+        }
+    }
+
+
+    private companion object {
+        private val VoiceGatewayJson = Json {
+            ignoreUnknownKeys = true
+            isLenient = true
         }
     }
 }

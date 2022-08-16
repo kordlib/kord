@@ -22,7 +22,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.*
 import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
@@ -254,8 +254,37 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
 
         try {
-            defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = GatewayJson.decodeFromString(Event.DeserializationStrategy, json) ?: return
+            val event = GatewayJson.decodeFromString(Event.DeserializationStrategy, json)
+
+            defaultGatewayLogger.trace {
+                val credentialFreeJson = when (event) {
+
+                    is VoiceServerUpdate -> {
+                        when (val payload = GatewayJson.parseToJsonElement(json)) {
+                            is JsonObject -> {
+                                val payloadCopy = buildJsonObject {
+                                    for ((k, v) in payload) put(k, v)
+
+                                    val data = payload["d"]
+                                    if (data is JsonObject) putJsonObject("d") {
+                                        for ((k, v) in data) put(k, v)
+                                        put("token", "hunter2")
+                                    }
+                                }
+                                payloadCopy.toString()
+                            }
+                            else -> json
+                        }
+                    }
+
+                    else -> json
+                }
+
+                "Gateway <<< $credentialFreeJson"
+            }
+
+            if (event == null) return
+
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception)
