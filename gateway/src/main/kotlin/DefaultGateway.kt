@@ -142,11 +142,6 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private lateinit var inflater: Inflater
 
-    private val jsonParser = Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
-
     private val stateMutex = Mutex()
 
     init {
@@ -260,7 +255,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json) ?: return
+            val event = GatewayJson.decodeFromString(Event.DeserializationStrategy, json) ?: return
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception)
@@ -342,13 +337,21 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
-        val json = Json.encodeToString(Command.SerializationStrategy, command)
-        if (command is Identify) {
-            defaultGatewayLogger.trace {
-                val copy = command.copy(token = "token")
-                "Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
+        val json = GatewayJson.encodeToString(Command.SerializationStrategy, command)
+
+        defaultGatewayLogger.trace {
+            val credentialFreeCopy = when (command) {
+                is Identify -> command.copy(token = "hunter2")
+                is Resume -> command.copy(token = "hunter2")
+                else -> null
             }
-        } else defaultGatewayLogger.trace { "Gateway >>> $json" }
+            val credentialFreeJson = credentialFreeCopy // re-encode copy
+                ?.let { GatewayJson.encodeToString(Command.SerializationStrategy, it) }
+                ?: json
+
+            "Gateway >>> $credentialFreeJson"
+        }
+
         socket.send(Frame.Text(json))
     }
 
@@ -359,6 +362,11 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
         private const val gatewayDetachedError =
             "The Gateway has been detached and can no longer be used, create a new instance instead."
+
+        private val GatewayJson = Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
     }
 }
 
