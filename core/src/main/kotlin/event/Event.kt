@@ -2,6 +2,7 @@ package dev.kord.core.event
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
+import dev.kord.core.entity.Strategizable
 import dev.kord.gateway.Gateway
 
 public interface Event {
@@ -38,6 +39,9 @@ public interface Event {
      *
      * kord.login()
      * ```
+     *
+     * Note that [withStrategy][Strategizable.withStrategy] for [strategizable][Strategizable] [Event]s will copy
+     * [customContext] only by reference. This should be considered when inserting mutable objects into [customContext].
      */
     @KordPreview
     public val customContext: Any?
