@@ -289,7 +289,7 @@ public final class dev/kord/voice/SpeakingFlags$Companion {
 }
 
 public final class dev/kord/voice/VoiceConnection {
-	public fun <init> (Ldev/kord/voice/VoiceConnectionData;Ldev/kord/gateway/Gateway;Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/gateway/VoiceGatewayConfiguration;Ldev/kord/voice/streams/Streams;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/udp/AudioFrameSender;Ldev/kord/voice/encryption/strategies/NonceStrategy;)V
+	public synthetic fun <init> (Ldev/kord/voice/VoiceConnectionData;Ldev/kord/gateway/Gateway;Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/gateway/VoiceGatewayConfiguration;Ldev/kord/voice/streams/Streams;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/udp/AudioFrameSender;Ldev/kord/voice/encryption/strategies/NonceStrategy;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun connect (Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun connect$default (Ldev/kord/voice/VoiceConnection;Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun disconnect (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -305,6 +305,8 @@ public final class dev/kord/voice/VoiceConnection {
 	public final fun getVoiceGateway ()Ldev/kord/voice/gateway/VoiceGateway;
 	public final fun getVoiceGatewayConfiguration ()Ldev/kord/voice/gateway/VoiceGatewayConfiguration;
 	public final fun leave (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun move (Ldev/kord/common/entity/Snowflake;ZZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun move$default (Ldev/kord/voice/VoiceConnection;Ldev/kord/common/entity/Snowflake;ZZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun setVoiceGatewayConfiguration (Ldev/kord/voice/gateway/VoiceGatewayConfiguration;)V
 	public final fun shutdown (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -317,6 +319,7 @@ public final class dev/kord/voice/VoiceConnectionBuilder {
 	public final fun getAudioProvider ()Ldev/kord/voice/AudioProvider;
 	public final fun getAudioSender ()Ldev/kord/voice/udp/AudioFrameSender;
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getConnectionDetachDuration-UwyO8pc ()J
 	public final fun getFrameInterceptor ()Ldev/kord/voice/FrameInterceptor;
 	public final fun getGateway ()Ldev/kord/gateway/Gateway;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
@@ -331,6 +334,7 @@ public final class dev/kord/voice/VoiceConnectionBuilder {
 	public final fun setAudioProvider (Ldev/kord/voice/AudioProvider;)V
 	public final fun setAudioSender (Ldev/kord/voice/udp/AudioFrameSender;)V
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setConnectionDetachDuration-LRDsOJo (J)V
 	public final fun setFrameInterceptor (Ldev/kord/voice/FrameInterceptor;)V
 	public final fun setGateway (Ldev/kord/gateway/Gateway;)V
 	public final fun setGuildId (Ldev/kord/common/entity/Snowflake;)V
