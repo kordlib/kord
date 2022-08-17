@@ -262,18 +262,6 @@ public class Guild(
      */
     public val defaultMessageNotificationLevel: DefaultMessageNotificationLevel get() = data.defaultMessageNotifications
 
-
-    /**
-     * The voice region id for the guild.
-     */
-    @Suppress("DEPRECATION")
-    @Deprecated(
-        "The region field has been moved to Channel#rtcRegion in Discord API v9",
-        ReplaceWith("Channel#rtcRegion")
-    )
-    public val regionId: String
-        get() = data.region
-
     /**
      * The id of the channel in which a discoverable server's rules should be found
      **/

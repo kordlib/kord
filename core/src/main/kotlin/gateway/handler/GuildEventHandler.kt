@@ -4,6 +4,9 @@ import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.putAll
 import dev.kord.cache.api.query
+import dev.kord.common.entity.DiscordGuild
+import dev.kord.common.entity.DiscordPartialGuild
+import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
@@ -53,8 +56,7 @@ internal class GuildEventHandler(
             is InviteDelete -> handle(event, shard, kord, coroutineScope)
             else -> null
         }
-
-    private suspend fun GatewayGuild.cache() {
+   private suspend fun GatewayGuild.cache() {
         for (member in members.orEmpty()) {
             cache.put(MemberData.from(member.user.value!!.id, id, member))
             cache.put(UserData.from(member.user.value!!))
@@ -84,13 +86,46 @@ internal class GuildEventHandler(
             cache.put(EmojiData.from(id, emoji.id!!, emoji))
         }
     }
+    private suspend fun DiscordPartialGuild.cache() {
+        for (member in members.orEmpty()) {
+            cache.put(MemberData.from(member.user.value!!.id, id, member))
+            cache.put(UserData.from(member.user.value!!))
+        }
+
+        for (role in roles.orEmpty()) {
+            cache.put(RoleData.from(id, role))
+        }
+
+        for (channel in channels.orEmpty()) {
+            cache.put(ChannelData.from(channel.copy(guildId = this.id.optionalSnowflake()))) //guild id always empty
+        }
+
+        for (thread in threads.orEmpty()) {
+            cache.put(ChannelData.from(thread.copy(guildId = this.id.optionalSnowflake()))) //guild id always empty
+        }
+
+        for (presence in presences.orEmpty()) {
+            cache.put(PresenceData.from(id, presence))
+        }
+
+        for (voiceState in voiceStates.orEmpty()) {
+            cache.put(VoiceStateData.from(id, voiceState))
+        }
+
+        for (emoji in emojis.orEmpty()) {
+            cache.put(EmojiData.from(id, emoji.id!!, emoji))
+        }
+    }
 
     private suspend fun handle(
         event: GuildCreate,
         shard: Int,
         kord: Kord,
         coroutineScope: CoroutineScope
-    ): GuildCreateEvent {
+    ): CoreEvent {
+        if (event.guild.name is Optional.Missing<*>) {
+            return UnavailableGuildCreateEvent(event.guild.id, shard, kord)
+        }
         val data = GuildData.from(event.guild)
         cache.put(data)
         event.guild.cache()

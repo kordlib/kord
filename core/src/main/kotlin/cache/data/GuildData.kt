@@ -23,8 +23,6 @@ public data class GuildData(
     //val owner: OptionalBoolean = OptionalBoolean.Missing, useless?
     val ownerId: Snowflake,
     val permissions: Optional<Permissions> = Optional.Missing(),
-    @Deprecated("The region field has been moved to Channel#rtcRegion in Discord API v9", ReplaceWith("ChannelData#rtcRegion"))
-    val region: String,
     val afkChannelId: Snowflake? = null,
     val afkTimeout: DurationInSeconds,
     val widgetEnabled: OptionalBoolean = OptionalBoolean.Missing,
@@ -90,7 +88,6 @@ public data class GuildData(
                 //owner = owner,
                 ownerId = ownerId,
                 permissions = permissions,
-                region = @Suppress("DEPRECATION") region,
                 afkChannelId = afkChannelId,
                 afkTimeout = afkTimeout,
                 widgetEnabled = widgetEnabled,
@@ -133,7 +130,58 @@ public data class GuildData(
                 premiumProgressBarEnabled = premiumProgressBarEnabled
             )
         }
+
+        public fun from(entity: DiscordPartialGuild): GuildData = with(entity) {
+            return GuildData(
+               id = id,
+                name = name.value!!,
+                icon = icon?.value!!,
+                iconHash = iconHash,
+                splash = splash,
+                discoverySplash = discoverySplash,
+                //owner = owner,
+                ownerId = ownerId.value!!,
+                permissions = permissions,
+                afkChannelId = afkChannelId.value,
+                afkTimeout = afkTimeout.value!!,
+                widgetEnabled = widgetEnabled,
+                widgetChannelId = widgetChannelId,
+                verificationLevel = verificationLevel.value!!,
+                defaultMessageNotifications = defaultMessageNotifications.value!!,
+                explicitContentFilter = explicitContentFilter.value!!,
+                roles = roles.orEmpty().map { it.id },
+                emojis = emojis.orEmpty().map { it.id!! },
+                features = features.orEmpty(),
+                mfaLevel = mfaLevel.value!!,
+                applicationId = applicationId.value,
+                systemChannelId = systemChannelId.value,
+                systemChannelFlags = systemChannelFlags.value!!,
+                rulesChannelId = rulesChannelId.value,
+                joinedAt = joinedAt,
+                large = large,
+                memberCount = memberCount,
+                channels = channels.mapList { it.id },
+                maxPresences = maxPresences,
+                maxMembers = maxMembers,
+                vanityUrlCode = vanityUrlCode?.value,
+                description = description?.value,
+                banner = banner?.value,
+                premiumTier = premiumTier.value!!,
+                premiumSubscriptionCount = premiumSubscriptionCount,
+                preferredLocale = preferredLocale.value!!,
+                publicUpdatesChannelId = publicUpdatesChannelId.value,
+                maxVideoChannelUsers = maxVideoChannelUsers,
+                approximateMemberCount = approximateMemberCount,
+                approximatePresenceCount = approximatePresenceCount,
+                welcomeScreen = welcomeScreen.map { WelcomeScreenData.from(it) },
+                nsfwLevel = nsfwLevel.value!!,
+                threads = threads.mapList { it.toData() },
+                stageInstances = stageInstances.mapList { StageInstanceData.from(it) },
+                stickers = stickers.mapList { StickerData.from(it) },
+                guildScheduledEvents = guildScheduledEvents.mapList { GuildScheduledEventData.from(it) },
+                premiumProgressBarEnabled = premiumProgressBarEnabled.value!!
+            )
+        }
     }
 }
-
 public fun DiscordGuild.toData(): GuildData = GuildData.from(this)

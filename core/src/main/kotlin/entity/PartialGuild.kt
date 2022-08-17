@@ -26,7 +26,7 @@ public class PartialGuild(
     /**
      * The name of this guild.
      */
-    public val name: String get() = data.name
+    public val name: String? get() = data.name.value
 
 
     override val id: Snowflake get() = data.id
@@ -34,7 +34,7 @@ public class PartialGuild(
     /**
      * The icon hash, if present.
      */
-    public val iconHash: String? get() = data.icon
+    public val iconHash: String? get() = data.icon?.value
 
     /**
      * wither who created the invite is the owner or not.
@@ -60,7 +60,7 @@ public class PartialGuild(
     /**
      * The vanity code of this server used in the [vanityUrl], if present.
      */
-    public val vanityCode: String? get() = data.vanityUrlCode.value
+    public val vanityCode: String? get() = data.vanityUrlCode?.value
 
     /**
      * The vanity invite URL of this server, if present.
@@ -70,7 +70,7 @@ public class PartialGuild(
     /**
      * The description of this guild, if present.
      */
-    public val description: String? get() = data.description.value
+    public val description: String? get() = data.description?.value
 
 
     /**
@@ -125,7 +125,7 @@ public class PartialGuild(
      * Gets the banner url in the specified format.
      */
     public fun getBannerUrl(format: Image.Format): String? =
-        data.banner.value?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
+        data.banner?.value?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
     /**
      * Requests to get the banner image in the specified [format], if present.

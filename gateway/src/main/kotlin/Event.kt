@@ -168,7 +168,7 @@ public sealed class Event {
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
-                        DiscordGuild.serializer()
+                        DiscordPartialGuild.serializer()
                     ), sequence
                 )
                 "GUILD_UPDATE" -> GuildUpdate(
@@ -591,7 +591,7 @@ public data class ChannelDelete(val channel: DiscordChannel, override val sequen
 public data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
 public data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
-public data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
+public data class GuildCreate(val guild: DiscordPartialGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildBanAdd(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()

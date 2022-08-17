@@ -2,6 +2,7 @@ package live
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.optional
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.Guild
@@ -38,7 +39,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                     id = guildId,
                     name = "",
                     ownerId = randomId(),
-                    region = "",
                     afkTimeout = 0.seconds,
                     verificationLevel = VerificationLevel.None,
                     defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
@@ -690,33 +690,32 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
 
             sendEventValidAndRandomId(guildId) {
                 GuildCreate(
-                    DiscordGuild(
+                    DiscordPartialGuild(
                         id = it,
-                        name = "",
+                        name = "".optional(),
                         icon = null,
-                        ownerId = randomId(),
-                        region = "",
+                        ownerId = randomId().optionalSnowflake(),
                         afkChannelId = null,
-                        afkTimeout = 0.seconds,
-                        verificationLevel = VerificationLevel.None,
-                        defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
-                        explicitContentFilter = ExplicitContentFilter.Disabled,
+                        afkTimeout = 0.seconds.optional(),
+                        verificationLevel = VerificationLevel.None.optional(),
+                        defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages.optional(),
+                        explicitContentFilter = ExplicitContentFilter.Disabled.optional(),
                         roles = emptyList(),
                         emojis = emptyList(),
                         features = emptyList(),
-                        mfaLevel = MFALevel.None,
+                        mfaLevel = MFALevel.None.optional(),
                         applicationId = null,
                         systemChannelId = null,
-                        systemChannelFlags = SystemChannelFlags(0),
+                        systemChannelFlags = SystemChannelFlags(0).optional(),
                         rulesChannelId = null,
                         vanityUrlCode = null,
                         description = null,
                         banner = null,
-                        premiumTier = PremiumTier.None,
-                        preferredLocale = "",
+                        premiumTier = PremiumTier.None.optional(),
+                        preferredLocale = "".optional(),
                         publicUpdatesChannelId = null,
-                        nsfwLevel = NsfwLevel.Default,
-                        premiumProgressBarEnabled = false
+                        nsfwLevel = NsfwLevel.Default.optional(),
+                        premiumProgressBarEnabled = false.optional()
                     ),
                     0
                 )

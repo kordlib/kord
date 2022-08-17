@@ -2,8 +2,11 @@ package dev.kord.core.performance
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.optional
+import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
+import dev.kord.core.entity.PartialGuild
 import dev.kord.core.event.guild.GuildCreateEvent
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.on
@@ -62,33 +65,32 @@ class KordEventDropTest {
         val amount = 1_000
 
         val event = GuildCreate(
-            DiscordGuild(
+            DiscordPartialGuild(
                 Snowflake("1337"),
-                "discord guild",
-                afkTimeout = 0.seconds,
-                defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages,
+                "discord guild".optional(),
+                afkTimeout = 0.seconds.optional(),
+                defaultMessageNotifications = DefaultMessageNotificationLevel.AllMessages.optional(),
                 emojis = emptyList(),
-                explicitContentFilter = ExplicitContentFilter.AllMembers,
+                explicitContentFilter = ExplicitContentFilter.AllMembers.optional(),
                 features = emptyList(),
-                mfaLevel = MFALevel.Elevated,
-                ownerId = Snowflake("123"),
-                preferredLocale = "en",
-                description = "A not really real guild",
-                premiumTier = PremiumTier.None,
-                region = "idk",
+                mfaLevel = MFALevel.Elevated.optional(),
+                ownerId = Snowflake("123").optionalSnowflake(),
+                preferredLocale = "en".optional(),
+                description = "A not really real guild".optional(),
+                premiumTier = PremiumTier.None.optional(),
                 roles = emptyList(),
-                verificationLevel = VerificationLevel.High,
+                verificationLevel = VerificationLevel.High.optional(),
                 icon = null,
                 afkChannelId = null,
                 applicationId = null,
-                systemChannelFlags = SystemChannelFlags(0),
+                systemChannelFlags = SystemChannelFlags(0).optional(),
                 systemChannelId = null,
                 rulesChannelId = null,
                 vanityUrlCode = null,
                 banner = null,
                 publicUpdatesChannelId = null,
-                nsfwLevel = NsfwLevel.Default,
-                premiumProgressBarEnabled = false
+                nsfwLevel = NsfwLevel.Default.optional(),
+                premiumProgressBarEnabled = false.optional()
             ), 0
         )
 

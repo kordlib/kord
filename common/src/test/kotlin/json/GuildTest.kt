@@ -1,6 +1,7 @@
 package json
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.value
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
@@ -94,10 +95,10 @@ class GuildTest {
 
         with(guild) {
             id shouldBe "80351110224678912"
-            name shouldBe "1337 Krew"
-            icon shouldBe "8342729096ea3675442027381ff50dfe"
-            owner shouldBe true
-            permissions shouldBe Permissions("36953089")
+            name.value shouldBe "1337 Krew"
+            icon?.value shouldBe "8342729096ea3675442027381ff50dfe"
+            owner.value shouldBe true
+            permissions.value shouldBe Permissions("36953089")
             features shouldBe listOf(GuildFeature.Community, GuildFeature.News)
         }
     }
