@@ -11,6 +11,7 @@ public class GuildDeleteEvent(
     public val guild: Guild?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event {
 
     override fun toString(): String {

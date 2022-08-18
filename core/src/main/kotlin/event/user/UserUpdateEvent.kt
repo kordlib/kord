@@ -8,6 +8,7 @@ public class UserUpdateEvent(
     public val old: User?,
     public val user: User,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event {
     override val kord: Kord get() = user.kord
 

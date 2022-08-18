@@ -21,7 +21,7 @@ public annotation class KordDsl
 @MustBeDocumented
 @RequiresOptIn(level = WARNING)
 @Retention(RUNTIME)
-@Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
+@Target(CLASS, PROPERTY, CONSTRUCTOR, FUNCTION, TYPEALIAS)
 public annotation class KordPreview
 
 /**

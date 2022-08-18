@@ -20,6 +20,7 @@ public sealed class GatewayEvent : Event
 public class ConnectEvent(
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : GatewayEvent()
 
 public sealed class DisconnectEvent : GatewayEvent() {
@@ -30,6 +31,7 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class DetachEvent(
         override val kord: Kord,
         override val shard: Int,
+        override val customContext: Any?,
     ) : DisconnectEvent() {
         override fun toString(): String {
             return "DetachEvent(kord=$kord, shard=$shard)"
@@ -42,6 +44,7 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class UserCloseEvent(
         override val kord: Kord,
         override val shard: Int,
+        override val customContext: Any?,
     ) : DisconnectEvent() {
         override fun toString(): String {
             return "UserCloseEvent(kord=$kord, shard=$shard)"
@@ -54,6 +57,7 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class TimeoutEvent(
         override val kord: Kord,
         override val shard: Int,
+        override val customContext: Any?,
     ) : DisconnectEvent() {
         override fun toString(): String {
             return "TimeoutEvent(kord=$kord, shard=$shard)"
@@ -70,6 +74,7 @@ public sealed class DisconnectEvent : GatewayEvent() {
         override val shard: Int,
         public val closeCode: GatewayCloseCode,
         public val recoverable: Boolean,
+        override val customContext: Any?,
     ) : DisconnectEvent() {
         override fun toString(): String {
             return "DiscordCloseEvent(kord=$kord, shard=$shard, closeCode=$closeCode, recoverable=$recoverable)"
@@ -83,6 +88,7 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class RetryLimitReachedEvent(
         override val kord: Kord,
         override val shard: Int,
+        override val customContext: Any?,
     ) : DisconnectEvent() {
         override fun toString(): String {
             return "RetryLimitReachedEvent(kord=$kord, shard=$shard)"
@@ -95,6 +101,7 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class ReconnectingEvent(
         override val kord: Kord,
         override val shard: Int,
+        override val customContext: Any?,
     ) : DisconnectEvent() {
         override fun toString(): String {
             return "ReconnectingEvent(kord=$kord, shard=$shard)"
@@ -107,6 +114,7 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class SessionReset(
         override val kord: Kord,
         override val shard: Int,
+        override val customContext: Any?,
     ) : DisconnectEvent() {
         override fun toString(): String {
             return "SessionReset(kord=$kord, shard=$shard)"
@@ -120,6 +128,7 @@ public sealed class DisconnectEvent : GatewayEvent() {
     public class ZombieConnectionEvent(
         override val kord: Kord,
         override val shard: Int,
+        override val customContext: Any?,
     ) : DisconnectEvent() {
         override fun toString(): String {
             return "ZombieConnectionEvent(kord=$kord, shard=$shard)"
@@ -135,6 +144,7 @@ public class ReadyEvent(
     public val sessionId: String,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GatewayEvent(), Strategizable {
 
@@ -143,7 +153,7 @@ public class ReadyEvent(
     public suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
-        ReadyEvent(gatewayVersion, guildIds, self, sessionId, kord, shard, strategy.supply(kord))
+        ReadyEvent(gatewayVersion, guildIds, self, sessionId, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "ReadyEvent(gatewayVersion=$gatewayVersion, guildIds=$guildIds, self=$self, sessionId='$sessionId', kord=$kord, shard=$shard, supplier=$supplier)"
@@ -153,6 +163,7 @@ public class ReadyEvent(
 public class ResumedEvent(
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : GatewayEvent() {
     override fun toString(): String {
         return "ResumedEvent(kord=$kord, shard=$shard)"

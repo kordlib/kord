@@ -6,6 +6,7 @@ import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.cache.KordCacheBuilder
 import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
@@ -30,7 +31,8 @@ internal class CacheEntitySupplierTest {
             RestClient(KtorRequestHandler("")),
             Snowflake(0u),
             MutableSharedFlow(),
-            Dispatchers.Default
+            Dispatchers.Default,
+            DefaultGatewayEventInterceptor(),
         )
 
         kord.unsafe.guild(Snowflake(0u)).regions.toList()

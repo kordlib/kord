@@ -34,6 +34,7 @@ public class GuildButtonInteractionCreateEvent(
     override val interaction: GuildButtonInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ButtonInteractionCreateEvent, GuildComponentInteractionCreateEvent
 
 /** An [Event] that fires when a [GlobalButtonInteraction] is created. */
@@ -41,6 +42,7 @@ public class GlobalButtonInteractionCreateEvent(
     override val interaction: GlobalButtonInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ButtonInteractionCreateEvent, GlobalComponentInteractionCreateEvent
 
 /** An [Event] that fires when a [GuildSelectMenuInteraction] is created. */
@@ -48,6 +50,7 @@ public class GuildSelectMenuInteractionCreateEvent(
     override val interaction: GuildSelectMenuInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : SelectMenuInteractionCreateEvent, GuildComponentInteractionCreateEvent
 
 /** An [Event] that fires when a [GlobalSelectMenuInteraction] is created. */
@@ -55,4 +58,5 @@ public class GlobalSelectMenuInteractionCreateEvent(
     override val interaction: GlobalSelectMenuInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : SelectMenuInteractionCreateEvent, GlobalComponentInteractionCreateEvent

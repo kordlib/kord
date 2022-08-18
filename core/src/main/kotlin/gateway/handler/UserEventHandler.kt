@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.query
 import dev.kord.core.Kord
@@ -14,25 +13,23 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import dev.kord.core.event.Event as CoreEvent
 
-internal class UserEventHandler(
-    cache: DataCache
-) : BaseGatewayEventHandler(cache) {
+internal class UserEventHandler : BaseGatewayEventHandler() {
 
-    override suspend fun handle(event: Event, shard: Int, kord: Kord): CoreEvent? = when (event) {
-        is UserUpdate -> handle(event, shard, kord)
+    override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? = when (event) {
+        is UserUpdate -> handle(event, shard, kord, context)
         else -> null
     }
 
-    private suspend fun handle(event: UserUpdate, shard: Int, kord: Kord): UserUpdateEvent {
+    private suspend fun handle(event: UserUpdate, shard: Int, kord: Kord, context: LazyContext?): UserUpdateEvent {
         val data = UserData.from(event.user)
 
-        val old = cache.query<UserData> { idEq(UserData::id, data.id) }
+        val old = kord.cache.query<UserData> { idEq(UserData::id, data.id) }
             .asFlow().map { User(it, kord) }.singleOrNull()
 
-        cache.put(data)
+        kord.cache.put(data)
         val new = User(data, kord)
 
-        return UserUpdateEvent(old, new, shard)
+        return UserUpdateEvent(old, new, shard, context?.get())
     }
 
 }

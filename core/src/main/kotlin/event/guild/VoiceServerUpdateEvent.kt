@@ -15,6 +15,7 @@ public class VoiceServerUpdateEvent(
     public val endpoint: String?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -25,7 +26,7 @@ public class VoiceServerUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceServerUpdateEvent =
-        VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, strategy.supply(kord))
+        VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "VoiceServerUpdateEvent(token='$token', guildId=$guildId, endpoint='$endpoint', kord=$kord, shard=$shard, supplier=$supplier)"

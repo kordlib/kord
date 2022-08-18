@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.query
 import dev.kord.cache.api.remove
@@ -15,78 +14,77 @@ import dev.kord.core.event.channel.data.ChannelPinsUpdateEventData
 import dev.kord.core.event.channel.data.TypingStartEventData
 import dev.kord.gateway.*
 
-internal class ChannelEventHandler(
-    cache: DataCache
-) : BaseGatewayEventHandler(cache) {
+internal class ChannelEventHandler : BaseGatewayEventHandler() {
 
     override suspend fun handle(
         event: Event,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): dev.kord.core.event.Event? = when (event) {
-        is ChannelCreate -> handle(event, shard, kord)
-        is ChannelUpdate -> handle(event, shard, kord)
-        is ChannelDelete -> handle(event, shard, kord)
-        is ChannelPinsUpdate -> handle(event, shard, kord)
-        is TypingStart -> handle(event, shard, kord)
+        is ChannelCreate -> handle(event, shard, kord, context)
+        is ChannelUpdate -> handle(event, shard, kord, context)
+        is ChannelDelete -> handle(event, shard, kord, context)
+        is ChannelPinsUpdate -> handle(event, shard, kord, context)
+        is TypingStart -> handle(event, shard, kord, context)
         else -> null
     }
 
-    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord): ChannelCreateEvent? {
+    private suspend fun handle(event: ChannelCreate, shard: Int, kord: Kord, context: LazyContext?): ChannelCreateEvent? {
         val data = ChannelData.from(event.channel)
-        cache.put(data)
+        kord.cache.put(data)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
-            is NewsChannel -> NewsChannelCreateEvent(channel, shard)
-            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelCreateEvent(channel, shard)
-            is DmChannel -> DMChannelCreateEvent(channel, shard)
-            is TextChannel -> TextChannelCreateEvent(channel, shard)
-            is StageChannel -> StageChannelCreateEvent(channel, shard)
-            is VoiceChannel -> VoiceChannelCreateEvent(channel, shard)
-            is Category -> CategoryCreateEvent(channel, shard)
+            is NewsChannel -> NewsChannelCreateEvent(channel, shard, context?.get())
+            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelCreateEvent(channel, shard, context?.get())
+            is DmChannel -> DMChannelCreateEvent(channel, shard, context?.get())
+            is TextChannel -> TextChannelCreateEvent(channel, shard, context?.get())
+            is StageChannel -> StageChannelCreateEvent(channel, shard, context?.get())
+            is VoiceChannel -> VoiceChannelCreateEvent(channel, shard, context?.get())
+            is Category -> CategoryCreateEvent(channel, shard, context?.get())
             is ThreadChannel -> return null
-            else -> UnknownChannelCreateEvent(channel, shard)
+            else -> UnknownChannelCreateEvent(channel, shard, context?.get())
 
         }
 
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord): ChannelUpdateEvent? {
+    private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, context: LazyContext?): ChannelUpdateEvent? {
         val data = ChannelData.from(event.channel)
-        val oldData = cache.query<ChannelData> { idEq(ChannelData::id, data.id) }.singleOrNull()
-        cache.put(data)
+        val oldData = kord.cache.query<ChannelData> { idEq(ChannelData::id, data.id) }.singleOrNull()
+        kord.cache.put(data)
         val old = oldData?.let { Channel.from(it, kord) }
         val coreEvent = when (val channel = Channel.from(data, kord)) {
-            is NewsChannel -> NewsChannelUpdateEvent(channel, old as? NewsChannel, shard)
-            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelUpdateEvent(channel, old as? StoreChannel, shard)
-            is DmChannel -> DMChannelUpdateEvent(channel, old as? DmChannel, shard)
-            is TextChannel -> TextChannelUpdateEvent(channel, old as? TextChannel, shard)
-            is StageChannel -> StageChannelUpdateEvent(channel, old as? StageChannel, shard)
-            is VoiceChannel -> VoiceChannelUpdateEvent(channel, old as? VoiceChannel, shard)
-            is Category -> CategoryUpdateEvent(channel, old as? Category, shard)
+            is NewsChannel -> NewsChannelUpdateEvent(channel, old as? NewsChannel, shard, context?.get())
+            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelUpdateEvent(channel, old as? StoreChannel, shard, context?.get())
+            is DmChannel -> DMChannelUpdateEvent(channel, old as? DmChannel, shard, context?.get())
+            is TextChannel -> TextChannelUpdateEvent(channel, old as? TextChannel, shard, context?.get())
+            is StageChannel -> StageChannelUpdateEvent(channel, old as? StageChannel, shard, context?.get())
+            is VoiceChannel -> VoiceChannelUpdateEvent(channel, old as? VoiceChannel, shard, context?.get())
+            is Category -> CategoryUpdateEvent(channel, old as? Category, shard, context?.get())
             is ThreadChannel -> return null
-            else -> UnknownChannelUpdateEvent(channel, old, shard)
+            else -> UnknownChannelUpdateEvent(channel, old, shard, context?.get())
 
         }
 
         return coreEvent
     }
 
-    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord): ChannelDeleteEvent? {
-        cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
+    private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord, context: LazyContext?): ChannelDeleteEvent? {
+        kord.cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
-            is NewsChannel -> NewsChannelDeleteEvent(channel, shard)
-            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelDeleteEvent(channel, shard)
-            is DmChannel -> DMChannelDeleteEvent(channel, shard)
-            is TextChannel -> TextChannelDeleteEvent(channel, shard)
-            is StageChannel -> StageChannelDeleteEvent(channel, shard)
-            is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard)
-            is Category -> CategoryDeleteEvent(channel, shard)
+            is NewsChannel -> NewsChannelDeleteEvent(channel, shard, context?.get())
+            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelDeleteEvent(channel, shard, context?.get())
+            is DmChannel -> DMChannelDeleteEvent(channel, shard, context?.get())
+            is TextChannel -> TextChannelDeleteEvent(channel, shard, context?.get())
+            is StageChannel -> StageChannelDeleteEvent(channel, shard, context?.get())
+            is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard, context?.get())
+            is Category -> CategoryDeleteEvent(channel, shard, context?.get())
             is ThreadChannel -> return null
-            else -> UnknownChannelDeleteEvent(channel, shard)
+            else -> UnknownChannelDeleteEvent(channel, shard, context?.get())
         }
 
         return coreEvent
@@ -96,15 +94,17 @@ internal class ChannelEventHandler(
         event: ChannelPinsUpdate,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): ChannelPinsUpdateEvent =
         with(event.pins) {
             val coreEvent = ChannelPinsUpdateEvent(
                 ChannelPinsUpdateEventData.from(this),
                 kord,
                 shard,
+                context?.get(),
             )
 
-            cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+            kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
                 it.copy(lastPinTimestamp = lastPinTimestamp)
             }
 
@@ -115,15 +115,17 @@ internal class ChannelEventHandler(
         event: TypingStart,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): TypingStartEvent = with(event.data) {
         member.value?.let {
-            cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
+            kord.cache.put(MemberData.from(userId = it.user.value!!.id, guildId = guildId.value!!, it))
         }
 
         TypingStartEvent(
             TypingStartEventData.from(this),
             kord,
             shard,
+            context?.get(),
         )
     }
 

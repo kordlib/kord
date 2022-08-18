@@ -1,6 +1,5 @@
 package dev.kord.core.gateway.handler
 
-import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.query
 import dev.kord.common.entity.optional.*
@@ -16,23 +15,22 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
 
-internal class MessageEventHandler(
-    cache: DataCache
-) : BaseGatewayEventHandler(cache) {
+internal class MessageEventHandler : BaseGatewayEventHandler() {
 
     override suspend fun handle(
         event: Event,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): dev.kord.core.event.Event? = when (event) {
-        is MessageCreate -> handle(event, shard, kord)
-        is MessageUpdate -> handle(event, shard, kord)
-        is MessageDelete -> handle(event, shard, kord)
-        is MessageDeleteBulk -> handle(event, shard, kord)
-        is MessageReactionAdd -> handle(event, shard, kord)
-        is MessageReactionRemove -> handle(event, shard, kord)
-        is MessageReactionRemoveAll -> handle(event, shard, kord)
-        is MessageReactionRemoveEmoji -> handle(event, shard, kord)
+        is MessageCreate -> handle(event, shard, kord, context)
+        is MessageUpdate -> handle(event, shard, kord, context)
+        is MessageDelete -> handle(event, shard, kord, context)
+        is MessageDeleteBulk -> handle(event, shard, kord, context)
+        is MessageReactionAdd -> handle(event, shard, kord, context)
+        is MessageReactionRemove -> handle(event, shard, kord, context)
+        is MessageReactionRemoveAll -> handle(event, shard, kord, context)
+        is MessageReactionRemoveEmoji -> handle(event, shard, kord, context)
         else -> null
     }
 
@@ -40,84 +38,88 @@ internal class MessageEventHandler(
         event: MessageCreate,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): MessageCreateEvent = with(event.message) {
         val data = MessageData.from(this)
-        cache.put(data)
+        kord.cache.put(data)
 
-        cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
             it.copy(lastMessageId = data.id.optionalSnowflake())
         }
 
         //get the user data only if it exists and the user isn't a webhook
         val userData = if (webhookId is OptionalSnowflake.Missing) {
-            UserData.from(author).also { cache.put(it) }
+            UserData.from(author).also { kord.cache.put(it) }
         } else null
 
         //get the member and cache the member. We need the user, guild id and member to be present
         val member = if (userData != null && guildId is OptionalSnowflake.Value && member is Optional.Value) {
             val memberData = MemberData.from(author.id, guildId.value!!, member.value!!)
-            cache.put(memberData)
+            kord.cache.put(memberData)
             Member(memberData, userData, kord)
         } else null
 
         //cache interaction user if present.
         if (interaction is Optional.Value) {
             val interactionUserData = UserData.from(interaction.value!!.user)
-            cache.put(interactionUserData)
+            kord.cache.put(interactionUserData)
         }
 
         mentions.forEach {
             val user = UserData.from(it)
-            cache.put(user)
+            kord.cache.put(user)
             it.member.value?.let {
-                cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
             }
         }
 
-        MessageCreateEvent(Message(data, kord), guildId.value, member, shard)
+        MessageCreateEvent(Message(data, kord), guildId.value, member, shard, context?.get())
     }
 
     private suspend fun handle(
         event: MessageUpdate,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): MessageUpdateEvent = with(event.message) {
-        val query = cache.query<MessageData> { idEq(MessageData::id, id) }
+        val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
 
         mentions.orEmpty().forEach {
             val user = UserData.from(it)
-            cache.put(user)
+            kord.cache.put(user)
             it.member.value?.let {
-                cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
             }
         }
 
-        MessageUpdateEvent(id, channelId, this, old, kord, shard)
+        MessageUpdateEvent(id, channelId, this, old, kord, shard, context?.get())
     }
 
     private suspend fun handle(
         event: MessageDelete,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): MessageDeleteEvent = with(event.message) {
-        val query = cache.query<MessageData> { idEq(MessageData::id, id) }
+        val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
 
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
 
-        MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard)
+        MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard, context?.get())
     }
 
     private suspend fun handle(
         event: MessageDeleteBulk,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): MessageBulkDeleteEvent =
         with(event.messageBulk) {
-            val query = cache.query<MessageData> { MessageData::id `in` ids }
+            val query = kord.cache.query<MessageData> { MessageData::id `in` ids }
 
             val removed = query.asFlow().map { Message(it, kord) }.toSet()
             query.remove()
@@ -131,6 +133,7 @@ internal class MessageEventHandler(
                 guildId.value,
                 kord,
                 shard,
+                context?.get(),
             )
         }
 
@@ -138,6 +141,7 @@ internal class MessageEventHandler(
         event: MessageReactionAdd,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): ReactionAddEvent =
         with(event.reaction) {
             /**
@@ -149,7 +153,7 @@ internal class MessageEventHandler(
                 else -> ReactionEmoji.Custom(id, emoji.name!!, emoji.animated.orElse(false))
             }
 
-            cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
                 val isMe = kord.selfId == event.reaction.userId
 
                 val reactions = if (it.reactions.value.isNullOrEmpty()) {
@@ -181,6 +185,7 @@ internal class MessageEventHandler(
                 reaction,
                 kord,
                 shard,
+                context?.get(),
             )
         }
 
@@ -188,6 +193,7 @@ internal class MessageEventHandler(
         event: MessageReactionRemove,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): ReactionRemoveEvent =
         with(event.reaction) {
             /**
@@ -199,7 +205,7 @@ internal class MessageEventHandler(
                 else -> ReactionEmoji.Custom(id, emoji.name ?: "", emoji.animated.orElse(false))
             }
 
-            cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
                 val oldReactions = it.reactions.value ?: return@update it
                 if (oldReactions.isEmpty()) return@update it
 
@@ -229,6 +235,7 @@ internal class MessageEventHandler(
                 reaction,
                 kord,
                 shard,
+                context?.get(),
             )
         }
 
@@ -236,9 +243,10 @@ internal class MessageEventHandler(
         event: MessageReactionRemoveAll,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): ReactionRemoveAllEvent =
         with(event.reactions) {
-            cache.query<MessageData> { idEq(MessageData::id, messageId) }
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = Optional.Missing()) }
 
             ReactionRemoveAllEvent(
@@ -247,6 +255,7 @@ internal class MessageEventHandler(
                 guildId.value,
                 kord,
                 shard,
+                context?.get(),
             )
         }
 
@@ -254,13 +263,14 @@ internal class MessageEventHandler(
         event: MessageReactionRemoveEmoji,
         shard: Int,
         kord: Kord,
+        context: LazyContext?,
     ): ReactionRemoveEmojiEvent =
         with(event.reaction) {
-            cache.query<MessageData> { idEq(MessageData::id, messageId) }
+            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
             val data = ReactionRemoveEmojiData.from(this)
-            ReactionRemoveEmojiEvent(data, kord, shard)
+            ReactionRemoveEmojiEvent(data, kord, shard, context?.get())
         }
 
 }

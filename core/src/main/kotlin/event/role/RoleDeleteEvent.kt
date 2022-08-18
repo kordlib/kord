@@ -16,6 +16,7 @@ public class RoleDeleteEvent(
     public val role: Role?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -26,7 +27,7 @@ public class RoleDeleteEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleDeleteEvent =
-        RoleDeleteEvent(guildId, roleId, role, kord, shard, strategy.supply(kord))
+        RoleDeleteEvent(guildId, roleId, role, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "RoleDeleteEvent(guildId=$guildId, roleId=$roleId, role=$role, kord=$kord, shard=$shard, supplier=$supplier)"

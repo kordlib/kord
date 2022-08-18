@@ -23,6 +23,7 @@ public class ThreadListSyncEvent(
     public val data: ThreadListSyncData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -68,8 +69,6 @@ public class ThreadListSyncEvent(
         return supplier.getGuildChannels(guildId).filter { it.id in channelIds }
     }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
-        return ThreadListSyncEvent(data, kord, shard, strategy.supply(kord))
-    }
-
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadListSyncEvent =
+        ThreadListSyncEvent(data, kord, shard, customContext, strategy.supply(kord))
 }

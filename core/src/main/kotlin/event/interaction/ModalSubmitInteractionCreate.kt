@@ -16,6 +16,7 @@ public class GuildModalSubmitInteractionCreateEvent(
     override val interaction: GuildModalSubmitInteraction,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : ModalSubmitInteractionCreateEvent
 
 /** An [Event] that fires when a [GlobalModalSubmitInteraction] is created. */
@@ -23,4 +24,5 @@ public class GlobalModalSubmitInteractionCreateEvent(
     override val interaction: GlobalModalSubmitInteraction,
     override val shard: Int,
     override val kord: Kord,
+    override val customContext: Any?,
 ) : ModalSubmitInteractionCreateEvent

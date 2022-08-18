@@ -8,6 +8,7 @@ public class GuildUpdateEvent(
     public val guild: Guild,
     public val old: Guild?,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event {
     override val kord: Kord get() = guild.kord
     override fun toString(): String {

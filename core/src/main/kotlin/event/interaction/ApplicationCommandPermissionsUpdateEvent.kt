@@ -8,4 +8,5 @@ public class ApplicationCommandPermissionsUpdateEvent(
     public val permissions: ApplicationCommandPermissions,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event

@@ -17,6 +17,7 @@ public class MembersChunkEvent(
     public val data: MembersChunkData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -44,7 +45,7 @@ public class MembersChunkEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MembersChunkEvent =
-        MembersChunkEvent(data, kord, shard, strategy.supply(kord))
+        MembersChunkEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "MemberChunksEvent(guildId=$guildId, members=$members, kord=$kord, shard=$shard, supplier=$supplier)"

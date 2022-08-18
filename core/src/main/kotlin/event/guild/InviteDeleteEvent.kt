@@ -22,6 +22,7 @@ public class InviteDeleteEvent(
     public val data: InviteDeleteData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -85,7 +86,7 @@ public class InviteDeleteEvent(
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteDeleteEvent =
-        InviteDeleteEvent(data, kord, shard, strategy.supply(kord))
+        InviteDeleteEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "InviteDeleteEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"

@@ -16,6 +16,7 @@ public class GlobalAutoCompleteInteractionCreateEvent(
     override val kord: Kord,
     override val shard: Int,
     override val interaction: GlobalAutoCompleteInteraction,
+    override val customContext: Any?,
 ) : AutoCompleteInteractionCreateEvent
 
 /** An [Event] that fires when a [GuildAutoCompleteInteraction] is created. */
@@ -23,4 +24,5 @@ public class GuildAutoCompleteInteractionCreateEvent(
     override val kord: Kord,
     override val shard: Int,
     override val interaction: GuildAutoCompleteInteraction,
+    override val customContext: Any?,
 ) : AutoCompleteInteractionCreateEvent

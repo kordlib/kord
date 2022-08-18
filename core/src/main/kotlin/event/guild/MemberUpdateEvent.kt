@@ -19,6 +19,7 @@ public class MemberUpdateEvent(
     public val old: Member?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -65,7 +66,7 @@ public class MemberUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberUpdateEvent =
-        MemberUpdateEvent(member, old, kord, shard, strategy.supply(kord))
+        MemberUpdateEvent(member, old, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "MemberUpdateEvent(member=$member, old=$old, kord=$kord, shard=$shard, supplier=$supplier)"

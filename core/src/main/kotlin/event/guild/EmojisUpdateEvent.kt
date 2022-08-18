@@ -16,6 +16,7 @@ public class EmojisUpdateEvent(
     public val old: Set<GuildEmoji>?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -26,7 +27,7 @@ public class EmojisUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): EmojisUpdateEvent =
-        EmojisUpdateEvent(guildId, emojis, old, kord, shard, strategy.supply(kord))
+        EmojisUpdateEvent(guildId, emojis, old, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "EmojisUpdateEvent(guildId=$guildId, emojis=$emojis, old=$old, kord=$kord, shard=$shard, supplier=$supplier)"

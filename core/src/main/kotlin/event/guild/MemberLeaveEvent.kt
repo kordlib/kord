@@ -13,6 +13,7 @@ public class MemberLeaveEvent(
     public val old: Member?,
     public val guildId: Snowflake,
     override val shard: Int,
+    override val customContext: Any?,
 ) : Event {
 
     override val kord: Kord get() = user.kord

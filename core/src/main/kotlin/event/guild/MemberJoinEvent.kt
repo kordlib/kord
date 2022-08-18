@@ -13,6 +13,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public class MemberJoinEvent(
     public val member: Member,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = member.kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -27,7 +28,7 @@ public class MemberJoinEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberJoinEvent =
-        MemberJoinEvent(member, shard, strategy.supply(kord))
+        MemberJoinEvent(member, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "MemberJoinEvent(member=$member, shard=$shard, supplier=$supplier)"

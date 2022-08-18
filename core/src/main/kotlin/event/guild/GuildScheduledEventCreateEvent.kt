@@ -15,6 +15,7 @@ public data class GuildScheduledEventCreateEvent(
     override val scheduledEvent: GuildScheduledEvent,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GuildScheduledEventEvent {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildScheduledEventCreateEvent =

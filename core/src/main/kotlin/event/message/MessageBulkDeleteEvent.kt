@@ -21,6 +21,7 @@ public class MessageBulkDeleteEvent(
     public val guildId: Snowflake?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
 
@@ -35,7 +36,7 @@ public class MessageBulkDeleteEvent(
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageBulkDeleteEvent =
-        MessageBulkDeleteEvent(messageIds, messages, channelId, guildId, kord, shard, strategy.supply(kord))
+        MessageBulkDeleteEvent(messageIds, messages, channelId, guildId, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "MessageBulkDeleteEvent(messageIds=$messageIds, messages=$messages, channelId=$channelId, guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"
