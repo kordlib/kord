@@ -316,9 +316,14 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * Requests to edit this guild's [MFA level][MFALevel] and returns the updated level.
      * This requires guild ownership.
      *
+     * @param reason the reason showing up in the audit log
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun editMFALevel(level: MFALevel): MFALevel = kord.rest.guild.modifyGuildMFALevel(id, level).level
+    public suspend fun editMFALevel(level: MFALevel, reason: String? = null): MFALevel =
+        kord.rest.guild.modifyGuildMFALevel(id, level, reason).level
+
+    @Deprecated("Binary compatibility, keep for at least one release.", level = HIDDEN)
+    public suspend fun editMFALevel(level: MFALevel): MFALevel = editMFALevel(level, reason = null)
 
     /**
      * Requests to leave this guild.
