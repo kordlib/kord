@@ -7,16 +7,12 @@ import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.cache.data.ThreadMembersUpdateEventData
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class ThreadMembersUpdateEvent(
     public val data: ThreadMembersUpdateEventData,
     override val kord: Kord,
     override val shard: Int,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope {
+) : Event {
 
     public val id: Snowflake get() = data.id
 

@@ -7,18 +7,14 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Member
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class MemberJoinEvent(
     public val member: Member,
     override val shard: Int,
     override val supplier: EntitySupplier = member.kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(member.kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     override val kord: Kord get() = member.kord
 
