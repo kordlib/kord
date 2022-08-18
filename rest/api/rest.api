@@ -6488,7 +6488,9 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun modifyGuildChannelPosition (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final synthetic fun modifyGuildEmbed (Ldev/kord/common/entity/Snowflake;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildIntegration (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun modifyGuildMFALevel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyGuildMFALevel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun modifyGuildMFALevel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun modifyGuildMFALevel$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyGuildMember (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildRole (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildRolePosition (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
