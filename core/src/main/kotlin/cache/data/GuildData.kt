@@ -135,7 +135,7 @@ public data class GuildData(
             return GuildData(
                id = id,
                 name = name.value!!,
-                icon = icon?.value!!,
+                icon = icon?.value,
                 iconHash = iconHash,
                 splash = splash,
                 discoverySplash = discoverySplash,
