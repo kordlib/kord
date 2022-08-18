@@ -18,4 +18,5 @@ internal class WebhookEventHandler : BaseGatewayEventHandler() {
         with(event.webhooksUpdateData) {
             WebhookUpdateEvent(guildId, channelId, kord, shard, context?.get())
         }
+
 }

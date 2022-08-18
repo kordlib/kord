@@ -51,4 +51,5 @@ internal class VoiceEventHandler : BaseGatewayEventHandler() {
         with(event.voiceServerUpdateData) {
             VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, context?.get())
         }
+
 }

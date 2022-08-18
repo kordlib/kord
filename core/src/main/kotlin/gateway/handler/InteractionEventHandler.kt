@@ -32,12 +32,7 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
             else -> null
         }
 
-    private suspend fun handle(
-        event: InteractionCreate,
-        shard: Int,
-        kord: Kord,
-        context: LazyContext?,
-    ): InteractionCreateEvent {
+    private suspend fun handle(event: InteractionCreate, shard: Int, kord: Kord, context: LazyContext?): InteractionCreateEvent {
         val data = InteractionData.from(event.interaction)
         val coreEvent = when (val interaction = Interaction.from(data, kord)) {
             is GlobalAutoCompleteInteraction -> GlobalAutoCompleteInteractionCreateEvent(kord, shard, interaction, context?.get())

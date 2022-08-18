@@ -32,7 +32,8 @@ public object KordConfiguration {
     private val GATEWAY = atomic(REST_GATEWAY_DEFAULT)
 
     /**
-     * The [version of Discord's Gateway](https://discord.com/developers/docs/topics/gateway#gateways-gateway-versions)
+     * The
+     * [version of Discord's Gateway](https://discord.com/developers/docs/topics/gateway#connecting-gateway-url-query-string-params)
      * Kord uses.
      *
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.

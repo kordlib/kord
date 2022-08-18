@@ -50,7 +50,7 @@ tasks {
     }
 
     gitPublishReset {
-        dependsOn(dokkaHtmlMultimodule)
+        dependsOn(dokkaHtmlMultiModule)
     }
 }
 

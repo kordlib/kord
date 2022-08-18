@@ -272,4 +272,5 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
             val data = ReactionRemoveEmojiData.from(this)
             ReactionRemoveEmojiEvent(data, kord, shard, context?.get())
         }
+
 }
