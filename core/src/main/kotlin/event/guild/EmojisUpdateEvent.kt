@@ -7,11 +7,8 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.GuildEmoji
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class EmojisUpdateEvent(
     public val guildId: Snowflake,
@@ -20,8 +17,7 @@ public class EmojisUpdateEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 

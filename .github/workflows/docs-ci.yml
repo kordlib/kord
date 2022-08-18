@@ -1,10 +1,10 @@
-# This workflow will upload docs to the gh-pages branch whenever something is pushed to master.
+# This workflow will upload docs to the gh-pages branch whenever something is pushed to 0.8.x.
 
 name: Docs
 on:
   push:
     branches:
-      - master
+      - 0.8.x
 
 jobs:
   upload_docs:

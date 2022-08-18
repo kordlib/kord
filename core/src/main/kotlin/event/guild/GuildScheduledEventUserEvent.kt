@@ -4,16 +4,14 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.*
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 
 /**
  * Sent when a user has [subscribed to][GuildScheduledEventUserAddEvent] or
  * [unsubscribed from][GuildScheduledEventUserRemoveEvent] a [GuildScheduledEvent].
  */
-public sealed interface GuildScheduledEventUserEvent : Event, CoroutineScope, Strategizable {
+public sealed interface GuildScheduledEventUserEvent : Event, Strategizable {
     public val scheduledEventId: Snowflake
     public val userId: Snowflake
     public val guildId: Snowflake
@@ -42,8 +40,7 @@ public data class GuildScheduledEventUserAddEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord),
-) : GuildScheduledEventUserEvent, CoroutineScope by coroutineScope {
+) : GuildScheduledEventUserEvent {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildScheduledEventUserAddEvent =
         GuildScheduledEventUserAddEvent(scheduledEventId, userId, guildId, kord, shard, strategy.supply(kord))
 }
@@ -56,8 +53,7 @@ public data class GuildScheduledEventUserRemoveEvent(
     override val kord: Kord,
     override val shard: Int,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord),
-) : GuildScheduledEventUserEvent, CoroutineScope by coroutineScope {
+) : GuildScheduledEventUserEvent {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildScheduledEventUserRemoveEvent =
         GuildScheduledEventUserRemoveEvent(scheduledEventId, userId, guildId, kord, shard, strategy.supply(kord))
 }
