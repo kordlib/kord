@@ -1889,6 +1889,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field AlreadyCrossposted Ldev/kord/rest/json/JsonErrorCode;
 	public static final field AnnouncementRateLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ApplicationCommandNameExists Ldev/kord/rest/json/JsonErrorCode;
+	public static final field ApplicationNotAvailable Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BeforeValueBeforeThreadCreate Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BitrateTooHigh Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BotsEndpoint Ldev/kord/rest/json/JsonErrorCode;
@@ -1911,8 +1912,10 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field ChannelWriteRateLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CommunityServerChannelMustBeTextChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Companion Ldev/kord/rest/json/JsonErrorCode$Companion;
+	public static final field ConnectionRevoked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field DisallowedName Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FailedToCreateStage Ldev/kord/rest/json/JsonErrorCode;
+	public static final field FailedToResizeAssetBelowMaximumSize Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FileTooLarge Ldev/kord/rest/json/JsonErrorCode;
 	public static final field General Ldev/kord/rest/json/JsonErrorCode;
 	public static final field GiftRequiresPaymentSource Ldev/kord/rest/json/JsonErrorCode;
@@ -1946,8 +1949,10 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxActiveAnnouncementThreads Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxActiveThreads Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxAnimatedEmojis Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxApplicationCommands Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxAttachments Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxBanFetches Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxDailyApplicationCommandCreates Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxEmojis Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxFriends Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildChannels Ldev/kord/rest/json/JsonErrorCode;
@@ -1972,6 +1977,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxUncompletedGuildScheduledEvents Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxWebhooks Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MessageAlreadyHasThread Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MessageBlockedByAutomaticModeration Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MissingAccess Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MissingOAuthScope Ldev/kord/rest/json/JsonErrorCode;
 	public static final field NoUsersWithDiscordTag Ldev/kord/rest/json/JsonErrorCode;
@@ -1982,6 +1988,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field OnlyOwner Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnAchievedThread Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnArchivedThread Ldev/kord/rest/json/JsonErrorCode;
+	public static final field OwnershipCannotBeTransferredToBot Ldev/kord/rest/json/JsonErrorCode;
 	public static final field PermissionLack Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ProvidedMessageCountInsufficient Ldev/kord/rest/json/JsonErrorCode;
 	public static final field RasterizedImagesInLotties Ldev/kord/rest/json/JsonErrorCode;
@@ -1998,6 +2005,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field StickerPermissionLack Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TemporarilyDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TheadLocked Ldev/kord/rest/json/JsonErrorCode;
+	public static final field TitleBlockedByAutomaticModeration Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TooFastDM Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TooLongNote Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Unauthorized Ldev/kord/rest/json/JsonErrorCode;
@@ -2041,6 +2049,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field UnknownStoreListing Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownStream Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownToken Ldev/kord/rest/json/JsonErrorCode;
+	public static final field UnknownUpload Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownUser Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownVoiceState Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownWebhook Ldev/kord/rest/json/JsonErrorCode;
@@ -2520,7 +2529,7 @@ public final class dev/kord/rest/json/request/CurrentVoiceStateModifyRequest {
 	public static synthetic fun copy$default (Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getRequestToSpeakTimeStamp ()Ldev/kord/common/entity/optional/Optional;
+	public final synthetic fun getRequestToSpeakTimeStamp ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getRequestToSpeakTimestamp ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getSuppress ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
@@ -3460,7 +3469,7 @@ public final class dev/kord/rest/json/request/GuildRoleCreateRequest {
 	public final fun getMentionable ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getPermissions ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getSeparate ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final synthetic fun getSeparate ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getUnicodeEmoji ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -3505,7 +3514,7 @@ public final class dev/kord/rest/json/request/GuildRoleModifyRequest {
 	public final fun getMentionable ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getPermissions ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getSeparate ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final synthetic fun getSeparate ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getUnicodeEmoji ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -5424,7 +5433,7 @@ public final class dev/kord/rest/request/RequestBuilder {
 	public final fun getBaseUrl ()Ljava/lang/String;
 	public final fun getKeys ()Ljava/util/Map;
 	public final fun getRoute ()Ldev/kord/rest/route/Route;
-	public final fun header (Ljava/lang/String;Ljava/lang/String;)V
+	public final synthetic fun header (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun parameter (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;)V
 	public final fun parameter (Ljava/lang/String;Ljava/lang/Object;)V
 	public final fun set (Ljava/util/Map;Ldev/kord/rest/route/Route$Key;Ldev/kord/common/entity/Snowflake;)V
@@ -6446,7 +6455,7 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun getGuildBans (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuildBans$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildChannels (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getGuildEmbed (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun getGuildEmbed (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildIntegrations (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildInvites (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildMember (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6477,7 +6486,7 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun modifyCurrentVoiceState (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuild (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildChannelPosition (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun modifyGuildEmbed (Ldev/kord/common/entity/Snowflake;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun modifyGuildEmbed (Ldev/kord/common/entity/Snowflake;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildIntegration (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildMFALevel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildMember (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6540,7 +6549,7 @@ public final class dev/kord/rest/service/InteractionService : dev/kord/rest/serv
 	public final fun createModalInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/DiscordModal;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createModalInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createNumberAutoCompleteInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun createPublicInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun createPublicInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createPublicInteractionResponse$default (Ldev/kord/rest/service/InteractionService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createStringAutoCompleteInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun deferMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;

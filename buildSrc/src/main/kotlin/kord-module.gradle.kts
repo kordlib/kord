@@ -29,10 +29,6 @@ kotlin {
 }
 
 tasks {
-    getByName("apiCheck") {
-        onlyIf { Library.isRelease }
-    }
-
     withType<JavaCompile> {
         sourceCompatibility = Jvm.targetString
         targetCompatibility = Jvm.targetString
