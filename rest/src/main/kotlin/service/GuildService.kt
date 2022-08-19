@@ -278,12 +278,20 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         }
     }
 
+    @Deprecated("Binary compatibility, keep for at least one release.", level = HIDDEN)
     public suspend fun modifyGuildMFALevel(guildId: Snowflake, level: MFALevel): GuildMFALevelModifyResponse =
-        call(Route.GuildMFALevelModify) {
-            keys[Route.GuildId] = guildId
-            val request = GuildMFALevelModifyRequest(level)
-            body(GuildMFALevelModifyRequest.serializer(), request)
-        }
+        modifyGuildMFALevel(guildId, level, reason = null)
+
+    public suspend fun modifyGuildMFALevel(
+        guildId: Snowflake,
+        level: MFALevel,
+        reason: String? = null,
+    ): GuildMFALevelModifyResponse = call(Route.GuildMFALevelModify) {
+        keys[Route.GuildId] = guildId
+        val request = GuildMFALevelModifyRequest(level)
+        body(GuildMFALevelModifyRequest.serializer(), request)
+        auditLogReason(reason)
+    }
 
     public suspend fun deleteGuildRole(guildId: Snowflake, roleId: Snowflake, reason: String? = null): Unit =
         call(Route.GuildRoleDelete) {

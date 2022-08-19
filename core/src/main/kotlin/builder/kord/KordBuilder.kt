@@ -13,6 +13,8 @@ import dev.kord.core.cache.registerKordData
 import dev.kord.core.event.Event
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
+import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.DefaultGateway
 import dev.kord.gateway.Gateway
@@ -115,6 +117,14 @@ public class KordBuilder(public val token: String) {
     public var httpClient: HttpClient? = null
 
     public var applicationId: Snowflake? = null
+
+    /**
+     * The [GatewayEventInterceptor] used for converting [gateway events][dev.kord.gateway.Event] to
+     * [core events][dev.kord.core.event.Event].
+     *
+     * [DefaultGatewayEventInterceptor] will be used when not set.
+     */
+    public var gatewayEventInterceptor: GatewayEventInterceptor? = null
 
     /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
@@ -274,14 +284,14 @@ public class KordBuilder(public val token: String) {
         }
 
         return Kord(
-            resources,
-            cache,
-            gateway,
-            rest,
-            self,
-            eventFlow,
-            defaultDispatcher
+            resources = resources,
+            cache = cache,
+            gateway = gateway,
+            rest = rest,
+            selfId = self,
+            eventFlow = eventFlow,
+            dispatcher = defaultDispatcher,
+            interceptor = gatewayEventInterceptor ?: DefaultGatewayEventInterceptor(),
         )
     }
-
 }

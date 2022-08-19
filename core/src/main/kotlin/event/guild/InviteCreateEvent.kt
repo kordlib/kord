@@ -14,11 +14,9 @@ import dev.kord.core.cache.data.InviteData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
@@ -30,9 +28,9 @@ public class InviteCreateEvent(
     public val data: InviteCreateData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     /**
      * The id of the [Channel] the invite is for.
@@ -239,7 +237,7 @@ public class InviteCreateEvent(
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =
-        InviteCreateEvent(data, kord, shard, supplier)
+        InviteCreateEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "InviteCreateEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"

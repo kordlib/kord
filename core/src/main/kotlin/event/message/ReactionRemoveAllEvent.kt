@@ -10,13 +10,10 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class ReactionRemoveAllEvent(
     public val channelId: Snowflake,
@@ -24,9 +21,9 @@ public class ReactionRemoveAllEvent(
     public val guildId: Snowflake?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
@@ -43,7 +40,7 @@ public class ReactionRemoveAllEvent(
     public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
-        ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))
+        ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "ReactionRemoveAllEvent(channelId=$channelId, messageId=$messageId, guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"

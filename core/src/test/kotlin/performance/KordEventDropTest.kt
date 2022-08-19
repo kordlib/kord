@@ -6,6 +6,7 @@ import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.event.guild.GuildCreateEvent
 import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.on
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
@@ -13,10 +14,13 @@ import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
 import kotlinx.datetime.Clock
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicInteger
@@ -54,7 +58,8 @@ class KordEventDropTest {
         RestClient(KtorRequestHandler("token", clock = Clock.System)),
         Snowflake("420"),
         MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-        Dispatchers.Default
+        Dispatchers.Default,
+        DefaultGatewayEventInterceptor(),
     )
 
     @Test

@@ -6,10 +6,8 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.entity.*
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 import kotlin.DeprecationLevel.HIDDEN
@@ -21,9 +19,9 @@ public class MemberUpdateEvent(
     public val old: Member?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val guildId: Snowflake get() = member.guildId
 
@@ -68,7 +66,7 @@ public class MemberUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MemberUpdateEvent =
-        MemberUpdateEvent(member, old, kord, shard, strategy.supply(kord))
+        MemberUpdateEvent(member, old, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "MemberUpdateEvent(member=$member, old=$old, kord=$kord, shard=$shard, supplier=$supplier)"

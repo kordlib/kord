@@ -1,14 +1,12 @@
 package dev.kord.core.event
 
+import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
+import dev.kord.core.entity.Strategizable
 import dev.kord.gateway.Gateway
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.job
 
-public interface Event : KordObject, CoroutineScope {
-
+public interface Event : KordObject {
     /**
      * The Gateway that spawned this event.
      */
@@ -18,6 +16,32 @@ public interface Event : KordObject, CoroutineScope {
      * The shard number of the [gateway] that spawned this event.
      */
     public val shard: Int
-}
 
-internal fun kordCoroutineScope(kord: Kord): CoroutineScope = CoroutineScope(kord.coroutineContext + SupervisorJob(kord.coroutineContext.job))
+    /**
+     * A custom object that can be inserted when creating events. By default, this is just `null`.
+     *
+     * This can be used to associate a custom context with an event, e.g. like this:
+     * ```kotlin
+     * class YourCustomContext(...)
+     *
+     * val kord = Kord(token) {
+     *     gatewayEventInterceptor = DefaultGatewayEventInterceptor(
+     *         customContextCreator = { event, kord -> YourCustomContext(...) }
+     *     )
+     * }
+     *
+     * kord.on<MessageCreateEvent> {
+     *     // receive the value previously set when creating the event
+     *     val context = customContext as YourCustomContext
+     *     // ...
+     * }
+     *
+     * kord.login()
+     * ```
+     *
+     * Note that [withStrategy][Strategizable.withStrategy] for [strategizable][Strategizable] [Event]s will copy
+     * [customContext] only by reference. This should be considered when inserting mutable objects into [customContext].
+     */
+    @KordPreview
+    public val customContext: Any?
+}

@@ -171,7 +171,8 @@ public sealed class MessageStickerType(public val value: Int) {
     public object LOTTIE : MessageStickerType(3)
 
     public companion object {
-        public val values: Set<MessageStickerType> = setOf(PNG, APNG, LOTTIE)
+        public val values: Set<MessageStickerType>
+            get() = setOf(PNG, APNG, LOTTIE)
     }
 
     internal object Serializer : KSerializer<MessageStickerType> {
