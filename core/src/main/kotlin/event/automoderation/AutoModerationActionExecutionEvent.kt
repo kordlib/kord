@@ -16,11 +16,9 @@ import dev.kord.core.entity.automoderation.BlockMessageAutoModerationAction
 import dev.kord.core.entity.automoderation.SendAlertMessageAutoModerationAction
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.event.automoderation.data.AutoModerationActionExecutionEventData
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Intent.MessageContent
-import kotlinx.coroutines.CoroutineScope
 
 /**
  * An [AutoModerationEvent] that is sent when an [AutoModerationRule] is triggered and an [AutoModerationAction] is
@@ -32,9 +30,9 @@ public class AutoModerationActionExecutionEvent(
     public val data: AutoModerationActionExecutionEventData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    coroutineScope: CoroutineScope = kordCoroutineScope(kord),
-) : AutoModerationEvent, CoroutineScope by coroutineScope {
+) : AutoModerationEvent {
 
     /** The ID of the [Guild] in which the [action] was executed. */
     override val guildId: Snowflake get() = data.guildId
@@ -123,8 +121,8 @@ public class AutoModerationActionExecutionEvent(
     public val matchedContent: String? get() = data.matchedContent
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationActionExecutionEvent =
-        AutoModerationActionExecutionEvent(data, kord, shard, strategy.supply(kord))
+        AutoModerationActionExecutionEvent(data, kord, shard, customContext, strategy.supply(kord))
 
-    override fun toString(): String =
-        "AutoModerationActionExecutionEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"
+    override fun toString(): String = "AutoModerationActionExecutionEvent(data=$data, kord=$kord, shard=$shard, " +
+            "customContext=$customContext, supplier=$supplier)"
 }

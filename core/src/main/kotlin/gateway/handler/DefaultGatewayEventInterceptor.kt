@@ -36,10 +36,10 @@ public class DefaultGatewayEventInterceptor @KordPreview public constructor(
     public constructor() : this(customContextCreator = null)
 
     private val listeners = listOf(
-        AutoModerationEventHandler(cache)
+        AutoModerationEventHandler(),
         ChannelEventHandler(),
         GuildEventHandler(),
-        InteractionEventHandler()
+        InteractionEventHandler(),
         LifeCycleEventHandler(),
         MessageEventHandler(),
         ThreadEventHandler(),

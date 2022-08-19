@@ -4,10 +4,8 @@ import dev.kord.common.entity.Permission.ManageGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.entity.automoderation.AutoModerationRule
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 
 /**
  * An [AutoModerationEvent] that is sent when an [AutoModerationRule] is configured (i.e.
@@ -39,15 +37,15 @@ public class AutoModerationRuleCreateEvent(
     override val rule: AutoModerationRule,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    coroutineScope: CoroutineScope = kordCoroutineScope(kord),
-) : AutoModerationRuleConfigurationEvent, CoroutineScope by coroutineScope {
+) : AutoModerationRuleConfigurationEvent {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationRuleCreateEvent =
-        AutoModerationRuleCreateEvent(rule, kord, shard, strategy.supply(kord))
+        AutoModerationRuleCreateEvent(rule, kord, shard, customContext, strategy.supply(kord))
 
-    override fun toString(): String =
-        "AutoModerationRuleCreateEvent(rule=$rule, kord=$kord, shard=$shard, supplier=$supplier)"
+    override fun toString(): String = "AutoModerationRuleCreateEvent(rule=$rule, kord=$kord, shard=$shard, " +
+            "customContext=$customContext, supplier=$supplier)"
 }
 
 /**
@@ -62,15 +60,15 @@ public class AutoModerationRuleUpdateEvent(
     public val old: AutoModerationRule?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    coroutineScope: CoroutineScope = kordCoroutineScope(kord),
-) : AutoModerationRuleConfigurationEvent, CoroutineScope by coroutineScope {
+) : AutoModerationRuleConfigurationEvent {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationRuleUpdateEvent =
-        AutoModerationRuleUpdateEvent(rule, old, kord, shard, strategy.supply(kord))
+        AutoModerationRuleUpdateEvent(rule, old, kord, shard, customContext, strategy.supply(kord))
 
-    override fun toString(): String =
-        "AutoModerationRuleUpdateEvent(rule=$rule, old=$old, kord=$kord, shard=$shard, supplier=$supplier)"
+    override fun toString(): String = "AutoModerationRuleUpdateEvent(rule=$rule, old=$old, kord=$kord, shard=$shard, " +
+            "customContext=$customContext, supplier=$supplier)"
 }
 
 /**
@@ -83,13 +81,13 @@ public class AutoModerationRuleDeleteEvent(
     override val rule: AutoModerationRule,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    coroutineScope: CoroutineScope = kordCoroutineScope(kord),
-) : AutoModerationRuleConfigurationEvent, CoroutineScope by coroutineScope {
+) : AutoModerationRuleConfigurationEvent {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoModerationRuleDeleteEvent =
-        AutoModerationRuleDeleteEvent(rule, kord, shard, strategy.supply(kord))
+        AutoModerationRuleDeleteEvent(rule, kord, shard, customContext, strategy.supply(kord))
 
-    override fun toString(): String =
-        "AutoModerationRuleDeleteEvent(rule=$rule, kord=$kord, shard=$shard, supplier=$supplier)"
+    override fun toString(): String = "AutoModerationRuleDeleteEvent(rule=$rule, kord=$kord, shard=$shard, " +
+            "customContext=$customContext, supplier=$supplier)"
 }
