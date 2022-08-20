@@ -34,10 +34,6 @@ object Library {
     val isRelease: Boolean get() = !isSnapshot && !isUndefined
 
     val isUndefined get() = version == "undefined"
-
-    init {
-        println("(debug print) version from env: $version")
-    }
 }
 
 object Repo {

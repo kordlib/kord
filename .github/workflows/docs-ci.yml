@@ -10,6 +10,11 @@ jobs:
   update_docs:
     name: Update docs
     runs-on: ubuntu-latest
+
+    env:
+      GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
+      GITHUB_BRANCH_NAME: ${{ github.ref }}
+
     steps:
       - uses: actions/checkout@v2
 
