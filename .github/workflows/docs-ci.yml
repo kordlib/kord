@@ -1,10 +1,10 @@
-# This workflow will upload docs to the gh-pages branch whenever something is pushed to 0.8.x.
+# This workflow will build and push docs to the gh-pages branch whenever something is pushed to 0.8.x.
 
 name: Docs
 on:
   push:
     branches:
-      - docs # todo set back to 0.8.x after testing
+      - 0.8.x
 
 jobs:
   update_docs:
