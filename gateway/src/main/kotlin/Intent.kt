@@ -2,6 +2,7 @@ package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
+import dev.kord.common.entity.DiscordMessage
 import dev.kord.gateway.Intent.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -17,8 +18,13 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * Some intents are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without
+ * Some [Intent]s are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without
  * enabling them.
+ *
+ * Those intents are:
+ * - [GuildMembers]
+ * - [GuildPresences]
+ * - [MessageContent]
  *
  * See [the official documentation](https://discord.com/developers/docs/topics/gateway#privileged-intents) for more info
  * on how to enable these.
@@ -168,6 +174,12 @@ public sealed class Intent(public val code: DiscordBitSet) {
      */
     public object DirectMessageTyping : Intent(1 shl 14)
 
+    /**
+     * [MessageContent] is required to receive non-empty values for content fields ([content][DiscordMessage.content],
+     * [attachments][DiscordMessage.attachments], [embeds][DiscordMessage.embeds] and
+     * [components][DiscordMessage.components]) in events like [MessageCreate]. This doesn't apply for DMs, messages
+     * your bot sends, or messages in which your bot is mentioned.
+     */
     @PrivilegedIntent
     public object MessageContent : Intent(1 shl 15)
 
