@@ -28,4 +28,6 @@ jobs:
         with:
           folder: dokka
           branch: gh-pages
+          git-config-name: GitHub Actions
+          git-config-email: actions@github.com
           commit-message: Update docs
