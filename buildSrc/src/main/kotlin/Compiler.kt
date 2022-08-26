@@ -12,7 +12,9 @@ object CompilerArguments {
 }
 
 object Jvm {
-    const val target = "1.8"
+    // keep these equivalent
+    const val targetString = "1.8"
+    const val targetInt = 8
 }
 
 fun KotlinJvmOptions.kordJvmOptions() {

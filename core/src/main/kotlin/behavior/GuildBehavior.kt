@@ -47,7 +47,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.*
+import java.util.Objects
 import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
@@ -211,6 +211,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     /**
      * Application commands for this guild only.
+     *
+     * @suppress
      */
     @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"), level = ERROR)
     public val commands: Flow<GuildApplicationCommand>
@@ -314,9 +316,14 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * Requests to edit this guild's [MFA level][MFALevel] and returns the updated level.
      * This requires guild ownership.
      *
+     * @param reason the reason showing up in the audit log
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun editMFALevel(level: MFALevel): MFALevel = kord.rest.guild.modifyGuildMFALevel(id, level).level
+    public suspend fun editMFALevel(level: MFALevel, reason: String? = null): MFALevel =
+        kord.rest.guild.modifyGuildMFALevel(id, level, reason).level
+
+    @Deprecated("Binary compatibility, keep for at least one release.", level = HIDDEN)
+    public suspend fun editMFALevel(level: MFALevel): MFALevel = editMFALevel(level, reason = null)
 
     /**
      * Requests to leave this guild.
@@ -699,6 +706,7 @@ public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> U
     return Guild(data, kord)
 }
 
+/** @suppress */
 @Deprecated(
     "emoji name and image are mandatory fields.",
     ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"),
@@ -730,6 +738,8 @@ public suspend inline fun GuildBehavior.createEmoji(
  * @return The created [TextChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     "channel name is a mandatory field",
@@ -771,6 +781,8 @@ public suspend inline fun GuildBehavior.createTextChannel(
  * @return The created [VoiceChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     "channel name is a mandatory field.",
@@ -811,6 +823,8 @@ public suspend inline fun GuildBehavior.createVoiceChannel(
  * @return The created [NewsChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     "channel name is a mandatory field.",
@@ -852,6 +866,8 @@ public suspend inline fun GuildBehavior.createNewsChannel(
  * @return The created [Category].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     "channel name is a mandatory field.",

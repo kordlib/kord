@@ -1,48 +1,48 @@
 package dev.kord.rest.request
 
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * Extension of [KtorRequestHandler] which tries to recover stack trace information lost through Ktor's
  * [io.ktor.util.pipeline.SuspendFunctionGun].
  *
- * This is done by creating a [ContextException] to capture the stack trace up until the point just before
- * [KtorRequestHandler.handle] gets called, then if that call throws any type of [Throwable] the [ContextException] gets
- * thrown instead (See [ContextException.cause])
+ * This is done by creating a [RecoveredStackTrace] to capture the stack trace up until the point just before
+ * [KtorRequestHandler.handle] gets called, then if that call throws any type of [Throwable] the [RecoveredStackTrace]
+ * gets added to the original [Throwable] as a [suppressed exception][addSuppressed] and the original [Throwable] is
+ * rethrown.
  *
- * @see ContextException
  * @see withStackTraceRecovery
  */
 public class StackTraceRecoveringKtorRequestHandler(private val delegate: KtorRequestHandler) :
     RequestHandler by delegate {
 
-    /**
-     * @throws ContextException if any exception occurs (this is also the only exception which can be thrown)
-     * @see KtorRequestHandler.handle
-     */
+    /** @see KtorRequestHandler.handle */
     override suspend fun <B : Any, R> handle(request: Request<B, R>): R {
-        val stacktrace = ContextException()
+        val recoveredStackTrace = RecoveredStackTrace()
 
         return try {
             delegate.handle(request)
-        } catch (e: Exception) {
-            stacktrace.sanitizeStackTrace()
-            e.initCause(stacktrace)
+        } catch (e: Throwable) {
+            recoveredStackTrace.sanitizeStackTrace()
+            e.addSuppressed(recoveredStackTrace)
             throw e
         }
     }
 }
 
-/**
- * Exception used to save the current stack trace before executing a request.
- *
- * @see StackTraceRecoveringKtorRequestHandler
- */
-public class ContextException internal constructor() : RuntimeException() {
+@Deprecated(
+    "'ContextException' is no longer thrown. 'stackTraceRecovery' uses a suppressed exception instead.",
+    level = ERROR,
+)
+public class ContextException internal constructor() : RuntimeException()
 
-    internal fun sanitizeStackTrace() {
-        // Remove artifacts of stack trace capturing
-        // This is the stack trace element is the creation of the ContextException
-        // at dev.kord.rest.request.StackTraceRecoveringKtorRequestHandler.handle(StackTraceRecoveringKtorRequestHandler.kt:23)
+/** A [Throwable] used to save the current stack trace before executing a request. */
+internal class RecoveredStackTrace : Throwable("This is the recovered stack trace:") {
+
+    fun sanitizeStackTrace() {
+        // Remove artifacts of stack trace capturing.
+        // The first stack trace element is the creation of the RecoveredStackTrace:
+        // at dev.kord.rest.request.StackTraceRecoveringKtorRequestHandler.handle(StackTraceRecoveringKtorRequestHandler.kt:21)
         stackTrace = stackTrace.copyOfRange(1, stackTrace.size)
     }
 }

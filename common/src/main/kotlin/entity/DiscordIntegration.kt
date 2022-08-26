@@ -52,6 +52,7 @@ public data class IntegrationApplication(
     val name: String,
     val icon: String?,
     val description: String,
+    /** @suppress */
     @Deprecated("This is deprecated and will always be empty.", level = ERROR)
     val summary: String,
     val bot: Optional<DiscordUser> = Optional.Missing(),

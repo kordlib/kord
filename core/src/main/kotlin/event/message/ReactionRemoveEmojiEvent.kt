@@ -12,21 +12,18 @@ import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class ReactionRemoveEmojiEvent(
     public val data: ReactionRemoveEmojiData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     /**
      * The id of the [TopGuildMessageChannel].
@@ -71,8 +68,8 @@ public class ReactionRemoveEmojiEvent(
 
     public suspend fun getMessageOrNull(): Message? = supplier.getMessageOrNull(channelId = channelId, messageId = messageId)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveAllEvent =
-        ReactionRemoveAllEvent(channelId, messageId, guildId, kord, shard, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionRemoveEmojiEvent =
+        ReactionRemoveEmojiEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "ReactionRemoveEmojiEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"

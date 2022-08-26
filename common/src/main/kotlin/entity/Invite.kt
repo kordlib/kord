@@ -1,6 +1,7 @@
 package dev.kord.common.entity
 
-import kotlinx.serialization.*
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -8,6 +9,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.ERROR
 
+/** @suppress */
 @Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This is no longer documented. Use 'InviteTargetType' instead.",

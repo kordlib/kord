@@ -20,7 +20,6 @@ import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.MasterGateway
-import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.gateway.start
 import dev.kord.core.supplier.*
@@ -56,15 +55,13 @@ public class Kord(
     public val selfId: Snowflake,
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
-    interceptorBuilder: () -> GatewayEventInterceptor = {
-        DefaultGatewayEventInterceptor(cache)
-    }
+    private val interceptor: GatewayEventInterceptor,
 ) : CoroutineScope {
-
-    private val interceptor = interceptorBuilder.invoke()
 
     /**
      * Global commands made by the bot under this Kord instance.
+     *
+     * @suppress
      */
     @Deprecated("Replace with function call for localizations", ReplaceWith("getGlobalApplicationCommands()"), level = ERROR)
     public val globalCommands: Flow<GlobalApplicationCommand>
@@ -164,6 +161,8 @@ public class Kord(
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @return The newly created Guild.
+     *
+     * @suppress
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(
@@ -631,6 +630,6 @@ public inline fun <reified T : Event> Kord.on(
 ): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach { event ->
-            scope.launch(event.coroutineContext) { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
+            scope.launch { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
         }
         .launchIn(scope)

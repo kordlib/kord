@@ -8,12 +8,9 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.entity.*
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class PresenceUpdateEvent(
     public val oldUser: User?,
@@ -22,9 +19,9 @@ public class PresenceUpdateEvent(
     public val old: Presence?,
     public val presence: Presence,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = presence.kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(presence.kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
     override val kord: Kord get() = presence.kord
 
     /**
@@ -83,7 +80,7 @@ public class PresenceUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PresenceUpdateEvent =
-        PresenceUpdateEvent(oldUser, user, guildId, old, presence, shard, strategy.supply(kord))
+        PresenceUpdateEvent(oldUser, user, guildId, old, presence, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "PresenceUpdateEvent(oldUser=$oldUser, user=$user, guildId=$guildId, old=$old, presence=$presence, shard=$shard, supplier=$supplier)"

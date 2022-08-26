@@ -40,6 +40,7 @@ public fun FollowupPermittingInteractionResponseBehavior(
     override val supplier: EntitySupplier = supplier
 }
 
+/** @suppress */
 @Deprecated(
     "Renamed to 'createPublicFollowup'.",
     ReplaceWith(
@@ -75,6 +76,7 @@ public suspend inline fun FollowupPermittingInteractionResponseBehavior.createPu
     return PublicFollowupMessage(message, applicationId, token, kord)
 }
 
+/** @suppress */
 @Deprecated(
     "Renamed to 'createEphemeralFollowup'.",
     ReplaceWith(
