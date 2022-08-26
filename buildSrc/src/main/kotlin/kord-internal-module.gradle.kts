@@ -10,8 +10,8 @@ repositories {
 
 tasks {
     withType<JavaCompile> {
-        sourceCompatibility = Jvm.target
-        targetCompatibility = Jvm.target
+        sourceCompatibility = Jvm.targetString
+        targetCompatibility = Jvm.targetString
     }
 
     withType<KotlinCompile> {

@@ -18,7 +18,7 @@ object Jvm {
 }
 
 fun KotlinJvmOptions.kordJvmOptions() {
-    jvmTarget = Jvm.target
+    jvmTarget = Jvm.targetString
     allWarningsAsErrors = true
     freeCompilerArgs += CompilerArguments.progressive
 }

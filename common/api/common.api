@@ -1191,10 +1191,13 @@ public final class dev/kord/common/entity/ButtonStyle$Unknown : dev/kord/common/
 public abstract class dev/kord/common/entity/ChannelType {
 	public static final field Companion Ldev/kord/common/entity/ChannelType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/ChannelType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1216,6 +1219,18 @@ public final class dev/kord/common/entity/ChannelType$GuildDirectory : dev/kord/
 
 public final class dev/kord/common/entity/ChannelType$GuildNews : dev/kord/common/entity/ChannelType {
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildNews;
+}
+
+public final class dev/kord/common/entity/ChannelType$GuildNewsThread : dev/kord/common/entity/ChannelType {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildNewsThread;
+}
+
+public final class dev/kord/common/entity/ChannelType$GuildPrivateThread : dev/kord/common/entity/ChannelType {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildPrivateThread;
+}
+
+public final class dev/kord/common/entity/ChannelType$GuildPublicThread : dev/kord/common/entity/ChannelType {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildPublicThread;
 }
 
 public final class dev/kord/common/entity/ChannelType$GuildStageVoice : dev/kord/common/entity/ChannelType {
@@ -6438,7 +6453,9 @@ public final class dev/kord/common/entity/MessageReactionRemoveData$Companion {
 public abstract class dev/kord/common/entity/MessageStickerType {
 	public static final field Companion Ldev/kord/common/entity/MessageStickerType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/MessageStickerType$APNG : dev/kord/common/entity/MessageStickerType {
@@ -6446,6 +6463,7 @@ public final class dev/kord/common/entity/MessageStickerType$APNG : dev/kord/com
 }
 
 public final class dev/kord/common/entity/MessageStickerType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
