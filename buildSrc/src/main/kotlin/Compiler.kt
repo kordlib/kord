@@ -17,7 +17,7 @@ object Jvm {
     const val targetInt = 8
 }
 
-fun KotlinJvmOptions.kordJvmOptions() {
+fun KotlinJvmOptions.applyKordKotlinOptions() {
     jvmTarget = Jvm.targetString
     allWarningsAsErrors = true
     freeCompilerArgs += CompilerArguments.progressive

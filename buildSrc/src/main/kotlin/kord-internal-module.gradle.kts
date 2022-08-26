@@ -16,7 +16,7 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions {
-            kordJvmOptions()
+            applyKordKotlinOptions()
         }
     }
 }

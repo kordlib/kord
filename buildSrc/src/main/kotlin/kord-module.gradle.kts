@@ -44,7 +44,7 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions {
-            kordJvmOptions()
+            applyKordKotlinOptions()
             freeCompilerArgs += listOf(
                 CompilerArguments.time,
                 CompilerArguments.contracts,
