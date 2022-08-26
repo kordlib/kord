@@ -228,7 +228,8 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                     }
                 }
 
-                // @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), <valuesPropertyDeprecationLevel>)
+                // TODO bump deprecation level and remove eventually
+                // @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = WARNING)
                 // public val <valuesPropertyName>
                 if (valuesPropertyName != null) {
                     addProperty(
@@ -241,7 +242,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                             Deprecated(
                                 "Renamed to 'entries'.",
                                 ReplaceWith("this.entries", imports = emptyArray()),
-                                valuesPropertyDeprecationLevel,
+                                level = WARNING,
                             )
                         )
                         getter {

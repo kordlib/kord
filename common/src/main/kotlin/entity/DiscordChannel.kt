@@ -55,21 +55,18 @@
         ),
         Entry(
             "PublicNewsThread", intValue = 10,
-            deprecationMessage = "Renamed to 'GuildNewsThread'",
+            deprecationMessage = "Renamed to 'GuildNewsThread'", deprecationLevel = WARNING,
             replaceWith = ReplaceWith("GuildNewsThread", "dev.kord.common.entity.ChannelType.GuildNewsThread"),
-            deprecationLevel = WARNING,
         ),
         Entry(
             "PublicGuildThread", intValue = 11,
-            deprecationMessage = "Renamed to 'GuildPublicThread'",
+            deprecationMessage = "Renamed to 'GuildPublicThread'", deprecationLevel = WARNING,
             replaceWith = ReplaceWith("GuildPublicThread", "dev.kord.common.entity.ChannelType.GuildPublicThread"),
-            deprecationLevel = WARNING,
         ),
         Entry(
             "PrivateThread", intValue = 12,
-            deprecationMessage = "Renamed to 'GuildPrivateThread'",
+            deprecationMessage = "Renamed to 'GuildPrivateThread'", deprecationLevel = WARNING,
             replaceWith = ReplaceWith("GuildPrivateThread", "dev.kord.common.entity.ChannelType.GuildPrivateThread"),
-            deprecationLevel = WARNING,
         ),
     ],
 )

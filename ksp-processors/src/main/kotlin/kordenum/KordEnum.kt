@@ -24,10 +24,9 @@ internal class KordEnum(
     val entries: List<Entry>,
     val deprecatedEntries: List<Entry>,
 
-    // for migration purposes
+    // for migration purposes, TODO remove eventually
     val valuesPropertyName: String?,
     val valuesPropertyType: ValuesPropertyType,
-    val valuesPropertyDeprecationLevel: DeprecationLevel,
 ) {
     internal class Entry(
         val name: String,
@@ -57,7 +56,6 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
 
     val valuesPropertyName = (args[GenerateKordEnum::valuesPropertyName] as String).ifEmpty { null }
     val valuesPropertyType = args[GenerateKordEnum::valuesPropertyType].toValuesPropertyType()
-    val valuesPropertyDeprecationLevel = args[GenerateKordEnum::valuesPropertyDeprecationLevel].toDeprecationLevel()
     if (valuesPropertyName != null) {
         if (valuesPropertyType == NONE) {
             logger.error("Didn't specify valuesPropertyType", symbol = this)
@@ -68,10 +66,6 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
             logger.error("Specified valuesPropertyType", symbol = this)
             return null
         }
-        if (valuesPropertyDeprecationLevel != WARNING) {
-            logger.error("Specified valuesPropertyDeprecationLevel", symbol = this)
-            return null
-        }
     }
 
     return KordEnum(
@@ -79,7 +73,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
         entries.map { it.toEntryOrNull(valueType, isDeprecated = false, logger) ?: return null },
         deprecatedEntries.map { it.toEntryOrNull(valueType, isDeprecated = true, logger) ?: return null },
 
-        valuesPropertyName, valuesPropertyType, valuesPropertyDeprecationLevel,
+        valuesPropertyName, valuesPropertyType,
     )
 }
 

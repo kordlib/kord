@@ -27,12 +27,11 @@ annotation class GenerateKordEnum(
     /** [entries] of the kord enum that are [Deprecated]. [Entry.deprecationMessage] is required for these. */
     val deprecatedEntries: Array<Entry> = [],
 
+    // TODO remove eventually
     /** For migration purposes. */
     val valuesPropertyName: String = "",
     /** For migration purposes. */
     val valuesPropertyType: ValuesPropertyType = NONE,
-    /** For migration purposes. */
-    val valuesPropertyDeprecationLevel: DeprecationLevel = WARNING,
 ) {
     enum class ValueType { INT, STRING }
     enum class ValuesPropertyType { NONE, SET }

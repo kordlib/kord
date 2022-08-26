@@ -27,15 +27,8 @@ class KordEnumProcessor(private val codeGenerator: CodeGenerator, private val lo
 
         resolver
             .getSymbolsWithAnnotation<GenerateKordEnum>()
-            .mapNotNull { symbol ->
-                when (symbol) {
-                    is KSFile -> symbol
-                    else -> {
-                        logger.warn("found annotation on wrong symbol", symbol)
-                        null
-                    }
-                }
-            }
+            .onEach { if (it !is KSFile) logger.warn("found annotation on wrong symbol", symbol = it) }
+            .filterIsInstance<KSFile>()
             .forEach(::processFile)
 
         logger.info("KordEnumProcessor finished processing annotations")
@@ -48,7 +41,7 @@ class KordEnumProcessor(private val codeGenerator: CodeGenerator, private val lo
             .filter { it.isOfType<GenerateKordEnum>() }
             .onEach { logger.info("found annotation", symbol = it) }
             .mapNotNull { it.toKordEnumOrNull(logger) }
-            .forEach { generateKordEnum(it, file) }
+            .forEach { generateKordEnum(it, originatingFile = file) }
     }
 
     private fun generateKordEnum(kordEnum: KordEnum, originatingFile: KSFile) {
