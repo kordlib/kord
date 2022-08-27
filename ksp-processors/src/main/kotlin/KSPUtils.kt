@@ -10,6 +10,11 @@ internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(i
 internal inline fun <reified A : Annotation> KSAnnotation.isOfType() = shortName.asString() == A::class.simpleName!!
         && annotationType.resolve().declaration.qualifiedName?.asString() == A::class.qualifiedName!!
 
-internal fun KSAnnotation.argumentsToMap() = arguments.associate { it.name!!.getShortName() to it.value!! }
+internal class AnnotationArguments private constructor(private val map: Map<String, Any>) {
+    internal operator fun get(parameter: KProperty1<out Annotation, Any>) = map[parameter.name]
 
-internal operator fun Map<String, Any>.get(parameter: KProperty1<*, *>) = get(parameter.name)
+    internal companion object {
+        internal val KSAnnotation.annotationArguments
+            get() = AnnotationArguments(arguments.associate { it.name!!.getShortName() to it.value!! })
+    }
+}

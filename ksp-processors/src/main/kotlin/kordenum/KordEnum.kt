@@ -3,6 +3,7 @@ package dev.kord.ksp.kordenum
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSAnnotation
 import com.google.devtools.ksp.symbol.KSType
+import dev.kord.ksp.AnnotationArguments.Companion.annotationArguments
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
@@ -10,8 +11,6 @@ import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
-import dev.kord.ksp.argumentsToMap
-import dev.kord.ksp.get
 import dev.kord.ksp.kordenum.KordEnum.Entry
 import kotlin.DeprecationLevel.*
 
@@ -45,7 +44,7 @@ internal class KordEnum(
  * Returns `null` if mapping fails.
  */
 internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
-    val args = argumentsToMap()
+    val args = annotationArguments
 
     val name = args[GenerateKordEnum::name] as String
     val valueType = args[GenerateKordEnum::valueType].toValueType()
@@ -99,7 +98,7 @@ private fun Any?.toValuesPropertyType() = when (val name = (this as KSType).decl
  * Returns `null` if mapping fails.
  */
 private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logger: KSPLogger): Entry? {
-    val args = (this as KSAnnotation).argumentsToMap()
+    val args = (this as KSAnnotation).annotationArguments
 
     val name = args[GenerateKordEnum.Entry::name] as String
     val intValue = args[GenerateKordEnum.Entry::intValue] as Int
@@ -161,7 +160,7 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
 
 /** Maps [KSAnnotation] to [ReplaceWith]. */
 private fun Any?.toReplaceWith(): ReplaceWith {
-    val args = (this as KSAnnotation).argumentsToMap()
+    val args = (this as KSAnnotation).annotationArguments
 
     val expression = args[ReplaceWith::expression] as String
     val imports = @Suppress("UNCHECKED_CAST") (args[ReplaceWith::imports] as List<String>)
