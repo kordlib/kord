@@ -1,5 +1,6 @@
 package dev.kord.common.entity
 
+import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.AutoModerationRuleTriggerType.Keyword
 import dev.kord.common.entity.Permission.ModerateMembers
 import dev.kord.common.entity.optional.Optional
@@ -52,13 +53,23 @@ public sealed class AutoModerationRuleTriggerType(public val value: Int) {
     /** Check if content contains words from a user defined list of keywords. */
     public object Keyword : AutoModerationRuleTriggerType(1)
 
-    /** Check if content represents generic spam. */
+    /**
+     * Check if content represents generic spam.
+     *
+     * This [trigger type][AutoModerationRuleTriggerType] is not yet released, so it cannot be used in most servers.
+     */
+    @KordExperimental
     public object Spam : AutoModerationRuleTriggerType(3)
 
     /** Check if content contains words from internal pre-defined wordsets. */
     public object KeywordPreset : AutoModerationRuleTriggerType(4)
 
-    /** Check if content contains more mentions than allowed. */
+    /**
+     * Check if content contains more mentions than allowed.
+     *
+     * This [trigger type][AutoModerationRuleTriggerType] is not yet released, so it cannot be used in most servers.
+     */
+    @KordExperimental
     public object MentionSpam : AutoModerationRuleTriggerType(5)
 
 

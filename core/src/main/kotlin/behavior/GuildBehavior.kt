@@ -5,6 +5,8 @@ import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
+import dev.kord.common.entity.AutoModerationRuleTriggerType.MentionSpam
+import dev.kord.common.entity.AutoModerationRuleTriggerType.Spam
 import dev.kord.common.entity.Permission.ManageGuild
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
@@ -1133,11 +1135,14 @@ public suspend inline fun GuildBehavior.createKeywordAutoModerationRule(
  *
  * This requires the [ManageGuild] permission.
  *
+ * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
+ *
  * @param name the rule name.
  * @param eventType the rule [event type][AutoModerationRuleEventType].
  *
  * @throws RestRequestException if something went wrong during the request.
  */
+@KordExperimental
 public suspend inline fun GuildBehavior.createSpamAutoModerationRule(
     name: String,
     eventType: AutoModerationRuleEventType = MessageSend,
@@ -1173,12 +1178,15 @@ public suspend inline fun GuildBehavior.createKeywordPresetAutoModerationRule(
  *
  * This requires the [ManageGuild] permission.
  *
+ * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
+ *
  * @param name the rule name.
  * @param eventType the rule [event type][AutoModerationRuleEventType].
  * @param mentionLimit total number of mentions (role & user) allowed per message (maximum of 50).
  *
  * @throws RestRequestException if something went wrong during the request.
  */
+@KordExperimental
 public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
     name: String,
     eventType: AutoModerationRuleEventType = MessageSend,

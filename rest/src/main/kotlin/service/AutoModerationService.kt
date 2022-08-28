@@ -1,5 +1,6 @@
 package dev.kord.rest.service
 
+import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.AutoModerationRuleEventType
 import dev.kord.common.entity.DiscordAutoModerationRule
 import dev.kord.common.entity.Snowflake
@@ -46,6 +47,7 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         return createAutoModerationRule(guildId, request.toRequest(), request.reason)
     }
 
+    @KordExperimental
     public suspend inline fun createSpamAutoModerationRule(
         guildId: Snowflake,
         name: String,
@@ -68,6 +70,7 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         return createAutoModerationRule(guildId, request.toRequest(), request.reason)
     }
 
+    @KordExperimental
     public suspend inline fun createMentionSpamAutoModerationRule(
         guildId: Snowflake,
         name: String,
@@ -112,6 +115,7 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
     }
 
+    @KordExperimental
     public suspend inline fun modifySpamAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,
@@ -132,6 +136,7 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
     }
 
+    @KordExperimental
     public suspend inline fun modifyMentionSpamAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,

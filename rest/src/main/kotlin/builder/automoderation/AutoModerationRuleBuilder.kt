@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.automoderation
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.AutoModerationActionType.*
 import dev.kord.common.entity.AutoModerationRuleEventType
 import dev.kord.common.entity.AutoModerationRuleKeywordPresetType
@@ -189,8 +190,13 @@ public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
 }
 
 
-/** An [AutoModerationRuleBuilder] for building rules with trigger type [Spam]. */
+/**
+ * An [AutoModerationRuleBuilder] for building rules with trigger type [Spam].
+ *
+ * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
+ */
 @KordDsl
+@KordExperimental
 public sealed interface SpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
     override val triggerType: Spam get() = Spam
 }
@@ -234,8 +240,13 @@ public fun KeywordPresetAutoModerationRuleBuilder.allowKeyword(keyword: String) 
 }
 
 
-/** An [AutoModerationRuleBuilder] for building rules with trigger type [MentionSpam]. */
+/**
+ * An [AutoModerationRuleBuilder] for building rules with trigger type [MentionSpam].
+ *
+ * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
+ */
 @KordDsl
+@KordExperimental
 public sealed interface MentionSpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
 
     override val triggerType: MentionSpam get() = MentionSpam

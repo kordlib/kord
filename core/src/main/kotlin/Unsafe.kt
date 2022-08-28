@@ -34,6 +34,7 @@ public class Unsafe(private val kord: Kord) {
     public fun keywordAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): KeywordAutoModerationRuleBehavior =
         KeywordAutoModerationRuleBehavior(guildId, ruleId, kord)
 
+    @KordExperimental
     public fun spamAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): SpamAutoModerationRuleBehavior =
         SpamAutoModerationRuleBehavior(guildId, ruleId, kord)
 
@@ -42,6 +43,7 @@ public class Unsafe(private val kord: Kord) {
         ruleId: Snowflake,
     ): KeywordPresetAutoModerationRuleBehavior = KeywordPresetAutoModerationRuleBehavior(guildId, ruleId, kord)
 
+    @KordExperimental
     public fun mentionSpamAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,
