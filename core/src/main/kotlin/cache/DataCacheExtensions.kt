@@ -35,11 +35,16 @@ internal suspend fun DataCache.removeKordData() {
     query<GuildData>().remove()
     query<MemberData>().remove()
     query<UserData>().remove()
+    query<ThreadMemberData>().remove()
     query<MessageData>().remove()
     query<EmojiData>().remove()
     query<WebhookData>().remove()
     query<PresenceData>().remove()
     query<VoiceStateData>().remove()
+    query<ApplicationCommandData>().remove()
+    query<GuildApplicationCommandPermissionsData>().remove()
+    query<StickerPackData>().remove()
+    query<StickerData>().remove()
     query<AutoModerationRuleData>().remove()
 }
 
