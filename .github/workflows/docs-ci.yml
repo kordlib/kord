@@ -1,4 +1,4 @@
-# This workflow will upload docs to the gh-pages branch whenever something is pushed to 0.8.x.
+# This workflow will build and push docs to the gh-pages branch whenever something is pushed to 0.8.x.
 
 name: Docs
 on:
@@ -7,22 +7,32 @@ on:
       - 0.8.x
 
 jobs:
-  upload_docs:
-    name: update docs
+  update_docs:
+    name: Update docs
     runs-on: ubuntu-latest
+
     env:
-      GRGIT_USER: ${{ secrets.GRGIT_USER }}
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
+      GITHUB_BRANCH_NAME: ${{ github.ref }}
 
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up JDK 8
         uses: actions/setup-java@v1
         with:
           java-version: 8
 
-
-      - name: Publish docs with Gradle
+      - name: Build docs with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: --stacktrace --info gitPublishPush
+          arguments: --stacktrace --info dokkaHtmlMultiModule
+
+      - name: Push docs to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dokka
+          branch: gh-pages
+          git-config-name: GitHub Actions
+          git-config-email: actions@github.com
+          commit-message: Update docs

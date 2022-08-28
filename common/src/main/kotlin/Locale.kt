@@ -12,8 +12,8 @@ import java.util.Locale as JLocale
 /**
  * Representation of a locale [supported by Discord](https://discord.com/developers/docs/reference#locales).
  *
- * @property language an ISO 639-1 language code representing the language
- * @property country an ISO 3166 country code representing the country
+ * @property language A language code representing the language.
+ * @property country A country code representing the country.
  */
 @Serializable(with = Locale.Serializer::class)
 public data class Locale(val language: String, val country: String? = null) {
@@ -177,7 +177,7 @@ public data class Locale(val language: String, val country: String? = null) {
 
 
         /**
-         * All languages [supported by Discord](https://discord.com/developers/docs/reference#Locales).
+         * All languages [supported by Discord](https://discord.com/developers/docs/reference#locales).
          */
         public val ALL: List<Locale> = listOf(
             DANISH,
@@ -216,11 +216,11 @@ public data class Locale(val language: String, val country: String? = null) {
         private val languageTagFormat = "([a-z]{2})(?:-([A-Z]{2}))?".toRegex()
 
         /**
-         * Decodes the language from a `languageCode-countryCode` or `languageCode` format.
+         * Decodes the [Locale] from a `languageCode-countryCode` or `languageCode` format.
          *
-         * This does not validate the actually languages and countries, it just validates the format.
+         * This does not validate the actual [language] and [country], it just validates the format.
          *
-         * @throws IllegalArgumentException if [string] is not a valid format.
+         * @throws IllegalArgumentException if [string] is not a valid [Locale].
          */
         public fun fromString(string: String): Locale {
             val match = requireNotNull(languageTagFormat.matchEntire(string)) { "$string is not a valid Locale" }
