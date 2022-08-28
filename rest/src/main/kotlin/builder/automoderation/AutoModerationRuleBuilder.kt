@@ -110,9 +110,30 @@ public sealed interface TypedAutoModerationRuleBuilder : AutoModerationRuleBuild
 }
 
 
+/** An [AutoModerationRuleBuilder] for building rules that can have a [Timeout] action. */
+@KordDsl
+public sealed interface TimeoutAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder
+
+/**
+ * Add a [Timeout] action which will execute whenever the rule is triggered.
+ *
+ * The [ModerateMembers] permission is required to use this action.
+ *
+ * @param duration the timeout duration (maximum of 2419200 seconds (4 weeks)).
+ */
+public inline fun TimeoutAutoModerationRuleBuilder.timeout(
+    duration: Duration,
+    builder: TimeoutAutoModerationActionBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val action = TimeoutAutoModerationActionBuilder(duration).apply(builder)
+    actions?.add(action) ?: assignActions(mutableListOf(action))
+}
+
+
 /** An [AutoModerationRuleBuilder] for building rules with trigger type [Keyword]. */
 @KordDsl
-public sealed interface KeywordAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
+public sealed interface KeywordAutoModerationRuleBuilder : TimeoutAutoModerationRuleBuilder {
 
     override val triggerType: Keyword get() = Keyword
 
@@ -127,22 +148,6 @@ public sealed interface KeywordAutoModerationRuleBuilder : TypedAutoModerationRu
 
     /** Use this to set [keywords][KeywordAutoModerationRuleBuilder.keywords] for [KeywordAutoModerationRuleBuilder]. */
     public fun assignKeywords(keywords: MutableList<String>)
-}
-
-/**
- * Add a [Timeout] action which will execute whenever the rule is triggered.
- *
- * The [ModerateMembers] permission is required to use this action.
- *
- * @param duration the timeout duration (maximum of 2419200 seconds (4 weeks)).
- */
-public inline fun KeywordAutoModerationRuleBuilder.timeout(
-    duration: Duration,
-    builder: TimeoutAutoModerationActionBuilder.() -> Unit = {},
-) {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    val action = TimeoutAutoModerationActionBuilder(duration).apply(builder)
-    actions?.add(action) ?: assignActions(mutableListOf(action))
 }
 
 /**
@@ -247,7 +252,7 @@ public fun KeywordPresetAutoModerationRuleBuilder.allowKeyword(keyword: String) 
  */
 @KordDsl
 @KordExperimental
-public sealed interface MentionSpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
+public sealed interface MentionSpamAutoModerationRuleBuilder : TimeoutAutoModerationRuleBuilder {
 
     override val triggerType: MentionSpam get() = MentionSpam
 

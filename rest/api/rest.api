@@ -128,8 +128,8 @@ public final class dev/kord/rest/builder/automoderation/AutoModerationRuleBuilde
 	public static final fun sendAlertMessage (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun sendAlertMessage$default (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun suffixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
-	public static final fun timeout-8Mi8wO0 (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;JLkotlin/jvm/functions/Function1;)V
-	public static synthetic fun timeout-8Mi8wO0$default (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;JLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun timeout-8Mi8wO0 (Ldev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder;JLkotlin/jvm/functions/Function1;)V
+	public static synthetic fun timeout-8Mi8wO0$default (Ldev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder;JLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
 public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
@@ -185,7 +185,7 @@ public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerati
 	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
 	public abstract fun assignKeywords (Ljava/util/List;)V
 	public abstract fun getKeywords ()Ljava/util/List;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
@@ -249,7 +249,7 @@ public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerat
 	public fun setPresets (Ljava/util/List;)V
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+public abstract interface class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
 	public abstract fun assignMentionLimit (I)V
 	public abstract fun getMentionLimit ()Ljava/lang/Integer;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
@@ -314,6 +314,9 @@ public final class dev/kord/rest/builder/automoderation/TimeoutAutoModerationAct
 	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$Timeout;
 	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
 	public final fun setDuration-LRDsOJo (J)V
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
 }
 
 public abstract interface class dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleBuilder {

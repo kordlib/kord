@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.AutoModerationRuleTriggerType.Keyword
+import dev.kord.common.entity.AutoModerationRuleTriggerType.MentionSpam
 import dev.kord.common.entity.Permission.ModerateMembers
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
@@ -198,8 +199,8 @@ public sealed class AutoModerationActionType(public val value: Int) {
     /**
      * Timeout user for a specified duration.
      *
-     * A [Timeout] action can only be setup for [Keyword] rules. The [ModerateMembers] permission is required to use the
-     * [Timeout] action type.
+     * A [Timeout] action can only be set up for [Keyword] and [MentionSpam] rules. The [ModerateMembers] permission is
+     * required to use the [Timeout] action type.
      */
     public object Timeout : AutoModerationActionType(3)
 
