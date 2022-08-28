@@ -2205,6 +2205,7 @@ public final class dev/kord/core/cache/DataCacheView : dev/kord/cache/api/DataCa
 
 public final class dev/kord/core/cache/KordCacheBuilder {
 	public fun <init> ()V
+	public final fun autoModerationRules (Lkotlin/jvm/functions/Function2;)V
 	public final fun build ()Ldev/kord/cache/api/DataCache;
 	public final fun channels (Lkotlin/jvm/functions/Function2;)V
 	public final fun disableAll ()V
