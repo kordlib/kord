@@ -16,12 +16,11 @@ public sealed class AutoModerationAction(
     expectedActionType: AutoModerationActionType?,
 ) : KordObject {
     init {
+        val type = data.type
         if (expectedActionType == null) {
-            require(data.type is Unknown) { "Expected unknown action type but got ${data.type}" }
+            require(type is Unknown) { "Expected unknown action type but got $type" }
         } else {
-            require(data.type == expectedActionType) {
-                "Wrong action type, expected $expectedActionType but got ${data.type}"
-            }
+            require(type == expectedActionType) { "Wrong action type, expected $expectedActionType but got $type" }
         }
     }
 

@@ -38,12 +38,11 @@ public sealed class AutoModerationRule(
 ) : TypedAutoModerationRuleBehavior {
 
     init {
+        val type = data.triggerType
         if (expectedTriggerType == null) {
-            require(data.triggerType is Unknown) { "Expected unknown trigger type but got ${data.triggerType}" }
+            require(type is Unknown) { "Expected unknown trigger type but got $type" }
         } else {
-            require(data.triggerType == expectedTriggerType) {
-                "Wrong trigger type, expected $expectedTriggerType but got ${data.triggerType}"
-            }
+            require(type == expectedTriggerType) { "Wrong trigger type, expected $expectedTriggerType but got $type" }
         }
     }
 
