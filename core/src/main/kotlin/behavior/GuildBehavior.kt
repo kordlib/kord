@@ -1129,26 +1129,6 @@ public suspend inline fun GuildBehavior.createKeywordAutoModerationRule(
 }
 
 /**
- * Requests to create a new [HarmfulLinkAutoModerationRule] in this guild and returns it.
- *
- * This requires the [ManageGuild] permission.
- *
- * @param name the rule name.
- * @param eventType the rule [event type][AutoModerationRuleEventType].
- *
- * @throws RestRequestException if something went wrong during the request.
- */
-public suspend inline fun GuildBehavior.createHarmfulLinkAutoModerationRule(
-    name: String,
-    eventType: AutoModerationRuleEventType = MessageSend,
-    builder: HarmfulLinkAutoModerationRuleCreateBuilder.() -> Unit,
-): HarmfulLinkAutoModerationRule {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    val rule = kord.rest.autoModeration.createHarmfulLinkAutoModerationRule(guildId = id, name, eventType, builder)
-    return HarmfulLinkAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
-}
-
-/**
  * Requests to create a new [SpamAutoModerationRule] in this guild and returns it.
  *
  * This requires the [ManageGuild] permission.

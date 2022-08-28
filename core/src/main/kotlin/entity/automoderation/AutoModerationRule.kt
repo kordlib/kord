@@ -108,7 +108,6 @@ internal fun AutoModerationRule(
     supplier: EntitySupplier = kord.defaultSupplier,
 ): AutoModerationRule = when (data.triggerType) {
     Keyword -> KeywordAutoModerationRule(data, kord, supplier)
-    HarmfulLink -> HarmfulLinkAutoModerationRule(data, kord, supplier)
     Spam -> SpamAutoModerationRule(data, kord, supplier)
     KeywordPreset -> KeywordPresetAutoModerationRule(data, kord, supplier)
     MentionSpam -> MentionSpamAutoModerationRule(data, kord, supplier)
@@ -136,20 +135,6 @@ public class KeywordAutoModerationRule(data: AutoModerationRuleData, kord: Kord,
         KeywordAutoModerationRule(data, kord, strategy.supply(kord))
 
     override fun toString(): String = "KeywordAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
-}
-
-/** An [AutoModerationRule] with trigger type [HarmfulLink]. */
-public class HarmfulLinkAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
-    AutoModerationRule(data, kord, supplier, expectedTriggerType = HarmfulLink),
-    HarmfulLinkAutoModerationRuleBehavior {
-
-    override suspend fun asAutoModerationRuleOrNull(): HarmfulLinkAutoModerationRule = this
-    override suspend fun asAutoModerationRule(): HarmfulLinkAutoModerationRule = this
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): HarmfulLinkAutoModerationRule =
-        HarmfulLinkAutoModerationRule(data, kord, strategy.supply(kord))
-
-    override fun toString(): String = "HarmfulLinkAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
 /** An [AutoModerationRule] with trigger type [Spam]. */

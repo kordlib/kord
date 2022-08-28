@@ -185,26 +185,6 @@ public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerati
 	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/HarmfulLinkAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
-	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$HarmfulLink;
-}
-
-public final class dev/kord/rest/builder/automoderation/HarmfulLinkAutoModerationRuleBuilder$DefaultImpls {
-	public static fun getTriggerType (Ldev/kord/rest/builder/automoderation/HarmfulLinkAutoModerationRuleBuilder;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$HarmfulLink;
-}
-
-public final class dev/kord/rest/builder/automoderation/HarmfulLinkAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/HarmfulLinkAutoModerationRuleBuilder {
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
-	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$HarmfulLink;
-	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
-}
-
-public final class dev/kord/rest/builder/automoderation/HarmfulLinkAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/HarmfulLinkAutoModerationRuleBuilder {
-	public fun <init> ()V
-	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$HarmfulLink;
-	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
-}
-
 public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
 	public abstract fun assignKeywords (Ljava/util/List;)V
 	public abstract fun getKeywords ()Ljava/util/List;
@@ -6706,7 +6686,6 @@ public final class dev/kord/rest/service/AutoModerationService : dev/kord/rest/s
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun createAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createAutoModerationRule$default (Ldev/kord/rest/service/AutoModerationService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun createHarmfulLinkAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createKeywordAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createKeywordPresetAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6717,7 +6696,6 @@ public final class dev/kord/rest/service/AutoModerationService : dev/kord/rest/s
 	public final fun listAutoModerationRulesForGuild (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun modifyAutoModerationRule$default (Ldev/kord/rest/service/AutoModerationService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun modifyHarmfulLinkAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyKeywordAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyKeywordPresetAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

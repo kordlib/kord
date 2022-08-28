@@ -76,13 +76,6 @@ public class KeywordAutoModerationRuleCreateBuilder(
         DiscordAutoModerationRuleTriggerMetadata(keywordFilter = keywords.toList().optional()).optional()
 }
 
-/** A [HarmfulLinkAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
-@KordDsl
-public class HarmfulLinkAutoModerationRuleCreateBuilder(
-    name: String,
-    eventType: AutoModerationRuleEventType,
-) : AutoModerationRuleCreateBuilder(name, eventType), HarmfulLinkAutoModerationRuleBuilder
-
 /** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
 @KordDsl
 public class SpamAutoModerationRuleCreateBuilder(

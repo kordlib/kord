@@ -52,9 +52,6 @@ public sealed class AutoModerationRuleTriggerType(public val value: Int) {
     /** Check if content contains words from a user defined list of keywords. */
     public object Keyword : AutoModerationRuleTriggerType(1)
 
-    /** Check if content contains any harmful links. */
-    public object HarmfulLink : AutoModerationRuleTriggerType(2)
-
     /** Check if content represents generic spam. */
     public object Spam : AutoModerationRuleTriggerType(3)
 
@@ -74,7 +71,6 @@ public sealed class AutoModerationRuleTriggerType(public val value: Int) {
 
         override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
             1 -> Keyword
-            2 -> HarmfulLink
             3 -> Spam
             4 -> KeywordPreset
             5 -> MentionSpam

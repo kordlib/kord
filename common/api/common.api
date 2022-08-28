@@ -1184,10 +1184,6 @@ public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Companio
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/AutoModerationRuleTriggerType$HarmfulLink : dev/kord/common/entity/AutoModerationRuleTriggerType {
-	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleTriggerType$HarmfulLink;
-}
-
 public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Keyword : dev/kord/common/entity/AutoModerationRuleTriggerType {
 	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 }

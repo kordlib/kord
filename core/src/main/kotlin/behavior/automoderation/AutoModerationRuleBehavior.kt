@@ -142,7 +142,6 @@ internal fun TypedAutoModerationRuleBehavior(
     supplier: EntitySupplier = kord.defaultSupplier,
 ): TypedAutoModerationRuleBehavior = when (triggerType) {
     Keyword -> KeywordAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
-    HarmfulLink -> HarmfulLinkAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
     Spam -> SpamAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
     KeywordPreset -> KeywordPresetAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
     MentionSpam -> MentionSpamAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
@@ -214,73 +213,6 @@ public suspend inline fun KeywordAutoModerationRuleBehavior.edit(
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val rule = kord.rest.autoModeration.modifyKeywordAutoModerationRule(guildId, ruleId = id, builder)
     return KeywordAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
-}
-
-
-/** The behavior of a [HarmfulLinkAutoModerationRule]. */
-public interface HarmfulLinkAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
-
-    override val triggerType: HarmfulLink get() = HarmfulLink
-
-    /**
-     * Requests to get this behavior as a [HarmfulLinkAutoModerationRule].
-     * Returns `null` if it wasn't found or if the rule isn't a [HarmfulLinkAutoModerationRule].
-     *
-     * This requires the [ManageGuild] permission.
-     *
-     * @throws RequestException if anything went wrong during the request.
-     */
-    override suspend fun asAutoModerationRuleOrNull(): HarmfulLinkAutoModerationRule? =
-        super.asAutoModerationRuleOrNull() as? HarmfulLinkAutoModerationRule
-
-    /**
-     * Requests to get this behavior as a [HarmfulLinkAutoModerationRule].
-     *
-     * This requires the [ManageGuild] permission.
-     *
-     * @throws RequestException if anything went wrong during the request.
-     * @throws EntityNotFoundException if the [HarmfulLinkAutoModerationRule] wasn't found.
-     * @throws ClassCastException if the rule isn't a [HarmfulLinkAutoModerationRule].
-     */
-    override suspend fun asAutoModerationRule(): HarmfulLinkAutoModerationRule =
-        super.asAutoModerationRule() as HarmfulLinkAutoModerationRule
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): HarmfulLinkAutoModerationRuleBehavior
-}
-
-internal fun HarmfulLinkAutoModerationRuleBehavior(
-    guildId: Snowflake,
-    ruleId: Snowflake,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier,
-): HarmfulLinkAutoModerationRuleBehavior = object : HarmfulLinkAutoModerationRuleBehavior {
-    override val guildId get() = guildId
-    override val id get() = ruleId
-    override val kord get() = kord
-    override val supplier get() = supplier
-
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>) =
-        HarmfulLinkAutoModerationRuleBehavior(guildId, ruleId, kord, strategy.supply(kord))
-
-    override fun equals(other: Any?) = autoModerationRuleEquals(other)
-    override fun hashCode() = autoModerationRuleHashCode()
-    override fun toString() =
-        "HarmfulLinkAutoModerationRuleBehavior(guildId=$guildId, id=$id, kord=$kord, supplier=$supplier)"
-}
-
-/**
- * Requests to edit this [HarmfulLinkAutoModerationRule] and returns the edited rule.
- *
- * This requires the [ManageGuild] permission.
- *
- * @throws RestRequestException if something went wrong during the request.
- */
-public suspend inline fun HarmfulLinkAutoModerationRuleBehavior.edit(
-    builder: HarmfulLinkAutoModerationRuleModifyBuilder.() -> Unit,
-): HarmfulLinkAutoModerationRule {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    val rule = kord.rest.autoModeration.modifyHarmfulLinkAutoModerationRule(guildId, ruleId = id, builder)
-    return HarmfulLinkAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }
 
 

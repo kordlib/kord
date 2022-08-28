@@ -189,13 +189,6 @@ public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
 }
 
 
-/** An [AutoModerationRuleBuilder] for building rules with trigger type [HarmfulLink]. */
-@KordDsl
-public sealed interface HarmfulLinkAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {
-    override val triggerType: HarmfulLink get() = HarmfulLink
-}
-
-
 /** An [AutoModerationRuleBuilder] for building rules with trigger type [Spam]. */
 @KordDsl
 public sealed interface SpamAutoModerationRuleBuilder : TypedAutoModerationRuleBuilder {

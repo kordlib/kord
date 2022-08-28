@@ -46,17 +46,6 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         return createAutoModerationRule(guildId, request.toRequest(), request.reason)
     }
 
-    public suspend inline fun createHarmfulLinkAutoModerationRule(
-        guildId: Snowflake,
-        name: String,
-        eventType: AutoModerationRuleEventType,
-        builder: HarmfulLinkAutoModerationRuleCreateBuilder.() -> Unit,
-    ): DiscordAutoModerationRule {
-        contract { callsInPlace(builder, EXACTLY_ONCE) }
-        val request = HarmfulLinkAutoModerationRuleCreateBuilder(name, eventType).apply(builder)
-        return createAutoModerationRule(guildId, request.toRequest(), request.reason)
-    }
-
     public suspend inline fun createSpamAutoModerationRule(
         guildId: Snowflake,
         name: String,
@@ -120,16 +109,6 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
     ): DiscordAutoModerationRule {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         val request = KeywordAutoModerationRuleModifyBuilder().apply(builder)
-        return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
-    }
-
-    public suspend inline fun modifyHarmfulLinkAutoModerationRule(
-        guildId: Snowflake,
-        ruleId: Snowflake,
-        builder: HarmfulLinkAutoModerationRuleModifyBuilder.() -> Unit,
-    ): DiscordAutoModerationRule {
-        contract { callsInPlace(builder, EXACTLY_ONCE) }
-        val request = HarmfulLinkAutoModerationRuleModifyBuilder().apply(builder)
         return modifyAutoModerationRule(guildId, ruleId, request.toRequest(), request.reason)
     }
 

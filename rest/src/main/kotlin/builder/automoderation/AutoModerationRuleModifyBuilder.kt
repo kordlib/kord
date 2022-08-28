@@ -89,13 +89,6 @@ public class KeywordAutoModerationRuleModifyBuilder :
         _keywords.map { DiscordAutoModerationRuleTriggerMetadata(keywordFilter = it.toList().optional()) }
 }
 
-/** A [HarmfulLinkAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
-@Suppress("CanSealedSubClassBeObject") // has state in super class
-@KordDsl
-public class HarmfulLinkAutoModerationRuleModifyBuilder :
-    AutoModerationRuleModifyBuilder(),
-    HarmfulLinkAutoModerationRuleBuilder
-
 /** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
 @Suppress("CanSealedSubClassBeObject") // has state in super class
 @KordDsl
