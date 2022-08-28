@@ -179,6 +179,7 @@ public data class DiscordAutoModerationAction(
     val metadata: Optional<DiscordAutoModerationActionMetadata> = Optional.Missing(),
 )
 
+/** The type of action. */
 @Serializable(with = AutoModerationActionType.Serializer::class)
 public sealed class AutoModerationActionType(public val value: Int) {
 
