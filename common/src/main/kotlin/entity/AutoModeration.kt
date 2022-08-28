@@ -102,6 +102,7 @@ public data class DiscordAutoModerationRuleTriggerMetadata(
     val mentionTotalLimit: OptionalInt = OptionalInt.Missing,
 )
 
+/** An internally pre-defined wordset which will be searched for in content. */
 @Serializable(with = AutoModerationRuleKeywordPresetType.Serializer::class)
 public sealed class AutoModerationRuleKeywordPresetType(public val value: Int) {
 
