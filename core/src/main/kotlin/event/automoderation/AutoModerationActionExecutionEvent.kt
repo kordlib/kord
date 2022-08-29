@@ -48,10 +48,10 @@ public class AutoModerationActionExecutionEvent(
         get() = TypedAutoModerationRuleBehavior(guildId, ruleId, data.ruleTriggerType, kord)
 
     /** The ID of the [Member] which generated the content which triggered the rule. */
-    public val userId: Snowflake get() = data.userId
+    public val memberId: Snowflake get() = data.userId
 
     /** The behavior of the [Member] which generated the content which triggered the rule. */
-    public val user: MemberBehavior get() = MemberBehavior(guildId, id = userId, kord)
+    public val member: MemberBehavior get() = MemberBehavior(guildId, id = memberId, kord)
 
     /** The ID of the [GuildMessageChannel] in which user [content] was posted. */
     public val channelId: Snowflake? get() = data.channelId.value

@@ -10681,14 +10681,14 @@ public final class dev/kord/core/event/automoderation/AutoModerationActionExecut
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMatchedContent ()Ljava/lang/String;
 	public final fun getMatchedKeyword ()Ljava/lang/String;
+	public final fun getMember ()Ldev/kord/core/behavior/MemberBehavior;
+	public final fun getMemberId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
 	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun getRule ()Ldev/kord/core/behavior/automoderation/TypedAutoModerationRuleBehavior;
 	public fun getRuleId ()Ldev/kord/common/entity/Snowflake;
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun getUser ()Ldev/kord/core/behavior/MemberBehavior;
-	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/automoderation/AutoModerationActionExecutionEvent;
