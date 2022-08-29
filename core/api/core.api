@@ -10901,14 +10901,15 @@ public abstract class dev/kord/core/event/gateway/GatewayEvent : dev/kord/core/e
 }
 
 public final class dev/kord/core/event/gateway/ReadyEvent : dev/kord/core/event/gateway/GatewayEvent, dev/kord/core/entity/Strategizable {
-	public fun <init> (ILjava/util/Set;Ldev/kord/core/entity/User;Ljava/lang/String;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (ILjava/util/Set;Ldev/kord/core/entity/User;Ljava/lang/String;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/util/Set;Ldev/kord/core/entity/User;Ljava/lang/String;Ljava/lang/String;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
+	public synthetic fun <init> (ILjava/util/Set;Ldev/kord/core/entity/User;Ljava/lang/String;Ljava/lang/String;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCustomContext ()Ljava/lang/Object;
 	public final fun getGatewayVersion ()I
 	public final fun getGuildIds ()Ljava/util/Set;
 	public final fun getGuilds ()Ljava/util/Set;
 	public final fun getGuilds (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getResumeGatewayUrl ()Ljava/lang/String;
 	public final fun getSelf ()Ldev/kord/core/entity/User;
 	public final fun getSessionId ()Ljava/lang/String;
 	public fun getShard ()I
