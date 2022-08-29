@@ -51,7 +51,7 @@ fun VersionCatalogBuilder.kotlinx() {
 }
 
 fun VersionCatalogBuilder.ktor() {
-    val ktor = version("ktor", "2.0.3")
+    val ktor = version("ktor", "2.1.0")
 
     library("ktor-client-json", "io.ktor", "ktor-serialization-kotlinx-json").versionRef(ktor)
     library("ktor-client-content-negotiation", "io.ktor", "ktor-client-content-negotiation").versionRef(ktor)
@@ -69,19 +69,19 @@ fun VersionCatalogBuilder.ktor() {
 }
 
 fun VersionCatalogBuilder.common() {
-    version("kotlinx-coroutines", "1.6.3")
+    version("kotlinx-coroutines", "1.6.4")
     library("kotlinx-serialization", "org.jetbrains.kotlinx", "kotlinx-serialization-json").version("1.3.3")
     library("kotlinx-coroutines", "org.jetbrains.kotlinx", "kotlinx-coroutines-core").versionRef("kotlinx-coroutines")
-    library("kotlinx-atomicfu", "org.jetbrains.kotlinx", "atomicfu").version("0.18.2")
+    library("kotlinx-atomicfu", "org.jetbrains.kotlinx", "atomicfu").version("0.18.3")
     library("kotlin-logging", "io.github.microutils", "kotlin-logging").version("2.1.23")
 
     bundle("common", listOf("kotlinx-serialization", "kotlinx-coroutines", "kotlinx-atomicfu", "kotlin-logging"))
 }
 
 fun VersionCatalogBuilder.tests() {
-    val junit5 = version("junit5", "5.8.2")
+    val junit5 = version("junit5", "5.9.0")
 
-    library("mockk", "io.mockk", "mockk").version("1.12.4")
+    library("mockk", "io.mockk", "mockk").version("1.12.5")
     library("kotlinx-coroutines-test", "org.jetbrains.kotlinx", "kotlinx-coroutines-test").versionRef("kotlinx-coroutines")
     library("junit-jupiter-api", "org.junit.jupiter", "junit-jupiter-api").versionRef(junit5)
 

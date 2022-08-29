@@ -10,7 +10,6 @@ import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.coroutines.CoroutineScope
 
 /**
  * Interface of all events related to [GuildScheduledEvents][GuildScheduledEvent].
@@ -19,7 +18,7 @@ import kotlinx.coroutines.CoroutineScope
  * @see GuildScheduledEventUpdateEvent
  * @see GuildScheduledEventDeleteEvent
  */
-public sealed interface GuildScheduledEventEvent : Event, CoroutineScope, Strategizable {
+public sealed interface GuildScheduledEventEvent : Event, Strategizable {
 
     /**
      * The [GuildScheduledEvent].

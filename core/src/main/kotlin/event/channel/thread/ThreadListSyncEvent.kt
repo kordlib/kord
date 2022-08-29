@@ -13,22 +13,19 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlin.coroutines.CoroutineContext
 
 
 public class ThreadListSyncEvent(
     public val data: ThreadListSyncData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val guildId: Snowflake get() = data.guildId
 
@@ -72,8 +69,6 @@ public class ThreadListSyncEvent(
         return supplier.getGuildChannels(guildId).filter { it.id in channelIds }
     }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable {
-        return ThreadListSyncEvent(data, kord, shard, strategy.supply(kord))
-    }
-
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadListSyncEvent =
+        ThreadListSyncEvent(data, kord, shard, customContext, strategy.supply(kord))
 }

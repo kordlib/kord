@@ -7,11 +7,8 @@ import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class RoleDeleteEvent(
     public val guildId: Snowflake,
@@ -19,9 +16,9 @@ public class RoleDeleteEvent(
     public val role: Role?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
@@ -30,7 +27,7 @@ public class RoleDeleteEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): RoleDeleteEvent =
-        RoleDeleteEvent(guildId, roleId, role, kord, shard, strategy.supply(kord))
+        RoleDeleteEvent(guildId, roleId, role, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "RoleDeleteEvent(guildId=$guildId, roleId=$roleId, role=$role, kord=$kord, shard=$shard, supplier=$supplier)"

@@ -10,13 +10,10 @@ import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class ReactionAddEvent(
     public val userId: Snowflake,
@@ -26,9 +23,9 @@ public class ReactionAddEvent(
     public val emoji: ReactionEmoji,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
@@ -55,7 +52,7 @@ public class ReactionAddEvent(
     public suspend fun getUserAsMember(): Member? = guildId?.let { supplier.getMemberOrNull(it, userId) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionAddEvent =
-        ReactionAddEvent(userId, channelId, messageId, guildId, emoji, kord, shard, strategy.supply(kord))
+        ReactionAddEvent(userId, channelId, messageId, guildId, emoji, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "ReactionAddEvent(userId=$userId, channelId=$channelId, messageId=$messageId, guildId=$guildId, emoji=$emoji, kord=$kord, shard=$shard, supplier=$supplier)"

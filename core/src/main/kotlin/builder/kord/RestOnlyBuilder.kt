@@ -5,6 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
@@ -65,14 +66,14 @@ public abstract class RestOnlyBuilder {
         val rest = RestClient(handlerBuilder(resources))
 
         return Kord(
-            resources,
-            @OptIn(ExperimentalCoroutinesApi::class)
-            DataCache.none(),
-            DefaultMasterGateway(mapOf(0 to Gateway.none())),
-            rest,
-            selfId,
-            MutableSharedFlow(),
-            defaultDispatcher,
+            resources = resources,
+            cache = @OptIn(ExperimentalCoroutinesApi::class) DataCache.none(),
+            gateway = DefaultMasterGateway(mapOf(0 to Gateway.none())),
+            rest = rest,
+            selfId = selfId,
+            eventFlow = MutableSharedFlow(),
+            dispatcher = defaultDispatcher,
+            interceptor = GatewayEventInterceptor.none(),
         )
     }
 }

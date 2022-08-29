@@ -37,7 +37,7 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: --stacktrace --info build -x apiCheck
+          arguments: --stacktrace --info build
 
 
   release:
@@ -74,14 +74,7 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: --stacktrace --info build -x apiCheck
-
-      - name: API Checking with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: apiCheck
-
-
+          arguments: --stacktrace --info build
 
       - name: Publish with Gradle
         uses: gradle/gradle-build-action@v2

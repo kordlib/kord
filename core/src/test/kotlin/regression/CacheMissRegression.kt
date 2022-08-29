@@ -11,6 +11,7 @@ import dev.kord.core.builder.kord.getBotIdFromToken
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.registerKordData
 import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Command
 import dev.kord.gateway.Event
@@ -136,7 +137,8 @@ class CacheMissingRegressions {
             RestClient(CrashingHandler(resources.httpClient, resources.token)),
             getBotIdFromToken(token),
             MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-            Dispatchers.Default
+            Dispatchers.Default,
+            DefaultGatewayEventInterceptor(),
         )
     }
 
