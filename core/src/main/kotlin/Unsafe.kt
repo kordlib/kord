@@ -3,29 +3,15 @@ package dev.kord.core
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.GlobalApplicationCommandBehavior
-import dev.kord.core.behavior.GuildApplicationCommandBehavior
-import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.GuildEmojiBehavior
-import dev.kord.core.behavior.GuildScheduledEventBehavior
-import dev.kord.core.behavior.MemberBehavior
-import dev.kord.core.behavior.MessageBehavior
-import dev.kord.core.behavior.RoleBehavior
-import dev.kord.core.behavior.StageInstanceBehavior
-import dev.kord.core.behavior.ThreadMemberBehavior
-import dev.kord.core.behavior.UserBehavior
-import dev.kord.core.behavior.WebhookBehavior
+import dev.kord.core.behavior.*
 import dev.kord.core.behavior.channel.*
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.behavior.interaction.ApplicationCommandInteractionBehavior
 import dev.kord.core.behavior.interaction.ComponentInteractionBehavior
 import dev.kord.rest.service.InteractionService
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * A class that exposes the creation of `{Entity}Behavior` classes.
@@ -74,7 +60,8 @@ public class Unsafe(private val kord: Kord) {
     public fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
         VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
 
-    @Suppress("DEPRECATION")
+    /** @suppress */
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         """
         Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
@@ -82,7 +69,7 @@ public class Unsafe(private val kord: Kord) {
         
         See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
         """,
-        level = WARNING,
+        level = ERROR,
     )
     public fun storeChannel(guildId: Snowflake, id: Snowflake): StoreChannelBehavior =
         StoreChannelBehavior(guildId = guildId, id = id, kord = kord)

@@ -1,6 +1,5 @@
 package live
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.UserData
@@ -10,13 +9,13 @@ import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.message.MessageBulkDeleteEvent
 import dev.kord.core.event.message.MessageDeleteEvent
-import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.live.*
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.gateway.*
 import equality.randomId
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Instant
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
@@ -28,7 +27,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
 @Disabled
 class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
@@ -59,7 +57,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                         discriminator = ""
                     ),
                     content = "",
-                    timestamp = "",
+                    timestamp = Instant.fromEpochMilliseconds(0),
                     tts = false,
                     mentionEveryone = false,
                     mentions = emptyList(),

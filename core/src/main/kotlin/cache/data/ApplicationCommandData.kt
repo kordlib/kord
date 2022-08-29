@@ -2,13 +2,11 @@ package dev.kord.core.cache.data
 
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
+import dev.kord.common.Locale
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.mapList
-import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonPrimitive
 
 @Serializable
 public data class ApplicationCommandData(
@@ -16,10 +14,15 @@ public data class ApplicationCommandData(
     val type: Optional<ApplicationCommandType> = Optional.Missing(),
     val applicationId: Snowflake,
     val name: String,
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val description: String?,
-    val guildId: OptionalSnowflake,
-    val options: Optional<List<ApplicationCommandOptionData>>,
-    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
+    val defaultMemberPermissions: Permissions?,
+    val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val version: Snowflake
 ) {
     public companion object {
@@ -33,10 +36,14 @@ public data class ApplicationCommandData(
                     type,
                     applicationId,
                     name,
+                    nameLocalizations,
                     description,
+                    descriptionLocalizations,
                     guildId,
                     options.mapList { ApplicationCommandOptionData.from(it) },
-                    defaultPermission,
+                    defaultMemberPermissions,
+                    dmPermission,
+                    @Suppress("DEPRECATION") defaultPermission,
                     version
                 )
             }
@@ -53,7 +60,11 @@ public data class ApplicationCommandOptionData(
     val required: OptionalBoolean = OptionalBoolean.Missing,
     val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
     val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
-    val channelTypes: Optional<List<ChannelType>> = Optional.Missing()
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    val minValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val minLength: OptionalInt = OptionalInt.Missing,
+    val maxLength: OptionalInt = OptionalInt.Missing
 ) {
     public companion object {
         public fun from(data: ApplicationCommandOption): ApplicationCommandOptionData {
@@ -66,7 +77,11 @@ public data class ApplicationCommandOptionData(
                     required,
                     choices.mapList { ApplicationCommandOptionChoiceData.from(it) },
                     options.mapList { inner -> from(inner) },
-                    channelTypes
+                    channelTypes,
+                    minValue,
+                    maxValue,
+                    minLength,
+                    maxLength
                 )
             }
         }

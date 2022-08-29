@@ -1,13 +1,17 @@
 package dev.kord.core.entity.application
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.ApplicationCommandType
 import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.value
 import dev.kord.core.behavior.ApplicationCommandBehavior
 import dev.kord.core.behavior.GlobalApplicationCommandBehavior
 import dev.kord.core.behavior.GuildApplicationCommandBehavior
-import dev.kord.core.cache.data.*
+import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.ApplicationCommandParameterData
 import dev.kord.rest.service.InteractionService
 
 /**
@@ -26,8 +30,17 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     override val applicationId: Snowflake
         get() = data.applicationId
 
+    /**
+     * The name of the command
+     */
     public val name: String
         get() = data.name
+
+    /**
+     * A map containing all localizations of [name].
+     */
+    public val nameLocalizations: Map<Locale, String>
+        get() = data.nameLocalizations.value ?: emptyMap()
 
     /**
      * auto-incrementing version identifier updated during substantial record changes.
@@ -35,15 +48,27 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     public val version: Snowflake get() = data.version
 
     /**
+     * Set of [Permissions] required to execute this command unless a server admin changed them.
+     */
+    public val defaultMemberPermissions: Permissions? get() = data.defaultMemberPermissions
+
+    /**
      * whether the command is enabled by default when the app is added to a guild.
      */
-    public val defaultPermission: Boolean? get() = data.defaultPermission.discordBoolean
+    @Suppress("DeprecatedCallableAddReplaceWith")
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    public val defaultPermission: Boolean? get() = @Suppress("DEPRECATION") data.defaultPermission.value
 
 
 }
 
 
-public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicationCommandBehavior
+public interface GlobalApplicationCommand : ApplicationCommand, GlobalApplicationCommandBehavior {
+    /**
+     * Whether this command is available in DMs with the application.
+     */
+    public val dmPermission: Boolean get() = data.dmPermission.orElse(true)
+}
 public class UnknownGlobalApplicationCommand(
     override val data: ApplicationCommandData,
     override val service: InteractionService,

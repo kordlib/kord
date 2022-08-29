@@ -1,6 +1,5 @@
 package dev.kord.core
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
@@ -16,10 +15,9 @@ import dev.kord.core.event.role.RoleDeleteEvent
 import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.event.user.PresenceUpdateEvent
 import dev.kord.core.event.user.VoiceStateUpdateEvent
-import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intent
+import dev.kord.gateway.Intent.*
 import dev.kord.gateway.Intents
-import dev.kord.gateway.MessageDelete
 import dev.kord.gateway.PrivilegedIntent
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.request.RestRequestException
@@ -31,8 +29,6 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
 import kotlinx.coroutines.flow.firstOrNull as coroutinesFirstOrNull
-
-internal fun Long.toInstant() = Instant.fromEpochMilliseconds(this)
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
@@ -62,6 +58,7 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 }
 
 
+/** @suppress */
 @Deprecated(
     "This is an internal utility function.",
     ReplaceWith("this.toList().sorted()", "kotlinx.coroutines.flow.toList"),
@@ -78,6 +75,8 @@ internal fun <T : Comparable<T>> Flow<T>.internalSorted(): Flow<T> = flow {
  * The terminal operator that returns the first element emitted by the flow that matches the [predicate]
  * and then cancels flow's collection.
  * Returns `null` if the flow was empty.
+ *
+ * @suppress
  */
 @Deprecated(
     "Use the function with the same name from kotlinx.coroutines.flow instead.",
@@ -90,8 +89,9 @@ public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: s
 /**
  * The terminal operator that returns `true` if any of the elements match [predicate].
  * The flow's collection is cancelled when a match is found.
+ *
+ * @suppress
  */
-@Suppress("DEPRECATION")
 @Deprecated(
     "This is an internal utility function.",
     ReplaceWith("this.firstOrNull(predicate) != null", "kotlinx.coroutines.flow.firstOrNull"),
@@ -351,7 +351,7 @@ public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>)
  * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
  * than one event.
  */
-@OptIn(PrivilegedIntent::class, KordPreview::class)
+@OptIn(PrivilegedIntent::class)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
 // see https://discord.com/developers/docs/topics/gateway#list-of-intents
 
@@ -372,7 +372,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelCreateEvent::class,
     NewsChannelCreateEvent::class,
     StageChannelCreateEvent::class,
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     StoreChannelCreateEvent::class,
     TextChannelCreateEvent::class,
     UnknownChannelCreateEvent::class,
@@ -383,7 +383,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelUpdateEvent::class,
     NewsChannelUpdateEvent::class,
     StageChannelUpdateEvent::class,
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     StoreChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
     UnknownChannelUpdateEvent::class,
@@ -394,7 +394,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelDeleteEvent::class,
     NewsChannelDeleteEvent::class,
     StageChannelDeleteEvent::class,
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     StoreChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
     UnknownChannelDeleteEvent::class,
@@ -479,7 +479,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
         +MessageContent
     }
 
-    MessageDelete::class -> {
+    MessageDeleteEvent::class -> {
         +GuildMessages
         +DirectMessages
         // no message content

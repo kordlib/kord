@@ -1,8 +1,10 @@
 package json
 
 import dev.kord.common.entity.*
+import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
+import kotlin.time.Duration.Companion.seconds
 
 
 private fun file(name: String): String {
@@ -40,7 +42,7 @@ class GuildTest {
             @Suppress("DEPRECATION")
             region shouldBe "us-west"
             afkChannelId shouldBe null
-            afkTimeout shouldBe 300
+            afkTimeout shouldBe 300.seconds
             systemChannelId shouldBe null
             widgetEnabled shouldBe true
             widgetChannelId shouldBe null
@@ -80,7 +82,7 @@ class GuildTest {
         with(member) {
             nick shouldBe "NOT API SUPPORT"
             roles shouldBe emptyList()
-            joinedAt shouldBe "2015-04-26T06:26:56.936000+00:00"
+            joinedAt shouldBe Instant.parse("2015-04-26T06:26:56.936000+00:00")
             deaf shouldBe false
             mute shouldBe false
         }

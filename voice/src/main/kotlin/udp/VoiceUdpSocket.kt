@@ -2,7 +2,6 @@ package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
 import io.ktor.network.sockets.*
-import io.ktor.util.network.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.filter
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.first
 public interface VoiceUdpSocket {
     public val incoming: SharedFlow<Datagram>
 
-    public suspend fun discoverIp(address: NetworkAddress, ssrc: Int): NetworkAddress
+    public suspend fun discoverIp(address: InetSocketAddress, ssrc: Int): InetSocketAddress
 
     public suspend fun send(packet: Datagram)
 
@@ -22,7 +21,7 @@ public interface VoiceUdpSocket {
         private object None : VoiceUdpSocket {
             override val incoming: SharedFlow<Datagram> = MutableSharedFlow()
 
-            override suspend fun discoverIp(address: NetworkAddress, ssrc: Int): NetworkAddress {
+            override suspend fun discoverIp(address: InetSocketAddress, ssrc: Int): InetSocketAddress {
                 return address
             }
 
@@ -36,5 +35,5 @@ public interface VoiceUdpSocket {
 }
 
 @KordVoice
-public suspend fun VoiceUdpSocket.receiveFrom(address: NetworkAddress): Datagram =
+public suspend fun VoiceUdpSocket.receiveFrom(address: InetSocketAddress): Datagram =
     incoming.filter { it.address == address }.first()

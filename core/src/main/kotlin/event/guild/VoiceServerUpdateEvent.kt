@@ -6,11 +6,8 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
 
 public class VoiceServerUpdateEvent(
     public val token: String,
@@ -18,9 +15,9 @@ public class VoiceServerUpdateEvent(
     public val endpoint: String?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
@@ -29,7 +26,7 @@ public class VoiceServerUpdateEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceServerUpdateEvent =
-        VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, strategy.supply(kord))
+        VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "VoiceServerUpdateEvent(token='$token', guildId=$guildId, endpoint='$endpoint', kord=$kord, shard=$shard, supplier=$supplier)"

@@ -4,7 +4,12 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.*
+import dev.kord.common.serialization.DurationInSeconds
+import kotlinx.datetime.Instant
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -17,6 +22,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
+import kotlin.DeprecationLevel.ERROR
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -118,6 +124,11 @@ public sealed class Event {
                     Resumed(sequence)
                 }
                 "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
+                "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
+                    decoder.decodeSerializableElement(
+                        descriptor, index, DiscordGuildApplicationCommandPermissions.serializer()
+                    ), sequence
+                )
                 "CHANNEL_CREATE" -> ChannelCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -569,6 +580,11 @@ public data class InvalidSession(val resumable: Boolean) : Event() {
     }
 }
 
+public data class ApplicationCommandPermissionsUpdate(
+    val permissions: DiscordGuildApplicationCommandPermissions,
+    override val sequence: Int?
+) : DispatchEvent()
+
 public data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelDelete(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
@@ -621,12 +637,12 @@ public data class DiscordCreatedInvite(
     val channelId: Snowflake,
     val code: String,
     @SerialName("created_at")
-    val createdAt: String,
+    val createdAt: Instant,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val inviter: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("max_age")
-    val maxAge: Int,
+    val maxAge: DurationInSeconds,
     @SerialName("max_uses")
     val maxUses: Int,
     @SerialName("target_type")
@@ -635,16 +651,19 @@ public data class DiscordCreatedInvite(
     val targetUser: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_application")
     val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
-    @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
+    /** @suppress */
+    @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     @SerialName("target_user_type")
-    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
 )
 
+/** @suppress */
 @Deprecated(
     "Use 'DiscordUser' instead, All missing fields have defaults.",
     ReplaceWith("DiscordUser", "dev.kord.common.entity.DiscordUser"),
+    level = ERROR,
 )
 @Serializable
 public data class DiscordInviteUser(

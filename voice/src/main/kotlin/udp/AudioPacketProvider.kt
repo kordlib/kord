@@ -15,7 +15,7 @@ public abstract class AudioPacketProvider(public val key: ByteArray, public val 
 private class CouldNotEncryptDataException(val data: ByteArray) :
     RuntimeException("Couldn't encrypt the following data: [${data.joinToString(", ")}]")
 
-public class DefaultAudioPackerProvider(key: ByteArray, nonceStrategy: NonceStrategy) :
+public class DefaultAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStrategy) :
     AudioPacketProvider(key, nonceStrategy) {
     private val codec = XSalsa20Poly1305Codec(key)
 

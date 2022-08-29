@@ -5,9 +5,11 @@ import dev.kord.rest.NamedFile
 import dev.kord.rest.route.Route
 import io.ktor.http.*
 import kotlinx.serialization.SerializationStrategy
+import kotlin.DeprecationLevel.HIDDEN
 
-public class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
+public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
 
+    public var baseUrl: String = Route.baseUrl
     public val keys: MutableMap<Route.Key, String> = HashMap(keySize, 1f)
 
     public operator fun MutableMap<Route.Key, String>.set(key: Route.Key, value: Snowflake) {
@@ -39,7 +41,7 @@ public class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     @Deprecated(
         "'header' was renamed to 'urlEncodedHeader'",
         ReplaceWith("urlEncodedHeader(key, value)"),
-        DeprecationLevel.ERROR,
+        level = HIDDEN,
     )
     public fun header(key: String, value: String): Unit = urlEncodedHeader(key, value)
 
@@ -62,7 +64,7 @@ public class RequestBuilder<T>(private val route: Route<T>, keySize: Int = 2) {
     }
 
     public fun build(): Request<*, T> = when {
-        files.isEmpty() -> JsonRequest(route, keys, parameters.build(), headers.build(), body)
-        else -> MultipartRequest(route, keys, parameters.build(), headers.build(), body, files)
+        files.isEmpty() -> JsonRequest(route, keys, parameters.build(), headers.build(), body, baseUrl)
+        else -> MultipartRequest(route, keys, parameters.build(), headers.build(), body, files, baseUrl)
     }
 }

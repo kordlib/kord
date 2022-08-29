@@ -14,16 +14,12 @@ import dev.kord.core.cache.data.InviteData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
-import kotlin.time.DurationUnit.SECONDS
-import kotlin.time.toDuration
 
 /**
  * Sent when a new invite to a channel is created.
@@ -32,9 +28,9 @@ public class InviteCreateEvent(
     public val data: InviteCreateData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     /**
      * The id of the [Channel] the invite is for.
@@ -54,7 +50,7 @@ public class InviteCreateEvent(
     /**
      * The time at which the invite was created.
      */
-    public val createdAt: Instant get() = data.createdAt.toInstant()
+    public val createdAt: Instant get() = data.createdAt
 
     /**
      * The id of the [Guild] of the invite.
@@ -87,7 +83,7 @@ public class InviteCreateEvent(
     /**
      * How long the invite is valid for.
      */
-    public val maxAge: Duration get() = data.maxAge.toDuration(unit = SECONDS)
+    public val maxAge: Duration get() = data.maxAge
 
     /**
      * The maximum number of times the invite can be used.
@@ -156,7 +152,7 @@ public class InviteCreateEvent(
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = DeprecationLevel.ERROR)
+    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = HIDDEN)
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
 
     /**
@@ -174,7 +170,7 @@ public class InviteCreateEvent(
      * @throws [EntityNotFoundException] if the  wasn't present.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getInviterOrNull instead.", ReplaceWith("getInviterOrNull()"), level = DeprecationLevel.ERROR)
+    @Deprecated("Use getInviterOrNull instead.", ReplaceWith("getInviterOrNull()"), level = HIDDEN)
     public suspend fun getInviter(): User? = inviterId?.let { supplier.getUser(it) }
 
     /**
@@ -195,7 +191,7 @@ public class InviteCreateEvent(
     @Deprecated(
         "Use getInviterAsMemberOrNull instead.",
         ReplaceWith("getInviterAsMemberOrNull()"),
-        level = DeprecationLevel.ERROR
+        level = HIDDEN,
     )
     public suspend fun getInviterAsMember(): Member? {
         return supplier.getMember(guildId = guildId ?: return null, userId = inviterId ?: return null)
@@ -241,7 +237,7 @@ public class InviteCreateEvent(
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InviteCreateEvent =
-        InviteCreateEvent(data, kord, shard, supplier)
+        InviteCreateEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "InviteCreateEvent(data=$data, kord=$kord, shard=$shard, supplier=$supplier)"

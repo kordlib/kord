@@ -37,10 +37,14 @@ class StackTraceRecoveryTest {
         val stackTrace = Thread.currentThread().stackTrace[1] // 1st one would be Thread.run for some reason
         try {
             handler.handle(request)
-        } catch (e: ContextException) {
+        } catch (e: Throwable) {
             e.printStackTrace()
-            //at dev.kord.rest.request.StackTraceRecoveryTest$test stack trace recovery$1.invokeSuspend(StackTraceRecoveryTest.kt:39)
-            with(e.stackTrace.first()) {
+
+            val recovered = e.suppressedExceptions.first { it is RecoveredStackTrace }
+            recovered.printStackTrace()
+
+            // at dev.kord.rest.request.StackTraceRecoveryTest$test stack trace recovery$1.invokeSuspend(StackTraceRecoveryTest.kt:39)
+            with(recovered.stackTrace.first()) {
                 assertEquals(stackTrace.className, className)
                 assertEquals(stackTrace.fileName, fileName)
                 assertEquals(stackTrace.lineNumber + 2, lineNumber) // +2 because capture is two lines deeper

@@ -1,5 +1,6 @@
 package dev.kord.voice
 
+import dev.kord.common.KordConfiguration
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
@@ -22,6 +23,8 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 @KordVoice
 public class VoiceConnectionBuilder(
@@ -96,6 +99,12 @@ public class VoiceConnectionBuilder(
     public var streams: Streams? = null
 
     /**
+     * The amount of time the connection should wait before assuming the voice connection has been closed instead of
+     * moved.
+     */
+    public var connectionDetachDuration: Duration = 100.milliseconds
+
+    /**
      * A builder to customize the voice connection's underlying [VoiceGateway].
      */
     public fun voiceGateway(builder: DefaultVoiceGatewayBuilder.() -> Unit) {
@@ -142,7 +151,7 @@ public class VoiceConnectionBuilder(
             voiceState.sessionId
         ) to VoiceGatewayConfiguration(
             voiceServer.token,
-            "wss://${voiceServer.endpoint}?v=4"
+            "wss://${voiceServer.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
         )
     }
 
@@ -181,7 +190,8 @@ public class VoiceConnectionBuilder(
             audioProvider,
             frameInterceptor,
             audioSender,
-            nonceStrategy
+            nonceStrategy,
+            connectionDetachDuration
         )
     }
 

@@ -2,6 +2,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -11,6 +12,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
 
 public sealed interface BaseDiscordInvite {
     public val code: String
@@ -38,9 +40,10 @@ public data class DiscordInvite(
     override val targetUser: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_application")
     override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
+    /** @suppress */
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     @SerialName("target_user_type")
-    val targetUserType: Optional<@Suppress("DEPRECATION") TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
     @SerialName("approximate_presence_count")
     override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_member_count")
@@ -78,7 +81,7 @@ public data class DiscordInviteWithMetadata(
     @SerialName("max_uses")
     val maxUses: Int,
     @SerialName("max_age")
-    val maxAge: Int,
+    val maxAge: DurationInSeconds,
     val temporary: Boolean,
     @SerialName("created_at")
     val createdAt: Instant,

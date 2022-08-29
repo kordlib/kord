@@ -4,6 +4,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -40,7 +41,7 @@ public data class DiscordUnavailableGuild(
  * @param permissions The total permissions for [DiscordUser] in the guild (excludes [overwrites][Overwrite]).
  * @param region [DiscordVoiceRegion] id for the guild.
  * @param afkChannelId The id of afk channel.
- * @param afkTimeout The afk timeout in seconds.
+ * @param afkTimeout The afk timeout.
  * @param widgetEnabled True if the server widget is enabled.
  * @param widgetChannelId The channel id that the widget will generate an invite to, or `null` if set to no invite.
  * @param verificationLevel [VerificationLevel] required for the guild.
@@ -93,7 +94,7 @@ public data class DiscordGuild(
         ReplaceWith("DiscordChannel#rtcRegion")
     ) val region: String,
     @SerialName("afk_channel_id") val afkChannelId: Snowflake?,
-    @SerialName("afk_timeout") val afkTimeout: Int,
+    @SerialName("afk_timeout") val afkTimeout: DurationInSeconds,
     @SerialName("widget_enabled") val widgetEnabled: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("widget_channel_id") val widgetChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("verification_level") val verificationLevel: VerificationLevel,
@@ -107,7 +108,7 @@ public data class DiscordGuild(
     @SerialName("system_channel_id") val systemChannelId: Snowflake?,
     @SerialName("system_channel_flags") val systemChannelFlags: SystemChannelFlags,
     @SerialName("rules_channel_id") val rulesChannelId: Snowflake?,
-    @SerialName("joined_at") val joinedAt: Optional<String> = Optional.Missing(),
+    @SerialName("joined_at") val joinedAt: Optional<Instant> = Optional.Missing(),
     val large: OptionalBoolean = OptionalBoolean.Missing,
     val unavailable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("member_count") val memberCount: OptionalInt = OptionalInt.Missing,
@@ -238,9 +239,11 @@ public sealed class GuildFeature(public val value: String) {
     public object MoreStickers : GuildFeature("MORE_STICKERS")
 
     /** Guild has access to the three-day archive time for threads */
+    @Deprecated("Thread archive durations are no longer boost locked")
     public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
 
     /** Guild has access to the seven day archive time for threads */
+    @Deprecated("Thread archive durations are no longer boost locked")
     public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
 
     /** Guild has access to create private threads */
@@ -277,8 +280,8 @@ public sealed class GuildFeature(public val value: String) {
             "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
             "MONETIZATION_ENABLED" -> MonetizationEnabled
             "MORE_STICKERS" -> MoreStickers
-            "THREE_DAY_THREAD_ARCHIVE" -> ThreeDayThreadArchive
-            "SEVEN_DAY_THREAD_ARCHIVE" -> SevenDayThreadArchive
+            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") ThreeDayThreadArchive
+            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") SevenDayThreadArchive
             "PRIVATE_THREADS" -> PrivateThreads
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
             "PREVIEW_ENABLED" -> PreviewEnabled

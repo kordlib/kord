@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION_ERROR")
 
 package dev.kord.core.behavior.channel
 
@@ -14,13 +14,15 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.StoreChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchStoreChannel
-import java.util.*
-import kotlin.DeprecationLevel.WARNING
+import java.util.Objects
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
  * The behavior of a Discord Store Channel associated to a guild.
+ *
+ * @suppress
  */
 @Deprecated(
     """
@@ -29,7 +31,7 @@ import kotlin.contracts.contract
     
     See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
     """,
-    level = WARNING,
+    level = ERROR,
 )
 public interface StoreChannelBehavior : CategorizableChannelBehavior {
 
@@ -77,6 +79,7 @@ public interface StoreChannelBehavior : CategorizableChannelBehavior {
 
 }
 
+/** @suppress */
 @Deprecated(
     """
     Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
@@ -84,7 +87,7 @@ public interface StoreChannelBehavior : CategorizableChannelBehavior {
     
     See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
     """,
-    level = WARNING,
+    level = ERROR,
 )
 public fun StoreChannelBehavior(
     guildId: Snowflake,
@@ -116,6 +119,8 @@ public fun StoreChannelBehavior(
  * @return The edited [StoreChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     """
@@ -124,7 +129,7 @@ public fun StoreChannelBehavior(
     
     See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
     """,
-    level = WARNING,
+    level = ERROR,
 )
 public suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.() -> Unit): StoreChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }

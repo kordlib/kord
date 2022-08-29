@@ -2,6 +2,8 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.serialization.DurationInDays
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -10,6 +12,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
 
 @Serializable
 public data class DiscordIntegration(
@@ -25,11 +28,11 @@ public data class DiscordIntegration(
     @SerialName("expire_behavior")
     val expireBehavior: IntegrationExpireBehavior,
     @SerialName("expire_grace_period")
-    val expireGracePeriod: Int,
+    val expireGracePeriod: DurationInDays,
     val user: DiscordUser,
     val account: DiscordIntegrationsAccount,
     @SerialName("synced_at")
-    val syncedAt: String,
+    val syncedAt: Instant,
     val subscriberCount: Int,
     val revoked: Boolean,
     val application: IntegrationApplication
@@ -49,7 +52,8 @@ public data class IntegrationApplication(
     val name: String,
     val icon: String?,
     val description: String,
-    @Deprecated("This is deprecated and will always be empty.")
+    /** @suppress */
+    @Deprecated("This is deprecated and will always be empty.", level = ERROR)
     val summary: String,
     val bot: Optional<DiscordUser> = Optional.Missing(),
 )

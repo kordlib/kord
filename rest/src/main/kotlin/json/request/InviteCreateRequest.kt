@@ -1,27 +1,28 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.entity.InviteTargetType
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.*
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.DeprecationLevel.ERROR
 
 @Serializable
 public data class InviteCreateRequest(
     @SerialName("max_age")
-    val maxAge: OptionalInt = OptionalInt.Missing,
+    val maxAge: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("max_uses")
     val maxUses: OptionalInt = OptionalInt.Missing,
     val temporary: OptionalBoolean = OptionalBoolean.Missing,
     val unique: OptionalBoolean = OptionalBoolean.Missing,
-    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"))
+    /** @suppress */
+    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"), level = ERROR)
     @SerialName("target_user")
     val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"))
+    /** @suppress */
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
     @SerialName("target_user_type")
-    val targetUserType: Optional<@Suppress("DEPRECATION") dev.kord.common.entity.TargetUserType> = Optional.Missing(),
+    val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") dev.kord.common.entity.TargetUserType> = Optional.Missing(),
     @SerialName("target_type")
     val targetType: Optional<InviteTargetType> = Optional.Missing(),
     @SerialName("target_user_id")
@@ -29,11 +30,13 @@ public data class InviteCreateRequest(
     @SerialName("target_application_id")
     val targetApplicationId: OptionalSnowflake = OptionalSnowflake.Missing,
 ) {
-    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"))
+    /** @suppress */
+    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"), level = ERROR)
     public val age: OptionalInt
-        get() = maxAge
+        get() = maxAge.value?.inWholeSeconds?.toInt()?.optionalInt() ?: OptionalInt.Missing
 
-    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"))
+    /** @suppress */
+    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"), level = ERROR)
     public val uses: OptionalInt
         get() = maxUses
 }

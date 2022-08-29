@@ -2,7 +2,6 @@ package dev.kord.core.builder.kord
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.KordConstants
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.core.ClientResources
@@ -14,6 +13,8 @@ import dev.kord.core.cache.registerKordData
 import dev.kord.core.event.Event
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
+import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.DefaultGateway
 import dev.kord.gateway.Gateway
@@ -47,7 +48,6 @@ public operator fun DefaultGateway.Companion.invoke(
     retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)
 ): DefaultGateway {
     return DefaultGateway {
-        url = "wss://gateway.discord.gg/"
         client = resources.httpClient
         reconnectRetry = retry
         sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
@@ -117,6 +117,14 @@ public class KordBuilder(public val token: String) {
     public var httpClient: HttpClient? = null
 
     public var applicationId: Snowflake? = null
+
+    /**
+     * The [GatewayEventInterceptor] used for converting [gateway events][dev.kord.gateway.Event] to
+     * [core events][dev.kord.core.event.Event].
+     *
+     * [DefaultGatewayEventInterceptor] will be used when not set.
+     */
+    public var gatewayEventInterceptor: GatewayEventInterceptor? = null
 
     /**
      * Configures the shards this client will connect to, by default `0 until recommended`.
@@ -195,12 +203,11 @@ public class KordBuilder(public val token: String) {
      * Requests the gateway info for the bot, or throws a [KordInitializationException] when something went wrong.
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
-        val response = get<HttpResponse>("${Route.baseUrl}${Route.GatewayBotGet.path}") {
-            @OptIn(KordExperimental::class)
+        val response = get("${Route.baseUrl}${Route.GatewayBotGet.path}") {
             header(UserAgent, KordConstants.USER_AGENT)
             header(Authorization, "Bot $token")
         }
-        val responseBody = response.readText()
+        val responseBody = response.bodyAsText()
         if (response.isError) {
             val message = buildString {
                 append("Something went wrong while initializing Kord")
@@ -277,14 +284,14 @@ public class KordBuilder(public val token: String) {
         }
 
         return Kord(
-            resources,
-            cache,
-            gateway,
-            rest,
-            self,
-            eventFlow,
-            defaultDispatcher
+            resources = resources,
+            cache = cache,
+            gateway = gateway,
+            rest = rest,
+            selfId = self,
+            eventFlow = eventFlow,
+            dispatcher = defaultDispatcher,
+            interceptor = gatewayEventInterceptor ?: DefaultGatewayEventInterceptor(),
         )
     }
-
 }

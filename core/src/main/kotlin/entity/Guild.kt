@@ -25,8 +25,9 @@ import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import java.util.*
+import kotlin.DeprecationLevel.HIDDEN
+import kotlin.time.Duration
 
 /**
  * An instance of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
@@ -51,6 +52,7 @@ public class Guild(
     public val afkChannel: VoiceChannelBehavior?
         get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
 
+    @Deprecated("Use 'cachedThreads' instead.", ReplaceWith("cachedThreads"))
     public val threads: Flow<ThreadChannel>
         get() = flow {
             data.threads.mapList {
@@ -60,9 +62,9 @@ public class Guild(
         }
 
     /**
-     * The afk timeout in seconds.
+     * The afk timeout.
      */
-    public val afkTimeout: Int get() = data.afkTimeout
+    public val afkTimeout: Duration get() = data.afkTimeout
 
     /**
      *  The id of the guild creator if it is bot-created.
@@ -141,7 +143,7 @@ public class Guild(
     @Deprecated(
         "Embed was renamed to widget.",
         ReplaceWith("widgetChannelId"),
-        DeprecationLevel.ERROR
+        level = HIDDEN,
     )
     public val embedChannelId: Snowflake? by ::widgetChannelId
 
@@ -156,8 +158,8 @@ public class Guild(
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(
         "Embed was renamed to widget.",
-        ReplaceWith("widgetChannelId"),
-        DeprecationLevel.ERROR
+        ReplaceWith("widgetChannel"),
+        level = HIDDEN,
     )
     public val embedChannel: TopGuildChannelBehavior? by ::widgetChannel
 
@@ -190,8 +192,7 @@ public class Guild(
     /**
      * The time at which this guild was joined, if present.
      */
-    public val joinedTime: Instant?
-        get() = data.joinedAt.value?.toInstant()
+    public val joinedTime: Instant? get() = data.joinedAt.value
 
     /**
      * The id of the owner.

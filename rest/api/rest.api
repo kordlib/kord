@@ -143,14 +143,12 @@ public final class dev/kord/rest/builder/channel/ChannelPermissionModifyBuilder 
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/GuildChannelPositionModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+public final class dev/kord/rest/builder/channel/GuildChannelPositionModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
-	public fun getReason ()Ljava/lang/String;
 	public final fun getSwaps ()Ljava/util/List;
 	public final fun move (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public final fun move (Lkotlin/Pair;)V
 	public final fun move ([Lkotlin/Pair;)V
-	public fun setReason (Ljava/lang/String;)V
 	public final fun setSwaps (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildChannelPositionModifyRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -200,6 +198,7 @@ public final class dev/kord/rest/builder/channel/InviteCreateBuilder : dev/kord/
 public final class dev/kord/rest/builder/channel/NewsChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
@@ -207,6 +206,7 @@ public final class dev/kord/rest/builder/channel/NewsChannelCreateBuilder : dev/
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
@@ -218,22 +218,25 @@ public final class dev/kord/rest/builder/channel/NewsChannelCreateBuilder : dev/
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/NewsChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+public final class dev/kord/rest/builder/channel/NewsChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
+	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getPermissionOverwrites ()Ljava/util/Set;
+	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
-	public final fun getRateLimitPerUser ()Ljava/lang/Integer;
+	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setPermissionOverwrites (Ljava/util/Set;)V
+	public fun setPermissionOverwrites (Ljava/util/Set;)V
 	public final fun setPosition (Ljava/lang/Integer;)V
-	public final fun setRateLimitPerUser (Ljava/lang/Integer;)V
+	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setTopic (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
@@ -278,32 +281,38 @@ public final class dev/kord/rest/builder/channel/PermissionOverwritesModifyBuild
 	public static fun addOverwrite (Ldev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder;Ldev/kord/common/entity/Overwrite;)V
 }
 
-public final class dev/kord/rest/builder/channel/StageVoiceChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+public final class dev/kord/rest/builder/channel/StageVoiceChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
+	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public final fun getBitrate ()Ljava/lang/Integer;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getPermissionOverwrites ()Ljava/util/Set;
+	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
+	public final fun getRtcRegion ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public final fun setBitrate (Ljava/lang/Integer;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setPermissionOverwrites (Ljava/util/Set;)V
+	public fun setPermissionOverwrites (Ljava/util/Set;)V
 	public final fun setPosition (Ljava/lang/Integer;)V
 	public fun setReason (Ljava/lang/String;)V
+	public final fun setRtcRegion (Ljava/lang/String;)V
 	public final fun setTopic (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/StoreChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+public final class dev/kord/rest/builder/channel/StoreChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
+	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
 	public final fun getName ()Ljava/lang/String;
-	public final fun getPermissionOverwrites ()Ljava/util/Set;
+	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
 	public final fun setName (Ljava/lang/String;)V
-	public final fun setPermissionOverwrites (Ljava/util/Set;)V
+	public fun setPermissionOverwrites (Ljava/util/Set;)V
 	public final fun setPosition (Ljava/lang/Integer;)V
 	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
@@ -313,20 +322,22 @@ public final class dev/kord/rest/builder/channel/StoreChannelModifyBuilder : dev
 public final class dev/kord/rest/builder/channel/TextChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
 	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
-	public final fun getRateLimitPerUser ()Ljava/lang/Integer;
+	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
 	public fun setPermissionOverwrites (Ljava/util/Set;)V
 	public final fun setPosition (Ljava/lang/Integer;)V
-	public final fun setRateLimitPerUser (Ljava/lang/Integer;)V
+	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setTopic (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildChannelCreateRequest;
@@ -336,20 +347,22 @@ public final class dev/kord/rest/builder/channel/TextChannelCreateBuilder : dev/
 public final class dev/kord/rest/builder/channel/TextChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
 	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
-	public final fun getRateLimitPerUser ()Ljava/lang/Integer;
+	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
+	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
 	public fun setPermissionOverwrites (Ljava/util/Set;)V
 	public final fun setPosition (Ljava/lang/Integer;)V
-	public final fun setRateLimitPerUser (Ljava/lang/Integer;)V
+	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setTopic (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
@@ -361,6 +374,7 @@ public final class dev/kord/rest/builder/channel/VoiceChannelCreateBuilder : dev
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
 	public final fun getBitrate ()Ljava/lang/Integer;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
 	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
@@ -368,6 +382,7 @@ public final class dev/kord/rest/builder/channel/VoiceChannelCreateBuilder : dev
 	public final fun getUserLimit ()Ljava/lang/Integer;
 	public final fun setBitrate (Ljava/lang/Integer;)V
 	public final fun setName (Ljava/lang/String;)V
+	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
 	public fun setPermissionOverwrites (Ljava/util/Set;)V
 	public final fun setPosition (Ljava/lang/Integer;)V
@@ -377,26 +392,31 @@ public final class dev/kord/rest/builder/channel/VoiceChannelCreateBuilder : dev
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/VoiceChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+public final class dev/kord/rest/builder/channel/VoiceChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
 	public fun <init> ()V
+	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
 	public final fun getBitrate ()Ljava/lang/Integer;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getPermissionOverwrites ()Ljava/util/Set;
+	public fun getPermissionOverwrites ()Ljava/util/Set;
 	public final fun getPosition ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getRtcRegion ()Ljava/lang/String;
 	public final fun getTopic ()Ljava/lang/String;
 	public final fun getUserLimit ()Ljava/lang/Integer;
+	public final fun getVideoQualityMode ()Ldev/kord/common/entity/VideoQualityMode;
 	public final fun setBitrate (Ljava/lang/Integer;)V
 	public final fun setName (Ljava/lang/String;)V
+	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setPermissionOverwrites (Ljava/util/Set;)V
+	public fun setPermissionOverwrites (Ljava/util/Set;)V
 	public final fun setPosition (Ljava/lang/Integer;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setRtcRegion (Ljava/lang/String;)V
 	public final fun setTopic (Ljava/lang/String;)V
 	public final fun setUserLimit (Ljava/lang/Integer;)V
+	public final fun setVideoQualityMode (Ldev/kord/common/entity/VideoQualityMode;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -431,18 +451,18 @@ public final class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBu
 public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
 	public final fun getArchived ()Ljava/lang/Boolean;
-	public final fun getAutoArchiveDuration ()Ljava/lang/Integer;
+	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getInvitable ()Ljava/lang/Boolean;
 	public final fun getLocked ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getRateLimitPerUser ()Ljava/lang/Integer;
+	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
 	public final fun setArchived (Ljava/lang/Boolean;)V
-	public final fun setAutoArchiveDuration (Ljava/lang/Integer;)V
+	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setInvitable (Ljava/lang/Boolean;)V
 	public final fun setLocked (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V
-	public final fun setRateLimitPerUser (Ljava/lang/Integer;)V
+	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
 	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -594,7 +614,7 @@ public final class dev/kord/rest/builder/guild/GuildCreateBuilder : dev/kord/res
 	public static synthetic fun category$default (Ldev/kord/rest/builder/guild/GuildCreateBuilder;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Snowflake;
 	public final fun everyoneRole (Lkotlin/jvm/functions/Function1;)V
 	public final fun getAfkChannelId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getAfkTimeout ()Ljava/lang/Integer;
+	public final fun getAfkTimeout-FghU774 ()Lkotlin/time/Duration;
 	public final fun getChannels ()Ljava/util/List;
 	public final fun getDefaultMessageNotificationLevel ()Ldev/kord/common/entity/DefaultMessageNotificationLevel;
 	public final fun getEveryoneRole ()Ldev/kord/rest/builder/role/RoleCreateBuilder;
@@ -612,7 +632,7 @@ public final class dev/kord/rest/builder/guild/GuildCreateBuilder : dev/kord/res
 	public final fun role (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Snowflake;
 	public static synthetic fun role$default (Ldev/kord/rest/builder/guild/GuildCreateBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Snowflake;
 	public final fun setAfkChannelId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setAfkTimeout (Ljava/lang/Integer;)V
+	public final fun setAfkTimeout-BwNAW2A (Lkotlin/time/Duration;)V
 	public final fun setDefaultMessageNotificationLevel (Ldev/kord/common/entity/DefaultMessageNotificationLevel;)V
 	public final fun setEveryoneRole (Ldev/kord/rest/builder/role/RoleCreateBuilder;)V
 	public final fun setExplicitContentFilter (Ldev/kord/common/entity/ExplicitContentFilter;)V
@@ -630,7 +650,7 @@ public final class dev/kord/rest/builder/guild/GuildCreateBuilder : dev/kord/res
 public final class dev/kord/rest/builder/guild/GuildModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
 	public final fun getAfkChannelId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getAfkTimeout ()Ljava/lang/Integer;
+	public final fun getAfkTimeout-FghU774 ()Lkotlin/time/Duration;
 	public final fun getBanner ()Ldev/kord/rest/Image;
 	public final fun getExplicitContentFilter ()Ldev/kord/common/entity/ExplicitContentFilter;
 	public final fun getIcon ()Ldev/kord/rest/Image;
@@ -646,7 +666,7 @@ public final class dev/kord/rest/builder/guild/GuildModifyBuilder : dev/kord/res
 	public final fun getSystemChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getVerificationLevel ()Ldev/kord/common/entity/VerificationLevel;
 	public final fun setAfkChannelId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setAfkTimeout (Ljava/lang/Integer;)V
+	public final fun setAfkTimeout-BwNAW2A (Lkotlin/time/Duration;)V
 	public final fun setBanner (Ldev/kord/rest/Image;)V
 	public final fun setExplicitContentFilter (Ldev/kord/common/entity/ExplicitContentFilter;)V
 	public final fun setIcon (Ldev/kord/rest/Image;)V
@@ -767,38 +787,29 @@ public final class dev/kord/rest/builder/integration/IntegrationModifyBuilder : 
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public abstract interface class dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder : dev/kord/rest/builder/RequestBuilder {
+public abstract interface class dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
+	public abstract fun disableCommandInGuilds ()V
+	public abstract fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public abstract fun getDefaultPermission ()Ljava/lang/Boolean;
-	public abstract fun getName ()Ljava/lang/String;
 	public abstract fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public abstract fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public abstract fun setDefaultPermission (Ljava/lang/Boolean;)V
-	public abstract fun setName (Ljava/lang/String;)V
 }
 
-public abstract interface class dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder : dev/kord/rest/builder/RequestBuilder {
+public final class dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder$DefaultImpls {
+	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedNameModifyBuilder {
+	public abstract fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public abstract fun getDefaultPermission ()Ljava/lang/Boolean;
-	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public abstract fun setDefaultPermission (Ljava/lang/Boolean;)V
-	public abstract fun setName (Ljava/lang/String;)V
 }
 
-public final class dev/kord/rest/builder/interaction/ApplicationCommandPermissionsBulkModifyBuilder : dev/kord/rest/builder/RequestBuilder {
-	public fun <init> ()V
-	public final fun command (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
-	public synthetic fun toRequest ()Ljava/lang/Object;
-	public fun toRequest ()Ljava/util/List;
-}
-
-public final class dev/kord/rest/builder/interaction/ApplicationCommandPermissionsModifyBuilder : dev/kord/rest/builder/RequestBuilder {
-	public fun <init> ()V
-	public final fun getPermissions ()Ljava/util/List;
-	public final fun role (Ldev/kord/common/entity/Snowflake;Z)V
-	public static synthetic fun role$default (Ldev/kord/rest/builder/interaction/ApplicationCommandPermissionsModifyBuilder;Ldev/kord/common/entity/Snowflake;ZILjava/lang/Object;)V
-	public final fun setPermissions (Ljava/util/List;)V
-	public fun toRequest ()Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest;
-	public synthetic fun toRequest ()Ljava/lang/Object;
-	public final fun user (Ldev/kord/common/entity/Snowflake;Z)V
-	public static synthetic fun user$default (Ldev/kord/rest/builder/interaction/ApplicationCommandPermissionsModifyBuilder;Ldev/kord/common/entity/Snowflake;ZILjava/lang/Object;)V
+public final class dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/interaction/AttachmentBuilder : dev/kord/rest/builder/interaction/OptionsBuilder {
@@ -807,7 +818,9 @@ public final class dev/kord/rest/builder/interaction/AttachmentBuilder : dev/kor
 
 public abstract class dev/kord/rest/builder/interaction/BaseChoiceBuilder : dev/kord/rest/builder/interaction/OptionsBuilder {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public abstract fun choice (Ljava/lang/String;Ljava/lang/Object;)V
+	public abstract fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
+	public final fun choice (Ljava/lang/String;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun choice$default (Ldev/kord/rest/builder/interaction/BaseChoiceBuilder;Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)V
 	public final fun getChoices ()Ljava/util/List;
 	public final fun setChoices (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
@@ -839,38 +852,173 @@ public final class dev/kord/rest/builder/interaction/ChannelBuilder : dev/kord/r
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilder : dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder, dev/kord/rest/builder/interaction/RootInputChatBuilder {
+public abstract interface class dev/kord/rest/builder/interaction/ChatInputCreateBuilder : dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder, dev/kord/rest/builder/interaction/LocalizedDescriptionCreateBuilder, dev/kord/rest/builder/interaction/RootInputChatBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilder$DefaultImpls {
+	public static fun description (Ldev/kord/rest/builder/interaction/ChatInputCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/ChatInputCreateBuilder;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/ChatInputCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun disableCommandInGuilds ()V
+	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
-	public final fun getDescription ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getDescriptionLocalizations ()Ljava/util/Map;
+	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getOptions ()Ljava/util/List;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
-	public final fun setDescription (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setDescriptionLocalizations (Ljava/util/Map;)V
+	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun setOptions (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilder : dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder, dev/kord/rest/builder/interaction/RootInputChatBuilder {
+public abstract interface class dev/kord/rest/builder/interaction/ChatInputModifyBuilder : dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder, dev/kord/rest/builder/interaction/LocalizedDescriptionModifyBuilder, dev/kord/rest/builder/interaction/RootInputChatBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilder$DefaultImpls {
+	public static fun description (Ldev/kord/rest/builder/interaction/ChatInputModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/ChatInputModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalChatInputModifyBuilder {
 	public fun <init> ()V
+	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
-	public final fun getDescription ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getDescriptionLocalizations ()Ljava/util/Map;
+	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getOptions ()Ljava/util/List;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
-	public final fun setDescription (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setDescriptionLocalizations (Ljava/util/Map;)V
+	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun setOptions (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/interaction/ChoiceLocalizationsBuilder : dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
+	public final fun get_nameLocalizations ()Ldev/kord/common/entity/optional/Optional;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
+	public final fun set_nameLocalizations (Ldev/kord/common/entity/optional/Optional;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder : dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder {
+	public abstract fun getDmPermission ()Ljava/lang/Boolean;
+	public abstract fun setDmPermission (Ljava/lang/Boolean;)V
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder$DefaultImpls {
+	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder : dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder {
+	public abstract fun getDmPermission ()Ljava/lang/Boolean;
+	public abstract fun setDmPermission (Ljava/lang/Boolean;)V
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder : dev/kord/rest/builder/interaction/ChatInputCreateBuilder, dev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder$DefaultImpls {
+	public static fun description (Ldev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/GlobalChatInputCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/GlobalChatInputModifyBuilder : dev/kord/rest/builder/interaction/ChatInputModifyBuilder, dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalChatInputModifyBuilder$DefaultImpls {
+	public static fun description (Ldev/kord/rest/builder/interaction/GlobalChatInputModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/GlobalChatInputModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder : dev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder, dev/kord/rest/builder/interaction/MessageCommandCreateBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder$DefaultImpls {
+	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/GlobalMessageCommandModifyBuilder : dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder, dev/kord/rest/builder/interaction/MessageCommandModifyBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalMessageCommandModifyBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/GlobalMessageCommandModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalMultiApplicationCommandBuilder : dev/kord/rest/builder/interaction/MultiApplicationCommandBuilder {
+	public fun <init> ()V
+	public final fun input (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun input$default (Ldev/kord/rest/builder/interaction/GlobalMultiApplicationCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun message (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun message$default (Ldev/kord/rest/builder/interaction/GlobalMultiApplicationCommandBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun user (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun user$default (Ldev/kord/rest/builder/interaction/GlobalMultiApplicationCommandBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder : dev/kord/rest/builder/interaction/GlobalApplicationCommandCreateBuilder, dev/kord/rest/builder/interaction/UserCommandCreateBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder$DefaultImpls {
+	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/GlobalUserCommandModifyBuilder : dev/kord/rest/builder/interaction/GlobalApplicationCommandModifyBuilder, dev/kord/rest/builder/interaction/UserCommandModifyBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/GlobalUserCommandModifyBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/GlobalUserCommandModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
 public final class dev/kord/rest/builder/interaction/GroupCommandBuilder : dev/kord/rest/builder/interaction/BaseCommandOptionBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun subCommand (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class dev/kord/rest/builder/interaction/GuildMultiApplicationCommandBuilder : dev/kord/rest/builder/interaction/MultiApplicationCommandBuilder {
+	public fun <init> ()V
+	public final fun input (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun input$default (Ldev/kord/rest/builder/interaction/GuildMultiApplicationCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun message (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun message$default (Ldev/kord/rest/builder/interaction/GuildMultiApplicationCommandBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun user (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun user$default (Ldev/kord/rest/builder/interaction/GuildMultiApplicationCommandBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
 public final class dev/kord/rest/builder/interaction/InputChatBuildersKt {
@@ -898,33 +1046,121 @@ public final class dev/kord/rest/builder/interaction/InputChatBuildersKt {
 	public static synthetic fun user$default (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
-public final class dev/kord/rest/builder/interaction/IntChoiceBuilder : dev/kord/rest/builder/interaction/BaseChoiceBuilder {
+public final class dev/kord/rest/builder/interaction/IntegerOptionBuilder : dev/kord/rest/builder/interaction/NumericOptionBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public fun choice (Ljava/lang/String;J)V
-	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;)V
+	public fun choice (Ljava/lang/String;JLdev/kord/common/entity/optional/Optional;)V
+	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/LocalizedDescriptionBuilder {
+	public abstract fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun getDescriptionLocalizations ()Ljava/util/Map;
+	public abstract fun setDescriptionLocalizations (Ljava/util/Map;)V
+}
+
+public final class dev/kord/rest/builder/interaction/LocalizedDescriptionBuilder$DefaultImpls {
+	public static fun description (Ldev/kord/rest/builder/interaction/LocalizedDescriptionBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/LocalizedDescriptionCreateBuilder : dev/kord/rest/builder/interaction/LocalizedDescriptionBuilder {
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun setDescription (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/LocalizedDescriptionCreateBuilder$DefaultImpls {
+	public static fun description (Ldev/kord/rest/builder/interaction/LocalizedDescriptionCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/LocalizedDescriptionModifyBuilder : dev/kord/rest/builder/interaction/LocalizedDescriptionBuilder {
+	public abstract fun getDescription ()Ljava/lang/String;
+	public abstract fun setDescription (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/LocalizedDescriptionModifyBuilder$DefaultImpls {
+	public static fun description (Ldev/kord/rest/builder/interaction/LocalizedDescriptionModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/LocalizedNameBuilder {
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getNameLocalizations ()Ljava/util/Map;
+	public abstract fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public abstract fun setNameLocalizations (Ljava/util/Map;)V
+}
+
+public final class dev/kord/rest/builder/interaction/LocalizedNameBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/LocalizedNameBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder : dev/kord/rest/builder/interaction/LocalizedNameBuilder {
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun setName (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/LocalizedNameCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/interaction/LocalizedNameModifyBuilder : dev/kord/rest/builder/interaction/LocalizedNameBuilder {
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun setName (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/LocalizedNameModifyBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/LocalizedNameModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/interaction/MentionableBuilder : dev/kord/rest/builder/interaction/OptionsBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 }
 
-public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilder : dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder {
+public abstract interface class dev/kord/rest/builder/interaction/MessageCommandCreateBuilder : dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilder$DefaultImpls {
+	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/MessageCommandCreateBuilder;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/MessageCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun disableCommandInGuilds ()V
+	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
+	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
+	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/interaction/MessageCommandModifyBuilder : dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder {
+public abstract interface class dev/kord/rest/builder/interaction/MessageCommandModifyBuilder : dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/MessageCommandModifyBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/MessageCommandModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/MessageCommandModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalMessageCommandModifyBuilder {
 	public fun <init> ()V
+	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
+	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
+	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -941,36 +1177,54 @@ public final class dev/kord/rest/builder/interaction/ModalBuilder : dev/kord/res
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/interaction/MultiApplicationCommandBuilder {
-	public fun <init> ()V
+public abstract class dev/kord/rest/builder/interaction/MultiApplicationCommandBuilder {
 	public final fun build ()Ljava/util/List;
 	public final fun getCommands ()Ljava/util/List;
-	public final fun input (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class dev/kord/rest/builder/interaction/MultiApplicationCommandBuilderKt {
+	public static final fun input (Ldev/kord/rest/builder/interaction/MultiApplicationCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun input$default (Ldev/kord/rest/builder/interaction/MultiApplicationCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public final fun message (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static final fun message (Ldev/kord/rest/builder/interaction/MultiApplicationCommandBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun message$default (Ldev/kord/rest/builder/interaction/MultiApplicationCommandBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public final fun user (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static final fun user (Ldev/kord/rest/builder/interaction/MultiApplicationCommandBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun user$default (Ldev/kord/rest/builder/interaction/MultiApplicationCommandBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
-public final class dev/kord/rest/builder/interaction/NumberChoiceBuilder : dev/kord/rest/builder/interaction/BaseChoiceBuilder {
+public final class dev/kord/rest/builder/interaction/NumberOptionBuilder : dev/kord/rest/builder/interaction/NumericOptionBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public fun choice (Ljava/lang/String;D)V
-	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;)V
+	public fun choice (Ljava/lang/String;DLdev/kord/common/entity/optional/Optional;)V
+	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
 }
 
-public abstract class dev/kord/rest/builder/interaction/OptionsBuilder : dev/kord/rest/builder/RequestBuilder {
+public abstract class dev/kord/rest/builder/interaction/NumericOptionBuilder : dev/kord/rest/builder/interaction/BaseChoiceBuilder {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getMaxValue ()Ljava/lang/Number;
+	public final fun getMinValue ()Ljava/lang/Number;
+	public final fun setMaxValue (Ljava/lang/Number;)V
+	public final fun setMinValue (Ljava/lang/Number;)V
+	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public abstract class dev/kord/rest/builder/interaction/OptionsBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedDescriptionCreateBuilder, dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public final fun getAutocomplete ()Ljava/lang/Boolean;
 	public final fun getDefault ()Ljava/lang/Boolean;
-	public final fun getDescription ()Ljava/lang/String;
-	public final fun getName ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getDescriptionLocalizations ()Ljava/util/Map;
+	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
 	public final fun getRequired ()Ljava/lang/Boolean;
 	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandOptionType;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public final fun setAutocomplete (Ljava/lang/Boolean;)V
 	public final fun setDefault (Ljava/lang/Boolean;)V
-	public final fun setDescription (Ljava/lang/String;)V
-	public final fun setName (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setDescriptionLocalizations (Ljava/util/Map;)V
+	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
 	public final fun setRequired (Ljava/lang/Boolean;)V
 	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -985,8 +1239,14 @@ public abstract interface class dev/kord/rest/builder/interaction/RootInputChatB
 
 public final class dev/kord/rest/builder/interaction/StringChoiceBuilder : dev/kord/rest/builder/interaction/BaseChoiceBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;)V
-	public fun choice (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
+	public fun choice (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)V
+	public final fun getMaxLength ()Ljava/lang/Integer;
+	public final fun getMinLength ()Ljava/lang/Integer;
+	public final fun setMaxLength (Ljava/lang/Integer;)V
+	public final fun setMinLength (Ljava/lang/Integer;)V
+	public fun toRequest ()Ldev/kord/common/entity/ApplicationCommandOption;
+	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/builder/interaction/SubCommandBuilder : dev/kord/rest/builder/interaction/BaseCommandOptionBuilder, dev/kord/rest/builder/interaction/BaseInputChatBuilder {
@@ -997,23 +1257,53 @@ public final class dev/kord/rest/builder/interaction/UserBuilder : dev/kord/rest
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 }
 
-public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilder : dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder {
+public abstract interface class dev/kord/rest/builder/interaction/UserCommandCreateBuilder : dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilder$DefaultImpls {
+	public static fun disableCommandInGuilds (Ldev/kord/rest/builder/interaction/UserCommandCreateBuilder;)V
+	public static fun name (Ldev/kord/rest/builder/interaction/UserCommandCreateBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun disableCommandInGuilds ()V
+	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
+	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
+	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/interaction/UserCommandModifyBuilder : dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder {
+public abstract interface class dev/kord/rest/builder/interaction/UserCommandModifyBuilder : dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder {
+}
+
+public final class dev/kord/rest/builder/interaction/UserCommandModifyBuilder$DefaultImpls {
+	public static fun name (Ldev/kord/rest/builder/interaction/UserCommandModifyBuilder;Ldev/kord/common/Locale;Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/interaction/UserCommandModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalUserCommandModifyBuilder {
 	public fun <init> ()V
+	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
+	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
+	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -1492,6 +1782,34 @@ public final class dev/kord/rest/builder/scheduled_events/ScheduledEventModifyBu
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/stage/StageInstanceCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
+	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getPrivacyLevel ()Ldev/kord/common/entity/StageInstancePrivacyLevel;
+	public fun getReason ()Ljava/lang/String;
+	public final fun getSendStartNotification ()Ljava/lang/Boolean;
+	public final fun getTopic ()Ljava/lang/String;
+	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setPrivacyLevel (Ldev/kord/common/entity/StageInstancePrivacyLevel;)V
+	public fun setReason (Ljava/lang/String;)V
+	public final fun setSendStartNotification (Ljava/lang/Boolean;)V
+	public final fun setTopic (Ljava/lang/String;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/StageInstanceCreateRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/stage/StageInstanceModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+	public fun <init> ()V
+	public final fun getPrivacyLevel ()Ldev/kord/common/entity/StageInstancePrivacyLevel;
+	public fun getReason ()Ljava/lang/String;
+	public final fun getTopic ()Ljava/lang/String;
+	public final fun setPrivacyLevel (Ldev/kord/common/entity/StageInstancePrivacyLevel;)V
+	public fun setReason (Ljava/lang/String;)V
+	public final fun setTopic (Ljava/lang/String;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/StageInstanceModifyRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
 public final class dev/kord/rest/builder/template/GuildFromTemplateCreateBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getImage ()Ldev/kord/rest/Image;
@@ -1571,11 +1889,14 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field AlreadyCrossposted Ldev/kord/rest/json/JsonErrorCode;
 	public static final field AnnouncementRateLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ApplicationCommandNameExists Ldev/kord/rest/json/JsonErrorCode;
+	public static final field ApplicationNotAvailable Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BeforeValueBeforeThreadCreate Ldev/kord/rest/json/JsonErrorCode;
+	public static final field BitrateTooHigh Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BotsEndpoint Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BulkDeleteOldMessage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotDeleteRequiredCommunityChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotEditMessageByAnotherUser Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotEditStickersWithinMessage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotExecuteOnDM Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotExecuteOnSystemMessage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotPinMessageFromAnotherChannel Ldev/kord/rest/json/JsonErrorCode;
@@ -1591,8 +1912,10 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field ChannelWriteRateLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CommunityServerChannelMustBeTextChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Companion Ldev/kord/rest/json/JsonErrorCode$Companion;
+	public static final field ConnectionRevoked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field DisallowedName Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FailedToCreateStage Ldev/kord/rest/json/JsonErrorCode;
+	public static final field FailedToResizeAssetBelowMaximumSize Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FileTooLarge Ldev/kord/rest/json/JsonErrorCode;
 	public static final field General Ldev/kord/rest/json/JsonErrorCode;
 	public static final field GiftRequiresPaymentSource Ldev/kord/rest/json/JsonErrorCode;
@@ -1600,6 +1923,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field GuildSubscriptionTooLow Ldev/kord/rest/json/JsonErrorCode;
 	public static final field GuildWidgetDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InteractionAlreadyAcknowledged Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InteractionFailedToSend Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAPIVersion Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAccountType Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAuthToken Ldev/kord/rest/json/JsonErrorCode;
@@ -1608,6 +1932,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field InvalidGuild Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidJsonForLottieFile Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidJsonInRequestBody Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InvalidMFALevel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidMessageType Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidOAuth2AccessToken Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidOAuth2State Ldev/kord/rest/json/JsonErrorCode;
@@ -1624,8 +1949,10 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxActiveAnnouncementThreads Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxActiveThreads Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxAnimatedEmojis Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxApplicationCommands Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxAttachments Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxBanFetches Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxDailyApplicationCommandCreates Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxEmojis Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxFriends Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildChannels Ldev/kord/rest/json/JsonErrorCode;
@@ -1650,6 +1977,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxUncompletedGuildScheduledEvents Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxWebhooks Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MessageAlreadyHasThread Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MessageBlockedByAutomaticModeration Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MissingAccess Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MissingOAuthScope Ldev/kord/rest/json/JsonErrorCode;
 	public static final field NoUsersWithDiscordTag Ldev/kord/rest/json/JsonErrorCode;
@@ -1660,6 +1988,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field OnlyOwner Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnAchievedThread Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnArchivedThread Ldev/kord/rest/json/JsonErrorCode;
+	public static final field OwnershipCannotBeTransferredToBot Ldev/kord/rest/json/JsonErrorCode;
 	public static final field PermissionLack Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ProvidedMessageCountInsufficient Ldev/kord/rest/json/JsonErrorCode;
 	public static final field RasterizedImagesInLotties Ldev/kord/rest/json/JsonErrorCode;
@@ -1673,12 +2002,15 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field ServerWriteRateLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field SlowModeRateLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field StageAlreadyOpen Ldev/kord/rest/json/JsonErrorCode;
+	public static final field StickerPermissionLack Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TemporarilyDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TheadLocked Ldev/kord/rest/json/JsonErrorCode;
+	public static final field TitleBlockedByAutomaticModeration Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TooFastDM Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TooLongNote Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Unauthorized Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnauthorizedForAction Ldev/kord/rest/json/JsonErrorCode;
+	public static final field UnderMinimumAge Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Unknown Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownAccount Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownApplication Ldev/kord/rest/json/JsonErrorCode;
@@ -1717,6 +2049,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field UnknownStoreListing Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownStream Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownToken Ldev/kord/rest/json/JsonErrorCode;
+	public static final field UnknownUpload Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownUser Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownVoiceState Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownWebhook Ldev/kord/rest/json/JsonErrorCode;
@@ -1736,20 +2069,28 @@ public final class dev/kord/rest/json/JsonErrorCode$Companion {
 
 public final class dev/kord/rest/json/request/ApplicationCommandCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/ApplicationCommandCreateRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ldev/kord/common/entity/ApplicationCommandType;
-	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/ApplicationCommandType;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun component5 ()Ldev/kord/common/entity/optional/OptionalBoolean;
-	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component8 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component9 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/ApplicationCommandType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefaultMemberPermissions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getDefaultPermission ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDescriptionLocalizations ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDmPermission ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getNameLocalizations ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getOptions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
 	public fun hashCode ()I
@@ -1776,19 +2117,27 @@ public final class dev/kord/rest/json/request/ApplicationCommandCreateRequest$Co
 public final class dev/kord/rest/json/request/ApplicationCommandModifyRequest {
 	public static final field Companion Ldev/kord/rest/json/request/ApplicationCommandModifyRequest$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
-	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;
+	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component7 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component8 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefaultMemberPermissions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getDefaultPermission ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDescriptionLocalizations ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDmPermission ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getNameLocalizations ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getOptions ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1808,36 +2157,6 @@ public final class dev/kord/rest/json/request/ApplicationCommandModifyRequest$$s
 }
 
 public final class dev/kord/rest/json/request/ApplicationCommandModifyRequest$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest {
-	public static final field Companion Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest$Companion;
-	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Ljava/util/List;
-	public final fun copy (Ljava/util/List;)Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getPermissions ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class dev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1955,29 +2274,32 @@ public final class dev/kord/rest/json/request/ChannelFollowRequest$Companion {
 public final class dev/kord/rest/json/request/ChannelModifyPatchRequest {
 	public static final field Companion Ldev/kord/rest/json/request/ChannelModifyPatchRequest$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component10 ()Ldev/kord/common/entity/optional/OptionalBoolean;
-	public final fun component11 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component11 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component12 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component13 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component14 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component15 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component16 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
-	public final fun component5 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component6 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component7 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/ChannelModifyPatchRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/ChannelModifyPatchRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getArchived ()Ldev/kord/common/entity/optional/OptionalBoolean;
-	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getBitrate ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getInvitable ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getLocked ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
@@ -1985,10 +2307,11 @@ public final class dev/kord/rest/json/request/ChannelModifyPatchRequest {
 	public final fun getParentId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getPermissionOverwrites ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getPosition ()Ldev/kord/common/entity/optional/OptionalInt;
-	public final fun getRateLimitPerUser ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getRateLimitPerUser ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getRtcRegion ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getTopic ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getUserLimit ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getVideoQualityMode ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Ldev/kord/rest/json/request/ChannelModifyPatchRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -2206,7 +2529,7 @@ public final class dev/kord/rest/json/request/CurrentVoiceStateModifyRequest {
 	public static synthetic fun copy$default (Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getRequestToSpeakTimeStamp ()Ldev/kord/common/entity/optional/Optional;
+	public final synthetic fun getRequestToSpeakTimeStamp ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getRequestToSpeakTimestamp ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getSuppress ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
@@ -2698,12 +3021,13 @@ public final class dev/kord/rest/json/request/GuildBanCreateRequest$Companion {
 
 public final class dev/kord/rest/json/request/GuildChannelCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/GuildChannelCreateRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component11 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component12 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ldev/kord/common/entity/ChannelType;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalInt;
@@ -2712,10 +3036,11 @@ public final class dev/kord/rest/json/request/GuildChannelCreateRequest {
 	public final fun component7 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/rest/json/request/GuildChannelCreateRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildChannelCreateRequest;Ljava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildChannelCreateRequest;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/GuildChannelCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildChannelCreateRequest;Ljava/lang/String;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildChannelCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBitrate ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ldev/kord/common/entity/optional/OptionalBoolean;
@@ -2765,11 +3090,11 @@ public final class dev/kord/rest/json/request/GuildChannelPositionModifyRequest$
 
 public final class dev/kord/rest/json/request/GuildCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/GuildCreateRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component10 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component10 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component11 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
@@ -2779,11 +3104,11 @@ public final class dev/kord/rest/json/request/GuildCreateRequest {
 	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/rest/json/request/GuildCreateRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildCreateRequest;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildCreateRequest;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/rest/json/request/GuildCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildCreateRequest;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAfkChannelId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun getAfkTimeout ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getAfkTimeout ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getChannels ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getDefaultNotificationLevel ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getExplicitContentFilter ()Ldev/kord/common/entity/optional/Optional;
@@ -2947,6 +3272,36 @@ public final class dev/kord/rest/json/request/GuildIntegrationModifyRequest$Comp
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/request/GuildMFALevelModifyRequest {
+	public static final field Companion Ldev/kord/rest/json/request/GuildMFALevelModifyRequest$Companion;
+	public synthetic fun <init> (ILdev/kord/common/entity/MFALevel;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/MFALevel;)V
+	public final fun component1 ()Ldev/kord/common/entity/MFALevel;
+	public final fun copy (Ldev/kord/common/entity/MFALevel;)Ldev/kord/rest/json/request/GuildMFALevelModifyRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildMFALevelModifyRequest;Ldev/kord/common/entity/MFALevel;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildMFALevelModifyRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLevel ()Ldev/kord/common/entity/MFALevel;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/rest/json/request/GuildMFALevelModifyRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/request/GuildMFALevelModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/GuildMFALevelModifyRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildMFALevelModifyRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildMFALevelModifyRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/GuildMFALevelModifyRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/request/GuildMemberAddRequest {
 	public static final field Companion Ldev/kord/rest/json/request/GuildMemberAddRequest$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -3033,9 +3388,9 @@ public final class dev/kord/rest/json/request/GuildMemberModifyRequest$Companion
 public final class dev/kord/rest/json/request/GuildModifyRequest {
 	public static final field Companion Ldev/kord/rest/json/request/GuildModifyRequest$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component10 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component11 ()Ldev/kord/common/entity/optional/Optional;
@@ -3048,14 +3403,14 @@ public final class dev/kord/rest/json/request/GuildModifyRequest {
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component6 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun component7 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/GuildModifyRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildModifyRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildModifyRequest;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/GuildModifyRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildModifyRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildModifyRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAfkChannelId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun getAfkTimeout ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getAfkTimeout ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getBanner ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getContentFilter ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getDefaultMessageNotificationLevel ()Ldev/kord/common/entity/optional/Optional;
@@ -3114,7 +3469,7 @@ public final class dev/kord/rest/json/request/GuildRoleCreateRequest {
 	public final fun getMentionable ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getPermissions ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getSeparate ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final synthetic fun getSeparate ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getUnicodeEmoji ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -3159,7 +3514,7 @@ public final class dev/kord/rest/json/request/GuildRoleModifyRequest {
 	public final fun getMentionable ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getPermissions ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getSeparate ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final synthetic fun getSeparate ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getUnicodeEmoji ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -3607,10 +3962,10 @@ public final class dev/kord/rest/json/request/InteractionResponseModifyRequest$C
 public final class dev/kord/rest/json/request/InviteCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/InviteCreateRequest$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
@@ -3619,11 +3974,11 @@ public final class dev/kord/rest/json/request/InviteCreateRequest {
 	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component8 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component9 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun copy (Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/rest/json/request/InviteCreateRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/InviteCreateRequest;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/rest/json/request/InviteCreateRequest;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/rest/json/request/InviteCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/InviteCreateRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/rest/json/request/InviteCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAge ()Ldev/kord/common/entity/optional/OptionalInt;
-	public final fun getMaxAge ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getMaxAge ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getMaxUses ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun getTargetApplicationId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getTargetType ()Ldev/kord/common/entity/optional/Optional;
@@ -3979,14 +4334,19 @@ public final class dev/kord/rest/json/request/ScheduledEventModifyRequest$Compan
 
 public final class dev/kord/rest/json/request/StageInstanceCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/StageInstanceCreateRequest$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/StageInstanceCreateRequest;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
+	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/StageInstanceCreateRequest;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getPrivacyLevel ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getSendStartNotification ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getTopic ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -4006,6 +4366,40 @@ public final class dev/kord/rest/json/request/StageInstanceCreateRequest$$serial
 }
 
 public final class dev/kord/rest/json/request/StageInstanceCreateRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/StageInstanceModifyRequest {
+	public static final field Companion Ldev/kord/rest/json/request/StageInstanceModifyRequest$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/StageInstanceModifyRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/StageInstanceModifyRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/StageInstanceModifyRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPrivacyLevel ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getTopic ()Ldev/kord/common/entity/optional/Optional;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/rest/json/request/StageInstanceModifyRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/request/StageInstanceModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/StageInstanceModifyRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/StageInstanceModifyRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/StageInstanceModifyRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/StageInstanceModifyRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -4596,6 +4990,36 @@ public final class dev/kord/rest/json/response/GetPruneResponse$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/response/GuildMFALevelModifyResponse {
+	public static final field Companion Ldev/kord/rest/json/response/GuildMFALevelModifyResponse$Companion;
+	public synthetic fun <init> (ILdev/kord/common/entity/MFALevel;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/MFALevel;)V
+	public final fun component1 ()Ldev/kord/common/entity/MFALevel;
+	public final fun copy (Ldev/kord/common/entity/MFALevel;)Ldev/kord/rest/json/response/GuildMFALevelModifyResponse;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/response/GuildMFALevelModifyResponse;Ldev/kord/common/entity/MFALevel;ILjava/lang/Object;)Ldev/kord/rest/json/response/GuildMFALevelModifyResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLevel ()Ldev/kord/common/entity/MFALevel;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/rest/json/response/GuildMFALevelModifyResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/response/GuildMFALevelModifyResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/response/GuildMFALevelModifyResponse$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/GuildMFALevelModifyResponse;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/GuildMFALevelModifyResponse;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/response/GuildMFALevelModifyResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/response/ListThreadsResponse {
 	public static final field Companion Ldev/kord/rest/json/response/ListThreadsResponse$Companion;
 	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -4692,18 +5116,18 @@ public final class dev/kord/rest/json/response/PruneResponse$Companion {
 
 public final class dev/kord/rest/json/response/SessionStartLimitResponse {
 	public static final field Companion Ldev/kord/rest/json/response/SessionStartLimitResponse$Companion;
-	public fun <init> (IIII)V
-	public synthetic fun <init> (IIIIILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (IIILkotlin/time/Duration;ILkotlinx/serialization/internal/SerializationConstructorMarker;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (IIJILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun component2 ()I
-	public final fun component3 ()I
+	public final fun component3-UwyO8pc ()J
 	public final fun component4 ()I
-	public final fun copy (IIII)Ldev/kord/rest/json/response/SessionStartLimitResponse;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/response/SessionStartLimitResponse;IIIIILjava/lang/Object;)Ldev/kord/rest/json/response/SessionStartLimitResponse;
+	public final fun copy-exY8QGI (IIJI)Ldev/kord/rest/json/response/SessionStartLimitResponse;
+	public static synthetic fun copy-exY8QGI$default (Ldev/kord/rest/json/response/SessionStartLimitResponse;IIJIILjava/lang/Object;)Ldev/kord/rest/json/response/SessionStartLimitResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMaxConcurrency ()I
 	public final fun getRemaining ()I
-	public final fun getResetAfter ()I
+	public final fun getResetAfter-UwyO8pc ()J
 	public final fun getTotal ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -4897,6 +5321,9 @@ public final class dev/kord/rest/ratelimit/Total {
 	public final synthetic fun unbox-impl ()J
 }
 
+public final class dev/kord/rest/request/ContextException : java/lang/RuntimeException {
+}
+
 public final class dev/kord/rest/request/HttpStatus {
 	public fun <init> (ILjava/lang/String;)V
 	public final fun component1 ()I
@@ -4929,7 +5356,8 @@ public final class dev/kord/rest/request/HttpUtilsKt {
 }
 
 public final class dev/kord/rest/request/JsonRequest : dev/kord/rest/request/Request {
-	public fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;)V
+	public fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/lang/String;)V
+	public synthetic fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getBody ()Ldev/kord/rest/request/RequestBody;
 	public fun getFiles ()Ljava/util/List;
 	public fun getHeaders ()Lio/ktor/util/StringValues;
@@ -4948,6 +5376,7 @@ public final class dev/kord/rest/request/KtorRequestHandler : dev/kord/rest/requ
 	public synthetic fun <init> (Lio/ktor/client/HttpClient;Ldev/kord/rest/ratelimit/RequestRateLimiter;Lkotlinx/datetime/Clock;Lkotlinx/serialization/json/Json;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getToken ()Ljava/lang/String;
 	public fun handle (Ldev/kord/rest/request/Request;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun intercept (Ldev/kord/rest/request/RequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/request/KtorRequestHandlerKt {
@@ -4957,8 +5386,8 @@ public final class dev/kord/rest/request/KtorRequestHandlerKt {
 }
 
 public final class dev/kord/rest/request/MultipartRequest : dev/kord/rest/request/Request {
-	public fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/util/List;)V
-	public synthetic fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/util/List;Ljava/lang/String;)V
+	public synthetic fun <init> (Ldev/kord/rest/route/Route;Ljava/util/Map;Lio/ktor/util/StringValues;Lio/ktor/util/StringValues;Ldev/kord/rest/request/RequestBody;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getBody ()Ldev/kord/rest/request/RequestBody;
 	public final fun getData ()Ljava/util/List;
 	public fun getFiles ()Ljava/util/List;
@@ -4969,6 +5398,9 @@ public final class dev/kord/rest/request/MultipartRequest : dev/kord/rest/reques
 }
 
 public abstract class dev/kord/rest/request/Request {
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getBaseUrl ()Ljava/lang/String;
 	public abstract fun getBody ()Ldev/kord/rest/request/RequestBody;
 	public abstract fun getFiles ()Ljava/util/List;
 	public abstract fun getHeaders ()Lio/ktor/util/StringValues;
@@ -4998,12 +5430,15 @@ public final class dev/kord/rest/request/RequestBuilder {
 	public final fun build ()Ldev/kord/rest/request/Request;
 	public final fun file (Ldev/kord/rest/NamedFile;)V
 	public final fun file (Ljava/lang/String;Ljava/io/InputStream;)V
+	public final fun getBaseUrl ()Ljava/lang/String;
 	public final fun getKeys ()Ljava/util/Map;
-	public final fun header (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun getRoute ()Ldev/kord/rest/route/Route;
+	public final synthetic fun header (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun parameter (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;)V
 	public final fun parameter (Ljava/lang/String;Ljava/lang/Object;)V
 	public final fun set (Ljava/util/Map;Ldev/kord/rest/route/Route$Key;Ldev/kord/common/entity/Snowflake;)V
 	public final fun set (Ljava/util/Map;Ldev/kord/rest/route/Route$Key;Ljava/lang/String;)V
+	public final fun setBaseUrl (Ljava/lang/String;)V
 	public final fun unencodedHeader (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun urlEncodedHeader (Ljava/lang/String;Ljava/lang/String;)V
 }
@@ -5011,6 +5446,11 @@ public final class dev/kord/rest/request/RequestBuilder {
 public abstract interface class dev/kord/rest/request/RequestHandler {
 	public abstract fun getToken ()Ljava/lang/String;
 	public abstract fun handle (Ldev/kord/rest/request/Request;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun intercept (Ldev/kord/rest/request/RequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/request/RequestHandler$DefaultImpls {
+	public static fun intercept (Ldev/kord/rest/request/RequestHandler;Ldev/kord/rest/request/RequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class dev/kord/rest/request/RequestIdentifier {
@@ -5052,6 +5492,17 @@ public abstract class dev/kord/rest/request/RestRequestException : dev/kord/comm
 	public final fun getError ()Ldev/kord/rest/json/response/DiscordErrorResponse;
 	public final fun getRequest ()Ldev/kord/rest/request/Request;
 	public final fun getStatus ()Ldev/kord/rest/request/HttpStatus;
+}
+
+public final class dev/kord/rest/request/StackTraceRecoveringKtorRequestHandler : dev/kord/rest/request/RequestHandler {
+	public fun <init> (Ldev/kord/rest/request/KtorRequestHandler;)V
+	public fun getToken ()Ljava/lang/String;
+	public fun handle (Ldev/kord/rest/request/Request;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun intercept (Ldev/kord/rest/request/RequestBuilder;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/request/StackTraceRecoveringKtorRequestHandlerKt {
+	public static final fun withStackTraceRecovery (Ldev/kord/rest/request/KtorRequestHandler;)Ldev/kord/rest/request/StackTraceRecoveringKtorRequestHandler;
 }
 
 public final class dev/kord/rest/route/CdnUrl {
@@ -5134,16 +5585,8 @@ public final class dev/kord/rest/route/Route$AllReactionsDelete : dev/kord/rest/
 	public static final field INSTANCE Ldev/kord/rest/route/Route$AllReactionsDelete;
 }
 
-public final class dev/kord/rest/route/Route$ApplicationCommandPermissionsBatchPut : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$ApplicationCommandPermissionsBatchPut;
-}
-
 public final class dev/kord/rest/route/Route$ApplicationCommandPermissionsGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$ApplicationCommandPermissionsGet;
-}
-
-public final class dev/kord/rest/route/Route$ApplicationCommandPermissionsPut : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$ApplicationCommandPermissionsPut;
 }
 
 public final class dev/kord/rest/route/Route$ApplicationId : dev/kord/rest/route/Route$Key {
@@ -5444,6 +5887,10 @@ public final class dev/kord/rest/route/Route$GuildInvitesGet : dev/kord/rest/rou
 
 public final class dev/kord/rest/route/Route$GuildLeave : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildLeave;
+}
+
+public final class dev/kord/rest/route/Route$GuildMFALevelModify : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildMFALevelModify;
 }
 
 public final class dev/kord/rest/route/Route$GuildMemberDelete : dev/kord/rest/route/Route {
@@ -6005,9 +6452,10 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun getGuild (Ldev/kord/common/entity/Snowflake;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuild$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildBan (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getGuildBans (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getGuildBans (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getGuildBans$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildChannels (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getGuildEmbed (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun getGuildEmbed (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildIntegrations (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildInvites (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildMember (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6038,8 +6486,11 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun modifyCurrentVoiceState (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuild (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildChannelPosition (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun modifyGuildEmbed (Ldev/kord/common/entity/Snowflake;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun modifyGuildEmbed (Ldev/kord/common/entity/Snowflake;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildIntegration (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyGuildMFALevel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun modifyGuildMFALevel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun modifyGuildMFALevel$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyGuildMember (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildRole (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildRolePosition (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6071,9 +6522,6 @@ public final class dev/kord/rest/service/InteractionService : dev/kord/rest/serv
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun acknowledge (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun acknowledge$default (Ldev/kord/rest/service/InteractionService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun bulkEditApplicationCommandPermissions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun bulkEditApplicationCommandPermissions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun bulkEditApplicationCommandPermissions$default (Ldev/kord/rest/service/InteractionService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createFollowupMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/json/request/MultipartFollowupMessageCreateRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createFollowupMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createFollowupMessage$default (Ldev/kord/rest/service/InteractionService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
@@ -6103,7 +6551,7 @@ public final class dev/kord/rest/service/InteractionService : dev/kord/rest/serv
 	public final fun createModalInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/DiscordModal;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createModalInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createNumberAutoCompleteInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun createPublicInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun createPublicInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createPublicInteractionResponse$default (Ldev/kord/rest/service/InteractionService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createStringAutoCompleteInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun deferMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6113,14 +6561,14 @@ public final class dev/kord/rest/service/InteractionService : dev/kord/rest/serv
 	public final fun deleteGlobalApplicationCommand (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun deleteGuildApplicationCommand (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun deleteOriginalInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun editApplicationCommandPermissions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ApplicationCommandPermissionsEditRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun editApplicationCommandPermissions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getApplicationCommandPermissions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getFollowupMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getGlobalApplicationCommands (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getGlobalApplicationCommands (Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getGlobalApplicationCommands$default (Ldev/kord/rest/service/InteractionService;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGlobalCommand (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildApplicationCommandPermissions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getGuildApplicationCommands (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getGuildApplicationCommands (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getGuildApplicationCommands$default (Ldev/kord/rest/service/InteractionService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildCommand (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyFollowupMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/FollowupMessageModifyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6177,15 +6625,22 @@ public final class dev/kord/rest/service/RestClientKt {
 public abstract class dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun call (Ldev/kord/rest/route/Route;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun call$default (Ldev/kord/rest/service/RestService;Ldev/kord/rest/route/Route;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getRequestHandler ()Ldev/kord/rest/request/RequestHandler;
 }
 
 public final class dev/kord/rest/service/StageInstanceService : dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun createStageInstance (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createStageInstance (Ldev/kord/rest/json/request/StageInstanceCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createStageInstance$default (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun createStageInstance$default (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/rest/json/request/StageInstanceCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun deleteStageInstance (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun deleteStageInstance$default (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getStageInstance (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyStageInstance (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/StageInstanceModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyStageInstance (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun modifyStageInstance$default (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/StageInstanceModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun updateStageInstance (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/StageInstanceUpdateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun updateStageInstance$default (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/StageInstanceUpdateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }

@@ -3,12 +3,17 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.serialization.DurationInDaysSerializer
+import dev.kord.common.serialization.DurationInSecondsSerializer
+import dev.kord.common.serialization.IntOrStringSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
-import kotlinx.serialization.json.*
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonElement
+import kotlin.time.Duration
 import dev.kord.common.Color as CommonColor
 import dev.kord.common.entity.DefaultMessageNotificationLevel as CommonDefaultMessageNotificationLevel
 import dev.kord.common.entity.ExplicitContentFilter as CommonExplicitContentFilter
@@ -109,35 +114,33 @@ public data class AuditLogChange<T>(
             element("key", ser.descriptor)
         }
 
-        override fun deserialize(decoder: Decoder): AuditLogChange<T> {
-            decoder.decodeStructure(descriptor) {
-                var new: JsonElement? = null
-                var old: JsonElement? = null
-                lateinit var key: AuditLogChangeKey<*>
-                while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> key = decodeSerializableElement(
-                            descriptor,
-                            index,
-                            AuditLogChangeKey.Serializer(Unit.serializer())
-                        )
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> throw SerializationException("unknown index: $index")
-                    }
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+            var new: JsonElement? = null
+            var old: JsonElement? = null
+            lateinit var key: AuditLogChangeKey<*>
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> new = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    1 -> old = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    2 -> key = decodeSerializableElement(
+                        descriptor,
+                        index,
+                        AuditLogChangeKey.Serializer(Unit.serializer())
+                    )
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("unknown index: $index")
                 }
-
-                val newVal = new?.let { Json.decodeFromJsonElement(key.serializer, new) }
-                val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
-
-                @Suppress("UNCHECKED_CAST")
-                return AuditLogChange(
-                    new = newVal,
-                    old = oldVal,
-                    key = key as AuditLogChangeKey<Any?>
-                ) as AuditLogChange<T>
             }
+
+            val newVal = new?.let { Json.decodeFromJsonElement(key.serializer, new) }
+            val oldVal = old?.let { Json.decodeFromJsonElement(key.serializer, old) }
+
+            @Suppress("UNCHECKED_CAST")
+            AuditLogChange(
+                new = newVal,
+                old = oldVal,
+                key = key as AuditLogChangeKey<Any?>
+            ) as AuditLogChange<T>
         }
 
         @Suppress("UNCHECKED_CAST")
@@ -181,7 +184,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object AfkChannelId : AuditLogChangeKey<Snowflake>("afk_channel_id", serializer())
 
     @SerialName("afk_timeout")
-    public object AfkTimeout : AuditLogChangeKey<Int>("afk_timeout", serializer())
+    public object AfkTimeout : AuditLogChangeKey<Duration>("afk_timeout", DurationInSecondsSerializer)
 
     @SerialName("mfa_level")
     public object MFALevel : AuditLogChangeKey<CommonMFALevel>("mfa_level", serializer())
@@ -237,13 +240,16 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object ApplicationId : AuditLogChangeKey<Snowflake>("application_id", serializer())
 
     @SerialName("rate_limit_per_user")
-    public object RateLimitPerUser : AuditLogChangeKey<Int>("rate_limit_per_user", serializer())
+    public object RateLimitPerUser : AuditLogChangeKey<Duration>("rate_limit_per_user", DurationInSecondsSerializer)
 
     @SerialName("permissions")
     public object Permissions : AuditLogChangeKey<CommonPermissions>("permissions", serializer())
 
     @SerialName("color")
     public object Color : AuditLogChangeKey<CommonColor>("color", serializer())
+
+    @SerialName("command_id")
+    public object CommandId : AuditLogChangeKey<Snowflake>("command_id", serializer())
 
     @SerialName("communication_disabled_until")
     public object CommunicationDisabledUntil : AuditLogChangeKey<Instant>("communication_disabled_until", serializer())
@@ -279,7 +285,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object Uses : AuditLogChangeKey<Int>("uses", serializer())
 
     @SerialName("max_age")
-    public object MaxAges : AuditLogChangeKey<Int>("max_age", serializer())
+    public object MaxAges : AuditLogChangeKey<Duration>("max_age", DurationInSecondsSerializer)
 
     @SerialName("temporary")
     public object Temporary : AuditLogChangeKey<Boolean>("temporary", serializer())
@@ -303,40 +309,11 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
      * The actual supertype is [AuditLogChangeKey<Int | String>][AuditLogChangeKey] but Kotlin does not support union
      * types yet. [Int]s are instead converted to a [String].
      */
+    // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
+    // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
+    // TODO use union type `String | Int` if Kotlin ever introduces them
     @SerialName("type")
-    public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer) {
-        // TODO use union type `String | Int` if Kotlin ever introduces them
-
-        // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
-        // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
-        private object IntOrStringSerializer : KSerializer<String> {
-            private val backingSerializer = JsonPrimitive.serializer()
-
-            /*
-             * Delegating serializers should not reuse descriptors:
-             * https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/serializers.md#delegating-serializers
-             *
-             * however `SerialDescriptor("...", backingSerializer.descriptor)` will throw since
-             * `JsonPrimitive.serializer().kind` is `PrimitiveKind.STRING` (`SerialDescriptor()` does not allow
-             * `PrimitiveKind`)
-             * -> use `PrimitiveSerialDescriptor("...", PrimitiveKind.STRING)` instead
-             */
-            override val descriptor = PrimitiveSerialDescriptor(
-                serialName = "dev.kord.common.entity.AuditLogChangeKey.Type.IntOrString",
-                PrimitiveKind.STRING,
-            )
-
-            override fun serialize(encoder: Encoder, value: String) {
-                val jsonPrimitive = value.toIntOrNull()?.let { JsonPrimitive(it) } ?: JsonPrimitive(value)
-                encoder.encodeSerializableValue(backingSerializer, jsonPrimitive)
-            }
-
-            override fun deserialize(decoder: Decoder): String {
-                val jsonPrimitive = decoder.decodeSerializableValue(backingSerializer)
-                return if (jsonPrimitive.isString) jsonPrimitive.content else jsonPrimitive.int.toString()
-            }
-        }
-    }
+    public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer)
 
     @SerialName("enable_emoticons")
     public object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
@@ -345,7 +322,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object ExpireBehavior : AuditLogChangeKey<IntegrationExpireBehavior>("expire_behavior", serializer())
 
     @SerialName("expire_grace_period")
-    public object ExpireGracePeriod : AuditLogChangeKey<Int>("expire_grace_period", serializer())
+    public object ExpireGracePeriod : AuditLogChangeKey<Duration>("expire_grace_period", DurationInDaysSerializer)
 
     @SerialName("user_limit")
     public object UserLimit : AuditLogChangeKey<Int>("user_limit", serializer())
@@ -421,6 +398,7 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
                 "rate_limit_per_user" -> RateLimitPerUser
                 "permissions" -> Permissions
                 "color" -> Color
+                "command_id" -> CommandId
                 "communication_disabled_until" -> CommunicationDisabledUntil
                 "hoist" -> Hoist
                 "mentionable" -> Mentionable
@@ -507,6 +485,7 @@ public sealed class AuditLogEvent(public val value: Int) {
     public object ThreadCreate : AuditLogEvent(110)
     public object ThreadUpdate : AuditLogEvent(111)
     public object ThreadDelete : AuditLogEvent(112)
+    public object ApplicationCommandPermissionUpdate : AuditLogEvent(121)
 
 
     internal object Serializer : KSerializer<AuditLogEvent> {
@@ -565,6 +544,7 @@ public sealed class AuditLogEvent(public val value: Int) {
             110 -> ThreadCreate
             111 -> ThreadUpdate
             112 -> ThreadDelete
+            121 -> ApplicationCommandPermissionUpdate
             else -> Unknown(value)
         }
     }

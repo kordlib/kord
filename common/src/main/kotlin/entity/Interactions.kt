@@ -2,12 +2,11 @@ package dev.kord.common.entity
 
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.value
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.MapSerializer
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
@@ -20,15 +19,24 @@ public data class DiscordApplicationCommand(
     @SerialName("application_id")
     val applicationId: Snowflake,
     val name: String,
+    @SerialName("name_localizations")
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     /**
      * Don't trust the docs: This is nullable on non chat input commands.
      */
     val description: String?,
+    @SerialName("description_localizations")
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    @SerialName("default_member_permissions")
+    val defaultMemberPermissions: Permissions?,
+    @SerialName("dm_permission")
+    val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("default_permission")
-    val defaultPermission: OptionalBoolean = OptionalBoolean.Missing,
+    @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
+    val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val version: Snowflake
 )
 
@@ -60,10 +68,13 @@ public sealed class ApplicationCommandType(public val value: Int) {
 public data class ApplicationCommandOption(
     val type: ApplicationCommandOptionType,
     val name: String,
+    @SerialName("name_localizations")
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val description: String,
+    @SerialName("description_localizations")
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    @OptIn(KordExperimental::class)
     val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
@@ -73,6 +84,10 @@ public data class ApplicationCommandOption(
     val minValue: Optional<JsonPrimitive> = Optional.Missing(),
     @SerialName("max_value")
     val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
+    @SerialName("min_length")
+    val minLength: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_length")
+    val maxLength: OptionalInt = OptionalInt.Missing
 )
 
 /**
@@ -136,51 +151,78 @@ public sealed class ApplicationCommandOptionType(public val type: Int) {
 
 }
 
+private val LocalizationSerializer =
+    Optional.serializer(MapSerializer(Locale.serializer(), String.serializer()).nullable)
+
 @Serializable(Choice.Serializer::class)
 public sealed class Choice<out T> {
     public abstract val name: String
+    public abstract val nameLocalizations: Optional<Map<Locale, String>?>
     public abstract val value: T
 
-    public data class IntChoice(override val name: String, override val value: Long) : Choice<Long>()
-    public data class NumberChoice(override val name: String, override val value: Double) : Choice<Double>()
-    public data class StringChoice(override val name: String, override val value: String) : Choice<String>()
+    public data class IntChoice(
+        override val name: String,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val value: Long
+    ) : Choice<Long>()
 
-    internal class Serializer<T>(serializer: KSerializer<T>) : KSerializer<Choice<*>> {
+    public data class NumberChoice(
+        override val name: String,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val value: Double
+    ) : Choice<Double>()
+
+    public data class StringChoice(
+        override val name: String,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val value: String
+    ) : Choice<String>()
+
+    internal object Serializer : KSerializer<Choice<*>> {
+
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
             element<String>("name")
-            element<String>("value")
+            element<JsonPrimitive>("value")
+            element<Map<Locale, String>?>("name_localizations", isOptional = true)
         }
 
-        override fun deserialize(decoder: Decoder): Choice<*> {
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+
             lateinit var name: String
+            var nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing()
             lateinit var value: JsonPrimitive
-            with(decoder.beginStructure(descriptor) as JsonDecoder) {
-                while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        0 -> name = decodeStringElement(descriptor, index)
-                        1 -> value = decodeJsonElement().jsonPrimitive
 
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> throw SerializationException("unknown index: $index")
-                    }
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> name = decodeStringElement(descriptor, index)
+                    1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
+                    2 -> nameLocalizations = decodeSerializableElement(descriptor, index, LocalizationSerializer)
+
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("unknown index: $index")
                 }
-                endStructure(descriptor)
             }
-            return when {
-                value.longOrNull != null -> IntChoice(name, value.long)
-                value.doubleOrNull != null -> NumberChoice(name, value.double)
-                else -> StringChoice(name, value.toString())
+
+            when {
+                value.isString -> StringChoice(name, nameLocalizations, value.content)
+                else -> value.longOrNull?.let { IntChoice(name, nameLocalizations, it) }
+                    ?: value.doubleOrNull?.let { NumberChoice(name, nameLocalizations, it) }
+                    ?: throw SerializationException("Illegal choice value: $value")
             }
         }
 
-        override fun serialize(encoder: Encoder, value: Choice<*>) {
-            encoder.encodeStructure(descriptor) {
-                encodeStringElement(descriptor, 0, value.name)
-                when (value) {
-                    is IntChoice -> encodeLongElement(descriptor, 1, value.value)
-                    is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
-                    else -> encodeStringElement(descriptor, 1, value.value.toString())
-                }
+        override fun serialize(encoder: Encoder, value: Choice<*>) = encoder.encodeStructure(descriptor) {
+
+            encodeStringElement(descriptor, 0, value.name)
+
+            when (value) {
+                is IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
+                is StringChoice -> encodeStringElement(descriptor, 1, value.value)
+            }
+
+            if (value.nameLocalizations !is Optional.Missing) {
+                encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
             }
         }
     }
@@ -213,6 +255,8 @@ public data class DiscordInteraction(
     val version: Int,
     @Serializable(with = MaybeMessageSerializer::class)
     val message: Optional<DiscordMessage> = Optional.Missing(),
+    @SerialName("app_permissions")
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
     val guildLocale: Optional<Locale> = Optional.Missing(),
@@ -305,6 +349,8 @@ public data class InteractionCallbackData(
     val name: Optional<String> = Optional.Missing(),
     val resolved: Optional<ResolvedObjects> = Optional.Missing(),
     val options: Optional<List<Option>> = Optional.Missing(),
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("custom_id")
     val customId: Optional<String> = Optional.Missing(),
     @SerialName("component_type")
@@ -636,32 +682,30 @@ public sealed class CommandArgument<out T> : Option() {
             }
         }
 
-        override fun deserialize(decoder: Decoder): CommandArgument<*> {
-            decoder.decodeStructure(descriptor) {
-                this as JsonDecoder
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+            this as JsonDecoder
 
-                var name = ""
-                var element: JsonElement? = null
-                var type: ApplicationCommandOptionType? = null
-                while (true) {
-                    when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
-                        0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
-                        1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
-                        2 -> type = decodeSerializableElement(
-                            descriptor,
-                            index,
-                            ApplicationCommandOptionType.serializer()
-                        )
+            var name = ""
+            var element: JsonElement? = null
+            var type: ApplicationCommandOptionType? = null
+            while (true) {
+                when (val index = decodeElementIndex(Option.Serializer.descriptor)) {
+                    0 -> name = decodeSerializableElement(descriptor, index, String.serializer())
+                    1 -> element = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    2 -> type = decodeSerializableElement(
+                        descriptor,
+                        index,
+                        ApplicationCommandOptionType.serializer()
+                    )
 
-                        CompositeDecoder.DECODE_DONE -> break
-                        else -> error("unknown index: $index")
-                    }
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> error("unknown index: $index")
                 }
-
-                requireNotNull(element)
-                requireNotNull(type)
-                return deserialize(json, element, name, type, OptionalBoolean.Missing)
             }
+
+            requireNotNull(element)
+            requireNotNull(type)
+            deserialize(json, element, name, type, OptionalBoolean.Missing)
         }
     }
 }
@@ -741,14 +785,6 @@ public data class DiscordGuildApplicationCommandPermissions(
     val permissions: List<DiscordGuildApplicationCommandPermission>
 )
 
-
-@Serializable
-public data class PartialDiscordGuildApplicationCommandPermissions(
-    val id: Snowflake,
-    val permissions: List<DiscordGuildApplicationCommandPermission>
-)
-
-
 @Serializable
 public data class DiscordGuildApplicationCommandPermission(
     val id: Snowflake,
@@ -759,6 +795,7 @@ public data class DiscordGuildApplicationCommandPermission(
     public sealed class Type(public val value: Int) {
         public object Role : Type(1)
         public object User : Type(2)
+        public object Channel : Type(3)
         public class Unknown(value: Int) : Type(value)
 
         public object Serializer : KSerializer<Type> {
@@ -769,6 +806,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 when (val value = decoder.decodeInt()) {
                     1 -> Role
                     2 -> User
+                    3 -> Channel
                     else -> Unknown(value)
                 }
 

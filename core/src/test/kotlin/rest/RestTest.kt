@@ -1,7 +1,6 @@
 package rest
 
 import dev.kord.common.Color
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.core.Kord
 import dev.kord.core.behavior.*
@@ -58,7 +57,6 @@ class RestServiceTest {
     private lateinit var userId: Snowflake
 
     @BeforeAll
-    @OptIn(KordExperimental::class)
     fun setup() = runBlocking {
         kord = Kord.restOnly(token)
 
@@ -412,7 +410,6 @@ class RestServiceTest {
 
     @Test
     @Order(25)
-    @OptIn(KordExperimental::class)
     fun `channel moves in guild`(): Unit = runBlocking {
         val category = guild.createCategory("move category")
         val textChannel = guild.createTextChannel("move me to a category")
@@ -432,8 +429,8 @@ class RestServiceTest {
             group("test-group", "automated test") {
                 subCommand("test-sub-command", "automated test") {
                     int("integer", "test choice") {
-                        choice("one", 1)
-                        choice("two", 2)
+                        choice("one", 1,)
+                        choice("two", 2,)
                     }
                 }
             }

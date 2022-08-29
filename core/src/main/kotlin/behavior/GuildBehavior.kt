@@ -3,10 +3,7 @@ package dev.kord.core.behavior
 import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.entity.DiscordUser
-import dev.kord.common.entity.GuildScheduledEventPrivacyLevel
-import dev.kord.common.entity.ScheduledEntityType
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
@@ -31,13 +28,15 @@ import dev.kord.gateway.RequestGuildMembers
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
 import dev.kord.gateway.start
 import dev.kord.rest.Image
-import kotlinx.coroutines.flow.toList
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
-import dev.kord.rest.builder.interaction.*
+import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
+import dev.kord.rest.builder.interaction.GuildMultiApplicationCommandBuilder
+import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
+import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
@@ -49,6 +48,8 @@ import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import java.util.Objects
+import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -69,12 +70,25 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * Returns all active public and private threads in this guild
      * Threads are ordered by their id, in descending order.
      *
-     *  The returned flow is lazily executed, any [RequestException] will be thrown on
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
-
      */
     public val activeThreads: Flow<ThreadChannel>
         get() = supplier.getActiveThreads(id)
+
+    /**
+     * Requests to get all threads in this guild that are present in [cache][Kord.cache].
+     *
+     * This property is not resolvable through REST and will always use [Kord.cache] instead.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public val cachedThreads: Flow<ThreadChannel>
+        get() = kord.cache
+            .query<ChannelData> { idEq(ChannelData::guildId, this@GuildBehavior.id) }
+            .asFlow()
+            .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
     /**
      * Requests to get all present webhooks for this guild.
@@ -197,8 +211,10 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     /**
      * Application commands for this guild only.
+     *
+     * @suppress
      */
-
+    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"), level = ERROR)
     public val commands: Flow<GuildApplicationCommand>
         get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
@@ -247,6 +263,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
             }
     }
 
+    public fun getApplicationCommands(withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> =
+        supplier.getGuildApplicationCommands(kord.resources.applicationId, id, withLocalizations)
 
     public suspend fun getApplicationCommand(commandId: Snowflake): GuildApplicationCommand =
         supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)
@@ -293,6 +311,19 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     public suspend fun delete(): Unit = kord.rest.guild.deleteGuild(id)
+
+    /**
+     * Requests to edit this guild's [MFA level][MFALevel] and returns the updated level.
+     * This requires guild ownership.
+     *
+     * @param reason the reason showing up in the audit log
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun editMFALevel(level: MFALevel, reason: String? = null): MFALevel =
+        kord.rest.guild.modifyGuildMFALevel(id, level, reason).level
+
+    @Deprecated("Binary compatibility, keep for at least one release.", level = HIDDEN)
+    public suspend fun editMFALevel(level: MFALevel): MFALevel = editMFALevel(level, reason = null)
 
     /**
      * Requests to leave this guild.
@@ -393,7 +424,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), DeprecationLevel.ERROR)
+    @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), level = HIDDEN)
     public suspend fun modifySelfNickname(newNickname: String? = null): String = editSelfNickname(newNickname)
 
     /**
@@ -575,7 +606,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     public suspend fun getSticker(stickerId: Snowflake): GuildSticker = supplier.getGuildSticker(id, stickerId)
 
-    public suspend fun getStickerOrNull(stickerId: Snowflake): GuildSticker? = supplier.getGuildStickerOrNull(id, stickerId)
+    public suspend fun getStickerOrNull(stickerId: Snowflake): GuildSticker? =
+        supplier.getGuildStickerOrNull(id, stickerId)
 
     public suspend fun createSticker(name: String, description: String, tags: String, file: NamedFile): GuildSticker {
         val request = MultipartGuildStickerCreateRequest(GuildStickerCreateRequest(name, description, tags), file)
@@ -622,7 +654,6 @@ public fun GuildBehavior(
 }
 
 
-
 public suspend inline fun GuildBehavior.createChatInputCommand(
     name: String,
     description: String,
@@ -631,7 +662,6 @@ public suspend inline fun GuildBehavior.createChatInputCommand(
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.createGuildChatInputCommand(id, name, description, builder)
 }
-
 
 
 public suspend inline fun GuildBehavior.createMessageCommand(
@@ -652,9 +682,8 @@ public suspend inline fun GuildBehavior.createUserCommand(
 }
 
 
-
 public suspend inline fun GuildBehavior.createApplicationCommands(
-    builder: MultiApplicationCommandBuilder.() -> Unit
+    builder: GuildMultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return kord.createGuildApplicationCommands(id, builder)
@@ -677,9 +706,11 @@ public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> U
     return Guild(data, kord)
 }
 
+/** @suppress */
 @Deprecated(
     "emoji name and image are mandatory fields.",
-    ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)")
+    ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"),
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
@@ -707,11 +738,13 @@ public suspend inline fun GuildBehavior.createEmoji(
  * @return The created [TextChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     "channel name is a mandatory field",
     ReplaceWith("createTextChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
@@ -748,11 +781,13 @@ public suspend inline fun GuildBehavior.createTextChannel(
  * @return The created [VoiceChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     "channel name is a mandatory field.",
     ReplaceWith("createVoiceChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
@@ -788,11 +823,13 @@ public suspend inline fun GuildBehavior.createVoiceChannel(
  * @return The created [NewsChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     "channel name is a mandatory field.",
     ReplaceWith("createNewsChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
@@ -829,11 +866,13 @@ public suspend inline fun GuildBehavior.createNewsChannel(
  * @return The created [Category].
  *
  * @throws [RestRequestException] if something went wrong during the request.
+ *
+ * @suppress
  */
 @Deprecated(
     "channel name is a mandatory field.",
-    ReplaceWith("createCategoryChannel(\"name\", builder)"),
-    DeprecationLevel.WARNING
+    ReplaceWith("this.createCategory(\"name\", builder)"),
+    level = ERROR,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
@@ -902,7 +941,7 @@ public suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositions
  * @throws [RestRequestException] if something went wrong during the request.
  */
 @DeprecatedSinceKord("0.7.0")
-@Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), DeprecationLevel.ERROR)
+@Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), level = HIDDEN)
 public suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role = createRole(builder)
 
 /**
@@ -1009,13 +1048,6 @@ public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuild
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
-}
-
-public suspend inline fun GuildBehavior.bulkEditSlashCommandPermissions(noinline builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit) {
-
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-    kord.bulkEditApplicationCommandPermissions(id, builder)
 }
 
 /**

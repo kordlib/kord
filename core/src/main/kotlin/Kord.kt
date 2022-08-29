@@ -8,63 +8,34 @@ import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
+import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
-import dev.kord.core.entity.application.GlobalApplicationCommand
-import dev.kord.core.entity.application.GlobalChatInputCommand
-import dev.kord.core.entity.application.GlobalMessageCommand
-import dev.kord.core.entity.application.GlobalUserCommand
-import dev.kord.core.entity.application.GuildApplicationCommand
-import dev.kord.core.entity.application.GuildChatInputCommand
-import dev.kord.core.entity.application.GuildMessageCommand
-import dev.kord.core.entity.application.GuildUserCommand
+import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.MasterGateway
-import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.gateway.start
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.supplier.getGlobalApplicationCommandOf
-import dev.kord.core.supplier.getGlobalApplicationCommandOfOrNull
-import dev.kord.core.supplier.getGuildApplicationCommandOf
-import dev.kord.core.supplier.getGuildApplicationCommandOfOrNull
+import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsBulkModifyBuilder
-import dev.kord.rest.builder.interaction.ApplicationCommandPermissionsModifyBuilder
-import dev.kord.rest.builder.interaction.ChatInputCreateBuilder
-import dev.kord.rest.builder.interaction.MessageCommandCreateBuilder
-import dev.kord.rest.builder.interaction.MultiApplicationCommandBuilder
-import dev.kord.rest.builder.interaction.UserCommandCreateBuilder
+import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.buffer
-import kotlinx.coroutines.flow.filterIsInstance
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -84,17 +55,15 @@ public class Kord(
     public val selfId: Snowflake,
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
-    interceptorBuilder: () -> GatewayEventInterceptor = {
-        DefaultGatewayEventInterceptor(cache)
-    }
+    private val interceptor: GatewayEventInterceptor,
 ) : CoroutineScope {
-
-    private val interceptor = interceptorBuilder.invoke()
 
     /**
      * Global commands made by the bot under this Kord instance.
+     *
+     * @suppress
      */
-
+    @Deprecated("Replace with function call for localizations", ReplaceWith("getGlobalApplicationCommands()"), level = ERROR)
     public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
@@ -113,7 +82,7 @@ public class Kord(
     /**
      * A reference to all exposed [unsafe][KordUnsafe] entity constructors for this instance.
      */
-    @OptIn(KordUnsafe::class, KordExperimental::class)
+    @OptIn(KordUnsafe::class)
     public val unsafe: Unsafe = Unsafe(this)
 
     /**
@@ -192,12 +161,14 @@ public class Kord(
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @return The newly created Guild.
+     *
+     * @suppress
      */
     @DeprecatedSinceKord("0.7.0")
     @Deprecated(
         "guild name is a mandatory field",
         ReplaceWith("createGuild(\"name\", builder)"),
-        DeprecationLevel.WARNING
+        level = ERROR,
     )
     public suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
         contract {
@@ -208,7 +179,6 @@ public class Kord(
 
     /**
      * Requests to create a new Guild configured through the [builder].
-     * At least the [GuildCreateBuilder.name] has to be set.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @return The newly created Guild.
@@ -432,10 +402,31 @@ public class Kord(
             }
             return KordRestOnlyBuilder(token).apply(builder).build()
         }
+
+        /**
+         * Builds a [Kord] instance configured by the [builder].
+         *
+         * The instance only allows for configuration of REST related APIs,
+         * interacting with the [gateway][Kord.gateway] or its [events][Kord.events] will result in no-ops.
+         *
+         * Similarly, [cache][Kord.cache] related functionality has been disabled and
+         * replaced with a no-op implementation.
+         */
+        @KordExperimental
+        public inline fun proxy(applicationId: Snowflake, builder: KordProxyBuilder.() -> Unit = {}): Kord {
+            contract {
+                callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+            }
+            return KordProxyBuilder(applicationId).apply(builder).build()
+        }
     }
 
-    public fun getGuildApplicationCommands(guildId: Snowflake): Flow<GuildApplicationCommand> {
-        return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId)
+
+    public fun getGlobalApplicationCommands(withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand> {
+        return defaultSupplier.getGlobalApplicationCommands(resources.applicationId, withLocalizations)
+    }
+    public fun getGuildApplicationCommands(guildId: Snowflake, withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> {
+        return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId, withLocalizations)
     }
 
     public suspend fun getGuildApplicationCommand(guildId: Snowflake, commandId: Snowflake): GuildApplicationCommand {
@@ -490,7 +481,7 @@ public class Kord(
     public suspend inline fun createGlobalChatInputCommand(
         name: String,
         description: String,
-        builder: ChatInputCreateBuilder.() -> Unit = {},
+        builder: GlobalChatInputCreateBuilder.() -> Unit = {},
     ): GlobalChatInputCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val response = rest.interaction.createGlobalChatInputApplicationCommand(
@@ -505,7 +496,7 @@ public class Kord(
 
     public suspend inline fun createGlobalMessageCommand(
         name: String,
-        builder: MessageCommandCreateBuilder.() -> Unit = {},
+        builder: GlobalMessageCommandCreateBuilder.() -> Unit = {},
     ): GlobalMessageCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val response =
@@ -516,7 +507,7 @@ public class Kord(
 
     public suspend inline fun createGlobalUserCommand(
         name: String,
-        builder: UserCommandCreateBuilder.() -> Unit = {},
+        builder: GlobalUserCommandCreateBuilder.() -> Unit = {},
     ): GlobalUserCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val response =
@@ -527,7 +518,7 @@ public class Kord(
 
 
     public suspend inline fun createGlobalApplicationCommands(
-        builder: MultiApplicationCommandBuilder.() -> Unit,
+        builder: GlobalMultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GlobalApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -596,7 +587,7 @@ public class Kord(
 
     public suspend inline fun createGuildApplicationCommands(
         guildId: Snowflake,
-        builder: MultiApplicationCommandBuilder.() -> Unit,
+        builder: GuildMultiApplicationCommandBuilder.() -> Unit,
     ): Flow<GuildApplicationCommand> {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
@@ -608,24 +599,6 @@ public class Kord(
                 emit(GuildApplicationCommand(data, rest.interaction))
             }
         }
-    }
-
-    public suspend inline fun editApplicationCommandPermissions(
-        guildId: Snowflake,
-        commandId: Snowflake,
-        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit,
-    ) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        rest.interaction.editApplicationCommandPermissions(resources.applicationId, guildId, commandId, builder)
-    }
-
-
-    public suspend inline fun bulkEditApplicationCommandPermissions(
-        guildId: Snowflake,
-        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit,
-    ) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        rest.interaction.bulkEditApplicationCommandPermissions(resources.applicationId, guildId, builder)
     }
 }
 
@@ -657,6 +630,6 @@ public inline fun <reified T : Event> Kord.on(
 ): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach { event ->
-            scope.launch(event.coroutineContext) { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
+            scope.launch { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
         }
         .launchIn(scope)

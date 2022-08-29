@@ -4,9 +4,10 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
 import kotlinx.atomicfu.atomic
+import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.Required
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -95,12 +96,8 @@ internal data class Identify(
 
 @Serializable
 public data class IdentifyProperties(
-    @Required
-    @SerialName("\$os")
     val os: String,
-    @SerialName("\$browser")
     val browser: String,
-    @SerialName("\$device")
     val device: String,
 )
 
@@ -123,7 +120,8 @@ public data class GuildMembersChunkData(
 public data class DiscordPresence(
     val status: PresenceStatus,
     val afk: Boolean,
-    val since: Long? = null,
+    @Serializable(with = InstantInEpochMillisecondsSerializer::class)
+    val since: Instant? = null,
     val game: DiscordBotActivity? = null,
 )
 
@@ -198,7 +196,8 @@ public data class UpdateVoiceStatus(
 
 @Serializable
 public data class UpdateStatus(
-    val since: Long?,
+    @Serializable(with = InstantInEpochMillisecondsSerializer::class)
+    val since: Instant?,
     val activities: List<DiscordBotActivity>,
     val status: PresenceStatus,
     val afk: Boolean,

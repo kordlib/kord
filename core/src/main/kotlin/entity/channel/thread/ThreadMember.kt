@@ -6,6 +6,7 @@ import dev.kord.core.behavior.ThreadMemberBehavior
 import dev.kord.core.cache.data.ThreadMemberData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlinx.datetime.Instant
 
 public class ThreadMember(
     public val data: ThreadMemberData,
@@ -18,7 +19,7 @@ public class ThreadMember(
     override val threadId: Snowflake get() = data.id
 
 
-    public val joinTimestamp: String get() = data.joinTimestamp
+    public val joinTimestamp: Instant get() = data.joinTimestamp
 
     public val flags: Int = data.flags
 

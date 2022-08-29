@@ -1,11 +1,16 @@
 object CompilerArguments {
-    const val coroutines = "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
     const val time = "-opt-in=kotlin.time.ExperimentalTime"
-    const val stdLib = "-opt-in=kotlin.ExperimentalStdlibApi"
-    const val optIn = "-opt-in=kotlin.RequiresOptIn"
     const val contracts = "-opt-in=kotlin.contracts.ExperimentalContracts"
+
+    const val kordPreview = "-opt-in=dev.kord.common.annotation.KordPreview"
+    const val kordExperimental = "-opt-in=dev.kord.common.annotation.KordExperimental"
+    const val kordVoice = "-opt-in=dev.kord.common.annotation.KordVoice"
+
+    const val progressive = "-progressive"
 }
 
 object Jvm {
-    const val target = "1.8"
+    // keep these equivalent
+    const val targetString = "1.8"
+    const val targetInt = 8
 }

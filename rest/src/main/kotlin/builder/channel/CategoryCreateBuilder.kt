@@ -31,7 +31,4 @@ public class CategoryCreateBuilder(
         permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
         type = ChannelType.GuildCategory
     )
-
-    override fun addOverwrite(overwrite: Overwrite) {
-    }
 }

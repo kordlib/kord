@@ -1,14 +1,17 @@
 package live
 
 import dev.kord.cache.api.DataCache
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.gateway.DefaultMasterGateway
+import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.gateway.*
+import dev.kord.gateway.Command
+import dev.kord.gateway.Event
+import dev.kord.gateway.Gateway
+import dev.kord.gateway.GatewayConfiguration
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
@@ -31,7 +34,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import kotlin.time.Duration
 
-@OptIn(KordPreview::class)
 abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     companion object {
@@ -108,7 +110,8 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
             RestClient(KtorRequestHandler(token = "token")),
             randomId(),
             MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-            Dispatchers.Default
+            Dispatchers.Default,
+            DefaultGatewayEventInterceptor(),
         )
     }
 

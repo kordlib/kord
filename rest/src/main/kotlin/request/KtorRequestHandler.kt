@@ -5,7 +5,6 @@ import dev.kord.rest.ratelimit.*
 import dev.kord.rest.route.optional
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.features.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
@@ -50,7 +49,7 @@ public class KtorRequestHandler(
             response
         }
 
-        val body = response.readText()
+        val body = response.bodyAsText()
         return when {
             response.isRateLimit -> {
                 logger.debug { response.logString(body) }
@@ -71,12 +70,12 @@ public class KtorRequestHandler(
         }
     }
 
-    private suspend fun <B : Any, R> HttpClient.createRequest(request: Request<B, R>) = request<HttpStatement> {
+    private suspend fun <B : Any, R> HttpClient.createRequest(request: Request<B, R>) = prepareRequest {
         method = request.route.method
         headers.appendAll(request.headers)
 
         url {
-            url.takeFrom(dev.kord.rest.route.Route.baseUrl)
+            url.takeFrom(request.baseUrl)
             encodedPath += request.path
             parameters.appendAll(request.parameters)
         }
@@ -86,11 +85,11 @@ public class KtorRequestHandler(
                 val requestBody = request.body ?: return@run
                 val json = parser.encodeToString(requestBody.strategy, requestBody.body)
                 logger.debug { request.logString(json) }
-                this.body = TextContent(json, ContentType.Application.Json)
+                setBody(TextContent(json, ContentType.Application.Json))
             }
             is MultipartRequest -> {
                 val content = request.data
-                this.body = MultiPartFormDataContent(content)
+                setBody(MultiPartFormDataContent(content))
                 logger.debug {
                     val json = content.filterIsInstance<PartData.FormItem>()
                         .firstOrNull { it.name == "payload_json" }?.value

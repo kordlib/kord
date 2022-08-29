@@ -4,6 +4,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.IntOrStringSerializer
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -74,9 +76,9 @@ public data class DiscordMessage(
     val author: DiscordUser,
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
     val content: String,
-    val timestamp: String,
+    val timestamp: Instant,
     @SerialName("edited_timestamp")
-    val editedTimestamp: String?,
+    val editedTimestamp: Instant?,
     val tts: Boolean,
     @SerialName("mention_everyone")
     val mentionEveryone: Boolean,
@@ -88,7 +90,7 @@ public data class DiscordMessage(
     val attachments: List<DiscordAttachment>,
     val embeds: List<DiscordEmbed>,
     val reactions: Optional<List<Reaction>> = Optional.Missing(),
-    val nonce: Optional<String> = Optional.Missing(),
+    val nonce: Optional<@Serializable(with = IntOrStringSerializer::class) String> = Optional.Missing(),
     val pinned: Boolean,
     @SerialName("webhook_id")
     val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -119,8 +121,6 @@ public data class DiscordMessage(
  * @param name name of the sticker
  * @param description description of the sticker
  * @param tags a comma-separated list of tags for the sticker
- * @param asset sticker asset hash
- * @param previewAsset sticker preview asset hash
  * @param formatType type of sticker format
  */
 @Serializable
@@ -171,7 +171,8 @@ public sealed class MessageStickerType(public val value: Int) {
     public object LOTTIE : MessageStickerType(3)
 
     public companion object {
-        public val values: Set<MessageStickerType> = setOf(PNG, APNG, LOTTIE)
+        public val values: Set<MessageStickerType>
+            get() = setOf(PNG, APNG, LOTTIE)
     }
 
     internal object Serializer : KSerializer<MessageStickerType> {
@@ -248,9 +249,9 @@ public data class DiscordPartialMessage(
     val author: Optional<DiscordUser> = Optional.Missing(),
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
     val content: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<String> = Optional.Missing(),
+    val timestamp: Optional<Instant> = Optional.Missing(),
     @SerialName("edited_timestamp")
-    val editedTimestamp: Optional<String?> = Optional.Missing(),
+    val editedTimestamp: Optional<Instant?> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("mention_everyone")
     val mentionEveryone: OptionalBoolean = OptionalBoolean.Missing,
@@ -488,7 +489,7 @@ public data class DiscordEmbed(
     val type: Optional<EmbedType> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<String> = Optional.Missing(),
+    val timestamp: Optional<Instant> = Optional.Missing(),
     val color: OptionalInt = OptionalInt.Missing,
     val footer: Optional<Footer> = Optional.Missing(),
     val image: Optional<Image> = Optional.Missing(),
@@ -773,6 +774,13 @@ public data class AllRemovedMessageReactions(
 
 @Serializable(with = MessageType.MessageTypeSerializer::class)
 public sealed class MessageType(public val code: Int) {
+
+    override fun equals(other: Any?): Boolean =
+        this === other || (other is MessageType && this.code == other.code)
+
+    override fun hashCode(): Int = code
+
+
     /** The default code for unknown values. */
     public class Unknown(code: Int) : MessageType(code)
     public object Default : MessageType(0)
@@ -782,11 +790,31 @@ public sealed class MessageType(public val code: Int) {
     public object ChannelNameChange : MessageType(4)
     public object ChannelIconChange : MessageType(5)
     public object ChannelPinnedMessage : MessageType(6)
+
+    /** @suppress */
+    @Deprecated("Renamed to 'UserJoin'.", ReplaceWith("UserJoin"))
     public object GuildMemberJoin : MessageType(7)
+    public object UserJoin : MessageType(7)
+
+    /** @suppress */
+    @Deprecated("Renamed to 'GuildBoost'.", ReplaceWith("GuildBoost"))
     public object UserPremiumGuildSubscription : MessageType(8)
+    public object GuildBoost : MessageType(8)
+
+    /** @suppress */
+    @Deprecated("Renamed to 'GuildBoostTier1'.", ReplaceWith("GuildBoostTier1"))
     public object UserPremiumGuildSubscriptionTierOne : MessageType(9)
+    public object GuildBoostTier1 : MessageType(9)
+
+    /** @suppress */
+    @Deprecated("Renamed to 'GuildBoostTier2'.", ReplaceWith("GuildBoostTier2"))
     public object UserPremiumGuildSubscriptionTwo : MessageType(10)
+    public object GuildBoostTier2 : MessageType(10)
+
+    /** @suppress */
+    @Deprecated("Renamed to 'GuildBoostTier3'.", ReplaceWith("GuildBoostTier3"))
     public object UserPremiumGuildSubscriptionThree : MessageType(11)
+    public object GuildBoostTier3 : MessageType(11)
     public object ChannelFollowAdd : MessageType(12)
     public object GuildDiscoveryDisqualified : MessageType(14)
 
@@ -826,11 +854,11 @@ public sealed class MessageType(public val code: Int) {
                 ChannelNameChange,
                 ChannelIconChange,
                 ChannelPinnedMessage,
-                GuildMemberJoin,
-                UserPremiumGuildSubscription,
-                UserPremiumGuildSubscriptionTierOne,
-                UserPremiumGuildSubscriptionTwo,
-                UserPremiumGuildSubscriptionThree,
+                UserJoin,
+                GuildBoost,
+                GuildBoostTier1,
+                GuildBoostTier2,
+                GuildBoostTier3,
                 ChannelFollowAdd,
                 GuildDiscoveryDisqualified,
                 GuildDiscoveryRequalified,

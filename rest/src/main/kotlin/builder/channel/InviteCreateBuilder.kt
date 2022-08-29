@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.InviteCreateRequest
+import kotlin.DeprecationLevel.ERROR
 import kotlin.time.Duration
 import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toDuration
@@ -16,32 +17,33 @@ import kotlin.time.toDuration
 public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     override var reason: String? = null
 
-    private var _maxAge: OptionalInt = OptionalInt.Missing
+    private var _maxAge: Optional<Duration> = Optional.Missing()
 
     /**
      * The duration of invite in seconds before expiry, or 0 for never. 86400 (24 hours) by default.
+     *
+     * @suppress
      */
-    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"))
-    public var age: Int? by ::_maxAge.delegate()
+    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"), level = ERROR)
+    public var age: Int?
+        get() = _maxAge.value?.inWholeSeconds?.toInt()
+        set(value) {
+            _maxAge = value?.toDuration(unit = SECONDS)?.optional() ?: Optional.Missing()
+        }
 
     /**
      * The duration before invite expiry, or 0 for never. Between 0 and 604800 seconds (7 days). 24 hours by default.
      */
-    public var maxAge: Duration?
-        get() = _maxAge.value?.toDuration(unit = SECONDS)
-        set(value) {
-            _maxAge = when (value) {
-                null -> OptionalInt.Missing
-                else -> OptionalInt.Value(value.inWholeSeconds.coerceIn(intValues).toInt())
-            }
-        }
+    public var maxAge: Duration? by ::_maxAge.delegate()
 
     private var _maxUses: OptionalInt = OptionalInt.Missing
 
     /**
      * The maximum number of uses, or 0 for unlimited. 0 by default.
+     *
+     * @suppress
      */
-    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"))
+    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"), level = ERROR)
     public var uses: Int? by ::_maxUses.delegate()
 
     /** The maximum number of uses, or 0 for unlimited. Between 0 and 100. 0 by default. */
@@ -65,8 +67,10 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
 
     /**
      * The target user id for this invite.
+     *
+     * @suppress
      */
-    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"))
+    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"), level = ERROR)
     public var targetUser: Snowflake? by ::_targetUser.delegate()
 
     private var _targetType: Optional<InviteTargetType> = Optional.Missing()
@@ -114,7 +118,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
             temporary = _temporary,
             unique = _unique,
             targetUser = _targetUser,
-            targetUserType = _targetUser.map { @Suppress("DEPRECATION") dev.kord.common.entity.TargetUserType.Stream },
+            targetUserType = _targetUser.map { @Suppress("DEPRECATION_ERROR") dev.kord.common.entity.TargetUserType.Stream },
             targetType = target,
             targetUserId = _targetUserId,
             targetApplicationId = _targetApplicationId,
@@ -124,4 +128,3 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
 
 private inline val OptionalSnowflake.isMissing get() = this == OptionalSnowflake.Missing
 private inline val OptionalSnowflake.isPresent get() = this != OptionalSnowflake.Missing
-private inline val intValues get() = Int.MIN_VALUE.toLong()..Int.MAX_VALUE.toLong()

@@ -1,4 +1,6 @@
+import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URL
 
 plugins {
     java
@@ -21,26 +23,30 @@ dependencies {
 
 kotlin {
     explicitApi()
+
+    // allow ExperimentalCoroutinesApi for `runTest {}`
+    sourceSets["test"].languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
 }
 
 tasks {
-    tasks.getByName("apiCheck") {
-        onlyIf { Library.isRelease }
-    }
-
     withType<JavaCompile> {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = Jvm.targetString
+        targetCompatibility = Jvm.targetString
     }
 
     withType<KotlinCompile> {
         kotlinOptions {
-            jvmTarget = Jvm.target
+            jvmTarget = Jvm.targetString
+            allWarningsAsErrors = true
             freeCompilerArgs = listOf(
-                CompilerArguments.coroutines,
                 CompilerArguments.time,
-                CompilerArguments.optIn,
                 CompilerArguments.contracts,
+
+                CompilerArguments.kordPreview,
+                CompilerArguments.kordExperimental,
+                CompilerArguments.kordVoice,
+
+                CompilerArguments.progressive,
             )
         }
     }
@@ -49,21 +55,31 @@ tasks {
         useJUnitPlatform()
     }
 
-    dokkaHtml.configure {
-        this.outputDirectory.set(project.projectDir.resolve("dokka").resolve("kord"))
+    // configure both dokkaHtml and dokkaHtmlPartial tasks
+    // (dokkaHtmlMultiModule depends on dokkaHtmlPartial, dokkaJar depends on dokkaHtml)
+    withType<AbstractDokkaLeafTask> {
+        // see https://kotlin.github.io/dokka/<dokka version>/user_guide/gradle/usage/#configuration-options
 
-        dokkaSourceSets {
-            configureEach {
-                platform.set(org.jetbrains.dokka.Platform.jvm)
+        failOnWarning.set(true)
 
-                sourceLink {
-                    localDirectory.set(file("src/main/kotlin"))
-                    remoteUrl.set(uri("https://github.com/kordlib/kord/tree/master/${project.name}/src/main/kotlin/").toURL())
+        dokkaSourceSets.configureEach {
 
-                    remoteLineSuffix.set("#L")
-                }
+            jdkVersion.set(Jvm.targetInt)
 
-                jdkVersion.set(8)
+            sourceLink {
+                localDirectory.set(file("src/main/kotlin"))
+                remoteUrl.set(URL("https://github.com/kordlib/kord/blob/${Library.commitHashOrDefault("0.8.x")}/${project.name}/src/main/kotlin/"))
+                remoteLineSuffix.set("#L")
+            }
+
+            externalDocumentationLink("https://kotlinlang.org/api/kotlinx.coroutines/")
+            externalDocumentationLink("https://kotlinlang.org/api/kotlinx.serialization/")
+            externalDocumentationLink("https://api.ktor.io/")
+
+            // don't list `TweetNaclFast` in docs
+            perPackageOption {
+                matchingRegex.set("""com\.iwebpp\.crypto""")
+                suppress.set(true)
             }
         }
     }
@@ -89,15 +105,9 @@ tasks {
 
     publishing {
         publications.withType<MavenPublication> {
-            from(components["kotlin"])
+            from(components["java"])
             artifact(sourcesJar.get())
             artifact(dokkaJar.get())
         }
-    }
-
-    java {
-        // We don't use java, but this prevents a Gradle warning,
-        // telling you to target the same java version for java and kt
-        sourceCompatibility = JavaVersion.VERSION_1_8
     }
 }

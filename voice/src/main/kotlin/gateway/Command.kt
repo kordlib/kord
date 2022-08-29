@@ -22,7 +22,6 @@ public sealed class Command {
         override fun serialize(encoder: Encoder, value: Command) {
             val composite = encoder.beginStructure(descriptor)
 
-            @OptIn(KordVoice::class)
             when (value) {
                 is Identify -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.Identify)

@@ -14,6 +14,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.request.RestRequestException
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -39,12 +40,14 @@ public fun FollowupPermittingInteractionResponseBehavior(
     override val supplier: EntitySupplier = supplier
 }
 
+/** @suppress */
 @Deprecated(
     "Renamed to 'createPublicFollowup'.",
     ReplaceWith(
         "this.createPublicFollowup { builder() }",
         "dev.kord.core.behavior.interaction.response.createPublicFollowup",
     ),
+    level = ERROR,
 )
 public suspend inline fun FollowupPermittingInteractionResponseBehavior.followUp(
     builder: FollowupMessageCreateBuilder.() -> Unit,
@@ -73,12 +76,14 @@ public suspend inline fun FollowupPermittingInteractionResponseBehavior.createPu
     return PublicFollowupMessage(message, applicationId, token, kord)
 }
 
+/** @suppress */
 @Deprecated(
     "Renamed to 'createEphemeralFollowup'.",
     ReplaceWith(
         "this.createEphemeralFollowup { builder() }",
         "dev.kord.core.behavior.interaction.response.createEphemeralFollowup",
     ),
+    level = ERROR,
 )
 public suspend inline fun FollowupPermittingInteractionResponseBehavior.followUpEphemeral(
     builder: FollowupMessageCreateBuilder.() -> Unit,

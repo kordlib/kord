@@ -12,6 +12,7 @@ import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.*
+import kotlin.DeprecationLevel.HIDDEN
 
 @KordPreview
 public fun VoiceChannel.live(
@@ -27,7 +28,7 @@ public inline fun VoiceChannel.live(
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
     "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
-    level = DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveVoiceChannel.onCreate(
@@ -46,7 +47,7 @@ public fun LiveVoiceChannel.onUpdate(
 @Deprecated(
     "The block is not called when the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public inline fun LiveVoiceChannel.onShutDown(
@@ -62,7 +63,7 @@ public inline fun LiveVoiceChannel.onShutDown(
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveVoiceChannel.onDelete(
@@ -74,7 +75,7 @@ public fun LiveVoiceChannel.onDelete(
 @Deprecated(
     "The block is not called when the entity is deleted because the live entity is shut down",
     ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    DeprecationLevel.ERROR
+    level = HIDDEN,
 )
 @KordPreview
 public fun LiveVoiceChannel.onGuildDelete(

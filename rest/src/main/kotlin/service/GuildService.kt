@@ -20,6 +20,7 @@ import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -93,7 +94,6 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.GuildId] = guildId
             val modifyBuilder = GuildChannelPositionModifyBuilder().apply(builder)
             body(GuildChannelPositionModifyRequest.serializer(), modifyBuilder.toRequest())
-            auditLogReason(modifyBuilder.reason)
         }
     }
 
@@ -278,6 +278,21 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         }
     }
 
+    @Deprecated("Binary compatibility, keep for at least one release.", level = HIDDEN)
+    public suspend fun modifyGuildMFALevel(guildId: Snowflake, level: MFALevel): GuildMFALevelModifyResponse =
+        modifyGuildMFALevel(guildId, level, reason = null)
+
+    public suspend fun modifyGuildMFALevel(
+        guildId: Snowflake,
+        level: MFALevel,
+        reason: String? = null,
+    ): GuildMFALevelModifyResponse = call(Route.GuildMFALevelModify) {
+        keys[Route.GuildId] = guildId
+        val request = GuildMFALevelModifyRequest(level)
+        body(GuildMFALevelModifyRequest.serializer(), request)
+        auditLogReason(reason)
+    }
+
     public suspend fun deleteGuildRole(guildId: Snowflake, roleId: Snowflake, reason: String? = null): Unit =
         call(Route.GuildRoleDelete) {
             keys[Route.GuildId] = guildId
@@ -357,7 +372,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
 
     @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER")
     @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("getGuildWidget(guildId)"), DeprecationLevel.ERROR)
+    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("getGuildWidget(guildId)"), level = HIDDEN)
     public suspend fun getGuildEmbed(guildId: Snowflake): Nothing =
         throw Exception("Guild embeds were renamed to widgets.")
 
@@ -366,7 +381,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
     @Deprecated(
         "Guild embeds were renamed to widgets.",
         ReplaceWith("modifyGuildWidget(guildId, embed)"),
-        DeprecationLevel.ERROR
+        level = HIDDEN,
     )
     public suspend fun modifyGuildEmbed(guildId: Snowflake, embed: Any): Nothing =
         throw Exception("Guild embeds were renamed to widgets.")

@@ -12,24 +12,20 @@ import dev.kord.core.entity.User
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
 import dev.kord.core.event.channel.data.TypingStartEventData
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.core.toInstant
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.datetime.Instant
-import kotlin.coroutines.CoroutineContext
 
 public class TypingStartEvent(
     public val data: TypingStartEventData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val channelId: Snowflake get() = data.channelId
 
@@ -37,7 +33,7 @@ public class TypingStartEvent(
 
     public val guildId: Snowflake? get() = data.guildId.value
 
-    public val started: Instant get() = data.timestamp.toInstant()
+    public val started: Instant get() = data.timestamp
 
     public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
@@ -85,13 +81,8 @@ public class TypingStartEvent(
      */
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
-        TypingStartEvent(
-            data,
-            kord,
-            shard,
-            supplier
-        )
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): TypingStartEvent =
+        TypingStartEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "TypingStartEvent(channelId=$channelId, userId=$userId, guildId=$guildId, started=$started, kord=$kord, shard=$shard, supplier=$supplier)"

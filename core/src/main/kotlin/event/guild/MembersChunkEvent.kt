@@ -1,6 +1,5 @@
 package dev.kord.core.event.guild
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
@@ -11,24 +10,16 @@ import dev.kord.core.entity.Member
 import dev.kord.core.entity.Presence
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.event.Event
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
-import kotlin.coroutines.CoroutineContext
-
-
-@DeprecatedSinceKord("0.7.0")
-@Deprecated("Renamed to MembersChunkEvent", ReplaceWith("MembersChunkEvent"), DeprecationLevel.ERROR)
-public typealias MemberChunksEvent = MembersChunkEvent
 
 public class MembersChunkEvent(
     public val data: MembersChunkData,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : Event, CoroutineScope by coroutineScope, Strategizable {
+) : Event, Strategizable {
 
     public val guildId: Snowflake get() = data.guildId
 
@@ -54,7 +45,7 @@ public class MembersChunkEvent(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MembersChunkEvent =
-        MembersChunkEvent(data, kord, shard, strategy.supply(kord))
+        MembersChunkEvent(data, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
         return "MemberChunksEvent(guildId=$guildId, members=$members, kord=$kord, shard=$shard, supplier=$supplier)"

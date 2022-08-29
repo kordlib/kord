@@ -38,7 +38,7 @@ internal class TimeSourceIntervalRateLimiter(
 
 
     private companion object {
-        private val DISTANT_PAST_MARK: TimeMark = object : TimeMark() {
+        private val DISTANT_PAST_MARK: TimeMark = object : TimeMark {
             override fun elapsedNow() = Duration.INFINITE
         }
     }

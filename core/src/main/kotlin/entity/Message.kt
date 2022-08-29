@@ -1,6 +1,5 @@
 package dev.kord.core.entity
 
-import cache.data.MessageInteractionData
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.MessageType
@@ -15,6 +14,7 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
 import dev.kord.core.cache.data.MessageData
+import dev.kord.core.cache.data.MessageInteractionData
 import dev.kord.core.entity.application.ApplicationCommand
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildChannel
@@ -31,8 +31,8 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 import java.util.Objects
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -57,7 +57,10 @@ public class Message(
         /** [Id][ActionInteraction.id] of the [ActionInteraction] this message is responding to. */
         override val id: Snowflake get() = data.id
 
-        /** The [name][ApplicationCommand.name] of the [ApplicationCommand] that triggered this message. */
+        /**
+         * The [name][ApplicationCommand.name] of the [ApplicationCommand] that triggered this message.
+         * This name includes subcommands and subcommand groups.
+         */
         public val name: String get() = data.name
 
         /** The [UserBehavior] of the [user][ActionInteraction.user] who invoked the [ActionInteraction]. */
@@ -127,8 +130,7 @@ public class Message(
      *
      * Returns null if the message was never edited.
      */
-    public val editedTimestamp: Instant?
-        get() = data.editedTimestamp?.toInstant()
+    public val editedTimestamp: Instant? get() = data.editedTimestamp
 
     /**
      * The embedded content of this message.
@@ -266,7 +268,7 @@ public class Message(
     /**
      * The instant when this message was created.
      */
-    public val timestamp: Instant get() = data.timestamp.toInstant()
+    public val timestamp: Instant get() = data.timestamp
 
     /**
      * Whether this message was send using `\tts`.
@@ -288,7 +290,8 @@ public class Message(
      */
     public val webhookId: Snowflake? get() = data.webhookId.value
 
-    @Deprecated("Replaced with 'actionRows'.", ReplaceWith("this.actionRows"))
+    /** @suppress */
+    @Deprecated("Replaced with 'actionRows'.", ReplaceWith("this.actionRows"), level = ERROR)
     public val components: List<Component>
         get() = data.components.orEmpty().map { Component(it) }
 

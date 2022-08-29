@@ -1,6 +1,5 @@
 package live
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.core.cache.data.MemberData
@@ -19,6 +18,7 @@ import dev.kord.gateway.GuildMemberUpdate
 import equality.randomId
 import kotlinx.coroutines.job
 import kotlinx.coroutines.runBlocking
+import kotlinx.datetime.Instant
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.TestInstance
@@ -29,7 +29,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@OptIn(KordPreview::class)
 @Timeout(value = 5, unit = TimeUnit.SECONDS)
 @Disabled
 class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
@@ -51,7 +50,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                     userId = userId,
                     guildId = guildId,
                     roles = emptyList(),
-                    joinedAt = "",
+                    joinedAt = Instant.fromEpochMilliseconds(0),
                     premiumSince = Optional.Missing(),
                     avatar = Optional.Missing(),
                 ),
@@ -83,7 +82,7 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                             discriminator = "",
                             avatar = null
                         ),
-                        joinedAt = ""
+                        joinedAt = Instant.fromEpochMilliseconds(0),
                     ),
                     0
                 )

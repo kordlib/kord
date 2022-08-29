@@ -73,7 +73,6 @@ public data class DiscordUser(
  * @param premiumType The type of Nitro subscription on a user's account.
  * @param publicFlags The public flags on a user's account. Unlike [flags], these **are** visible ot other users.
  */
-@OptIn(ExperimentalSerializationApi::class)
 @Serializable
 public data class DiscordOptionallyMemberUser(
     val id: Snowflake,
@@ -92,6 +91,7 @@ public data class DiscordOptionallyMemberUser(
     val premiumType: Optional<UserPremium> = Optional.Missing(),
     @SerialName("public_flags")
     val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    @OptIn(ExperimentalSerializationApi::class)
     @JsonNames("member", "guild_member")
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )

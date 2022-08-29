@@ -8,6 +8,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -15,6 +16,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
 public data class GuildCreateRequest(
@@ -31,7 +33,7 @@ public data class GuildCreateRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: OptionalInt = OptionalInt.Missing,
+    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("system_channel_id")
     val systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
 )
@@ -45,7 +47,7 @@ public data class GuildChannelCreateRequest(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<Int> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
     val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing(),
@@ -53,6 +55,8 @@ public data class GuildChannelCreateRequest(
     val parentId: OptionalSnowflake = OptionalSnowflake.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("default_auto_archive_duration")
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
 )
 
 @Serializable
@@ -74,7 +78,7 @@ public data class GuildChannelPositionModifyRequest(
     internal object Serializer : KSerializer<GuildChannelPositionModifyRequest> {
         private val delegate = ListSerializer(ChannelPositionSwapRequest.serializer())
 
-        @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
+        @OptIn(ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
             get() = listSerialDescriptor(ChannelPositionSwapRequest.serializer().descriptor)
 
@@ -134,7 +138,7 @@ public data class GuildRoleCreateRequest(
     /** Only use this when creating a guild with roles. */
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
 ) {
-    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), DeprecationLevel.ERROR)
+    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), level = HIDDEN)
     public val separate: OptionalBoolean
         get() = hoist
 }
@@ -145,7 +149,7 @@ public data class GuildRolePositionModifyRequest(val swaps: List<Pair<Snowflake,
 
     internal object Serializer : KSerializer<GuildRolePositionModifyRequest> {
 
-        @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
+        @OptIn(ExperimentalSerializationApi::class)
         override val descriptor: SerialDescriptor
             get() = listSerialDescriptor(RolePosition.serializer().descriptor)
 
@@ -176,10 +180,13 @@ public data class GuildRoleModifyRequest(
     val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val mentionable: OptionalBoolean? = OptionalBoolean.Missing,
 ) {
-    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), DeprecationLevel.ERROR)
+    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), level = HIDDEN)
     public val separate: OptionalBoolean?
         get() = hoist
 }
+
+@Serializable
+public data class GuildMFALevelModifyRequest(val level: MFALevel)
 
 @Serializable
 public data class GuildIntegrationCreateRequest(val type: Int, val id: String)
@@ -196,7 +203,7 @@ public data class GuildIntegrationModifyRequest(
 
 @Serializable
 @DeprecatedSinceKord("0.7.0")
-@Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetModifyRequest"), DeprecationLevel.ERROR)
+@Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetModifyRequest"), level = HIDDEN)
 public data class GuildEmbedModifyRequest(
     val enabled: Boolean,
     @SerialName("channel_id")
@@ -228,7 +235,7 @@ public data class GuildModifyRequest(
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: OptionalInt = OptionalInt.Missing,
+    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing(),
     val icon: Optional<String?> = Optional.Missing(),
     @SerialName("owner_id")
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,

@@ -25,6 +25,7 @@ public data class InteractionData(
     val permissions: Optional<Permissions> = Optional.Missing(),
     val version: Int,
     val message: Optional<MessageData> = Optional.Missing(),
+    val appPermissions: Optional<Permissions> = Optional.Missing(),
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing()
 ) {
@@ -47,6 +48,7 @@ public data class InteractionData(
                     message.map {
                         MessageData.from(it)
                     },
+                    appPermissions,
                     locale,
                     guildLocale
                 )
@@ -86,6 +88,7 @@ public data class ApplicationInteractionData(
     val name: Optional<String> = Optional.Missing(),
     val options: Optional<List<OptionData>> = Optional.Missing(),
     val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing(),
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val customId: Optional<String> = Optional.Missing(),
     val componentType: Optional<ComponentType> = Optional.Missing(),
     val values: Optional<List<String>> = Optional.Missing(),
@@ -95,7 +98,7 @@ public data class ApplicationInteractionData(
 
         public fun from(
             data: InteractionCallbackData,
-            guildId: Snowflake?
+            interactionGuildId: Snowflake?, // this is the id of the guild the interaction was triggered in
         ): ApplicationInteractionData {
             return with(data) {
                 ApplicationInteractionData(
@@ -103,8 +106,9 @@ public data class ApplicationInteractionData(
                     type,
                     targetId,
                     name,
-                    options.map { it.map { OptionData.from(it) } },
-                    resolved.map { ResolvedObjectsData.from(it, guildId) },
+                    options.map { it.map { option -> OptionData.from(option) } },
+                    resolved.map { ResolvedObjectsData.from(it, interactionGuildId) },
+                    guildId, // this is the id of the guild the command is registered to
                     customId,
                     componentType,
                     values = values,
@@ -119,9 +123,7 @@ public data class ApplicationInteractionData(
 @Serializable
 public data class OptionData(
     val name: String,
-    @OptIn(KordExperimental::class)
     val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
-    @OptIn(KordExperimental::class)
     val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
     val subCommands: Optional<List<SubCommand>> = Optional.Missing(),
     val focused: OptionalBoolean = OptionalBoolean.Missing

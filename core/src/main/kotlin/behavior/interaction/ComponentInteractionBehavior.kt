@@ -16,6 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.UpdateMessageInteractionResponseCreateBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -36,10 +37,13 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * There is no noticeable difference between this and [acknowledgeEphemeralDeferredMessageUpdate]
      * when it comes to acknowledging the interaction, both functions can be called
      * on public and ephemeral messages.
+     *
+     * @suppress
      */
     @Deprecated(
         "Renamed to 'deferPublicMessageUpdate'. Also take a look at the new documentation.",
         ReplaceWith("this.deferPublicMessageUpdate()"),
+        level = ERROR,
     )
     public suspend fun acknowledgePublicDeferredMessageUpdate(): PublicMessageInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
@@ -78,10 +82,13 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
      * There is no noticeable difference between this and [acknowledgePublicDeferredMessageUpdate]
      * when it comes to acknowledging the interaction, both functions can be called
      * on public and ephemeral messages.
+     *
+     * @suppress
      */
     @Deprecated(
         "Renamed to 'deferEphemeralMessageUpdate'. Also take a look at the new documentation.",
         ReplaceWith("this.deferEphemeralMessageUpdate()"),
+        level = ERROR,
     )
     public suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralMessageInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
@@ -146,10 +153,13 @@ public fun ComponentInteractionBehavior(
  * There is no noticeable difference between this and [acknowledgeEphemeralUpdateMessage]
  * when it comes to acknowledging the interaction, both functions can be called
  * on public and ephemeral messages.
+ *
+ * @suppress
  */
 @Deprecated(
     "Renamed to 'updatePublicMessage'. Also take a look at the new documentation.",
     ReplaceWith("this.updatePublicMessage()", "dev.kord.core.behavior.interaction.updatePublicMessage"),
+    level = ERROR,
 )
 public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
@@ -192,10 +202,13 @@ public suspend inline fun ComponentInteractionBehavior.updatePublicMessage(
  * There is no noticeable difference between this and [acknowledgeEphemeralUpdateMessage]
  * when it comes to acknowledging the interaction, both functions can be called
  * on public and ephemeral messages.
+ *
+ * @suppress
  */
 @Deprecated(
     "Renamed to 'updateEphemeralMessage'. Also take a look at the new documentation.",
     ReplaceWith("this.updateEphemeralMessage()", "dev.kord.core.behavior.interaction.updateEphemeralMessage"),
+    level = ERROR,
 )
 public suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit

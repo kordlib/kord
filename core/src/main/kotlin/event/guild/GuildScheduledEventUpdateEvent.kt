@@ -5,10 +5,8 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.entity.GuildScheduledEvent
 import dev.kord.core.entity.channel.TopGuildChannel
-import dev.kord.core.event.kordCoroutineScope
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.CoroutineScope
 
 /**
  * Event fired if a [GuildScheduledEvent] gets updated.
@@ -24,9 +22,9 @@ public data class GuildScheduledEventUpdateEvent(
     public val oldEvent: GuildScheduledEvent?,
     override val kord: Kord,
     override val shard: Int,
+    override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-    public val coroutineScope: CoroutineScope = kordCoroutineScope(kord)
-) : GuildScheduledEventEvent, CoroutineScope by coroutineScope {
+) : GuildScheduledEventEvent {
 
     /**
      * The channel id of the channel the event is in.

@@ -7,6 +7,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * Detailed error codes sent by the Discord API in the JSON [error response][DiscordErrorResponse].
@@ -169,6 +170,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** This message cannot be edited due to announcement rate limits. */
     AnnouncementRateLimit(20022),
 
+    /** Under minimum age. */
+    UnderMinimumAge(20024),
+
     /** The channel you are writing has hit the write rate limit. */
     ChannelWriteRateLimit(20028),
 
@@ -226,8 +230,14 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Guild already has a template. */
     GuildAlreadyHadTemplate(30031),
 
+    /** Maximum number of application commands reached. */
+    MaxApplicationCommands(30032),
+
     /** Max number of thread participants has been reached (1000). */
     MaxThreadParticipants(30033),
+
+    /** Max number of daily application command creates has been reached (200). */
+    MaxDailyApplicationCommandCreates(30034),
 
     /** Maximum number of bans for non-guild members have been exceeded. */
     MaxNonMemberBans(30035),
@@ -256,6 +266,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of tags in a forum channel has been reached. */
     MaxTagsInForumChannel(30048),
 
+    /** Bitrate is too high for channel of this type. */
+    BitrateTooHigh(30052),
+
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
 
@@ -277,6 +290,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** The user is banned from this guild. */
     UserBannedFromGuild(40007),
 
+    /** Connection has been revoked. */
+    ConnectionRevoked(40012),
+
     /** Target user is not connected to voice. */
     UserNotInVoice(40032),
 
@@ -285,6 +301,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** An application command with that name already exists. */
     ApplicationCommandNameExists(40041),
+
+    /** Application interaction failed to send. */
+    InteractionFailedToSend(40043),
 
     /** Interaction has already been acknowledged. */
     InteractionAlreadyAcknowledged(40060),
@@ -341,6 +360,9 @@ public enum class JsonErrorCode(public val code: Int) {
      * Provided too few or too many messages to delete. Must provide at least 2 and fewer than 100 messages to delete.
      */
     ProvidedMessageCountInsufficient(50016),
+
+    /** Invalid MFA Level. */
+    InvalidMFALevel(50017),
 
     /** A message can only be pinned to the channel it was sent in. */
     CannotPinMessageFromAnotherChannel(50019),
@@ -405,6 +427,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Cannot delete a channel required for Community guilds. */
     CannotDeleteRequiredCommunityChannel(50074),
 
+    /** Cannot edit stickers within a message. */
+    CannotEditStickersWithinMessage(50080),
+
     /** Invalid sticker sent. */
     InvalidStickerSent(50081),
 
@@ -434,6 +459,18 @@ public enum class JsonErrorCode(public val code: Int) {
     /** The request body contains invalid JSON. */
     InvalidJsonInRequestBody(50109),
 
+    /** Ownership cannot be transferred to a bot user. */
+    OwnershipCannotBeTransferredToBot(50132),
+
+    /** Failed to resize the asset below the maximum size: 262144. */
+    FailedToResizeAssetBelowMaximumSize(50138),
+    
+    /** Uploaded file not found. */
+    UnknownUpload(50146),
+
+    /** You do not have permission to send this sticker. */
+    StickerPermissionLack(50600),
+
     /** Two factor is required for this operation. */
     Require2FA(60003),
 
@@ -442,6 +479,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Reaction was blocked. */
     ReactionBlocked(90001),
+
+    /** Application not yet available. Try again later. */
+    ApplicationNotAvailable(110001),
 
     /** API resource is currently overloaded. Try again a little later. */
     APIResourceOverloaded(130000),
@@ -491,13 +531,19 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Failed to create stage needed for stage event. */
     FailedToCreateStage(180002),
 
+    /** Message was blocked by automatic moderation. */
+    MessageBlockedByAutomaticModeration(200000),
+
+    /** Title was blocked by automatic moderation. */
+    TitleBlockedByAutomaticModeration(200001),
+
     ;
 
     public companion object {
         @Deprecated(
             "JsonErrorCode.OperationOnAchievedThread was renamed to JsonErrorCode.OperationOnArchivedThread.",
             ReplaceWith("JsonErrorCode.OperationOnArchivedThread"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val OperationOnAchievedThread: JsonErrorCode = OperationOnArchivedThread
@@ -505,7 +551,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "JsonErrorCode.InvalidThreadSettings was removed because it was a duplicate of JsonErrorCode.InvalidThreadNotificationSettings.",
             ReplaceWith("JsonErrorCode.InvalidThreadNotificationSettings"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val InvalidThreadSettings: JsonErrorCode = InvalidThreadNotificationSettings
@@ -513,7 +559,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "JsonErrorCode.InvalidThreadBefore was removed because it was a duplicate of JsonErrorCode.BeforeValueBeforeThreadCreate.",
             ReplaceWith("JsonErrorCode.BeforeValueBeforeThreadCreate"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val InvalidThreadBefore: JsonErrorCode = BeforeValueBeforeThreadCreate
@@ -521,7 +567,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "'JsonErrorCode.CannotSendMessagesInVoiceChannel' was renamed to JsonErrorCode.CannotSendMessagesInNonTextChannel",
             ReplaceWith("JsonErrorCode.CannotSendMessagesInNonTextChannel"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val CannotSendMessagesInVoiceChannel: JsonErrorCode = CannotSendMessagesInNonTextChannel
@@ -529,7 +575,7 @@ public enum class JsonErrorCode(public val code: Int) {
         @Deprecated(
             "Object JsonErrorCode.JsonErrorCodeSerializer is internal now, use JsonErrorCode.serializer() instead.",
             ReplaceWith("JsonErrorCode.serializer()", "dev.kord.rest.json.JsonErrorCode"),
-            DeprecationLevel.ERROR,
+            level = HIDDEN,
         )
         @JvmField
         public val JsonErrorCodeSerializer: KSerializer<JsonErrorCode> = Serializer

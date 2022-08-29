@@ -17,14 +17,18 @@ import dev.kord.rest.route.Route
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
+import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
+import kotlin.collections.set
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 public class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    public suspend fun getGlobalApplicationCommands(applicationId: Snowflake): List<DiscordApplicationCommand> =
+    public suspend fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean? = null): List<DiscordApplicationCommand> =
         call(Route.GlobalApplicationCommandsGet) {
             keys[Route.ApplicationId] = applicationId
+            withLocalizations?.let { parameter("with_localizations", it) }
         }
 
     public suspend fun createGlobalApplicationCommand(
@@ -60,8 +64,10 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     public suspend fun getGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
+        withLocalizations: Boolean? = null
     ): List<DiscordApplicationCommand> = call(Route.GuildApplicationCommandsGet) {
         applicationIdGuildId(applicationId, guildId)
+        withLocalizations?.let { parameter("with_localizations", it) }
     }
 
     public suspend fun createGuildApplicationCommand(
@@ -338,117 +344,98 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         applicationIdGuildIdCommandId(applicationId, guildId, commandId)
     }
 
-    public suspend fun editApplicationCommandPermissions(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        commandId: Snowflake,
-        request: ApplicationCommandPermissionsEditRequest,
-    ): DiscordGuildApplicationCommandPermissions = call(Route.ApplicationCommandPermissionsPut) {
-        applicationIdGuildIdCommandId(applicationId, guildId, commandId)
-        body(ApplicationCommandPermissionsEditRequest.serializer(), request)
-    }
-
-    public suspend fun bulkEditApplicationCommandPermissions(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        request: List<PartialDiscordGuildApplicationCommandPermissions>,
-    ): List<DiscordGuildApplicationCommandPermissions> = call(Route.ApplicationCommandPermissionsBatchPut) {
-        applicationIdGuildId(applicationId, guildId)
-        body(ListSerializer(PartialDiscordGuildApplicationCommandPermissions.serializer()), request)
-    }
-
     public suspend inline fun createGlobalChatInputApplicationCommand(
         applicationId: Snowflake,
         name: String,
         description: String,
-        builder: ChatInputCreateBuilder.() -> Unit = {}
+        builder: GlobalChatInputCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return createGlobalApplicationCommand(
             applicationId,
-            ChatInputCreateBuilder(name, description).apply(builder).toRequest()
+            ChatInputCreateBuilderImpl(name, description).apply(builder).toRequest()
         )
     }
 
     public suspend inline fun createGlobalMessageCommandApplicationCommand(
         applicationId: Snowflake,
         name: String,
-        builder: MessageCommandCreateBuilder.() -> Unit = {}
+        builder: GlobalMessageCommandCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return createGlobalApplicationCommand(
             applicationId,
-            MessageCommandCreateBuilder(name).apply(builder).toRequest()
+            MessageCommandCreateBuilderImpl(name).apply(builder).toRequest()
         )
     }
 
     public suspend inline fun createGlobalUserCommandApplicationCommand(
         applicationId: Snowflake,
         name: String,
-        builder: UserCommandCreateBuilder.() -> Unit = {}
+        builder: GlobalUserCommandCreateBuilder.() -> Unit = {}
     ): DiscordApplicationCommand {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return createGlobalApplicationCommand(
             applicationId,
-            UserCommandCreateBuilder(name).apply(builder).toRequest()
+            UserCommandCreateBuilderImpl(name).apply(builder).toRequest()
         )
     }
 
     public suspend inline fun createGlobalApplicationCommands(
         applicationId: Snowflake,
-        builder: MultiApplicationCommandBuilder.() -> Unit
+        builder: GlobalMultiApplicationCommandBuilder.() -> Unit
     ): List<DiscordApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return createGlobalApplicationCommands(
             applicationId,
-            MultiApplicationCommandBuilder().apply(builder).build()
+            GlobalMultiApplicationCommandBuilder().apply(builder).build()
         )
     }
 
     public suspend inline fun modifyGlobalChatInputApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: ChatInputModifyBuilder.() -> Unit
+        builder: GlobalChatInputModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return modifyGlobalApplicationCommand(
             applicationId,
             commandId,
-            ChatInputModifyBuilder().apply(builder).toRequest()
+            ChatInputModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
     public suspend inline fun modifyGlobalMessageApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: MessageCommandModifyBuilder.() -> Unit
+        builder: GlobalMessageCommandModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 
         return modifyGlobalApplicationCommand(
             applicationId,
             commandId,
-            MessageCommandModifyBuilder().apply(builder).toRequest()
+            MessageCommandModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
     public suspend inline fun modifyGlobalUserApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
-        builder: UserCommandModifyBuilder.() -> Unit
+        builder: GlobalUserCommandModifyBuilder.() -> Unit
     ): DiscordApplicationCommand {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         return modifyGlobalApplicationCommand(
             applicationId,
             commandId,
-            UserCommandModifyBuilder().apply(builder).toRequest()
+            UserCommandModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
@@ -463,7 +450,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createGuildApplicationCommand(
             applicationId,
             guildId,
-            ChatInputCreateBuilder(name, description).apply(builder).toRequest()
+            ChatInputCreateBuilderImpl(name, description).apply(builder).toRequest()
         )
     }
 
@@ -479,7 +466,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createGuildApplicationCommand(
             applicationId,
             guildId,
-            MessageCommandCreateBuilder(name).apply(builder).toRequest()
+            MessageCommandCreateBuilderImpl(name).apply(builder).toRequest()
         )
     }
 
@@ -495,14 +482,14 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createGuildApplicationCommand(
             applicationId,
             guildId,
-            UserCommandCreateBuilder(name).apply(builder).toRequest()
+            UserCommandCreateBuilderImpl(name).apply(builder).toRequest()
         )
     }
 
     public suspend inline fun createGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
-        builder: MultiApplicationCommandBuilder.() -> Unit
+        builder: GuildMultiApplicationCommandBuilder.() -> Unit
     ): List<DiscordApplicationCommand> {
 
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
@@ -510,7 +497,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         return createGuildApplicationCommands(
             applicationId,
             guildId,
-            MultiApplicationCommandBuilder().apply(builder).build()
+            GuildMultiApplicationCommandBuilder().apply(builder).build()
         )
     }
 
@@ -526,7 +513,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             applicationId,
             guildId,
             commandId,
-            ChatInputModifyBuilder().apply(builder).toRequest()
+            ChatInputModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
@@ -542,7 +529,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             applicationId,
             guildId,
             commandId,
-            MessageCommandModifyBuilder().apply(builder).toRequest()
+            MessageCommandModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
@@ -557,7 +544,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             applicationId,
             guildId,
             commandId,
-            UserCommandModifyBuilder().apply(builder).toRequest()
+            UserCommandModifyBuilderImpl().apply(builder).toRequest()
         )
     }
 
@@ -565,7 +552,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     @Deprecated(
         "'createPublicInteractionResponse' was renamed to 'createInteractionResponse'",
         ReplaceWith("this.createInteractionResponse(interactionId, interactionToken, ephemeral, builder)"),
-        DeprecationLevel.ERROR,
+        level = HIDDEN,
     )
     public suspend inline fun createPublicInteractionResponse(
         interactionId: Snowflake,
@@ -633,37 +620,11 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun bulkEditApplicationCommandPermissions(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        builder: ApplicationCommandPermissionsBulkModifyBuilder.() -> Unit = {}
-    ): List<DiscordGuildApplicationCommandPermissions> {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return bulkEditApplicationCommandPermissions(
-            applicationId,
-            guildId,
-            ApplicationCommandPermissionsBulkModifyBuilder().apply(builder).toRequest()
-        )
-    }
-
-    public suspend inline fun editApplicationCommandPermissions(
-        applicationId: Snowflake,
-        guildId: Snowflake,
-        commandId: Snowflake,
-        builder: ApplicationCommandPermissionsModifyBuilder.() -> Unit
-    ): DiscordGuildApplicationCommandPermissions {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return editApplicationCommandPermissions(
-            applicationId,
-            guildId,
-            commandId,
-            ApplicationCommandPermissionsModifyBuilder().apply(builder).toRequest()
-        )
-    }
-
+    /** @suppress */
     @Deprecated(
         "Renamed to 'deferMessage'.",
         ReplaceWith("this.deferMessage(interactionId, interactionToken, ephemeral)"),
+        level = ERROR,
     )
     public suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
         deferMessage(interactionId, interactionToken, ephemeral)
