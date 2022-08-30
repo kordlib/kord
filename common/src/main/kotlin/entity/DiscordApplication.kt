@@ -155,8 +155,10 @@ public enum class ApplicationFlag(public val code: Int) {
      * Intent required for bots in under 100 servers to receive
      * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found in Bot Settings.
      */
-    GatewayMessageContentLimited(1 shl 19);
+    GatewayMessageContentLimited(1 shl 19),
 
+    /** Indicates if an app has registered global application commands. */
+    ApplicationCommandBadge(1 shl 23);
 
     public operator fun plus(flag: ApplicationFlag): ApplicationFlags = ApplicationFlags(this.code or flag.code)
 
