@@ -21,6 +21,7 @@ import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -594,12 +595,31 @@ public suspend inline fun GuildService.createCategory(
 
 public suspend inline fun GuildService.modifyCurrentVoiceState(
     guildId: Snowflake,
+    builder: CurrentVoiceStateModifyBuilder.() -> Unit,
+) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val request = CurrentVoiceStateModifyBuilder().apply(builder).toRequest()
+    modifyCurrentVoiceState(guildId, request)
+}
+
+@Deprecated(
+    "'channelId' is no longer required, use other overload instead.",
+    ReplaceWith(
+        "this.modifyCurrentVoiceState(guildId) {\nthis@modifyCurrentVoiceState.channelId = channelId\nbuilder()\n}"
+    ),
+    level = WARNING,
+)
+public suspend inline fun GuildService.modifyCurrentVoiceState(
+    guildId: Snowflake,
     channelId: Snowflake,
     builder: CurrentVoiceStateModifyBuilder.() -> Unit
 ) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val modifyBuilder = CurrentVoiceStateModifyBuilder(channelId).apply(builder)
-    modifyCurrentVoiceState(guildId, modifyBuilder.toRequest())
+    val request = CurrentVoiceStateModifyBuilder()
+        .apply { this@apply.channelId = channelId }
+        .apply(builder)
+        .toRequest()
+    modifyCurrentVoiceState(guildId, request)
 }
 
 public suspend inline fun GuildService.modifyVoiceState(

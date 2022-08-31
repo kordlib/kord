@@ -62,7 +62,7 @@ public suspend inline fun StageChannelBehavior.createStageInstance(
  */
 public suspend inline fun StageChannelBehavior.editCurrentVoiceState(builder: CurrentVoiceStateModifyBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    kord.rest.guild.modifyCurrentVoiceState(guildId, id, builder)
+    kord.rest.guild.modifyCurrentVoiceState(guildId, builder)
 }
 
 /**
