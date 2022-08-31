@@ -5855,6 +5855,7 @@ public final class dev/kord/core/entity/AttachmentKt {
 
 public final class dev/kord/core/entity/AuditLog : dev/kord/core/KordObject {
 	public fun <init> (Ldev/kord/common/entity/DiscordAuditLog;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)V
+	public final fun getApplicationCommands ()Ljava/util/List;
 	public final fun getAutoModerationRules ()Ljava/util/List;
 	public final fun getData ()Ldev/kord/common/entity/DiscordAuditLog;
 	public final fun getEntries ()Ljava/util/List;

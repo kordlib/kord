@@ -2218,17 +2218,19 @@ public final class dev/kord/common/entity/DiscordAttachment$Companion {
 
 public final class dev/kord/common/entity/DiscordAuditLog {
 	public static final field Companion Ldev/kord/common/entity/DiscordAuditLog$Companion;
-	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/util/List;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Ljava/util/List;
 	public final fun component6 ()Ljava/util/List;
-	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ldev/kord/common/entity/DiscordAuditLog;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAuditLog;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAuditLog;
+	public final fun component7 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ldev/kord/common/entity/DiscordAuditLog;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAuditLog;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAuditLog;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getApplicationCommands ()Ljava/util/List;
 	public final fun getAuditLogEntries ()Ljava/util/List;
 	public final fun getAutoModerationRules ()Ljava/util/List;
 	public final fun getIntegrations ()Ljava/util/List;
