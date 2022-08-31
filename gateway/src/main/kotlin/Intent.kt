@@ -193,6 +193,20 @@ public sealed class Intent(public val code: DiscordBitSet) {
      */
     public object GuildScheduledEvents : Intent(1 shl 16)
 
+    /**
+     * Enables the following events:
+     * - [AutoModerationRuleCreate]
+     * - [AutoModerationRuleUpdate]
+     * - [AutoModerationRuleDelete]
+     */
+    public object AutoModerationConfiguration : Intent(1 shl 20)
+
+    /**
+     * Enables the following events:
+     * - [AutoModerationActionExecution]
+     */
+    public object AutoModerationExecution : Intent(1 shl 21)
+
 
     public companion object {
         @OptIn(PrivilegedIntent::class)
@@ -215,6 +229,8 @@ public sealed class Intent(public val code: DiscordBitSet) {
                 DirectMessageTyping,
                 MessageContent,
                 GuildScheduledEvents,
+                AutoModerationConfiguration,
+                AutoModerationExecution,
             )
     }
 }

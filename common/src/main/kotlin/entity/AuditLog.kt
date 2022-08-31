@@ -27,6 +27,8 @@ public data class DiscordAuditLog(
     val users: List<DiscordUser>,
     @SerialName("audit_log_entries")
     val auditLogEntries: List<DiscordAuditLogEntry>,
+    @SerialName("auto_moderation_rules")
+    val autoModerationRules: List<DiscordAutoModerationRule>,
     val integrations: List<DiscordPartialIntegration>,
     val threads: List<DiscordChannel>
 )
@@ -486,6 +488,10 @@ public sealed class AuditLogEvent(public val value: Int) {
     public object ThreadUpdate : AuditLogEvent(111)
     public object ThreadDelete : AuditLogEvent(112)
     public object ApplicationCommandPermissionUpdate : AuditLogEvent(121)
+    public object AutoModerationRuleCreate : AuditLogEvent(140)
+    public object AutoModerationRuleUpdate : AuditLogEvent(141)
+    public object AutoModerationRuleDelete : AuditLogEvent(142)
+    public object AutoModerationBlockMessage : AuditLogEvent(143)
 
 
     internal object Serializer : KSerializer<AuditLogEvent> {
@@ -545,6 +551,10 @@ public sealed class AuditLogEvent(public val value: Int) {
             111 -> ThreadUpdate
             112 -> ThreadDelete
             121 -> ApplicationCommandPermissionUpdate
+            140 -> AutoModerationRuleCreate
+            141 -> AutoModerationRuleUpdate
+            142 -> AutoModerationRuleDelete
+            143 -> AutoModerationBlockMessage
             else -> Unknown(value)
         }
     }

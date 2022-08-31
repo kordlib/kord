@@ -6,6 +6,7 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
+import dev.kord.core.event.automoderation.*
 import dev.kord.core.event.channel.*
 import dev.kord.core.event.channel.thread.*
 import dev.kord.core.event.guild.*
@@ -459,6 +460,13 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     -> +GuildScheduledEvents
 
 
+    AutoModerationRuleConfigurationEvent::class,
+    AutoModerationRuleCreateEvent::class,
+    AutoModerationRuleUpdateEvent::class,
+    AutoModerationRuleDeleteEvent::class,
+    -> +AutoModerationConfiguration
+
+
     /*
      * events requiring multiple intents:
      */
@@ -493,6 +501,19 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     TypingStartEvent::class -> {
         +GuildMessageTyping
         +DirectMessageTyping
+    }
+
+    AutoModerationActionExecutionEvent::class -> {
+        +AutoModerationExecution
+        +MessageContent
+    }
+
+    AutoModerationEvent::class -> {
+        // supertype of AutoModerationRuleConfigurationEvent and AutoModerationActionExecutionEvent
+        // -> requires intents for both
+        +AutoModerationConfiguration
+        +AutoModerationExecution
+        +MessageContent
     }
 
 

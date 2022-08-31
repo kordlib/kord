@@ -2,16 +2,15 @@ package dev.kord.core.event
 
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
+import dev.kord.core.KordObject
 import dev.kord.core.entity.Strategizable
 import dev.kord.gateway.Gateway
 
-public interface Event {
+public interface Event : KordObject {
     /**
      * The Gateway that spawned this event.
      */
     public val gateway: Gateway get() = kord.gateway.gateways.getValue(shard)
-
-    public val kord: Kord
 
     /**
      * The shard number of the [gateway] that spawned this event.

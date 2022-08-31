@@ -4,6 +4,10 @@ import dev.kord.cache.api.query
 import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
+import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
+import dev.kord.common.entity.AutoModerationRuleTriggerType.MentionSpam
+import dev.kord.common.entity.AutoModerationRuleTriggerType.Spam
+import dev.kord.common.entity.Permission.ManageGuild
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
@@ -16,6 +20,7 @@ import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.application.GuildChatInputCommand
 import dev.kord.core.entity.application.GuildMessageCommand
 import dev.kord.core.entity.application.GuildUserCommand
+import dev.kord.core.entity.automoderation.*
 import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
@@ -30,6 +35,7 @@ import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
+import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
@@ -51,6 +57,7 @@ import java.util.Objects
 import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
+import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
 /**
@@ -314,6 +321,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to edit this guild's [MFA level][MFALevel] and returns the updated level.
+     *
      * This requires guild ownership.
      *
      * @param reason the reason showing up in the audit log
@@ -615,6 +623,39 @@ public interface GuildBehavior : KordEntity, Strategizable {
         val data = StickerData.from(response)
         return GuildSticker(data, kord)
     }
+
+    /**
+     * Requests to get all [AutoModerationRule]s currently configured for this guild.
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public val autoModerationRules: Flow<AutoModerationRule>
+        get() = supplier.getAutoModerationRules(guildId = id)
+
+    /**
+     * Requests an [AutoModerationRule] by its [id][ruleId]. Returns `null` if it wasn't found.
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getAutoModerationRuleOrNull(ruleId: Snowflake): AutoModerationRule? =
+        supplier.getAutoModerationRuleOrNull(guildId = id, ruleId)
+
+    /**
+     * Requests an [AutoModerationRule] by its [id][ruleId].
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [AutoModerationRule] wasn't found.
+     */
+    public suspend fun getAutoModerationRule(ruleId: Snowflake): AutoModerationRule =
+        supplier.getAutoModerationRule(guildId = id, ruleId)
+
 
     /**
      * Returns a new [GuildBehavior] with the given [strategy].
@@ -1066,4 +1107,94 @@ public suspend fun GuildBehavior.createScheduledEvent(
     val data = GuildScheduledEventData.from(event)
 
     return GuildScheduledEvent(data, kord, supplier)
+}
+
+
+/**
+ * Requests to create a new [KeywordAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.createKeywordAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    builder: KeywordAutoModerationRuleCreateBuilder.() -> Unit,
+): KeywordAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createKeywordAutoModerationRule(guildId = id, name, eventType, builder)
+    return KeywordAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+/**
+ * Requests to create a new [SpamAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
+ *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+@KordExperimental
+public suspend inline fun GuildBehavior.createSpamAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    builder: SpamAutoModerationRuleCreateBuilder.() -> Unit,
+): SpamAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createSpamAutoModerationRule(guildId = id, name, eventType, builder)
+    return SpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+/**
+ * Requests to create a new [KeywordPresetAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.createKeywordPresetAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    builder: KeywordPresetAutoModerationRuleCreateBuilder.() -> Unit,
+): KeywordPresetAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createKeywordPresetAutoModerationRule(guildId = id, name, eventType, builder)
+    return KeywordPresetAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+/**
+ * Requests to create a new [MentionSpamAutoModerationRule] in this guild and returns it.
+ *
+ * This requires the [ManageGuild] permission.
+ *
+ * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
+ *
+ * @param name the rule name.
+ * @param eventType the rule [event type][AutoModerationRuleEventType].
+ * @param mentionLimit total number of mentions (role & user) allowed per message (maximum of 50).
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+@KordExperimental
+public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    mentionLimit: Int,
+    builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
+): MentionSpamAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration
+        .createMentionSpamAutoModerationRule(guildId = id, name, eventType, mentionLimit, builder)
+    return MentionSpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }

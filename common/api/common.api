@@ -884,6 +884,22 @@ public final class dev/kord/common/entity/AuditLogEvent$ApplicationCommandPermis
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$ApplicationCommandPermissionUpdate;
 }
 
+public final class dev/kord/common/entity/AuditLogEvent$AutoModerationBlockMessage : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$AutoModerationBlockMessage;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$AutoModerationRuleCreate : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$AutoModerationRuleCreate;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$AutoModerationRuleDelete : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$AutoModerationRuleDelete;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$AutoModerationRuleUpdate : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$AutoModerationRuleUpdate;
+}
+
 public final class dev/kord/common/entity/AuditLogEvent$BotAdd : dev/kord/common/entity/AuditLogEvent {
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$BotAdd;
 }
@@ -1078,6 +1094,114 @@ public final class dev/kord/common/entity/AuditLogEvent$WebhookDelete : dev/kord
 
 public final class dev/kord/common/entity/AuditLogEvent$WebhookUpdate : dev/kord/common/entity/AuditLogEvent {
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$WebhookUpdate;
+}
+
+public abstract class dev/kord/common/entity/AutoModerationActionType {
+	public static final field Companion Ldev/kord/common/entity/AutoModerationActionType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/AutoModerationActionType$BlockMessage : dev/kord/common/entity/AutoModerationActionType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationActionType$BlockMessage;
+}
+
+public final class dev/kord/common/entity/AutoModerationActionType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/AutoModerationActionType$SendAlertMessage : dev/kord/common/entity/AutoModerationActionType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationActionType$SendAlertMessage;
+}
+
+public final class dev/kord/common/entity/AutoModerationActionType$Timeout : dev/kord/common/entity/AutoModerationActionType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationActionType$Timeout;
+}
+
+public final class dev/kord/common/entity/AutoModerationActionType$Unknown : dev/kord/common/entity/AutoModerationActionType {
+	public fun <init> (I)V
+}
+
+public abstract class dev/kord/common/entity/AutoModerationRuleEventType {
+	public static final field Companion Ldev/kord/common/entity/AutoModerationRuleEventType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleEventType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleEventType$MessageSend : dev/kord/common/entity/AutoModerationRuleEventType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleEventType$MessageSend;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleEventType$Unknown : dev/kord/common/entity/AutoModerationRuleEventType {
+	public fun <init> (I)V
+}
+
+public abstract class dev/kord/common/entity/AutoModerationRuleKeywordPresetType {
+	public static final field Companion Ldev/kord/common/entity/AutoModerationRuleKeywordPresetType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Profanity : dev/kord/common/entity/AutoModerationRuleKeywordPresetType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleKeywordPresetType$Profanity;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$SexualContent : dev/kord/common/entity/AutoModerationRuleKeywordPresetType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleKeywordPresetType$SexualContent;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Slurs : dev/kord/common/entity/AutoModerationRuleKeywordPresetType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleKeywordPresetType$Slurs;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Unknown : dev/kord/common/entity/AutoModerationRuleKeywordPresetType {
+	public fun <init> (I)V
+}
+
+public abstract class dev/kord/common/entity/AutoModerationRuleTriggerType {
+	public static final field Companion Ldev/kord/common/entity/AutoModerationRuleTriggerType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Keyword : dev/kord/common/entity/AutoModerationRuleTriggerType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset : dev/kord/common/entity/AutoModerationRuleTriggerType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam : dev/kord/common/entity/AutoModerationRuleTriggerType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Spam : dev/kord/common/entity/AutoModerationRuleTriggerType {
+	public static final field INSTANCE Ldev/kord/common/entity/AutoModerationRuleTriggerType$Spam;
+}
+
+public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Unknown : dev/kord/common/entity/AutoModerationRuleTriggerType {
+	public fun <init> (I)V
 }
 
 public abstract interface class dev/kord/common/entity/BaseDiscordApplication {
@@ -2094,17 +2218,19 @@ public final class dev/kord/common/entity/DiscordAttachment$Companion {
 
 public final class dev/kord/common/entity/DiscordAuditLog {
 	public static final field Companion Ldev/kord/common/entity/DiscordAuditLog$Companion;
-	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
 	public final fun component1 ()Ljava/util/List;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Ljava/util/List;
-	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ldev/kord/common/entity/DiscordAuditLog;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAuditLog;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAuditLog;
+	public final fun component6 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ldev/kord/common/entity/DiscordAuditLog;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAuditLog;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAuditLog;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAuditLogEntries ()Ljava/util/List;
+	public final fun getAutoModerationRules ()Ljava/util/List;
 	public final fun getIntegrations ()Ljava/util/List;
 	public final fun getThreads ()Ljava/util/List;
 	public final fun getUsers ()Ljava/util/List;
@@ -2247,6 +2373,161 @@ public final class dev/kord/common/entity/DiscordAutoComplete$$serializer : kotl
 
 public final class dev/kord/common/entity/DiscordAutoComplete$Companion {
 	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationAction {
+	public static final field Companion Ldev/kord/common/entity/DiscordAutoModerationAction$Companion;
+	public synthetic fun <init> (ILdev/kord/common/entity/AutoModerationActionType;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/AutoModerationActionType;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/AutoModerationActionType;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/AutoModerationActionType;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/AutoModerationActionType;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordAutoModerationAction;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAutoModerationAction;Ldev/kord/common/entity/AutoModerationActionType;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAutoModerationAction;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAutoModerationAction;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationAction$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/common/entity/DiscordAutoModerationAction$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordAutoModerationAction;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordAutoModerationAction;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationAction$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationActionMetadata {
+	public static final field Companion Ldev/kord/common/entity/DiscordAutoModerationActionMetadata$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordAutoModerationActionMetadata;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAutoModerationActionMetadata;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAutoModerationActionMetadata;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChannelId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getDurationSeconds ()Ldev/kord/common/entity/optional/Optional;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAutoModerationActionMetadata;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationActionMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/common/entity/DiscordAutoModerationActionMetadata$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordAutoModerationActionMetadata;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordAutoModerationActionMetadata;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationActionMetadata$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationRule {
+	public static final field Companion Ldev/kord/common/entity/DiscordAutoModerationRule$Companion;
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;Ljava/util/List;ZLjava/util/List;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;Ljava/util/List;ZLjava/util/List;Ljava/util/List;)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component10 ()Ljava/util/List;
+	public final fun component11 ()Ljava/util/List;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component5 ()Ldev/kord/common/entity/AutoModerationRuleEventType;
+	public final fun component6 ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public final fun component7 ()Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;
+	public final fun component8 ()Ljava/util/List;
+	public final fun component9 ()Z
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;Ljava/util/List;ZLjava/util/List;Ljava/util/List;)Ldev/kord/common/entity/DiscordAutoModerationRule;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAutoModerationRule;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;Ljava/util/List;ZLjava/util/List;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAutoModerationRule;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActions ()Ljava/util/List;
+	public final fun getCreatorId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getEnabled ()Z
+	public final fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
+	public final fun getExemptChannels ()Ljava/util/List;
+	public final fun getExemptRoles ()Ljava/util/List;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getTriggerMetadata ()Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;
+	public final fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAutoModerationRule;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationRule$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/common/entity/DiscordAutoModerationRule$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordAutoModerationRule;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordAutoModerationRule;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationRule$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata {
+	public static final field Companion Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;)Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAllowList ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getKeywordFilter ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getMentionTotalLimit ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final fun getPresets ()Ldev/kord/common/entity/optional/Optional;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordAutoModerationRuleTriggerMetadata$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/DiscordBotActivity {
@@ -5735,8 +6016,10 @@ public final class dev/kord/common/entity/ExplicitContentFilter$Unknown : dev/ko
 public abstract class dev/kord/common/entity/GuildFeature {
 	public static final field Companion Ldev/kord/common/entity/GuildFeature$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Ljava/lang/String;
-	public fun toString ()Ljava/lang/String;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/GuildFeature$AnimatedBanner : dev/kord/common/entity/GuildFeature {
@@ -5745,6 +6028,10 @@ public final class dev/kord/common/entity/GuildFeature$AnimatedBanner : dev/kord
 
 public final class dev/kord/common/entity/GuildFeature$AnimatedIcon : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$AnimatedIcon;
+}
+
+public final class dev/kord/common/entity/GuildFeature$AutoModeration : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$AutoModeration;
 }
 
 public final class dev/kord/common/entity/GuildFeature$Banner : dev/kord/common/entity/GuildFeature {
@@ -6465,9 +6752,13 @@ public final class dev/kord/common/entity/MessageStickerType$Unknown : dev/kord/
 public abstract class dev/kord/common/entity/MessageType {
 	public static final field Companion Ldev/kord/common/entity/MessageType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun equals (Ljava/lang/Object;)Z
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public fun hashCode ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/MessageType$AutoModerationAction : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$AutoModerationAction;
 }
 
 public final class dev/kord/common/entity/MessageType$Call : dev/kord/common/entity/MessageType {

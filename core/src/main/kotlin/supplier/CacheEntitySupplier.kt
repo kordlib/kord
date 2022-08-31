@@ -15,6 +15,7 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
+import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -583,6 +584,20 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         cache.query<GuildScheduledEventData> {
             idEq(GuildScheduledEventData::guildId, guildId)
         }.asFlow().map { GuildScheduledEvent(it, kord) }
+
+    override fun getAutoModerationRules(guildId: Snowflake): Flow<AutoModerationRule> =
+        cache.query { idEq(AutoModerationRuleData::guildId, guildId) }
+            .asFlow()
+            .map { AutoModerationRule(it, kord) }
+
+    override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
+        cache
+            .query {
+                idEq(AutoModerationRuleData::id, ruleId)
+                idEq(AutoModerationRuleData::guildId, guildId)
+            }
+            .singleOrNull()
+            ?.let { AutoModerationRule(it, kord) }
 
 
     override fun toString(): String = "CacheEntitySupplier(cache=$cache)"

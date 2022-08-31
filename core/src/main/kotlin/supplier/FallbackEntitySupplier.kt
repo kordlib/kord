@@ -5,6 +5,7 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
+import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -268,6 +269,13 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> =
         first.getGuildStickers(guildId).switchIfEmpty(second.getGuildStickers(guildId))
+
+
+    override fun getAutoModerationRules(guildId: Snowflake): Flow<AutoModerationRule> =
+        first.getAutoModerationRules(guildId).switchIfEmpty(second.getAutoModerationRules(guildId))
+
+    override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
+        first.getAutoModerationRuleOrNull(guildId, ruleId) ?: second.getAutoModerationRuleOrNull(guildId, ruleId)
 
 
     override fun toString(): String = "FallbackEntitySupplier(first=$first, second=$second)"
