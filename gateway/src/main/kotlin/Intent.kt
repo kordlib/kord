@@ -18,10 +18,10 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * Some [Intent]s are defined as "Privileged" due to the sensitive nature of the data and cannot be used by Kord without
+ * Some [Intent]s are defined as "privileged" due to the sensitive nature of the data and cannot be used by Kord without
  * enabling them.
  *
- * Those intents are:
+ * Currently, those intents include:
  * - [GuildMembers]
  * - [GuildPresences]
  * - [MessageContent]
@@ -31,7 +31,7 @@ import kotlin.contracts.contract
  */
 @MustBeDocumented
 @RequiresOptIn(
-    "Some intents are defined as \"Privileged\" due to the sensitive nature of the data and cannot be used by Kord " +
+    "Some intents are defined as \"privileged\" due to the sensitive nature of the data and cannot be used by Kord " +
             "without enabling them. See https://discord.com/developers/docs/topics/gateway#privileged-intents for " +
             "more info on how to enable these.",
     level = ERROR,
@@ -175,10 +175,19 @@ public sealed class Intent(public val code: DiscordBitSet) {
     public object DirectMessageTyping : Intent(1 shl 14)
 
     /**
-     * [MessageContent] is required to receive non-empty values for content fields ([content][DiscordMessage.content],
-     * [attachments][DiscordMessage.attachments], [embeds][DiscordMessage.embeds] and
-     * [components][DiscordMessage.components]) in events like [MessageCreate]. This doesn't apply for DMs, messages
-     * your bot sends, or messages in which your bot is mentioned.
+     * [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly associated with any
+     * Gateway [event][Event]s. Instead, access to [MessageContent] permits your app to receive message content data
+     * across the APIs.
+     *
+     * For example, the [content][DiscordMessage.content], [embeds][DiscordMessage.embeds],
+     * [attachments][DiscordMessage.attachments], and [components][DiscordMessage.components] fields in
+     * [message objects][DiscordMessage] all contain message content and therefore require this intent.
+     *
+     * Apps **without** this intent will receive empty values in fields that contain user-inputted content with a few
+     * exceptions:
+     * - content in messages that an app sends
+     * - content in DMs with the app
+     * - content in which the app is mentioned
      */
     @PrivilegedIntent
     public object MessageContent : Intent(1 shl 15)
