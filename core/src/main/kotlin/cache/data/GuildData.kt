@@ -77,6 +77,7 @@ public data class GuildData(
             link(GuildData::id to WebhookData::nullableGuildId)
             link(GuildData::id to VoiceStateData::guildId)
             link(GuildData::id to PresenceData::guildId)
+            link(GuildData::id to AutoModerationRuleData::guildId)
         }
 
         public fun from(entity: DiscordGuild): GuildData = with(entity) {

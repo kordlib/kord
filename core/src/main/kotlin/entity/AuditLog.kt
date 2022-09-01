@@ -4,10 +4,11 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
+import dev.kord.core.cache.data.AutoModerationRuleData
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.IntegrationData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.cache.data.WebhookData
+import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 
@@ -23,10 +24,14 @@ public class AuditLog(
 
     public val integrations: List<Snowflake> get() = data.integrations.map { it.id }
 
-    public val threads: List<ThreadChannel> get() = data.threads.map {
-       val data =  ChannelData.from(it)
-        Channel.from(data, kord)
-    }.filterIsInstance<ThreadChannel>()
+    public val threads: List<ThreadChannel>
+        get() = data.threads.map {
+            val data = ChannelData.from(it)
+            Channel.from(data, kord)
+        }.filterIsInstance<ThreadChannel>()
+
+    public val autoModerationRules: List<AutoModerationRule>
+        get() = data.autoModerationRules.map { AutoModerationRule(AutoModerationRuleData.from(it), kord) }
 
     public val entries: List<AuditLogEntry> get() = data.auditLogEntries.map { AuditLogEntry(it, kord) }
 

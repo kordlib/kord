@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.*
+import dev.kord.core.behavior.automoderation.*
 import dev.kord.core.behavior.channel.*
 import dev.kord.core.behavior.channel.threads.PrivateThreadParentChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
@@ -26,6 +27,27 @@ import kotlin.DeprecationLevel.ERROR
 @KordUnsafe
 @KordExperimental
 public class Unsafe(private val kord: Kord) {
+
+    public fun autoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRuleBehavior =
+        AutoModerationRuleBehavior(guildId, ruleId, kord)
+
+    public fun keywordAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): KeywordAutoModerationRuleBehavior =
+        KeywordAutoModerationRuleBehavior(guildId, ruleId, kord)
+
+    @KordExperimental
+    public fun spamAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): SpamAutoModerationRuleBehavior =
+        SpamAutoModerationRuleBehavior(guildId, ruleId, kord)
+
+    public fun keywordPresetAutoModerationRule(
+        guildId: Snowflake,
+        ruleId: Snowflake,
+    ): KeywordPresetAutoModerationRuleBehavior = KeywordPresetAutoModerationRuleBehavior(guildId, ruleId, kord)
+
+    @KordExperimental
+    public fun mentionSpamAutoModerationRule(
+        guildId: Snowflake,
+        ruleId: Snowflake,
+    ): MentionSpamAutoModerationRuleBehavior = MentionSpamAutoModerationRuleBehavior(guildId, ruleId, kord)
 
     public fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
         MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
@@ -67,7 +89,8 @@ public class Unsafe(private val kord: Kord) {
         Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
         removed on March 10, 2022.
         
-        See https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.
+        See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
+        information.
         """,
         level = ERROR,
     )

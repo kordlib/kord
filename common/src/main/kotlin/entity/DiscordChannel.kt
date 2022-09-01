@@ -50,7 +50,8 @@
             kDoc = "A channel in which game developers can sell their game on Discord.\n\n@suppress",
             deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
                     "Discord and store channels were removed on March 10, 2022. See " +
-                    "https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.",
+                    "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
+                    " for more information.",
             deprecationLevel = ERROR,
         ),
     ],

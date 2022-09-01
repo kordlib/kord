@@ -66,9 +66,12 @@ public final class dev/kord/rest/NamedFile {
 	public final fun getUrl ()Ljava/lang/String;
 }
 
-public abstract interface class dev/kord/rest/builder/AuditRequestBuilder : dev/kord/rest/builder/RequestBuilder {
+public abstract interface class dev/kord/rest/builder/AuditBuilder {
 	public abstract fun getReason ()Ljava/lang/String;
 	public abstract fun setReason (Ljava/lang/String;)V
+}
+
+public abstract interface class dev/kord/rest/builder/AuditRequestBuilder : dev/kord/rest/builder/AuditBuilder, dev/kord/rest/builder/RequestBuilder {
 }
 
 public abstract interface class dev/kord/rest/builder/RequestBuilder {
@@ -87,6 +90,243 @@ public final class dev/kord/rest/builder/auditlog/AuditLogGetRequestBuilder : de
 	public final fun setUserId (Ldev/kord/common/entity/Snowflake;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/AuditLogGetRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public abstract class dev/kord/rest/builder/automoderation/AutoModerationActionBuilder : dev/kord/rest/builder/RequestBuilder {
+	protected fun buildMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public abstract fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public final fun toRequest ()Ldev/kord/common/entity/DiscordAutoModerationAction;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/AutoModerationRuleBuilder : dev/kord/rest/builder/AuditBuilder {
+	public abstract fun assignActions (Ljava/util/List;)V
+	public abstract fun assignEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public abstract fun assignName (Ljava/lang/String;)V
+	public abstract fun getActions ()Ljava/util/List;
+	public abstract fun getEnabled ()Ljava/lang/Boolean;
+	public abstract fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
+	public abstract fun getExemptChannels ()Ljava/util/List;
+	public abstract fun getExemptRoles ()Ljava/util/List;
+	public abstract fun getName ()Ljava/lang/String;
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public abstract fun setEnabled (Ljava/lang/Boolean;)V
+	public abstract fun setExemptChannels (Ljava/util/List;)V
+	public abstract fun setExemptRoles (Ljava/util/List;)V
+}
+
+public final class dev/kord/rest/builder/automoderation/AutoModerationRuleBuilderKt {
+	public static final fun allowKeyword (Ldev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun anywhereKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun blockMessage (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun blockMessage$default (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun exemptChannel (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;)V
+	public static final fun exemptRole (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;)V
+	public static final fun keyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun prefixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun preset (Ldev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder;Ldev/kord/common/entity/AutoModerationRuleKeywordPresetType;)V
+	public static final fun sendAlertMessage (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun sendAlertMessage$default (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun suffixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun timeout-8Mi8wO0 (Ldev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder;JLkotlin/jvm/functions/Function1;)V
+	public static synthetic fun timeout-8Mi8wO0$default (Ldev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder;JLkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
+public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun assignActions (Ljava/util/List;)V
+	public final fun assignEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public final fun assignName (Ljava/lang/String;)V
+	protected fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getActions ()Ljava/util/List;
+	public final fun getEnabled ()Ljava/lang/Boolean;
+	public final fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
+	public final fun getExemptChannels ()Ljava/util/List;
+	public final fun getExemptRoles ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getReason ()Ljava/lang/String;
+	public final fun setActions (Ljava/util/List;)V
+	public final fun setEnabled (Ljava/lang/Boolean;)V
+	public final fun setEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public final fun setExemptChannels (Ljava/util/List;)V
+	public final fun setExemptRoles (Ljava/util/List;)V
+	public final fun setName (Ljava/lang/String;)V
+	public final fun setReason (Ljava/lang/String;)V
+	public final fun toRequest ()Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/automoderation/AutoModerationRuleBuilder {
+	public final fun assignActions (Ljava/util/List;)V
+	public final fun assignEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public final fun assignName (Ljava/lang/String;)V
+	protected fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getActions ()Ljava/util/List;
+	public final fun getEnabled ()Ljava/lang/Boolean;
+	public final fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
+	public final fun getExemptChannels ()Ljava/util/List;
+	public final fun getExemptRoles ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getReason ()Ljava/lang/String;
+	public final fun setActions (Ljava/util/List;)V
+	public final fun setEnabled (Ljava/lang/Boolean;)V
+	public final fun setEventType (Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public final fun setExemptChannels (Ljava/util/List;)V
+	public final fun setExemptRoles (Ljava/util/List;)V
+	public final fun setName (Ljava/lang/String;)V
+	public final fun setReason (Ljava/lang/String;)V
+	public final fun toRequest ()Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
+	public fun <init> ()V
+	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$BlockMessage;
+	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
+	public abstract fun assignKeywords (Ljava/util/List;)V
+	public abstract fun getKeywords ()Ljava/util/List;
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
+}
+
+public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder$DefaultImpls {
+	public static fun getTriggerType (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
+}
+
+public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public fun assignKeywords (Ljava/util/List;)V
+	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun getKeywords ()Ljava/util/List;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setKeywords (Ljava/util/List;)V
+}
+
+public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
+	public fun <init> ()V
+	public fun assignKeywords (Ljava/util/List;)V
+	public fun getKeywords ()Ljava/util/List;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setKeywords (Ljava/util/List;)V
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+	public abstract fun assignPresets (Ljava/util/List;)V
+	public abstract fun getAllowedKeywords ()Ljava/util/List;
+	public abstract fun getPresets ()Ljava/util/List;
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+	public abstract fun setAllowedKeywords (Ljava/util/List;)V
+}
+
+public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder$DefaultImpls {
+	public static fun getTriggerType (Ldev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+}
+
+public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public fun assignPresets (Ljava/util/List;)V
+	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun getAllowedKeywords ()Ljava/util/List;
+	public fun getPresets ()Ljava/util/List;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setAllowedKeywords (Ljava/util/List;)V
+	public fun setPresets (Ljava/util/List;)V
+}
+
+public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder {
+	public fun <init> ()V
+	public fun assignPresets (Ljava/util/List;)V
+	public fun getAllowedKeywords ()Ljava/util/List;
+	public fun getPresets ()Ljava/util/List;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setAllowedKeywords (Ljava/util/List;)V
+	public fun setPresets (Ljava/util/List;)V
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
+	public abstract fun assignMentionLimit (I)V
+	public abstract fun getMentionLimit ()Ljava/lang/Integer;
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
+}
+
+public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder$DefaultImpls {
+	public static fun getTriggerType (Ldev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
+}
+
+public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;I)V
+	public fun assignMentionLimit (I)V
+	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun getMentionLimit ()Ljava/lang/Integer;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setMentionLimit (I)V
+}
+
+public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder {
+	public fun <init> ()V
+	public fun assignMentionLimit (I)V
+	public fun getMentionLimit ()Ljava/lang/Integer;
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setMentionLimit (Ljava/lang/Integer;)V
+}
+
+public final class dev/kord/rest/builder/automoderation/SendAlertMessageAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
+	public synthetic fun buildMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$SendAlertMessage;
+	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/SpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Spam;
+}
+
+public final class dev/kord/rest/builder/automoderation/SpamAutoModerationRuleBuilder$DefaultImpls {
+	public static fun getTriggerType (Ldev/kord/rest/builder/automoderation/SpamAutoModerationRuleBuilder;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$Spam;
+}
+
+public final class dev/kord/rest/builder/automoderation/SpamAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/SpamAutoModerationRuleBuilder {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Spam;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+}
+
+public final class dev/kord/rest/builder/automoderation/SpamAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/SpamAutoModerationRuleBuilder {
+	public fun <init> ()V
+	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Spam;
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+}
+
+public final class dev/kord/rest/builder/automoderation/TimeoutAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
+	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun buildMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDuration-UwyO8pc ()J
+	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$Timeout;
+	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public final fun setDuration-LRDsOJo (J)V
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+}
+
+public abstract interface class dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleBuilder {
+	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+}
+
+public final class dev/kord/rest/builder/automoderation/UntypedAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder {
+	public fun <init> ()V
+	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun getTriggerType ()Ljava/lang/Void;
 }
 
 public final class dev/kord/rest/builder/ban/BanCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
@@ -2209,6 +2449,95 @@ public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$
 
 public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$Companion {
 	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/AutoModerationRuleCreateRequest {
+	public static final field Companion Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ldev/kord/common/entity/AutoModerationRuleEventType;
+	public final fun component3 ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Ldev/kord/common/entity/AutoModerationRuleTriggerType;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActions ()Ljava/util/List;
+	public final fun getEnabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun getEventType ()Ldev/kord/common/entity/AutoModerationRuleEventType;
+	public final fun getExemptChannels ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getExemptRoles ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/request/AutoModerationRuleCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/AutoModerationRuleCreateRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/AutoModerationRuleModifyRequest {
+	public static final field Companion Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component5 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getActions ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getEnabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun getEventType ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getExemptChannels ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getExemptRoles ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/request/AutoModerationRuleModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/AutoModerationRuleModifyRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/BulkDeleteRequest {
@@ -5597,6 +5926,30 @@ public final class dev/kord/rest/route/Route$AuditLogGet : dev/kord/rest/route/R
 	public static final field INSTANCE Ldev/kord/rest/route/Route$AuditLogGet;
 }
 
+public final class dev/kord/rest/route/Route$AutoModerationRuleCreate : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$AutoModerationRuleCreate;
+}
+
+public final class dev/kord/rest/route/Route$AutoModerationRuleDelete : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$AutoModerationRuleDelete;
+}
+
+public final class dev/kord/rest/route/Route$AutoModerationRuleGet : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$AutoModerationRuleGet;
+}
+
+public final class dev/kord/rest/route/Route$AutoModerationRuleId : dev/kord/rest/route/Route$Key {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$AutoModerationRuleId;
+}
+
+public final class dev/kord/rest/route/Route$AutoModerationRuleModify : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$AutoModerationRuleModify;
+}
+
+public final class dev/kord/rest/route/Route$AutoModerationRulesForGuildList : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$AutoModerationRulesForGuildList;
+}
+
 public final class dev/kord/rest/route/Route$BulkMessageDeletePost : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$BulkMessageDeletePost;
 }
@@ -6332,6 +6685,27 @@ public final class dev/kord/rest/service/AuditLogService : dev/kord/rest/service
 	public final fun getAuditLogs (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/service/AutoModerationService : dev/kord/rest/service/RestService {
+	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun createAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createAutoModerationRule$default (Ldev/kord/rest/service/AutoModerationService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun createKeywordAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun createKeywordPresetAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun createMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun createSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun deleteAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun deleteAutoModerationRule$default (Ldev/kord/rest/service/AutoModerationService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun listAutoModerationRulesForGuild (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun modifyAutoModerationRule$default (Ldev/kord/rest/service/AutoModerationService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun modifyKeywordAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyKeywordPresetAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifySpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyUntypedAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun addPinnedMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6604,6 +6978,7 @@ public final class dev/kord/rest/service/RestClient : dev/kord/rest/service/Rest
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun getApplication ()Ldev/kord/rest/service/ApplicationService;
 	public final fun getAuditLog ()Ldev/kord/rest/service/AuditLogService;
+	public final fun getAutoModeration ()Ldev/kord/rest/service/AutoModerationService;
 	public final fun getChannel ()Ldev/kord/rest/service/ChannelService;
 	public final fun getEmoji ()Ldev/kord/rest/service/EmojiService;
 	public final fun getGuild ()Ldev/kord/rest/service/GuildService;

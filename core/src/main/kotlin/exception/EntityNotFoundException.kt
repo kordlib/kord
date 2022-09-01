@@ -98,5 +98,8 @@ public class EntityNotFoundException : Exception {
             throw EntityNotFoundException(
                 "Followup message with id $messageId for interaction with token $token was not found."
             )
+
+        public inline fun autoModerationRuleNotFound(guildId: Snowflake, ruleId: Snowflake): Nothing =
+            guildEntityNotFound("Auto Moderation Rule", guildId, ruleId)
     }
 }

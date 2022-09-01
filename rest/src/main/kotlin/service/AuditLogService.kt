@@ -6,6 +6,8 @@ import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
+import kotlin.contracts.InvocationKind.EXACTLY_ONCE
+import kotlin.contracts.contract
 
 public class AuditLogService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
@@ -13,6 +15,7 @@ public class AuditLogService(requestHandler: RequestHandler) : RestService(reque
         guildId: Snowflake,
         builder: AuditLogGetRequestBuilder.() -> Unit,
     ): DiscordAuditLog {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
         val request = AuditLogGetRequestBuilder().apply(builder).toRequest()
         return getAuditLogs(guildId, request)
     }
