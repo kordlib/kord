@@ -1112,6 +1112,7 @@ public final class dev/kord/common/entity/AutoModerationActionType$BlockMessage 
 }
 
 public final class dev/kord/common/entity/AutoModerationActionType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1136,6 +1137,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleEventType {
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleEventType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1156,6 +1158,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleKeywordPresetType
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -1184,6 +1187,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleTriggerType {
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

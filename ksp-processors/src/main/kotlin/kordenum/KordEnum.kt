@@ -31,6 +31,7 @@ internal class KordEnum(
         val name: String,
         val kDoc: String?,
         val value: Comparable<*>,
+        val isKordExperimental: Boolean,
         val isDeprecated: Boolean,
         val deprecationMessage: String,
         val replaceWith: ReplaceWith,
@@ -104,6 +105,7 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
     val intValue = args[GenerateKordEnum.Entry::intValue] as Int
     val stringValue = args[GenerateKordEnum.Entry::stringValue] as String
     val kDoc = args[GenerateKordEnum.Entry::kDoc].toKDoc()
+    val isKordExperimental = args[GenerateKordEnum.Entry::isKordExperimental] as Boolean
     val deprecationMessage = args[GenerateKordEnum.Entry::deprecationMessage] as String
     val replaceWith = args[GenerateKordEnum.Entry::replaceWith].toReplaceWith()
     val deprecationLevel = args[GenerateKordEnum.Entry::deprecationLevel].toDeprecationLevel()
@@ -155,7 +157,7 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
         }
     }
 
-    return Entry(name, kDoc, value, isDeprecated, deprecationMessage, replaceWith, deprecationLevel)
+    return Entry(name, kDoc, value, isKordExperimental, isDeprecated, deprecationMessage, replaceWith, deprecationLevel)
 }
 
 /** Maps [KSAnnotation] to [ReplaceWith]. */

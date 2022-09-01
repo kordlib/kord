@@ -47,6 +47,8 @@ annotation class GenerateKordEnum(
         val stringValue: String = DEFAULT_STRING_VALUE,
         /** KDoc for the entry (optional). */
         val kDoc: String = "",
+        /** Whether to add `@KordExperimental` to this entry. */
+        val isKordExperimental: Boolean = false,
         /** [Deprecated.message] for a [deprecated entry][GenerateKordEnum.deprecatedEntries]. */
         val deprecationMessage: String = "",
         /** [Deprecated.replaceWith] for a [deprecated entry][GenerateKordEnum.deprecatedEntries]. */

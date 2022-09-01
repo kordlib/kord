@@ -26,6 +26,7 @@ import com.squareup.kotlinpoet.SET as SET_CLASS_NAME
 import com.squareup.kotlinpoet.STRING as STRING_CLASS_NAME
 
 private val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
+private val KORD_EXPERIMENTAL = ClassName("dev.kord.common.annotation", "KordExperimental")
 
 private val Entry.warningSuppressedName
     get() = when {
@@ -121,7 +122,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 addModifiers(FINAL, OVERRIDE)
                 returns<Boolean>()
                 addParameter<Any?>("other")
-                addStatement("return this·===·other || (other·is·%T && this.$valueName·==·other.$valueName)", enumName)
+                addStatement("return this·===·other || (other·is·%T·&&·this.$valueName·==·other.$valueName)", enumName)
             }
 
             // final override fun hashCode
@@ -147,6 +148,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 
             fun TypeSpec.Builder.entry(entry: Entry) {
                 entry.kDoc?.let { addKdoc(it) }
+                if (entry.isKordExperimental) addAnnotation(KORD_EXPERIMENTAL)
                 addModifiers(PUBLIC)
                 superclass(enumName)
                 addSuperclassConstructorParameter(valueFormat, entry.value)

@@ -24,8 +24,8 @@ import kotlinx.serialization.encoding.Encoder
 public sealed class ChannelType(
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other || (other is ChannelType
-            && this.value == other.value)
+    public final override fun equals(other: Any?): Boolean = this === other ||
+            (other is ChannelType && this.value == other.value)
 
     public final override fun hashCode(): Int = value.hashCode()
 
