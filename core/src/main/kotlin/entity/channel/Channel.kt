@@ -50,8 +50,8 @@ public interface Channel : ChannelBehavior {
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)
             @Suppress("DEPRECATION_ERROR") GuildStore -> @Suppress("DEPRECATION_ERROR") StoreChannel(data, kord)
-            GuildNewsThread -> NewsChannelThread(data, kord)
-            GuildPrivateThread, GuildPublicThread -> TextChannelThread(data, kord)
+            PublicNewsThread -> NewsChannelThread(data, kord)
+            PrivateThread, PublicGuildThread -> TextChannelThread(data, kord)
 
             else -> {
                 if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))

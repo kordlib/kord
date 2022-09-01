@@ -10,7 +10,6 @@ import kotlin.Deprecated
 import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.ReplaceWith
 import kotlin.Suppress
 import kotlin.collections.List
 import kotlinx.serialization.KSerializer
@@ -73,19 +72,19 @@ public sealed class ChannelType(
     /**
      * A temporary sub-channel within a [GuildNews] channel.
      */
-    public object GuildNewsThread : ChannelType(10)
+    public object PublicNewsThread : ChannelType(10)
 
     /**
      * A temporary sub-channel within a [GuildText] channel.
      */
-    public object GuildPublicThread : ChannelType(11)
+    public object PublicGuildThread : ChannelType(11)
 
     /**
      * A temporary sub-channel within a [GuildText] channel that is only viewable by those invited
      * and those with
      * the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.
      */
-    public object GuildPrivateThread : ChannelType(12)
+    public object PrivateThread : ChannelType(12)
 
     /**
      * A voice channel for
@@ -112,27 +111,6 @@ public sealed class ChannelType(
     )
     public object GuildStore : ChannelType(6)
 
-    @Deprecated(
-        message = "Renamed to 'GuildNewsThread'",
-        replaceWith = ReplaceWith(expression = "GuildNewsThread", imports =
-                    arrayOf("dev.kord.common.entity.ChannelType.GuildNewsThread")),
-    )
-    public object PublicNewsThread : ChannelType(10)
-
-    @Deprecated(
-        message = "Renamed to 'GuildPublicThread'",
-        replaceWith = ReplaceWith(expression = "GuildPublicThread", imports =
-                    arrayOf("dev.kord.common.entity.ChannelType.GuildPublicThread")),
-    )
-    public object PublicGuildThread : ChannelType(11)
-
-    @Deprecated(
-        message = "Renamed to 'GuildPrivateThread'",
-        replaceWith = ReplaceWith(expression = "GuildPrivateThread", imports =
-                    arrayOf("dev.kord.common.entity.ChannelType.GuildPrivateThread")),
-    )
-    public object PrivateThread : ChannelType(12)
-
     internal object Serializer : KSerializer<ChannelType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelType", PrimitiveKind.INT)
@@ -148,9 +126,9 @@ public sealed class ChannelType(
             4 -> GuildCategory
             5 -> GuildNews
             6 -> @Suppress("DEPRECATION_ERROR") GuildStore
-            10 -> GuildNewsThread
-            11 -> GuildPublicThread
-            12 -> GuildPrivateThread
+            10 -> PublicNewsThread
+            11 -> PublicGuildThread
+            12 -> PrivateThread
             13 -> GuildStageVoice
             14 -> GuildDirectory
             else -> Unknown(value)
@@ -167,9 +145,9 @@ public sealed class ChannelType(
                 GuildCategory,
                 GuildNews,
                 @Suppress("DEPRECATION_ERROR") GuildStore,
-                GuildNewsThread,
-                GuildPublicThread,
-                GuildPrivateThread,
+                PublicNewsThread,
+                PublicGuildThread,
+                PrivateThread,
                 GuildStageVoice,
                 GuildDirectory,
             )

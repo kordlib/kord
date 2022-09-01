@@ -73,7 +73,7 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         return unsafeStartThread(
             name,
             archiveDuration,
-            ChannelType.GuildPublicThread,
+            ChannelType.PublicGuildThread,
             builder
         ) as TextChannelThread
     }
@@ -83,8 +83,8 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
         builder: StartThreadBuilder.() -> Unit = {}
     ): TextChannelThread {
-        val startBuilder = StartThreadBuilder(name, archiveDuration, ChannelType.GuildPrivateThread).apply(builder)
-        return unsafeStartThread(startBuilder.name, startBuilder.autoArchiveDuration, ChannelType.GuildPrivateThread, builder) as TextChannelThread
+        val startBuilder = StartThreadBuilder(name, archiveDuration, ChannelType.PrivateThread).apply(builder)
+        return unsafeStartThread(startBuilder.name, startBuilder.autoArchiveDuration, ChannelType.PrivateThread, builder) as TextChannelThread
     }
 
     public suspend fun startPublicThreadWithMessage(

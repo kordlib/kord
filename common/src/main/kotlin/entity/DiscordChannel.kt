@@ -20,10 +20,10 @@
             [users·can·follow·and·crosspost·into·their·own·server](https://support.discord.com/hc/en-us/articles/360032008192).
             """,
         ),
-        Entry("GuildNewsThread", intValue = 10, kDoc = "A temporary sub-channel within a [GuildNews] channel."),
-        Entry("GuildPublicThread", intValue = 11, kDoc = "A temporary sub-channel within a [GuildText] channel."),
+        Entry("PublicNewsThread", intValue = 10, kDoc = "A temporary sub-channel within a [GuildNews] channel."),
+        Entry("PublicGuildThread", intValue = 11, kDoc = "A temporary sub-channel within a [GuildText] channel."),
         Entry(
-            "GuildPrivateThread", intValue = 12,
+            "PrivateThread", intValue = 12,
             kDoc = """
             A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and those with
             the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.
@@ -53,21 +53,6 @@
                     "https://support-dev.discord.com/hc/en-us/articles/4414590563479 for more information.",
             deprecationLevel = ERROR,
         ),
-        Entry(
-            "PublicNewsThread", intValue = 10,
-            deprecationMessage = "Renamed to 'GuildNewsThread'", deprecationLevel = WARNING,
-            replaceWith = ReplaceWith("GuildNewsThread", "dev.kord.common.entity.ChannelType.GuildNewsThread"),
-        ),
-        Entry(
-            "PublicGuildThread", intValue = 11,
-            deprecationMessage = "Renamed to 'GuildPublicThread'", deprecationLevel = WARNING,
-            replaceWith = ReplaceWith("GuildPublicThread", "dev.kord.common.entity.ChannelType.GuildPublicThread"),
-        ),
-        Entry(
-            "PrivateThread", intValue = 12,
-            deprecationMessage = "Renamed to 'GuildPrivateThread'", deprecationLevel = WARNING,
-            replaceWith = ReplaceWith("GuildPrivateThread", "dev.kord.common.entity.ChannelType.GuildPrivateThread"),
-        ),
     ],
 )
 
@@ -92,7 +77,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.ERROR
-import kotlin.DeprecationLevel.WARNING
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 

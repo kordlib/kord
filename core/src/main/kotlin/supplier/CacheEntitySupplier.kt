@@ -335,7 +335,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                     it.threadMetadata.value?.archived == true
                             && time != null
                             && (before == null || time < before)
-                            && (it.type == ChannelType.GuildPublicThread || it.type == ChannelType.GuildNewsThread)
+                            && (it.type == ChannelType.PublicGuildThread || it.type == ChannelType.PublicNewsThread)
                 }
                 .limit(limit)
                 .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
@@ -356,7 +356,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                     it.threadMetadata.value?.archived == true
                             && time != null
                             && (before == null || time < before)
-                            && it.type == ChannelType.GuildPrivateThread
+                            && it.type == ChannelType.PrivateThread
                 }
                 .limit(limit)
                 .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
@@ -379,7 +379,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                 .filter {
                     it.threadMetadata.value?.archived == true
                             && (before == null || it.id < before)
-                            && it.type == ChannelType.GuildPrivateThread
+                            && it.type == ChannelType.PrivateThread
                             && it.member !is Optional.Missing
                 }
                 .limit(limit)

@@ -1221,18 +1221,6 @@ public final class dev/kord/common/entity/ChannelType$GuildNews : dev/kord/commo
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildNews;
 }
 
-public final class dev/kord/common/entity/ChannelType$GuildNewsThread : dev/kord/common/entity/ChannelType {
-	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildNewsThread;
-}
-
-public final class dev/kord/common/entity/ChannelType$GuildPrivateThread : dev/kord/common/entity/ChannelType {
-	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildPrivateThread;
-}
-
-public final class dev/kord/common/entity/ChannelType$GuildPublicThread : dev/kord/common/entity/ChannelType {
-	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildPublicThread;
-}
-
 public final class dev/kord/common/entity/ChannelType$GuildStageVoice : dev/kord/common/entity/ChannelType {
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildStageVoice;
 }

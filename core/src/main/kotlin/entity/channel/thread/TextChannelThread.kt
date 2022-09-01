@@ -22,7 +22,7 @@ public class TextChannelThread(
     /**
      * Whether this thread is private.
      */
-    public val isPrivate: Boolean get() = data.type == ChannelType.GuildPrivateThread
+    public val isPrivate: Boolean get() = data.type == ChannelType.PrivateThread
 
     /**
      * Whether non-moderators can add other non-moderators to a thread.
