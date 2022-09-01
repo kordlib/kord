@@ -1,3 +1,61 @@
+@file:GenerateKordEnum(
+    name = "AuditLogEvent", valueType = INT,
+    entries = [
+        Entry("GuildUpdate", intValue = 1, kDoc = "Server settings were updated."),
+        Entry("ChannelCreate", intValue = 10, kDoc = "Channel was created."),
+        Entry("ChannelUpdate", intValue = 11, kDoc = "Channel settings were updated"),
+        Entry("ChannelDelete", intValue = 12, kDoc = "Channel was deleted."),
+        Entry("ChannelOverwriteCreate", intValue = 13, kDoc = "Permission overwrite was added to a channel."),
+        Entry("ChannelOverwriteUpdate", intValue = 14, kDoc = "Permission overwrite was updated for a channel."),
+        Entry("ChannelOverwriteDelete", intValue = 15, kDoc = "Permission overwrite was deleted from a channel."),
+        Entry("MemberKick", intValue = 20, kDoc = "Member was removed from server."),
+        Entry("MemberPrune", intValue = 21, kDoc = "Members were pruned from server."),
+        Entry("MemberBanAdd", intValue = 22, kDoc = "Member was banned from server."),
+        Entry("MemberBanRemove", intValue = 23, kDoc = "Server ban was lifted for a member."),
+        Entry("MemberUpdate", intValue = 24, kDoc = "Member was updated in server."),
+        Entry("MemberRoleUpdate", intValue = 25, kDoc = "Member was added or removed from a role."),
+        Entry("MemberMove", intValue = 26, kDoc = "Member was moved to a different voice channel."),
+        Entry("MemberDisconnect", intValue = 27, kDoc = "Member was disconnected from a voice channel."),
+        Entry("BotAdd", intValue = 28, kDoc = "Bot user was added to server."),
+        Entry("RoleCreate", intValue = 30, kDoc = "Role was created."),
+        Entry("RoleUpdate", intValue = 31, kDoc = "Role was edited."),
+        Entry("RoleDelete", intValue = 32, kDoc = "Role was deleted."),
+        Entry("InviteCreate", intValue = 40, kDoc = "Server invite was created."),
+        Entry("InviteUpdate", intValue = 41, kDoc = "Server invite was updated."),
+        Entry("InviteDelete", intValue = 42, kDoc = "Server invite was deleted."),
+        Entry("WebhookCreate", intValue = 50, kDoc = "Webhook was created."),
+        Entry("WebhookUpdate", intValue = 51, kDoc = "Webhook properties or channel were updated."),
+        Entry("WebhookDelete", intValue = 52, kDoc = "Webhook was deleted."),
+        Entry("EmojiCreate", intValue = 60, kDoc = "Emoji was created."),
+        Entry("EmojiUpdate", intValue = 61, kDoc = "Emoji name was updated."),
+        Entry("EmojiDelete", intValue = 62, kDoc = "Emoji was deleted."),
+        Entry("MessageDelete", intValue = 72, kDoc = "Single message was deleted."),
+        Entry("MessageBulkDelete", intValue = 73, kDoc = "Multiple messages were deleted."),
+        Entry("MessagePin", intValue = 74, kDoc = "Message was pinned to a channel"),
+        Entry("MessageUnpin", intValue = 75, kDoc = "Message was unpinned from a channel."),
+        Entry("IntegrationCreate", intValue = 80, kDoc = "App was added to server."),
+        Entry("IntegrationUpdate", intValue = 81, kDoc = "App was updated (as an example, its scopes were updated)."),
+        Entry("IntegrationDelete", intValue = 82, kDoc = "App was removed from server."),
+        Entry("StageInstanceCreate", intValue = 83, kDoc = "Stage instance was created (stage channel becomes live)."),
+        Entry("StageInstanceUpdate", intValue = 84, kDoc = "Stage instance details were updated."),
+        Entry("StageInstanceDelete", intValue = 85, kDoc = "Stage instance was deleted (stage channel no longer live)."),
+        Entry("StickerCreate", intValue = 90, kDoc = "Sticker was created."),
+        Entry("StickerUpdate", intValue = 91, kDoc = "Sticker details were updated."),
+        Entry("StickerDelete", intValue = 92, kDoc = "Sticker was deleted."),
+        Entry("GuildScheduledEventCreate", intValue = 100, kDoc = "Event was created."),
+        Entry("GuildScheduledEventUpdate", intValue = 101, kDoc = "Event was updated."),
+        Entry("GuildScheduledEventDelete", intValue = 102, kDoc = "Event was cancelled."),
+        Entry("ThreadCreate", intValue = 110, kDoc = "Thread was created in a channel."),
+        Entry("ThreadUpdate", intValue = 111, kDoc = "Thread was updated."),
+        Entry("ThreadDelete", intValue = 112, kDoc = "Thread was deleted."),
+        Entry("ApplicationCommandPermissionUpdate", intValue = 121, kDoc = "Permissions were updated for a command."),
+        Entry("AutoModerationRuleCreate", intValue = 140, kDoc = "Auto Moderation rule was created."),
+        Entry("AutoModerationRuleUpdate", intValue = 141, kDoc = "Auto Moderation rule was updated."),
+        Entry("AutoModerationRuleDelete", intValue = 142, kDoc = "Auto Moderation rule was deleted."),
+        Entry("AutoModerationBlockMessage", intValue = 143, kDoc = "Message was blocked by AutoMod (according to a rule)."),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -6,6 +64,9 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.serialization.DurationInDaysSerializer
 import dev.kord.common.serialization.DurationInSecondsSerializer
 import dev.kord.common.serialization.IntOrStringSerializer
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.serializer
@@ -435,128 +496,4 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
             } as AuditLogChangeKey<T>
         }
     }
-}
-
-@Serializable(with = AuditLogEvent.Serializer::class)
-public sealed class AuditLogEvent(public val value: Int) {
-    public class Unknown(value: Int) : AuditLogEvent(value)
-    public object GuildUpdate : AuditLogEvent(1)
-    public object ChannelCreate : AuditLogEvent(10)
-    public object ChannelUpdate : AuditLogEvent(11)
-    public object ChannelDelete : AuditLogEvent(12)
-    public object ChannelOverwriteCreate : AuditLogEvent(13)
-    public object ChannelOverwriteUpdate : AuditLogEvent(14)
-    public object ChannelOverwriteDelete : AuditLogEvent(15)
-    public object MemberKick : AuditLogEvent(20)
-    public object MemberPrune : AuditLogEvent(21)
-    public object MemberBanAdd : AuditLogEvent(22)
-    public object MemberBanRemove : AuditLogEvent(23)
-    public object MemberUpdate : AuditLogEvent(24)
-    public object MemberRoleUpdate : AuditLogEvent(25)
-    public object MemberMove : AuditLogEvent(26)
-    public object MemberDisconnect : AuditLogEvent(27)
-    public object BotAdd : AuditLogEvent(28)
-    public object RoleCreate : AuditLogEvent(30)
-    public object RoleUpdate : AuditLogEvent(31)
-    public object RoleDelete : AuditLogEvent(32)
-    public object InviteCreate : AuditLogEvent(40)
-    public object InviteUpdate : AuditLogEvent(41)
-    public object InviteDelete : AuditLogEvent(42)
-    public object WebhookCreate : AuditLogEvent(50)
-    public object WebhookUpdate : AuditLogEvent(51)
-    public object WebhookDelete : AuditLogEvent(52)
-    public object EmojiCreate : AuditLogEvent(60)
-    public object EmojiUpdate : AuditLogEvent(61)
-    public object EmojiDelete : AuditLogEvent(62)
-    public object MessageDelete : AuditLogEvent(72)
-    public object MessageBulkDelete : AuditLogEvent(73)
-    public object MessagePin : AuditLogEvent(74)
-    public object MessageUnpin : AuditLogEvent(75)
-    public object IntegrationCreate : AuditLogEvent(80)
-    public object IntegrationUpdate : AuditLogEvent(81)
-    public object IntegrationDelete : AuditLogEvent(82)
-    public object StageInstanceCreate : AuditLogEvent(83)
-    public object StageInstanceUpdate : AuditLogEvent(84)
-    public object StageInstanceDelete : AuditLogEvent(85)
-    public object StickerCreate : AuditLogEvent(90)
-    public object StickerUpdate : AuditLogEvent(91)
-    public object StickerDelete : AuditLogEvent(92)
-    public object GuildScheduledEventCreate : AuditLogEvent(100)
-    public object GuildScheduledEventUpdate : AuditLogEvent(101)
-    public object GuildScheduledEventDelete : AuditLogEvent(102)
-    public object ThreadCreate : AuditLogEvent(110)
-    public object ThreadUpdate : AuditLogEvent(111)
-    public object ThreadDelete : AuditLogEvent(112)
-    public object ApplicationCommandPermissionUpdate : AuditLogEvent(121)
-    public object AutoModerationRuleCreate : AuditLogEvent(140)
-    public object AutoModerationRuleUpdate : AuditLogEvent(141)
-    public object AutoModerationRuleDelete : AuditLogEvent(142)
-    public object AutoModerationBlockMessage : AuditLogEvent(143)
-
-
-    internal object Serializer : KSerializer<AuditLogEvent> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.AuditLogEvent", PrimitiveKind.INT)
-
-        override fun serialize(encoder: Encoder, value: AuditLogEvent) {
-            encoder.encodeInt(value.value)
-        }
-
-        override fun deserialize(decoder: Decoder): AuditLogEvent = when (val value = decoder.decodeInt()) {
-            1 -> GuildUpdate
-            10 -> ChannelCreate
-            11 -> ChannelUpdate
-            12 -> ChannelDelete
-            13 -> ChannelOverwriteCreate
-            14 -> ChannelOverwriteUpdate
-            15 -> ChannelOverwriteDelete
-            20 -> MemberKick
-            21 -> MemberPrune
-            22 -> MemberBanAdd
-            23 -> MemberBanRemove
-            24 -> MemberUpdate
-            25 -> MemberRoleUpdate
-            26 -> MemberMove
-            27 -> MemberDisconnect
-            28 -> BotAdd
-            30 -> RoleCreate
-            31 -> RoleUpdate
-            32 -> RoleDelete
-            40 -> InviteCreate
-            41 -> InviteUpdate
-            42 -> InviteDelete
-            50 -> WebhookCreate
-            51 -> WebhookUpdate
-            52 -> WebhookDelete
-            60 -> EmojiCreate
-            61 -> EmojiUpdate
-            62 -> EmojiDelete
-            72 -> MessageDelete
-            73 -> MessageBulkDelete
-            74 -> MessagePin
-            75 -> MessageUnpin
-            80 -> IntegrationCreate
-            81 -> IntegrationUpdate
-            82 -> IntegrationDelete
-            83 -> StageInstanceCreate
-            84 -> StageInstanceUpdate
-            85 -> StageInstanceDelete
-            90 -> StickerCreate
-            91 -> StickerUpdate
-            92 -> StickerDelete
-            100 -> GuildScheduledEventCreate
-            101 -> GuildScheduledEventUpdate
-            102 -> GuildScheduledEventDelete
-            110 -> ThreadCreate
-            111 -> ThreadUpdate
-            112 -> ThreadDelete
-            121 -> ApplicationCommandPermissionUpdate
-            140 -> AutoModerationRuleCreate
-            141 -> AutoModerationRuleUpdate
-            142 -> AutoModerationRuleDelete
-            143 -> AutoModerationBlockMessage
-            else -> Unknown(value)
-        }
-    }
-
 }

@@ -877,7 +877,9 @@ public final class dev/kord/common/entity/AuditLogEntryOptionalInfo$Companion {
 public abstract class dev/kord/common/entity/AuditLogEvent {
 	public static final field Companion Ldev/kord/common/entity/AuditLogEvent$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/AuditLogEvent$ApplicationCommandPermissionUpdate : dev/kord/common/entity/AuditLogEvent {
@@ -929,6 +931,7 @@ public final class dev/kord/common/entity/AuditLogEvent$ChannelUpdate : dev/kord
 }
 
 public final class dev/kord/common/entity/AuditLogEvent$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
