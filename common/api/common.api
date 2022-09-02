@@ -6465,10 +6465,13 @@ public final class dev/kord/common/entity/InteractionsKt {
 public abstract class dev/kord/common/entity/InviteTargetType {
 	public static final field Companion Ldev/kord/common/entity/InviteTargetType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/InviteTargetType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
