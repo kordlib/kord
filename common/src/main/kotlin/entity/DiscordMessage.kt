@@ -58,6 +58,25 @@
 )
 
 @file:GenerateKordEnum(
+    name = "MessageActivityType", valueType = INT,
+    entries = [
+        Entry("Join", intValue = 1),
+        Entry("Spectate", intValue = 2),
+        Entry("Listen", intValue = 3),
+        Entry("JoinRequest", intValue = 5),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "AllowedMentionType", valueType = STRING,
+    entries = [
+        Entry("RoleMentions", stringValue = "roles", kDoc = "Controls role mentions."),
+        Entry("UserMentions", stringValue = "users", kDoc = "Controls user mentions"),
+        Entry("EveryoneMentions", stringValue = "everyone", kDoc = "Controls @everyone and @here mentions."),
+    ],
+)
+
+@file:GenerateKordEnum(
     name = "MessageStickerType", valueType = INT,
     // had `public val values: Set<MessageStickerType>` in companion before -> replace with `entries`
     valuesPropertyName = "values", valuesPropertyType = SET,
@@ -78,6 +97,7 @@ import dev.kord.common.serialization.IntOrStringSerializer
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
@@ -726,32 +746,6 @@ public data class MessageActivity(
     val partyId: Optional<String> = Optional.Missing(),
 )
 
-@Serializable(with = MessageActivityType.Serializer::class)
-public sealed class MessageActivityType(public val value: Int) {
-    public class Unknown(value: Int) : MessageActivityType(value)
-    public object Join : MessageActivityType(1)
-    public object Spectate : MessageActivityType(2)
-    public object Listen : MessageActivityType(3)
-    public object JoinRequest : MessageActivityType(5)
-
-    internal object Serializer : KSerializer<MessageActivityType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.MessageActivivtyType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MessageActivityType = when (val value = decoder.decodeInt()) {
-            1 -> Join
-            2 -> Spectate
-            3 -> Listen
-            5 -> JoinRequest
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: MessageActivityType) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
 @Serializable
 public data class MessageApplication(
     val id: Snowflake,
@@ -816,30 +810,6 @@ public data class AllRemovedMessageReactions(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
-
-@Serializable(with = AllowedMentionType.Serializer::class)
-public sealed class AllowedMentionType(public val value: String) {
-    public class Unknown(value: String) : AllowedMentionType(value)
-    public object RoleMentions : AllowedMentionType("roles")
-    public object UserMentions : AllowedMentionType("users")
-    public object EveryoneMentions : AllowedMentionType("everyone")
-
-    internal object Serializer : KSerializer<AllowedMentionType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.DiscordAllowedMentionType", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): AllowedMentionType = when (val value = decoder.decodeString()) {
-            "roles" -> RoleMentions
-            "users" -> UserMentions
-            "everyone" -> EveryoneMentions
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: AllowedMentionType) {
-            encoder.encodeString(value.value)
-        }
-    }
-}
 
 @Serializable
 public data class AllowedMentions(

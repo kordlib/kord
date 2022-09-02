@@ -263,10 +263,14 @@ public final class dev/kord/common/entity/AllRemovedMessageReactions$Companion {
 public abstract class dev/kord/common/entity/AllowedMentionType {
 	public static final field Companion Ldev/kord/common/entity/AllowedMentionType$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Ljava/lang/String;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/AllowedMentionType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -6548,10 +6552,13 @@ public final class dev/kord/common/entity/MessageActivity$Companion {
 public abstract class dev/kord/common/entity/MessageActivityType {
 	public static final field Companion Ldev/kord/common/entity/MessageActivityType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/MessageActivityType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
