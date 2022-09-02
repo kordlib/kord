@@ -1,4 +1,63 @@
 @file:GenerateKordEnum(
+    name = "MessageType", valueType = INT, valueName = "code",
+    // had `public val values: Set<MessageType>` in companion before -> replace with `entries`
+    valuesPropertyName = "values", valuesPropertyType = SET,
+    entries = [
+        Entry("Default", intValue = 0),
+        Entry("RecipientAdd", intValue = 1),
+        Entry("RecipientRemove", intValue = 2),
+        Entry("Call", intValue = 3),
+        Entry("ChannelNameChange", intValue = 4),
+        Entry("ChannelIconChange", intValue = 5),
+        Entry("ChannelPinnedMessage", intValue = 6),
+        Entry("UserJoin", intValue = 7),
+        Entry("GuildBoost", intValue = 8),
+        Entry("GuildBoostTier1", intValue = 9),
+        Entry("GuildBoostTier2", intValue = 10),
+        Entry("GuildBoostTier3", intValue = 11),
+        Entry("ChannelFollowAdd", intValue = 12),
+        Entry("GuildDiscoveryDisqualified", intValue = 14),
+        Entry("GuildDiscoveryRequalified", intValue = 15),
+        Entry("GuildDiscoveryGracePeriodInitialWarning", intValue = 16),
+        Entry("GuildDiscoveryGracePeriodFinalWarning", intValue = 17),
+        Entry("ThreadCreated", intValue = 18),
+        Entry("Reply", intValue = 19),
+        Entry("ChatInputCommand", intValue = 20),
+        Entry("ThreadStarterMessage", intValue = 21),
+        Entry("GuildInviteReminder", intValue = 22),
+        Entry("ContextMenuCommand", intValue = 23),
+        Entry("AutoModerationAction", intValue = 24),
+    ],
+    deprecatedEntries = [
+        Entry(
+            "GuildMemberJoin", intValue = 7, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'UserJoin'.", deprecationLevel = WARNING,
+            replaceWith = ReplaceWith("UserJoin", "dev.kord.common.entity.MessageType.UserJoin"),
+        ),
+        Entry(
+            "UserPremiumGuildSubscription", intValue = 8, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'GuildBoost'.", deprecationLevel = WARNING,
+            replaceWith = ReplaceWith("GuildBoost", "dev.kord.common.entity.MessageType.GuildBoost"),
+        ),
+        Entry(
+            "UserPremiumGuildSubscriptionTierOne", intValue = 9, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'GuildBoostTier1'.", deprecationLevel = WARNING,
+            replaceWith = ReplaceWith("GuildBoostTier1", "dev.kord.common.entity.MessageType.GuildBoostTier1"),
+        ),
+        Entry(
+            "UserPremiumGuildSubscriptionTwo", intValue = 10, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'GuildBoostTier2'.", deprecationLevel = WARNING,
+            replaceWith = ReplaceWith("GuildBoostTier2", "dev.kord.common.entity.MessageType.GuildBoostTier2"),
+        ),
+        Entry(
+            "UserPremiumGuildSubscriptionThree", intValue = 11, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'GuildBoostTier3'.", deprecationLevel = WARNING,
+            replaceWith = ReplaceWith("GuildBoostTier3", "dev.kord.common.entity.MessageType.GuildBoostTier3"),
+        ),
+    ],
+)
+
+@file:GenerateKordEnum(
     name = "MessageStickerType", valueType = INT,
     // had `public val values: Set<MessageStickerType>` in companion before -> replace with `entries`
     valuesPropertyName = "values", valuesPropertyType = SET,
@@ -29,6 +88,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -756,111 +816,6 @@ public data class AllRemovedMessageReactions(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
-
-@Serializable(with = MessageType.MessageTypeSerializer::class)
-public sealed class MessageType(public val code: Int) {
-
-    final override fun equals(other: Any?): Boolean =
-        this === other || (other is MessageType && this.code == other.code)
-
-    final override fun hashCode(): Int = code
-
-
-    /** The default code for unknown values. */
-    public class Unknown(code: Int) : MessageType(code)
-    public object Default : MessageType(0)
-    public object RecipientAdd : MessageType(1)
-    public object RecipientRemove : MessageType(2)
-    public object Call : MessageType(3)
-    public object ChannelNameChange : MessageType(4)
-    public object ChannelIconChange : MessageType(5)
-    public object ChannelPinnedMessage : MessageType(6)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'UserJoin'.", ReplaceWith("UserJoin"))
-    public object GuildMemberJoin : MessageType(7)
-    public object UserJoin : MessageType(7)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'GuildBoost'.", ReplaceWith("GuildBoost"))
-    public object UserPremiumGuildSubscription : MessageType(8)
-    public object GuildBoost : MessageType(8)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier1'.", ReplaceWith("GuildBoostTier1"))
-    public object UserPremiumGuildSubscriptionTierOne : MessageType(9)
-    public object GuildBoostTier1 : MessageType(9)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier2'.", ReplaceWith("GuildBoostTier2"))
-    public object UserPremiumGuildSubscriptionTwo : MessageType(10)
-    public object GuildBoostTier2 : MessageType(10)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier3'.", ReplaceWith("GuildBoostTier3"))
-    public object UserPremiumGuildSubscriptionThree : MessageType(11)
-    public object GuildBoostTier3 : MessageType(11)
-    public object ChannelFollowAdd : MessageType(12)
-    public object GuildDiscoveryDisqualified : MessageType(14)
-
-    @Suppress("SpellCheckingInspection")
-    public object GuildDiscoveryRequalified : MessageType(15)
-    public object GuildDiscoveryGracePeriodInitialWarning : MessageType(16)
-    public object GuildDiscoveryGracePeriodFinalWarning : MessageType(17)
-    public object ThreadCreated : MessageType(18)
-    public object Reply : MessageType(19)
-    public object ChatInputCommand : MessageType(20)
-    public object ThreadStarterMessage : MessageType(21)
-    public object GuildInviteReminder : MessageType(22)
-    public object ContextMenuCommand : MessageType(23)
-    public object AutoModerationAction : MessageType(24)
-
-
-    internal object MessageTypeSerializer : KSerializer<MessageType> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MessageType {
-            val code = decoder.decodeInt()
-            return values.firstOrNull { it.code == code } ?: Unknown(code)
-        }
-
-        override fun serialize(encoder: Encoder, value: MessageType) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-    public companion object {
-        public val values: Set<MessageType>
-            get() = setOf(
-                Default,
-                RecipientAdd,
-                RecipientRemove,
-                Call,
-                ChannelNameChange,
-                ChannelIconChange,
-                ChannelPinnedMessage,
-                UserJoin,
-                GuildBoost,
-                GuildBoostTier1,
-                GuildBoostTier2,
-                GuildBoostTier3,
-                ChannelFollowAdd,
-                GuildDiscoveryDisqualified,
-                GuildDiscoveryRequalified,
-                Reply,
-                GuildDiscoveryGracePeriodInitialWarning,
-                GuildDiscoveryGracePeriodFinalWarning,
-                ThreadCreated,
-                ChatInputCommand,
-                ThreadStarterMessage,
-                GuildInviteReminder,
-                ContextMenuCommand,
-                AutoModerationAction,
-            )
-    }
-}
 
 @Serializable(with = AllowedMentionType.Serializer::class)
 public sealed class AllowedMentionType(public val value: String) {

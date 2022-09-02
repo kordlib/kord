@@ -6810,6 +6810,7 @@ public final class dev/kord/common/entity/MessageType$ChatInputCommand : dev/kor
 }
 
 public final class dev/kord/common/entity/MessageType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
