@@ -1,4 +1,66 @@
 @file:GenerateKordEnum(
+    name = "DefaultMessageNotificationLevel", valueType = INT,
+    entries = [
+        Entry("AllMessages", intValue = 0, kDoc = "Members will receive notifications for all messages by default."),
+        Entry(
+            "OnlyMentions", intValue = 1,
+            kDoc = "Members will receive notifications only for messages that @mention them by default.",
+        ),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "ExplicitContentFilter", valueType = INT,
+    entries = [
+        Entry("Disabled", intValue = 0, kDoc = "Media content will not be scanned."),
+        Entry(
+            "MembersWithoutRoles", intValue = 1,
+            kDoc = "Media content sent by members without roles will be scanned.",
+        ),
+        Entry("AllMembers", intValue = 2, kDoc = "Media content sent by all members will be scanned."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "MFALevel", valueType = INT,
+    entries = [
+        Entry("None", intValue = 0, kDoc = "Guild has no MFA/2FA requirement for moderation actions."),
+        Entry("Elevated", intValue = 1, kDoc = "Guild has a 2FA requirement for moderation actions."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "VerificationLevel", valueType = INT,
+    entries = [
+        Entry("None", intValue = 0, kDoc = "Unrestricted."),
+        Entry("Low", intValue = 1, kDoc = "Must have verified email on account."),
+        Entry("Medium", intValue = 2, kDoc = "Must be registered on Discord for longer than 5 minutes."),
+        Entry("High", intValue = 3, kDoc = "Must be a member of the server for longer than 10 minutes."),
+        Entry("VeryHigh", intValue = 4, kDoc = "Must have a verified phone number."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "NsfwLevel", valueType = INT,
+    entries = [
+        Entry("Default", intValue = 0),
+        Entry("Explicit", intValue = 1),
+        Entry("Safe", intValue = 2),
+        Entry("AgeRestricted", intValue = 3),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "PremiumTier", valueType = INT,
+    entries = [
+        Entry("None", intValue = 0, kDoc = "Guild has not unlocked any Server Boost perks."),
+        Entry("One", intValue = 1, kDoc = "Guild has unlocked Server Boost level 1 perks."),
+        Entry("Two", intValue = 2, kDoc = "Guild has unlocked Server Boost level 2 perks."),
+        Entry("Three", intValue = 3, kDoc = "Guild has unlocked Server Boost level 3 perks."),
+    ],
+)
+
+@file:GenerateKordEnum(
     name = "GuildFeature", valueType = STRING,
     entries = [
         Entry(
@@ -74,6 +136,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
@@ -244,9 +307,8 @@ public data class DiscordPartialGuild(
     @SerialName("guild_scheduled_events")
     val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
     @SerialName("premium_progress_bar_enabled")
-    val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
-
-    )
+    val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
+)
 
 @Serializable(with = SystemChannelFlags.Companion::class)
 public data class SystemChannelFlags(val code: Int) {
@@ -373,188 +435,6 @@ public data class DiscordVoiceRegion(
     val deprecated: Boolean,
     val custom: Boolean,
 )
-
-/**
- * A representation of a [Discord Premium tier](https://discord.com/developers/docs/resources/guild#guild-object-premium-tier).
- */
-@Serializable(with = PremiumTier.Serializer::class)
-public sealed class PremiumTier(public val value: Int) {
-    public class Unknown(value: Int) : PremiumTier(value)
-    public object None : PremiumTier(0)
-    public object One : PremiumTier(1)
-    public object Two : PremiumTier(2)
-    public object Three : PremiumTier(3)
-
-    internal object Serializer : KSerializer<PremiumTier> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.PremiumTier", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): PremiumTier = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> One
-            2 -> Two
-            3 -> Three
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: PremiumTier) {
-            encoder.encodeInt(value.value)
-        }
-
-    }
-}
-
-@Serializable(with = DefaultMessageNotificationLevel.Serializer::class)
-public sealed class DefaultMessageNotificationLevel(public val value: Int) {
-    public class Unknown(value: Int) : DefaultMessageNotificationLevel(value)
-    public object AllMessages : DefaultMessageNotificationLevel(0)
-    public object OnlyMentions : DefaultMessageNotificationLevel(1)
-
-    internal object Serializer : KSerializer<DefaultMessageNotificationLevel> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("default_message_notifications", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel =
-            when (val value = decoder.decodeInt()) {
-                0 -> AllMessages
-                1 -> OnlyMentions
-                else -> Unknown(value)
-            }
-
-        override fun serialize(encoder: Encoder, value: DefaultMessageNotificationLevel) {
-            encoder.encodeInt(value.value)
-        }
-    }
-
-}
-
-@Serializable(with = ExplicitContentFilter.Serializer::class)
-public sealed class ExplicitContentFilter(public val value: Int) {
-    public class Unknown(value: Int) : ExplicitContentFilter(value)
-    public object Disabled : ExplicitContentFilter(0)
-    public object MembersWithoutRoles : ExplicitContentFilter(1)
-    public object AllMembers : ExplicitContentFilter(2)
-
-    internal object Serializer : KSerializer<ExplicitContentFilter> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("explicit_content_filter", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ExplicitContentFilter = when (val value = decoder.decodeInt()) {
-            0 -> Disabled
-            1 -> MembersWithoutRoles
-            2 -> AllMembers
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: ExplicitContentFilter) {
-            encoder.encodeInt(value.value)
-        }
-
-    }
-}
-
-@Serializable(with = MFALevel.Serializer::class)
-public sealed class MFALevel(public val value: Int) {
-    public class Unknown(value: Int) : MFALevel(value)
-    public object None : MFALevel(0)
-    public object Elevated : MFALevel(1)
-
-    internal object Serializer : KSerializer<MFALevel> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.MFALevel", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MFALevel = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Elevated
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: MFALevel) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
-/**
- * A representation of a [Discord Guild NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
- */
-@Serializable(with = NsfwLevel.Serializer::class)
-public sealed class NsfwLevel(public val value: Int) {
-    public class Unknown(value: Int) : NsfwLevel(value)
-
-    public object Default : NsfwLevel(0)
-
-    public object Explicit : NsfwLevel(1)
-
-    public object Safe : NsfwLevel(2)
-
-    public object AgeRestricted : NsfwLevel(3)
-
-    internal object Serializer : KSerializer<NsfwLevel> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.GuildNsfwLevel", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): NsfwLevel = when (val value = decoder.decodeInt()) {
-            0 -> Default
-            1 -> Explicit
-            2 -> Safe
-            3 -> AgeRestricted
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: NsfwLevel) {
-            encoder.encodeInt(value.value)
-        }
-
-    }
-}
-
-
-/**
- * A representation of a [Discord Verification Level](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
- */
-@Serializable(with = VerificationLevel.Serializer::class)
-public sealed class VerificationLevel(public val value: Int) {
-    public class Unknown(value: Int) : VerificationLevel(value)
-
-    /** Unrestricted. */
-    public object None : VerificationLevel(0)
-
-    /** Must have verified email and account.  */
-    public object Low : VerificationLevel(1)
-
-    /** Must be registered on Discord for longer than 5 minutes. */
-    public object Medium : VerificationLevel(2)
-
-    /** Must be member of the server for longer than 10 minutes */
-    public object High : VerificationLevel(3)
-
-    /** Must have a verified phone number */
-    public object VeryHigh : VerificationLevel(4)
-
-    internal object Serializer : KSerializer<VerificationLevel> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.VerificationLevel", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): VerificationLevel = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Low
-            2 -> Medium
-            3 -> High
-            4 -> VeryHigh
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: VerificationLevel) {
-            encoder.encodeInt(value.value)
-        }
-
-    }
-}
 
 @Serializable
 public data class DiscordWelcomeScreenChannel(

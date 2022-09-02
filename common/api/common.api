@@ -1682,7 +1682,9 @@ public final class dev/kord/common/entity/ComponentType$Unknown : dev/kord/commo
 public abstract class dev/kord/common/entity/DefaultMessageNotificationLevel {
 	public static final field Companion Ldev/kord/common/entity/DefaultMessageNotificationLevel$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/DefaultMessageNotificationLevel$AllMessages : dev/kord/common/entity/DefaultMessageNotificationLevel {
@@ -1690,6 +1692,7 @@ public final class dev/kord/common/entity/DefaultMessageNotificationLevel$AllMes
 }
 
 public final class dev/kord/common/entity/DefaultMessageNotificationLevel$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -5999,7 +6002,9 @@ public final class dev/kord/common/entity/EmbedType$Video : dev/kord/common/enti
 public abstract class dev/kord/common/entity/ExplicitContentFilter {
 	public static final field Companion Ldev/kord/common/entity/ExplicitContentFilter$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/ExplicitContentFilter$AllMembers : dev/kord/common/entity/ExplicitContentFilter {
@@ -6007,6 +6012,7 @@ public final class dev/kord/common/entity/ExplicitContentFilter$AllMembers : dev
 }
 
 public final class dev/kord/common/entity/ExplicitContentFilter$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -6482,10 +6488,13 @@ public final class dev/kord/common/entity/InviteTargetType$Unknown : dev/kord/co
 public abstract class dev/kord/common/entity/MFALevel {
 	public static final field Companion Ldev/kord/common/entity/MFALevel$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/MFALevel$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -6907,7 +6916,9 @@ public final class dev/kord/common/entity/NotSerializable : kotlinx/serializatio
 public abstract class dev/kord/common/entity/NsfwLevel {
 	public static final field Companion Ldev/kord/common/entity/NsfwLevel$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/NsfwLevel$AgeRestricted : dev/kord/common/entity/NsfwLevel {
@@ -6915,6 +6926,7 @@ public final class dev/kord/common/entity/NsfwLevel$AgeRestricted : dev/kord/com
 }
 
 public final class dev/kord/common/entity/NsfwLevel$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -7242,10 +7254,13 @@ public final class dev/kord/common/entity/Permissions$PermissionsBuilder {
 public abstract class dev/kord/common/entity/PremiumTier {
 	public static final field Companion Ldev/kord/common/entity/PremiumTier$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/PremiumTier$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -7699,10 +7714,13 @@ public final class dev/kord/common/entity/UserPremium$Unknown : dev/kord/common/
 public abstract class dev/kord/common/entity/VerificationLevel {
 	public static final field Companion Ldev/kord/common/entity/VerificationLevel$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/VerificationLevel$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
