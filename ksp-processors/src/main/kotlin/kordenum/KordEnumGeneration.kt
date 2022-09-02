@@ -132,6 +132,14 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 addStatement("return $valueName.hashCode()")
             }
 
+            // TODO for all value types
+            // final override fun toString
+            if (valueType == STRING) addFunction("toString"){
+                addModifiers(FINAL, OVERRIDE)
+                returns<String>()
+                addStatement("return \"%T($valueName=\$$valueName)\"", enumName)
+            }
+
 
             // public class Unknown(<valueName>: <valueTypeName>) : <enumName>(<valueName>)
             addClass("Unknown") {

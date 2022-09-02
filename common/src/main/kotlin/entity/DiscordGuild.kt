@@ -1,3 +1,70 @@
+@file:GenerateKordEnum(
+    name = "GuildFeature", valueType = STRING,
+    entries = [
+        Entry(
+            "AnimatedBanner", stringValue = "ANIMATED_BANNER",
+            kDoc = "Guild has access to set an animated guild banner image.",
+        ),
+        Entry("AnimatedIcon", stringValue = "ANIMATED_ICON", kDoc = "Guild has access to set an animated guild icon."),
+        Entry("AutoModeration", stringValue = "AUTO_MODERATION", kDoc = "Guild has set up auto moderation rules."),
+        Entry("Banner", stringValue = "BANNER", kDoc = "Guild has access to set a guild banner image."),
+        Entry(
+            "Community", stringValue = "COMMUNITY",
+            kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " +
+                    "receives community updates.",
+        ),
+        Entry("Discoverable", stringValue = "DISCOVERABLE", kDoc = "Guild is able to be discovered in the directory."),
+        Entry(
+            "Featurable", stringValue = "FEATURABLE",
+            kDoc = "Guild is able to be featured in the directory.",
+        ),
+        Entry(
+            "InviteSplash", stringValue = "INVITE_SPLASH",
+            kDoc = "Guild has access to set an invite splash background.",
+        ),
+        Entry(
+            "MemberVerificationGateEnabled", stringValue = "MEMBER_VERIFICATION_GATE_ENABLED",
+            kDoc = "Guild has enabled Membership Screening.",
+        ),
+        Entry("MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization."),
+        Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
+        Entry("News", stringValue = "NEWS", kDoc = "Guild has access to create announcement channels."),
+        Entry("Partnered", stringValue = "PARTNERED", kDoc = "Guild is partnered."),
+        Entry(
+            "PreviewEnabled", stringValue = "PREVIEW_ENABLED",
+            kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
+        ),
+        Entry("PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads"),
+        Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
+        Entry(
+            "TicketedEventsEnabled", stringValue = "TICKETED_EVENTS_ENABLED",
+            kDoc = "Guild has enabled ticketed events.",
+        ),
+        Entry("VanityUrl", stringValue = "VANITY_URL", kDoc = "Guild has access to set a vanity URL."),
+        Entry("Verified", stringValue = "VERIFIED", kDoc = "Guild is verified."),
+        Entry(
+            "VIPRegions", stringValue = "VIP_REGIONS",
+            kDoc = "Guild has access to set 384kbps bitrate in voice (previously VIP voice servers).",
+        ),
+        Entry(
+            "WelcomeScreenEnabled", stringValue = "WELCOME_SCREEN_ENABLED",
+            kDoc = "Guild has enabled the welcome screen.",
+        ),
+    ],
+    deprecatedEntries = [
+        Entry(
+            "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
+            kDoc = "Guild has access to the three-day archive time for threads\n\n@suppress.",
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = WARNING,
+        ),
+        Entry(
+            "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
+            kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = WARNING,
+        ),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -5,6 +72,9 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -14,6 +84,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.WARNING
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -176,135 +247,6 @@ public data class DiscordPartialGuild(
     val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
 
     )
-
-/**
- * A representation of a [Discord Guild Feature](https://discord.com/developers/docs/resources/guild#guild-object-guild-features).
- */
-@Serializable(with = GuildFeature.Serializer::class)
-public sealed class GuildFeature(public val value: String) {
-
-    final override fun equals(other: Any?): Boolean =
-        this === other || (other is GuildFeature && this.value == other.value)
-
-    final override fun hashCode(): Int = value.hashCode()
-    final override fun toString(): String = "GuildFeature(value=$value)"
-
-
-    /** An unknown [GuildFeature]. */
-    public class Unknown(value: String) : GuildFeature(value)
-
-    /** Guild has access to set an animated guild banner image. */
-    public object AnimatedBanner : GuildFeature("ANIMATED_BANNER")
-
-    /** Guild has set up auto moderation rules. */
-    public object AutoModeration : GuildFeature("AUTO_MODERATION")
-
-    /** Guild has access to set an invite splash background */
-    public object InviteSplash : GuildFeature("INVITE_SPLASH")
-
-    /** Guild has access to set 384kbps bitrate in voice (previously VIP voice servers) */
-    public object VIPRegions : GuildFeature("VIP_REGIONS")
-
-    /** Guild has access to set a vanity URL */
-    public object VanityUrl : GuildFeature("VANITY_URL")
-
-    /** Guild is verified */
-    public object Verified : GuildFeature("VERIFIED")
-
-    /** Guild is partnered */
-    public object Partnered : GuildFeature("PARTNERED")
-
-    /** Guild can enable welcome screen and discovery, and receives community updates */
-    public object Community : GuildFeature("COMMUNITY")
-
-    /** Guild has access to use commerce features (i.e. create store channels) */
-    public object Commerce : GuildFeature("COMMERCE")
-
-    /** Guild has access to create news channels */
-    public object News : GuildFeature("NEWS")
-
-    /** Guild is lurkable and able to be discovered directly */
-    public object Discoverable : GuildFeature("DISCOVERABLE")
-
-    /** Guild is able to be featured in the directory */
-    public object Featurable : GuildFeature("FEATURABLE")
-
-    /** Guild has access to set an animated guild icon */
-    public object AnimatedIcon : GuildFeature("ANIMATED_ICON")
-
-    /** Guild has access to set a guild banner image */
-    public object Banner : GuildFeature("BANNER")
-
-    /** Guild has enabled the welcome screen */
-    public object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
-
-    /** Guild has enabled ticketed events */
-    public object TicketedEventsEnabled : GuildFeature("TICKETED_EVENTS_ENABLED")
-
-    /** Guild has enabled monetization */
-    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
-
-    /** Guild has increased custom sticker slots */
-    public object MoreStickers : GuildFeature("MORE_STICKERS")
-
-    /** Guild has access to the three-day archive time for threads */
-    @Deprecated("Thread archive durations are no longer boost locked")
-    public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
-
-    /** Guild has access to the seven day archive time for threads */
-    @Deprecated("Thread archive durations are no longer boost locked")
-    public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
-
-    /** Guild has access to create private threads */
-    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
-
-    /** Guild has enabled Membership Screening */
-    public object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
-
-    /** Guild can be previewed before joining via Membership Screening or the directory */
-    public object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
-
-    /** Guild is able to set role icons */
-    public object RoleIcons : GuildFeature("ROLE_ICONS")
-
-
-    internal object Serializer : KSerializer<GuildFeature> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): GuildFeature = when (val value = decoder.decodeString()) {
-            "ANIMATED_BANNER" -> AnimatedBanner
-            "AUTO_MODERATION" -> AutoModeration
-            "INVITE_SPLASH" -> InviteSplash
-            "VIP_REGIONS" -> VIPRegions
-            "VANITY_URL" -> VanityUrl
-            "VERIFIED" -> Verified
-            "PARTNERED" -> Partnered
-            "COMMUNITY" -> Community
-            "COMMERCE" -> Commerce
-            "NEWS" -> News
-            "DISCOVERABLE" -> Discoverable
-            "FEATURABLE" -> Featurable
-            "ANIMATED_ICON" -> AnimatedIcon
-            "BANNER" -> Banner
-            "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
-            "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
-            "MONETIZATION_ENABLED" -> MonetizationEnabled
-            "MORE_STICKERS" -> MoreStickers
-            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") ThreeDayThreadArchive
-            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") SevenDayThreadArchive
-            "PRIVATE_THREADS" -> PrivateThreads
-            "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
-            "PREVIEW_ENABLED" -> PreviewEnabled
-            "ROLE_ICONS" -> RoleIcons
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: GuildFeature) {
-            encoder.encodeString(value.value)
-        }
-    }
-}
 
 @Serializable(with = SystemChannelFlags.Companion::class)
 public data class SystemChannelFlags(val code: Int) {
