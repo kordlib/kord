@@ -57,12 +57,12 @@ public final class dev/kord/rest/Image$Size : java/lang/Enum {
 }
 
 public final class dev/kord/rest/NamedFile {
-	public fun <init> (Ljava/lang/String;Ljava/io/InputStream;)V
+	public fun <init> (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/io/InputStream;
+	public final fun component2 ()Lio/ktor/utils/io/ByteReadChannel;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun getInputStream ()Ljava/io/InputStream;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getReadChannel ()Lio/ktor/utils/io/ByteReadChannel;
 	public final fun getUrl ()Ljava/lang/String;
 }
 
@@ -1703,7 +1703,7 @@ public final class dev/kord/rest/builder/message/EmbedBuilder$Thumbnail : dev/ko
 
 public final class dev/kord/rest/builder/message/create/FollowupMessageCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> (Z)V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -1723,7 +1723,7 @@ public final class dev/kord/rest/builder/message/create/InteractionResponseCreat
 	public fun <init> ()V
 	public fun <init> (Z)V
 	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -1740,7 +1740,7 @@ public final class dev/kord/rest/builder/message/create/InteractionResponseCreat
 }
 
 public abstract interface class dev/kord/rest/builder/message/create/MessageCreateBuilder {
-	public abstract fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public abstract fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public abstract fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public abstract fun getComponents ()Ljava/util/List;
@@ -1754,7 +1754,7 @@ public abstract interface class dev/kord/rest/builder/message/create/MessageCrea
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$DefaultImpls {
-	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -1767,7 +1767,7 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
 
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -1787,7 +1787,7 @@ public final class dev/kord/rest/builder/message/create/UpdateMessageInteraction
 
 public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -1810,7 +1810,7 @@ public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder
 
 public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public final fun getAvatarUrl ()Ljava/lang/String;
@@ -1831,7 +1831,7 @@ public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuil
 
 public final class dev/kord/rest/builder/message/modify/FollowupMessageModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun <init> ()V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getAttachments ()Ljava/util/List;
@@ -1851,7 +1851,7 @@ public final class dev/kord/rest/builder/message/modify/FollowupMessageModifyBui
 
 public final class dev/kord/rest/builder/message/modify/InteractionResponseModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun <init> ()V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getAttachments ()Ljava/util/List;
@@ -1870,7 +1870,7 @@ public final class dev/kord/rest/builder/message/modify/InteractionResponseModif
 }
 
 public abstract interface class dev/kord/rest/builder/message/modify/MessageModifyBuilder {
-	public abstract fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public abstract fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public abstract fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public abstract fun getAttachments ()Ljava/util/List;
@@ -1887,7 +1887,7 @@ public abstract interface class dev/kord/rest/builder/message/modify/MessageModi
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$DefaultImpls {
-	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -1900,7 +1900,7 @@ public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderKt {
 
 public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun <init> ()V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getAttachments ()Ljava/util/List;
@@ -1922,7 +1922,7 @@ public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder
 
 public final class dev/kord/rest/builder/message/modify/WebhookMessageModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun <init> ()V
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public fun addFile (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getAttachments ()Ljava/util/List;
@@ -5758,7 +5758,7 @@ public final class dev/kord/rest/request/RequestBuilder {
 	public final fun body (Lkotlinx/serialization/SerializationStrategy;Ljava/lang/Object;)V
 	public final fun build ()Ldev/kord/rest/request/Request;
 	public final fun file (Ldev/kord/rest/NamedFile;)V
-	public final fun file (Ljava/lang/String;Ljava/io/InputStream;)V
+	public final fun file (Ljava/lang/String;Lio/ktor/utils/io/ByteReadChannel;)V
 	public final fun getBaseUrl ()Ljava/lang/String;
 	public final fun getKeys ()Ljava/util/Map;
 	public final fun getRoute ()Ldev/kord/rest/route/Route;

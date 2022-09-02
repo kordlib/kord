@@ -5,10 +5,9 @@ import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.io.InputStream
-import java.nio.file.Files
+import io.ktor.util.cio.*
+import io.ktor.utils.io.*
+import java.io.File
 import java.nio.file.Path
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -53,7 +52,7 @@ public sealed interface MessageCreateBuilder {
     /**
      * Adds a file with the [name] and [content] to the attachments.
      */
-    public fun addFile(name: String, content: InputStream): NamedFile {
+    public fun addFile(name: String, content: ByteReadChannel): NamedFile {
         val namedFile = NamedFile(name, content)
         files += namedFile
         return namedFile
@@ -62,9 +61,8 @@ public sealed interface MessageCreateBuilder {
     /**
      * Adds a file with the given [path] to the attachments.
      */
-    public suspend fun addFile(path: Path): NamedFile = withContext(Dispatchers.IO) {
-        addFile(path.fileName.toString(), Files.newInputStream(path))
-    }
+    public suspend fun addFile(path: Path): NamedFile =
+        addFile(path.fileName.toString(), File(path.toUri()).readChannel())
 
 
 }

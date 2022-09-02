@@ -14,12 +14,14 @@ import dev.kord.rest.Image
 import dev.kord.rest.builder.interaction.group
 import dev.kord.rest.builder.interaction.int
 import dev.kord.rest.builder.interaction.subCommand
+import io.ktor.util.cio.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
+import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -151,7 +153,7 @@ class RestServiceTest {
         val message = channel.createMessage {
             content = "TEST"
 
-            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+            addFile("test.txt", File(ClassLoader.getSystemResource("images/kord.png").toURI()).readChannel())
         }
 
         channel.getMessage(message.id)
@@ -377,7 +379,7 @@ class RestServiceTest {
         val message = channel.createMessage {
             content = "TEST"
 
-            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+            addFile("test.txt", File(ClassLoader.getSystemResource("images/kord.png").toURI()).readChannel())
         }
 
         assertEquals("TEST", message.content)
@@ -389,7 +391,7 @@ class RestServiceTest {
     @Order(23)
     fun `message with only file correctly`(): Unit = runBlocking {
         val message = channel.createMessage {
-            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+            addFile("test.txt", File(ClassLoader.getSystemResource("images/kord.png").toURI()).readChannel())
         }
 
         assertEquals(1, message.attachments.size)
@@ -402,7 +404,7 @@ class RestServiceTest {
         val message = channel.createMessage {
             content = "TEST"
 
-            addFile("test.txt", ClassLoader.getSystemResourceAsStream("images/kord.png")!!)
+            addFile("test.txt", File(ClassLoader.getSystemResource("images/kord.png").toURI()).readChannel())
         }
 
         assertEquals("TEST", message.content)

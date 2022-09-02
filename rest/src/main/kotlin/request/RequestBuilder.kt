@@ -4,6 +4,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.rest.NamedFile
 import dev.kord.rest.route.Route
 import io.ktor.http.*
+import io.ktor.utils.io.*
 import kotlinx.serialization.SerializationStrategy
 import kotlin.DeprecationLevel.HIDDEN
 
@@ -55,7 +56,7 @@ public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
         headers.append(key, value)
     }
 
-    public fun file(name: String, input: java.io.InputStream) {
+    public fun file(name: String, input: ByteReadChannel) {
         files.add(NamedFile(name, input))
     }
 

@@ -6,6 +6,7 @@ import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.http.content.*
 import io.ktor.util.*
+import io.ktor.utils.io.*
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 
@@ -89,19 +90,13 @@ public class MultipartRequest<B : Any, R>(
         body?.let {
             append("payload_json", Json.encodeToString(it.strategy, it.body))
         }
-        try {
-
-            files.forEachIndexed { index, pair ->
-
-                val (name, inputStream) = pair
-                append(
-                    "file$index",
-                    inputStream.readBytes(),
-                    Headers.build { append(HttpHeaders.ContentDisposition, "filename=$name") }
-                )
-            }
-        } finally {
-            files.forEach { it.inputStream.close() }
+        files.forEachIndexed { index, pair ->
+            val (name, channel) = pair
+            append(
+                "file$index",
+                ChannelProvider { channel },
+                Headers.build { append(HttpHeaders.ContentDisposition, "filename=$name") }
+            )
         }
     }
 }
