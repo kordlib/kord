@@ -133,7 +133,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
 
 
-            // /** An unknown [<enumName>]. */
             // public class Unknown(<valueName>: <valueTypeName>) : <enumName>(<valueName>)
             addClass("Unknown") {
                 addKdoc(

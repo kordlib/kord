@@ -2822,10 +2822,13 @@ public final class dev/kord/common/entity/DiscordConnection$Companion {
 public abstract class dev/kord/common/entity/DiscordConnectionVisibility {
 	public static final field Companion Ldev/kord/common/entity/DiscordConnectionVisibility$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/DiscordConnectionVisibility$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
