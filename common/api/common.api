@@ -7477,9 +7477,16 @@ public final class dev/kord/common/entity/SnowflakeKt {
 }
 
 public abstract class dev/kord/common/entity/StageInstancePrivacyLevel {
-	public static final field Serializer Ldev/kord/common/entity/StageInstancePrivacyLevel$Serializer;
+	public static final field Companion Ldev/kord/common/entity/StageInstancePrivacyLevel$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/StageInstancePrivacyLevel$Companion {
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/StageInstancePrivacyLevel$GuildOnly : dev/kord/common/entity/StageInstancePrivacyLevel {
@@ -7488,15 +7495,6 @@ public final class dev/kord/common/entity/StageInstancePrivacyLevel$GuildOnly : 
 
 public final class dev/kord/common/entity/StageInstancePrivacyLevel$Public : dev/kord/common/entity/StageInstancePrivacyLevel {
 	public static final field INSTANCE Ldev/kord/common/entity/StageInstancePrivacyLevel$Public;
-}
-
-public final class dev/kord/common/entity/StageInstancePrivacyLevel$Serializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/StageInstancePrivacyLevel;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/StageInstancePrivacyLevel;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/StageInstancePrivacyLevel$Unknown : dev/kord/common/entity/StageInstancePrivacyLevel {

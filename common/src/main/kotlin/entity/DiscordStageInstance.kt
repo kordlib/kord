@@ -1,13 +1,24 @@
+@file:GenerateKordEnum(
+    name = "StageInstancePrivacyLevel", valueType = INT,
+    entries = [
+        Entry("GuildOnly", intValue = 2, kDoc = "The Stage instance is visible to only guild members."),
+    ],
+    deprecatedEntries = [
+        Entry(
+            "Public", intValue = 1, kDoc = "The Stage instance is visible publicly.",
+            deprecationMessage = "Stages are no longer discoverable", deprecationLevel = WARNING,
+        ),
+    ],
+)
+
 package dev.kord.common.entity
 
-import kotlinx.serialization.KSerializer
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.WARNING
 
 
 /**
@@ -38,42 +49,3 @@ public data class DiscordStageInstance(
     @SerialName("guild_scheduled_event_id")
     val guildScheduledEventId: Snowflake?,
 )
-
-/**
- * Privacy level of a [DiscordStageInstance].
- */
-@Serializable(with = StageInstancePrivacyLevel.Serializer::class)
-public sealed class StageInstancePrivacyLevel(public val value: Int) {
-
-    /**
-     * The Stage instance is visible publicly, such as on Stage Discovery.
-     */
-    @Deprecated("Stages are no longer discoverable")
-    public object Public : StageInstancePrivacyLevel(1)
-
-    /**
-     * The Stage instance is visible to only guild members.
-     */
-    public object GuildOnly : StageInstancePrivacyLevel(2)
-
-    /**
-     * An unknown privacy level.
-     */
-    public class Unknown(value: Int) : StageInstancePrivacyLevel(value)
-
-    public companion object Serializer : KSerializer<StageInstancePrivacyLevel> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("StageInstancePrivacyLevel", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): StageInstancePrivacyLevel {
-            @Suppress("DEPRECATION")
-            return when (val value = decoder.decodeInt()) {
-                1 -> Public
-                2 -> GuildOnly
-                else -> Unknown(value)
-            }
-        }
-
-        override fun serialize(encoder: Encoder, value: StageInstancePrivacyLevel): Unit = encoder.encodeInt(value.value)
-
-    }
-}
