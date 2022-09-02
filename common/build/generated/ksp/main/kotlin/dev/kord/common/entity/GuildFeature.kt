@@ -61,6 +61,11 @@ public sealed class GuildFeature(
     public object Banner : GuildFeature("BANNER")
 
     /**
+     * Guild has access to use commerce features (i.e. create store channels).
+     */
+    public object Commerce : GuildFeature("COMMERCE")
+
+    /**
      * Guild can enable welcome screen, Membership Screening, stage channels and discovery, and
      * receives community updates.
      */
@@ -176,6 +181,7 @@ public sealed class GuildFeature(
             "ANIMATED_ICON" -> AnimatedIcon
             "AUTO_MODERATION" -> AutoModeration
             "BANNER" -> Banner
+            "COMMERCE" -> Commerce
             "COMMUNITY" -> Community
             "DISCOVERABLE" -> Discoverable
             "FEATURABLE" -> Featurable
@@ -206,6 +212,7 @@ public sealed class GuildFeature(
                 AnimatedIcon,
                 AutoModeration,
                 Banner,
+                Commerce,
                 Community,
                 Discoverable,
                 Featurable,

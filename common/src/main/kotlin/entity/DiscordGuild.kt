@@ -71,6 +71,10 @@
         Entry("AutoModeration", stringValue = "AUTO_MODERATION", kDoc = "Guild has set up auto moderation rules."),
         Entry("Banner", stringValue = "BANNER", kDoc = "Guild has access to set a guild banner image."),
         Entry(
+            "Commerce", stringValue = "COMMERCE",
+            kDoc = "Guild has access to use commerce features (i.e. create store channels).",
+        ),
+        Entry(
             "Community", stringValue = "COMMUNITY",
             kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " +
                     "receives community updates.",
