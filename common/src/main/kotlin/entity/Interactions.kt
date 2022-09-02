@@ -1,8 +1,83 @@
+@file:GenerateKordEnum(
+    name = "ApplicationCommandType", valueType = INT,
+    entries = [
+        Entry("ChatInput", intValue = 1, kDoc = "A text-based command that shows up when a user types `/`."),
+        Entry("User", intValue = 2, kDoc = "A UI-based command that shows up when you right-click or tap on a user."),
+        Entry(
+            "Message", intValue = 3,
+            kDoc = "A UI-based command that shows up when you right-click or tap on a message.",
+        ),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "ApplicationCommandOptionType", valueType = INT, valueName = "type",
+    entries = [
+        Entry("SubCommand", intValue = 1),
+        Entry("SubCommandGroup", intValue = 2),
+        Entry("String", intValue = 3),
+        Entry("Integer", intValue = 4, kDoc = "Any integer between `-2^53` and `2^53`."),
+        Entry("Boolean", intValue = 5),
+        Entry("User", intValue = 6),
+        Entry("Channel", intValue = 7, kDoc = "Includes all channel types + categories."),
+        Entry("Role", intValue = 8),
+        Entry("Mentionable", intValue = 9, kDoc = "Includes users and roles."),
+        Entry("Number", intValue = 10, kDoc = "Any double between `-2^53` and `2^53`."),
+        Entry("Attachment", intValue = 11),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "InteractionType", valueType = INT, valueName = "type",
+    entries = [
+        Entry("Ping", intValue = 1),
+        Entry("ApplicationCommand", intValue = 2),
+        Entry("Component", intValue = 3),
+        Entry("AutoComplete", intValue = 4),
+        Entry("ModalSubmit", intValue = 5),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "InteractionResponseType", valueType = INT, valueName = "type",
+    entries = [
+        Entry("Pong", intValue = 1, kDoc = "ACK a [Ping][dev.kord.common.entity.InteractionType.Ping]"),
+        Entry("ChannelMessageWithSource", intValue = 4, kDoc = "Respond to an interaction with a message."),
+        Entry(
+            "DeferredChannelMessageWithSource", intValue = 5,
+            kDoc = "ACK an interaction and edit a response later, the user sees a loading state.",
+        ),
+        Entry(
+            "DeferredUpdateMessage", intValue = 6,
+            kDoc = "For components, ACK an interaction and edit the original message later; the user does not see a " +
+                    "loading state.",
+        ),
+        Entry("UpdateMessage", intValue = 7, kDoc = "For components, edit the message the component was attached to."),
+        Entry(
+            "ApplicationCommandAutoCompleteResult", intValue = 8,
+            kDoc = "Respond to an autocomplete interaction with suggested choices.",
+        ),
+        Entry("Modal", intValue = 9, kDoc = "Respond to an interaction with a popup modal."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "ApplicationCommandPermissionType", valueType = INT,
+    entries = [
+        Entry("Role", intValue = 1),
+        Entry("User", intValue = 2),
+        Entry("Channel", intValue = 3),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.optional.*
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
@@ -39,30 +114,6 @@ public data class DiscordApplicationCommand(
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
     val version: Snowflake
 )
-
-@Serializable(with = ApplicationCommandType.Serializer::class)
-public sealed class ApplicationCommandType(public val value: Int) {
-    /** The default code for unknown values. */
-    public class Unknown(value: Int) : ApplicationCommandType(value)
-    public object ChatInput : ApplicationCommandType(1)
-    public object User : ApplicationCommandType(2)
-    public object Message : ApplicationCommandType(3)
-
-    internal object Serializer : KSerializer<ApplicationCommandType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ApplicationCommandType = when (val code = decoder.decodeInt()) {
-            1 -> ChatInput
-            2 -> User
-            3 -> Message
-            else -> Unknown(code)
-        }
-
-        override fun serialize(encoder: Encoder, value: ApplicationCommandType) = encoder.encodeInt(value.value)
-    }
-
-}
 
 @Serializable
 public data class ApplicationCommandOption(
@@ -104,52 +155,6 @@ public object NotSerializable : KSerializer<Any?> {
     override fun serialize(encoder: Encoder, value: Any?): Nothing = error("This operation is not supported.")
 }
 
-
-@Serializable(ApplicationCommandOptionType.Serializer::class)
-public sealed class ApplicationCommandOptionType(public val type: Int) {
-
-    public object SubCommand : ApplicationCommandOptionType(1)
-    public object SubCommandGroup : ApplicationCommandOptionType(2)
-    public object String : ApplicationCommandOptionType(3)
-    public object Integer : ApplicationCommandOptionType(4)
-    public object Boolean : ApplicationCommandOptionType(5)
-    public object User : ApplicationCommandOptionType(6)
-    public object Channel : ApplicationCommandOptionType(7)
-    public object Role : ApplicationCommandOptionType(8)
-    public object Mentionable : ApplicationCommandOptionType(9)
-    public object Number : ApplicationCommandOptionType(10)
-    public object Attachment : ApplicationCommandOptionType(11)
-    public class Unknown(type: Int) : ApplicationCommandOptionType(type)
-
-    internal object Serializer : KSerializer<ApplicationCommandOptionType> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("ApplicationCommandOptionType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ApplicationCommandOptionType {
-            return when (val type = decoder.decodeInt()) {
-                1 -> SubCommand
-                2 -> SubCommandGroup
-                3 -> String
-                4 -> Integer
-                5 -> Boolean
-                6 -> User
-                7 -> Channel
-                8 -> Role
-                9 -> Mentionable
-                10 -> Number
-                11 -> Attachment
-                else -> Unknown(type)
-            }
-        }
-
-        override fun serialize(encoder: Encoder, value: ApplicationCommandOptionType) {
-            encoder.encodeInt(value.type)
-        }
-    }
-
-
-}
 
 private val LocalizationSerializer =
     Optional.serializer(MapSerializer(Locale.serializer(), String.serializer()).nullable)
@@ -291,54 +296,6 @@ public data class DiscordInteraction(
     }
 }
 
-
-@Serializable(InteractionType.Serializer::class)
-public sealed class InteractionType(public val type: Int) {
-    public object Ping : InteractionType(1)
-    public object ApplicationCommand : InteractionType(2)
-
-    /*
-     * don't trust the docs:
-     *
-     * this type exists and is needed for components even though it's not documented
-     */
-    public object Component : InteractionType(3)
-
-    public object AutoComplete : InteractionType(4)
-    public object ModalSubmit : InteractionType(5)
-    public class Unknown(type: Int) : InteractionType(type)
-
-    override fun toString(): String = when (this) {
-        Ping -> "InteractionType.Ping($type)"
-        ApplicationCommand -> "InteractionType.ApplicationCommand($type)"
-        Component -> "InteractionType.ComponentInvoke($type)"
-        AutoComplete -> "InteractionType.AutoComplete($type)"
-        ModalSubmit -> "InteractionType.ModalSubmit($type)"
-        is Unknown -> "InteractionType.Unknown($type)"
-    }
-
-    internal object Serializer : KSerializer<InteractionType> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("InteractionType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): InteractionType {
-            return when (val type = decoder.decodeInt()) {
-                1 -> Ping
-                2 -> ApplicationCommand
-                3 -> Component
-                4 -> AutoComplete
-                5 -> ModalSubmit
-                else -> Unknown(type)
-            }
-        }
-
-        override fun serialize(encoder: Encoder, value: InteractionType) {
-            encoder.encodeInt(value.type)
-        }
-
-    }
-}
 
 @Serializable
 public data class InteractionCallbackData(
@@ -738,42 +695,6 @@ public fun CommandArgument<*>.snowflake(): Snowflake {
     return Snowflake(id)
 }
 
-@Serializable(InteractionResponseType.Serializer::class)
-
-public sealed class InteractionResponseType(public val type: Int) {
-    public object Pong : InteractionResponseType(1)
-    public object ChannelMessageWithSource : InteractionResponseType(4)
-    public object DeferredChannelMessageWithSource : InteractionResponseType(5)
-    public object DeferredUpdateMessage : InteractionResponseType(6)
-    public object UpdateMessage : InteractionResponseType(7)
-    public object ApplicationCommandAutoCompleteResult : InteractionResponseType(8)
-    public object Modal : InteractionResponseType(9)
-    public class Unknown(type: Int) : InteractionResponseType(type)
-
-    internal object Serializer : KSerializer<InteractionResponseType> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("InteractionResponseType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): InteractionResponseType {
-            return when (val type = decoder.decodeInt()) {
-                1 -> Pong
-                4 -> ChannelMessageWithSource
-                5 -> DeferredChannelMessageWithSource
-                6 -> DeferredUpdateMessage
-                7 -> UpdateMessage
-                8 -> ApplicationCommandAutoCompleteResult
-                9 -> Modal
-                else -> Unknown(type)
-            }
-        }
-
-        override fun serialize(encoder: Encoder, value: InteractionResponseType) {
-            encoder.encodeInt(value.type)
-        }
-    }
-}
-
 
 @Serializable
 public data class DiscordGuildApplicationCommandPermissions(
@@ -788,32 +709,9 @@ public data class DiscordGuildApplicationCommandPermissions(
 @Serializable
 public data class DiscordGuildApplicationCommandPermission(
     val id: Snowflake,
-    val type: Type,
+    val type: ApplicationCommandPermissionType,
     val permission: Boolean
-) {
-    @Serializable(with = Type.Serializer::class)
-    public sealed class Type(public val value: Int) {
-        public object Role : Type(1)
-        public object User : Type(2)
-        public object Channel : Type(3)
-        public class Unknown(value: Int) : Type(value)
-
-        public object Serializer : KSerializer<Type> {
-            override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
-
-            override fun deserialize(decoder: Decoder): Type =
-                when (val value = decoder.decodeInt()) {
-                    1 -> Role
-                    2 -> User
-                    3 -> Channel
-                    else -> Unknown(value)
-                }
-
-            override fun serialize(encoder: Encoder, value: Type): Unit = encoder.encodeInt(value.value)
-        }
-    }
-}
+)
 
 @Serializable
 public data class DiscordAutoComplete<T>(

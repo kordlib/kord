@@ -1,6 +1,6 @@
 package dev.kord.core.entity.application
 
-import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
+import dev.kord.common.entity.ApplicationCommandPermissionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionData
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
@@ -11,7 +11,7 @@ public class GuildApplicationCommandPermission(public val data: GuildApplication
 
     public val id: Snowflake get() = data.id
 
-    public val type: DiscordGuildApplicationCommandPermission.Type get() = data.type
+    public val type: ApplicationCommandPermissionType get() = data.type
 
     public val permission: Boolean get() = data.permission
 }
