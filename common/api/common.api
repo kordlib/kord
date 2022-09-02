@@ -7694,10 +7694,13 @@ public final class dev/kord/common/entity/UserFlags$UserFlagsSerializer : kotlin
 public abstract class dev/kord/common/entity/UserPremium {
 	public static final field Companion Ldev/kord/common/entity/UserPremium$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/UserPremium$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
