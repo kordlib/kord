@@ -1,17 +1,38 @@
+@file:GenerateKordEnum(
+    name = "GuildScheduledEventPrivacyLevel", valueType = INT,
+    entries = [Entry("GuildOnly", intValue = 2, kDoc = "The scheduled event is only accessible to guild members.")],
+)
+
+@file:GenerateKordEnum(
+    name = "ScheduledEntityType", valueType = INT,
+    entries = [
+        Entry("StageInstance", intValue = 1),
+        Entry("Voice", intValue = 2),
+        Entry("External", intValue = 3),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "GuildScheduledEventStatus", valueType = INT,
+    entries = [
+        Entry("Scheduled", intValue = 1),
+        Entry("Active", intValue = 2),
+        Entry("Completed", intValue = 3),
+        Entry("Cancelled", intValue = 4),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * Representation of a
@@ -65,83 +86,6 @@ public data class DiscordGuildScheduledEvent(
     val userCount: OptionalInt = OptionalInt.Missing,
     val image: Optional<String?> = Optional.Missing(),
 )
-
-/** Privacy level of a [DiscordGuildScheduledEvent]. */
-@Serializable(with = GuildScheduledEventPrivacyLevel.Serializer::class)
-public sealed class GuildScheduledEventPrivacyLevel(public val value: Int) {
-
-    /** The scheduled event is only accessible to guild members. */
-    public object GuildOnly : GuildScheduledEventPrivacyLevel(2)
-
-    /** An unknown privacy level. */
-    public class Unknown(value: Int) : GuildScheduledEventPrivacyLevel(value)
-
-    internal object Serializer : KSerializer<GuildScheduledEventPrivacyLevel> {
-        override val descriptor: SerialDescriptor =
-            PrimitiveSerialDescriptor("GuildScheduledEventPrivacyLevel", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): GuildScheduledEventPrivacyLevel {
-            return when (val value = decoder.decodeInt()) {
-                2 -> GuildOnly
-                else -> Unknown(value)
-            }
-        }
-
-        override fun serialize(encoder: Encoder, value: GuildScheduledEventPrivacyLevel) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
-@Serializable(with = ScheduledEntityType.Serializer::class)
-public sealed class ScheduledEntityType(public val value: Int) {
-    public object StageInstance : ScheduledEntityType(1)
-    public object Voice : ScheduledEntityType(2)
-    public object External : ScheduledEntityType(3)
-    public class Unknown(value: Int) : ScheduledEntityType(value)
-
-    public companion object Serializer : KSerializer<ScheduledEntityType> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ScheduledEntityType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ScheduledEntityType {
-            return when (val value = decoder.decodeInt()) {
-                1 -> StageInstance
-                2 -> Voice
-                3 -> External
-                else -> Unknown(value)
-            }
-        }
-
-        override fun serialize(encoder: Encoder, value: ScheduledEntityType): Unit = encoder.encodeInt(value.value)
-
-    }
-}
-
-@Serializable(with = GuildScheduledEventStatus.Serializer::class)
-public sealed class GuildScheduledEventStatus(public val value: Int) {
-    public object Scheduled : GuildScheduledEventStatus(1)
-    public object Active : GuildScheduledEventStatus(2)
-    public object Completed : GuildScheduledEventStatus(3)
-    public object Cancelled : GuildScheduledEventStatus(4)
-    public class Unknown(value: Int) : GuildScheduledEventStatus(value)
-
-    public companion object Serializer : KSerializer<GuildScheduledEventStatus> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("GuildScheduledEventStatus", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): GuildScheduledEventStatus {
-            return when (val value = decoder.decodeInt()) {
-                1 -> Scheduled
-                2 -> Active
-                3 -> Completed
-                4 -> Cancelled
-                else -> Unknown(value)
-            }
-        }
-
-        override fun serialize(encoder: Encoder, value: GuildScheduledEventStatus): Unit = encoder.encodeInt(value.value)
-
-    }
-}
 
 /**
  * Entity metadata for [DiscordGuildScheduledEvent].
