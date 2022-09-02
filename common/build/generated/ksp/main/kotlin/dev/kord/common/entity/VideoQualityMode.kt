@@ -29,6 +29,8 @@ public sealed class VideoQualityMode(
 
     /**
      * An unknown [VideoQualityMode].
+     *
+     * This is used as a fallback for [VideoQualityMode]s that haven't been added to Kord yet.
      */
     public class Unknown(
         `value`: Int,

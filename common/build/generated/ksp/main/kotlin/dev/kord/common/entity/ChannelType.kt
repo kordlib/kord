@@ -31,6 +31,8 @@ public sealed class ChannelType(
 
     /**
      * An unknown [ChannelType].
+     *
+     * This is used as a fallback for [ChannelType]s that haven't been added to Kord yet.
      */
     public class Unknown(
         `value`: Int,

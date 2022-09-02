@@ -19,50 +19,56 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Indicates in what event context a rule should be checked.
+ * Style of a [text input][dev.kord.common.entity.ComponentType.TextInput]
  */
-@Serializable(with = AutoModerationRuleEventType.Serializer::class)
-public sealed class AutoModerationRuleEventType(
+@Serializable(with = TextInputStyle.Serializer::class)
+public sealed class TextInputStyle(
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
-            (other is AutoModerationRuleEventType && this.value == other.value)
+            (other is TextInputStyle && this.value == other.value)
 
     public final override fun hashCode(): Int = value.hashCode()
 
     /**
-     * An unknown [AutoModerationRuleEventType].
+     * An unknown [TextInputStyle].
      *
-     * This is used as a fallback for [AutoModerationRuleEventType]s that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [TextInputStyle]s that haven't been added to Kord yet.
      */
     public class Unknown(
         `value`: Int,
-    ) : AutoModerationRuleEventType(value)
+    ) : TextInputStyle(value)
 
     /**
-     * When a member sends or edits a message in the guild.
+     * A single-line input.
      */
-    public object MessageSend : AutoModerationRuleEventType(1)
+    public object Short : TextInputStyle(1)
 
-    internal object Serializer : KSerializer<AutoModerationRuleEventType> {
+    /**
+     * A multi-line input.
+     */
+    public object Paragraph : TextInputStyle(2)
+
+    internal object Serializer : KSerializer<TextInputStyle> {
         public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleEventType",
+                PrimitiveSerialDescriptor("dev.kord.common.entity.TextInputStyle",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: AutoModerationRuleEventType) =
+        public override fun serialize(encoder: Encoder, `value`: TextInputStyle) =
                 encoder.encodeInt(value.value)
 
         public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> MessageSend
+            1 -> Short
+            2 -> Paragraph
             else -> Unknown(value)
         }
     }
 
     public companion object {
-        public val entries: List<AutoModerationRuleEventType> by lazy(mode = PUBLICATION) {
+        public val entries: List<TextInputStyle> by lazy(mode = PUBLICATION) {
             listOf(
-                MessageSend,
+                Short,
+                Paragraph,
             )
         }
 

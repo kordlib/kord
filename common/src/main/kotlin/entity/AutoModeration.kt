@@ -5,7 +5,7 @@
         Entry("Keyword", intValue = 1, kDoc = "Check if content contains words from a user defined list of keywords."),
         Entry(
             "Spam", intValue = 3, isKordExperimental = true,
-            kDoc = "Check if content represents generic spam.\n\nThis [trigger type][AutoModerationRuleTriggerType] " +
+            kDoc = "Check if content represents generic spam.\n\nThis [trigger·type][AutoModerationRuleTriggerType] " +
                     "is not yet released, so it cannot be used in most servers."
         ),
         Entry(
@@ -14,7 +14,7 @@
         ),
         Entry(
             "MentionSpam", intValue = 5, isKordExperimental = true,
-            kDoc = "Check if content contains more mentions than allowed.\n\nThis [trigger type][" +
+            kDoc = "Check if content contains more mentions than allowed.\n\nThis [trigger·type][" +
                     "AutoModerationRuleTriggerType] is not yet released, so it cannot be used in most servers."
         ),
     ],

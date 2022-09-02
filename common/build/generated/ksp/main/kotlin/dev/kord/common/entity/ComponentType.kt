@@ -18,51 +18,67 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-/**
- * Indicates in what event context a rule should be checked.
- */
-@Serializable(with = AutoModerationRuleEventType.Serializer::class)
-public sealed class AutoModerationRuleEventType(
+@Serializable(with = ComponentType.Serializer::class)
+public sealed class ComponentType(
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
-            (other is AutoModerationRuleEventType && this.value == other.value)
+            (other is ComponentType && this.value == other.value)
 
     public final override fun hashCode(): Int = value.hashCode()
 
     /**
-     * An unknown [AutoModerationRuleEventType].
+     * An unknown [ComponentType].
      *
-     * This is used as a fallback for [AutoModerationRuleEventType]s that haven't been added to Kord
-     * yet.
+     * This is used as a fallback for [ComponentType]s that haven't been added to Kord yet.
      */
     public class Unknown(
         `value`: Int,
-    ) : AutoModerationRuleEventType(value)
+    ) : ComponentType(value)
 
     /**
-     * When a member sends or edits a message in the guild.
+     * A container for other components.
      */
-    public object MessageSend : AutoModerationRuleEventType(1)
+    public object ActionRow : ComponentType(1)
 
-    internal object Serializer : KSerializer<AutoModerationRuleEventType> {
+    /**
+     * A button object.
+     */
+    public object Button : ComponentType(2)
+
+    /**
+     * A select menu for picking from choices.
+     */
+    public object SelectMenu : ComponentType(3)
+
+    /**
+     * A text input object.
+     */
+    public object TextInput : ComponentType(4)
+
+    internal object Serializer : KSerializer<ComponentType> {
         public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleEventType",
-                PrimitiveKind.INT)
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: AutoModerationRuleEventType) =
+        public override fun serialize(encoder: Encoder, `value`: ComponentType) =
                 encoder.encodeInt(value.value)
 
         public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> MessageSend
+            1 -> ActionRow
+            2 -> Button
+            3 -> SelectMenu
+            4 -> TextInput
             else -> Unknown(value)
         }
     }
 
     public companion object {
-        public val entries: List<AutoModerationRuleEventType> by lazy(mode = PUBLICATION) {
+        public val entries: List<ComponentType> by lazy(mode = PUBLICATION) {
             listOf(
-                MessageSend,
+                ActionRow,
+                Button,
+                SelectMenu,
+                TextInput,
             )
         }
 

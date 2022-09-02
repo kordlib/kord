@@ -29,6 +29,8 @@ public sealed class AuditLogEvent(
 
     /**
      * An unknown [AuditLogEvent].
+     *
+     * This is used as a fallback for [AuditLogEvent]s that haven't been added to Kord yet.
      */
     public class Unknown(
         `value`: Int,

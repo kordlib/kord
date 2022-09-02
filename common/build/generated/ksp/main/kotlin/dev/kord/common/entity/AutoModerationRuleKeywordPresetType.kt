@@ -32,6 +32,9 @@ public sealed class AutoModerationRuleKeywordPresetType(
 
     /**
      * An unknown [AutoModerationRuleKeywordPresetType].
+     *
+     * This is used as a fallback for [AutoModerationRuleKeywordPresetType]s that haven't been added
+     * to Kord yet.
      */
     public class Unknown(
         `value`: Int,

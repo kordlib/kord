@@ -136,7 +136,10 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             // /** An unknown [<enumName>]. */
             // public class Unknown(<valueName>: <valueTypeName>) : <enumName>(<valueName>)
             addClass("Unknown") {
-                addKdoc("An unknown [%T].", enumName)
+                addKdoc(
+                    "An unknown [%1T].\n\nThis is used as a fallback for [%1T]s that haven't been added to Kord yet.",
+                    enumName,
+                )
                 addModifiers(PUBLIC)
                 primaryConstructor {
                     addParameter(valueName, valueTypeName)

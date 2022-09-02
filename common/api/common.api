@@ -1281,9 +1281,16 @@ public final class dev/kord/common/entity/BulkDeleteData$Companion {
 }
 
 public abstract class dev/kord/common/entity/ButtonStyle {
-	public static final field Serializer Ldev/kord/common/entity/ButtonStyle$Serializer;
+	public static final field Companion Ldev/kord/common/entity/ButtonStyle$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/ButtonStyle$Companion {
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/ButtonStyle$Danger : dev/kord/common/entity/ButtonStyle {
@@ -1300,15 +1307,6 @@ public final class dev/kord/common/entity/ButtonStyle$Primary : dev/kord/common/
 
 public final class dev/kord/common/entity/ButtonStyle$Secondary : dev/kord/common/entity/ButtonStyle {
 	public static final field INSTANCE Ldev/kord/common/entity/ButtonStyle$Secondary;
-}
-
-public final class dev/kord/common/entity/ButtonStyle$Serializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ButtonStyle;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ButtonStyle;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/ButtonStyle$Success : dev/kord/common/entity/ButtonStyle {
@@ -1649,9 +1647,11 @@ public final class dev/kord/common/entity/CommandGroup : dev/kord/common/entity/
 }
 
 public abstract class dev/kord/common/entity/ComponentType {
-	public static final field Serializer Ldev/kord/common/entity/ComponentType$Serializer;
+	public static final field Companion Ldev/kord/common/entity/ComponentType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/ComponentType$ActionRow : dev/kord/common/entity/ComponentType {
@@ -1662,17 +1662,13 @@ public final class dev/kord/common/entity/ComponentType$Button : dev/kord/common
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$Button;
 }
 
-public final class dev/kord/common/entity/ComponentType$SelectMenu : dev/kord/common/entity/ComponentType {
-	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$SelectMenu;
+public final class dev/kord/common/entity/ComponentType$Companion {
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/ComponentType$Serializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ComponentType;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ComponentType;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+public final class dev/kord/common/entity/ComponentType$SelectMenu : dev/kord/common/entity/ComponentType {
+	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$SelectMenu;
 }
 
 public final class dev/kord/common/entity/ComponentType$TextInput : dev/kord/common/entity/ComponentType {
@@ -7590,8 +7586,16 @@ public final class dev/kord/common/entity/TeamMembershipState$Unknown : dev/kord
 }
 
 public abstract class dev/kord/common/entity/TextInputStyle {
+	public static final field Companion Ldev/kord/common/entity/TextInputStyle$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/TextInputStyle$Companion {
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/TextInputStyle$Paragraph : dev/kord/common/entity/TextInputStyle {

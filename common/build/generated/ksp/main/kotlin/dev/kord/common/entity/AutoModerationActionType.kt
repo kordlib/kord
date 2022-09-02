@@ -32,6 +32,9 @@ public sealed class AutoModerationActionType(
 
     /**
      * An unknown [AutoModerationActionType].
+     *
+     * This is used as a fallback for [AutoModerationActionType]s that haven't been added to Kord
+     * yet.
      */
     public class Unknown(
         `value`: Int,

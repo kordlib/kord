@@ -29,6 +29,8 @@ public sealed class OverwriteType(
 
     /**
      * An unknown [OverwriteType].
+     *
+     * This is used as a fallback for [OverwriteType]s that haven't been added to Kord yet.
      */
     public class Unknown(
         `value`: Int,
