@@ -6302,9 +6302,16 @@ public final class dev/kord/common/entity/IntegrationApplication$Companion {
 }
 
 public abstract class dev/kord/common/entity/IntegrationExpireBehavior {
-	public static final field Serializer Ldev/kord/common/entity/IntegrationExpireBehavior$Serializer;
+	public static final field Companion Ldev/kord/common/entity/IntegrationExpireBehavior$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/IntegrationExpireBehavior$Companion {
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/IntegrationExpireBehavior$Kick : dev/kord/common/entity/IntegrationExpireBehavior {
@@ -6313,15 +6320,6 @@ public final class dev/kord/common/entity/IntegrationExpireBehavior$Kick : dev/k
 
 public final class dev/kord/common/entity/IntegrationExpireBehavior$RemoveRole : dev/kord/common/entity/IntegrationExpireBehavior {
 	public static final field INSTANCE Ldev/kord/common/entity/IntegrationExpireBehavior$RemoveRole;
-}
-
-public final class dev/kord/common/entity/IntegrationExpireBehavior$Serializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/IntegrationExpireBehavior;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/IntegrationExpireBehavior;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/IntegrationExpireBehavior$Unknown : dev/kord/common/entity/IntegrationExpireBehavior {
