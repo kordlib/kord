@@ -7300,9 +7300,17 @@ public final class dev/kord/common/entity/PremiumTier$Unknown : dev/kord/common/
 }
 
 public abstract class dev/kord/common/entity/PresenceStatus {
-	public static final field StatusSerializer Ldev/kord/common/entity/PresenceStatus$StatusSerializer;
+	public static final field Companion Ldev/kord/common/entity/PresenceStatus$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Ljava/lang/String;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/PresenceStatus$Companion {
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/PresenceStatus$DoNotDisturb : dev/kord/common/entity/PresenceStatus {
@@ -7323,15 +7331,6 @@ public final class dev/kord/common/entity/PresenceStatus$Offline : dev/kord/comm
 
 public final class dev/kord/common/entity/PresenceStatus$Online : dev/kord/common/entity/PresenceStatus {
 	public static final field INSTANCE Ldev/kord/common/entity/PresenceStatus$Online;
-}
-
-public final class dev/kord/common/entity/PresenceStatus$StatusSerializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/PresenceStatus;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/PresenceStatus;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/PresenceStatus$Unknown : dev/kord/common/entity/PresenceStatus {
@@ -7589,26 +7588,24 @@ public final class dev/kord/common/entity/TargetUserType$Unknown : dev/kord/comm
 }
 
 public abstract class dev/kord/common/entity/TeamMembershipState {
-	public static final field TeamMembershipStateSerializer Ldev/kord/common/entity/TeamMembershipState$TeamMembershipStateSerializer;
+	public static final field Companion Ldev/kord/common/entity/TeamMembershipState$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/TeamMembershipState$Accepted : dev/kord/common/entity/TeamMembershipState {
 	public static final field INSTANCE Ldev/kord/common/entity/TeamMembershipState$Accepted;
 }
 
-public final class dev/kord/common/entity/TeamMembershipState$Invited : dev/kord/common/entity/TeamMembershipState {
-	public static final field INSTANCE Ldev/kord/common/entity/TeamMembershipState$Invited;
+public final class dev/kord/common/entity/TeamMembershipState$Companion {
+	public final fun getEntries ()Ljava/util/List;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/TeamMembershipState$TeamMembershipStateSerializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/TeamMembershipState;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/TeamMembershipState;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+public final class dev/kord/common/entity/TeamMembershipState$Invited : dev/kord/common/entity/TeamMembershipState {
+	public static final field INSTANCE Ldev/kord/common/entity/TeamMembershipState$Invited;
 }
 
 public final class dev/kord/common/entity/TeamMembershipState$Unknown : dev/kord/common/entity/TeamMembershipState {

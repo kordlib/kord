@@ -1,11 +1,17 @@
+@file:GenerateKordEnum(
+    name = "TeamMembershipState", valueType = INT,
+    entries = [
+        Entry("Invited", intValue = 1),
+        Entry("Accepted", intValue = 2),
+    ],
+)
+
 package dev.kord.common.entity
 
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * The raw developer team data gotten from the API.
@@ -18,44 +24,6 @@ public data class DiscordTeam(
     @SerialName("owner_user_id")
     val ownerUserId: Snowflake,
 )
-
-/**
- * The state of membership on a Discord developer team.
- */
-@Serializable(with = TeamMembershipState.TeamMembershipStateSerializer::class)
-public sealed class TeamMembershipState(public val value: Int) {
-    /**
-     * Unknown membership state.
-     */
-    public class Unknown(value: Int) : TeamMembershipState(value)
-
-    /**
-     * The user has been invited.
-     */
-    public object Invited : TeamMembershipState(1)
-
-    /**
-     * The user has accepted the invitation.
-     */
-    public object Accepted : TeamMembershipState(2)
-
-
-    public companion object TeamMembershipStateSerializer : KSerializer<TeamMembershipState> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("membership_state", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): TeamMembershipState = when (val value = decoder.decodeInt()) {
-            1 -> Invited
-            2 -> Accepted
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: TeamMembershipState) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
 
 /**
  * The raw developer team member data gotten from the API.
