@@ -57,6 +57,19 @@
     ],
 )
 
+@file:GenerateKordEnum(
+    name = "VideoQualityMode", valueType = INT,
+    entries = [
+        Entry("Auto", intValue = 1, kDoc = "Discord chooses the quality for optimal performance."),
+        Entry("Full", intValue = 2, kDoc = "720p."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "OverwriteType", valueType = INT,
+    entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -72,8 +85,6 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -156,62 +167,6 @@ public data class Overwrite(
     val allow: Permissions,
     val deny: Permissions,
 )
-
-@Serializable(with = OverwriteType.Serializer::class)
-public sealed class OverwriteType(public val value: Int) {
-
-    public class Unknown(value: Int) : OverwriteType(value)
-    public object Role : OverwriteType(0)
-    public object Member : OverwriteType(1)
-
-    internal object Serializer : KSerializer<OverwriteType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.Overwrite.Type", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): OverwriteType = when (val value = decoder.decodeInt()) {
-            0 -> Role
-            1 -> Member
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: OverwriteType) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
-@Serializable(with = VideoQualityMode.Serializer::class)
-public sealed class VideoQualityMode(public val value: Int) {
-
-    final override fun equals(other: Any?): Boolean =
-        this === other || (other is VideoQualityMode && other.value == this.value)
-
-    final override fun hashCode(): Int = value
-
-
-    /** An unknown Video Quality Mode. */
-    public class Unknown(value: Int) : VideoQualityMode(value)
-
-    /** Discord chooses the quality for optimal performance. */
-    public object Auto : VideoQualityMode(1)
-
-    /** 720p. */
-    public object Full : VideoQualityMode(2)
-
-
-    internal object Serializer : KSerializer<VideoQualityMode> {
-        override val descriptor =
-            PrimitiveSerialDescriptor("dev.kord.common.entity.VideoQualityMode", PrimitiveKind.INT)
-
-        override fun serialize(encoder: Encoder, value: VideoQualityMode) = encoder.encodeInt(value.value)
-
-        override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> Auto
-            2 -> Full
-            else -> Unknown(value)
-        }
-    }
-}
 
 @Serializable
 public data class DiscordThreadMetadata(
