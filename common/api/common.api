@@ -7785,7 +7785,13 @@ public final class dev/kord/common/entity/VideoQualityMode$Unknown : dev/kord/co
 public abstract class dev/kord/common/entity/WebhookType {
 	public static final field Companion Ldev/kord/common/entity/WebhookType$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
+	public final fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/WebhookType$Application : dev/kord/common/entity/WebhookType {
+	public static final field INSTANCE Ldev/kord/common/entity/WebhookType$Application;
 }
 
 public final class dev/kord/common/entity/WebhookType$ChannelFollower : dev/kord/common/entity/WebhookType {
@@ -7793,6 +7799,7 @@ public final class dev/kord/common/entity/WebhookType$ChannelFollower : dev/kord
 }
 
 public final class dev/kord/common/entity/WebhookType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
