@@ -6,8 +6,11 @@ import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import io.ktor.util.cio.*
+import io.ktor.util.cio.toByteReadChannel
 import io.ktor.utils.io.*
+import io.ktor.utils.io.jvm.javaio.*
 import java.io.File
+import java.io.InputStream
 import java.nio.file.Path
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -52,6 +55,23 @@ public sealed interface MessageCreateBuilder {
     /**
      * Adds a file with the [name] and [content] to the attachments.
      */
+    @Deprecated(
+        "Use ByteReadChannel instead of InputStream",
+        ReplaceWith(
+            "addFile(name, content.toByteReadChannel())",
+            "io.ktor.util.cio.toByteReadChannel"
+        ),
+        DeprecationLevel.WARNING
+    )
+    public fun addFile(name: String, content: InputStream): NamedFile {
+        val namedFile = NamedFile(name, content.toByteReadChannel())
+        files += namedFile
+        return namedFile
+    }
+
+    /**
+     * Adds a file with the [name] and [content] to the attachments.
+     */
     public fun addFile(name: String, content: ByteReadChannel): NamedFile {
         val namedFile = NamedFile(name, content)
         files += namedFile
@@ -62,7 +82,7 @@ public sealed interface MessageCreateBuilder {
      * Adds a file with the given [path] to the attachments.
      */
     public suspend fun addFile(path: Path): NamedFile =
-        addFile(path.fileName.toString(), File(path.toUri()).readChannel())
+        addFile(path.fileName.toString(), path.readChannel())
 
 
 }
