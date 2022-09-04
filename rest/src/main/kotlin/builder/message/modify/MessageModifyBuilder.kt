@@ -8,7 +8,7 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
-import java.io.File
+import io.ktor.utils.io.jvm.javaio.toByteReadChannel
 import java.io.InputStream
 import java.nio.file.Path
 import kotlin.contracts.InvocationKind
@@ -37,21 +37,9 @@ public sealed interface MessageModifyBuilder {
      */
     @Deprecated(
         "Use ByteReadChannel instead of InputStream",
-        ReplaceWith(
-            "addFile(name, content.toByteReadChannel())",
-            "io.ktor.util.cio.toByteReadChannel"
-        ),
-        DeprecationLevel.WARNING
+        level = DeprecationLevel.WARNING
     )
-    public fun addFile(name: String, content: InputStream): NamedFile {
-        val namedFile = NamedFile(name, content.toByteReadChannel())
-
-        files = (files ?: mutableListOf()).also {
-            it.add(namedFile)
-        }
-
-        return namedFile
-    }
+    public fun addFile(name: String, content: InputStream): NamedFile = addFile(name, content.toByteReadChannel())
 
     /**
      * Adds a file with the [name] and [content] to the attachments.

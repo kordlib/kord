@@ -8,12 +8,19 @@ public class NamedFile(public val name: String, public val readChannel: ByteRead
     public constructor(name: String, inputStream: InputStream) : this(name, inputStream.toByteReadChannel())
 
     public val url: String get() = "attachment://$name"
+
+    @Deprecated(
+        "Use ByteReadChannel instead of InputStream",
+        ReplaceWith("readChannel"),
+        DeprecationLevel.WARNING,
+    )
     public val inputStream: InputStream get() = readChannel.toInputStream()
 
     public operator fun component1(): String = name
     public operator fun component2(): ByteReadChannel = readChannel
+    public operator fun component3(): String = url
+
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     @JvmName("component2")
     public fun _component2(): InputStream = inputStream
-    public operator fun component3(): String = url
 }

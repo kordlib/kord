@@ -6,6 +6,7 @@ import dev.kord.rest.route.Route
 import io.ktor.http.*
 import io.ktor.utils.io.*
 import kotlinx.serialization.SerializationStrategy
+import java.io.InputStream
 import kotlin.DeprecationLevel.HIDDEN
 
 public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
@@ -54,6 +55,11 @@ public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
     /** Adds a header without encoding its [value]. */
     public fun unencodedHeader(key: String, value: String) {
         headers.append(key, value)
+    }
+
+    @Deprecated("Use ByteReadChannel instead of InputStream", level = DeprecationLevel.WARNING)
+    public fun file(name: String, input: InputStream) {
+        files.add(NamedFile(name, input))
     }
 
     public fun file(name: String, input: ByteReadChannel) {

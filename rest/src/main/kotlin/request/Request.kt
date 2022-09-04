@@ -90,12 +90,11 @@ public class MultipartRequest<B : Any, R>(
         body?.let {
             append("payload_json", Json.encodeToString(it.strategy, it.body))
         }
-        files.forEachIndexed { index, pair ->
-            val (name, channel) = pair
+        files.forEachIndexed { index, (fileName, fileChannel) ->
             append(
                 "file$index",
-                ChannelProvider { channel },
-                Headers.build { append(HttpHeaders.ContentDisposition, "filename=$name") }
+                ChannelProvider { fileChannel },
+                headersOf(HttpHeaders.ContentDisposition, "filename=$fileName")
             )
         }
     }
