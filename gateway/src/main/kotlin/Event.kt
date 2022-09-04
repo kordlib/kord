@@ -67,7 +67,7 @@ public sealed class Event {
                         decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
-                            op = OpCode.serializer().deserialize(decoder)
+                            op = decodeSerializableElement(descriptor, index, OpCode.serializer())
                             when (op) {
                                 OpCode.HeartbeatACK -> data = HeartbeatACK
                                 OpCode.Reconnect -> data = Reconnect
