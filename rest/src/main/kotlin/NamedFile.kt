@@ -1,11 +1,13 @@
 package dev.kord.rest
 
+import io.ktor.client.request.forms.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
 
-public class NamedFile(public val name: String, public val readChannel: ByteReadChannel) {
-    public constructor(name: String, inputStream: InputStream) : this(name, inputStream.toByteReadChannel())
+public class NamedFile(public val name: String, public val channelProvider: ChannelProvider) {
+    public constructor(name: String, inputStream: InputStream) : this(name, ChannelProvider { inputStream.toByteReadChannel() })
+    public constructor(name: String, channel: ByteReadChannel) : this(name, ChannelProvider { channel })
 
     public val url: String get() = "attachment://$name"
 
@@ -14,10 +16,10 @@ public class NamedFile(public val name: String, public val readChannel: ByteRead
         ReplaceWith("readChannel"),
         DeprecationLevel.WARNING,
     )
-    public val inputStream: InputStream get() = readChannel.toInputStream()
+    public val inputStream: InputStream get() = channelProvider.block().toInputStream()
 
     public operator fun component1(): String = name
-    public operator fun component2(): ByteReadChannel = readChannel
+    public operator fun component2(): ChannelProvider = channelProvider
     public operator fun component3(): String = url
 
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)

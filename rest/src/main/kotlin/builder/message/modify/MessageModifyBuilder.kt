@@ -6,6 +6,7 @@ import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
+import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.toByteReadChannel
@@ -39,24 +40,34 @@ public sealed interface MessageModifyBuilder {
         "Use ByteReadChannel instead of InputStream",
         level = DeprecationLevel.WARNING
     )
-    public fun addFile(name: String, content: InputStream): NamedFile = addFile(name, content.toByteReadChannel())
-
-    /**
-     * Adds a file with the [name] and [content] to the attachments.
-     */
-    public fun addFile(name: String, content: ByteReadChannel): NamedFile {
-        val namedFile = NamedFile(name, content)
-
-        files = (files ?: mutableListOf()).also {
-            it.add(namedFile)
+    public fun addFile(name: String, content: InputStream): NamedFile =
+        NamedFile(name, content).also {
+            addFile(it)
         }
 
-        return namedFile
-    }
+    public fun addFile(name: String, content: ByteReadChannel): NamedFile =
+        NamedFile(name, content).also {
+            addFile(it)
+        }
+
+    /**
+     * Adds a file with the [name] and [contentProvider] to the attachments.
+     */
+    public fun addFile(name: String, contentProvider: ChannelProvider): NamedFile =
+        NamedFile(name, contentProvider).also {
+            addFile(it)
+        }
 
     public suspend fun addFile(path: Path): NamedFile =
-        addFile(path.fileName.toString(), path.readChannel())
+        NamedFile(path.fileName.toString(), path.readChannel()).also {
+            addFile(it)
+        }
 
+    public fun addFile(file: NamedFile) {
+        files = (files ?: mutableListOf()).also {
+            it.add(file)
+        }
+    }
 }
 
 public inline fun MessageModifyBuilder.embed(block: EmbedBuilder.() -> Unit) {

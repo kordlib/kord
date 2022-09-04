@@ -3,6 +3,7 @@ package dev.kord.rest.request
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.NamedFile
 import dev.kord.rest.route.Route
+import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.utils.io.*
 import kotlinx.serialization.SerializationStrategy
@@ -62,8 +63,12 @@ public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
         files.add(NamedFile(name, input))
     }
 
-    public fun file(name: String, input: ByteReadChannel) {
-        files.add(NamedFile(name, input))
+    public fun file(name: String, channel: ByteReadChannel) {
+        files.add(NamedFile(name, channel))
+    }
+
+    public fun file(name: String, channelProvider: ChannelProvider) {
+        files.add(NamedFile(name, channelProvider))
     }
 
     public fun file(file: NamedFile) {
