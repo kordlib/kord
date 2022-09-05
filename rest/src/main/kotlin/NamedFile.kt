@@ -24,5 +24,6 @@ public class NamedFile(public val name: String, public val channelProvider: Chan
 
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     @JvmName("component2")
+    @Suppress("DEPRECATION")
     public fun _component2(): InputStream = inputStream
 }
