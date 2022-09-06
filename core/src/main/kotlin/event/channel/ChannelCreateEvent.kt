@@ -94,6 +94,17 @@ public class StageChannelCreateEvent(
     }
 }
 
+public class ForumChannelCreateEvent(
+    override val channel: ForumChannel,
+    override val shard : Int,
+    override val customContext: Any?,
+
+) : ChannelCreateEvent {
+        override fun toString(): String {
+            return "ForumChannelCreateEvent(channel=$channel, shard=$shard)"
+        }
+}
+
 public class UnknownChannelCreateEvent(
     override val channel: Channel,
     override val shard: Int,

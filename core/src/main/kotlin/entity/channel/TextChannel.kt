@@ -19,7 +19,7 @@ public class TextChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, TextChannelBehavior, ThreadParentChannel {
+) : CategorizableChannel, TextChannelBehavior, ThreadParentChannel, TopGuildMessageChannel {
 
     /**
      * Whether the channel is nsfw.
@@ -44,6 +44,13 @@ public class TextChannel(
     override suspend fun asChannel(): TextChannel = this
 
     override suspend fun asChannelOrNull(): TextChannel = this
+    override suspend fun fetchChannel(): TextChannel {
+        return super<TextChannelBehavior>.fetchChannel()
+    }
+
+    override suspend fun fetchChannelOrNull(): TextChannel? {
+        return super<TextChannelBehavior>.fetchChannelOrNull()
+    }
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 

@@ -414,6 +414,15 @@ public suspend inline fun ChannelService.patchTextChannel(
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
+
+public suspend inline fun ChannelService.patchForumChannel(
+    channelId: Snowflake,
+    builder: ForumChannelModifyBuilder.() -> Unit
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val modifyBuilder = ForumChannelModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
+}
 public suspend inline fun ChannelService.patchVoiceChannel(
     channelId: Snowflake,
     builder: VoiceChannelModifyBuilder.() -> Unit

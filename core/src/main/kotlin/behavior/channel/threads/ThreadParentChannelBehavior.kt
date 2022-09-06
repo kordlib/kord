@@ -7,7 +7,7 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
@@ -25,7 +25,7 @@ import java.util.*
 /**
  * Behavior of channels that can contain public threads.
  */
-public interface ThreadParentChannelBehavior : TopGuildMessageChannelBehavior {
+public interface ThreadParentChannelBehavior : TopGuildChannelBehavior {
     /**
      * Returns all active public and private threads in the channel.
      * Threads are ordered by their id, in descending order.

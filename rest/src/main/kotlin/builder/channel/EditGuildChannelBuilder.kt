@@ -63,6 +63,53 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
 }
 
 @KordDsl
+public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
+    override var reason: String? = null
+
+    private var _name: Optional<String> = Optional.Missing()
+    public var name: String? by ::_name.delegate()
+
+    private var _position: OptionalInt? = OptionalInt.Missing
+    public var position: Int? by ::_position.delegate()
+
+    private var _topic: Optional<String?> = Optional.Missing()
+    public var topic: String? by ::_topic.delegate()
+
+    private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
+    public var nsfw: Boolean? by ::_nsfw.delegate()
+
+    private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
+    public var parentId: Snowflake? by ::_parentId.delegate()
+
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
+
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+
+    /**
+     * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
+     * channel, to automatically archive the thread after recent activity.
+     */
+    public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
+
+    override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
+        name = _name,
+        position = _position,
+        topic = _topic,
+        nsfw = _nsfw,
+        rateLimitPerUser = _rateLimitPerUser,
+        permissionOverwrites = _permissionOverwrites,
+        parentId = _parentId,
+        defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
+    )
+
+}
+
+@KordDsl
 public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null

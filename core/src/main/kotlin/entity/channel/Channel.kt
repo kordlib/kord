@@ -50,6 +50,7 @@ public interface Channel : ChannelBehavior {
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)
             @Suppress("DEPRECATION_ERROR") GuildStore -> @Suppress("DEPRECATION_ERROR") StoreChannel(data, kord)
+            GuildForum -> ForumChannel(data, kord)
             PublicNewsThread -> NewsChannelThread(data, kord)
             PrivateThread -> TextChannelThread(data, kord)
             PublicGuildThread -> TextChannelThread(data, kord)

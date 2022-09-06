@@ -775,6 +775,16 @@ public suspend inline fun GuildBehavior.createTextChannel(
     return Channel.from(data, kord) as TextChannel
 }
 
+public suspend inline fun GuildBehavior.createForumChannel(
+    name: String,
+    builder: ForumChannelCreateBuilder.() -> Unit = {}
+): ForumChannel  {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val response = kord.rest.guild.createForumChannel(id, name, builder)
+    val data = ChannelData.from(response)
+    return Channel.from(data, kord) as ForumChannel
+}
+
 /**
  * Requests to create a new voice channel.
  *

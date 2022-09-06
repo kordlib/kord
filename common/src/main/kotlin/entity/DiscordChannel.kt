@@ -55,6 +55,8 @@ public data class DiscordChannel(
     val name: Optional<String?> = Optional.Missing(),
     val topic: Optional<String?> = Optional.Missing(),
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("nsfw_level")
+    val nsfwLevel: NsfwLevel,
     @SerialName("last_message_id")
     val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val bitrate: OptionalInt = OptionalInt.Missing,
@@ -158,6 +160,9 @@ public sealed class ChannelType(public val value: Int) {
      * containing the listed servers.
      */
     public object GuildDirectory : ChannelType(14)
+
+    public object GuildForum : ChannelType(15)
+
 
 
     internal object Serializer : KSerializer<ChannelType> {

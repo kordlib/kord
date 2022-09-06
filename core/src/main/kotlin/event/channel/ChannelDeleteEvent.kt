@@ -93,6 +93,17 @@ public class StageChannelDeleteEvent(
     }
 }
 
+public class ForumChannelDeleteEvent(
+    override val channel: ForumChannel,
+    override val shard: Int,
+    override val customContext: Any?,
+) : ChannelDeleteEvent {
+    override fun toString(): String {
+        return "ForumChannelDeleteEvent(channel=$channel, shard=$shard)"
+    }
+}
+
+
 public class UnknownChannelDeleteEvent(
     override val channel: Channel,
     override val shard: Int,

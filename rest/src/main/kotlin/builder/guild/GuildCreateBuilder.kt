@@ -113,6 +113,16 @@ public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildC
         return id
     }
 
+    public inline fun forumChannel(
+        name: String,
+        id: Snowflake = newUniqueSnowflake(),
+        builder: TextChannelCreateBuilder.() -> Unit
+    ): Snowflake {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        channels.add(TextChannelCreateBuilder(name).apply(builder).toRequest().copy(id=OptionalSnowflake.Value(id)))
+        return id
+    }
+
     public inline fun category(
         name: String,
         id: Snowflake = newUniqueSnowflake(),
