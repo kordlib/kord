@@ -464,7 +464,7 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Failed to resize the asset below the maximum size: 262144. */
     FailedToResizeAssetBelowMaximumSize(50138),
-    
+
     /** Uploaded file not found. */
     UnknownUpload(50146),
 
@@ -536,6 +536,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Title was blocked by automatic moderation. */
     TitleBlockedByAutomaticModeration(200001),
+
+    /** Webhooks can only create threads in forum channels. */
+    OnlyThreadsInForumChannels(220003),
 
     ;
 
