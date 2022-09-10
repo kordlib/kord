@@ -2144,6 +2144,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field CannotSelfRedeemGift Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendEmptyMessage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendExplicitContent Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotSendMessageInForumChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendMessagesInNonTextChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendMessagesInVoiceChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendMessagesToUser Ldev/kord/rest/json/JsonErrorCode;
@@ -2222,13 +2223,13 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MessageBlockedByAutomaticModeration Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MissingAccess Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MissingOAuthScope Ldev/kord/rest/json/JsonErrorCode;
+	public static final field NoSettableTagsAvailable Ldev/kord/rest/json/JsonErrorCode;
 	public static final field NoUsersWithDiscordTag Ldev/kord/rest/json/JsonErrorCode;
 	public static final field NonBotEndpoint Ldev/kord/rest/json/JsonErrorCode;
 	public static final field NonBotGuildInviteAccepted Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OAuth2ApplicationLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OAuth2HasNoBot Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OnlyOwner Ldev/kord/rest/json/JsonErrorCode;
-	public static final field OnlyThreadsInForumChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnAchievedThread Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnArchivedThread Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OwnershipCannotBeTransferredToBot Ldev/kord/rest/json/JsonErrorCode;
@@ -2247,6 +2248,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field StageAlreadyOpen Ldev/kord/rest/json/JsonErrorCode;
 	public static final field StickerPermissionLack Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TagNamesMustBeUnique Ldev/kord/rest/json/JsonErrorCode;
+	public static final field TagRequired Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TemporarilyDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TheadLocked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TitleBlockedByAutomaticModeration Ldev/kord/rest/json/JsonErrorCode;
@@ -2302,6 +2304,10 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field UserBannedFromGuild Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UserNotInVoice Ldev/kord/rest/json/JsonErrorCode;
 	public static final field VerifyAccount Ldev/kord/rest/json/JsonErrorCode;
+	public static final field WebhookCannotHaveThreadNameAndThreadId Ldev/kord/rest/json/JsonErrorCode;
+	public static final field WebhookMissingThreadNameOrThreadId Ldev/kord/rest/json/JsonErrorCode;
+	public static final field WebhookServicesCannotBeUsedInForumChannels Ldev/kord/rest/json/JsonErrorCode;
+	public static final field WebhooksCanOnlyCreateThreadsInForumChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WrongChannelType Ldev/kord/rest/json/JsonErrorCode;
 	public final fun getCode ()I
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/rest/json/JsonErrorCode;
