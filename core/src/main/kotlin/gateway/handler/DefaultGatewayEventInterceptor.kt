@@ -36,15 +36,16 @@ public class DefaultGatewayEventInterceptor @KordPreview public constructor(
     public constructor() : this(customContextCreator = null)
 
     private val listeners = listOf(
-        MessageEventHandler(),
+        AutoModerationEventHandler(),
         ChannelEventHandler(),
-        ThreadEventHandler(),
         GuildEventHandler(),
+        InteractionEventHandler(),
         LifeCycleEventHandler(),
+        MessageEventHandler(),
+        ThreadEventHandler(),
         UserEventHandler(),
         VoiceEventHandler(),
         WebhookEventHandler(),
-        InteractionEventHandler()
     )
 
     override suspend fun handle(event: ShardEvent, kord: Kord): CoreEvent? {
