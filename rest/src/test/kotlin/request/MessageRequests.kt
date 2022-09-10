@@ -10,7 +10,6 @@ import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
-import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
@@ -57,7 +56,7 @@ class MessageRequests {
 
         val channelService = ChannelService(KtorRequestHandler(client = HttpClient(mockEngine), token = ""))
 
-        val fileChannel = ClassLoader.getSystemResource("images/kord.png")!!.toURI().toPath().readChannel()
+        val fileChannel = ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel()
 
         with(fileChannel) {
             assert(!isClosedForWrite)

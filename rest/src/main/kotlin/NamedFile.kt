@@ -1,11 +1,11 @@
 package dev.kord.rest
 
 import io.ktor.client.request.forms.*
-import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
 
-public class NamedFile(public val name: String, public val channelProvider: ChannelProvider) {
+public class NamedFile(public val name: String, public val contentProvider: ChannelProvider) {
+    /** @suppress */
     @Deprecated(
         "Use lazy ChannelProvider instead of InputStream. You should also make sure that the stream/channel is only " +
                 "opened inside the block of the ChannelProvider because it could otherwise be read multiple times " +
@@ -17,26 +17,30 @@ public class NamedFile(public val name: String, public val channelProvider: Chan
         ),
         DeprecationLevel.WARNING,
     )
-    public constructor(name: String, inputStream: InputStream) : this(name, ChannelProvider { inputStream.toByteReadChannel() })
+    public constructor(name: String, inputStream: InputStream) : this(
+        name,
+        ChannelProvider { inputStream.toByteReadChannel() },
+    )
 
     public val url: String get() = "attachment://$name"
 
+    /** @suppress */
     @Deprecated(
         "Use ChannelProvider instead of InputStream",
         ReplaceWith(
-            "channelProvider.block().toInputStream()",
+            "contentProvider.block().toInputStream()",
             "io.ktor.utils.io.jvm.javaio.toInputStream",
         ),
         DeprecationLevel.WARNING,
     )
-    public val inputStream: InputStream get() = channelProvider.block().toInputStream()
+    public val inputStream: InputStream get() = contentProvider.block().toInputStream()
 
     public operator fun component1(): String = name
-    public operator fun component2(): ChannelProvider = channelProvider
+    public operator fun component2(): ChannelProvider = contentProvider
     public operator fun component3(): String = url
 
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     @JvmName("component2")
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION", "FunctionName")
     public fun _component2(): InputStream = inputStream
 }

@@ -7,8 +7,7 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
-import io.ktor.utils.io.*
-import io.ktor.utils.io.jvm.javaio.toByteReadChannel
+import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
 import java.nio.file.Path
 import kotlin.contracts.InvocationKind
@@ -53,6 +52,8 @@ public sealed interface MessageCreateBuilder {
 
     /**
      * Adds a file with the [name] and [content] to the attachments.
+     *
+     * @suppress
      */
     @Deprecated(
         "Use lazy ChannelProvider instead of InputStream. You should also make sure that the stream/channel is only " +
@@ -69,10 +70,10 @@ public sealed interface MessageCreateBuilder {
         addFile(name, ChannelProvider { content.toByteReadChannel() })
 
     /**
-     * Adds a file with the [name] and [content] to the attachments.
+     * Adds a file with the [name] and [contentProvider] to the attachments.
      */
-    public fun addFile(name: String, content: ChannelProvider): NamedFile {
-        val namedFile = NamedFile(name, content)
+    public fun addFile(name: String, contentProvider: ChannelProvider): NamedFile {
+        val namedFile = NamedFile(name, contentProvider)
         files += namedFile
         return namedFile
     }

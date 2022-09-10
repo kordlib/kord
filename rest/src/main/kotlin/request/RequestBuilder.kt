@@ -6,7 +6,6 @@ import dev.kord.rest.route.Route
 import io.ktor.client.request.forms.*
 import io.ktor.http.*
 import io.ktor.util.cio.*
-import io.ktor.utils.io.*
 import kotlinx.serialization.SerializationStrategy
 import java.io.InputStream
 import java.nio.file.Path
@@ -60,6 +59,7 @@ public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
         headers.append(key, value)
     }
 
+    /** @suppress */
     @Deprecated(
         "Use lazy ChannelProvider instead of InputStream. You should also make sure that the stream/channel is only " +
                 "opened inside the block of the ChannelProvider because it could otherwise be read multiple times " +
@@ -80,8 +80,8 @@ public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
         file(path.fileName.toString(), ChannelProvider { path.readChannel() })
     }
 
-    public fun file(name: String, channelProvider: ChannelProvider) {
-        files.add(NamedFile(name, channelProvider))
+    public fun file(name: String, contentProvider: ChannelProvider) {
+        files.add(NamedFile(name, contentProvider))
     }
 
     public fun file(file: NamedFile) {

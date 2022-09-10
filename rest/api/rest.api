@@ -63,7 +63,7 @@ public final class dev/kord/rest/NamedFile {
 	public final fun component2 ()Lio/ktor/client/request/forms/ChannelProvider;
 	public final synthetic fun component2 ()Ljava/io/InputStream;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun getChannelProvider ()Lio/ktor/client/request/forms/ChannelProvider;
+	public final fun getContentProvider ()Lio/ktor/client/request/forms/ChannelProvider;
 	public final fun getInputStream ()Ljava/io/InputStream;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/lang/String;
