@@ -37,37 +37,31 @@ public sealed interface MessageModifyBuilder {
      * Adds a file with the [name] and [content] to the attachments.
      */
     @Deprecated(
-        "Use ByteReadChannel instead of InputStream",
-        level = DeprecationLevel.WARNING
+        "Use lazy ChannelProvider instead of InputStream. You should also make sure that the stream/channel is only " +
+                "opened inside the block of the ChannelProvider because it could otherwise be read multiple times " +
+                "(which isn't allowed).",
+        ReplaceWith(
+            "addFile(name, ChannelProvider { content.toByteReadChannel() })",
+            "io.ktor.client.request.forms.ChannelProvider",
+            "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
+        ),
+        DeprecationLevel.WARNING,
     )
     public fun addFile(name: String, content: InputStream): NamedFile =
-        NamedFile(name, content).also {
-            addFile(it)
-        }
+        addFile(name, ChannelProvider { content.toByteReadChannel() })
 
-    public fun addFile(name: String, content: ByteReadChannel): NamedFile =
-        NamedFile(name, content).also {
-            addFile(it)
-        }
+    public suspend fun addFile(path: Path): NamedFile =
+        addFile(path.fileName.toString(), ChannelProvider { path.readChannel() })
 
     /**
      * Adds a file with the [name] and [contentProvider] to the attachments.
      */
     public fun addFile(name: String, contentProvider: ChannelProvider): NamedFile =
-        NamedFile(name, contentProvider).also {
-            addFile(it)
+        NamedFile(name, contentProvider).also { file ->
+            files = (files ?: mutableListOf()).also {
+                it.add(file)
+            }
         }
-
-    public suspend fun addFile(path: Path): NamedFile =
-        NamedFile(path.fileName.toString(), path.readChannel()).also {
-            addFile(it)
-        }
-
-    public fun addFile(file: NamedFile) {
-        files = (files ?: mutableListOf()).also {
-            it.add(file)
-        }
-    }
 }
 
 public inline fun MessageModifyBuilder.embed(block: EmbedBuilder.() -> Unit) {

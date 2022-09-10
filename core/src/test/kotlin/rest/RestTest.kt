@@ -14,6 +14,7 @@ import dev.kord.rest.Image
 import dev.kord.rest.builder.interaction.group
 import dev.kord.rest.builder.interaction.int
 import dev.kord.rest.builder.interaction.subCommand
+import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
@@ -22,6 +23,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import java.io.File
+import kotlin.io.path.toPath
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -153,7 +155,10 @@ class RestServiceTest {
         val message = channel.createMessage {
             content = "TEST"
 
-            addFile("test.txt", File(ClassLoader.getSystemResource("images/kord.png").toURI()).readChannel())
+            addFile(
+                "test.txt",
+                ChannelProvider { ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel() }
+            )
         }
 
         channel.getMessage(message.id)
@@ -379,7 +384,10 @@ class RestServiceTest {
         val message = channel.createMessage {
             content = "TEST"
 
-            addFile("test.txt", File(ClassLoader.getSystemResource("images/kord.png").toURI()).readChannel())
+            addFile(
+                "test.txt",
+                ChannelProvider { ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel() }
+            )
         }
 
         assertEquals("TEST", message.content)
@@ -391,7 +399,10 @@ class RestServiceTest {
     @Order(23)
     fun `message with only file correctly`(): Unit = runBlocking {
         val message = channel.createMessage {
-            addFile("test.txt", File(ClassLoader.getSystemResource("images/kord.png").toURI()).readChannel())
+            addFile(
+                "test.txt",
+                ChannelProvider { ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel() }
+            )
         }
 
         assertEquals(1, message.attachments.size)
@@ -404,7 +415,10 @@ class RestServiceTest {
         val message = channel.createMessage {
             content = "TEST"
 
-            addFile("test.txt", File(ClassLoader.getSystemResource("images/kord.png").toURI()).readChannel())
+            addFile(
+                "test.txt",
+                ChannelProvider { ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel() }
+            )
         }
 
         assertEquals("TEST", message.content)
@@ -431,8 +445,8 @@ class RestServiceTest {
             group("test-group", "automated test") {
                 subCommand("test-sub-command", "automated test") {
                     int("integer", "test choice") {
-                        choice("one", 1,)
-                        choice("two", 2,)
+                        choice("one", 1)
+                        choice("two", 2)
                     }
                 }
             }

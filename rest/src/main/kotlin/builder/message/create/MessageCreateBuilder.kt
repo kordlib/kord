@@ -5,6 +5,7 @@ import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
+import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.*
 import io.ktor.utils.io.jvm.javaio.toByteReadChannel
@@ -54,15 +55,23 @@ public sealed interface MessageCreateBuilder {
      * Adds a file with the [name] and [content] to the attachments.
      */
     @Deprecated(
-        "Use ByteReadChannel instead of InputStream",
-        level = DeprecationLevel.WARNING
+        "Use lazy ChannelProvider instead of InputStream. You should also make sure that the stream/channel is only " +
+                "opened inside the block of the ChannelProvider because it could otherwise be read multiple times " +
+                "(which isn't allowed).",
+        ReplaceWith(
+            "addFile(name, ChannelProvider { content.toByteReadChannel() })",
+            "io.ktor.client.request.forms.ChannelProvider",
+            "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
+        ),
+        DeprecationLevel.WARNING,
     )
-    public fun addFile(name: String, content: InputStream): NamedFile = addFile(name, content.toByteReadChannel())
+    public fun addFile(name: String, content: InputStream): NamedFile =
+        addFile(name, ChannelProvider { content.toByteReadChannel() })
 
     /**
      * Adds a file with the [name] and [content] to the attachments.
      */
-    public fun addFile(name: String, content: ByteReadChannel): NamedFile {
+    public fun addFile(name: String, content: ChannelProvider): NamedFile {
         val namedFile = NamedFile(name, content)
         files += namedFile
         return namedFile
@@ -72,9 +81,7 @@ public sealed interface MessageCreateBuilder {
      * Adds a file with the given [path] to the attachments.
      */
     public suspend fun addFile(path: Path): NamedFile =
-        addFile(path.fileName.toString(), path.readChannel())
-
-
+        addFile(path.fileName.toString(), ChannelProvider { path.readChannel() })
 }
 
 /**

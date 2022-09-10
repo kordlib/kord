@@ -6,14 +6,27 @@ import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
 
 public class NamedFile(public val name: String, public val channelProvider: ChannelProvider) {
+    @Deprecated(
+        "Use lazy ChannelProvider instead of InputStream. You should also make sure that the stream/channel is only " +
+                "opened inside the block of the ChannelProvider because it could otherwise be read multiple times " +
+                "(which isn't allowed).",
+        ReplaceWith(
+            "NamedFile(name, ChannelProvider { inputStream.toByteReadChannel() })",
+            "io.ktor.client.request.forms.ChannelProvider",
+            "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
+        ),
+        DeprecationLevel.WARNING,
+    )
     public constructor(name: String, inputStream: InputStream) : this(name, ChannelProvider { inputStream.toByteReadChannel() })
-    public constructor(name: String, channel: ByteReadChannel) : this(name, ChannelProvider { channel })
 
     public val url: String get() = "attachment://$name"
 
     @Deprecated(
-        "Use ByteReadChannel instead of InputStream",
-        ReplaceWith("readChannel"),
+        "Use ChannelProvider instead of InputStream",
+        ReplaceWith(
+            "channelProvider.block().toInputStream()",
+            "io.ktor.utils.io.jvm.javaio.toInputStream",
+        ),
         DeprecationLevel.WARNING,
     )
     public val inputStream: InputStream get() = channelProvider.block().toInputStream()

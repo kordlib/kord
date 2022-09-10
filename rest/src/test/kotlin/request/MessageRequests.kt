@@ -8,12 +8,15 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.rest.service.ChannelService
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
+import io.ktor.client.request.forms.*
+import io.ktor.util.cio.*
 import io.ktor.utils.io.jvm.javaio.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
+import kotlin.io.path.toPath
 
 private val mockId = Snowflake(42)
 private const val fileName = "linus.png"
@@ -54,7 +57,7 @@ class MessageRequests {
 
         val channelService = ChannelService(KtorRequestHandler(client = HttpClient(mockEngine), token = ""))
 
-        val fileChannel = ClassLoader.getSystemResourceAsStream("images/kord.png")!!.toByteReadChannel()
+        val fileChannel = ClassLoader.getSystemResource("images/kord.png")!!.toURI().toPath().readChannel()
 
         with(fileChannel) {
             assert(!isClosedForWrite)
@@ -62,7 +65,7 @@ class MessageRequests {
             assert(totalBytesRead == 0L)
 
             val createdMessage = channelService.createMessage(mockId) {
-                addFile(fileName, fileChannel)
+                addFile(fileName, ChannelProvider { fileChannel })
             }
             assert(createdMessage == mockMessage)
 
