@@ -1314,6 +1314,7 @@ public final class dev/kord/common/entity/ButtonStyle$Unknown : dev/kord/common/
 
 public final class dev/kord/common/entity/ChannelFlag : java/lang/Enum {
 	public static final field Pinned Ldev/kord/common/entity/ChannelFlag;
+	public static final field RequireTag Ldev/kord/common/entity/ChannelFlag;
 	public final fun getCode ()I
 	public final fun plus (Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
 	public final fun plus (Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;

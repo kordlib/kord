@@ -20,6 +20,7 @@ import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
+import dev.kord.common.entity.ChannelType.GuildForum
 import kotlin.time.Duration.Companion.minutes
 
 /**
@@ -196,8 +197,11 @@ public sealed class ChannelType(public val value: Int) {
 
 public enum class ChannelFlag(public val code: Int) {
 
-    /** This thread is pinned to the top of its parent forum channel. */
-    Pinned(1 shl 1);
+    /** This thread is pinned to the top of its parent [GuildForum] channel. */
+    Pinned(1 shl 1),
+
+    /** Whether a tag is required to be specified when creating a thread in a [GuildForum] channel. */
+    RequireTag(1 shl 4);
 
 
     public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
