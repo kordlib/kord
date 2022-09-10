@@ -2203,6 +2203,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxLottieAnimationDimensions Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxNonMemberBans Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxOldMessageEdits Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxPinnedThreadsInForumChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxPins Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxPruneRequests Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxReactions Ldev/kord/rest/json/JsonErrorCode;
@@ -2213,6 +2214,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxStickerFrameCount Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxStickerFrameRate Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxStickers Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxTagsInForumChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxThreadParticipants Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxUncompletedGuildScheduledEvents Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxWebhooks Ldev/kord/rest/json/JsonErrorCode;
@@ -2226,6 +2228,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field OAuth2ApplicationLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OAuth2HasNoBot Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OnlyOwner Ldev/kord/rest/json/JsonErrorCode;
+	public static final field OnlyThreadsInForumChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnAchievedThread Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnArchivedThread Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OwnershipCannotBeTransferredToBot Ldev/kord/rest/json/JsonErrorCode;
@@ -2243,6 +2246,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field SlowModeRateLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field StageAlreadyOpen Ldev/kord/rest/json/JsonErrorCode;
 	public static final field StickerPermissionLack Ldev/kord/rest/json/JsonErrorCode;
+	public static final field TagNamesMustBeUnique Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TemporarilyDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TheadLocked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field TitleBlockedByAutomaticModeration Ldev/kord/rest/json/JsonErrorCode;
@@ -2288,6 +2292,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field UnknownStoreDirectoryLayout Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownStoreListing Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownStream Ldev/kord/rest/json/JsonErrorCode;
+	public static final field UnknownTag Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownToken Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownUpload Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownUser Ldev/kord/rest/json/JsonErrorCode;
