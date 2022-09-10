@@ -38,7 +38,7 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         // update lastMessageId for forum channels when thread is created
         // (same for other channels when message is created)
         val parentId = channelData.parentId?.value!!
-        cache.query<ChannelData> {
+        kord.cache.query<ChannelData> {
             ChannelData::type eq ChannelType.GuildForum
             idEq(ChannelData::id, parentId)
         }.update {
