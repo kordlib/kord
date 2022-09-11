@@ -27,6 +27,7 @@ import com.squareup.kotlinpoet.STRING as STRING_CLASS_NAME
 
 private val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
 private val KORD_EXPERIMENTAL = ClassName("dev.kord.common.annotation", "KordExperimental")
+private val K_SERIALIZER = KSerializer::class.asClassName()
 
 private val Entry.warningSuppressedName
     get() = when {
@@ -97,9 +98,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
         @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Suppress`
         addAnnotation(Suppress("RedundantVisibilityModifier", "IncorrectFormatting", "ReplaceArrayOfWithLiteral"))
 
-        // /** <kDoc> */
-        // @Serializable(with = <enumName>.Serializer::class)
-        // public sealed class <enumName>(public val <valueName>: <valueTypeName)
         addClass(enumName) {
 
             // for ksp incremental processing
@@ -117,7 +115,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 initializer(valueName)
             }
 
-            // final override fun equals
             addFunction("equals") {
                 addModifiers(FINAL, OVERRIDE)
                 returns<Boolean>()
@@ -125,7 +122,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 addStatement("return this·===·other || (other·is·%T·&&·this.$valueName·==·other.$valueName)", enumName)
             }
 
-            // final override fun hashCode
             addFunction("hashCode") {
                 addModifiers(FINAL, OVERRIDE)
                 returns<Int>()
@@ -133,15 +129,13 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
 
             // TODO for all value types
-            // final override fun toString
-            if (valueType == STRING) addFunction("toString"){
+            if (valueType == STRING) addFunction("toString") {
                 addModifiers(FINAL, OVERRIDE)
                 returns<String>()
                 addStatement("return \"%T($valueName=\$$valueName)\"", enumName)
             }
 
 
-            // public class Unknown(<valueName>: <valueTypeName>) : <enumName>(<valueName>)
             addClass("Unknown") {
                 addKdoc(
                     "An unknown [%1T].\n\nThis is used as a fallback for [%1T]s that haven't been added to Kord yet.",
@@ -164,17 +158,12 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 addSuperclassConstructorParameter(valueFormat, entry.value)
             }
 
-            // /** <entry.kDoc> */
-            // public object <entry.name> : <enumName>(<entry.value>)
             for (entry in entries) {
                 addObject(entry.name) {
                     entry(entry)
                 }
             }
 
-            // /** <entry.kDoc> */
-            // @Deprecated(<entry.deprecationMessage>, <entry.replaceWith>, <entry.deprecationLevel>)
-            // public object <entry.name> : <enumName>(<entry.value>)
             for (entry in deprecatedEntries) {
                 addObject(entry.name) {
                     entry(entry)
@@ -187,9 +176,8 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             // internal object Serializer : KSerializer<<enumName>>
             addObject("Serializer") {
                 addModifiers(INTERNAL)
-                addSuperinterface(KSerializer::class.asClassName().parameterizedBy(enumName))
+                addSuperinterface(K_SERIALIZER.parameterizedBy(enumName))
 
-                // override val descriptor
                 addProperty<SerialDescriptor>("descriptor", OVERRIDE) {
                     initializer(
                         "%M(%S, %T)",
@@ -199,7 +187,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                     )
                 }
 
-                // override fun serialize
                 addFunction("serialize") {
                     addModifiers(OVERRIDE)
                     addParameter<Encoder>("encoder")
@@ -207,7 +194,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                     addStatement("return encoder.encode$encodingPostfix(value.$valueName)")
                 }
 
-                // override fun deserialize
                 addFunction("deserialize") {
                     addModifiers(OVERRIDE)
                     addParameter<Decoder>("decoder")
@@ -225,7 +211,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             addCompanionObject {
                 addModifiers(PUBLIC)
 
-                // public val entries
                 addProperty("entries", LIST.parameterizedBy(enumName), PUBLIC) {
                     delegate {
                         withControlFlow("lazy(mode·=·%M)", PUBLICATION.asMemberName()) {
@@ -241,8 +226,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 }
 
                 // TODO bump deprecation level and remove eventually
-                // @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = WARNING)
-                // public val <valuesPropertyName>
                 if (valuesPropertyName != null) {
                     addProperty(
                         valuesPropertyName,
