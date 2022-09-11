@@ -25,14 +25,12 @@ dependencies {
 kotlin {
     explicitApi()
 
-    sourceSets.main {
+    sourceSets {
         // mark ksp src dir
-        kotlin.srcDir("build/generated/ksp/main/kotlin")
-    }
+        main { kotlin.srcDir("build/generated/ksp/main/kotlin") }
 
-    sourceSets.test {
-        // allow ExperimentalCoroutinesApi for `runTest {}`
-        languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+        // allow `ExperimentalCoroutinesApi` for `runTest {}`
+        test { languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi") }
     }
 }
 
