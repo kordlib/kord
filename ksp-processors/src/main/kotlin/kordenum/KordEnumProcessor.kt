@@ -1,15 +1,18 @@
 package dev.kord.ksp.kordenum
 
-import com.google.devtools.ksp.processing.CodeGenerator
-import com.google.devtools.ksp.processing.KSPLogger
-import com.google.devtools.ksp.processing.Resolver
-import com.google.devtools.ksp.processing.SymbolProcessor
+import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.getSymbolsWithAnnotation
 import dev.kord.ksp.isOfType
+
+/** [SymbolProcessorProvider] for [KordEnumProcessor]. */
+class KordEnumProcessorProvider : SymbolProcessorProvider {
+    override fun create(environment: SymbolProcessorEnvironment) =
+        KordEnumProcessor(environment.codeGenerator, environment.logger)
+}
 
 /** [SymbolProcessor] for [GenerateKordEnum] annotation. */
 class KordEnumProcessor(private val codeGenerator: CodeGenerator, private val logger: KSPLogger) : SymbolProcessor {
