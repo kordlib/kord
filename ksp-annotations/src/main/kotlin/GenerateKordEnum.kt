@@ -32,6 +32,8 @@ annotation class GenerateKordEnum(
     val valuesPropertyName: String = "",
     /** For migration purposes. */
     val valuesPropertyType: ValuesPropertyType = NONE,
+    /** For migration purposes. */
+    val deprecatedSerializerName: String = "",
 ) {
     enum class ValueType { INT, STRING }
     enum class ValuesPropertyType { NONE, SET }

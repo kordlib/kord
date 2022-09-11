@@ -72,6 +72,10 @@ internal inline fun TypeSpec.Builder.addCompanionObject(name: String? = null, bu
 
 // FunSpec.Builder
 
+@DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
+internal fun FunSpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =
+    addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
+
 internal inline fun <reified T> FunSpec.Builder.returns() = returns(typeNameOf<T>())
 
 internal inline fun <reified T> FunSpec.Builder.addParameter(name: String, vararg modifiers: KModifier) =

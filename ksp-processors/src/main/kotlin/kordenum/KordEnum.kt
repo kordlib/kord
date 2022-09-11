@@ -26,6 +26,7 @@ internal class KordEnum(
     // for migration purposes, TODO remove eventually
     val valuesPropertyName: String?,
     val valuesPropertyType: ValuesPropertyType,
+    val deprecatedSerializerName: String?,
 ) {
     internal class Entry(
         val name: String,
@@ -67,13 +68,14 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
             return null
         }
     }
+    val deprecatedSerializerName = (args[GenerateKordEnum::deprecatedSerializerName] as String).ifEmpty { null }
 
     return KordEnum(
         name, kDoc, valueType, valueName,
         entries.map { it.toEntryOrNull(valueType, isDeprecated = false, logger) ?: return null },
         deprecatedEntries.map { it.toEntryOrNull(valueType, isDeprecated = true, logger) ?: return null },
 
-        valuesPropertyName, valuesPropertyType,
+        valuesPropertyName, valuesPropertyType, deprecatedSerializerName,
     )
 }
 

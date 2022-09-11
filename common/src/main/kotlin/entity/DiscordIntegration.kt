@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "IntegrationExpireBehavior", valueType = INT,
+    deprecatedSerializerName = "Serializer",
     entries = [
         Entry("RemoveRole", intValue = 0),
         Entry("Kick", intValue = 1),

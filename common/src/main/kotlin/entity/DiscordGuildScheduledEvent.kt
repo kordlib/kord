@@ -5,6 +5,7 @@
 
 @file:GenerateKordEnum(
     name = "ScheduledEntityType", valueType = INT,
+    deprecatedSerializerName = "Serializer",
     entries = [
         Entry("StageInstance", intValue = 1),
         Entry("Voice", intValue = 2),
@@ -14,6 +15,7 @@
 
 @file:GenerateKordEnum(
     name = "GuildScheduledEventStatus", valueType = INT,
+    deprecatedSerializerName = "Serializer",
     entries = [
         Entry("Scheduled", intValue = 1),
         Entry("Active", intValue = 2),

@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "ComponentType", valueType = INT,
+    deprecatedSerializerName = "Serializer",
     entries = [
         Entry("ActionRow", intValue = 1, kDoc = "A container for other components."),
         Entry("Button", intValue = 2, kDoc = "A button object."),
@@ -10,6 +11,7 @@
 
 @file:GenerateKordEnum(
     name = "ButtonStyle", valueType = INT,
+    deprecatedSerializerName = "Serializer",
     kDoc = "Style of a [button][dev.kord.common.entity.ComponentType.Button].\n\nA preview of the different styles " +
             "can be found " +
             "[here](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).",

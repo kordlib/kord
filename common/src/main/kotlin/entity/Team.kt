@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "TeamMembershipState", valueType = INT,
+    deprecatedSerializerName = "TeamMembershipStateSerializer",
     entries = [
         Entry("Invited", intValue = 1),
         Entry("Accepted", intValue = 2),

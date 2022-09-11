@@ -6,10 +6,14 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
+import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.ReplaceWith
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -18,7 +22,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable(with = ComponentType.Serializer::class)
+@Serializable(with = ComponentType.NewSerializer::class)
 public sealed class ComponentType(
     public val `value`: Int,
 ) {
@@ -56,7 +60,7 @@ public sealed class ComponentType(
      */
     public object TextInput : ComponentType(4)
 
-    internal object Serializer : KSerializer<ComponentType> {
+    internal object NewSerializer : KSerializer<ComponentType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
 
@@ -72,6 +76,20 @@ public sealed class ComponentType(
         }
     }
 
+    @Deprecated(
+        message = "Use 'ComponentType.serializer()' instead.",
+        replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.ComponentType")),
+    )
+    public object Serializer : KSerializer<ComponentType> by NewSerializer {
+        @Deprecated(
+            message = "Use 'ComponentType.serializer()' instead.",
+            replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.ComponentType")),
+        )
+        public fun serializer(): KSerializer<ComponentType> = this
+    }
+
     public companion object {
         public val entries: List<ComponentType> by lazy(mode = PUBLICATION) {
             listOf(
@@ -82,5 +100,13 @@ public sealed class ComponentType(
             )
         }
 
+
+        @Suppress(names = arrayOf("DEPRECATION"))
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Serializer: Serializer = Serializer
     }
 }

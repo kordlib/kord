@@ -6,10 +6,14 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
+import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.ReplaceWith
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -55,6 +59,20 @@ public sealed class TeamMembershipState(
         }
     }
 
+    @Deprecated(
+        message = "Use 'TeamMembershipState.serializer()' instead.",
+        replaceWith = ReplaceWith(expression = "TeamMembershipState.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.TeamMembershipState")),
+    )
+    public object TeamMembershipStateSerializer : KSerializer<TeamMembershipState> by Serializer {
+        @Deprecated(
+            message = "Use 'TeamMembershipState.serializer()' instead.",
+            replaceWith = ReplaceWith(expression = "TeamMembershipState.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.TeamMembershipState")),
+        )
+        public fun serializer(): KSerializer<TeamMembershipState> = this
+    }
+
     public companion object {
         public val entries: List<TeamMembershipState> by lazy(mode = PUBLICATION) {
             listOf(
@@ -63,5 +81,14 @@ public sealed class TeamMembershipState(
             )
         }
 
+
+        @Suppress(names = arrayOf("DEPRECATION"))
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val TeamMembershipStateSerializer: TeamMembershipStateSerializer =
+                TeamMembershipStateSerializer
     }
 }

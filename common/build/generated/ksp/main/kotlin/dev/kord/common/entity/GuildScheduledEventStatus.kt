@@ -6,10 +6,14 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
+import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.ReplaceWith
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -18,7 +22,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable(with = GuildScheduledEventStatus.Serializer::class)
+@Serializable(with = GuildScheduledEventStatus.NewSerializer::class)
 public sealed class GuildScheduledEventStatus(
     public val `value`: Int,
 ) {
@@ -45,7 +49,7 @@ public sealed class GuildScheduledEventStatus(
 
     public object Cancelled : GuildScheduledEventStatus(4)
 
-    internal object Serializer : KSerializer<GuildScheduledEventStatus> {
+    internal object NewSerializer : KSerializer<GuildScheduledEventStatus> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.GuildScheduledEventStatus",
                 PrimitiveKind.INT)
@@ -62,6 +66,20 @@ public sealed class GuildScheduledEventStatus(
         }
     }
 
+    @Deprecated(
+        message = "Use 'GuildScheduledEventStatus.serializer()' instead.",
+        replaceWith = ReplaceWith(expression = "GuildScheduledEventStatus.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.GuildScheduledEventStatus")),
+    )
+    public object Serializer : KSerializer<GuildScheduledEventStatus> by NewSerializer {
+        @Deprecated(
+            message = "Use 'GuildScheduledEventStatus.serializer()' instead.",
+            replaceWith = ReplaceWith(expression = "GuildScheduledEventStatus.serializer()", imports
+                        = arrayOf("dev.kord.common.entity.GuildScheduledEventStatus")),
+        )
+        public fun serializer(): KSerializer<GuildScheduledEventStatus> = this
+    }
+
     public companion object {
         public val entries: List<GuildScheduledEventStatus> by lazy(mode = PUBLICATION) {
             listOf(
@@ -72,5 +90,13 @@ public sealed class GuildScheduledEventStatus(
             )
         }
 
+
+        @Suppress(names = arrayOf("DEPRECATION"))
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Serializer: Serializer = Serializer
     }
 }

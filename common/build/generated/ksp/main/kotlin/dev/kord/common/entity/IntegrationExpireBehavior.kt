@@ -6,10 +6,14 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
+import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.ReplaceWith
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -18,7 +22,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable(with = IntegrationExpireBehavior.Serializer::class)
+@Serializable(with = IntegrationExpireBehavior.NewSerializer::class)
 public sealed class IntegrationExpireBehavior(
     public val `value`: Int,
 ) {
@@ -41,7 +45,7 @@ public sealed class IntegrationExpireBehavior(
 
     public object Kick : IntegrationExpireBehavior(1)
 
-    internal object Serializer : KSerializer<IntegrationExpireBehavior> {
+    internal object NewSerializer : KSerializer<IntegrationExpireBehavior> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.IntegrationExpireBehavior",
                 PrimitiveKind.INT)
@@ -56,6 +60,20 @@ public sealed class IntegrationExpireBehavior(
         }
     }
 
+    @Deprecated(
+        message = "Use 'IntegrationExpireBehavior.serializer()' instead.",
+        replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
+    )
+    public object Serializer : KSerializer<IntegrationExpireBehavior> by NewSerializer {
+        @Deprecated(
+            message = "Use 'IntegrationExpireBehavior.serializer()' instead.",
+            replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.serializer()", imports
+                        = arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
+        )
+        public fun serializer(): KSerializer<IntegrationExpireBehavior> = this
+    }
+
     public companion object {
         public val entries: List<IntegrationExpireBehavior> by lazy(mode = PUBLICATION) {
             listOf(
@@ -64,5 +82,13 @@ public sealed class IntegrationExpireBehavior(
             )
         }
 
+
+        @Suppress(names = arrayOf("DEPRECATION"))
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Serializer: Serializer = Serializer
     }
 }

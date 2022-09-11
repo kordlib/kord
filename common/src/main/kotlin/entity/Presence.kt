@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "PresenceStatus", valueType = STRING,
+    deprecatedSerializerName = "StatusSerializer",
     entries = [
         Entry("Online", stringValue = "online", kDoc = "Online."),
         Entry("DoNotDisturb", stringValue = "dnd", kDoc = "Do Not Disturb."),

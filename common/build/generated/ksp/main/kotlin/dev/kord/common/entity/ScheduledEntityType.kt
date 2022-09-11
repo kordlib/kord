@@ -6,10 +6,14 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
+import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.ReplaceWith
 import kotlin.Suppress
 import kotlin.collections.List
+import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -18,7 +22,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-@Serializable(with = ScheduledEntityType.Serializer::class)
+@Serializable(with = ScheduledEntityType.NewSerializer::class)
 public sealed class ScheduledEntityType(
     public val `value`: Int,
 ) {
@@ -42,7 +46,7 @@ public sealed class ScheduledEntityType(
 
     public object External : ScheduledEntityType(3)
 
-    internal object Serializer : KSerializer<ScheduledEntityType> {
+    internal object NewSerializer : KSerializer<ScheduledEntityType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ScheduledEntityType",
                 PrimitiveKind.INT)
@@ -58,6 +62,20 @@ public sealed class ScheduledEntityType(
         }
     }
 
+    @Deprecated(
+        message = "Use 'ScheduledEntityType.serializer()' instead.",
+        replaceWith = ReplaceWith(expression = "ScheduledEntityType.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.ScheduledEntityType")),
+    )
+    public object Serializer : KSerializer<ScheduledEntityType> by NewSerializer {
+        @Deprecated(
+            message = "Use 'ScheduledEntityType.serializer()' instead.",
+            replaceWith = ReplaceWith(expression = "ScheduledEntityType.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.ScheduledEntityType")),
+        )
+        public fun serializer(): KSerializer<ScheduledEntityType> = this
+    }
+
     public companion object {
         public val entries: List<ScheduledEntityType> by lazy(mode = PUBLICATION) {
             listOf(
@@ -67,5 +85,13 @@ public sealed class ScheduledEntityType(
             )
         }
 
+
+        @Suppress(names = arrayOf("DEPRECATION"))
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Serializer: Serializer = Serializer
     }
 }

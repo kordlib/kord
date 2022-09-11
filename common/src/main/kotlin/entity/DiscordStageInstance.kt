@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "StageInstancePrivacyLevel", valueType = INT,
+    deprecatedSerializerName = "Serializer",
     entries = [
         Entry("GuildOnly", intValue = 2, kDoc = "The Stage instance is visible to only guild members."),
     ],
