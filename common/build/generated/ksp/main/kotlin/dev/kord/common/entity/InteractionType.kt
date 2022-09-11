@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = InteractionType.Serializer::class)
 public sealed class InteractionType(
+    /**
+     * The raw type used by Discord.
+     */
     public val type: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -69,6 +72,9 @@ public sealed class InteractionType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [InteractionType]s.
+         */
         public val entries: List<InteractionType> by lazy(mode = PUBLICATION) {
             listOf(
                 Ping,

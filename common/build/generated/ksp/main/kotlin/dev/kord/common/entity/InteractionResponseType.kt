@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = InteractionResponseType.Serializer::class)
 public sealed class InteractionResponseType(
+    /**
+     * The raw type used by Discord.
+     */
     public val type: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -42,7 +45,7 @@ public sealed class InteractionResponseType(
     ) : InteractionResponseType(type)
 
     /**
-     * ACK a [Ping][dev.kord.common.entity.InteractionType.Ping]
+     * ACK a [Ping][dev.kord.common.entity.InteractionType.Ping].
      */
     public object Pong : InteractionResponseType(1)
 
@@ -98,6 +101,9 @@ public sealed class InteractionResponseType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [InteractionResponseType]s.
+         */
         public val entries: List<InteractionResponseType> by lazy(mode = PUBLICATION) {
             listOf(
                 Pong,

@@ -24,6 +24,9 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = UserPremium.Serializer::class)
 public sealed class UserPremium(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -65,6 +68,9 @@ public sealed class UserPremium(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [UserPremium]s.
+         */
         public val entries: List<UserPremium> by lazy(mode = PUBLICATION) {
             listOf(
                 None,

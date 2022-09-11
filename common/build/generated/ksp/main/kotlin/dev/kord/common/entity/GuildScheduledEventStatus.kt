@@ -25,6 +25,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = GuildScheduledEventStatus.NewSerializer::class)
 public sealed class GuildScheduledEventStatus(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -85,6 +88,9 @@ public sealed class GuildScheduledEventStatus(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [GuildScheduledEventStatus]s.
+         */
         public val entries: List<GuildScheduledEventStatus> by lazy(mode = PUBLICATION) {
             listOf(
                 Scheduled,

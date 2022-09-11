@@ -31,6 +31,9 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = ButtonStyle.NewSerializer::class)
 public sealed class ButtonStyle(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -107,6 +110,9 @@ public sealed class ButtonStyle(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [ButtonStyle]s.
+         */
         public val entries: List<ButtonStyle> by lazy(mode = PUBLICATION) {
             listOf(
                 Primary,

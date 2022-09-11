@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = AllowedMentionType.Serializer::class)
 public sealed class AllowedMentionType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: String,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -73,6 +76,9 @@ public sealed class AllowedMentionType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [AllowedMentionType]s.
+         */
         public val entries: List<AllowedMentionType> by lazy(mode = PUBLICATION) {
             listOf(
                 EveryoneMentions,

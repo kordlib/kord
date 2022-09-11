@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ExplicitContentFilter.Serializer::class)
 public sealed class ExplicitContentFilter(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -72,6 +75,9 @@ public sealed class ExplicitContentFilter(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [ExplicitContentFilter]s.
+         */
         public val entries: List<ExplicitContentFilter> by lazy(mode = PUBLICATION) {
             listOf(
                 Disabled,

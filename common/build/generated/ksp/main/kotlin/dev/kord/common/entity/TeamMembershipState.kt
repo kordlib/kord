@@ -25,6 +25,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = TeamMembershipState.Serializer::class)
 public sealed class TeamMembershipState(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -78,6 +81,9 @@ public sealed class TeamMembershipState(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [TeamMembershipState]s.
+         */
         public val entries: List<TeamMembershipState> by lazy(mode = PUBLICATION) {
             listOf(
                 Invited,

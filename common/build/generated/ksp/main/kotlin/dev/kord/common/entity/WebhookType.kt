@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = WebhookType.Serializer::class)
 public sealed class WebhookType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -72,6 +75,9 @@ public sealed class WebhookType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [WebhookType]s.
+         */
         public val entries: List<WebhookType> by lazy(mode = PUBLICATION) {
             listOf(
                 Incoming,

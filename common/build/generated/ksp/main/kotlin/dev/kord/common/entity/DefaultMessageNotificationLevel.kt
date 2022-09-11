@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = DefaultMessageNotificationLevel.Serializer::class)
 public sealed class DefaultMessageNotificationLevel(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -67,6 +70,9 @@ public sealed class DefaultMessageNotificationLevel(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [DefaultMessageNotificationLevel]s.
+         */
         public val entries: List<DefaultMessageNotificationLevel> by lazy(mode = PUBLICATION) {
             listOf(
                 AllMessages,

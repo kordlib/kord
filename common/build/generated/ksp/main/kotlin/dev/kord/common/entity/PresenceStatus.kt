@@ -25,6 +25,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = PresenceStatus.Serializer::class)
 public sealed class PresenceStatus(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: String,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -103,6 +106,9 @@ public sealed class PresenceStatus(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [PresenceStatus]s.
+         */
         public val entries: List<PresenceStatus> by lazy(mode = PUBLICATION) {
             listOf(
                 DoNotDisturb,

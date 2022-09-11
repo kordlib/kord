@@ -19,6 +19,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ApplicationCommandOptionType.Serializer::class)
 public sealed class ApplicationCommandOptionType(
+    /**
+     * The raw type used by Discord.
+     */
     public val type: Int,
 ) {
     public final override fun equals(other: Any?): kotlin.Boolean = this === other ||
@@ -98,6 +101,9 @@ public sealed class ApplicationCommandOptionType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [ApplicationCommandOptionType]s.
+         */
         public val entries: List<ApplicationCommandOptionType> by lazy(mode = PUBLICATION) {
             listOf(
                 SubCommand,

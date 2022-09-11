@@ -25,6 +25,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ScheduledEntityType.NewSerializer::class)
 public sealed class ScheduledEntityType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -81,6 +84,9 @@ public sealed class ScheduledEntityType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [ScheduledEntityType]s.
+         */
         public val entries: List<ScheduledEntityType> by lazy(mode = PUBLICATION) {
             listOf(
                 StageInstance,

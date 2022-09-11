@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = MFALevel.Serializer::class)
 public sealed class MFALevel(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -65,6 +68,9 @@ public sealed class MFALevel(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [MFALevel]s.
+         */
         public val entries: List<MFALevel> by lazy(mode = PUBLICATION) {
             listOf(
                 None,

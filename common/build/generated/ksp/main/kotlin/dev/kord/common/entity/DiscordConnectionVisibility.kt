@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = DiscordConnectionVisibility.Serializer::class)
 public sealed class DiscordConnectionVisibility(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -67,6 +70,9 @@ public sealed class DiscordConnectionVisibility(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [DiscordConnectionVisibility]s.
+         */
         public val entries: List<DiscordConnectionVisibility> by lazy(mode = PUBLICATION) {
             listOf(
                 None,

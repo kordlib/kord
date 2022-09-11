@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ApplicationCommandPermissionType.Serializer::class)
 public sealed class ApplicationCommandPermissionType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -64,6 +67,9 @@ public sealed class ApplicationCommandPermissionType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [ApplicationCommandPermissionType]s.
+         */
         public val entries: List<ApplicationCommandPermissionType> by lazy(mode = PUBLICATION) {
             listOf(
                 Role,

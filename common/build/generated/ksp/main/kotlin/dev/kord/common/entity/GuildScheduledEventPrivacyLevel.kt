@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = GuildScheduledEventPrivacyLevel.Serializer::class)
 public sealed class GuildScheduledEventPrivacyLevel(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -61,6 +64,9 @@ public sealed class GuildScheduledEventPrivacyLevel(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [GuildScheduledEventPrivacyLevel]s.
+         */
         public val entries: List<GuildScheduledEventPrivacyLevel> by lazy(mode = PUBLICATION) {
             listOf(
                 GuildOnly,

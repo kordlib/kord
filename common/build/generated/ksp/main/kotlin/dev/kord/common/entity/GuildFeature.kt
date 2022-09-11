@@ -22,6 +22,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = GuildFeature.Serializer::class)
 public sealed class GuildFeature(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: String,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -207,6 +210,9 @@ public sealed class GuildFeature(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [GuildFeature]s.
+         */
         public val entries: List<GuildFeature> by lazy(mode = PUBLICATION) {
             listOf(
                 AnimatedBanner,

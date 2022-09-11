@@ -41,7 +41,7 @@
 @file:GenerateKordEnum(
     name = "InteractionResponseType", valueType = INT, valueName = "type",
     entries = [
-        Entry("Pong", intValue = 1, kDoc = "ACK a [Ping][dev.kord.common.entity.InteractionType.Ping]"),
+        Entry("Pong", intValue = 1, kDoc = "ACK a [Ping][dev.kord.common.entity.InteractionType.Ping]."),
         Entry("ChannelMessageWithSource", intValue = 4, kDoc = "Respond to an interaction with a message."),
         Entry(
             "DeferredChannelMessageWithSource", intValue = 5,

@@ -20,10 +20,13 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Style of a [text input][dev.kord.common.entity.ComponentType.TextInput]
+ * Style of a [text input][dev.kord.common.entity.ComponentType.TextInput].
  */
 @Serializable(with = TextInputStyle.Serializer::class)
 public sealed class TextInputStyle(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -69,6 +72,9 @@ public sealed class TextInputStyle(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [TextInputStyle]s.
+         */
         public val entries: List<TextInputStyle> by lazy(mode = PUBLICATION) {
             listOf(
                 Short,

@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = OverwriteType.Serializer::class)
 public sealed class OverwriteType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -59,6 +62,9 @@ public sealed class OverwriteType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [OverwriteType]s.
+         */
         public val entries: List<OverwriteType> by lazy(mode = PUBLICATION) {
             listOf(
                 Role,

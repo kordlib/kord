@@ -123,6 +123,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 addParameter(valueName, valueTypeName)
             }
             addProperty(valueName, valueTypeName, PUBLIC) {
+                addKdoc("The raw $valueName used by Discord.")
                 initializer(valueName)
             }
 
@@ -246,6 +247,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 addModifiers(PUBLIC)
 
                 addProperty("entries", LIST.parameterizedBy(enumName), PUBLIC) {
+                    addKdoc("A [List] of all known [%T]s.", enumName)
                     delegate {
                         withControlFlow("lazy(mode·=·%M)", PUBLICATION.asMemberName()) {
                             addStatement("listOf(")

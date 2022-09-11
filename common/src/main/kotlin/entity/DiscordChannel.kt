@@ -7,41 +7,30 @@
         Entry("GroupDM", intValue = 3, kDoc = "A direct message between multiple users."),
         Entry(
             "GuildCategory", intValue = 4,
-            kDoc = """
-            An
-            [organizational·category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101)
-            that contains up to 50 channels.
-            """,
+            kDoc = "An [organizational·category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-" +
+                    "Categories-101) that contains up to 50 channels.",
         ),
         Entry(
             "GuildNews", intValue = 5,
-            kDoc = """
-            A channel that
-            [users·can·follow·and·crosspost·into·their·own·server](https://support.discord.com/hc/en-us/articles/360032008192).
-            """,
+            kDoc = "A channel that [users·can·follow·and·crosspost·into·their·own·server]" +
+                    "(https://support.discord.com/hc/en-us/articles/360032008192).",
         ),
         Entry("PublicNewsThread", intValue = 10, kDoc = "A temporary sub-channel within a [GuildNews] channel."),
         Entry("PublicGuildThread", intValue = 11, kDoc = "A temporary sub-channel within a [GuildText] channel."),
         Entry(
             "PrivateThread", intValue = 12,
-            kDoc = """
-            A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and those with
-            the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.
-            """,
+            kDoc = "A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and " +
+                    "those with the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.",
         ),
         Entry(
             "GuildStageVoice", intValue = 13,
-            kDoc = """
-            A voice channel for
-            [hosting·events·with·an·audience](https://support.discord.com/hc/en-us/articles/1500005513722).
-            """,
+            kDoc = "A voice channel for [hosting·events·with·an·audience]" +
+                    "(https://support.discord.com/hc/en-us/articles/1500005513722).",
         ),
         Entry(
             "GuildDirectory", intValue = 14,
-            kDoc = """
-            The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-Student-Hubs-FAQ)
-            containing the listed servers.
-            """,
+            kDoc = "The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-" +
+                    "Student-Hubs-FAQ) containing the listed servers.",
         ),
     ],
     deprecatedEntries = [

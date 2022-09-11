@@ -25,6 +25,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ComponentType.NewSerializer::class)
 public sealed class ComponentType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -95,6 +98,9 @@ public sealed class ComponentType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [ComponentType]s.
+         */
         public val entries: List<ComponentType> by lazy(mode = PUBLICATION) {
             listOf(
                 ActionRow,

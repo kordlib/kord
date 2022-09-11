@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = VerificationLevel.Serializer::class)
 public sealed class VerificationLevel(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -84,6 +87,9 @@ public sealed class VerificationLevel(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [VerificationLevel]s.
+         */
         public val entries: List<VerificationLevel> by lazy(mode = PUBLICATION) {
             listOf(
                 None,

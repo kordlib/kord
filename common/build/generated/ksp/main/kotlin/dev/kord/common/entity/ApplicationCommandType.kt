@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ApplicationCommandType.Serializer::class)
 public sealed class ApplicationCommandType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -72,6 +75,9 @@ public sealed class ApplicationCommandType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [ApplicationCommandType]s.
+         */
         public val entries: List<ApplicationCommandType> by lazy(mode = PUBLICATION) {
             listOf(
                 ChatInput,

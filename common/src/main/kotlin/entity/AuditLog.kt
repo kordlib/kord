@@ -3,7 +3,7 @@
     entries = [
         Entry("GuildUpdate", intValue = 1, kDoc = "Server settings were updated."),
         Entry("ChannelCreate", intValue = 10, kDoc = "Channel was created."),
-        Entry("ChannelUpdate", intValue = 11, kDoc = "Channel settings were updated"),
+        Entry("ChannelUpdate", intValue = 11, kDoc = "Channel settings were updated."),
         Entry("ChannelDelete", intValue = 12, kDoc = "Channel was deleted."),
         Entry("ChannelOverwriteCreate", intValue = 13, kDoc = "Permission overwrite was added to a channel."),
         Entry("ChannelOverwriteUpdate", intValue = 14, kDoc = "Permission overwrite was updated for a channel."),
@@ -31,7 +31,7 @@
         Entry("EmojiDelete", intValue = 62, kDoc = "Emoji was deleted."),
         Entry("MessageDelete", intValue = 72, kDoc = "Single message was deleted."),
         Entry("MessageBulkDelete", intValue = 73, kDoc = "Multiple messages were deleted."),
-        Entry("MessagePin", intValue = 74, kDoc = "Message was pinned to a channel"),
+        Entry("MessagePin", intValue = 74, kDoc = "Message was pinned to a channel."),
         Entry("MessageUnpin", intValue = 75, kDoc = "Message was unpinned from a channel."),
         Entry("IntegrationCreate", intValue = 80, kDoc = "App was added to server."),
         Entry("IntegrationUpdate", intValue = 81, kDoc = "App was updated (as an example, its scopes were updated)."),

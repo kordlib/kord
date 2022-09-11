@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = MessageActivityType.Serializer::class)
 public sealed class MessageActivityType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -66,6 +69,9 @@ public sealed class MessageActivityType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [MessageActivityType]s.
+         */
         public val entries: List<MessageActivityType> by lazy(mode = PUBLICATION) {
             listOf(
                 Join,

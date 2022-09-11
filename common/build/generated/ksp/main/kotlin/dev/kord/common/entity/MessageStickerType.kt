@@ -24,6 +24,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = MessageStickerType.Serializer::class)
 public sealed class MessageStickerType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -66,6 +69,9 @@ public sealed class MessageStickerType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [MessageStickerType]s.
+         */
         public val entries: List<MessageStickerType> by lazy(mode = PUBLICATION) {
             listOf(
                 PNG,

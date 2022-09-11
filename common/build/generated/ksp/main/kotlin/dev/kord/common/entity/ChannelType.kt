@@ -23,6 +23,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = ChannelType.Serializer::class)
 public sealed class ChannelType(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -87,8 +90,7 @@ public sealed class ChannelType(
 
     /**
      * A temporary sub-channel within a [GuildText] channel that is only viewable by those invited
-     * and those with
-     * the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.
+     * and those with the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.
      */
     public object PrivateThread : ChannelType(12)
 
@@ -142,6 +144,9 @@ public sealed class ChannelType(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [ChannelType]s.
+         */
         public val entries: List<ChannelType> by lazy(mode = PUBLICATION) {
             listOf(
                 GuildText,

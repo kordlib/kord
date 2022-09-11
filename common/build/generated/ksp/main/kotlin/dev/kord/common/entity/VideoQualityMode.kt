@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = VideoQualityMode.Serializer::class)
 public sealed class VideoQualityMode(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -66,6 +69,9 @@ public sealed class VideoQualityMode(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [VideoQualityMode]s.
+         */
         public val entries: List<VideoQualityMode> by lazy(mode = PUBLICATION) {
             listOf(
                 Auto,

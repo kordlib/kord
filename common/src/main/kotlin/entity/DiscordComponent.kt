@@ -13,8 +13,8 @@
     name = "ButtonStyle", valueType = INT,
     deprecatedSerializerName = "Serializer",
     kDoc = "Style of a [button][dev.kord.common.entity.ComponentType.Button].\n\nA preview of the different styles " +
-            "can be found " +
-            "[here](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).",
+            "can be found [here]" +
+            "(https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).",
     entries = [
         Entry("Primary", intValue = 1, kDoc = "Blurple."),
         Entry("Secondary", intValue = 2, kDoc = "Grey."),
@@ -26,7 +26,7 @@
 
 @file:GenerateKordEnum(
     name = "TextInputStyle", valueType = INT,
-    kDoc = "Style of a [text·input][dev.kord.common.entity.ComponentType.TextInput]",
+    kDoc = "Style of a [text·input][dev.kord.common.entity.ComponentType.TextInput].",
     entries = [
         Entry("Short", intValue = 1, kDoc = "A single-line input."),
         Entry("Paragraph", intValue = 2, kDoc = "A multi-line input."),

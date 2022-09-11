@@ -25,6 +25,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = IntegrationExpireBehavior.NewSerializer::class)
 public sealed class IntegrationExpireBehavior(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -79,6 +82,9 @@ public sealed class IntegrationExpireBehavior(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [IntegrationExpireBehavior]s.
+         */
         public val entries: List<IntegrationExpireBehavior> by lazy(mode = PUBLICATION) {
             listOf(
                 RemoveRole,

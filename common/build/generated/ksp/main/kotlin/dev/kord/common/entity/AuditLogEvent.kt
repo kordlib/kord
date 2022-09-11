@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = AuditLogEvent.Serializer::class)
 public sealed class AuditLogEvent(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -51,7 +54,7 @@ public sealed class AuditLogEvent(
     public object ChannelCreate : AuditLogEvent(10)
 
     /**
-     * Channel settings were updated
+     * Channel settings were updated.
      */
     public object ChannelUpdate : AuditLogEvent(11)
 
@@ -191,7 +194,7 @@ public sealed class AuditLogEvent(
     public object MessageBulkDelete : AuditLogEvent(73)
 
     /**
-     * Message was pinned to a channel
+     * Message was pinned to a channel.
      */
     public object MessagePin : AuditLogEvent(74)
 
@@ -365,6 +368,9 @@ public sealed class AuditLogEvent(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [AuditLogEvent]s.
+         */
         public val entries: List<AuditLogEvent> by lazy(mode = PUBLICATION) {
             listOf(
                 GuildUpdate,

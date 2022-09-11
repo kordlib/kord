@@ -25,6 +25,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = StageInstancePrivacyLevel.NewSerializer::class)
 public sealed class StageInstancePrivacyLevel(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -86,6 +89,9 @@ public sealed class StageInstancePrivacyLevel(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [StageInstancePrivacyLevel]s.
+         */
         public val entries: List<StageInstancePrivacyLevel> by lazy(mode = PUBLICATION) {
             listOf(
                 @Suppress("DEPRECATION") Public,

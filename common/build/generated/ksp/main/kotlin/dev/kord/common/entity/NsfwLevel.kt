@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 @Serializable(with = NsfwLevel.Serializer::class)
 public sealed class NsfwLevel(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
     public final override fun equals(other: Any?): Boolean = this === other ||
@@ -65,6 +68,9 @@ public sealed class NsfwLevel(
     }
 
     public companion object {
+        /**
+         * A [List] of all known [NsfwLevel]s.
+         */
         public val entries: List<NsfwLevel> by lazy(mode = PUBLICATION) {
             listOf(
                 Default,
