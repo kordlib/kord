@@ -392,6 +392,7 @@ public abstract class dev/kord/common/entity/ApplicationCommandOptionType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getType ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ApplicationCommandOptionType$Attachment : dev/kord/common/entity/ApplicationCommandOptionType {
@@ -453,6 +454,7 @@ public abstract class dev/kord/common/entity/ApplicationCommandPermissionType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ApplicationCommandPermissionType$Channel : dev/kord/common/entity/ApplicationCommandPermissionType {
@@ -482,6 +484,7 @@ public abstract class dev/kord/common/entity/ApplicationCommandType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ApplicationCommandType$ChatInput : dev/kord/common/entity/ApplicationCommandType {
@@ -919,6 +922,7 @@ public abstract class dev/kord/common/entity/AuditLogEvent {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/AuditLogEvent$ApplicationCommandPermissionUpdate : dev/kord/common/entity/AuditLogEvent {
@@ -1144,6 +1148,7 @@ public abstract class dev/kord/common/entity/AutoModerationActionType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/AutoModerationActionType$BlockMessage : dev/kord/common/entity/AutoModerationActionType {
@@ -1173,6 +1178,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleEventType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleEventType$Companion {
@@ -1194,6 +1200,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleKeywordPresetType
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Companion {
@@ -1223,6 +1230,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleTriggerType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Companion {
@@ -1326,6 +1334,7 @@ public abstract class dev/kord/common/entity/ButtonStyle {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ButtonStyle$Companion {
@@ -1373,6 +1382,7 @@ public abstract class dev/kord/common/entity/ChannelType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ChannelType$Companion {
@@ -1703,6 +1713,7 @@ public abstract class dev/kord/common/entity/ComponentType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ComponentType$ActionRow : dev/kord/common/entity/ComponentType {
@@ -1746,6 +1757,7 @@ public abstract class dev/kord/common/entity/DefaultMessageNotificationLevel {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/DefaultMessageNotificationLevel$AllMessages : dev/kord/common/entity/DefaultMessageNotificationLevel {
@@ -2889,6 +2901,7 @@ public abstract class dev/kord/common/entity/DiscordConnectionVisibility {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/DiscordConnectionVisibility$Companion {
@@ -6071,6 +6084,7 @@ public abstract class dev/kord/common/entity/ExplicitContentFilter {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ExplicitContentFilter$AllMembers : dev/kord/common/entity/ExplicitContentFilter {
@@ -6246,6 +6260,7 @@ public abstract class dev/kord/common/entity/GuildScheduledEventPrivacyLevel {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/GuildScheduledEventPrivacyLevel$Companion {
@@ -6268,6 +6283,7 @@ public abstract class dev/kord/common/entity/GuildScheduledEventStatus {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/GuildScheduledEventStatus$Active : dev/kord/common/entity/GuildScheduledEventStatus {
@@ -6385,6 +6401,7 @@ public abstract class dev/kord/common/entity/IntegrationExpireBehavior {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/IntegrationExpireBehavior$Companion {
@@ -6472,6 +6489,7 @@ public abstract class dev/kord/common/entity/InteractionResponseType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getType ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/InteractionResponseType$ApplicationCommandAutoCompleteResult : dev/kord/common/entity/InteractionResponseType {
@@ -6517,6 +6535,7 @@ public abstract class dev/kord/common/entity/InteractionType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getType ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/InteractionType$ApplicationCommand : dev/kord/common/entity/InteractionType {
@@ -6561,6 +6580,7 @@ public abstract class dev/kord/common/entity/InviteTargetType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/InviteTargetType$Companion {
@@ -6586,6 +6606,7 @@ public abstract class dev/kord/common/entity/MFALevel {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/MFALevel$Companion {
@@ -6644,6 +6665,7 @@ public abstract class dev/kord/common/entity/MessageActivityType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/MessageActivityType$Companion {
@@ -6845,6 +6867,7 @@ public abstract class dev/kord/common/entity/MessageStickerType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/MessageStickerType$APNG : dev/kord/common/entity/MessageStickerType {
@@ -6875,6 +6898,7 @@ public abstract class dev/kord/common/entity/MessageType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/MessageType$AutoModerationAction : dev/kord/common/entity/MessageType {
@@ -7018,6 +7042,7 @@ public abstract class dev/kord/common/entity/NsfwLevel {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/NsfwLevel$AgeRestricted : dev/kord/common/entity/NsfwLevel {
@@ -7097,6 +7122,7 @@ public abstract class dev/kord/common/entity/OverwriteType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/OverwriteType$Companion {
@@ -7356,6 +7382,7 @@ public abstract class dev/kord/common/entity/PremiumTier {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/PremiumTier$Companion {
@@ -7515,6 +7542,7 @@ public abstract class dev/kord/common/entity/ScheduledEntityType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ScheduledEntityType$Companion {
@@ -7593,6 +7621,7 @@ public abstract class dev/kord/common/entity/StageInstancePrivacyLevel {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/StageInstancePrivacyLevel$Companion {
@@ -7711,6 +7740,7 @@ public abstract class dev/kord/common/entity/TeamMembershipState {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/TeamMembershipState$Accepted : dev/kord/common/entity/TeamMembershipState {
@@ -7746,6 +7776,7 @@ public abstract class dev/kord/common/entity/TextInputStyle {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/TextInputStyle$Companion {
@@ -7827,6 +7858,7 @@ public abstract class dev/kord/common/entity/UserPremium {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/UserPremium$Companion {
@@ -7856,6 +7888,7 @@ public abstract class dev/kord/common/entity/VerificationLevel {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/VerificationLevel$Companion {
@@ -7893,6 +7926,7 @@ public abstract class dev/kord/common/entity/VideoQualityMode {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/VideoQualityMode$Auto : dev/kord/common/entity/VideoQualityMode {
@@ -7918,6 +7952,7 @@ public abstract class dev/kord/common/entity/WebhookType {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
 	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/WebhookType$Application : dev/kord/common/entity/WebhookType {

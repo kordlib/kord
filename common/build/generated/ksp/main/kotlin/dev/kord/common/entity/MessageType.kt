@@ -10,6 +10,7 @@ import kotlin.Deprecated
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.ReplaceWith
+import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 import kotlin.collections.Set
@@ -29,6 +30,9 @@ public sealed class MessageType(
             (other is MessageType && this.code == other.code)
 
     public final override fun hashCode(): Int = code.hashCode()
+
+    public final override fun toString(): String =
+            "MessageType.${this::class.simpleName}(code=$code)"
 
     /**
      * An unknown [MessageType].

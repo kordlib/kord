@@ -10,6 +10,7 @@ import kotlin.Deprecated
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.ReplaceWith
+import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 import kotlin.collections.Set
@@ -29,6 +30,9 @@ public sealed class MessageStickerType(
             (other is MessageStickerType && this.value == other.value)
 
     public final override fun hashCode(): Int = value.hashCode()
+
+    public final override fun toString(): String =
+            "MessageStickerType.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [MessageStickerType].

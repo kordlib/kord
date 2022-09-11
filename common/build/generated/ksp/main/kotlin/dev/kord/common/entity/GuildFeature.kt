@@ -29,7 +29,8 @@ public sealed class GuildFeature(
 
     public final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String = "GuildFeature(value=$value)"
+    public final override fun toString(): String =
+            "GuildFeature.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [GuildFeature].

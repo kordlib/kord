@@ -8,6 +8,7 @@ import kotlin.Any
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 import kotlinx.serialization.KSerializer
@@ -26,6 +27,9 @@ public sealed class InteractionType(
             (other is InteractionType && this.type == other.type)
 
     public final override fun hashCode(): Int = type.hashCode()
+
+    public final override fun toString(): String =
+            "InteractionType.${this::class.simpleName}(type=$type)"
 
     /**
      * An unknown [InteractionType].

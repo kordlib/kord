@@ -26,6 +26,9 @@ public sealed class ApplicationCommandOptionType(
 
     public final override fun hashCode(): Int = type.hashCode()
 
+    public final override fun toString(): kotlin.String =
+            "ApplicationCommandOptionType.${this::class.simpleName}(type=$type)"
+
     /**
      * An unknown [ApplicationCommandOptionType].
      *

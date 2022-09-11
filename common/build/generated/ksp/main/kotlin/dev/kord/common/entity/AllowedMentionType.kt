@@ -28,7 +28,8 @@ public sealed class AllowedMentionType(
 
     public final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String = "AllowedMentionType(value=$value)"
+    public final override fun toString(): String =
+            "AllowedMentionType.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [AllowedMentionType].

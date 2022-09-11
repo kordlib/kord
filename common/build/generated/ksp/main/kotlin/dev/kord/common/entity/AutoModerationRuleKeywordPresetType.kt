@@ -8,6 +8,7 @@ import kotlin.Any
 import kotlin.Boolean
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 import kotlinx.serialization.KSerializer
@@ -29,6 +30,9 @@ public sealed class AutoModerationRuleKeywordPresetType(
             (other is AutoModerationRuleKeywordPresetType && this.value == other.value)
 
     public final override fun hashCode(): Int = value.hashCode()
+
+    public final override fun toString(): String =
+            "AutoModerationRuleKeywordPresetType.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [AutoModerationRuleKeywordPresetType].

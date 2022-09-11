@@ -11,6 +11,7 @@ import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.ReplaceWith
+import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
 import kotlin.jvm.JvmField
@@ -30,6 +31,9 @@ public sealed class GuildScheduledEventStatus(
             (other is GuildScheduledEventStatus && this.value == other.value)
 
     public final override fun hashCode(): Int = value.hashCode()
+
+    public final override fun toString(): String =
+            "GuildScheduledEventStatus.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [GuildScheduledEventStatus].

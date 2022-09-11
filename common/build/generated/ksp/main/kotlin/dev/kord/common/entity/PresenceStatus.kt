@@ -32,7 +32,8 @@ public sealed class PresenceStatus(
 
     public final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String = "PresenceStatus(value=$value)"
+    public final override fun toString(): String =
+            "PresenceStatus.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [PresenceStatus].
