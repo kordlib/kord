@@ -1,42 +1,76 @@
 package dev.kord.rest.request
 
-import dev.kord.rest.NamedFile
-import dev.kord.rest.json.response.GatewayResponse
-import dev.kord.rest.route.Route
-import io.ktor.util.*
+import dev.kord.common.entity.DiscordAttachment
+import dev.kord.common.entity.DiscordMessage
+import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.MessageType.Default
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.service.ChannelService
+import io.ktor.client.*
+import io.ktor.client.engine.mock.*
+import io.ktor.client.request.forms.*
+import io.ktor.util.cio.*
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.MethodOrderer
+import kotlinx.datetime.Clock
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInstance
-import org.junit.jupiter.api.TestMethodOrder
-import java.io.InputStream
+import kotlin.io.path.toPath
 
-@TestMethodOrder(MethodOrderer.MethodName::class)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+private val mockId = Snowflake(42)
+private const val fileName = "linus.png"
+private val mockMessage = DiscordMessage(
+    id = mockId,
+    channelId = mockId,
+    author = DiscordUser(id = mockId, username = "user", discriminator = "1337", avatar = null),
+    content = "",
+    timestamp = Clock.System.now(),
+    editedTimestamp = null,
+    tts = false,
+    mentionEveryone = false,
+    mentions = emptyList(),
+    mentionRoles = emptyList(),
+    attachments = listOf(
+        DiscordAttachment(
+            id = mockId,
+            filename = fileName,
+            size = 1234,
+            url = "http://never.gonna.give.you.up",
+            proxyUrl = "http://never.gonna.let.you.down",
+        )
+    ),
+    embeds = emptyList(),
+    pinned = false,
+    type = Default,
+)
+
 class MessageRequests {
     @Test
-    fun `attachment stream closed`() = runBlocking {
-        val linusStream = object : InputStream() {
-            val stream = ClassLoader.getSystemResourceAsStream("images/kord.png")!!
-            var closed = false
-                private set
+    fun `attachment channel is read and closed lazily`() = runBlocking {
 
-            override fun read() = stream.read()
-            override fun close() {
-                stream.close()
-                closed = true
-            }
+        val mockEngine = MockEngine { request ->
+            request.body.toByteArray() // `toByteArray()` reads `fileChannel`
+
+            respond(Json.encodeToString(mockMessage))
         }
 
-        MultipartRequest<Any, GatewayResponse>(
-            Route.GatewayGet,
-            mapOf(),
-            StringValues.Empty,
-            StringValues.Empty,
-            null,
-            listOf(NamedFile("linus.png", linusStream))
-        )
+        val channelService = ChannelService(KtorRequestHandler(client = HttpClient(mockEngine), token = ""))
 
-        assert(linusStream.closed)
+        val fileChannel = ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel()
+
+        with(fileChannel) {
+            assert(!isClosedForWrite)
+            assert(!isClosedForRead)
+            assert(totalBytesRead == 0L)
+
+            val createdMessage = channelService.createMessage(mockId) {
+                addFile(fileName, ChannelProvider { fileChannel })
+            }
+            assert(createdMessage == mockMessage)
+
+            assert(isClosedForWrite)
+            assert(isClosedForRead)
+            assert(totalBytesRead > 0L)
+        }
     }
 }

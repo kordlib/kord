@@ -558,6 +558,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Webhook services cannot be used in forum channels. */
     WebhookServicesCannotBeUsedInForumChannels(220004),
 
+    /** Message blocked by harmful links filter. */
+    MessageBlockedByHarmfulLinksFilter(240000),
+
     ;
 
     public companion object {

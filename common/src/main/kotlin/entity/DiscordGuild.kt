@@ -217,7 +217,21 @@ public sealed class GuildFeature(public val value: String) {
     /** Guild can enable welcome screen and discovery, and receives community updates */
     public object Community : GuildFeature("COMMUNITY")
 
-    /** Guild has access to use commerce features (i.e. create store channels) */
+    /**
+     * Guild has access to use commerce features (i.e. create store channels)
+     *
+     * @suppress
+     */
+    @Deprecated(
+        """
+        Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+        removed on March 10, 2022.
+        
+        See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
+        information.
+        """,
+        level = DeprecationLevel.ERROR,
+    )
     public object Commerce : GuildFeature("COMMERCE")
 
     /** Guild has access to create news channels */
@@ -281,7 +295,7 @@ public sealed class GuildFeature(public val value: String) {
             "VERIFIED" -> Verified
             "PARTNERED" -> Partnered
             "COMMUNITY" -> Community
-            "COMMERCE" -> Commerce
+            "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "NEWS" -> News
             "DISCOVERABLE" -> Discoverable
             "FEATURABLE" -> Featurable
