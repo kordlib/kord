@@ -183,12 +183,21 @@ public data class DiscordPartialGuild(
 @Serializable(with = GuildFeature.Serializer::class)
 public sealed class GuildFeature(public val value: String) {
 
-    override fun toString(): String = "GuildFeature(value=$value)"
+    final override fun equals(other: Any?): Boolean =
+        this === other || (other is GuildFeature && this.value == other.value)
 
+    final override fun hashCode(): Int = value.hashCode()
+    final override fun toString(): String = "GuildFeature(value=$value)"
+
+
+    /** An unknown [GuildFeature]. */
     public class Unknown(value: String) : GuildFeature(value)
 
     /** Guild has access to set an animated guild banner image. */
     public object AnimatedBanner : GuildFeature("ANIMATED_BANNER")
+
+    /** Guild has set up auto moderation rules. */
+    public object AutoModeration : GuildFeature("AUTO_MODERATION")
 
     /** Guild has access to set an invite splash background */
     public object InviteSplash : GuildFeature("INVITE_SPLASH")
@@ -208,7 +217,21 @@ public sealed class GuildFeature(public val value: String) {
     /** Guild can enable welcome screen and discovery, and receives community updates */
     public object Community : GuildFeature("COMMUNITY")
 
-    /** Guild has access to use commerce features (i.e. create store channels) */
+    /**
+     * Guild has access to use commerce features (i.e. create store channels)
+     *
+     * @suppress
+     */
+    @Deprecated(
+        """
+        Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
+        removed on March 10, 2022.
+        
+        See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
+        information.
+        """,
+        level = DeprecationLevel.ERROR,
+    )
     public object Commerce : GuildFeature("COMMERCE")
 
     /** Guild has access to create news channels */
@@ -258,19 +281,21 @@ public sealed class GuildFeature(public val value: String) {
     /** Guild is able to set role icons */
     public object RoleIcons : GuildFeature("ROLE_ICONS")
 
+
     internal object Serializer : KSerializer<GuildFeature> {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
 
         override fun deserialize(decoder: Decoder): GuildFeature = when (val value = decoder.decodeString()) {
             "ANIMATED_BANNER" -> AnimatedBanner
+            "AUTO_MODERATION" -> AutoModeration
             "INVITE_SPLASH" -> InviteSplash
             "VIP_REGIONS" -> VIPRegions
             "VANITY_URL" -> VanityUrl
             "VERIFIED" -> Verified
             "PARTNERED" -> Partnered
             "COMMUNITY" -> Community
-            "COMMERCE" -> Commerce
+            "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "NEWS" -> News
             "DISCOVERABLE" -> Discoverable
             "FEATURABLE" -> Featurable

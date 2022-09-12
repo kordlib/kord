@@ -775,10 +775,10 @@ public data class AllRemovedMessageReactions(
 @Serializable(with = MessageType.MessageTypeSerializer::class)
 public sealed class MessageType(public val code: Int) {
 
-    override fun equals(other: Any?): Boolean =
+    final override fun equals(other: Any?): Boolean =
         this === other || (other is MessageType && this.code == other.code)
 
-    override fun hashCode(): Int = code
+    final override fun hashCode(): Int = code
 
 
     /** The default code for unknown values. */
@@ -828,6 +828,8 @@ public sealed class MessageType(public val code: Int) {
     public object ThreadStarterMessage : MessageType(21)
     public object GuildInviteReminder : MessageType(22)
     public object ContextMenuCommand : MessageType(23)
+    public object AutoModerationAction : MessageType(24)
+
 
     internal object MessageTypeSerializer : KSerializer<MessageType> {
 
@@ -870,6 +872,7 @@ public sealed class MessageType(public val code: Int) {
                 ThreadStarterMessage,
                 GuildInviteReminder,
                 ContextMenuCommand,
+                AutoModerationAction,
             )
     }
 }

@@ -90,8 +90,8 @@ internal data class Identify(
     val intents: Intents,
 ) : Command() {
     override fun toString(): String =
-        "Identify(token=hunter2,properties=$properties,compress=$compress,largeThreshold=$largeThreshold," +
-                "shard=$shard,presence=$presence"
+        "Identify(token=hunter2, properties=$properties, compress=$compress, largeThreshold=$largeThreshold, " +
+                "shard=$shard, presence=$presence, intents=$intents)"
 }
 
 @Serializable
@@ -133,7 +133,7 @@ internal data class Resume(
     @SerialName("seq")
     val sequenceNumber: Int,
 ) : Command() {
-    override fun toString(): String = "Resume(token=hunter2,sessionId=$sessionId,sequenceNumber:$sequenceNumber)"
+    override fun toString(): String = "Resume(token=hunter2, sessionId=$sessionId, sequenceNumber=$sequenceNumber)"
 }
 
 /**

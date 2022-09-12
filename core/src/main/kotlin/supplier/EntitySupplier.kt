@@ -1,12 +1,14 @@
 package dev.kord.core.supplier
 
 import dev.kord.common.entity.ChannelType.Unknown
+import dev.kord.common.entity.Permission.ManageGuild
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
+import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildChannel
@@ -609,6 +611,37 @@ public interface EntitySupplier {
     public fun getNitroStickerPacks(): Flow<StickerPack>
 
     public fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker>
+
+    /**
+     * Requests to get all [AutoModerationRule]s currently configured for the [Guild] with the given [guildId].
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public fun getAutoModerationRules(guildId: Snowflake): Flow<AutoModerationRule>
+
+    /**
+     * Requests an [AutoModerationRule] by its [id][ruleId]. Returns `null` if it wasn't found.
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule?
+
+    /**
+     * Requests an [AutoModerationRule] by its [id][ruleId].
+     *
+     * This requires the [ManageGuild] permission.
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [AutoModerationRule] wasn't found.
+     */
+    public suspend fun getAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule =
+        getAutoModerationRuleOrNull(guildId, ruleId)
+            ?: EntityNotFoundException.autoModerationRuleNotFound(guildId, ruleId)
 }
 
 
