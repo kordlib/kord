@@ -16,6 +16,7 @@ import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.create.embed
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -24,7 +25,8 @@ import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import java.util.*
+import java.util.Objects
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.coroutineContext
@@ -298,19 +300,7 @@ public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder
     return createMessage { embed(block) }
 }
 
-/**
- * Requests to trigger the typing indicator for the bot in this channel.
- * The typing status will be refreshed until the [block] has been completed.
- *
- * ```kotlin
- * channel.withTyping {
- *     delay(20.seconds.toLongMilliseconds()) //some very long task
- *     createMessage("done!")
- * }
- * ```
- *
- * @throws [RestRequestException] if something went wrong during the request.
- */
+@Deprecated("Binary compatibility.", level = HIDDEN)
 public suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
     contract {
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
@@ -328,5 +318,38 @@ public suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() 
         block()
     } finally {
         typing = false
+    }
+}
+
+/**
+ * Requests to trigger the typing indicator for the bot in this channel.
+ * The typing status will be refreshed until the [block] has been completed.
+ *
+ * Returns the [result][R] of the [block] or rethrows its exception.
+ *
+ * ```kotlin
+ * channel.withTyping {
+ *     delay(42.seconds) // some very long task
+ *     createMessage("done!")
+ * }
+ * ```
+ *
+ * @throws RestRequestException if something went wrong during a [type][MessageChannelBehavior.type] request.
+ */
+public suspend fun <T : MessageChannelBehavior, R> T.withTyping(block: suspend T.() -> R): R {
+    // see contract in `coroutineScope {}`
+    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
+
+    type() // guarantees that the typing indicator is triggered before `block` is called
+    return coroutineScope {
+        val typingJob = launch {
+            while (true) {
+                delay(8.seconds) // cancellable
+                type()
+            }
+        }
+        val result = block()
+        typingJob.cancel()
+        result
     }
 }
