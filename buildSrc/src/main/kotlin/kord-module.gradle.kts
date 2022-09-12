@@ -77,7 +77,7 @@ tasks {
 
             sourceLink {
                 localDirectory.set(file("src/main/kotlin"))
-                remoteUrl.set(URL("$baseRemoteUrl/src/main/kotlin/"))
+                remoteUrl.set(URL("$baseRemoteUrl/src/main/kotlin"))
                 remoteLineSuffix.set("#L")
             }
 
@@ -86,7 +86,7 @@ tasks {
             sourceLink {
                 // will fail if dir doesn't exist -> always create it, won't harm if not needed
                 localDirectory.set(file("build/generated/ksp/main/kotlin").apply { mkdirs() })
-                remoteUrl.set(URL("$baseRemoteUrl/build/generated/ksp/main/kotlin/"))
+                remoteUrl.set(URL("$baseRemoteUrl/build/generated/ksp/main/kotlin"))
                 remoteLineSuffix.set("#L")
             }
 
