@@ -68,6 +68,18 @@
 )
 
 @file:GenerateKordEnum(
+    name = "EmbedType", valueType = STRING,
+    entries = [
+        Entry("Rich", stringValue = "rich", kDoc = "Generic embed rendered from embed attributes."),
+        Entry("Image", stringValue = "image", kDoc = "Image embed."),
+        Entry("Video", stringValue = "video", kDoc = "Video embed."),
+        Entry("Gifv", stringValue = "gifv", kDoc = "Animated gif image embed rendered as a video embed."),
+        Entry("Article", stringValue = "article", kDoc = "Article embed."),
+        Entry("Link", stringValue = "link", kDoc = "Link embed."),
+    ],
+)
+
+@file:GenerateKordEnum(
     name = "AllowedMentionType", valueType = STRING,
     entries = [
         Entry("RoleMentions", stringValue = "roles", kDoc = "Controls role mentions."),
@@ -550,7 +562,6 @@ public data class DiscordAttachment(
 @Serializable
 public data class DiscordEmbed(
     val title: Optional<String> = Optional.Missing(),
-    @Suppress("DEPRECATION")
     val type: Optional<EmbedType> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
@@ -672,64 +683,6 @@ public data class DiscordEmbed(
         val value: String,
         val inline: OptionalBoolean = OptionalBoolean.Missing,
     )
-}
-
-/**
- * A representation of a [Discord Embed Type structure](https://discord.com/developers/docs/resources/channel#embed-object-embed-types).
- *
- * Embed types are "loosely defined" and, for the most part, are not used by our clients for rendering.
- * Embed attributes power what is rendered.
- * Embed types should be considered deprecated and might be removed in a future API version.
- */
-@Suppress("DEPRECATION")
-@Deprecated(
-    """
-    Embed types are "loosely defined" and, for the most part, are not used by clients for rendering. 
-    Embed attributes power what is rendered. 
-    Embed types should be considered deprecated and might be removed in a future API version.
-"""
-)
-@Serializable(with = EmbedType.Serializer::class)
-public sealed class EmbedType(public val value: String) {
-    public class Unknown(value: String) : EmbedType(value)
-
-    /** Generic embed rendered from embed attributes. */
-    public object Rich : EmbedType("rich")
-
-    /** Image embed. */
-    public object Image : EmbedType("image")
-
-    /** Video embed. */
-    public object Video : EmbedType("video")
-
-    /** Animated gif image embed rendered as a video embed. */
-    public object Gifv : EmbedType("gifv")
-
-    /** Article embed. */
-    public object Article : EmbedType("article")
-
-    /** Link embed. */
-    public object Link : EmbedType("link")
-
-    internal object Serializer : KSerializer<EmbedType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.EmbedType", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): EmbedType = when (val value = decoder.decodeString()) {
-            "rich" -> Rich
-            "image" -> Image
-            "video" -> Video
-            "gifv" -> Gifv
-            "article" -> Article
-            "Link" -> Link
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: EmbedType) {
-            encoder.encodeString(value.value)
-        }
-    }
-
 }
 
 @Serializable

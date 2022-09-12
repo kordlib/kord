@@ -6043,7 +6043,10 @@ public final class dev/kord/common/entity/DiscordWelcomeScreenChannel$Companion 
 public abstract class dev/kord/common/entity/EmbedType {
 	public static final field Companion Ldev/kord/common/entity/EmbedType$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Ljava/lang/String;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/EmbedType$Article : dev/kord/common/entity/EmbedType {
@@ -6051,6 +6054,7 @@ public final class dev/kord/common/entity/EmbedType$Article : dev/kord/common/en
 }
 
 public final class dev/kord/common/entity/EmbedType$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
