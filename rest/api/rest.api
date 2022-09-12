@@ -2239,6 +2239,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxWebhooks Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MessageAlreadyHasThread Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MessageBlockedByAutomaticModeration Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MessageBlockedByHarmfulLinksFilter Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MissingAccess Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MissingOAuthScope Ldev/kord/rest/json/JsonErrorCode;
 	public static final field NoUsersWithDiscordTag Ldev/kord/rest/json/JsonErrorCode;
