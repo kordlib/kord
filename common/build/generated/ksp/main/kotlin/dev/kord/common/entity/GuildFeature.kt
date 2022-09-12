@@ -7,6 +7,7 @@ package dev.kord.common.entity
 import kotlin.Any
 import kotlin.Boolean
 import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.String
@@ -63,11 +64,6 @@ public sealed class GuildFeature(
      * Guild has access to set a guild banner image.
      */
     public object Banner : GuildFeature("BANNER")
-
-    /**
-     * Guild has access to use commerce features (i.e. create store channels).
-     */
-    public object Commerce : GuildFeature("COMMERCE")
 
     /**
      * Guild can enable welcome screen, Membership Screening, stage channels and discovery, and
@@ -156,6 +152,18 @@ public sealed class GuildFeature(
     public object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
 
     /**
+     * Guild has access to use commerce features (i.e. create store channels).
+     *
+     * @suppress
+     */
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message =
+                "Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were removed on March 10, 2022. See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more information.",
+    )
+    public object Commerce : GuildFeature("COMMERCE")
+
+    /**
      * Guild has access to the three-day archive time for threads
      *
      * @suppress.
@@ -185,7 +193,7 @@ public sealed class GuildFeature(
             "ANIMATED_ICON" -> AnimatedIcon
             "AUTO_MODERATION" -> AutoModeration
             "BANNER" -> Banner
-            "COMMERCE" -> Commerce
+            "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "COMMUNITY" -> Community
             "DISCOVERABLE" -> Discoverable
             "FEATURABLE" -> Featurable
@@ -219,7 +227,7 @@ public sealed class GuildFeature(
                 AnimatedIcon,
                 AutoModeration,
                 Banner,
-                Commerce,
+                @Suppress("DEPRECATION_ERROR") Commerce,
                 Community,
                 Discoverable,
                 Featurable,

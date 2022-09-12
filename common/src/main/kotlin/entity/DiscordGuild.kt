@@ -71,10 +71,6 @@
         Entry("AutoModeration", stringValue = "AUTO_MODERATION", kDoc = "Guild has set up auto moderation rules."),
         Entry("Banner", stringValue = "BANNER", kDoc = "Guild has access to set a guild banner image."),
         Entry(
-            "Commerce", stringValue = "COMMERCE",
-            kDoc = "Guild has access to use commerce features (i.e. create store channels).",
-        ),
-        Entry(
             "Community", stringValue = "COMMUNITY",
             kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " +
                     "receives community updates.",
@@ -119,6 +115,15 @@
     ],
     deprecatedEntries = [
         Entry(
+            "Commerce", stringValue = "COMMERCE",
+            kDoc = "Guild has access to use commerce features (i.e. create store channels).\n\n@suppress",
+            deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
+                    "Discord and store channels were removed on March 10, 2022. See " +
+                    "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
+                    " for more information.",
+            deprecationLevel = ERROR,
+        ),
+        Entry(
             "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
             kDoc = "Guild has access to the three-day archive time for threads\n\n@suppress.",
             deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = WARNING,
@@ -151,6 +156,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.WARNING
 
 /**
