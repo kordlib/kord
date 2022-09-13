@@ -13,9 +13,9 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.StoreChannelModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import dev.kord.rest.service.patchStoreChannel
 import java.util.Objects
 import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -32,7 +32,7 @@ import kotlin.contracts.contract
     See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
     information.
     """,
-    level = ERROR,
+    level = HIDDEN,
 )
 public interface StoreChannelBehavior : CategorizableChannelBehavior {
 
@@ -76,7 +76,7 @@ public interface StoreChannelBehavior : CategorizableChannelBehavior {
      * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.cacheWithRestFallback].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StoreChannelBehavior =
-        StoreChannelBehavior(guildId, id, kord, strategy)
+        createStoreChannelBehavior(guildId, id, kord, strategy)
 
 }
 
@@ -89,14 +89,22 @@ public interface StoreChannelBehavior : CategorizableChannelBehavior {
     See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
     information.
     """,
-    level = ERROR,
+    level = HIDDEN,
 )
 public fun StoreChannelBehavior(
     guildId: Snowflake,
     id: Snowflake,
     kord: Kord,
     strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-): StoreChannelBehavior = object : StoreChannelBehavior {
+): StoreChannelBehavior = createStoreChannelBehavior(guildId, id, kord, strategy)
+
+@Deprecated("Deprecated to not use by accident, remove when stores are removed", level = ERROR)
+internal fun createStoreChannelBehavior(
+    guildId: Snowflake,
+    id: Snowflake,
+    kord: Kord,
+    strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy,
+) = object : StoreChannelBehavior {
     override val guildId: Snowflake = guildId
     override val id: Snowflake = id
     override val kord: Kord = kord
@@ -132,11 +140,13 @@ public fun StoreChannelBehavior(
     See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
     information.
     """,
-    level = ERROR,
+    level = HIDDEN,
 )
 public suspend inline fun StoreChannelBehavior.edit(builder: StoreChannelModifyBuilder.() -> Unit): StoreChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val response = kord.rest.channel.patchStoreChannel(id, builder)
+
+    val modifyBuilder = StoreChannelModifyBuilder().apply(builder)
+    val response = kord.rest.channel.patchChannel(id, modifyBuilder.toRequest(), modifyBuilder.reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as StoreChannel

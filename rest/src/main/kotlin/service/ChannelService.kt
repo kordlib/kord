@@ -14,7 +14,7 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -445,16 +445,16 @@ public suspend inline fun ChannelService.patchStageVoiceChannel(
     See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
     information.
     """,
-    level = ERROR,
+    level = HIDDEN,
 )
 public suspend inline fun ChannelService.patchStoreChannel(
     channelId: Snowflake,
-    builder: StoreChannelModifyBuilder.() -> Unit
+    builder: dev.kord.rest.builder.channel.StoreChannelModifyBuilder.() -> Unit
 ): DiscordChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val modifyBuilder = StoreChannelModifyBuilder().apply(builder)
+    val modifyBuilder = dev.kord.rest.builder.channel.StoreChannelModifyBuilder().apply(builder)
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 

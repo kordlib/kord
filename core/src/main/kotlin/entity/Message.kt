@@ -32,7 +32,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import java.util.Objects
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -291,7 +291,7 @@ public class Message(
     public val webhookId: Snowflake? get() = data.webhookId.value
 
     /** @suppress */
-    @Deprecated("Replaced with 'actionRows'.", ReplaceWith("this.actionRows"), level = ERROR)
+    @Deprecated("Replaced with 'actionRows'.", ReplaceWith("this.actionRows"), level = HIDDEN)
     public val components: List<Component>
         get() = data.components.orEmpty().map { Component(it) }
 

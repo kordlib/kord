@@ -5,7 +5,7 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
 public data class InviteCreateRequest(
@@ -16,11 +16,11 @@ public data class InviteCreateRequest(
     val temporary: OptionalBoolean = OptionalBoolean.Missing,
     val unique: OptionalBoolean = OptionalBoolean.Missing,
     /** @suppress */
-    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"), level = ERROR)
+    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"), level = HIDDEN)
     @SerialName("target_user")
     val targetUser: OptionalSnowflake = OptionalSnowflake.Missing,
     /** @suppress */
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = HIDDEN)
     @SerialName("target_user_type")
     val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") dev.kord.common.entity.TargetUserType> = Optional.Missing(),
     @SerialName("target_type")
@@ -31,12 +31,12 @@ public data class InviteCreateRequest(
     val targetApplicationId: OptionalSnowflake = OptionalSnowflake.Missing,
 ) {
     /** @suppress */
-    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"), level = ERROR)
+    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"), level = HIDDEN)
     public val age: OptionalInt
         get() = maxAge.value?.inWholeSeconds?.toInt()?.optionalInt() ?: OptionalInt.Missing
 
     /** @suppress */
-    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"), level = ERROR)
+    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"), level = HIDDEN)
     public val uses: OptionalInt
         get() = maxUses
 }

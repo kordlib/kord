@@ -13,7 +13,6 @@ import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * Sent when an invite is deleted.
@@ -66,16 +65,6 @@ public class InviteDeleteEvent(
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getChannelOrNull(): Channel? = supplier.getChannelOrNull(channelId)
-
-    /**
-     * Requests to get the [Guild] of the invite.
-     */
-    @Deprecated(
-        "'guildId' might not be present, use 'getGuildOrNull' instead.",
-        ReplaceWith("this.getGuildOrNull()"),
-        level = HIDDEN,
-    )
-    public suspend fun getGuild(): Guild = supplier.getGuild(guildId!!)
 
     /**
      * Requests to get the [Guild] of the invite.

@@ -63,7 +63,7 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 @Deprecated(
     "This is an internal utility function.",
     ReplaceWith("this.toList().sorted()", "kotlinx.coroutines.flow.toList"),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public fun <T : Entity> Flow<T>.sorted(): Flow<T> = internalSorted()
 
@@ -82,7 +82,7 @@ internal fun <T : Comparable<T>> Flow<T>.internalSorted(): Flow<T> = flow {
 @Deprecated(
     "Use the function with the same name from kotlinx.coroutines.flow instead.",
     ReplaceWith("this.firstOrNull(predicate)", "kotlinx.coroutines.flow.firstOrNull"),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
     filter { predicate(it) }.coroutinesFirstOrNull()
@@ -96,7 +96,7 @@ public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: s
 @Deprecated(
     "This is an internal utility function.",
     ReplaceWith("this.firstOrNull(predicate) != null", "kotlinx.coroutines.flow.firstOrNull"),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
     coroutinesFirstOrNull { predicate(it) } != null
@@ -374,7 +374,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelCreateEvent::class,
     StageChannelCreateEvent::class,
     @Suppress("DEPRECATION_ERROR")
-    StoreChannelCreateEvent::class,
+    dev.kord.core.event.channel.StoreChannelCreateEvent::class,
     TextChannelCreateEvent::class,
     UnknownChannelCreateEvent::class,
     VoiceChannelCreateEvent::class,
@@ -385,7 +385,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelUpdateEvent::class,
     StageChannelUpdateEvent::class,
     @Suppress("DEPRECATION_ERROR")
-    StoreChannelUpdateEvent::class,
+    dev.kord.core.event.channel.StoreChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
     UnknownChannelUpdateEvent::class,
     VoiceChannelUpdateEvent::class,
@@ -396,7 +396,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelDeleteEvent::class,
     StageChannelDeleteEvent::class,
     @Suppress("DEPRECATION_ERROR")
-    StoreChannelDeleteEvent::class,
+    dev.kord.core.event.channel.StoreChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
     UnknownChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,

@@ -14,6 +14,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -230,7 +231,7 @@ public sealed class GuildFeature(public val value: String) {
         See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
         information.
         """,
-        level = DeprecationLevel.ERROR,
+        level = ERROR,
     )
     public object Commerce : GuildFeature("COMMERCE")
 
@@ -262,11 +263,11 @@ public sealed class GuildFeature(public val value: String) {
     public object MoreStickers : GuildFeature("MORE_STICKERS")
 
     /** Guild has access to the three-day archive time for threads */
-    @Deprecated("Thread archive durations are no longer boost locked")
+    @Deprecated("Thread archive durations are no longer boost locked", level = ERROR)
     public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
 
     /** Guild has access to the seven day archive time for threads */
-    @Deprecated("Thread archive durations are no longer boost locked")
+    @Deprecated("Thread archive durations are no longer boost locked", level = ERROR)
     public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
 
     /** Guild has access to create private threads */
@@ -305,8 +306,8 @@ public sealed class GuildFeature(public val value: String) {
             "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
             "MONETIZATION_ENABLED" -> MonetizationEnabled
             "MORE_STICKERS" -> MoreStickers
-            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") ThreeDayThreadArchive
-            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") SevenDayThreadArchive
+            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive
+            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive
             "PRIVATE_THREADS" -> PrivateThreads
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
             "PREVIEW_ENABLED" -> PreviewEnabled

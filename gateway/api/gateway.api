@@ -352,7 +352,7 @@ public final class dev/kord/gateway/DiscordCreatedInvite {
 	public final fun getTargetApplication ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getTargetType ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getTargetUser ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getTargetUserType ()Ldev/kord/common/entity/optional/Optional;
+	public final synthetic fun getTargetUserType ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getTemporary ()Z
 	public final fun getUses ()I
 	public fun hashCode ()I

@@ -1,10 +1,8 @@
 package dev.kord.core.entity
 
 import dev.kord.common.Color
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.UserFlags
-import dev.kord.common.entity.UserPremium
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.UserBehavior
@@ -12,7 +10,6 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.Image
-import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
@@ -43,13 +40,6 @@ public open class User(
      */
     public val discriminator: String get() = data.discriminator
 
-    /**
-     * The flags on a user's account, if present.
-     */
-    @Deprecated("Use publicFlags instead.", ReplaceWith("publicFlags"), level = HIDDEN)
-    @DeprecatedSinceKord("0.7.0")
-    public val flags: UserFlags? by ::publicFlags
-
     override suspend fun asUser(): User {
         return this
     }
@@ -62,15 +52,6 @@ public open class User(
      * The flags on a user's account, if present.
      */
     public val publicFlags: UserFlags? get() = data.publicFlags.value
-
-    /**
-     * The type of Nitro subscription on a user's account, if present.
-     */
-    @Suppress("DeprecatedCallableAddReplaceWith", "RedundantNullableReturnType")
-    @Deprecated("premiumType is never present.", level = HIDDEN)
-    @DeprecatedSinceKord("0.7.0")
-    public val premiumType: UserPremium?
-        get() = throw NotImplementedError("premiumType is no longer supported.")
 
     /**
      * The complete user tag.

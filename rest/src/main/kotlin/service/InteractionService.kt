@@ -17,7 +17,6 @@ import dev.kord.rest.route.Route
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.collections.set
 import kotlin.contracts.InvocationKind
@@ -549,21 +548,6 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     }
 
 
-    @Deprecated(
-        "'createPublicInteractionResponse' was renamed to 'createInteractionResponse'",
-        ReplaceWith("this.createInteractionResponse(interactionId, interactionToken, ephemeral, builder)"),
-        level = HIDDEN,
-    )
-    public suspend inline fun createPublicInteractionResponse(
-        interactionId: Snowflake,
-        interactionToken: String,
-        ephemeral: Boolean = false,
-        builder: InteractionResponseCreateBuilder.() -> Unit
-    ) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return createInteractionResponse(interactionId, interactionToken, ephemeral, builder)
-    }
-
     public suspend inline fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
@@ -624,7 +608,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     @Deprecated(
         "Renamed to 'deferMessage'.",
         ReplaceWith("this.deferMessage(interactionId, interactionToken, ephemeral)"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
         deferMessage(interactionId, interactionToken, ephemeral)

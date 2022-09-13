@@ -14,6 +14,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -792,27 +793,27 @@ public sealed class MessageType(public val code: Int) {
     public object ChannelPinnedMessage : MessageType(6)
 
     /** @suppress */
-    @Deprecated("Renamed to 'UserJoin'.", ReplaceWith("UserJoin"))
+    @Deprecated("Renamed to 'UserJoin'.", ReplaceWith("UserJoin"), level = ERROR)
     public object GuildMemberJoin : MessageType(7)
     public object UserJoin : MessageType(7)
 
     /** @suppress */
-    @Deprecated("Renamed to 'GuildBoost'.", ReplaceWith("GuildBoost"))
+    @Deprecated("Renamed to 'GuildBoost'.", ReplaceWith("GuildBoost"), level = ERROR)
     public object UserPremiumGuildSubscription : MessageType(8)
     public object GuildBoost : MessageType(8)
 
     /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier1'.", ReplaceWith("GuildBoostTier1"))
+    @Deprecated("Renamed to 'GuildBoostTier1'.", ReplaceWith("GuildBoostTier1"), level = ERROR)
     public object UserPremiumGuildSubscriptionTierOne : MessageType(9)
     public object GuildBoostTier1 : MessageType(9)
 
     /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier2'.", ReplaceWith("GuildBoostTier2"))
+    @Deprecated("Renamed to 'GuildBoostTier2'.", ReplaceWith("GuildBoostTier2"), level = ERROR)
     public object UserPremiumGuildSubscriptionTwo : MessageType(10)
     public object GuildBoostTier2 : MessageType(10)
 
     /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier3'.", ReplaceWith("GuildBoostTier3"))
+    @Deprecated("Renamed to 'GuildBoostTier3'.", ReplaceWith("GuildBoostTier3"), level = ERROR)
     public object UserPremiumGuildSubscriptionThree : MessageType(11)
     public object GuildBoostTier3 : MessageType(11)
     public object ChannelFollowAdd : MessageType(12)
