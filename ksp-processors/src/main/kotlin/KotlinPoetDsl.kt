@@ -2,10 +2,12 @@ package dev.kord.ksp
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.MemberName.Companion.member
+import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.TYPE
 
 // for scope control, see https://kotlinlang.org/docs/type-safe-builders.html#scope-control-dslmarker
 @DslMarker
+@Retention(SOURCE)
 @Target(TYPE)
 internal annotation class KotlinPoetDsl
 
