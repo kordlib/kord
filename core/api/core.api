@@ -1216,7 +1216,8 @@ public final class dev/kord/core/behavior/channel/MessageChannelBehaviorKt {
 	public static synthetic fun MessageChannelBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILjava/lang/Object;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static final fun createEmbed (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createMessage (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun withTyping (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final synthetic fun withTyping (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun withTyping (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/channel/NewsChannelBehavior : dev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior {
