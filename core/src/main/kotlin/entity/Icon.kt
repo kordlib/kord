@@ -11,8 +11,7 @@ public sealed class Icon(
     public val format: Image.Format,
     public val cdnUrl: CdnUrl,
     override val kord: Kord
-) :
-    KordObject {
+) : KordObject {
 
     public val url: String
         get() = cdnUrl.toUrl {
