@@ -12,6 +12,8 @@ public sealed class Icon(
     public val cdnUrl: CdnUrl,
     override val kord: Kord
 ) : KordObject {
+    public val animated: Boolean
+        get() = format == Image.Format.GIF
 
     public val url: String
         get() = cdnUrl.toUrl {
