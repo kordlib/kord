@@ -7,14 +7,12 @@ import dev.kord.rest.Image
 import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
-public sealed class Icon(public val animated: Boolean, public val cdnUrl: CdnUrl, override val kord: Kord) :
+public sealed class Icon(
+    public val format: Image.Format,
+    public val cdnUrl: CdnUrl,
+    override val kord: Kord
+) :
     KordObject {
-
-    public val format: Image.Format
-        get() = when {
-            animated -> Image.Format.GIF
-            else -> Image.Format.WEBP
-        }
 
     public val url: String
         get() = cdnUrl.toUrl {
@@ -40,22 +38,22 @@ public sealed class Icon(public val animated: Boolean, public val cdnUrl: CdnUrl
         })
 
     override fun toString(): String {
-        return "Icon(type=${javaClass.name},animated=$animated,cdnUrl=$cdnUrl,kord=$kord)"
+        return "Icon(type=${javaClass.name},format=$format,cdnUrl=$cdnUrl,kord=$kord)"
     }
 
     public class EmojiIcon(animated: Boolean, emojiId: Snowflake, kord: Kord) :
-        Icon(animated, DiscordCdn.emoji(emojiId), kord)
+        Icon(if (animated) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.emoji(emojiId), kord)
 
     public class DefaultUserAvatar(discriminator: Int, kord: Kord) :
-        Icon(false, DiscordCdn.defaultAvatar(discriminator), kord)
+        Icon(Image.Format.PNG /* Discord Default Avatars only support PNG */, DiscordCdn.defaultAvatar(discriminator), kord)
 
     public class UserAvatar(userId: Snowflake, avatarHash: String, kord: Kord) :
-        Icon(avatarHash.startsWith("a_"), DiscordCdn.userAvatar(userId, avatarHash), kord)
+        Icon(if (avatarHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.userAvatar(userId, avatarHash), kord)
 
     public class MemberAvatar(guildId: Snowflake, userId: Snowflake, avatarHash: String, kord: Kord) :
-        Icon(avatarHash.startsWith("a_"), DiscordCdn.memberAvatar(guildId, userId, avatarHash), kord)
+        Icon(if (avatarHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.memberAvatar(guildId, userId, avatarHash), kord)
 
     public class RoleIcon(roleId: Snowflake, iconHash: String, kord: Kord) :
-        Icon(iconHash.startsWith("a_"), DiscordCdn.roleIcon(roleId, iconHash), kord)
+        Icon(if (iconHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.roleIcon(roleId, iconHash), kord)
 
 }
