@@ -37,7 +37,7 @@ public sealed class Icon(
         })
 
     override fun toString(): String {
-        return "Icon(type=${javaClass.name},format=$format,cdnUrl=$cdnUrl,kord=$kord)"
+        return "Icon(type=${javaClass.name},format=$format,animated=$animated,cdnUrl=$cdnUrl,kord=$kord)"
     }
 
     public class EmojiIcon(animated: Boolean, emojiId: Snowflake, kord: Kord) :
