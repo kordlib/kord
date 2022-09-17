@@ -17,19 +17,30 @@ import kotlin.time.Duration.Companion.days
  */
 public interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBehavior {
 
+    /**
+     * Requests to bulk delete the [messages].
+     * Messages older than 14 days will be deleted individually.
+     *
+     * @param reason the reason showing up in the audit log
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public suspend fun bulkDelete(messages: Iterable<Snowflake>, reason: String? = null) {
+        bulkDelete(messages, deleteOlderMessages = true, reason)
+    }
 
     /**
      * Requests to bulk delete the [messages].
      * Messages older than 14 days will be deleted individually.
      *
      * @param reason the reason showing up in the audit log
-     * @param deleteOlderMessages If the messages are from a week ago they will be deleted individually
+     * @param deleteOlderMessages whether messages from two weeks ago will be deleted
      * @throws [RestRequestException] if something went wrong during the request.
      */
     public suspend fun bulkDelete(
         messages: Iterable<Snowflake>,
-        reason: String? = null,
-        deleteOlderMessages: Boolean = false
+        deleteOlderMessages: Boolean = true,
+        reason: String? = null
     ) {
         val daysLimit = Clock.System.now() - 14.days
         //split up in bulk delete and manual delete
