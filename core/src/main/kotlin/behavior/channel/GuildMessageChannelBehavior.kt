@@ -31,10 +31,11 @@ public interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChan
 
     /**
      * Requests to bulk delete the [messages].
-     * Messages older than 14 days will be deleted individually.
+     *
+     * If [deleteOlderMessages] is `true` (default), messages older than 14
+     * days will be deleted individually. Otherwise they will be ignored.
      *
      * @param reason the reason showing up in the audit log
-     * @param deleteOlderMessages whether messages from two weeks ago will be deleted
      * @throws [RestRequestException] if something went wrong during the request.
      */
     public suspend fun bulkDelete(
