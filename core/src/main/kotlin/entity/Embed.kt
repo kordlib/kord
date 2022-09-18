@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package dev.kord.core.entity
 
 import dev.kord.common.Color
@@ -12,12 +10,6 @@ import dev.kord.core.cache.data.*
 import dev.kord.rest.builder.message.EmbedBuilder
 import kotlinx.datetime.Instant
 
-internal const val embedDeprecationMessage = """
-Embed types should be considered deprecated and might be removed in a future API version.
-
-https://discord.com/developers/docs/resources/channel#embed-object-embed-types
-"""
-
 /**
  * An instance of a [Discord Embed](https://discord.com/developers/docs/resources/channel#embed-object).
  */
@@ -28,13 +20,8 @@ public data class Embed(val data: EmbedData, override val kord: Kord) : KordObje
      */
     public val title: String? get() = data.title.value
 
-    /*
-     * The type, [Embed.Type.Rich] for webhook and bot created embeds. Null if unknown.
-     */
-    @Suppress("DeprecatedCallableAddReplaceWith", "DEPRECATION")
-    @Deprecated(embedDeprecationMessage)
-    val type: EmbedType?
-        get() = data.type.value
+    /** The type of embed, if present. Always [Rich][EmbedType.Rich] for webhook embeds. */
+    val type: EmbedType? get() = data.type.value
 
     /**
      * The description, if present.

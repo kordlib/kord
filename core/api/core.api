@@ -1130,7 +1130,8 @@ public final class dev/kord/core/behavior/channel/GuildChannelBehaviorKt {
 public abstract interface class dev/kord/core/behavior/channel/GuildMessageChannelBehavior : dev/kord/core/behavior/channel/GuildChannelBehavior, dev/kord/core/behavior/channel/MessageChannelBehavior {
 	public abstract fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract synthetic fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun bulkDelete (Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;
@@ -1139,8 +1140,10 @@ public abstract interface class dev/kord/core/behavior/channel/GuildMessageChann
 public final class dev/kord/core/behavior/channel/GuildMessageChannelBehavior$DefaultImpls {
 	public static fun asChannel (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun bulkDelete$default (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete$default (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1216,7 +1219,8 @@ public final class dev/kord/core/behavior/channel/MessageChannelBehaviorKt {
 	public static synthetic fun MessageChannelBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILjava/lang/Object;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static final fun createEmbed (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createMessage (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun withTyping (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final synthetic fun withTyping (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun withTyping (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/channel/NewsChannelBehavior : dev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior {
@@ -1236,7 +1240,8 @@ public final class dev/kord/core/behavior/channel/NewsChannelBehavior$DefaultImp
 	public static fun addOverwrite (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/behavior/channel/NewsChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1364,7 +1369,8 @@ public final class dev/kord/core/behavior/channel/TextChannelBehavior$DefaultImp
 	public static fun addOverwrite (Ldev/kord/core/behavior/channel/TextChannelBehavior;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/behavior/channel/TextChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/TextChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/TextChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/TextChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/behavior/channel/TextChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/behavior/channel/TextChannelBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/behavior/channel/TextChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/behavior/channel/TextChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1452,7 +1458,8 @@ public final class dev/kord/core/behavior/channel/TopGuildMessageChannelBehavior
 	public static fun addOverwrite (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1496,7 +1503,8 @@ public final class dev/kord/core/behavior/channel/VoiceChannelBehavior$DefaultIm
 	public static fun addOverwrite (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1539,7 +1547,8 @@ public final class dev/kord/core/behavior/channel/threads/PrivateThreadParentCha
 	public static fun addOverwrite (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1591,7 +1600,8 @@ public final class dev/kord/core/behavior/channel/threads/ThreadChannelBehavior$
 	public static fun addUser (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1640,7 +1650,8 @@ public final class dev/kord/core/behavior/channel/threads/ThreadParentChannelBeh
 	public static fun addOverwrite (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -3545,16 +3556,21 @@ public final class dev/kord/core/cache/data/EmojiDataKt {
 
 public final class dev/kord/core/cache/data/GuildApplicationCommandPermissionData {
 	public static final field Companion Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData$Companion;
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ApplicationCommandPermissionType;Z)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;Z)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
+	public final fun component2 ()Ldev/kord/common/entity/ApplicationCommandPermissionType;
+	public final synthetic fun component2 ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
 	public final fun component3 ()Z
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ApplicationCommandPermissionType;Z)Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
 	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;Z)Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ApplicationCommandPermissionType;ZILjava/lang/Object;)Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
 	public static synthetic fun copy$default (Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;ZILjava/lang/Object;)Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPermission ()Z
-	public final fun getType ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
+	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandPermissionType;
+	public final synthetic fun getType ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -5857,6 +5873,7 @@ public final class dev/kord/core/entity/AttachmentKt {
 
 public final class dev/kord/core/entity/AuditLog : dev/kord/core/KordObject {
 	public fun <init> (Ldev/kord/common/entity/DiscordAuditLog;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)V
+	public final fun getApplicationCommands ()Ljava/util/List;
 	public final fun getAutoModerationRules ()Ljava/util/List;
 	public final fun getData ()Ldev/kord/common/entity/DiscordAuditLog;
 	public final fun getEntries ()Ljava/util/List;
@@ -6402,7 +6419,7 @@ public final class dev/kord/core/entity/GuildWidget : dev/kord/core/KordObject, 
 }
 
 public abstract class dev/kord/core/entity/Icon : dev/kord/core/KordObject {
-	public synthetic fun <init> (ZLdev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ldev/kord/rest/Image$Format;ZLdev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getAnimated ()Z
 	public final fun getCdnUrl ()Ldev/kord/rest/route/CdnUrl;
 	public final fun getFormat ()Ldev/kord/rest/Image$Format;
@@ -7434,7 +7451,8 @@ public final class dev/kord/core/entity/application/GuildApplicationCommandPermi
 	public final fun getData ()Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPermission ()Z
-	public final fun getType ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
+	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandPermissionType;
+	public final synthetic fun getType ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
 }
 
 public final class dev/kord/core/entity/application/GuildChatInputCommand : dev/kord/core/behavior/GuildChatInputCommandBehavior, dev/kord/core/entity/application/ChatInputCommandCommand, dev/kord/core/entity/application/GuildApplicationCommand {
@@ -7905,7 +7923,8 @@ public abstract interface class dev/kord/core/entity/channel/GuildMessageChannel
 public final class dev/kord/core/entity/channel/GuildMessageChannel$DefaultImpls {
 	public static fun asChannel (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/entity/channel/GuildMessageChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/entity/channel/GuildMessageChannel;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/entity/channel/GuildMessageChannel;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/entity/channel/GuildMessageChannel;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/entity/channel/GuildMessageChannel;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/entity/channel/GuildMessageChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/entity/channel/GuildMessageChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7983,7 +8002,8 @@ public final class dev/kord/core/entity/channel/NewsChannel : dev/kord/core/beha
 	public fun addOverwrite (Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun bulkDelete (Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public fun createMessage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8197,7 +8217,8 @@ public final class dev/kord/core/entity/channel/TextChannel : dev/kord/core/beha
 	public fun addOverwrite (Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun bulkDelete (Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public fun createMessage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8284,7 +8305,8 @@ public final class dev/kord/core/entity/channel/ThreadParentChannel$DefaultImpls
 	public static fun addOverwrite (Ldev/kord/core/entity/channel/ThreadParentChannel;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/entity/channel/ThreadParentChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/entity/channel/ThreadParentChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/entity/channel/ThreadParentChannel;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/entity/channel/ThreadParentChannel;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/entity/channel/ThreadParentChannel;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/entity/channel/ThreadParentChannel;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/entity/channel/ThreadParentChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/entity/channel/ThreadParentChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8374,7 +8396,8 @@ public final class dev/kord/core/entity/channel/TopGuildMessageChannel$DefaultIm
 	public static fun addOverwrite (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/entity/channel/TopGuildMessageChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8424,7 +8447,8 @@ public final class dev/kord/core/entity/channel/VoiceChannel : dev/kord/core/beh
 	public fun addOverwrite (Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun bulkDelete (Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public fun createMessage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8547,7 +8571,8 @@ public final class dev/kord/core/entity/channel/thread/NewsChannelThread : dev/k
 	public fun addUser (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun bulkDelete (Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public fun createMessage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8624,7 +8649,8 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 	public fun addUser (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun bulkDelete (Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public fun createMessage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8720,7 +8746,8 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun addUser (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannel (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun asChannelOrNull (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun bulkDelete (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun bulkDelete (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun compareTo (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/core/entity/Entity;)I
 	public static fun createMessage (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun delete (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package dev.kord.core.cache.data
 
 import dev.kord.common.entity.DiscordEmbed
@@ -11,7 +9,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class EmbedData(
     val title: Optional<String> = Optional.Missing(),
-    @Suppress("DEPRECATION")
     val type: Optional<EmbedType> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
