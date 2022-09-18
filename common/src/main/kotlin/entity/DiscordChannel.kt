@@ -83,6 +83,8 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
 import dev.kord.common.entity.ChannelType.GuildForum
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlin.time.Duration.Companion.minutes
 
 /**

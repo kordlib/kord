@@ -108,6 +108,11 @@ public sealed class ChannelType(
     public object GuildDirectory : ChannelType(14)
 
     /**
+     * A channel that can only contain threads.
+     */
+    public object GuildForum : ChannelType(15)
+
+    /**
      * A channel in which game developers can sell their game on Discord.
      *
      * @suppress
@@ -139,6 +144,7 @@ public sealed class ChannelType(
             12 -> PrivateThread
             13 -> GuildStageVoice
             14 -> GuildDirectory
+            15 -> GuildForum
             else -> Unknown(value)
         }
     }
@@ -161,6 +167,7 @@ public sealed class ChannelType(
                 PrivateThread,
                 GuildStageVoice,
                 GuildDirectory,
+                GuildForum,
             )
         }
 
