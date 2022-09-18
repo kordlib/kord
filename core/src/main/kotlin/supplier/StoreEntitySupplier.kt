@@ -8,6 +8,7 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
 import dev.kord.core.entity.application.GuildApplicationCommand
+import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -307,6 +308,13 @@ public class StoreEntitySupplier(
     ): Flow<ApplicationCommandPermissions> {
         return storeOnEach(supplier.getGuildApplicationCommandPermissions(applicationId, guildId)) { it.data }
     }
+
+    override fun getAutoModerationRules(guildId: Snowflake): Flow<AutoModerationRule> =
+        storeOnEach(supplier.getAutoModerationRules(guildId)) { it.data }
+
+    override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
+        storeAndReturn(supplier.getAutoModerationRuleOrNull(guildId, ruleId)) { it.data }
+
 
     private inline fun <T, reified R : Any> storeOnEach(source: Flow<T>, crossinline transform: (T) -> R): Flow<T> {
         return source.onEach { fetchedEntity ->

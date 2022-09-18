@@ -10,19 +10,28 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 public class RestClient(requestHandler: RequestHandler) : RestService(requestHandler) {
+
+    // order like in docs:
+
+    // interactions
+    public val interaction: InteractionService = InteractionService(requestHandler)
+
+    // resources
     public val auditLog: AuditLogService = AuditLogService(requestHandler)
+    public val autoModeration: AutoModerationService = AutoModerationService(requestHandler)
     public val channel: ChannelService = ChannelService(requestHandler)
     public val emoji: EmojiService = EmojiService(requestHandler)
     public val guild: GuildService = GuildService(requestHandler)
+    public val template: TemplateService = TemplateService(requestHandler)
     public val invite: InviteService = InviteService(requestHandler)
+    public val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
+    public val sticker: StickerService = StickerService(requestHandler)
     public val user: UserService = UserService(requestHandler)
     public val voice: VoiceService = VoiceService(requestHandler)
     public val webhook: WebhookService = WebhookService(requestHandler)
+
+    // topics
     public val application: ApplicationService = ApplicationService(requestHandler)
-    public val template: TemplateService = TemplateService(requestHandler)
-    public val interaction: InteractionService = InteractionService(requestHandler)
-    public val stageInstance: StageInstanceService = StageInstanceService(requestHandler)
-    public val sticker: StickerService = StickerService(requestHandler)
 
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows

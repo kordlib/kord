@@ -1,5 +1,6 @@
 package dev.kord.core.entity.channel
 
+import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ChannelType.*
 import dev.kord.common.entity.Snowflake
@@ -25,6 +26,9 @@ public interface Channel : ChannelBehavior {
      * The type of this channel.
      */
     public val type: ChannelType get() = data.type
+
+    /** The flags of this channel, if present. */
+    public val flags: ChannelFlags? get() = data.flags.value
 
     /**
      * Returns a new [Channel] with the given [strategy].
@@ -52,8 +56,7 @@ public interface Channel : ChannelBehavior {
             @Suppress("DEPRECATION_ERROR") GuildStore -> @Suppress("DEPRECATION_ERROR") StoreChannel(data, kord)
             GuildForum -> ForumChannel(data, kord)
             PublicNewsThread -> NewsChannelThread(data, kord)
-            PrivateThread -> TextChannelThread(data, kord)
-            PublicGuildThread -> TextChannelThread(data, kord)
+            PrivateThread, PublicGuildThread -> TextChannelThread(data, kord)
 
             else -> {
                 if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))

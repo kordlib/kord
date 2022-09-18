@@ -1,3 +1,141 @@
+@file:GenerateKordEnum(
+    name = "DefaultMessageNotificationLevel", valueType = INT,
+    entries = [
+        Entry("AllMessages", intValue = 0, kDoc = "Members will receive notifications for all messages by default."),
+        Entry(
+            "OnlyMentions", intValue = 1,
+            kDoc = "Members will receive notifications only for messages that @mention them by default.",
+        ),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "ExplicitContentFilter", valueType = INT,
+    entries = [
+        Entry("Disabled", intValue = 0, kDoc = "Media content will not be scanned."),
+        Entry(
+            "MembersWithoutRoles", intValue = 1,
+            kDoc = "Media content sent by members without roles will be scanned.",
+        ),
+        Entry("AllMembers", intValue = 2, kDoc = "Media content sent by all members will be scanned."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "MFALevel", valueType = INT,
+    entries = [
+        Entry("None", intValue = 0, kDoc = "Guild has no MFA/2FA requirement for moderation actions."),
+        Entry("Elevated", intValue = 1, kDoc = "Guild has a 2FA requirement for moderation actions."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "VerificationLevel", valueType = INT,
+    entries = [
+        Entry("None", intValue = 0, kDoc = "Unrestricted."),
+        Entry("Low", intValue = 1, kDoc = "Must have verified email on account."),
+        Entry("Medium", intValue = 2, kDoc = "Must be registered on Discord for longer than 5 minutes."),
+        Entry("High", intValue = 3, kDoc = "Must be a member of the server for longer than 10 minutes."),
+        Entry("VeryHigh", intValue = 4, kDoc = "Must have a verified phone number."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "NsfwLevel", valueType = INT,
+    entries = [
+        Entry("Default", intValue = 0),
+        Entry("Explicit", intValue = 1),
+        Entry("Safe", intValue = 2),
+        Entry("AgeRestricted", intValue = 3),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "PremiumTier", valueType = INT,
+    entries = [
+        Entry("None", intValue = 0, kDoc = "Guild has not unlocked any Server Boost perks."),
+        Entry("One", intValue = 1, kDoc = "Guild has unlocked Server Boost level 1 perks."),
+        Entry("Two", intValue = 2, kDoc = "Guild has unlocked Server Boost level 2 perks."),
+        Entry("Three", intValue = 3, kDoc = "Guild has unlocked Server Boost level 3 perks."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "GuildFeature", valueType = STRING,
+    entries = [
+        Entry(
+            "AnimatedBanner", stringValue = "ANIMATED_BANNER",
+            kDoc = "Guild has access to set an animated guild banner image.",
+        ),
+        Entry("AnimatedIcon", stringValue = "ANIMATED_ICON", kDoc = "Guild has access to set an animated guild icon."),
+        Entry("AutoModeration", stringValue = "AUTO_MODERATION", kDoc = "Guild has set up auto moderation rules."),
+        Entry("Banner", stringValue = "BANNER", kDoc = "Guild has access to set a guild banner image."),
+        Entry(
+            "Community", stringValue = "COMMUNITY",
+            kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " +
+                    "receives community updates.",
+        ),
+        Entry("Discoverable", stringValue = "DISCOVERABLE", kDoc = "Guild is able to be discovered in the directory."),
+        Entry(
+            "Featurable", stringValue = "FEATURABLE",
+            kDoc = "Guild is able to be featured in the directory.",
+        ),
+        Entry(
+            "InviteSplash", stringValue = "INVITE_SPLASH",
+            kDoc = "Guild has access to set an invite splash background.",
+        ),
+        Entry(
+            "MemberVerificationGateEnabled", stringValue = "MEMBER_VERIFICATION_GATE_ENABLED",
+            kDoc = "Guild has enabled Membership Screening.",
+        ),
+        Entry("MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization."),
+        Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
+        Entry("News", stringValue = "NEWS", kDoc = "Guild has access to create announcement channels."),
+        Entry("Partnered", stringValue = "PARTNERED", kDoc = "Guild is partnered."),
+        Entry(
+            "PreviewEnabled", stringValue = "PREVIEW_ENABLED",
+            kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
+        ),
+        Entry("PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads"),
+        Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
+        Entry(
+            "TicketedEventsEnabled", stringValue = "TICKETED_EVENTS_ENABLED",
+            kDoc = "Guild has enabled ticketed events.",
+        ),
+        Entry("VanityUrl", stringValue = "VANITY_URL", kDoc = "Guild has access to set a vanity URL."),
+        Entry("Verified", stringValue = "VERIFIED", kDoc = "Guild is verified."),
+        Entry(
+            "VIPRegions", stringValue = "VIP_REGIONS",
+            kDoc = "Guild has access to set 384kbps bitrate in voice (previously VIP voice servers).",
+        ),
+        Entry(
+            "WelcomeScreenEnabled", stringValue = "WELCOME_SCREEN_ENABLED",
+            kDoc = "Guild has enabled the welcome screen.",
+        ),
+    ],
+    deprecatedEntries = [
+        Entry(
+            "Commerce", stringValue = "COMMERCE",
+            kDoc = "Guild has access to use commerce features (i.e. create store channels).\n\n@suppress",
+            deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
+                    "Discord and store channels were removed on March 10, 2022. See " +
+                    "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
+                    " for more information.",
+            deprecationLevel = ERROR,
+        ),
+        Entry(
+            "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
+            kDoc = "Guild has access to the three-day archive time for threads\n\n@suppress.",
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = WARNING,
+        ),
+        Entry(
+            "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
+            kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = WARNING,
+        ),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -5,6 +143,10 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -14,6 +156,8 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.WARNING
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -173,127 +317,8 @@ public data class DiscordPartialGuild(
     @SerialName("guild_scheduled_events")
     val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
     @SerialName("premium_progress_bar_enabled")
-    val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
-
-    )
-
-/**
- * A representation of a [Discord Guild Feature](https://discord.com/developers/docs/resources/guild#guild-object-guild-features).
- */
-@Serializable(with = GuildFeature.Serializer::class)
-public sealed class GuildFeature(public val value: String) {
-
-    override fun toString(): String = "GuildFeature(value=$value)"
-
-    public class Unknown(value: String) : GuildFeature(value)
-
-    /** Guild has access to set an animated guild banner image. */
-    public object AnimatedBanner : GuildFeature("ANIMATED_BANNER")
-
-    /** Guild has access to set an invite splash background */
-    public object InviteSplash : GuildFeature("INVITE_SPLASH")
-
-    /** Guild has access to set 384kbps bitrate in voice (previously VIP voice servers) */
-    public object VIPRegions : GuildFeature("VIP_REGIONS")
-
-    /** Guild has access to set a vanity URL */
-    public object VanityUrl : GuildFeature("VANITY_URL")
-
-    /** Guild is verified */
-    public object Verified : GuildFeature("VERIFIED")
-
-    /** Guild is partnered */
-    public object Partnered : GuildFeature("PARTNERED")
-
-    /** Guild can enable welcome screen and discovery, and receives community updates */
-    public object Community : GuildFeature("COMMUNITY")
-
-    /** Guild has access to use commerce features (i.e. create store channels) */
-    public object Commerce : GuildFeature("COMMERCE")
-
-    /** Guild has access to create news channels */
-    public object News : GuildFeature("NEWS")
-
-    /** Guild is lurkable and able to be discovered directly */
-    public object Discoverable : GuildFeature("DISCOVERABLE")
-
-    /** Guild is able to be featured in the directory */
-    public object Featurable : GuildFeature("FEATURABLE")
-
-    /** Guild has access to set an animated guild icon */
-    public object AnimatedIcon : GuildFeature("ANIMATED_ICON")
-
-    /** Guild has access to set a guild banner image */
-    public object Banner : GuildFeature("BANNER")
-
-    /** Guild has enabled the welcome screen */
-    public object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
-
-    /** Guild has enabled ticketed events */
-    public object TicketedEventsEnabled : GuildFeature("TICKETED_EVENTS_ENABLED")
-
-    /** Guild has enabled monetization */
-    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
-
-    /** Guild has increased custom sticker slots */
-    public object MoreStickers : GuildFeature("MORE_STICKERS")
-
-    /** Guild has access to the three-day archive time for threads */
-    @Deprecated("Thread archive durations are no longer boost locked")
-    public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
-
-    /** Guild has access to the seven day archive time for threads */
-    @Deprecated("Thread archive durations are no longer boost locked")
-    public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
-
-    /** Guild has access to create private threads */
-    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
-
-    /** Guild has enabled Membership Screening */
-    public object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
-
-    /** Guild can be previewed before joining via Membership Screening or the directory */
-    public object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
-
-    /** Guild is able to set role icons */
-    public object RoleIcons : GuildFeature("ROLE_ICONS")
-
-    internal object Serializer : KSerializer<GuildFeature> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("feature", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): GuildFeature = when (val value = decoder.decodeString()) {
-            "ANIMATED_BANNER" -> AnimatedBanner
-            "INVITE_SPLASH" -> InviteSplash
-            "VIP_REGIONS" -> VIPRegions
-            "VANITY_URL" -> VanityUrl
-            "VERIFIED" -> Verified
-            "PARTNERED" -> Partnered
-            "COMMUNITY" -> Community
-            "COMMERCE" -> Commerce
-            "NEWS" -> News
-            "DISCOVERABLE" -> Discoverable
-            "FEATURABLE" -> Featurable
-            "ANIMATED_ICON" -> AnimatedIcon
-            "BANNER" -> Banner
-            "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
-            "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
-            "MONETIZATION_ENABLED" -> MonetizationEnabled
-            "MORE_STICKERS" -> MoreStickers
-            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") ThreeDayThreadArchive
-            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") SevenDayThreadArchive
-            "PRIVATE_THREADS" -> PrivateThreads
-            "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
-            "PREVIEW_ENABLED" -> PreviewEnabled
-            "ROLE_ICONS" -> RoleIcons
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: GuildFeature) {
-            encoder.encodeString(value.value)
-        }
-    }
-}
+    val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
+)
 
 @Serializable(with = SystemChannelFlags.Companion::class)
 public data class SystemChannelFlags(val code: Int) {
@@ -420,188 +445,6 @@ public data class DiscordVoiceRegion(
     val deprecated: Boolean,
     val custom: Boolean,
 )
-
-/**
- * A representation of a [Discord Premium tier](https://discord.com/developers/docs/resources/guild#guild-object-premium-tier).
- */
-@Serializable(with = PremiumTier.Serializer::class)
-public sealed class PremiumTier(public val value: Int) {
-    public class Unknown(value: Int) : PremiumTier(value)
-    public object None : PremiumTier(0)
-    public object One : PremiumTier(1)
-    public object Two : PremiumTier(2)
-    public object Three : PremiumTier(3)
-
-    internal object Serializer : KSerializer<PremiumTier> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.PremiumTier", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): PremiumTier = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> One
-            2 -> Two
-            3 -> Three
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: PremiumTier) {
-            encoder.encodeInt(value.value)
-        }
-
-    }
-}
-
-@Serializable(with = DefaultMessageNotificationLevel.Serializer::class)
-public sealed class DefaultMessageNotificationLevel(public val value: Int) {
-    public class Unknown(value: Int) : DefaultMessageNotificationLevel(value)
-    public object AllMessages : DefaultMessageNotificationLevel(0)
-    public object OnlyMentions : DefaultMessageNotificationLevel(1)
-
-    internal object Serializer : KSerializer<DefaultMessageNotificationLevel> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("default_message_notifications", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel =
-            when (val value = decoder.decodeInt()) {
-                0 -> AllMessages
-                1 -> OnlyMentions
-                else -> Unknown(value)
-            }
-
-        override fun serialize(encoder: Encoder, value: DefaultMessageNotificationLevel) {
-            encoder.encodeInt(value.value)
-        }
-    }
-
-}
-
-@Serializable(with = ExplicitContentFilter.Serializer::class)
-public sealed class ExplicitContentFilter(public val value: Int) {
-    public class Unknown(value: Int) : ExplicitContentFilter(value)
-    public object Disabled : ExplicitContentFilter(0)
-    public object MembersWithoutRoles : ExplicitContentFilter(1)
-    public object AllMembers : ExplicitContentFilter(2)
-
-    internal object Serializer : KSerializer<ExplicitContentFilter> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("explicit_content_filter", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ExplicitContentFilter = when (val value = decoder.decodeInt()) {
-            0 -> Disabled
-            1 -> MembersWithoutRoles
-            2 -> AllMembers
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: ExplicitContentFilter) {
-            encoder.encodeInt(value.value)
-        }
-
-    }
-}
-
-@Serializable(with = MFALevel.Serializer::class)
-public sealed class MFALevel(public val value: Int) {
-    public class Unknown(value: Int) : MFALevel(value)
-    public object None : MFALevel(0)
-    public object Elevated : MFALevel(1)
-
-    internal object Serializer : KSerializer<MFALevel> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.MFALevel", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MFALevel = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Elevated
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: MFALevel) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
-/**
- * A representation of a [Discord Guild NSFW Level](https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level).
- */
-@Serializable(with = NsfwLevel.Serializer::class)
-public sealed class NsfwLevel(public val value: Int) {
-    public class Unknown(value: Int) : NsfwLevel(value)
-
-    public object Default : NsfwLevel(0)
-
-    public object Explicit : NsfwLevel(1)
-
-    public object Safe : NsfwLevel(2)
-
-    public object AgeRestricted : NsfwLevel(3)
-
-    internal object Serializer : KSerializer<NsfwLevel> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.GuildNsfwLevel", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): NsfwLevel = when (val value = decoder.decodeInt()) {
-            0 -> Default
-            1 -> Explicit
-            2 -> Safe
-            3 -> AgeRestricted
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: NsfwLevel) {
-            encoder.encodeInt(value.value)
-        }
-
-    }
-}
-
-
-/**
- * A representation of a [Discord Verification Level](https://discord.com/developers/docs/resources/guild#guild-object-verification-level).
- */
-@Serializable(with = VerificationLevel.Serializer::class)
-public sealed class VerificationLevel(public val value: Int) {
-    public class Unknown(value: Int) : VerificationLevel(value)
-
-    /** Unrestricted. */
-    public object None : VerificationLevel(0)
-
-    /** Must have verified email and account.  */
-    public object Low : VerificationLevel(1)
-
-    /** Must be registered on Discord for longer than 5 minutes. */
-    public object Medium : VerificationLevel(2)
-
-    /** Must be member of the server for longer than 10 minutes */
-    public object High : VerificationLevel(3)
-
-    /** Must have a verified phone number */
-    public object VeryHigh : VerificationLevel(4)
-
-    internal object Serializer : KSerializer<VerificationLevel> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.VerificationLevel", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): VerificationLevel = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Low
-            2 -> Medium
-            3 -> High
-            4 -> VeryHigh
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: VerificationLevel) {
-            encoder.encodeInt(value.value)
-        }
-
-    }
-}
 
 @Serializable
 public data class DiscordWelcomeScreenChannel(

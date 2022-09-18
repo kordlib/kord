@@ -21,6 +21,8 @@ include("rest")
 include("core")
 include("voice")
 include("bom")
+include("ksp-annotations")
+include("ksp-processors")
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
@@ -32,6 +34,7 @@ dependencyResolutionManagement {
             cache()
             common()
             tests()
+            kspProcessors()
         }
     }
 }
@@ -51,7 +54,7 @@ fun VersionCatalogBuilder.kotlinx() {
 }
 
 fun VersionCatalogBuilder.ktor() {
-    val ktor = version("ktor", "2.1.0")
+    val ktor = version("ktor", "2.1.1")
 
     library("ktor-client-json", "io.ktor", "ktor-serialization-kotlinx-json").versionRef(ktor)
     library("ktor-client-content-negotiation", "io.ktor", "ktor-client-content-negotiation").versionRef(ktor)
@@ -96,4 +99,14 @@ fun VersionCatalogBuilder.tests() {
             "junit-jupiter-engine"
         )
     )
+}
+
+fun VersionCatalogBuilder.kspProcessors() {
+    library("ksp-api", "com.google.devtools.ksp", "symbol-processing-api").version("1.7.10-1.0.6")
+
+    val kotlinpoet = version("kotlinpoet", "1.12.0")
+    library("kotlinpoet", "com.squareup", "kotlinpoet").versionRef(kotlinpoet)
+    library("kotlinpoet-ksp", "com.squareup", "kotlinpoet-ksp").versionRef(kotlinpoet)
+
+    bundle("ksp-processors", listOf("ksp-api", "kotlinpoet", "kotlinpoet-ksp"))
 }

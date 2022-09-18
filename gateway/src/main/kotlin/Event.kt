@@ -67,7 +67,7 @@ public sealed class Event {
                         decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
-                            op = OpCode.serializer().deserialize(decoder)
+                            op = decodeSerializableElement(descriptor, index, OpCode.serializer())
                             when (op) {
                                 OpCode.HeartbeatACK -> data = HeartbeatACK
                                 OpCode.Reconnect -> data = Reconnect
@@ -128,6 +128,26 @@ public sealed class Event {
                     decoder.decodeSerializableElement(
                         descriptor, index, DiscordGuildApplicationCommandPermissions.serializer()
                     ), sequence
+                )
+                "AUTO_MODERATION_RULE_CREATE" -> AutoModerationRuleCreate(
+                    rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
+                    sequence,
+                )
+                "AUTO_MODERATION_RULE_UPDATE" -> AutoModerationRuleUpdate(
+                    rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
+                    sequence,
+                )
+                "AUTO_MODERATION_RULE_DELETE" -> AutoModerationRuleDelete(
+                    rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
+                    sequence,
+                )
+                "AUTO_MODERATION_ACTION_EXECUTION" -> AutoModerationActionExecution(
+                    actionExecution = decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordAutoModerationActionExecution.serializer(),
+                    ),
+                    sequence,
                 )
                 "CHANNEL_CREATE" -> ChannelCreate(
                     decoder.decodeSerializableElement(
@@ -584,6 +604,44 @@ public data class ApplicationCommandPermissionsUpdate(
     val permissions: DiscordGuildApplicationCommandPermissions,
     override val sequence: Int?
 ) : DispatchEvent()
+
+public data class AutoModerationRuleCreate(val rule: DiscordAutoModerationRule, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class AutoModerationRuleUpdate(val rule: DiscordAutoModerationRule, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class AutoModerationRuleDelete(val rule: DiscordAutoModerationRule, override val sequence: Int?) :
+    DispatchEvent()
+
+public data class AutoModerationActionExecution(
+    val actionExecution: DiscordAutoModerationActionExecution,
+    override val sequence: Int?,
+) : DispatchEvent()
+
+@Serializable
+public data class DiscordAutoModerationActionExecution(
+    @SerialName("guild_id")
+    val guildId: Snowflake,
+    val action: DiscordAutoModerationAction,
+    @SerialName("rule_id")
+    val ruleId: Snowflake,
+    @SerialName("rule_trigger_type")
+    val ruleTriggerType: AutoModerationRuleTriggerType,
+    @SerialName("user_id")
+    val userId: Snowflake,
+    @SerialName("channel_id")
+    val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("message_id")
+    val messageId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("alert_system_message_id")
+    val alertSystemMessageId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val content: String,
+    @SerialName("matched_keyword")
+    val matchedKeyword: String?,
+    @SerialName("matched_content")
+    val matchedContent: String?,
+)
 
 public data class ChannelCreate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()
 public data class ChannelUpdate(val channel: DiscordChannel, override val sequence: Int?) : DispatchEvent()

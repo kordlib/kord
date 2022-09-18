@@ -1,5 +1,9 @@
 .gradle/
 .idea/
-build/
 out/
 dokka/
+
+**/build/*
+!**/build/generated/
+# re-exclude BuildConfigGenerated.kt
+common/build/generated/source/buildConfig/main/main/dev/kord/common/BuildConfigGenerated.kt

@@ -1,7 +1,20 @@
+@file:GenerateKordEnum(
+    name = "UserPremium", valueType = INT,
+    kDoc = "Premium types denote the level of premium a user has.",
+    entries = [
+        Entry("None", intValue = 0),
+        Entry("NitroClassic", intValue = 1),
+        Entry("Nitro", intValue = 2),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -177,33 +190,4 @@ public data class UserFlags(val code: Int) {
 public inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return UserFlags.UserFlagsBuilder().apply(builder).flags()
-}
-
-/**
- * An instance of [Discord Premium Types](https://discord.com/developers/docs/resources/user#user-object-premium-types).
- *
- * Premium types denote the level of premium a user has.
- */
-@Serializable(with = UserPremium.Serializer::class)
-public sealed class UserPremium(public val value: Int) {
-    public class Unknown(value: Int) : UserPremium(value)
-    public object None : UserPremium(0)
-    public object NitroClassic : UserPremium(1)
-    public object Nitro : UserPremium(2)
-
-    internal object Serializer : KSerializer<UserPremium> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("premium_type", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): UserPremium = when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> NitroClassic
-            2 -> Nitro
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: UserPremium) {
-            encoder.encodeInt(value.value)
-        }
-    }
 }

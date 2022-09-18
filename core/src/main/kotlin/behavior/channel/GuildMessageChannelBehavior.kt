@@ -17,7 +17,6 @@ import kotlin.time.Duration.Companion.days
  */
 public interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChannelBehavior {
 
-
     /**
      * Requests to bulk delete the [messages].
      * Messages older than 14 days will be deleted individually.
@@ -25,7 +24,25 @@ public interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChan
      * @param reason the reason showing up in the audit log
      * @throws [RestRequestException] if something went wrong during the request.
      */
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     public suspend fun bulkDelete(messages: Iterable<Snowflake>, reason: String? = null) {
+        bulkDelete(messages, deleteOlderMessages = true, reason)
+    }
+
+    /**
+     * Requests to bulk delete the [messages].
+     *
+     * If [deleteOlderMessages] is `true` (default), messages older than 14
+     * days will be deleted individually. Otherwise they will be ignored.
+     *
+     * @param reason the reason showing up in the audit log
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    public suspend fun bulkDelete(
+        messages: Iterable<Snowflake>,
+        deleteOlderMessages: Boolean = true,
+        reason: String? = null
+    ) {
         val daysLimit = Clock.System.now() - 14.days
         //split up in bulk delete and manual delete
         // if message.timeMark + 14 days > now, then the message isn't 14 days old yet, and we can add it to the bulk delete
@@ -37,7 +54,8 @@ public interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChan
             else kord.rest.channel.bulkDelete(id, BulkDeleteRequest(it), reason)
         }
 
-        older.forEach { kord.rest.channel.deleteMessage(id, it, reason) }
+        if (deleteOlderMessages)
+            older.forEach { kord.rest.channel.deleteMessage(id, it, reason) }
     }
 
     override suspend fun asChannel(): GuildMessageChannel {

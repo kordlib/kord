@@ -3,14 +3,17 @@ package dev.kord.rest.builder
 import dev.kord.common.annotation.KordDsl
 
 @KordDsl
-public interface RequestBuilder<T> {
-    public fun toRequest(): T
-}
-
-@KordDsl
-public interface AuditRequestBuilder<T> : RequestBuilder<T> {
+public interface AuditBuilder {
     /**
      * The reason for this request, this will be displayed in the audit log.
      */
     public var reason: String?
 }
+
+@KordDsl
+public interface RequestBuilder<out T : Any> {
+    public fun toRequest(): T
+}
+
+@KordDsl
+public interface AuditRequestBuilder<out T : Any> : AuditBuilder, RequestBuilder<T>

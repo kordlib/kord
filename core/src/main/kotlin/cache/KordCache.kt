@@ -124,6 +124,10 @@ public class KordCacheBuilder {
      */
     public fun voiceState(generator: Generator<VoiceStateData, String>): Unit = forDescription(VoiceStateData.description, generator)
 
+    /** Configures the caching for [AutoModerationRuleData]. */
+    public fun autoModerationRules(generator: Generator<AutoModerationRuleData, Snowflake>): Unit =
+        forDescription(AutoModerationRuleData.description, generator)
+
     public fun build(): DataCache = DelegatingDataCache(EntrySupplier.invoke { cache, description ->
         val generator = descriptionGenerators[description] ?: defaultGenerator
         generator(cache, description)
