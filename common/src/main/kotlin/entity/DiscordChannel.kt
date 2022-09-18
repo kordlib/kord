@@ -1,18 +1,79 @@
+@file:GenerateKordEnum(
+    name = "ChannelType", valueType = INT,
+    entries = [
+        Entry("GuildText", intValue = 0, kDoc = "A text channel within a server."),
+        Entry("DM", intValue = 1, kDoc = "A direct message between users."),
+        Entry("GuildVoice", intValue = 2, kDoc = "A voice channel within a server."),
+        Entry("GroupDM", intValue = 3, kDoc = "A direct message between multiple users."),
+        Entry(
+            "GuildCategory", intValue = 4,
+            kDoc = "An [organizational·category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-" +
+                    "Categories-101) that contains up to 50 channels.",
+        ),
+        Entry(
+            "GuildNews", intValue = 5,
+            kDoc = "A channel that [users·can·follow·and·crosspost·into·their·own·server]" +
+                    "(https://support.discord.com/hc/en-us/articles/360032008192).",
+        ),
+        Entry("PublicNewsThread", intValue = 10, kDoc = "A temporary sub-channel within a [GuildNews] channel."),
+        Entry("PublicGuildThread", intValue = 11, kDoc = "A temporary sub-channel within a [GuildText] channel."),
+        Entry(
+            "PrivateThread", intValue = 12,
+            kDoc = "A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and " +
+                    "those with the [ManageThreads][dev.kord.common.entity.Permission.ManageThreads] permission.",
+        ),
+        Entry(
+            "GuildStageVoice", intValue = 13,
+            kDoc = "A voice channel for [hosting·events·with·an·audience]" +
+                    "(https://support.discord.com/hc/en-us/articles/1500005513722).",
+        ),
+        Entry(
+            "GuildDirectory", intValue = 14,
+            kDoc = "The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-" +
+                    "Student-Hubs-FAQ) containing the listed servers.",
+        ),
+    ],
+    deprecatedEntries = [
+        Entry(
+            "GuildStore", intValue = 6,
+            kDoc = "A channel in which game developers can sell their game on Discord.\n\n@suppress",
+            deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
+                    "Discord and store channels were removed on March 10, 2022. See " +
+                    "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
+                    " for more information.",
+            deprecationLevel = HIDDEN,
+        ),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "VideoQualityMode", valueType = INT,
+    entries = [
+        Entry("Auto", intValue = 1, kDoc = "Discord chooses the quality for optimal performance."),
+        Entry("Full", intValue = 2, kDoc = "720p."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "OverwriteType", valueType = INT,
+    entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
+)
+
 package dev.kord.common.entity
 
-import dev.kord.common.entity.Permission.ManageThreads
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInMinutesSerializer
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -88,103 +149,6 @@ public data class DiscordChannel(
     val member: Optional<DiscordThreadMember> = Optional.Missing()
 )
 
-@Serializable(with = ChannelType.Serializer::class)
-public sealed class ChannelType(public val value: Int) {
-
-    /** The default code for unknown values. */
-    public class Unknown(value: Int) : ChannelType(value)
-
-    /** A text channel within a server. */
-    public object GuildText : ChannelType(0)
-
-    /** A direct message between users. */
-    public object DM : ChannelType(1)
-
-    /** A voice channel within a server. */
-    public object GuildVoice : ChannelType(2)
-
-    /** A direct message between multiple users. */
-    public object GroupDM : ChannelType(3)
-
-    /**
-     * An [organizational category](https://support.discord.com/hc/en-us/articles/115001580171-Channel-Categories-101)
-     * that contains up to 50 channels.
-     */
-    public object GuildCategory : ChannelType(4)
-
-    /**
-     * A channel that
-     * [users can follow and crosspost into their own server](https://support.discord.com/hc/en-us/articles/360032008192).
-     */
-    public object GuildNews : ChannelType(5)
-
-    /**
-     * A channel in which game developers can sell their game on Discord.
-     *
-     * @suppress
-     */
-    @Deprecated(
-        """
-        Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
-        removed on March 10, 2022.
-        
-        See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
-        information.
-        """,
-        level = HIDDEN,
-    )
-    public object GuildStore : ChannelType(6)
-
-    /** A temporary sub-channel within a [GuildNews] channel. */
-    public object PublicNewsThread : ChannelType(10)
-
-    /** A temporary sub-channel within a [GuildText] channel. */
-    public object PublicGuildThread : ChannelType(11)
-
-    /**
-     * A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and those with the
-     * [ManageThreads] permission.
-     */
-    public object PrivateThread : ChannelType(12)
-
-    /**
-     * A voice channel for
-     * [hosting events with an audience](https://support.discord.com/hc/en-us/articles/1500005513722).
-     */
-    public object GuildStageVoice : ChannelType(13)
-
-    /**
-     * The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-Student-Hubs-FAQ)
-     * containing the listed servers.
-     */
-    public object GuildDirectory : ChannelType(14)
-
-
-    internal object Serializer : KSerializer<ChannelType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ChannelType = when (val code = decoder.decodeInt()) {
-            0 -> GuildText
-            1 -> DM
-            2 -> GuildVoice
-            3 -> GroupDM
-            4 -> GuildCategory
-            5 -> GuildNews
-            6 -> @Suppress("DEPRECATION_ERROR") GuildStore
-            10 -> PublicNewsThread
-            11 -> PublicGuildThread
-            12 -> PrivateThread
-            13 -> GuildStageVoice
-            14 -> GuildDirectory
-            else -> Unknown(code)
-        }
-
-        override fun serialize(encoder: Encoder, value: ChannelType) = encoder.encodeInt(value.value)
-    }
-
-}
-
 @Serializable
 public data class Overwrite(
     val id: Snowflake,
@@ -192,62 +156,6 @@ public data class Overwrite(
     val allow: Permissions,
     val deny: Permissions,
 )
-
-@Serializable(with = OverwriteType.Serializer::class)
-public sealed class OverwriteType(public val value: Int) {
-
-    public class Unknown(value: Int) : OverwriteType(value)
-    public object Role : OverwriteType(0)
-    public object Member : OverwriteType(1)
-
-    internal object Serializer : KSerializer<OverwriteType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.Overwrite.Type", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): OverwriteType = when (val value = decoder.decodeInt()) {
-            0 -> Role
-            1 -> Member
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: OverwriteType) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
-@Serializable(with = VideoQualityMode.Serializer::class)
-public sealed class VideoQualityMode(public val value: Int) {
-
-    final override fun equals(other: Any?): Boolean =
-        this === other || (other is VideoQualityMode && other.value == this.value)
-
-    final override fun hashCode(): Int = value
-
-
-    /** An unknown Video Quality Mode. */
-    public class Unknown(value: Int) : VideoQualityMode(value)
-
-    /** Discord chooses the quality for optimal performance. */
-    public object Auto : VideoQualityMode(1)
-
-    /** 720p. */
-    public object Full : VideoQualityMode(2)
-
-
-    internal object Serializer : KSerializer<VideoQualityMode> {
-        override val descriptor =
-            PrimitiveSerialDescriptor("dev.kord.common.entity.VideoQualityMode", PrimitiveKind.INT)
-
-        override fun serialize(encoder: Encoder, value: VideoQualityMode) = encoder.encodeInt(value.value)
-
-        override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> Auto
-            2 -> Full
-            else -> Unknown(value)
-        }
-    }
-}
 
 @Serializable
 public data class DiscordThreadMetadata(

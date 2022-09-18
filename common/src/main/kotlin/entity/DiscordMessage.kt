@@ -1,3 +1,104 @@
+@file:GenerateKordEnum(
+    name = "MessageType", valueType = INT, valueName = "code",
+    // had `public val values: Set<MessageType>` in companion before -> replace with `entries`
+    valuesPropertyName = "values", valuesPropertyType = SET,
+    entries = [
+        Entry("Default", intValue = 0),
+        Entry("RecipientAdd", intValue = 1),
+        Entry("RecipientRemove", intValue = 2),
+        Entry("Call", intValue = 3),
+        Entry("ChannelNameChange", intValue = 4),
+        Entry("ChannelIconChange", intValue = 5),
+        Entry("ChannelPinnedMessage", intValue = 6),
+        Entry("UserJoin", intValue = 7),
+        Entry("GuildBoost", intValue = 8),
+        Entry("GuildBoostTier1", intValue = 9),
+        Entry("GuildBoostTier2", intValue = 10),
+        Entry("GuildBoostTier3", intValue = 11),
+        Entry("ChannelFollowAdd", intValue = 12),
+        Entry("GuildDiscoveryDisqualified", intValue = 14),
+        Entry("GuildDiscoveryRequalified", intValue = 15),
+        Entry("GuildDiscoveryGracePeriodInitialWarning", intValue = 16),
+        Entry("GuildDiscoveryGracePeriodFinalWarning", intValue = 17),
+        Entry("ThreadCreated", intValue = 18),
+        Entry("Reply", intValue = 19),
+        Entry("ChatInputCommand", intValue = 20),
+        Entry("ThreadStarterMessage", intValue = 21),
+        Entry("GuildInviteReminder", intValue = 22),
+        Entry("ContextMenuCommand", intValue = 23),
+        Entry("AutoModerationAction", intValue = 24),
+    ],
+    deprecatedEntries = [
+        Entry(
+            "GuildMemberJoin", intValue = 7, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'UserJoin'.", deprecationLevel = ERROR,
+            replaceWith = ReplaceWith("UserJoin", "dev.kord.common.entity.MessageType.UserJoin"),
+        ),
+        Entry(
+            "UserPremiumGuildSubscription", intValue = 8, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'GuildBoost'.", deprecationLevel = ERROR,
+            replaceWith = ReplaceWith("GuildBoost", "dev.kord.common.entity.MessageType.GuildBoost"),
+        ),
+        Entry(
+            "UserPremiumGuildSubscriptionTierOne", intValue = 9, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'GuildBoostTier1'.", deprecationLevel = ERROR,
+            replaceWith = ReplaceWith("GuildBoostTier1", "dev.kord.common.entity.MessageType.GuildBoostTier1"),
+        ),
+        Entry(
+            "UserPremiumGuildSubscriptionTwo", intValue = 10, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'GuildBoostTier2'.", deprecationLevel = ERROR,
+            replaceWith = ReplaceWith("GuildBoostTier2", "dev.kord.common.entity.MessageType.GuildBoostTier2"),
+        ),
+        Entry(
+            "UserPremiumGuildSubscriptionThree", intValue = 11, kDoc = "@suppress",
+            deprecationMessage = "Renamed to 'GuildBoostTier3'.", deprecationLevel = ERROR,
+            replaceWith = ReplaceWith("GuildBoostTier3", "dev.kord.common.entity.MessageType.GuildBoostTier3"),
+        ),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "MessageActivityType", valueType = INT,
+    entries = [
+        Entry("Join", intValue = 1),
+        Entry("Spectate", intValue = 2),
+        Entry("Listen", intValue = 3),
+        Entry("JoinRequest", intValue = 5),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "EmbedType", valueType = STRING,
+    entries = [
+        Entry("Rich", stringValue = "rich", kDoc = "Generic embed rendered from embed attributes."),
+        Entry("Image", stringValue = "image", kDoc = "Image embed."),
+        Entry("Video", stringValue = "video", kDoc = "Video embed."),
+        Entry("Gifv", stringValue = "gifv", kDoc = "Animated gif image embed rendered as a video embed."),
+        Entry("Article", stringValue = "article", kDoc = "Article embed."),
+        Entry("Link", stringValue = "link", kDoc = "Link embed."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "AllowedMentionType", valueType = STRING,
+    entries = [
+        Entry("RoleMentions", stringValue = "roles", kDoc = "Controls role mentions."),
+        Entry("UserMentions", stringValue = "users", kDoc = "Controls user mentions"),
+        Entry("EveryoneMentions", stringValue = "everyone", kDoc = "Controls @everyone and @here mentions."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "MessageStickerType", valueType = INT,
+    // had `public val values: Set<MessageStickerType>` in companion before -> replace with `entries`
+    valuesPropertyName = "values", valuesPropertyType = SET,
+    entries = [
+        Entry("PNG", intValue = 1),
+        Entry("APNG", intValue = 2),
+        Entry("LOTTIE", intValue = 3),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -5,6 +106,11 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.IntOrStringSerializer
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -163,36 +269,6 @@ public data class DiscordStickerItem(
     @SerialName("format_type")
     val formatType: MessageStickerType
 )
-
-@Serializable(with = MessageStickerType.Serializer::class)
-public sealed class MessageStickerType(public val value: Int) {
-    public class Unknown(value: Int) : MessageStickerType(value)
-    public object PNG : MessageStickerType(1)
-    public object APNG : MessageStickerType(2)
-    public object LOTTIE : MessageStickerType(3)
-
-    public companion object {
-        public val values: Set<MessageStickerType>
-            get() = setOf(PNG, APNG, LOTTIE)
-    }
-
-    internal object Serializer : KSerializer<MessageStickerType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.MessageStickerType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MessageStickerType = when (val value = decoder.decodeInt()) {
-            1 -> PNG
-            2 -> APNG
-            3 -> LOTTIE
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: MessageStickerType) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
-
 
 /**
  * Represents [a partial message sent in a channel within Discord](https://discord.com/developers/docs/resources/channel#message-object).
@@ -486,7 +562,6 @@ public data class DiscordAttachment(
 @Serializable
 public data class DiscordEmbed(
     val title: Optional<String> = Optional.Missing(),
-    @Suppress("DEPRECATION")
     val type: Optional<EmbedType> = Optional.Missing(),
     val description: Optional<String> = Optional.Missing(),
     val url: Optional<String> = Optional.Missing(),
@@ -610,64 +685,6 @@ public data class DiscordEmbed(
     )
 }
 
-/**
- * A representation of a [Discord Embed Type structure](https://discord.com/developers/docs/resources/channel#embed-object-embed-types).
- *
- * Embed types are "loosely defined" and, for the most part, are not used by our clients for rendering.
- * Embed attributes power what is rendered.
- * Embed types should be considered deprecated and might be removed in a future API version.
- */
-@Suppress("DEPRECATION")
-@Deprecated(
-    """
-    Embed types are "loosely defined" and, for the most part, are not used by clients for rendering. 
-    Embed attributes power what is rendered. 
-    Embed types should be considered deprecated and might be removed in a future API version.
-"""
-)
-@Serializable(with = EmbedType.Serializer::class)
-public sealed class EmbedType(public val value: String) {
-    public class Unknown(value: String) : EmbedType(value)
-
-    /** Generic embed rendered from embed attributes. */
-    public object Rich : EmbedType("rich")
-
-    /** Image embed. */
-    public object Image : EmbedType("image")
-
-    /** Video embed. */
-    public object Video : EmbedType("video")
-
-    /** Animated gif image embed rendered as a video embed. */
-    public object Gifv : EmbedType("gifv")
-
-    /** Article embed. */
-    public object Article : EmbedType("article")
-
-    /** Link embed. */
-    public object Link : EmbedType("link")
-
-    internal object Serializer : KSerializer<EmbedType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.EmbedType", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): EmbedType = when (val value = decoder.decodeString()) {
-            "rich" -> Rich
-            "image" -> Image
-            "video" -> Video
-            "gifv" -> Gifv
-            "article" -> Article
-            "Link" -> Link
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: EmbedType) {
-            encoder.encodeString(value.value)
-        }
-    }
-
-}
-
 @Serializable
 public data class Reaction(
     val count: Int,
@@ -681,32 +698,6 @@ public data class MessageActivity(
     @SerialName("party_id")
     val partyId: Optional<String> = Optional.Missing(),
 )
-
-@Serializable(with = MessageActivityType.Serializer::class)
-public sealed class MessageActivityType(public val value: Int) {
-    public class Unknown(value: Int) : MessageActivityType(value)
-    public object Join : MessageActivityType(1)
-    public object Spectate : MessageActivityType(2)
-    public object Listen : MessageActivityType(3)
-    public object JoinRequest : MessageActivityType(5)
-
-    internal object Serializer : KSerializer<MessageActivityType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.MessageActivivtyType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MessageActivityType = when (val value = decoder.decodeInt()) {
-            1 -> Join
-            2 -> Spectate
-            3 -> Listen
-            5 -> JoinRequest
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: MessageActivityType) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
 
 @Serializable
 public data class MessageApplication(
@@ -772,135 +763,6 @@ public data class AllRemovedMessageReactions(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
-
-@Serializable(with = MessageType.MessageTypeSerializer::class)
-public sealed class MessageType(public val code: Int) {
-
-    final override fun equals(other: Any?): Boolean =
-        this === other || (other is MessageType && this.code == other.code)
-
-    final override fun hashCode(): Int = code
-
-
-    /** The default code for unknown values. */
-    public class Unknown(code: Int) : MessageType(code)
-    public object Default : MessageType(0)
-    public object RecipientAdd : MessageType(1)
-    public object RecipientRemove : MessageType(2)
-    public object Call : MessageType(3)
-    public object ChannelNameChange : MessageType(4)
-    public object ChannelIconChange : MessageType(5)
-    public object ChannelPinnedMessage : MessageType(6)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'UserJoin'.", ReplaceWith("UserJoin"), level = ERROR)
-    public object GuildMemberJoin : MessageType(7)
-    public object UserJoin : MessageType(7)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'GuildBoost'.", ReplaceWith("GuildBoost"), level = ERROR)
-    public object UserPremiumGuildSubscription : MessageType(8)
-    public object GuildBoost : MessageType(8)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier1'.", ReplaceWith("GuildBoostTier1"), level = ERROR)
-    public object UserPremiumGuildSubscriptionTierOne : MessageType(9)
-    public object GuildBoostTier1 : MessageType(9)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier2'.", ReplaceWith("GuildBoostTier2"), level = ERROR)
-    public object UserPremiumGuildSubscriptionTwo : MessageType(10)
-    public object GuildBoostTier2 : MessageType(10)
-
-    /** @suppress */
-    @Deprecated("Renamed to 'GuildBoostTier3'.", ReplaceWith("GuildBoostTier3"), level = ERROR)
-    public object UserPremiumGuildSubscriptionThree : MessageType(11)
-    public object GuildBoostTier3 : MessageType(11)
-    public object ChannelFollowAdd : MessageType(12)
-    public object GuildDiscoveryDisqualified : MessageType(14)
-
-    @Suppress("SpellCheckingInspection")
-    public object GuildDiscoveryRequalified : MessageType(15)
-    public object GuildDiscoveryGracePeriodInitialWarning : MessageType(16)
-    public object GuildDiscoveryGracePeriodFinalWarning : MessageType(17)
-    public object ThreadCreated : MessageType(18)
-    public object Reply : MessageType(19)
-    public object ChatInputCommand : MessageType(20)
-    public object ThreadStarterMessage : MessageType(21)
-    public object GuildInviteReminder : MessageType(22)
-    public object ContextMenuCommand : MessageType(23)
-    public object AutoModerationAction : MessageType(24)
-
-
-    internal object MessageTypeSerializer : KSerializer<MessageType> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MessageType {
-            val code = decoder.decodeInt()
-            return values.firstOrNull { it.code == code } ?: Unknown(code)
-        }
-
-        override fun serialize(encoder: Encoder, value: MessageType) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-    public companion object {
-        public val values: Set<MessageType>
-            get() = setOf(
-                Default,
-                RecipientAdd,
-                RecipientRemove,
-                Call,
-                ChannelNameChange,
-                ChannelIconChange,
-                ChannelPinnedMessage,
-                UserJoin,
-                GuildBoost,
-                GuildBoostTier1,
-                GuildBoostTier2,
-                GuildBoostTier3,
-                ChannelFollowAdd,
-                GuildDiscoveryDisqualified,
-                GuildDiscoveryRequalified,
-                Reply,
-                GuildDiscoveryGracePeriodInitialWarning,
-                GuildDiscoveryGracePeriodFinalWarning,
-                ThreadCreated,
-                ChatInputCommand,
-                ThreadStarterMessage,
-                GuildInviteReminder,
-                ContextMenuCommand,
-                AutoModerationAction,
-            )
-    }
-}
-
-@Serializable(with = AllowedMentionType.Serializer::class)
-public sealed class AllowedMentionType(public val value: String) {
-    public class Unknown(value: String) : AllowedMentionType(value)
-    public object RoleMentions : AllowedMentionType("roles")
-    public object UserMentions : AllowedMentionType("users")
-    public object EveryoneMentions : AllowedMentionType("everyone")
-
-    internal object Serializer : KSerializer<AllowedMentionType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.DiscordAllowedMentionType", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): AllowedMentionType = when (val value = decoder.decodeString()) {
-            "roles" -> RoleMentions
-            "users" -> UserMentions
-            "everyone" -> EveryoneMentions
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: AllowedMentionType) {
-            encoder.encodeString(value.value)
-        }
-    }
-}
 
 @Serializable
 public data class AllowedMentions(

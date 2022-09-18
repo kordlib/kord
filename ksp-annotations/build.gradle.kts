@@ -1,0 +1,3 @@
+plugins {
+    `kord-internal-module`
+}

@@ -41,7 +41,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
      */
     public suspend fun getGuild(guildId: Snowflake, withCounts: Boolean = false): DiscordGuild = call(Route.GuildGet) {
         keys[Route.GuildId] = guildId
-        parameter("with_count", withCounts.toString())
+        parameter("with_counts", withCounts.toString())
     }
 
     /**

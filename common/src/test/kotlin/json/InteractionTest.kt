@@ -108,7 +108,7 @@ class InteractionTest {
 
             with(permissions.first()) {
                 id shouldBe "827126703301066792"
-                type shouldBe DiscordGuildApplicationCommandPermission.Type.Role
+                type shouldBe ApplicationCommandPermissionType.Role
                 permission shouldBe true
             }
         }
