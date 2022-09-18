@@ -1,21 +1,50 @@
+@file:GenerateKordEnum(
+    name = "ComponentType", valueType = INT,
+    deprecatedSerializerName = "Serializer",
+    entries = [
+        Entry("ActionRow", intValue = 1, kDoc = "A container for other components."),
+        Entry("Button", intValue = 2, kDoc = "A button object."),
+        Entry("SelectMenu", intValue = 3, kDoc = "A select menu for picking from choices."),
+        Entry("TextInput", intValue = 4, kDoc = "A text input object."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "ButtonStyle", valueType = INT,
+    deprecatedSerializerName = "Serializer",
+    kDoc = "Style of a [button][dev.kord.common.entity.ComponentType.Button].\n\nA preview of the different styles " +
+            "can be found [here]" +
+            "(https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).",
+    entries = [
+        Entry("Primary", intValue = 1, kDoc = "Blurple."),
+        Entry("Secondary", intValue = 2, kDoc = "Grey."),
+        Entry("Success", intValue = 3, kDoc = "Green."),
+        Entry("Danger", intValue = 4, kDoc = "Red."),
+        Entry("Link", intValue = 5, kDoc = "Grey, navigates to a URL."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "TextInputStyle", valueType = INT,
+    kDoc = "Style of a [text·input][dev.kord.common.entity.ComponentType.TextInput].",
+    entries = [
+        Entry("Short", intValue = 1, kDoc = "A single-line input."),
+        Entry("Paragraph", intValue = 2, kDoc = "A multi-line input."),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonContentPolymorphicSerializer
-import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.intOrNull
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.*
 
 /**
  * Represent a [interactable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
@@ -120,149 +149,3 @@ public data class DiscordTextInputComponent(
      override val required: OptionalBoolean = OptionalBoolean.Missing,
      override val value: Optional<String> = Optional.Missing()
 ) : DiscordComponent()
-
-/**
- * Representation of different [DiscordComponent] types.
- *
- * @property value the raw type value used by the Discord API
- */
-@Serializable(with = ComponentType.Serializer::class)
-public sealed class ComponentType(public val value: Int) {
-    /**
-     * Fallback type used for types that haven't been added to Kord yet.
-     */
-    public class Unknown(value: Int) : ComponentType(value)
-
-    /**
-     * A container for other components.
-     */
-    public object ActionRow : ComponentType(1)
-
-    /**
-     * A clickable button.
-     */
-    public object Button : ComponentType(2)
-
-    /**
-     * A select menu for picking from choices.
-     */
-    public object SelectMenu : ComponentType(3)
-
-    /**
-     * 	A text input object.
-     */
-    public object TextInput : ComponentType(4)
-
-    public companion object Serializer : KSerializer<ComponentType> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ComponentType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ComponentType =
-            when (val value = decoder.decodeInt()) {
-                1 -> ActionRow
-                2 -> Button
-                3 -> SelectMenu
-                4 -> TextInput
-                else -> Unknown(value)
-            }
-
-        override fun serialize(encoder: Encoder, value: ComponentType): Unit = encoder.encodeInt(value.value)
-    }
-}
-
-/**
- * Representation of different ButtonStyles.
- *
- * A cheat sheet on how the styles look like can be found [here](https://discord.com/assets/7bb017ce52cfd6575e21c058feb3883b.png)
- *
- * @see ComponentType.Button
- */
-@Serializable(with = ButtonStyle.Serializer::class)
-public sealed class ButtonStyle(public val value: Int) {
-
-    /**
-     * A fallback style used for styles that haven't been added to Kord yet.
-     */
-    public class Unknown(value: Int) : ButtonStyle(value)
-
-    /**
-     * Blurple.
-     * Requires: [DiscordComponent.customId]
-     */
-    public object Primary : ButtonStyle(1)
-
-    /**
-     * Grey.
-     * Requires: [DiscordComponent.customId]
-     */
-    public object Secondary : ButtonStyle(2)
-
-    /**
-     * Green
-     * Requires: [DiscordComponent.customId]
-     */
-    public object Success : ButtonStyle(3)
-
-    /**
-     * Red.
-     * Requires: [DiscordComponent.customId]
-     */
-    public object Danger : ButtonStyle(4)
-
-    /**
-     * Grey, navigates to an URL.
-     * Requires: [DiscordComponent.url]
-     */
-    public object Link : ButtonStyle(5)
-
-    public companion object Serializer : KSerializer<ButtonStyle> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Button", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ButtonStyle =
-            when (val value = decoder.decodeInt()) {
-                1 -> Primary
-                2 -> Secondary
-                3 -> Success
-                4 -> Danger
-                5 -> Link
-                else -> Unknown(value)
-            }
-
-        override fun serialize(encoder: Encoder, value: ButtonStyle): Unit = encoder.encodeInt(value.value)
-    }
-}
-
-/**
- * Representation of different TextInputStyles.
- *
- * @see ComponentType.TextInput
- */
-@Serializable(with = TextInputStyle.Serializer::class)
-public sealed class TextInputStyle(public val value: Int) {
-    /**
-     * A fallback style used for styles that haven't been added to Kord yet.
-     */
-    public class Unknown(value: Int) : TextInputStyle(value)
-
-    /**
-     * A single-line input.
-     */
-    public object Short : TextInputStyle(1)
-
-    /**
-     * A multi-line input.
-     */
-    public object Paragraph : TextInputStyle(2)
-
-    internal companion object Serializer : KSerializer<TextInputStyle> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("TextInput", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): TextInputStyle =
-            when (val value = decoder.decodeInt()) {
-                1 -> Short
-                2 -> Paragraph
-                else -> Unknown(value)
-            }
-
-        override fun serialize(encoder: Encoder, value: TextInputStyle): Unit = encoder.encodeInt(value.value)
-    }
-}

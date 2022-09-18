@@ -1,7 +1,22 @@
+@file:GenerateKordEnum(
+    name = "PresenceStatus", valueType = STRING,
+    deprecatedSerializerName = "StatusSerializer",
+    entries = [
+        Entry("Online", stringValue = "online", kDoc = "Online."),
+        Entry("DoNotDisturb", stringValue = "dnd", kDoc = "Do Not Disturb."),
+        Entry("Idle", stringValue = "idle", kDoc = "AFK."),
+        Entry("Invisible", stringValue = "invisible", kDoc = "Invisible and shown as offline."),
+        Entry("Offline", stringValue = "offline", kDoc = "Offline."),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -66,31 +81,3 @@ public data class DiscordClientStatus(
     val mobile: Optional<PresenceStatus> = Optional.Missing(),
     val web: Optional<PresenceStatus> = Optional.Missing(),
 )
-
-@Serializable(with = PresenceStatus.StatusSerializer::class)
-public sealed class PresenceStatus(public val value: String) {
-
-    public class Unknown(value: String) : PresenceStatus(value)
-    public object Online : PresenceStatus("online")
-    public object Idle : PresenceStatus("idle")
-    public object DoNotDisturb : PresenceStatus("dnd")
-    public object Offline : PresenceStatus("offline")
-    public object Invisible : PresenceStatus("invisible")
-
-    public companion object StatusSerializer : KSerializer<PresenceStatus> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Kord.ClientStatus", PrimitiveKind.STRING)
-
-        override fun deserialize(decoder: Decoder): PresenceStatus = when (val value = decoder.decodeString()) {
-            "online" -> Online
-            "idle" -> Idle
-            "dnd" -> DoNotDisturb
-            "offline" -> Offline
-            "invisible" -> Invisible
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: PresenceStatus) {
-            encoder.encodeString(value.value)
-        }
-    }
-}
