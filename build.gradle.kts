@@ -46,3 +46,7 @@ tasks {
         outputDirectory.set(dokkaOutputDir)
     }
 }
+
+apiValidation {
+    ignoredProjects += listOf("ksp-annotations", "ksp-processors")
+}

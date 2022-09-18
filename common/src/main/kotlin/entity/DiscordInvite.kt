@@ -1,17 +1,22 @@
+@file:GenerateKordEnum(
+    name = "InviteTargetType", valueType = INT,
+    entries = [
+        Entry("Stream", intValue = 1),
+        Entry("EmbeddedApplication", intValue = 2),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.ERROR
 
 public sealed interface BaseDiscordInvite {
@@ -97,24 +102,3 @@ public data class DiscordPartialInvite(
     val code: String?,
     val uses: Int
 )
-
-@Serializable(with = InviteTargetType.Serializer::class)
-public sealed class InviteTargetType(public val value: Int) {
-    public class Unknown(value: Int) : InviteTargetType(value)
-    public object Stream : InviteTargetType(1)
-    public object EmbeddedApplication : InviteTargetType(2)
-
-    internal object Serializer : KSerializer<InviteTargetType> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("InviteTargetType", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): InviteTargetType = when (val value = decoder.decodeInt()) {
-            1 -> Stream
-            2 -> EmbeddedApplication
-            else -> Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: InviteTargetType) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}

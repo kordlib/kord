@@ -72,14 +72,14 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         val channel = DeletedThreadChannel(channelData, kord)
         val old = cachedData?.let { Channel.from(cachedData, kord) }
         val coreEvent = when (channel.type) {
-            is ChannelType.PublicNewsThread -> NewsChannelThreadDeleteEvent(
+            ChannelType.PublicNewsThread -> NewsChannelThreadDeleteEvent(
                 channel,
                 old as? NewsChannelThread,
                 shard,
                 context?.get(),
             )
-            is ChannelType.PrivateThread,
-            is ChannelType.GuildText -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard, context?.get())
+            ChannelType.PrivateThread,
+            ChannelType.PublicGuildThread -> TextChannelThreadDeleteEvent(channel, old as? TextChannelThread, shard, context?.get())
             else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard, context?.get())
         }
 
