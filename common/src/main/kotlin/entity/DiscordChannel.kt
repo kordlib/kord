@@ -124,8 +124,6 @@ public data class DiscordChannel(
     val name: Optional<String?> = Optional.Missing(),
     val topic: Optional<String?> = Optional.Missing(),
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
-    @SerialName("nsfw_level")
-    val nsfwLevel: NsfwLevel,
     @SerialName("last_message_id")
     val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val bitrate: OptionalInt = OptionalInt.Missing,
@@ -167,9 +165,6 @@ public enum class ChannelFlag(public val code: Int) {
 
     /** Whether a tag is required to be specified when creating a thread in a [GuildForum] channel. */
     RequireTag(1 shl 4);
-
-    public object GuildForum : ChannelType(15)
-
 
 
     public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
