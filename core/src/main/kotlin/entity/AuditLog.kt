@@ -1,13 +1,14 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
-import dev.kord.core.cache.data.AutoModerationRuleData
-import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.UserData
-import dev.kord.core.cache.data.WebhookData
+import dev.kord.core.cache.data.*
+import dev.kord.core.entity.application.ApplicationCommand
+import dev.kord.core.entity.application.GlobalApplicationCommand
+import dev.kord.core.entity.application.GuildApplicationCommand
 import dev.kord.core.entity.automoderation.AutoModerationRule
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -32,6 +33,16 @@ public class AuditLog(
 
     public val autoModerationRules: List<AutoModerationRule>
         get() = data.autoModerationRules.map { AutoModerationRule(AutoModerationRuleData.from(it), kord) }
+
+    public val applicationCommands: List<ApplicationCommand>
+        get() = data.applicationCommands.map { command ->
+            val data = ApplicationCommandData.from(command)
+            val service = kord.rest.interaction
+            when (data.guildId) {
+                OptionalSnowflake.Missing -> GlobalApplicationCommand(data, service)
+                is OptionalSnowflake.Value -> GuildApplicationCommand(data, service)
+            }
+        }
 
     public val entries: List<AuditLogEntry> get() = data.auditLogEntries.map { AuditLogEntry(it, kord) }
 

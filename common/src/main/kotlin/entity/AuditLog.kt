@@ -86,6 +86,8 @@ import dev.kord.common.entity.VerificationLevel as CommonVerificationLevel
 public data class DiscordAuditLog(
     val webhooks: List<DiscordWebhook>,
     val users: List<DiscordUser>,
+    @SerialName("application_commands")
+    val applicationCommands: List<DiscordApplicationCommand>,
     @SerialName("audit_log_entries")
     val auditLogEntries: List<DiscordAuditLogEntry>,
     @SerialName("auto_moderation_rules")
