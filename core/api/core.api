@@ -1,8 +1,10 @@
 public final class dev/kord/core/ClientResources {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/builder/Shards;ILio/ktor/client/HttpClient;Ldev/kord/core/supplier/EntitySupplyStrategy;)V
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/builder/Shards;Lio/ktor/client/HttpClient;Ldev/kord/core/supplier/EntitySupplyStrategy;)V
 	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultStrategy ()Ldev/kord/core/supplier/EntitySupplyStrategy;
 	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
+	public final fun getMaxConcurrency ()I
 	public final fun getShards ()Ldev/kord/gateway/builder/Shards;
 	public final fun getToken ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
@@ -12939,6 +12941,7 @@ public final class dev/kord/core/gateway/DefaultMasterGateway : dev/kord/core/ga
 	public fun getEvents ()Lkotlinx/coroutines/flow/Flow;
 	public fun getGateways ()Ljava/util/Map;
 	public fun sendAll (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun startWithConfig (Ldev/kord/gateway/GatewayConfiguration;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun startWithConfig (Ldev/kord/gateway/GatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun stopAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
@@ -12950,6 +12953,7 @@ public abstract interface class dev/kord/core/gateway/MasterGateway {
 	public abstract fun getEvents ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getGateways ()Ljava/util/Map;
 	public abstract fun sendAll (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun startWithConfig (Ldev/kord/gateway/GatewayConfiguration;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun startWithConfig (Ldev/kord/gateway/GatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun stopAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -12957,12 +12961,15 @@ public abstract interface class dev/kord/core/gateway/MasterGateway {
 public final class dev/kord/core/gateway/MasterGateway$DefaultImpls {
 	public static fun detachAll (Ldev/kord/core/gateway/MasterGateway;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun sendAll (Ldev/kord/core/gateway/MasterGateway;Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun startWithConfig (Ldev/kord/core/gateway/MasterGateway;Ldev/kord/gateway/GatewayConfiguration;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun startWithConfig (Ldev/kord/core/gateway/MasterGateway;Ldev/kord/gateway/GatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun stopAll (Ldev/kord/core/gateway/MasterGateway;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/gateway/MasterGatewayKt {
+	public static final fun start (Ldev/kord/core/gateway/MasterGateway;Ljava/lang/String;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun start (Ldev/kord/core/gateway/MasterGateway;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun start$default (Ldev/kord/core/gateway/MasterGateway;Ljava/lang/String;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun start$default (Ldev/kord/core/gateway/MasterGateway;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 

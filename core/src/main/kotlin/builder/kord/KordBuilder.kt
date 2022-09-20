@@ -232,7 +232,8 @@ public class KordBuilder(public val token: String) {
     public suspend fun build(): Kord {
         val client = httpClient.configure()
 
-        val recommendedShards = client.getGatewayInfo().shards
+        val gatewayInfo = client.getGatewayInfo()
+        val recommendedShards = gatewayInfo.shards
         val shardsInfo = shardsBuilder(recommendedShards)
         val shards = shardsInfo.indices.toList()
 
@@ -245,8 +246,14 @@ public class KordBuilder(public val token: String) {
             }
         }
 
-        val resources =
-            ClientResources(token, applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy)
+        val resources = ClientResources(
+            token = token,
+            applicationId = applicationId ?: getBotIdFromToken(token),
+            shards = shardsInfo,
+            maxConcurrency = gatewayInfo.sessionStartLimit.maxConcurrency,
+            httpClient = client,
+            defaultStrategy = defaultStrategy
+        )
         val rawRequestHandler = handlerBuilder(resources)
         val requestHandler = if (stackTraceRecovery) {
             if (rawRequestHandler is KtorRequestHandler) {
