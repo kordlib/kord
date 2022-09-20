@@ -38,11 +38,17 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
+import kotlin.DeprecationLevel.WARNING
 import kotlin.concurrent.thread
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration.Companion.seconds
 
+@Deprecated(
+    "Use DefaultGateway {} instead.",
+    ReplaceWith("DefaultGateway {\nclient = resources.httpClient\nthis@DefaultGateway.retry = retry\n}"),
+    level = WARNING,
+)
 public operator fun DefaultGateway.Companion.invoke(
     resources: ClientResources,
     retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)
@@ -62,7 +68,8 @@ public class KordBuilder(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
-            val rateLimiter = IntervalRateLimiter(limit = 1, interval = 5.seconds)
+            // shared between all shards
+            val rateLimiter = IntervalRateLimiter(limit = resources.maxConcurrency, interval = 5.seconds)
             shards.map {
                 DefaultGateway {
                     client = resources.httpClient
