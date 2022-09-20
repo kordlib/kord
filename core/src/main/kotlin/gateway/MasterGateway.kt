@@ -1,17 +1,18 @@
 package dev.kord.core.gateway
 
 import dev.kord.gateway.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.joinAll
-import kotlinx.coroutines.launch
+import mu.KotlinLogging
 import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
+
+private val logger = KotlinLogging.logger { }
 
 public data class ShardEvent(val event: Event, val gateway: Gateway, val shard: Int)
 
@@ -53,15 +54,31 @@ public interface MasterGateway {
                 val rateLimitKey = shardId % maxConcurrency
 
                 if (rateLimitKey <= previousRateLimitKey) {
+                    logger.trace {
+                        val listeners = readyListeners.size
+                        val shards = if (listeners == 1) "shard" else "shards"
+                        "Waiting for $listeners $shards to start before starting shard $shardId"
+                    }
                     readyListeners.joinAll() // wait until all gateways from last bucket are started
                     readyListeners.clear()
+
+                    // https://discord.com/developers/docs/topics/gateway#rate-limiting:
+                    // clients have a limit of concurrent identify requests allowed per 5 seconds
+                    // -> delay after each bucket
+                    delay(5.seconds)
                 }
 
                 // make sure we don't miss the event by executing until first suspension point before starting gateway
-                readyListeners += launch(start = UNDISPATCHED) { gateway.events.first { it is Ready } }
+                readyListeners += launch(start = UNDISPATCHED) {
+                    gateway.events.first { it is Ready }
+                    logger.trace { "Started shard $shardId" }
+                }
 
                 val config = configuration.copy(shard = configuration.shard.copy(index = shardId))
-                launch { gateway.start(config) }
+                launch {
+                    logger.trace { "Starting shard $shardId..." }
+                    gateway.start(config)
+                }
 
                 previousRateLimitKey = rateLimitKey
             }

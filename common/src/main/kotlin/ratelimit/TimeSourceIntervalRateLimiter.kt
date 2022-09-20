@@ -36,6 +36,8 @@ internal class TimeSourceIntervalRateLimiter(
         }
     }
 
+    override fun toString() = "TimeSourceIntervalRateLimiter(limit=$limit, interval=$interval, timeSource=$timeSource)"
+
 
     private companion object {
         private val DISTANT_PAST_MARK: TimeMark = object : TimeMark {

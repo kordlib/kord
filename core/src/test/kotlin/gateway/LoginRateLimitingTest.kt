@@ -22,6 +22,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 import kotlin.time.times
 
 private class DelayedStartGateway(private val notifyStarted: suspend () -> Unit) : Gateway {
@@ -103,10 +104,11 @@ class LoginRateLimitingTest {
             maxConcurrency,
         )
 
-        assertEquals(
-            expected = (expectedBuckets * DelayedStartGateway.START_DELAY).inWholeMilliseconds,
-            actual = currentTime,
-        )
+        val timeSpentLoggingIn = expectedBuckets * DelayedStartGateway.START_DELAY
+        val timeSpentWaitingBetweenLogins = (expectedBuckets - 1) * 5.seconds
+
+        val expectedTime = timeSpentLoggingIn + timeSpentWaitingBetweenLogins
+        assertEquals(expected = expectedTime.inWholeMilliseconds, actual = currentTime)
 
         startNotificationChannel.close()
     }
