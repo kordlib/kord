@@ -45,7 +45,7 @@ public interface MasterGateway {
         return coroutineScope {
 
             var previousRateLimitKey = -1
-            val readyListeners = mutableListOf<Job>()
+            val readyListeners = mutableListOf<Pair<Int, Job>>()
 
             // sort gateways.entries to start shards in order
             for ((shardId, gateway) in gateways.entries.sortedBy { it.key }) {
@@ -54,12 +54,10 @@ public interface MasterGateway {
                 val rateLimitKey = shardId % maxConcurrency
 
                 if (rateLimitKey <= previousRateLimitKey) {
-                    logger.trace {
-                        val listeners = readyListeners.size
-                        val shards = if (listeners == 1) "shard" else "shards"
-                        "Waiting for $listeners $shards to start before starting shard $shardId"
-                    }
-                    readyListeners.joinAll() // wait until all gateways from last bucket are started
+                    val (shardIds, jobs) = readyListeners.unzip()
+                    logger.trace { "Waiting for shards $shardIds to start before starting shard $shardId and above" }
+
+                    jobs.joinAll() // wait until all gateways from last bucket are started
                     readyListeners.clear()
 
                     // https://discord.com/developers/docs/topics/gateway#rate-limiting:
@@ -69,7 +67,7 @@ public interface MasterGateway {
                 }
 
                 // make sure we don't miss the event by executing until first suspension point before starting gateway
-                readyListeners += launch(start = UNDISPATCHED) {
+                readyListeners += shardId to launch(start = UNDISPATCHED) {
                     gateway.events.first { it is Ready }
                     logger.trace { "Started shard $shardId" }
                 }
