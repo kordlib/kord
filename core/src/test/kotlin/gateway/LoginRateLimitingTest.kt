@@ -6,8 +6,8 @@ import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.gateway.*
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.channels.actor
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.toList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -65,30 +65,26 @@ private class DelayedStartGateway(private val notifyStarted: suspend () -> Unit)
 
 class LoginRateLimitingTest {
 
+    private fun expectedTime(buckets: Int): Long {
+        require(buckets >= 1)
+        val timeSpentLoggingIn = buckets * DelayedStartGateway.START_DELAY
+        val timeSpentWaitingBetweenLogins = (buckets - 1) * 5.seconds
+        return (timeSpentLoggingIn + timeSpentWaitingBetweenLogins).inWholeMilliseconds
+    }
+
     private fun testLoginRateLimiting(
         numShards: Int,
         shardIds: Iterable<Int>,
         maxConcurrency: Int,
         expectedBuckets: Int,
     ) = runTest {
+        class Start(val time: Long, val shardId: Int)
 
-        @OptIn(ObsoleteCoroutinesApi::class)
-        val startNotificationChannel = actor<Int>(capacity = numShards) {
-            var currentlyStartingBucket = -1
-
-            for (shardId in channel) {
-                val bucket = shardId / maxConcurrency
-
-                // buckets must be started in order
-                assertTrue(bucket >= currentlyStartingBucket)
-
-                currentlyStartingBucket = bucket
-            }
-        }
+        val startChannel = Channel<Start>(capacity = numShards)
 
         val masterGateway = DefaultMasterGateway(
             shardIds.associateWith { shardId ->
-                DelayedStartGateway(notifyStarted = { startNotificationChannel.send(shardId) })
+                DelayedStartGateway(notifyStarted = { startChannel.send(Start(currentTime, shardId)) })
             }
         )
 
@@ -104,14 +100,43 @@ class LoginRateLimitingTest {
             maxConcurrency,
         )
 
-        val timeSpentLoggingIn = expectedBuckets * DelayedStartGateway.START_DELAY
-        val timeSpentWaitingBetweenLogins = (expectedBuckets - 1) * 5.seconds
+        // start is done, nothing more will be sent now
+        startChannel.close()
 
-        val expectedTime = timeSpentLoggingIn + timeSpentWaitingBetweenLogins
-        assertEquals(expected = expectedTime.inWholeMilliseconds, actual = currentTime)
+        // test that the correct amount of total time has elapsed
+        assertEquals(expectedTime(expectedBuckets), actual = currentTime)
 
-        startNotificationChannel.close()
+        class Bucket(val startTime: Long, val shardIds: List<Int>)
+
+        val buckets = startChannel.toList()
+            .groupBy(Start::time, Start::shardId)
+            .map { (time, shardIds) -> Bucket(time, shardIds) }
+            .sortedBy { it.startTime }
+
+        buckets.forEachIndexed { currentBucketIndex, currentBucket ->
+            val bucketsIncludingCurrent = currentBucketIndex + 1
+
+            // test time for each bucket
+            assertEquals(expectedTime(bucketsIncludingCurrent), actual = currentBucket.startTime)
+
+            // buckets must not be bigger than maxConcurrency
+            assertTrue(currentBucket.shardIds.size <= maxConcurrency)
+
+            // buckets must not have duplicate `rate_limit_key`s
+            val rateLimitKeys = currentBucket.shardIds.map { it % maxConcurrency }
+            assertEquals(expected = rateLimitKeys.distinct(), actual = rateLimitKeys)
+
+            // all later buckets must have higher shardIds
+            assertTrue(
+                buckets.drop(bucketsIncludingCurrent).all { laterBucket ->
+                    laterBucket.shardIds.all { laterShardId ->
+                        currentBucket.shardIds.all { it < laterShardId }
+                    }
+                }
+            )
+        }
     }
+
 
     // probably the most common case
     @Test
