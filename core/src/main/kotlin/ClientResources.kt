@@ -27,7 +27,8 @@ public class ClientResources(
         shards: Shards,
         httpClient: HttpClient,
         defaultStrategy: EntitySupplyStrategy<*>,
-    ) : this(token, applicationId, shards, maxConcurrency = Int.MAX_VALUE, httpClient, defaultStrategy)
+        // TODO maxConcurrency should be Int.MAX_VALUE, just hardcoding Schlaubi's value for now
+    ) : this(token, applicationId, shards, maxConcurrency = 1, httpClient, defaultStrategy)
 
     override fun toString(): String = "ClientResources(token=hunter2, applicationId=$applicationId, shards=$shards, " +
             "maxConcurrency=$maxConcurrency, httpClient=$httpClient, defaultStrategy=$defaultStrategy)"

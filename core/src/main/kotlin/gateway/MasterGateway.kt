@@ -36,7 +36,8 @@ public interface MasterGateway {
         level = WARNING,
     )
     public suspend fun startWithConfig(configuration: GatewayConfiguration): Unit =
-        startWithConfig(configuration, maxConcurrency = Int.MAX_VALUE)
+        // TODO maxConcurrency should be Int.MAX_VALUE, just hardcoding Schlaubi's value for now
+        startWithConfig(configuration, maxConcurrency = 1)
 
     public suspend fun startWithConfig(configuration: GatewayConfiguration, maxConcurrency: Int) {
         require(maxConcurrency > 0) { "Invalid maxConcurrency: $maxConcurrency" }
@@ -100,7 +101,8 @@ public interface MasterGateway {
 public suspend inline fun MasterGateway.start(token: String, config: GatewayConfigurationBuilder.() -> Unit = {}) {
     contract { callsInPlace(config, EXACTLY_ONCE) }
 
-    start(token, maxConcurrency = Int.MAX_VALUE, config)
+    // TODO maxConcurrency should be Int.MAX_VALUE, just hardcoding Schlaubi's value for now
+    start(token, maxConcurrency = 1, config)
 }
 
 public suspend inline fun MasterGateway.start(
