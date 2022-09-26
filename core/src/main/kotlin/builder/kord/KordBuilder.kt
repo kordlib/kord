@@ -19,6 +19,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.DefaultGateway
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
+import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import dev.kord.rest.json.response.BotGatewayResponse
@@ -57,7 +58,6 @@ public operator fun DefaultGateway.Companion.invoke(
         client = resources.httpClient
         reconnectRetry = retry
         sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
-        identifyRateLimiter = IntervalRateLimiter(limit = 1, interval = 5.seconds)
     }
 }
 
@@ -69,7 +69,7 @@ public class KordBuilder(public val token: String) {
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
             // shared between all shards
-            val rateLimiter = IntervalRateLimiter(limit = resources.maxConcurrency, interval = 5.seconds)
+            val rateLimiter = IdentifyRateLimiter(resources.maxConcurrency, defaultDispatcher)
             shards.map {
                 DefaultGateway {
                     client = resources.httpClient

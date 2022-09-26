@@ -1,7 +1,5 @@
 package dev.kord.gateway.handler
 
-import dev.kord.common.ratelimit.RateLimiter
-import dev.kord.common.ratelimit.consume
 import dev.kord.gateway.*
 import dev.kord.gateway.retry.Retry
 import kotlinx.atomicfu.AtomicRef
@@ -13,7 +11,6 @@ internal class HandshakeHandler(
     flow: Flow<Event>,
     private val send: suspend (Command) -> Unit,
     private val sequence: Sequence,
-    private val identifyRateLimiter: RateLimiter,
     private val reconnectRetry: Retry
 ) : Handler(flow, "HandshakeHandler") {
 
@@ -27,7 +24,7 @@ internal class HandshakeHandler(
     private val resume
         get() = Resume(configuration.token, session.value!!, sequence.value ?: 0)
 
-    private val sessionStart get() = session.value == null
+    val needsIdentify get() = session.value == null
 
     override fun start() {
         on<Ready> { event ->
@@ -36,10 +33,7 @@ internal class HandshakeHandler(
 
         on<Hello> {
             reconnectRetry.reset() //connected and read without problems, resetting retry counter
-            identifyRateLimiter.consume {
-                if (sessionStart) send(identify)
-                else send(resume)
-            }
+            send(if (needsIdentify) identify else resume)
         }
 
         on<Close.SessionReset> {

@@ -6,6 +6,7 @@ import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.gateway.*
+import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.toList
 import kotlinx.coroutines.delay
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import kotlin.coroutines.CoroutineContext
@@ -25,13 +27,17 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.times
 
-private class DelayedStartGateway(private val notifyStarted: suspend () -> Unit) : Gateway {
+private class DelayedStartGateway(
+    private val identifyRateLimiter: IdentifyRateLimiter,
+    private val notifyStarted: suspend () -> Unit,
+) : Gateway {
     override val coroutineContext: CoroutineContext get() = EmptyCoroutineContext
     private val _events = MutableSharedFlow<Event>()
     override val events: SharedFlow<Event> get() = _events
     override val ping: StateFlow<Duration?> = MutableStateFlow(null)
 
     override suspend fun start(configuration: GatewayConfiguration) {
+        identifyRateLimiter.consume(configuration.shard.index, events)
         delay(START_DELAY)
         _events.emit(READY) // we define a shard as started when it received its ready event
         notifyStarted()
@@ -63,6 +69,7 @@ private class DelayedStartGateway(private val notifyStarted: suspend () -> Unit)
     }
 }
 
+// TODO test IdentifyRateLimiter in isolation instead
 class LoginRateLimitingTest {
 
     private fun expectedTime(buckets: Int): Long {
@@ -82,9 +89,14 @@ class LoginRateLimitingTest {
 
         val startChannel = Channel<Start>(capacity = numShards)
 
+        val dispatcher = StandardTestDispatcher(testScheduler) // allow delay skipping
+        val identifyRateLimiter = IdentifyRateLimiter(maxConcurrency, dispatcher)
         val masterGateway = DefaultMasterGateway(
             shardIds.associateWith { shardId ->
-                DelayedStartGateway(notifyStarted = { startChannel.send(Start(currentTime, shardId)) })
+                DelayedStartGateway(
+                    identifyRateLimiter,
+                    notifyStarted = { startChannel.send(Start(currentTime, shardId)) },
+                )
             }
         )
 
@@ -96,8 +108,7 @@ class LoginRateLimitingTest {
                 DiscordShard(0, numShards),
                 threshold = 250,
                 intents = Intents(),
-            ),
-            maxConcurrency,
+            )
         )
 
         // start is done, nothing more will be sent now

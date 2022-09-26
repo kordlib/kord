@@ -128,7 +128,7 @@ public class Kord(
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
         val loginBuilder = LoginBuilder().apply(builder)
-        gateway.start(resources.token, resources.maxConcurrency) {
+        gateway.start(resources.token) {
             shard = DiscordShard(0, resources.shards.totalShards)
             presence = loginBuilder.presence
             intents = loginBuilder.intents
