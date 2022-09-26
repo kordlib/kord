@@ -36,5 +36,5 @@ internal class ClockIntervalRateLimiter(
         }
     }
 
-    override fun toString() = "ClockIntervalRateLimiter(limit=$limit, interval=$interval, clock=$clock)"
+    override fun toString() = "IntervalRateLimiter(limit=$limit, interval=$interval, clock=$clock)"
 }

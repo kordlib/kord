@@ -36,7 +36,7 @@ internal class TimeSourceIntervalRateLimiter(
         }
     }
 
-    override fun toString() = "TimeSourceIntervalRateLimiter(limit=$limit, interval=$interval, timeSource=$timeSource)"
+    override fun toString() = "IntervalRateLimiter(limit=$limit, interval=$interval, timeSource=$timeSource)"
 
 
     private companion object {
