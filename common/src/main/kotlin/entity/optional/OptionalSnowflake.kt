@@ -1,7 +1,6 @@
 package dev.kord.common.entity.optional
 
 import dev.kord.common.entity.Snowflake
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -92,10 +91,8 @@ public sealed class OptionalSnowflake {
         override fun hashCode(): Int = value.hashCode()
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     internal object Serializer : KSerializer<OptionalSnowflake> {
-        override val descriptor: SerialDescriptor =
-            @OptIn(ExperimentalUnsignedTypes::class) ULong.serializer().descriptor
+        override val descriptor: SerialDescriptor = ULong.serializer().descriptor
 
         override fun deserialize(decoder: Decoder): OptionalSnowflake =
             Value(decoder.decodeInline(descriptor).decodeLong().toULong())
