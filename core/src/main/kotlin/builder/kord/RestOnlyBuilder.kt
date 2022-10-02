@@ -59,7 +59,7 @@ public abstract class RestOnlyBuilder {
             token,
             selfId,
             Shards(0),
-            maxConcurrency = Int.MAX_VALUE,
+            maxConcurrency = 1,
             client,
             EntitySupplyStrategy.rest,
         )

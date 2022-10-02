@@ -127,7 +127,7 @@ class CacheMissingRegressions {
             token,
             getBotIdFromToken(token),
             Shards(1),
-            maxConcurrency = Int.MAX_VALUE,
+            maxConcurrency = 1,
             null.configure(),
             EntitySupplyStrategy.cacheWithRestFallback,
         )
