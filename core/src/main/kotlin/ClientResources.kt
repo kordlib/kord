@@ -17,7 +17,8 @@ public class ClientResources(
     @Deprecated(
         "Specify maxConcurrency. It can be obtained by calling the Route.GatewayBotGet endpoint.",
         ReplaceWith(
-            "ClientResources(token, applicationId, shards, maxConcurrency = Int.MAX_VALUE, httpClient, defaultStrategy)"
+            "ClientResources(token, applicationId, shards, maxConcurrency = 1 /* can be obtained by calling the " +
+                    "Route.GatewayBotGet endpoint */, httpClient, defaultStrategy)"
         ),
         level = WARNING,
     )
@@ -27,7 +28,7 @@ public class ClientResources(
         shards: Shards,
         httpClient: HttpClient,
         defaultStrategy: EntitySupplyStrategy<*>,
-    ) : this(token, applicationId, shards, maxConcurrency = Int.MAX_VALUE, httpClient, defaultStrategy)
+    ) : this(token, applicationId, shards, maxConcurrency = 1, httpClient, defaultStrategy)
 
     override fun toString(): String = "ClientResources(token=hunter2, applicationId=$applicationId, shards=$shards, " +
             "maxConcurrency=$maxConcurrency, httpClient=$httpClient, defaultStrategy=$defaultStrategy)"
