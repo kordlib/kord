@@ -14,6 +14,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.selects.select
 import mu.KotlinLogging
 import kotlin.DeprecationLevel.ERROR
+import kotlin.contracts.InvocationKind.AT_LEAST_ONCE
+import kotlin.contracts.InvocationKind.EXACTLY_ONCE
+import kotlin.contracts.contract
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.times
 import dev.kord.common.ratelimit.IntervalRateLimiter as CommonIntervalRateLimiter
@@ -90,7 +93,7 @@ private class IdentifyRateLimiterImpl(
      */
     private val state = atomic(initial = NOT_RUNNING)
 
-    private fun incrementWaitersAndGetOldState() = state.getAndUpdate { current ->
+    private fun getOldStateAndIncrementWaiters() = state.getAndUpdate { current ->
         when (current) {
             NOT_RUNNING, RUNNING_WITH_NO_WAITERS -> ONE_WAITER // we are the first waiter
             MAX_WAITERS -> error(
@@ -122,7 +125,7 @@ private class IdentifyRateLimiterImpl(
     override suspend fun consume(shardId: Int, events: Flow<Event>) {
         require(shardId >= 0) { "shardId must be non-negative but was $shardId" }
 
-        val oldState = incrementWaitersAndGetOldState()
+        val oldState = getOldStateAndIncrementWaiters()
         try {
             if (oldState == NOT_RUNNING) launchRateLimiterCoroutine()
 
@@ -176,7 +179,7 @@ private class IdentifyRateLimiterImpl(
                     if (request == null) { // timeout
                         val runAgainAfterTimeout = when (checkWaitersAndGetNewState()) {
                             NOT_RUNNING -> false
-                            RUNNING_WITH_NO_WAITERS -> error("Can't be RUNNING_WITH_NO_WAITERS after check")
+                            RUNNING_WITH_NO_WAITERS -> error("Can't be RUNNING_WITH_NO_WAITERS after checking waiters")
                             else -> true // there are waiters, next request will be sent soon -> won't time out again
                         }
                         return runAgainAfterTimeout
@@ -258,6 +261,8 @@ private class IdentifyRateLimiterImpl(
 
 
         private inline fun <R> retryOnUnexpectedException(block: () -> R): R {
+            contract { callsInPlace(block, AT_LEAST_ONCE) }
+
             while (true) {
                 try {
                     return block()
@@ -274,9 +279,11 @@ private class IdentifyRateLimiterImpl(
             }
         }
 
-        private inline fun rethrowExceptionAndReject(requests: Iterable<IdentifyRequest>, block: () -> Unit) {
+        private inline fun <R> rethrowExceptionAndReject(requests: Iterable<IdentifyRequest>, block: () -> R): R {
+            contract { callsInPlace(block, EXACTLY_ONCE) }
+
             try {
-                block()
+                return block()
             } catch (t: Throwable) {
                 requests.forEach { it.reject(cause = t) }
                 throw t
