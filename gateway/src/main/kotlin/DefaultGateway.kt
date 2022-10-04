@@ -120,7 +120,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + data.dispatcher
 
-    private val compression: Boolean = URLBuilder(data.url).parameters.contains("compress", "zlib-stream")
+    private val compression: Boolean
 
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
@@ -143,9 +143,12 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private val stateMutex = Mutex()
 
     init {
+        val initialUrl = Url(data.url)
+        compression = initialUrl.parameters.contains("compress", "zlib-stream")
+
         val sequence = Sequence()
         SequenceHandler(events, sequence)
-        handshakeHandler = HandshakeHandler(events, ::trySend, sequence, data.reconnectRetry)
+        handshakeHandler = HandshakeHandler(events, initialUrl, ::trySend, sequence, data.reconnectRetry)
         HeartbeatHandler(events, ::trySend, { restart(Close.ZombieConnection) }, { _ping.value = it }, sequence)
         ReconnectHandler(events) { restart(Close.Reconnecting) }
         InvalidSessionHandler(events) { restart(it) }
@@ -160,7 +163,9 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 if (handshakeHandler.needsIdentify) {
                     data.identifyRateLimiter.consume(shardId = configuration.shard.index, events)
                 }
-                socket = webSocket(data.url)
+                val url = handshakeHandler.gatewayUrl
+                defaultGatewayLogger.trace { "opening gateway connection to $url" }
+                socket = data.client.webSocketSession { url(url) }
                 /**
                  * https://discord.com/developers/docs/topics/gateway#transport-compression
                  *
@@ -204,8 +209,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun resetState(configuration: GatewayConfiguration) = stateMutex.withLock {
-        @Suppress("UNUSED_VARIABLE")
-        val exhaustive = when (state.value) { //exhaustive state checking
+        when (state.value) {
             is State.Running -> throw IllegalStateException(gatewayRunningError)
             State.Detached -> throw IllegalStateException(gatewayDetachedError)
             State.Stopped -> Unit
@@ -267,7 +271,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         when {
             !discordReason.retry -> {
                 state.update { State.Stopped }
-                throw  IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
+                throw IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
             }
             discordReason.resetSession -> {
                 setStopped()
@@ -286,10 +290,6 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         } catch (ignore: CancellationException) {
             //reading was stopped from somewhere else, ignore
         }
-    }
-
-    private suspend fun webSocket(url: String) = data.client.webSocketSession {
-        url(url)
     }
 
     override suspend fun stop() {

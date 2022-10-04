@@ -22,6 +22,7 @@
       }
     ],
     "session_id": "12345",
+    "resume_gateway_url": "wss://us-east1-b.gateway.discord.gg",
     "_trace": [
       "test"
     ],

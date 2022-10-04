@@ -49,6 +49,7 @@ internal class LifeCycleEventHandler : BaseGatewayEventHandler() {
                 guilds,
                 User(self, kord),
                 sessionId,
+                resumeGatewayUrl,
                 kord,
                 shard,
                 context?.get(),
