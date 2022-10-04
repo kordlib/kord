@@ -38,6 +38,7 @@ private val READY = Ready(
         privateChannels = emptyList(),
         guilds = emptyList(),
         sessionId = "deadbeef",
+        resumeGatewayUrl = "wss://us-east1-b.gateway.discord.gg",
         traces = emptyList(),
     ),
     sequence = 1,
