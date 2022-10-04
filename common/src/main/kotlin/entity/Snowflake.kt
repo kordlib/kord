@@ -3,7 +3,6 @@ package dev.kord.common.entity
 import dev.kord.common.entity.Snowflake.Companion.validValues
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -210,10 +209,8 @@ public class Snowflake : Comparable<Snowflake> {
         private val maxMillisecondsSinceDiscordEpoch = max.millisecondsSinceDiscordEpoch
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     internal object Serializer : KSerializer<Snowflake> {
-        override val descriptor: SerialDescriptor =
-            @OptIn(ExperimentalUnsignedTypes::class) ULong.serializer().descriptor
+        override val descriptor: SerialDescriptor = ULong.serializer().descriptor
 
         override fun deserialize(decoder: Decoder): Snowflake =
             Snowflake(decoder.decodeInline(descriptor).decodeLong().toULong())
