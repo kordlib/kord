@@ -9,7 +9,6 @@ import io.ktor.util.cio.*
 import kotlinx.serialization.SerializationStrategy
 import java.io.InputStream
 import java.nio.file.Path
-import kotlin.DeprecationLevel.HIDDEN
 
 public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
 
@@ -41,13 +40,6 @@ public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
     public fun parameter(key: String, value: Any) {
         parameters.append(key, value.toString())
     }
-
-    @Deprecated(
-        "'header' was renamed to 'urlEncodedHeader'",
-        ReplaceWith("urlEncodedHeader(key, value)"),
-        level = HIDDEN,
-    )
-    public fun header(key: String, value: String): Unit = urlEncodedHeader(key, value)
 
     /** Adds a header and encodes its [value] as an [URL query component][encodeURLQueryComponent]. */
     public fun urlEncodedHeader(key: String, value: String) {

@@ -1,6 +1,5 @@
 package dev.kord.core.event.guild
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.InviteTargetType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -18,7 +17,6 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 /**
@@ -147,31 +145,11 @@ public class InviteCreateEvent(
 
     /**
      * Requests to get the [Guild] of the invite.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the  wasn't present.
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = HIDDEN)
-    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
-
-    /**
-     * Requests to get the [Guild] of the invite.
      * returns null if the guild isn't present, or if invite does not target a guild.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
-
-    /**
-     * Requests to get the [User] that created the invite, or null if no inviter created this invite.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the  wasn't present.
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getInviterOrNull instead.", ReplaceWith("getInviterOrNull()"), level = HIDDEN)
-    public suspend fun getInviter(): User? = inviterId?.let { supplier.getUser(it) }
 
     /**
      * Requests to get the [User] that created the invite,
@@ -180,22 +158,6 @@ public class InviteCreateEvent(
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getInviterOrNull(): User? = inviterId?.let { supplier.getUserOrNull(it) }
-
-    /**
-     * Requests to get the [User] that created the invite as a [Member] of the [Guild][getGuild].
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the  wasn't present.
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated(
-        "Use getInviterAsMemberOrNull instead.",
-        ReplaceWith("getInviterAsMemberOrNull()"),
-        level = HIDDEN,
-    )
-    public suspend fun getInviterAsMember(): Member? {
-        return supplier.getMember(guildId = guildId ?: return null, userId = inviterId ?: return null)
-    }
 
     /**
      * Requests to get the [User] that created the invite as a [Member] of the [Guild][getGuildOrNull],

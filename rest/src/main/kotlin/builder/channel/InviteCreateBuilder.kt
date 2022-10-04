@@ -8,7 +8,7 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.InviteCreateRequest
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 import kotlin.time.DurationUnit.SECONDS
 import kotlin.time.toDuration
@@ -24,7 +24,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
      *
      * @suppress
      */
-    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"), level = ERROR)
+    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"), level = HIDDEN)
     public var age: Int?
         get() = _maxAge.value?.inWholeSeconds?.toInt()
         set(value) {
@@ -43,7 +43,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
      *
      * @suppress
      */
-    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"), level = ERROR)
+    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"), level = HIDDEN)
     public var uses: Int? by ::_maxUses.delegate()
 
     /** The maximum number of uses, or 0 for unlimited. Between 0 and 100. 0 by default. */
@@ -70,7 +70,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
      *
      * @suppress
      */
-    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"), level = ERROR)
+    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"), level = HIDDEN)
     public var targetUser: Snowflake? by ::_targetUser.delegate()
 
     private var _targetType: Optional<InviteTargetType> = Optional.Missing()

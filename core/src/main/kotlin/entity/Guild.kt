@@ -1,6 +1,5 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.exception.RequestException
@@ -26,7 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import java.util.*
-import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.ERROR
 import kotlin.time.Duration
 
 /**
@@ -52,7 +51,7 @@ public class Guild(
     public val afkChannel: VoiceChannelBehavior?
         get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
 
-    @Deprecated("Use 'cachedThreads' instead.", ReplaceWith("cachedThreads"))
+    @Deprecated("Use 'cachedThreads' instead.", ReplaceWith("cachedThreads"), level = ERROR)
     public val threads: Flow<ThreadChannel>
         get() = flow {
             data.threads.mapList {
@@ -137,31 +136,9 @@ public class Guild(
     public val isWidgetEnabled: Boolean get() = data.widgetEnabled.discordBoolean
 
     /**
-     * The channel id that the guild's widget will generate an invite to, if set and enabled.
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated(
-        "Embed was renamed to widget.",
-        ReplaceWith("widgetChannelId"),
-        level = HIDDEN,
-    )
-    public val embedChannelId: Snowflake? by ::widgetChannelId
-
-    /**
      * The ID of the channel the widget will redirect users to, if present.
      */
     public val widgetChannelId: Snowflake? get() = data.widgetChannelId.value
-
-    /**
-     * The behavior of the embedded channel, if present.
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated(
-        "Embed was renamed to widget.",
-        ReplaceWith("widgetChannel"),
-        level = HIDDEN,
-    )
-    public val embedChannel: TopGuildChannelBehavior? by ::widgetChannel
 
     /**
      * The behavior of the channel widgets will redirect users to, if present.

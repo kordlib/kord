@@ -41,7 +41,7 @@
                     "Discord and store channels were removed on March 10, 2022. See " +
                     "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
                     " for more information.",
-            deprecationLevel = ERROR,
+            deprecationLevel = HIDDEN,
         ),
     ],
 )
@@ -77,7 +77,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 

@@ -11,7 +11,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import kotlin.DeprecationLevel.HIDDEN
 
 /** The behavior of a [GuildInteraction]. */
 public interface GuildInteractionBehavior : InteractionBehavior {
@@ -21,12 +20,6 @@ public interface GuildInteractionBehavior : InteractionBehavior {
 
     /** The behavior of the guild the interaction was sent from. */
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
-
-    /**
-     * The [GuildBehavior] for the guild the command was executed in.
-     */
-    @Deprecated("Renamed to 'guild'.", ReplaceWith("this.guild"), level = HIDDEN)
-    public val guildBehavior: GuildBehavior get() = guild
 
     override val channel: GuildMessageChannelBehavior
         get() = GuildMessageChannelBehavior(guildId, channelId, kord)

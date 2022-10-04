@@ -13,8 +13,7 @@ import dev.kord.core.cache.data.PartialApplicationData
 import dev.kord.core.event.guild.InviteCreateEvent
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.*
-import kotlin.DeprecationLevel.HIDDEN
+import java.util.Objects
 
 public sealed class BaseApplication(
     final override val kord: Kord,
@@ -98,13 +97,6 @@ public class Application(
     public val teamId: Snowflake? get() = data.team?.id
 
     public val team: Team? get() = data.team?.let { Team(it, kord) }
-
-    @Deprecated(
-        "'ownerId' might not be present, use 'getOwnerOrNull' instead.",
-        ReplaceWith("this.getOwnerOrNull()"),
-        level = HIDDEN,
-    )
-    public suspend fun getOwner(): User = supplier.getUser(ownerId!!)
 
     /**
      * Returns a new [Application] with the given [strategy].

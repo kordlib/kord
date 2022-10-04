@@ -1,6 +1,5 @@
 package dev.kord.rest.service
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.rest.builder.ban.BanCreateBuilder
@@ -370,22 +369,6 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
             keys[Route.GuildId] = guildId
             keys[Route.IntegrationId] = integrationId
         }
-
-    @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER")
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("getGuildWidget(guildId)"), level = HIDDEN)
-    public suspend fun getGuildEmbed(guildId: Snowflake): Nothing =
-        throw Exception("Guild embeds were renamed to widgets.")
-
-    @Suppress("RedundantSuspendModifier", "UNUSED_PARAMETER")
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated(
-        "Guild embeds were renamed to widgets.",
-        ReplaceWith("modifyGuildWidget(guildId, embed)"),
-        level = HIDDEN,
-    )
-    public suspend fun modifyGuildEmbed(guildId: Snowflake, embed: Any): Nothing =
-        throw Exception("Guild embeds were renamed to widgets.")
 
     public suspend fun getGuildWidget(guildId: Snowflake): DiscordGuildWidget = call(Route.GuildWidgetGet) {
         keys[Route.GuildId] = guildId

@@ -35,7 +35,10 @@ import dev.kord.gateway.start
 import dev.kord.rest.Image
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
-import dev.kord.rest.builder.automoderation.*
+import dev.kord.rest.builder.automoderation.KeywordAutoModerationRuleCreateBuilder
+import dev.kord.rest.builder.automoderation.KeywordPresetAutoModerationRuleCreateBuilder
+import dev.kord.rest.builder.automoderation.MentionSpamAutoModerationRuleCreateBuilder
+import dev.kord.rest.builder.automoderation.SpamAutoModerationRuleCreateBuilder
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.guild.*
@@ -54,7 +57,6 @@ import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import java.util.Objects
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
@@ -221,7 +223,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
      *
      * @suppress
      */
-    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"), level = ERROR)
+    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"), level = HIDDEN)
     public val commands: Flow<GuildApplicationCommand>
         get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
 
@@ -424,16 +426,6 @@ public interface GuildBehavior : KordEntity, Strategizable {
         withExpiration: Boolean = true,
         scheduledEventId: Snowflake? = null,
     ): Invite? = kord.with(rest).getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
-
-
-    /**
-     *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use editSelfNickname.", ReplaceWith("editSelfNickname(newNickname)"), level = HIDDEN)
-    public suspend fun modifySelfNickname(newNickname: String? = null): String = editSelfNickname(newNickname)
 
     /**
      *  Requests to change the nickname of the bot in this guild, passing `null` will remove it.
@@ -751,7 +743,7 @@ public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> U
 @Deprecated(
     "emoji name and image are mandatory fields.",
     ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"),
-    level = ERROR,
+    level = HIDDEN,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
@@ -785,7 +777,7 @@ public suspend inline fun GuildBehavior.createEmoji(
 @Deprecated(
     "channel name is a mandatory field",
     ReplaceWith("createTextChannel(\"name\", builder)"),
-    level = ERROR,
+    level = HIDDEN,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
@@ -828,7 +820,7 @@ public suspend inline fun GuildBehavior.createTextChannel(
 @Deprecated(
     "channel name is a mandatory field.",
     ReplaceWith("createVoiceChannel(\"name\", builder)"),
-    level = ERROR,
+    level = HIDDEN,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
@@ -870,7 +862,7 @@ public suspend inline fun GuildBehavior.createVoiceChannel(
 @Deprecated(
     "channel name is a mandatory field.",
     ReplaceWith("createNewsChannel(\"name\", builder)"),
-    level = ERROR,
+    level = HIDDEN,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
@@ -913,7 +905,7 @@ public suspend inline fun GuildBehavior.createNewsChannel(
 @Deprecated(
     "channel name is a mandatory field.",
     ReplaceWith("this.createCategory(\"name\", builder)"),
-    level = ERROR,
+    level = HIDDEN,
 )
 @DeprecatedSinceKord("0.7.0")
 public suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
@@ -973,17 +965,6 @@ public suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositions
     return response.asFlow().map { RoleData.from(id, it) }.map { Role(it, kord) }
 
 }
-
-/**
- * Requests to add a new role to this guild.
- *
- * @return The created [Role].
- *
- * @throws [RestRequestException] if something went wrong during the request.
- */
-@DeprecatedSinceKord("0.7.0")
-@Deprecated("Use createRole instead.", ReplaceWith("createRole(builder)"), level = HIDDEN)
-public suspend inline fun GuildBehavior.addRole(builder: RoleCreateBuilder.() -> Unit = {}): Role = createRole(builder)
 
 /**
  * Requests to add a new role to this guild.

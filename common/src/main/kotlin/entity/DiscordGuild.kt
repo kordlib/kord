@@ -126,12 +126,12 @@
         Entry(
             "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
             kDoc = "Guild has access to the three-day archive time for threads\n\n@suppress.",
-            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = WARNING,
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
         ),
         Entry(
             "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
             kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
-            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = WARNING,
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
         ),
     ],
 )
@@ -157,7 +157,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.ERROR
-import kotlin.DeprecationLevel.WARNING
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
