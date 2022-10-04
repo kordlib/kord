@@ -105,7 +105,9 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
             try {
-                socket = data.client.webSocketSession { url(handshakeHandler.gatewayUrl) }
+                val url = handshakeHandler.gatewayUrl
+                defaultGatewayLogger.trace { "opening gateway connection to $url" }
+                socket = data.client.webSocketSession { url(url) }
                 /**
                  * https://discord.com/developers/docs/topics/gateway#transport-compression
                  *
