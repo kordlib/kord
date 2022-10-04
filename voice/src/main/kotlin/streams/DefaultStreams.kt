@@ -13,7 +13,6 @@ import dev.kord.voice.udp.PayloadType
 import dev.kord.voice.udp.RTPPacket
 import dev.kord.voice.udp.VoiceUdpSocket
 import io.ktor.network.sockets.*
-import io.ktor.util.network.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
@@ -84,7 +83,7 @@ public class DefaultStreams(
     private val _ssrcToUser: AtomicRef<MutableMap<UInt, Snowflake>> =
         atomic(mutableMapOf())
 
-    override val ssrcToUser: Map<UInt, Snowflake> by _ssrcToUser
+    override val ssrcToUser: Map<UInt, Snowflake> get() = _ssrcToUser.value
 }
 
 private fun Flow<RTPPacket>.decrypt(nonceStrategy: NonceStrategy, key: ByteArray): Flow<RTPPacket> {

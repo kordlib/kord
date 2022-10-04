@@ -5846,7 +5846,6 @@ public abstract class dev/kord/rest/request/RestRequestException : dev/kord/comm
 	public fun <init> (Ldev/kord/rest/request/Request;Ldev/kord/rest/request/HttpStatus;Ldev/kord/rest/json/response/DiscordErrorResponse;)V
 	public synthetic fun <init> (Ldev/kord/rest/request/Request;Ldev/kord/rest/request/HttpStatus;Ldev/kord/rest/json/response/DiscordErrorResponse;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getCode ()I
-	public static fun getCode$delegate (Ldev/kord/rest/request/RestRequestException;)Ljava/lang/Object;
 	public final fun getError ()Ldev/kord/rest/json/response/DiscordErrorResponse;
 	public final fun getRequest ()Ldev/kord/rest/request/Request;
 	public final fun getStatus ()Ldev/kord/rest/request/HttpStatus;

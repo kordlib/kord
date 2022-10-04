@@ -5768,7 +5768,6 @@ public final class dev/kord/core/entity/Activity {
 	public final fun getStart ()Lkotlinx/datetime/Instant;
 	public final fun getState ()Ljava/lang/String;
 	public final synthetic fun getStop ()Lkotlinx/datetime/Instant;
-	public static fun getStop$delegate (Ldev/kord/core/entity/Activity;)Ljava/lang/Object;
 	public final fun getType ()Ldev/kord/common/entity/ActivityType;
 	public final fun getUrl ()Ljava/lang/String;
 	public final fun isInstance ()Ljava/lang/Boolean;
@@ -6180,9 +6179,7 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public final fun getDiscoverySplashUrl (Ldev/kord/rest/Image$Format;)Ljava/lang/String;
 	public final synthetic fun getEmbedChannel ()Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
 	public final fun getEmbedChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getEmbedChannel$delegate (Ldev/kord/core/entity/Guild;)Ljava/lang/Object;
 	public final synthetic fun getEmbedChannelId ()Ldev/kord/common/entity/Snowflake;
-	public static fun getEmbedChannelId$delegate (Ldev/kord/core/entity/Guild;)Ljava/lang/Object;
 	public final fun getEmoji (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getEmojiIds ()Ljava/util/Set;
 	public final fun getEmojiOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7142,7 +7139,6 @@ public class dev/kord/core/entity/User : dev/kord/core/behavior/UserBehavior {
 	public fun getDmChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getDmChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final synthetic fun getFlags ()Ldev/kord/common/entity/UserFlags;
-	public static fun getFlags$delegate (Ldev/kord/core/entity/User;)Ljava/lang/Object;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getMention ()Ljava/lang/String;
@@ -12021,11 +12017,8 @@ public final class dev/kord/core/event/guild/MemberUpdateEvent : dev/kord/core/e
 	public fun <init> (Ldev/kord/core/entity/Member;Ldev/kord/core/entity/Member;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/entity/Member;Ldev/kord/core/entity/Member;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final synthetic fun getCurrentNickName ()Ljava/lang/String;
-	public static fun getCurrentNickName$delegate (Ldev/kord/core/event/guild/MemberUpdateEvent;)Ljava/lang/Object;
 	public final synthetic fun getCurrentRoleIds ()Ljava/util/Set;
-	public static fun getCurrentRoleIds$delegate (Ldev/kord/core/event/guild/MemberUpdateEvent;)Ljava/lang/Object;
 	public final synthetic fun getCurrentRoles ()Lkotlinx/coroutines/flow/Flow;
-	public static fun getCurrentRoles$delegate (Ldev/kord/core/event/guild/MemberUpdateEvent;)Ljava/lang/Object;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
@@ -12036,15 +12029,12 @@ public final class dev/kord/core/event/guild/MemberUpdateEvent : dev/kord/core/e
 	public final fun getMember ()Ldev/kord/core/entity/Member;
 	public final synthetic fun getMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final synthetic fun getMemberId ()Ldev/kord/common/entity/Snowflake;
-	public static fun getMemberId$delegate (Ldev/kord/core/event/guild/MemberUpdateEvent;)Ljava/lang/Object;
 	public final synthetic fun getMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getOld ()Ldev/kord/core/entity/Member;
 	public final synthetic fun getPremiumSince ()Lkotlinx/datetime/Instant;
-	public static fun getPremiumSince$delegate (Ldev/kord/core/event/guild/MemberUpdateEvent;)Ljava/lang/Object;
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final synthetic fun getUser ()Ldev/kord/core/entity/User;
-	public static fun getUser$delegate (Ldev/kord/core/event/guild/MemberUpdateEvent;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/guild/MemberUpdateEvent;
