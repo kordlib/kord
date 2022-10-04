@@ -20,8 +20,14 @@ internal class HandshakeHandler(
     private class ResumeContext(val sessionId: String, val resumeUrl: Url)
 
     private val resumeContext = atomic<ResumeContext?>(initial = null)
-    val gatewayUrl get() = resumeContext.value?.resumeUrl ?: initialUrl
-    val needsIdentify get() = resumeContext.value == null
+
+    val needsIdentifyAndGatewayUrl: Pair<Boolean, Url>
+        get() {
+            val context = resumeContext.value
+            val needsIdentify = context == null
+            val gatewayUrl = context?.resumeUrl ?: initialUrl
+            return Pair(needsIdentify, gatewayUrl)
+        }
 
     private val resumeOrIdentify
         get() = when (val sessionId = resumeContext.value?.sessionId) {

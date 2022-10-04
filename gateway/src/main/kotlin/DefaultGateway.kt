@@ -160,12 +160,15 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
             try {
-                if (handshakeHandler.needsIdentify) {
+                val (needsIdentify, gatewayUrl) = handshakeHandler.needsIdentifyAndGatewayUrl
+
+                if (needsIdentify) {
                     data.identifyRateLimiter.consume(shardId = configuration.shard.index, events)
                 }
-                val url = handshakeHandler.gatewayUrl
-                defaultGatewayLogger.trace { "opening gateway connection to $url" }
-                socket = data.client.webSocketSession { url(url) }
+
+                defaultGatewayLogger.trace { "opening gateway connection to $gatewayUrl" }
+                socket = data.client.webSocketSession { url(gatewayUrl) }
+
                 /**
                  * https://discord.com/developers/docs/topics/gateway#transport-compression
                  *
