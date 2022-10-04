@@ -4,13 +4,13 @@ import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.common.ratelimit.consume
 import dev.kord.gateway.*
 import dev.kord.gateway.retry.Retry
-import kotlinx.atomicfu.AtomicRef
+import io.ktor.http.*
 import kotlinx.atomicfu.atomic
-import kotlinx.atomicfu.update
 import kotlinx.coroutines.flow.Flow
 
 internal class HandshakeHandler(
     flow: Flow<Event>,
+    private val initialUrl: Url,
     private val send: suspend (Command) -> Unit,
     private val sequence: Sequence,
     private val identifyRateLimiter: RateLimiter,
@@ -19,31 +19,37 @@ internal class HandshakeHandler(
 
     lateinit var configuration: GatewayConfiguration
 
-    private val session: AtomicRef<String?> = atomic(null)
+    // see https://discord.com/developers/docs/topics/gateway#resuming
+    private class ResumeContext(val sessionId: String, val resumeUrl: Url)
 
-    private val identify
-        get() = configuration.identify
+    private val resumeContext = atomic<ResumeContext?>(initial = null)
+    val gatewayUrl get() = resumeContext.value?.resumeUrl ?: initialUrl
 
-    private val resume
-        get() = Resume(configuration.token, session.value!!, sequence.value ?: 0)
-
-    private val sessionStart get() = session.value == null
-
-    override fun start() {
-        on<Ready> { event ->
-            session.update { event.data.sessionId }
+    private val resumeOrIdentify
+        get() = when (val sessionId = resumeContext.value?.sessionId) {
+            null -> configuration.identify
+            else -> Resume(configuration.token, sessionId, sequence.value ?: 0)
         }
 
+    override fun start() {
         on<Hello> {
-            reconnectRetry.reset() //connected and read without problems, resetting retry counter
+            reconnectRetry.reset() // connected and read without problems, resetting retry counter
             identifyRateLimiter.consume {
-                if (sessionStart) send(identify)
-                else send(resume)
+                send(resumeOrIdentify)
             }
         }
 
+        on<Ready> { event ->
+            // keep custom query params
+            val resumeUrl = URLBuilder(event.data.resumeGatewayUrl)
+                .apply { parameters.appendMissing(initialUrl.parameters) }
+                .build()
+
+            resumeContext.value = ResumeContext(event.data.sessionId, resumeUrl)
+        }
+
         on<Close.SessionReset> {
-            session.update { null }
+            resumeContext.value = null
         }
     }
 }

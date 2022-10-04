@@ -60,6 +60,7 @@ class SerializationTest {
                 }
                 privateChannels shouldBe listOf()
                 sessionId shouldBe "12345"
+                resumeGatewayUrl shouldBe "wss://us-east1-b.gateway.discord.gg"
                 with(shard.value!!) {
                     index.shouldBe(0)
                     count.shouldBe(5)
