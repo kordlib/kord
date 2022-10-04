@@ -53,7 +53,7 @@ public class DefaultGatewayBuilder {
         val identifyRateLimiter = identifyRateLimiter
             ?: @Suppress("DEPRECATION_ERROR") oldIdentifyRateLimiter
                 ?.let { dev.kord.gateway.ratelimit.IdentifyRateLimiterFromCommonRateLimiter(it) }
-            ?: IdentifyRateLimiter(maxConcurrency = 1)
+            ?: IdentifyRateLimiter(maxConcurrency = 1, dispatcher)
 
         client.requestPipeline.intercept(HttpRequestPipeline.Render) {
             // CIO adds this header even if no extensions are used, which causes it to be empty
