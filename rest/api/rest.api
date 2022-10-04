@@ -7047,3 +7047,4 @@ public final class dev/kord/rest/service/WebhookServiceKt {
 	public static final fun webhookIdTokenMessageIdThreadId (Ldev/kord/rest/request/RequestBuilder;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)V
 	public static final fun webhookIdTokenWaitThreadId (Ldev/kord/rest/request/RequestBuilder;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Boolean;Ldev/kord/common/entity/Snowflake;)V
 }
+
