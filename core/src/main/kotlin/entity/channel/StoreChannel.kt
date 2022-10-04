@@ -8,7 +8,7 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import java.util.Objects
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * An instance of a Discord Store Channel associated to a guild.
@@ -24,7 +24,7 @@ import kotlin.DeprecationLevel.ERROR
     See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
     information.
     """,
-    level = ERROR,
+    level = HIDDEN,
 )
 public data class StoreChannel(
     override val data: ChannelData,

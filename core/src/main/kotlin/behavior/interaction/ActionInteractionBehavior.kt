@@ -14,26 +14,12 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /** The behavior of an [ActionInteraction]. */
 public interface ActionInteractionBehavior : InteractionBehavior {
-
-    /**
-     * Acknowledges the interaction ephemerally. The user will see a 'loading' animation.
-     *
-     * Call [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "Renamed to 'deferEphemeralMessage'.",
-        ReplaceWith("this.deferEphemeralMessage()"),
-        level = HIDDEN,
-    )
-    public suspend fun acknowledgeEphemeral(): EphemeralMessageInteractionResponseBehavior = deferEphemeralMessage()
 
     /**
      * Acknowledges the interaction ephemerally with the intent of responding with an [ephemeral][MessageFlag.Ephemeral]
@@ -73,7 +59,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         See the documentation of this method for how it should be replaced.
         """,
         ReplaceWith("this.deferEphemeralResponse()"),
-        level = ERROR,
+        level = HIDDEN,
     )
     @OptIn(KordUnsafe::class)
     public suspend fun deferEphemeralMessage(): EphemeralMessageInteractionResponseBehavior =
@@ -110,19 +96,6 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         kord.rest.interaction.deferMessage(id, token, ephemeral = true)
         return DeferredEphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
     }
-
-    /**
-     * Acknowledges the interaction publicly. The user will see a 'loading' animation.
-     *
-     * Call [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object to edit the response later.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "Renamed to 'deferPublicMessage'.",
-        ReplaceWith("this.deferPublicMessage()"),
-        level = HIDDEN,
-    )
-    public suspend fun acknowledgePublic(): PublicMessageInteractionResponseBehavior = deferPublicMessage()
 
     /**
      * Acknowledges the interaction publicly with the intent of responding with a public message later by calling
@@ -162,7 +135,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         See the documentation of this method for how it should be replaced.
         """,
         ReplaceWith("this.deferPublicResponse()"),
-        level = ERROR,
+        level = HIDDEN,
     )
     @OptIn(KordUnsafe::class)
     public suspend fun deferPublicMessage(): PublicMessageInteractionResponseBehavior = deferPublicResponseUnsafe()

@@ -288,22 +288,6 @@ public sealed class Permission(public val code: DiscordBitSet) {
 
     public companion object {
 
-        @Deprecated(
-            "Renamed to 'ManageEmojisAndStickers'.",
-            ReplaceWith("Permission.ManageEmojisAndStickers", "dev.kord.common.entity.Permission"),
-            DeprecationLevel.HIDDEN,
-        )
-        public val ManageEmojis: ManageEmojisAndStickers
-            get() = ManageEmojisAndStickers
-
-        @Deprecated(
-            "Renamed to 'UseApplicationCommands'.",
-            ReplaceWith("Permission.UseApplicationCommands", "dev.kord.common.entity.Permission"),
-            DeprecationLevel.HIDDEN,
-        )
-        public val UseSlashCommands: UseApplicationCommands
-            get() = UseApplicationCommands
-
         // We cannot inline this into the "All" object, because that causes a weird compiler error
         private fun buildAll(): DiscordBitSet = values.fold(EmptyBitSet()) { acc, value -> acc + value.code }
 

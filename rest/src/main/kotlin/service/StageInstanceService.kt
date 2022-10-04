@@ -2,6 +2,7 @@ package dev.kord.rest.service
 
 import dev.kord.common.entity.DiscordStageInstance
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.stage.StageInstanceCreateBuilder
 import dev.kord.rest.builder.stage.StageInstanceModifyBuilder
 import dev.kord.rest.json.request.StageInstanceCreateRequest
@@ -9,7 +10,7 @@ import dev.kord.rest.json.request.StageInstanceModifyRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -64,7 +65,7 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
     @Deprecated(
         "Replaced by 'modifyStageInstance'.",
         ReplaceWith("this.modifyStageInstance(channelId, request, reason)"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun updateStageInstance(
         channelId: Snowflake,
@@ -88,7 +89,7 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
 @Deprecated(
     "Replaced by builder overload.",
     ReplaceWith("this.createStageInstance(channelId, topic) {\nthis@createStageInstance.reason = reason\n}"),
-    level = ERROR,
+    level = HIDDEN,
 )
 public suspend fun StageInstanceService.createStageInstance(
     channelId: Snowflake,
@@ -99,20 +100,19 @@ public suspend fun StageInstanceService.createStageInstance(
 )
 
 /** @suppress */
-@Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "Replaced by 'modifyStageInstance'.",
     ReplaceWith(
         "this.modifyStageInstance(channelId) {\nthis@modifyStageInstance.topic = topic\nthis@modifyStageInstance.reason = reason\n}"
     ),
-    level = ERROR,
+    level = HIDDEN,
 )
 public suspend fun StageInstanceService.updateStageInstance(
     channelId: Snowflake,
     topic: String,
     reason: String? = null,
-): DiscordStageInstance = updateStageInstance(
+): DiscordStageInstance = modifyStageInstance(
     channelId,
-    dev.kord.rest.json.request.StageInstanceUpdateRequest(topic),
+    StageInstanceModifyRequest(topic.optional()),
     reason
 )

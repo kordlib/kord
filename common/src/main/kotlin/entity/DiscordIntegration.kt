@@ -18,7 +18,7 @@ import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
 public data class DiscordIntegration(
@@ -59,7 +59,7 @@ public data class IntegrationApplication(
     val icon: String?,
     val description: String,
     /** @suppress */
-    @Deprecated("This is deprecated and will always be empty.", level = ERROR)
+    @Deprecated("This is deprecated and will always be empty.", level = HIDDEN)
     val summary: String,
     val bot: Optional<DiscordUser> = Optional.Missing(),
 )

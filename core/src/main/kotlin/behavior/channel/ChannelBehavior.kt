@@ -13,7 +13,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.request.RestRequestException
 import java.util.*
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * The behavior of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
@@ -85,7 +85,7 @@ public interface ChannelBehavior : KordEntity, Strategizable {
  *
  * @suppress
  */
-@Deprecated("Deprecated in favor of asChannelOfOrNull", ReplaceWith("this.asChannelOfOrNull<T>()"), level = ERROR)
+@Deprecated("Deprecated in favor of asChannelOfOrNull", ReplaceWith("this.asChannelOfOrNull<T>()"), level = HIDDEN)
 public suspend inline fun <reified T: Channel> ChannelBehavior.ofOrNull(): T? = supplier.getChannelOfOrNull(id)
 
 
@@ -98,7 +98,7 @@ public suspend inline fun <reified T: Channel> ChannelBehavior.ofOrNull(): T? = 
  *
  * @suppress
  */
-@Deprecated("Deprecated in favor of asChannelOf", ReplaceWith("this.asChannelOf<T>()"), level = ERROR)
+@Deprecated("Deprecated in favor of asChannelOf", ReplaceWith("this.asChannelOf<T>()"), level = HIDDEN)
 public suspend inline fun <reified T: Channel> ChannelBehavior.of(): T = supplier.getChannelOf(id)
 
 

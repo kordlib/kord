@@ -1,11 +1,14 @@
 package dev.kord.core.cache.data
 
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordInvite
+import dev.kord.common.entity.DiscordInviteWithMetadata
+import dev.kord.common.entity.InviteTargetType
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 public sealed interface BaseInviteData {
     public val code: String
@@ -31,8 +34,8 @@ public data class InviteData(
     override val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
     override val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
     /** @suppress */
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
-    val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = HIDDEN)
+    val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") dev.kord.common.entity.TargetUserType> = Optional.Missing(),
     override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     override val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     override val expiresAt: Optional<Instant?> = Optional.Missing(),
@@ -50,7 +53,7 @@ public data class InviteData(
                 targetType,
                 targetUserId = targetUser.mapSnowflake { it.id },
                 targetApplication = targetApplication.map { PartialApplicationData.from(it) },
-                @Suppress("DEPRECATION_ERROR") targetUserType,
+                component8(),
                 approximatePresenceCount,
                 approximateMemberCount,
                 expiresAt,

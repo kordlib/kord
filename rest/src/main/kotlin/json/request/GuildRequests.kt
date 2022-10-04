@@ -1,7 +1,6 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.Color
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
@@ -10,13 +9,15 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
-import kotlinx.serialization.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.DeprecationLevel.WARNING
 
 @Serializable
@@ -156,11 +157,7 @@ public data class GuildRoleCreateRequest(
     val mentionable: OptionalBoolean = OptionalBoolean.Missing,
     /** Only use this when creating a guild with roles. */
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
-) {
-    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), level = HIDDEN)
-    public val separate: OptionalBoolean
-        get() = hoist
-}
+)
 
 
 @Serializable(with = GuildRolePositionModifyRequest.Serializer::class)
@@ -198,11 +195,7 @@ public data class GuildRoleModifyRequest(
     @SerialName("unicode_emoji")
     val unicodeEmoji: Optional<String?> = Optional.Missing(),
     val mentionable: OptionalBoolean? = OptionalBoolean.Missing,
-) {
-    @Deprecated("Renamed to 'hoist'.", ReplaceWith("this.hoist"), level = HIDDEN)
-    public val separate: OptionalBoolean?
-        get() = hoist
-}
+)
 
 @Serializable
 public data class GuildMFALevelModifyRequest(val level: MFALevel)
@@ -218,15 +211,6 @@ public data class GuildIntegrationModifyRequest(
     val expirePeriod: OptionalInt? = OptionalInt.Missing,
     @SerialName("enable_emoticons")
     val emoticons: OptionalBoolean = OptionalBoolean.Missing,
-)
-
-@Serializable
-@DeprecatedSinceKord("0.7.0")
-@Deprecated("Guild embeds were renamed to widgets.", ReplaceWith("GuildWidgetModifyRequest"), level = HIDDEN)
-public data class GuildEmbedModifyRequest(
-    val enabled: Boolean,
-    @SerialName("channel_id")
-    val channelId: Snowflake,
 )
 
 @Serializable

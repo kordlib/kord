@@ -9,17 +9,12 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.application.MessageCommand
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlin.DeprecationLevel.HIDDEN
 
 /** An [ApplicationCommandInteraction] created when a user uses a [MessageCommand]. */
 public sealed interface MessageCommandInteraction : ApplicationCommandInteraction {
 
     /** The id of the message targeted by the [MessageCommand]. */
     public val targetId: Snowflake get() = data.data.targetId.value!!
-
-    @Deprecated("Renamed to 'target'.", ReplaceWith("this.target"), level = HIDDEN)
-    public val targetBehavior: MessageBehavior
-        get() = target
 
     /** The behavior of the message targeted by the [MessageCommand]. */
     public val target: MessageBehavior get() = MessageBehavior(channelId, targetId, kord)

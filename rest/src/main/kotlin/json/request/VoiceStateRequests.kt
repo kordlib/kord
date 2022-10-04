@@ -13,16 +13,7 @@ public data class CurrentVoiceStateModifyRequest(
     val suppress: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("request_to_speak_timestamp")
     val requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing(),
-) {
-    @Deprecated(
-        "requestToSpeakTimeStamp was renamed to requestToSpeakTimestamp.",
-        ReplaceWith("requestToSpeakTimestamp"),
-        DeprecationLevel.HIDDEN,
-    )
-    val requestToSpeakTimeStamp: Optional<String>
-        get() = requestToSpeakTimestamp.map { it.toString() }.coerceToMissing()
-}
-
+)
 
 @Serializable
 public data class VoiceStateModifyRequest(

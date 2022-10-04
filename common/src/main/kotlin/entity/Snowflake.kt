@@ -9,7 +9,6 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 import kotlin.time.TimeMark
@@ -71,16 +70,9 @@ public class Snowflake : Comparable<Snowflake> {
      *
      * @suppress
      */
-    @Deprecated("Use toString() instead", ReplaceWith("toString()"), level = ERROR)
+    @Deprecated("Use toString() instead", ReplaceWith("toString()"), level = HIDDEN)
     public val asString: String
         get() = value.toString()
-
-    /**
-     * The point in time this Snowflake represents.
-     */
-    @Deprecated("timeStamp was renamed to timestamp.", ReplaceWith("timestamp"), level = HIDDEN)
-    public val timeStamp: Instant
-        get() = timestamp
 
     /**
      * The point in time this Snowflake represents.
@@ -203,17 +195,6 @@ public class Snowflake : Comparable<Snowflake> {
          * Useful when requesting paginated entities.
          */
         public val max: Snowflake = Snowflake(validValues.last)
-
-        /**
-         * The point in time that marks the Discord Epoch (the first second of 2015).
-         */
-        @Deprecated(
-            "Snowflake.discordEpochStart was renamed to Snowflake.discordEpoch.",
-            ReplaceWith("Snowflake.discordEpoch"),
-            level = HIDDEN,
-        )
-        public val discordEpochStart: Instant
-            get() = discordEpoch
 
         /**
          * The point in time that marks the Discord Epoch (the first second of 2015).

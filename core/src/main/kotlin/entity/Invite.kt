@@ -12,11 +12,9 @@ import dev.kord.core.cache.data.BaseInviteData
 import dev.kord.core.cache.data.InviteData
 import dev.kord.core.cache.data.InviteWithMetadataData
 import dev.kord.core.entity.channel.Channel
-import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
@@ -85,9 +83,9 @@ public open class Invite(
      * @suppress
      */
     @Suppress("DEPRECATION_ERROR")
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = HIDDEN)
     public val targetUserType: dev.kord.common.entity.TargetUserType?
-        get() = (data as? InviteData)?.targetUserType?.value
+        get() = (data as? InviteData)?.component8()?.value
 
     /**
      * Approximate count of total members.
@@ -107,24 +105,12 @@ public open class Invite(
         get() = data.guildScheduledEvent.value?.let { GuildScheduledEvent(it, kord) }
 
     /**
-     * Requests to get the channel this invite is for.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [Channel] wasn't present.
-     */
-    @Deprecated("Use 'getChannelOrNull' instead.", ReplaceWith("this.getChannelOrNull()"), level = HIDDEN)
-    public suspend fun getChannel(): Channel? = channelId?.let { supplier.getChannel(it) }
-
-    /**
      * Requests to get the channel this invite is for,
      * returns null if the [Channel] isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getChannelOrNull(): Channel? = channelId?.let { supplier.getChannelOrNull(it) }
-
-    @Deprecated("Renamed to 'getInviterOrNull'", ReplaceWith("this.getInviterOrNull()"), level = HIDDEN)
-    public suspend fun getInviter(): User? = getInviterOrNull()
 
     /**
      * Requests to get the creator of the invite for,
@@ -133,9 +119,6 @@ public open class Invite(
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getInviterOrNull(): User? = inviterId?.let { supplier.getUserOrNull(it) }
-
-    @Deprecated("Renamed to 'getTargetUserOrNull'", ReplaceWith("this.getTargetUserOrNull()"), level = HIDDEN)
-    public suspend fun getTargetUser(): User? = getTargetUserOrNull()
 
     /**
      * Requests to get the user this invite was created for,

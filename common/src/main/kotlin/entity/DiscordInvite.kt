@@ -17,7 +17,7 @@ import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 public sealed interface BaseDiscordInvite {
     public val code: String
@@ -46,7 +46,7 @@ public data class DiscordInvite(
     @SerialName("target_application")
     override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
     /** @suppress */
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = ERROR)
+    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = HIDDEN)
     @SerialName("target_user_type")
     val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") TargetUserType> = Optional.Missing(),
     @SerialName("approximate_presence_count")

@@ -31,27 +31,27 @@
     deprecatedEntries = [
         Entry(
             "GuildMemberJoin", intValue = 7, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'UserJoin'.", deprecationLevel = WARNING,
+            deprecationMessage = "Renamed to 'UserJoin'.", deprecationLevel = ERROR,
             replaceWith = ReplaceWith("UserJoin", "dev.kord.common.entity.MessageType.UserJoin"),
         ),
         Entry(
             "UserPremiumGuildSubscription", intValue = 8, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'GuildBoost'.", deprecationLevel = WARNING,
+            deprecationMessage = "Renamed to 'GuildBoost'.", deprecationLevel = ERROR,
             replaceWith = ReplaceWith("GuildBoost", "dev.kord.common.entity.MessageType.GuildBoost"),
         ),
         Entry(
             "UserPremiumGuildSubscriptionTierOne", intValue = 9, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'GuildBoostTier1'.", deprecationLevel = WARNING,
+            deprecationMessage = "Renamed to 'GuildBoostTier1'.", deprecationLevel = ERROR,
             replaceWith = ReplaceWith("GuildBoostTier1", "dev.kord.common.entity.MessageType.GuildBoostTier1"),
         ),
         Entry(
             "UserPremiumGuildSubscriptionTwo", intValue = 10, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'GuildBoostTier2'.", deprecationLevel = WARNING,
+            deprecationMessage = "Renamed to 'GuildBoostTier2'.", deprecationLevel = ERROR,
             replaceWith = ReplaceWith("GuildBoostTier2", "dev.kord.common.entity.MessageType.GuildBoostTier2"),
         ),
         Entry(
             "UserPremiumGuildSubscriptionThree", intValue = 11, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'GuildBoostTier3'.", deprecationLevel = WARNING,
+            deprecationMessage = "Renamed to 'GuildBoostTier3'.", deprecationLevel = ERROR,
             replaceWith = ReplaceWith("GuildBoostTier3", "dev.kord.common.entity.MessageType.GuildBoostTier3"),
         ),
     ],
@@ -120,7 +120,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
