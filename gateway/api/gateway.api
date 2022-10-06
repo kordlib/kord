@@ -1928,7 +1928,7 @@ public final class dev/kord/gateway/builder/Shards {
 }
 
 public abstract interface class dev/kord/gateway/ratelimit/IdentifyRateLimiter {
-	public abstract fun consume (ILkotlinx/coroutines/flow/Flow;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun consume (ILkotlinx/coroutines/flow/SharedFlow;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getMaxConcurrency ()I
 }
 

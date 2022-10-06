@@ -6,17 +6,12 @@ import kotlinx.atomicfu.getAndUpdate
 import kotlinx.atomicfu.update
 import kotlinx.atomicfu.updateAndGet
 import kotlinx.coroutines.*
-import kotlinx.coroutines.CoroutineStart.UNDISPATCHED
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onSuccess
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.selects.select
 import mu.KotlinLogging
 import kotlin.DeprecationLevel.ERROR
-import kotlin.contracts.InvocationKind.AT_LEAST_ONCE
-import kotlin.contracts.InvocationKind.EXACTLY_ONCE
-import kotlin.contracts.contract
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.times
 import dev.kord.common.ratelimit.IntervalRateLimiter as CommonIntervalRateLimiter
@@ -37,11 +32,11 @@ public interface IdentifyRateLimiter {
     /**
      * Suspends until the [Gateway] with the given [shardId] is allowed to [Identify].
      *
-     * Identifying is considered complete once [Ready] or [Close] is observed in [events].
+     * Identifying is considered complete once [Ready], [InvalidSession] or [Close] is observed in [events].
      *
      * @throws IllegalArgumentException if [shardId] is negative.
      */
-    public suspend fun consume(shardId: Int, events: Flow<Event>)
+    public suspend fun consume(shardId: Int, events: SharedFlow<Event>)
 }
 
 
@@ -70,12 +65,14 @@ private class IdentifyRateLimiterImpl(
 
     private class IdentifyRequest(
         val shardId: Int,
-        val events: Flow<Event>,
+        val events: SharedFlow<Event>,
         private val permission: CompletableDeferred<Unit>,
-    ) {
+    ) : Comparable<IdentifyRequest> {
+        override fun compareTo(other: IdentifyRequest) = this.shardId.compareTo(other.shardId)
         fun allow() = permission.complete(Unit)
-        fun reject(cause: Throwable) = permission.completeExceptionally(cause)
     }
+
+    private val IdentifyRequest.rateLimitKey get() = shardId % maxConcurrency
 
     // doesn't need onUndeliveredElement for rejecting requests, we don't close or cancel the channel, receiving can't
     // be cancelled (running in GlobalScope), only send can be cancelled, which is ok because permission isn't needed in
@@ -86,46 +83,54 @@ private class IdentifyRateLimiterImpl(
      * Can be
      * - [NOT_RUNNING]: no coroutine ([launchRateLimiterCoroutine]) is running, or it is about to stop and will no
      *   longer process [IdentifyRequest]s
-     * - [RUNNING_WITH_NO_WAITERS]: the coroutine is running and ready to process [IdentifyRequest]s but there are no
-     *   waiters that sent a request
-     * - unsigned number of waiters: number of concurrent [consume] invocations that wait for their [IdentifyRequest] to
-     *   be processed (min [ONE_WAITER], max [MAX_WAITERS])
+     * - [RUNNING_WITH_NO_CONSUMERS]: the coroutine is running and ready to process [IdentifyRequest]s but there are no
+     *   consumers that sent a request
+     * - unsigned number of consumers: number of concurrent [consume] invocations that wait for their [IdentifyRequest]
+     *   to be processed (min [ONE_CONSUMER], max [MAX_CONSUMERS])
      */
     private val state = atomic(initial = NOT_RUNNING)
 
-    private fun getOldStateAndIncrementWaiters() = state.getAndUpdate { current ->
+    private fun getOldStateAndIncrementConsumers() = state.getAndUpdate { current ->
         when (current) {
-            NOT_RUNNING, RUNNING_WITH_NO_WAITERS -> ONE_WAITER // we are the first waiter
-            MAX_WAITERS -> error(
+            NOT_RUNNING, RUNNING_WITH_NO_CONSUMERS -> ONE_CONSUMER // we are the first consumer
+            MAX_CONSUMERS -> error(
                 "Too many concurrent identify attempts, overflow happened. There are already ${current.toUInt()} " +
                         "other consume() invocations waiting. This is most likely a bug."
             )
-            else -> current + 1 // increment number of waiters
+            else -> current + 1 // increment number of consumers
         }
     }
 
-    private fun decrementWaiters() = state.update { current ->
+    private fun decrementConsumers() = state.update { current ->
         when (current) {
             NOT_RUNNING -> error("Should be running but was NOT_RUNNING")
-            RUNNING_WITH_NO_WAITERS -> error("Should have waiters but was RUNNING_WITH_NO_WAITERS")
-            ONE_WAITER -> RUNNING_WITH_NO_WAITERS // we were the last waiter
-            else -> current - 1 // decrement number of waiters
+            RUNNING_WITH_NO_CONSUMERS -> error("Should have consumers but was RUNNING_WITH_NO_CONSUMERS")
+            ONE_CONSUMER -> RUNNING_WITH_NO_CONSUMERS // we were the last consumer
+            else -> current - 1 // decrement number of consumers
         }
     }
 
-    private fun checkWaitersAndGetNewState() = state.updateAndGet { current ->
-        when (current) {
-            NOT_RUNNING -> error("We are running, so we can't observe NOT_RUNNING")
-            RUNNING_WITH_NO_WAITERS -> NOT_RUNNING // no new requests in sight
-            else -> current // don't change number of waiters
+    private fun stopIfHasNoConsumers(): Boolean {
+        val newState = state.updateAndGet { current ->
+            when (current) {
+                NOT_RUNNING -> error("We are running, so we can't observe NOT_RUNNING")
+                RUNNING_WITH_NO_CONSUMERS -> NOT_RUNNING // no new requests in sight
+                else -> current // don't change number of consumers
+            }
         }
+        val stopped = when (newState) {
+            NOT_RUNNING -> true
+            RUNNING_WITH_NO_CONSUMERS -> error("Can't be RUNNING_WITH_NO_CONSUMERS after checking consumers")
+            else -> false
+        }
+        return stopped
     }
 
 
-    override suspend fun consume(shardId: Int, events: Flow<Event>) {
+    override suspend fun consume(shardId: Int, events: SharedFlow<Event>) {
         require(shardId >= 0) { "shardId must be non-negative but was $shardId" }
 
-        val oldState = getOldStateAndIncrementWaiters()
+        val oldState = getOldStateAndIncrementConsumers()
         try {
             if (oldState == NOT_RUNNING) launchRateLimiterCoroutine()
 
@@ -133,7 +138,7 @@ private class IdentifyRateLimiterImpl(
             channel.send(IdentifyRequest(shardId, events, permission))
             permission.await()
         } finally {
-            decrementWaiters()
+            decrementConsumers()
         }
     }
 
@@ -146,99 +151,83 @@ private class IdentifyRateLimiterImpl(
         //   demand which will then time out again etc.
         // => no leaks
         @OptIn(DelicateCoroutinesApi::class)
-        GlobalScope.launch(dispatcher) {
-            do {
-                // we can't be cancelled (GlobalScope) and we never close the channel, so all exceptions are bugs
-                val runAgainAfterTimeout = retryOnUnexpectedException {
-                    runRateLimiterAndGetWhetherShouldRunAgainAfterTimeout()
+        GlobalScope.launch(context = dispatcher + EXCEPTION_LOGGER) {
+
+            // only read/written from sequential loop, not from launched concurrent coroutines
+            // request.rateLimitKey is always in the range 0..<maxConcurrency
+            val identifyWaiters = arrayOfNulls<Job>(size = maxConcurrency)
+
+            while (true) {
+                val batch = receiveSortedBatchOfRequestsOrNull() ?: when {
+                    identifyWaiters.any { it != null && !it.isCompleted } -> continue // keep receiving while waiting
+                    stopIfHasNoConsumers() -> return@launch // no consumers and no waiters -> stop (only exit point)
+                    else -> continue // has consumers -> there will be new requests soon
                 }
-            } while (runAgainAfterTimeout)
+
+                for (request in batch) {
+                    val key = request.rateLimitKey
+                    val previousWaiter = identifyWaiters[key]
+                    identifyWaiters[key] = launchIdentifyWaiter(previousWaiter, request)
+                }
+            }
         }
     }
 
+    /** Returns `null` on [RECEIVE_TIMEOUT]. */
+    private suspend fun receiveSortedBatchOfRequestsOrNull(): List<IdentifyRequest>? {
 
-    // only returns normally on timeout
-    private suspend fun runRateLimiterAndGetWhetherShouldRunAgainAfterTimeout(): Boolean {
-        while (true) {
-            // will produce a list of at least one identify request
-            val requests = buildList {
+        // first receive suspends until we get a request or time out
+        // using select instead of withTimeoutOrNull here, so we can't remove the request from the channel on timeout
+        val firstRequest = select<IdentifyRequest?> {
+            channel.onReceive { it }
+            @OptIn(ExperimentalCoroutinesApi::class) onTimeout(RECEIVE_TIMEOUT) { null }
+        } ?: return null
 
-                // reject all requests we received so far when an exception is thrown somewhere
-                rethrowExceptionAndReject(requests = this@buildList) {
+        yield() // give other requests the chance to arrive if they were sent at the same time
 
-                    // first receive suspends until we get a request or timeout
-                    // using select instead of withTimeoutOrNull here, so we don't remove the request from the channel
-                    // on timeout
-                    val request = select<IdentifyRequest?> {
-                        channel.onReceive { it }
+        return buildList {
+            add(firstRequest)
 
-                        @OptIn(ExperimentalCoroutinesApi::class)
-                        onTimeout(TIMEOUT) { null }
-                    }
+            do { // now we receive other requests that are immediately available
+                val result = channel.tryReceive().onSuccess(::add)
+            } while (result.isSuccess)
 
-                    if (request == null) { // timeout
-                        val runAgainAfterTimeout = when (checkWaitersAndGetNewState()) {
-                            NOT_RUNNING -> false
-                            RUNNING_WITH_NO_WAITERS -> error("Can't be RUNNING_WITH_NO_WAITERS after checking waiters")
-                            else -> true // there are waiters, next request will be sent soon -> won't time out again
-                        }
-                        return runAgainAfterTimeout
-                    }
-
-                    this@buildList.add(request)
-
-                    // now we collect other requests that are immediately available
-                    do {
-                        yield() // give elements the chance to arrive if they were sent at the same time
-                        val result = channel.tryReceive().onSuccess(this@buildList::add)
-                    } while (result.isSuccess)
-                }
-            }
-
-            rethrowExceptionAndReject(requests) { handle(requests) }
-
-            delay(DELAY_AFTER_BUCKET_OF_CONCURRENT_IDENTIFIES)
+            sort() // sort requests in this batch
         }
     }
 
-    private suspend fun handle(requests: List<IdentifyRequest>) = coroutineScope {
-        // mutability is ok here, not read/written from launched concurrent coroutines
-        var previousRateLimitKey = -1
-        val identifiedListeners = mutableListOf<Pair<Int, Job>>()
-
-        for (request in requests.sortedBy { it.shardId }) {
-            val rateLimitKey = request.shardId % maxConcurrency
-
-            if (rateLimitKey <= previousRateLimitKey) {
-                val (shardIds, jobs) = identifiedListeners.unzip()
-                logger.debug {
-                    "Waiting for shards $shardIds to identify before identifying on shard ${request.shardId} " +
-                            "(rate_limit_key $rateLimitKey) and above..."
-                }
-
-                jobs.joinAll()
-                identifiedListeners.clear()
-
-                delay(DELAY_AFTER_BUCKET_OF_CONCURRENT_IDENTIFIES)
+    private fun CoroutineScope.launchIdentifyWaiter(previousWaiter: Job?, request: IdentifyRequest) = launch {
+        if (previousWaiter != null) {
+            logger.debug {
+                "Waiting for other shard(s) with rate_limit_key ${request.rateLimitKey} to identify " +
+                        "before identifying on shard ${request.shardId}"
             }
-
-            // make sure to not miss events by executing until first suspension point before giving permission
-            identifiedListeners += request.shardId to launch(start = UNDISPATCHED) {
-                val event = request.events.first { it is Ready || it is Close }
-                logger.debug {
-                    "${
-                        if (event is Ready) "Identified on shard ${request.shardId}"
-                        else "Identifying on shard ${request.shardId} failed"
-                    }, freeing up rate_limit_key $rateLimitKey"
-                }
-            }
-
-            logger.debug { "Identifying on shard ${request.shardId} (rate_limit_key $rateLimitKey)..." }
-            // notify gateway waiting in consume -> it will try to identify -> wait for event
-            request.allow()
-
-            previousRateLimitKey = rateLimitKey
+            previousWaiter.join()
         }
+
+        // using a timeout so a broken gateway won't block its rate_limit_key for a long time
+        val responseToIdentify = withTimeoutOrNull(IDENTIFY_TIMEOUT) {
+            request.events
+                .onSubscription { // onSubscription ensures we don't miss events
+                    logger.debug {
+                        "Identifying on shard ${request.shardId} with rate_limit_key ${request.rateLimitKey}..."
+                    }
+                    request.allow() // notify gateway waiting in consume -> it will try to identify -> wait for event
+                }
+                .first { it is Ready || it is InvalidSession || it is Close }
+        }
+
+        logger.debug {
+            when (responseToIdentify) {
+                is Ready -> "Identified on shard ${request.shardId}"
+                is InvalidSession -> "Identifying on shard ${request.shardId} failed, session could not be initialized"
+                is Close -> "Shard ${request.shardId} was stopped before it could identify"
+                else -> "Identifying on shard ${request.shardId} timed out"
+            } + ", delaying $DELAY_AFTER_IDENTIFY before freeing up rate_limit_key ${request.rateLimitKey}"
+        }
+
+        // next waiter for the current rate_limit_key has to wait for this delay before it can identify
+        delay(DELAY_AFTER_IDENTIFY)
     }
 
 
@@ -248,46 +237,24 @@ private class IdentifyRateLimiterImpl(
     private companion object {
         // https://discord.com/developers/docs/topics/gateway#rate-limiting:
         // Apps also have a limit for concurrent Identify requests allowed per 5 seconds.
-        // -> delay after each bucket
-        private val DELAY_AFTER_BUCKET_OF_CONCURRENT_IDENTIFIES = 5.seconds
+        // -> for each rate_limit_key: delay after identify
+        private val DELAY_AFTER_IDENTIFY = 5.seconds
 
-        private val TIMEOUT = (2 * DELAY_AFTER_BUCKET_OF_CONCURRENT_IDENTIFIES).inWholeMilliseconds
+        private val RECEIVE_TIMEOUT = (2 * DELAY_AFTER_IDENTIFY).inWholeMilliseconds
+        private val IDENTIFY_TIMEOUT = DELAY_AFTER_IDENTIFY / 2
 
         // states
-        private const val MAX_WAITERS = -2 // interpreted as UInt.MAX_VALUE - 1u
+        private const val MAX_CONSUMERS = -2 // interpreted as UInt.MAX_VALUE - 1u
         private const val NOT_RUNNING = -1
-        private const val RUNNING_WITH_NO_WAITERS = 0
-        private const val ONE_WAITER = 1
+        private const val RUNNING_WITH_NO_CONSUMERS = 0
+        private const val ONE_CONSUMER = 1
 
-
-        private inline fun <R> retryOnUnexpectedException(block: () -> R): R {
-            contract { callsInPlace(block, AT_LEAST_ONCE) }
-
-            while (true) {
-                try {
-                    return block()
-                } catch (t: Throwable) {
-                    try {
-                        logger.error(
-                            "IdentifyRateLimiter threw an exception, please report this, it should not happen",
-                            t,
-                        )
-                    } catch (_: Throwable) {
-                        // logger failed, this is bad
-                    }
-                }
-            }
-        }
-
-        private inline fun <R> rethrowExceptionAndReject(requests: Iterable<IdentifyRequest>, block: () -> R): R {
-            contract { callsInPlace(block, EXACTLY_ONCE) }
-
-            try {
-                return block()
-            } catch (t: Throwable) {
-                requests.forEach { it.reject(cause = t) }
-                throw t
-            }
+        private val EXCEPTION_LOGGER = CoroutineExceptionHandler { context, exception ->
+            // we can't be cancelled (GlobalScope) and we never close the channel, so all exceptions are bugs
+            logger.error(
+                "IdentifyRateLimiter threw an exception in context $context, please report this, it should not happen",
+                exception,
+            )
         }
     }
 }
@@ -303,7 +270,7 @@ internal class IdentifyRateLimiterFromCommonRateLimiter(
             commonRateLimiter.limit
         } else throw UnsupportedOperationException()
 
-    override suspend fun consume(shardId: Int, events: Flow<Event>) {
+    override suspend fun consume(shardId: Int, events: SharedFlow<Event>) {
         // check unused param to fulfil documented contract
         require(shardId >= 0) { "shardId must be non-negative but was $shardId" }
         commonRateLimiter.consume()

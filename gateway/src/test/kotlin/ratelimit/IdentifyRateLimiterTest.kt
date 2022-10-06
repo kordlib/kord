@@ -5,6 +5,7 @@ import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Close.DiscordClose
 import dev.kord.gateway.GatewayCloseCode.Unknown
+import dev.kord.gateway.InvalidSession
 import dev.kord.gateway.Ready
 import dev.kord.gateway.ReadyData
 import dev.kord.gateway.ratelimit.IdentifyRateLimiter
@@ -17,6 +18,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.assertThrows
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.random.Random
+import kotlin.random.nextInt
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -44,6 +46,8 @@ private val READY = Ready(
     sequence = 1,
 )
 
+private val INVALID_SESSION = InvalidSession(resumable = false)
+
 private val CLOSE = DiscordClose(closeCode = Unknown, recoverable = true)
 
 class IdentifyRateLimiterTest {
@@ -54,7 +58,7 @@ class IdentifyRateLimiterTest {
         assertThrows<IllegalArgumentException> { IdentifyRateLimiter(maxConcurrency = -1) }
         assertThrows<IllegalArgumentException> {
             val rateLimiter = IdentifyRateLimiter(maxConcurrency = 1)
-            rateLimiter.consume(-1, emptyFlow())
+            rateLimiter.consume(shardId = -1, events = MutableSharedFlow())
         }
     }
 
@@ -66,11 +70,7 @@ class IdentifyRateLimiterTest {
         return (timeSpentLoggingIn + timeSpentWaitingBetweenLogins).inWholeMilliseconds
     }
 
-    private fun testRateLimiter(
-        shardIds: Iterable<Int>,
-        maxConcurrency: Int,
-        expectedBuckets: Int,
-    ) = runTest {
+    private fun testRateLimiter(shardIds: Iterable<Int>, maxConcurrency: Int, expectedBuckets: Int) = runTest {
         val rateLimiter = IdentifyRateLimiter(
             maxConcurrency,
             dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher,
@@ -90,9 +90,13 @@ class IdentifyRateLimiterTest {
                 startPermission.await()
                 delay(START_DELAY)
                 startChannel.send(Start(currentTime, shardId))
-                val close = Random.nextDouble() > 0.8
-                emit(if (close) CLOSE else READY)
-            }.shareIn(this, started = Eagerly) // hot flow like Gateway.events
+                val event = when (Random.nextInt(1..100)) {
+                    in 1..70 -> READY
+                    in 71..85 -> INVALID_SESSION
+                    else -> CLOSE
+                }
+                emit(event)
+            }.shareIn(scope = this@runTest, started = Eagerly)
 
             // here we test the IdentifyRateLimiter
             launch {
@@ -126,15 +130,6 @@ class IdentifyRateLimiterTest {
             // buckets must not have duplicate `rate_limit_key`s
             val rateLimitKeys = currentBucket.shardIds.map { it % maxConcurrency }
             assertEquals(expected = rateLimitKeys.distinct(), actual = rateLimitKeys)
-
-            // all later buckets must have higher shardIds
-            assertTrue(
-                buckets.drop(currentBucketCount).all { laterBucket ->
-                    laterBucket.shardIds.all { laterShardId ->
-                        currentBucket.shardIds.all { it < laterShardId }
-                    }
-                }
-            )
         }
     }
 
@@ -164,6 +159,38 @@ class IdentifyRateLimiterTest {
     fun `randomly distributed shards`() = testRateLimiter(
         shardIds = listOf(0, 4, 5, 10, 23),
         maxConcurrency = 2,
-        expectedBuckets = 3, // started concurrently: [0], [4 and 5], [10 and 23]
+        expectedBuckets = 3, // started concurrently: [0 and 5], [4 and 10], [23]
     )
+
+
+    @Test
+    fun `IdentifyRateLimiter timeouts unresponsive gateways`() = runTest {
+        val rateLimiter = IdentifyRateLimiter(
+            maxConcurrency = 1,
+            dispatcher = coroutineContext[ContinuationInterceptor] as CoroutineDispatcher,
+        )
+
+        // consume from an unresponsive gateway
+        rateLimiter.consume(shardId = 0, events = MutableSharedFlow())
+
+        // first identify should be allowed without delay
+        assertEquals(expected = 0, actual = currentTime)
+
+        val startPermission = CompletableDeferred<Unit>()
+
+        val responsiveEvents = flow {
+            startPermission.await()
+            emit(READY)
+        }.shareIn(scope = this@runTest, started = Eagerly)
+
+        // consume from a responsive gateway
+        rateLimiter.consume(shardId = 1, responsiveEvents)
+        startPermission.complete(Unit)
+
+        // second identify should be allowed after 2.5-second timeout plus normal 5-second delay
+        val timeout = 2.5.seconds
+        val delayAfterIdentify = 5.seconds
+        val expectedTime = (timeout + delayAfterIdentify).inWholeMilliseconds
+        assertEquals(expectedTime, actual = currentTime)
+    }
 }
