@@ -4,7 +4,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordExperimental
 import kotlin.Any
 import kotlin.Boolean
 import kotlin.Int
@@ -55,11 +54,7 @@ public sealed class AutoModerationRuleTriggerType(
 
     /**
      * Check if content represents generic spam.
-     *
-     * This [trigger type][AutoModerationRuleTriggerType] is not yet released, so it cannot be used
-     * in most servers.
      */
-    @KordExperimental
     public object Spam : AutoModerationRuleTriggerType(3)
 
     /**
@@ -69,11 +64,7 @@ public sealed class AutoModerationRuleTriggerType(
 
     /**
      * Check if content contains more mentions than allowed.
-     *
-     * This [trigger type][AutoModerationRuleTriggerType] is not yet released, so it cannot be used
-     * in most servers.
      */
-    @KordExperimental
     public object MentionSpam : AutoModerationRuleTriggerType(5)
 
     internal object Serializer : KSerializer<AutoModerationRuleTriggerType> {

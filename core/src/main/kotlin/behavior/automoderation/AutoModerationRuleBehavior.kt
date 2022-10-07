@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.automoderation
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.AutoModerationRuleTriggerType
 import dev.kord.common.entity.AutoModerationRuleTriggerType.*
 import dev.kord.common.entity.Permission.ManageGuild
@@ -217,12 +216,7 @@ public suspend inline fun KeywordAutoModerationRuleBehavior.edit(
 }
 
 
-/**
- * The behavior of a [SpamAutoModerationRule].
- *
- * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
- */
-@KordExperimental
+/** The behavior of a [SpamAutoModerationRule]. */
 public interface SpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
 
     override val triggerType: Spam get() = Spam
@@ -278,11 +272,8 @@ internal fun SpamAutoModerationRuleBehavior(
  *
  * This requires the [ManageGuild] permission.
  *
- * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
- *
  * @throws RestRequestException if something went wrong during the request.
  */
-@KordExperimental
 public suspend inline fun SpamAutoModerationRuleBehavior.edit(
     builder: SpamAutoModerationRuleModifyBuilder.() -> Unit,
 ): SpamAutoModerationRule {
@@ -359,12 +350,7 @@ public suspend inline fun KeywordPresetAutoModerationRuleBehavior.edit(
 }
 
 
-/**
- * The behavior of a [MentionSpamAutoModerationRule].
- *
- * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
- */
-@KordExperimental
+/** The behavior of a [MentionSpamAutoModerationRule]. */
 public interface MentionSpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
 
     override val triggerType: MentionSpam get() = MentionSpam
@@ -420,11 +406,8 @@ internal fun MentionSpamAutoModerationRuleBehavior(
  *
  * This requires the [ManageGuild] permission.
  *
- * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
- *
  * @throws RestRequestException if something went wrong during the request.
  */
-@KordExperimental
 public suspend inline fun MentionSpamAutoModerationRuleBehavior.edit(
     builder: MentionSpamAutoModerationRuleModifyBuilder.() -> Unit,
 ): MentionSpamAutoModerationRule {
