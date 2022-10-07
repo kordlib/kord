@@ -29,23 +29,23 @@ import kotlin.DeprecationLevel.HIDDEN
 public class Unsafe(private val kord: Kord) {
 
     public fun autoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRuleBehavior =
-        AutoModerationRuleBehavior(guildId, ruleId, kord)
+        AutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
     public fun keywordAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): KeywordAutoModerationRuleBehavior =
-        KeywordAutoModerationRuleBehavior(guildId, ruleId, kord)
+        KeywordAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
     public fun spamAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): SpamAutoModerationRuleBehavior =
-        SpamAutoModerationRuleBehavior(guildId, ruleId, kord)
+        SpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
     public fun keywordPresetAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,
-    ): KeywordPresetAutoModerationRuleBehavior = KeywordPresetAutoModerationRuleBehavior(guildId, ruleId, kord)
+    ): KeywordPresetAutoModerationRuleBehavior = KeywordPresetAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
     public fun mentionSpamAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,
-    ): MentionSpamAutoModerationRuleBehavior = MentionSpamAutoModerationRuleBehavior(guildId, ruleId, kord)
+    ): MentionSpamAutoModerationRuleBehavior = MentionSpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
     public fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
         MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
