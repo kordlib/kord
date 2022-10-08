@@ -95,31 +95,6 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlin.time.Duration.Companion.minutes
 
-/**
- * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
- *
- * @param id The id of the channel.
- * @param type the Type of channel.
- * @param guildId the id of the guild.
- * @param position The sorting position of the channel.
- * @param permissionOverwrites The explicit permission overwrite for members and roles.
- * @param name The name of the channel.
- * @param topic The channel topic.
- * @param nsfw Whether the channel is nsfw.
- * @param lastMessageId The id of the last message sent in this channel (or thread for
- * [GuildForum][ChannelType.GuildForum] channels) (may not point to an existing or valid message or thread).
- * @param bitrate The bitrate (in bits) of the voice channel.
- * @param userLimit The user limit of the voice channel.
- * @param rateLimitPerUser amount of time a user has to wait before sending another message; bots,
- * as well as users with the permission [Permission.ManageMessages] or [Permission.ManageChannels] are unaffected.
- * @param recipients The recipients of the DM.
- * @param icon The icon hash.
- * @param ownerId The id of DM creator.
- * @param applicationId The application id of the group DM creator if it is bot-created.
- * @param parentId The id of the parent category for a channel.
- * @param lastPinTimestamp When the last pinned message was pinned.
- * @param flags The channel flags.
- */
 @Serializable
 public data class DiscordChannel(
     val id: Snowflake,
@@ -164,6 +139,18 @@ public data class DiscordChannel(
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val member: Optional<DiscordThreadMember> = Optional.Missing(),
     val flags: Optional<ChannelFlags> = Optional.Missing(),
+    @SerialName("total_message_sent")
+    val totalMessageSent: OptionalInt = OptionalInt.Missing,
+    @SerialName("available_tags")
+    val availableTags: Optional<List<DiscordForumTag>> = Optional.Missing(),
+    @SerialName("applied_tags")
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    @SerialName("default_reaction_emoji")
+    val defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing(),
+    @SerialName("default_thread_rate_limit_per_user")
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
+    @SerialName("default_sort_order")
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
 )
 
 public enum class ChannelFlag(public val code: Int) {
@@ -309,3 +296,22 @@ public sealed class ArchiveDuration(public val duration: Duration) {
             )
     }
 }
+
+@Serializable
+public data class DiscordDefaultReaction(
+    @SerialName("emoji_id")
+    val emojiId: Snowflake?,
+    @SerialName("emoji_name")
+    val emojiName: String?,
+)
+
+@Serializable
+public data class DiscordForumTag(
+    val id: Snowflake,
+    val name: String,
+    val moderated: Boolean,
+    @SerialName("emoji_id")
+    val emojiId: Snowflake?,
+    @SerialName("emoji_name")
+    val emojiName: String?,
+)
