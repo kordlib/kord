@@ -36,7 +36,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelCreateEvent(channel, shard, context?.get())
-            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelCreateEvent(channel, shard, context?.get())
+            is @Suppress("DEPRECATION_ERROR") dev.kord.core.entity.channel.StoreChannel -> @Suppress("DEPRECATION_ERROR") dev.kord.core.event.channel.StoreChannelCreateEvent(channel, shard, context?.get())
             is DmChannel -> DMChannelCreateEvent(channel, shard, context?.get())
             is TextChannel -> TextChannelCreateEvent(channel, shard, context?.get())
             is StageChannel -> StageChannelCreateEvent(channel, shard, context?.get())
@@ -57,7 +57,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
         val old = oldData?.let { Channel.from(it, kord) }
         val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelUpdateEvent(channel, old as? NewsChannel, shard, context?.get())
-            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelUpdateEvent(channel, old as? StoreChannel, shard, context?.get())
+            is @Suppress("DEPRECATION_ERROR") dev.kord.core.entity.channel.StoreChannel -> @Suppress("DEPRECATION_ERROR") dev.kord.core.event.channel.StoreChannelUpdateEvent(channel, old as? @Suppress("DEPRECATION_ERROR") dev.kord.core.entity.channel.StoreChannel, shard, context?.get())
             is DmChannel -> DMChannelUpdateEvent(channel, old as? DmChannel, shard, context?.get())
             is TextChannel -> TextChannelUpdateEvent(channel, old as? TextChannel, shard, context?.get())
             is StageChannel -> StageChannelUpdateEvent(channel, old as? StageChannel, shard, context?.get())
@@ -77,7 +77,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
             is NewsChannel -> NewsChannelDeleteEvent(channel, shard, context?.get())
-            is @Suppress("DEPRECATION_ERROR") StoreChannel -> @Suppress("DEPRECATION_ERROR") StoreChannelDeleteEvent(channel, shard, context?.get())
+            is @Suppress("DEPRECATION_ERROR") dev.kord.core.entity.channel.StoreChannel -> @Suppress("DEPRECATION_ERROR") dev.kord.core.event.channel.StoreChannelDeleteEvent(channel, shard, context?.get())
             is DmChannel -> DMChannelDeleteEvent(channel, shard, context?.get())
             is TextChannel -> TextChannelDeleteEvent(channel, shard, context?.get())
             is StageChannel -> StageChannelDeleteEvent(channel, shard, context?.get())

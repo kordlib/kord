@@ -1,11 +1,12 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.DeprecatedSinceKord
-import dev.kord.common.entity.*
+import dev.kord.common.entity.ActivityFlags
+import dev.kord.common.entity.ActivityType
+import dev.kord.common.entity.DiscordActivityEmoji
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ActivityData
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 
 public class Activity(public val data: ActivityData) {
 
@@ -13,10 +14,6 @@ public class Activity(public val data: ActivityData) {
     public val type: ActivityType get() = data.type
     public val url: String? get() = data.url.value
     public val start: Instant? get() = data.timestamps.value?.start?.value
-
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("stop was renamed to end.", ReplaceWith("end"), level = HIDDEN)
-    public val stop: Instant? by ::end
 
     public val end: Instant? get() = data.timestamps.value?.end?.value
 

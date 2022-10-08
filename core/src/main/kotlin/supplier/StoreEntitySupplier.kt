@@ -3,7 +3,6 @@ package dev.kord.core.supplier
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.Kord
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
@@ -17,7 +16,6 @@ import dev.kord.core.entity.interaction.followup.FollowupMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * [EntitySupplier] that delegates to another [EntitySupplier] to resolve entities.
@@ -28,14 +26,6 @@ public class StoreEntitySupplier(
     private val supplier: EntitySupplier,
     private val cache: DataCache,
 ) : EntitySupplier {
-
-    @Deprecated(
-        "Parameter 'kord' is unused, use other constructor instead.",
-        ReplaceWith("StoreEntitySupplier(supplier, cache)"),
-        level = HIDDEN,
-    )
-    @Suppress("UNUSED_PARAMETER")
-    public constructor(supplier: EntitySupplier, cache: DataCache, kord: Kord) : this(supplier, cache)
 
     override val guilds: Flow<Guild>
         get() = storeOnEach(supplier.guilds) { it.data }

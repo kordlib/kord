@@ -16,7 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.UpdateMessageInteractionResponseCreateBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -43,7 +43,7 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
     @Deprecated(
         "Renamed to 'deferPublicMessageUpdate'. Also take a look at the new documentation.",
         ReplaceWith("this.deferPublicMessageUpdate()"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun acknowledgePublicDeferredMessageUpdate(): PublicMessageInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
@@ -88,7 +88,7 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
     @Deprecated(
         "Renamed to 'deferEphemeralMessageUpdate'. Also take a look at the new documentation.",
         ReplaceWith("this.deferEphemeralMessageUpdate()"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralMessageInteractionResponseBehavior {
         val request = InteractionResponseCreateRequest(
@@ -159,7 +159,7 @@ public fun ComponentInteractionBehavior(
 @Deprecated(
     "Renamed to 'updatePublicMessage'. Also take a look at the new documentation.",
     ReplaceWith("this.updatePublicMessage()", "dev.kord.core.behavior.interaction.updatePublicMessage"),
-    level = ERROR,
+    level = HIDDEN,
 )
 public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
@@ -208,7 +208,7 @@ public suspend inline fun ComponentInteractionBehavior.updatePublicMessage(
 @Deprecated(
     "Renamed to 'updateEphemeralMessage'. Also take a look at the new documentation.",
     ReplaceWith("this.updateEphemeralMessage()", "dev.kord.core.behavior.interaction.updateEphemeralMessage"),
-    level = ERROR,
+    level = HIDDEN,
 )
 public suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
     builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit

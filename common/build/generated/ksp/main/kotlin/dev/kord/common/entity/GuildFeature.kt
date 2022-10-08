@@ -168,7 +168,10 @@ public sealed class GuildFeature(
      *
      * @suppress.
      */
-    @Deprecated(message = "Thread archive durations are no longer boost locked.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Thread archive durations are no longer boost locked.",
+    )
     public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
 
     /**
@@ -176,7 +179,10 @@ public sealed class GuildFeature(
      *
      * @suppress
      */
-    @Deprecated(message = "Thread archive durations are no longer boost locked.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Thread archive durations are no longer boost locked.",
+    )
     public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
 
     internal object Serializer : KSerializer<GuildFeature> {
@@ -206,8 +212,8 @@ public sealed class GuildFeature(
             "PREVIEW_ENABLED" -> PreviewEnabled
             "PRIVATE_THREADS" -> PrivateThreads
             "ROLE_ICONS" -> RoleIcons
-            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") SevenDayThreadArchive
-            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION") ThreeDayThreadArchive
+            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive
+            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive
             "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
             "VANITY_URL" -> VanityUrl
             "VERIFIED" -> Verified
@@ -240,8 +246,8 @@ public sealed class GuildFeature(
                 PreviewEnabled,
                 PrivateThreads,
                 RoleIcons,
-                @Suppress("DEPRECATION") SevenDayThreadArchive,
-                @Suppress("DEPRECATION") ThreeDayThreadArchive,
+                @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive,
+                @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive,
                 TicketedEventsEnabled,
                 VanityUrl,
                 Verified,

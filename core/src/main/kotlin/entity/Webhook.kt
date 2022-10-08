@@ -1,6 +1,5 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.WebhookType
 import dev.kord.common.exception.RequestException
@@ -9,15 +8,14 @@ import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.WebhookBehavior
 import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.cache.data.WebhookData
-import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.channel.MessageChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import java.util.*
-import kotlin.DeprecationLevel.HIDDEN
+import java.util.Objects
 
 public data class Webhook(
     val data: WebhookData,
@@ -42,16 +40,6 @@ public data class Webhook(
     val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
     val guild: GuildBehavior? get() = guildId?.let { GuildBehavior(it, kord) }
-
-    /**
-     * Requests to get the guild this webhook belongs to.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [Guild] wasn't present.
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getGuildOrNull instead.", ReplaceWith("getGuildOrNull()"), level = HIDDEN)
-    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuild(it) }
 
     /**
      * Requests to get the guild this webhook belongs to,

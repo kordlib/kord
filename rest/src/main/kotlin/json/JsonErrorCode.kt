@@ -7,7 +7,6 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * Detailed error codes sent by the Discord API in the JSON [error response][DiscordErrorResponse].
@@ -562,48 +561,6 @@ public enum class JsonErrorCode(public val code: Int) {
     MessageBlockedByHarmfulLinksFilter(240000),
 
     ;
-
-    public companion object {
-        @Deprecated(
-            "JsonErrorCode.OperationOnAchievedThread was renamed to JsonErrorCode.OperationOnArchivedThread.",
-            ReplaceWith("JsonErrorCode.OperationOnArchivedThread"),
-            level = HIDDEN,
-        )
-        @JvmField
-        public val OperationOnAchievedThread: JsonErrorCode = OperationOnArchivedThread
-
-        @Deprecated(
-            "JsonErrorCode.InvalidThreadSettings was removed because it was a duplicate of JsonErrorCode.InvalidThreadNotificationSettings.",
-            ReplaceWith("JsonErrorCode.InvalidThreadNotificationSettings"),
-            level = HIDDEN,
-        )
-        @JvmField
-        public val InvalidThreadSettings: JsonErrorCode = InvalidThreadNotificationSettings
-
-        @Deprecated(
-            "JsonErrorCode.InvalidThreadBefore was removed because it was a duplicate of JsonErrorCode.BeforeValueBeforeThreadCreate.",
-            ReplaceWith("JsonErrorCode.BeforeValueBeforeThreadCreate"),
-            level = HIDDEN,
-        )
-        @JvmField
-        public val InvalidThreadBefore: JsonErrorCode = BeforeValueBeforeThreadCreate
-
-        @Deprecated(
-            "'JsonErrorCode.CannotSendMessagesInVoiceChannel' was renamed to JsonErrorCode.CannotSendMessagesInNonTextChannel",
-            ReplaceWith("JsonErrorCode.CannotSendMessagesInNonTextChannel"),
-            level = HIDDEN,
-        )
-        @JvmField
-        public val CannotSendMessagesInVoiceChannel: JsonErrorCode = CannotSendMessagesInNonTextChannel
-
-        @Deprecated(
-            "Object JsonErrorCode.JsonErrorCodeSerializer is internal now, use JsonErrorCode.serializer() instead.",
-            ReplaceWith("JsonErrorCode.serializer()", "dev.kord.rest.json.JsonErrorCode"),
-            level = HIDDEN,
-        )
-        @JvmField
-        public val JsonErrorCodeSerializer: KSerializer<JsonErrorCode> = Serializer
-    }
 
     internal object Serializer : KSerializer<JsonErrorCode> {
         override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)

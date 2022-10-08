@@ -6,7 +6,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
 public data class StageInstanceCreateRequest(
@@ -23,7 +23,7 @@ public data class StageInstanceCreateRequest(
 @Deprecated(
     "Replaced by 'StageInstanceModifyRequest'.",
     ReplaceWith("StageInstanceModifyRequest", "dev.kord.rest.json.request.StageInstanceModifyRequest"),
-    level = ERROR,
+    level = HIDDEN,
 )
 @Serializable
 public data class StageInstanceUpdateRequest(val topic: String)

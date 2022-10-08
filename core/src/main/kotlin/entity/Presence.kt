@@ -1,6 +1,5 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -11,9 +10,6 @@ import dev.kord.core.cache.data.PresenceData
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
-import kotlin.DeprecationLevel.HIDDEN
 
 public class Presence(
     public val data: PresenceData,
@@ -25,23 +21,7 @@ public class Presence(
 
     public val clientStatus: ClientStatus get() = ClientStatus(data.clientStatus)
 
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Game field is no longer present.", ReplaceWith("activities.firstOrNull()"), level = HIDDEN)
-    public val game: Activity?
-        get() = activities.firstOrNull()
-
     public val guildId: Snowflake get() = data.guildId
-
-    @Suppress("RedundantNullableReturnType")
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("role ids are no longer present.", ReplaceWith("emptySet()"), level = HIDDEN)
-    public val roleIds: Set<Snowflake>?
-        get() = emptySet()
-
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("role ids are no longer present.", ReplaceWith("emptyFlow()"), level = HIDDEN)
-    public val roles: Flow<Role>
-        get() = emptyFlow()
 
     public val status: PresenceStatus get() = data.status
 

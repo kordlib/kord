@@ -4158,7 +4158,7 @@ public final class dev/kord/common/entity/DiscordInvite : dev/kord/common/entity
 	public fun getTargetApplication ()Ldev/kord/common/entity/optional/Optional;
 	public fun getTargetType ()Ldev/kord/common/entity/optional/Optional;
 	public fun getTargetUser ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getTargetUserType ()Ldev/kord/common/entity/optional/Optional;
+	public final synthetic fun getTargetUserType ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Ldev/kord/common/entity/DiscordInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -6437,7 +6437,7 @@ public final class dev/kord/common/entity/IntegrationApplication {
 	public final fun getIcon ()Ljava/lang/String;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getSummary ()Ljava/lang/String;
+	public final synthetic fun getSummary ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Ldev/kord/common/entity/IntegrationApplication;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -7239,8 +7239,6 @@ public final class dev/kord/common/entity/Permission$ChangeNickname : dev/kord/c
 }
 
 public final class dev/kord/common/entity/Permission$Companion {
-	public final synthetic fun getManageEmojis ()Ldev/kord/common/entity/Permission$ManageEmojisAndStickers;
-	public final synthetic fun getUseSlashCommands ()Ldev/kord/common/entity/Permission$UseApplicationCommands;
 	public final fun getValues ()Ljava/util/Set;
 }
 
@@ -7653,11 +7651,10 @@ public final class dev/kord/common/entity/Snowflake : java/lang/Comparable {
 	public final fun component3-w2LRezQ ()B
 	public final fun component4-Mh2AYeg ()S
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAsString ()Ljava/lang/String;
+	public final synthetic fun getAsString ()Ljava/lang/String;
 	public final fun getIncrement-Mh2AYeg ()S
 	public final fun getProcessId-w2LRezQ ()B
 	public final fun getTimeMark ()Lkotlin/time/TimeMark;
-	public final synthetic fun getTimeStamp ()Lkotlinx/datetime/Instant;
 	public final fun getTimestamp ()Lkotlinx/datetime/Instant;
 	public final fun getValue-s-VKNKU ()J
 	public final fun getWorkerId-w2LRezQ ()B
@@ -7667,7 +7664,6 @@ public final class dev/kord/common/entity/Snowflake : java/lang/Comparable {
 
 public final class dev/kord/common/entity/Snowflake$Companion {
 	public final fun getDiscordEpoch ()Lkotlinx/datetime/Instant;
-	public final synthetic fun getDiscordEpochStart ()Lkotlinx/datetime/Instant;
 	public final fun getEndOfTime ()Lkotlinx/datetime/Instant;
 	public final fun getMax ()Ldev/kord/common/entity/Snowflake;
 	public final fun getMin ()Ldev/kord/common/entity/Snowflake;

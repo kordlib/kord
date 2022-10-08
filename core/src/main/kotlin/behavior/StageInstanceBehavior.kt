@@ -1,6 +1,7 @@
 package dev.kord.core.behavior
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.StageInstanceData
@@ -12,7 +13,8 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.stage.StageInstanceModifyBuilder
-import kotlin.DeprecationLevel.ERROR
+import dev.kord.rest.json.request.StageInstanceModifyRequest
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -25,9 +27,9 @@ public interface StageInstanceBehavior : KordEntity, Strategizable {
 
     /** @suppress */
     @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Replaced by 'edit'.", ReplaceWith("this.edit {\nthis@edit.topic = topic\n}"), level = ERROR)
+    @Deprecated("Replaced by 'edit'.", ReplaceWith("this.edit {\nthis@edit.topic = topic\n}"), level = HIDDEN)
     public suspend fun update(topic: String): StageInstance {
-        val instance = kord.rest.stageInstance.updateStageInstance(channelId, dev.kord.rest.json.request.StageInstanceUpdateRequest(topic))
+        val instance = kord.rest.stageInstance.modifyStageInstance(channelId, StageInstanceModifyRequest(topic.optional()))
         val data = StageInstanceData.from(instance)
 
         return StageInstance(data, kord, supplier)

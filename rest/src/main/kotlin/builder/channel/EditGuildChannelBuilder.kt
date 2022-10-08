@@ -12,7 +12,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 @KordDsl
@@ -256,7 +256,7 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
     information.
     """,
-    level = ERROR,
+    level = HIDDEN,
 )
 public class StoreChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {

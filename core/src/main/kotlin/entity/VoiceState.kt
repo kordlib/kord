@@ -1,6 +1,5 @@
 package dev.kord.core.entity
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -13,7 +12,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 
 public class VoiceState(
     public val data: VoiceStateData,
@@ -56,21 +54,6 @@ public class VoiceState(
 
     /** The [Instant] at which the user requested to speak. */
     public val requestToSpeakTimestamp: Instant? get() = data.requestToSpeakTimestamp
-
-    /** Discord does not support anger detection. */
-    @Deprecated("I can't see any steam...", ReplaceWith("this.isSelfStreaming"), level = HIDDEN)
-    public val isSelfSteaming: Boolean
-        get() = isSelfStreaming
-
-    /**
-     * Requests to get the voice channel of this voice state.
-     * Returns null if the [VoiceChannel] isn't present, or [channelId] is null.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use getChannelOrNull instead.", ReplaceWith("getChannelOrNull"), level = HIDDEN)
-    public suspend fun getChannel(): BaseVoiceChannelBehavior? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
      * Requests to get the voice channel, returns null if the [VoiceChannel] isn't present.

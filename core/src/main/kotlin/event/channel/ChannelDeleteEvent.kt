@@ -3,7 +3,7 @@ package dev.kord.core.event.channel
 import dev.kord.core.Kord
 import dev.kord.core.entity.channel.*
 import dev.kord.core.event.Event
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 public interface ChannelDeleteEvent : Event {
     public val channel: Channel
@@ -51,10 +51,10 @@ public class NewsChannelDeleteEvent(
     See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
     information.
     """,
-    level = ERROR,
+    level = HIDDEN,
 )
 public class StoreChannelDeleteEvent(
-    override val channel: StoreChannel,
+    override val channel: dev.kord.core.entity.channel.StoreChannel,
     override val shard: Int,
     override val customContext: Any?,
 ) : ChannelDeleteEvent {

@@ -15,7 +15,6 @@ import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
@@ -53,17 +52,6 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      * This is inherited from the parent channel.
      */
     public val isNsfw: Boolean get() = data.nsfw.discordBoolean
-
-    /**
-     * timestamp when the thread's archive status was last changed.
-     */
-    @Deprecated(
-        "archiveTimeStamp was renamed to archiveTimestamp.",
-        ReplaceWith("archiveTimestamp"),
-        level = HIDDEN,
-    )
-    public val archiveTimeStamp: Instant
-        get() = archiveTimestamp
 
     /**
      * The timestamp when the thread's archive status was last changed.

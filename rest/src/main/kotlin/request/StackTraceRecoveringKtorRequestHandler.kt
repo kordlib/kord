@@ -1,6 +1,6 @@
 package dev.kord.rest.request
 
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * Extension of [KtorRequestHandler] which tries to recover stack trace information lost through Ktor's
@@ -32,7 +32,7 @@ public class StackTraceRecoveringKtorRequestHandler(private val delegate: KtorRe
 
 @Deprecated(
     "'ContextException' is no longer thrown. 'stackTraceRecovery' uses a suppressed exception instead.",
-    level = ERROR,
+    level = HIDDEN,
 )
 public class ContextException internal constructor() : RuntimeException()
 

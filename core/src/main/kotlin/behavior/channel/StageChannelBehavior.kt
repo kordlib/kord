@@ -17,7 +17,6 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.modifyCurrentVoiceState
 import dev.kord.rest.service.modifyVoiceState
 import dev.kord.rest.service.patchStageVoiceChannel
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -30,14 +29,6 @@ public interface StageChannelBehavior : BaseVoiceChannelBehavior {
         strategy: EntitySupplyStrategy<*>
     ): StageChannelBehavior {
         return StageChannelBehavior(id, guildId, kord, strategy.supply(kord))
-    }
-
-    @Deprecated("Binary compatibility.", level = HIDDEN)
-    public suspend fun createStageInstance(topic: String): StageInstance {
-        val instance = kord.rest.stageInstance.createStageInstance(id, topic)
-        val data = StageInstanceData.from(instance)
-
-        return StageInstance(data, kord, supplier)
     }
 
     public suspend fun getStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
