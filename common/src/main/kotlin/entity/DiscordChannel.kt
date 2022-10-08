@@ -56,6 +56,14 @@
 )
 
 @file:GenerateKordEnum(
+    name = "SortOrderType", valueType = INT,
+    entries = [
+        Entry("LatestActivity", intValue = 0, kDoc = "Sort forum posts by activity."),
+        Entry("CreationDate", intValue = 1, kDoc = "Sort forum posts by creation time (from most recent to oldest)."),
+    ],
+)
+
+@file:GenerateKordEnum(
     name = "OverwriteType", valueType = INT,
     entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
 )

@@ -8274,11 +8274,6 @@ public final class dev/kord/core/entity/channel/ThreadParentChannel$DefaultImpls
 	public static fun getGuildId (Ldev/kord/core/entity/channel/ThreadParentChannel;)Ldev/kord/common/entity/Snowflake;
 	public static fun getGuildOrNull (Ldev/kord/core/entity/channel/ThreadParentChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getId (Ldev/kord/core/entity/channel/ThreadParentChannel;)Ldev/kord/common/entity/Snowflake;
-	public static fun getInvites (Ldev/kord/core/entity/channel/ThreadParentChannel;)Lkotlinx/coroutines/flow/Flow;
-	public static fun getLastMessage (Ldev/kord/core/entity/channel/ThreadParentChannel;)Ldev/kord/core/behavior/MessageBehavior;
-	public static fun getLastMessage (Ldev/kord/core/entity/channel/ThreadParentChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getLastMessageId (Ldev/kord/core/entity/channel/ThreadParentChannel;)Ldev/kord/common/entity/Snowflake;
-	public static fun getLastPinTimestamp (Ldev/kord/core/entity/channel/ThreadParentChannel;)Lkotlinx/datetime/Instant;
 	public static fun getMention (Ldev/kord/core/entity/channel/ThreadParentChannel;)Ljava/lang/String;
 	public static fun getName (Ldev/kord/core/entity/channel/ThreadParentChannel;)Ljava/lang/String;
 	public static fun getPermissionOverwrites (Ldev/kord/core/entity/channel/ThreadParentChannel;)Ljava/util/Set;
@@ -13695,3 +13690,4 @@ public final class dev/kord/core/supplier/StoreEntitySupplier : dev/kord/core/su
 	public fun getWebhookWithTokenOrNull (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 }
+
