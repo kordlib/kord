@@ -245,7 +245,7 @@ public sealed interface MentionSpamAutoModerationRuleBuilder : TimeoutAutoModera
 
     override val triggerType: MentionSpam get() = MentionSpam
 
-    /** Total number of mentions (role & user) allowed per message (maximum of 50). */
+    /** Total number of unique role and user mentions allowed per message (maximum of 50). */
     public val mentionLimit: Int?
 
     /**

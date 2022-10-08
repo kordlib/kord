@@ -1156,7 +1156,7 @@ public suspend inline fun GuildBehavior.createKeywordPresetAutoModerationRule(
  *
  * @param name the rule name.
  * @param eventType the rule [event type][AutoModerationRuleEventType].
- * @param mentionLimit total number of mentions (role & user) allowed per message (maximum of 50).
+ * @param mentionLimit total number of unique role and user mentions allowed per message (maximum of 50).
  *
  * @throws RestRequestException if something went wrong during the request.
  */

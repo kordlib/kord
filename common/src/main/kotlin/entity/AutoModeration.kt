@@ -8,7 +8,7 @@
             "KeywordPreset", intValue = 4,
             kDoc = "Check if content contains words from internal pre-defined wordsets."
         ),
-        Entry("MentionSpam", intValue = 5, kDoc = "Check if content contains more mentions than allowed."),
+        Entry("MentionSpam", intValue = 5, kDoc = "Check if content contains more unique mentions than allowed."),
     ],
 )
 

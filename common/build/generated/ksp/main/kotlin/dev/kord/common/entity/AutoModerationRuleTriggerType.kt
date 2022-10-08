@@ -63,7 +63,7 @@ public sealed class AutoModerationRuleTriggerType(
     public object KeywordPreset : AutoModerationRuleTriggerType(4)
 
     /**
-     * Check if content contains more mentions than allowed.
+     * Check if content contains more unique mentions than allowed.
      */
     public object MentionSpam : AutoModerationRuleTriggerType(5)
 

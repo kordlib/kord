@@ -179,7 +179,7 @@ public class MentionSpamAutoModerationRule(data: AutoModerationRuleData, kord: K
     AutoModerationRule(data, kord, supplier, expectedTriggerType = MentionSpam),
     MentionSpamAutoModerationRuleBehavior {
 
-    /** Total number of mentions (role & user) allowed per message. */
+    /** Total number of unique role and user mentions allowed per message. */
     public val mentionLimit: Int get() = data.triggerMetadata.mentionTotalLimit.value!!
 
     override suspend fun asAutoModerationRuleOrNull(): MentionSpamAutoModerationRule = this
