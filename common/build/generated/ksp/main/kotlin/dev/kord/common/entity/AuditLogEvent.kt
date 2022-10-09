@@ -299,9 +299,19 @@ public sealed class AuditLogEvent(
     public object AutoModerationRuleDelete : AuditLogEvent(142)
 
     /**
-     * Message was blocked by AutoMod (according to a rule).
+     * Message was blocked by AutoMod.
      */
     public object AutoModerationBlockMessage : AuditLogEvent(143)
+
+    /**
+     * Message was flagged by AutoMod.
+     */
+    public object AutoModerationFlagToChannel : AuditLogEvent(144)
+
+    /**
+     * Member was timed out by AutoMod.
+     */
+    public object AutoModerationUserCommunicationDisabled : AuditLogEvent(145)
 
     internal object Serializer : KSerializer<AuditLogEvent> {
         public override val descriptor: SerialDescriptor =
@@ -363,6 +373,8 @@ public sealed class AuditLogEvent(
             141 -> AutoModerationRuleUpdate
             142 -> AutoModerationRuleDelete
             143 -> AutoModerationBlockMessage
+            144 -> AutoModerationFlagToChannel
+            145 -> AutoModerationUserCommunicationDisabled
             else -> Unknown(value)
         }
     }
@@ -425,6 +437,8 @@ public sealed class AuditLogEvent(
                 AutoModerationRuleUpdate,
                 AutoModerationRuleDelete,
                 AutoModerationBlockMessage,
+                AutoModerationFlagToChannel,
+                AutoModerationUserCommunicationDisabled,
             )
         }
 
