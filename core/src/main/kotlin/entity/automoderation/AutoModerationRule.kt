@@ -1,6 +1,5 @@
 package dev.kord.core.entity.automoderation
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.AutoModerationRuleEventType
 import dev.kord.common.entity.AutoModerationRuleKeywordPresetType
 import dev.kord.common.entity.AutoModerationRuleTriggerType
@@ -137,12 +136,7 @@ public class KeywordAutoModerationRule(data: AutoModerationRuleData, kord: Kord,
     override fun toString(): String = "KeywordAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
-/**
- * An [AutoModerationRule] with trigger type [Spam].
- *
- * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
- */
-@KordExperimental
+/** An [AutoModerationRule] with trigger type [Spam]. */
 public class SpamAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = Spam),
     SpamAutoModerationRuleBehavior {
@@ -180,17 +174,12 @@ public class KeywordPresetAutoModerationRule(data: AutoModerationRuleData, kord:
     override fun toString(): String = "KeywordPresetAutoModerationRule(data=$data, kord=$kord, supplier=$supplier)"
 }
 
-/**
- * An [AutoModerationRule] with trigger type [MentionSpam].
- *
- * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
- */
-@KordExperimental
+/** An [AutoModerationRule] with trigger type [MentionSpam]. */
 public class MentionSpamAutoModerationRule(data: AutoModerationRuleData, kord: Kord, supplier: EntitySupplier) :
     AutoModerationRule(data, kord, supplier, expectedTriggerType = MentionSpam),
     MentionSpamAutoModerationRuleBehavior {
 
-    /** Total number of mentions (role & user) allowed per message. */
+    /** Total number of unique role and user mentions allowed per message. */
     public val mentionLimit: Int get() = data.triggerMetadata.mentionTotalLimit.value!!
 
     override suspend fun asAutoModerationRuleOrNull(): MentionSpamAutoModerationRule = this

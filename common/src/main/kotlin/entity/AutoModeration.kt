@@ -3,20 +3,12 @@
     kDoc = "Characterizes the type of content which can trigger the rule.",
     entries = [
         Entry("Keyword", intValue = 1, kDoc = "Check if content contains words from a user defined list of keywords."),
-        Entry(
-            "Spam", intValue = 3, isKordExperimental = true,
-            kDoc = "Check if content represents generic spam.\n\nThis [trigger·type][AutoModerationRuleTriggerType] " +
-                    "is not yet released, so it cannot be used in most servers."
-        ),
+        Entry("Spam", intValue = 3, kDoc = "Check if content represents generic spam."),
         Entry(
             "KeywordPreset", intValue = 4,
             kDoc = "Check if content contains words from internal pre-defined wordsets."
         ),
-        Entry(
-            "MentionSpam", intValue = 5, isKordExperimental = true,
-            kDoc = "Check if content contains more mentions than allowed.\n\nThis [trigger·type][" +
-                    "AutoModerationRuleTriggerType] is not yet released, so it cannot be used in most servers."
-        ),
+        Entry("MentionSpam", intValue = 5, kDoc = "Check if content contains more unique mentions than allowed."),
     ],
 )
 

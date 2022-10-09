@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.automoderation
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.AutoModerationRuleTriggerType
 import dev.kord.common.entity.AutoModerationRuleTriggerType.*
 import dev.kord.common.entity.Permission.ManageGuild
@@ -23,7 +22,7 @@ import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
 /** The behavior of an [AutoModerationRule]. */
-public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
+public sealed interface AutoModerationRuleBehavior : KordEntity, Strategizable {
 
     /** The ID of the [Guild] which this rule belongs to. */
     public val guildId: Snowflake
@@ -88,20 +87,16 @@ public interface AutoModerationRuleBehavior : KordEntity, Strategizable {
     override fun toString(): String
 }
 
-internal fun AutoModerationRuleBehavior(
-    guildId: Snowflake,
-    ruleId: Snowflake,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier,
-): AutoModerationRuleBehavior = object : AutoModerationRuleBehavior {
-    override val guildId get() = guildId
-    override val id get() = ruleId
+internal class AutoModerationRuleBehaviorImpl(
+    override val guildId: Snowflake,
+    override val id: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : AutoModerationRuleBehavior {
     override val triggerType get() = null
-    override val kord get() = kord
-    override val supplier get() = supplier
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>) =
-        AutoModerationRuleBehavior(guildId, ruleId, kord, strategy.supply(kord))
+        AutoModerationRuleBehaviorImpl(guildId, id, kord, strategy.supply(kord))
 
     override fun equals(other: Any?) = autoModerationRuleEquals(other)
     override fun hashCode() = autoModerationRuleHashCode()
@@ -142,10 +137,10 @@ internal fun TypedAutoModerationRuleBehavior(
     kord: Kord,
     supplier: EntitySupplier = kord.defaultSupplier,
 ): TypedAutoModerationRuleBehavior = when (triggerType) {
-    Keyword -> KeywordAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
-    Spam -> SpamAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
-    KeywordPreset -> KeywordPresetAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
-    MentionSpam -> MentionSpamAutoModerationRuleBehavior(guildId, ruleId, kord, supplier)
+    Keyword -> KeywordAutoModerationRuleBehaviorImpl(guildId, ruleId, kord, supplier)
+    Spam -> SpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord, supplier)
+    KeywordPreset -> KeywordPresetAutoModerationRuleBehaviorImpl(guildId, ruleId, kord, supplier)
+    MentionSpam -> MentionSpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord, supplier)
     is Unknown -> UnknownAutoModerationRuleBehavior(guildId, ruleId, triggerType, kord, supplier)
 }
 
@@ -181,19 +176,14 @@ public interface KeywordAutoModerationRuleBehavior : TypedAutoModerationRuleBeha
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): KeywordAutoModerationRuleBehavior
 }
 
-internal fun KeywordAutoModerationRuleBehavior(
-    guildId: Snowflake,
-    ruleId: Snowflake,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier,
-): KeywordAutoModerationRuleBehavior = object : KeywordAutoModerationRuleBehavior {
-    override val guildId get() = guildId
-    override val id get() = ruleId
-    override val kord get() = kord
-    override val supplier get() = supplier
-
+internal class KeywordAutoModerationRuleBehaviorImpl(
+    override val guildId: Snowflake,
+    override val id: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : KeywordAutoModerationRuleBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>) =
-        KeywordAutoModerationRuleBehavior(guildId, ruleId, kord, strategy.supply(kord))
+        KeywordAutoModerationRuleBehaviorImpl(guildId, id, kord, strategy.supply(kord))
 
     override fun equals(other: Any?) = autoModerationRuleEquals(other)
     override fun hashCode() = autoModerationRuleHashCode()
@@ -217,12 +207,7 @@ public suspend inline fun KeywordAutoModerationRuleBehavior.edit(
 }
 
 
-/**
- * The behavior of a [SpamAutoModerationRule].
- *
- * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
- */
-@KordExperimental
+/** The behavior of a [SpamAutoModerationRule]. */
 public interface SpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
 
     override val triggerType: Spam get() = Spam
@@ -253,24 +238,18 @@ public interface SpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavio
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): SpamAutoModerationRuleBehavior
 }
 
-internal fun SpamAutoModerationRuleBehavior(
-    guildId: Snowflake,
-    ruleId: Snowflake,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier,
-): SpamAutoModerationRuleBehavior = object : SpamAutoModerationRuleBehavior {
-    override val guildId get() = guildId
-    override val id get() = ruleId
-    override val kord get() = kord
-    override val supplier get() = supplier
-
+internal class SpamAutoModerationRuleBehaviorImpl(
+    override val guildId: Snowflake,
+    override val id: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : SpamAutoModerationRuleBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>) =
-        SpamAutoModerationRuleBehavior(guildId, ruleId, kord, strategy.supply(kord))
+        SpamAutoModerationRuleBehaviorImpl(guildId, id, kord, strategy.supply(kord))
 
     override fun equals(other: Any?) = autoModerationRuleEquals(other)
     override fun hashCode() = autoModerationRuleHashCode()
-    override fun toString() =
-        "SpamAutoModerationRuleBehavior(guildId=$guildId, id=$id, kord=$kord, supplier=$supplier)"
+    override fun toString() = "SpamAutoModerationRuleBehavior(guildId=$guildId, id=$id, kord=$kord, supplier=$supplier)"
 }
 
 /**
@@ -278,11 +257,8 @@ internal fun SpamAutoModerationRuleBehavior(
  *
  * This requires the [ManageGuild] permission.
  *
- * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
- *
  * @throws RestRequestException if something went wrong during the request.
  */
-@KordExperimental
 public suspend inline fun SpamAutoModerationRuleBehavior.edit(
     builder: SpamAutoModerationRuleModifyBuilder.() -> Unit,
 ): SpamAutoModerationRule {
@@ -323,19 +299,14 @@ public interface KeywordPresetAutoModerationRuleBehavior : TypedAutoModerationRu
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): KeywordPresetAutoModerationRuleBehavior
 }
 
-internal fun KeywordPresetAutoModerationRuleBehavior(
-    guildId: Snowflake,
-    ruleId: Snowflake,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier,
-): KeywordPresetAutoModerationRuleBehavior = object : KeywordPresetAutoModerationRuleBehavior {
-    override val guildId get() = guildId
-    override val id get() = ruleId
-    override val kord get() = kord
-    override val supplier get() = supplier
-
+internal class KeywordPresetAutoModerationRuleBehaviorImpl(
+    override val guildId: Snowflake,
+    override val id: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : KeywordPresetAutoModerationRuleBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>) =
-        KeywordPresetAutoModerationRuleBehavior(guildId, ruleId, kord, strategy.supply(kord))
+        KeywordPresetAutoModerationRuleBehaviorImpl(guildId, id, kord, strategy.supply(kord))
 
     override fun equals(other: Any?) = autoModerationRuleEquals(other)
     override fun hashCode() = autoModerationRuleHashCode()
@@ -359,12 +330,7 @@ public suspend inline fun KeywordPresetAutoModerationRuleBehavior.edit(
 }
 
 
-/**
- * The behavior of a [MentionSpamAutoModerationRule].
- *
- * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
- */
-@KordExperimental
+/** The behavior of a [MentionSpamAutoModerationRule]. */
 public interface MentionSpamAutoModerationRuleBehavior : TypedAutoModerationRuleBehavior {
 
     override val triggerType: MentionSpam get() = MentionSpam
@@ -395,19 +361,14 @@ public interface MentionSpamAutoModerationRuleBehavior : TypedAutoModerationRule
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MentionSpamAutoModerationRuleBehavior
 }
 
-internal fun MentionSpamAutoModerationRuleBehavior(
-    guildId: Snowflake,
-    ruleId: Snowflake,
-    kord: Kord,
-    supplier: EntitySupplier = kord.defaultSupplier,
-): MentionSpamAutoModerationRuleBehavior = object : MentionSpamAutoModerationRuleBehavior {
-    override val guildId get() = guildId
-    override val id get() = ruleId
-    override val kord get() = kord
-    override val supplier get() = supplier
-
+internal class MentionSpamAutoModerationRuleBehaviorImpl(
+    override val guildId: Snowflake,
+    override val id: Snowflake,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : MentionSpamAutoModerationRuleBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>) =
-        MentionSpamAutoModerationRuleBehavior(guildId, ruleId, kord, strategy.supply(kord))
+        MentionSpamAutoModerationRuleBehaviorImpl(guildId, id, kord, strategy.supply(kord))
 
     override fun equals(other: Any?) = autoModerationRuleEquals(other)
     override fun hashCode() = autoModerationRuleHashCode()
@@ -420,11 +381,8 @@ internal fun MentionSpamAutoModerationRuleBehavior(
  *
  * This requires the [ManageGuild] permission.
  *
- * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
- *
  * @throws RestRequestException if something went wrong during the request.
  */
-@KordExperimental
 public suspend inline fun MentionSpamAutoModerationRuleBehavior.edit(
     builder: MentionSpamAutoModerationRuleModifyBuilder.() -> Unit,
 ): MentionSpamAutoModerationRule {
@@ -434,22 +392,15 @@ public suspend inline fun MentionSpamAutoModerationRuleBehavior.edit(
 }
 
 
-@Suppress("FunctionName")
-internal fun UnknownAutoModerationRuleBehavior(
-    guildId: Snowflake,
-    ruleId: Snowflake,
-    triggerType: Unknown,
-    kord: Kord,
-    supplier: EntitySupplier,
-): TypedAutoModerationRuleBehavior = object : TypedAutoModerationRuleBehavior {
-    override val guildId get() = guildId
-    override val id get() = ruleId
-    override val triggerType get() = triggerType
-    override val kord get() = kord
-    override val supplier get() = supplier
-
+private class UnknownAutoModerationRuleBehavior(
+    override val guildId: Snowflake,
+    override val id: Snowflake,
+    override val triggerType: Unknown,
+    override val kord: Kord,
+    override val supplier: EntitySupplier,
+) : TypedAutoModerationRuleBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>) =
-        UnknownAutoModerationRuleBehavior(guildId, ruleId, triggerType, kord, strategy.supply(kord))
+        UnknownAutoModerationRuleBehavior(guildId, id, triggerType, kord, strategy.supply(kord))
 
     override fun equals(other: Any?) = autoModerationRuleEquals(other)
     override fun hashCode() = autoModerationRuleHashCode()
