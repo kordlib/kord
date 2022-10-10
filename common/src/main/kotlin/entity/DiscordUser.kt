@@ -1,6 +1,7 @@
 @file:GenerateKordEnum(
     name = "UserPremium", valueType = INT,
     kDoc = "Premium types denote the level of premium a user has.",
+    docUrl = "https://discord.com/developers/docs/resources/user#user-object-premium-types",
     entries = [
         Entry("None", intValue = 0),
         Entry("NitroClassic", intValue = 1),

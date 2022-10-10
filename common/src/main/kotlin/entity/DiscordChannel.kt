@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "ChannelType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-channel-types",
     entries = [
         Entry("GuildText", intValue = 0, kDoc = "A text channel within a server."),
         Entry("DM", intValue = 1, kDoc = "A direct message between users."),
@@ -48,6 +49,7 @@
 
 @file:GenerateKordEnum(
     name = "VideoQualityMode", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes",
     entries = [
         Entry("Auto", intValue = 1, kDoc = "Discord chooses the quality for optimal performance."),
         Entry("Full", intValue = 2, kDoc = "720p."),
@@ -56,6 +58,7 @@
 
 @file:GenerateKordEnum(
     name = "OverwriteType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure",
     entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
 )
 

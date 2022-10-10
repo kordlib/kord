@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "WebhookType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types",
     entries = [
         Entry(
             "Incoming", intValue = 1,

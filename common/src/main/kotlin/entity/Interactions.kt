@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "ApplicationCommandType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types",
     entries = [
         Entry("ChatInput", intValue = 1, kDoc = "A text-based command that shows up when a user types `/`."),
         Entry("User", intValue = 2, kDoc = "A UI-based command that shows up when you right-click or tap on a user."),
@@ -12,6 +13,7 @@
 
 @file:GenerateKordEnum(
     name = "ApplicationCommandOptionType", valueType = INT, valueName = "type",
+    docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type",
     entries = [
         Entry("SubCommand", intValue = 1),
         Entry("SubCommandGroup", intValue = 2),
@@ -29,6 +31,7 @@
 
 @file:GenerateKordEnum(
     name = "InteractionType", valueType = INT, valueName = "type",
+    docUrl = "https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type",
     entries = [
         Entry("Ping", intValue = 1),
         Entry("ApplicationCommand", intValue = 2),
@@ -40,6 +43,7 @@
 
 @file:GenerateKordEnum(
     name = "InteractionResponseType", valueType = INT, valueName = "type",
+    docUrl = "https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type",
     entries = [
         Entry("Pong", intValue = 1, kDoc = "ACK a [Ping][dev.kord.common.entity.InteractionType.Ping]."),
         Entry("ChannelMessageWithSource", intValue = 4, kDoc = "Respond to an interaction with a message."),
@@ -63,6 +67,7 @@
 
 @file:GenerateKordEnum(
     name = "ApplicationCommandPermissionType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type",
     entries = [
         Entry("Role", intValue = 1),
         Entry("User", intValue = 2),
