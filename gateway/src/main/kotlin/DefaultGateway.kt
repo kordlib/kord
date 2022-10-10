@@ -85,10 +85,10 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private val stateMutex = Mutex()
+    private val initialUrl = Url(data.url)
     private val sequence = Sequence()
 
     init {
-        val initialUrl = Url(data.url)
         compression = initialUrl.parameters.contains("compress", "zlib-stream")
 
         SequenceHandler(events, sequence)
@@ -112,7 +112,12 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         if (session != null) {
             sequence.value = session.sequence
             handshakeHandler.resumeContext.update {
-                HandshakeHandler.ResumeContext(session.sessionId, Url(session.resumeUrl))
+                HandshakeHandler.ResumeContext(
+                    session.sessionId,
+                    URLBuilder(initialUrl)
+                        .apply { parameters.appendMissing(initialUrl.parameters) }
+                        .build()
+                )
             }
         }
 
