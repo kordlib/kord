@@ -2174,6 +2174,8 @@ public final class dev/kord/core/cache/CachingGateway : dev/kord/cache/api/DataC
 	public fun send (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun start (Ldev/kord/gateway/GatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun stop (Ldev/kord/gateway/WebSocketCloseReason;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun stopAndInvalidateSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun stopForResume (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 }
 
