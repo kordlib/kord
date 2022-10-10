@@ -13,10 +13,7 @@ import dev.kord.core.cache.registerKordData
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.gateway.Command
-import dev.kord.gateway.Event
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.GatewayConfiguration
+import dev.kord.gateway.*
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.JsonRequest
 import dev.kord.rest.request.MultipartRequest
@@ -72,8 +69,12 @@ object FakeGateway : Gateway {
         deferred.await()
     }
 
-    override suspend fun stop() {
+    override suspend fun stop(closeReason: WebSocketCloseReason) {
         deferred.complete(Unit)
+    }
+
+    override suspend fun resume(configuration: GatewayResumeConfiguration) {
+        deferred.await()
     }
 
     override val coroutineContext: CoroutineContext = SupervisorJob() + EmptyCoroutineContext

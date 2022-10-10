@@ -215,9 +215,10 @@ public final class dev/kord/gateway/DefaultGateway : dev/kord/gateway/Gateway {
 	public fun getCoroutineContext ()Lkotlin/coroutines/CoroutineContext;
 	public fun getEvents ()Lkotlinx/coroutines/flow/SharedFlow;
 	public fun getPing ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun resume (Ldev/kord/gateway/GatewayResumeConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun send (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun start (Ldev/kord/gateway/GatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun stop (Ldev/kord/gateway/WebSocketCloseReason;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/gateway/DefaultGateway$Companion {
@@ -652,13 +653,18 @@ public abstract interface class dev/kord/gateway/Gateway : kotlinx/coroutines/Co
 	public abstract fun detach (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getEvents ()Lkotlinx/coroutines/flow/SharedFlow;
 	public abstract fun getPing ()Lkotlinx/coroutines/flow/StateFlow;
+	public abstract fun resume (Ldev/kord/gateway/GatewayResumeConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun send (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun start (Ldev/kord/gateway/GatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun stop (Ldev/kord/gateway/WebSocketCloseReason;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/gateway/Gateway$Companion {
 	public final fun none ()Ldev/kord/gateway/Gateway;
+}
+
+public final class dev/kord/gateway/Gateway$DefaultImpls {
+	public static synthetic fun stop$default (Ldev/kord/gateway/Gateway;Ldev/kord/gateway/WebSocketCloseReason;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class dev/kord/gateway/GatewayCloseCode : java/lang/Enum {
@@ -682,6 +688,8 @@ public final class dev/kord/gateway/GatewayCloseCode : java/lang/Enum {
 }
 
 public final class dev/kord/gateway/GatewayConfiguration {
+	public static final field Companion Ldev/kord/gateway/GatewayConfiguration$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/DiscordShard;Ldev/kord/common/entity/optional/Optional;ILdev/kord/gateway/Intents;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/DiscordShard;Ldev/kord/common/entity/optional/Optional;ILdev/kord/gateway/Intents;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/DiscordShard;Ldev/kord/common/entity/optional/Optional;ILdev/kord/gateway/Intents;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -701,6 +709,23 @@ public final class dev/kord/gateway/GatewayConfiguration {
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/gateway/GatewayConfiguration;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/gateway/GatewayConfiguration$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/GatewayConfiguration$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/GatewayConfiguration;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/GatewayConfiguration;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/GatewayConfiguration$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/GatewayConfigurationBuilder {
@@ -727,8 +752,46 @@ public final class dev/kord/gateway/GatewayKt {
 	public static final fun requestGuildMembers (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
 	public static final fun requestGuildMembers (Ldev/kord/gateway/Gateway;Ldev/kord/gateway/RequestGuildMembers;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun requestGuildMembers$default (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static final fun resume (Ldev/kord/gateway/Gateway;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun resume$default (Ldev/kord/gateway/Gateway;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun start (Ldev/kord/gateway/Gateway;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun start$default (Ldev/kord/gateway/Gateway;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class dev/kord/gateway/GatewayResumeConfiguration {
+	public static final field Companion Ldev/kord/gateway/GatewayResumeConfiguration$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILdev/kord/gateway/GatewayConfiguration;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ILdev/kord/gateway/GatewayConfiguration;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()Ldev/kord/gateway/GatewayConfiguration;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;ILdev/kord/gateway/GatewayConfiguration;)Ldev/kord/gateway/GatewayResumeConfiguration;
+	public static synthetic fun copy$default (Ldev/kord/gateway/GatewayResumeConfiguration;Ljava/lang/String;Ljava/lang/String;ILdev/kord/gateway/GatewayConfiguration;ILjava/lang/Object;)Ldev/kord/gateway/GatewayResumeConfiguration;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getResumeUrl ()Ljava/lang/String;
+	public final fun getSequence ()I
+	public final fun getSessionId ()Ljava/lang/String;
+	public final fun getStartConfiguration ()Ldev/kord/gateway/GatewayConfiguration;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/gateway/GatewayResumeConfiguration;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/gateway/GatewayResumeConfiguration$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/GatewayResumeConfiguration$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/GatewayResumeConfiguration;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/GatewayResumeConfiguration;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/GatewayResumeConfiguration$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/GuildBanAdd : dev/kord/gateway/DispatchEvent {
@@ -1605,6 +1668,19 @@ public final class dev/kord/gateway/RequestGuildMembers$Nonce {
 	public final fun new ()Ljava/lang/String;
 }
 
+public final class dev/kord/gateway/ResumeSession {
+	public fun <init> (Ldev/kord/gateway/Session;I)V
+	public final fun component1 ()Ldev/kord/gateway/Session;
+	public final fun component2 ()I
+	public final fun copy (Ldev/kord/gateway/Session;I)Ldev/kord/gateway/ResumeSession;
+	public static synthetic fun copy$default (Ldev/kord/gateway/ResumeSession;Ldev/kord/gateway/Session;IILjava/lang/Object;)Ldev/kord/gateway/ResumeSession;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSequenceId ()I
+	public final fun getSession ()Ldev/kord/gateway/Session;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/gateway/Resumed : dev/kord/gateway/DispatchEvent {
 	public static final field Companion Ldev/kord/gateway/Resumed$Companion;
 	public synthetic fun <init> (ILjava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -1633,6 +1709,19 @@ public final class dev/kord/gateway/Resumed$$serializer : kotlinx/serialization/
 
 public final class dev/kord/gateway/Resumed$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/Session {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Ldev/kord/gateway/Session;
+	public static synthetic fun copy$default (Ldev/kord/gateway/Session;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/gateway/Session;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getResumeGatewayUrl ()Ljava/lang/String;
+	public final fun getSessionId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/ThreadCreate : dev/kord/gateway/DispatchEvent {
@@ -1842,6 +1931,19 @@ public final class dev/kord/gateway/VoiceStateUpdate : dev/kord/gateway/Dispatch
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getSequence ()Ljava/lang/Integer;
 	public final fun getVoiceState ()Ldev/kord/common/entity/DiscordVoiceState;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/WebSocketCloseReason {
+	public fun <init> (SLjava/lang/String;)V
+	public final fun component1 ()S
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (SLjava/lang/String;)Ldev/kord/gateway/WebSocketCloseReason;
+	public static synthetic fun copy$default (Ldev/kord/gateway/WebSocketCloseReason;SLjava/lang/String;ILjava/lang/Object;)Ldev/kord/gateway/WebSocketCloseReason;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()S
+	public final fun getMessage ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

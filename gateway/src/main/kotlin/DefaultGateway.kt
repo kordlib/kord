@@ -85,12 +85,12 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private val stateMutex = Mutex()
+    private val sequence = Sequence()
 
     init {
         val initialUrl = Url(data.url)
         compression = initialUrl.parameters.contains("compress", "zlib-stream")
 
-        val sequence = Sequence()
         SequenceHandler(events, sequence)
         handshakeHandler =
             HandshakeHandler(events, initialUrl, ::trySend, sequence, data.identifyRateLimiter, data.reconnectRetry)
@@ -103,6 +103,20 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     override suspend fun start(configuration: GatewayConfiguration): Unit = withContext(Dispatchers.Default) {
         resetState(configuration)
 
+        startAndHandleGatewayConnection()
+    }
+
+    override suspend fun resume(configuration: GatewayResumeConfiguration) {
+        resetState(configuration.startConfiguration)
+        sequence.value = configuration.sequence
+        handshakeHandler.resumeContext.update {
+            HandshakeHandler.ResumeContext(configuration.sessionId, Url(configuration.resumeUrl))
+        }
+
+        startAndHandleGatewayConnection()
+    }
+
+    private suspend fun startAndHandleGatewayConnection() {
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
             try {
                 val url = handshakeHandler.gatewayUrl
@@ -234,12 +248,12 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
     }
 
-    override suspend fun stop() {
+    override suspend fun stop(closeReason: WebSocketCloseReason) {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         data.eventFlow.emit(Close.UserClose)
         state.update { State.Stopped }
         _ping.value = null
-        if (socketOpen) socket.close(CloseReason(1000, "leaving"))
+        if (socketOpen) socket.close(CloseReason(closeReason.code, closeReason.message))
     }
 
     internal suspend fun restart(code: Close) {

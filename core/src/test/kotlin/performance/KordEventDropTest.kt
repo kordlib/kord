@@ -48,7 +48,9 @@ class KordEventDropTest {
 
         override suspend fun start(configuration: GatewayConfiguration) {}
 
-        override suspend fun stop() {}
+        override suspend fun stop(closeReason: WebSocketCloseReason) {}
+
+        override suspend fun resume(configuration: GatewayResumeConfiguration) {}
     }
 
     val kord = Kord(

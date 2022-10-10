@@ -20,9 +20,9 @@ internal class HandshakeHandler(
     lateinit var configuration: GatewayConfiguration
 
     // see https://discord.com/developers/docs/topics/gateway#resuming
-    private class ResumeContext(val sessionId: String, val resumeUrl: Url)
+    internal class ResumeContext(val sessionId: String, val resumeUrl: Url)
 
-    private val resumeContext = atomic<ResumeContext?>(initial = null)
+    internal val resumeContext = atomic<ResumeContext?>(initial = null)
     val gatewayUrl get() = resumeContext.value?.resumeUrl ?: initialUrl
 
     private val resumeOrIdentify

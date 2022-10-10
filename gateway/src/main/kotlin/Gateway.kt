@@ -40,12 +40,29 @@ public interface Gateway : CoroutineScope {
     public val ping: StateFlow<Duration?>
 
     /**
-     * Starts a reconnection gateway connection with the given [configuration].
+     * Starts a reconnecting gateway connection with the given [configuration].
+     *
+     * After connecting, an identify request will be sent and a session will be created.
+     * If you want to resume an already started session, use [resume].
+     *
      * This function will suspend until the lifecycle of the gateway has ended.
      *
      * @param configuration the configuration for this gateway session.
      */
     public suspend fun start(configuration: GatewayConfiguration)
+
+    /**
+     * Starts a reconnecting gateway connection with the given [configuration].
+     *
+     * After connecting, a resume request will be sent and the session will be resumed if the session is valid.
+     * If the session was invalidated, an identify request will be sent and a session will be created.
+     * If you want to start a new session, use [start].
+     *
+     * This function will suspend until the lifecycle of the gateway has ended.
+     *
+     * @param configuration the configuration for this gateway session.
+     */
+    public suspend fun resume(configuration: GatewayResumeConfiguration)
 
     /**
      * Sends a [Command] to the gateway, suspending until the message has been sent.
@@ -64,9 +81,14 @@ public interface Gateway : CoroutineScope {
     public suspend fun detach()
 
     /**
-     * Closes the Gateway and ends the current session, suspending until the underlying webSocket is closed.
+     * Closes the Gateway, suspending until the underlying webSocket is closed.
+     *
+     * By default, the current gateway session will be closed. If you want to keep the session alive to reconnect later,
+     * change the [closeReason] to use a different [WebSocketCloseReason.code] that isn't 1000 or 1001.
+     *
+     * @param closeReason the close reason that will be used when stopping the WebSocket connection.
      */
-    public suspend fun stop()
+    public suspend fun stop(closeReason: WebSocketCloseReason = WebSocketCloseReason(1000, "leaving"))
 
     public companion object {
         private object None : Gateway {
@@ -83,7 +105,9 @@ public interface Gateway : CoroutineScope {
 
             override suspend fun start(configuration: GatewayConfiguration) {}
 
-            override suspend fun stop() {}
+            override suspend fun resume(configuration: GatewayResumeConfiguration) {}
+
+            override suspend fun stop(closeReason: WebSocketCloseReason) {}
 
             override suspend fun detach() {
                 (this as CoroutineScope).cancel()
@@ -112,6 +136,10 @@ public suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Un
 
 /**
  * Starts a reconnecting gateway connection with the given parameters.
+ *
+ * After connecting, an identify request will be sent and a session will be created.
+ * If you want to resume an already started session, use [resume].
+ *
  * This function will suspend until the lifecycle of the gateway has ended.
  *
  * ```kotlin
@@ -139,6 +167,52 @@ public suspend inline fun Gateway.start(token: String, config: GatewayConfigurat
     val builder = GatewayConfigurationBuilder(token)
     builder.apply(config)
     start(builder.build())
+}
+
+/**
+ * Starts a reconnecting gateway connection with the given parameters.
+ *
+ * After connecting, a resume request will be sent and the session will be resumed if the session is valid.
+ * If the session was invalidated, an identify request will be sent and a session will be created.
+ * If you want to start a new session, use [start].
+ *
+ * This function will suspend until the lifecycle of the gateway has ended.
+ *
+ * ```kotlin
+ * gateway.resume("your_token", "gatewaySessionId", "https://discord-resume-url-here.discord.com/", 0) {
+ *     shard = DiscordShard(0,1)
+ *
+ *     presence {
+ *         afk = false
+ *         status = Status.Online
+ *         watching("you :eyes:")
+ *     }
+ *
+ * }
+ *
+ * //gateway has disconnected
+ * ```
+ *
+ * @param token     The Discord token of the bot.
+ * @param sessionId The gateway session ID.
+ * @param resumeUrl The gateway session resume URL.
+ * @param sequence  The last received sequence number of this gateway session.
+ * @param config additional configuration for the gateway.
+ */
+public suspend inline fun Gateway.resume(token: String, sessionId: String, resumeUrl: String, sequence: Int, config: GatewayConfigurationBuilder.() -> Unit = {}) {
+    contract {
+        callsInPlace(config, InvocationKind.EXACTLY_ONCE)
+    }
+    val builder = GatewayConfigurationBuilder(token)
+    builder.apply(config)
+    resume(
+        GatewayResumeConfiguration(
+            sessionId,
+            resumeUrl,
+            sequence,
+            builder.build()
+        )
+    )
 }
 
 /**
@@ -222,6 +296,8 @@ public fun Gateway.requestGuildMembers(request: RequestGuildMembers): Flow<Guild
             return@transformWhile (it.data.chunkIndex + 1) < it.data.chunkCount
         }// 0 <= chunk_index < chunk_count
 }
+
+public data class WebSocketCloseReason(val code: Short, val message: String)
 
 /**
  * Enum representation of Discord's [Gateway close event codes](https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes).

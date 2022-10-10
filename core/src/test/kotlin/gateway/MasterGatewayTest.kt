@@ -1,10 +1,7 @@
 package gateway
 
 import dev.kord.core.gateway.DefaultMasterGateway
-import dev.kord.gateway.Command
-import dev.kord.gateway.Event
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.GatewayConfiguration
+import dev.kord.gateway.*
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -76,8 +73,9 @@ internal class DefaultMasterGatewayTest {
 
         override suspend fun start(configuration: GatewayConfiguration) {}
 
-        override suspend fun stop() {}
+        override suspend fun stop(closeReason: WebSocketCloseReason) {}
 
+        override suspend fun resume(configuration: GatewayResumeConfiguration) {}
     }
 
 }

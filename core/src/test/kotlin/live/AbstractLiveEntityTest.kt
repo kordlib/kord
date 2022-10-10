@@ -8,10 +8,7 @@ import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.gateway.Command
-import dev.kord.gateway.Event
-import dev.kord.gateway.Gateway
-import dev.kord.gateway.GatewayConfiguration
+import dev.kord.gateway.*
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
@@ -53,7 +50,9 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
         override suspend fun start(configuration: GatewayConfiguration) {}
 
-        override suspend fun stop() {}
+        override suspend fun stop(closeReason: WebSocketCloseReason) {}
+
+        override suspend fun resume(configuration: GatewayResumeConfiguration) {}
     }
 
     class CounterAtomicLatch(count: Int) {
