@@ -79,16 +79,17 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
     val valueFormat = valueType.toFormat()
 
     val relevantEntriesForSerializerAndCompanion = run {
-
         // don't keep deprecated entries with a non-deprecated replacement
-        val nonDeprecatedValues = entries.map { it.value }.toSet()
+        val nonDeprecated = entries
+        val nonDeprecatedValues = nonDeprecated.map { it.value }
+        val deprecatedToKeep = deprecatedEntries.filter { it.value !in nonDeprecatedValues }.sorted()
 
-        entries
-            .plus(deprecatedEntries.filter { it.value !in nonDeprecatedValues })
-            .sortedWith { e1, e2 ->
-                @Suppress("UNCHECKED_CAST") // values are of same type
-                (e1.value as Comparable<Comparable<*>>).compareTo(e2.value)
-            }
+        val (result, taken) = nonDeprecated.fold(emptyList<Entry>() to 0) { (acc, taken), entry ->
+            val smallerDeprecated = deprecatedToKeep.drop(taken).takeWhile { it < entry }
+            (acc + smallerDeprecated + entry) to (taken + smallerDeprecated.size)
+        }
+
+        return@run result + deprecatedToKeep.drop(taken) // add all deprecated that weren't taken yet
     }
 
     // TODO remove eventually (always use "Serializer" then)

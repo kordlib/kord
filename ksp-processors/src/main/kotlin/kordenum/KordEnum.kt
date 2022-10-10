@@ -14,6 +14,8 @@ import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import dev.kord.ksp.kordenum.KordEnum.Entry
 import kotlin.DeprecationLevel.*
 
+private val NATURAL_ORDER: Comparator<Comparable<*>> = compareBy { it }
+
 /** Mapping of [GenerateKordEnum] that is easier to work with in [KordEnumProcessor]. */
 internal class KordEnum(
     val name: String,
@@ -38,7 +40,9 @@ internal class KordEnum(
         val deprecationMessage: String,
         val replaceWith: ReplaceWith,
         val deprecationLevel: DeprecationLevel,
-    )
+    ) : Comparable<Entry> {
+        override fun compareTo(other: Entry) = with(NATURAL_ORDER) { compare(value, other.value) }
+    }
 }
 
 /**

@@ -72,9 +72,9 @@ public sealed class AllowedMentionType(
 
         public override fun deserialize(decoder: Decoder) =
                 when (val value = decoder.decodeString()) {
-            "everyone" -> EveryoneMentions
             "roles" -> RoleMentions
             "users" -> UserMentions
+            "everyone" -> EveryoneMentions
             else -> Unknown(value)
         }
     }
@@ -85,9 +85,9 @@ public sealed class AllowedMentionType(
          */
         public val entries: List<AllowedMentionType> by lazy(mode = PUBLICATION) {
             listOf(
-                EveryoneMentions,
                 RoleMentions,
                 UserMentions,
+                EveryoneMentions,
             )
         }
 

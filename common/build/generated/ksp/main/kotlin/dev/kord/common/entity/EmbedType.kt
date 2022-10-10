@@ -86,12 +86,12 @@ public sealed class EmbedType(
 
         public override fun deserialize(decoder: Decoder) =
                 when (val value = decoder.decodeString()) {
-            "article" -> Article
-            "gifv" -> Gifv
-            "image" -> Image
-            "link" -> Link
             "rich" -> Rich
+            "image" -> Image
             "video" -> Video
+            "gifv" -> Gifv
+            "article" -> Article
+            "link" -> Link
             else -> Unknown(value)
         }
     }
@@ -102,12 +102,12 @@ public sealed class EmbedType(
          */
         public val entries: List<EmbedType> by lazy(mode = PUBLICATION) {
             listOf(
-                Article,
-                Gifv,
-                Image,
-                Link,
                 Rich,
+                Image,
                 Video,
+                Gifv,
+                Article,
+                Link,
             )
         }
 

@@ -86,11 +86,11 @@ public sealed class PresenceStatus(
 
         public override fun deserialize(decoder: Decoder) =
                 when (val value = decoder.decodeString()) {
+            "online" -> Online
             "dnd" -> DoNotDisturb
             "idle" -> Idle
             "invisible" -> Invisible
             "offline" -> Offline
-            "online" -> Online
             else -> Unknown(value)
         }
     }
@@ -115,11 +115,11 @@ public sealed class PresenceStatus(
          */
         public val entries: List<PresenceStatus> by lazy(mode = PUBLICATION) {
             listOf(
+                Online,
                 DoNotDisturb,
                 Idle,
                 Invisible,
                 Offline,
-                Online,
             )
         }
 
