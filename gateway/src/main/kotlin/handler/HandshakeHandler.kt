@@ -34,7 +34,11 @@ internal class HandshakeHandler(
     override fun start() {
         on<Hello> {
             reconnectRetry.reset() // connected and read without problems, resetting retry counter
-            identifyRateLimiter.consume {
+            
+            val resumeContext = resumeContext.value
+            if (resumeContext != null) {
+                send(Resume(configuration.token, resumeContext.sessionId, sequence.value ?: 0))
+            } else identifyRateLimiter.consume {
                 send(resumeOrIdentify)
             }
         }
