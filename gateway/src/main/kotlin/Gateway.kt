@@ -91,6 +91,24 @@ public interface Gateway : CoroutineScope {
      */
     public suspend fun stop(closeReason: WebSocketCloseReason = WebSocketCloseReason(1000, "leaving")): GatewayResumeConfiguration
 
+    /**
+     * Closes the Gateway with code 1012, suspending until the underlying webSocket is closed.
+     *
+     * The session won't be invalidated, and you will be able to [resume] the gateway session. The session will be invalidated by Discord after a few minutes.
+     *
+     * @return the gateway session information, if there was any successful identify before closing the connection.
+     */
+    public suspend fun stopForResume(): GatewayResumeConfiguration = stop(WebSocketCloseReason(1012, "service restart"))
+
+    /**
+     * Closes the Gateway with code 1000, suspending until the underlying webSocket is closed.
+     *
+     * The session will be invalidated, and you won't be able to [resume] it. The bot will appear offline in the member list.
+     *
+     * @return the gateway session information, if there was any successful identify before closing the connection.
+     */
+    public suspend fun stopAndInvalidateSession(): GatewayResumeConfiguration = stop(WebSocketCloseReason(1000, "leaving"))
+
     public companion object {
         private object None : Gateway {
 
