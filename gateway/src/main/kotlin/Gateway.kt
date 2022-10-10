@@ -87,8 +87,9 @@ public interface Gateway : CoroutineScope {
      * change the [closeReason] to use a different [WebSocketCloseReason.code] that isn't 1000 or 1001.
      *
      * @param closeReason the close reason that will be used when stopping the WebSocket connection.
+     * @return the gateway session information, if there was any successful identify before closing the connection.
      */
-    public suspend fun stop(closeReason: WebSocketCloseReason = WebSocketCloseReason(1000, "leaving"))
+    public suspend fun stop(closeReason: WebSocketCloseReason = WebSocketCloseReason(1000, "leaving")): GatewaySession?
 
     public companion object {
         private object None : Gateway {
@@ -107,7 +108,7 @@ public interface Gateway : CoroutineScope {
 
             override suspend fun resume(configuration: GatewayResumeConfiguration) {}
 
-            override suspend fun stop(closeReason: WebSocketCloseReason) {}
+            override suspend fun stop(closeReason: WebSocketCloseReason): GatewaySession? { return null }
 
             override suspend fun detach() {
                 (this as CoroutineScope).cancel()
@@ -194,12 +195,10 @@ public suspend inline fun Gateway.start(token: String, config: GatewayConfigurat
  * ```
  *
  * @param token     The Discord token of the bot.
- * @param sessionId The gateway session ID.
- * @param resumeUrl The gateway session resume URL.
- * @param sequence  The last received sequence number of this gateway session.
+ * @param session   The gateway session information.
  * @param config additional configuration for the gateway.
  */
-public suspend inline fun Gateway.resume(token: String, sessionId: String, resumeUrl: String, sequence: Int, config: GatewayConfigurationBuilder.() -> Unit = {}) {
+public suspend inline fun Gateway.resume(token: String, session: GatewaySession, config: GatewayConfigurationBuilder.() -> Unit = {}) {
     contract {
         callsInPlace(config, InvocationKind.EXACTLY_ONCE)
     }
@@ -207,9 +206,7 @@ public suspend inline fun Gateway.resume(token: String, sessionId: String, resum
     builder.apply(config)
     resume(
         GatewayResumeConfiguration(
-            sessionId,
-            resumeUrl,
-            sequence,
+            session,
             builder.build()
         )
     )

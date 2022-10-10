@@ -50,7 +50,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
         override suspend fun start(configuration: GatewayConfiguration) {}
 
-        override suspend fun stop(closeReason: WebSocketCloseReason) {}
+        override suspend fun stop(closeReason: WebSocketCloseReason): GatewaySession? { return null }
 
         override suspend fun resume(configuration: GatewayResumeConfiguration) {}
     }

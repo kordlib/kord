@@ -108,9 +108,9 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override suspend fun resume(configuration: GatewayResumeConfiguration) {
         resetState(configuration.startConfiguration)
-        sequence.value = configuration.sequence
+        sequence.value = configuration.session.sequence
         handshakeHandler.resumeContext.update {
-            HandshakeHandler.ResumeContext(configuration.sessionId, Url(configuration.resumeUrl))
+            HandshakeHandler.ResumeContext(configuration.session.sessionId, Url(configuration.session.resumeUrl))
         }
 
         startAndHandleGatewayConnection()
@@ -248,12 +248,20 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
     }
 
-    override suspend fun stop(closeReason: WebSocketCloseReason) {
+    override suspend fun stop(closeReason: WebSocketCloseReason): GatewaySession? {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         data.eventFlow.emit(Close.UserClose)
         state.update { State.Stopped }
         _ping.value = null
         if (socketOpen) socket.close(CloseReason(closeReason.code, closeReason.message))
+
+        val resumeContext = handshakeHandler.resumeContext.value ?: return null // We don't have any resume context, so we haven't made a succesful gateway connection.
+        val sequenceNumber = sequence.value ?: return null // We don't have any sequence number stored, so we *probably* haven't made a succesful gateway connection.
+        return GatewaySession(
+            resumeContext.sessionId,
+            resumeContext.resumeUrl.toString(),
+            sequenceNumber
+        )
     }
 
     internal suspend fun restart(code: Close) {
