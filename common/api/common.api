@@ -603,10 +603,14 @@ public final class dev/kord/common/entity/ApplicationFlags$Companion {
 public abstract class dev/kord/common/entity/ArchiveDuration {
 	public static final field Companion Ldev/kord/common/entity/ArchiveDuration$Companion;
 	public synthetic fun <init> (JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getDuration-UwyO8pc ()J
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/ArchiveDuration$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
