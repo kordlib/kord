@@ -69,9 +69,9 @@ object FakeGateway : Gateway {
         deferred.await()
     }
 
-    override suspend fun stop(closeReason: WebSocketCloseReason): GatewaySession? {
+    override suspend fun stop(closeReason: WebSocketCloseReason): GatewayResumeConfiguration {
         deferred.complete(Unit)
-        return null
+        error("Can't stop this!")
     }
 
     override suspend fun resume(configuration: GatewayResumeConfiguration) {

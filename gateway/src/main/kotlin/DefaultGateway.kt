@@ -108,9 +108,12 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     override suspend fun resume(configuration: GatewayResumeConfiguration) {
         resetState(configuration.startConfiguration)
-        sequence.value = configuration.session.sequence
-        handshakeHandler.resumeContext.update {
-            HandshakeHandler.ResumeContext(configuration.session.sessionId, Url(configuration.session.resumeUrl))
+        val session = configuration.session
+        if (session != null) {
+            sequence.value = session.sequence
+            handshakeHandler.resumeContext.update {
+                HandshakeHandler.ResumeContext(session.sessionId, Url(session.resumeUrl))
+            }
         }
 
         startAndHandleGatewayConnection()
@@ -248,19 +251,26 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
     }
 
-    override suspend fun stop(closeReason: WebSocketCloseReason): GatewaySession? {
+    override suspend fun stop(closeReason: WebSocketCloseReason): GatewayResumeConfiguration {
         check(state.value !is State.Detached) { "The resources of this gateway are detached, create another one" }
         data.eventFlow.emit(Close.UserClose)
         state.update { State.Stopped }
         _ping.value = null
         if (socketOpen) socket.close(CloseReason(closeReason.code, closeReason.message))
 
-        val resumeContext = handshakeHandler.resumeContext.value ?: return null // We don't have any resume context, so we haven't made a succesful gateway connection.
-        val sequenceNumber = sequence.value ?: return null // We don't have any sequence number stored, so we *probably* haven't made a succesful gateway connection.
-        return GatewaySession(
-            resumeContext.sessionId,
-            resumeContext.resumeUrl.toString(),
-            sequenceNumber
+        val resumeContext = handshakeHandler.resumeContext.value // We don't have any resume context, so we haven't made a succesful gateway connection.
+        val sequenceNumber = sequence.value // We don't have any sequence number stored, so we *probably* haven't made a succesful gateway connection.
+        val session = if (resumeContext != null && sequenceNumber != null) {
+            GatewaySession(
+                resumeContext.sessionId,
+                resumeContext.resumeUrl.toString(),
+                sequenceNumber
+            )
+        } else null
+
+        return GatewayResumeConfiguration(
+            session,
+            handshakeHandler.configuration
         )
     }
 

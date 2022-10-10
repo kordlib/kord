@@ -89,7 +89,7 @@ public interface Gateway : CoroutineScope {
      * @param closeReason the close reason that will be used when stopping the WebSocket connection.
      * @return the gateway session information, if there was any successful identify before closing the connection.
      */
-    public suspend fun stop(closeReason: WebSocketCloseReason = WebSocketCloseReason(1000, "leaving")): GatewaySession?
+    public suspend fun stop(closeReason: WebSocketCloseReason = WebSocketCloseReason(1000, "leaving")): GatewayResumeConfiguration
 
     public companion object {
         private object None : Gateway {
@@ -108,7 +108,7 @@ public interface Gateway : CoroutineScope {
 
             override suspend fun resume(configuration: GatewayResumeConfiguration) {}
 
-            override suspend fun stop(closeReason: WebSocketCloseReason): GatewaySession? { return null }
+            override suspend fun stop(closeReason: WebSocketCloseReason): GatewayResumeConfiguration { error("Can't stop this!") }
 
             override suspend fun detach() {
                 (this as CoroutineScope).cancel()
