@@ -114,7 +114,16 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             // for ksp incremental processing
             addOriginatingKSFile(originatingFile)
 
-            kDoc?.let { addKdoc(it) }
+            // KDoc for the kord enum
+            run {
+                val docLink = docUrl?.let { url -> "See [%T]s in the [Discord·Developer·Documentation]($url)." }
+                val combinedKDocFormat = when {
+                    kDoc != null && docLink != null -> "$kDoc\n\n$docLink"
+                    else -> kDoc ?: docLink
+                }
+                combinedKDocFormat?.let { format -> addKdoc(format, enumName) }
+            }
+
             addAnnotation<Serializable> {
                 addMember("with·=·%T.$internalSerializerName::class", enumName)
             }

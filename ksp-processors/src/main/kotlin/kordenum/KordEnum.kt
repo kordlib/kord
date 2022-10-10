@@ -18,6 +18,7 @@ import kotlin.DeprecationLevel.*
 internal class KordEnum(
     val name: String,
     val kDoc: String?,
+    val docUrl: String?,
     val valueType: ValueType,
     val valueName: String,
     val entries: List<Entry>,
@@ -52,6 +53,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     val valueType = args[GenerateKordEnum::valueType].toValueType()
     val entries = args[GenerateKordEnum::entries] as List<*>
     val kDoc = args[GenerateKordEnum::kDoc].toKDoc()
+    val docUrl = (args[GenerateKordEnum::docUrl] as String).ifBlank { null }
     val valueName = args[GenerateKordEnum::valueName] as String
     val deprecatedEntries = args[GenerateKordEnum::deprecatedEntries] as List<*>
 
@@ -71,7 +73,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     val deprecatedSerializerName = (args[GenerateKordEnum::deprecatedSerializerName] as String).ifEmpty { null }
 
     return KordEnum(
-        name, kDoc, valueType, valueName,
+        name, kDoc, docUrl, valueType, valueName,
         entries.map { it.toEntryOrNull(valueType, isDeprecated = false, logger) ?: return null },
         deprecatedEntries.map { it.toEntryOrNull(valueType, isDeprecated = true, logger) ?: return null },
 
