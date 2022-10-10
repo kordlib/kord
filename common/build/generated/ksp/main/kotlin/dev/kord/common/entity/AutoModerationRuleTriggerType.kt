@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * Characterizes the type of content which can trigger the rule.
+ *
+ * See [AutoModerationRuleTriggerType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types).
  */
 @Serializable(with = AutoModerationRuleTriggerType.Serializer::class)
 public sealed class AutoModerationRuleTriggerType(

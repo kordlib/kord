@@ -19,6 +19,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [AllowedMentionType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types).
+ */
 @Serializable(with = AllowedMentionType.Serializer::class)
 public sealed class AllowedMentionType(
     /**

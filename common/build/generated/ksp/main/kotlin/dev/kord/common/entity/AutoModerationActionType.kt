@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * The type of action.
+ *
+ * See [AutoModerationActionType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-types).
  */
 @Serializable(with = AutoModerationActionType.Serializer::class)
 public sealed class AutoModerationActionType(

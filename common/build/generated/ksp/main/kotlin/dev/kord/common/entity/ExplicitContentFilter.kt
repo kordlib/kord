@@ -19,6 +19,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [ExplicitContentFilter]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level).
+ */
 @Serializable(with = ExplicitContentFilter.Serializer::class)
 public sealed class ExplicitContentFilter(
     /**

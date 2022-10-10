@@ -23,6 +23,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [PresenceStatus]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types).
+ */
 @Serializable(with = PresenceStatus.Serializer::class)
 public sealed class PresenceStatus(
     /**

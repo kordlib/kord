@@ -22,6 +22,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [MessageStickerType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types).
+ */
 @Serializable(with = MessageStickerType.Serializer::class)
 public sealed class MessageStickerType(
     /**
