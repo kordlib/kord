@@ -174,6 +174,8 @@ public data class DiscordThreadMetadata(
     val createTimestamp: Optional<Instant?> = Optional.Missing(),
 )
 
+// this should actually be generated with @file:GenerateKordEnum,
+// but it's not worth adding support for Duration just for this class
 @Serializable(with = ArchiveDuration.NewSerializer::class)
 public sealed class ArchiveDuration(
     /** The raw [Duration] used by Discord. */
