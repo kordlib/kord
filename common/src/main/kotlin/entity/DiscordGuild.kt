@@ -131,13 +131,13 @@
             deprecationLevel = ERROR,
         ),
         Entry(
-            "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
-            kDoc = "Guild has access to the three-day archive time for threads\n\n@suppress.",
+            "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
+            kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
             deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
         ),
         Entry(
-            "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
-            kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
+            "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
+            kDoc = "Guild has access to the three-day archive time for threads.\n\n@suppress",
             deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
         ),
     ],

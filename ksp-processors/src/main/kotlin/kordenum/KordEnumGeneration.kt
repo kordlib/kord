@@ -82,8 +82,9 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
         // don't keep deprecated entries with a non-deprecated replacement
         val nonDeprecated = entries
         val nonDeprecatedValues = nonDeprecated.map { it.value }
-        val deprecatedToKeep = deprecatedEntries.filter { it.value !in nonDeprecatedValues }.sorted()
+        val deprecatedToKeep = deprecatedEntries.filter { it.value !in nonDeprecatedValues }
 
+        // merge nonDeprecated and deprecatedToKeep, preserving their order
         val (result, taken) = nonDeprecated.fold(emptyList<Entry>() to 0) { (acc, taken), entry ->
             val smallerDeprecated = deprecatedToKeep.drop(taken).takeWhile { it < entry }
             (acc + smallerDeprecated + entry) to (taken + smallerDeprecated.size)

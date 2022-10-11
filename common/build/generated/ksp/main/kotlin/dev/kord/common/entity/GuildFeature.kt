@@ -168,17 +168,6 @@ public sealed class GuildFeature(
     public object Commerce : GuildFeature("COMMERCE")
 
     /**
-     * Guild has access to the three-day archive time for threads
-     *
-     * @suppress.
-     */
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Thread archive durations are no longer boost locked.",
-    )
-    public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
-
-    /**
      * Guild has access to the seven day archive time for threads.
      *
      * @suppress
@@ -188,6 +177,17 @@ public sealed class GuildFeature(
         message = "Thread archive durations are no longer boost locked.",
     )
     public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
+
+    /**
+     * Guild has access to the three-day archive time for threads.
+     *
+     * @suppress
+     */
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Thread archive durations are no longer boost locked.",
+    )
+    public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
 
     internal object Serializer : KSerializer<GuildFeature> {
         public override val descriptor: SerialDescriptor =
