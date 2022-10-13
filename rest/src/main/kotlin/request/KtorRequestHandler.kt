@@ -44,7 +44,7 @@ public class KtorRequestHandler(
             val httpRequest = client.createRequest(request)
             val response = httpRequest.execute()
 
-            it.complete(RequestResponse.from(response, clock))
+            it.complete(RequestResponse.from(response))
 
             response
         }
@@ -114,7 +114,7 @@ public fun KtorRequestHandler(
     return KtorRequestHandler(client, requestRateLimiter, clock, parser, token)
 }
 
-public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {
+public fun RequestResponse.Companion.from(response: HttpResponse): RequestResponse {
     val bucket = response.bucket
     val rateLimit = run {
         val total = Total(response.rateLimitTotal ?: return@run null)
@@ -122,7 +122,7 @@ public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock):
         RateLimit(total, remaining)
     }
 
-    val reset = Reset(response.channelResetPoint(clock))
+    val reset = Reset(response.channelResetPoint())
 
     return when {
         response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)

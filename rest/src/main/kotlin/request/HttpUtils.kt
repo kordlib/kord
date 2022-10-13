@@ -30,9 +30,9 @@ public val HttpResponse.channelResetPoint: Instant
         return Instant.fromEpochMilliseconds(unixSeconds.times(1000).toLong())
     }
 
-public fun HttpResponse.channelResetPoint(clock: Clock): Instant {
-    val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return clock.now()
-    return clock.now().plus(seconds.seconds)
+public fun HttpResponse.channelResetPoint(): Instant {
+    val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return channelResetPoint
+    return channelResetPoint.plus(seconds.seconds)
 }
 
 public val HttpResponse.isRateLimit: Boolean get() = status.value == 429
