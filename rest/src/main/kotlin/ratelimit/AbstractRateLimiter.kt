@@ -60,7 +60,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                 if (key != null) {
                     if (identity.addBucket(key)) {
 
-                        logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for" }
+                        logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for ${key.bucket.id.value}" }
                         buckets[key] = key.bucket
                     }
                 }
