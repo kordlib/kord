@@ -156,7 +156,7 @@ public suspend inline fun Gateway.editPresence(builder: PresenceBuilder.() -> Un
 /**
  * Starts a reconnecting gateway connection with the given parameters.
  *
- * After connecting, an identify request will be sent and a session will be created.
+ * After connecting, an [Identify] request will be sent and a session will be created.
  * If you want to resume an already started session, use [resume].
  *
  * This function will suspend until the lifecycle of the gateway has ended.
