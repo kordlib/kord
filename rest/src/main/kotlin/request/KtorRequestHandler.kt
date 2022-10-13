@@ -127,7 +127,7 @@ public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock):
     return when {
         response.isRateLimit -> when {
             response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
-            bucket != null -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
+            bucket != null -> RequestResponse.BucketRateLimit(bucket, rateLimit, reset)
             // Can be a "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently" ban.
             // In this case, the request only has a "retry-after" header
             else -> RequestResponse.GlobalRateLimit(null, rateLimit, Reset(response.globalSuspensionPoint(clock) ?: error("Received a 429 request with no Retry-After header!")))
