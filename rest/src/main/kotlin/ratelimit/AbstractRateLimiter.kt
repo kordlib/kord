@@ -27,11 +27,15 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
 
     internal fun createBucket(identity: RequestIdentifier, response: RequestResponse): Bucket? {
         val key = response.bucketKey ?: return null
+        
+        val bucket = routeBuckets
+            .getOrPut(identity) { ConcurrentHashMap() }
+            .getOrPut(key) {
+                logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for ${key.value} (identity $identity)" }
+                Bucket(identity, key)
+            }
 
-        logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for ${key.value} (identity $identity)" }
-        val bucket = Bucket(identity, key)
         bucket.updateRateLimit(response.rateLimit, response.reset)
-        routeBuckets.getOrPut(identity) { ConcurrentHashMap() }[key] = bucket
         return bucket
     }
 
