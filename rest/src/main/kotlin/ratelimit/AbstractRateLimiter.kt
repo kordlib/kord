@@ -51,7 +51,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
 
     internal abstract fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken
 
-    internal abstract inner class AbstractRequestToken(
+    internal abstract class AbstractRequestToken(
         val rateLimiter: AbstractRateLimiter,
         val identity: RequestIdentifier,
         val requestBuckets: List<Bucket>
