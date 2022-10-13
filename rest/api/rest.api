@@ -5644,6 +5644,21 @@ public final class dev/kord/rest/ratelimit/RequestResponse$GlobalRateLimit : dev
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/rest/ratelimit/RequestResponse$UnknownBucketRateLimit : dev/kord/rest/ratelimit/RequestResponse {
+	public synthetic fun <init> (Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/rest/ratelimit/RateLimit;
+	public final fun component2-Ad4v_Ag ()Lkotlinx/datetime/Instant;
+	public final fun copy-K94tdRY (Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;)Ldev/kord/rest/ratelimit/RequestResponse$UnknownBucketRateLimit;
+	public static synthetic fun copy-K94tdRY$default (Ldev/kord/rest/ratelimit/RequestResponse$UnknownBucketRateLimit;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;ILjava/lang/Object;)Ldev/kord/rest/ratelimit/RequestResponse$UnknownBucketRateLimit;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getBucketKey-JBzVXgM ()Ljava/lang/String;
+	public fun getRateLimit ()Ldev/kord/rest/ratelimit/RateLimit;
+	public synthetic fun getReset-8536Nbg ()Lkotlinx/datetime/Instant;
+	public fun getReset-Ad4v_Ag ()Lkotlinx/datetime/Instant;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract interface class dev/kord/rest/ratelimit/RequestToken {
 	public abstract fun complete (Ldev/kord/rest/ratelimit/RequestResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getCompleted ()Z
@@ -5695,7 +5710,7 @@ public final class dev/kord/rest/request/HttpStatus {
 
 public final class dev/kord/rest/request/HttpUtilsKt {
 	public static final fun auditLogReason (Ldev/kord/rest/request/RequestBuilder;Ljava/lang/String;)V
-	public static final fun channelResetPoint (Lio/ktor/client/statement/HttpResponse;)Lkotlinx/datetime/Instant;
+	public static final fun channelResetPoint (Lio/ktor/client/statement/HttpResponse;Lkotlinx/datetime/Clock;)Lkotlinx/datetime/Instant;
 	public static final fun errorString (Lio/ktor/client/statement/HttpResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun getBucket (Lio/ktor/client/statement/HttpResponse;)Ljava/lang/String;
 	public static final fun getChannelResetPoint (Lio/ktor/client/statement/HttpResponse;)Lkotlinx/datetime/Instant;
@@ -5709,6 +5724,8 @@ public final class dev/kord/rest/request/HttpUtilsKt {
 	public static final fun isRateLimit (Lio/ktor/client/statement/HttpResponse;)Z
 	public static final fun logString (Ldev/kord/rest/request/Request;Ljava/lang/String;)Ljava/lang/String;
 	public static final fun logString (Lio/ktor/client/statement/HttpResponse;Ljava/lang/String;)Ljava/lang/String;
+	public static final fun rateLimitResetPoint (Lio/ktor/client/statement/HttpResponse;)Lkotlinx/datetime/Instant;
+	public static final fun retryAfterResetPoint (Lio/ktor/client/statement/HttpResponse;Lkotlinx/datetime/Clock;)Lkotlinx/datetime/Instant;
 }
 
 public final class dev/kord/rest/request/JsonRequest : dev/kord/rest/request/Request {
