@@ -114,7 +114,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             handshakeHandler.resumeContext.update {
                 HandshakeHandler.ResumeContext(
                     session.sessionId,
-                    URLBuilder(initialUrl)
+                    URLBuilder(session.resumeUrl)
                         .apply { parameters.appendMissing(initialUrl.parameters) }
                         .build()
                 )
