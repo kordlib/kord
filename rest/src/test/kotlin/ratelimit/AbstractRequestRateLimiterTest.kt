@@ -118,8 +118,8 @@ abstract class AbstractRequestRateLimiterTest {
         val rateLimiter = newRequestRateLimiter(clock)
 
         rateLimiter.sendRequest(clock, 1, 1, rateLimit = RateLimit.exhausted)
-        rateLimiter.sendRequest(clock, 2, 1, rateLimit = RateLimit(Total(5), Remaining(5))) //discovery
-        rateLimiter.sendRequest(clock, 2, 1, rateLimit = RateLimit(Total(5), Remaining(5)))
+        rateLimiter.sendRequest(clock, 1, 1, rateLimit = RateLimit(Total(5), Remaining(5))) //discovery
+        rateLimiter.sendRequest(clock, 1, 1, rateLimit = RateLimit(Total(5), Remaining(5)))
 
         assertEquals(timeout.inWholeMilliseconds, currentTime)
     }
