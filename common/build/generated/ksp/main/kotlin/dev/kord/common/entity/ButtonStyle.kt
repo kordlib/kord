@@ -26,8 +26,8 @@ import kotlinx.serialization.encoding.Encoder
 /**
  * Style of a [button][dev.kord.common.entity.ComponentType.Button].
  *
- * A preview of the different styles can be found
- * [here](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).
+ * See [ButtonStyle]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).
  */
 @Serializable(with = ButtonStyle.NewSerializer::class)
 public sealed class ButtonStyle(

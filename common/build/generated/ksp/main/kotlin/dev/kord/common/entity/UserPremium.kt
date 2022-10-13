@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * Premium types denote the level of premium a user has.
+ *
+ * See [UserPremium]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-premium-types).
  */
 @Serializable(with = UserPremium.Serializer::class)
 public sealed class UserPremium(

@@ -2,6 +2,7 @@
     name = "MessageType", valueType = INT, valueName = "code",
     // had `public val values: Set<MessageType>` in companion before -> replace with `entries`
     valuesPropertyName = "values", valuesPropertyType = SET,
+    docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-types",
     entries = [
         Entry("Default", intValue = 0),
         Entry("RecipientAdd", intValue = 1),
@@ -59,6 +60,7 @@
 
 @file:GenerateKordEnum(
     name = "MessageActivityType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-activity-types",
     entries = [
         Entry("Join", intValue = 1),
         Entry("Spectate", intValue = 2),
@@ -69,6 +71,7 @@
 
 @file:GenerateKordEnum(
     name = "EmbedType", valueType = STRING,
+    docUrl = "https://discord.com/developers/docs/resources/channel#embed-object-embed-types",
     entries = [
         Entry("Rich", stringValue = "rich", kDoc = "Generic embed rendered from embed attributes."),
         Entry("Image", stringValue = "image", kDoc = "Image embed."),
@@ -81,6 +84,7 @@
 
 @file:GenerateKordEnum(
     name = "AllowedMentionType", valueType = STRING,
+    docUrl = "https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types",
     entries = [
         Entry("RoleMentions", stringValue = "roles", kDoc = "Controls role mentions."),
         Entry("UserMentions", stringValue = "users", kDoc = "Controls user mentions"),
@@ -92,6 +96,7 @@
     name = "MessageStickerType", valueType = INT,
     // had `public val values: Set<MessageStickerType>` in companion before -> replace with `entries`
     valuesPropertyName = "values", valuesPropertyType = SET,
+    docUrl = "https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types",
     entries = [
         Entry("PNG", intValue = 1),
         Entry("APNG", intValue = 2),

@@ -22,6 +22,8 @@ annotation class GenerateKordEnum(
     val entries: Array<Entry>,
     /** KDoc for the kord enum (optional). */
     val kDoc: String = "",
+    /** Url to the Discord Developer Documentation for the kord enum (optional). */
+    val docUrl: String = "",
     /** Name of the value of the kord enum. */
     val valueName: String = "value",
     /** [entries] of the kord enum that are [Deprecated]. [Entry.deprecationMessage] is required for these. */

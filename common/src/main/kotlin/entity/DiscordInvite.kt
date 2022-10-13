@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "InviteTargetType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types",
     entries = [
         Entry("Stream", intValue = 1),
         Entry("EmbeddedApplication", intValue = 2),

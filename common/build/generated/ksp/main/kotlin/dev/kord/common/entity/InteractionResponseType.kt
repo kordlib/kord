@@ -19,6 +19,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [InteractionResponseType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type).
+ */
 @Serializable(with = InteractionResponseType.Serializer::class)
 public sealed class InteractionResponseType(
     /**
