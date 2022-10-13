@@ -30,6 +30,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
 
         logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for ${key.value}" }
         val bucket = Bucket(key)
+        bucket.updateRateLimit(response.rateLimit, response.reset)
         routeBuckets.getOrPut(identity) { ConcurrentHashMap() }[key] = bucket
         return bucket
     }
@@ -64,7 +65,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
 
         override suspend fun complete(response: RequestResponse) {
             with(rateLimiter) {
-                val bucket = rateLimiter.createBucket(identity, response)
+                rateLimiter.createBucket(identity, response)
 
                 when (response) {
                     is RequestResponse.GlobalRateLimit -> {
@@ -73,7 +74,6 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                     }
                     is RequestResponse.BucketRateLimit -> {
                         logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
-                        bucket?.updateReset(response.reset)
                     }
                     else -> {}
                 }
@@ -85,21 +85,34 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     }
 
     internal inner class Bucket(val id: BucketKey) {
-        val reset = atomic(Reset(clock.now()))
+        val rateLimitWithReset = atomic<RateLimitWithReset?>(null)
         val mutex = Mutex()
 
         suspend fun awaitAndLock() {
             mutex.lock()
-            logger.trace { "[BUCKET]:Bucket ${id.value} waiting until ${reset.value}" }
-            reset.value.await()
+            val rateLimitWithReset = rateLimitWithReset.value
+
+            // Are we exausted?
+            if (rateLimitWithReset?.rateLimit?.isExhausted == true) {
+                // Yes, we are, so we need to wait for the rate limit reset!
+                val reset = rateLimitWithReset.reset
+
+                if (reset != null) {
+                    logger.trace { "[BUCKET]:Bucket ${id.value} waiting until ${reset.value}" }
+                    reset.await()
+                } else {
+                    logger.warn { "[BUCKET]:Bucket ${id.value} is exausted, however we don't have any information about the reset timer" }
+                }
+            }
         }
 
-        fun updateReset(newValue: Reset) {
-            reset.update { newValue }
+        fun updateRateLimit(newRateLimit: RateLimit?, newReset: Reset?) {
+            rateLimitWithReset.update { RateLimitWithReset(newRateLimit, newReset) }
         }
 
         fun unlock() = mutex.unlock()
 
     }
 
+    internal data class RateLimitWithReset(val rateLimit: RateLimit?, val reset: Reset?)
 }
