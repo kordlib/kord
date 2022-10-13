@@ -80,6 +80,11 @@ public interface Gateway : CoroutineScope {
      */
     public suspend fun detach()
 
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public suspend fun stop() {
+        stop(WebSocketCloseReason(1000, "leaving"))
+    }
+
     /**
      * Closes the Gateway, suspending until the underlying WebSocket is closed.
      *
