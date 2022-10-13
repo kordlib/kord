@@ -219,8 +219,7 @@ public final class dev/kord/gateway/DefaultGateway : dev/kord/gateway/Gateway {
 	public fun send (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun start (Ldev/kord/gateway/GatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun stop (Ldev/kord/gateway/WebSocketCloseReason;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun stopAndInvalidateSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun stopForResume (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/gateway/DefaultGateway$Companion {
@@ -659,8 +658,7 @@ public abstract interface class dev/kord/gateway/Gateway : kotlinx/coroutines/Co
 	public abstract fun send (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun start (Ldev/kord/gateway/GatewayConfiguration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun stop (Ldev/kord/gateway/WebSocketCloseReason;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun stopAndInvalidateSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun stopForResume (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract synthetic fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/gateway/Gateway$Companion {
@@ -668,9 +666,8 @@ public final class dev/kord/gateway/Gateway$Companion {
 }
 
 public final class dev/kord/gateway/Gateway$DefaultImpls {
+	public static synthetic fun stop (Ldev/kord/gateway/Gateway;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun stop$default (Ldev/kord/gateway/Gateway;Ldev/kord/gateway/WebSocketCloseReason;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static fun stopAndInvalidateSession (Ldev/kord/gateway/Gateway;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun stopForResume (Ldev/kord/gateway/Gateway;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/gateway/GatewayCloseCode : java/lang/Enum {
@@ -762,6 +759,8 @@ public final class dev/kord/gateway/GatewayKt {
 	public static synthetic fun resume$default (Ldev/kord/gateway/Gateway;Ljava/lang/String;Ldev/kord/gateway/GatewaySession;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun start (Ldev/kord/gateway/Gateway;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun start$default (Ldev/kord/gateway/Gateway;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun stopAndInvalidateSession (Ldev/kord/gateway/Gateway;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun stopForResume (Ldev/kord/gateway/Gateway;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/gateway/GatewayResumeConfiguration {
