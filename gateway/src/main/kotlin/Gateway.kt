@@ -54,7 +54,7 @@ public interface Gateway : CoroutineScope {
     /**
      * Starts a reconnecting gateway connection with the given [configuration].
      *
-     * After connecting, a resume request will be sent and the session will be resumed if the session is valid.
+     * After connecting, a [Resume] request will be sent and the session will be resumed if the session is valid.
      * If the session was invalidated, an identify request will be sent and a session will be created.
      * If you want to start a new session, use [start].
      *
