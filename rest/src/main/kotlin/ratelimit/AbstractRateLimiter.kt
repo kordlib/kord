@@ -19,7 +19,8 @@ import kotlin.time.Duration.Companion.seconds
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
-    internal val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
+    // https://discord.com/developers/docs/topics/rate-limits#invalid-request-limit-aka-cloudflare-bans
+    internal val autoBanRateLimiter = IntervalRateLimiter(limit = 10_000, interval = 10.minutes)
     internal val globalSuspensionPoint = atomic(Reset(clock.now()))
     internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, ConcurrentHashMap<BucketKey, Bucket>>()
     internal val Request<*, *>.buckets get() = routeBuckets[identifier].orEmpty().values.toList()
