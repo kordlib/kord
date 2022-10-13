@@ -5695,7 +5695,7 @@ public final class dev/kord/rest/request/HttpStatus {
 
 public final class dev/kord/rest/request/HttpUtilsKt {
 	public static final fun auditLogReason (Ldev/kord/rest/request/RequestBuilder;Ljava/lang/String;)V
-	public static final fun channelResetPoint (Lio/ktor/client/statement/HttpResponse;Lkotlinx/datetime/Clock;)Lkotlinx/datetime/Instant;
+	public static final fun channelResetPoint (Lio/ktor/client/statement/HttpResponse;)Lkotlinx/datetime/Instant;
 	public static final fun errorString (Lio/ktor/client/statement/HttpResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun getBucket (Lio/ktor/client/statement/HttpResponse;)Ljava/lang/String;
 	public static final fun getChannelResetPoint (Lio/ktor/client/statement/HttpResponse;)Lkotlinx/datetime/Instant;
@@ -5738,7 +5738,7 @@ public final class dev/kord/rest/request/KtorRequestHandler : dev/kord/rest/requ
 public final class dev/kord/rest/request/KtorRequestHandlerKt {
 	public static final fun KtorRequestHandler (Ljava/lang/String;Ldev/kord/rest/ratelimit/RequestRateLimiter;Lkotlinx/datetime/Clock;Lkotlinx/serialization/json/Json;)Ldev/kord/rest/request/KtorRequestHandler;
 	public static synthetic fun KtorRequestHandler$default (Ljava/lang/String;Ldev/kord/rest/ratelimit/RequestRateLimiter;Lkotlinx/datetime/Clock;Lkotlinx/serialization/json/Json;ILjava/lang/Object;)Ldev/kord/rest/request/KtorRequestHandler;
-	public static final fun from (Ldev/kord/rest/ratelimit/RequestResponse$Companion;Lio/ktor/client/statement/HttpResponse;Lkotlinx/datetime/Clock;)Ldev/kord/rest/ratelimit/RequestResponse;
+	public static final fun from (Ldev/kord/rest/ratelimit/RequestResponse$Companion;Lio/ktor/client/statement/HttpResponse;)Ldev/kord/rest/ratelimit/RequestResponse;
 }
 
 public final class dev/kord/rest/request/MultipartRequest : dev/kord/rest/request/Request {
