@@ -81,13 +81,16 @@ public interface Gateway : CoroutineScope {
     public suspend fun detach()
 
     /**
-     * Closes the Gateway, suspending until the underlying webSocket is closed.
+     * Closes the Gateway, suspending until the underlying WebSocket is closed.
      *
-     * By default, the current gateway session will be closed. If you want to keep the session alive to reconnect later,
-     * change the [closeReason] to use a different [WebSocketCloseReason.code] that isn't 1000 or 1001.
+     * By default, the current gateway session will be closed. If you want to keep the session alive to [resume] later,
+     * change the [closeReason] to use a different [WebSocketCloseReason.code] that isn't `1000` or `1001`.
      *
-     * @param closeReason the close reason that will be used when stopping the WebSocket connection.
-     * @return the gateway session information, if there was any successful identify before closing the connection.
+     * Returns a [GatewayResumeConfiguration] that can be passed to [resume] later. The
+     * [session][GatewayResumeConfiguration.session] will be non-null if there was any successful [Identify]
+     * request before closing the connection.
+     *
+     * @param closeReason the close reason that will be used when closing the WebSocket connection.
      */
     public suspend fun stop(closeReason: WebSocketCloseReason = WebSocketCloseReason(1000, "leaving")): GatewayResumeConfiguration
 
