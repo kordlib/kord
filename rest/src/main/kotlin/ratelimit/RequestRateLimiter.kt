@@ -110,6 +110,16 @@ public sealed class RequestResponse {
         override val reset: Reset
     ) : RequestResponse()
 
+    /**
+     * The request returned a rate limit error without a bucket key present.
+     */
+    public data class UnknownBucketRateLimit(
+        override val rateLimit: RateLimit?,
+        override val reset: Reset
+    ) : RequestResponse() {
+        override val bucketKey: BucketKey? = null
+    }
+
     public companion object
 
 }

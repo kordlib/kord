@@ -122,16 +122,12 @@ public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock):
         RateLimit(total, remaining)
     }
 
-    val reset = Reset(response.channelResetPoint())
+    val reset = Reset(response.channelResetPoint(clock))
 
     return when {
-        response.isRateLimit -> when {
-            response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
-            bucket != null -> RequestResponse.BucketRateLimit(bucket, rateLimit, reset)
-            // Can be a "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently" ban.
-            // In this case, the request only has a "retry-after" header
-            else -> RequestResponse.GlobalRateLimit(null, rateLimit, Reset(response.globalSuspensionPoint(clock) ?: error("Received a 429 request with no Retry-After header!")))
-        }
+        response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
+        response.isRateLimit && bucket != null -> RequestResponse.BucketRateLimit(bucket, rateLimit, Reset(response.globalSuspensionPoint(clock) ?: error("Missing Retry-After header from Global Rate Limit response!")))
+        response.isRateLimit -> RequestResponse.UnknownBucketRateLimit(rateLimit, reset)
         response.isError -> RequestResponse.Error
         else -> RequestResponse.Accepted(bucket, rateLimit, reset)
     }

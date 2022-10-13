@@ -30,9 +30,34 @@ public val HttpResponse.channelResetPoint: Instant
         return Instant.fromEpochMilliseconds(unixSeconds.times(1000).toLong())
     }
 
-public fun HttpResponse.channelResetPoint(): Instant {
-    val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return channelResetPoint
-    return channelResetPoint.plus(seconds.seconds)
+/**
+ * Gets when the current rate limit bucket expires, based on the [rateLimitResetPoint] and [retryAfterResetPoint] implementations.
+ *
+ * If both results are null, [channelResetPoint] will be used.
+ */
+public fun HttpResponse.channelResetPoint(clock: Clock): Instant {
+    return rateLimitResetPoint() ?: retryAfterResetPoint(clock) ?: channelResetPoint
+}
+
+/**
+ * Gets when the current rate limit bucket expires, based on the [rateLimitResetAfter] and [resetTimeHeader] headers.
+ *
+ * If the [rateLimitResetAfter] header is not present, null will be returned.
+ * If the [resetTimeHeader] header is not present, the current time will be used
+ */
+public fun HttpResponse.rateLimitResetPoint(): Instant? {
+    val seconds = headers[rateLimitResetAfter]?.toDouble() ?: return null
+    return channelResetPoint + seconds.seconds
+}
+
+/**
+ * Gets when the current rate limit bucket expires, based on the [retryAfterHeader] headers.
+ *
+ * The end time will be based from the current instant from the [clock], plus the retry after seconds.
+ */
+public fun HttpResponse.retryAfterResetPoint(clock: Clock): Instant? {
+    val seconds = headers[retryAfterHeader]?.toDouble() ?: return null
+    return clock.now() + seconds.seconds
 }
 
 public val HttpResponse.isRateLimit: Boolean get() = status.value == 429
