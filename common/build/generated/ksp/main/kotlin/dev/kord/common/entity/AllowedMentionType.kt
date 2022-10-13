@@ -19,6 +19,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [AllowedMentionType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types).
+ */
 @Serializable(with = AllowedMentionType.Serializer::class)
 public sealed class AllowedMentionType(
     /**
@@ -68,9 +72,9 @@ public sealed class AllowedMentionType(
 
         public override fun deserialize(decoder: Decoder) =
                 when (val value = decoder.decodeString()) {
-            "everyone" -> EveryoneMentions
             "roles" -> RoleMentions
             "users" -> UserMentions
+            "everyone" -> EveryoneMentions
             else -> Unknown(value)
         }
     }
@@ -81,9 +85,9 @@ public sealed class AllowedMentionType(
          */
         public val entries: List<AllowedMentionType> by lazy(mode = PUBLICATION) {
             listOf(
-                EveryoneMentions,
                 RoleMentions,
                 UserMentions,
+                EveryoneMentions,
             )
         }
 

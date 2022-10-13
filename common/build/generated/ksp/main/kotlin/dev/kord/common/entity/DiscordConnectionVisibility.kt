@@ -19,6 +19,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [DiscordConnectionVisibility]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#connection-object-visibility-types).
+ */
 @Serializable(with = DiscordConnectionVisibility.Serializer::class)
 public sealed class DiscordConnectionVisibility(
     /**

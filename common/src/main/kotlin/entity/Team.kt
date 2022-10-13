@@ -1,6 +1,7 @@
 @file:GenerateKordEnum(
     name = "TeamMembershipState", valueType = INT,
     deprecatedSerializerName = "TeamMembershipStateSerializer",
+    docUrl = "https://discord.com/developers/docs/topics/teams#data-models-membership-state-enum",
     entries = [
         Entry("Invited", intValue = 1),
         Entry("Accepted", intValue = 2),

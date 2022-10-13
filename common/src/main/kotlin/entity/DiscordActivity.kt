@@ -11,6 +11,9 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
+import kotlin.LazyThreadSafetyMode.PUBLICATION
 
 @Serializable
 public data class DiscordBotActivity(
@@ -131,29 +134,115 @@ public data class DiscordActivitySecrets(
     val match: Optional<String> = Optional.Missing()
 )
 
-@Serializable(with = ActivityType.ActivityTypeSerializer::class)
-public enum class ActivityType(public val code: Int) {
-    /** The default code for unknown values. */
-    Unknown(Int.MIN_VALUE),
-    Game(0),
-    Streaming(1),
-    Listening(2),
-    Watching(3),
-    Custom(4),
-    Competing(5);
 
-    public companion object ActivityTypeSerializer : KSerializer<ActivityType> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
+// TODO replace with the following annotation once the deprecation cycle for enum artifacts is done
+// @file:GenerateKordEnum(
+//     name = "ActivityType", valueType = INT, valueName = "code",
+//     deprecatedSerializerName = "ActivityTypeSerializer",
+//     docUrl = "https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types",
+//     entries = [
+//         Entry("Game", intValue = 0),
+//         Entry("Streaming", intValue = 1),
+//         Entry("Listening", intValue = 2),
+//         Entry("Watching", intValue = 3),
+//         Entry("Custom", intValue = 4),
+//         Entry("Competing", intValue = 5),
+//     ],
+// )
+@Serializable(with = ActivityType.Serializer::class)
+public sealed class ActivityType(public val code: Int) {
+    final override fun equals(other: Any?): Boolean =
+        this === other || (other is ActivityType && this.code == other.code)
 
-        override fun deserialize(decoder: Decoder): ActivityType {
-            val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
-        }
+    final override fun hashCode(): Int = code.hashCode()
+    final override fun toString(): String = "ActivityType.${this::class.simpleName}(code=$code)"
 
-        override fun serialize(encoder: Encoder, value: ActivityType) {
-            encoder.encodeInt(value.code)
+    public class Unknown(code: Int) : ActivityType(code)
+    public object Game : ActivityType(0)
+    public object Streaming : ActivityType(1)
+    public object Listening : ActivityType(2)
+    public object Watching : ActivityType(3)
+    public object Custom : ActivityType(4)
+    public object Competing : ActivityType(5)
+
+    internal object Serializer : KSerializer<ActivityType> {
+        override val descriptor = PrimitiveSerialDescriptor("dev.kord.common.entity.ActivityType", PrimitiveKind.INT)
+        override fun serialize(encoder: Encoder, value: ActivityType) = encoder.encodeInt(value.code)
+        override fun deserialize(decoder: Decoder) = when (val code = decoder.decodeInt()) {
+            0 -> Game
+            1 -> Streaming
+            2 -> Listening
+            3 -> Watching
+            4 -> Custom
+            5 -> Competing
+            else -> Unknown(code)
         }
     }
 
+    public companion object {
+        public val entries: List<ActivityType> by lazy(mode = PUBLICATION) {
+            listOf(Game, Streaming, Listening, Watching, Custom, Competing)
+        }
+
+
+        // enum artifacts
+
+        private val UNKNOWN = Unknown(Int.MIN_VALUE) // like old enum entry `Unknown`
+
+        // @formatter:off
+        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Unknown: ActivityType = UNKNOWN
+        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Game: ActivityType = Game
+        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Streaming: ActivityType = Streaming
+        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Listening: ActivityType = Listening
+        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Watching: ActivityType = Watching
+        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Custom: ActivityType = Custom
+        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Competing: ActivityType = Competing
+        // @formatter:on
+
+        /** @suppress */
+        @Suppress("NON_FINAL_MEMBER_IN_OBJECT")
+        @Deprecated("ActivityType is no longer an enum class. Deprecated without replacement.", level = WARNING)
+        @JvmStatic
+        public open fun valueOf(name: String): ActivityType = when (name) {
+            "Unknown" -> UNKNOWN
+            "Game" -> Game
+            "Streaming" -> Streaming
+            "Listening" -> Listening
+            "Watching" -> Watching
+            "Custom" -> Custom
+            "Competing" -> Competing
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /** @suppress */
+        @Suppress("NON_FINAL_MEMBER_IN_OBJECT")
+        @Deprecated(
+            "ActivityType is no longer an enum class.",
+            ReplaceWith("ActivityType.entries.toTypedArray()", "dev.kord.common.entity.ActivityType"),
+            level = WARNING,
+        )
+        @JvmStatic
+        public open fun values(): Array<ActivityType> =
+            arrayOf(UNKNOWN, Game, Streaming, Listening, Watching, Custom, Competing)
+
+
+        @Suppress("DEPRECATION")
+        @Deprecated("Binary compatibility", level = HIDDEN)
+        @JvmField
+        public val ActivityTypeSerializer: ActivityTypeSerializer = ActivityTypeSerializer
+    }
+
+    @Deprecated(
+        "Use 'ActivityType.serializer()' instead.",
+        ReplaceWith("ActivityType.serializer()", "dev.kord.common.entity.ActivityType"),
+        level = WARNING,
+    )
+    public object ActivityTypeSerializer : KSerializer<ActivityType> by Serializer {
+        @Deprecated(
+            "Use 'ActivityType.serializer()' instead.",
+            ReplaceWith("ActivityType.serializer()", "dev.kord.common.entity.ActivityType"),
+            level = WARNING,
+        )
+        public fun serializer(): KSerializer<ActivityType> = this
+    }
 }

@@ -23,6 +23,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [GuildScheduledEventStatus]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-status).
+ */
 @Serializable(with = GuildScheduledEventStatus.NewSerializer::class)
 public sealed class GuildScheduledEventStatus(
     /**
