@@ -44,7 +44,7 @@ public class KtorRequestHandler(
             val httpRequest = client.createRequest(request)
             val response = httpRequest.execute()
 
-            it.complete(RequestResponse.from(response))
+            it.complete(RequestResponse.from(response, clock))
 
             response
         }
@@ -114,7 +114,7 @@ public fun KtorRequestHandler(
     return KtorRequestHandler(client, requestRateLimiter, clock, parser, token)
 }
 
-public fun RequestResponse.Companion.from(response: HttpResponse): RequestResponse {
+public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock): RequestResponse {
     val bucket = response.bucket
     val rateLimit = run {
         val total = Total(response.rateLimitTotal ?: return@run null)
@@ -125,11 +125,13 @@ public fun RequestResponse.Companion.from(response: HttpResponse): RequestRespon
     val reset = Reset(response.channelResetPoint())
 
     return when {
-        response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
-        response.isRateLimit -> RequestResponse.BucketRateLimit(
-            bucket
-                ?: BucketKey("missing"), rateLimit, reset
-        )
+        response.isRateLimit -> when {
+            response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
+            bucket != null -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
+            // Can be a "You are being blocked from accessing our API temporarily due to exceeding our rate limits frequently" ban.
+            // In this case, the request only has a "retry-after" header
+            else -> RequestResponse.GlobalRateLimit(null, rateLimit, Reset(response.globalSuspensionPoint(clock) ?: error("Received a 429 request with no Retry-After header!")))
+        }
         response.isError -> RequestResponse.Error
         else -> RequestResponse.Accepted(bucket, rateLimit, reset)
     }

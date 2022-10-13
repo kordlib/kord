@@ -47,9 +47,9 @@ public val HttpResponse.bucket: BucketKey? get() = headers[bucketRateLimitKey]?.
 /**
  * The unix time (in ms) when the global rate limit gets reset.
  */
-public fun HttpResponse.globalSuspensionPoint(clock: Clock): Long {
-    val secondsWait = headers[retryAfterHeader]?.toLong() ?: return clock.now().toEpochMilliseconds()
-    return (secondsWait * 1000) + clock.now().toEpochMilliseconds()
+public fun HttpResponse.globalSuspensionPoint(clock: Clock): Instant? {
+    val secondsWait = headers[retryAfterHeader]?.toLong() ?: return null
+    return clock.now() + secondsWait.seconds
 }
 
 public fun HttpResponse.logString(body: String): String =
