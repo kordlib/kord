@@ -99,8 +99,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         InvalidSessionHandler(events) { restart(it) }
     }
 
-    //running on default dispatchers because ktor does *not* like running on an EmptyCoroutineContext from main
-    override suspend fun start(configuration: GatewayConfiguration): Unit = withContext(Dispatchers.Default) {
+    override suspend fun start(configuration: GatewayConfiguration) {
         resetState(configuration)
 
         startAndHandleGatewayConnection()
@@ -124,7 +123,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         startAndHandleGatewayConnection()
     }
 
-    private suspend fun startAndHandleGatewayConnection() {
+    private suspend fun startAndHandleGatewayConnection() = withContext(data.dispatcher) {
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
             try {
                 val url = handshakeHandler.gatewayUrl
