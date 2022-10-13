@@ -28,8 +28,8 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     internal fun createBucket(identity: RequestIdentifier, response: RequestResponse): Bucket? {
         val key = response.bucketKey ?: return null
 
-        logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for ${key.value}" }
-        val bucket = Bucket(key)
+        logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for ${key.value} (identity $identity)" }
+        val bucket = Bucket(identity, key)
         bucket.updateRateLimit(response.rateLimit, response.reset)
         routeBuckets.getOrPut(identity) { ConcurrentHashMap() }[key] = bucket
         return bucket
@@ -73,7 +73,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                         globalSuspensionPoint.update { response.reset }
                     }
                     is RequestResponse.BucketRateLimit -> {
-                        logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
+                        logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} (identity $identity) was exhausted until ${response.reset.value}" }
                     }
                     else -> {}
                 }
@@ -84,7 +84,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
         }
     }
 
-    internal inner class Bucket(val id: BucketKey) {
+    internal inner class Bucket(val identity: RequestIdentifier, val id: BucketKey) {
         val rateLimitWithReset = atomic<RateLimitWithReset?>(null)
         val mutex = Mutex()
 
@@ -98,10 +98,10 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                 val reset = rateLimitWithReset.reset
 
                 if (reset != null) {
-                    logger.trace { "[BUCKET]:Bucket ${id.value} waiting until ${reset.value}" }
+                    logger.trace { "[BUCKET]:Bucket ${id.value} (identity $identity) waiting until ${reset.value}" }
                     reset.await()
                 } else {
-                    logger.warn { "[BUCKET]:Bucket ${id.value} is exausted, however we don't have any information about the reset timer" }
+                    logger.warn { "[BUCKET]:Bucket ${id.value} (identity $identity) is exausted, however we don't have any information about the reset timer" }
                 }
             }
         }
