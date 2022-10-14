@@ -126,7 +126,7 @@ public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock):
 
     return when {
         response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
-        response.isRateLimit && bucket != null -> RequestResponse.BucketRateLimit(bucket, rateLimit, Reset(response.globalSuspensionPoint(clock) ?: error("Missing Retry-After header from Global Rate Limit response!")))
+        response.isRateLimit && bucket != null -> RequestResponse.BucketRateLimit(bucket, rateLimit, reset)
         response.isRateLimit -> RequestResponse.UnknownBucketRateLimit(rateLimit, reset)
         response.isError -> RequestResponse.Error
         else -> RequestResponse.Accepted(bucket, rateLimit, reset)
