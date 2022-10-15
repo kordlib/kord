@@ -83,7 +83,7 @@ class IdentifyRateLimiterTest {
 
         val startChannel = Channel<Start>(capacity = shardCount)
 
-        for (shardId in shardIds) {
+        for (shardId in shardIds.shuffled()) {
             val startPermission = CompletableDeferred<Unit>()
 
             val mockEvents = flow {

@@ -259,7 +259,7 @@ public class KordBuilder(public val token: String) {
             shards = shardsInfo,
             maxConcurrency = gatewayInfo.sessionStartLimit.maxConcurrency,
             httpClient = client,
-            defaultStrategy = defaultStrategy
+            defaultStrategy = defaultStrategy,
         )
         val rawRequestHandler = handlerBuilder(resources)
         val requestHandler = if (stackTraceRecovery) {
