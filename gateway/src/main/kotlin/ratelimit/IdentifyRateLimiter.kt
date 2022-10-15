@@ -64,11 +64,10 @@ private class IdentifyRateLimiterImpl(
 ) : IdentifyRateLimiter {
 
     private class IdentifyRequest(
-        val shardId: Int,
-        val events: SharedFlow<Event>,
+        @JvmField val shardId: Int,
+        @JvmField val events: SharedFlow<Event>,
         private val permission: CompletableDeferred<Unit>,
-    ) : Comparable<IdentifyRequest> {
-        override fun compareTo(other: IdentifyRequest) = this.shardId.compareTo(other.shardId)
+    ) {
         fun allow() = permission.complete(Unit)
     }
 
@@ -151,7 +150,7 @@ private class IdentifyRateLimiterImpl(
         //   demand which will then time out again etc.
         // => no leaks
         @OptIn(DelicateCoroutinesApi::class)
-        GlobalScope.launch(context = dispatcher + EXCEPTION_LOGGER) {
+        GlobalScope.launch(context = dispatcher + ExceptionLogger) {
 
             // only read/written from sequential loop, not from launched concurrent coroutines
             // request.rateLimitKey is always in the range 0..<maxConcurrency
@@ -192,7 +191,7 @@ private class IdentifyRateLimiterImpl(
                 val result = channel.tryReceive().onSuccess(::add)
             } while (result.isSuccess)
 
-            sort() // sort requests in this batch
+            sortWith(ShardIdComparator) // sort requests in this batch
         }
     }
 
@@ -249,7 +248,9 @@ private class IdentifyRateLimiterImpl(
         private const val RUNNING_WITH_NO_CONSUMERS = 0
         private const val ONE_CONSUMER = 1
 
-        private val EXCEPTION_LOGGER = CoroutineExceptionHandler { context, exception ->
+        private val ShardIdComparator = Comparator<IdentifyRequest> { r1, r2 -> r1.shardId.compareTo(r2.shardId) }
+
+        private val ExceptionLogger = CoroutineExceptionHandler { context, exception ->
             // we can't be cancelled (GlobalScope) and we never close the channel, so all exceptions are bugs
             logger.error(
                 "IdentifyRateLimiter threw an exception in context $context, please report this, it should not happen",

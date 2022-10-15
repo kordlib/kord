@@ -159,7 +159,7 @@ class IdentifyRateLimiterTest {
     fun `randomly distributed shards`() = testRateLimiter(
         shardIds = listOf(0, 4, 5, 10, 23),
         maxConcurrency = 2,
-        expectedBuckets = 3, // started concurrently: [0 and 5], [4 and 10], [23]
+        expectedBuckets = 3, // started concurrently: [0 and 5], [4 and 23], [10]
     )
 
 
