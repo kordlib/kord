@@ -46,7 +46,7 @@ private sealed class State(val retry: Boolean) {
  * @param url The url to connect to.
  * @param client The [HttpClient] from which a WebSocket will be created, requires the [WebSockets] plugin to be
  * installed.
- * @param reconnectRetry A retry used for reconnection attempts.
+ * @param reconnectRetry A [Retry] used for reconnection attempts.
  * @param sendRateLimiter A [RateLimiter] that follows the Discord API specifications for sending messages.
  * @param identifyRateLimiter An [IdentifyRateLimiter] that follows the Discord API specifications for identifying.
  */
