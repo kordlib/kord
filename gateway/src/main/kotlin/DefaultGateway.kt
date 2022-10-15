@@ -47,7 +47,7 @@ private sealed class State(val retry: Boolean) {
  * @param client The [HttpClient] from which a WebSocket will be created, requires the [WebSockets] plugin to be
  * installed.
  * @param reconnectRetry A retry used for reconnection attempts.
- * @param sendRateLimiter A [RateLimiter] than follows the Discord API specifications for sending messages.
+ * @param sendRateLimiter A [RateLimiter] that follows the Discord API specifications for sending messages.
  * @param identifyRateLimiter An [IdentifyRateLimiter] that follows the Discord API specifications for identifying.
  */
 public data class DefaultGatewayData(
