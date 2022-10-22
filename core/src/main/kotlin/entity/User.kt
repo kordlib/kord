@@ -23,12 +23,12 @@ public open class User(
         get() = data.id
 
     /**
-     * The users avatar as [Icon] object
+     * The users avatar as [Asset] object
      */
-    public val avatar: Icon?
-        get() = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
+    public val avatar: Asset?
+        get() = data.avatar?.let { Asset.UserAvatar(data.id, it, kord) }
 
-    public val defaultAvatar: Icon get() = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
+    public val defaultAvatar: Asset get() = Asset.DefaultUserAvatar(data.discriminator.toInt(), kord)
 
     /**
      * The username of this user.
@@ -68,6 +68,7 @@ public open class User(
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
+    public val banner: Asset? get() = data.banner?.let { Asset.UserBanner(id, it, kord) }
 
     override fun hashCode(): Int = id.hashCode()
 

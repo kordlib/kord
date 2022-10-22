@@ -27,7 +27,7 @@ public data class Role(
 
     public val hoisted: Boolean get() = data.hoisted
 
-    val icon: Icon? get() = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
+    val icon: Asset? get() = data.icon.value?.let { Asset.RoleIcon(data.id, it, kord) }
 
     val unicodeEmoji: String? = data.unicodeEmoji.value
 

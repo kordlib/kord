@@ -25,6 +25,8 @@ public sealed class BaseApplication(
 
     public val name: String get() = data.name
 
+    public val icon: Asset? get() = data.icon?.let { Asset.ApplicationIcon(id, it, kord) }
+
     public val iconHash: String? get() = data.icon
 
     public val description: String get() = data.description
@@ -52,6 +54,8 @@ public sealed class BaseApplication(
 
     public val slug: String? get() = data.slug.value
 
+    public val cover: Asset? get() = data.coverImage.value?.let { Asset.ApplicationCover(id, it, kord) }
+
     public val coverImageHash: String? get() = data.coverImage.value
 
     public val flags: ApplicationFlags? get() = data.flags.value
@@ -64,7 +68,6 @@ public sealed class BaseApplication(
 
     /** The application's default custom authorization link, if enabled. */
     public val customInstallUrl: String? get() = data.customInstallUrl.value
-
 
     public suspend fun getOwnerOrNull(): User? = ownerId?.let { supplier.getUserOrNull(it) }
 

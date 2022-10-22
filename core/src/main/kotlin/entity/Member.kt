@@ -35,10 +35,10 @@ public class Member(
     public val displayName: String get() = nickname ?: username
 
     /**
-     * The members guild avatar as [Icon] object
+     * The members guild avatar as [Asset] object
      */
-    public val memberAvatar: Icon?
-        get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, data.id, it, kord) }
+    public val memberAvatar: Asset?
+        get() = memberData.avatar.value?.let { Asset.MemberAvatar(memberData.guildId, id, it, kord) }
 
     /**
      * When the user joined this [guild].
