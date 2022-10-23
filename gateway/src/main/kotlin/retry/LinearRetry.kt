@@ -28,7 +28,7 @@ public class LinearRetry(
         require(
             maxBackoff.minus(firstBackoff).isPositive()
         ) { "maxBackoff ${maxBackoff.inWholeMilliseconds} ms needs to be bigger than firstBackoff ${firstBackoff.inWholeMilliseconds} ms" }
-        require(maxTries > 1) { "maxTries needs to be positive but was $maxTries" }
+        require(maxTries > 1) { "maxTries needs to be greater than 1 but was $maxTries" }
     }
 
     private val tries = atomic(0)
