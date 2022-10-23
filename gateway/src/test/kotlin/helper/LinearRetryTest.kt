@@ -21,7 +21,7 @@ class LinearRetryTest {
         }
 
         val end = currentTime
-        val elapsed = (end-start).milliseconds
+        val elapsed = (end - start).milliseconds
 
         assert(elapsed == 55.seconds)
         assert(i == 10)
@@ -29,7 +29,7 @@ class LinearRetryTest {
 
     @Test
     fun testExtreme() = runTest {
-        val linearRetry = LinearRetry(1.seconds, 60.seconds, Integer.MAX_VALUE)
+        val linearRetry = LinearRetry(1.seconds, 60.seconds, Int.MAX_VALUE)
         var i = 0
         val start = currentTime
 
@@ -39,7 +39,7 @@ class LinearRetryTest {
         }
 
         val end = currentTime
-        val elapsed = (end-start).milliseconds
+        val elapsed = (end - start).milliseconds
 
         assert(elapsed == 1000.seconds)
     }
