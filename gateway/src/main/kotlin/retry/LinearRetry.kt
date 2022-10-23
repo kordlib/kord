@@ -5,7 +5,7 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.delay
 import mu.KotlinLogging
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.times
 
 private val linearRetryLogger = KotlinLogging.logger { }
 
@@ -45,8 +45,7 @@ public class LinearRetry(
 
         // tries/maxTries ratio * (backOffDiff) = retryProgress
         val ratio = tries.getAndIncrement() / (maxTries - 1).toDouble()
-        val retryProgress =
-            (ratio * (maxBackoff - firstBackoff).inWholeMilliseconds).toLong().milliseconds
+        val retryProgress = ratio * (maxBackoff - firstBackoff)
         val diff = firstBackoff + retryProgress
 
         linearRetryLogger.trace { "retry attempt ${tries.value}, delaying for $diff" }
