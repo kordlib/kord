@@ -5,6 +5,7 @@ import kotlinx.atomicfu.update
 import kotlinx.coroutines.delay
 import mu.KotlinLogging
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
 
 private val linearRetryLogger = KotlinLogging.logger { }
 
@@ -27,7 +28,7 @@ public class LinearRetry(
         require(
             maxBackoff.minus(firstBackoff).isPositive()
         ) { "maxBackoff ${maxBackoff.inWholeMilliseconds} ms needs to be bigger than firstBackoff ${firstBackoff.inWholeMilliseconds} ms" }
-        require(maxTries > 0) { "maxTries needs to be positive but was $maxTries" }
+        require(maxTries > 1) { "maxTries needs to be positive but was $maxTries" }
     }
 
     private val tries = atomic(0)
@@ -43,10 +44,10 @@ public class LinearRetry(
         if (!hasNext) error("max retries exceeded")
 
         // tries/maxTries ratio * (backOffDiff) = retryProgress
+        val ratio = tries.getAndIncrement() / (maxTries - 1).toDouble()
         val retryProgress =
-            ((tries.getAndIncrement() / (maxTries - 1).toDouble())
-                    * (maxBackoff.inWholeMilliseconds - firstBackoff.inWholeMilliseconds)).toLong()
-        val diff = firstBackoff.inWholeMilliseconds + retryProgress
+            (ratio * (maxBackoff - firstBackoff).inWholeMilliseconds).toLong().milliseconds
+        val diff = firstBackoff + retryProgress
 
         linearRetryLogger.trace { "retry attempt ${tries.value}, delaying for $diff ms" }
         delay(diff)
