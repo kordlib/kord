@@ -22,7 +22,8 @@ class LinearRetryTest {
 
         val end = currentTime
         val elapsed = (end-start).milliseconds
-        assert(elapsed >= 55.seconds)
+
+        assert(elapsed == 55.seconds)
         assert(i == 10)
     }
 
@@ -39,6 +40,7 @@ class LinearRetryTest {
 
         val end = currentTime
         val elapsed = (end-start).milliseconds
-        assert(elapsed <= 1100.seconds)
+
+        assert(elapsed == 1000.seconds)
     }
 }
