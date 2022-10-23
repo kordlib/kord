@@ -123,5 +123,5 @@ public class StickerPack(public val data: StickerPackData, override val kord: Ko
 
     public val stickers: List<Sticker> get() = data.stickers.map { Sticker(it, kord) }
 
-
+    public val banner: Asset get() = Asset.StickerPackBanner(data.bannerAssetId, kord)
 }

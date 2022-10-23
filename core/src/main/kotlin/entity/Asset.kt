@@ -8,39 +8,14 @@ import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
 public sealed class Asset(
-    public val format: Image.Format,
-    public val cdnUrl: CdnUrl,
-    override val kord: Kord
-) : KordObject {
-    public val animated: Boolean get() = format is Image.Format.GIF
-
-    public val url: String
-        get() = cdnUrl.toUrl {
-            this.format = this@Asset.format
-        }
-
-    public suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl())
-
-    public suspend fun getImage(size: Image.Size): Image =
-        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
-            this.size = size
-        })
-
-    public suspend fun getImage(format: Image.Format): Image =
-        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
-            this.format = format
-        })
-
-    public suspend fun getImage(format: Image.Format, size: Image.Size): Image =
-        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
-            this.format = format
-            this.size = size
-        })
-
-    public class EmojiIcon(animated: Boolean, emojiId: Snowflake, kord: Kord) : Asset(if (animated) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.emoji(emojiId), kord)
+    format: Image.Format,
+    cdnUrl: CdnUrl,
+    kord: Kord
+) : Icon(format, format is Image.Format.GIF, cdnUrl, kord) {
+    public class Emoji(animated: Boolean, emojiId: Snowflake, kord: Kord) : Asset(if (animated) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.emoji(emojiId), kord)
 
     public class DefaultUserAvatar(discriminator: Int, kord: Kord) :
-        Asset(Image.Format.PNG /* Discord Default Avatars only support PNG */, DiscordCdn.defaultAvatar(discriminator), kord)
+        Asset(Image.Format.PNG, DiscordCdn.defaultAvatar(discriminator), kord)
 
     public class UserAvatar(userId: Snowflake, avatarHash: String, kord: Kord) :
         Asset(if (avatarHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.userAvatar(userId, avatarHash), kord)

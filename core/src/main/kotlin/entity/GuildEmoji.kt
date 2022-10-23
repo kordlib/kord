@@ -105,7 +105,7 @@ public class GuildEmoji(
     /**
      * The image as [Asset] object for the emoji
      */
-    public val image: Asset get() = Asset.EmojiIcon(data.animated.discordBoolean, data.id, kord)
+    public val image: Asset get() = Asset.Emoji(data.animated.discordBoolean, data.id, kord)
 
     /**
      * Requests to delete this emoji, with the given [reason].

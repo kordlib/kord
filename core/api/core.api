@@ -5810,22 +5810,9 @@ public final class dev/kord/core/entity/Application : dev/kord/core/entity/BaseA
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
-public abstract class dev/kord/core/entity/Asset : dev/kord/core/KordObject {
+public abstract class dev/kord/core/entity/Asset : dev/kord/core/entity/Icon {
 	public synthetic fun <init> (Ldev/kord/rest/Image$Format;Ldev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getAnimated ()Z
-	public final fun getCdnUrl ()Ldev/kord/rest/route/CdnUrl;
-	public final fun getFormat ()Ldev/kord/rest/Image$Format;
-	public final fun getImage (Ldev/kord/rest/Image$Format;Ldev/kord/rest/Image$Size;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getImage (Ldev/kord/rest/Image$Format;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getImage (Ldev/kord/rest/Image$Size;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getImage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getUrl ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/entity/Asset$ApplicationAsset : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
 }
 
 public final class dev/kord/core/entity/Asset$ApplicationCover : dev/kord/core/entity/Asset {
@@ -5840,7 +5827,7 @@ public final class dev/kord/core/entity/Asset$DefaultUserAvatar : dev/kord/core/
 	public fun <init> (ILdev/kord/core/Kord;)V
 }
 
-public final class dev/kord/core/entity/Asset$EmojiIcon : dev/kord/core/entity/Asset {
+public final class dev/kord/core/entity/Asset$Emoji : dev/kord/core/entity/Asset {
 	public fun <init> (ZLdev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)V
 }
 
@@ -5973,6 +5960,7 @@ public abstract class dev/kord/core/entity/BaseApplication : dev/kord/core/entit
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getCover ()Ldev/kord/core/entity/Asset;
 	public final fun getCoverImageHash ()Ljava/lang/String;
 	public final fun getCustomInstallUrl ()Ljava/lang/String;
 	public abstract fun getData ()Ldev/kord/core/cache/data/BaseApplicationData;
@@ -5981,6 +5969,7 @@ public abstract class dev/kord/core/entity/BaseApplication : dev/kord/core/entit
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getIcon ()Ldev/kord/core/entity/Asset;
 	public final fun getIconHash ()Ljava/lang/String;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getInstallParams ()Ldev/kord/common/entity/InstallParams;
@@ -6404,6 +6393,7 @@ public final class dev/kord/core/entity/GuildScheduledEvent : dev/kord/core/beha
 	public fun fetchGuildScheduledEventOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getCover ()Ldev/kord/core/entity/Asset;
 	public final fun getCreator ()Ldev/kord/core/entity/User;
 	public final fun getCreatorId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getData ()Ldev/kord/core/cache/data/GuildScheduledEventData;
@@ -6463,6 +6453,40 @@ public final class dev/kord/core/entity/GuildWidget : dev/kord/core/KordObject, 
 	public final fun isEnabled ()Z
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/GuildWidget;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
+public abstract class dev/kord/core/entity/Icon : dev/kord/core/KordObject {
+	public synthetic fun <init> (Ldev/kord/rest/Image$Format;ZLdev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAnimated ()Z
+	public final fun getCdnUrl ()Ldev/kord/rest/route/CdnUrl;
+	public final fun getFormat ()Ldev/kord/rest/Image$Format;
+	public final fun getImage (Ldev/kord/rest/Image$Format;Ldev/kord/rest/Image$Size;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getImage (Ldev/kord/rest/Image$Format;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getImage (Ldev/kord/rest/Image$Size;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getImage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/entity/Icon$DefaultUserAvatar : dev/kord/core/entity/Icon {
+	public fun <init> (ILdev/kord/core/Kord;)V
+}
+
+public final class dev/kord/core/entity/Icon$EmojiIcon : dev/kord/core/entity/Icon {
+	public fun <init> (ZLdev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)V
+}
+
+public final class dev/kord/core/entity/Icon$MemberAvatar : dev/kord/core/entity/Icon {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
+}
+
+public final class dev/kord/core/entity/Icon$RoleIcon : dev/kord/core/entity/Icon {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
+}
+
+public final class dev/kord/core/entity/Icon$UserAvatar : dev/kord/core/entity/Icon {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
 }
 
 public final class dev/kord/core/entity/Integration : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
@@ -7062,6 +7086,7 @@ public final class dev/kord/core/entity/StickerPack : dev/kord/core/entity/KordE
 	public fun <init> (Ldev/kord/core/cache/data/StickerPackData;Ldev/kord/core/Kord;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public final fun getBanner ()Ldev/kord/core/entity/Asset;
 	public final fun getCoverStickerId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getData ()Ldev/kord/core/cache/data/StickerPackData;
 	public final fun getDescription ()Ljava/lang/String;
@@ -7143,6 +7168,7 @@ public class dev/kord/core/entity/User : dev/kord/core/behavior/UserBehavior {
 	public fun fetchUserOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAccentColor ()Ldev/kord/common/Color;
 	public final fun getAvatar ()Ldev/kord/core/entity/Asset;
+	public final fun getBanner ()Ldev/kord/core/entity/Asset;
 	public final fun getBannerUrl (Ldev/kord/rest/Image$Format;)Ljava/lang/String;
 	public final fun getData ()Ldev/kord/core/cache/data/UserData;
 	public final fun getDefaultAvatar ()Ldev/kord/core/entity/Asset;
