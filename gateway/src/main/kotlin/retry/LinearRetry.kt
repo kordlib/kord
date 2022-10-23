@@ -49,7 +49,7 @@ public class LinearRetry(
             (ratio * (maxBackoff - firstBackoff).inWholeMilliseconds).toLong().milliseconds
         val diff = firstBackoff + retryProgress
 
-        linearRetryLogger.trace { "retry attempt ${tries.value}, delaying for $diff ms" }
+        linearRetryLogger.trace { "retry attempt ${tries.value}, delaying for $diff" }
         delay(diff)
     }
 
