@@ -55,8 +55,6 @@ public sealed class UserPremium(
 
     public object Nitro : UserPremium(2)
 
-    public object NitroBasic : UserPremium(3)
-
     internal object Serializer : KSerializer<UserPremium> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.UserPremium", PrimitiveKind.INT)
@@ -68,7 +66,6 @@ public sealed class UserPremium(
             0 -> None
             1 -> NitroClassic
             2 -> Nitro
-            3 -> NitroBasic
             else -> Unknown(value)
         }
     }
@@ -82,7 +79,6 @@ public sealed class UserPremium(
                 None,
                 NitroClassic,
                 Nitro,
-                NitroBasic,
             )
         }
 
