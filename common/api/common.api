@@ -7932,6 +7932,10 @@ public final class dev/kord/common/entity/UserPremium$Nitro : dev/kord/common/en
 	public static final field INSTANCE Ldev/kord/common/entity/UserPremium$Nitro;
 }
 
+public final class dev/kord/common/entity/UserPremium$NitroBasic : dev/kord/common/entity/UserPremium {
+	public static final field INSTANCE Ldev/kord/common/entity/UserPremium$NitroBasic;
+}
+
 public final class dev/kord/common/entity/UserPremium$NitroClassic : dev/kord/common/entity/UserPremium {
 	public static final field INSTANCE Ldev/kord/common/entity/UserPremium$NitroClassic;
 }
