@@ -6,6 +6,7 @@
         Entry("None", intValue = 0),
         Entry("NitroClassic", intValue = 1),
         Entry("Nitro", intValue = 2),
+        Entry("NitroBasic", intValue = 3)
     ],
 )
 
