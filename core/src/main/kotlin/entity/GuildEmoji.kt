@@ -103,6 +103,14 @@ public class GuildEmoji(
     public val user: UserBehavior? get() = userId?.let { UserBehavior(it, kord) }
 
     /**
+     * The image as [Icon] object for the emoji
+     */
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getImage")
+    public val image0: Icon get() = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
+
+    /**
      * The image as [Asset] object for the emoji
      */
     public val image: Asset get() = Asset.Emoji(data.animated.discordBoolean, data.id, kord)

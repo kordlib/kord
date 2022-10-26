@@ -35,6 +35,15 @@ public class Member(
     public val displayName: String get() = nickname ?: username
 
     /**
+     * The members guild avatar as [Icon] object
+     */
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getMemberAvatar")
+    public val memberAvatar0: Icon?
+        get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }
+
+    /**
      * The members guild avatar as [Asset] object
      */
     public val memberAvatar: Asset?

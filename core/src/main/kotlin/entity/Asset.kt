@@ -8,10 +8,35 @@ import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
 public sealed class Asset(
-    format: Image.Format,
-    cdnUrl: CdnUrl,
-    kord: Kord
-) : Icon(format, format is Image.Format.GIF, cdnUrl, kord) {
+    public val format: Image.Format,
+    public val cdnUrl: CdnUrl,
+    override val kord: Kord
+) : KordObject {
+    public val url: String
+        get() = cdnUrl.toUrl {
+            this.format = this@Asset.format
+        }
+
+    public val animated: Boolean get() = format is Image.Format.GIF
+
+    public suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl())
+
+    public suspend fun getImage(size: Image.Size): Image =
+        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
+            this.size = size
+        })
+
+    public suspend fun getImage(format: Image.Format): Image =
+        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
+            this.format = format
+        })
+
+    public suspend fun getImage(format: Image.Format, size: Image.Size): Image =
+        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
+            this.format = format
+            this.size = size
+        })
+
     public class Emoji(animated: Boolean, emojiId: Snowflake, kord: Kord) : Asset(if (animated) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.emoji(emojiId), kord)
 
     public class DefaultUserAvatar(discriminator: Int, kord: Kord) :

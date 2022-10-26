@@ -27,7 +27,16 @@ public class Team(
     /**
      * The hash of this team's icon.
      */
-    public val icon: String? get() = data.icon
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getIcon")
+    public val icon0: String? get() = data.icon
+
+    /**
+     * The hash of this team's icon.
+     */
+    public val iconHash: String? get() = data.icon
+
+    public val icon: Asset? get() = data.icon?.let { Asset.TeamIcon(data.id, it, kord) }
 
     /**
      * A collection of all members of this team.

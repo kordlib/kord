@@ -23,10 +23,24 @@ public open class User(
         get() = data.id
 
     /**
+     * The users avatar as [Icon] object
+     */
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getAvatar")
+    public val avatar0: Icon?
+        get() = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
+
+    /**
      * The users avatar as [Asset] object
      */
     public val avatar: Asset?
         get() = data.avatar?.let { Asset.UserAvatar(data.id, it, kord) }
+
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getDefaultAvatar")
+    public val defaultAvatar0: Icon get() = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
 
     public val defaultAvatar: Asset get() = Asset.DefaultUserAvatar(data.discriminator.toInt(), kord)
 
@@ -65,6 +79,7 @@ public open class User(
 
     public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
+    @Deprecated("Old method", ReplaceWith("User#banner"), DeprecationLevel.WARNING)
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
@@ -86,6 +101,7 @@ public open class User(
         return "User(data=$data, kord=$kord, supplier=$supplier)"
     }
 
+    @Deprecated("Old method", ReplaceWith("Asset"), DeprecationLevel.WARNING)
     public data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**

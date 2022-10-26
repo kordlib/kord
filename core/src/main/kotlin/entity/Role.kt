@@ -27,6 +27,11 @@ public data class Role(
 
     public val hoisted: Boolean get() = data.hoisted
 
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getIcon")
+    val icon0: Icon? get() = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
+
     val icon: Asset? get() = data.icon.value?.let { Asset.RoleIcon(data.id, it, kord) }
 
     val unicodeEmoji: String? = data.unicodeEmoji.value
