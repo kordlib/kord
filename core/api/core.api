@@ -1876,6 +1876,7 @@ public abstract interface class dev/kord/core/behavior/interaction/followup/Ephe
 
 public final class dev/kord/core/behavior/interaction/followup/EphemeralFollowupMessageBehavior$DefaultImpls {
 	public static fun compareTo (Ldev/kord/core/behavior/interaction/followup/EphemeralFollowupMessageBehavior;Ldev/kord/core/entity/Entity;)I
+	public static fun delete (Ldev/kord/core/behavior/interaction/followup/EphemeralFollowupMessageBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/followup/EphemeralFollowupMessageBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/followup/EphemeralFollowupMessageBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/followup/EphemeralFollowupMessageBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1888,6 +1889,7 @@ public final class dev/kord/core/behavior/interaction/followup/EphemeralFollowup
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/followup/FollowupMessageBehavior : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
+	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public abstract fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1899,6 +1901,7 @@ public abstract interface class dev/kord/core/behavior/interaction/followup/Foll
 
 public final class dev/kord/core/behavior/interaction/followup/FollowupMessageBehavior$DefaultImpls {
 	public static fun compareTo (Ldev/kord/core/behavior/interaction/followup/FollowupMessageBehavior;Ldev/kord/core/entity/Entity;)I
+	public static fun delete (Ldev/kord/core/behavior/interaction/followup/FollowupMessageBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/followup/FollowupMessageBehavior;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static fun getChannel (Ldev/kord/core/behavior/interaction/followup/FollowupMessageBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getChannelOrNull (Ldev/kord/core/behavior/interaction/followup/FollowupMessageBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1909,7 +1912,6 @@ public final class dev/kord/core/behavior/interaction/followup/FollowupMessageBe
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/followup/PublicFollowupMessageBehavior : dev/kord/core/behavior/interaction/followup/FollowupMessageBehavior {
-	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/followup/PublicFollowupMessageBehavior;
 }
 
@@ -1938,16 +1940,19 @@ public abstract interface class dev/kord/core/behavior/interaction/response/Defe
 }
 
 public final class dev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior$DefaultImpls {
+	public static fun delete (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/DeferredEphemeralMessageInteractionResponseBehavior;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/InteractionResponseBehavior {
+	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;
 }
 
 public final class dev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior$DefaultImpls {
+	public static fun delete (Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -1957,7 +1962,6 @@ public final class dev/kord/core/behavior/interaction/response/DeferredMessageIn
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/response/DeferredPublicMessageInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/DeferredMessageInteractionResponseBehavior, dev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior {
-	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/DeferredPublicMessageInteractionResponseBehavior;
 }
 
@@ -1995,6 +1999,7 @@ public abstract interface class dev/kord/core/behavior/interaction/response/Ephe
 }
 
 public final class dev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior$DefaultImpls {
+	public static fun delete (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/EphemeralMessageInteractionResponseBehavior;
@@ -2039,10 +2044,12 @@ public final class dev/kord/core/behavior/interaction/response/InteractionRespon
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/FollowupPermittingInteractionResponseBehavior {
+	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;
 }
 
 public final class dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior$DefaultImpls {
+	public static fun delete (Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessage (Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getFollowupMessageOrNull (Ldev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -2082,7 +2089,6 @@ public final class dev/kord/core/behavior/interaction/response/PublicMesageInter
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior : dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior, dev/kord/core/behavior/interaction/response/PublicInteractionResponseBehavior {
-	public abstract fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior;
 }
 
@@ -10477,6 +10483,7 @@ public abstract class dev/kord/core/entity/interaction/followup/FollowupMessage 
 	public synthetic fun <init> (Ldev/kord/core/entity/Message;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
@@ -10493,7 +10500,6 @@ public final class dev/kord/core/entity/interaction/followup/FollowupMessageKt {
 public final class dev/kord/core/entity/interaction/followup/PublicFollowupMessage : dev/kord/core/entity/interaction/followup/FollowupMessage, dev/kord/core/behavior/interaction/followup/PublicFollowupMessageBehavior {
 	public fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
@@ -10524,6 +10530,7 @@ public final class dev/kord/core/entity/interaction/response/EphemeralMessageInt
 
 public abstract class dev/kord/core/entity/interaction/response/MessageInteractionResponse : dev/kord/core/behavior/interaction/response/MessageInteractionResponseBehavior {
 	public synthetic fun <init> (Ldev/kord/core/entity/Message;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFollowupMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFollowupMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getMessage ()Ldev/kord/core/entity/Message;
@@ -10533,7 +10540,6 @@ public abstract class dev/kord/core/entity/interaction/response/MessageInteracti
 public final class dev/kord/core/entity/interaction/response/PublicMessageInteractionResponse : dev/kord/core/entity/interaction/response/MessageInteractionResponse, dev/kord/core/behavior/interaction/response/PublicMessageInteractionResponseBehavior {
 	public fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/entity/Message;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun delete (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;

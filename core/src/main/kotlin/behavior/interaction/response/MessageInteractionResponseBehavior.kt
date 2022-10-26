@@ -22,6 +22,14 @@ import kotlin.contracts.contract
  */
 public interface MessageInteractionResponseBehavior : FollowupPermittingInteractionResponseBehavior {
 
+    /**
+     * Requests to delete the message.
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun delete() {
+        kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
+    }
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageInteractionResponseBehavior
 }
 
