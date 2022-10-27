@@ -19,16 +19,6 @@ import kotlin.contracts.contract
 
 public interface PublicFollowupMessageBehavior : FollowupMessageBehavior {
 
-    /**
-     * Requests to delete this followup message.
-     *
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
-    public suspend fun delete() {
-        kord.rest.interaction.deleteFollowupMessage(applicationId, token, id)
-    }
-
-
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): PublicFollowupMessageBehavior {
         return PublicFollowupMessageBehavior(id, applicationId, token, channelId, kord, strategy.supply(kord))
     }
