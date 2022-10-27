@@ -17,13 +17,17 @@ import kotlin.contracts.contract
  * [updatePublicMessage][ComponentInteractionBehavior.updatePublicMessage] or
  * [updateEphemeralMessage][ComponentInteractionBehavior.updateEphemeralMessage].
  *
- * This is the handle to a message, it supports [editing][MessageInteractionResponseBehavior.edit] and sending followup
- * messages to the interaction.
+ * This is the handle to a message, it supports
+ * [editing][MessageInteractionResponseBehavior.edit],
+ * [deleting][delete] and sending followup messages to the interaction.
  */
 public interface MessageInteractionResponseBehavior : FollowupPermittingInteractionResponseBehavior {
 
     /**
      * Requests to delete the message.
+     *
+     * This [MessageInteractionResponseBehavior] can still be used to send followup messages to the interaction.
+     *
      * @throws RestRequestException if something went wrong during the request.
      */
     public suspend fun delete() {
