@@ -717,12 +717,21 @@ public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/r
 	public fun <init> ()V
 	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun channelSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun channelSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun getComponents ()Ljava/util/List;
 	public final fun interactionButton (Ldev/kord/common/entity/ButtonStyle;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun linkButton (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun mentionableSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun mentionableSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun roleSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun roleSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun selectMenu (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public final fun stringSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun textInput (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun textInput$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun userSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun userSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 }
 
 public abstract class dev/kord/rest/builder/component/ActionRowComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
@@ -759,14 +768,30 @@ public final class dev/kord/rest/builder/component/ButtonBuilder$LinkButtonBuild
 	public final fun setUrl (Ljava/lang/String;)V
 }
 
+public final class dev/kord/rest/builder/component/ChannelSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
+	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getChannelTypes ()Ljava/util/List;
+	public final fun setChannelTypes (Ljava/util/List;)V
+}
+
 public abstract interface class dev/kord/rest/builder/component/ComponentBuilder {
 	public abstract fun build ()Ldev/kord/common/entity/DiscordComponent;
+}
+
+public final class dev/kord/rest/builder/component/MentionableSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
+	public fun <init> (Ljava/lang/String;)V
 }
 
 public abstract interface class dev/kord/rest/builder/component/MessageComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
 }
 
-public final class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
+public final class dev/kord/rest/builder/component/RoleSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
@@ -796,6 +821,10 @@ public final class dev/kord/rest/builder/component/SelectOptionBuilder {
 	public final fun setValue (Ljava/lang/String;)V
 }
 
+public final class dev/kord/rest/builder/component/StringSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
+	public fun <init> (Ljava/lang/String;)V
+}
+
 public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
 	public fun <init> (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
@@ -814,6 +843,10 @@ public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/r
 	public final fun setRequired (Ljava/lang/Boolean;)V
 	public final fun setStyle (Ldev/kord/common/entity/TextInputStyle;)V
 	public final fun setValue (Ljava/lang/String;)V
+}
+
+public final class dev/kord/rest/builder/component/UserSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
+	public fun <init> (Ljava/lang/String;)V
 }
 
 public final class dev/kord/rest/builder/guild/CurrentVoiceStateModifyBuilder : dev/kord/rest/builder/RequestBuilder {

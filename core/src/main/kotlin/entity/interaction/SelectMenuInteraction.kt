@@ -1,8 +1,10 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.component.SelectMenuComponent
 import dev.kord.core.supplier.EntitySupplier
@@ -21,6 +23,12 @@ public sealed interface SelectMenuInteraction : ComponentInteraction {
 
     override val component: SelectMenuComponent
         get() = message.actionRows.firstNotNullOf { it.selectMenus[componentId] }
+
+    /**
+     * The resolved object is included in interaction payloads for user, role, mentionable, and channel select menu components
+     */
+    public val resolvedObjects: ResolvedObjects?
+        get() = data.data.resolvedObjectsData.unwrap { ResolvedObjects(it, kord) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): SelectMenuInteraction
 }

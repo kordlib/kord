@@ -44,12 +44,73 @@ public class ActionRowBuilder : MessageComponentBuilder {
      * Creates and adds a select menu with the [customId] and configured by the [builder].
      * An ActionRow with a select menu cannot have any other select menus or buttons.
      */
-    public inline fun selectMenu(customId: String, builder: SelectMenuBuilder.() -> Unit) {
+    @Deprecated("Renamed by discord to StringSelect", ReplaceWith("stringSelect"))
+    public inline fun selectMenu(customId: String, builder: StringSelectBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
 
-        components.add(SelectMenuBuilder(customId).apply(builder))
+        components.add(StringSelectBuilder(customId).apply(builder))
+    }
+
+    /**
+     * Creates and adds a string select menu with the [customId] and configured by the [builder].
+     * An ActionRow with a select menu cannot have any other select menus or buttons.
+     */
+    public inline fun stringSelect(customId: String, builder: StringSelectBuilder.() -> Unit) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(StringSelectBuilder(customId).apply(builder))
+    }
+
+    /**
+     * Creates and adds an user select menu with the [customId] and configured by the [builder].
+     * An ActionRow with a select menu cannot have any other select menus or buttons.
+     */
+    public inline fun userSelect(customId: String, builder: UserSelectBuilder.() -> Unit = {}) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(UserSelectBuilder(customId).apply(builder))
+    }
+
+    /**
+     * Creates and adds a role select menu with the [customId] and configured by the [builder].
+     * An ActionRow with a select menu cannot have any other select menus or buttons.
+     */
+    public inline fun roleSelect(customId: String, builder: RoleSelectBuilder.() -> Unit = {}) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(RoleSelectBuilder(customId).apply(builder))
+    }
+
+    /**
+     * Creates and adds a mentionable select menu with the [customId] and configured by the [builder].
+     * An ActionRow with a select menu cannot have any other select menus or buttons.
+     */
+    public inline fun mentionableSelect(customId: String, builder: MentionableSelectBuilder.() -> Unit = {}) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(MentionableSelectBuilder(customId).apply(builder))
+    }
+
+    /**
+     * Creates and adds a channel select menu with the [customId] and configured by the [builder].
+     * An ActionRow with a select menu cannot have any other select menus or buttons.
+     */
+    public inline fun channelSelect(customId: String, builder: ChannelSelectBuilder.() -> Unit = {}) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(ChannelSelectBuilder(customId).apply(builder))
     }
 
     /**

@@ -1,5 +1,6 @@
 package dev.kord.core.entity.component
 
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.optional.orEmpty
@@ -12,10 +13,7 @@ import dev.kord.core.entity.interaction.SelectMenuInteraction
  * An interactive dropdown menu rendered on a [Message] that consists of multiple [options].
  */
 
-public class SelectMenuComponent(override val data: ComponentData) : Component {
-
-    override val type: ComponentType.SelectMenu
-        get() = ComponentType.SelectMenu
+public open class SelectMenuComponent(override val data: ComponentData) : Component {
 
     /**
      * The custom identifier for any [ComponentInteractions][SelectMenuInteraction]
@@ -30,6 +28,8 @@ public class SelectMenuComponent(override val data: ComponentData) : Component {
 
     /**
      * The possible options to choose from.
+     *
+     * **Available only in [ComponentType.StringSelect]**
      */
     public val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
 
@@ -59,6 +59,18 @@ public class SelectMenuComponent(override val data: ComponentData) : Component {
     }
 
     override fun toString(): String = "SelectMenuComponent(data=$data)"
+}
+
+public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(data)
+
+public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data)
+
+public class RoleSelectComponent(data: ComponentData) : SelectMenuComponent(data)
+
+public class MentionableSelectComponent(data: ComponentData) : SelectMenuComponent(data)
+
+public class ChannelSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+    public val channelTypes: List<ChannelType>? get() = data.channelTypes.value
 }
 
 /**
