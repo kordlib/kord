@@ -716,29 +716,37 @@ public final class dev/kord/rest/builder/channel/VoiceChannelModifyBuilder : dev
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/thread/StartThreadBuilder : dev/kord/rest/builder/AuditRequestBuilder {
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/ChannelType;)V
+public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilder : dev/kord/rest/builder/channel/thread/StartThreadBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun createPostMessage (Lkotlin/jvm/functions/Function1;)V
+	public final fun getAppliedTags ()Ljava/util/List;
+	public final fun getMessage ()Ldev/kord/rest/json/request/MessageCreateRequest;
+	public final fun setAppliedTags (Ljava/util/List;)V
+	public final fun setMessage (Ldev/kord/rest/json/request/MessageCreateRequest;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/StartThreadRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public class dev/kord/rest/builder/channel/thread/StartThreadBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+	public fun <init> (Ljava/lang/String;)V
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
-	public final fun getInvitable ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
-	public final fun getType ()Ldev/kord/common/entity/ChannelType;
 	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
-	public final fun setInvitable (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V
+	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
 	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/StartThreadRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBuilder : dev/kord/rest/builder/AuditRequestBuilder {
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;)V
-	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
-	public final fun getName ()Ljava/lang/String;
-	public fun getReason ()Ljava/lang/String;
-	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
-	public final fun setName (Ljava/lang/String;)V
-	public fun setReason (Ljava/lang/String;)V
+public final class dev/kord/rest/builder/channel/thread/StartThreadWithoutMessageBuilder : dev/kord/rest/builder/channel/thread/StartThreadBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getInvitable ()Ljava/lang/Boolean;
+	public final fun getType ()Ldev/kord/common/entity/ChannelType;
+	public final fun setInvitable (Ljava/lang/Boolean;)V
+	public final fun setType (Ldev/kord/common/entity/ChannelType;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/StartThreadRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -4816,19 +4824,25 @@ public final class dev/kord/rest/json/request/StageInstanceUpdateRequest$Compani
 
 public final class dev/kord/rest/json/request/StartThreadRequest {
 	public static final field Companion Ldev/kord/rest/json/request/StartThreadRequest$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ldev/kord/common/entity/ArchiveDuration;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
-	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/StartThreadRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/StartThreadRequest;Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/StartThreadRequest;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/StartThreadRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/StartThreadRequest;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/StartThreadRequest;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
+	public final fun getAppliedTags ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getInvitable ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun getMessage ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getName ()Ljava/lang/String;
+	public final fun getRateLimitPerUser ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getType ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -6775,6 +6789,8 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public static synthetic fun putChannel$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ChannelModifyPutRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun removeFromGroup (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun removeUserFromThread (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun startForumThread (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun startForumThread$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun startThread (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/StartThreadRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun startThread (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/ChannelType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun startThread$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/StartThreadRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
