@@ -66,9 +66,14 @@ public data class ChannelPermissionEditRequest(
 public data class StartThreadRequest(
     val name: String,
     @SerialName("auto_archive_duration")
-    val autoArchiveDuration: ArchiveDuration,
+    val autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val type: Optional<ChannelType> = Optional.Missing(),
-    val invitable: OptionalBoolean = OptionalBoolean.Missing
+    val invitable: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("rate_limit_per_user")
+    val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
+    val message: Optional<MessageCreateRequest> = Optional.Missing(),
+    @SerialName("applied_tags")
+    val appliedTags: Optional<List<Snowflake>?> = Optional.Missing()
 )
 
 public data class ListThreadsBySnowflakeRequest(

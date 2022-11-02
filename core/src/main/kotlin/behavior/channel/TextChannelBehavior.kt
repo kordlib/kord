@@ -17,12 +17,13 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import java.util.*
+import java.util.Objects
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -68,32 +69,66 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
     public suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        builder: StartThreadBuilder.() -> Unit = {}
+        reason: String? = null,
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
     ): TextChannelThread {
-        return unsafeStartThread(
-            name,
-            archiveDuration,
-            ChannelType.PublicGuildThread,
-            builder
-        ) as TextChannelThread
+        return startPublicThread(name) {
+            this.reason = reason
+            this.autoArchiveDuration = archiveDuration
+            builder()
+        }
+    }
+
+    public suspend fun startPublicThread(
+        name: String,
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+    ): TextChannelThread {
+        return unsafeStartThread(name) {
+            builder()
+
+            type = ChannelType.PublicGuildThread
+        } as TextChannelThread
     }
 
     public suspend fun startPrivateThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        builder: StartThreadBuilder.() -> Unit = {}
+        reason: String? = null,
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
     ): TextChannelThread {
-        val startBuilder = StartThreadBuilder(name, archiveDuration, ChannelType.PrivateThread).apply(builder)
-        return unsafeStartThread(startBuilder.name, startBuilder.autoArchiveDuration, ChannelType.PrivateThread, builder) as TextChannelThread
+        return startPrivateThread(name) {
+            this.reason = reason
+            this.autoArchiveDuration = archiveDuration
+            builder()
+        }
+    }
+
+    public suspend fun startPrivateThread(
+        name: String,
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+    ): TextChannelThread {
+        return unsafeStartThread(name) {
+            builder()
+            type = ChannelType.PrivateThread
+        } as TextChannelThread
     }
 
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
         reason: String? = null
     ): TextChannelThread {
-        return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as TextChannelThread
+        return startPublicThreadWithMessage(messageId, name) {
+            this.reason = reason
+        }
+    }
+
+    public suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        builder: StartThreadBuilder.() -> Unit = {}
+    ): TextChannelThread {
+        return unsafeStartPublicThreadWithMessage(messageId, name, builder) as TextChannelThread
     }
 
     override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<TextChannelThread> {

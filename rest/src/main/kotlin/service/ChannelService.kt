@@ -3,8 +3,9 @@ package dev.kord.rest.service
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
+import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
@@ -309,10 +310,13 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         messageId: Snowflake,
         name: String,
         archiveDuration: ArchiveDuration,
-        builder: StartThreadWithMessageBuilder.() -> Unit
+        builder: StartThreadBuilder.() -> Unit
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val startBuilder = StartThreadWithMessageBuilder(name, archiveDuration).apply(builder)
+        val startBuilder = StartThreadBuilder(name).apply {
+            this.autoArchiveDuration = archiveDuration
+            builder()
+        }
         return startThreadWithMessage(channelId, messageId, startBuilder.toRequest(), startBuilder.reason)
     }
 
@@ -331,10 +335,23 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         name: String,
         archiveDuration: ArchiveDuration,
         type: ChannelType,
-        builder: StartThreadBuilder.() -> Unit = {}
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val startBuilder = StartThreadBuilder(name, archiveDuration, type).apply(builder)
+        val startBuilder = StartThreadWithoutMessageBuilder(name).apply {
+            this.autoArchiveDuration = archiveDuration
+            this.type = type
+        }
+        return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
+    }
+
+    public suspend fun startForumThread(
+        channelId: Snowflake,
+        name: String,
+        builder: StartForumThreadBuilder.() -> Unit = {}
+    ): DiscordChannel {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val startBuilder = StartForumThreadBuilder(name).apply(builder)
         return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
     }
 
