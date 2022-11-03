@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.channel.thread
 
 import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
@@ -28,6 +29,9 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
     private var _invitable: OptionalBoolean = OptionalBoolean.Missing
     public var invitable: Boolean? by ::_invitable.delegate()
 
+    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    public var flags: ChannelFlags? by ::_flags.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest {
         return ChannelModifyPatchRequest(
             name = _name,
@@ -35,7 +39,8 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
             archived = _archived,
             autoArchiveDuration = _autoArchiveDuration,
             rateLimitPerUser = _rateLimitPerUser,
-            invitable = _invitable
+            invitable = _invitable,
+            flags = _flags
         )
     }
 

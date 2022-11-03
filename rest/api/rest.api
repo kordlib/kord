@@ -396,7 +396,6 @@ public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev
 	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DiscordDefaultReaction;
 	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
 	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
-	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
@@ -410,7 +409,6 @@ public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev
 	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DiscordDefaultReaction;)V
 	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
 	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
-	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
@@ -769,6 +767,7 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public fun <init> ()V
 	public final fun getArchived ()Ljava/lang/Boolean;
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
+	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun getInvitable ()Ljava/lang/Boolean;
 	public final fun getLocked ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
@@ -776,6 +775,7 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public fun getReason ()Ljava/lang/String;
 	public final fun setArchived (Ljava/lang/Boolean;)V
 	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
+	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun setInvitable (Ljava/lang/Boolean;)V
 	public final fun setLocked (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V

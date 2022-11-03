@@ -2,7 +2,6 @@ package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
-import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DiscordDefaultReaction
 import dev.kord.common.entity.DiscordForumTag
@@ -62,9 +61,6 @@ public class ForumChannelCreateBuilder(public var name: String) :
     private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
 
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
-    public var flags: ChannelFlags? by ::_flags.delegate()
-
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
         type = ChannelType.GuildForum,
@@ -79,6 +75,5 @@ public class ForumChannelCreateBuilder(public var name: String) :
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,
-        flags = _flags
     )
 }
