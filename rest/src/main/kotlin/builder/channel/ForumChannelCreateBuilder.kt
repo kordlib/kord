@@ -2,10 +2,13 @@ package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DiscordDefaultReaction
+import dev.kord.common.entity.DiscordForumTag
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.SortOrderType
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -53,6 +56,15 @@ public class ForumChannelCreateBuilder(public var name: String) :
     private var _defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing()
     public var defaultThreadRateLimitPerUser: DurationInSeconds? by ::_defaultThreadRateLimitPerUser.delegate()
 
+    private var _availableTags: Optional<List<DiscordForumTag>> = Optional.Missing()
+    public var availableTags: List<DiscordForumTag>? by ::_availableTags.delegate()
+
+    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
+    public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
+
+    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    public var flags: ChannelFlags? by ::_flags.delegate()
+
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
         type = ChannelType.GuildForum,
@@ -65,5 +77,8 @@ public class ForumChannelCreateBuilder(public var name: String) :
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
         defaultReactionEmoji = _defaultReactionEmoji,
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
+        availableTags = _availableTags,
+        defaultSortOrder = _defaultSortOrder,
+        flags = _flags
     )
 }
