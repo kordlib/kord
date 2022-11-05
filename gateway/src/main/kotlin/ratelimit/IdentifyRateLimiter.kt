@@ -3,8 +3,8 @@ package dev.kord.gateway.ratelimit
 import dev.kord.gateway.*
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.getAndUpdate
+import kotlinx.atomicfu.loop
 import kotlinx.atomicfu.update
-import kotlinx.atomicfu.updateAndGet
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onSuccess
@@ -109,20 +109,13 @@ private class IdentifyRateLimiterImpl(
         }
     }
 
-    private fun stopIfHasNoConsumers(): Boolean {
-        val newState = state.updateAndGet { current ->
-            when (current) {
-                NOT_RUNNING -> error("We are running, so we can't observe NOT_RUNNING")
-                RUNNING_WITH_NO_CONSUMERS -> NOT_RUNNING // no new requests in sight
-                else -> current // don't change number of consumers
-            }
+    private fun stopIfHasNoConsumers(): Boolean = state.loop { current ->
+        when (current) {
+            NOT_RUNNING -> error("Should be running but was NOT_RUNNING")
+            RUNNING_WITH_NO_CONSUMERS -> // no new requests in sight -> try to stop
+                if (state.compareAndSet(expect = current, update = NOT_RUNNING)) return true
+            else -> return false // don't change number of consumers
         }
-        val stopped = when (newState) {
-            NOT_RUNNING -> true
-            RUNNING_WITH_NO_CONSUMERS -> error("Can't be RUNNING_WITH_NO_CONSUMERS after checking consumers")
-            else -> false
-        }
-        return stopped
     }
 
 
