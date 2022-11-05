@@ -202,7 +202,11 @@ private class IdentifyRateLimiterImpl(
             request.events
                 .onSubscription { // onSubscription ensures we don't miss events
                     logger.debug {
-                        "Identifying on shard ${request.shardId} with rate_limit_key ${request.rateLimitKey}..."
+                        "${
+                            if (previousWaiter != null)
+                                "Waited for other shard(s) with rate_limit_key ${request.rateLimitKey} to identify, i"
+                            else "I"
+                        }dentifying on shard ${request.shardId} with rate_limit_key ${request.rateLimitKey}..."
                     }
                     request.allow() // notify gateway waiting in consume -> it will try to identify -> wait for event
                 }
@@ -211,10 +215,11 @@ private class IdentifyRateLimiterImpl(
 
         logger.debug {
             when (responseToIdentify) {
+                null -> "Identifying on shard ${request.shardId} timed out"
                 is Ready -> "Identified on shard ${request.shardId}"
                 is InvalidSession -> "Identifying on shard ${request.shardId} failed, session could not be initialized"
                 is Close -> "Shard ${request.shardId} was stopped before it could identify"
-                else -> "Identifying on shard ${request.shardId} timed out"
+                else -> "Unexpected responseToIdentify on shard ${request.shardId}: $responseToIdentify"
             } + ", delaying $DELAY_AFTER_IDENTIFY before freeing up rate_limit_key ${request.rateLimitKey}"
         }
 
