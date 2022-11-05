@@ -128,6 +128,7 @@ public final class dev/kord/rest/builder/automoderation/AutoModerationRuleBuilde
 	public static final fun keyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun prefixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun preset (Ldev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder;Ldev/kord/common/entity/AutoModerationRuleKeywordPresetType;)V
+	public static final fun regexPattern (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun sendAlertMessage (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun sendAlertMessage$default (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun suffixKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
@@ -189,32 +190,40 @@ public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerati
 }
 
 public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
-	public abstract fun assignKeywords (Ljava/util/List;)V
+	public abstract synthetic fun assignKeywords (Ljava/util/List;)V
 	public abstract fun getKeywords ()Ljava/util/List;
+	public abstract fun getRegexPatterns ()Ljava/util/List;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
+	public abstract fun setKeywords (Ljava/util/List;)V
+	public abstract fun setRegexPatterns (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder$DefaultImpls {
+	public static synthetic fun assignKeywords (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/util/List;)V
 	public static fun getTriggerType (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;)Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 }
 
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
-	public fun assignKeywords (Ljava/util/List;)V
+	public synthetic fun assignKeywords (Ljava/util/List;)V
 	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public fun getKeywords ()Ljava/util/List;
+	public fun getRegexPatterns ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
 	public fun setKeywords (Ljava/util/List;)V
+	public fun setRegexPatterns (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
 	public fun <init> ()V
-	public fun assignKeywords (Ljava/util/List;)V
+	public synthetic fun assignKeywords (Ljava/util/List;)V
 	public fun getKeywords ()Ljava/util/List;
+	public fun getRegexPatterns ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
 	public fun setKeywords (Ljava/util/List;)V
+	public fun setRegexPatterns (Ljava/util/List;)V
 }
 
 public abstract interface class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
