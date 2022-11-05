@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "AuditLogEvent", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events",
     entries = [
         Entry("GuildUpdate", intValue = 1, kDoc = "Server settings were updated."),
         Entry("ChannelCreate", intValue = 10, kDoc = "Channel was created."),
@@ -52,7 +53,9 @@
         Entry("AutoModerationRuleCreate", intValue = 140, kDoc = "Auto Moderation rule was created."),
         Entry("AutoModerationRuleUpdate", intValue = 141, kDoc = "Auto Moderation rule was updated."),
         Entry("AutoModerationRuleDelete", intValue = 142, kDoc = "Auto Moderation rule was deleted."),
-        Entry("AutoModerationBlockMessage", intValue = 143, kDoc = "Message was blocked by AutoMod (according to a rule)."),
+        Entry("AutoModerationBlockMessage", intValue = 143, kDoc = "Message was blocked by AutoMod."),
+        Entry("AutoModerationFlagToChannel", intValue = 144, kDoc = "Message was flagged by AutoMod."),
+        Entry("AutoModerationUserCommunicationDisabled", intValue = 145, kDoc = "Member was timed out by AutoMod."),
     ],
 )
 
@@ -118,6 +121,12 @@ public data class DiscordAuditLogEntry(
 
 @Serializable
 public data class AuditLogEntryOptionalInfo(
+    @SerialName("application_id")
+    val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("auto_moderation_rule_name")
+    val autoModerationRuleName: Optional<String> = Optional.Missing(),
+    @SerialName("auto_moderation_rule_trigger_type")
+    val autoModerationRuleTriggerType: Optional<String> = Optional.Missing(),
     /*
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional

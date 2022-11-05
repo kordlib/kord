@@ -23,6 +23,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [PresenceStatus]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types).
+ */
 @Serializable(with = PresenceStatus.Serializer::class)
 public sealed class PresenceStatus(
     /**
@@ -82,11 +86,11 @@ public sealed class PresenceStatus(
 
         public override fun deserialize(decoder: Decoder) =
                 when (val value = decoder.decodeString()) {
+            "online" -> Online
             "dnd" -> DoNotDisturb
             "idle" -> Idle
             "invisible" -> Invisible
             "offline" -> Offline
-            "online" -> Online
             else -> Unknown(value)
         }
     }
@@ -111,11 +115,11 @@ public sealed class PresenceStatus(
          */
         public val entries: List<PresenceStatus> by lazy(mode = PUBLICATION) {
             listOf(
+                Online,
                 DoNotDisturb,
                 Idle,
                 Invisible,
                 Offline,
-                Online,
             )
         }
 

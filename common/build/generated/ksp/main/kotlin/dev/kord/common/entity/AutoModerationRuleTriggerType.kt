@@ -4,7 +4,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordExperimental
 import kotlin.Any
 import kotlin.Boolean
 import kotlin.Int
@@ -22,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * Characterizes the type of content which can trigger the rule.
+ *
+ * See [AutoModerationRuleTriggerType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types).
  */
 @Serializable(with = AutoModerationRuleTriggerType.Serializer::class)
 public sealed class AutoModerationRuleTriggerType(
@@ -55,11 +57,7 @@ public sealed class AutoModerationRuleTriggerType(
 
     /**
      * Check if content represents generic spam.
-     *
-     * This [trigger type][AutoModerationRuleTriggerType] is not yet released, so it cannot be used
-     * in most servers.
      */
-    @KordExperimental
     public object Spam : AutoModerationRuleTriggerType(3)
 
     /**
@@ -68,12 +66,8 @@ public sealed class AutoModerationRuleTriggerType(
     public object KeywordPreset : AutoModerationRuleTriggerType(4)
 
     /**
-     * Check if content contains more mentions than allowed.
-     *
-     * This [trigger type][AutoModerationRuleTriggerType] is not yet released, so it cannot be used
-     * in most servers.
+     * Check if content contains more unique mentions than allowed.
      */
-    @KordExperimental
     public object MentionSpam : AutoModerationRuleTriggerType(5)
 
     internal object Serializer : KSerializer<AutoModerationRuleTriggerType> {

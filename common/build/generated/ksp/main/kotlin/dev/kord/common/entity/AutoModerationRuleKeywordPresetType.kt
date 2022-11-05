@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * An internally pre-defined wordset which will be searched for in content.
+ *
+ * See [AutoModerationRuleKeywordPresetType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-preset-types).
  */
 @Serializable(with = AutoModerationRuleKeywordPresetType.Serializer::class)
 public sealed class AutoModerationRuleKeywordPresetType(

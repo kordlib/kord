@@ -79,16 +79,18 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
     val valueFormat = valueType.toFormat()
 
     val relevantEntriesForSerializerAndCompanion = run {
-
         // don't keep deprecated entries with a non-deprecated replacement
-        val nonDeprecatedValues = entries.map { it.value }.toSet()
+        val nonDeprecated = entries
+        val nonDeprecatedValues = nonDeprecated.map { it.value }
+        val deprecatedToKeep = deprecatedEntries.filter { it.value !in nonDeprecatedValues }
 
-        entries
-            .plus(deprecatedEntries.filter { it.value !in nonDeprecatedValues })
-            .sortedWith { e1, e2 ->
-                @Suppress("UNCHECKED_CAST") // values are of same type
-                (e1.value as Comparable<Comparable<*>>).compareTo(e2.value)
-            }
+        // merge nonDeprecated and deprecatedToKeep, preserving their order
+        val (result, taken) = nonDeprecated.fold(emptyList<Entry>() to 0) { (acc, taken), entry ->
+            val smallerDeprecated = deprecatedToKeep.drop(taken).takeWhile { it < entry }
+            (acc + smallerDeprecated + entry) to (taken + smallerDeprecated.size)
+        }
+
+        return@run result + deprecatedToKeep.drop(taken) // add all deprecated that weren't taken yet
     }
 
     // TODO remove eventually (always use "Serializer" then)
@@ -114,7 +116,16 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             // for ksp incremental processing
             addOriginatingKSFile(originatingFile)
 
-            kDoc?.let { addKdoc(it) }
+            // KDoc for the kord enum
+            run {
+                val docLink = docUrl?.let { url -> "See [%T]s in the [Discord·Developer·Documentation]($url)." }
+                val combinedKDocFormat = when {
+                    kDoc != null && docLink != null -> "$kDoc\n\n$docLink"
+                    else -> kDoc ?: docLink
+                }
+                combinedKDocFormat?.let { format -> addKdoc(format, enumName) }
+            }
+
             addAnnotation<Serializable> {
                 addMember("with·=·%T.$internalSerializerName::class", enumName)
             }

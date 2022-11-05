@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "ChannelType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-channel-types",
     entries = [
         Entry("GuildText", intValue = 0, kDoc = "A text channel within a server."),
         Entry("DM", intValue = 1, kDoc = "A direct message between users."),
@@ -48,6 +49,7 @@
 
 @file:GenerateKordEnum(
     name = "VideoQualityMode", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes",
     entries = [
         Entry("Auto", intValue = 1, kDoc = "Discord chooses the quality for optimal performance."),
         Entry("Full", intValue = 2, kDoc = "720p."),
@@ -56,6 +58,7 @@
 
 @file:GenerateKordEnum(
     name = "OverwriteType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure",
     entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
 )
 
@@ -74,10 +77,11 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
+import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -170,35 +174,57 @@ public data class DiscordThreadMetadata(
     val createTimestamp: Optional<Instant?> = Optional.Missing(),
 )
 
-@Serializable(with = ArchiveDuration.Serializer::class)
-public sealed class ArchiveDuration(public val duration: Duration) {
+// this should actually be generated with @file:GenerateKordEnum,
+// but it's not worth adding support for Duration just for this class
+@Serializable(with = ArchiveDuration.NewSerializer::class)
+public sealed class ArchiveDuration(
+    /** The raw [Duration] used by Discord. */
+    public val duration: Duration,
+) {
+    final override fun equals(other: Any?): Boolean =
+        this === other || (other is ArchiveDuration && this.duration == other.duration)
+
+    final override fun hashCode(): Int = duration.hashCode()
+    final override fun toString(): String = "ArchiveDuration.${this::class.simpleName}(duration=$duration)"
+
+    /**
+     * An unknown [ArchiveDuration].
+     *
+     * This is used as a fallback for [ArchiveDuration]s that haven't been added to Kord yet.
+     */
     public class Unknown(duration: Duration) : ArchiveDuration(duration)
     public object Hour : ArchiveDuration(60.minutes)
     public object Day : ArchiveDuration(1440.minutes)
     public object ThreeDays : ArchiveDuration(4320.minutes)
     public object Week : ArchiveDuration(10080.minutes)
 
-    public object Serializer : KSerializer<ArchiveDuration> {
+    internal object NewSerializer : KSerializer<ArchiveDuration> {
+        override val descriptor get() = DurationInMinutesSerializer.descriptor
 
-        override val descriptor: SerialDescriptor get() = DurationInMinutesSerializer.descriptor
+        override fun serialize(encoder: Encoder, value: ArchiveDuration) =
+            encoder.encodeSerializableValue(DurationInMinutesSerializer, value.duration)
 
         override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val value = decoder.decodeSerializableValue(DurationInMinutesSerializer)
-            return values.firstOrNull { it.duration == value } ?: Unknown(value)
-        }
-
-        override fun serialize(encoder: Encoder, value: ArchiveDuration) {
-            encoder.encodeSerializableValue(DurationInMinutesSerializer, value.duration)
+            val duration = decoder.decodeSerializableValue(DurationInMinutesSerializer)
+            return entries.firstOrNull { it.duration == duration } ?: Unknown(duration)
         }
     }
 
     public companion object {
-        public val values: Set<ArchiveDuration>
-            get() = setOf(
-                Hour,
-                Day,
-                ThreeDays,
-                Week,
-            )
+        /** A [List] of all known [ArchiveDuration]s. */
+        public val entries: List<ArchiveDuration> by lazy(mode = PUBLICATION) {
+            listOf(Hour, Day, ThreeDays, Week)
+        }
+
+        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = WARNING)
+        public val values: Set<ArchiveDuration> get() = entries.toSet()
     }
+
+    @Deprecated(
+        "Use 'ArchiveDuration.serializer()' instead.",
+        ReplaceWith("ArchiveDuration.serializer()", "dev.kord.common.entity.ArchiveDuration"),
+        level = WARNING,
+    )
+    // TODO rename internal `NewSerializer` to `Serializer` when this is removed
+    public object Serializer : KSerializer<ArchiveDuration> by NewSerializer
 }

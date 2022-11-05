@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * Premium types denote the level of premium a user has.
+ *
+ * See [UserPremium]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-premium-types).
  */
 @Serializable(with = UserPremium.Serializer::class)
 public sealed class UserPremium(
@@ -52,6 +55,8 @@ public sealed class UserPremium(
 
     public object Nitro : UserPremium(2)
 
+    public object NitroBasic : UserPremium(3)
+
     internal object Serializer : KSerializer<UserPremium> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.UserPremium", PrimitiveKind.INT)
@@ -63,6 +68,7 @@ public sealed class UserPremium(
             0 -> None
             1 -> NitroClassic
             2 -> Nitro
+            3 -> NitroBasic
             else -> Unknown(value)
         }
     }
@@ -76,6 +82,7 @@ public sealed class UserPremium(
                 None,
                 NitroClassic,
                 Nitro,
+                NitroBasic,
             )
         }
 

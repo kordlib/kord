@@ -19,6 +19,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [OverwriteType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure).
+ */
 @Serializable(with = OverwriteType.Serializer::class)
 public sealed class OverwriteType(
     /**

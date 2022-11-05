@@ -1,11 +1,8 @@
 package dev.kord.rest.builder.automoderation
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.AutoModerationRuleEventType
 import dev.kord.common.entity.AutoModerationRuleKeywordPresetType
-import dev.kord.common.entity.AutoModerationRuleTriggerType.MentionSpam
-import dev.kord.common.entity.AutoModerationRuleTriggerType.Spam
 import dev.kord.common.entity.DiscordAutoModerationRuleTriggerMetadata
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
@@ -79,13 +76,8 @@ public class KeywordAutoModerationRuleCreateBuilder(
         DiscordAutoModerationRuleTriggerMetadata(keywordFilter = keywords.toList().optional()).optional()
 }
 
-/**
- * A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s.
- *
- * The [Spam] trigger type is not yet released, so it cannot be used in most servers.
- */
+/** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
 @KordDsl
-@KordExperimental
 public class SpamAutoModerationRuleCreateBuilder(
     name: String,
     eventType: AutoModerationRuleEventType,
@@ -115,13 +107,8 @@ public class KeywordPresetAutoModerationRuleCreateBuilder(
         ).optional()
 }
 
-/**
- * A [MentionSpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s.
- *
- * The [MentionSpam] trigger type is not yet released, so it cannot be used in most servers.
- */
+/** A [MentionSpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
 @KordDsl
-@KordExperimental
 public class MentionSpamAutoModerationRuleCreateBuilder(
     name: String,
     eventType: AutoModerationRuleEventType,

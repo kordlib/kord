@@ -207,18 +207,6 @@ public final class dev/kord/voice/EncryptionMode : java/lang/Enum {
 	public static fun values ()[Ldev/kord/voice/EncryptionMode;
 }
 
-public final class dev/kord/voice/EncryptionMode$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/EncryptionMode;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/EncryptionMode;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
 public final class dev/kord/voice/EncryptionMode$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }

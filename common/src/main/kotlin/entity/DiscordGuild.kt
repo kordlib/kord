@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "DefaultMessageNotificationLevel", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level",
     entries = [
         Entry("AllMessages", intValue = 0, kDoc = "Members will receive notifications for all messages by default."),
         Entry(
@@ -11,6 +12,7 @@
 
 @file:GenerateKordEnum(
     name = "ExplicitContentFilter", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level",
     entries = [
         Entry("Disabled", intValue = 0, kDoc = "Media content will not be scanned."),
         Entry(
@@ -23,6 +25,7 @@
 
 @file:GenerateKordEnum(
     name = "MFALevel", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-mfa-level",
     entries = [
         Entry("None", intValue = 0, kDoc = "Guild has no MFA/2FA requirement for moderation actions."),
         Entry("Elevated", intValue = 1, kDoc = "Guild has a 2FA requirement for moderation actions."),
@@ -31,6 +34,7 @@
 
 @file:GenerateKordEnum(
     name = "VerificationLevel", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-verification-level",
     entries = [
         Entry("None", intValue = 0, kDoc = "Unrestricted."),
         Entry("Low", intValue = 1, kDoc = "Must have verified email on account."),
@@ -42,6 +46,7 @@
 
 @file:GenerateKordEnum(
     name = "NsfwLevel", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level",
     entries = [
         Entry("Default", intValue = 0),
         Entry("Explicit", intValue = 1),
@@ -52,6 +57,7 @@
 
 @file:GenerateKordEnum(
     name = "PremiumTier", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-premium-tier",
     entries = [
         Entry("None", intValue = 0, kDoc = "Guild has not unlocked any Server Boost perks."),
         Entry("One", intValue = 1, kDoc = "Guild has unlocked Server Boost level 1 perks."),
@@ -62,6 +68,7 @@
 
 @file:GenerateKordEnum(
     name = "GuildFeature", valueType = STRING,
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-features",
     entries = [
         Entry(
             "AnimatedBanner", stringValue = "ANIMATED_BANNER",
@@ -124,13 +131,13 @@
             deprecationLevel = ERROR,
         ),
         Entry(
-            "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
-            kDoc = "Guild has access to the three-day archive time for threads\n\n@suppress.",
+            "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
+            kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
             deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
         ),
         Entry(
-            "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
-            kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
+            "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
+            kDoc = "Guild has access to the three-day archive time for threads.\n\n@suppress",
             deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
         ),
     ],
