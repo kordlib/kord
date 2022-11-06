@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -226,8 +227,7 @@ public class Kord(
      */
     public suspend fun getChannel(
         id: Snowflake,
-        strategy: EntitySupplyStrategy<*> =
-            resources.defaultStrategy,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Channel? = strategy.supply(this).getChannelOrNull(id)
 
     /**
@@ -241,11 +241,44 @@ public class Kord(
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): T? = strategy.supply(this).getChannelOfOrNull(id)
 
+    /**
+     * Requests the [Guild] with the given [id], returns `null` when the guild isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     */
+    public suspend fun getGuildOrNull(
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+    ): Guild? = strategy.supply(this).getGuildOrNull(id)
+
+    /**
+     * Requests the [Guild] with the given [id], returns `null` when the guild isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     */
+    @Deprecated(
+        "This function has an inconsistent name for its nullable return type and has been deprecated in favour of " +
+                "'getGuildOrNull()'.",
+        ReplaceWith("this.getGuildOrNull(id, strategy)"),
+        level = WARNING,
+    )
     public suspend fun getGuild(
         id: Snowflake,
-        strategy: EntitySupplyStrategy<*> =
-            resources.defaultStrategy,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Guild? = strategy.supply(this).getGuildOrNull(id)
+
+    /**
+     * Requests the [Guild] with the given [id].
+     *
+     * This will be renamed to `getGuild` once the [deprecated function][getGuild] is removed.
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     * @throws EntityNotFoundException if the guild is null.
+     */
+    public suspend fun getGuildOrThrow(
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+    ): Guild = strategy.supply(this).getGuild(id)
 
     /**
      * Requests to get the [Webhook] in this guild.
@@ -358,7 +391,6 @@ public class Kord(
     public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
 
 
-
     /**
      * Requests to edit the presence of the bot user configured by the [builder].
      * The new presence will be shown on all shards. Use [MasterGateway.gateways] or [Event.gateway] to
@@ -425,7 +457,11 @@ public class Kord(
     public fun getGlobalApplicationCommands(withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand> {
         return defaultSupplier.getGlobalApplicationCommands(resources.applicationId, withLocalizations)
     }
-    public fun getGuildApplicationCommands(guildId: Snowflake, withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> {
+
+    public fun getGuildApplicationCommands(
+        guildId: Snowflake,
+        withLocalizations: Boolean? = null,
+    ): Flow<GuildApplicationCommand> {
         return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId, withLocalizations)
     }
 
