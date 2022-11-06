@@ -51,6 +51,8 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public final fun getGuildApplicationCommandOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildApplicationCommands (Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getGuildApplicationCommands$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public final fun getGuildOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getGuildOrNull$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildPreview (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuildPreview$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildPreviewOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
