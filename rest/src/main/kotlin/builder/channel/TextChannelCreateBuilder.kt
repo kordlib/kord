@@ -10,7 +10,6 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 import kotlin.time.Duration
@@ -46,8 +45,8 @@ public class TextChannelCreateBuilder(public var name: String) :
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
-    private var _defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing()
-    public var defaultThreadRateLimitPerUser: DurationInSeconds? by ::_defaultThreadRateLimitPerUser.delegate()
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,

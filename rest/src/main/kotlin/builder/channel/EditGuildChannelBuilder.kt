@@ -14,7 +14,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
 import kotlin.DeprecationLevel.HIDDEN
@@ -101,20 +101,26 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
      */
     public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
 
+    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    public var flags: ChannelFlags? by ::_flags.delegate()
+
     private var _defaultReactionEmoji: Optional<DiscordDefaultReaction> = Optional.Missing()
     public var defaultReactionEmoji: DiscordDefaultReaction? by ::_defaultReactionEmoji.delegate()
 
-    private var _defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing()
-    public var defaultThreadRateLimitPerUser: DurationInSeconds? by ::_defaultThreadRateLimitPerUser.delegate()
+    private var _defaultReactionEmojiId: Optional<Snowflake> = Optional.Missing()
+    public var defaultReactionEmojiId: Snowflake? by ::_defaultReactionEmojiId.delegate()
+
+    private var _defaultReactionEmojiName: Optional<String> = Optional.Missing()
+    public var defaultReactionEmojiName: String? by ::_defaultReactionEmojiName.delegate()
 
     private var _availableTags: Optional<List<DiscordForumTag>> = Optional.Missing()
     public var availableTags: List<DiscordForumTag>? by ::_availableTags.delegate()
 
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
+
     private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
-
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
-    public var flags: ChannelFlags? by ::_flags.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
@@ -125,7 +131,10 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         permissionOverwrites = _permissionOverwrites,
         parentId = _parentId,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
-        defaultReactionEmoji = _defaultReactionEmoji,
+        defaultReactionEmoji = (_defaultReactionEmoji.value ?: DiscordDefaultReaction(
+            _defaultReactionEmojiId.value,
+            _defaultReactionEmojiName.value
+        )).optional(),
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,

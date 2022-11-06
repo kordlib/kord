@@ -60,12 +60,12 @@ public data class GuildChannelCreateRequest(
     @SerialName("default_auto_archive_duration")
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     @SerialName("default_reaction_emoji")
-    val defaultReactionEmoji: Optional<DiscordDefaultReaction> = Optional.Missing(),
+    val defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing(),
     @SerialName("default_thread_rate_limit_per_user")
     val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val flags: Optional<ChannelFlags> = Optional.Missing(),
     @SerialName("available_tags")
-    val availableTags: Optional<List<DiscordForumTag>> = Optional.Missing(),
+    val availableTags: Optional<List<DiscordForumTag>?> = Optional.Missing(),
     @SerialName("default_sort_order")
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
 )
