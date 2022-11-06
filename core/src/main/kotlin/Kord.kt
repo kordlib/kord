@@ -226,8 +226,7 @@ public class Kord(
      */
     public suspend fun getChannel(
         id: Snowflake,
-        strategy: EntitySupplyStrategy<*> =
-            resources.defaultStrategy,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Channel? = strategy.supply(this).getChannelOrNull(id)
 
     /**
@@ -241,11 +240,26 @@ public class Kord(
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): T? = strategy.supply(this).getChannelOfOrNull(id)
 
+    /**
+     * Requests the [Guild] with the given [id], returns `null` when the guild isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     */
+    public suspend fun getGuildOrNull(
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+    ): Guild? = strategy.supply(this).getGuildOrNull(id)
+
+    /**
+     * Requests the [Guild] with the given [id].
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     * @throws EntityNotFoundException if the guild is null.
+     */
     public suspend fun getGuild(
         id: Snowflake,
-        strategy: EntitySupplyStrategy<*> =
-            resources.defaultStrategy,
-    ): Guild? = strategy.supply(this).getGuildOrNull(id)
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): Guild = strategy.supply(this).getGuild(id)
 
     /**
      * Requests to get the [Webhook] in this guild.
