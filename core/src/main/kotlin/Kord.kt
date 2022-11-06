@@ -64,11 +64,7 @@ public class Kord(
      *
      * @suppress
      */
-    @Deprecated(
-        "Replace with function call for localizations",
-        ReplaceWith("getGlobalApplicationCommands()"),
-        level = HIDDEN
-    )
+    @Deprecated("Replace with function call for localizations", ReplaceWith("getGlobalApplicationCommands()"), level = HIDDEN)
     public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
@@ -252,7 +248,7 @@ public class Kord(
      */
     public suspend fun getGuildOrNull(
         id: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Guild? = strategy.supply(this).getGuildOrNull(id)
 
     /**
@@ -261,9 +257,10 @@ public class Kord(
      * @throws RequestException if something went wrong while retrieving the guild.
      */
     @Deprecated(
-        "This function incorrectly returns a nullable and has been deprecated in favour of [getGuildOrNull]",
-        ReplaceWith("kord.getGuildOrNull()"),
-        WARNING
+        "This function has an inconsistent name for its nullable return type and has been deprecated in favour of " +
+                "'getGuildOrNull()'.",
+        ReplaceWith("this.getGuildOrNull(id, strategy)"),
+        level = WARNING,
     )
     public suspend fun getGuild(
         id: Snowflake,
@@ -273,14 +270,14 @@ public class Kord(
     /**
      * Requests the [Guild] with the given [id].
      *
-     * This will be renamed to `getGuild` once the deprecated function is removed
+     * This will be renamed to `getGuild` once the [deprecated function][getGuild] is removed.
      *
      * @throws RequestException if something went wrong while retrieving the guild.
      * @throws EntityNotFoundException if the guild is null.
      */
     public suspend fun getGuildOrThrow(
         id: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Guild = strategy.supply(this).getGuild(id)
 
     /**
@@ -463,7 +460,7 @@ public class Kord(
 
     public fun getGuildApplicationCommands(
         guildId: Snowflake,
-        withLocalizations: Boolean? = null
+        withLocalizations: Boolean? = null,
     ): Flow<GuildApplicationCommand> {
         return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId, withLocalizations)
     }
