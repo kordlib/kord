@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -63,7 +64,11 @@ public class Kord(
      *
      * @suppress
      */
-    @Deprecated("Replace with function call for localizations", ReplaceWith("getGlobalApplicationCommands()"), level = HIDDEN)
+    @Deprecated(
+        "Replace with function call for localizations",
+        ReplaceWith("getGlobalApplicationCommands()"),
+        level = HIDDEN
+    )
     public val globalCommands: Flow<GlobalApplicationCommand>
         get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
@@ -247,16 +252,33 @@ public class Kord(
      */
     public suspend fun getGuildOrNull(
         id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+    ): Guild? = strategy.supply(this).getGuildOrNull(id)
+
+    /**
+     * Requests the [Guild] with the given [id], returns `null` when the guild isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     */
+    @Deprecated(
+        "This function incorrectly returns a nullable and has been deprecated in favour of [getGuildOrNull]",
+        ReplaceWith("getGuildOrNull"),
+        WARNING
+    )
+    public suspend fun getGuild(
+        id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Guild? = strategy.supply(this).getGuildOrNull(id)
 
     /**
      * Requests the [Guild] with the given [id].
      *
+     * This will be renamed to `getGuild` once the deprecated function is removed
+     *
      * @throws RequestException if something went wrong while retrieving the guild.
      * @throws EntityNotFoundException if the guild is null.
      */
-    public suspend fun getGuild(
+    public suspend fun getGuildOrThrow(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
     ): Guild = strategy.supply(this).getGuild(id)
@@ -372,7 +394,6 @@ public class Kord(
     public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
 
 
-
     /**
      * Requests to edit the presence of the bot user configured by the [builder].
      * The new presence will be shown on all shards. Use [MasterGateway.gateways] or [Event.gateway] to
@@ -439,7 +460,11 @@ public class Kord(
     public fun getGlobalApplicationCommands(withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand> {
         return defaultSupplier.getGlobalApplicationCommands(resources.applicationId, withLocalizations)
     }
-    public fun getGuildApplicationCommands(guildId: Snowflake, withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> {
+
+    public fun getGuildApplicationCommands(
+        guildId: Snowflake,
+        withLocalizations: Boolean? = null
+    ): Flow<GuildApplicationCommand> {
         return defaultSupplier.getGuildApplicationCommands(resources.applicationId, guildId, withLocalizations)
     }
 
