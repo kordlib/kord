@@ -262,7 +262,7 @@ public class Kord(
      */
     @Deprecated(
         "This function incorrectly returns a nullable and has been deprecated in favour of [getGuildOrNull]",
-        ReplaceWith("getGuildOrNull"),
+        ReplaceWith("kord.getGuildOrNull()"),
         WARNING
     )
     public suspend fun getGuild(
