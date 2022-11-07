@@ -123,9 +123,10 @@ private class IdentifyRateLimiterImpl(
         require(shardId >= 0) { "shardId must be non-negative but was $shardId" }
 
         val oldState = getOldStateAndIncrementConsumers()
-        try {
-            if (oldState == NOT_RUNNING) launchRateLimiterCoroutine()
+        if (oldState == NOT_RUNNING) launchRateLimiterCoroutine() // if this throws we are screwed anyway
 
+        // this might throw because of cancellation of the coroutine that called consume(), which is ok
+        try {
             val permission = CompletableDeferred<Unit>()
             channel.send(IdentifyRequest(shardId, events, permission))
             permission.await()
