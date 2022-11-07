@@ -322,12 +322,21 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
 
     public suspend fun startThread(
         channelId: Snowflake,
-        request: StartThreadRequest,
+        multipartRequest: MultipartStartThreadRequest,
         reason: String? = null,
     ): DiscordChannel = call(Route.StartThreadPost) {
         keys[Route.ChannelId] = channelId
-        body(StartThreadRequest.serializer(), request)
+        body(StartThreadRequest.serializer(), multipartRequest.request)
         auditLogReason(reason)
+        multipartRequest.files.value?.forEach { file(it) }
+    }
+
+    public suspend fun startThread(
+        channelId: Snowflake,
+        request: StartThreadRequest,
+        reason: String? = null,
+    ): DiscordChannel {
+        return startThread(channelId, MultipartStartThreadRequest(request), reason)
     }
 
     public suspend fun startThread(

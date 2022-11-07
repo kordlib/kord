@@ -43,6 +43,7 @@ public data class ChannelData(
     val defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing(),
     val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    val message: Optional<MessageData> = Optional.Missing()
 ) {
 
 
@@ -83,7 +84,8 @@ public data class ChannelData(
                 appliedTags,
                 defaultReactionEmoji,
                 defaultThreadRateLimitPerUser,
-                defaultSortOrder
+                defaultSortOrder,
+                message.map { MessageData.from(it) }
             )
         }
     }

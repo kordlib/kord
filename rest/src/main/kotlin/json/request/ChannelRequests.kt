@@ -6,6 +6,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.rest.NamedFile
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -71,9 +72,14 @@ public data class StartThreadRequest(
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("rate_limit_per_user")
     val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
-    val message: Optional<MessageCreateRequest> = Optional.Missing(),
+    val message: Optional<MessageCreateRequest?> = Optional.Missing(),
     @SerialName("applied_tags")
     val appliedTags: Optional<List<Snowflake>?> = Optional.Missing()
+)
+
+public data class MultipartStartThreadRequest(
+    val request: StartThreadRequest,
+    val files: Optional<List<NamedFile>?> = Optional.Missing(),
 )
 
 public data class ListThreadsBySnowflakeRequest(

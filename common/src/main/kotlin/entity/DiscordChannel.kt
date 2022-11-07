@@ -157,6 +157,7 @@ public data class DiscordChannel(
     val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("default_sort_order")
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    val message: Optional<DiscordMessage> = Optional.Missing()
 )
 
 public enum class ChannelFlag(public val code: Int) {

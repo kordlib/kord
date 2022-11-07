@@ -2,8 +2,10 @@ package dev.kord.core.entity.channel.thread
 
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -30,6 +32,11 @@ public class TextChannelThread(
      * This is only applicable to [private][isPrivate] threads and will always be `false` for public threads.
      */
     public val isInvitable: Boolean get() = data.threadMetadata.value!!.invitable.discordBoolean
+
+    /**
+     * Only available when creating a thread in a forum channel
+     */
+    public val message: Message get() = data.message.unwrap { Message(it, kord) }!!
 
     override suspend fun getParent(): TextChannel {
         return supplier.getChannelOf(parentId)
