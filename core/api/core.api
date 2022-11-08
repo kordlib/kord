@@ -1,8 +1,10 @@
 public final class dev/kord/core/ClientResources {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/builder/Shards;ILio/ktor/client/HttpClient;Ldev/kord/core/supplier/EntitySupplyStrategy;)V
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/builder/Shards;Lio/ktor/client/HttpClient;Ldev/kord/core/supplier/EntitySupplyStrategy;)V
 	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultStrategy ()Ldev/kord/core/supplier/EntitySupplyStrategy;
 	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
+	public final fun getMaxConcurrency ()I
 	public final fun getShards ()Ldev/kord/gateway/builder/Shards;
 	public final fun getToken ()Ljava/lang/String;
 	public fun toString ()Ljava/lang/String;
