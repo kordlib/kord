@@ -1,3 +1,27 @@
+# 0.8.0-M16
+
+## Breaking / Performance
+
+* Events no longer implement `CoroutineScope` which caused a memory leak (#665 for migration steps)
+* Bump deprecations (#653)
+
+## Additions
+
+* New error codes (#656 #655 #654)
+* Add audit log reason to Modify Guild MFA Level endpoint (#668)
+* Add events custom context (#667)
+* Voice: Add helper to move/update voice connections (#657)
+
+## Fixes
+
+* Fix MessageStickerType constructor initialization deadlock (#670)
+
+## Improvements / Updates
+
+* Use suppressed exceptions for stack trace recovery (#658)
+* Upgrade to Gradle 7.5.1 (#662)
+* Changes to Kord's annotations (#659)
+
 # 0.8.0-M15
 
 ## Additions
