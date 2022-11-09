@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * Indicates in what event context a rule should be checked.
+ *
+ * See [AutoModerationRuleEventType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types).
  */
 @Serializable(with = AutoModerationRuleEventType.Serializer::class)
 public sealed class AutoModerationRuleEventType(

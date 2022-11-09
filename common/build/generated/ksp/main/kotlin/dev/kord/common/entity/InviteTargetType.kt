@@ -19,6 +19,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [InviteTargetType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types).
+ */
 @Serializable(with = InviteTargetType.Serializer::class)
 public sealed class InviteTargetType(
     /**

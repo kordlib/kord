@@ -19,6 +19,10 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
+/**
+ * See [EmbedType]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#embed-object-embed-types).
+ */
 @Serializable(with = EmbedType.Serializer::class)
 public sealed class EmbedType(
     /**
@@ -82,12 +86,12 @@ public sealed class EmbedType(
 
         public override fun deserialize(decoder: Decoder) =
                 when (val value = decoder.decodeString()) {
-            "article" -> Article
-            "gifv" -> Gifv
-            "image" -> Image
-            "link" -> Link
             "rich" -> Rich
+            "image" -> Image
             "video" -> Video
+            "gifv" -> Gifv
+            "article" -> Article
+            "link" -> Link
             else -> Unknown(value)
         }
     }
@@ -98,12 +102,12 @@ public sealed class EmbedType(
          */
         public val entries: List<EmbedType> by lazy(mode = PUBLICATION) {
             listOf(
-                Article,
-                Gifv,
-                Image,
-                Link,
                 Rich,
+                Image,
                 Video,
+                Gifv,
+                Article,
+                Link,
             )
         }
 

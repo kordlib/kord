@@ -9,6 +9,7 @@ import dev.kord.common.entity.AutoModerationRuleTriggerType.*
 import dev.kord.common.entity.Permission.ModerateMembers
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.AuditBuilder
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.time.Duration
@@ -137,35 +138,46 @@ public sealed interface KeywordAutoModerationRuleBuilder : TimeoutAutoModeration
     override val triggerType: Keyword get() = Keyword
 
     /**
-     * Substrings which will be searched for in content.
+     * Substrings which will be searched for in content (maximum of 1000).
      *
      * A keyword can be a phrase which contains multiple words. Wildcard symbols can be used to customize how each
      * keyword will be matched. See
      * [keyword matching strategies](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies).
+     * Each keyword must be 30 characters or less.
      */
-    public val keywords: MutableList<String>?
+    public var keywords: MutableList<String>?
 
-    /** Use this to set [keywords][KeywordAutoModerationRuleBuilder.keywords] for [KeywordAutoModerationRuleBuilder]. */
-    public fun assignKeywords(keywords: MutableList<String>)
+    @Deprecated("Binary compatibility", level = HIDDEN)
+    public fun assignKeywords(keywords: MutableList<String>) {
+        this.keywords = keywords
+    }
+
+    /**
+     * Regular expression patterns which will be matched against content (maximum of 10).
+     *
+     * Only Rust flavored regex is currently supported. Each regex pattern must be 75 characters or less.
+     */
+    public var regexPatterns: MutableList<String>?
 }
 
 /**
- * Add a [keyword] to [keywords][KeywordAutoModerationRuleBuilder.keywords].
+ * Add a [keyword] to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
  *
  * A keyword can be a phrase which contains multiple words. Wildcard symbols can be used to customize how each
  * keyword will be matched. See
  * [keyword matching strategies](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies).
+ * Each keyword must be 30 characters or less.
  */
 public fun KeywordAutoModerationRuleBuilder.keyword(keyword: String) {
-    keywords?.add(keyword) ?: assignKeywords(mutableListOf(keyword))
+    keywords?.add(keyword) ?: run { keywords = mutableListOf(keyword) }
 }
 
 /**
  * Add a [keyword] with keyword matching strategy
  * [Prefix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * to [keywords][KeywordAutoModerationRuleBuilder.keywords].
+ * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
  *
- * A keyword can be a phrase which contains multiple words.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
  */
 public fun KeywordAutoModerationRuleBuilder.prefixKeyword(keyword: String) {
     keyword("$keyword*")
@@ -174,9 +186,9 @@ public fun KeywordAutoModerationRuleBuilder.prefixKeyword(keyword: String) {
 /**
  * Add a [keyword] with keyword matching strategy
  * [Suffix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * to [keywords][KeywordAutoModerationRuleBuilder.keywords].
+ * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
  *
- * A keyword can be a phrase which contains multiple words.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
  */
 public fun KeywordAutoModerationRuleBuilder.suffixKeyword(keyword: String) {
     keyword("*$keyword")
@@ -185,12 +197,21 @@ public fun KeywordAutoModerationRuleBuilder.suffixKeyword(keyword: String) {
 /**
  * Add a [keyword] with keyword matching strategy
  * [Anywhere](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * to [keywords][KeywordAutoModerationRuleBuilder.keywords].
+ * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
  *
- * A keyword can be a phrase which contains multiple words.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
  */
 public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
     keyword("*$keyword*")
+}
+
+/**
+ * Add a [pattern] to [regexPatterns][KeywordAutoModerationRuleBuilder.regexPatterns] (maximum of 10).
+ *
+ * Only Rust flavored regex is currently supported. Each regex pattern must be 75 characters or less.
+ */
+public fun KeywordAutoModerationRuleBuilder.regexPattern(pattern: String) {
+    regexPatterns?.add(pattern) ?: run { regexPatterns = mutableListOf(pattern) }
 }
 
 
@@ -217,9 +238,9 @@ public sealed interface KeywordPresetAutoModerationRuleBuilder : TypedAutoModera
     public fun assignPresets(presets: MutableList<AutoModerationRuleKeywordPresetType>)
 
     /**
-     * Substrings which will be exempt from triggering the [presets].
+     * Substrings which will be exempt from triggering the [presets] (maximum of 1000).
      *
-     * A keyword can be a phrase which contains multiple words.
+     * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
      */
     public var allowedKeywords: MutableList<String>?
 }
@@ -230,9 +251,9 @@ public fun KeywordPresetAutoModerationRuleBuilder.preset(preset: AutoModerationR
 }
 
 /**
- * Add a [keyword] to [allowedKeywords][KeywordPresetAutoModerationRuleBuilder.allowedKeywords].
+ * Add a [keyword] to [allowedKeywords][KeywordPresetAutoModerationRuleBuilder.allowedKeywords] (maximum of 1000).
  *
- * A keyword can be a phrase which contains multiple words.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
  */
 public fun KeywordPresetAutoModerationRuleBuilder.allowKeyword(keyword: String) {
     allowedKeywords?.add(keyword) ?: run { allowedKeywords = mutableListOf(keyword) }

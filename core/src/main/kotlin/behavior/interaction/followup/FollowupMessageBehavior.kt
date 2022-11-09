@@ -33,6 +33,15 @@ public interface FollowupMessageBehavior : KordEntity, Strategizable {
 
     public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
+    /**
+     * Requests to delete this followup message.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    public suspend fun delete() {
+        kord.rest.interaction.deleteFollowupMessage(applicationId, token, id)
+    }
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): FollowupMessageBehavior
 }
 

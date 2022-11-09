@@ -21,6 +21,9 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * Style of a [text input][dev.kord.common.entity.ComponentType.TextInput].
+ *
+ * See [TextInputStyle]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles).
  */
 @Serializable(with = TextInputStyle.Serializer::class)
 public sealed class TextInputStyle(

@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "DiscordConnectionVisibility", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/user#connection-object-visibility-types",
     entries = [
         Entry("None", intValue = 0, kDoc = "Invisible to everyone except the user themselves."),
         Entry("Everyone", intValue = 1, kDoc = "Visible to everyone."),

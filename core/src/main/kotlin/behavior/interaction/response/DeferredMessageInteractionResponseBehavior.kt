@@ -19,6 +19,22 @@ import kotlin.contracts.contract
  */
 public sealed interface DeferredMessageInteractionResponseBehavior : InteractionResponseBehavior {
 
+    /**
+     * Requests to delete the response.
+     *
+     * The 'loading' animation will stop and any attempt to call
+     * [respond][DeferredMessageInteractionResponseBehavior.respond] hereafter will fail.
+     *
+     * Returns a [FollowupPermittingInteractionResponseBehavior] that can still be used to send followup messages to the
+     * interaction.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun delete(): FollowupPermittingInteractionResponseBehavior {
+        kord.rest.interaction.deleteOriginalInteractionResponse(applicationId, token)
+        return FollowupPermittingInteractionResponseBehavior(applicationId, token, kord)
+    }
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): DeferredMessageInteractionResponseBehavior
 }
 

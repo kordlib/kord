@@ -1,5 +1,6 @@
 @file:GenerateKordEnum(
     name = "AuditLogEvent", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events",
     entries = [
         Entry("GuildUpdate", intValue = 1, kDoc = "Server settings were updated."),
         Entry("ChannelCreate", intValue = 10, kDoc = "Channel was created."),

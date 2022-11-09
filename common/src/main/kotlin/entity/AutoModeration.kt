@@ -1,6 +1,7 @@
 @file:GenerateKordEnum(
     name = "AutoModerationRuleTriggerType", valueType = INT,
     kDoc = "Characterizes the type of content which can trigger the rule.",
+    docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types",
     entries = [
         Entry("Keyword", intValue = 1, kDoc = "Check if content contains words from a user defined list of keywords."),
         Entry("Spam", intValue = 3, kDoc = "Check if content represents generic spam."),
@@ -15,6 +16,7 @@
 @file:GenerateKordEnum(
     name = "AutoModerationRuleKeywordPresetType", valueType = INT,
     kDoc = "An internally pre-defined wordset which will be searched for in content.",
+    docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-preset-types",
     entries = [
         Entry("Profanity", intValue = 1, kDoc = "Words that may be considered forms of swearing or cursing."),
         Entry("SexualContent", intValue = 2, kDoc = "Words that refer to sexually explicit behavior or activity."),
@@ -25,6 +27,7 @@
 @file:GenerateKordEnum(
     name = "AutoModerationRuleEventType", valueType = INT,
     kDoc = "Indicates in what event context a rule should be checked.",
+    docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types",
     entries = [
         Entry("MessageSend", intValue = 1, kDoc = "When a member sends or edits a message in the guild."),
     ],
@@ -33,6 +36,7 @@
 @file:GenerateKordEnum(
     name = "AutoModerationActionType", valueType = INT,
     kDoc = "The type of action.",
+    docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-types",
     entries = [
         Entry("BlockMessage", intValue = 1, kDoc = "Blocks the content of a message according to the rule."),
         Entry("SendAlertMessage", intValue = 2, kDoc = "Logs user content to a specified channel."),
@@ -85,6 +89,8 @@ public data class DiscordAutoModerationRule(
 public data class DiscordAutoModerationRuleTriggerMetadata(
     @SerialName("keyword_filter")
     val keywordFilter: Optional<List<String>> = Optional.Missing(),
+    @SerialName("regex_patterns")
+    val regexPatterns: Optional<List<String>> = Optional.Missing(),
     val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
     @SerialName("allow_list")
     val allowList: Optional<List<String>> = Optional.Missing(),

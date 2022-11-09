@@ -231,14 +231,16 @@ public final class dev/kord/gateway/DefaultGatewayBuilder {
 	public final fun getClient ()Lio/ktor/client/HttpClient;
 	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
-	public final fun getIdentifyRateLimiter ()Ldev/kord/common/ratelimit/RateLimiter;
+	public final synthetic fun getIdentifyRateLimiter ()Ldev/kord/common/ratelimit/RateLimiter;
+	public final fun getIdentifyRateLimiter ()Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
 	public final fun getReconnectRetry ()Ldev/kord/gateway/retry/Retry;
 	public final fun getSendRateLimiter ()Ldev/kord/common/ratelimit/RateLimiter;
 	public final fun getUrl ()Ljava/lang/String;
 	public final fun setClient (Lio/ktor/client/HttpClient;)V
 	public final fun setDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public final fun setEventFlow (Lkotlinx/coroutines/flow/MutableSharedFlow;)V
-	public final fun setIdentifyRateLimiter (Ldev/kord/common/ratelimit/RateLimiter;)V
+	public final synthetic fun setIdentifyRateLimiter (Ldev/kord/common/ratelimit/RateLimiter;)V
+	public final fun setIdentifyRateLimiter (Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;)V
 	public final fun setReconnectRetry (Ldev/kord/gateway/retry/Retry;)V
 	public final fun setSendRateLimiter (Ldev/kord/common/ratelimit/RateLimiter;)V
 	public final fun setUrl (Ljava/lang/String;)V
@@ -246,20 +248,25 @@ public final class dev/kord/gateway/DefaultGatewayBuilder {
 
 public final class dev/kord/gateway/DefaultGatewayData {
 	public fun <init> (Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/common/ratelimit/RateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;)V
+	public fun <init> (Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lio/ktor/client/HttpClient;
 	public final fun component3 ()Ldev/kord/gateway/retry/Retry;
 	public final fun component4 ()Ldev/kord/common/ratelimit/RateLimiter;
-	public final fun component5 ()Ldev/kord/common/ratelimit/RateLimiter;
+	public final synthetic fun component5 ()Ldev/kord/common/ratelimit/RateLimiter;
+	public final fun component5 ()Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
 	public final fun component6 ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun component7 ()Lkotlinx/coroutines/flow/MutableSharedFlow;
 	public final fun copy (Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/common/ratelimit/RateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;)Ldev/kord/gateway/DefaultGatewayData;
+	public final fun copy (Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;)Ldev/kord/gateway/DefaultGatewayData;
 	public static synthetic fun copy$default (Ldev/kord/gateway/DefaultGatewayData;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/common/ratelimit/RateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;ILjava/lang/Object;)Ldev/kord/gateway/DefaultGatewayData;
+	public static synthetic fun copy$default (Ldev/kord/gateway/DefaultGatewayData;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Lkotlinx/coroutines/CoroutineDispatcher;Lkotlinx/coroutines/flow/MutableSharedFlow;ILjava/lang/Object;)Ldev/kord/gateway/DefaultGatewayData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClient ()Lio/ktor/client/HttpClient;
 	public final fun getDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
-	public final fun getIdentifyRateLimiter ()Ldev/kord/common/ratelimit/RateLimiter;
+	public final synthetic fun getIdentifyRateLimiter ()Ldev/kord/common/ratelimit/RateLimiter;
+	public final fun getIdentifyRateLimiter ()Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
 	public final fun getReconnectRetry ()Ldev/kord/gateway/retry/Retry;
 	public final fun getSendRateLimiter ()Ldev/kord/common/ratelimit/RateLimiter;
 	public final fun getUrl ()Ljava/lang/String;
@@ -2029,6 +2036,16 @@ public final class dev/kord/gateway/builder/Shards {
 	public final fun getTotalShards ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class dev/kord/gateway/ratelimit/IdentifyRateLimiter {
+	public abstract fun consume (ILkotlinx/coroutines/flow/SharedFlow;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getMaxConcurrency ()I
+}
+
+public final class dev/kord/gateway/ratelimit/IdentifyRateLimiterKt {
+	public static final fun IdentifyRateLimiter (ILkotlinx/coroutines/CoroutineDispatcher;)Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
+	public static synthetic fun IdentifyRateLimiter$default (ILkotlinx/coroutines/CoroutineDispatcher;ILjava/lang/Object;)Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
 }
 
 public final class dev/kord/gateway/retry/LinearRetry : dev/kord/gateway/retry/Retry {

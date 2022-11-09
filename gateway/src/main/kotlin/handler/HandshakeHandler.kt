@@ -1,7 +1,5 @@
 package dev.kord.gateway.handler
 
-import dev.kord.common.ratelimit.RateLimiter
-import dev.kord.common.ratelimit.consume
 import dev.kord.gateway.*
 import dev.kord.gateway.retry.Retry
 import io.ktor.http.*
@@ -13,7 +11,6 @@ internal class HandshakeHandler(
     private val initialUrl: Url,
     private val send: suspend (Command) -> Unit,
     private val sequence: Sequence,
-    private val identifyRateLimiter: RateLimiter,
     private val reconnectRetry: Retry
 ) : Handler(flow, "HandshakeHandler") {
 
@@ -25,6 +22,14 @@ internal class HandshakeHandler(
     internal val resumeContext = atomic<ResumeContext?>(initial = null)
     val gatewayUrl get() = resumeContext.value?.resumeUrl ?: initialUrl
 
+    val needsIdentifyAndGatewayUrl: Pair<Boolean, Url>
+        get() {
+            val context = resumeContext.value
+            val needsIdentify = context == null
+            val gatewayUrl = context?.resumeUrl ?: initialUrl
+            return Pair(needsIdentify, gatewayUrl)
+        }
+
     private val resumeOrIdentify
         get() = when (val sessionId = resumeContext.value?.sessionId) {
             null -> configuration.identify
@@ -34,9 +39,7 @@ internal class HandshakeHandler(
     override fun start() {
         on<Hello> {
             reconnectRetry.reset() // connected and read without problems, resetting retry counter
-            identifyRateLimiter.consume {
-                send(resumeOrIdentify)
-            }
+            send(resumeOrIdentify)
         }
 
         on<Ready> { event ->

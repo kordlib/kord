@@ -5,6 +5,7 @@ import dev.kord.common.entity.optional.optionalInt
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.GatewayCloseCode.*
 import dev.kord.gateway.handler.*
+import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
@@ -26,6 +27,8 @@ import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
+import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -41,21 +44,74 @@ private sealed class State(val retry: Boolean) {
 
 /**
  * @param url The url to connect to.
- * @param client The client from which a webSocket will be created, requires the WebSockets and JsonFeature to be
+ * @param client The [HttpClient] from which a WebSocket will be created, requires the [WebSockets] plugin to be
  * installed.
- * @param reconnectRetry A retry used for reconnection attempts.
- * @param sendRateLimiter A rate limiter than follows the Discord API specifications for sending messages.
- * @param identifyRateLimiter: A rate limiter that follows the Discord API specifications for identifying.
+ * @param reconnectRetry A [Retry] used for reconnection attempts.
+ * @param sendRateLimiter A [RateLimiter] that follows the Discord API specifications for sending messages.
+ * @param identifyRateLimiter An [IdentifyRateLimiter] that follows the Discord API specifications for identifying.
  */
 public data class DefaultGatewayData(
     val url: String,
     val client: HttpClient,
     val reconnectRetry: Retry,
     val sendRateLimiter: RateLimiter,
-    val identifyRateLimiter: RateLimiter,
+    val identifyRateLimiter: IdentifyRateLimiter,
     val dispatcher: CoroutineDispatcher,
-    val eventFlow: MutableSharedFlow<Event>
-)
+    val eventFlow: MutableSharedFlow<Event>,
+) {
+    /** @suppress */
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated(
+        "Identifying now uses IdentifyRateLimiter instead of RateLimiter to better work with multiple shards.",
+        ReplaceWith(
+            "DefaultGatewayData(url, client, reconnectRetry, sendRateLimiter, IdentifyRateLimiter(maxConcurrency = 1 " +
+                    "/* can be obtained by calling the Route.GatewayBotGet endpoint */, dispatcher), dispatcher, " +
+                    "eventFlow)",
+            "dev.kord.gateway.IdentifyRateLimiter"
+        ),
+        level = ERROR,
+    )
+    public constructor(
+        url: String, client: HttpClient, reconnectRetry: Retry, sendRateLimiter: RateLimiter,
+        identifyRateLimiter: RateLimiter, dispatcher: CoroutineDispatcher, eventFlow: MutableSharedFlow<Event>,
+    ) : this(
+        url, client, reconnectRetry, sendRateLimiter,
+        dev.kord.gateway.ratelimit.IdentifyRateLimiterFromCommonRateLimiter(identifyRateLimiter), dispatcher, eventFlow,
+    )
+
+    @Suppress("DEPRECATION_ERROR")
+    private val oldIdentifyRateLimiter
+        get() = (identifyRateLimiter as? dev.kord.gateway.ratelimit.IdentifyRateLimiterFromCommonRateLimiter)
+            ?.commonRateLimiter
+
+    @Deprecated("Binary compatibility", level = HIDDEN)
+    @get:JvmName("getIdentifyRateLimiter")
+    public val identifyRateLimiter0: RateLimiter? get() = oldIdentifyRateLimiter
+
+    @Suppress("FunctionName")
+    @Deprecated("Binary compatibility", level = HIDDEN)
+    @JvmName("component5")
+    public fun _component5(): RateLimiter? = oldIdentifyRateLimiter
+
+    /** @suppress */
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated(
+        "Identifying now uses IdentifyRateLimiter instead of RateLimiter to better work with multiple shards.",
+        ReplaceWith(
+            "copy(url, client, reconnectRetry, sendRateLimiter, IdentifyRateLimiter(maxConcurrency = 1 /* can be " +
+                    "obtained by calling the Route.GatewayBotGet endpoint */, dispatcher), dispatcher, eventFlow)",
+            "dev.kord.gateway.IdentifyRateLimiter"
+        ),
+        level = ERROR,
+    )
+    public fun copy(
+        url: String = this.url, client: HttpClient = this.client, reconnectRetry: Retry = this.reconnectRetry,
+        sendRateLimiter: RateLimiter = this.sendRateLimiter,
+        identifyRateLimiter: RateLimiter = oldIdentifyRateLimiter!!, dispatcher: CoroutineDispatcher = this.dispatcher,
+        eventFlow: MutableSharedFlow<Event> = this.eventFlow,
+    ): DefaultGatewayData =
+        DefaultGatewayData(url, client, reconnectRetry, sendRateLimiter, identifyRateLimiter, dispatcher, eventFlow)
+}
 
 /**
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket
@@ -92,8 +148,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         compression = initialUrl.parameters.contains("compress", "zlib-stream")
 
         SequenceHandler(events, sequence)
-        handshakeHandler =
-            HandshakeHandler(events, initialUrl, ::trySend, sequence, data.identifyRateLimiter, data.reconnectRetry)
+        handshakeHandler = HandshakeHandler(events, initialUrl, ::trySend, sequence, data.reconnectRetry)
         HeartbeatHandler(events, ::trySend, { restart(Close.ZombieConnection) }, { _ping.value = it }, sequence)
         ReconnectHandler(events) { restart(Close.Reconnecting) }
         InvalidSessionHandler(events) { restart(it) }
@@ -102,7 +157,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     override suspend fun start(configuration: GatewayConfiguration) {
         resetState(configuration)
 
-        startAndHandleGatewayConnection()
+        startAndHandleGatewayConnection(configuration)
     }
 
     override suspend fun resume(configuration: GatewayResumeConfiguration) {
@@ -120,15 +175,21 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             }
         }
 
-        startAndHandleGatewayConnection()
+        startAndHandleGatewayConnection(configuration.startConfiguration)
     }
 
-    private suspend fun startAndHandleGatewayConnection() = withContext(data.dispatcher) {
+    private suspend fun startAndHandleGatewayConnection(configuration: GatewayConfiguration) = withContext(data.dispatcher) {
         while (data.reconnectRetry.hasNext && state.value is State.Running) {
             try {
-                val url = handshakeHandler.gatewayUrl
-                defaultGatewayLogger.trace { "opening gateway connection to $url" }
-                socket = data.client.webSocketSession { url(url) }
+                val (needsIdentify, gatewayUrl) = handshakeHandler.needsIdentifyAndGatewayUrl
+
+                if (needsIdentify) {
+                    data.identifyRateLimiter.consume(shardId = configuration.shard.index, events)
+                }
+
+                defaultGatewayLogger.trace { "opening gateway connection to $gatewayUrl" }
+                socket = data.client.webSocketSession { url(gatewayUrl) }
+
                 /**
                  * https://discord.com/developers/docs/topics/gateway#transport-compression
                  *
