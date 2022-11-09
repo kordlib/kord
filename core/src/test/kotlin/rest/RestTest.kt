@@ -1,5 +1,6 @@
 package rest
 
+import BoxedSnowflake
 import dev.kord.common.Color
 import dev.kord.common.entity.*
 import dev.kord.core.Kord
@@ -49,21 +50,21 @@ class RestServiceTest {
     private lateinit var kord: Kord
 
     //created guild id
-    private lateinit var guildId: Snowflake
+    private lateinit var guildId: BoxedSnowflake
     private lateinit var guild: Guild
 
     //created channel id
-    private lateinit var channelId: Snowflake
+    private lateinit var channelId: BoxedSnowflake
     private lateinit var channel: TextChannel
 
 
-    private lateinit var userId: Snowflake
+    private lateinit var userId: BoxedSnowflake
 
     @BeforeAll
     fun setup() = runBlocking {
         kord = Kord.restOnly(token)
 
-        userId = kord.getSelf().id
+        userId = BoxedSnowflake(kord.getSelf().id)
     }
 
 
@@ -84,9 +85,9 @@ class RestServiceTest {
             explicitContentFilter = ExplicitContentFilter.AllMembers
         }
 
-        guildId = guild.id
+        guildId = BoxedSnowflake(guild.id)
 
-        this@RestServiceTest.guild = kord.getGuildOrThrow(guildId)
+        this@RestServiceTest.guild = kord.getGuildOrThrow(guildId.value)
 
         guild.edit {
             name = "Edited Guild Test"
@@ -116,7 +117,7 @@ class RestServiceTest {
                 to check if encoding is okay
             """.trimIndent()
         }
-        channelId = channel.id
+        channelId = BoxedSnowflake(channel.id)
         this@RestServiceTest.channel = channel
 
         guild.getChannelOf<TextChannel>(channel.id)
@@ -225,7 +226,7 @@ class RestServiceTest {
         guild.members.toList()
         //TODO add member to guild
 
-        guild.getMember(userId)
+        guild.getMember(userId.value)
 
         guild.editSelfNickname("Kord")
         //deleteGuildMember(guildId, user)
@@ -246,7 +247,7 @@ class RestServiceTest {
             name = "Edited role"
         }
 
-        val member = guild.getMember(userId)
+        val member = guild.getMember(userId.value)
         member.addRole(role.id)
         member.removeRole(role.id)
 
@@ -325,7 +326,7 @@ class RestServiceTest {
     @Order(19)
     fun `emojis in guilds`(): Unit = runBlocking {
         val emoji = guild.createEmoji("kord", imageBinary("images/kord.png")) {
-            roles.add(guildId)
+            roles.add(guildId.value)
         }
 
         emoji.edit { name = "edited" }

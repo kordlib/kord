@@ -1,5 +1,6 @@
 package live
 
+import BoxedSnowflake
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.UserData
@@ -23,12 +24,12 @@ import kotlin.test.assertEquals
 @Disabled
 class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
 
-    private lateinit var userId: Snowflake
+    private lateinit var userId: BoxedSnowflake
 
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        userId = randomId()
+        userId = BoxedSnowflake(randomId())
     }
 
     @BeforeTest
@@ -37,7 +38,7 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
             user = User(
                 kord = kord,
                 data = UserData(
-                    id = userId,
+                    id = userId.value,
                     username = "",
                     discriminator = ""
                 )
@@ -49,11 +50,11 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
-                assertEquals(it.user.id, userId)
+                assertEquals(it.user.id, userId.value)
                 count()
             }
 
-            sendEventValidAndRandomId(userId) {
+            sendEventValidAndRandomId(userId.value) {
                 UserUpdate(
                     DiscordUser(
                         id = it,

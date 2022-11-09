@@ -70,12 +70,7 @@ public sealed class OptionalSnowflake {
      * @param uLongValue the raw value this optional wraps.
      * See [Snowflake.value] and [Snowflake.validValues] for more details.
      */
-    public class Value(private val uLongValue: ULong) : OptionalSnowflake() {
-
-        public constructor(value: Snowflake) : this(value.value)
-
-        override val value: Snowflake get() = Snowflake(uLongValue)
-
+    public class Value(override val value: Snowflake) : OptionalSnowflake() {
         /**
          * Destructures this optional to its [value].
          */
@@ -95,7 +90,7 @@ public sealed class OptionalSnowflake {
         override val descriptor: SerialDescriptor = ULong.serializer().descriptor
 
         override fun deserialize(decoder: Decoder): OptionalSnowflake =
-            Value(decoder.decodeInline(descriptor).decodeLong().toULong())
+            Value(Snowflake(decoder.decodeInline(descriptor).decodeLong().toULong()))
 
         override fun serialize(encoder: Encoder, value: OptionalSnowflake) = when (value) {
             Missing -> Unit // ignore value
@@ -113,7 +108,7 @@ public val OptionalSnowflake?.value: Snowflake?
         OptionalSnowflake.Missing, null -> null
     }
 
-public fun Snowflake.optionalSnowflake(): OptionalSnowflake.Value = OptionalSnowflake.Value(this.value)
+public fun Snowflake.optionalSnowflake(): OptionalSnowflake.Value = OptionalSnowflake.Value(Snowflake(this.value))
 
 @JvmName("optionalNullable")
 public fun Snowflake?.optionalSnowflake(): OptionalSnowflake.Value? = this?.optionalSnowflake()

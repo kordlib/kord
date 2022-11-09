@@ -207,6 +207,18 @@ public final class dev/kord/voice/EncryptionMode : java/lang/Enum {
 	public static fun values ()[Ldev/kord/voice/EncryptionMode;
 }
 
+public final class dev/kord/voice/EncryptionMode$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/EncryptionMode;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/EncryptionMode;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/voice/EncryptionMode$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -293,43 +305,43 @@ public final class dev/kord/voice/VoiceConnection {
 	public final fun getVoiceGateway ()Ldev/kord/voice/gateway/VoiceGateway;
 	public final fun getVoiceGatewayConfiguration ()Ldev/kord/voice/gateway/VoiceGatewayConfiguration;
 	public final fun leave (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun move (Ldev/kord/common/entity/Snowflake;ZZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun move$default (Ldev/kord/voice/VoiceConnection;Ldev/kord/common/entity/Snowflake;ZZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun move-9VmEaQQ (JZZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun move-9VmEaQQ$default (Ldev/kord/voice/VoiceConnection;JZZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun setVoiceGatewayConfiguration (Ldev/kord/voice/gateway/VoiceGatewayConfiguration;)V
 	public final fun shutdown (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/VoiceConnectionBuilder {
-	public fun <init> (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)V
+	public synthetic fun <init> (Ldev/kord/gateway/Gateway;JJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun audioProvider (Ldev/kord/voice/AudioProvider;)V
 	public final fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun frameInterceptor (Ldev/kord/voice/FrameInterceptor;)V
 	public final fun getAudioProvider ()Ldev/kord/voice/AudioProvider;
 	public final fun getAudioSender ()Ldev/kord/voice/udp/AudioFrameSender;
-	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getChannelId-4_xYDEk ()J
 	public final fun getConnectionDetachDuration-UwyO8pc ()J
 	public final fun getFrameInterceptor ()Ldev/kord/voice/FrameInterceptor;
 	public final fun getGateway ()Ldev/kord/gateway/Gateway;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildId-4_xYDEk ()J
 	public final fun getNonceStrategy ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
 	public final fun getReceiveVoice ()Z
 	public final fun getSelfDeaf ()Z
-	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getSelfId-4_xYDEk ()J
 	public final fun getSelfMute ()Z
 	public final fun getStreams ()Ldev/kord/voice/streams/Streams;
 	public final fun getTimeout ()J
 	public final fun getUdpSocket ()Ldev/kord/voice/udp/VoiceUdpSocket;
 	public final fun setAudioProvider (Ldev/kord/voice/AudioProvider;)V
 	public final fun setAudioSender (Ldev/kord/voice/udp/AudioFrameSender;)V
-	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setChannelId-IO-hELI (J)V
 	public final fun setConnectionDetachDuration-LRDsOJo (J)V
 	public final fun setFrameInterceptor (Ldev/kord/voice/FrameInterceptor;)V
 	public final fun setGateway (Ldev/kord/gateway/Gateway;)V
-	public final fun setGuildId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setGuildId-IO-hELI (J)V
 	public final fun setNonceStrategy (Ldev/kord/voice/encryption/strategies/NonceStrategy;)V
 	public final fun setReceiveVoice (Z)V
 	public final fun setSelfDeaf (Z)V
-	public final fun setSelfId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setSelfId-IO-hELI (J)V
 	public final fun setSelfMute (Z)V
 	public final fun setStreams (Ldev/kord/voice/streams/Streams;)V
 	public final fun setTimeout (J)V
@@ -338,23 +350,23 @@ public final class dev/kord/voice/VoiceConnectionBuilder {
 }
 
 public final class dev/kord/voice/VoiceConnectionData {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun <init> (JJLjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-4_xYDEk ()J
+	public final fun component2-4_xYDEk ()J
 	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/voice/VoiceConnectionData;
-	public static synthetic fun copy$default (Ldev/kord/voice/VoiceConnectionData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/VoiceConnectionData;
+	public final fun copy-U2evHYk (JJLjava/lang/String;)Ldev/kord/voice/VoiceConnectionData;
+	public static synthetic fun copy-U2evHYk$default (Ldev/kord/voice/VoiceConnectionData;JJLjava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/VoiceConnectionData;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildId-4_xYDEk ()J
+	public final fun getSelfId-4_xYDEk ()J
 	public final fun getSessionId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/voice/VoiceConnectionKt {
-	public static final fun VoiceConnection (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun VoiceConnection$default (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun VoiceConnection-vnAI47A (Ldev/kord/gateway/Gateway;JJJLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun VoiceConnection-vnAI47A$default (Ldev/kord/gateway/Gateway;JJJLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/encryption/XSalsa20Poly1305Codec {
@@ -464,13 +476,13 @@ public final class dev/kord/voice/gateway/DefaultVoiceGateway : dev/kord/voice/g
 }
 
 public final class dev/kord/voice/gateway/DefaultVoiceGatewayBuilder {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
+	public synthetic fun <init> (JJLjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/voice/gateway/DefaultVoiceGateway;
 	public final fun getClient ()Lio/ktor/client/HttpClient;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildId-4_xYDEk ()J
 	public final fun getReconnectRetry ()Ldev/kord/gateway/retry/Retry;
-	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getSelfId-4_xYDEk ()J
 	public final fun getSessionId ()Ljava/lang/String;
 	public final fun setClient (Lio/ktor/client/HttpClient;)V
 	public final fun setEventFlow (Lkotlinx/coroutines/flow/MutableSharedFlow;)V
@@ -478,21 +490,21 @@ public final class dev/kord/voice/gateway/DefaultVoiceGatewayBuilder {
 }
 
 public final class dev/kord/voice/gateway/DefaultVoiceGatewayData {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun <init> (JJLjava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-4_xYDEk ()J
+	public final fun component2-4_xYDEk ()J
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Lio/ktor/client/HttpClient;
 	public final fun component5 ()Ldev/kord/gateway/retry/Retry;
 	public final fun component6 ()Lkotlinx/coroutines/flow/MutableSharedFlow;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;)Ldev/kord/voice/gateway/DefaultVoiceGatewayData;
-	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DefaultVoiceGatewayData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;ILjava/lang/Object;)Ldev/kord/voice/gateway/DefaultVoiceGatewayData;
+	public final fun copy-huMQfDM (JJLjava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;)Ldev/kord/voice/gateway/DefaultVoiceGatewayData;
+	public static synthetic fun copy-huMQfDM$default (Ldev/kord/voice/gateway/DefaultVoiceGatewayData;JJLjava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;ILjava/lang/Object;)Ldev/kord/voice/gateway/DefaultVoiceGatewayData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClient ()Lio/ktor/client/HttpClient;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildId-4_xYDEk ()J
 	public final fun getReconnectRetry ()Ldev/kord/gateway/retry/Retry;
-	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getSelfId-4_xYDEk ()J
 	public final fun getSessionId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -592,19 +604,19 @@ public final class dev/kord/voice/gateway/Hello$Companion {
 
 public final class dev/kord/voice/gateway/Identify : dev/kord/voice/gateway/Command {
 	public static final field Companion Ldev/kord/voice/gateway/Identify$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JJLjava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-4_xYDEk ()J
+	public final fun component2-4_xYDEk ()J
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;)Ldev/kord/voice/gateway/Identify;
-	public static synthetic fun copy$default (Ldev/kord/voice/gateway/Identify;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/gateway/Identify;
+	public final fun copy-Lfpyfds (JJLjava/lang/String;Ljava/lang/String;)Ldev/kord/voice/gateway/Identify;
+	public static synthetic fun copy-Lfpyfds$default (Ldev/kord/voice/gateway/Identify;JJLjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/gateway/Identify;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getServerId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getServerId-4_xYDEk ()J
 	public final fun getSessionId ()Ljava/lang/String;
 	public final fun getToken ()Ljava/lang/String;
-	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getUserId-4_xYDEk ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Ldev/kord/voice/gateway/Identify;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -682,15 +694,15 @@ public final class dev/kord/voice/gateway/Ready$Companion {
 
 public final class dev/kord/voice/gateway/Resume : dev/kord/voice/gateway/Command {
 	public static final field Companion Ldev/kord/voice/gateway/Resume$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JLjava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-4_xYDEk ()J
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;)Ldev/kord/voice/gateway/Resume;
-	public static synthetic fun copy$default (Ldev/kord/voice/gateway/Resume;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/gateway/Resume;
+	public final fun copy-9y3P_48 (JLjava/lang/String;Ljava/lang/String;)Ldev/kord/voice/gateway/Resume;
+	public static synthetic fun copy-9y3P_48$default (Ldev/kord/voice/gateway/Resume;JLjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/voice/gateway/Resume;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getServerId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getServerId-4_xYDEk ()J
 	public final fun getSessionId ()Ljava/lang/String;
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -854,16 +866,16 @@ public final class dev/kord/voice/gateway/SessionDescription$Companion {
 public final class dev/kord/voice/gateway/Speaking : dev/kord/voice/gateway/VoiceEvent {
 	public static final field Companion Ldev/kord/voice/gateway/Speaking$Companion;
 	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Lkotlin/UInt;Ldev/kord/voice/SpeakingFlags;Lkotlinx/serialization/internal/SerializationConstructorMarker;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;ILdev/kord/voice/SpeakingFlags;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public synthetic fun <init> (JILdev/kord/voice/SpeakingFlags;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-4_xYDEk ()J
 	public final fun component2-pVg5ArA ()I
 	public final fun component3 ()Ldev/kord/voice/SpeakingFlags;
-	public final fun copy-OsBMiQA (Ldev/kord/common/entity/Snowflake;ILdev/kord/voice/SpeakingFlags;)Ldev/kord/voice/gateway/Speaking;
-	public static synthetic fun copy-OsBMiQA$default (Ldev/kord/voice/gateway/Speaking;Ldev/kord/common/entity/Snowflake;ILdev/kord/voice/SpeakingFlags;ILjava/lang/Object;)Ldev/kord/voice/gateway/Speaking;
+	public final fun copy-jfKTBeE (JILdev/kord/voice/SpeakingFlags;)Ldev/kord/voice/gateway/Speaking;
+	public static synthetic fun copy-jfKTBeE$default (Ldev/kord/voice/gateway/Speaking;JILdev/kord/voice/SpeakingFlags;ILjava/lang/Object;)Ldev/kord/voice/gateway/Speaking;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getSpeaking ()Ldev/kord/voice/SpeakingFlags;
 	public final fun getSsrc-pVg5ArA ()I
-	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getUserId-4_xYDEk ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Ldev/kord/voice/gateway/Speaking;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V

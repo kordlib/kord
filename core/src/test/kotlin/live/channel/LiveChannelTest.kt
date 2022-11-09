@@ -1,5 +1,6 @@
 package live.channel
 
+import BoxedSnowflake
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.DiscordUnavailableGuild
@@ -29,7 +30,7 @@ import kotlin.test.assertEquals
 @Disabled
 abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE>() {
 
-    protected abstract val channelId: Snowflake
+    protected abstract val channelId: BoxedSnowflake
 
     @Test
     fun `Check type of live entity corresponds to the channel type`() = runBlocking {
@@ -54,11 +55,11 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as ChannelDeleteEvent
-                assertEquals(channelId, event.channel.id)
+                assertEquals(channelId.value, event.channel.id)
                 count()
             }
 
-            sendEventValidAndRandomId(channelId) {
+            sendEventValidAndRandomId(channelId.value) {
                 ChannelDelete(
                     DiscordChannel(
                         id = it,
@@ -76,11 +77,11 @@ abstract class LiveChannelTest<LIVE : LiveChannel> : AbstractLiveEntityTest<LIVE
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as GuildDeleteEvent
-                assertEquals(guildId, event.guildId)
+                assertEquals(guildId.value, event.guildId)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(guildId) {
+            sendEventValidAndRandomIdCheckLiveActive(guildId.value) {
                 GuildDelete(
                     DiscordUnavailableGuild(
                         id = it

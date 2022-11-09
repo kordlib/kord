@@ -35,7 +35,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             Guild(
                 kord = kord,
                 data = GuildData(
-                    id = guildId,
+                    id = guildId.value,
                     name = "",
                     ownerId = randomId(),
                     region = "",
@@ -61,11 +61,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onEmojisUpdate is called when event is received`() {
         countdownContext(1) {
             live.onEmojisUpdate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildEmojisUpdate(
                     DiscordUpdatedEmojis(
                         guildId = it,
@@ -81,11 +81,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onIntegrationsUpdate is called when event is received`() {
         countdownContext(1) {
             live.onIntegrationsUpdate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildIntegrationsUpdate(
                     DiscordGuildIntegrations(
                         guildId = it
@@ -100,11 +100,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onBanAdd is called when event is received`() {
         countdownContext(1) {
             live.onBanAdd {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildBanAdd(
                     DiscordGuildBan(
                         guildId = it,
@@ -125,11 +125,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onBanRemove is called when event is received`() {
         countdownContext(1) {
             live.onBanRemove {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildBanRemove(
                     DiscordGuildBan(
                         guildId = it,
@@ -150,11 +150,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onPresenceUpdate is called when event is received`() {
         countdownContext(1) {
             live.onPresenceUpdate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 PresenceUpdate(
                     DiscordPresenceUpdate(
                         user = DiscordPresenceUser(
@@ -176,11 +176,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onVoiceServerUpdate is called when event is received`() {
         countdownContext(1) {
             live.onVoiceServerUpdate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 VoiceServerUpdate(
                     DiscordVoiceServerUpdateData(
                         guildId = it,
@@ -197,11 +197,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onVoiceStateUpdate is called when event is received`() {
         countdownContext(1) {
             live.onVoiceStateUpdate {
-                assertEquals(guildId, it.state.guildId)
+                assertEquals(guildId.value, it.state.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 VoiceStateUpdate(
                     DiscordVoiceState(
                         guildId = it.optionalSnowflake(),
@@ -226,11 +226,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onWebhookUpdate is called when event is received`() {
         countdownContext(1) {
             live.onWebhookUpdate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 WebhooksUpdate(
                     DiscordWebhooksUpdateData(
                         guildId = it,
@@ -246,11 +246,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onRoleCreate is called when event is received`() {
         countdownContext(1) {
             live.onRoleCreate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildRoleCreate(
                     DiscordGuildRole(
                         guildId = it,
@@ -277,11 +277,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onRoleUpdate is called when event is received`() {
         countdownContext(1) {
             live.onRoleUpdate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildRoleUpdate(
                     DiscordGuildRole(
                         guildId = it,
@@ -308,11 +308,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onRoleDelete is called when event is received`() {
         countdownContext(1) {
             live.onRoleDelete {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildRoleDelete(
                     DiscordDeletedGuildRole(
                         guildId = it,
@@ -328,11 +328,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onMemberJoin is called when event is received`() {
         countdownContext(1) {
             live.onMemberJoin {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildMemberAdd(
                     DiscordAddedGuildMember(
                         guildId = it,
@@ -359,11 +359,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onMemberUpdate is called when event is received`() {
         countdownContext(1) {
             live.onMemberUpdate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildMemberUpdate(
                     DiscordUpdatedGuildMember(
                         guildId = it,
@@ -386,11 +386,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onMemberLeave is called when event is received`() {
         countdownContext(1) {
             live.onMemberLeave {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildMemberRemove(
                     DiscordRemovedGuildMember(
                         guildId = it,
@@ -413,11 +413,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
             live.onReactionAdd {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 MessageReactionAdd(
                     MessageReactionAddData(
                         messageId = randomId(),
@@ -439,7 +439,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             val emojiOther = ReactionEmoji.Unicode("\uD83D\uDC3B")
 
             live.onReactionAdd(emojiExpected) {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 assertEquals(emojiExpected, it.emoji)
                 count()
             }
@@ -456,8 +456,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             )
 
             sendEventAndWait(createEvent(randomId(), emojiExpected))
-            sendEventAndWait(createEvent(guildId, emojiOther))
-            sendEvent(createEvent(guildId, emojiExpected))
+            sendEventAndWait(createEvent(guildId.value, emojiOther))
+            sendEvent(createEvent(guildId.value, emojiExpected))
         }
     }
 
@@ -467,12 +467,12 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
             live.onReactionRemove {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 assertEquals(emojiExpected, it.emoji)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 MessageReactionRemove(
                     MessageReactionRemoveData(
                         messageId = randomId(),
@@ -494,7 +494,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             val emojiOther = ReactionEmoji.Unicode("\uD83D\uDC3B")
 
             live.onReactionRemove(emojiExpected) {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 assertEquals(emojiExpected, it.emoji)
                 count()
             }
@@ -511,8 +511,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             )
 
             sendEventAndWait(createEvent(randomId(), emojiExpected))
-            sendEventAndWait(createEvent(guildId, emojiOther))
-            sendEvent(createEvent(guildId, emojiExpected))
+            sendEventAndWait(createEvent(guildId.value, emojiOther))
+            sendEvent(createEvent(guildId.value, emojiExpected))
         }
     }
 
@@ -520,11 +520,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onReactionRemoveAll is called when event is received`() {
         countdownContext(1) {
             live.onReactionRemoveAll {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 MessageReactionRemoveAll(
                     AllRemovedMessageReactions(
                         channelId = randomId(),
@@ -541,11 +541,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onMessageCreate is called when event is received`() {
         countdownContext(1) {
             live.onMessageCreate {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 MessageCreate(
                     DiscordMessage(
                         id = randomId(),
@@ -579,11 +579,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onMessageUpdate is called when event is received`() {
         countdownContext(1) {
             live.onMessageUpdate {
-                assertEquals(guildId, it.new.guildId.value)
+                assertEquals(guildId.value, it.new.guildId.value)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 MessageUpdate(
                     DiscordPartialMessage(
                         id = randomId(),
@@ -600,11 +600,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onMessageDelete is called when event is received`() {
         countdownContext(1) {
             live.onMessageDelete {
-                assertEquals(guildId, it.guildId)
+                assertEquals(guildId.value, it.guildId)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 MessageDelete(
                     DeletedMessage(
                         id = randomId(),
@@ -621,11 +621,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onChannelCreate is called when event is received`() {
         countdownContext(1) {
             live.onChannelCreate {
-                assertEquals(guildId, it.channel.data.guildId.value)
+                assertEquals(guildId.value, it.channel.data.guildId.value)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 ChannelCreate(
                     DiscordChannel(
                         id = randomId(),
@@ -642,11 +642,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onChannelUpdate is called when event is received`() {
         countdownContext(1) {
             live.onChannelUpdate {
-                assertEquals(guildId, it.channel.data.guildId.value)
+                assertEquals(guildId.value, it.channel.data.guildId.value)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 ChannelUpdate(
                     DiscordChannel(
                         id = randomId(),
@@ -663,11 +663,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onChannelDelete is called when event is received`() {
         countdownContext(1) {
             live.onChannelDelete {
-                assertEquals(guildId, it.channel.data.guildId.value)
+                assertEquals(guildId.value, it.channel.data.guildId.value)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 ChannelDelete(
                     DiscordChannel(
                         id = randomId(),
@@ -684,11 +684,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onGuildCreate is called when event is received`() {
         countdownContext(1) {
             live.onGuildCreate {
-                assertEquals(guildId, it.guild.id)
+                assertEquals(guildId.value, it.guild.id)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildCreate(
                     DiscordGuild(
                         id = it,
@@ -728,11 +728,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
     fun `Check onGuildUpdate is called when event is received`() {
         countdownContext(1) {
             live.onGuildUpdate {
-                assertEquals(guildId, it.guild.id)
+                assertEquals(guildId.value, it.guild.id)
                 count()
             }
 
-            sendEventValidAndRandomId(guildId) {
+            sendEventValidAndRandomId(guildId.value) {
                 GuildUpdate(
                     DiscordGuild(
                         id = it,
@@ -774,11 +774,11 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as GuildDeleteEvent
-                assertEquals(guildId, event.guildId)
+                assertEquals(guildId.value, event.guildId)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(guildId) {
+            sendEventValidAndRandomIdCheckLiveActive(guildId.value) {
                 GuildDelete(
                     DiscordUnavailableGuild(
                         id = it,

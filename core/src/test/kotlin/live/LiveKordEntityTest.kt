@@ -131,7 +131,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
             val eventGuildBan = GuildBanAdd(
                 DiscordGuildBan(
-                    guildId = guildId,
+                    guildId = guildId.value,
                     user = DiscordUser(
                         id = randomId(),
                         username = "",
@@ -145,7 +145,7 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
 
             val eventGuildDelete = GuildDelete(
                 DiscordUnavailableGuild(
-                    id = guildId
+                    id = guildId.value
                 ),
                 0
             )

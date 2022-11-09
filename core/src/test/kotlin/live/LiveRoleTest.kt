@@ -1,5 +1,6 @@
 package live
 
+import BoxedSnowflake
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.core.cache.data.RoleData
@@ -28,12 +29,12 @@ import kotlin.test.assertEquals
 @Disabled
 class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
 
-    private lateinit var roleId: Snowflake
+    private lateinit var roleId: BoxedSnowflake
 
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        roleId = randomId()
+        roleId = BoxedSnowflake(randomId())
     }
 
     @BeforeTest
@@ -42,8 +43,8 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
             Role(
                 kord = kord,
                 data = RoleData(
-                    id = roleId,
-                    guildId = guildId,
+                    id = roleId.value,
+                    guildId = guildId.value,
                     name = "test",
                     color = 0,
                     hoisted = false,
@@ -62,11 +63,11 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
-                assertEquals(roleId, it.role.id)
+                assertEquals(roleId.value, it.role.id)
                 count()
             }
 
-            sendEventValidAndRandomId(roleId) {
+            sendEventValidAndRandomId(roleId.value) {
                 GuildRoleUpdate(
                     DiscordGuildRole(
                         guildId = randomId(),
@@ -95,11 +96,11 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as RoleDeleteEvent
-                assertEquals(roleId, event.roleId)
+                assertEquals(roleId.value, event.roleId)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(roleId) {
+            sendEventValidAndRandomIdCheckLiveActive(roleId.value) {
                 GuildRoleDelete(
                     DiscordDeletedGuildRole(
                         guildId = randomId(),
@@ -117,11 +118,11 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as GuildDeleteEvent
-                assertEquals(guildId, event.guildId)
+                assertEquals(guildId.value, event.guildId)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(guildId) {
+            sendEventValidAndRandomIdCheckLiveActive(guildId.value) {
                 GuildDelete(
                     DiscordUnavailableGuild(
                         id = it

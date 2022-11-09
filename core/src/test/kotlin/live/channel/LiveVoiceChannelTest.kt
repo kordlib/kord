@@ -1,5 +1,6 @@
 package live.channel
 
+import BoxedSnowflake
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.Snowflake
@@ -25,12 +26,12 @@ import kotlin.test.assertEquals
 @Disabled
 class LiveVoiceChannelTest : LiveChannelTest<LiveVoiceChannel>() {
 
-    override lateinit var channelId: Snowflake
+    override lateinit var channelId: BoxedSnowflake
 
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        channelId = randomId()
+        channelId = BoxedSnowflake(randomId())
     }
 
     @BeforeTest
@@ -39,9 +40,9 @@ class LiveVoiceChannelTest : LiveChannelTest<LiveVoiceChannel>() {
             VoiceChannel(
                 kord = kord,
                 data = ChannelData(
-                    id = channelId,
+                    id = channelId.value,
                     type = ChannelType.GuildVoice,
-                    guildId = guildId.optionalSnowflake()
+                    guildId = guildId.value.optionalSnowflake()
                 )
             )
         )
@@ -51,11 +52,11 @@ class LiveVoiceChannelTest : LiveChannelTest<LiveVoiceChannel>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
-                assertEquals(it.channel.id, channelId)
+                assertEquals(it.channel.id, channelId.value)
                 count()
             }
 
-            sendEventValidAndRandomId(channelId) {
+            sendEventValidAndRandomId(channelId.value) {
                 ChannelUpdate(
                     DiscordChannel(
                         id = it,

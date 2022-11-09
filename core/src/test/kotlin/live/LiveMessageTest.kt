@@ -1,5 +1,6 @@
 package live
 
+import BoxedSnowflake
 import dev.kord.common.entity.*
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.UserData
@@ -31,26 +32,26 @@ import kotlin.test.assertTrue
 @Disabled
 class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
 
-    private lateinit var messageId: Snowflake
+    private lateinit var messageId: BoxedSnowflake
 
-    private lateinit var channelId: Snowflake
+    private lateinit var channelId: BoxedSnowflake
 
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        messageId = randomId()
-        channelId = randomId()
+        messageId = BoxedSnowflake(randomId())
+        channelId = BoxedSnowflake(randomId())
     }
 
     @BeforeTest
     fun onBefore() = runBlocking {
         live = LiveMessage(
-            guildId = guildId,
+            guildId = guildId.value,
             message = Message(
                 kord = kord,
                 data = MessageData(
-                    id = messageId,
-                    channelId = channelId,
+                    id = messageId.value,
+                    channelId = channelId.value,
                     author = UserData(
                         id = randomId(),
                         username = "",
@@ -77,12 +78,12 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
             live.onReactionAdd {
-                assertEquals(messageId, it.messageId)
+                assertEquals(messageId.value, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
                 count()
             }
 
-            sendEventValidAndRandomId(messageId) {
+            sendEventValidAndRandomId(messageId.value) {
                 MessageReactionAdd(
                     MessageReactionAddData(
                         messageId = it,
@@ -103,7 +104,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             val emojiOther = ReactionEmoji.Unicode("\uD83D\uDC3B")
 
             live.onReactionAdd(emojiExpected) {
-                assertEquals(messageId, it.messageId)
+                assertEquals(messageId.value, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
                 count()
             }
@@ -119,8 +120,8 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             )
 
             sendEventAndWait(createEvent(randomId(), emojiExpected))
-            sendEventAndWait(createEvent(messageId, emojiOther))
-            sendEvent(createEvent(messageId, emojiExpected))
+            sendEventAndWait(createEvent(messageId.value, emojiOther))
+            sendEvent(createEvent(messageId.value, emojiExpected))
         }
     }
 
@@ -130,12 +131,12 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             val emojiExpected = ReactionEmoji.Unicode("\uD83D\uDC28")
 
             live.onReactionRemove {
-                assertEquals(messageId, it.messageId)
+                assertEquals(messageId.value, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
                 count()
             }
 
-            sendEventValidAndRandomId(messageId) {
+            sendEventValidAndRandomId(messageId.value) {
                 MessageReactionRemove(
                     MessageReactionRemoveData(
                         messageId = it,
@@ -156,7 +157,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             val emojiOther = ReactionEmoji.Unicode("\uD83D\uDC3B")
 
             live.onReactionRemove(emojiExpected) {
-                assertEquals(messageId, it.messageId)
+                assertEquals(messageId.value, it.messageId)
                 assertEquals(emojiExpected, it.emoji)
                 count()
             }
@@ -172,8 +173,8 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             )
 
             sendEvent(createEvent(randomId(), emojiExpected))
-            sendEvent(createEvent(messageId, emojiOther))
-            sendEvent(createEvent(messageId, emojiExpected))
+            sendEvent(createEvent(messageId.value, emojiOther))
+            sendEvent(createEvent(messageId.value, emojiExpected))
         }
     }
 
@@ -181,11 +182,11 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check onReactionRemoveAll is called when event is received`() {
         countdownContext(1) {
             live.onReactionRemoveAll {
-                assertEquals(messageId, it.messageId)
+                assertEquals(messageId.value, it.messageId)
                 count()
             }
 
-            sendEventValidAndRandomId(messageId) {
+            sendEventValidAndRandomId(messageId.value) {
                 MessageReactionRemoveAll(
                     AllRemovedMessageReactions(
                         channelId = randomId(),
@@ -201,11 +202,11 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
-                assertEquals(messageId, it.messageId)
+                assertEquals(messageId.value, it.messageId)
                 count()
             }
 
-            sendEventValidAndRandomId(messageId) {
+            sendEventValidAndRandomId(messageId.value) {
                 MessageUpdate(
                     DiscordPartialMessage(
                         id = it,
@@ -223,11 +224,11 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as MessageDeleteEvent
-                assertEquals(messageId, event.messageId)
+                assertEquals(messageId.value, event.messageId)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(messageId) {
+            sendEventValidAndRandomIdCheckLiveActive(messageId.value) {
                 MessageDelete(
                     DeletedMessage(
                         id = it,
@@ -245,11 +246,11 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as MessageBulkDeleteEvent
-                assertTrue { messageId in event.messageIds }
+                assertTrue { messageId.value in event.messageIds }
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(messageId) {
+            sendEventValidAndRandomIdCheckLiveActive(messageId.value) {
                 MessageDeleteBulk(
                     BulkDeleteData(
                         ids = mutableListOf(it),
@@ -267,11 +268,11 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as ChannelDeleteEvent
-                assertEquals(channelId, event.channel.id)
+                assertEquals(channelId.value, event.channel.id)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(channelId) {
+            sendEventValidAndRandomIdCheckLiveActive(channelId.value) {
                 ChannelDelete(
                     DiscordChannel(
                         id = it,
@@ -289,11 +290,11 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as GuildDeleteEvent
-                assertEquals(guildId, event.guildId)
+                assertEquals(guildId.value, event.guildId)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(guildId) {
+            sendEventValidAndRandomIdCheckLiveActive(guildId.value) {
                 GuildDelete(
                     DiscordUnavailableGuild(
                         id = it

@@ -18,7 +18,7 @@ public fun KMutableProperty0<OptionalSnowflake>.delegate(): ReadWriteProperty<An
 
         override fun setValue(thisRef: Any?, property: KProperty<*>, value: Snowflake?) {
             val optional = if (value == null) OptionalSnowflake.Missing
-            else OptionalSnowflake.Value(value.value)
+            else OptionalSnowflake.Value(Snowflake(value.value))
             this@delegate.set(optional)
         }
     }

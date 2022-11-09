@@ -1,5 +1,6 @@
 package live
 
+import BoxedSnowflake
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.core.cache.data.MemberData
@@ -33,12 +34,12 @@ import kotlin.test.assertEquals
 @Disabled
 class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
 
-    private lateinit var userId: Snowflake
+    private lateinit var userId: BoxedSnowflake
 
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        userId = randomId()
+        userId = BoxedSnowflake(randomId())
     }
 
     @BeforeTest
@@ -47,15 +48,15 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
             Member(
                 kord = kord,
                 memberData = MemberData(
-                    userId = userId,
-                    guildId = guildId,
+                    userId = userId.value,
+                    guildId = guildId.value,
                     roles = emptyList(),
                     joinedAt = Instant.fromEpochMilliseconds(0),
                     premiumSince = Optional.Missing(),
                     avatar = Optional.Missing(),
                 ),
                 userData = UserData(
-                    id = userId,
+                    id = userId.value,
                     username = "",
                     discriminator = ""
                 )
@@ -67,11 +68,11 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
-                assertEquals(userId, it.member.id)
+                assertEquals(userId.value, it.member.id)
                 count()
             }
 
-            sendEventValidAndRandomId(userId) {
+            sendEventValidAndRandomId(userId.value) {
                 GuildMemberUpdate(
                     DiscordUpdatedGuildMember(
                         guildId = randomId(),
@@ -96,11 +97,11 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as MemberLeaveEvent
-                assertEquals(userId, event.user.id)
+                assertEquals(userId.value, event.user.id)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(userId) {
+            sendEventValidAndRandomIdCheckLiveActive(userId.value) {
                 GuildMemberRemove(
                     DiscordRemovedGuildMember(
                         guildId = randomId(),
@@ -123,11 +124,11 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as BanAddEvent
-                assertEquals(userId, event.user.id)
+                assertEquals(userId.value, event.user.id)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(userId) {
+            sendEventValidAndRandomIdCheckLiveActive(userId.value) {
                 GuildBanAdd(
                     DiscordGuildBan(
                         guildId = randomId(),
@@ -150,11 +151,11 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
             live.coroutineContext.job.invokeOnCompletion {
                 it as LiveCancellationException
                 val event = it.event as GuildDeleteEvent
-                assertEquals(guildId, event.guildId)
+                assertEquals(guildId.value, event.guildId)
                 count()
             }
 
-            sendEventValidAndRandomIdCheckLiveActive(guildId) {
+            sendEventValidAndRandomIdCheckLiveActive(guildId.value) {
                 GuildDelete(
                     DiscordUnavailableGuild(
                         id = it

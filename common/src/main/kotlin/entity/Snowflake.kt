@@ -24,23 +24,20 @@ import kotlin.time.TimeMark
  * but [equals] only returns `true` if [compareTo] returns `0`.
  */
 @Serializable(with = Snowflake.Serializer::class)
-public class Snowflake : Comparable<Snowflake> {
-
+@JvmInline
+public value class Snowflake
+/**
+ * Creates a Snowflake from a given ULong [value].
+ *
+ * Values are [coerced in][coerceIn] [validValues].
+ */
+constructor(
     /**
      * The raw value of this Snowflake as specified
      * [here](https://discord.com/developers/docs/reference#snowflakes).
      */
     public val value: ULong
-
-    /**
-     * Creates a Snowflake from a given ULong [value].
-     *
-     * Values are [coerced in][coerceIn] [validValues].
-     */
-    public constructor(value: ULong) {
-        this.value = value.coerceIn(validValues)
-    }
-
+) : Comparable<Snowflake> {
     /**
      * Creates a Snowflake from a given String [value], parsing it as a [ULong] value.
      *
@@ -155,11 +152,6 @@ public class Snowflake : Comparable<Snowflake> {
      * A [String] representation of this Snowflake's [value].
      */
     override fun toString(): String = value.toString()
-
-    override fun hashCode(): Int = value.hashCode()
-
-    override fun equals(other: Any?): Boolean = other is Snowflake && this.value == other.value
-
 
     public companion object {
         // see https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right

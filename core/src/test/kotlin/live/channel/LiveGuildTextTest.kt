@@ -1,5 +1,6 @@
 package live.channel
 
+import BoxedSnowflake
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.Snowflake
@@ -38,12 +39,12 @@ class LiveGuildTextTest : LiveChannelTest<LiveGuildChannel>() {
         }
     }
 
-    override lateinit var channelId: Snowflake
+    override lateinit var channelId: BoxedSnowflake
 
     @BeforeAll
     override fun onBeforeAll() {
         super.onBeforeAll()
-        channelId = randomId()
+        channelId = BoxedSnowflake(randomId())
     }
 
     @BeforeTest
@@ -52,9 +53,9 @@ class LiveGuildTextTest : LiveChannelTest<LiveGuildChannel>() {
             GuildChannelMock(
                 kord = kord,
                 data = ChannelData(
-                    id = channelId,
+                    id = channelId.value,
                     type = ChannelType.GuildText,
-                    guildId = guildId.optionalSnowflake()
+                    guildId = guildId.value.optionalSnowflake()
                 )
             )
         )
@@ -64,11 +65,11 @@ class LiveGuildTextTest : LiveChannelTest<LiveGuildChannel>() {
     fun `Check onUpdate is called when event is received`() {
         countdownContext(1) {
             live.onUpdate {
-                assertEquals(it.channel.id, channelId)
+                assertEquals(it.channel.id, channelId.value)
                 count()
             }
 
-            sendEventValidAndRandomId(channelId) {
+            sendEventValidAndRandomId(channelId.value) {
                 ChannelUpdate(
                     DiscordChannel(
                         id = it,
