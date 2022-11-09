@@ -2,7 +2,6 @@ package dev.kord.gateway
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
@@ -22,7 +21,6 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.HIDDEN
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -711,29 +709,8 @@ public data class DiscordCreatedInvite(
     val targetUser: Optional<DiscordUser> = Optional.Missing(),
     @SerialName("target_application")
     val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
-    /** @suppress */
-    @Deprecated("No longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = HIDDEN)
-    @SerialName("target_user_type")
-    val targetUserType: Optional<@Suppress("DEPRECATION_ERROR") dev.kord.common.entity.TargetUserType> = Optional.Missing(),
     val temporary: Boolean,
     val uses: Int,
-)
-
-/** @suppress */
-@Deprecated(
-    "Use 'DiscordUser' instead, All missing fields have defaults.",
-    ReplaceWith("DiscordUser", "dev.kord.common.entity.DiscordUser"),
-    level = HIDDEN,
-)
-@Serializable
-public data class DiscordInviteUser(
-    val id: Snowflake,
-    val username: String,
-    val discriminator: String,
-    val avatar: String?,
-    val bot: OptionalBoolean = OptionalBoolean.Missing,
-    @SerialName("public_flags")
-    val publicFlags: Optional<UserFlags> = Optional.Missing(),
 )
 
 public data class MessageCreate(val message: DiscordMessage, override val sequence: Int?) : DispatchEvent()

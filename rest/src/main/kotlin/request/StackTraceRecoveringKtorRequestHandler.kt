@@ -1,7 +1,5 @@
 package dev.kord.rest.request
 
-import kotlin.DeprecationLevel.HIDDEN
-
 /**
  * Extension of [KtorRequestHandler] which tries to recover stack trace information lost through Ktor's
  * [io.ktor.util.pipeline.SuspendFunctionGun].
@@ -29,12 +27,6 @@ public class StackTraceRecoveringKtorRequestHandler(private val delegate: KtorRe
         }
     }
 }
-
-@Deprecated(
-    "'ContextException' is no longer thrown. 'stackTraceRecovery' uses a suppressed exception instead.",
-    level = HIDDEN,
-)
-public class ContextException internal constructor() : RuntimeException()
 
 /** A [Throwable] used to save the current stack trace before executing a request. */
 internal class RecoveredStackTrace : Throwable("This is the recovered stack trace:") {

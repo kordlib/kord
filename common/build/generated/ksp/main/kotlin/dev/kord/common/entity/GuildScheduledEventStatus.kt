@@ -78,12 +78,14 @@ public sealed class GuildScheduledEventStatus(
     }
 
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Use 'GuildScheduledEventStatus.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "GuildScheduledEventStatus.serializer()", imports =
                     arrayOf("dev.kord.common.entity.GuildScheduledEventStatus")),
     )
     public object Serializer : KSerializer<GuildScheduledEventStatus> by NewSerializer {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Use 'GuildScheduledEventStatus.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "GuildScheduledEventStatus.serializer()", imports
                         = arrayOf("dev.kord.common.entity.GuildScheduledEventStatus")),
@@ -105,7 +107,7 @@ public sealed class GuildScheduledEventStatus(
         }
 
 
-        @Suppress(names = arrayOf("DEPRECATION"))
+        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Binary compatibility",

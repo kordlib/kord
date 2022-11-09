@@ -16,7 +16,6 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
 import kotlinx.coroutines.*
-import kotlin.DeprecationLevel.HIDDEN
 
 @KordPreview
 public fun Channel.live(
@@ -24,7 +23,6 @@ public fun Channel.live(
 ): LiveChannel = when (this) {
     is DmChannel -> this.live(coroutineScope)
     is NewsChannel -> this.live(coroutineScope)
-    is @Suppress("DEPRECATION_ERROR") dev.kord.core.entity.channel.StoreChannel -> this.live(coroutineScope)
     is TextChannel -> this.live(coroutineScope)
     is VoiceChannel -> this.live(coroutineScope)
     else -> error("unsupported channel type")
@@ -86,35 +84,8 @@ public fun LiveChannel.onMessageUpdate(scope: CoroutineScope = this, block: susp
 public fun LiveChannel.onMessageDelete(scope: CoroutineScope = this, block: suspend (MessageDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
-@Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated(
-    "The block is never called because the channel is already created, use LiveGuild.onChannelCreate(block)",
-    level = HIDDEN,
-)
-@KordPreview
-public fun LiveChannel.onChannelCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit): Job =
-    on(scope = scope, consumer = block)
-
 @KordPreview
 public fun LiveChannel.onChannelUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit): Job =
-    on(scope = scope, consumer = block)
-
-@Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    level = HIDDEN,
-)
-@KordPreview
-public fun LiveChannel.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit): Job =
-    on(scope = scope, consumer = block)
-
-@Deprecated(
-    "The block is never called because the guild where the channel is located is already created",
-    ReplaceWith("Kord.on<GuildCreateEvent>(block)"),
-    level = HIDDEN,
-)
-@KordPreview
-public fun LiveChannel.onGuildCreate(scope: CoroutineScope = this, block: suspend (GuildCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview

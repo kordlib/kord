@@ -235,7 +235,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 val deprecatedAnnotation = Deprecated(
                     "Use '$name.serializer()' instead.",
                     ReplaceWith("$name.serializer()", "$packageName.$name"),
-                    level = WARNING,
+                    level = ERROR,
                 )
                 val kSerializer = K_SERIALIZER.parameterizedBy(enumName)
 
@@ -284,7 +284,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                             Deprecated(
                                 "Renamed to 'entries'.",
                                 ReplaceWith("this.entries", imports = emptyArray()),
-                                level = WARNING,
+                                level = ERROR,
                             )
                         )
                         getter {
@@ -299,7 +299,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 
                     @OptIn(DelicateKotlinPoetApi::class)
                     addProperty(deprecatedSerializerName, deprecatedSerializer, PUBLIC) {
-                        addAnnotation(Suppress("DEPRECATION"))
+                        addAnnotation(Suppress("DEPRECATION_ERROR"))
                         addAnnotation(Deprecated("Binary compatibility", level = HIDDEN))
                         addAnnotation(JvmField())
                         initializer("%T", deprecatedSerializer)

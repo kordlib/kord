@@ -1,7 +1,6 @@
 package dev.kord.core
 
 import dev.kord.cache.api.DataCache
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
@@ -35,8 +34,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.HIDDEN
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -58,15 +56,6 @@ public class Kord(
     dispatcher: CoroutineDispatcher,
     private val interceptor: GatewayEventInterceptor,
 ) : CoroutineScope {
-
-    /**
-     * Global commands made by the bot under this Kord instance.
-     *
-     * @suppress
-     */
-    @Deprecated("Replace with function call for localizations", ReplaceWith("getGlobalApplicationCommands()"), level = HIDDEN)
-    public val globalCommands: Flow<GlobalApplicationCommand>
-        get() = defaultSupplier.getGlobalApplicationCommands(resources.applicationId)
 
     public val nitroStickerPacks: Flow<StickerPack>
         get() = defaultSupplier.getNitroStickerPacks()
@@ -158,28 +147,6 @@ public class Kord(
 
     /**
      * Requests to create a new Guild configured through the [builder].
-     * At least the [GuildCreateBuilder.name] has to be set.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @return The newly created Guild.
-     *
-     * @suppress
-     */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated(
-        "guild name is a mandatory field",
-        ReplaceWith("createGuild(\"name\", builder)"),
-        level = HIDDEN,
-    )
-    public suspend inline fun createGuild(builder: GuildCreateBuilder.() -> Unit): Guild {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-        return createGuild("name", builder)
-    }
-
-    /**
-     * Requests to create a new Guild configured through the [builder].
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @return The newly created Guild.
@@ -260,7 +227,7 @@ public class Kord(
         "This function has an inconsistent name for its nullable return type and has been deprecated in favour of " +
                 "'getGuildOrNull()'.",
         ReplaceWith("this.getGuildOrNull(id, strategy)"),
-        level = WARNING,
+        level = ERROR,
     )
     public suspend fun getGuild(
         id: Snowflake,

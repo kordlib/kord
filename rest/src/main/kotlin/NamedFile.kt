@@ -3,6 +3,7 @@ package dev.kord.rest
 import io.ktor.client.request.forms.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
+import kotlin.DeprecationLevel.ERROR
 
 public class NamedFile(public val name: String, public val contentProvider: ChannelProvider) {
     /** @suppress */
@@ -15,7 +16,7 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
             "io.ktor.client.request.forms.ChannelProvider",
             "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
         ),
-        DeprecationLevel.WARNING,
+        level = ERROR,
     )
     public constructor(name: String, inputStream: InputStream) : this(
         name,
@@ -31,7 +32,7 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
             "contentProvider.block().toInputStream()",
             "io.ktor.utils.io.jvm.javaio.toInputStream",
         ),
-        DeprecationLevel.WARNING,
+        level = ERROR,
     )
     public val inputStream: InputStream get() = contentProvider.block().toInputStream()
 
@@ -41,6 +42,6 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
 
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     @JvmName("component2")
-    @Suppress("DEPRECATION", "FunctionName")
+    @Suppress("DEPRECATION_ERROR", "FunctionName")
     public fun _component2(): InputStream = inputStream
 }
