@@ -1,12 +1,7 @@
 import org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
 
-@Suppress("DSL_SCOPE_VIOLATION") // false positive for `libs` in IntelliJ
 plugins {
-    org.jetbrains.dokka
-
-    signing
-    `maven-publish`
-    alias(libs.plugins.nexusStaging)
+    org.jetbrains.dokka // for dokkaHtmlMultiModule task
 }
 
 repositories {

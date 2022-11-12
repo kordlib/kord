@@ -31,7 +31,6 @@ dokka = "1.7.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.18.5" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.12.1" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
-nexus-staging = "0.30.0" # https://github.com/Codearte/gradle-nexus-staging-plugin
 
 
 [libraries]
@@ -98,4 +97,3 @@ pluginsForBuildSrc = [
 [plugins]
 
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
-nexusStaging = { id = "io.codearte.nexus-staging", version.ref = "nexus-staging" }
