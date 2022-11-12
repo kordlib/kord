@@ -9,7 +9,6 @@ import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.HIDDEN
 
 private val WebhookData.nullableUserId get() = userId.value
 
@@ -35,13 +34,6 @@ public data class UserData(
 
         public fun from(entity: DiscordUser): UserData = with(entity) {
             UserData(id, username, discriminator, avatar, bot, publicFlags, banner, accentColor)
-        }
-
-        /** @suppress */
-        @Suppress("DEPRECATION_ERROR")
-        @Deprecated("'DiscordInviteUser' is deprecated. Use 'DiscordUser' instead.", level = HIDDEN)
-        public fun from(entity: dev.kord.gateway.DiscordInviteUser): UserData = with(entity) {
-            UserData(id, username, discriminator, avatar, bot, publicFlags)
         }
 
         public fun from(entity: DiscordOptionallyMemberUser): UserData = with(entity) {

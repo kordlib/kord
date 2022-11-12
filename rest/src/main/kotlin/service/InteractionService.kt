@@ -17,7 +17,6 @@ import dev.kord.rest.route.Route
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.collections.set
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -602,16 +601,6 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
             messageId,
             FollowupMessageModifyBuilder().apply(builder).toRequest()
         )
-    }
-
-    /** @suppress */
-    @Deprecated(
-        "Renamed to 'deferMessage'.",
-        ReplaceWith("this.deferMessage(interactionId, interactionToken, ephemeral)"),
-        level = HIDDEN,
-    )
-    public suspend fun acknowledge(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {
-        deferMessage(interactionId, interactionToken, ephemeral)
     }
 
     public suspend fun deferMessage(interactionId: Snowflake, interactionToken: String, ephemeral: Boolean = false) {

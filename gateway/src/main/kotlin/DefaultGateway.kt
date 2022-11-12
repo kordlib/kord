@@ -27,7 +27,6 @@ import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -69,11 +68,19 @@ public data class DefaultGatewayData(
                     "eventFlow)",
             "dev.kord.gateway.IdentifyRateLimiter"
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
     public constructor(
         url: String, client: HttpClient, reconnectRetry: Retry, sendRateLimiter: RateLimiter,
         identifyRateLimiter: RateLimiter, dispatcher: CoroutineDispatcher, eventFlow: MutableSharedFlow<Event>,
+    ) : this(url, client, reconnectRetry, sendRateLimiter, identifyRateLimiter, eventFlow, dispatcher)
+
+    // same as hidden public constructor but changed last two params, so it can still be used internally
+    // can be removed when deprecated stuff in this class is removed
+    @Suppress("DEPRECATION_ERROR")
+    private constructor(
+        url: String, client: HttpClient, reconnectRetry: Retry, sendRateLimiter: RateLimiter,
+        identifyRateLimiter: RateLimiter, eventFlow: MutableSharedFlow<Event>, dispatcher: CoroutineDispatcher,
     ) : this(
         url, client, reconnectRetry, sendRateLimiter,
         dev.kord.gateway.ratelimit.IdentifyRateLimiterFromCommonRateLimiter(identifyRateLimiter), dispatcher, eventFlow,
@@ -102,7 +109,7 @@ public data class DefaultGatewayData(
                     "obtained by calling the Route.GatewayBotGet endpoint */, dispatcher), dispatcher, eventFlow)",
             "dev.kord.gateway.IdentifyRateLimiter"
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
     public fun copy(
         url: String = this.url, client: HttpClient = this.client, reconnectRetry: Retry = this.reconnectRetry,
@@ -110,7 +117,7 @@ public data class DefaultGatewayData(
         identifyRateLimiter: RateLimiter = oldIdentifyRateLimiter!!, dispatcher: CoroutineDispatcher = this.dispatcher,
         eventFlow: MutableSharedFlow<Event> = this.eventFlow,
     ): DefaultGatewayData =
-        DefaultGatewayData(url, client, reconnectRetry, sendRateLimiter, identifyRateLimiter, dispatcher, eventFlow)
+        DefaultGatewayData(url, client, reconnectRetry, sendRateLimiter, identifyRateLimiter, eventFlow, dispatcher)
 }
 
 /**

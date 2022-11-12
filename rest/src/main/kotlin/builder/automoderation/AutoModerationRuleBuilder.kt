@@ -9,7 +9,6 @@ import dev.kord.common.entity.AutoModerationRuleTriggerType.*
 import dev.kord.common.entity.Permission.ModerateMembers
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.AuditBuilder
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.time.Duration
@@ -146,11 +145,6 @@ public sealed interface KeywordAutoModerationRuleBuilder : TimeoutAutoModeration
      * Each keyword must be 30 characters or less.
      */
     public var keywords: MutableList<String>?
-
-    @Deprecated("Binary compatibility", level = HIDDEN)
-    public fun assignKeywords(keywords: MutableList<String>) {
-        this.keywords = keywords
-    }
 
     /**
      * Regular expression patterns which will be matched against content (maximum of 10).

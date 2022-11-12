@@ -4,7 +4,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.builder.Shards
 import io.ktor.client.*
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 public class ClientResources(
     public val token: String,
@@ -20,7 +20,7 @@ public class ClientResources(
             "ClientResources(token, applicationId, shards, maxConcurrency = 1 /* can be obtained by calling the " +
                     "Route.GatewayBotGet endpoint */, httpClient, defaultStrategy)"
         ),
-        level = WARNING,
+        level = ERROR,
     )
     public constructor(
         token: String,
