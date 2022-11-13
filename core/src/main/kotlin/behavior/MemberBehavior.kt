@@ -17,7 +17,6 @@ import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import java.util.Objects
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -35,19 +34,6 @@ public interface MemberBehavior : KordEntity, UserBehavior {
      * The guild this channel is associated to.
      */
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
-
-    /**
-     * The raw mention for this member's nickname.
-     *
-     * @suppress
-     */
-    @Deprecated(
-        "Nickname mentions are deprecated and should be handled the same way as regular user mentions, " +
-                "see https://discord.com/developers/docs/reference#message-formatting-formats",
-        ReplaceWith("this.mention"),
-        level = HIDDEN,
-    )
-    public val nicknameMention: String get() = "<@!$id>"
 
     /**
      * Requests to get the this behavior as a [Member].

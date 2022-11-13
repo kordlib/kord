@@ -122,12 +122,14 @@ public sealed class ComponentType(
     }
 
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Use 'ComponentType.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
                     arrayOf("dev.kord.common.entity.ComponentType")),
     )
     public object Serializer : KSerializer<ComponentType> by NewSerializer {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Use 'ComponentType.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
                         arrayOf("dev.kord.common.entity.ComponentType")),
@@ -153,7 +155,7 @@ public sealed class ComponentType(
         }
 
 
-        @Suppress(names = arrayOf("DEPRECATION"))
+        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Binary compatibility",

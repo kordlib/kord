@@ -10,6 +10,7 @@ import io.ktor.util.cio.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
 import java.nio.file.Path
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -64,7 +65,7 @@ public sealed interface MessageCreateBuilder {
             "io.ktor.client.request.forms.ChannelProvider",
             "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
         ),
-        DeprecationLevel.WARNING,
+        level = ERROR,
     )
     public fun addFile(name: String, content: InputStream): NamedFile =
         addFile(name, ChannelProvider { content.toByteReadChannel() })
