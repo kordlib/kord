@@ -6,6 +6,8 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
+import dev.kord.common.entity.DiscordSelectOption
+import dev.kord.common.entity.optional.mapCopy
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
@@ -24,19 +26,21 @@ public open class SelectMenuBuilder
 @Deprecated(
     "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
             "constructor of one of the subtypes.",
+    ReplaceWith("StringSelectBuilder(customId)", "dev.kord.rest.builder.component.StringSelectBuilder"),
     level = DeprecationLevel.WARNING,
 )
 public constructor(public var customId: String) : ActionRowComponentBuilder() {
-    internal open val type: ComponentType get() = ComponentType.StringSelect
 
     /**
      * The choices in the select, max 25.
-     *
      */
     @Deprecated(
-        "Binary compatibility",
+        "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
+        ReplaceWith(
+            "(this as? StringSelectBuilder)?.options ?: mutableListOf()",
+            "dev.kord.rest.builder.component.StringSelectBuilder",
+        ),
         level = DeprecationLevel.WARNING,
-        replaceWith = ReplaceWith("dev.kord.rest.builder.component.StringSelectBuilder#options")
     )
     public open val options: MutableList<SelectOptionBuilder> = mutableListOf()
 
@@ -66,7 +70,7 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
     @Deprecated(
         "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
         ReplaceWith(
-            "(this as StringSelectBuilder).option(label, value, builder)",
+            "(this as? StringSelectBuilder)?.option(label, value, builder)",
             "dev.kord.rest.builder.component.StringSelectBuilder",
             "dev.kord.rest.builder.component.option",
         ),
@@ -82,21 +86,24 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
         options.add(SelectOptionBuilder(label = label, value = value).apply(builder))
     }
 
+    // TODO make abstract when this is turned into a sealed class
+    protected open val type: ComponentType get() = ComponentType.StringSelect
+
+    // TODO return Optional.Missing() here when options is exclusively moved to StringSelectBuilder
+    protected open fun buildOptions(): Optional<List<DiscordSelectOption>> =
+        if (type == ComponentType.StringSelect) Optional(options.map { it.build() }) else Optional.Missing()
+
     protected open fun buildChannelTypes(): Optional<List<ChannelType>> = Optional.Missing()
-
-    override fun build(): DiscordChatComponent {
-        return DiscordChatComponent(
-            type,
-            customId = Optional(customId),
-            disabled = _disabled,
-            placeholder = _placeholder,
-            minValues = OptionalInt.Value(allowedValues.start),
-            maxValues = OptionalInt.Value(allowedValues.endInclusive),
-            options = Optional(options.map { it.build() }),
-            channelTypes = buildChannelTypes()
-        )
-    }
-
+    final override fun build(): DiscordChatComponent = DiscordChatComponent(
+        type = type,
+        customId = Optional(customId),
+        options = buildOptions(),
+        channelTypes = buildChannelTypes(),
+        placeholder = _placeholder,
+        minValues = OptionalInt.Value(allowedValues.start),
+        maxValues = OptionalInt.Value(allowedValues.endInclusive),
+        disabled = _disabled,
+    )
 }
 
 @KordDsl
@@ -105,10 +112,11 @@ public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId)
 
     /**
      * The choices in the select, max 25.
-     *
      */
     @Suppress("OVERRIDE_DEPRECATION")
-    override val options: MutableList<SelectOptionBuilder> = mutableListOf()
+    override var options: MutableList<SelectOptionBuilder> = mutableListOf()
+
+    override fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional(options.map { it.build() })
 }
 
 /**
@@ -150,5 +158,9 @@ public class ChannelSelectBuilder(customId: String) : SelectMenuBuilder(customId
     private var _channelTypes: Optional<MutableList<ChannelType>> = Optional.Missing()
     public var channelTypes: MutableList<ChannelType>? by ::_channelTypes.delegate()
 
-    override fun buildChannelTypes(): Optional<List<ChannelType>> = _channelTypes
+    override fun buildChannelTypes(): Optional<List<ChannelType>> = _channelTypes.mapCopy()
+}
+
+public fun ChannelSelectBuilder.channelType(type: ChannelType) {
+    channelTypes?.add(type) ?: run { channelTypes = mutableListOf(type) }
 }

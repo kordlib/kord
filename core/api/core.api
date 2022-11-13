@@ -8666,7 +8666,8 @@ public final class dev/kord/core/entity/component/ButtonComponent : dev/kord/cor
 public final class dev/kord/core/entity/component/ChannelSelectComponent : dev/kord/core/entity/component/SelectMenuComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
 	public final fun getChannelTypes ()Ljava/util/List;
-	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public fun getType ()Ldev/kord/common/entity/ComponentType$StringSelect;
+	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
 }
 
 public abstract interface class dev/kord/core/entity/component/Component {
@@ -8684,12 +8685,14 @@ public final class dev/kord/core/entity/component/ComponentKt {
 
 public final class dev/kord/core/entity/component/MentionableSelectComponent : dev/kord/core/entity/component/SelectMenuComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
-	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public fun getType ()Ldev/kord/common/entity/ComponentType$MentionableSelect;
+	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
 }
 
 public final class dev/kord/core/entity/component/RoleSelectComponent : dev/kord/core/entity/component/SelectMenuComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
-	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public fun getType ()Ldev/kord/common/entity/ComponentType$RoleSelect;
+	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
 }
 
 public class dev/kord/core/entity/component/SelectMenuComponent : dev/kord/core/entity/component/Component {
@@ -8702,7 +8705,7 @@ public class dev/kord/core/entity/component/SelectMenuComponent : dev/kord/core/
 	public final fun getMinValues ()I
 	public fun getOptions ()Ljava/util/List;
 	public final fun getPlaceholder ()Ljava/lang/String;
-	public final synthetic fun getType ()Ldev/kord/common/entity/ComponentType$SelectMenu;
+	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType$SelectMenu;
 	public fun getType ()Ldev/kord/common/entity/ComponentType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -8724,7 +8727,8 @@ public final class dev/kord/core/entity/component/SelectOption {
 public final class dev/kord/core/entity/component/StringSelectComponent : dev/kord/core/entity/component/SelectMenuComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
 	public fun getOptions ()Ljava/util/List;
-	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public fun getType ()Ldev/kord/common/entity/ComponentType$StringSelect;
+	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
 }
 
 public final class dev/kord/core/entity/component/TextInputComponent : dev/kord/core/entity/component/Component {
@@ -8753,7 +8757,8 @@ public final class dev/kord/core/entity/component/UnknownComponent : dev/kord/co
 
 public final class dev/kord/core/entity/component/UserSelectComponent : dev/kord/core/entity/component/SelectMenuComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
-	public fun getType ()Ldev/kord/common/entity/ComponentType;
+	public fun getType ()Ldev/kord/common/entity/ComponentType$UserSelect;
+	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
 }
 
 public abstract interface class dev/kord/core/entity/interaction/ActionInteraction : dev/kord/core/behavior/interaction/ActionInteractionBehavior, dev/kord/core/entity/interaction/Interaction {
