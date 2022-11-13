@@ -7,6 +7,7 @@ import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -52,6 +53,17 @@ public open class SelectMenuBuilder(
      * @param label The user-facing name of the option, max 100 characters.
      * @param value The dev-defined value of the option, max 100 characters.
      */
+    @Deprecated(
+        "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
+        ReplaceWith(
+            "(this as StringSelectBuilder).option(label, value, builder)",
+            "dev.kord.rest.builder.component.StringSelectBuilder",
+            "dev.kord.rest.builder.component.option",
+        ),
+        level = WARNING,
+    )
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
+    @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun option(label: String, value: String, builder: SelectOptionBuilder.() -> Unit = {}) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -77,6 +89,23 @@ public open class SelectMenuBuilder(
 @KordDsl
 public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType = ComponentType.StringSelect
+}
+
+/**
+ * Adds a new option to the select menu with the given [label] and [value] that can be configured by the [builder].
+ *
+ * @param label The user-facing name of the option, max 100 characters.
+ * @param value The dev-defined value of the option, max 100 characters.
+ */
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER") // can be removed when member in SelectMenuBuilder is removed
+public inline fun StringSelectBuilder.option(
+    label: String,
+    value: String,
+    builder: SelectOptionBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+    options.add(SelectOptionBuilder(label = label, value = value).apply(builder))
 }
 
 @KordDsl

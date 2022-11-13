@@ -806,6 +806,11 @@ public class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/b
 	public final fun setPlaceholder (Ljava/lang/String;)V
 }
 
+public final class dev/kord/rest/builder/component/SelectMenuBuilderKt {
+	public static final fun option (Ldev/kord/rest/builder/component/StringSelectBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun option$default (Ldev/kord/rest/builder/component/StringSelectBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+}
+
 public final class dev/kord/rest/builder/component/SelectOptionBuilder {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun build ()Ldev/kord/common/entity/DiscordSelectOption;
