@@ -44,7 +44,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
      * Creates and adds a select menu with the [customId] and configured by the [builder].
      * An ActionRow with a select menu cannot have any other select menus or buttons.
      */
-    @Deprecated("Renamed by discord to StringSelect", ReplaceWith("stringSelect"))
+    @Deprecated("Renamed by discord to StringSelect", ReplaceWith("stringSelect(customId, builder)"))
     public inline fun selectMenu(customId: String, builder: StringSelectBuilder.() -> Unit) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -66,7 +66,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
     }
 
     /**
-     * Creates and adds an user select menu with the [customId] and configured by the [builder].
+     * Creates and adds a user select menu with the [customId] and configured by the [builder].
      * An ActionRow with a select menu cannot have any other select menus or buttons.
      */
     public inline fun userSelect(customId: String, builder: UserSelectBuilder.() -> Unit = {}) {

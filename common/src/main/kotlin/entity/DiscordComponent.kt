@@ -5,7 +5,7 @@
     entries = [
         Entry("ActionRow", intValue = 1, kDoc = "A container for other components."),
         Entry("Button", intValue = 2, kDoc = "A button object."),
-        Entry("StringSelect", intValue = 3, kDoc = "A select menu for picking from choices."),
+        Entry("StringSelect", intValue = 3, kDoc = "A select menu for picking from defined text options."),
         Entry("TextInput", intValue = 4, kDoc = "A text input object."),
         Entry("UserSelect", intValue = 5, kDoc = "Select menu for users."),
         Entry("RoleSelect", intValue = 6, kDoc = "Select menu for roles."),
@@ -14,7 +14,7 @@
     ],
     deprecatedEntries = [
         Entry("SelectMenu", intValue = 3, kDoc = "A select menu for picking from choices.",
-            deprecationMessage = "Renamed by discord", replaceWith = ReplaceWith("StringSelect"),
+            deprecationMessage = "Renamed by discord", replaceWith = ReplaceWith("StringSelect", "dev.kord.common.entity.ComponentType.StringSelect"),
             deprecationLevel = DeprecationLevel.WARNING
         ),
     ],

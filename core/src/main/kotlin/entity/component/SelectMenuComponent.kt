@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ChannelType
@@ -13,7 +15,18 @@ import dev.kord.core.entity.interaction.SelectMenuInteraction
  * An interactive dropdown menu rendered on a [Message] that consists of multiple [options].
  */
 
-public open class SelectMenuComponent(override val data: ComponentData) : Component {
+public open class SelectMenuComponent
+@Deprecated(
+    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
+            "constructor of one of the subtypes.",
+    level = DeprecationLevel.WARNING,
+)
+public constructor(override val data: ComponentData) : Component {
+
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getType")
+    public val type0: ComponentType.SelectMenu get() = ComponentType.SelectMenu
 
     /**
      * The custom identifier for any [ComponentInteractions][SelectMenuInteraction]
@@ -28,18 +41,21 @@ public open class SelectMenuComponent(override val data: ComponentData) : Compon
 
     /**
      * The possible options to choose from.
-     *
-     * **Available only in [ComponentType.StringSelect]**
      */
-    public val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
+    @Deprecated(
+        "Binary compatibility",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith("dev.kord.core.entity.component.StringSelectComponent#options")
+    )
+    public open val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
 
     /**
-     * The minimum amount of [options] that can be chosen, default `1`.
+     * The minimum amount of options that can be chosen, default `1`.
      */
     public val minValues: Int get() = data.minValues.orElse(1)
 
     /**
-     * The maximum amount of [options] that can be chosen, default `1`.
+     * The maximum amount of options that can be chosen, default `1`.
      */
     public val maxValues: Int get() = data.maxValues.orElse(1)
 
@@ -61,15 +77,41 @@ public open class SelectMenuComponent(override val data: ComponentData) : Compon
     override fun toString(): String = "SelectMenuComponent(data=$data)"
 }
 
-public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(data)
+public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
 
-public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data)
+    override val type: ComponentType
+        get() = ComponentType.StringSelect
 
-public class RoleSelectComponent(data: ComponentData) : SelectMenuComponent(data)
+    /**
+     * The possible options to choose from.
+     */
+    @Suppress("OVERRIDE_DEPRECATION")
+    public override val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
+}
 
-public class MentionableSelectComponent(data: ComponentData) : SelectMenuComponent(data)
+public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+
+    override val type: ComponentType
+        get() = ComponentType.UserSelect
+}
+
+public class RoleSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+
+    override val type: ComponentType
+        get() = ComponentType.RoleSelect
+}
+
+public class MentionableSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+
+    override val type: ComponentType
+        get() = ComponentType.MentionableSelect
+}
 
 public class ChannelSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+
+    override val type: ComponentType
+        get() = ComponentType.StringSelect
+
     public val channelTypes: List<ChannelType>? get() = data.channelTypes.value
 }
 

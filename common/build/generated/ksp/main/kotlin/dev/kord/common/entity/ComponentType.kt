@@ -62,7 +62,7 @@ public sealed class ComponentType(
     public object Button : ComponentType(2)
 
     /**
-     * A select menu for picking from choices.
+     * A select menu for picking from defined text options.
      */
     public object StringSelect : ComponentType(3)
 
@@ -96,7 +96,8 @@ public sealed class ComponentType(
      */
     @Deprecated(
         message = "Renamed by discord",
-        replaceWith = ReplaceWith(expression = "StringSelect", imports = arrayOf()),
+        replaceWith = ReplaceWith(expression = "StringSelect", imports =
+                    arrayOf("dev.kord.common.entity.ComponentType.StringSelect")),
     )
     public object SelectMenu : ComponentType(3)
 

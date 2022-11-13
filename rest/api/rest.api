@@ -770,8 +770,6 @@ public final class dev/kord/rest/builder/component/ButtonBuilder$LinkButtonBuild
 
 public final class dev/kord/rest/builder/component/ChannelSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
-	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
-	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	public final fun getChannelTypes ()Ljava/util/List;
 	public final fun setChannelTypes (Ljava/util/List;)V
 }
@@ -795,9 +793,10 @@ public class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/b
 	public fun <init> (Ljava/lang/String;)V
 	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
+	protected fun buildChannelTypes ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getAllowedValues ()Lkotlin/ranges/ClosedRange;
 	public final fun getCustomId ()Ljava/lang/String;
-	public final fun getOptions ()Ljava/util/List;
+	public fun getOptions ()Ljava/util/List;
 	public final fun getPlaceholder ()Ljava/lang/String;
 	public final fun option (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun option$default (Ldev/kord/rest/builder/component/SelectMenuBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
@@ -828,6 +827,7 @@ public final class dev/kord/rest/builder/component/SelectOptionBuilder {
 
 public final class dev/kord/rest/builder/component/StringSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun getOptions ()Ljava/util/List;
 }
 
 public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
