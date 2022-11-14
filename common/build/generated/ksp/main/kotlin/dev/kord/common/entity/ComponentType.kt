@@ -62,14 +62,44 @@ public sealed class ComponentType(
     public object Button : ComponentType(2)
 
     /**
-     * A select menu for picking from choices.
+     * A select menu for picking from defined text options.
      */
-    public object SelectMenu : ComponentType(3)
+    public object StringSelect : ComponentType(3)
 
     /**
      * A text input object.
      */
     public object TextInput : ComponentType(4)
+
+    /**
+     * Select menu for users.
+     */
+    public object UserSelect : ComponentType(5)
+
+    /**
+     * Select menu for roles.
+     */
+    public object RoleSelect : ComponentType(6)
+
+    /**
+     * Select menu for mentionables (users and roles).
+     */
+    public object MentionableSelect : ComponentType(7)
+
+    /**
+     * Select menu for channels.
+     */
+    public object ChannelSelect : ComponentType(8)
+
+    /**
+     * A select menu for picking from choices.
+     */
+    @Deprecated(
+        message = "Renamed by discord",
+        replaceWith = ReplaceWith(expression = "StringSelect", imports =
+                    arrayOf("dev.kord.common.entity.ComponentType.StringSelect")),
+    )
+    public object SelectMenu : ComponentType(3)
 
     internal object NewSerializer : KSerializer<ComponentType> {
         public override val descriptor: SerialDescriptor =
@@ -81,8 +111,12 @@ public sealed class ComponentType(
         public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
             1 -> ActionRow
             2 -> Button
-            3 -> SelectMenu
+            3 -> StringSelect
             4 -> TextInput
+            5 -> UserSelect
+            6 -> RoleSelect
+            7 -> MentionableSelect
+            8 -> ChannelSelect
             else -> Unknown(value)
         }
     }
@@ -111,8 +145,12 @@ public sealed class ComponentType(
             listOf(
                 ActionRow,
                 Button,
-                SelectMenu,
+                StringSelect,
                 TextInput,
+                UserSelect,
+                RoleSelect,
+                MentionableSelect,
+                ChannelSelect,
             )
         }
 
