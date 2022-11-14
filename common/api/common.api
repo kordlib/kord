@@ -7859,6 +7859,7 @@ public final class dev/kord/common/entity/TextInputStyle$Unknown : dev/kord/comm
 }
 
 public final class dev/kord/common/entity/UserFlag : java/lang/Enum {
+	public static final field ActiveDeveloper Ldev/kord/common/entity/UserFlag;
 	public static final field BotHttpInteractions Ldev/kord/common/entity/UserFlag;
 	public static final field BugHunterLevel1 Ldev/kord/common/entity/UserFlag;
 	public static final field BugHunterLevel2 Ldev/kord/common/entity/UserFlag;
