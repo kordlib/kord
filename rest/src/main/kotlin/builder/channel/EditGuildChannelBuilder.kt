@@ -53,6 +53,9 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
      */
     public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
 
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
         position = _position,
@@ -62,8 +65,8 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         permissionOverwrites = _permissionOverwrites,
         parentId = _parentId,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
     )
-
 }
 
 @KordDsl
