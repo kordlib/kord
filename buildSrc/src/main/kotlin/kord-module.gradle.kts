@@ -16,11 +16,6 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation(kotlin("test"))
-    testRuntimeOnly(kotlin("test-junit5"))
-}
-
 kotlin {
     explicitApi()
 

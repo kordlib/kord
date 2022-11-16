@@ -54,6 +54,8 @@ kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
 
 # tests
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit5" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
@@ -73,8 +75,8 @@ ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin
 
 ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
 
-test-implementation = ["kotlinx-coroutines-test", "junit-jupiter-api", "mockk"]
-test-runtime = ["junit-jupiter-engine", "slf4j-simple"]
+test-implementation = ["kotlinx-coroutines-test", "kotlin-test", "junit-jupiter-api", "mockk"]
+test-runtime = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
 
 pluginsForBuildSrc = [
     "kotlin-jvm-plugin",
