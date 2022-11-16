@@ -104,14 +104,10 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _flags: Optional<ChannelFlags> = Optional.Missing()
     public var flags: ChannelFlags? by ::_flags.delegate()
 
-    private var _defaultReactionEmoji: Optional<DiscordDefaultReaction> = Optional.Missing()
+    private var _defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing()
     public var defaultReactionEmoji: DiscordDefaultReaction? by ::_defaultReactionEmoji.delegate()
-
-    private var _defaultReactionEmojiId: Optional<Snowflake> = Optional.Missing()
-    public var defaultReactionEmojiId: Snowflake? by ::_defaultReactionEmojiId.delegate()
-
-    private var _defaultReactionEmojiName: Optional<String> = Optional.Missing()
-    public var defaultReactionEmojiName: String? by ::_defaultReactionEmojiName.delegate()
+    public var defaultReactionEmojiId: Snowflake? = null
+    public var defaultReactionEmojiName: String? = null
 
     private var _availableTags: Optional<List<DiscordForumTag>> = Optional.Missing()
     public var availableTags: List<DiscordForumTag>? by ::_availableTags.delegate()
@@ -131,10 +127,14 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         permissionOverwrites = _permissionOverwrites,
         parentId = _parentId,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
-        defaultReactionEmoji = (_defaultReactionEmoji.value ?: DiscordDefaultReaction(
-            _defaultReactionEmojiId.value,
-            _defaultReactionEmojiName.value
-        )).optional(),
+        defaultReactionEmoji = when {
+            defaultReactionEmojiId != null || defaultReactionEmojiName != null ->
+                DiscordDefaultReaction(
+                    emojiId = defaultReactionEmojiId,
+                    emojiName = defaultReactionEmojiName,
+                ).optional()
+            else -> _defaultReactionEmoji
+        },
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,
