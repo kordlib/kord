@@ -1,13 +1,5 @@
 [versions]
 
-# Steps for upgrading Gradle:
-# 1. update `gradle` and `gradleChecksum` ('Complete (-all) ZIP Checksum' from https://gradle.org/release-checksums)
-# 2. run `./gradlew wrapper` (will update 'gradle/wrapper/gradle-wrapper.properties')
-# 3. run `./gradlew wrapper` again (might update 'gradle/wrapper/gradle-wrapper.jar', 'gradlew' and 'gradlew.bat')
-# 4. commit all changes
-gradle = "7.5.1" # https://github.com/gradle/gradle
-gradleChecksum = "db9c8211ed63f61f60292c69e80d89196f9eb36665e369e7f00ac4cc841c2219"
-
 # api dependencies
 kotlin = "1.7.20" # https://github.com/JetBrains/kotlin
 ktor = "2.1.3" # https://github.com/ktorio/ktor
