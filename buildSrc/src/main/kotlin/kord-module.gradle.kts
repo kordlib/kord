@@ -92,6 +92,10 @@ tasks {
 
             externalDocumentationLink("https://kotlinlang.org/api/kotlinx.coroutines/")
             externalDocumentationLink("https://kotlinlang.org/api/kotlinx.serialization/")
+            externalDocumentationLink(
+                url = "https://kotlinlang.org/api/kotlinx-datetime/",
+                packageListUrl = "https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/package-list",
+            )
             externalDocumentationLink("https://api.ktor.io/")
 
             // don't list `TweetNaclFast` in docs
