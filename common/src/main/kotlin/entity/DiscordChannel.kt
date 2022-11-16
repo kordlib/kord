@@ -35,17 +35,6 @@
         ),
         Entry("GuildForum", intValue = 15, kDoc = "A channel that can only contain threads."),
     ],
-    deprecatedEntries = [
-        Entry(
-            "GuildStore", intValue = 6,
-            kDoc = "A channel in which game developers can sell their game on Discord.\n\n@suppress",
-            deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
-                    "Discord and store channels were removed on March 10, 2022. See " +
-                    "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
-                    " for more information.",
-            deprecationLevel = HIDDEN,
-        ),
-    ],
 )
 
 @file:GenerateKordEnum(
@@ -93,8 +82,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -312,14 +300,14 @@ public sealed class ArchiveDuration(
             listOf(Hour, Day, ThreeDays, Week)
         }
 
-        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = WARNING)
+        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = ERROR)
         public val values: Set<ArchiveDuration> get() = entries.toSet()
     }
 
     @Deprecated(
         "Use 'ArchiveDuration.serializer()' instead.",
         ReplaceWith("ArchiveDuration.serializer()", "dev.kord.common.entity.ArchiveDuration"),
-        level = WARNING,
+        level = ERROR,
     )
     // TODO rename internal `NewSerializer` to `Serializer` when this is removed
     public object Serializer : KSerializer<ArchiveDuration> by NewSerializer

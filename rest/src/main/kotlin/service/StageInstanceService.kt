@@ -2,7 +2,6 @@ package dev.kord.rest.service
 
 import dev.kord.common.entity.DiscordStageInstance
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.stage.StageInstanceCreateBuilder
 import dev.kord.rest.builder.stage.StageInstanceModifyBuilder
 import dev.kord.rest.json.request.StageInstanceCreateRequest
@@ -10,7 +9,6 @@ import dev.kord.rest.json.request.StageInstanceModifyRequest
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -60,59 +58,9 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
         return modifyStageInstance(channelId, appliedBuilder.toRequest(), appliedBuilder.reason)
     }
 
-    /** @suppress */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "Replaced by 'modifyStageInstance'.",
-        ReplaceWith("this.modifyStageInstance(channelId, request, reason)"),
-        level = HIDDEN,
-    )
-    public suspend fun updateStageInstance(
-        channelId: Snowflake,
-        request: dev.kord.rest.json.request.StageInstanceUpdateRequest,
-        reason: String? = null,
-    ): DiscordStageInstance = call(Route.StageInstancePatch) {
-        keys[Route.ChannelId] = channelId
-
-        body(dev.kord.rest.json.request.StageInstanceUpdateRequest.serializer(), request)
-        auditLogReason(reason)
-    }
-
     public suspend fun deleteStageInstance(channelId: Snowflake, reason: String? = null): Unit =
         call(Route.StageInstanceDelete) {
             keys[Route.ChannelId] = channelId
             auditLogReason(reason)
         }
 }
-
-/** @suppress */
-@Deprecated(
-    "Replaced by builder overload.",
-    ReplaceWith("this.createStageInstance(channelId, topic) {\nthis@createStageInstance.reason = reason\n}"),
-    level = HIDDEN,
-)
-public suspend fun StageInstanceService.createStageInstance(
-    channelId: Snowflake,
-    topic: String,
-    reason: String? = null,
-): DiscordStageInstance = createStageInstance(
-    StageInstanceCreateRequest(channelId, topic), reason
-)
-
-/** @suppress */
-@Deprecated(
-    "Replaced by 'modifyStageInstance'.",
-    ReplaceWith(
-        "this.modifyStageInstance(channelId) {\nthis@modifyStageInstance.topic = topic\nthis@modifyStageInstance.reason = reason\n}"
-    ),
-    level = HIDDEN,
-)
-public suspend fun StageInstanceService.updateStageInstance(
-    channelId: Snowflake,
-    topic: String,
-    reason: String? = null,
-): DiscordStageInstance = modifyStageInstance(
-    channelId,
-    StageInstanceModifyRequest(topic.optional()),
-    reason
-)

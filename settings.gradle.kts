@@ -54,7 +54,7 @@ fun VersionCatalogBuilder.kotlinx() {
 }
 
 fun VersionCatalogBuilder.ktor() {
-    val ktor = version("ktor", "2.1.2")
+    val ktor = version("ktor", "2.1.3")
 
     library("ktor-client-json", "io.ktor", "ktor-serialization-kotlinx-json").versionRef(ktor)
     library("ktor-client-content-negotiation", "io.ktor", "ktor-client-content-negotiation").versionRef(ktor)
@@ -102,7 +102,7 @@ fun VersionCatalogBuilder.tests() {
 }
 
 fun VersionCatalogBuilder.kspProcessors() {
-    library("ksp-api", "com.google.devtools.ksp", "symbol-processing-api").version("1.7.20-1.0.7")
+    library("ksp-api", "com.google.devtools.ksp", "symbol-processing-api").version("1.7.20-1.0.8")
 
     val kotlinpoet = version("kotlinpoet", "1.12.0")
     library("kotlinpoet", "com.squareup", "kotlinpoet").versionRef(kotlinpoet)

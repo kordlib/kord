@@ -14,7 +14,6 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -442,29 +441,6 @@ public suspend inline fun ChannelService.patchStageVoiceChannel(
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
     return patchChannel(channelId, StageVoiceChannelModifyBuilder().apply(builder).toRequest())
-}
-
-/** @suppress */
-@Suppress("DEPRECATION_ERROR")
-@Deprecated(
-    """
-    Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were
-    removed on March 10, 2022.
-    
-    See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more
-    information.
-    """,
-    level = HIDDEN,
-)
-public suspend inline fun ChannelService.patchStoreChannel(
-    channelId: Snowflake,
-    builder: dev.kord.rest.builder.channel.StoreChannelModifyBuilder.() -> Unit
-): DiscordChannel {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    val modifyBuilder = dev.kord.rest.builder.channel.StoreChannelModifyBuilder().apply(builder)
-    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 
 public suspend inline fun ChannelService.patchNewsChannel(

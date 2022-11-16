@@ -1,10 +1,7 @@
 package dev.kord.core.behavior.interaction
 
-import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.MessageFlag
-import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.response.EphemeralMessageInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.PublicMessageInteractionResponseBehavior
@@ -14,9 +11,6 @@ import dev.kord.core.entity.interaction.ModalSubmitInteraction
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.UpdateMessageInteractionResponseCreateBuilder
-import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
-import dev.kord.rest.json.request.InteractionResponseCreateRequest
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -26,34 +20,7 @@ import kotlin.contracts.contract
  */
 public interface ComponentInteractionBehavior : ActionInteractionBehavior {
 // this can not be a ModalParentInteractionBehavior since ModalSubmitInteractions implement ComponentInteractionBehavior
-// but can not be responded to with another modal (yet?)
-
-    /**
-     * Acknowledges a component interaction publicly with the intent of updating it later.
-     *
-     * There is no requirement to actually update the message later, calling this is
-     * sufficient to handle the interaction and stops any 'loading' animations in the client.
-     *
-     * There is no noticeable difference between this and [acknowledgeEphemeralDeferredMessageUpdate]
-     * when it comes to acknowledging the interaction, both functions can be called
-     * on public and ephemeral messages.
-     *
-     * @suppress
-     */
-    @Deprecated(
-        "Renamed to 'deferPublicMessageUpdate'. Also take a look at the new documentation.",
-        ReplaceWith("this.deferPublicMessageUpdate()"),
-        level = HIDDEN,
-    )
-    public suspend fun acknowledgePublicDeferredMessageUpdate(): PublicMessageInteractionResponseBehavior {
-        val request = InteractionResponseCreateRequest(
-            type = InteractionResponseType.DeferredUpdateMessage
-        )
-
-        kord.rest.interaction.createInteractionResponse(id, token, request)
-
-        return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
-    }
+// but can not be responded to with another modal
 
     /**
      * Acknowledges the interaction with the intent of updating the original public message later by calling
@@ -71,38 +38,6 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
     public suspend fun deferPublicMessageUpdate(): PublicMessageInteractionResponseBehavior {
         kord.rest.interaction.deferMessageUpdate(id, token)
         return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
-    }
-
-    /**
-     * Acknowledges a component interaction ephemerally with the intent of updating it later.
-     *
-     * There is no requirement to actually update the message later, calling this is
-     * sufficient to handle the interaction and stops any 'loading' state in the client.
-     *
-     * There is no noticeable difference between this and [acknowledgePublicDeferredMessageUpdate]
-     * when it comes to acknowledging the interaction, both functions can be called
-     * on public and ephemeral messages.
-     *
-     * @suppress
-     */
-    @Deprecated(
-        "Renamed to 'deferEphemeralMessageUpdate'. Also take a look at the new documentation.",
-        ReplaceWith("this.deferEphemeralMessageUpdate()"),
-        level = HIDDEN,
-    )
-    public suspend fun acknowledgeEphemeralDeferredMessageUpdate(): EphemeralMessageInteractionResponseBehavior {
-        val request = InteractionResponseCreateRequest(
-            data = Optional.Value(
-                InteractionApplicationCommandCallbackData(
-                    flags = Optional(MessageFlags(MessageFlag.Ephemeral))
-                )
-            ),
-            type = InteractionResponseType.DeferredUpdateMessage
-        )
-
-        kord.rest.interaction.createInteractionResponse(id, token, request)
-
-        return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
     }
 
     /**
@@ -148,36 +83,6 @@ public fun ComponentInteractionBehavior(
 }
 
 /**
- * Acknowledges a component interaction publicly and updates the message with the [builder].
- *
- * There is no noticeable difference between this and [acknowledgeEphemeralUpdateMessage]
- * when it comes to acknowledging the interaction, both functions can be called
- * on public and ephemeral messages.
- *
- * @suppress
- */
-@Deprecated(
-    "Renamed to 'updatePublicMessage'. Also take a look at the new documentation.",
-    ReplaceWith("this.updatePublicMessage()", "dev.kord.core.behavior.interaction.updatePublicMessage"),
-    level = HIDDEN,
-)
-public suspend fun ComponentInteractionBehavior.acknowledgePublicUpdateMessage(
-    builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
-): PublicMessageInteractionResponseBehavior {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-    val request = UpdateMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
-
-    kord.rest.interaction.createInteractionResponse(
-        id,
-        token,
-        request.copy(request = request.request.copy(InteractionResponseType.UpdateMessage))
-    )
-
-    return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
-}
-
-/**
  * Responds to the interaction by updating the original public message.
  *
  * There is nothing that will prevent you from calling this for an [ephemeral][MessageFlag.Ephemeral] message but
@@ -194,36 +99,6 @@ public suspend inline fun ComponentInteractionBehavior.updatePublicMessage(
     kord.rest.interaction.createInteractionResponse(id, token, request)
 
     return PublicMessageInteractionResponseBehavior(applicationId, token, kord)
-}
-
-/**
- * Acknowledges a component interaction ephemerally and updates the message with the [builder].
- *
- * There is no noticeable difference between this and [acknowledgeEphemeralUpdateMessage]
- * when it comes to acknowledging the interaction, both functions can be called
- * on public and ephemeral messages.
- *
- * @suppress
- */
-@Deprecated(
-    "Renamed to 'updateEphemeralMessage'. Also take a look at the new documentation.",
-    ReplaceWith("this.updateEphemeralMessage()", "dev.kord.core.behavior.interaction.updateEphemeralMessage"),
-    level = HIDDEN,
-)
-public suspend fun ComponentInteractionBehavior.acknowledgeEphemeralUpdateMessage(
-    builder: UpdateMessageInteractionResponseCreateBuilder.() -> Unit
-): EphemeralMessageInteractionResponseBehavior {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-    val request = UpdateMessageInteractionResponseCreateBuilder().apply(builder).toRequest()
-
-    kord.rest.interaction.createInteractionResponse(
-        id,
-        token,
-        request
-    )
-
-    return EphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
 }
 
 /**

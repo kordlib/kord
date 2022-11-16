@@ -89,6 +89,8 @@ public data class DiscordAutoModerationRule(
 public data class DiscordAutoModerationRuleTriggerMetadata(
     @SerialName("keyword_filter")
     val keywordFilter: Optional<List<String>> = Optional.Missing(),
+    @SerialName("regex_patterns")
+    val regexPatterns: Optional<List<String>> = Optional.Missing(),
     val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
     @SerialName("allow_list")
     val allowList: Optional<List<String>> = Optional.Missing(),

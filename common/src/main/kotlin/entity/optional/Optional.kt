@@ -213,6 +213,8 @@ public inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<L
     is Value -> Value(value.map(mapper))
 }
 
+public fun <T> Optional<MutableList<T>>.mapCopy(): Optional<List<T>> = map { mutable -> mutable.toList() }
+
 
 @Suppress("UNCHECKED_CAST")
 public inline fun <K, V, R> Optional<Map<K, V>>.mapValues(mapper: (Map.Entry<K, V>) -> R): Optional<Map<K, R>> = when (this) {
@@ -221,7 +223,6 @@ public inline fun <K, V, R> Optional<Map<K, V>>.mapValues(mapper: (Map.Entry<K, 
 }
 
 
-@Suppress("UNCHECKED_CAST")
 public inline fun <E> Optional<List<E>>.filterList(mapper: (E) -> Boolean): Optional<List<E>> = when (this) {
     is Missing, is Null<*> -> this
     is Value -> Value(value.filter(mapper))

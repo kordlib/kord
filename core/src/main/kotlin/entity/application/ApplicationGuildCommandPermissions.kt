@@ -15,7 +15,7 @@ public class GuildApplicationCommandPermission(public val data: GuildApplication
 
     public val type: ApplicationCommandPermissionType get() = data.type
 
-    @Suppress("DEPRECATION_ERROR")
+    @Suppress("DEPRECATION_ERROR", "INVISIBLE_MEMBER")
     @Deprecated("Binary compatibility", level = HIDDEN)
     @get:JvmName("getType")
     public val type0: DiscordGuildApplicationCommandPermission.Type
@@ -23,7 +23,7 @@ public class GuildApplicationCommandPermission(public val data: GuildApplication
             ApplicationCommandPermissionType.Role -> DiscordGuildApplicationCommandPermission.Type.Role
             ApplicationCommandPermissionType.User -> DiscordGuildApplicationCommandPermission.Type.User
             ApplicationCommandPermissionType.Channel -> DiscordGuildApplicationCommandPermission.Type.Channel
-            is ApplicationCommandPermissionType.Unknown -> DiscordGuildApplicationCommandPermission.Type.Unknown(t.value)
+            is ApplicationCommandPermissionType.Unknown -> DiscordGuildApplicationCommandPermission.Type.Unknown(t.value, null)
         }
 
     public val permission: Boolean get() = data.permission

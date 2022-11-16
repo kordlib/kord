@@ -128,17 +128,17 @@
                     "Discord and store channels were removed on March 10, 2022. See " +
                     "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
                     " for more information.",
-            deprecationLevel = ERROR,
+            deprecationLevel = HIDDEN,
         ),
         Entry(
             "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
             kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
-            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = HIDDEN,
         ),
         Entry(
             "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
             kDoc = "Guild has access to the three-day archive time for threads.\n\n@suppress",
-            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = HIDDEN,
         ),
     ],
 )
@@ -163,7 +163,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].

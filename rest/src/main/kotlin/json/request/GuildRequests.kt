@@ -18,7 +18,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 @Serializable
 public data class GuildCreateRequest(
@@ -133,20 +133,20 @@ public data class GuildMemberModifyRequest(
 public data class GuildBanCreateRequest @Deprecated(
     "'reason' and 'deleteMessageDays' are deprecated, use other constructor instead.",
     ReplaceWith("GuildBanCreateRequest(deleteMessageSeconds)"),
-    level = WARNING,
+    level = ERROR,
 ) public constructor(
     /** @suppress*/
-    @Deprecated("Use 'X-Audit-Log-Reason' header instead.", level = WARNING)
+    @Deprecated("Use 'X-Audit-Log-Reason' header instead.", level = ERROR)
     val reason: Optional<String> = Optional.Missing(),
     /** @suppress*/
-    @Deprecated("Use 'deleteMessageSeconds' instead.", ReplaceWith("this.deleteMessageSeconds"), level = WARNING)
+    @Deprecated("Use 'deleteMessageSeconds' instead.", ReplaceWith("this.deleteMessageSeconds"), level = ERROR)
     @SerialName("delete_message_days")
     val deleteMessagesDays: OptionalInt = OptionalInt.Missing,
     @SerialName("delete_message_seconds")
     val deleteMessageSeconds: Optional<DurationInSeconds> = Optional.Missing(),
 ) {
     // use this as primary constructor when other constructor is removed
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     public constructor(deleteMessageSeconds: Optional<DurationInSeconds> = Optional.Missing()) : this(
         reason = Optional.Missing(),
         deleteMessagesDays = OptionalInt.Missing,

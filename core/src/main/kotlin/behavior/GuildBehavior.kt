@@ -1,7 +1,6 @@
 package dev.kord.core.behavior
 
 import dev.kord.cache.api.query
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
@@ -55,7 +54,6 @@ import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import java.util.Objects
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
@@ -217,15 +215,6 @@ public interface GuildBehavior : KordEntity, Strategizable {
         get() = supplier.getTemplates(id)
 
     /**
-     * Application commands for this guild only.
-     *
-     * @suppress
-     */
-    @Deprecated("Use function call", ReplaceWith("getApplicationCommands()"), level = HIDDEN)
-    public val commands: Flow<GuildApplicationCommand>
-        get() = supplier.getGuildApplicationCommands(kord.resources.applicationId, id)
-
-    /**
      * Returns the gateway this guild is part of as per the
      * [Discord sharding rules](https://discord.com/developers/docs/topics/gateway#sharding).
      * Returns `null` if no gateway for the shard is present in [kord].
@@ -329,9 +318,6 @@ public interface GuildBehavior : KordEntity, Strategizable {
      */
     public suspend fun editMFALevel(level: MFALevel, reason: String? = null): MFALevel =
         kord.rest.guild.modifyGuildMFALevel(id, level, reason).level
-
-    @Deprecated("Binary compatibility, keep for at least one release.", level = HIDDEN)
-    public suspend fun editMFALevel(level: MFALevel): MFALevel = editMFALevel(level, reason = null)
 
     /**
      * Requests to leave this guild.
@@ -737,20 +723,6 @@ public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> U
     return Guild(data, kord)
 }
 
-/** @suppress */
-@Deprecated(
-    "emoji name and image are mandatory fields.",
-    ReplaceWith("createEmoji(\"name\", Image.fromUrl(\"url\"), builder)"),
-    level = HIDDEN,
-)
-@DeprecatedSinceKord("0.7.0")
-public suspend inline fun GuildBehavior.createEmoji(builder: EmojiCreateBuilder.() -> Unit): GuildEmoji {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    return createEmoji("name", Image.raw(byteArrayOf(), Image.Format.PNG), builder)
-}
-
 public suspend inline fun GuildBehavior.createEmoji(
     name: String,
     image: Image,
@@ -761,28 +733,6 @@ public suspend inline fun GuildBehavior.createEmoji(
     }
     val discordEmoji = kord.rest.emoji.createEmoji(guildId = id, name, image, builder)
     return GuildEmoji(EmojiData.from(guildId = id, id = discordEmoji.id!!, discordEmoji), kord)
-}
-
-/**
- * Requests to create a new text channel.
- *
- * @return The created [TextChannel].
- *
- * @throws [RestRequestException] if something went wrong during the request.
- *
- * @suppress
- */
-@Deprecated(
-    "channel name is a mandatory field",
-    ReplaceWith("createTextChannel(\"name\", builder)"),
-    level = HIDDEN,
-)
-@DeprecatedSinceKord("0.7.0")
-public suspend inline fun GuildBehavior.createTextChannel(builder: TextChannelCreateBuilder.() -> Unit): TextChannel {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    return createTextChannel("name", builder)
 }
 
 /**
@@ -822,28 +772,6 @@ public suspend inline fun GuildBehavior.createForumChannel(
  * @return The created [VoiceChannel].
  *
  * @throws [RestRequestException] if something went wrong during the request.
- *
- * @suppress
- */
-@Deprecated(
-    "channel name is a mandatory field.",
-    ReplaceWith("createVoiceChannel(\"name\", builder)"),
-    level = HIDDEN,
-)
-@DeprecatedSinceKord("0.7.0")
-public suspend inline fun GuildBehavior.createVoiceChannel(builder: VoiceChannelCreateBuilder.() -> Unit): VoiceChannel {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    return createVoiceChannel("name", builder)
-}
-
-/**
- * Requests to create a new voice channel.
- *
- * @return The created [VoiceChannel].
- *
- * @throws [RestRequestException] if something went wrong during the request.
  */
 public suspend inline fun GuildBehavior.createVoiceChannel(
     name: String,
@@ -856,28 +784,6 @@ public suspend inline fun GuildBehavior.createVoiceChannel(
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as VoiceChannel
-}
-
-/**
- * Requests to create a new news channel.
- *
- * @return The created [NewsChannel].
- *
- * @throws [RestRequestException] if something went wrong during the request.
- *
- * @suppress
- */
-@Deprecated(
-    "channel name is a mandatory field.",
-    ReplaceWith("createNewsChannel(\"name\", builder)"),
-    level = HIDDEN,
-)
-@DeprecatedSinceKord("0.7.0")
-public suspend inline fun GuildBehavior.createNewsChannel(builder: NewsChannelCreateBuilder.() -> Unit): NewsChannel {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    return createNewsChannel("name", builder)
 }
 
 /**
@@ -900,28 +806,6 @@ public suspend inline fun GuildBehavior.createNewsChannel(
     return Channel.from(data, kord) as NewsChannel
 }
 
-
-/**
- * Requests to create a new category.
- *
- * @return The created [Category].
- *
- * @throws [RestRequestException] if something went wrong during the request.
- *
- * @suppress
- */
-@Deprecated(
-    "channel name is a mandatory field.",
-    ReplaceWith("this.createCategory(\"name\", builder)"),
-    level = HIDDEN,
-)
-@DeprecatedSinceKord("0.7.0")
-public suspend inline fun GuildBehavior.createCategory(builder: CategoryCreateBuilder.() -> Unit): Category {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    return createCategory("name", builder)
-}
 
 /**
  * Requests to create a new category.
