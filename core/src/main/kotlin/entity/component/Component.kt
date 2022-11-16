@@ -31,10 +31,15 @@ public sealed interface Component {
  * @see SelectMenuComponent
  * @see UnknownComponent
  */
+@Suppress("DEPRECATION")
 public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.ActionRow -> ActionRowComponent(data)
     ComponentType.Button -> ButtonComponent(data as ChatComponentData)
-    ComponentType.SelectMenu -> SelectMenuComponent(data)
+    ComponentType.StringSelect, ComponentType.SelectMenu -> StringSelectComponent(data)
+    ComponentType.UserSelect -> UserSelectComponent(data)
+    ComponentType.RoleSelect -> RoleSelectComponent(data)
+    ComponentType.MentionableSelect -> MentionableSelectComponent(data)
+    ComponentType.ChannelSelect -> ChannelSelectComponent(data)
     ComponentType.TextInput -> TextInputComponent(data as TextInputComponentData)
     is ComponentType.Unknown -> UnknownComponent(data)
 }

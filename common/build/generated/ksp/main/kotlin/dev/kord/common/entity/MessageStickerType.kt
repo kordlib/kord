@@ -7,6 +7,7 @@ package dev.kord.common.entity
 import kotlin.Any
 import kotlin.Boolean
 import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.ReplaceWith
@@ -86,6 +87,7 @@ public sealed class MessageStickerType(
 
 
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Renamed to 'entries'.",
             replaceWith = ReplaceWith(expression = "this.entries", imports = arrayOf()),
         )

@@ -1,10 +1,8 @@
 package dev.kord.rest.request
 
-import dev.kord.common.annotation.DeprecatedSinceKord
 import dev.kord.common.exception.RequestException
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.service.RestService
-import kotlin.DeprecationLevel.HIDDEN
 import io.ktor.client.statement.HttpResponse as KtorResponse
 
 private fun formatRestRequestExceptionMessage(status: HttpStatus, error: DiscordErrorResponse?): String {
@@ -25,14 +23,7 @@ public abstract class RestRequestException(
     public val request: Request<*, *>,
     public val status: HttpStatus,
     public val error: DiscordErrorResponse? = null,
-) : RequestException(formatRestRequestExceptionMessage(status, error)) {
-
-    /** @suppress */
-    @DeprecatedSinceKord("0.7.0")
-    @Deprecated("Use status.code instead", ReplaceWith("status.code"), level = HIDDEN)
-    public val code: Int by this.status::code
-
-}
+) : RequestException(formatRestRequestExceptionMessage(status, error))
 
 /**
  * Represents an HTTP status code and description.

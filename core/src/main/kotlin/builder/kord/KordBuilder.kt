@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.concurrent.thread
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -48,7 +48,7 @@ import kotlin.time.Duration.Companion.seconds
 @Deprecated(
     "Use DefaultGateway {} instead.",
     ReplaceWith("DefaultGateway {\nclient = resources.httpClient\nthis@DefaultGateway.retry = retry\n}"),
-    level = WARNING,
+    level = ERROR,
 )
 public operator fun DefaultGateway.Companion.invoke(
     resources: ClientResources,
