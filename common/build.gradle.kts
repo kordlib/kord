@@ -1,27 +1,22 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-}
-
+@Suppress("DSL_SCOPE_VIOLATION") // false positive for `libs` in IntelliJ
 plugins {
     `kord-module`
     `kord-sampled-module`
     `kord-publishing`
-
-    // see https://github.com/gmazzo/gradle-buildconfig-plugin
-    id("com.github.gmazzo.buildconfig") version "3.1.0"
+    alias(libs.plugins.buildconfig)
 }
 
 dependencies {
+    api(libs.kotlinx.coroutines.core)
+    api(libs.kotlinx.serialization.json)
     api(libs.kotlinx.datetime)
-
-    api(libs.bundles.common)
-    testImplementation(libs.bundles.test.implementation)
-    testRuntimeOnly(libs.bundles.test.runtime)
+    api(libs.kotlin.logging)
 
     compileOnly(projects.kspAnnotations)
     ksp(projects.kspProcessors)
+
+    testImplementation(libs.bundles.test.implementation)
+    testRuntimeOnly(libs.bundles.test.runtime)
 }
 
 /*
