@@ -2186,6 +2186,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field CannotEditStickersWithinMessage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotExecuteOnDM Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotExecuteOnSystemMessage Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotModifySystemWebhook Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotPinMessageFromAnotherChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotReplyWithoutMessageHistoryPermission Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSelfRedeemGift Ldev/kord/rest/json/JsonErrorCode;
@@ -2212,6 +2213,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field InteractionFailedToSend Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAPIVersion Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAccountType Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InvalidActivityAction Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidAuthToken Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidFile Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidFormBody Ldev/kord/rest/json/JsonErrorCode;
