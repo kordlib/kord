@@ -390,6 +390,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** An invite was accepted to a guild the application's bot is not in. */
     NonBotGuildInviteAccepted(50036),
 
+    /** Invalid Activity Action. */
+    InvalidActivityAction(50039),
+
     /** Invalid API version provided. */
     InvalidAPIVersion(50041),
 
@@ -410,6 +413,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Payment source required to redeem gift. */
     GiftRequiresPaymentSource(50070),
+
+    /** Cannot modify a system webhook. */
+    CannotModifySystemWebhook(50073),
 
     /** Cannot delete a channel required for Community guilds. */
     CannotDeleteRequiredCommunityChannel(50074),
