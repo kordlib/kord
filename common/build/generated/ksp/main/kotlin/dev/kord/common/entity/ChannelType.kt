@@ -86,7 +86,7 @@ public sealed class ChannelType(
     public object PublicNewsThread : ChannelType(10)
 
     /**
-     * A temporary sub-channel within a [GuildText] channel.
+     * A temporary sub-channel within a [GuildText] or [GuildForum] channel.
      */
     public object PublicGuildThread : ChannelType(11)
 

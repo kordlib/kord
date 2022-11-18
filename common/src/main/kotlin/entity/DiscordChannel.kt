@@ -17,7 +17,10 @@
                     "(https://support.discord.com/hc/en-us/articles/360032008192).",
         ),
         Entry("PublicNewsThread", intValue = 10, kDoc = "A temporary sub-channel within a [GuildNews] channel."),
-        Entry("PublicGuildThread", intValue = 11, kDoc = "A temporary sub-channel within a [GuildText] channel."),
+        Entry(
+            "PublicGuildThread", intValue = 11,
+            kDoc = "A temporary sub-channel within a [GuildText] or [GuildForum] channel."
+        ),
         Entry(
             "PrivateThread", intValue = 12,
             kDoc = "A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and " +
