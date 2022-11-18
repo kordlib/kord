@@ -20,13 +20,11 @@ dependencies {
     "voiceApi"(projects.core)
     "voiceApi"(projects.voice)
 
-    implementation(libs.bundles.common)
-
     api(libs.kord.cache.api)
     api(libs.kord.cache.map)
 
     samplesImplementation(libs.slf4j.simple)
-    testImplementation(libs.mockk)
+
     testImplementation(libs.bundles.test.implementation)
     testRuntimeOnly(libs.bundles.test.runtime)
 }

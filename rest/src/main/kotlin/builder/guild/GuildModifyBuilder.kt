@@ -1,10 +1,7 @@
 package dev.kord.rest.builder.guild
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.DefaultMessageNotificationLevel
-import dev.kord.common.entity.ExplicitContentFilter
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.VerificationLevel
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
@@ -77,6 +74,11 @@ public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
      */
     public var preferredLocale: Locale? by ::_preferredLocale.delegate()
 
+    private var _features: Optional<Set<GuildFeature>> = Optional.Missing()
+
+    /** The enabled [GuildFeature]s. */
+    public var features: Set<GuildFeature>? by ::_features.delegate()
+
     override fun toRequest(): GuildModifyRequest = GuildModifyRequest(
         _name,
         _region,
@@ -92,6 +94,7 @@ public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
         _systemChannelId,
         _rulesChannelId,
         _publicUpdatesChannelId,
-        _preferredLocale.map { "${it.language}-${it.country}" }
+        _preferredLocale.map { "${it.language}-${it.country}" },
+        features = _features,
     )
 }

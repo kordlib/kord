@@ -261,6 +261,7 @@ public data class GuildModifyRequest(
     val publicUpdatesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("preferred_locale")
     val preferredLocale: Optional<String?> = Optional.Missing(),
+    val features: Optional<Set<GuildFeature>> = Optional.Missing(),
 )
 
 @Serializable

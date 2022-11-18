@@ -75,6 +75,10 @@
             kDoc = "Guild has access to set an animated guild banner image.",
         ),
         Entry("AnimatedIcon", stringValue = "ANIMATED_ICON", kDoc = "Guild has access to set an animated guild icon."),
+        Entry(
+            "ApplicationCommandPermissionsV2", stringValue = "APPLICATION_COMMAND_PERMISSIONS_V2",
+            kDoc = "Guild is using the old permissions configuration behavior.",
+        ),
         Entry("AutoModeration", stringValue = "AUTO_MODERATION", kDoc = "Guild has set up auto moderation rules."),
         Entry("Banner", stringValue = "BANNER", kDoc = "Guild has access to set a guild banner image."),
         Entry(
@@ -82,10 +86,18 @@
             kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " +
                     "receives community updates.",
         ),
+        Entry(
+            "DeveloperSupportServer", stringValue = "DEVELOPER_SUPPORT_SERVER",
+            kDoc = "Guild has been set as a support server on the App Directory.",
+        ),
         Entry("Discoverable", stringValue = "DISCOVERABLE", kDoc = "Guild is able to be discovered in the directory."),
         Entry(
             "Featurable", stringValue = "FEATURABLE",
             kDoc = "Guild is able to be featured in the directory.",
+        ),
+        Entry(
+            "InvitesDisabled", stringValue = "INVITES_DISABLED",
+            kDoc = "Guild has paused invites, preventing new users from joining.",
         ),
         Entry(
             "InviteSplash", stringValue = "INVITE_SPLASH",

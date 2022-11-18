@@ -2,7 +2,6 @@
 .gradle/
 .idea/
 out/
-dokka/
 
 **/build/*
 !**/build/generated/

@@ -8711,12 +8711,16 @@ public class dev/kord/core/entity/component/SelectMenuComponent : dev/kord/core/
 	public final fun getDisabled ()Z
 	public final fun getMaxValues ()I
 	public final fun getMinValues ()I
-	public fun getOptions ()Ljava/util/List;
+	public final fun getOptions ()Ljava/util/List;
 	public final fun getPlaceholder ()Ljava/lang/String;
 	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType$SelectMenu;
 	public fun getType ()Ldev/kord/common/entity/ComponentType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/entity/component/SelectMenuComponentKt {
+	public static final fun getOptions (Ldev/kord/core/entity/component/StringSelectComponent;)Ljava/util/List;
 }
 
 public final class dev/kord/core/entity/component/SelectOption {
@@ -8734,7 +8738,6 @@ public final class dev/kord/core/entity/component/SelectOption {
 
 public final class dev/kord/core/entity/component/StringSelectComponent : dev/kord/core/entity/component/SelectMenuComponent {
 	public fun <init> (Ldev/kord/core/cache/data/ComponentData;)V
-	public fun getOptions ()Ljava/util/List;
 	public fun getType ()Ldev/kord/common/entity/ComponentType$StringSelect;
 	public synthetic fun getType ()Ldev/kord/common/entity/ComponentType;
 }
