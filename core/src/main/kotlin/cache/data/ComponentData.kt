@@ -29,6 +29,7 @@ public sealed class ComponentData {
     public abstract val maxLength: OptionalInt
     public abstract val required: OptionalBoolean
     public abstract val value: Optional<String>
+    public abstract val channelTypes: Optional<List<ChannelType>>
 
     public companion object {
         public fun from(entity: DiscordComponent): ComponentData = with (entity) {
@@ -50,7 +51,8 @@ public sealed class ComponentData {
                         minLength = minLength,
                         maxLength = maxLength,
                         required = required,
-                        value = value
+                        value = value,
+                        channelTypes = channelTypes
                     )
                 }
                 is DiscordTextInputComponent -> {
@@ -70,7 +72,8 @@ public sealed class ComponentData {
                         minLength = minLength,
                         maxLength = maxLength,
                         required = required,
-                        value = value
+                        value = value,
+                        channelTypes = channelTypes
                     )
                 }
             }
@@ -96,7 +99,8 @@ public data class ChatComponentData(
     override val minLength: OptionalInt = OptionalInt.Missing,
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing()
+    override val value: Optional<String> = Optional.Missing(),
+    override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : ComponentData()
 
 @Serializable
@@ -117,5 +121,6 @@ public data class TextInputComponentData(
     override val minLength: OptionalInt = OptionalInt.Missing,
     override val maxLength: OptionalInt = OptionalInt.Missing,
     override val required: OptionalBoolean = OptionalBoolean.Missing,
-    override val value: Optional<String> = Optional.Missing()
+    override val value: Optional<String> = Optional.Missing(),
+    override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : ComponentData()

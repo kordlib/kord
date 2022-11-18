@@ -20,7 +20,8 @@ import kotlin.contracts.contract
  * [updateEphemeralMessage][ComponentInteractionBehavior.updateEphemeralMessage].
  *
  * This is the handle to an [ephemeral][MessageFlag.Ephemeral] message, it supports
- * [editing][EphemeralMessageInteractionResponseBehavior.edit] and sending followup messages to the interaction.
+ * [editing][EphemeralMessageInteractionResponseBehavior.edit],
+ * [deleting][delete] and sending followup messages to the interaction.
  *
  * The message is only visible to the [user][Interaction.user] who invoked the interaction.
  */

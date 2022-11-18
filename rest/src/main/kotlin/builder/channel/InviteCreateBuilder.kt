@@ -8,10 +8,7 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.InviteCreateRequest
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
-import kotlin.time.DurationUnit.SECONDS
-import kotlin.time.toDuration
 
 @KordDsl
 public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
@@ -20,31 +17,11 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     private var _maxAge: Optional<Duration> = Optional.Missing()
 
     /**
-     * The duration of invite in seconds before expiry, or 0 for never. 86400 (24 hours) by default.
-     *
-     * @suppress
-     */
-    @Deprecated("'age' was renamed to 'maxAge'", ReplaceWith("this.maxAge"), level = HIDDEN)
-    public var age: Int?
-        get() = _maxAge.value?.inWholeSeconds?.toInt()
-        set(value) {
-            _maxAge = value?.toDuration(unit = SECONDS)?.optional() ?: Optional.Missing()
-        }
-
-    /**
      * The duration before invite expiry, or 0 for never. Between 0 and 604800 seconds (7 days). 24 hours by default.
      */
     public var maxAge: Duration? by ::_maxAge.delegate()
 
     private var _maxUses: OptionalInt = OptionalInt.Missing
-
-    /**
-     * The maximum number of uses, or 0 for unlimited. 0 by default.
-     *
-     * @suppress
-     */
-    @Deprecated("'uses' was renamed to 'maxUses'", ReplaceWith("this.maxUses"), level = HIDDEN)
-    public var uses: Int? by ::_maxUses.delegate()
 
     /** The maximum number of uses, or 0 for unlimited. Between 0 and 100. 0 by default. */
     public var maxUses: Int? by ::_maxUses.delegate()
@@ -62,16 +39,6 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
      * Whether to reuse a similar invite (useful for creating many unique one time use invites). False by default.
      */
     public var unique: Boolean? by ::_unique.delegate()
-
-    private var _targetUser: OptionalSnowflake = OptionalSnowflake.Missing
-
-    /**
-     * The target user id for this invite.
-     *
-     * @suppress
-     */
-    @Deprecated("This is no longer documented. Use 'targetUserId' instead.", ReplaceWith("this.targetUserId"), level = HIDDEN)
-    public var targetUser: Snowflake? by ::_targetUser.delegate()
 
     private var _targetType: Optional<InviteTargetType> = Optional.Missing()
 
@@ -117,8 +84,6 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
             maxUses = _maxUses,
             temporary = _temporary,
             unique = _unique,
-            targetUser = _targetUser,
-            targetUserType = _targetUser.map { @Suppress("DEPRECATION_ERROR") dev.kord.common.entity.TargetUserType.Stream },
             targetType = target,
             targetUserId = _targetUserId,
             targetApplicationId = _targetApplicationId,

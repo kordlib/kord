@@ -6,8 +6,6 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
-import kotlin.Deprecated
-import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.String
@@ -116,18 +114,6 @@ public sealed class ChannelType(
      */
     public object GuildForum : ChannelType(15)
 
-    /**
-     * A channel in which game developers can sell their game on Discord.
-     *
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message =
-                "Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were removed on March 10, 2022. See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more information.",
-    )
-    public object GuildStore : ChannelType(6)
-
     internal object Serializer : KSerializer<ChannelType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelType", PrimitiveKind.INT)
@@ -142,7 +128,6 @@ public sealed class ChannelType(
             3 -> GroupDM
             4 -> GuildCategory
             5 -> GuildNews
-            6 -> @Suppress("DEPRECATION_ERROR") GuildStore
             10 -> PublicNewsThread
             11 -> PublicGuildThread
             12 -> PrivateThread
@@ -165,7 +150,6 @@ public sealed class ChannelType(
                 GroupDM,
                 GuildCategory,
                 GuildNews,
-                @Suppress("DEPRECATION_ERROR") GuildStore,
                 PublicNewsThread,
                 PublicGuildThread,
                 PrivateThread,

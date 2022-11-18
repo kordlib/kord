@@ -14,7 +14,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -40,22 +39,6 @@ public fun FollowupPermittingInteractionResponseBehavior(
     override val supplier: EntitySupplier = supplier
 }
 
-/** @suppress */
-@Deprecated(
-    "Renamed to 'createPublicFollowup'.",
-    ReplaceWith(
-        "this.createPublicFollowup { builder() }",
-        "dev.kord.core.behavior.interaction.response.createPublicFollowup",
-    ),
-    level = HIDDEN,
-)
-public suspend inline fun FollowupPermittingInteractionResponseBehavior.followUp(
-    builder: FollowupMessageCreateBuilder.() -> Unit,
-): PublicFollowupMessage {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return createPublicFollowup(builder)
-}
-
 /**
  * Follows up an interaction response by sending a [FollowupMessage] without the
  * [Ephemeral flag][MessageFlag.Ephemeral].
@@ -74,22 +57,6 @@ public suspend inline fun FollowupPermittingInteractionResponseBehavior.createPu
     val message = Message(response.toData(), kord)
 
     return PublicFollowupMessage(message, applicationId, token, kord)
-}
-
-/** @suppress */
-@Deprecated(
-    "Renamed to 'createEphemeralFollowup'.",
-    ReplaceWith(
-        "this.createEphemeralFollowup { builder() }",
-        "dev.kord.core.behavior.interaction.response.createEphemeralFollowup",
-    ),
-    level = HIDDEN,
-)
-public suspend inline fun FollowupPermittingInteractionResponseBehavior.followUpEphemeral(
-    builder: FollowupMessageCreateBuilder.() -> Unit,
-): EphemeralFollowupMessage {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return createEphemeralFollowup(builder)
 }
 
 /**

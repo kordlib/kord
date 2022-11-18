@@ -15,7 +15,6 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 /**
@@ -76,16 +75,6 @@ public open class Invite(
      * The behavior of the user whose stream to display for this voice channel stream invite
      */
     public val targetUser: UserBehavior? get() = targetUserId?.let { UserBehavior(it, kord) }
-
-    /**
-     * The type of user target for this invite, if present.
-     *
-     * @suppress
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("This is no longer documented. Use 'targetType' instead.", ReplaceWith("this.targetType"), level = HIDDEN)
-    public val targetUserType: dev.kord.common.entity.TargetUserType?
-        get() = (data as? InviteData)?.component8()?.value
 
     /**
      * Approximate count of total members.
