@@ -60,6 +60,12 @@ public sealed class GuildFeature(
     public object AnimatedIcon : GuildFeature("ANIMATED_ICON")
 
     /**
+     * Guild is using the old permissions configuration behavior.
+     */
+    public object ApplicationCommandPermissionsV2 :
+            GuildFeature("APPLICATION_COMMAND_PERMISSIONS_V2")
+
+    /**
      * Guild has set up auto moderation rules.
      */
     public object AutoModeration : GuildFeature("AUTO_MODERATION")
@@ -76,6 +82,11 @@ public sealed class GuildFeature(
     public object Community : GuildFeature("COMMUNITY")
 
     /**
+     * Guild has been set as a support server on the App Directory.
+     */
+    public object DeveloperSupportServer : GuildFeature("DEVELOPER_SUPPORT_SERVER")
+
+    /**
      * Guild is able to be discovered in the directory.
      */
     public object Discoverable : GuildFeature("DISCOVERABLE")
@@ -84,6 +95,11 @@ public sealed class GuildFeature(
      * Guild is able to be featured in the directory.
      */
     public object Featurable : GuildFeature("FEATURABLE")
+
+    /**
+     * Guild has paused invites, preventing new users from joining.
+     */
+    public object InvitesDisabled : GuildFeature("INVITES_DISABLED")
 
     /**
      * Guild has access to set an invite splash background.
@@ -201,12 +217,15 @@ public sealed class GuildFeature(
                 when (val value = decoder.decodeString()) {
             "ANIMATED_BANNER" -> AnimatedBanner
             "ANIMATED_ICON" -> AnimatedIcon
+            "APPLICATION_COMMAND_PERMISSIONS_V2" -> ApplicationCommandPermissionsV2
             "AUTO_MODERATION" -> AutoModeration
             "BANNER" -> Banner
             "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "COMMUNITY" -> Community
+            "DEVELOPER_SUPPORT_SERVER" -> DeveloperSupportServer
             "DISCOVERABLE" -> Discoverable
             "FEATURABLE" -> Featurable
+            "INVITES_DISABLED" -> InvitesDisabled
             "INVITE_SPLASH" -> InviteSplash
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
             "MONETIZATION_ENABLED" -> MonetizationEnabled
@@ -235,12 +254,15 @@ public sealed class GuildFeature(
             listOf(
                 AnimatedBanner,
                 AnimatedIcon,
+                ApplicationCommandPermissionsV2,
                 AutoModeration,
                 Banner,
                 @Suppress("DEPRECATION_ERROR") Commerce,
                 Community,
+                DeveloperSupportServer,
                 Discoverable,
                 Featurable,
+                InvitesDisabled,
                 InviteSplash,
                 MemberVerificationGateEnabled,
                 MonetizationEnabled,
