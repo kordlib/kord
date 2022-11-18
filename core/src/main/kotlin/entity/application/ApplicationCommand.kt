@@ -60,7 +60,7 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     public val defaultPermission: Boolean? get() = @Suppress("DEPRECATION") data.defaultPermission.value
 
     /** Indicates whether the command is age-restricted. */
-    public val nsfw: Boolean get() = data.nsfw.orElse(false)
+    public val isNsfw: Boolean get() = data.nsfw.orElse(false)
 }
 
 
