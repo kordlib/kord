@@ -118,6 +118,7 @@ public data class DiscordApplicationCommand(
     @SerialName("default_permission")
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 )
 

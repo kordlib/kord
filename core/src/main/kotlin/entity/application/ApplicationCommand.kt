@@ -24,7 +24,7 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     override val id: Snowflake
         get() = data.id
 
-     public val type: ApplicationCommandType
+    public val type: ApplicationCommandType
         get() = data.type.value!!
 
     override val applicationId: Snowflake
@@ -59,7 +59,8 @@ public sealed interface ApplicationCommand : ApplicationCommandBehavior {
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     public val defaultPermission: Boolean? get() = @Suppress("DEPRECATION") data.defaultPermission.value
 
-
+    /** Indicates whether the command is age-restricted. */
+    public val nsfw: Boolean get() = data.nsfw.orElse(false)
 }
 
 
