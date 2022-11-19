@@ -123,7 +123,7 @@ class InteractionTest {
             applicationId shouldBe "845027738276462632"
             channelId shouldBe "772908445358620702"
             with(data){
-                componentType shouldBe ComponentType.SelectMenu
+                componentType shouldBe ComponentType.StringSelect
                 customId shouldBe "class_select_1"
                 values shouldBe listOf("mage", "rogue")
             }

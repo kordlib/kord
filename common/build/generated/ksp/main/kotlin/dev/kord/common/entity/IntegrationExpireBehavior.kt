@@ -72,12 +72,14 @@ public sealed class IntegrationExpireBehavior(
     }
 
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Use 'IntegrationExpireBehavior.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.serializer()", imports =
                     arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
     )
     public object Serializer : KSerializer<IntegrationExpireBehavior> by NewSerializer {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Use 'IntegrationExpireBehavior.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.serializer()", imports
                         = arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
@@ -97,7 +99,7 @@ public sealed class IntegrationExpireBehavior(
         }
 
 
-        @Suppress(names = arrayOf("DEPRECATION"))
+        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Binary compatibility",

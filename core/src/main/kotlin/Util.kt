@@ -1,7 +1,6 @@
 package dev.kord.core
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.Entity
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -59,54 +58,15 @@ internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: ()
 }
 
 
-/** @suppress */
-@Deprecated(
-    "This is an internal utility function.",
-    ReplaceWith("this.toList().sorted()", "kotlinx.coroutines.flow.toList"),
-    DeprecationLevel.HIDDEN,
-)
-public fun <T : Entity> Flow<T>.sorted(): Flow<T> = internalSorted()
-
-// TODO rename to `sorted` once the public version is fully deprecated and removed, use import alias for now
-internal fun <T : Comparable<T>> Flow<T>.internalSorted(): Flow<T> = flow {
+internal fun <T : Comparable<T>> Flow<T>.sorted(): Flow<T> = flow {
     toList().sorted().forEach { emit(it) }
 }
 
 /**
- * The terminal operator that returns the first element emitted by the flow that matches the [predicate]
- * and then cancels flow's collection.
- * Returns `null` if the flow was empty.
- *
- * @suppress
- */
-@Deprecated(
-    "Use the function with the same name from kotlinx.coroutines.flow instead.",
-    ReplaceWith("this.firstOrNull(predicate)", "kotlinx.coroutines.flow.firstOrNull"),
-    DeprecationLevel.HIDDEN,
-)
-public suspend inline fun <T : Any> Flow<T>.firstOrNull(crossinline predicate: suspend (T) -> Boolean): T? =
-    filter { predicate(it) }.coroutinesFirstOrNull()
-
-/**
- * The terminal operator that returns `true` if any of the elements match [predicate].
- * The flow's collection is cancelled when a match is found.
- *
- * @suppress
- */
-@Deprecated(
-    "This is an internal utility function.",
-    ReplaceWith("this.firstOrNull(predicate) != null", "kotlinx.coroutines.flow.firstOrNull"),
-    DeprecationLevel.HIDDEN,
-)
-public suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
-    coroutinesFirstOrNull { predicate(it) } != null
-
-// TODO rename this to `any` once the public version is fully deprecated and removed, use import alias for now
-/**
  * The terminal operator that returns `true` if any of the elements match [predicate].
  * The flow's collection is cancelled when a match is found.
  */
-internal suspend inline fun <T : Any> Flow<T>.internalAny(crossinline predicate: suspend (T) -> Boolean): Boolean =
+internal suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
     coroutinesFirstOrNull { predicate(it) } != null
 
 /**
@@ -373,8 +333,6 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelCreateEvent::class,
     NewsChannelCreateEvent::class,
     StageChannelCreateEvent::class,
-    @Suppress("DEPRECATION_ERROR")
-    dev.kord.core.event.channel.StoreChannelCreateEvent::class,
     TextChannelCreateEvent::class,
     UnknownChannelCreateEvent::class,
     VoiceChannelCreateEvent::class,
@@ -384,8 +342,6 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelUpdateEvent::class,
     NewsChannelUpdateEvent::class,
     StageChannelUpdateEvent::class,
-    @Suppress("DEPRECATION_ERROR")
-    dev.kord.core.event.channel.StoreChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
     UnknownChannelUpdateEvent::class,
     VoiceChannelUpdateEvent::class,
@@ -395,8 +351,6 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     DMChannelDeleteEvent::class,
     NewsChannelDeleteEvent::class,
     StageChannelDeleteEvent::class,
-    @Suppress("DEPRECATION_ERROR")
-    dev.kord.core.event.channel.StoreChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
     UnknownChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,

@@ -49,6 +49,7 @@ public data class AutoModerationRuleData(
 @Serializable
 public data class AutoModerationRuleTriggerMetadataData(
     val keywordFilter: Optional<List<String>> = Optional.Missing(),
+    val regexPatterns: Optional<List<String>> = Optional.Missing(),
     val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
     val allowList: Optional<List<String>> = Optional.Missing(),
     val mentionTotalLimit: OptionalInt = OptionalInt.Missing,
@@ -58,6 +59,7 @@ public data class AutoModerationRuleTriggerMetadataData(
             with(metadata) {
                 AutoModerationRuleTriggerMetadataData(
                     keywordFilter = keywordFilter,
+                    regexPatterns = regexPatterns,
                     presets = presets,
                     allowList = allowList,
                     mentionTotalLimit = mentionTotalLimit,

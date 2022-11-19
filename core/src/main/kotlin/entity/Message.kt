@@ -22,7 +22,6 @@ import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.entity.component.ActionRowComponent
-import dev.kord.core.entity.component.Component
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
@@ -33,7 +32,6 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import java.util.Objects
-import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -296,11 +294,6 @@ public class Message(
      * Can be used to estimate the relative position along with total_message_sent on the parent thread,
      */
     public val position: Int? get() = data.position.value
-
-    /** @suppress */
-    @Deprecated("Replaced with 'actionRows'.", ReplaceWith("this.actionRows"), level = HIDDEN)
-    public val components: List<Component>
-        get() = data.components.orEmpty().map { Component(it) }
 
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>

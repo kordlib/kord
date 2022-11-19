@@ -9,10 +9,8 @@ import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.guild.MemberLeaveEvent
 import dev.kord.core.event.guild.MemberUpdateEvent
-import dev.kord.core.live.channel.LiveGuildChannel
 import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.*
-import kotlin.DeprecationLevel.HIDDEN
 
 @KordPreview
 public fun Member.live(
@@ -25,54 +23,8 @@ public inline fun Member.live(
     block: LiveMember.() -> Unit
 ): LiveMember = this.live(coroutineScope).apply(block)
 
-@Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    level = HIDDEN,
-)
-@KordPreview
-public fun LiveMember.onLeave(scope: CoroutineScope = this, block: suspend (MemberLeaveEvent) -> Unit): Job =
-    on(scope = scope, consumer = block)
-
 @KordPreview
 public fun LiveMember.onUpdate(scope: CoroutineScope = this, block: suspend (MemberUpdateEvent) -> Unit): Job =
-    on(scope = scope, consumer = block)
-
-@Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    level = HIDDEN,
-)
-@KordPreview
-public fun LiveMember.onBanAdd(scope: CoroutineScope = this, block: suspend (BanAddEvent) -> Unit): Job =
-    on(scope = scope, consumer = block)
-
-@Deprecated(
-    "The block is not called when the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    level = HIDDEN,
-)
-@KordPreview
-public inline fun LiveGuildChannel.onShutdown(
-    scope: CoroutineScope = this,
-    crossinline block: suspend (Event) -> Unit
-): Job =
-    on<Event>(scope) {
-        if (it is MemberLeaveEvent || it is BanAddEvent || it is GuildDeleteEvent) {
-            block(it)
-        }
-    }
-
-@Deprecated(
-    "The block is not called when the entity is deleted because the live entity is shut down",
-    ReplaceWith("coroutineContext.job.invokeOnCompletion(block)", "kotlinx.coroutines.job"),
-    level = HIDDEN,
-)
-@KordPreview
-public fun LiveGuildChannel.onGuildDelete(
-    scope: CoroutineScope = this,
-    block: suspend (GuildDeleteEvent) -> Unit
-): Job =
     on(scope = scope, consumer = block)
 
 @KordPreview

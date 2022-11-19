@@ -3,13 +3,17 @@ package dev.kord.rest.builder.channel
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
+import dev.kord.common.entity.DiscordDefaultReaction
+import dev.kord.common.entity.DiscordForumTag
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.SortOrderType
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 import kotlin.time.Duration
@@ -45,6 +49,20 @@ public class ForumChannelCreateBuilder(public var name: String) :
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
+    private var _defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing()
+    public var defaultReactionEmoji: DiscordDefaultReaction? by ::_defaultReactionEmoji.delegate()
+    public var defaultReactionEmojiId: Snowflake? = null
+    public var defaultReactionEmojiName: String? = null
+
+    private var _availableTags: Optional<List<DiscordForumTag>?> = Optional.Missing()
+    public var availableTags: List<DiscordForumTag>? by ::_availableTags.delegate()
+
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
+
+    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
+    public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
+
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
         type = ChannelType.GuildForum,
@@ -55,5 +73,16 @@ public class ForumChannelCreateBuilder(public var name: String) :
         nsfw = _nsfw,
         permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
+        defaultReactionEmoji = when {
+            defaultReactionEmojiId != null || defaultReactionEmojiName != null ->
+                DiscordDefaultReaction(
+                    emojiId = defaultReactionEmojiId,
+                    emojiName = defaultReactionEmojiName,
+                ).optional()
+            else -> _defaultReactionEmoji
+        },
+        defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
+        availableTags = _availableTags,
+        defaultSortOrder = _defaultSortOrder,
     )
 }

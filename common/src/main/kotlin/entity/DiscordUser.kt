@@ -128,6 +128,7 @@ public enum class UserFlag(public val code: Int) {
     VerifiedBotDeveloper(1 shl 17),
     DiscordCertifiedModerator(1 shl 18),
     BotHttpInteractions(1 shl 19),
+    ActiveDeveloper(1 shl 22)
 }
 
 @Serializable(with = UserFlags.UserFlagsSerializer::class)

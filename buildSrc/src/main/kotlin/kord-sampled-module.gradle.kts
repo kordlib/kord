@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm")
+    org.jetbrains.kotlin.jvm
 }
 
 sourceSets {

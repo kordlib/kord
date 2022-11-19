@@ -6,7 +6,7 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildBanCreateRequest
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.time.Duration
 
 @KordDsl
@@ -21,7 +21,7 @@ public class BanCreateBuilder : AuditRequestBuilder<GuildBanCreateRequest> {
      *
      * @suppress
      */
-    @Deprecated("Use 'deleteMessageDuration' instead.", ReplaceWith("this.deleteMessageDuration"), level = WARNING)
+    @Deprecated("Use 'deleteMessageDuration' instead.", ReplaceWith("this.deleteMessageDuration"), level = ERROR)
     public var deleteMessagesDays: Int? by ::_deleteMessagesDays.delegate()
 
     private var _deleteMessageDuration: Optional<Duration> = Optional.Missing()
@@ -29,7 +29,7 @@ public class BanCreateBuilder : AuditRequestBuilder<GuildBanCreateRequest> {
     /** [Duration] to delete messages for, between 0 and 604800 seconds (7 days). */
     public var deleteMessageDuration: Duration? by ::_deleteMessageDuration.delegate()
 
-    override fun toRequest(): GuildBanCreateRequest = @Suppress("DEPRECATION") GuildBanCreateRequest(
+    override fun toRequest(): GuildBanCreateRequest = @Suppress("DEPRECATION_ERROR") GuildBanCreateRequest(
         deleteMessagesDays = _deleteMessagesDays,
         deleteMessageSeconds = _deleteMessageDuration,
     )

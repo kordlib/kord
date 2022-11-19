@@ -3,11 +3,11 @@ package dev.kord.gateway
 import dev.kord.common.KordConfiguration
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
+import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
-import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
@@ -16,6 +16,7 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration.Companion.seconds
 
 public class DefaultGatewayBuilder {
@@ -24,7 +25,19 @@ public class DefaultGatewayBuilder {
     public var client: HttpClient? = null
     public var reconnectRetry: Retry? = null
     public var sendRateLimiter: RateLimiter? = null
-    public var identifyRateLimiter: RateLimiter? = null
+    public var identifyRateLimiter: IdentifyRateLimiter? = null
+
+    private var oldIdentifyRateLimiter: RateLimiter? = null
+
+    @Deprecated("Binary compatibility", level = HIDDEN)
+    @get:JvmName("getIdentifyRateLimiter")
+    @set:JvmName("setIdentifyRateLimiter")
+    public var identifyRateLimiter0: RateLimiter?
+        get() = oldIdentifyRateLimiter
+        set(value) {
+            oldIdentifyRateLimiter = value
+        }
+
     public var dispatcher: CoroutineDispatcher = Dispatchers.Default
     public var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
@@ -37,7 +50,10 @@ public class DefaultGatewayBuilder {
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
         val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)
-        val identifyRateLimiter = identifyRateLimiter ?: IntervalRateLimiter(limit = 1, interval = 5.seconds)
+        val identifyRateLimiter = identifyRateLimiter
+            ?: @Suppress("DEPRECATION_ERROR") oldIdentifyRateLimiter
+                ?.let { dev.kord.gateway.ratelimit.IdentifyRateLimiterFromCommonRateLimiter(it) }
+            ?: IdentifyRateLimiter(maxConcurrency = 1, dispatcher)
 
         client.requestPipeline.intercept(HttpRequestPipeline.Render) {
             // CIO adds this header even if no extensions are used, which causes it to be empty

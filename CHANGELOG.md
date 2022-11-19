@@ -1,3 +1,70 @@
+# 0.8.0-M17
+
+## Additions
+
+* Add support for Auto Moderation (#647 #697 #713)
+* Add error 240000 (#676)
+* Add `ApplicationFlag.ApplicationCommandBadge` (#677)
+* Parameter for deleting old messages in `GuildMessageChannelBehavior.bulkDelete` (#692)
+* Add `application_commands` to audit log (#681)
+* Add `UserPremium.NitroBasic` (#704)
+* Make ephemeral messages deletable (#706)
+* Add `Kord.getGuildOrNull` (#714)
+
+## Changes
+
+* Change attachment `InputStream` to `ChannelProvider` (#682)
+* Deprecate `GuildFeature.Commerce` (#678)
+* Update create guild ban endpoint (#679)
+* Update voice state modification (#680)
+* Use structured concurrency for `MessageChannelBehavior.withTyping` (#687)
+* Generate kord enums with KSP (#686 #698)
+* Use gateway url provided in `Ready` event for resuming (#666)
+* Bump `DeprecationLevel`s (#688)
+* Properly implement Identify rate limiting (#693)
+
+## Fixes
+
+* Fix gateway events created with `buildJsonObject` failing to be deserialized (#683)
+* Fix `with_count` parameter typo (#690)
+* Fix default avatar URL not working (#691)
+* Make `LinearRetry` behave linearly for all inputs (#702)
+
+## Dependencies
+
+* Kotlin 1.7.10 -> 1.7.20
+* Ktor 2.1.0 -> 2.1.3
+* kotlinx.serialization 1.3.3 -> 1.4.1
+* AtomicFU 0.18.3 -> 0.18.5
+* Binary compatibility validator 0.11.0 -> 0.12.1
+* Dokka 1.7.10 -> 1.7.20
+* JUnit 5 5.9.0 -> 5.9.1
+* MockK 1.12.5 -> 1.13.2
+
+# 0.8.0-M16
+
+## Breaking / Performance
+
+* Events no longer implement `CoroutineScope` which caused a memory leak (#665 for migration steps)
+* Bump deprecations (#653)
+
+## Additions
+
+* New error codes (#656 #655 #654)
+* Add audit log reason to Modify Guild MFA Level endpoint (#668)
+* Add events custom context (#667)
+* Voice: Add helper to move/update voice connections (#657)
+
+## Fixes
+
+* Fix MessageStickerType constructor initialization deadlock (#670)
+
+## Improvements / Updates
+
+* Use suppressed exceptions for stack trace recovery (#658)
+* Upgrade to Gradle 7.5.1 (#662)
+* Changes to Kord's annotations (#659)
+
 # 0.8.0-M15
 
 ## Additions
