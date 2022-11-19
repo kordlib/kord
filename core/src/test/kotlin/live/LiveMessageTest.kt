@@ -65,7 +65,7 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                     attachments = emptyList(),
                     embeds = emptyList(),
                     pinned = false,
-                    type = MessageType.Default
+                    type = MessageType.Default,
                 )
             )
         )
