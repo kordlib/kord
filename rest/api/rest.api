@@ -624,6 +624,21 @@ public final class dev/kord/rest/builder/channel/StageVoiceChannelModifyBuilder 
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/channel/StoreChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
+	public fun <init> ()V
+	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public final fun getName ()Ljava/lang/String;
+	public fun getPermissionOverwrites ()Ljava/util/Set;
+	public final fun getPosition ()Ljava/lang/Integer;
+	public fun getReason ()Ljava/lang/String;
+	public final fun setName (Ljava/lang/String;)V
+	public fun setPermissionOverwrites (Ljava/util/Set;)V
+	public final fun setPosition (Ljava/lang/Integer;)V
+	public fun setReason (Ljava/lang/String;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
 public final class dev/kord/rest/builder/channel/TextChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
@@ -4862,6 +4877,36 @@ public final class dev/kord/rest/json/request/StageInstanceModifyRequest$Compani
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/request/StageInstanceUpdateRequest {
+	public static final field Companion Ldev/kord/rest/json/request/StageInstanceUpdateRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Ldev/kord/rest/json/request/StageInstanceUpdateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/StageInstanceUpdateRequest;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/rest/json/request/StageInstanceUpdateRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTopic ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/rest/json/request/StageInstanceUpdateRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/request/StageInstanceUpdateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/StageInstanceUpdateRequest$$serializer;
+	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/StageInstanceUpdateRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/StageInstanceUpdateRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/StageInstanceUpdateRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/request/StartThreadRequest {
 	public static final field Companion Ldev/kord/rest/json/request/StartThreadRequest$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -5718,6 +5763,9 @@ public final class dev/kord/rest/ratelimit/Total {
 	public fun toString ()Ljava/lang/String;
 	public static fun toString-impl (J)Ljava/lang/String;
 	public final synthetic fun unbox-impl ()J
+}
+
+public final class dev/kord/rest/request/ContextException : java/lang/RuntimeException {
 }
 
 public final class dev/kord/rest/request/HttpStatus {
@@ -7069,6 +7117,13 @@ public final class dev/kord/rest/service/StageInstanceService : dev/kord/rest/se
 	public final fun modifyStageInstance (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/StageInstanceModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyStageInstance (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun modifyStageInstance$default (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/StageInstanceModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/service/StageInstanceServiceKt {
+	public static final synthetic fun createStageInstance (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createStageInstance$default (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final synthetic fun updateStageInstance (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun updateStageInstance$default (Ldev/kord/rest/service/StageInstanceService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class dev/kord/rest/service/StickerService : dev/kord/rest/service/RestService {

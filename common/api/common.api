@@ -1522,6 +1522,10 @@ public final class dev/kord/common/entity/ChannelType$GuildStageVoice : dev/kord
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildStageVoice;
 }
 
+public final class dev/kord/common/entity/ChannelType$GuildStore : dev/kord/common/entity/ChannelType {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildStore;
+}
+
 public final class dev/kord/common/entity/ChannelType$GuildText : dev/kord/common/entity/ChannelType {
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildText;
 }
@@ -7973,6 +7977,24 @@ public final class dev/kord/common/entity/SystemChannelFlags$Companion : kotlinx
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public abstract class dev/kord/common/entity/TargetUserType {
+	public static final field Companion Ldev/kord/common/entity/TargetUserType$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getValue ()I
+}
+
+public final class dev/kord/common/entity/TargetUserType$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/TargetUserType$Stream : dev/kord/common/entity/TargetUserType {
+	public static final field INSTANCE Ldev/kord/common/entity/TargetUserType$Stream;
+}
+
+public final class dev/kord/common/entity/TargetUserType$Unknown : dev/kord/common/entity/TargetUserType {
+	public fun <init> (I)V
+}
+
 public abstract class dev/kord/common/entity/TeamMembershipState {
 	public static final field Companion Ldev/kord/common/entity/TeamMembershipState$Companion;
 	public static final field TeamMembershipStateSerializer Ldev/kord/common/entity/TeamMembershipState$TeamMembershipStateSerializer;
@@ -8466,6 +8488,12 @@ public abstract class dev/kord/common/ratelimit/AbstractIntervalRateLimiter : de
 	protected final fun getLimitIsExceeded ()Z
 	protected final fun getRemainingConsumes ()I
 	protected final fun setRemainingConsumes (I)V
+}
+
+public final class dev/kord/common/ratelimit/BucketRateLimiter : dev/kord/common/ratelimit/RateLimiter {
+	public synthetic fun <init> (IJLkotlinx/datetime/Clock;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (IJLkotlinx/datetime/Clock;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun consume (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/common/ratelimit/IntervalRateLimiter : dev/kord/common/ratelimit/RateLimiter {
