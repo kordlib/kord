@@ -6354,6 +6354,10 @@ public final class dev/kord/common/entity/GuildFeature$AnimatedIcon : dev/kord/c
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$AnimatedIcon;
 }
 
+public final class dev/kord/common/entity/GuildFeature$ApplicationCommandPermissionsV2 : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$ApplicationCommandPermissionsV2;
+}
+
 public final class dev/kord/common/entity/GuildFeature$AutoModeration : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$AutoModeration;
 }
@@ -6375,6 +6379,10 @@ public final class dev/kord/common/entity/GuildFeature$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/GuildFeature$DeveloperSupportServer : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$DeveloperSupportServer;
+}
+
 public final class dev/kord/common/entity/GuildFeature$Discoverable : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$Discoverable;
 }
@@ -6385,6 +6393,10 @@ public final class dev/kord/common/entity/GuildFeature$Featurable : dev/kord/com
 
 public final class dev/kord/common/entity/GuildFeature$InviteSplash : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$InviteSplash;
+}
+
+public final class dev/kord/common/entity/GuildFeature$InvitesDisabled : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$InvitesDisabled;
 }
 
 public final class dev/kord/common/entity/GuildFeature$MemberVerificationGateEnabled : dev/kord/common/entity/GuildFeature {

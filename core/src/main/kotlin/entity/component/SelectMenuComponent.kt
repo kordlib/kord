@@ -48,10 +48,14 @@ public constructor(override val data: ComponentData) : Component {
         ReplaceWith(
             "(this as? StringSelectComponent)?.options ?: emptyList()",
             "dev.kord.core.entity.component.StringSelectComponent",
+            "dev.kord.core.entity.component.options",
         ),
         level = DeprecationLevel.WARNING,
     )
-    public open val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
+    public val options: List<SelectOption> get() = _options
+
+    @Suppress("PropertyName")
+    internal val _options get() = data.options.orEmpty().map { SelectOption(it) }
 
     /**
      * The minimum amount of options that can be chosen, default `1`.
@@ -83,13 +87,12 @@ public constructor(override val data: ComponentData) : Component {
 
 public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.StringSelect get() = ComponentType.StringSelect
-
-    /**
-     * The possible options to choose from.
-     */
-    @Suppress("OVERRIDE_DEPRECATION")
-    public override val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
 }
+
+// TODO replace with member in StringSelectComponent when SelectMenuComponent.options is removed
+/** The possible options to choose from. */
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+public val StringSelectComponent.options: List<SelectOption> get() = _options
 
 public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.UserSelect get() = ComponentType.UserSelect

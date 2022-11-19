@@ -39,10 +39,16 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
         ReplaceWith(
             "(this as? StringSelectBuilder)?.options ?: mutableListOf()",
             "dev.kord.rest.builder.component.StringSelectBuilder",
+            "dev.kord.rest.builder.component.options",
         ),
         level = DeprecationLevel.WARNING,
     )
-    public open val options: MutableList<SelectOptionBuilder> = mutableListOf()
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
+    @kotlin.internal.LowPriorityInOverloadResolution
+    public val options: MutableList<SelectOptionBuilder> get() = _options
+
+    @Suppress("PropertyName")
+    internal var _options = mutableListOf<SelectOptionBuilder>()
 
     /**
      * The range of values that can be accepted. Accepts any range between [0,25].
@@ -110,14 +116,17 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
 public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.StringSelect
 
-    /**
-     * The choices in the select, max 25.
-     */
-    @Suppress("OVERRIDE_DEPRECATION")
-    override var options: MutableList<SelectOptionBuilder> = mutableListOf()
-
     override fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional(options.map { it.build() })
 }
+
+// TODO replace with member in StringSelectBuilder when SelectMenuBuilder.options is removed
+/** The choices in the select, max 25. */
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+public var StringSelectBuilder.options: MutableList<SelectOptionBuilder>
+    get() = _options
+    set(value) {
+        _options = value
+    }
 
 /**
  * Adds a new option to the select menu with the given [label] and [value] that can be configured by the [builder].

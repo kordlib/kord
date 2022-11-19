@@ -4,6 +4,10 @@ plugins {
 
 dependencies {
     implementation(projects.kspAnnotations)
-    implementation(libs.bundles.ksp.processors)
-    implementation(libs.kotlinx.serialization) // use types directly
+
+    implementation(libs.ksp.api)
+    implementation(libs.kotlinpoet)
+    implementation(libs.kotlinpoet.ksp)
+
+    implementation(libs.kotlinx.serialization.json) // use types directly
 }

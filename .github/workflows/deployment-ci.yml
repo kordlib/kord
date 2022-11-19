@@ -80,8 +80,3 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: -x test publish
-
-# Disabled for now
-#
-#      - name: Close and Release Repository
-#          run: ./gradlew closeAndReleaseRepository

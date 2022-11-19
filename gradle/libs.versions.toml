@@ -1,0 +1,93 @@
+[versions]
+
+# api dependencies
+kotlin = "1.7.20" # https://github.com/JetBrains/kotlin
+ktor = "2.1.3" # https://github.com/ktorio/ktor
+kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-serialization = "1.4.1" # https://github.com/Kotlin/kotlinx.serialization
+kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
+kotlin-logging = "2.1.23" # https://github.com/MicroUtils/kotlin-logging
+kord-cache = { strictly = "[0.3.0, 0.4.0[", prefer = "latest.release" }
+
+# code generation
+ksp = "1.7.20-1.0.8" # https://github.com/google/ksp
+kotlinpoet = "1.12.0" # https://github.com/square/kotlinpoet
+
+# tests
+junit5 = "5.9.1" # https://github.com/junit-team/junit5
+mockk = "1.13.2" # https://github.com/mockk/mockk
+slf4j = "1.7.36" # https://www.slf4j.org
+
+# plugins
+dokka = "1.7.20" # https://github.com/Kotlin/dokka
+kotlinx-atomicfu = "0.18.5" # https://github.com/Kotlin/kotlinx-atomicfu
+binary-compatibility-validator = "0.12.1" # https://github.com/Kotlin/binary-compatibility-validator
+buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
+
+
+[libraries]
+
+# cache
+kord-cache-api = { module = "dev.kord.cache:cache-api", version.ref = "kord-cache" }
+kord-cache-map = { module = "dev.kord.cache:cache-map", version.ref = "kord-cache" }
+
+# ktor
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktor" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
+ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
+
+# kotlinx
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+
+# other
+kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlin-logging" }
+
+# code generation
+ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
+kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
+kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
+
+# tests
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit5" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+
+# actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
+# https://docs.gradle.org/current/userguide/custom_plugins.html#applying_external_plugins_in_precompiled_script_plugins
+kotlin-jvm-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-serialization-plugin = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", version.ref = "kotlinx-atomicfu" }
+binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
+ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
+
+
+[bundles]
+
+ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
+
+test-implementation = ["kotlinx-coroutines-test", "kotlin-test", "junit-jupiter-api", "mockk"]
+test-runtime = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
+
+pluginsForBuildSrc = [
+    "kotlin-jvm-plugin",
+    "kotlin-serialization-plugin",
+    "dokka-plugin",
+    "atomicfu-plugin",
+    "binary-compatibility-validator-plugin",
+    "ksp-plugin",
+]
+
+
+[plugins]
+
+buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
