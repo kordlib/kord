@@ -1308,37 +1308,6 @@ public final class dev/kord/core/behavior/channel/StageChannelBehaviorKt {
 	public static final fun editVoiceState (Ldev/kord/core/behavior/channel/StageChannelBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class dev/kord/core/behavior/channel/StoreChannelBehavior : dev/kord/core/behavior/channel/CategorizableChannelBehavior {
-	public abstract fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/StoreChannelBehavior;
-}
-
-public final class dev/kord/core/behavior/channel/StoreChannelBehavior$DefaultImpls {
-	public static fun addOverwrite (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun asChannel (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun compareTo (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Ldev/kord/core/entity/Entity;)I
-	public static fun delete (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun fetchChannel (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun fetchChannelOrNull (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getGuild (Ldev/kord/core/behavior/channel/StoreChannelBehavior;)Ldev/kord/core/behavior/GuildBehavior;
-	public static fun getGuild (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getGuildOrNull (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getInvites (Ldev/kord/core/behavior/channel/StoreChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
-	public static fun getMention (Ldev/kord/core/behavior/channel/StoreChannelBehavior;)Ljava/lang/String;
-	public static fun getPosition (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun withStrategy (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/StoreChannelBehavior;
-}
-
-public final class dev/kord/core/behavior/channel/StoreChannelBehaviorKt {
-	public static final synthetic fun StoreChannelBehavior (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/StoreChannelBehavior;
-	public static synthetic fun StoreChannelBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILjava/lang/Object;)Ldev/kord/core/behavior/channel/StoreChannelBehavior;
-	public static final synthetic fun edit (Ldev/kord/core/behavior/channel/StoreChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public abstract interface class dev/kord/core/behavior/channel/TextChannelBehavior : dev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior {
 	public abstract fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8084,59 +8053,6 @@ public final class dev/kord/core/entity/channel/StageChannel : dev/kord/core/beh
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildChannel;
 }
 
-public final class dev/kord/core/entity/channel/StoreChannel : dev/kord/core/behavior/channel/StoreChannelBehavior, dev/kord/core/entity/channel/CategorizableChannel {
-	public fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun addOverwrite (Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public final fun component1 ()Ldev/kord/core/cache/data/ChannelData;
-	public final fun component2 ()Ldev/kord/core/Kord;
-	public final fun component3 ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun copy (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)Ldev/kord/core/entity/channel/StoreChannel;
-	public static synthetic fun copy$default (Ldev/kord/core/entity/channel/StoreChannel;Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILjava/lang/Object;)Ldev/kord/core/entity/channel/StoreChannel;
-	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getCategory ()Ldev/kord/core/behavior/channel/CategoryBehavior;
-	public fun getCategoryId ()Ldev/kord/common/entity/Snowflake;
-	public fun getData ()Ldev/kord/core/cache/data/ChannelData;
-	public fun getEffectivePermissions (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
-	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
-	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getInvites ()Lkotlinx/coroutines/flow/Flow;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getMention ()Ljava/lang/String;
-	public fun getName ()Ljava/lang/String;
-	public fun getPermissionOverwrites ()Ljava/util/Set;
-	public fun getPermissionOverwritesForMember (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/entity/PermissionOverwriteEntity;
-	public fun getPermissionOverwritesForRole (Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/entity/PermissionOverwriteEntity;
-	public fun getPosition (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getRawPosition ()I
-	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public fun getType ()Ldev/kord/common/entity/ChannelType;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/StoreChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/CategorizableChannel;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/StoreChannel;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildChannel;
-}
-
 public final class dev/kord/core/entity/channel/TextChannel : dev/kord/core/behavior/channel/TextChannelBehavior, dev/kord/core/entity/channel/CategorizableChannel, dev/kord/core/entity/channel/ThreadParentChannel, dev/kord/core/entity/channel/TopGuildMessageChannel {
 	public fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -10913,41 +10829,6 @@ public final class dev/kord/core/event/channel/StageChannelUpdateEvent : dev/kor
 	public fun getKord ()Ldev/kord/core/Kord;
 	public synthetic fun getOld ()Ldev/kord/core/entity/channel/Channel;
 	public fun getOld ()Ldev/kord/core/entity/channel/StageChannel;
-	public fun getShard ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/event/channel/StoreChannelCreateEvent : dev/kord/core/event/channel/ChannelCreateEvent {
-	public fun <init> (Ldev/kord/core/entity/channel/StoreChannel;ILjava/lang/Object;)V
-	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
-	public fun getChannel ()Ldev/kord/core/entity/channel/StoreChannel;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/event/channel/StoreChannelDeleteEvent : dev/kord/core/event/channel/ChannelDeleteEvent {
-	public fun <init> (Ldev/kord/core/entity/channel/StoreChannel;ILjava/lang/Object;)V
-	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
-	public fun getChannel ()Ldev/kord/core/entity/channel/StoreChannel;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getShard ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/event/channel/StoreChannelUpdateEvent : dev/kord/core/event/channel/ChannelUpdateEvent {
-	public fun <init> (Ldev/kord/core/entity/channel/StoreChannel;Ldev/kord/core/entity/channel/StoreChannel;ILjava/lang/Object;)V
-	public synthetic fun getChannel ()Ldev/kord/core/entity/channel/Channel;
-	public fun getChannel ()Ldev/kord/core/entity/channel/StoreChannel;
-	public fun getCustomContext ()Ljava/lang/Object;
-	public fun getGateway ()Ldev/kord/gateway/Gateway;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public synthetic fun getOld ()Ldev/kord/core/entity/channel/Channel;
-	public fun getOld ()Ldev/kord/core/entity/channel/StoreChannel;
 	public fun getShard ()I
 	public fun toString ()Ljava/lang/String;
 }
