@@ -11025,6 +11025,7 @@ public final class dev/kord/core/event/channel/TypingStartEvent : dev/kord/core/
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getShard ()I
 	public final fun getStarted ()Lkotlinx/datetime/Instant;
@@ -12452,6 +12453,7 @@ public final class dev/kord/core/event/message/MessageBulkDeleteEvent : dev/kord
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMessageIds ()Ljava/util/Set;
 	public final fun getMessages ()Ljava/util/Set;
@@ -12469,6 +12471,7 @@ public final class dev/kord/core/event/message/MessageCreateEvent : dev/kord/cor
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMember ()Ldev/kord/core/entity/Member;
 	public final fun getMessage ()Ldev/kord/core/entity/Message;
@@ -12491,6 +12494,7 @@ public final class dev/kord/core/event/message/MessageDeleteEvent : dev/kord/cor
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMessage ()Ldev/kord/core/entity/Message;
 	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
@@ -12535,6 +12539,7 @@ public final class dev/kord/core/event/message/ReactionAddEvent : dev/kord/core/
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
 	public final fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -12565,6 +12570,7 @@ public final class dev/kord/core/event/message/ReactionRemoveAllEvent : dev/kord
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
 	public final fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -12617,6 +12623,7 @@ public final class dev/kord/core/event/message/ReactionRemoveEvent : dev/kord/co
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
 	public final fun getMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
