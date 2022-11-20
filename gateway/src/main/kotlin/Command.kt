@@ -20,9 +20,9 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.SerializationStrategy as KSerializationStrategy
 
 public sealed class Command {
-    internal data class Heartbeat(val sequenceNumber: Int? = null) : Command() {
+    public data class Heartbeat(val sequenceNumber: Int?) : Command() {
 
-        object SerializationStrategy : KSerializationStrategy<Heartbeat> {
+        public object SerializationStrategy : KSerializationStrategy<Heartbeat> {
             override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Heartbeat", PrimitiveKind.INT)
 
             @OptIn(ExperimentalSerializationApi::class)
@@ -79,8 +79,8 @@ public sealed class Command {
 
 
 @Serializable
-internal data class Identify(
-    internal val token: String,
+public data class Identify(
+    val token: String,
     val properties: IdentifyProperties,
     val compress: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("large_threshold")
@@ -126,7 +126,7 @@ public data class DiscordPresence(
 )
 
 @Serializable
-internal data class Resume(
+public data class Resume(
     val token: String,
     @SerialName("session_id")
     val sessionId: String,
