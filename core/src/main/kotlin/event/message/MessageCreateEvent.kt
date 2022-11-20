@@ -35,6 +35,12 @@ public class MessageCreateEvent(
     )
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
+    /**
+     * Requests to get the guild this message was created in, if it was created in one,
+     * returns null if the [Guild] isn't present or the message was a [DM][DmChannel].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageCreateEvent =
