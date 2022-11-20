@@ -393,7 +393,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
-                else -> error("unknown ApplicationCommandOptionType $type")
+                null, is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")
             }
         }
 
