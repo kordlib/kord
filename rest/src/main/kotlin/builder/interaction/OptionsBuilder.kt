@@ -94,6 +94,7 @@ public sealed class BaseChoiceBuilder<T>(
  *
  * @see LocalizedNameCreateBuilder
  */
+@KordDsl
 public class ChoiceLocalizationsBuilder(override var name: String) : LocalizedNameCreateBuilder {
     @PublishedApi
     internal var _nameLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing()

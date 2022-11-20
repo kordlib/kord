@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message.create
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.optional.*
 import dev.kord.rest.NamedFile
@@ -11,7 +12,7 @@ import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 
-
+@KordDsl
 public class UpdateMessageInteractionResponseCreateBuilder :
     MessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {

@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.guild
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordWelcomeScreenChannel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
@@ -12,6 +13,7 @@ import dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+@KordDsl
 public class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreenModifyRequest> {
 
     override var reason: String? = null
@@ -46,7 +48,7 @@ public class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreen
 
 }
 
-
+@KordDsl
 public class WelcomeScreenChannelBuilder(
     public var channelId: Snowflake,
     public var description: String,

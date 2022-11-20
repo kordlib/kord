@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message.create
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
@@ -17,6 +18,7 @@ import kotlin.contracts.contract
 /**
  * The base builder for creating a new message.
  */
+@KordDsl
 public sealed interface MessageCreateBuilder {
 
     /**
