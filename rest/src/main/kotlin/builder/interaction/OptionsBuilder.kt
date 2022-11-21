@@ -146,7 +146,7 @@ public class IntegerOptionBuilder(name: String, description: String) :
 
     override fun choice(name: String, value: Long, nameLocalizations: Optional<Map<Locale, String>?>) {
         if (choices == null) choices = mutableListOf()
-        choices!!.add(Choice.IntChoice(name, nameLocalizations, value))
+        choices!!.add(Choice.IntegerChoice(name, nameLocalizations, value))
     }
 }
 

@@ -1690,6 +1690,7 @@ public final class dev/kord/core/behavior/interaction/AutoCompleteInteractionBeh
 
 public final class dev/kord/core/behavior/interaction/AutoCompleteInteractionBehaviorKt {
 	public static final fun suggestInt (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun suggestInteger (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun suggestNumber (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun suggestString (Ldev/kord/core/behavior/interaction/AutoCompleteInteractionBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
