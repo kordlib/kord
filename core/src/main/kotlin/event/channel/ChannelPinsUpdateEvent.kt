@@ -24,6 +24,8 @@ import kotlinx.datetime.Instant
  * @property shard The shard for the event
  * @property customContext Any custom context provided
  * @property supplier The entity supplier to use for the event
+ *
+ * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-pins-update">Channel Pins Update</a>
  */
 public class ChannelPinsUpdateEvent(
     public val data: ChannelPinsUpdateEventData,

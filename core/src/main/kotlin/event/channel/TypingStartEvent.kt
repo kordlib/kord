@@ -27,6 +27,8 @@ import kotlinx.datetime.Instant
  * @property shard The shard for the event
  * @property customContext Any custom context provided
  * @property supplier The entity supplier to use for the event
+ *
+ * @see <a href=https://discord.com/developers/docs/topics/gateway#typing-start>Typing Start</a>
  */
 public class TypingStartEvent(
     public val data: TypingStartEventData,
@@ -35,6 +37,7 @@ public class TypingStartEvent(
     override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : Event, Strategizable {
+
     /**
      * The ID of the channel that triggered the event.
      */
