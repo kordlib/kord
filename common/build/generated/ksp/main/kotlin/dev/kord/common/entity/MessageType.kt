@@ -103,7 +103,7 @@ public sealed class MessageType(
      * @suppress
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Renamed to 'UserJoin'.",
         replaceWith = ReplaceWith(expression = "UserJoin", imports =
                     arrayOf("dev.kord.common.entity.MessageType.UserJoin")),
@@ -114,7 +114,7 @@ public sealed class MessageType(
      * @suppress
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Renamed to 'GuildBoost'.",
         replaceWith = ReplaceWith(expression = "GuildBoost", imports =
                     arrayOf("dev.kord.common.entity.MessageType.GuildBoost")),
@@ -125,7 +125,7 @@ public sealed class MessageType(
      * @suppress
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Renamed to 'GuildBoostTier1'.",
         replaceWith = ReplaceWith(expression = "GuildBoostTier1", imports =
                     arrayOf("dev.kord.common.entity.MessageType.GuildBoostTier1")),
@@ -136,7 +136,7 @@ public sealed class MessageType(
      * @suppress
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Renamed to 'GuildBoostTier2'.",
         replaceWith = ReplaceWith(expression = "GuildBoostTier2", imports =
                     arrayOf("dev.kord.common.entity.MessageType.GuildBoostTier2")),
@@ -147,7 +147,7 @@ public sealed class MessageType(
      * @suppress
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Renamed to 'GuildBoostTier3'.",
         replaceWith = ReplaceWith(expression = "GuildBoostTier3", imports =
                     arrayOf("dev.kord.common.entity.MessageType.GuildBoostTier3")),
@@ -225,6 +225,7 @@ public sealed class MessageType(
 
 
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Renamed to 'entries'.",
             replaceWith = ReplaceWith(expression = "this.entries", imports = arrayOf()),
         )

@@ -127,6 +127,13 @@ public class KeywordAutoModerationRule(data: AutoModerationRuleData, kord: Kord,
      */
     public val keywords: List<String> get() = data.triggerMetadata.keywordFilter.orEmpty()
 
+    /**
+     * Regular expression patterns which will be matched against content.
+     *
+     * Only Rust flavored regex is currently supported.
+     */
+    public val regexPatterns: List<String> get() = data.triggerMetadata.regexPatterns.orEmpty()
+
     override suspend fun asAutoModerationRuleOrNull(): KeywordAutoModerationRule = this
     override suspend fun asAutoModerationRule(): KeywordAutoModerationRule = this
 

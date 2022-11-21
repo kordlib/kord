@@ -1,5 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package dev.kord.core.entity.component
 
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordPartialEmoji
 import dev.kord.common.entity.optional.orEmpty
@@ -12,10 +15,19 @@ import dev.kord.core.entity.interaction.SelectMenuInteraction
  * An interactive dropdown menu rendered on a [Message] that consists of multiple [options].
  */
 
-public class SelectMenuComponent(override val data: ComponentData) : Component {
+public open class SelectMenuComponent
+@Deprecated(
+    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
+            "constructor of one of the subtypes.",
+    ReplaceWith("StringSelectComponent(data)", "dev.kord.core.entity.component.StringSelectComponent"),
+    level = DeprecationLevel.WARNING,
+)
+public constructor(override val data: ComponentData) : Component {
 
-    override val type: ComponentType.SelectMenu
-        get() = ComponentType.SelectMenu
+    @Suppress("DEPRECATION", "INAPPLICABLE_JVM_NAME")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getType")
+    public open val type0: ComponentType.SelectMenu get() = ComponentType.SelectMenu
 
     /**
      * The custom identifier for any [ComponentInteractions][SelectMenuInteraction]
@@ -31,15 +43,27 @@ public class SelectMenuComponent(override val data: ComponentData) : Component {
     /**
      * The possible options to choose from.
      */
-    public val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
+    @Deprecated(
+        "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectComponent' subclass).",
+        ReplaceWith(
+            "(this as? StringSelectComponent)?.options ?: emptyList()",
+            "dev.kord.core.entity.component.StringSelectComponent",
+            "dev.kord.core.entity.component.options",
+        ),
+        level = DeprecationLevel.WARNING,
+    )
+    public val options: List<SelectOption> get() = _options
+
+    @Suppress("PropertyName")
+    internal val _options get() = data.options.orEmpty().map { SelectOption(it) }
 
     /**
-     * The minimum amount of [options] that can be chosen, default `1`.
+     * The minimum amount of options that can be chosen, default `1`.
      */
     public val minValues: Int get() = data.minValues.orElse(1)
 
     /**
-     * The maximum amount of [options] that can be chosen, default `1`.
+     * The maximum amount of options that can be chosen, default `1`.
      */
     public val maxValues: Int get() = data.maxValues.orElse(1)
 
@@ -59,6 +83,33 @@ public class SelectMenuComponent(override val data: ComponentData) : Component {
     }
 
     override fun toString(): String = "SelectMenuComponent(data=$data)"
+}
+
+public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+    override val type: ComponentType.StringSelect get() = ComponentType.StringSelect
+}
+
+// TODO replace with member in StringSelectComponent when SelectMenuComponent.options is removed
+/** The possible options to choose from. */
+@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+public val StringSelectComponent.options: List<SelectOption> get() = _options
+
+public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+    override val type: ComponentType.UserSelect get() = ComponentType.UserSelect
+}
+
+public class RoleSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+    override val type: ComponentType.RoleSelect get() = ComponentType.RoleSelect
+}
+
+public class MentionableSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+    override val type: ComponentType.MentionableSelect get() = ComponentType.MentionableSelect
+}
+
+public class ChannelSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
+    override val type: ComponentType.StringSelect get() = ComponentType.StringSelect
+
+    public val channelTypes: List<ChannelType>? get() = data.channelTypes.value
 }
 
 /**

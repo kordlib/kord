@@ -91,7 +91,6 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
@@ -723,7 +722,7 @@ public data class DiscordGuildApplicationCommandPermission(
     @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "'DiscordGuildApplicationCommandPermission.Type' is replaced by 'ApplicationCommandPermissionType'",
-        level = ERROR,
+        level = HIDDEN,
     )
     public constructor(id: Snowflake, type: Type, permission: Boolean) : this(id, type.toNewType(), permission)
 
@@ -737,22 +736,22 @@ public data class DiscordGuildApplicationCommandPermission(
     @JvmName("component2")
     public fun _component2(): Type = type.toDeprecatedType()
 
-    @Suppress("DEPRECATION_ERROR", "DeprecatedCallableAddReplaceWith")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "'DiscordGuildApplicationCommandPermission.Type' is replaced by 'ApplicationCommandPermissionType'",
-        level = ERROR,
+        level = HIDDEN,
     )
     public fun copy(
         id: Snowflake = this.id,
         type: Type = this.type.toDeprecatedType(),
         permission: Boolean = this.permission,
-    ): DiscordGuildApplicationCommandPermission = DiscordGuildApplicationCommandPermission(id, type, permission)
+    ): DiscordGuildApplicationCommandPermission = DiscordGuildApplicationCommandPermission(id, type.toNewType(), permission)
 
     @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "Replaced by 'ApplicationCommandPermissionType'",
         ReplaceWith("ApplicationCommandPermissionType", "dev.kord.common.entity.ApplicationCommandPermissionType"),
-        level = ERROR,
+        level = HIDDEN,
     )
     @Serializable(with = Type.Serializer::class)
     public sealed class Type(public val value: Int) {
@@ -762,7 +761,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.Role",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
         public object Role : Type(1)
 
@@ -772,7 +771,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.User",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
         public object User : Type(2)
 
@@ -782,7 +781,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.Channel",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
         public object Channel : Type(3)
 
@@ -792,17 +791,19 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.Unknown",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
-        public class Unknown
-        @Deprecated(
-            "Replaced by 'ApplicationCommandPermissionType.Unknown'",
-            ReplaceWith(
-                "ApplicationCommandPermissionType.Unknown(value)",
-                "dev.kord.common.entity.ApplicationCommandPermissionType",
-            ),
-            level = ERROR,
-        ) public constructor(value: Int) : Type(value)
+        public class Unknown internal constructor(value: Int, @Suppress("UNUSED_PARAMETER") unused: Nothing?) : Type(value) {
+            @Deprecated(
+                "Replaced by 'ApplicationCommandPermissionType.Unknown'",
+                ReplaceWith(
+                    "ApplicationCommandPermissionType.Unknown(value)",
+                    "dev.kord.common.entity.ApplicationCommandPermissionType",
+                ),
+                level = HIDDEN,
+            )
+            public constructor(value: Int) : this(value, null)
+        }
 
         @Deprecated(
             "Replaced by 'ApplicationCommandPermissionType.serializer()'",
@@ -810,7 +811,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.serializer()",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
         public object Serializer : KSerializer<Type> {
             override val descriptor: SerialDescriptor =
@@ -821,7 +822,7 @@ public data class DiscordGuildApplicationCommandPermission(
                     1 -> Role
                     2 -> User
                     3 -> Channel
-                    else -> Unknown(value)
+                    else -> Unknown(value, null)
                 }
 
             override fun serialize(encoder: Encoder, value: Type): Unit = encoder.encodeInt(value.value)
@@ -836,7 +837,7 @@ public data class DiscordGuildApplicationCommandPermission(
             ApplicationCommandPermissionType.Role -> Type.Role
             ApplicationCommandPermissionType.User -> Type.User
             ApplicationCommandPermissionType.Channel -> Type.Channel
-            is ApplicationCommandPermissionType.Unknown -> Type.Unknown(value)
+            is ApplicationCommandPermissionType.Unknown -> Type.Unknown(value, null)
         }
 
         @Suppress("DEPRECATION_ERROR")

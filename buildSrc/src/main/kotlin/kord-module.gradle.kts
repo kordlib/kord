@@ -3,23 +3,17 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URL
 
 plugins {
-    java
-    kotlin("jvm")
-    kotlin("plugin.serialization")
-    id("org.jetbrains.dokka")
-    id("kotlinx-atomicfu")
-    id("com.google.devtools.ksp")
+    org.jetbrains.kotlin.jvm
+    org.jetbrains.kotlin.plugin.serialization
+    org.jetbrains.dokka
+    `kotlinx-atomicfu`
+    org.jetbrains.kotlinx.`binary-compatibility-validator`
+    com.google.devtools.ksp
     `maven-publish`
 }
 
 repositories {
     mavenCentral()
-    maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
-}
-
-dependencies {
-    testImplementation(kotlin("test"))
-    testRuntimeOnly(kotlin("test-junit5"))
 }
 
 kotlin {
@@ -32,6 +26,12 @@ kotlin {
         // allow `ExperimentalCoroutinesApi` for `runTest {}`
         test { languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi") }
     }
+}
+
+// https://github.com/Kotlin/kotlinx-atomicfu/issues/210
+atomicfu {
+    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+    dependenciesVersion = libs.findVersion("kotlinx-atomicfu").get().requiredVersion
 }
 
 tasks {
@@ -92,6 +92,10 @@ tasks {
 
             externalDocumentationLink("https://kotlinlang.org/api/kotlinx.coroutines/")
             externalDocumentationLink("https://kotlinlang.org/api/kotlinx.serialization/")
+            externalDocumentationLink(
+                url = "https://kotlinlang.org/api/kotlinx-datetime/",
+                packageListUrl = "https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/package-list",
+            )
             externalDocumentationLink("https://api.ktor.io/")
 
             // don't list `TweetNaclFast` in docs

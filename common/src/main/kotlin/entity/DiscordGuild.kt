@@ -75,6 +75,10 @@
             kDoc = "Guild has access to set an animated guild banner image.",
         ),
         Entry("AnimatedIcon", stringValue = "ANIMATED_ICON", kDoc = "Guild has access to set an animated guild icon."),
+        Entry(
+            "ApplicationCommandPermissionsV2", stringValue = "APPLICATION_COMMAND_PERMISSIONS_V2",
+            kDoc = "Guild is using the old permissions configuration behavior.",
+        ),
         Entry("AutoModeration", stringValue = "AUTO_MODERATION", kDoc = "Guild has set up auto moderation rules."),
         Entry("Banner", stringValue = "BANNER", kDoc = "Guild has access to set a guild banner image."),
         Entry(
@@ -82,10 +86,18 @@
             kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " +
                     "receives community updates.",
         ),
+        Entry(
+            "DeveloperSupportServer", stringValue = "DEVELOPER_SUPPORT_SERVER",
+            kDoc = "Guild has been set as a support server on the App Directory.",
+        ),
         Entry("Discoverable", stringValue = "DISCOVERABLE", kDoc = "Guild is able to be discovered in the directory."),
         Entry(
             "Featurable", stringValue = "FEATURABLE",
             kDoc = "Guild is able to be featured in the directory.",
+        ),
+        Entry(
+            "InvitesDisabled", stringValue = "INVITES_DISABLED",
+            kDoc = "Guild has paused invites, preventing new users from joining.",
         ),
         Entry(
             "InviteSplash", stringValue = "INVITE_SPLASH",
@@ -128,17 +140,17 @@
                     "Discord and store channels were removed on March 10, 2022. See " +
                     "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
                     " for more information.",
-            deprecationLevel = ERROR,
+            deprecationLevel = HIDDEN,
         ),
         Entry(
             "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
             kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
-            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = HIDDEN,
         ),
         Entry(
             "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
             kDoc = "Guild has access to the three-day archive time for threads.\n\n@suppress",
-            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = ERROR,
+            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = HIDDEN,
         ),
     ],
 )
@@ -163,7 +175,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].

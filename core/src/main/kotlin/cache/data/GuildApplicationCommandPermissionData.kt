@@ -3,7 +3,6 @@ package dev.kord.core.cache.data
 import dev.kord.common.entity.ApplicationCommandPermissionType
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
 import dev.kord.common.entity.Snowflake
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 
 
@@ -15,7 +14,7 @@ public data class GuildApplicationCommandPermissionData(
     @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "'DiscordGuildApplicationCommandPermission.Type' is replaced by 'ApplicationCommandPermissionType'",
-        level = ERROR,
+        level = HIDDEN,
     )
     public constructor(id: Snowflake, type: DiscordGuildApplicationCommandPermission.Type, permission: Boolean) : this(
         id,
@@ -33,16 +32,16 @@ public data class GuildApplicationCommandPermissionData(
     @JvmName("component2")
     public fun _component2(): DiscordGuildApplicationCommandPermission.Type = type.toDeprecatedType()
 
-    @Suppress("DEPRECATION_ERROR", "DeprecatedCallableAddReplaceWith")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "'DiscordGuildApplicationCommandPermission.Type' is replaced by 'ApplicationCommandPermissionType'",
-        level = ERROR,
+        level = HIDDEN,
     )
     public fun copy(
         id: Snowflake = this.id,
         type: DiscordGuildApplicationCommandPermission.Type = this.type.toDeprecatedType(),
         permission: Boolean = this.permission,
-    ): GuildApplicationCommandPermissionData = GuildApplicationCommandPermissionData(id, type, permission)
+    ): GuildApplicationCommandPermissionData = GuildApplicationCommandPermissionData(id, type.toNewType(), permission)
 
 
     public companion object {
@@ -53,12 +52,12 @@ public data class GuildApplicationCommandPermissionData(
 
 
         // functions for migration purposes, remove when bumping deprecations
-        @Suppress("DEPRECATION_ERROR")
+        @Suppress("DEPRECATION_ERROR", "INVISIBLE_MEMBER")
         private fun ApplicationCommandPermissionType.toDeprecatedType() = when (this) {
             ApplicationCommandPermissionType.Role -> DiscordGuildApplicationCommandPermission.Type.Role
             ApplicationCommandPermissionType.User -> DiscordGuildApplicationCommandPermission.Type.User
             ApplicationCommandPermissionType.Channel -> DiscordGuildApplicationCommandPermission.Type.Channel
-            is ApplicationCommandPermissionType.Unknown -> DiscordGuildApplicationCommandPermission.Type.Unknown(value)
+            is ApplicationCommandPermissionType.Unknown -> DiscordGuildApplicationCommandPermission.Type.Unknown(value, null)
         }
 
         @Suppress("DEPRECATION_ERROR")

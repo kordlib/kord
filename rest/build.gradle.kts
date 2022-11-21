@@ -6,14 +6,11 @@ plugins {
 
 dependencies {
     api(projects.common)
-    implementation(libs.bundles.common)
 
-    api(libs.ktor.client.cio)
-    api(libs.ktor.client.json)
     api(libs.bundles.ktor.client.serialization)
-
-    testImplementation(libs.ktor.client.mock)
+    api(libs.ktor.client.cio)
 
     testImplementation(libs.bundles.test.implementation)
+    testImplementation(libs.ktor.client.mock)
     testRuntimeOnly(libs.bundles.test.runtime)
 }
