@@ -681,23 +681,43 @@ public data class CommandGroup(
         get() = ApplicationCommandOptionType.SubCommandGroup
 }
 
+@Deprecated(
+    "Use an is-check or cast instead.",
+    ReplaceWith("(this as CommandArgument.IntegerArgument).value", "dev.kord.common.entity.CommandArgument"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.int(): Long {
     return value as? Long ?: error("$value wasn't an int.")
 }
 
 
+@Deprecated(
+    "This function calls value.toString() which might be unexpected. Use an explicit value.toString() instead.",
+    ReplaceWith("this.value.toString()"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.string(): String {
     return value.toString()
 }
 
 
+@Deprecated(
+    "Use an is-check or cast instead.",
+    ReplaceWith("(this as CommandArgument.BooleanArgument).value", "dev.kord.common.entity.CommandArgument"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
 
+@Deprecated(
+    "This function calls value.toString() which might be unexpected. Use an explicit value.toString() instead.",
+    ReplaceWith("Snowflake(this.value.toString())", "dev.kord.common.entity.Snowflake"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.snowflake(): Snowflake {
-    val id = string().toULongOrNull() ?: error("$value wasn't a Snowflake")
+    val id = value.toString().toULongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)
 }
 
