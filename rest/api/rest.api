@@ -95,6 +95,11 @@ public final class dev/kord/rest/builder/auditlog/AuditLogGetRequestBuilder : de
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public abstract interface class dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+	public abstract fun getAllowedKeywords ()Ljava/util/List;
+	public abstract fun setAllowedKeywords (Ljava/util/List;)V
+}
+
 public abstract class dev/kord/rest/builder/automoderation/AutoModerationActionBuilder : dev/kord/rest/builder/RequestBuilder {
 	protected fun buildMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public abstract fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
@@ -119,7 +124,11 @@ public abstract interface class dev/kord/rest/builder/automoderation/AutoModerat
 }
 
 public final class dev/kord/rest/builder/automoderation/AutoModerationRuleBuilderKt {
-	public static final fun allowKeyword (Ldev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun allowAnywhereKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun allowKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final synthetic fun allowKeyword (Ldev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun allowPrefixKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
+	public static final fun allowSuffixKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun anywhereKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun blockMessage (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun blockMessage$default (Ldev/kord/rest/builder/automoderation/AutoModerationRuleBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
@@ -189,7 +198,7 @@ public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerati
 	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
+public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
 	public abstract fun getKeywords ()Ljava/util/List;
 	public abstract fun getRegexPatterns ()Ljava/util/List;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
@@ -204,30 +213,32 @@ public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRul
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
 	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
+	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getKeywords ()Ljava/util/List;
 	public fun getRegexPatterns ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setAllowedKeywords (Ljava/util/List;)V
 	public fun setKeywords (Ljava/util/List;)V
 	public fun setRegexPatterns (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder {
 	public fun <init> ()V
+	public fun getAllowedKeywords ()Ljava/util/List;
 	public fun getKeywords ()Ljava/util/List;
 	public fun getRegexPatterns ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
+	public fun setAllowedKeywords (Ljava/util/List;)V
 	public fun setKeywords (Ljava/util/List;)V
 	public fun setRegexPatterns (Ljava/util/List;)V
 }
 
-public abstract interface class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TypedAutoModerationRuleBuilder {
+public abstract interface class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder {
 	public abstract fun assignPresets (Ljava/util/List;)V
-	public abstract fun getAllowedKeywords ()Ljava/util/List;
 	public abstract fun getPresets ()Ljava/util/List;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$KeywordPreset;
-	public abstract fun setAllowedKeywords (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder$DefaultImpls {
