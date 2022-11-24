@@ -13,7 +13,7 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
@@ -138,9 +138,9 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
 internal suspend fun ThreadParentChannelBehavior.unsafeStartPublicThreadWithMessage(
     messageId: Snowflake,
     name: String,
-    builder: StartThreadBuilder.() -> Unit = {}
+    builder: StartThreadWithMessageBuilder.() -> Unit = {}
 ): ThreadChannel {
-    val request = StartThreadBuilder(name).apply(builder).toRequest()
+    val request = StartThreadWithMessageBuilder(name).apply(builder).toRequest()
     val response = kord.rest.channel.startThreadWithMessage(id, messageId, request)
     val data = ChannelData.from(response)
 

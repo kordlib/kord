@@ -16,14 +16,14 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import java.util.Objects
+import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -126,7 +126,7 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        builder: StartThreadBuilder.() -> Unit = {}
+        builder: StartThreadWithMessageBuilder.() -> Unit = {}
     ): TextChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as TextChannelThread
     }

@@ -1,22 +1,12 @@
 package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ArchiveDuration
-import dev.kord.common.entity.ChannelFlags
-import dev.kord.common.entity.DiscordDefaultReaction
-import dev.kord.common.entity.DiscordForumTag
-import dev.kord.common.entity.Overwrite
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.SortOrderType
-import dev.kord.common.entity.VideoQualityMode
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
+import dev.kord.rest.json.request.ForumTagRequest
 import kotlin.time.Duration
 
 @KordDsl
@@ -111,8 +101,15 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
-    private var _availableTags: Optional<List<DiscordForumTag>> = Optional.Missing()
-    public var availableTags: List<DiscordForumTag>? by ::_availableTags.delegate()
+    private var _availableTags: Optional<MutableList<ForumTagRequest>?> = Optional.Missing()
+    public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
+
+    public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
+        if (availableTags == null) availableTags = mutableListOf()
+
+        val tagBuilder = ForumTagBuilder(name).apply(builder)
+        availableTags?.add(tagBuilder.toRequest())
+    }
 
     private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
     public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()

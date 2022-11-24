@@ -17,7 +17,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.NewsChannelModifyBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import dev.kord.rest.json.request.ChannelFollowRequest
 import dev.kord.rest.request.RestRequestException
@@ -121,7 +121,7 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        builder: StartThreadBuilder.() -> Unit = {}
+        builder: StartThreadWithMessageBuilder.() -> Unit = {}
     ): NewsChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as NewsChannelThread
     }

@@ -7,7 +7,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlin.time.Duration
 
-public open class StartThreadBuilder(public var name: String) : AuditRequestBuilder<StartThreadRequest> {
+public open class StartThreadWithMessageBuilder(public var name: String) : AuditRequestBuilder<StartThreadRequest> {
     override var reason: String? = null
 
     private var _autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
@@ -24,3 +24,6 @@ public open class StartThreadBuilder(public var name: String) : AuditRequestBuil
         )
     }
 }
+
+@Deprecated("Renamed to StartThreadWithMessageBuilder", replaceWith = ReplaceWith("dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder"))
+public typealias StartThreadBuilder = StartThreadWithMessageBuilder

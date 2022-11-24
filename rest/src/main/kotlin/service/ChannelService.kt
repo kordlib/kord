@@ -4,7 +4,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
@@ -309,10 +309,10 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         messageId: Snowflake,
         name: String,
         archiveDuration: ArchiveDuration,
-        builder: StartThreadBuilder.() -> Unit
+        builder: StartThreadWithMessageBuilder.() -> Unit
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val startBuilder = StartThreadBuilder(name).apply {
+        val startBuilder = StartThreadWithMessageBuilder(name).apply {
             this.autoArchiveDuration = archiveDuration
             builder()
         }
