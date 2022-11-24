@@ -8,6 +8,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * The event dispatched when a scheduled guild event was created.
  *
+ * See [Guild Scheduled Event Create](https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-create)
+ *
  * @see GuildScheduledEvent
  * @see GuildScheduledEventEvent
  */

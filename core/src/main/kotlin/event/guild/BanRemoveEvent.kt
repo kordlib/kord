@@ -36,7 +36,7 @@ public class BanRemoveEvent(
     public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
-     * Requests to get the [Guild] this ban was removed from, or `null` if the guild wasnt' present
+     * Requests to get the [Guild] this ban was removed from, or `null` if the guild wasn't present
      *
      * @throws [RequestException] if anything went wrong during the request.
      */

@@ -31,6 +31,8 @@ public sealed interface AutoModerationRuleConfigurationEvent : AutoModerationEve
  * An [AutoModerationRuleConfigurationEvent] that is sent when an [AutoModerationRule] is created.
  *
  * This event is only sent to bot users which have the [ManageGuild] permission.
+ *
+ * See [Auto moderation rule create](https://discord.com/developers/docs/topics/gateway-events#auto-moderation-rule-create)
  */
 public class AutoModerationRuleCreateEvent(
     /** The [AutoModerationRule] that was created. */
@@ -52,6 +54,8 @@ public class AutoModerationRuleCreateEvent(
  * An [AutoModerationRuleConfigurationEvent] that is sent when an [AutoModerationRule] is updated.
  *
  * This event is only sent to bot users which have the [ManageGuild] permission.
+ *
+ * See [Auto moderation rule update](https://discord.com/developers/docs/topics/gateway-events#auto-moderation-rule-update)
  */
 public class AutoModerationRuleUpdateEvent(
     /** The [AutoModerationRule] that was updated. */
@@ -75,6 +79,8 @@ public class AutoModerationRuleUpdateEvent(
  * An [AutoModerationRuleConfigurationEvent] that is sent when an [AutoModerationRule] is deleted.
  *
  * This event is only sent to bot users which have the [ManageGuild] permission.
+ *
+ * See [Auto moderation rule delete](https://discord.com/developers/docs/topics/gateway-events#auto-moderation-rule-delete)
  */
 public class AutoModerationRuleDeleteEvent(
     /** The [AutoModerationRule] that was deleted. */

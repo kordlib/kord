@@ -12,6 +12,13 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * The event dispatched when a guild's emojis have been updated.
+ *
+ * The [old][old] [GuildEmoji] set may be `null` unless it has been stored by the cache.
+ *
+ * See [Guild Emoji Update](https://discord.com/developers/docs/topics/gateway-events#guild-emojis-update)
+ */
 public class EmojisUpdateEvent(
     public val guildId: Snowflake,
     public val emojis: Set<GuildEmoji>,

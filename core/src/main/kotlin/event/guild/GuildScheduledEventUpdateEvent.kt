@@ -11,6 +11,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 /**
  * The event dispatched when a [GuildScheduledEvent] gets updated.
  *
+ * See [Guild Schedule Event Update](https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-update)
+ *
  * @property scheduledEvent the updated event, for the old event use [oldEvent]
  * @property oldEvent the event that was in the cache before the update
  *

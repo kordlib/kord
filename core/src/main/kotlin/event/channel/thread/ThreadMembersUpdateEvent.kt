@@ -44,10 +44,13 @@ public class ThreadMembersUpdateEvent(
         }
 
     /**
-     * A [List] IDs for the users removed from the thread in this event, or empty if null.
+     * The [List] of IDs for the users removed from the thread in this event, or empty if null.
      */
     public val removedMemberIds: List<Snowflake> get() = data.removedMemberIds.orEmpty()
 
+    /**
+     * The [List] of users removed from the thread in this event as [MemberBehavior]
+     */
     public val removedMemberBehaviors: List<MemberBehavior>
         get() = removedMemberIds.map {
             MemberBehavior(guildId, it, kord)
