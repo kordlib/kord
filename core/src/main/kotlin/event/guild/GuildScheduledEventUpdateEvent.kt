@@ -9,7 +9,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * Event fired if a [GuildScheduledEvent] gets updated.
+ * The event dispatched when a [GuildScheduledEvent] gets updated.
  *
  * @property scheduledEvent the updated event, for the old event use [oldEvent]
  * @property oldEvent the event that was in the cache before the update

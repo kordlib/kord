@@ -8,7 +8,7 @@ import dev.kord.core.event.channel.ChannelUpdateEvent
 /**
  * The event dispatched when a [ThreadChannel] is updated in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#thread-update">Thread Update</a>
+ * See [Thread Update](https://discord.com/developers/docs/topics/gateway-events#thread-update)
  */
 public sealed interface ThreadUpdateEvent : ChannelUpdateEvent {
     override val channel: ThreadChannel
@@ -17,7 +17,7 @@ public sealed interface ThreadUpdateEvent : ChannelUpdateEvent {
 /**
  * The event dispatched when a [TextChannelThread] is updated in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#thread-update">Thread Update</a>
+ * See [Thread Update](https://discord.com/developers/docs/topics/gateway-events#thread-update)
  */
 public class TextChannelThreadUpdateEvent(
     override val channel: TextChannelThread,
@@ -33,7 +33,7 @@ public class TextChannelThreadUpdateEvent(
 /**
  * The event dispatched when a [NewsChannelThread] is updated in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#thread-update">Thread Update</a>
+ * See [Thread Update](https://discord.com/developers/docs/topics/gateway-events#thread-update)
  */
 public class NewsChannelThreadUpdateEvent(
     override val channel: NewsChannelThread,
@@ -49,7 +49,7 @@ public class NewsChannelThreadUpdateEvent(
 /**
  * The event dispatched when an Unknown [ThreadChannel] is updated in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#thread-update">Thread Update</a>
+ * See [Thread Update](https://discord.com/developers/docs/topics/gateway-events#thread-update)
  */
 public class UnknownChannelThreadUpdateEvent(
     override val channel: ThreadChannel,

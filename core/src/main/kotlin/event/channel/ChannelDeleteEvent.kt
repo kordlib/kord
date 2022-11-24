@@ -7,7 +7,7 @@ import dev.kord.core.event.Event
 /**
  * The event dispatched when a [Channel] is deleted in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Channel Delete</a>
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
  */
 public interface ChannelDeleteEvent : Event {
     public val channel: Channel
@@ -18,7 +18,7 @@ public interface ChannelDeleteEvent : Event {
 /**
  * The event dispatched when a [Category] is deleted in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Channel Delete</a>
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
  */
 public class CategoryDeleteEvent(
     override val channel: Category,
@@ -33,7 +33,7 @@ public class CategoryDeleteEvent(
 /**
  * The event dispatched when a [DmChannel] is deleted in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Channel Delete</a>
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
  */
 public class DMChannelDeleteEvent(
     override val channel: DmChannel,
@@ -48,7 +48,7 @@ public class DMChannelDeleteEvent(
 /**
  * The event dispatched when a [NewsChannel] is deleted in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Channel Delete</a>
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
  */
 public class NewsChannelDeleteEvent(
     override val channel: NewsChannel,
@@ -63,7 +63,7 @@ public class NewsChannelDeleteEvent(
 /**
  * The event dispatched when a [TextChannel] is deleted in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Channel Delete</a>
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
  */
 public class TextChannelDeleteEvent(
     override val channel: TextChannel,
@@ -78,7 +78,7 @@ public class TextChannelDeleteEvent(
 /**
  * The event dispatched when a [VoiceChannel] is deleted in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Channel Delete</a>
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
  */
 public class VoiceChannelDeleteEvent(
     override val channel: VoiceChannel,
@@ -93,7 +93,7 @@ public class VoiceChannelDeleteEvent(
 /**
  * The event dispatched when a [StageChannel] is deleted in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Channel Delete</a>
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
  */
 public class StageChannelDeleteEvent(
     override val channel: StageChannel,
@@ -108,7 +108,7 @@ public class StageChannelDeleteEvent(
 /**
  * The event dispatched when an Unknown [Channel] is deleted in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-delete">Channel Delete</a>
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
  */
 public class UnknownChannelDeleteEvent(
     override val channel: Channel,

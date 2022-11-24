@@ -6,7 +6,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * Event fired when a scheduled event got created.
+ * The event dispatched when a scheduled guild event was created.
  *
  * @see GuildScheduledEvent
  * @see GuildScheduledEventEvent

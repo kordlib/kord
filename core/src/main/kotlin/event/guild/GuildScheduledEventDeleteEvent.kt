@@ -6,7 +6,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
- * Event fired when a scheduled event got deleted.
+ * The event dispatched when a scheduled guild event got deleted.
  * Use [GuildScheduledEvent.status] to know why the event got deleted.
  *
  * @see GuildScheduledEvent

@@ -7,7 +7,7 @@ import dev.kord.core.event.Event
 /**
  * The event dispatched when a [Channel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-create">Channel Create</a>
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
  */
 public interface ChannelCreateEvent : Event {
     public val channel: Channel
@@ -18,7 +18,7 @@ public interface ChannelCreateEvent : Event {
 /**
  * The event dispatched when a [Category] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-create">Channel Create</a>
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
  */
 public class CategoryCreateEvent(
     override val channel: Category,
@@ -33,7 +33,7 @@ public class CategoryCreateEvent(
 /**
  * The event dispatched when a [DmChannel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-create">Channel Create</a>
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
  */
 public class DMChannelCreateEvent(
     override val channel: DmChannel,
@@ -48,7 +48,7 @@ public class DMChannelCreateEvent(
 /**
  * The event dispatched when a [NewsChannel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-create">Channel Create</a>
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
  */
 public class NewsChannelCreateEvent(
     override val channel: NewsChannel,
@@ -63,7 +63,7 @@ public class NewsChannelCreateEvent(
 /**
  * The event dispatched when a [TextChannel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-create">Channel Create</a>
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
  */
 public class TextChannelCreateEvent(
     override val channel: TextChannel,
@@ -78,7 +78,7 @@ public class TextChannelCreateEvent(
 /**
  * The event dispatched when a [VoiceChannel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-create">Channel Create</a>
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
  */
 public class VoiceChannelCreateEvent(
     override val channel: VoiceChannel,
@@ -93,7 +93,7 @@ public class VoiceChannelCreateEvent(
 /**
  * The event dispatched when a [StageChannel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-create">Channel Create</a>
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
  */
 public class StageChannelCreateEvent(
     override val channel: StageChannel,
@@ -108,7 +108,7 @@ public class StageChannelCreateEvent(
 /**
  * The event dispatched when an Unknown [Channel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-create">Channel Create</a>
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
  */
 public class UnknownChannelCreateEvent(
     override val channel: Channel,

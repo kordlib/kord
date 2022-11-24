@@ -20,7 +20,13 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 
-
+/**
+ * The event dispatched when a Thread list is synced.
+ *
+ * See [Thread List Sync](https://discord.com/developers/docs/topics/gateway-events#thread-list-sync)
+ *
+ * @property data The data for the sync
+ */
 public class ThreadListSyncEvent(
     public val data: ThreadListSyncData,
     override val kord: Kord,
@@ -44,6 +50,9 @@ public class ThreadListSyncEvent(
      */
     public val channelIds: List<Snowflake> get() = data.channelIds.orEmpty()
 
+    /**
+     * The behavior of the channels that contain threads, if the [channelIds] list is not empty.
+     */
     public val channelBehaviors: List<ThreadParentChannelBehavior>
         get() = channelIds.map {
             ThreadParentChannelBehavior(guildId, it, kord)
@@ -68,9 +77,8 @@ public class ThreadListSyncEvent(
      * Requests to get the [Guild] for the event
      *
      * @throws RequestException if something went wrong while retrieving the guild.
-     * @throws EntityNotFoundException if the guild is null.
+     * @throws EntityNotFoundException if the guild is `null`.
      */
-    // TODO Make this expression body syntax? Maybe another PR?
     public suspend fun getGuild(): Guild {
         return supplier.getGuild(guildId)
     }

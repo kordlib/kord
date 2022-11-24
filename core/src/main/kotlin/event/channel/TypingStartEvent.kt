@@ -20,15 +20,11 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
 
 /**
- * The event that typing begins in a channel.
+ * The event that is dispatched when a user starts typing in a channel.
  *
  * @property data The data associated with the event
- * @property kord The Kord Instance
- * @property shard The shard for the event
- * @property customContext Any custom context provided
- * @property supplier The entity supplier to use for the event
  *
- * @see <a href=https://discord.com/developers/docs/topics/gateway#typing-start>Typing Start</a>
+ * See [Typing Start](https://discord.com/developers/docs/topics/gateway-events#typing-start)
  */
 public class TypingStartEvent(
     public val data: TypingStartEventData,

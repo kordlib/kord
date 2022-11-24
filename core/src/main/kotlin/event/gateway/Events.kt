@@ -15,8 +15,14 @@ import dev.kord.gateway.GatewayCloseCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 
+/**
+ * A Gateway recieved an event.
+ */
 public sealed class GatewayEvent : Event
 
+/**
+ * The event dispatched when a bot connects to the Gateway.
+ */
 public class ConnectEvent(
     override val kord: Kord,
     override val shard: Int,
@@ -137,6 +143,9 @@ public sealed class DisconnectEvent : GatewayEvent() {
 
 }
 
+/**
+ * The event sent after the bot sends a valid `Identify` payload.
+ */
 public class ReadyEvent(
     public val gatewayVersion: Int,
     public val guildIds: Set<Snowflake>,
@@ -149,8 +158,16 @@ public class ReadyEvent(
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : GatewayEvent(), Strategizable {
 
+    /**
+     * A set of all the [Guild]s the bot is in.
+     */
     public val guilds: Set<GuildBehavior> get() = guildIds.map { GuildBehavior(it, kord) }.toSet()
 
+    /**
+     * Requests to get a flow of all the [Guild]s the bot is in from the [supplier], filtered to those in the [guilds] set.
+     *
+     * @return A flow of [Guild]s the bot is in
+     */
     public suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
@@ -160,6 +177,9 @@ public class ReadyEvent(
             "sessionId='$sessionId', resumeGatewayUrl=$resumeGatewayUrl, kord=$kord, shard=$shard, supplier=$supplier)"
 }
 
+/**
+ * The event sent when the bot is attempting to reconnect.
+ */
 public class ResumedEvent(
     override val kord: Kord,
     override val shard: Int,

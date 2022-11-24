@@ -8,7 +8,7 @@ import dev.kord.core.event.channel.ChannelCreateEvent
 /**
  * The event dispatched when a [ThreadChannel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#thread-create">Thread Create</a>
+ * See [Thread Create](https://discord.com/developers/docs/topics/gateway-events#thread-create)
  */
 public sealed interface ThreadChannelCreateEvent : ChannelCreateEvent {
     override val channel: ThreadChannel
@@ -17,7 +17,7 @@ public sealed interface ThreadChannelCreateEvent : ChannelCreateEvent {
 /**
  * The event dispatched when a [TextChannelThread] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#thread-create">Thread Create</a>
+ * See [Thread Create](https://discord.com/developers/docs/topics/gateway-events#thread-create)
  */
 public class TextChannelThreadCreateEvent(
     override val channel: TextChannelThread,
@@ -32,7 +32,7 @@ public class TextChannelThreadCreateEvent(
 /**
  * The event dispatched when a [NewsChannelThread] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#thread-create">Thread Create</a>
+ * See [Thread Create](https://discord.com/developers/docs/topics/gateway-events#thread-create)
  */
 public class NewsChannelThreadCreateEvent(
     override val channel: NewsChannelThread,
@@ -47,7 +47,7 @@ public class NewsChannelThreadCreateEvent(
 /**
  * The event dispatched when an Unknown [ThreadChannel] is created in a guild.
  *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#thread-create">Thread Create</a>
+ * See [Thread Create](https://discord.com/developers/docs/topics/gateway-events#thread-create)
  */
 public class UnknownChannelThreadCreateEvent(
     override val channel: ThreadChannel,

@@ -7,6 +7,11 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
+/**
+ * The data for the event dispatched when a message is pinned or unpinned from a text channel.
+ *
+ * See [Channel Pins Update](https://discord.com/developers/docs/topics/gateway-events#channel-pins-update)
+ */
 @Serializable
 public data class ChannelPinsUpdateEventData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,

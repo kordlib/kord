@@ -17,15 +17,13 @@ import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.datetime.Instant
 
 /**
- * The event of a channels Pins being updated.
+ * The event dispatched when a message is pinned or unpinned in a text channel.
+ *
+ * This event is not sent when a pinned message is deleted.
+ *
+ * See [Channel Pins Update](https://discord.com/developers/docs/topics/gateway-events#channel-pins-update)
  *
  * @property data The data associated with the event
- * @property kord The Kord Instance
- * @property shard The shard for the event
- * @property customContext Any custom context provided
- * @property supplier The entity supplier to use for the event
- *
- * @see <a href="https://discord.com/developers/docs/topics/gateway#channel-pins-update">Channel Pins Update</a>
  */
 public class ChannelPinsUpdateEvent(
     public val data: ChannelPinsUpdateEventData,

@@ -9,6 +9,11 @@ import dev.kord.common.serialization.InstantInEpochSecondsSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
+/**
+ * The data for the event dispatched when a user starts typing in a channel.
+ *
+ * See [Typing Start](https://discord.com/developers/docs/topics/gateway-events#typing-start)
+ */
 @Serializable
 public data class TypingStartEventData(
     val channelId: Snowflake,

@@ -23,6 +23,9 @@ public class BanAddEvent(
 
     override val kord: Kord get() = user.kord
 
+    /**
+     * The [Guild] this event was triggered from
+     */
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /**
