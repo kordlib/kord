@@ -20,6 +20,7 @@ public data class Locale(val language: String, val country: String? = null) {
     /**
      * Converts this into a [JLocale].
      */
+    @Suppress("DEPRECATION")
     public fun asJavaLocale(): JLocale = JLocale(language, country ?: "")
 
     @Suppress("MemberVisibilityCanBePrivate")

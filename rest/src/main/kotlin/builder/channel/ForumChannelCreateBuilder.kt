@@ -8,7 +8,6 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ForumTagRequest
 import dev.kord.rest.json.request.GuildChannelCreateRequest
-import kotlinx.serialization.SerialName
 import kotlin.time.Duration
 
 @KordDsl
@@ -92,14 +91,15 @@ public class ForumChannelCreateBuilder(public var name: String) :
 }
 
 public class ForumTagBuilder(private val name: String) : RequestBuilder<ForumTagRequest> {
-    private var _moderated: OptionalBoolean? = OptionalBoolean.Missing
-    public var moderated: Boolean? by _moderated.delegate()
+    private var _moderated: OptionalBoolean = OptionalBoolean.Missing
+    public var moderated: Boolean? by ::_moderated.delegate()
 
     private var _reactionEmojiId: Optional<Snowflake?> = Optional.Missing()
-    public var reactionEmojiId: Snowflake? by _reactionEmojiId.delegate()
+    public var reactionEmojiId: Snowflake? by ::_reactionEmojiId.delegate()
 
     private var _reactionEmojiName: Optional<String?> = Optional.Missing()
-    public var reactionEmojiName: String? by _reactionEmojiName.delegate()
+    public var reactionEmojiName: String? by ::_reactionEmojiName.delegate()
+
     override fun toRequest(): ForumTagRequest {
         return ForumTagRequest(
             name = name,

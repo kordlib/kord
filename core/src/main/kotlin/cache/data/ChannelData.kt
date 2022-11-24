@@ -37,7 +37,13 @@ public data class ChannelData(
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val member: Optional<ThreadMemberData> = Optional.Missing(),
     val flags: Optional<ChannelFlags> = Optional.Missing(),
-    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
+    val totalMessageSent: OptionalInt = OptionalInt.Missing,
+    val availableTags: Optional<List<DiscordForumTag>> = Optional.Missing(),
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    val defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing(),
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    val message: Optional<MessageData> = Optional.Missing()
 ) {
 
 
@@ -73,7 +79,13 @@ public data class ChannelData(
                 defaultAutoArchiveDuration,
                 member.map { ThreadMemberData.from(it, id) },
                 flags,
-                defaultSortOrder
+                totalMessageSent,
+                availableTags,
+                appliedTags,
+                defaultReactionEmoji,
+                defaultThreadRateLimitPerUser,
+                defaultSortOrder,
+                message.map { MessageData.from(it) }
             )
         }
     }
