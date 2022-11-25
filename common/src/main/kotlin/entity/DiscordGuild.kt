@@ -115,7 +115,6 @@
             "PreviewEnabled", stringValue = "PREVIEW_ENABLED",
             kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
         ),
-        Entry("PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads"),
         Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
         Entry(
             "TicketedEventsEnabled", stringValue = "TICKETED_EVENTS_ENABLED",
@@ -141,6 +140,11 @@
                     "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
                     " for more information.",
             deprecationLevel = HIDDEN,
+        ),
+        Entry(
+            "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
+            deprecationMessage = "Creating a private thread no longer requires the server to be boosted.",
+            deprecationLevel = WARNING,
         ),
         Entry(
             "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
@@ -176,6 +180,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
