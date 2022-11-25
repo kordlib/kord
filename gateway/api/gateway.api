@@ -212,13 +212,6 @@ public final class dev/kord/gateway/Command$Heartbeat : dev/kord/gateway/Command
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/gateway/Command$Heartbeat$SerializationStrategy : kotlinx/serialization/SerializationStrategy {
-	public static final field INSTANCE Ldev/kord/gateway/Command$Heartbeat$SerializationStrategy;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Command$Heartbeat;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-}
-
 public final class dev/kord/gateway/Command$SerializationStrategy : kotlinx/serialization/SerializationStrategy {
 	public static final field INSTANCE Ldev/kord/gateway/Command$SerializationStrategy;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
