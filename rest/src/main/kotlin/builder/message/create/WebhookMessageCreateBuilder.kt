@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message.create
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ChannelType.GuildForum
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
@@ -14,6 +15,7 @@ import dev.kord.rest.json.request.WebhookExecuteRequest
 /**
  * Message builder for creating messages as a webhook user.
  */
+@KordDsl
 public class WebhookMessageCreateBuilder :
     MessageCreateBuilder,
     RequestBuilder<MultiPartWebhookExecuteRequest> {

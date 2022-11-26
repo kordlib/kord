@@ -11,33 +11,21 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.SerializationStrategy as KSerializationStrategy
 
 public sealed class Command {
-    internal data class Heartbeat(val sequenceNumber: Int? = null) : Command() {
 
-        object SerializationStrategy : KSerializationStrategy<Heartbeat> {
-            override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Heartbeat", PrimitiveKind.INT)
-
-            @OptIn(ExperimentalSerializationApi::class)
-            override fun serialize(encoder: Encoder, value: Heartbeat) {
-                encoder.encodeNullableSerializableValue(Int.serializer(), value.sequenceNumber)
-            }
-        }
-
-    }
+    public data class Heartbeat(val sequenceNumber: Int?) : Command()
 
     public object SerializationStrategy : KSerializationStrategy<Command> {
 
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Command") {
             element("op", OpCode.serializer().descriptor)
-            element("d", JsonObject.serializer().descriptor)
+            element("d", JsonElement.serializer().descriptor)
         }
 
         @OptIn(PrivilegedIntent::class)
@@ -66,7 +54,8 @@ public sealed class Command {
                 }
                 is Heartbeat -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.serializer(), OpCode.Heartbeat)
-                    composite.encodeSerializableElement(descriptor, 1, Heartbeat.SerializationStrategy, value)
+                    @OptIn(ExperimentalSerializationApi::class)
+                    composite.encodeNullableSerializableElement(descriptor, 1, Int.serializer(), value.sequenceNumber)
                 }
             }
 
@@ -79,8 +68,8 @@ public sealed class Command {
 
 
 @Serializable
-internal data class Identify(
-    internal val token: String,
+public data class Identify(
+    val token: String,
     val properties: IdentifyProperties,
     val compress: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("large_threshold")
@@ -126,7 +115,7 @@ public data class DiscordPresence(
 )
 
 @Serializable
-internal data class Resume(
+public data class Resume(
     val token: String,
     @SerialName("session_id")
     val sessionId: String,

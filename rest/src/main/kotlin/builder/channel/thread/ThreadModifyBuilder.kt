@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.channel.thread
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -8,6 +9,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
 import kotlin.time.Duration
 
+@KordDsl
 public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
 
     private var _name: Optional<String> = Optional.Missing()

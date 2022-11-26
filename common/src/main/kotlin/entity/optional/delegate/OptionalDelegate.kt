@@ -18,7 +18,7 @@ public fun <V : Any> KMutableProperty0<Optional<V>>.delegate(): ReadWritePropert
         override fun getValue(thisRef: Any?, property: KProperty<*>): V? {
             return when (val optional = this@delegate.get()) {
                 is Optional.Value -> optional.value
-                else -> null
+                is Optional.Missing, is Optional.Null<*> -> null
             }
         }
     }
@@ -36,7 +36,7 @@ public fun <V : Any> KMutableProperty0<Optional<List<V>>>.delegateList(): ReadWr
         override fun getValue(thisRef: Any?, property: KProperty<*>): List<V> {
             return when (val optional = this@delegateList.get()) {
                 is Optional.Value -> optional.value
-                else -> emptyList()
+                is Optional.Missing, is Optional.Null<*> -> emptyList()
             }
         }
     }

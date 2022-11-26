@@ -57,7 +57,7 @@ public interface Channel : ChannelBehavior {
             PublicNewsThread -> NewsChannelThread(data, kord)
             PrivateThread, PublicGuildThread -> TextChannelThread(data, kord)
 
-            else -> {
+            GuildDirectory, is Unknown -> {
                 if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))
                 else ThreadChannel(data, kord, strategy.supply(kord))
             }

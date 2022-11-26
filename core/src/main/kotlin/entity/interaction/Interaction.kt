@@ -60,18 +60,18 @@ public sealed interface Interaction : InteractionBehavior {
             data: InteractionData,
             kord: Kord,
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-        ): Interaction {
-            return when {
-                data.type is InteractionType.Component -> ComponentInteraction(data, kord, strategy.supply(kord))
-                data.type is InteractionType.AutoComplete -> AutoCompleteInteraction(data, kord, strategy.supply(kord))
-                data.type is InteractionType.ModalSubmit -> ModalSubmitInteraction(data, kord, strategy.supply(kord))
-                data.guildId !is OptionalSnowflake.Missing -> GuildApplicationCommandInteraction(
-                    data,
-                    kord,
-                    strategy.supply(kord)
-                )
-                else -> GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
+        ): Interaction = when (val type = data.type) {
+            InteractionType.Component -> ComponentInteraction(data, kord, strategy.supply(kord))
+            InteractionType.AutoComplete -> AutoCompleteInteraction(data, kord, strategy.supply(kord))
+            InteractionType.ModalSubmit -> ModalSubmitInteraction(data, kord, strategy.supply(kord))
+            InteractionType.ApplicationCommand -> {
+                if (data.guildId !is OptionalSnowflake.Missing) {
+                    GuildApplicationCommandInteraction(data, kord, strategy.supply(kord))
+                } else {
+                    GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
+                }
             }
+            InteractionType.Ping, is InteractionType.Unknown -> error("Unsupported interaction type: $type")
         }
     }
 }

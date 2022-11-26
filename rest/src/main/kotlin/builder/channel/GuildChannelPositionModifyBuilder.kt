@@ -34,7 +34,7 @@ public class GuildChannelPositionModifyBuilder : RequestBuilder<GuildChannelPosi
         GuildChannelPositionModifyRequest(swaps.map { it.toRequest() })
 }
 
-
+@KordDsl
 public class GuildChannelSwapBuilder(public var channelId: Snowflake) {
 
 
