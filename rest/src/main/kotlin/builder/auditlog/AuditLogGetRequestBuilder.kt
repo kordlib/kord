@@ -1,11 +1,13 @@
 package dev.kord.rest.builder.auditlog
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.AuditLogEvent
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
 import dev.kord.rest.service.AuditLogService
 
+@KordDsl
 public class AuditLogGetRequestBuilder : RequestBuilder<AuditLogGetRequest> {
 
     /**

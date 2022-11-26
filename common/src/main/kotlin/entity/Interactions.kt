@@ -92,6 +92,7 @@ import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 
 @Serializable
 public data class DiscordApplicationCommand(
@@ -171,10 +172,22 @@ public sealed class Choice<out T> {
     public abstract val nameLocalizations: Optional<Map<Locale, String>?>
     public abstract val value: T
 
-    public data class IntChoice(
+    @Deprecated("Renamed to 'IntegerChoice'.", level = WARNING)
+    public data class IntChoice
+    @Deprecated(
+        "Renamed to 'IntegerChoice'.",
+        ReplaceWith("IntegerChoice(name, nameLocalizations, value)", "dev.kord.common.entity.Choice.IntegerChoice"),
+        level = WARNING,
+    ) public constructor(
         override val name: String,
         override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: Long
+    ) : Choice<Long>()
+
+    public data class IntegerChoice(
+        override val name: String,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val value: Long,
     ) : Choice<Long>()
 
     public data class NumberChoice(
@@ -216,7 +229,7 @@ public sealed class Choice<out T> {
 
             when {
                 value.isString -> StringChoice(name, nameLocalizations, value.content)
-                else -> value.longOrNull?.let { IntChoice(name, nameLocalizations, it) }
+                else -> value.longOrNull?.let { IntegerChoice(name, nameLocalizations, it) }
                     ?: value.doubleOrNull?.let { NumberChoice(name, nameLocalizations, it) }
                     ?: throw SerializationException("Illegal choice value: $value")
             }
@@ -227,7 +240,8 @@ public sealed class Choice<out T> {
             encodeStringElement(descriptor, 0, value.name)
 
             when (value) {
-                is IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is @Suppress("DEPRECATION") IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is IntegerChoice -> encodeLongElement(descriptor, 1, value.value)
                 is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
                 is StringChoice -> encodeStringElement(descriptor, 1, value.value)
             }
@@ -393,7 +407,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
-                else -> error("unknown ApplicationCommandOptionType $type")
+                null, is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")
             }
         }
 
@@ -681,23 +695,43 @@ public data class CommandGroup(
         get() = ApplicationCommandOptionType.SubCommandGroup
 }
 
+@Deprecated(
+    "Use an is-check or cast instead.",
+    ReplaceWith("(this as CommandArgument.IntegerArgument).value", "dev.kord.common.entity.CommandArgument"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.int(): Long {
     return value as? Long ?: error("$value wasn't an int.")
 }
 
 
+@Deprecated(
+    "This function calls value.toString() which might be unexpected. Use an explicit value.toString() instead.",
+    ReplaceWith("this.value.toString()"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.string(): String {
     return value.toString()
 }
 
 
+@Deprecated(
+    "Use an is-check or cast instead.",
+    ReplaceWith("(this as CommandArgument.BooleanArgument).value", "dev.kord.common.entity.CommandArgument"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
 
+@Deprecated(
+    "This function calls value.toString() which might be unexpected. Use an explicit value.toString() instead.",
+    ReplaceWith("Snowflake(this.value.toString())", "dev.kord.common.entity.Snowflake"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.snowflake(): Snowflake {
-    val id = string().toULongOrNull() ?: error("$value wasn't a Snowflake")
+    val id = value.toString().toULongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)
 }
 

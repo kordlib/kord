@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message.modify
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
@@ -12,7 +13,7 @@ import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.InteractionResponseModifyRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 
-
+@KordDsl
 public class InteractionResponseModifyBuilder :
     MessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseModifyRequest> {

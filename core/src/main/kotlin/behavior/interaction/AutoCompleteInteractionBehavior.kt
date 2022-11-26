@@ -7,6 +7,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.interaction.IntegerOptionBuilder
 import dev.kord.rest.builder.interaction.NumberOptionBuilder
 import dev.kord.rest.builder.interaction.StringChoiceBuilder
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -14,7 +15,7 @@ import kotlin.contracts.contract
  * The behavior of an [AutoCompleteInteraction].
  *
  * @see suggestString
- * @see suggestInt
+ * @see suggestInteger
  * @see suggestNumber
  * @see suggest
  */
@@ -23,14 +24,24 @@ public interface AutoCompleteInteractionBehavior : DataInteractionBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): AutoCompleteInteractionBehavior
 }
 
+@Deprecated(
+    "Renamed to 'suggestInteger'.",
+    ReplaceWith("this.suggestInteger { builder() }", "dev.kord.core.behavior.interaction.suggestInteger"),
+    level = WARNING,
+)
+public suspend inline fun AutoCompleteInteractionBehavior.suggestInt(builder: IntegerOptionBuilder.() -> Unit) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    suggestInteger(builder)
+}
+
 /**
- * Responds to the interaction with the int choices specified by [builder].
+ * Responds to the interaction with the integer choices specified by [builder].
  *
  * The provided choices are only suggestions and the user can provide any other input as well.
  *
  * @see IntegerOptionBuilder
  */
-public suspend inline fun AutoCompleteInteractionBehavior.suggestInt(builder: IntegerOptionBuilder.() -> Unit) {
+public suspend inline fun AutoCompleteInteractionBehavior.suggestInteger(builder: IntegerOptionBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
