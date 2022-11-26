@@ -83,7 +83,7 @@ public data class StartThreadRequest(
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("rate_limit_per_user")
     val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
-    val message: Optional<MessageCreateRequest?> = Optional.Missing(),
+    val message: Optional<ForumThreadMessageRequest?> = Optional.Missing(),
     val flags: Optional<ChannelFlags?> = Optional.Missing(),
     @SerialName("applied_tags")
     val appliedTags: Optional<List<Snowflake>?> = Optional.Missing()

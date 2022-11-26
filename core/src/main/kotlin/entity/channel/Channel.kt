@@ -7,6 +7,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.channel.thread.ForumChannelThread
 import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -55,7 +56,9 @@ public interface Channel : ChannelBehavior {
             GuildNews -> NewsChannel(data, kord)
             GuildForum -> ForumChannel(data, kord)
             PublicNewsThread -> NewsChannelThread(data, kord)
-            PrivateThread, PublicGuildThread -> TextChannelThread(data, kord)
+            PrivateThread, PublicGuildThread -> {
+                TextChannelThread(data, kord)
+            }
 
             GuildDirectory, is Unknown -> {
                 if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))

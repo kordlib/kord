@@ -1,18 +1,21 @@
 package dev.kord.rest.builder.channel.thread
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
-import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
-import dev.kord.rest.json.request.MultipartMessageCreateRequest
+import dev.kord.rest.builder.message.create.ForumMessageCreateBuilder
 import dev.kord.rest.json.request.MultipartStartThreadRequest
 import dev.kord.rest.json.request.StartThreadRequest
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.Duration
 
+@KordDsl
 public class StartForumThreadBuilder(public var name: String) : AuditRequestBuilder<MultipartStartThreadRequest> {
     override var reason: String? = null
 
@@ -25,27 +28,36 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
     private var _appliedTags: Optional<MutableList<Snowflake>?> = Optional.Missing()
     public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
-    private var _message: Optional<MultipartMessageCreateRequest> = Optional.Missing()
-    public var message: MultipartMessageCreateRequest? by ::_message.delegate()
-
     private var _flags: Optional<ChannelFlags> = Optional.Missing()
     public var flags: ChannelFlags? by ::_flags.delegate()
 
-    public inline fun createThreadMessage(builder: UserMessageCreateBuilder.() -> Unit) {
-        message = UserMessageCreateBuilder().apply(builder).toRequest()
+    public var message: ForumMessageCreateBuilder? = null
+
+    public fun createMessage(content: String) {
+        createMessage {
+            this.content = content
+        }
+    }
+
+    public inline fun createMessage(builder: ForumMessageCreateBuilder.() -> Unit) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        message = ForumMessageCreateBuilder().apply(builder)
     }
 
     override fun toRequest(): MultipartStartThreadRequest {
+        val messageRequest = message?.toRequest()
+
         return MultipartStartThreadRequest(
             StartThreadRequest(
                 name = name,
                 autoArchiveDuration = _autoArchiveDuration,
                 rateLimitPerUser = _rateLimitPerUser,
-                message = _message.value?.request.optional(),
+                message = Optional(messageRequest?.request).coerceToMissing(),
                 appliedTags = _appliedTags,
                 flags = _flags
             ),
-            _message.value?.files.optional()
+            Optional(messageRequest?.files).coerceToMissing()
         )
     }
 

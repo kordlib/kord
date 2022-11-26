@@ -8,6 +8,8 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ForumTagRequest
 import dev.kord.rest.json.request.GuildChannelCreateRequest
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.Duration
 
 @KordDsl
@@ -50,6 +52,8 @@ public class ForumChannelCreateBuilder(public var name: String) :
     public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
 
     public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
         if (availableTags == null) availableTags = mutableListOf()
 
         val tagBuilder = ForumTagBuilder(name).apply(builder)

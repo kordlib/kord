@@ -28,7 +28,10 @@ public class ForumChannel(
     public val defaultThreadRateLimitPerUser: Duration? get() = data.defaultThreadRateLimitPerUser.value
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ForumChannel {
-        return ForumChannel(data,kord, strategy.supply(kord))
+        return ForumChannel(data, kord, strategy.supply(kord))
     }
 
+    override fun toString(): String {
+        return "ForumChannel(data=$data, kord=$kord, supplier=$supplier)"
+    }
 }

@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.channel.thread
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.optional.Optional
@@ -9,6 +10,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.StartThreadRequest
 import kotlin.time.Duration
 
+@KordDsl
 public class StartThreadWithoutMessageBuilder(public var name: String) : AuditRequestBuilder<StartThreadRequest> {
     override var reason: String? = null
 

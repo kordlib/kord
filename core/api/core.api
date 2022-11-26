@@ -7860,6 +7860,7 @@ public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/beh
 	public final fun getTopic ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/ChannelType;
 	public fun startPublicThread (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
@@ -8505,6 +8506,7 @@ public final class dev/kord/core/entity/channel/thread/ForumChannelThread : dev/
 	public fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMembers ()Lkotlinx/coroutines/flow/Flow;
 	public fun getMention ()Ljava/lang/String;
+	public final fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8529,6 +8531,7 @@ public final class dev/kord/core/entity/channel/thread/ForumChannelThread : dev/
 	public fun join (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun leave (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun removeUser (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun toString ()Ljava/lang/String;
 	public fun type (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun typeUntil (Lkotlin/time/TimeMark;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun typeUntil (Lkotlinx/datetime/Instant;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8656,7 +8659,6 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 	public fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMembers ()Lkotlinx/coroutines/flow/Flow;
 	public fun getMention ()Ljava/lang/String;
-	public final fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

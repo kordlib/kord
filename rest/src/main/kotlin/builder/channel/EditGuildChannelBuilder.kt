@@ -7,6 +7,8 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
 import dev.kord.rest.json.request.ForumTagRequest
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.Duration
 
 @KordDsl
@@ -105,6 +107,8 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
 
     public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
         if (availableTags == null) availableTags = mutableListOf()
 
         val tagBuilder = ForumTagBuilder(name).apply(builder)
