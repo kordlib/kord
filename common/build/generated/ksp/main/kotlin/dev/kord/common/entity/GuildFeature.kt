@@ -137,11 +137,6 @@ public sealed class GuildFeature(
     public object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
 
     /**
-     * Guild has access to create private threads
-     */
-    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
-
-    /**
      * Guild is able to set role icons.
      */
     public object RoleIcons : GuildFeature("ROLE_ICONS")
@@ -182,6 +177,12 @@ public sealed class GuildFeature(
                 "Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were removed on March 10, 2022. See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more information.",
     )
     public object Commerce : GuildFeature("COMMERCE")
+
+    /**
+     * Guild has access to create private threads
+     */
+    @Deprecated(message = "Creating a private thread no longer requires the server to be boosted.")
+    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
     /**
      * Guild has access to the seven day archive time for threads.
@@ -233,7 +234,7 @@ public sealed class GuildFeature(
             "NEWS" -> News
             "PARTNERED" -> Partnered
             "PREVIEW_ENABLED" -> PreviewEnabled
-            "PRIVATE_THREADS" -> PrivateThreads
+            "PRIVATE_THREADS" -> @Suppress("DEPRECATION") PrivateThreads
             "ROLE_ICONS" -> RoleIcons
             "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive
             "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive
@@ -270,7 +271,7 @@ public sealed class GuildFeature(
                 News,
                 Partnered,
                 PreviewEnabled,
-                PrivateThreads,
+                @Suppress("DEPRECATION") PrivateThreads,
                 RoleIcons,
                 @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive,
                 @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive,

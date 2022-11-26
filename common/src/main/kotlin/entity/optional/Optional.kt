@@ -308,5 +308,5 @@ public fun <T : Any?> T?.optional(): Optional<T?> = Optional(this)
 
 public fun Optional<Boolean>.toPrimitive(): OptionalBoolean = when (this) {
     is Value -> OptionalBoolean.Value(value)
-    else -> OptionalBoolean.Missing
+    is Missing, is Null<*> -> OptionalBoolean.Missing
 }

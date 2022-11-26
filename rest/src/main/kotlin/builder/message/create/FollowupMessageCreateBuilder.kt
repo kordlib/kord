@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message.create
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
@@ -14,6 +15,7 @@ import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
 /**
  * Message builder for creating messages following up interaction responses.
  */
+@KordDsl
 public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
     MessageCreateBuilder,
     RequestBuilder<MultipartFollowupMessageCreateRequest> {

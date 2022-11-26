@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message.create
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
@@ -16,6 +17,7 @@ import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 /**
  * Message builder for publicly responding to an interaction.
  */
+@KordDsl
 public class InteractionResponseCreateBuilder(public val ephemeral: Boolean = false) :
     MessageCreateBuilder,
     RequestBuilder<MultipartInteractionResponseCreateRequest> {

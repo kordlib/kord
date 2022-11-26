@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message.create
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordMessageReference
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
@@ -14,6 +15,7 @@ import dev.kord.rest.json.request.MultipartMessageCreateRequest
 /**
  * Message builder for creating messages as a bot user.
  */
+@KordDsl
 public class UserMessageCreateBuilder
     : MessageCreateBuilder,
     RequestBuilder<MultipartMessageCreateRequest> {
