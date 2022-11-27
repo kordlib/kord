@@ -426,6 +426,56 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         if (before != null) parameter("before", before)
         if (limit != null) parameter("limit", limit)
     }
+
+    public suspend fun createForumTag(
+        channelId: Snowflake,
+        name: String,
+        builder: ForumTagBuilder.() -> Unit = {}
+    ): DiscordChannel {
+        val forumTagBuilder = ForumTagBuilder(name).apply(builder)
+        return createForumTag(channelId, forumTagBuilder.toRequest(), forumTagBuilder.reason)
+    }
+
+    public suspend fun createForumTag(
+        channelId: Snowflake,
+        request: ForumTagRequest,
+        reason: String? = null
+    ): DiscordChannel = call(Route.ForumTagPost) {
+        keys[Route.ChannelId] = channelId
+
+        body(ForumTagRequest.serializer(), request)
+        auditLogReason(reason)
+    }
+
+    public suspend fun deleteForumTag(channelId: Snowflake, tagId: Snowflake, reason: String? = null): DiscordChannel =
+        call(Route.ForumTagDelete) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.TagId] = tagId
+
+            auditLogReason(reason)
+        }
+
+    public suspend fun editForumTag(
+        channelId: Snowflake,
+        tagId: Snowflake,
+        builder: ModifyForumTagBuilder.() -> Unit
+    ): DiscordChannel {
+        val forumTagBuilder = ModifyForumTagBuilder().apply(builder)
+        return editForumTag(channelId, tagId, forumTagBuilder.toRequest(), forumTagBuilder.reason)
+    }
+
+    public suspend fun editForumTag(
+        channelId: Snowflake,
+        tagId: Snowflake,
+        request: ForumTagRequest,
+        reason: String? = null
+    ): DiscordChannel = call(Route.ForumTagPut) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.TagId] = tagId
+
+        body(ForumTagRequest.serializer(), request)
+        auditLogReason(reason)
+    }
 }
 
 public suspend inline fun ChannelService.patchTextChannel(
@@ -448,6 +498,7 @@ public suspend inline fun ChannelService.patchForumChannel(
     val modifyBuilder = ForumChannelModifyBuilder().apply(builder)
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
+
 public suspend inline fun ChannelService.patchVoiceChannel(
     channelId: Snowflake,
     builder: VoiceChannelModifyBuilder.() -> Unit

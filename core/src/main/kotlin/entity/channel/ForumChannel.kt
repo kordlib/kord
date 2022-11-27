@@ -2,12 +2,15 @@ package dev.kord.core.entity.channel
 
 import dev.kord.common.entity.DiscordDefaultReaction
 import dev.kord.common.entity.DiscordForumTag
+import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ForumChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.channel.ForumTagBuilder
+import dev.kord.rest.builder.channel.ModifyForumTagBuilder
 import kotlin.time.Duration
 
 public class ForumChannel(
@@ -26,6 +29,27 @@ public class ForumChannel(
     public val defaultReactionEmoji: DiscordDefaultReaction? get() = data.defaultReactionEmoji.value
 
     public val defaultThreadRateLimitPerUser: Duration? get() = data.defaultThreadRateLimitPerUser.value
+
+    public suspend fun createTag(name: String, builder: ForumTagBuilder.() -> Unit = {}): ForumChannel {
+        val request = kord.rest.channel.createForumTag(data.id, name, builder)
+        val data = ChannelData.from(request)
+
+        return Channel.from(data, kord) as ForumChannel
+    }
+
+    public suspend fun deleteTag(tagId: Snowflake, reason: String? = null): ForumChannel {
+        val request = kord.rest.channel.deleteForumTag(data.id, tagId, reason)
+        val data = ChannelData.from(request)
+
+        return Channel.from(data, kord) as ForumChannel
+    }
+
+    public suspend fun editTag(tagId: Snowflake, builder: ModifyForumTagBuilder.() -> Unit): ForumChannel {
+        val request = kord.rest.channel.editForumTag(data.id, tagId, builder)
+        val data = ChannelData.from(request)
+
+        return Channel.from(data, kord) as ForumChannel
+    }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ForumChannel {
         return ForumChannel(data, kord, strategy.supply(kord))

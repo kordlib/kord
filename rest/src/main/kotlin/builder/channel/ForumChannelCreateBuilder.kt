@@ -94,7 +94,8 @@ public class ForumChannelCreateBuilder(public var name: String) :
     )
 }
 
-public class ForumTagBuilder(private val name: String) : RequestBuilder<ForumTagRequest> {
+@KordDsl
+public class ForumTagBuilder(private val name: String) : AuditRequestBuilder<ForumTagRequest> {
     private var _moderated: OptionalBoolean = OptionalBoolean.Missing
     public var moderated: Boolean? by ::_moderated.delegate()
 
@@ -104,9 +105,11 @@ public class ForumTagBuilder(private val name: String) : RequestBuilder<ForumTag
     private var _reactionEmojiName: Optional<String?> = Optional.Missing()
     public var reactionEmojiName: String? by ::_reactionEmojiName.delegate()
 
+    override var reason: String? = null
+
     override fun toRequest(): ForumTagRequest {
         return ForumTagRequest(
-            name = name,
+            name = Optional(name),
             moderated = _moderated,
             emojiId = _reactionEmojiId,
             emojiName = _reactionEmojiName
