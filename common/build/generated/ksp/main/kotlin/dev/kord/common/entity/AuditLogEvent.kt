@@ -303,17 +303,17 @@ public sealed class AuditLogEvent(
     public object AutoModerationRuleDelete : AuditLogEvent(142)
 
     /**
-     * Message was blocked by AutoMod.
+     * Message was blocked by Auto Moderation.
      */
     public object AutoModerationBlockMessage : AuditLogEvent(143)
 
     /**
-     * Message was flagged by AutoMod.
+     * Message was flagged by Auto Moderation.
      */
     public object AutoModerationFlagToChannel : AuditLogEvent(144)
 
     /**
-     * Member was timed out by AutoMod.
+     * Member was timed out by Auto Moderation.
      */
     public object AutoModerationUserCommunicationDisabled : AuditLogEvent(145)
 
