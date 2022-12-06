@@ -12,6 +12,15 @@ import dev.kord.core.event.Event
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * The event dispatched when a [Message] is created.
+ *
+ * See [Message create event](https://discord.com/developers/docs/resources/channel#create-message)
+ *
+ * @param message The [Message] that triggered the event
+ * @param guildId The guild ID the event occurred in. It may be `null` if the id was not stored in the cache
+ * @param member The member that was triggered in the event. It may be `null` if the member was not stored in the cache
+ */
 public class MessageCreateEvent(
     public val message: Message,
     public val guildId: Snowflake?,
