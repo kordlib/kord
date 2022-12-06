@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.guild
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.GuildScheduledEventEntityMetadata
 import dev.kord.common.entity.GuildScheduledEventPrivacyLevel
 import dev.kord.common.entity.ScheduledEntityType
@@ -13,6 +14,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildScheduledEventCreateRequest
 import kotlinx.datetime.Instant
 
+@KordDsl
 public class ScheduledEventCreateBuilder(
     /** The name of the scheduled event. */
     public var name: String,

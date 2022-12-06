@@ -39,6 +39,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
      * @param style the style of this button, [ButtonStyle.Link] is not valid.
      * @param customId the ID of this button, used to identify component interactions.
      */
+    @KordDsl
     public class InteractionButtonBuilder(
         public var style: ButtonStyle,
         public var customId: String,
@@ -59,6 +60,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
      *
      * @param url The url to open when clicked.
      */
+    @KordDsl
     public class LinkButtonBuilder(
         public var url: String,
     ) : ButtonBuilder() {

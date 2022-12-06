@@ -53,9 +53,9 @@
         Entry("AutoModerationRuleCreate", intValue = 140, kDoc = "Auto Moderation rule was created."),
         Entry("AutoModerationRuleUpdate", intValue = 141, kDoc = "Auto Moderation rule was updated."),
         Entry("AutoModerationRuleDelete", intValue = 142, kDoc = "Auto Moderation rule was deleted."),
-        Entry("AutoModerationBlockMessage", intValue = 143, kDoc = "Message was blocked by AutoMod."),
-        Entry("AutoModerationFlagToChannel", intValue = 144, kDoc = "Message was flagged by AutoMod."),
-        Entry("AutoModerationUserCommunicationDisabled", intValue = 145, kDoc = "Member was timed out by AutoMod."),
+        Entry("AutoModerationBlockMessage", intValue = 143, kDoc = "Message was blocked by Auto Moderation."),
+        Entry("AutoModerationFlagToChannel", intValue = 144, kDoc = "Message was flagged by Auto Moderation."),
+        Entry("AutoModerationUserCommunicationDisabled", intValue = 145, kDoc = "Member was timed out by Auto Moderation."),
     ],
 )
 

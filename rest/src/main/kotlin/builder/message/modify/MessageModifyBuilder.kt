@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message.modify
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
@@ -15,6 +16,7 @@ import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+@KordDsl
 public sealed interface MessageModifyBuilder {
 
     public var content: String?

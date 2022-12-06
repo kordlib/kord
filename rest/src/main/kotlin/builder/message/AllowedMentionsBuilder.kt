@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.message
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.AllowedMentionType
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.Snowflake
@@ -11,6 +12,7 @@ import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 /**
  * The mentions that should trigger a ping. See the [Discord documentation](https://discord.com/developers/docs/resources/channel#allowed-mentions-object).
  */
+@KordDsl
 public class AllowedMentionsBuilder {
     /**
      * The roles that should be mentioned in this message, any id that is mentioned in this list but not present in the

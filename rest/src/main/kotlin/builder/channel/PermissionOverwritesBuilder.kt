@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.channel
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.OverwriteType
 import dev.kord.common.entity.Snowflake
@@ -9,6 +10,7 @@ import kotlin.contracts.contract
 /**
  * Builder that can modify [permission overwrites][Overwrite].
  */
+@KordDsl
 public sealed interface PermissionOverwritesBuilder {
     /**
      * Adds [overwrite] to this builder.
@@ -19,6 +21,7 @@ public sealed interface PermissionOverwritesBuilder {
 /**
  * [PermissionOverwritesBuilder] which creates an entity with overwrites.
  */
+@KordDsl
 public interface PermissionOverwritesCreateBuilder : PermissionOverwritesBuilder {
     public var permissionOverwrites: MutableSet<Overwrite>
 
@@ -30,6 +33,7 @@ public interface PermissionOverwritesCreateBuilder : PermissionOverwritesBuilder
 /**
  * [PermissionOverwritesBuilder] which modifies an existing entity with overwrites.
  */
+@KordDsl
 public interface PermissionOverwritesModifyBuilder : PermissionOverwritesBuilder {
     public var permissionOverwrites: MutableSet<Overwrite>?
 
