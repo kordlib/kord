@@ -195,20 +195,34 @@ public final class dev/kord/voice/DefaultFrameInterceptorData {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/voice/EncryptionMode : java/lang/Enum {
-	public static final field AeadAes256Gcm Ldev/kord/voice/EncryptionMode;
-	public static final field AeadAes256GcmRtpsize Ldev/kord/voice/EncryptionMode;
+public abstract class dev/kord/voice/EncryptionMode {
 	public static final field Companion Ldev/kord/voice/EncryptionMode$Companion;
-	public static final field XSalsa20Poly1305 Ldev/kord/voice/EncryptionMode;
-	public static final field XSalsa20Poly1305Lite Ldev/kord/voice/EncryptionMode;
-	public static final field XSalsa20Poly1305LiteRtpsize Ldev/kord/voice/EncryptionMode;
-	public static final field XSalsa20Poly1305Suffix Ldev/kord/voice/EncryptionMode;
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/EncryptionMode;
-	public static fun values ()[Ldev/kord/voice/EncryptionMode;
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Ljava/lang/String;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/voice/EncryptionMode$Companion {
+	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/EncryptionMode$Unknown : dev/kord/voice/EncryptionMode {
+	public fun <init> (Ljava/lang/String;)V
+}
+
+public final class dev/kord/voice/EncryptionMode$XSalsa20Poly1305 : dev/kord/voice/EncryptionMode {
+	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$XSalsa20Poly1305;
+}
+
+public final class dev/kord/voice/EncryptionMode$XSalsa20Poly1305Lite : dev/kord/voice/EncryptionMode {
+	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$XSalsa20Poly1305Lite;
+}
+
+public final class dev/kord/voice/EncryptionMode$XSalsa20Poly1305Suffix : dev/kord/voice/EncryptionMode {
+	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$XSalsa20Poly1305Suffix;
 }
 
 public abstract interface class dev/kord/voice/FrameInterceptor {
