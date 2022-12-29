@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 
 object CompilerArguments {
     const val time = "-opt-in=kotlin.time.ExperimentalTime"
@@ -12,13 +12,10 @@ object CompilerArguments {
 }
 
 object Jvm {
-    // keep these equivalent
-    const val targetString = "1.8"
-    const val targetInt = 8
+    const val target = 8
 }
 
-fun KotlinJvmOptions.applyKordKotlinOptions() {
-    jvmTarget = Jvm.targetString
-    allWarningsAsErrors = true
-    freeCompilerArgs += CompilerArguments.progressive
+fun KotlinJvmCompilerOptions.applyKordCompilerOptions() {
+    allWarningsAsErrors.set(true)
+    freeCompilerArgs.add(CompilerArguments.progressive)
 }

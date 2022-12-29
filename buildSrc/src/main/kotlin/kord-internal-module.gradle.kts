@@ -8,15 +8,12 @@ repositories {
     mavenCentral()
 }
 
-tasks {
-    withType<JavaCompile> {
-        sourceCompatibility = Jvm.targetString
-        targetCompatibility = Jvm.targetString
-    }
+kotlin {
+    jvmToolchain(Jvm.target)
+}
 
-    withType<KotlinCompile> {
-        kotlinOptions {
-            applyKordKotlinOptions()
-        }
+tasks.withType<KotlinCompile> {
+    compilerOptions {
+        applyKordCompilerOptions()
     }
 }
