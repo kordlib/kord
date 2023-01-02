@@ -6,7 +6,7 @@ plugins {
     org.jetbrains.kotlin.jvm
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
-    `kotlinx-atomicfu`
+    //`kotlinx-atomicfu`
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
     `maven-publish`
@@ -29,10 +29,10 @@ kotlin {
 }
 
 // https://github.com/Kotlin/kotlinx-atomicfu/issues/210
-atomicfu {
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-    dependenciesVersion = libs.findVersion("kotlinx-atomicfu").get().requiredVersion
-}
+//atomicfu {
+//    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+//    dependenciesVersion = libs.findVersion("kotlinx-atomicfu").get().requiredVersion
+//}
 
 tasks {
     withType<JavaCompile> {
