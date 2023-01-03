@@ -2389,7 +2389,6 @@ public final class dev/kord/rest/json/request/ApplicationCommandCreateRequest {
 
 public final class dev/kord/rest/json/request/ApplicationCommandCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ApplicationCommandCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ApplicationCommandCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2435,7 +2434,6 @@ public final class dev/kord/rest/json/request/ApplicationCommandModifyRequest {
 
 public final class dev/kord/rest/json/request/ApplicationCommandModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ApplicationCommandModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ApplicationCommandModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2485,7 +2483,6 @@ public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest 
 }
 
 public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun <init> (Lkotlinx/serialization/KSerializer;)V
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/AutoCompleteResponseCreateRequest;
@@ -2531,7 +2528,6 @@ public final class dev/kord/rest/json/request/AutoModerationRuleCreateRequest {
 
 public final class dev/kord/rest/json/request/AutoModerationRuleCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2575,7 +2571,6 @@ public final class dev/kord/rest/json/request/AutoModerationRuleModifyRequest {
 
 public final class dev/kord/rest/json/request/AutoModerationRuleModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/AutoModerationRuleModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2605,7 +2600,6 @@ public final class dev/kord/rest/json/request/BulkDeleteRequest {
 
 public final class dev/kord/rest/json/request/BulkDeleteRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/BulkDeleteRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/BulkDeleteRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2635,7 +2629,6 @@ public final class dev/kord/rest/json/request/ChannelFollowRequest {
 
 public final class dev/kord/rest/json/request/ChannelFollowRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ChannelFollowRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ChannelFollowRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2697,7 +2690,6 @@ public final class dev/kord/rest/json/request/ChannelModifyPatchRequest {
 
 public final class dev/kord/rest/json/request/ChannelModifyPatchRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ChannelModifyPatchRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2744,7 +2736,6 @@ public final class dev/kord/rest/json/request/ChannelModifyPutRequest {
 
 public final class dev/kord/rest/json/request/ChannelModifyPutRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ChannelModifyPutRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ChannelModifyPutRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2778,7 +2769,6 @@ public final class dev/kord/rest/json/request/ChannelPermissionEditRequest {
 
 public final class dev/kord/rest/json/request/ChannelPermissionEditRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ChannelPermissionEditRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ChannelPermissionEditRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2815,7 +2805,6 @@ public final class dev/kord/rest/json/request/ChannelPositionSwapRequest {
 
 public final class dev/kord/rest/json/request/ChannelPositionSwapRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ChannelPositionSwapRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ChannelPositionSwapRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2849,7 +2838,6 @@ public final class dev/kord/rest/json/request/CurrentUserModifyRequest {
 
 public final class dev/kord/rest/json/request/CurrentUserModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/CurrentUserModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/CurrentUserModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2881,7 +2869,6 @@ public final class dev/kord/rest/json/request/CurrentUserNicknameModifyRequest {
 
 public final class dev/kord/rest/json/request/CurrentUserNicknameModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/CurrentUserNicknameModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/CurrentUserNicknameModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2917,7 +2904,6 @@ public final class dev/kord/rest/json/request/CurrentVoiceStateModifyRequest {
 
 public final class dev/kord/rest/json/request/CurrentVoiceStateModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/CurrentVoiceStateModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2947,7 +2933,6 @@ public final class dev/kord/rest/json/request/DMCreateRequest {
 
 public final class dev/kord/rest/json/request/DMCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/DMCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/DMCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2983,7 +2968,6 @@ public final class dev/kord/rest/json/request/EmbedAuthorRequest {
 
 public final class dev/kord/rest/json/request/EmbedAuthorRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/EmbedAuthorRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/EmbedAuthorRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3018,7 +3002,6 @@ public final class dev/kord/rest/json/request/EmbedFieldRequest {
 
 public final class dev/kord/rest/json/request/EmbedFieldRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/EmbedFieldRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/EmbedFieldRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3051,7 +3034,6 @@ public final class dev/kord/rest/json/request/EmbedFooterRequest {
 
 public final class dev/kord/rest/json/request/EmbedFooterRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/EmbedFooterRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/EmbedFooterRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3081,7 +3063,6 @@ public final class dev/kord/rest/json/request/EmbedImageRequest {
 
 public final class dev/kord/rest/json/request/EmbedImageRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/EmbedImageRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/EmbedImageRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3133,7 +3114,6 @@ public final class dev/kord/rest/json/request/EmbedRequest {
 
 public final class dev/kord/rest/json/request/EmbedRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/EmbedRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/EmbedRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3163,7 +3143,6 @@ public final class dev/kord/rest/json/request/EmbedThumbnailRequest {
 
 public final class dev/kord/rest/json/request/EmbedThumbnailRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/EmbedThumbnailRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/EmbedThumbnailRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3197,7 +3176,6 @@ public final class dev/kord/rest/json/request/EmojiCreateRequest {
 
 public final class dev/kord/rest/json/request/EmojiCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/EmojiCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/EmojiCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3231,7 +3209,6 @@ public final class dev/kord/rest/json/request/EmojiModifyRequest {
 
 public final class dev/kord/rest/json/request/EmojiModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/EmojiModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/EmojiModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3277,7 +3254,6 @@ public final class dev/kord/rest/json/request/FollowupMessageCreateRequest {
 
 public final class dev/kord/rest/json/request/FollowupMessageCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/FollowupMessageCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/FollowupMessageCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3317,7 +3293,6 @@ public final class dev/kord/rest/json/request/FollowupMessageModifyRequest {
 
 public final class dev/kord/rest/json/request/FollowupMessageModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/FollowupMessageModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/FollowupMessageModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3349,7 +3324,6 @@ public final class dev/kord/rest/json/request/GroupDMCreateRequest {
 
 public final class dev/kord/rest/json/request/GroupDMCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GroupDMCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GroupDMCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3387,7 +3361,6 @@ public final class dev/kord/rest/json/request/GuildBanCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildBanCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildBanCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildBanCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3440,7 +3413,6 @@ public final class dev/kord/rest/json/request/GuildChannelCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildChannelCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildChannelCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildChannelCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3507,7 +3479,6 @@ public final class dev/kord/rest/json/request/GuildCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3540,7 +3511,6 @@ public final class dev/kord/rest/json/request/GuildFromTemplateCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildFromTemplateCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildFromTemplateCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildFromTemplateCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3572,7 +3542,6 @@ public final class dev/kord/rest/json/request/GuildIntegrationCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildIntegrationCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildIntegrationCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildIntegrationCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3608,7 +3577,6 @@ public final class dev/kord/rest/json/request/GuildIntegrationModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildIntegrationModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildIntegrationModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildIntegrationModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3638,7 +3606,6 @@ public final class dev/kord/rest/json/request/GuildMFALevelModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildMFALevelModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildMFALevelModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildMFALevelModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3679,7 +3646,6 @@ public final class dev/kord/rest/json/request/GuildMemberAddRequest {
 
 public final class dev/kord/rest/json/request/GuildMemberAddRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildMemberAddRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildMemberAddRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3721,7 +3687,6 @@ public final class dev/kord/rest/json/request/GuildMemberModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildMemberModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildMemberModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildMemberModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3783,7 +3748,6 @@ public final class dev/kord/rest/json/request/GuildModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3829,7 +3793,6 @@ public final class dev/kord/rest/json/request/GuildRoleCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildRoleCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildRoleCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildRoleCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3873,7 +3836,6 @@ public final class dev/kord/rest/json/request/GuildRoleModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildRoleModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildRoleModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildRoleModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3936,7 +3898,6 @@ public final class dev/kord/rest/json/request/GuildScheduledEventCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildScheduledEventCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildScheduledEventCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildScheduledEventCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -3971,7 +3932,6 @@ public final class dev/kord/rest/json/request/GuildScheduledEventUsersResponse {
 
 public final class dev/kord/rest/json/request/GuildScheduledEventUsersResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildScheduledEventUsersResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildScheduledEventUsersResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4005,7 +3965,6 @@ public final class dev/kord/rest/json/request/GuildStickerCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildStickerCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildStickerCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildStickerCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4041,7 +4000,6 @@ public final class dev/kord/rest/json/request/GuildStickerModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildStickerModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildStickerModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildStickerModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4074,7 +4032,6 @@ public final class dev/kord/rest/json/request/GuildTemplateCreateRequest {
 
 public final class dev/kord/rest/json/request/GuildTemplateCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildTemplateCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildTemplateCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4108,7 +4065,6 @@ public final class dev/kord/rest/json/request/GuildTemplateModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildTemplateModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildTemplateModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildTemplateModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4144,7 +4100,6 @@ public final class dev/kord/rest/json/request/GuildWelcomeScreenModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildWelcomeScreenModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildWelcomeScreenModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildWelcomeScreenModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4178,7 +4133,6 @@ public final class dev/kord/rest/json/request/GuildWidgetModifyRequest {
 
 public final class dev/kord/rest/json/request/GuildWidgetModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/GuildWidgetModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildWidgetModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4220,7 +4174,6 @@ public final class dev/kord/rest/json/request/InteractionApplicationCommandCallb
 
 public final class dev/kord/rest/json/request/InteractionApplicationCommandCallbackData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/InteractionApplicationCommandCallbackData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/InteractionApplicationCommandCallbackData;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4253,7 +4206,6 @@ public final class dev/kord/rest/json/request/InteractionResponseCreateRequest {
 
 public final class dev/kord/rest/json/request/InteractionResponseCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/InteractionResponseCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/InteractionResponseCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4295,7 +4247,6 @@ public final class dev/kord/rest/json/request/InteractionResponseModifyRequest {
 
 public final class dev/kord/rest/json/request/InteractionResponseModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/InteractionResponseModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/InteractionResponseModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4339,7 +4290,6 @@ public final class dev/kord/rest/json/request/InviteCreateRequest {
 
 public final class dev/kord/rest/json/request/InviteCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/InviteCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/InviteCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4413,7 +4363,6 @@ public final class dev/kord/rest/json/request/MessageCreateRequest {
 
 public final class dev/kord/rest/json/request/MessageCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/MessageCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/MessageCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4455,7 +4404,6 @@ public final class dev/kord/rest/json/request/MessageEditPatchRequest {
 
 public final class dev/kord/rest/json/request/MessageEditPatchRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/MessageEditPatchRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/MessageEditPatchRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4487,7 +4435,6 @@ public final class dev/kord/rest/json/request/ModalResponseCreateRequest {
 
 public final class dev/kord/rest/json/request/ModalResponseCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ModalResponseCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ModalResponseCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4662,7 +4609,6 @@ public final class dev/kord/rest/json/request/ScheduledEventModifyRequest {
 
 public final class dev/kord/rest/json/request/ScheduledEventModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/ScheduledEventModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/ScheduledEventModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4699,7 +4645,6 @@ public final class dev/kord/rest/json/request/StageInstanceCreateRequest {
 
 public final class dev/kord/rest/json/request/StageInstanceCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/StageInstanceCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4733,7 +4678,6 @@ public final class dev/kord/rest/json/request/StageInstanceModifyRequest {
 
 public final class dev/kord/rest/json/request/StageInstanceModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/StageInstanceModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/StageInstanceModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4770,7 +4714,6 @@ public final class dev/kord/rest/json/request/StartThreadRequest {
 
 public final class dev/kord/rest/json/request/StartThreadRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/StartThreadRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/StartThreadRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4802,7 +4745,6 @@ public final class dev/kord/rest/json/request/UserAddDMRequest {
 
 public final class dev/kord/rest/json/request/UserAddDMRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/UserAddDMRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/UserAddDMRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4835,7 +4777,6 @@ public final class dev/kord/rest/json/request/VoiceStateModifyRequest {
 
 public final class dev/kord/rest/json/request/VoiceStateModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/VoiceStateModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/VoiceStateModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4868,7 +4809,6 @@ public final class dev/kord/rest/json/request/WebhookCreateRequest {
 
 public final class dev/kord/rest/json/request/WebhookCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/WebhookCreateRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/WebhookCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4908,7 +4848,6 @@ public final class dev/kord/rest/json/request/WebhookEditMessageRequest {
 
 public final class dev/kord/rest/json/request/WebhookEditMessageRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/WebhookEditMessageRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/WebhookEditMessageRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4952,7 +4891,6 @@ public final class dev/kord/rest/json/request/WebhookExecuteRequest {
 
 public final class dev/kord/rest/json/request/WebhookExecuteRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/WebhookExecuteRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/WebhookExecuteRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -4988,7 +4926,6 @@ public final class dev/kord/rest/json/request/WebhookModifyRequest {
 
 public final class dev/kord/rest/json/request/WebhookModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/request/WebhookModifyRequest$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/WebhookModifyRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5020,7 +4957,6 @@ public final class dev/kord/rest/json/response/BanResponse {
 
 public final class dev/kord/rest/json/response/BanResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/BanResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/BanResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5054,7 +4990,6 @@ public final class dev/kord/rest/json/response/BotGatewayResponse {
 
 public final class dev/kord/rest/json/response/BotGatewayResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/BotGatewayResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/BotGatewayResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5100,7 +5035,6 @@ public final class dev/kord/rest/json/response/Connection {
 
 public final class dev/kord/rest/json/response/Connection$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/Connection$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/Connection;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5130,7 +5064,6 @@ public final class dev/kord/rest/json/response/CurrentUserNicknameModifyResponse
 
 public final class dev/kord/rest/json/response/CurrentUserNicknameModifyResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/CurrentUserNicknameModifyResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/CurrentUserNicknameModifyResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5166,7 +5099,6 @@ public final class dev/kord/rest/json/response/DiscordErrorResponse {
 
 public final class dev/kord/rest/json/response/DiscordErrorResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/DiscordErrorResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/DiscordErrorResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5198,7 +5130,6 @@ public final class dev/kord/rest/json/response/FollowedChannelResponse {
 
 public final class dev/kord/rest/json/response/FollowedChannelResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/FollowedChannelResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/FollowedChannelResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5228,7 +5159,6 @@ public final class dev/kord/rest/json/response/GatewayResponse {
 
 public final class dev/kord/rest/json/response/GatewayResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/GatewayResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/GatewayResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5258,7 +5188,6 @@ public final class dev/kord/rest/json/response/GetPruneResponse {
 
 public final class dev/kord/rest/json/response/GetPruneResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/GetPruneResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/GetPruneResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5288,7 +5217,6 @@ public final class dev/kord/rest/json/response/GuildMFALevelModifyResponse {
 
 public final class dev/kord/rest/json/response/GuildMFALevelModifyResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/GuildMFALevelModifyResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/GuildMFALevelModifyResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5320,7 +5248,6 @@ public final class dev/kord/rest/json/response/ListThreadsResponse {
 
 public final class dev/kord/rest/json/response/ListThreadsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/ListThreadsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/ListThreadsResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5352,7 +5279,6 @@ public final class dev/kord/rest/json/response/PartialChannelResponse {
 
 public final class dev/kord/rest/json/response/PartialChannelResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/PartialChannelResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/PartialChannelResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5382,7 +5308,6 @@ public final class dev/kord/rest/json/response/PruneResponse {
 
 public final class dev/kord/rest/json/response/PruneResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/PruneResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/PruneResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -5418,7 +5343,6 @@ public final class dev/kord/rest/json/response/SessionStartLimitResponse {
 
 public final class dev/kord/rest/json/response/SessionStartLimitResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/rest/json/response/SessionStartLimitResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/SessionStartLimitResponse;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
