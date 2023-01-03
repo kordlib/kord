@@ -20,7 +20,7 @@ slf4j = "1.7.36" # https://www.slf4j.org
 
 # plugins
 dokka = "1.7.20" # https://github.com/Kotlin/dokka
-kotlinx-atomicfu = "0.18.5" # https://github.com/Kotlin/kotlinx-atomicfu FIXME update when on Kt 1.8.0
+kotlinx-atomicfu = "0.19.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.12.1" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
 
@@ -82,7 +82,7 @@ pluginsForBuildSrc = [
     "kotlin-jvm-plugin",
     "kotlin-serialization-plugin",
     "dokka-plugin",
-   # "atomicfu-plugin",
+    "atomicfu-plugin",
     "binary-compatibility-validator-plugin",
     "ksp-plugin",
 ]
