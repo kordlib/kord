@@ -1605,7 +1605,12 @@ public final class dev/kord/gateway/RequestGuildMembers$Companion {
 
 public final class dev/kord/gateway/RequestGuildMembers$Nonce {
 	public static final field INSTANCE Ldev/kord/gateway/RequestGuildMembers$Nonce;
+	public static final field counter$dev$VolatileWrapper Ldev/kord/gateway/RequestGuildMembers$Nonce$Counter$dev$VolatileWrapper;
 	public final fun new ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/RequestGuildMembers$Nonce$Counter$dev$VolatileWrapper {
+	public fun <init> ()V
 }
 
 public final class dev/kord/gateway/Resume : dev/kord/gateway/Command {
