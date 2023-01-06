@@ -2185,11 +2185,13 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field BitrateTooHigh Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BotsEndpoint Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BulkDeleteOldMessage Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotConvertBetweenPremiumAndNormalEmoji Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotDeleteRequiredCommunityChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotEditMessageByAnotherUser Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotEditStickersWithinMessage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotExecuteOnDM Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotExecuteOnSystemMessage Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotMixSubscriptionAndNonSubscriptionRoles Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotModifySystemWebhook Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotPinMessageFromAnotherChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotReplyWithoutMessageHistoryPermission Ldev/kord/rest/json/JsonErrorCode;
@@ -2205,6 +2207,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field Companion Ldev/kord/rest/json/JsonErrorCode$Companion;
 	public static final field ConnectionRevoked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field DisallowedName Ldev/kord/rest/json/JsonErrorCode;
+	public static final field EntityOfEventDifferentToEventEntity Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FailedToCreateStage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FailedToResizeAssetBelowMaximumSize Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FileTooLarge Ldev/kord/rest/json/JsonErrorCode;
@@ -2229,6 +2232,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field InvalidOAuth2AccessToken Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidOAuth2State Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidRecipients Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InvalidRequestOrigin Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidRole Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidStickerFrameRate Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidStickerSent Ldev/kord/rest/json/JsonErrorCode;
@@ -2246,11 +2250,13 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxFriends Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildRoles Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxGuildWebhookCount Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildWidgetSettingsUpdates Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuilds Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxInvites Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxLottieAnimationDimensions Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxNonMemberBans Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxNumberOfPremiumEmoji Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxOldMessageEdits Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxPins Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxPruneRequests Ldev/kord/rest/json/JsonErrorCode;
@@ -2284,6 +2290,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field ReactionBlocked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field RequestEntityTooLarge Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Require2FA Ldev/kord/rest/json/JsonErrorCode;
+	public static final field ResourceIsRateLimited Ldev/kord/rest/json/JsonErrorCode;
 	public static final field SendMessagesTemporarilyDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ServerNeedsMonetizationEnabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ServerNeedsMoreBoosts Ldev/kord/rest/json/JsonErrorCode;
