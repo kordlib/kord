@@ -4854,18 +4854,22 @@ public final class dev/kord/core/cache/data/RoleDataKt {
 
 public final class dev/kord/core/cache/data/RoleTagsData {
 	public static final field Companion Ldev/kord/core/cache/data/RoleTagsData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Z)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/OptionalSnowflake;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/OptionalSnowflake;Z)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/OptionalSnowflake;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component3 ()Z
-	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Z)Ldev/kord/core/cache/data/RoleTagsData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/RoleTagsData;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ZILjava/lang/Object;)Ldev/kord/core/cache/data/RoleTagsData;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component5 ()Z
+	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/OptionalSnowflake;Z)Ldev/kord/core/cache/data/RoleTagsData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/RoleTagsData;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;ZLdev/kord/common/entity/optional/OptionalSnowflake;ZILjava/lang/Object;)Ldev/kord/core/cache/data/RoleTagsData;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAvailableForPurchase ()Z
 	public final fun getBotId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getIntegrationId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getPremiumSubscriber ()Z
+	public final fun getSubscriptionListingId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Ldev/kord/core/cache/data/RoleTagsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -6817,7 +6821,9 @@ public final class dev/kord/core/entity/RoleTags : dev/kord/core/KordObject, dev
 	public final fun getIntegration (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getIntegrationId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getSubscriptionListingId ()Ldev/kord/common/entity/Snowflake;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public final fun isAvailableForPurchase ()Z
 	public final fun isPremiumRole ()Z
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }

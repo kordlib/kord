@@ -5100,18 +5100,22 @@ public final class dev/kord/common/entity/DiscordRole$Companion {
 public final class dev/kord/common/entity/DiscordRoleTags {
 	public static final field Companion Ldev/kord/common/entity/DiscordRoleTags$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordRoleTags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordRoleTags;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordRoleTags;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component5 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordRoleTags;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordRoleTags;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordRoleTags;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAvailableForPurchase ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getBotId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getIntegrationId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getPremiumSubscriber ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getSubscriptionListingId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Ldev/kord/common/entity/DiscordRoleTags;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -6156,6 +6160,14 @@ public final class dev/kord/common/entity/GuildFeature$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/GuildFeature$CreatorMonetizableProvision : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$CreatorMonetizableProvision;
+}
+
+public final class dev/kord/common/entity/GuildFeature$CreatorStorePage : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$CreatorStorePage;
+}
+
 public final class dev/kord/common/entity/GuildFeature$DeveloperSupportServer : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$DeveloperSupportServer;
 }
@@ -6206,6 +6218,14 @@ public final class dev/kord/common/entity/GuildFeature$PrivateThreads : dev/kord
 
 public final class dev/kord/common/entity/GuildFeature$RoleIcons : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$RoleIcons;
+}
+
+public final class dev/kord/common/entity/GuildFeature$RoleSubscriptionsAvailableForPurchase : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$RoleSubscriptionsAvailableForPurchase;
+}
+
+public final class dev/kord/common/entity/GuildFeature$RoleSubscriptionsEnabled : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$RoleSubscriptionsEnabled;
 }
 
 public final class dev/kord/common/entity/GuildFeature$SevenDayThreadArchive : dev/kord/common/entity/GuildFeature {
@@ -7001,6 +7021,10 @@ public final class dev/kord/common/entity/MessageType$RecipientRemove : dev/kord
 
 public final class dev/kord/common/entity/MessageType$Reply : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$Reply;
+}
+
+public final class dev/kord/common/entity/MessageType$RoleSubscriptionPurchase : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$RoleSubscriptionPurchase;
 }
 
 public final class dev/kord/common/entity/MessageType$ThreadCreated : dev/kord/common/entity/MessageType {
