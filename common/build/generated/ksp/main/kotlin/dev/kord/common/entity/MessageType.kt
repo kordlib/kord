@@ -99,6 +99,8 @@ public sealed class MessageType(
 
     public object AutoModerationAction : MessageType(24)
 
+    public object RoleSubscriptionPurchase : MessageType(25)
+
     /**
      * @suppress
      */
@@ -186,6 +188,7 @@ public sealed class MessageType(
             22 -> GuildInviteReminder
             23 -> ContextMenuCommand
             24 -> AutoModerationAction
+            25 -> RoleSubscriptionPurchase
             else -> Unknown(code)
         }
     }
@@ -220,6 +223,7 @@ public sealed class MessageType(
                 GuildInviteReminder,
                 ContextMenuCommand,
                 AutoModerationAction,
+                RoleSubscriptionPurchase
             )
         }
 

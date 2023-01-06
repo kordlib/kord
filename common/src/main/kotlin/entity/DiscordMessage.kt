@@ -28,6 +28,7 @@
         Entry("GuildInviteReminder", intValue = 22),
         Entry("ContextMenuCommand", intValue = 23),
         Entry("AutoModerationAction", intValue = 24),
+        Entry("RoleSubscriptionPurchase", intValue = 25),
     ],
     deprecatedEntries = [
         Entry(
