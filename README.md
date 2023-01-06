@@ -2,7 +2,7 @@
 
 [![Discord](https://img.shields.io/discord/556525343595298817.svg?color=&label=Kord&logo=discord&style=for-the-badge)](https://discord.gg/6jcx5ev)
 [![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
-[![Github CI status (branch)](https://img.shields.io/github/actions/workflow/status/kordlib/kord/deployment-ci.yml?branch=master&label=CI&style=for-the-badge)]()
+[![Github CI status (branch)](https://img.shields.io/github/actions/workflow/status/kordlib/kord/deployment-ci.yml?branch=0.8.x&label=CI&style=for-the-badge)]()
 
 __Kord is still in an experimental stage, as such we can't guarantee API stability between releases. While we'd love for
 you to try out our library, we don't recommend you use this in production just yet.__
