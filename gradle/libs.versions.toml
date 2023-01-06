@@ -23,7 +23,7 @@ dokka = "1.7.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.19.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.12.1" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
-
+git-hooks = "0.0.2" # https://github.com/jakemarsden/git-hooks-gradle-plugin
 
 [libraries]
 
@@ -70,7 +70,6 @@ atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", ver
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
 
-
 [bundles]
 
 ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
@@ -91,3 +90,4 @@ pluginsForBuildSrc = [
 [plugins]
 
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
+git-hooks = { id = "com.github.jakemarsden.git-hooks", version.ref = "git-hooks"}

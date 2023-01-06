@@ -2,10 +2,13 @@ import org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
 
 plugins {
     org.jetbrains.dokka // for dokkaHtmlMultiModule task
+    @Suppress("DSL_SCOPE_VIOLATION")
+    alias(libs.plugins.git.hooks)
 }
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
 }
 
 group = Library.group
@@ -16,4 +19,8 @@ version = Library.version
 // (use 'Complete (-all) ZIP Checksum' from https://gradle.org/release-checksums for <checksum>)
 tasks.wrapper {
     distributionType = ALL
+}
+
+gitHooks {
+    setHooks(mapOf("pre-commit" to "clean apiCheck"))
 }
