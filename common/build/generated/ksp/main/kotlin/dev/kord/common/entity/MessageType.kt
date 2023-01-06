@@ -223,7 +223,7 @@ public sealed class MessageType(
                 GuildInviteReminder,
                 ContextMenuCommand,
                 AutoModerationAction,
-                RoleSubscriptionPurchase
+                RoleSubscriptionPurchase,
             )
         }
 

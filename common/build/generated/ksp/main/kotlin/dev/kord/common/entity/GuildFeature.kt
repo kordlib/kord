@@ -82,6 +82,16 @@ public sealed class GuildFeature(
     public object Community : GuildFeature("COMMUNITY")
 
     /**
+     * Guild has enabled monetization.
+     */
+    public object CreatorMonetizableProvision : GuildFeature("CREATOR_MONETIZABLE_PROVISIONAL")
+
+    /**
+     * Guild has enabled the role subscription promo page.
+     */
+    public object CreatorStorePage : GuildFeature("CREATOR_STORE_PAGE")
+
+    /**
      * Guild has been set as a support server on the App Directory.
      */
     public object DeveloperSupportServer : GuildFeature("DEVELOPER_SUPPORT_SERVER")
@@ -140,6 +150,17 @@ public sealed class GuildFeature(
      * Guild is able to set role icons.
      */
     public object RoleIcons : GuildFeature("ROLE_ICONS")
+
+    /**
+     * Guild has role subscriptions that can be purchased.
+     */
+    public object RoleSubscriptionsAvailableForPurchase :
+            GuildFeature("ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE")
+
+    /**
+     * Guild has enabled role subscriptions.
+     */
+    public object RoleSubscriptionsEnabled : GuildFeature("ROLE_SUBSCRIPTIONS_ENABLED")
 
     /**
      * Guild has enabled ticketed events.
@@ -223,6 +244,8 @@ public sealed class GuildFeature(
             "BANNER" -> Banner
             "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "COMMUNITY" -> Community
+            "CREATOR_MONETIZABLE_PROVISIONAL" -> CreatorMonetizableProvision
+            "CREATOR_STORE_PAGE" -> CreatorStorePage
             "DEVELOPER_SUPPORT_SERVER" -> DeveloperSupportServer
             "DISCOVERABLE" -> Discoverable
             "FEATURABLE" -> Featurable
@@ -236,6 +259,8 @@ public sealed class GuildFeature(
             "PREVIEW_ENABLED" -> PreviewEnabled
             "PRIVATE_THREADS" -> @Suppress("DEPRECATION") PrivateThreads
             "ROLE_ICONS" -> RoleIcons
+            "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE" -> RoleSubscriptionsAvailableForPurchase
+            "ROLE_SUBSCRIPTIONS_ENABLED" -> RoleSubscriptionsEnabled
             "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive
             "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive
             "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
@@ -260,6 +285,8 @@ public sealed class GuildFeature(
                 Banner,
                 @Suppress("DEPRECATION_ERROR") Commerce,
                 Community,
+                CreatorMonetizableProvision,
+                CreatorStorePage,
                 DeveloperSupportServer,
                 Discoverable,
                 Featurable,
@@ -273,6 +300,8 @@ public sealed class GuildFeature(
                 PreviewEnabled,
                 @Suppress("DEPRECATION") PrivateThreads,
                 RoleIcons,
+                RoleSubscriptionsAvailableForPurchase,
+                RoleSubscriptionsEnabled,
                 @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive,
                 @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive,
                 TicketedEventsEnabled,

@@ -87,6 +87,14 @@
                     "receives community updates.",
         ),
         Entry(
+            "CreatorMonetizableProvision", stringValue = "CREATOR_MONETIZABLE_PROVISIONAL",
+            kDoc = "Guild has enabled monetization."
+        ),
+        Entry(
+            "CreatorStorePage", stringValue = "CREATOR_STORE_PAGE",
+            kDoc = "Guild has enabled the role subscription promo page."
+        ),
+        Entry(
             "DeveloperSupportServer", stringValue = "DEVELOPER_SUPPORT_SERVER",
             kDoc = "Guild has been set as a support server on the App Directory.",
         ),
@@ -116,6 +124,12 @@
             kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
         ),
         Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
+        Entry("RoleSubscriptionsAvailableForPurchase", stringValue = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+            kDoc = "Guild has role subscriptions that can be purchased."
+        ),
+        Entry("RoleSubscriptionsEnabled", stringValue = "ROLE_SUBSCRIPTIONS_ENABLED",
+            kDoc = "Guild has enabled role subscriptions."
+        ),
         Entry(
             "TicketedEventsEnabled", stringValue = "TICKETED_EVENTS_ENABLED",
             kDoc = "Guild has enabled ticketed events.",

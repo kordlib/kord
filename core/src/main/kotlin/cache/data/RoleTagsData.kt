@@ -10,10 +10,18 @@ public data class RoleTagsData(
     val botId: OptionalSnowflake = OptionalSnowflake.Missing,
     val integrationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val premiumSubscriber: Boolean,
+    val subscriptionListingId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val availableForPurchase: Boolean
 ) {
     public companion object {
         public fun from(entity: DiscordRoleTags): RoleTagsData = with(entity) {
-            RoleTagsData(botId, integrationId, premiumSubscriber is Optional.Null)
+            RoleTagsData(
+                botId,
+                integrationId,
+                premiumSubscriber is Optional.Null,
+                subscriptionListingId,
+                availableForPurchase is Optional.Null
+            )
         }
     }
 }
