@@ -6951,6 +6951,10 @@ public final class dev/kord/common/entity/MessageType$Default : dev/kord/common/
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$Default;
 }
 
+public final class dev/kord/common/entity/MessageType$GuildApplicationPremiumSubscription : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$GuildApplicationPremiumSubscription;
+}
+
 public final class dev/kord/common/entity/MessageType$GuildBoost : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$GuildBoost;
 }
@@ -6991,6 +6995,10 @@ public final class dev/kord/common/entity/MessageType$GuildMemberJoin : dev/kord
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$GuildMemberJoin;
 }
 
+public final class dev/kord/common/entity/MessageType$InteractionPremiumUpsell : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$InteractionPremiumUpsell;
+}
+
 public final class dev/kord/common/entity/MessageType$RecipientAdd : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$RecipientAdd;
 }
@@ -7001,6 +7009,26 @@ public final class dev/kord/common/entity/MessageType$RecipientRemove : dev/kord
 
 public final class dev/kord/common/entity/MessageType$Reply : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$Reply;
+}
+
+public final class dev/kord/common/entity/MessageType$StageEnd : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageEnd;
+}
+
+public final class dev/kord/common/entity/MessageType$StageRaiseHand : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageRaiseHand;
+}
+
+public final class dev/kord/common/entity/MessageType$StageSpeaker : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageSpeaker;
+}
+
+public final class dev/kord/common/entity/MessageType$StageStart : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageStart;
+}
+
+public final class dev/kord/common/entity/MessageType$StageTopic : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageTopic;
 }
 
 public final class dev/kord/common/entity/MessageType$ThreadCreated : dev/kord/common/entity/MessageType {

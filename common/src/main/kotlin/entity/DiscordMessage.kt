@@ -28,6 +28,13 @@
         Entry("GuildInviteReminder", intValue = 22),
         Entry("ContextMenuCommand", intValue = 23),
         Entry("AutoModerationAction", intValue = 24),
+        Entry("InteractionPremiumUpsell", intValue = 26),
+        Entry("StageStart", intValue = 27),
+        Entry("StageEnd", intValue = 28),
+        Entry("StageSpeaker", intValue = 29),
+        Entry("StageRaiseHand", intValue = 30),
+        Entry("StageTopic", intValue = 31),
+        Entry("GuildApplicationPremiumSubscription", intValue = 32),
     ],
     deprecatedEntries = [
         Entry(
@@ -116,6 +123,7 @@ import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
+import kotlinx.coroutines.runInterruptible
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
