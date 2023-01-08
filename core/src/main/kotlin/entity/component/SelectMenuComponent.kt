@@ -52,6 +52,8 @@ public constructor(override val data: ComponentData) : Component {
         ),
         level = DeprecationLevel.WARNING,
     )
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
+    @kotlin.internal.LowPriorityInOverloadResolution
     public val options: List<SelectOption> get() = _options
 
     @Suppress("PropertyName")

@@ -12,7 +12,7 @@ import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.rest.Image
 import dev.kord.rest.builder.interaction.group
-import dev.kord.rest.builder.interaction.int
+import dev.kord.rest.builder.interaction.integer
 import dev.kord.rest.builder.interaction.subCommand
 import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
@@ -443,7 +443,7 @@ class RestServiceTest {
         val command = kord.createGlobalChatInputCommand("test", "automated test") {
             group("test-group", "automated test") {
                 subCommand("test-sub-command", "automated test") {
-                    int("integer", "test choice") {
+                    integer("integer", "test choice") {
                         choice("one", 1)
                         choice("two", 2)
                     }
@@ -451,7 +451,7 @@ class RestServiceTest {
             }
 
             subCommand("test-sub-command", "automated test") {
-                int("integer", "test choice")
+                integer("integer", "test choice")
             }
         }
 

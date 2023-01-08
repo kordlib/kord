@@ -34,7 +34,7 @@ internal class RecoveredStackTrace : Throwable("This is the recovered stack trac
     fun sanitizeStackTrace() {
         // Remove artifacts of stack trace capturing.
         // The first stack trace element is the creation of the RecoveredStackTrace:
-        // at dev.kord.rest.request.StackTraceRecoveringKtorRequestHandler.handle(StackTraceRecoveringKtorRequestHandler.kt:21)
+        // at dev.kord.rest.request.StackTraceRecoveringKtorRequestHandler.handle(StackTraceRecoveringKtorRequestHandler.kt:19)
         stackTrace = stackTrace.copyOfRange(1, stackTrace.size)
     }
 }

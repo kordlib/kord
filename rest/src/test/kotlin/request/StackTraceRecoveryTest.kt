@@ -34,7 +34,7 @@ class StackTraceRecoveryTest {
             null
         )
 
-        val stackTrace = Thread.currentThread().stackTrace[1] // 1st one would be Thread.run for some reason
+        val stackTrace = Thread.currentThread().stackTrace[1] // [0]: java.lang.Thread.getStackTrace(Thread.java)
         try {
             handler.handle(request)
         } catch (e: Throwable) {

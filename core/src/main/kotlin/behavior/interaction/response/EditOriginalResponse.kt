@@ -34,7 +34,7 @@ internal suspend inline fun InteractionResponseBehavior.editOriginalResponseWith
     val public = when (this) {
         is PublicInteractionResponseBehavior -> true
         is EphemeralInteractionResponseBehavior -> false
-        else -> error(
+        is FollowupPermittingInteractionResponseBehavior -> error(
             "This function can't be called on an InteractionResponseBehavior that implements neither " +
                     "PublicInteractionResponseBehavior nor EphemeralInteractionResponseBehavior."
         )

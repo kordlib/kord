@@ -1573,6 +1573,22 @@ public final class dev/kord/common/entity/Choice$IntChoice : dev/kord/common/ent
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/common/entity/Choice$IntegerChoice : dev/kord/common/entity/Choice {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;J)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()J
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;J)Ldev/kord/common/entity/Choice$IntegerChoice;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/Choice$IntegerChoice;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;JILjava/lang/Object;)Ldev/kord/common/entity/Choice$IntegerChoice;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ldev/kord/common/entity/optional/Optional;
+	public fun getValue ()Ljava/lang/Long;
+	public synthetic fun getValue ()Ljava/lang/Object;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/common/entity/Choice$NumberChoice : dev/kord/common/entity/Choice {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;D)V
 	public final fun component1 ()Ljava/lang/String;

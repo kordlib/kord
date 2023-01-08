@@ -37,6 +37,7 @@ public data class ChannelData(
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val member: Optional<ThreadMemberData> = Optional.Missing(),
     val flags: Optional<ChannelFlags> = Optional.Missing(),
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     val totalMessageSent: OptionalInt = OptionalInt.Missing
 ) {
 
@@ -73,6 +74,7 @@ public data class ChannelData(
                 defaultAutoArchiveDuration,
                 member.map { ThreadMemberData.from(it, id) },
                 flags,
+                defaultSortOrder,
                 totalMessageSent
             )
         }

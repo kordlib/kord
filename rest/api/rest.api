@@ -1392,6 +1392,8 @@ public final class dev/kord/rest/builder/interaction/InputChatBuildersKt {
 	public static synthetic fun group$default (Ldev/kord/rest/builder/interaction/RootInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun int (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun int$default (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public static final fun integer (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun integer$default (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun mentionable (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun mentionable$default (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun number (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
