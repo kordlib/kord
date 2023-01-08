@@ -103,9 +103,6 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
      */
     public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
 
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
-    public var flags: ChannelFlags? by ::_flags.delegate()
-
     private var _defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing()
     public var defaultReactionEmoji: DiscordDefaultReaction? by ::_defaultReactionEmoji.delegate()
     public var defaultReactionEmojiId: Snowflake? = null
@@ -140,7 +137,6 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,
-        flags = _flags
     )
 
 }

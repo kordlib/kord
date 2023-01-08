@@ -63,7 +63,6 @@ public data class GuildChannelCreateRequest(
     val defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing(),
     @SerialName("default_thread_rate_limit_per_user")
     val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
-    val flags: Optional<ChannelFlags> = Optional.Missing(),
     @SerialName("available_tags")
     val availableTags: Optional<List<DiscordForumTag>?> = Optional.Missing(),
     @SerialName("default_sort_order")

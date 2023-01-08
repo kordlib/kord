@@ -31,9 +31,6 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
     private var _invitable: OptionalBoolean = OptionalBoolean.Missing
     public var invitable: Boolean? by ::_invitable.delegate()
 
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
-    public var flags: ChannelFlags? by ::_flags.delegate()
-
     override fun toRequest(): ChannelModifyPatchRequest {
         return ChannelModifyPatchRequest(
             name = _name,
@@ -42,7 +39,6 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
             autoArchiveDuration = _autoArchiveDuration,
             rateLimitPerUser = _rateLimitPerUser,
             invitable = _invitable,
-            flags = _flags
         )
     }
 
