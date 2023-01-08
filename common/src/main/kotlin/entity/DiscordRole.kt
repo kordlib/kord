@@ -34,6 +34,8 @@ public data class DiscordRoleTags(
     val subscriptionListingId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("available_for_purchase")
     val availableForPurchase: Optional<DiscordNull?> = Optional.Missing(),
+    @SerialName("guild_connections")
+    val guildConnections: Optional<DiscordNull?> = Optional.Missing(),
 )
 
 @Serializable
