@@ -7011,26 +7011,6 @@ public final class dev/kord/common/entity/MessageType$Reply : dev/kord/common/en
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$Reply;
 }
 
-public final class dev/kord/common/entity/MessageType$StageEnd : dev/kord/common/entity/MessageType {
-	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageEnd;
-}
-
-public final class dev/kord/common/entity/MessageType$StageRaiseHand : dev/kord/common/entity/MessageType {
-	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageRaiseHand;
-}
-
-public final class dev/kord/common/entity/MessageType$StageSpeaker : dev/kord/common/entity/MessageType {
-	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageSpeaker;
-}
-
-public final class dev/kord/common/entity/MessageType$StageStart : dev/kord/common/entity/MessageType {
-	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageStart;
-}
-
-public final class dev/kord/common/entity/MessageType$StageTopic : dev/kord/common/entity/MessageType {
-	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageTopic;
-}
-
 public final class dev/kord/common/entity/MessageType$ThreadCreated : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$ThreadCreated;
 }
