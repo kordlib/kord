@@ -1,14 +1,7 @@
 package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ArchiveDuration
-import dev.kord.common.entity.ChannelFlags
-import dev.kord.common.entity.DiscordDefaultReaction
-import dev.kord.common.entity.DiscordForumTag
-import dev.kord.common.entity.Overwrite
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.SortOrderType
-import dev.kord.common.entity.VideoQualityMode
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -120,6 +113,9 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
 
+    private var _defaultForumLayout: Optional<ForumLayoutType?> = Optional.Missing()
+    public var defaultForumLayout: ForumLayoutType? by ::_defaultForumLayout.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
         name = _name,
         position = _position,
@@ -140,6 +136,7 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,
+        defaultForumLayout = _defaultForumLayout,
         flags = _flags
     )
 
