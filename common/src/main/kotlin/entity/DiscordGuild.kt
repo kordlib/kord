@@ -388,7 +388,19 @@ public enum class SystemChannelFlag(public val code: Int) {
     SuppressJoinNotifications(1.shl(0)),
 
     /** Suppress server boost notifications. **/
-    SuppressPremiumSubscriptions(1.shl(1))
+    SuppressPremiumSubscriptions(1.shl(1)),
+
+    /** Suppress guild reminder notifications **/
+    SuppressGuildReminderNotifications(1.shl(2)),
+
+    /** Suppress join notification replies **/
+    SuppressJoinNotificationReplies(1.shl(3)),
+
+    /** Suppress role subscription notifications **/
+    SuppressRoleSubscriptionPurchaseNotifications(1.shl(4)),
+
+    /** Suppress role subscription notification replies **/
+    SuppressRoleSubscriptionPurchaseNotificationReplies(1.shl(5)),
 }
 
 @Serializable
