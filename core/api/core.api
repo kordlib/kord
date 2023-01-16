@@ -11269,6 +11269,16 @@ public final class dev/kord/core/event/guild/EmojisUpdateEvent : dev/kord/core/e
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/guild/EmojisUpdateEvent;
 }
 
+public final class dev/kord/core/event/guild/GuildAuditLogEntryCreateEvent : dev/kord/core/event/Event {
+	public fun <init> (Ldev/kord/core/entity/AuditLogEntry;Ldev/kord/core/Kord;ILjava/lang/Object;)V
+	public final fun getAuditLogEntry ()Ldev/kord/core/entity/AuditLogEntry;
+	public fun getCustomContext ()Ljava/lang/Object;
+	public fun getGateway ()Ldev/kord/gateway/Gateway;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public fun getShard ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/core/event/guild/GuildCreateEvent : dev/kord/core/event/Event {
 	public fun <init> (Ldev/kord/core/entity/Guild;ILjava/lang/Object;)V
 	public fun getCustomContext ()Ljava/lang/Object;
