@@ -6888,6 +6888,10 @@ public final class dev/kord/common/entity/MessageStickerType$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/MessageStickerType$GIF : dev/kord/common/entity/MessageStickerType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageStickerType$GIF;
+}
+
 public final class dev/kord/common/entity/MessageStickerType$LOTTIE : dev/kord/common/entity/MessageStickerType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageStickerType$LOTTIE;
 }
