@@ -7457,6 +7457,7 @@ public final class dev/kord/core/entity/automoderation/KeywordAutoModerationRule
 	public fun <init> (Ldev/kord/core/cache/data/AutoModerationRuleData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public fun asAutoModerationRule (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun asAutoModerationRuleOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getAllowedKeywords ()Ljava/util/List;
 	public final fun getKeywords ()Ljava/util/List;
 	public final fun getRegexPatterns ()Ljava/util/List;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$Keyword;

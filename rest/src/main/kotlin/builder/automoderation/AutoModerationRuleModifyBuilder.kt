@@ -85,13 +85,18 @@ public class KeywordAutoModerationRuleModifyBuilder :
     private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
     override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
 
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
+
     override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> {
         val keywords = _keywords
         val regexPatterns = _regexPatterns
-        return ifAnyPresent(keywords, regexPatterns) {
+        val allowedKeywords = _allowedKeywords
+        return ifAnyPresent(keywords, regexPatterns, allowedKeywords) {
             DiscordAutoModerationRuleTriggerMetadata(
                 keywordFilter = keywords.mapCopy(),
                 regexPatterns = regexPatterns.mapCopy(),
+                allowList = allowedKeywords.mapCopy(),
             )
         }
     }
