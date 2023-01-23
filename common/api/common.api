@@ -128,6 +128,7 @@ public final class dev/kord/common/Locale$Companion {
 	public final fun getGREEK ()Ldev/kord/common/Locale;
 	public final fun getHINDI ()Ldev/kord/common/Locale;
 	public final fun getHUNGARIAN ()Ldev/kord/common/Locale;
+	public final fun getINDONESIAN ()Ldev/kord/common/Locale;
 	public final fun getITALIAN ()Ldev/kord/common/Locale;
 	public final fun getJAPANESE ()Ldev/kord/common/Locale;
 	public final fun getKOREAN ()Ldev/kord/common/Locale;
