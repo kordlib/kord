@@ -113,7 +113,7 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
 
-    private var _defaultForumLayout: Optional<ForumLayoutType?> = Optional.Missing()
+    private var _defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing()
     public var defaultForumLayout: ForumLayoutType? by ::_defaultForumLayout.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(

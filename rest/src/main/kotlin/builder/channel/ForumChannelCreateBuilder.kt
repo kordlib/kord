@@ -57,7 +57,7 @@ public class ForumChannelCreateBuilder(public var name: String) :
     private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
 
-    private var _defaultForumLayout: Optional<ForumLayoutType?> = Optional.Missing()
+    private var _defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing()
     public var defaultForumLayout: ForumLayoutType? by ::_defaultForumLayout.delegate()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
@@ -81,6 +81,6 @@ public class ForumChannelCreateBuilder(public var name: String) :
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,
-        defaultForumLayout = _defaultForumLayout
+        defaultForumLayout = _defaultForumLayout,
     )
 }

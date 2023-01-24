@@ -60,12 +60,12 @@
 
 @file:GenerateKordEnum(
     name = "ForumLayoutType", valueType = INT,
-    docUrl = "https://discord.com/developers/docs/resources/channel#forum-layout-types",
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types",
     entries = [
         Entry("NotSet", intValue = 0, kDoc = "No default has been set for forum channel."),
-        Entry("ListView", intValue = 1, kDoc = "Displays posts as a list."),
-        Entry("GalleryView", intValue = 2, kDoc = "Displays posts as a collection of tiles")
-    ]
+        Entry("ListView", intValue = 1, kDoc = "Display posts as a list."),
+        Entry("GalleryView", intValue = 2, kDoc = "Display posts as a collection of tiles."),
+    ],
 )
 
 @file:GenerateKordEnum(
@@ -159,7 +159,7 @@ public data class DiscordChannel(
     @SerialName("default_sort_order")
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     @SerialName("default_forum_layout")
-    val defaultForumLayout: Optional<ForumLayoutType?> = Optional.Missing(),
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
 )
 
 public enum class ChannelFlag(public val code: Int) {

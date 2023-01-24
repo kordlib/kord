@@ -21,7 +21,7 @@ import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [ForumLayoutType]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#forum-layout-types).
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types).
  */
 @Serializable(with = ForumLayoutType.Serializer::class)
 public sealed class ForumLayoutType(
@@ -53,12 +53,12 @@ public sealed class ForumLayoutType(
     public object NotSet : ForumLayoutType(0)
 
     /**
-     * Displays posts as a list.
+     * Display posts as a list.
      */
     public object ListView : ForumLayoutType(1)
 
     /**
-     * Displays posts as a collection of tiles
+     * Display posts as a collection of tiles.
      */
     public object GalleryView : ForumLayoutType(2)
 
