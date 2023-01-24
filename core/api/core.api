@@ -7712,6 +7712,7 @@ public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/beh
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getActiveThreads ()Lkotlinx/coroutines/flow/Flow;
 	public fun getData ()Ldev/kord/core/cache/data/ChannelData;
+	public final fun getDefaultForumLayout ()Ldev/kord/common/entity/ForumLayoutType;
 	public fun getEffectivePermissions (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
 	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
