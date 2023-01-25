@@ -118,7 +118,6 @@ import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
-import kotlinx.coroutines.runInterruptible
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
