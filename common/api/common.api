@@ -6954,6 +6954,10 @@ public final class dev/kord/common/entity/MessageType$Default : dev/kord/common/
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$Default;
 }
 
+public final class dev/kord/common/entity/MessageType$GuildApplicationPremiumSubscription : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$GuildApplicationPremiumSubscription;
+}
+
 public final class dev/kord/common/entity/MessageType$GuildBoost : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$GuildBoost;
 }
@@ -6992,6 +6996,10 @@ public final class dev/kord/common/entity/MessageType$GuildInviteReminder : dev/
 
 public final class dev/kord/common/entity/MessageType$GuildMemberJoin : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$GuildMemberJoin;
+}
+
+public final class dev/kord/common/entity/MessageType$InteractionPremiumUpsell : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$InteractionPremiumUpsell;
 }
 
 public final class dev/kord/common/entity/MessageType$RecipientAdd : dev/kord/common/entity/MessageType {
