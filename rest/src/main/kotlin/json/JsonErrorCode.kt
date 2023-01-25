@@ -259,11 +259,11 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Bitrate is too high for channel of this type. */
     BitrateTooHigh(30052),
 
-    /** Maximum number of premium emojis reached. */
-    MaxNumberOfPremiumEmoji(30056),
+    /** Maximum number of premium emojis reached (25). */
+    MaxPremiumEmojis(30056),
 
-    /** Maximum number of webhooks per guild reached (1000) */
-    MaxGuildWebhookCount(30058),
+    /** Maximum number of webhooks per guild reached (1000). */
+    MaxGuildWebhooks(30058),
 
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
@@ -452,8 +452,8 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Community server channels must be text channels. */
     CommunityServerChannelMustBeTextChannel(50086),
 
-    /** The entity type of the event is different to the entity you are trying o start the event for. */
-    EntityOfEventDifferentToEventEntity(50091),
+    /** The entity type of the event is different from the entity you are trying to start the event for. */
+    EntityOfEventDifferentFromEventEntity(50091),
 
     /** This server is not available in your location. */
     ServerNotAvailableInLocation(50095),

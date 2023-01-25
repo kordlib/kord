@@ -2207,7 +2207,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field Companion Ldev/kord/rest/json/JsonErrorCode$Companion;
 	public static final field ConnectionRevoked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field DisallowedName Ldev/kord/rest/json/JsonErrorCode;
-	public static final field EntityOfEventDifferentToEventEntity Ldev/kord/rest/json/JsonErrorCode;
+	public static final field EntityOfEventDifferentFromEventEntity Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FailedToCreateStage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FailedToResizeAssetBelowMaximumSize Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FileTooLarge Ldev/kord/rest/json/JsonErrorCode;
@@ -2250,15 +2250,15 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxFriends Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildRoles Ldev/kord/rest/json/JsonErrorCode;
-	public static final field MaxGuildWebhookCount Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxGuildWebhooks Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildWidgetSettingsUpdates Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuilds Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxInvites Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxLottieAnimationDimensions Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxNonMemberBans Ldev/kord/rest/json/JsonErrorCode;
-	public static final field MaxNumberOfPremiumEmoji Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxOldMessageEdits Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxPins Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxPremiumEmojis Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxPruneRequests Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxReactions Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxRecipients Ldev/kord/rest/json/JsonErrorCode;
