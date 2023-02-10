@@ -81,6 +81,12 @@ tasks {
         }
     }
 
+    afterEvaluate {
+        named("sourcesJar") {
+            dependsOn("kspCommonMainKotlinMetadata")
+        }
+    }
+
     withType<AbstractDokkaLeafTask>().configureEach {
         applyKordDokkaOptions()
         dependsOn("kspCommonMainKotlinMetadata")
