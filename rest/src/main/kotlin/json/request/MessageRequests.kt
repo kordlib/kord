@@ -19,7 +19,8 @@ public data class MessageCreateRequest(
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing()
 )
 
 public data class MultipartMessageCreateRequest(
