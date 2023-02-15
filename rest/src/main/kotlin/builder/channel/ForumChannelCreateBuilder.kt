@@ -66,6 +66,9 @@ public class ForumChannelCreateBuilder(public var name: String) :
     private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
 
+    private var _defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing()
+    public var defaultForumLayout: ForumLayoutType? by ::_defaultForumLayout.delegate()
+
     private var _flags: Optional<ChannelFlags> = Optional.Missing()
     public var flags: ChannelFlags? by ::_flags.delegate()
 
@@ -91,6 +94,7 @@ public class ForumChannelCreateBuilder(public var name: String) :
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,
         flags = _flags
+        defaultForumLayout = _defaultForumLayout,
     )
 }
 

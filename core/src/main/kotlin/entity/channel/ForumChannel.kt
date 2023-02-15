@@ -3,6 +3,7 @@ package dev.kord.core.entity.channel
 import dev.kord.common.entity.DiscordDefaultReaction
 import dev.kord.common.entity.DiscordForumTag
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.ForumLayoutType
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ForumChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
@@ -51,8 +52,13 @@ public class ForumChannel(
         return Channel.from(data, kord) as ForumChannel
     }
 
+    /**
+     * The default layout of the forum, if present.
+     */
+    public val defaultForumLayout: ForumLayoutType? get() = data.defaultForumLayout.value
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ForumChannel {
-        return ForumChannel(data, kord, strategy.supply(kord))
+        return ForumChannel(data,kord, strategy.supply(kord))
     }
 
     override fun toString(): String {

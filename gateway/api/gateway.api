@@ -325,7 +325,6 @@ public final class dev/kord/gateway/DiscordAutoModerationActionExecution {
 
 public final class dev/kord/gateway/DiscordAutoModerationActionExecution$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordAutoModerationActionExecution$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordAutoModerationActionExecution;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -378,7 +377,6 @@ public final class dev/kord/gateway/DiscordCreatedInvite {
 
 public final class dev/kord/gateway/DiscordCreatedInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordCreatedInvite$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordCreatedInvite;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -413,7 +411,6 @@ public final class dev/kord/gateway/DiscordDeletedInvite {
 
 public final class dev/kord/gateway/DiscordDeletedInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordDeletedInvite$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordDeletedInvite;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -450,7 +447,6 @@ public final class dev/kord/gateway/DiscordPresence {
 
 public final class dev/kord/gateway/DiscordPresence$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordPresence$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordPresence;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -486,7 +482,6 @@ public final class dev/kord/gateway/DiscordRemovedEmoji {
 
 public final class dev/kord/gateway/DiscordRemovedEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordRemovedEmoji$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordRemovedEmoji;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -518,7 +513,6 @@ public final class dev/kord/gateway/DiscordRemovedReactionEmoji {
 
 public final class dev/kord/gateway/DiscordRemovedReactionEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordRemovedReactionEmoji$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordRemovedReactionEmoji;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -555,7 +549,6 @@ public final class dev/kord/gateway/DiscordThreadListSync {
 
 public final class dev/kord/gateway/DiscordThreadListSync$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordThreadListSync$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordThreadListSync;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -594,7 +587,6 @@ public final class dev/kord/gateway/DiscordThreadMembersUpdate {
 
 public final class dev/kord/gateway/DiscordThreadMembersUpdate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/DiscordThreadMembersUpdate$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordThreadMembersUpdate;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -865,7 +857,6 @@ public final class dev/kord/gateway/GuildMembersChunkData {
 
 public final class dev/kord/gateway/GuildMembersChunkData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/GuildMembersChunkData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/GuildMembersChunkData;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -990,7 +981,6 @@ public final class dev/kord/gateway/GuildScheduledEventUserMetadata {
 
 public final class dev/kord/gateway/GuildScheduledEventUserMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/GuildScheduledEventUserMetadata$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/GuildScheduledEventUserMetadata;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1071,7 +1061,6 @@ public final class dev/kord/gateway/Hello : dev/kord/gateway/Event {
 
 public final class dev/kord/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Hello$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Hello;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1114,7 +1103,6 @@ public final class dev/kord/gateway/Identify : dev/kord/gateway/Command {
 
 public final class dev/kord/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Identify$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Identify;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1148,7 +1136,6 @@ public final class dev/kord/gateway/IdentifyProperties {
 
 public final class dev/kord/gateway/IdentifyProperties$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/IdentifyProperties$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/IdentifyProperties;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1559,7 +1546,6 @@ public final class dev/kord/gateway/ReadyData {
 
 public final class dev/kord/gateway/ReadyData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/ReadyData$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/ReadyData;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1604,7 +1590,6 @@ public final class dev/kord/gateway/RequestGuildMembers : dev/kord/gateway/Comma
 
 public final class dev/kord/gateway/RequestGuildMembers$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/RequestGuildMembers$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/RequestGuildMembers;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1620,7 +1605,12 @@ public final class dev/kord/gateway/RequestGuildMembers$Companion {
 
 public final class dev/kord/gateway/RequestGuildMembers$Nonce {
 	public static final field INSTANCE Ldev/kord/gateway/RequestGuildMembers$Nonce;
+	public static final field counter$dev$VolatileWrapper Ldev/kord/gateway/RequestGuildMembers$Nonce$Counter$dev$VolatileWrapper;
 	public final fun new ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/RequestGuildMembers$Nonce$Counter$dev$VolatileWrapper {
+	public fun <init> ()V
 }
 
 public final class dev/kord/gateway/Resume : dev/kord/gateway/Command {
@@ -1643,7 +1633,6 @@ public final class dev/kord/gateway/Resume : dev/kord/gateway/Command {
 
 public final class dev/kord/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Resume$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Resume;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1673,7 +1662,6 @@ public final class dev/kord/gateway/Resumed : dev/kord/gateway/DispatchEvent {
 
 public final class dev/kord/gateway/Resumed$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Resumed$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Resumed;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1809,7 +1797,6 @@ public final class dev/kord/gateway/UpdateStatus : dev/kord/gateway/Command {
 
 public final class dev/kord/gateway/UpdateStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/UpdateStatus$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/UpdateStatus;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -1845,7 +1832,6 @@ public final class dev/kord/gateway/UpdateVoiceStatus : dev/kord/gateway/Command
 
 public final class dev/kord/gateway/UpdateVoiceStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/UpdateVoiceStatus$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/UpdateVoiceStatus;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;

@@ -25,6 +25,9 @@ public interface ApplicationCommandCreateBuilder : LocalizedNameCreateBuilder,
     public fun disableCommandInGuilds() {
         defaultMemberPermissions = Permissions()
     }
+
+    /** Indicates whether the command is age-restricted. Defaults to `false`. */
+    public var nsfw: Boolean?
 }
 
 @KordDsl
@@ -45,4 +48,7 @@ public interface ApplicationCommandModifyBuilder : LocalizedNameModifyBuilder,
 
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     public var defaultPermission: Boolean?
+
+    /** Indicates whether the command is age-restricted. */
+    public var nsfw: Boolean?
 }

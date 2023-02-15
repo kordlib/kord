@@ -65,6 +65,8 @@ public data class ChannelModifyPatchRequest(
     val appliedTags: Optional<List<Snowflake>?> = Optional.Missing(),
     @SerialName("default_sort_order")
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    @SerialName("default_forum_layout")
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
 )
 
 @Serializable

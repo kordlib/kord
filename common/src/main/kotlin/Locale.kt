@@ -23,8 +23,12 @@ public data class Locale(val language: String, val country: String? = null) {
     @Suppress("DEPRECATION")
     public fun asJavaLocale(): JLocale = JLocale(language, country ?: "")
 
-    @Suppress("MemberVisibilityCanBePrivate")
     public companion object {
+
+        /**
+         * Indonesian.
+         */
+        public val INDONESIAN: Locale = Locale("id")
 
         /**
          * Danish.
@@ -181,6 +185,7 @@ public data class Locale(val language: String, val country: String? = null) {
          * All languages [supported by Discord](https://discord.com/developers/docs/reference#locales).
          */
         public val ALL: List<Locale> = listOf(
+            INDONESIAN,
             DANISH,
             GERMAN,
             ENGLISH_GREAT_BRITAIN,

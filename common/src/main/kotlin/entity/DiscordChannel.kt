@@ -59,6 +59,16 @@
 )
 
 @file:GenerateKordEnum(
+    name = "ForumLayoutType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types",
+    entries = [
+        Entry("NotSet", intValue = 0, kDoc = "No default has been set for forum channel."),
+        Entry("ListView", intValue = 1, kDoc = "Display posts as a list."),
+        Entry("GalleryView", intValue = 2, kDoc = "Display posts as a collection of tiles."),
+    ],
+)
+
+@file:GenerateKordEnum(
     name = "OverwriteType", valueType = INT,
     docUrl = "https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure",
     entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
@@ -148,7 +158,9 @@ public data class DiscordChannel(
     val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("default_sort_order")
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
-    val message: Optional<DiscordMessage> = Optional.Missing()
+    @SerialName("default_forum_layout")
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
+    val message: Optional<DiscordMessage> = Optional.Missing(),
 )
 
 public enum class ChannelFlag(public val code: Int) {

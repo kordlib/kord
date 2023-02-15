@@ -71,11 +71,15 @@ public class KeywordAutoModerationRuleCreateBuilder(
     private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
     override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
 
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
+
     // one of keywords or regexPatterns is required, don't bother to send missing trigger metadata if both are missing
     override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =
         DiscordAutoModerationRuleTriggerMetadata(
             keywordFilter = _keywords.mapCopy(),
             regexPatterns = _regexPatterns.mapCopy(),
+            allowList = _allowedKeywords.mapCopy(),
         ).optional()
 }
 
