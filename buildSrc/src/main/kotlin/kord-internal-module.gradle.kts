@@ -12,7 +12,7 @@ kotlin {
     jvmToolchain(Jvm.target)
 }
 
-tasks.withType<KotlinCompile> {
+tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
         applyKordCompilerOptions()
     }
