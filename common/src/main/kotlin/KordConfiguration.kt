@@ -1,10 +1,8 @@
 package dev.kord.common
 
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import kotlinx.atomicfu.atomic
 
-@KordExperimental
 public object KordConfiguration {
 
     private const val REST_GATEWAY_DEFAULT = 10
@@ -14,7 +12,6 @@ public object KordConfiguration {
      *
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
-    @KordExperimental
     @set:KordUnsafe
     public var REST_VERSION: Int by atomic(REST_GATEWAY_DEFAULT)
 
@@ -25,7 +22,6 @@ public object KordConfiguration {
      *
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
-    @KordExperimental
     @set:KordUnsafe
     public var GATEWAY_VERSION: Int by atomic(REST_GATEWAY_DEFAULT)
 
@@ -36,7 +32,6 @@ public object KordConfiguration {
      *
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
-    @KordExperimental
     @set:KordUnsafe
     public var VOICE_GATEWAY_VERSION: Int by atomic(4)
 }
