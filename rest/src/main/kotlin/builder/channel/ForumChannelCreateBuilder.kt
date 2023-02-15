@@ -93,7 +93,7 @@ public class ForumChannelCreateBuilder(public var name: String) :
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,
-        flags = _flags
+        flags = _flags,
         defaultForumLayout = _defaultForumLayout,
     )
 }
