@@ -6758,6 +6758,7 @@ public final class dev/kord/common/entity/MessageFlag : java/lang/Enum {
 	public static final field Loading Ldev/kord/common/entity/MessageFlag;
 	public static final field SourceMessageDeleted Ldev/kord/common/entity/MessageFlag;
 	public static final field SuppressEmbeds Ldev/kord/common/entity/MessageFlag;
+	public static final field SuppressNotifications Ldev/kord/common/entity/MessageFlag;
 	public static final field Urgent Ldev/kord/common/entity/MessageFlag;
 	public final fun getCode ()I
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/MessageFlag;
