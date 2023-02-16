@@ -22,6 +22,7 @@ public data class DiscordGuildMember(
     val premiumSince: Optional<Instant?> = Optional.Missing(),
     val deaf: OptionalBoolean = OptionalBoolean.Missing,
     val mute: OptionalBoolean = OptionalBoolean.Missing,
+    val flags: GuildMemberFlags,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
     @SerialName("communication_disabled_until")
@@ -106,3 +107,11 @@ public data class DiscordThreadMember(
     val joinTimestamp: Instant,
     val flags: Int
 )
+
+@Serializable
+public enum class GuildMemberFlags(public val code: Int) {
+    DID_REJOIN(1.shl(0)),
+    COMPLETED_ONBOARDING(1.shl(1)),
+    BYPASSES_VERIFICATION(1.shl(2)),
+    STARTED_ONBOARDING(1.shl(3))
+}
