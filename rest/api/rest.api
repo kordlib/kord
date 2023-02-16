@@ -2232,6 +2232,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field CannotUpdateFinishedEvent Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelVerificationTooHigh Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelWriteRateLimit Ldev/kord/rest/json/JsonErrorCode;
+	public static final field ChannelsTooLarge Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CommunityServerChannelMustBeTextChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Companion Ldev/kord/rest/json/JsonErrorCode$Companion;
 	public static final field ConnectionRevoked Ldev/kord/rest/json/JsonErrorCode;
@@ -2274,9 +2275,11 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxApplicationCommands Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxAttachments Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxBanFetches Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxChannelPermissionOverwrites Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxDailyApplicationCommandCreates Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxEmojis Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxFriends Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxGroupDMs Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildRoles Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildWebhooks Ldev/kord/rest/json/JsonErrorCode;
