@@ -385,7 +385,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     EmojisUpdateEvent::class -> +GuildEmojis
 
 
-    IntegrationsUpdateEvent::class -> +GuildIntegrations
+    IntegrationUpdateEvent::class -> +GuildIntegrations
 
 
     WebhookUpdateEvent::class -> +GuildWebhooks
