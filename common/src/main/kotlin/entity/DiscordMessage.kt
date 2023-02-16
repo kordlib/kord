@@ -420,7 +420,7 @@ public enum class MessageFlag(public val code: Int) {
     /** This message failed to mention some roles and add their members to the thread. */
     FailedToMentionSomeRolesInThread(1 shl 8),
 
-    /** This message will not trigger push and desktop notifications.*/
+    /** This message will not trigger push and desktop notifications. */
     SuppressNotifications(1 shl 12)
 }
 

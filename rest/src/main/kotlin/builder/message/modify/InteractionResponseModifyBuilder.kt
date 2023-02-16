@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message.modify
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordAttachment
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.common.entity.optional.mapList
@@ -10,12 +11,12 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
+import dev.kord.rest.builder.message.create.buildMessageFlags
 import dev.kord.rest.json.request.InteractionResponseModifyRequest
 import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
 
 @KordDsl
-public class InteractionResponseModifyBuilder :
-    MessageModifyBuilder,
+public class InteractionResponseModifyBuilder : MessageModifyBuilder,
     RequestBuilder<MultipartInteractionResponseModifyRequest> {
 
     private var state = MessageModifyStateHolder()
@@ -30,6 +31,8 @@ public class InteractionResponseModifyBuilder :
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
+    override val flags: MessageFlags? by state::flags.delegate()
+    override var suppressEmbeds: Boolean? by state::suppressEmbeds.delegate()
 
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
@@ -40,9 +43,9 @@ public class InteractionResponseModifyBuilder :
                 embeds = state.embeds.mapList { it.toRequest() },
                 allowedMentions = state.allowedMentions.map { it.build() },
                 components = state.components.mapList { it.build() },
-                attachments = state.attachments
-            ),
-            state.files
+                attachments = state.attachments,
+                flags = buildMessageFlags(flags, suppressEmbeds = suppressEmbeds)
+            ), state.files
         )
     }
 

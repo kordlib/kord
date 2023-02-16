@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message.modify
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordAttachment
+import dev.kord.common.entity.MessageFlags
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
@@ -34,6 +35,18 @@ public sealed interface MessageModifyBuilder {
     public var files: MutableList<NamedFile>?
 
     public var attachments: MutableList<DiscordAttachment>?
+
+    /**
+     * Optional custom [MessageFlags] to add to the message created.
+     *
+     * @see suppressEmbeds
+     */
+    public val flags: MessageFlags?
+
+    /**
+     * Do not include any embeds when serializing this message.
+     */
+    public var suppressEmbeds: Boolean?
 
     /**
      * Adds a file with the [name] and [content] to the attachments.

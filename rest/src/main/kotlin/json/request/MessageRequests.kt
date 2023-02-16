@@ -79,7 +79,7 @@ public data class MessageEditPatchRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing()
+    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing(),
 )
 
 public data class MultipartMessagePatchRequest(

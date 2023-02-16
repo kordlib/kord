@@ -1,7 +1,6 @@
 package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
 import dev.kord.rest.NamedFile
@@ -33,6 +32,10 @@ public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
 
     override val files: MutableList<NamedFile> = mutableListOf()
 
+    override val flags: MessageFlags? = null
+    override var suppressEmbeds: Boolean? = null
+    override var suppressNotifications: Boolean? = null
+
     override fun toRequest(): MultipartFollowupMessageCreateRequest {
         return MultipartFollowupMessageCreateRequest(
             FollowupMessageCreateRequest(
@@ -41,7 +44,7 @@ public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
-                flags = Optional(if (ephemeral) MessageFlags(MessageFlag.Ephemeral) else null).coerceToMissing()
+                flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications, ephemeral)
             ),
             files
         )

@@ -1,6 +1,9 @@
 package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.optional.Optional
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
@@ -54,6 +57,24 @@ public sealed interface MessageCreateBuilder {
     public val files: MutableList<NamedFile>
 
     /**
+     * Optional custom [MessageFlags] to add to the message created.
+     *
+     * @see suppressEmbeds
+     * @see suppressNotifications
+     */
+    public val flags: MessageFlags?
+
+    /**
+     * Do not include any embeds when serializing this message.
+     */
+    public var suppressEmbeds: Boolean?
+
+    /**
+     * This message will not trigger push and desktop notifications.
+     */
+    public var suppressNotifications: Boolean?
+
+    /**
      * Adds a file with the [name] and [content] to the attachments.
      *
      * @suppress
@@ -86,6 +107,35 @@ public sealed interface MessageCreateBuilder {
      */
     public suspend fun addFile(path: Path): NamedFile =
         addFile(path.fileName.toString(), ChannelProvider { path.readChannel() })
+
+}
+
+internal fun buildMessageFlags(
+    base: MessageFlags?,
+    suppressEmbeds: Boolean? = null,
+    suppressNotifications: Boolean? = null,
+    ephemeral: Boolean? = null
+): Optional<MessageFlags> {
+    fun MessageFlags.Builder.add(add: Boolean?, flag: MessageFlag) {
+        when (add) {
+            true -> +flag
+            false -> -flag
+            null -> {}
+        }
+    }
+
+    val flags = MessageFlags {
+        add(suppressEmbeds, MessageFlag.SuppressEmbeds)
+        add(suppressNotifications, MessageFlag.SuppressNotifications)
+        add(ephemeral, MessageFlag.Ephemeral)
+    }.takeIf { it.code > 0 }
+
+    val allFlags = listOfNotNull(base, flags)
+    return if (allFlags.isEmpty()) {
+        Optional.Missing()
+    } else {
+        Optional(MessageFlags(allFlags))
+    }
 }
 
 /**
