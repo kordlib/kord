@@ -7,6 +7,7 @@ package dev.kord.common.entity
 import kotlin.Any
 import kotlin.Boolean
 import kotlin.Deprecated
+import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.ReplaceWith
@@ -56,6 +57,8 @@ public sealed class MessageStickerType(
 
     public object LOTTIE : MessageStickerType(3)
 
+    public object GIF : MessageStickerType(4)
+
     internal object Serializer : KSerializer<MessageStickerType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MessageStickerType",
@@ -68,6 +71,7 @@ public sealed class MessageStickerType(
             1 -> PNG
             2 -> APNG
             3 -> LOTTIE
+            4 -> GIF
             else -> Unknown(value)
         }
     }
@@ -81,11 +85,13 @@ public sealed class MessageStickerType(
                 PNG,
                 APNG,
                 LOTTIE,
+                GIF,
             )
         }
 
 
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Renamed to 'entries'.",
             replaceWith = ReplaceWith(expression = "this.entries", imports = arrayOf()),
         )

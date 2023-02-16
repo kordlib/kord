@@ -26,6 +26,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
 
     override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? =
         when (event) {
+            is GuildAuditLogEntryCreate -> handle(event, shard, kord, context)
             is GuildCreate -> handle(event, shard, kord, context)
             is GuildUpdate -> handle(event, shard, kord, context)
             is GuildDelete -> handle(event, shard, kord, context)
@@ -80,6 +81,19 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         for (emoji in emojis) {
             cache.put(EmojiData.from(id, emoji.id!!, emoji))
         }
+    }
+
+    private suspend fun handle(
+        event: GuildAuditLogEntryCreate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?
+    ): GuildAuditLogEntryCreateEvent {
+        val entry = AuditLogEntry(event.entry, kord)
+
+        kord.cache.put(entry)
+
+        return GuildAuditLogEntryCreateEvent(entry, kord, shard, context?.get())
     }
 
     private suspend fun handle(

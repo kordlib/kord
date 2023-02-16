@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.scheduled_events
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -10,6 +11,7 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.ScheduledEventModifyRequest
 import kotlinx.datetime.Instant
 
+@KordDsl
 public class ScheduledEventModifyBuilder : AuditRequestBuilder<ScheduledEventModifyRequest> {
     override var reason: String? = null
 

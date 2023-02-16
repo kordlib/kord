@@ -91,8 +91,8 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 
 @Serializable
 public data class DiscordApplicationCommand(
@@ -119,6 +119,7 @@ public data class DiscordApplicationCommand(
     @SerialName("default_permission")
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 )
 
@@ -172,10 +173,22 @@ public sealed class Choice<out T> {
     public abstract val nameLocalizations: Optional<Map<Locale, String>?>
     public abstract val value: T
 
-    public data class IntChoice(
+    @Deprecated("Renamed to 'IntegerChoice'.", level = WARNING)
+    public data class IntChoice
+    @Deprecated(
+        "Renamed to 'IntegerChoice'.",
+        ReplaceWith("IntegerChoice(name, nameLocalizations, value)", "dev.kord.common.entity.Choice.IntegerChoice"),
+        level = WARNING,
+    ) public constructor(
         override val name: String,
         override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: Long
+    ) : Choice<Long>()
+
+    public data class IntegerChoice(
+        override val name: String,
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val value: Long,
     ) : Choice<Long>()
 
     public data class NumberChoice(
@@ -217,7 +230,7 @@ public sealed class Choice<out T> {
 
             when {
                 value.isString -> StringChoice(name, nameLocalizations, value.content)
-                else -> value.longOrNull?.let { IntChoice(name, nameLocalizations, it) }
+                else -> value.longOrNull?.let { IntegerChoice(name, nameLocalizations, it) }
                     ?: value.doubleOrNull?.let { NumberChoice(name, nameLocalizations, it) }
                     ?: throw SerializationException("Illegal choice value: $value")
             }
@@ -228,7 +241,8 @@ public sealed class Choice<out T> {
             encodeStringElement(descriptor, 0, value.name)
 
             when (value) {
-                is IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is @Suppress("DEPRECATION") IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is IntegerChoice -> encodeLongElement(descriptor, 1, value.value)
                 is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
                 is StringChoice -> encodeStringElement(descriptor, 1, value.value)
             }
@@ -394,7 +408,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
-                else -> error("unknown ApplicationCommandOptionType $type")
+                null, is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")
             }
         }
 
@@ -682,23 +696,43 @@ public data class CommandGroup(
         get() = ApplicationCommandOptionType.SubCommandGroup
 }
 
+@Deprecated(
+    "Use an is-check or cast instead.",
+    ReplaceWith("(this as CommandArgument.IntegerArgument).value", "dev.kord.common.entity.CommandArgument"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.int(): Long {
     return value as? Long ?: error("$value wasn't an int.")
 }
 
 
+@Deprecated(
+    "This function calls value.toString() which might be unexpected. Use an explicit value.toString() instead.",
+    ReplaceWith("this.value.toString()"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.string(): String {
     return value.toString()
 }
 
 
+@Deprecated(
+    "Use an is-check or cast instead.",
+    ReplaceWith("(this as CommandArgument.BooleanArgument).value", "dev.kord.common.entity.CommandArgument"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
 }
 
 
+@Deprecated(
+    "This function calls value.toString() which might be unexpected. Use an explicit value.toString() instead.",
+    ReplaceWith("Snowflake(this.value.toString())", "dev.kord.common.entity.Snowflake"),
+    level = WARNING,
+)
 public fun CommandArgument<*>.snowflake(): Snowflake {
-    val id = string().toULongOrNull() ?: error("$value wasn't a Snowflake")
+    val id = value.toString().toULongOrNull() ?: error("$value wasn't a Snowflake")
     return Snowflake(id)
 }
 
@@ -723,7 +757,7 @@ public data class DiscordGuildApplicationCommandPermission(
     @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "'DiscordGuildApplicationCommandPermission.Type' is replaced by 'ApplicationCommandPermissionType'",
-        level = ERROR,
+        level = HIDDEN,
     )
     public constructor(id: Snowflake, type: Type, permission: Boolean) : this(id, type.toNewType(), permission)
 
@@ -737,22 +771,22 @@ public data class DiscordGuildApplicationCommandPermission(
     @JvmName("component2")
     public fun _component2(): Type = type.toDeprecatedType()
 
-    @Suppress("DEPRECATION_ERROR", "DeprecatedCallableAddReplaceWith")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "'DiscordGuildApplicationCommandPermission.Type' is replaced by 'ApplicationCommandPermissionType'",
-        level = ERROR,
+        level = HIDDEN,
     )
     public fun copy(
         id: Snowflake = this.id,
         type: Type = this.type.toDeprecatedType(),
         permission: Boolean = this.permission,
-    ): DiscordGuildApplicationCommandPermission = DiscordGuildApplicationCommandPermission(id, type, permission)
+    ): DiscordGuildApplicationCommandPermission = DiscordGuildApplicationCommandPermission(id, type.toNewType(), permission)
 
     @Suppress("DEPRECATION_ERROR")
     @Deprecated(
         "Replaced by 'ApplicationCommandPermissionType'",
         ReplaceWith("ApplicationCommandPermissionType", "dev.kord.common.entity.ApplicationCommandPermissionType"),
-        level = ERROR,
+        level = HIDDEN,
     )
     @Serializable(with = Type.Serializer::class)
     public sealed class Type(public val value: Int) {
@@ -762,7 +796,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.Role",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
         public object Role : Type(1)
 
@@ -772,7 +806,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.User",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
         public object User : Type(2)
 
@@ -782,7 +816,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.Channel",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
         public object Channel : Type(3)
 
@@ -792,17 +826,19 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.Unknown",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
-        public class Unknown
-        @Deprecated(
-            "Replaced by 'ApplicationCommandPermissionType.Unknown'",
-            ReplaceWith(
-                "ApplicationCommandPermissionType.Unknown(value)",
-                "dev.kord.common.entity.ApplicationCommandPermissionType",
-            ),
-            level = ERROR,
-        ) public constructor(value: Int) : Type(value)
+        public class Unknown internal constructor(value: Int, @Suppress("UNUSED_PARAMETER") unused: Nothing?) : Type(value) {
+            @Deprecated(
+                "Replaced by 'ApplicationCommandPermissionType.Unknown'",
+                ReplaceWith(
+                    "ApplicationCommandPermissionType.Unknown(value)",
+                    "dev.kord.common.entity.ApplicationCommandPermissionType",
+                ),
+                level = HIDDEN,
+            )
+            public constructor(value: Int) : this(value, null)
+        }
 
         @Deprecated(
             "Replaced by 'ApplicationCommandPermissionType.serializer()'",
@@ -810,7 +846,7 @@ public data class DiscordGuildApplicationCommandPermission(
                 "ApplicationCommandPermissionType.serializer()",
                 "dev.kord.common.entity.ApplicationCommandPermissionType",
             ),
-            level = ERROR,
+            level = HIDDEN,
         )
         public object Serializer : KSerializer<Type> {
             override val descriptor: SerialDescriptor =
@@ -821,7 +857,7 @@ public data class DiscordGuildApplicationCommandPermission(
                     1 -> Role
                     2 -> User
                     3 -> Channel
-                    else -> Unknown(value)
+                    else -> Unknown(value, null)
                 }
 
             override fun serialize(encoder: Encoder, value: Type): Unit = encoder.encodeInt(value.value)
@@ -836,7 +872,7 @@ public data class DiscordGuildApplicationCommandPermission(
             ApplicationCommandPermissionType.Role -> Type.Role
             ApplicationCommandPermissionType.User -> Type.User
             ApplicationCommandPermissionType.Channel -> Type.Channel
-            is ApplicationCommandPermissionType.Unknown -> Type.Unknown(value)
+            is ApplicationCommandPermissionType.Unknown -> Type.Unknown(value, null)
         }
 
         @Suppress("DEPRECATION_ERROR")

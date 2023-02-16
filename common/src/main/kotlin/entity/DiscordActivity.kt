@@ -11,8 +11,8 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
-import kotlin.DeprecationLevel.WARNING
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 
 @Serializable
@@ -201,7 +201,7 @@ public sealed class ActivityType(public val code: Int) {
 
         /** @suppress */
         @Suppress("NON_FINAL_MEMBER_IN_OBJECT")
-        @Deprecated("ActivityType is no longer an enum class. Deprecated without replacement.", level = WARNING)
+        @Deprecated("ActivityType is no longer an enum class. Deprecated without replacement.", level = ERROR)
         @JvmStatic
         public open fun valueOf(name: String): ActivityType = when (name) {
             "Unknown" -> UNKNOWN
@@ -219,14 +219,14 @@ public sealed class ActivityType(public val code: Int) {
         @Deprecated(
             "ActivityType is no longer an enum class.",
             ReplaceWith("ActivityType.entries.toTypedArray()", "dev.kord.common.entity.ActivityType"),
-            level = WARNING,
+            level = ERROR,
         )
         @JvmStatic
         public open fun values(): Array<ActivityType> =
             arrayOf(UNKNOWN, Game, Streaming, Listening, Watching, Custom, Competing)
 
 
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         @Deprecated("Binary compatibility", level = HIDDEN)
         @JvmField
         public val ActivityTypeSerializer: ActivityTypeSerializer = ActivityTypeSerializer
@@ -235,13 +235,13 @@ public sealed class ActivityType(public val code: Int) {
     @Deprecated(
         "Use 'ActivityType.serializer()' instead.",
         ReplaceWith("ActivityType.serializer()", "dev.kord.common.entity.ActivityType"),
-        level = WARNING,
+        level = ERROR,
     )
     public object ActivityTypeSerializer : KSerializer<ActivityType> by Serializer {
         @Deprecated(
             "Use 'ActivityType.serializer()' instead.",
             ReplaceWith("ActivityType.serializer()", "dev.kord.common.entity.ActivityType"),
-            level = WARNING,
+            level = ERROR,
         )
         public fun serializer(): KSerializer<ActivityType> = this
     }

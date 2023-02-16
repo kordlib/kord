@@ -53,8 +53,8 @@ public sealed class AutoModerationRuleCreateBuilder(
         triggerMetadata = buildTriggerMetadata(),
         actions = actions.map { it.toRequest() },
         enabled = _enabled,
-        exemptRoles = _exemptRoles.map { it.toList() },
-        exemptChannels = _exemptChannels.map { it.toList() },
+        exemptRoles = _exemptRoles.mapCopy(),
+        exemptChannels = _exemptChannels.mapCopy(),
     )
 }
 
@@ -65,15 +65,22 @@ public class KeywordAutoModerationRuleCreateBuilder(
     eventType: AutoModerationRuleEventType,
 ) : AutoModerationRuleCreateBuilder(name, eventType), KeywordAutoModerationRuleBuilder {
 
-    override var keywords: MutableList<String> = mutableListOf()
+    private var _keywords: Optional<MutableList<String>> = Optional.Missing()
+    override var keywords: MutableList<String>? by ::_keywords.delegate()
 
-    /** @suppress Use `this.keywords = keywords` instead. */
-    override fun assignKeywords(keywords: MutableList<String>) {
-        this.keywords = keywords
-    }
+    private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
+    override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
 
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
+
+    // one of keywords or regexPatterns is required, don't bother to send missing trigger metadata if both are missing
     override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =
-        DiscordAutoModerationRuleTriggerMetadata(keywordFilter = keywords.toList().optional()).optional()
+        DiscordAutoModerationRuleTriggerMetadata(
+            keywordFilter = _keywords.mapCopy(),
+            regexPatterns = _regexPatterns.mapCopy(),
+            allowList = _allowedKeywords.mapCopy(),
+        ).optional()
 }
 
 /** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
@@ -103,7 +110,7 @@ public class KeywordPresetAutoModerationRuleCreateBuilder(
     override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =
         DiscordAutoModerationRuleTriggerMetadata(
             presets = presets.toList().optional(),
-            allowList = _allowedKeywords.map { it.toList() },
+            allowList = _allowedKeywords.mapCopy(),
         ).optional()
 }
 

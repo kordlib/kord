@@ -74,12 +74,14 @@ public sealed class ScheduledEntityType(
     }
 
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Use 'ScheduledEntityType.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "ScheduledEntityType.serializer()", imports =
                     arrayOf("dev.kord.common.entity.ScheduledEntityType")),
     )
     public object Serializer : KSerializer<ScheduledEntityType> by NewSerializer {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Use 'ScheduledEntityType.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "ScheduledEntityType.serializer()", imports =
                         arrayOf("dev.kord.common.entity.ScheduledEntityType")),
@@ -100,7 +102,7 @@ public sealed class ScheduledEntityType(
         }
 
 
-        @Suppress(names = arrayOf("DEPRECATION"))
+        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Binary compatibility",

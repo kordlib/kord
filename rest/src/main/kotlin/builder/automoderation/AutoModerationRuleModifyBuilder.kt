@@ -6,6 +6,8 @@ import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.AutoModerationRuleModifyRequest
+import kotlin.contracts.InvocationKind.AT_MOST_ONCE
+import kotlin.contracts.contract
 
 /** An [AutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
 @KordDsl
@@ -55,8 +57,8 @@ public sealed class AutoModerationRuleModifyBuilder :
         triggerMetadata = buildTriggerMetadata(),
         actions = _actions.mapList { it.toRequest() },
         enabled = _enabled,
-        exemptRoles = _exemptRoles.map { it.toList() },
-        exemptChannels = _exemptChannels.map { it.toList() },
+        exemptRoles = _exemptRoles.mapCopy(),
+        exemptChannels = _exemptChannels.mapCopy(),
     )
 }
 
@@ -80,13 +82,24 @@ public class KeywordAutoModerationRuleModifyBuilder :
     private var _keywords: Optional<MutableList<String>> = Optional.Missing()
     override var keywords: MutableList<String>? by ::_keywords.delegate()
 
-    /** @suppress Use `this.keywords = keywords` instead. */
-    override fun assignKeywords(keywords: MutableList<String>) {
-        this.keywords = keywords
-    }
+    private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
+    override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
 
-    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> =
-        _keywords.map { DiscordAutoModerationRuleTriggerMetadata(keywordFilter = it.toList().optional()) }
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
+
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> {
+        val keywords = _keywords
+        val regexPatterns = _regexPatterns
+        val allowedKeywords = _allowedKeywords
+        return ifAnyPresent(keywords, regexPatterns, allowedKeywords) {
+            DiscordAutoModerationRuleTriggerMetadata(
+                keywordFilter = keywords.mapCopy(),
+                regexPatterns = regexPatterns.mapCopy(),
+                allowList = allowedKeywords.mapCopy(),
+            )
+        }
+    }
 }
 
 /** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleModifyRequest]s. */
@@ -116,14 +129,11 @@ public class KeywordPresetAutoModerationRuleModifyBuilder :
     override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> {
         val presets = _presets
         val allowedKeywords = _allowedKeywords
-        return when {
-            presets !is Optional.Missing || allowedKeywords !is Optional.Missing ->
-                DiscordAutoModerationRuleTriggerMetadata(
-                    presets = presets.map { it.toList() },
-                    allowList = allowedKeywords.map { it.toList() },
-                ).optional()
-
-            else -> Optional.Missing()
+        return ifAnyPresent(presets, allowedKeywords) {
+            DiscordAutoModerationRuleTriggerMetadata(
+                presets = presets.mapCopy(),
+                allowList = allowedKeywords.mapCopy(),
+            )
         }
     }
 }
@@ -147,4 +157,14 @@ public class MentionSpamAutoModerationRuleModifyBuilder :
             OptionalInt.Missing -> Optional.Missing()
             is OptionalInt.Value -> DiscordAutoModerationRuleTriggerMetadata(mentionTotalLimit = limit).optional()
         }
+}
+
+private inline fun <T : Any> ifAnyPresent(vararg optionals: Optional<*>, block: () -> T): Optional<T> {
+    contract { callsInPlace(block, AT_MOST_ONCE) }
+
+    return if (optionals.any { it is Optional.Value }) {
+        Optional.Value(block())
+    } else {
+        Optional.Missing()
+    }
 }

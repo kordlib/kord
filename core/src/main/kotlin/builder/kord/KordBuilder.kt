@@ -19,6 +19,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.DefaultGateway
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
+import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import dev.kord.rest.json.response.BotGatewayResponse
@@ -38,11 +39,17 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
+import kotlin.DeprecationLevel.ERROR
 import kotlin.concurrent.thread
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration.Companion.seconds
 
+@Deprecated(
+    "Use DefaultGateway {} instead.",
+    ReplaceWith("DefaultGateway {\nclient = resources.httpClient\nthis@DefaultGateway.retry = retry\n}"),
+    level = ERROR,
+)
 public operator fun DefaultGateway.Companion.invoke(
     resources: ClientResources,
     retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)
@@ -51,7 +58,6 @@ public operator fun DefaultGateway.Companion.invoke(
         client = resources.httpClient
         reconnectRetry = retry
         sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
-        identifyRateLimiter = IntervalRateLimiter(limit = 1, interval = 5.seconds)
     }
 }
 
@@ -62,7 +68,8 @@ public class KordBuilder(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
-            val rateLimiter = IntervalRateLimiter(limit = 1, interval = 5.seconds)
+            // shared between all shards
+            val rateLimiter = IdentifyRateLimiter(resources.maxConcurrency, defaultDispatcher)
             shards.map {
                 DefaultGateway {
                     client = resources.httpClient
@@ -232,7 +239,8 @@ public class KordBuilder(public val token: String) {
     public suspend fun build(): Kord {
         val client = httpClient.configure()
 
-        val recommendedShards = client.getGatewayInfo().shards
+        val gatewayInfo = client.getGatewayInfo()
+        val recommendedShards = gatewayInfo.shards
         val shardsInfo = shardsBuilder(recommendedShards)
         val shards = shardsInfo.indices.toList()
 
@@ -245,8 +253,14 @@ public class KordBuilder(public val token: String) {
             }
         }
 
-        val resources =
-            ClientResources(token, applicationId ?: getBotIdFromToken(token), shardsInfo, client, defaultStrategy)
+        val resources = ClientResources(
+            token = token,
+            applicationId = applicationId ?: getBotIdFromToken(token),
+            shards = shardsInfo,
+            maxConcurrency = gatewayInfo.sessionStartLimit.maxConcurrency,
+            httpClient = client,
+            defaultStrategy = defaultStrategy,
+        )
         val rawRequestHandler = handlerBuilder(resources)
         val requestHandler = if (stackTraceRecovery) {
             if (rawRequestHandler is KtorRequestHandler) {

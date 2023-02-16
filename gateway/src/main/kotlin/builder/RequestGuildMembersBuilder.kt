@@ -1,5 +1,6 @@
 package dev.kord.gateway.builder
 
+import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -16,6 +17,7 @@ import dev.kord.gateway.RequestGuildMembers
  * @param guildId The id of the guild on which to execute the command.
  */
 @OptIn(PrivilegedIntent::class)
+@KordDsl
 public class RequestGuildMembersBuilder(public var guildId: Snowflake) {
 
     private var _query: Optional<String> = Optional.Missing()

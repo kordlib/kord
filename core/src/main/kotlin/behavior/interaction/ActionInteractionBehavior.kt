@@ -14,56 +14,11 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.request.RestRequestException
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /** The behavior of an [ActionInteraction]. */
 public interface ActionInteractionBehavior : InteractionBehavior {
-
-    /**
-     * Acknowledges the interaction ephemerally with the intent of responding with an [ephemeral][MessageFlag.Ephemeral]
-     * message later by calling [edit][EphemeralMessageInteractionResponseBehavior.edit] on the returned object. The
-     * user will see a 'loading' animation.
-     *
-     * ## This method is deprecated
-     * Replace code like
-     * ```kotlin
-     * val response = interaction.deferEphemeralMessage()
-     * response.followUpEphemeral { ... }
-     * response.followUp { ... }
-     * ```
-     * or
-     * ```kotlin
-     * val response = interaction.deferEphemeralMessage()
-     * response.edit { ... }
-     * response.followUp { ... }
-     * ```
-     * with
-     * ```kotlin
-     * val deferred = interaction.deferEphemeralResponse()
-     * val response = deferred.respond { ... }
-     * response.createPublicFollowup { ... }
-     * ```
-     *
-     * @suppress
-     */
-    @Deprecated(
-        """
-        Deferring a response now always enforces actually responding before using followups to avoid some strange
-        behavior when using followups before sending an original response.
-        
-        If you need to keep using followups directly after deferring a response you can use
-        'deferEphemeralResponseUnsafe()'.
-        
-        See the documentation of this method for how it should be replaced.
-        """,
-        ReplaceWith("this.deferEphemeralResponse()"),
-        level = HIDDEN,
-    )
-    @OptIn(KordUnsafe::class)
-    public suspend fun deferEphemeralMessage(): EphemeralMessageInteractionResponseBehavior =
-        deferEphemeralResponseUnsafe()
 
     /**
      * Acknowledges the interaction with the intent of responding with an [ephemeral][MessageFlag.Ephemeral] message
@@ -96,49 +51,6 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         kord.rest.interaction.deferMessage(id, token, ephemeral = true)
         return DeferredEphemeralMessageInteractionResponseBehavior(applicationId, token, kord)
     }
-
-    /**
-     * Acknowledges the interaction publicly with the intent of responding with a public message later by calling
-     * [edit][PublicMessageInteractionResponseBehavior.edit] on the returned object. The user will see a 'loading'
-     * animation.
-     *
-     * ## This method is deprecated
-     * Replace code like
-     * ```kotlin
-     * val response = interaction.deferPublicMessage()
-     * response.followUp { ... }
-     * response.followUpEphemeral { ... }
-     * ```
-     * or
-     * ```kotlin
-     * val response = interaction.deferPublicMessage()
-     * response.edit { ... }
-     * response.followUpEphemeral { ... }
-     * ```
-     * with
-     * ```kotlin
-     * val deferred = interaction.deferPublicResponse()
-     * val response = deferred.respond { ... }
-     * response.createEphemeralFollowup { ... }
-     * ```
-     *
-     * @suppress
-     */
-    @Deprecated(
-        """
-        Deferring a response now always enforces actually responding before using followups to avoid some strange
-        behavior when using followups before sending an original response.
-        
-        If you need to keep using followups directly after deferring a response you can use
-        'deferPublicResponseUnsafe()'.
-        
-        See the documentation of this method for how it should be replaced.
-        """,
-        ReplaceWith("this.deferPublicResponse()"),
-        level = HIDDEN,
-    )
-    @OptIn(KordUnsafe::class)
-    public suspend fun deferPublicMessage(): PublicMessageInteractionResponseBehavior = deferPublicResponseUnsafe()
 
     /**
      * Acknowledges the interaction with the intent of responding with a public message later by calling

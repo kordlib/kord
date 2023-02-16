@@ -1,22 +1,19 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm")
+    org.jetbrains.kotlin.jvm
 }
 
 repositories {
     mavenCentral()
 }
 
-tasks {
-    withType<JavaCompile> {
-        sourceCompatibility = Jvm.targetString
-        targetCompatibility = Jvm.targetString
-    }
+kotlin {
+    jvmToolchain(Jvm.target)
+}
 
-    withType<KotlinCompile> {
-        kotlinOptions {
-            applyKordKotlinOptions()
-        }
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        applyKordCompilerOptions()
     }
 }

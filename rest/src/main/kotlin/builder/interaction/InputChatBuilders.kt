@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -82,7 +83,21 @@ public inline fun BaseInputChatBuilder.string(
     options!!.add(StringChoiceBuilder(name, description).apply(builder))
 }
 
+@Deprecated(
+    "Renamed to 'integer'.",
+    ReplaceWith("this.integer(name, description) { builder() }", "dev.kord.rest.builder.interaction.integer"),
+    level = WARNING,
+)
 public inline fun BaseInputChatBuilder.int(
+    name: String,
+    description: String,
+    builder: IntegerOptionBuilder.() -> Unit = {},
+) {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    integer(name, description, builder)
+}
+
+public inline fun BaseInputChatBuilder.integer(
     name: String,
     description: String,
     builder: IntegerOptionBuilder.() -> Unit = {}
@@ -152,6 +167,7 @@ internal class ChatInputCreateBuilderImpl(
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
+    override var nsfw: Boolean? by state::nsfw.delegate()
 
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
@@ -164,6 +180,7 @@ internal class ChatInputCreateBuilderImpl(
             state.defaultMemberPermissions,
             state.dmPermission,
             @Suppress("DEPRECATION") state.defaultPermission,
+            nsfw = state.nsfw,
         )
 
     }
@@ -195,6 +212,8 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
+    override var nsfw: Boolean? by state::nsfw.delegate()
+
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             state.name,
@@ -205,6 +224,7 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
             state.defaultMemberPermissions,
             state.dmPermission,
             @Suppress("DEPRECATION") state.defaultPermission,
+            nsfw = state.nsfw,
         )
 
     }

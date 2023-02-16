@@ -28,31 +28,38 @@
         Entry("GuildInviteReminder", intValue = 22),
         Entry("ContextMenuCommand", intValue = 23),
         Entry("AutoModerationAction", intValue = 24),
+        Entry("InteractionPremiumUpsell", intValue = 26),
+        Entry("StageStart", intValue = 27),
+        Entry("StageEnd", intValue = 28),
+        Entry("StageSpeaker", intValue = 29),
+        Entry("StageRaiseHand", intValue = 30),
+        Entry("StageTopic", intValue = 31),
+        Entry("GuildApplicationPremiumSubscription", intValue = 32),
     ],
     deprecatedEntries = [
         Entry(
             "GuildMemberJoin", intValue = 7, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'UserJoin'.", deprecationLevel = ERROR,
+            deprecationMessage = "Renamed to 'UserJoin'.", deprecationLevel = HIDDEN,
             replaceWith = ReplaceWith("UserJoin", "dev.kord.common.entity.MessageType.UserJoin"),
         ),
         Entry(
             "UserPremiumGuildSubscription", intValue = 8, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'GuildBoost'.", deprecationLevel = ERROR,
+            deprecationMessage = "Renamed to 'GuildBoost'.", deprecationLevel = HIDDEN,
             replaceWith = ReplaceWith("GuildBoost", "dev.kord.common.entity.MessageType.GuildBoost"),
         ),
         Entry(
             "UserPremiumGuildSubscriptionTierOne", intValue = 9, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'GuildBoostTier1'.", deprecationLevel = ERROR,
+            deprecationMessage = "Renamed to 'GuildBoostTier1'.", deprecationLevel = HIDDEN,
             replaceWith = ReplaceWith("GuildBoostTier1", "dev.kord.common.entity.MessageType.GuildBoostTier1"),
         ),
         Entry(
             "UserPremiumGuildSubscriptionTwo", intValue = 10, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'GuildBoostTier2'.", deprecationLevel = ERROR,
+            deprecationMessage = "Renamed to 'GuildBoostTier2'.", deprecationLevel = HIDDEN,
             replaceWith = ReplaceWith("GuildBoostTier2", "dev.kord.common.entity.MessageType.GuildBoostTier2"),
         ),
         Entry(
             "UserPremiumGuildSubscriptionThree", intValue = 11, kDoc = "@suppress",
-            deprecationMessage = "Renamed to 'GuildBoostTier3'.", deprecationLevel = ERROR,
+            deprecationMessage = "Renamed to 'GuildBoostTier3'.", deprecationLevel = HIDDEN,
             replaceWith = ReplaceWith("GuildBoostTier3", "dev.kord.common.entity.MessageType.GuildBoostTier3"),
         ),
     ],
@@ -101,6 +108,7 @@
         Entry("PNG", intValue = 1),
         Entry("APNG", intValue = 2),
         Entry("LOTTIE", intValue = 3),
+        Entry("GIF", intValue = 4)
     ],
 )
 
@@ -125,7 +133,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

@@ -49,11 +49,10 @@ public interface Channel : ChannelBehavior {
             GuildVoice -> VoiceChannel(data, kord)
             GuildCategory -> Category(data, kord)
             GuildNews -> NewsChannel(data, kord)
-            @Suppress("DEPRECATION_ERROR") ChannelType.GuildStore -> @Suppress("DEPRECATION_ERROR") StoreChannel(data, kord)
             PublicNewsThread -> NewsChannelThread(data, kord)
             PrivateThread, PublicGuildThread -> TextChannelThread(data, kord)
 
-            else -> {
+            GuildDirectory, is Unknown -> {
                 if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))
                 else ThreadChannel(data, kord, strategy.supply(kord))
             }

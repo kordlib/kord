@@ -60,6 +60,12 @@ public sealed class GuildFeature(
     public object AnimatedIcon : GuildFeature("ANIMATED_ICON")
 
     /**
+     * Guild is using the old permissions configuration behavior.
+     */
+    public object ApplicationCommandPermissionsV2 :
+            GuildFeature("APPLICATION_COMMAND_PERMISSIONS_V2")
+
+    /**
      * Guild has set up auto moderation rules.
      */
     public object AutoModeration : GuildFeature("AUTO_MODERATION")
@@ -76,6 +82,11 @@ public sealed class GuildFeature(
     public object Community : GuildFeature("COMMUNITY")
 
     /**
+     * Guild has been set as a support server on the App Directory.
+     */
+    public object DeveloperSupportServer : GuildFeature("DEVELOPER_SUPPORT_SERVER")
+
+    /**
      * Guild is able to be discovered in the directory.
      */
     public object Discoverable : GuildFeature("DISCOVERABLE")
@@ -84,6 +95,11 @@ public sealed class GuildFeature(
      * Guild is able to be featured in the directory.
      */
     public object Featurable : GuildFeature("FEATURABLE")
+
+    /**
+     * Guild has paused invites, preventing new users from joining.
+     */
+    public object InvitesDisabled : GuildFeature("INVITES_DISABLED")
 
     /**
      * Guild has access to set an invite splash background.
@@ -121,11 +137,6 @@ public sealed class GuildFeature(
     public object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
 
     /**
-     * Guild has access to create private threads
-     */
-    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
-
-    /**
      * Guild is able to set role icons.
      */
     public object RoleIcons : GuildFeature("ROLE_ICONS")
@@ -161,11 +172,17 @@ public sealed class GuildFeature(
      * @suppress
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message =
                 "Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were removed on March 10, 2022. See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more information.",
     )
     public object Commerce : GuildFeature("COMMERCE")
+
+    /**
+     * Guild has access to create private threads
+     */
+    @Deprecated(message = "Creating a private thread no longer requires the server to be boosted.")
+    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
     /**
      * Guild has access to the seven day archive time for threads.
@@ -173,7 +190,7 @@ public sealed class GuildFeature(
      * @suppress
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Thread archive durations are no longer boost locked.",
     )
     public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
@@ -184,7 +201,7 @@ public sealed class GuildFeature(
      * @suppress
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Thread archive durations are no longer boost locked.",
     )
     public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
@@ -201,12 +218,15 @@ public sealed class GuildFeature(
                 when (val value = decoder.decodeString()) {
             "ANIMATED_BANNER" -> AnimatedBanner
             "ANIMATED_ICON" -> AnimatedIcon
+            "APPLICATION_COMMAND_PERMISSIONS_V2" -> ApplicationCommandPermissionsV2
             "AUTO_MODERATION" -> AutoModeration
             "BANNER" -> Banner
             "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "COMMUNITY" -> Community
+            "DEVELOPER_SUPPORT_SERVER" -> DeveloperSupportServer
             "DISCOVERABLE" -> Discoverable
             "FEATURABLE" -> Featurable
+            "INVITES_DISABLED" -> InvitesDisabled
             "INVITE_SPLASH" -> InviteSplash
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
             "MONETIZATION_ENABLED" -> MonetizationEnabled
@@ -214,7 +234,7 @@ public sealed class GuildFeature(
             "NEWS" -> News
             "PARTNERED" -> Partnered
             "PREVIEW_ENABLED" -> PreviewEnabled
-            "PRIVATE_THREADS" -> PrivateThreads
+            "PRIVATE_THREADS" -> @Suppress("DEPRECATION") PrivateThreads
             "ROLE_ICONS" -> RoleIcons
             "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive
             "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive
@@ -235,12 +255,15 @@ public sealed class GuildFeature(
             listOf(
                 AnimatedBanner,
                 AnimatedIcon,
+                ApplicationCommandPermissionsV2,
                 AutoModeration,
                 Banner,
                 @Suppress("DEPRECATION_ERROR") Commerce,
                 Community,
+                DeveloperSupportServer,
                 Discoverable,
                 Featurable,
+                InvitesDisabled,
                 InviteSplash,
                 MemberVerificationGateEnabled,
                 MonetizationEnabled,
@@ -248,7 +271,7 @@ public sealed class GuildFeature(
                 News,
                 Partnered,
                 PreviewEnabled,
-                PrivateThreads,
+                @Suppress("DEPRECATION") PrivateThreads,
                 RoleIcons,
                 @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive,
                 @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive,

@@ -85,6 +85,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * Enables the following events:
      * - [GuildBanAdd]
      * - [GuildBanRemove]
+     * - [AuditLogEntryCreateEvent]
      */
     public object GuildBans : Intent(1 shl 2)
 

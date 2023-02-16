@@ -5,7 +5,8 @@ plugins {
     `kord-publishing`
 }
 
-val voice by sourceSets.creating
+val voice: SourceSet by sourceSets.creating
+val voiceApi: Configuration by configurations.getting
 
 configurations {
     getByName("voiceImplementation") {
@@ -17,16 +18,14 @@ dependencies {
     api(projects.common)
     api(projects.rest)
     api(projects.gateway)
-    "voiceApi"(projects.core)
-    "voiceApi"(projects.voice)
-
-    implementation(libs.bundles.common)
+    voiceApi(projects.core)
+    voiceApi(projects.voice)
 
     api(libs.kord.cache.api)
     api(libs.kord.cache.map)
 
     samplesImplementation(libs.slf4j.simple)
-    testImplementation(libs.mockk)
+
     testImplementation(libs.bundles.test.implementation)
     testRuntimeOnly(libs.bundles.test.runtime)
 }

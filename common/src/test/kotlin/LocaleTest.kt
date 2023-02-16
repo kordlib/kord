@@ -9,6 +9,7 @@ class LocaleTest {
 
     private val all = with(Locale) {
         listOf(
+            "id" to INDONESIAN,
             "da" to DANISH,
             "de" to GERMAN,
             "en-GB" to ENGLISH_GREAT_BRITAIN,

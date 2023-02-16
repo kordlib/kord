@@ -5,8 +5,18 @@
     entries = [
         Entry("ActionRow", intValue = 1, kDoc = "A container for other components."),
         Entry("Button", intValue = 2, kDoc = "A button object."),
-        Entry("SelectMenu", intValue = 3, kDoc = "A select menu for picking from choices."),
+        Entry("StringSelect", intValue = 3, kDoc = "A select menu for picking from defined text options."),
         Entry("TextInput", intValue = 4, kDoc = "A text input object."),
+        Entry("UserSelect", intValue = 5, kDoc = "Select menu for users."),
+        Entry("RoleSelect", intValue = 6, kDoc = "Select menu for roles."),
+        Entry("MentionableSelect", intValue = 7, kDoc = "Select menu for mentionables (users and roles)."),
+        Entry("ChannelSelect", intValue = 8, kDoc = "Select menu for channels."),
+    ],
+    deprecatedEntries = [
+        Entry("SelectMenu", intValue = 3, kDoc = "A select menu for picking from choices.",
+            deprecationMessage = "Renamed by discord", replaceWith = ReplaceWith("StringSelect", "dev.kord.common.entity.ComponentType.StringSelect"),
+            deprecationLevel = DeprecationLevel.WARNING
+        ),
     ],
 )
 
@@ -65,6 +75,7 @@ import kotlinx.serialization.json.*
  * @property maxLength the maximum input length for a text input, min 1, max 4000.
  * @property required whether this component is required to be filled, default false.
  * @property value a pre-filled value for this component, max 4000 characters.
+ * @property channelTypes List of channel types to include in the channel select component ([ComponentType.ChannelSelect])
  */
 @Serializable(with = DiscordComponent.Serializer::class)
 public sealed class DiscordComponent {
@@ -88,6 +99,8 @@ public sealed class DiscordComponent {
     public abstract val maxLength: OptionalInt
     public abstract val required: OptionalBoolean
     public abstract val value: Optional<String>
+    @SerialName("channel_types")
+    public abstract val channelTypes: Optional<List<ChannelType>>
 
     internal object Serializer : JsonContentPolymorphicSerializer<DiscordComponent>(DiscordComponent::class) {
         override fun selectDeserializer(element: JsonElement): KSerializer<out DiscordComponent> {
@@ -123,13 +136,15 @@ public data class DiscordChatComponent(
     @SerialName("max_length")
      override val maxLength: OptionalInt = OptionalInt.Missing,
      override val required: OptionalBoolean = OptionalBoolean.Missing,
-     override val value: Optional<String> = Optional.Missing()
+     override val value: Optional<String> = Optional.Missing(),
+     @SerialName("channel_types")
+     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : DiscordComponent()
 
 @Serializable
 public data class DiscordTextInputComponent(
      override val type: ComponentType,
-    public val style: Optional<TextInputStyle> = Optional.Missing(),
+     public val style: Optional<TextInputStyle> = Optional.Missing(),
      override val label: Optional<String> = Optional.Missing(),
      override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
     @SerialName("custom_id")
@@ -148,5 +163,7 @@ public data class DiscordTextInputComponent(
     @SerialName("max_length")
      override val maxLength: OptionalInt = OptionalInt.Missing,
      override val required: OptionalBoolean = OptionalBoolean.Missing,
-     override val value: Optional<String> = Optional.Missing()
+     override val value: Optional<String> = Optional.Missing(),
+     @SerialName("channel_types")
+     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 ) : DiscordComponent()

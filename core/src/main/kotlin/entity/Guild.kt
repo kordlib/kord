@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import java.util.*
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 /**
@@ -51,7 +51,7 @@ public class Guild(
     public val afkChannel: VoiceChannelBehavior?
         get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
 
-    @Deprecated("Use 'cachedThreads' instead.", ReplaceWith("cachedThreads"), level = ERROR)
+    @Deprecated("Use 'cachedThreads' instead.", ReplaceWith("cachedThreads"), level = HIDDEN)
     public val threads: Flow<ThreadChannel>
         get() = flow {
             data.threads.mapList {

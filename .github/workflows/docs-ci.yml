@@ -31,7 +31,7 @@ jobs:
       - name: Push docs to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dokka
+          folder: build/dokka/htmlMultiModule
           branch: gh-pages
           git-config-name: GitHub Actions
           git-config-email: actions@github.com
