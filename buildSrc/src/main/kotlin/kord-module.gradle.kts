@@ -38,6 +38,20 @@ atomicfu {
 }
 
 tasks {
+    withType<KotlinCompile> {
+        compilerOptions {
+            applyKordCompilerOptions()
+            freeCompilerArgs.addAll(
+                CompilerArguments.time,
+                CompilerArguments.contracts,
+
+                CompilerArguments.kordPreview,
+                CompilerArguments.kordExperimental,
+                CompilerArguments.kordVoice,
+            )
+        }
+    }
+
     withType<Test>().configureEach {
         useJUnitPlatform()
     }
@@ -97,20 +111,6 @@ tasks {
 
     withType<PublishToMavenRepository>().configureEach {
         doFirst { require(!Library.isUndefined) { "No release/snapshot version found." } }
-    }
-
-    withType<KotlinCompile>().configureEach {
-        compilerOptions {
-            applyKordCompilerOptions()
-            freeCompilerArgs.addAll(
-                CompilerArguments.time,
-                CompilerArguments.contracts,
-
-                CompilerArguments.kordPreview,
-                CompilerArguments.kordExperimental,
-                CompilerArguments.kordVoice,
-            )
-        }
     }
 
     kotlinSourcesJar {
