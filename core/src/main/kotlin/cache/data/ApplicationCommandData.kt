@@ -23,6 +23,7 @@ public data class ApplicationCommandData(
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
     val defaultPermission: OptionalBoolean? = OptionalBoolean.Missing,
+    val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val version: Snowflake
 ) {
     public companion object {
@@ -44,6 +45,7 @@ public data class ApplicationCommandData(
                     defaultMemberPermissions,
                     dmPermission,
                     @Suppress("DEPRECATION") defaultPermission,
+                    nsfw,
                     version
                 )
             }

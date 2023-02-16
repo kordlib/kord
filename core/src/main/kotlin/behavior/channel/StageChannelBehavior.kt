@@ -20,7 +20,7 @@ import dev.kord.rest.service.patchStageVoiceChannel
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public interface StageChannelBehavior : BaseVoiceChannelBehavior {
+public interface StageChannelBehavior : BaseVoiceChannelBehavior, TopGuildMessageChannelBehavior {
 
     /**
      * Returns a new [StageChannelBehavior] with the given [strategy].

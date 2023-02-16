@@ -101,6 +101,10 @@ public sealed class MessageType(
 
     public object RoleSubscriptionPurchase : MessageType(25)
 
+    public object InteractionPremiumUpsell : MessageType(26)
+
+    public object GuildApplicationPremiumSubscription : MessageType(32)
+
     /**
      * @suppress
      */
@@ -189,6 +193,8 @@ public sealed class MessageType(
             23 -> ContextMenuCommand
             24 -> AutoModerationAction
             25 -> RoleSubscriptionPurchase
+            26 -> InteractionPremiumUpsell
+            32 -> GuildApplicationPremiumSubscription
             else -> Unknown(code)
         }
     }
@@ -224,6 +230,8 @@ public sealed class MessageType(
                 ContextMenuCommand,
                 AutoModerationAction,
                 RoleSubscriptionPurchase,
+                InteractionPremiumUpsell,
+                GuildApplicationPremiumSubscription,
             )
         }
 

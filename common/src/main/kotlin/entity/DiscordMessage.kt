@@ -29,6 +29,8 @@
         Entry("ContextMenuCommand", intValue = 23),
         Entry("AutoModerationAction", intValue = 24),
         Entry("RoleSubscriptionPurchase", intValue = 25),
+        Entry("InteractionPremiumUpsell", intValue = 26),
+        Entry("GuildApplicationPremiumSubscription", intValue = 32),
     ],
     deprecatedEntries = [
         Entry(
