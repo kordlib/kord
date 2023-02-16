@@ -268,6 +268,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of webhooks per guild reached (1000). */
     MaxGuildWebhooks(30058),
 
+    /** Maximum number of channel permission overwrites reached (1000). */
+    MaxChannelPermissionOverwrites(30060),
+
     /** The channels for this guild are too large. */
     ChannelsTooLarge(30061),
 
