@@ -28,6 +28,8 @@
         Entry("GuildInviteReminder", intValue = 22),
         Entry("ContextMenuCommand", intValue = 23),
         Entry("AutoModerationAction", intValue = 24),
+        Entry("InteractionPremiumUpsell", intValue = 26),
+        Entry("GuildApplicationPremiumSubscription", intValue = 32),
     ],
     deprecatedEntries = [
         Entry(

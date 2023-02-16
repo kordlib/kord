@@ -39,6 +39,7 @@ public data class ChannelData(
     val flags: Optional<ChannelFlags> = Optional.Missing(),
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     val totalMessageSent: OptionalInt = OptionalInt.Missing
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
 ) {
 
 
@@ -76,6 +77,7 @@ public data class ChannelData(
                 flags,
                 defaultSortOrder,
                 totalMessageSent
+                defaultForumLayout,
             )
         }
     }

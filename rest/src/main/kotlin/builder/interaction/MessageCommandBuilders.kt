@@ -29,6 +29,8 @@ internal class MessageCommandModifyBuilderImpl : GlobalMessageCommandModifyBuild
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
+    override var nsfw: Boolean? by state::nsfw.delegate()
+
     override fun toRequest(): ApplicationCommandModifyRequest {
         return ApplicationCommandModifyRequest(
             name = state.name,
@@ -36,6 +38,7 @@ internal class MessageCommandModifyBuilderImpl : GlobalMessageCommandModifyBuild
             dmPermission = state.dmPermission,
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
+            nsfw = state.nsfw,
         )
 
     }
@@ -64,6 +67,8 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
     override var defaultPermission: Boolean? by @Suppress("DEPRECATION") state::defaultPermission.delegate()
 
+    override var nsfw: Boolean? by state::nsfw.delegate()
+
     override fun toRequest(): ApplicationCommandCreateRequest {
         return ApplicationCommandCreateRequest(
             name = name,
@@ -72,6 +77,7 @@ internal class MessageCommandCreateBuilderImpl(override var name: String) : Glob
             dmPermission = state.dmPermission,
             defaultMemberPermissions = state.defaultMemberPermissions,
             defaultPermission = @Suppress("DEPRECATION") state.defaultPermission,
+            nsfw = state.nsfw,
         )
     }
 }

@@ -29,4 +29,5 @@ internal class ApplicationCommandModifyStateHolder {
     @SerialName("default_permission")
     var defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 
+    var nsfw: OptionalBoolean = OptionalBoolean.Missing
 }
