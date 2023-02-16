@@ -7,6 +7,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
+import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
@@ -287,6 +288,12 @@ public class Message(
      * Returns null if this message was not send using a webhook.
      */
     public val webhookId: Snowflake? get() = data.webhookId.value
+
+    /**
+     * A generally increasing integer that represents the **approximate** position of the message in the thread.
+     * Can be used to estimate the relative position along with total_message_sent on the parent thread,
+     */
+    public val position: Int? get() = data.position.value
 
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>
