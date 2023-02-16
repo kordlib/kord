@@ -103,6 +103,7 @@
         Entry("PNG", intValue = 1),
         Entry("APNG", intValue = 2),
         Entry("LOTTIE", intValue = 3),
+        Entry("GIF", intValue = 4)
     ],
 )
 
