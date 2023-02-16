@@ -85,6 +85,7 @@ class GuildTest {
             joinedAt shouldBe Instant.parse("2015-04-26T06:26:56.936000+00:00")
             deaf shouldBe false
             mute shouldBe false
+            flags shouldBe GuildMemberFlags(0)
         }
     }
 

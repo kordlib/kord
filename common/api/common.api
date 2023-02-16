@@ -6249,18 +6249,40 @@ public final class dev/kord/common/entity/GuildFeature$WelcomeScreenEnabled : de
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$WelcomeScreenEnabled;
 }
 
-public final class dev/kord/common/entity/GuildMemberFlags : java/lang/Enum {
-	public static final field BYPASSES_VERIFICATION Ldev/kord/common/entity/GuildMemberFlags;
-	public static final field COMPLETED_ONBOARDING Ldev/kord/common/entity/GuildMemberFlags;
-	public static final field Companion Ldev/kord/common/entity/GuildMemberFlags$Companion;
-	public static final field DID_REJOIN Ldev/kord/common/entity/GuildMemberFlags;
-	public static final field STARTED_ONBOARDING Ldev/kord/common/entity/GuildMemberFlags;
+public final class dev/kord/common/entity/GuildMemberFlag : java/lang/Enum {
+	public static final field BYPASSES_VERIFICATION Ldev/kord/common/entity/GuildMemberFlag;
+	public static final field COMPLETED_ONBOARDING Ldev/kord/common/entity/GuildMemberFlag;
+	public static final field Companion Ldev/kord/common/entity/GuildMemberFlag$Companion;
+	public static final field DID_REJOIN Ldev/kord/common/entity/GuildMemberFlag;
+	public static final field STARTED_ONBOARDING Ldev/kord/common/entity/GuildMemberFlag;
 	public final fun getCode ()I
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlags;
-	public static fun values ()[Ldev/kord/common/entity/GuildMemberFlags;
+	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlag;
+	public static fun values ()[Ldev/kord/common/entity/GuildMemberFlag;
 }
 
-public final class dev/kord/common/entity/GuildMemberFlags$Companion {
+public final class dev/kord/common/entity/GuildMemberFlag$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/GuildMemberFlags {
+	public static final field Companion Ldev/kord/common/entity/GuildMemberFlags$Companion;
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun contains (Ldev/kord/common/entity/GuildMemberFlags;)Z
+	public final fun copy (I)Ldev/kord/common/entity/GuildMemberFlags;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/GuildMemberFlags;IILjava/lang/Object;)Ldev/kord/common/entity/GuildMemberFlags;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/GuildMemberFlags$Companion : kotlinx/serialization/KSerializer {
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/GuildMemberFlags;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/GuildMemberFlags;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
