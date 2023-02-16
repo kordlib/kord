@@ -54,7 +54,7 @@ public sealed class BaseApplication(
 
     public val slug: String? get() = data.slug.value
 
-    public val cover: Asset? get() = data.coverImage.value?.let { Asset.ApplicationCover(id, it, kord) }
+    public val coverImage: Asset? get() = data.coverImage.value?.let { Asset.ApplicationCover(id, it, kord) }
 
     public val coverImageHash: String? get() = data.coverImage.value
 
