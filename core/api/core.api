@@ -108,6 +108,17 @@ public abstract interface class dev/kord/core/KordObject {
 	public abstract fun getKord ()Ldev/kord/core/Kord;
 }
 
+public final class dev/kord/core/Markdown {
+	public final fun escape ()Ljava/lang/String;
+	public final fun getText ()Ljava/lang/String;
+	public final fun strip ()Ljava/lang/String;
+	public final fun toHTML ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/MarkdownKt {
+	public static final fun parseMarkdown (Ljava/lang/String;)Ldev/kord/core/Markdown;
+}
+
 public final class dev/kord/core/Unsafe {
 	public fun <init> (Ldev/kord/core/Kord;)V
 	public final fun applicationCommandInteraction (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/behavior/interaction/ApplicationCommandInteractionBehavior;
@@ -6457,6 +6468,8 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public fun asMessageOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public final fun contentDisplay (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun contentStripped (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun delete (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteAllReactions (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

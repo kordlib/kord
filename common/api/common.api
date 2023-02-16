@@ -57,6 +57,15 @@ public final class dev/kord/common/DiscordBitSetSerializer : kotlinx/serializati
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
+public final class dev/kord/common/DiscordMarkFlavourDescriptor : org/intellij/markdown/flavours/commonmark/CommonMarkFlavourDescriptor {
+	public static final field INSTANCE Ldev/kord/common/DiscordMarkFlavourDescriptor;
+	public fun createHtmlGeneratingProviders (Lorg/intellij/markdown/parser/LinkMap;Ljava/net/URI;)Ljava/util/Map;
+	public fun createInlinesLexer ()Lorg/intellij/markdown/lexer/MarkdownLexer;
+	public final fun getPlainTextTypes ()Ljava/util/List;
+	public fun getSequentialParserManager ()Lorg/intellij/markdown/parser/sequentialparsers/SequentialParserManager;
+	public final fun getSupportedElements ()Ljava/util/List;
+}
+
 public final class dev/kord/common/DiscordTimestampKt {
 	public static final fun toMessageFormat (Lkotlinx/datetime/Instant;Ldev/kord/common/DiscordTimestampStyle;)Ljava/lang/String;
 	public static synthetic fun toMessageFormat$default (Lkotlinx/datetime/Instant;Ldev/kord/common/DiscordTimestampStyle;ILjava/lang/Object;)Ljava/lang/String;
