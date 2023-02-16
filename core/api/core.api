@@ -5863,7 +5863,7 @@ public abstract class dev/kord/core/entity/BaseApplication : dev/kord/core/entit
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public final fun equals (Ljava/lang/Object;)Z
-	public final fun getCover ()Ldev/kord/core/entity/Asset;
+	public final fun getCoverImage ()Ldev/kord/core/entity/Asset;
 	public final fun getCoverImageHash ()Ljava/lang/String;
 	public final fun getCustomInstallUrl ()Ljava/lang/String;
 	public abstract fun getData ()Ldev/kord/core/cache/data/BaseApplicationData;
