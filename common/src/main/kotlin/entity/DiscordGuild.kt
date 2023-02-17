@@ -384,12 +384,12 @@ public data class DiscordGuildBan(
 )
 
 @Serializable
-public data class DiscordGuildIntegration(
+public data class DiscordGuildIntegrations(
     @SerialName("guild_id") val guildId: Snowflake,
 )
 
 @Serializable
-public data class DiscordGuildIntegrationDeleted(
+public data class DiscordGuildIntegrationsDeleted(
     val id: Snowflake,
     @SerialName("guild_id") val guildId: Snowflake,
     @SerialName("application_id") val applicationId: Snowflake?

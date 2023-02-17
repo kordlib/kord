@@ -38,7 +38,7 @@ public fun LiveGuild.onEmojisUpdate(scope: CoroutineScope = this, block: suspend
 @KordPreview
 public fun LiveGuild.onIntegrationsUpdate(
     scope: CoroutineScope = this,
-    block: suspend (IntegrationUpdateEvent) -> Unit
+    block: suspend (IntegrationsUpdateEvent) -> Unit
 ): Job =
     on(scope = scope, consumer = block)
 
@@ -178,7 +178,7 @@ public class LiveGuild(
     override fun filter(event: Event): Boolean = when (event) {
         is EmojisUpdateEvent -> event.guildId == guild.id
 
-        is IntegrationUpdateEvent -> event.guildId == guild.id
+        is IntegrationsUpdateEvent -> event.guildId == guild.id
 
         is BanAddEvent -> event.guildId == guild.id
         is BanRemoveEvent -> event.guildId == guild.id
