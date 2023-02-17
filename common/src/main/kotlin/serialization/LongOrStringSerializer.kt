@@ -6,9 +6,9 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.int
+import kotlinx.serialization.json.long
 
-internal object IntOrStringSerializer : KSerializer<String> {
+internal object LongOrStringSerializer : KSerializer<String> {
     private val backingSerializer = JsonPrimitive.serializer()
 
     /*
@@ -21,17 +21,17 @@ internal object IntOrStringSerializer : KSerializer<String> {
      * -> use `PrimitiveSerialDescriptor("...", PrimitiveKind.STRING)` instead
      */
     override val descriptor = PrimitiveSerialDescriptor(
-        serialName = "dev.kord.common.serialization.IntOrString",
+        serialName = "dev.kord.common.serialization.LongOrString",
         PrimitiveKind.STRING,
     )
 
     override fun serialize(encoder: Encoder, value: String) {
-        val jsonPrimitive = value.toIntOrNull()?.let { JsonPrimitive(it) } ?: JsonPrimitive(value)
+        val jsonPrimitive = value.toLongOrNull()?.let { JsonPrimitive(it) } ?: JsonPrimitive(value)
         encoder.encodeSerializableValue(backingSerializer, jsonPrimitive)
     }
 
     override fun deserialize(decoder: Decoder): String {
         val jsonPrimitive = decoder.decodeSerializableValue(backingSerializer)
-        return if (jsonPrimitive.isString) jsonPrimitive.content else jsonPrimitive.int.toString()
+        return if (jsonPrimitive.isString) jsonPrimitive.content else jsonPrimitive.long.toString()
     }
 }
