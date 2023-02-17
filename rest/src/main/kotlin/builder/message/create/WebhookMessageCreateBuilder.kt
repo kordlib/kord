@@ -36,7 +36,7 @@ public class WebhookMessageCreateBuilder :
 
     override val files: MutableList<NamedFile> = mutableListOf()
 
-    override val flags: MessageFlags? = null
+    override var flags: MessageFlags? = null
     override var suppressEmbeds: Boolean? = null
     override var suppressNotifications: Boolean? = null
 

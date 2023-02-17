@@ -62,7 +62,7 @@ public sealed interface MessageCreateBuilder {
      * @see suppressEmbeds
      * @see suppressNotifications
      */
-    public val flags: MessageFlags?
+    public var flags: MessageFlags?
 
     /**
      * Do not include any embeds when serializing this message.
