@@ -242,21 +242,21 @@ public sealed class Event {
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
-                        DiscordIntegrations.serializer()
+                        DiscordGuildIntegrations.serializer()
                     ), sequence
                 )
                 "INTEGRATION_DELETE" -> IntegrationDelete(
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
-                        DiscordIntegrationsDeleted.serializer()
+                        DiscordGuildIntegrationsDeleted.serializer()
                     ), sequence
                 )
                 "INTEGRATION_UPDATE" -> IntegrationUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
-                        DiscordIntegrations.serializer()
+                        DiscordGuildIntegrations.serializer()
                     ), sequence
                 )
                 "GUILD_MEMBER_ADD" -> GuildMemberAdd(
@@ -686,11 +686,11 @@ public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence
 public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
 public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
-public data class IntegrationDelete(val integration: DiscordIntegrationsDeleted, override val sequence: Int?) :
+public data class IntegrationDelete(val integration: DiscordGuildIntegrationsDeleted, override val sequence: Int?) :
     DispatchEvent()
-public data class IntegrationCreate(val integration: DiscordIntegrations, override val sequence: Int?) :
+public data class IntegrationCreate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
-public data class IntegrationUpdate(val integration: DiscordIntegrations, override val sequence: Int?) :
+public data class IntegrationUpdate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
 
 public data class GuildMemberAdd(val member: DiscordAddedGuildMember, override val sequence: Int?) : DispatchEvent()
@@ -870,11 +870,4 @@ public data class DiscordThreadMembersUpdate(
     val addedMembers: Optional<List<DiscordThreadMember>> = Optional.Missing(),
     @SerialName("removed_member_ids")
     val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
-)
-
-@Serializable
-public data class DiscordIntegrations(
-    val integration: DiscordIntegration,
-    @SerialName("guild_id")
-    val guildId: Snowflake
 )

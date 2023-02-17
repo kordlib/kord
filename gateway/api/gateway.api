@@ -424,37 +424,6 @@ public final class dev/kord/gateway/DiscordDeletedInvite$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/gateway/DiscordIntegrations {
-	public static final field Companion Ldev/kord/gateway/DiscordIntegrations$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/DiscordIntegration;Ldev/kord/common/entity/Snowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/DiscordIntegration;Ldev/kord/common/entity/Snowflake;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordIntegration;
-	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
-	public final fun copy (Ldev/kord/common/entity/DiscordIntegration;Ldev/kord/common/entity/Snowflake;)Ldev/kord/gateway/DiscordIntegrations;
-	public static synthetic fun copy$default (Ldev/kord/gateway/DiscordIntegrations;Ldev/kord/common/entity/DiscordIntegration;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;)Ldev/kord/gateway/DiscordIntegrations;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getIntegration ()Ldev/kord/common/entity/DiscordIntegration;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordIntegrations;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class dev/kord/gateway/DiscordIntegrations$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/gateway/DiscordIntegrations$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/DiscordIntegrations;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/DiscordIntegrations;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/gateway/DiscordIntegrations$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public final class dev/kord/gateway/DiscordPresence {
 	public static final field Companion Ldev/kord/gateway/DiscordPresence$Companion;
 	public synthetic fun <init> (ILdev/kord/common/entity/PresenceStatus;ZLkotlinx/datetime/Instant;Ldev/kord/common/entity/DiscordBotActivity;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -1194,39 +1163,39 @@ public final class dev/kord/gateway/IdentifyProperties$Companion {
 }
 
 public final class dev/kord/gateway/IntegrationCreate : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/gateway/DiscordIntegrations;
+	public fun <init> (Ldev/kord/common/entity/DiscordGuildIntegrations;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordGuildIntegrations;
 	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationCreate;
-	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationCreate;Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationCreate;
+	public final fun copy (Ldev/kord/common/entity/DiscordGuildIntegrations;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationCreate;Ldev/kord/common/entity/DiscordGuildIntegrations;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationCreate;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getIntegration ()Ldev/kord/gateway/DiscordIntegrations;
+	public final fun getIntegration ()Ldev/kord/common/entity/DiscordGuildIntegrations;
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/IntegrationDelete : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/common/entity/DiscordIntegrationsDeleted;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordIntegrationsDeleted;
+	public fun <init> (Ldev/kord/common/entity/DiscordGuildIntegrationsDeleted;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordGuildIntegrationsDeleted;
 	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/DiscordIntegrationsDeleted;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationDelete;
-	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationDelete;Ldev/kord/common/entity/DiscordIntegrationsDeleted;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationDelete;
+	public final fun copy (Ldev/kord/common/entity/DiscordGuildIntegrationsDeleted;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationDelete;Ldev/kord/common/entity/DiscordGuildIntegrationsDeleted;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationDelete;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getIntegration ()Ldev/kord/common/entity/DiscordIntegrationsDeleted;
+	public final fun getIntegration ()Ldev/kord/common/entity/DiscordGuildIntegrationsDeleted;
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/IntegrationUpdate : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/gateway/DiscordIntegrations;
+	public fun <init> (Ldev/kord/common/entity/DiscordGuildIntegrations;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordGuildIntegrations;
 	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationUpdate;
-	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationUpdate;Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationUpdate;
+	public final fun copy (Ldev/kord/common/entity/DiscordGuildIntegrations;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationUpdate;Ldev/kord/common/entity/DiscordGuildIntegrations;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationUpdate;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getIntegration ()Ldev/kord/gateway/DiscordIntegrations;
+	public final fun getIntegration ()Ldev/kord/common/entity/DiscordGuildIntegrations;
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
