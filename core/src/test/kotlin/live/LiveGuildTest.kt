@@ -86,7 +86,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
             }
 
             sendEventValidAndRandomId(guildId) {
-                GuildIntegrationUpdate(
+                GuildIntegrationsUpdate(
                     DiscordGuildIntegration(
                         guildId = it
                     ),

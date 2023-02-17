@@ -231,25 +231,32 @@ public sealed class Event {
                         DiscordUpdatedEmojis.serializer()
                     ), sequence
                 )
-                "INTEGRATION_CREATE" -> GuildIntegrationCreate(
+                "GUILD_INTEGRATIONS_UPDATE" -> GuildIntegrationsUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
                         DiscordGuildIntegration.serializer()
                     ), sequence
                 )
-                "INTEGRATION_UPDATE" -> GuildIntegrationUpdate(
+                "INTEGRATION_CREATE" -> IntegrationCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
                         DiscordGuildIntegration.serializer()
                     ), sequence
                 )
-                "INTEGRATION_DELETE" -> GuildIntegrationDelete(
+                "INTEGRATION_DELETE" -> IntegrationDelete(
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
                         DiscordGuildIntegrationDeleted.serializer()
+                    ), sequence
+                )
+                "INTEGRATION_UPDATE" -> IntegrationUpdate(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordGuildIntegration.serializer()
                     ), sequence
                 )
                 "GUILD_MEMBER_ADD" -> GuildMemberAdd(
@@ -677,11 +684,13 @@ public data class GuildDelete(val guild: DiscordUnavailableGuild, override val s
 public data class GuildBanAdd(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
 public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
 public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
-public data class GuildIntegrationCreate(val integration: DiscordGuildIntegration, override val sequence: Int?) :
+public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegration, override val sequence: Int?) :
     DispatchEvent()
-public data class GuildIntegrationUpdate(val integration: DiscordGuildIntegration, override val sequence: Int?) :
+public data class IntegrationDelete(val integration: DiscordGuildIntegrationDeleted, override val sequence: Int?) :
     DispatchEvent()
-public data class GuildIntegrationDelete(val integration: DiscordGuildIntegrationDeleted, override val sequence: Int?) :
+public data class IntegrationCreate(val integration: DiscordGuildIntegration, override val sequence: Int?) :
+    DispatchEvent()
+public data class IntegrationUpdate(val integration: DiscordGuildIntegration, override val sequence: Int?) :
     DispatchEvent()
 
 public data class GuildMemberAdd(val member: DiscordAddedGuildMember, override val sequence: Int?) : DispatchEvent()
