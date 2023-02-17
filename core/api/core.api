@@ -11585,14 +11585,15 @@ public final class dev/kord/core/event/guild/GuildUpdateEvent : dev/kord/core/ev
 }
 
 public final class dev/kord/core/event/guild/IntegrationCreateEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/DiscordIntegration;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/DiscordIntegration;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getIntegration ()Ldev/kord/common/entity/DiscordIntegration;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
@@ -11619,14 +11620,15 @@ public final class dev/kord/core/event/guild/IntegrationDeleteEvent : dev/kord/c
 }
 
 public final class dev/kord/core/event/guild/IntegrationUpdateEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/DiscordIntegration;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/DiscordIntegration;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCustomContext ()Ljava/lang/Object;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getIntegration ()Ldev/kord/common/entity/DiscordIntegration;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;

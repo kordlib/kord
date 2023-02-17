@@ -389,7 +389,7 @@ public data class DiscordGuildIntegrations(
 )
 
 @Serializable
-public data class DiscordGuildIntegrationsDeleted(
+public data class DiscordIntegrationsDeleted(
     val id: Snowflake,
     @SerialName("guild_id") val guildId: Snowflake,
     @SerialName("application_id") val applicationId: Snowflake?

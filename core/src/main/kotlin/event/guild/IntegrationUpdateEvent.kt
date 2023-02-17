@@ -1,5 +1,6 @@
 package dev.kord.core.event.guild
 
+import dev.kord.common.entity.DiscordIntegration
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
@@ -10,23 +11,23 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 public class IntegrationUpdateEvent(
+    public val integration: DiscordIntegration,
     public val guildId: Snowflake,
     override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : Event, Strategizable  {
+) : Event, Strategizable {
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
-
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): IntegrationUpdateEvent =
-        IntegrationUpdateEvent(guildId, kord, shard, customContext, strategy.supply(kord))
+        IntegrationUpdateEvent(integration, guildId, kord, shard, customContext, strategy.supply(kord))
 
     override fun toString(): String {
-        return "IntegrationUpdateEvent(guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"
+        return "IntegrationUpdateEvent(integration=$integration, guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"
     }
 }
