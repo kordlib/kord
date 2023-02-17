@@ -33,7 +33,9 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             is GuildBanAdd -> handle(event, shard, kord, context)
             is GuildBanRemove -> handle(event, shard, kord, context)
             is GuildEmojisUpdate -> handle(event, shard, kord, context)
-            is GuildIntegrationsUpdate -> handle(event, shard, kord, context)
+            is GuildIntegrationCreate -> handle(event, shard, kord, context)
+            is GuildIntegrationUpdate -> handle(event, shard, kord, context)
+            is GuildIntegrationDelete -> handle(event, shard, kord, context)
             is GuildMemberAdd -> handle(event, shard, kord, context)
             is GuildMemberRemove -> handle(event, shard, kord, context)
             is GuildMemberUpdate -> handle(event, shard, kord, context)
@@ -187,14 +189,31 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             EmojisUpdateEvent(guildId, emojis.toSet(), old, kord, shard, context?.get())
         }
 
-
     private suspend fun handle(
-        event: GuildIntegrationsUpdate,
+        event: GuildIntegrationCreate,
         shard: Int,
         kord: Kord,
         context: LazyContext?,
-    ): IntegrationsUpdateEvent {
-        return IntegrationsUpdateEvent(event.integrations.guildId, kord, shard, context?.get())
+    ): IntegrationCreateEvent {
+        return IntegrationCreateEvent(event.integration.guildId, kord, shard, context?.get())
+    }
+
+    private suspend fun handle(
+        event: GuildIntegrationUpdate,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): IntegrationUpdateEvent {
+        return IntegrationUpdateEvent(event.integration.guildId, kord, shard, context?.get())
+    }
+
+    private suspend fun handle(
+        event: GuildIntegrationDelete,
+        shard: Int,
+        kord: Kord,
+        context: LazyContext?,
+    ): IntegrationDeleteEvent {
+        return IntegrationDeleteEvent(event.integration.id, event.integration.guildId, event.integration.applicationId, kord, shard, context?.get())
     }
 
     private suspend fun handle(
