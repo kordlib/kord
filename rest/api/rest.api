@@ -1783,6 +1783,7 @@ public final class dev/kord/rest/builder/message/create/FollowupMessageCreateBui
 	public fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public fun setContent (Ljava/lang/String;)V
+	public fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 	public fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public fun setTts (Ljava/lang/Boolean;)V
@@ -1809,6 +1810,7 @@ public final class dev/kord/rest/builder/message/create/InteractionResponseCreat
 	public fun getTts ()Ljava/lang/Boolean;
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public fun setContent (Ljava/lang/String;)V
+	public fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 	public fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public fun setTts (Ljava/lang/Boolean;)V
@@ -1831,6 +1833,7 @@ public abstract interface class dev/kord/rest/builder/message/create/MessageCrea
 	public abstract fun getTts ()Ljava/lang/Boolean;
 	public abstract fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public abstract fun setContent (Ljava/lang/String;)V
+	public abstract fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public abstract fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 	public abstract fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public abstract fun setTts (Ljava/lang/Boolean;)V
@@ -1847,6 +1850,7 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
 	public static final fun allowedMentions (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun embed (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun messageFlags (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
@@ -1868,6 +1872,7 @@ public final class dev/kord/rest/builder/message/create/UpdateMessageInteraction
 	public fun setContent (Ljava/lang/String;)V
 	public fun setEmbeds (Ljava/util/List;)V
 	public fun setFiles (Ljava/util/List;)V
+	public fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 	public fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public fun setTts (Ljava/lang/Boolean;)V
@@ -1895,6 +1900,7 @@ public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public fun setContent (Ljava/lang/String;)V
 	public final fun setFailIfNotExists (Ljava/lang/Boolean;)V
+	public fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public final fun setMessageReference (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setNonce (Ljava/lang/String;)V
 	public fun setSuppressEmbeds (Ljava/lang/Boolean;)V
@@ -1923,6 +1929,7 @@ public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuil
 	public fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public final fun setAvatarUrl (Ljava/lang/String;)V
 	public fun setContent (Ljava/lang/String;)V
+	public fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 	public fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public fun setTts (Ljava/lang/Boolean;)V
@@ -2011,6 +2018,7 @@ public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderKt {
 	public static final fun allowedMentions (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun embed (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final fun messageFlags (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
