@@ -166,3 +166,15 @@ public inline fun MessageCreateBuilder.actionRow(builder: ActionRowBuilder.() ->
 
     components.add(ActionRowBuilder().apply(builder))
 }
+
+/**
+ * Sets the [MessageFlags] for the created message.
+ *
+ * **Only supports [MessageFlag.SuppressEmbeds] and [MessageFlag.SuppressNotifications]**
+ */
+public inline fun MessageCreateBuilder.messageFlags(builder: MessageFlags.Builder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    flags = MessageFlags(builder)
+}

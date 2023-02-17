@@ -2,12 +2,14 @@ package dev.kord.rest.builder.message.modify
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordAttachment
+import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
+import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.jvm.javaio.*
@@ -113,4 +115,16 @@ public inline fun MessageModifyBuilder.actionRow(builder: ActionRowBuilder.() ->
     components = (components ?: mutableListOf()).also {
         it.add(ActionRowBuilder().apply(builder))
     }
+}
+
+/**
+ * Sets/Unsets the [MessageFlags] for this message.
+ *
+ * **Only supports [MessageFlag.SuppressEmbeds]**
+ */
+public inline fun MessageCreateBuilder.messageFlags(builder: MessageFlags.Builder.() -> Unit) {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    flags = MessageFlags(builder)
 }
