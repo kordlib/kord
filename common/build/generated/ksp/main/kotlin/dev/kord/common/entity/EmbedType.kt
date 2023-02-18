@@ -77,6 +77,23 @@ public sealed class EmbedType(
      */
     public object Link : EmbedType("link")
 
+    public companion object {
+        /**
+         * A [List] of all known [EmbedType]s.
+         */
+        public val entries: List<EmbedType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Rich,
+                Image,
+                Video,
+                Gifv,
+                Article,
+                Link,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<EmbedType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.EmbedType", PrimitiveKind.STRING)
@@ -94,22 +111,5 @@ public sealed class EmbedType(
             "link" -> Link
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [EmbedType]s.
-         */
-        public val entries: List<EmbedType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Rich,
-                Image,
-                Video,
-                Gifv,
-                Article,
-                Link,
-            )
-        }
-
     }
 }

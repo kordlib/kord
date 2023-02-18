@@ -55,6 +55,21 @@ public sealed class MessageActivityType(
 
     public object JoinRequest : MessageActivityType(5)
 
+    public companion object {
+        /**
+         * A [List] of all known [MessageActivityType]s.
+         */
+        public val entries: List<MessageActivityType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Join,
+                Spectate,
+                Listen,
+                JoinRequest,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<MessageActivityType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MessageActivityType",
@@ -70,20 +85,5 @@ public sealed class MessageActivityType(
             5 -> JoinRequest
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [MessageActivityType]s.
-         */
-        public val entries: List<MessageActivityType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Join,
-                Spectate,
-                Listen,
-                JoinRequest,
-            )
-        }
-
     }
 }

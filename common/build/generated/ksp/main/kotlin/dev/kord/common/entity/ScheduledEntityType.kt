@@ -57,38 +57,6 @@ public sealed class ScheduledEntityType(
 
     public object External : ScheduledEntityType(3)
 
-    internal object NewSerializer : KSerializer<ScheduledEntityType> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ScheduledEntityType",
-                PrimitiveKind.INT)
-
-        public override fun serialize(encoder: Encoder, `value`: ScheduledEntityType) =
-                encoder.encodeInt(value.value)
-
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> StageInstance
-            2 -> Voice
-            3 -> External
-            else -> Unknown(value)
-        }
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Use 'ScheduledEntityType.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "ScheduledEntityType.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.ScheduledEntityType")),
-    )
-    public object Serializer : KSerializer<ScheduledEntityType> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "Use 'ScheduledEntityType.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "ScheduledEntityType.serializer()", imports =
-                        arrayOf("dev.kord.common.entity.ScheduledEntityType")),
-        )
-        public fun serializer(): KSerializer<ScheduledEntityType> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [ScheduledEntityType]s.
@@ -109,5 +77,39 @@ public sealed class ScheduledEntityType(
         )
         @JvmField
         public val Serializer: Serializer = Serializer
+    }
+
+    internal object NewSerializer : KSerializer<ScheduledEntityType> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ScheduledEntityType",
+                PrimitiveKind.INT)
+
+        public override fun serialize(encoder: Encoder, `value`: ScheduledEntityType) =
+                encoder.encodeInt(value.value)
+
+        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> StageInstance
+            2 -> Voice
+            3 -> External
+            else -> Unknown(value)
+        }
+    }
+
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Use 'dev.kord.common.entity.ScheduledEntityType.serializer()' instead.",
+        replaceWith = ReplaceWith(expression =
+                    "dev.kord.common.entity.ScheduledEntityType.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.dev.kord.common.entity.ScheduledEntityType")),
+    )
+    public object Serializer : KSerializer<ScheduledEntityType> by NewSerializer {
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "Use 'dev.kord.common.entity.ScheduledEntityType.serializer()' instead.",
+            replaceWith = ReplaceWith(expression =
+                        "dev.kord.common.entity.ScheduledEntityType.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.dev.kord.common.entity.ScheduledEntityType")),
+        )
+        public fun serializer(): KSerializer<ScheduledEntityType> = this
     }
 }

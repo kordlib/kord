@@ -70,6 +70,21 @@ public sealed class AutoModerationRuleTriggerType(
      */
     public object MentionSpam : AutoModerationRuleTriggerType(5)
 
+    public companion object {
+        /**
+         * A [List] of all known [AutoModerationRuleTriggerType]s.
+         */
+        public val entries: List<AutoModerationRuleTriggerType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Keyword,
+                Spam,
+                KeywordPreset,
+                MentionSpam,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<AutoModerationRuleTriggerType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleTriggerType",
@@ -85,20 +100,5 @@ public sealed class AutoModerationRuleTriggerType(
             5 -> MentionSpam
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [AutoModerationRuleTriggerType]s.
-         */
-        public val entries: List<AutoModerationRuleTriggerType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Keyword,
-                Spam,
-                KeywordPreset,
-                MentionSpam,
-            )
-        }
-
     }
 }

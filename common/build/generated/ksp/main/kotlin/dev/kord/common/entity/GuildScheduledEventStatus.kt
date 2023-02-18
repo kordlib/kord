@@ -60,39 +60,6 @@ public sealed class GuildScheduledEventStatus(
 
     public object Cancelled : GuildScheduledEventStatus(4)
 
-    internal object NewSerializer : KSerializer<GuildScheduledEventStatus> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildScheduledEventStatus",
-                PrimitiveKind.INT)
-
-        public override fun serialize(encoder: Encoder, `value`: GuildScheduledEventStatus) =
-                encoder.encodeInt(value.value)
-
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> Scheduled
-            2 -> Active
-            3 -> Completed
-            4 -> Cancelled
-            else -> Unknown(value)
-        }
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Use 'GuildScheduledEventStatus.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "GuildScheduledEventStatus.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.GuildScheduledEventStatus")),
-    )
-    public object Serializer : KSerializer<GuildScheduledEventStatus> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "Use 'GuildScheduledEventStatus.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "GuildScheduledEventStatus.serializer()", imports
-                        = arrayOf("dev.kord.common.entity.GuildScheduledEventStatus")),
-        )
-        public fun serializer(): KSerializer<GuildScheduledEventStatus> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [GuildScheduledEventStatus]s.
@@ -114,5 +81,41 @@ public sealed class GuildScheduledEventStatus(
         )
         @JvmField
         public val Serializer: Serializer = Serializer
+    }
+
+    internal object NewSerializer : KSerializer<GuildScheduledEventStatus> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildScheduledEventStatus",
+                PrimitiveKind.INT)
+
+        public override fun serialize(encoder: Encoder, `value`: GuildScheduledEventStatus) =
+                encoder.encodeInt(value.value)
+
+        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> Scheduled
+            2 -> Active
+            3 -> Completed
+            4 -> Cancelled
+            else -> Unknown(value)
+        }
+    }
+
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Use 'dev.kord.common.entity.GuildScheduledEventStatus.serializer()' instead.",
+        replaceWith = ReplaceWith(expression =
+                    "dev.kord.common.entity.GuildScheduledEventStatus.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.dev.kord.common.entity.GuildScheduledEventStatus")),
+    )
+    public object Serializer : KSerializer<GuildScheduledEventStatus> by NewSerializer {
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message =
+                    "Use 'dev.kord.common.entity.GuildScheduledEventStatus.serializer()' instead.",
+            replaceWith = ReplaceWith(expression =
+                        "dev.kord.common.entity.GuildScheduledEventStatus.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.dev.kord.common.entity.GuildScheduledEventStatus")),
+        )
+        public fun serializer(): KSerializer<GuildScheduledEventStatus> = this
     }
 }

@@ -51,6 +51,19 @@ public sealed class OverwriteType(
 
     public object Member : OverwriteType(1)
 
+    public companion object {
+        /**
+         * A [List] of all known [OverwriteType]s.
+         */
+        public val entries: List<OverwriteType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Role,
+                Member,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<OverwriteType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.OverwriteType", PrimitiveKind.INT)
@@ -63,18 +76,5 @@ public sealed class OverwriteType(
             1 -> Member
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [OverwriteType]s.
-         */
-        public val entries: List<OverwriteType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Role,
-                Member,
-            )
-        }
-
     }
 }

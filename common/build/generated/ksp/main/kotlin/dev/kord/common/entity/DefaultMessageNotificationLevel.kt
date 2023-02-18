@@ -58,6 +58,19 @@ public sealed class DefaultMessageNotificationLevel(
      */
     public object OnlyMentions : DefaultMessageNotificationLevel(1)
 
+    public companion object {
+        /**
+         * A [List] of all known [DefaultMessageNotificationLevel]s.
+         */
+        public val entries: List<DefaultMessageNotificationLevel> by lazy(mode = PUBLICATION) {
+            listOf(
+                AllMessages,
+                OnlyMentions,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<DefaultMessageNotificationLevel> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.DefaultMessageNotificationLevel",
@@ -71,18 +84,5 @@ public sealed class DefaultMessageNotificationLevel(
             1 -> OnlyMentions
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [DefaultMessageNotificationLevel]s.
-         */
-        public val entries: List<DefaultMessageNotificationLevel> by lazy(mode = PUBLICATION) {
-            listOf(
-                AllMessages,
-                OnlyMentions,
-            )
-        }
-
     }
 }

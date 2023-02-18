@@ -62,6 +62,20 @@ public sealed class ExplicitContentFilter(
      */
     public object AllMembers : ExplicitContentFilter(2)
 
+    public companion object {
+        /**
+         * A [List] of all known [ExplicitContentFilter]s.
+         */
+        public val entries: List<ExplicitContentFilter> by lazy(mode = PUBLICATION) {
+            listOf(
+                Disabled,
+                MembersWithoutRoles,
+                AllMembers,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<ExplicitContentFilter> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ExplicitContentFilter",
@@ -76,19 +90,5 @@ public sealed class ExplicitContentFilter(
             2 -> AllMembers
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [ExplicitContentFilter]s.
-         */
-        public val entries: List<ExplicitContentFilter> by lazy(mode = PUBLICATION) {
-            listOf(
-                Disabled,
-                MembersWithoutRoles,
-                AllMembers,
-            )
-        }
-
     }
 }

@@ -4,6 +4,7 @@ import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.GenerateKordEnum.ValueType.BITSET
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
 import kotlin.DeprecationLevel.WARNING
 import kotlin.annotation.AnnotationRetention.SOURCE
@@ -36,8 +37,12 @@ annotation class GenerateKordEnum(
     val valuesPropertyType: ValuesPropertyType = NONE,
     /** For migration purposes. */
     val deprecatedSerializerName: String = "",
+    /**
+     * Generate a Discord bit flags builder.
+     */
+    val isFlags: Boolean = false,
 ) {
-    enum class ValueType { INT, STRING }
+    enum class ValueType { INT, STRING, BITSET }
     enum class ValuesPropertyType { NONE, SET }
 
     @Retention(SOURCE)
@@ -49,6 +54,8 @@ annotation class GenerateKordEnum(
         val intValue: Int = DEFAULT_INT_VALUE,
         /** [String] value of the entry. Only set this if [GenerateKordEnum.valueType] is [STRING]. */
         val stringValue: String = DEFAULT_STRING_VALUE,
+        /** [Long] value of the entry. Only set this if [GenerateKordEnum.valueType] is [BITSET]. */
+        val longValue: Long = DEFAULT_LONG_VALUE,
         /** KDoc for the entry (optional). */
         val kDoc: String = "",
         /** Whether to add `@KordExperimental` to this entry. */
@@ -63,6 +70,9 @@ annotation class GenerateKordEnum(
         companion object {
             /** Default value for [intValue]. */
             const val DEFAULT_INT_VALUE = Int.MIN_VALUE // probably won't appear anywhere
+
+            /** Default value for [longValue] */
+            const val DEFAULT_LONG_VALUE = 0L
 
             /** Default value for [stringValue]. */
             const val DEFAULT_STRING_VALUE = ""

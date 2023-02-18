@@ -206,6 +206,44 @@ public sealed class GuildFeature(
     )
     public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
 
+    public companion object {
+        /**
+         * A [List] of all known [GuildFeature]s.
+         */
+        public val entries: List<GuildFeature> by lazy(mode = PUBLICATION) {
+            listOf(
+                AnimatedBanner,
+                AnimatedIcon,
+                ApplicationCommandPermissionsV2,
+                AutoModeration,
+                Banner,
+                @Suppress("DEPRECATION_ERROR") Commerce,
+                Community,
+                DeveloperSupportServer,
+                Discoverable,
+                Featurable,
+                InvitesDisabled,
+                InviteSplash,
+                MemberVerificationGateEnabled,
+                MonetizationEnabled,
+                MoreStickers,
+                News,
+                Partnered,
+                PreviewEnabled,
+                @Suppress("DEPRECATION") PrivateThreads,
+                RoleIcons,
+                @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive,
+                @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive,
+                TicketedEventsEnabled,
+                VanityUrl,
+                Verified,
+                VIPRegions,
+                WelcomeScreenEnabled,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<GuildFeature> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.GuildFeature",
@@ -245,43 +283,5 @@ public sealed class GuildFeature(
             "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [GuildFeature]s.
-         */
-        public val entries: List<GuildFeature> by lazy(mode = PUBLICATION) {
-            listOf(
-                AnimatedBanner,
-                AnimatedIcon,
-                ApplicationCommandPermissionsV2,
-                AutoModeration,
-                Banner,
-                @Suppress("DEPRECATION_ERROR") Commerce,
-                Community,
-                DeveloperSupportServer,
-                Discoverable,
-                Featurable,
-                InvitesDisabled,
-                InviteSplash,
-                MemberVerificationGateEnabled,
-                MonetizationEnabled,
-                MoreStickers,
-                News,
-                Partnered,
-                PreviewEnabled,
-                @Suppress("DEPRECATION") PrivateThreads,
-                RoleIcons,
-                @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive,
-                @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive,
-                TicketedEventsEnabled,
-                VanityUrl,
-                Verified,
-                VIPRegions,
-                WelcomeScreenEnabled,
-            )
-        }
-
     }
 }

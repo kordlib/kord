@@ -84,6 +84,24 @@ public sealed class InteractionResponseType(
      */
     public object Modal : InteractionResponseType(9)
 
+    public companion object {
+        /**
+         * A [List] of all known [InteractionResponseType]s.
+         */
+        public val entries: List<InteractionResponseType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Pong,
+                ChannelMessageWithSource,
+                DeferredChannelMessageWithSource,
+                DeferredUpdateMessage,
+                UpdateMessage,
+                ApplicationCommandAutoCompleteResult,
+                Modal,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<InteractionResponseType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionResponseType",
@@ -102,23 +120,5 @@ public sealed class InteractionResponseType(
             9 -> Modal
             else -> Unknown(type)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [InteractionResponseType]s.
-         */
-        public val entries: List<InteractionResponseType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Pong,
-                ChannelMessageWithSource,
-                DeferredChannelMessageWithSource,
-                DeferredUpdateMessage,
-                UpdateMessage,
-                ApplicationCommandAutoCompleteResult,
-                Modal,
-            )
-        }
-
     }
 }

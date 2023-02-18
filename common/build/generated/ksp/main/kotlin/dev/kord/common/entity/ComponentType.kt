@@ -101,42 +101,6 @@ public sealed class ComponentType(
     )
     public object SelectMenu : ComponentType(3)
 
-    internal object NewSerializer : KSerializer<ComponentType> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
-
-        public override fun serialize(encoder: Encoder, `value`: ComponentType) =
-                encoder.encodeInt(value.value)
-
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> ActionRow
-            2 -> Button
-            3 -> StringSelect
-            4 -> TextInput
-            5 -> UserSelect
-            6 -> RoleSelect
-            7 -> MentionableSelect
-            8 -> ChannelSelect
-            else -> Unknown(value)
-        }
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Use 'ComponentType.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.ComponentType")),
-    )
-    public object Serializer : KSerializer<ComponentType> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "Use 'ComponentType.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
-                        arrayOf("dev.kord.common.entity.ComponentType")),
-        )
-        public fun serializer(): KSerializer<ComponentType> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [ComponentType]s.
@@ -162,5 +126,43 @@ public sealed class ComponentType(
         )
         @JvmField
         public val Serializer: Serializer = Serializer
+    }
+
+    internal object NewSerializer : KSerializer<ComponentType> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
+
+        public override fun serialize(encoder: Encoder, `value`: ComponentType) =
+                encoder.encodeInt(value.value)
+
+        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> ActionRow
+            2 -> Button
+            3 -> StringSelect
+            4 -> TextInput
+            5 -> UserSelect
+            6 -> RoleSelect
+            7 -> MentionableSelect
+            8 -> ChannelSelect
+            else -> Unknown(value)
+        }
+    }
+
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Use 'dev.kord.common.entity.ComponentType.serializer()' instead.",
+        replaceWith = ReplaceWith(expression = "dev.kord.common.entity.ComponentType.serializer()",
+                    imports =
+                    arrayOf("dev.kord.common.entity.dev.kord.common.entity.ComponentType")),
+    )
+    public object Serializer : KSerializer<ComponentType> by NewSerializer {
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "Use 'dev.kord.common.entity.ComponentType.serializer()' instead.",
+            replaceWith = ReplaceWith(expression =
+                        "dev.kord.common.entity.ComponentType.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.dev.kord.common.entity.ComponentType")),
+        )
+        public fun serializer(): KSerializer<ComponentType> = this
     }
 }

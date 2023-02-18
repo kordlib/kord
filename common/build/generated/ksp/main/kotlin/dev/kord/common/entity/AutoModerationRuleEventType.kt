@@ -55,6 +55,18 @@ public sealed class AutoModerationRuleEventType(
      */
     public object MessageSend : AutoModerationRuleEventType(1)
 
+    public companion object {
+        /**
+         * A [List] of all known [AutoModerationRuleEventType]s.
+         */
+        public val entries: List<AutoModerationRuleEventType> by lazy(mode = PUBLICATION) {
+            listOf(
+                MessageSend,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<AutoModerationRuleEventType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleEventType",
@@ -67,17 +79,5 @@ public sealed class AutoModerationRuleEventType(
             1 -> MessageSend
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [AutoModerationRuleEventType]s.
-         */
-        public val entries: List<AutoModerationRuleEventType> by lazy(mode = PUBLICATION) {
-            listOf(
-                MessageSend,
-            )
-        }
-
     }
 }

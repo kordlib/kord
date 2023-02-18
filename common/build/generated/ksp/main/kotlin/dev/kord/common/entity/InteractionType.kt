@@ -57,6 +57,22 @@ public sealed class InteractionType(
 
     public object ModalSubmit : InteractionType(5)
 
+    public companion object {
+        /**
+         * A [List] of all known [InteractionType]s.
+         */
+        public val entries: List<InteractionType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Ping,
+                ApplicationCommand,
+                Component,
+                AutoComplete,
+                ModalSubmit,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<InteractionType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionType",
@@ -73,21 +89,5 @@ public sealed class InteractionType(
             5 -> ModalSubmit
             else -> Unknown(type)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [InteractionType]s.
-         */
-        public val entries: List<InteractionType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Ping,
-                ApplicationCommand,
-                Component,
-                AutoComplete,
-                ModalSubmit,
-            )
-        }
-
     }
 }

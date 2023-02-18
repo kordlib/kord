@@ -59,6 +59,19 @@ public sealed class TextInputStyle(
      */
     public object Paragraph : TextInputStyle(2)
 
+    public companion object {
+        /**
+         * A [List] of all known [TextInputStyle]s.
+         */
+        public val entries: List<TextInputStyle> by lazy(mode = PUBLICATION) {
+            listOf(
+                Short,
+                Paragraph,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<TextInputStyle> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.TextInputStyle",
@@ -72,18 +85,5 @@ public sealed class TextInputStyle(
             2 -> Paragraph
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [TextInputStyle]s.
-         */
-        public val entries: List<TextInputStyle> by lazy(mode = PUBLICATION) {
-            listOf(
-                Short,
-                Paragraph,
-            )
-        }
-
     }
 }

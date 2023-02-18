@@ -63,6 +63,20 @@ public sealed class WebhookType(
      */
     public object Application : WebhookType(3)
 
+    public companion object {
+        /**
+         * A [List] of all known [WebhookType]s.
+         */
+        public val entries: List<WebhookType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Incoming,
+                ChannelFollower,
+                Application,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<WebhookType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.WebhookType", PrimitiveKind.INT)
@@ -76,19 +90,5 @@ public sealed class WebhookType(
             3 -> Application
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [WebhookType]s.
-         */
-        public val entries: List<WebhookType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Incoming,
-                ChannelFollower,
-                Application,
-            )
-        }
-
     }
 }

@@ -54,6 +54,20 @@ public sealed class ApplicationCommandPermissionType(
 
     public object Channel : ApplicationCommandPermissionType(3)
 
+    public companion object {
+        /**
+         * A [List] of all known [ApplicationCommandPermissionType]s.
+         */
+        public val entries: List<ApplicationCommandPermissionType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Role,
+                User,
+                Channel,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<ApplicationCommandPermissionType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationCommandPermissionType",
@@ -68,19 +82,5 @@ public sealed class ApplicationCommandPermissionType(
             3 -> Channel
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [ApplicationCommandPermissionType]s.
-         */
-        public val entries: List<ApplicationCommandPermissionType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Role,
-                User,
-                Channel,
-            )
-        }
-
     }
 }

@@ -55,37 +55,6 @@ public sealed class TeamMembershipState(
 
     public object Accepted : TeamMembershipState(2)
 
-    internal object Serializer : KSerializer<TeamMembershipState> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.TeamMembershipState",
-                PrimitiveKind.INT)
-
-        public override fun serialize(encoder: Encoder, `value`: TeamMembershipState) =
-                encoder.encodeInt(value.value)
-
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> Invited
-            2 -> Accepted
-            else -> Unknown(value)
-        }
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Use 'TeamMembershipState.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "TeamMembershipState.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.TeamMembershipState")),
-    )
-    public object TeamMembershipStateSerializer : KSerializer<TeamMembershipState> by Serializer {
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "Use 'TeamMembershipState.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "TeamMembershipState.serializer()", imports =
-                        arrayOf("dev.kord.common.entity.TeamMembershipState")),
-        )
-        public fun serializer(): KSerializer<TeamMembershipState> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [TeamMembershipState]s.
@@ -106,5 +75,38 @@ public sealed class TeamMembershipState(
         @JvmField
         public val TeamMembershipStateSerializer: TeamMembershipStateSerializer =
                 TeamMembershipStateSerializer
+    }
+
+    internal object Serializer : KSerializer<TeamMembershipState> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.TeamMembershipState",
+                PrimitiveKind.INT)
+
+        public override fun serialize(encoder: Encoder, `value`: TeamMembershipState) =
+                encoder.encodeInt(value.value)
+
+        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> Invited
+            2 -> Accepted
+            else -> Unknown(value)
+        }
+    }
+
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Use 'dev.kord.common.entity.TeamMembershipState.serializer()' instead.",
+        replaceWith = ReplaceWith(expression =
+                    "dev.kord.common.entity.TeamMembershipState.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.dev.kord.common.entity.TeamMembershipState")),
+    )
+    public object TeamMembershipStateSerializer : KSerializer<TeamMembershipState> by Serializer {
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "Use 'dev.kord.common.entity.TeamMembershipState.serializer()' instead.",
+            replaceWith = ReplaceWith(expression =
+                        "dev.kord.common.entity.TeamMembershipState.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.dev.kord.common.entity.TeamMembershipState")),
+        )
+        public fun serializer(): KSerializer<TeamMembershipState> = this
     }
 }

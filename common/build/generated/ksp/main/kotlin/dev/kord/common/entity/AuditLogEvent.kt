@@ -317,6 +317,71 @@ public sealed class AuditLogEvent(
      */
     public object AutoModerationUserCommunicationDisabled : AuditLogEvent(145)
 
+    public companion object {
+        /**
+         * A [List] of all known [AuditLogEvent]s.
+         */
+        public val entries: List<AuditLogEvent> by lazy(mode = PUBLICATION) {
+            listOf(
+                GuildUpdate,
+                ChannelCreate,
+                ChannelUpdate,
+                ChannelDelete,
+                ChannelOverwriteCreate,
+                ChannelOverwriteUpdate,
+                ChannelOverwriteDelete,
+                MemberKick,
+                MemberPrune,
+                MemberBanAdd,
+                MemberBanRemove,
+                MemberUpdate,
+                MemberRoleUpdate,
+                MemberMove,
+                MemberDisconnect,
+                BotAdd,
+                RoleCreate,
+                RoleUpdate,
+                RoleDelete,
+                InviteCreate,
+                InviteUpdate,
+                InviteDelete,
+                WebhookCreate,
+                WebhookUpdate,
+                WebhookDelete,
+                EmojiCreate,
+                EmojiUpdate,
+                EmojiDelete,
+                MessageDelete,
+                MessageBulkDelete,
+                MessagePin,
+                MessageUnpin,
+                IntegrationCreate,
+                IntegrationUpdate,
+                IntegrationDelete,
+                StageInstanceCreate,
+                StageInstanceUpdate,
+                StageInstanceDelete,
+                StickerCreate,
+                StickerUpdate,
+                StickerDelete,
+                GuildScheduledEventCreate,
+                GuildScheduledEventUpdate,
+                GuildScheduledEventDelete,
+                ThreadCreate,
+                ThreadUpdate,
+                ThreadDelete,
+                ApplicationCommandPermissionUpdate,
+                AutoModerationRuleCreate,
+                AutoModerationRuleUpdate,
+                AutoModerationRuleDelete,
+                AutoModerationBlockMessage,
+                AutoModerationFlagToChannel,
+                AutoModerationUserCommunicationDisabled,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<AuditLogEvent> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AuditLogEvent", PrimitiveKind.INT)
@@ -381,70 +446,5 @@ public sealed class AuditLogEvent(
             145 -> AutoModerationUserCommunicationDisabled
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [AuditLogEvent]s.
-         */
-        public val entries: List<AuditLogEvent> by lazy(mode = PUBLICATION) {
-            listOf(
-                GuildUpdate,
-                ChannelCreate,
-                ChannelUpdate,
-                ChannelDelete,
-                ChannelOverwriteCreate,
-                ChannelOverwriteUpdate,
-                ChannelOverwriteDelete,
-                MemberKick,
-                MemberPrune,
-                MemberBanAdd,
-                MemberBanRemove,
-                MemberUpdate,
-                MemberRoleUpdate,
-                MemberMove,
-                MemberDisconnect,
-                BotAdd,
-                RoleCreate,
-                RoleUpdate,
-                RoleDelete,
-                InviteCreate,
-                InviteUpdate,
-                InviteDelete,
-                WebhookCreate,
-                WebhookUpdate,
-                WebhookDelete,
-                EmojiCreate,
-                EmojiUpdate,
-                EmojiDelete,
-                MessageDelete,
-                MessageBulkDelete,
-                MessagePin,
-                MessageUnpin,
-                IntegrationCreate,
-                IntegrationUpdate,
-                IntegrationDelete,
-                StageInstanceCreate,
-                StageInstanceUpdate,
-                StageInstanceDelete,
-                StickerCreate,
-                StickerUpdate,
-                StickerDelete,
-                GuildScheduledEventCreate,
-                GuildScheduledEventUpdate,
-                GuildScheduledEventDelete,
-                ThreadCreate,
-                ThreadUpdate,
-                ThreadDelete,
-                ApplicationCommandPermissionUpdate,
-                AutoModerationRuleCreate,
-                AutoModerationRuleUpdate,
-                AutoModerationRuleDelete,
-                AutoModerationBlockMessage,
-                AutoModerationFlagToChannel,
-                AutoModerationUserCommunicationDisabled,
-            )
-        }
-
     }
 }

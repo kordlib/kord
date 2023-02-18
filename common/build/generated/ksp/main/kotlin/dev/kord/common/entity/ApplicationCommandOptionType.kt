@@ -80,6 +80,28 @@ public sealed class ApplicationCommandOptionType(
 
     public object Attachment : ApplicationCommandOptionType(11)
 
+    public companion object {
+        /**
+         * A [List] of all known [ApplicationCommandOptionType]s.
+         */
+        public val entries: List<ApplicationCommandOptionType> by lazy(mode = PUBLICATION) {
+            listOf(
+                SubCommand,
+                SubCommandGroup,
+                String,
+                Integer,
+                Boolean,
+                User,
+                Channel,
+                Role,
+                Mentionable,
+                Number,
+                Attachment,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<ApplicationCommandOptionType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationCommandOptionType",
@@ -102,27 +124,5 @@ public sealed class ApplicationCommandOptionType(
             11 -> Attachment
             else -> Unknown(type)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [ApplicationCommandOptionType]s.
-         */
-        public val entries: List<ApplicationCommandOptionType> by lazy(mode = PUBLICATION) {
-            listOf(
-                SubCommand,
-                SubCommandGroup,
-                String,
-                Integer,
-                Boolean,
-                User,
-                Channel,
-                Role,
-                Mentionable,
-                Number,
-                Attachment,
-            )
-        }
-
     }
 }

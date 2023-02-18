@@ -53,6 +53,18 @@ public sealed class GuildScheduledEventPrivacyLevel(
      */
     public object GuildOnly : GuildScheduledEventPrivacyLevel(2)
 
+    public companion object {
+        /**
+         * A [List] of all known [GuildScheduledEventPrivacyLevel]s.
+         */
+        public val entries: List<GuildScheduledEventPrivacyLevel> by lazy(mode = PUBLICATION) {
+            listOf(
+                GuildOnly,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<GuildScheduledEventPrivacyLevel> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.GuildScheduledEventPrivacyLevel",
@@ -65,17 +77,5 @@ public sealed class GuildScheduledEventPrivacyLevel(
             2 -> GuildOnly
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [GuildScheduledEventPrivacyLevel]s.
-         */
-        public val entries: List<GuildScheduledEventPrivacyLevel> by lazy(mode = PUBLICATION) {
-            listOf(
-                GuildOnly,
-            )
-        }
-
     }
 }

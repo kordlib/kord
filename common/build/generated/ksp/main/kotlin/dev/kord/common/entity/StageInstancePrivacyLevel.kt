@@ -63,37 +63,6 @@ public sealed class StageInstancePrivacyLevel(
     @Deprecated(message = "Stages are no longer discoverable")
     public object Public : StageInstancePrivacyLevel(1)
 
-    internal object NewSerializer : KSerializer<StageInstancePrivacyLevel> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.StageInstancePrivacyLevel",
-                PrimitiveKind.INT)
-
-        public override fun serialize(encoder: Encoder, `value`: StageInstancePrivacyLevel) =
-                encoder.encodeInt(value.value)
-
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> @Suppress("DEPRECATION") Public
-            2 -> GuildOnly
-            else -> Unknown(value)
-        }
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Use 'StageInstancePrivacyLevel.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "StageInstancePrivacyLevel.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.StageInstancePrivacyLevel")),
-    )
-    public object Serializer : KSerializer<StageInstancePrivacyLevel> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "Use 'StageInstancePrivacyLevel.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "StageInstancePrivacyLevel.serializer()", imports
-                        = arrayOf("dev.kord.common.entity.StageInstancePrivacyLevel")),
-        )
-        public fun serializer(): KSerializer<StageInstancePrivacyLevel> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [StageInstancePrivacyLevel]s.
@@ -113,5 +82,39 @@ public sealed class StageInstancePrivacyLevel(
         )
         @JvmField
         public val Serializer: Serializer = Serializer
+    }
+
+    internal object NewSerializer : KSerializer<StageInstancePrivacyLevel> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.StageInstancePrivacyLevel",
+                PrimitiveKind.INT)
+
+        public override fun serialize(encoder: Encoder, `value`: StageInstancePrivacyLevel) =
+                encoder.encodeInt(value.value)
+
+        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> @Suppress("DEPRECATION") Public
+            2 -> GuildOnly
+            else -> Unknown(value)
+        }
+    }
+
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Use 'dev.kord.common.entity.StageInstancePrivacyLevel.serializer()' instead.",
+        replaceWith = ReplaceWith(expression =
+                    "dev.kord.common.entity.StageInstancePrivacyLevel.serializer()", imports =
+                    arrayOf("dev.kord.common.entity.dev.kord.common.entity.StageInstancePrivacyLevel")),
+    )
+    public object Serializer : KSerializer<StageInstancePrivacyLevel> by NewSerializer {
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message =
+                    "Use 'dev.kord.common.entity.StageInstancePrivacyLevel.serializer()' instead.",
+            replaceWith = ReplaceWith(expression =
+                        "dev.kord.common.entity.StageInstancePrivacyLevel.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.dev.kord.common.entity.StageInstancePrivacyLevel")),
+        )
+        public fun serializer(): KSerializer<StageInstancePrivacyLevel> = this
     }
 }

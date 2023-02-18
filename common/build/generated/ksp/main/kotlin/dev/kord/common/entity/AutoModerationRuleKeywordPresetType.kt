@@ -65,6 +65,20 @@ public sealed class AutoModerationRuleKeywordPresetType(
      */
     public object Slurs : AutoModerationRuleKeywordPresetType(3)
 
+    public companion object {
+        /**
+         * A [List] of all known [AutoModerationRuleKeywordPresetType]s.
+         */
+        public val entries: List<AutoModerationRuleKeywordPresetType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Profanity,
+                SexualContent,
+                Slurs,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<AutoModerationRuleKeywordPresetType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleKeywordPresetType",
@@ -79,19 +93,5 @@ public sealed class AutoModerationRuleKeywordPresetType(
             3 -> Slurs
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [AutoModerationRuleKeywordPresetType]s.
-         */
-        public val entries: List<AutoModerationRuleKeywordPresetType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Profanity,
-                SexualContent,
-                Slurs,
-            )
-        }
-
     }
 }

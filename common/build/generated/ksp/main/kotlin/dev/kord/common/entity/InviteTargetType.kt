@@ -51,6 +51,19 @@ public sealed class InviteTargetType(
 
     public object EmbeddedApplication : InviteTargetType(2)
 
+    public companion object {
+        /**
+         * A [List] of all known [InviteTargetType]s.
+         */
+        public val entries: List<InviteTargetType> by lazy(mode = PUBLICATION) {
+            listOf(
+                Stream,
+                EmbeddedApplication,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<InviteTargetType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.InviteTargetType",
@@ -64,18 +77,5 @@ public sealed class InviteTargetType(
             2 -> EmbeddedApplication
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [InviteTargetType]s.
-         */
-        public val entries: List<InviteTargetType> by lazy(mode = PUBLICATION) {
-            listOf(
-                Stream,
-                EmbeddedApplication,
-            )
-        }
-
     }
 }

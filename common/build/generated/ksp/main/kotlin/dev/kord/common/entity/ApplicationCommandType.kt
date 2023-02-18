@@ -62,6 +62,20 @@ public sealed class ApplicationCommandType(
      */
     public object Message : ApplicationCommandType(3)
 
+    public companion object {
+        /**
+         * A [List] of all known [ApplicationCommandType]s.
+         */
+        public val entries: List<ApplicationCommandType> by lazy(mode = PUBLICATION) {
+            listOf(
+                ChatInput,
+                User,
+                Message,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<ApplicationCommandType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationCommandType",
@@ -76,19 +90,5 @@ public sealed class ApplicationCommandType(
             3 -> Message
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [ApplicationCommandType]s.
-         */
-        public val entries: List<ApplicationCommandType> by lazy(mode = PUBLICATION) {
-            listOf(
-                ChatInput,
-                User,
-                Message,
-            )
-        }
-
     }
 }

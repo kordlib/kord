@@ -71,6 +71,20 @@ public sealed class AutoModerationActionType(
      */
     public object Timeout : AutoModerationActionType(3)
 
+    public companion object {
+        /**
+         * A [List] of all known [AutoModerationActionType]s.
+         */
+        public val entries: List<AutoModerationActionType> by lazy(mode = PUBLICATION) {
+            listOf(
+                BlockMessage,
+                SendAlertMessage,
+                Timeout,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<AutoModerationActionType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationActionType",
@@ -85,19 +99,5 @@ public sealed class AutoModerationActionType(
             3 -> Timeout
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [AutoModerationActionType]s.
-         */
-        public val entries: List<AutoModerationActionType> by lazy(mode = PUBLICATION) {
-            listOf(
-                BlockMessage,
-                SendAlertMessage,
-                Timeout,
-            )
-        }
-
     }
 }

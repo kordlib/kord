@@ -76,41 +76,6 @@ public sealed class PresenceStatus(
      */
     public object Offline : PresenceStatus("offline")
 
-    internal object Serializer : KSerializer<PresenceStatus> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.PresenceStatus",
-                PrimitiveKind.STRING)
-
-        public override fun serialize(encoder: Encoder, `value`: PresenceStatus) =
-                encoder.encodeString(value.value)
-
-        public override fun deserialize(decoder: Decoder) =
-                when (val value = decoder.decodeString()) {
-            "online" -> Online
-            "dnd" -> DoNotDisturb
-            "idle" -> Idle
-            "invisible" -> Invisible
-            "offline" -> Offline
-            else -> Unknown(value)
-        }
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Use 'PresenceStatus.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "PresenceStatus.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.PresenceStatus")),
-    )
-    public object StatusSerializer : KSerializer<PresenceStatus> by Serializer {
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "Use 'PresenceStatus.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "PresenceStatus.serializer()", imports =
-                        arrayOf("dev.kord.common.entity.PresenceStatus")),
-        )
-        public fun serializer(): KSerializer<PresenceStatus> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [PresenceStatus]s.
@@ -133,5 +98,42 @@ public sealed class PresenceStatus(
         )
         @JvmField
         public val StatusSerializer: StatusSerializer = StatusSerializer
+    }
+
+    internal object Serializer : KSerializer<PresenceStatus> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.PresenceStatus",
+                PrimitiveKind.STRING)
+
+        public override fun serialize(encoder: Encoder, `value`: PresenceStatus) =
+                encoder.encodeString(value.value)
+
+        public override fun deserialize(decoder: Decoder) =
+                when (val value = decoder.decodeString()) {
+            "online" -> Online
+            "dnd" -> DoNotDisturb
+            "idle" -> Idle
+            "invisible" -> Invisible
+            "offline" -> Offline
+            else -> Unknown(value)
+        }
+    }
+
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Use 'dev.kord.common.entity.PresenceStatus.serializer()' instead.",
+        replaceWith = ReplaceWith(expression = "dev.kord.common.entity.PresenceStatus.serializer()",
+                    imports =
+                    arrayOf("dev.kord.common.entity.dev.kord.common.entity.PresenceStatus")),
+    )
+    public object StatusSerializer : KSerializer<PresenceStatus> by Serializer {
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "Use 'dev.kord.common.entity.PresenceStatus.serializer()' instead.",
+            replaceWith = ReplaceWith(expression =
+                        "dev.kord.common.entity.PresenceStatus.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.dev.kord.common.entity.PresenceStatus")),
+        )
+        public fun serializer(): KSerializer<PresenceStatus> = this
     }
 }

@@ -78,39 +78,6 @@ public sealed class ButtonStyle(
      */
     public object Link : ButtonStyle(5)
 
-    internal object NewSerializer : KSerializer<ButtonStyle> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ButtonStyle", PrimitiveKind.INT)
-
-        public override fun serialize(encoder: Encoder, `value`: ButtonStyle) =
-                encoder.encodeInt(value.value)
-
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> Primary
-            2 -> Secondary
-            3 -> Success
-            4 -> Danger
-            5 -> Link
-            else -> Unknown(value)
-        }
-    }
-
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Use 'ButtonStyle.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "ButtonStyle.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.ButtonStyle")),
-    )
-    public object Serializer : KSerializer<ButtonStyle> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "Use 'ButtonStyle.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "ButtonStyle.serializer()", imports =
-                        arrayOf("dev.kord.common.entity.ButtonStyle")),
-        )
-        public fun serializer(): KSerializer<ButtonStyle> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [ButtonStyle]s.
@@ -133,5 +100,39 @@ public sealed class ButtonStyle(
         )
         @JvmField
         public val Serializer: Serializer = Serializer
+    }
+
+    internal object NewSerializer : KSerializer<ButtonStyle> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ButtonStyle", PrimitiveKind.INT)
+
+        public override fun serialize(encoder: Encoder, `value`: ButtonStyle) =
+                encoder.encodeInt(value.value)
+
+        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> Primary
+            2 -> Secondary
+            3 -> Success
+            4 -> Danger
+            5 -> Link
+            else -> Unknown(value)
+        }
+    }
+
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Use 'dev.kord.common.entity.ButtonStyle.serializer()' instead.",
+        replaceWith = ReplaceWith(expression = "dev.kord.common.entity.ButtonStyle.serializer()",
+                    imports = arrayOf("dev.kord.common.entity.dev.kord.common.entity.ButtonStyle")),
+    )
+    public object Serializer : KSerializer<ButtonStyle> by NewSerializer {
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "Use 'dev.kord.common.entity.ButtonStyle.serializer()' instead.",
+            replaceWith = ReplaceWith(expression =
+                        "dev.kord.common.entity.ButtonStyle.serializer()", imports =
+                        arrayOf("dev.kord.common.entity.dev.kord.common.entity.ButtonStyle")),
+        )
+        public fun serializer(): KSerializer<ButtonStyle> = this
     }
 }

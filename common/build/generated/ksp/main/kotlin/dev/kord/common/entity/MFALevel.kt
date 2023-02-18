@@ -57,6 +57,19 @@ public sealed class MFALevel(
      */
     public object Elevated : MFALevel(1)
 
+    public companion object {
+        /**
+         * A [List] of all known [MFALevel]s.
+         */
+        public val entries: List<MFALevel> by lazy(mode = PUBLICATION) {
+            listOf(
+                None,
+                Elevated,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<MFALevel> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MFALevel", PrimitiveKind.INT)
@@ -69,18 +82,5 @@ public sealed class MFALevel(
             1 -> Elevated
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [MFALevel]s.
-         */
-        public val entries: List<MFALevel> by lazy(mode = PUBLICATION) {
-            listOf(
-                None,
-                Elevated,
-            )
-        }
-
     }
 }

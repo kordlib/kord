@@ -2,6 +2,7 @@ package dev.kord.ksp
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.MemberName.Companion.member
+import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.TYPE
 
@@ -17,6 +18,7 @@ internal typealias AnnotationSpecBuilder = (@KotlinPoetDsl AnnotationSpec.Builde
 internal typealias FunSpecBuilder = (@KotlinPoetDsl FunSpec.Builder).() -> Unit
 internal typealias PropertySpecBuilder = (@KotlinPoetDsl PropertySpec.Builder).() -> Unit
 internal typealias CodeBlockBuilder = (@KotlinPoetDsl CodeBlock.Builder).() -> Unit
+internal typealias ParameterSpecBuilder = (@KotlinPoetDsl ParameterSpec.Builder).() -> Unit
 
 
 // miscellaneous
@@ -36,6 +38,9 @@ internal fun FileSpec.Builder.addAnnotation(annotation: Annotation, includeDefau
 internal inline fun FileSpec.Builder.addClass(className: ClassName, builder: TypeSpecBuilder) =
     addType(TypeSpec.classBuilder(className).apply(builder).build())
 
+internal inline fun TypeSpec.Builder.addClass(className: ClassName, builder: TypeSpecBuilder) =
+    addType(TypeSpec.classBuilder(className).apply(builder).build())
+
 
 // extensions for `TypeSpec.Builder`
 
@@ -51,6 +56,9 @@ internal inline fun TypeSpec.Builder.addClass(name: String, builder: TypeSpecBui
 
 internal inline fun TypeSpec.Builder.addCompanionObject(name: String? = null, builder: TypeSpecBuilder) =
     addType(TypeSpec.companionObjectBuilder(name).apply(builder).build())
+
+internal inline fun FunSpec.Builder.parameter(name: String, valueType: ClassName, builder: ParameterSpecBuilder) =
+    addParameter(ParameterSpec.builder(name, valueType).apply(builder).build())
 
 internal inline fun TypeSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
     addFunction(FunSpec.builder(name).apply(builder).build())
@@ -73,6 +81,9 @@ internal inline fun TypeSpec.Builder.addProperty(
 
 internal inline fun TypeSpec.Builder.primaryConstructor(builder: FunSpecBuilder) =
     primaryConstructor(FunSpec.constructorBuilder().apply(builder).build())
+
+internal inline fun TypeSpec.Builder.constructor(builder: FunSpecBuilder) =
+    addFunction(FunSpec.constructorBuilder().apply(builder).build())
 
 
 // extensions for `FunSpec.Builder`
@@ -110,3 +121,8 @@ internal inline fun CodeBlock.Builder.withControlFlow(
     vararg args: Any?,
     builder: CodeBlockBuilder,
 ) = beginControlFlow(controlFlow, *args).apply(builder).endControlFlow()
+
+internal fun GenerateKordEnum.ValueType.toPrimitiveKind() = when (this) {
+    GenerateKordEnum.ValueType.INT -> PrimitiveKind.INT::class
+    GenerateKordEnum.ValueType.STRING, GenerateKordEnum.ValueType.BITSET -> PrimitiveKind.STRING::class
+}

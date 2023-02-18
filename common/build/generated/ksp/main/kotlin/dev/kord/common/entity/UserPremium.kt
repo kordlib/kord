@@ -57,6 +57,21 @@ public sealed class UserPremium(
 
     public object NitroBasic : UserPremium(3)
 
+    public companion object {
+        /**
+         * A [List] of all known [UserPremium]s.
+         */
+        public val entries: List<UserPremium> by lazy(mode = PUBLICATION) {
+            listOf(
+                None,
+                NitroClassic,
+                Nitro,
+                NitroBasic,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<UserPremium> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.UserPremium", PrimitiveKind.INT)
@@ -71,20 +86,5 @@ public sealed class UserPremium(
             3 -> NitroBasic
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [UserPremium]s.
-         */
-        public val entries: List<UserPremium> by lazy(mode = PUBLICATION) {
-            listOf(
-                None,
-                NitroClassic,
-                Nitro,
-                NitroBasic,
-            )
-        }
-
     }
 }

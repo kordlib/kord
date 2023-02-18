@@ -109,6 +109,28 @@ public sealed class ChannelType(
      */
     public object GuildDirectory : ChannelType(14)
 
+    public companion object {
+        /**
+         * A [List] of all known [ChannelType]s.
+         */
+        public val entries: List<ChannelType> by lazy(mode = PUBLICATION) {
+            listOf(
+                GuildText,
+                DM,
+                GuildVoice,
+                GroupDM,
+                GuildCategory,
+                GuildNews,
+                PublicNewsThread,
+                PublicGuildThread,
+                PrivateThread,
+                GuildStageVoice,
+                GuildDirectory,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<ChannelType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelType", PrimitiveKind.INT)
@@ -130,27 +152,5 @@ public sealed class ChannelType(
             14 -> GuildDirectory
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [ChannelType]s.
-         */
-        public val entries: List<ChannelType> by lazy(mode = PUBLICATION) {
-            listOf(
-                GuildText,
-                DM,
-                GuildVoice,
-                GroupDM,
-                GuildCategory,
-                GuildNews,
-                PublicNewsThread,
-                PublicGuildThread,
-                PrivateThread,
-                GuildStageVoice,
-                GuildDirectory,
-            )
-        }
-
     }
 }

@@ -58,6 +58,19 @@ public sealed class DiscordConnectionVisibility(
      */
     public object Everyone : DiscordConnectionVisibility(1)
 
+    public companion object {
+        /**
+         * A [List] of all known [DiscordConnectionVisibility]s.
+         */
+        public val entries: List<DiscordConnectionVisibility> by lazy(mode = PUBLICATION) {
+            listOf(
+                None,
+                Everyone,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<DiscordConnectionVisibility> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.DiscordConnectionVisibility",
@@ -71,18 +84,5 @@ public sealed class DiscordConnectionVisibility(
             1 -> Everyone
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [DiscordConnectionVisibility]s.
-         */
-        public val entries: List<DiscordConnectionVisibility> by lazy(mode = PUBLICATION) {
-            listOf(
-                None,
-                Everyone,
-            )
-        }
-
     }
 }

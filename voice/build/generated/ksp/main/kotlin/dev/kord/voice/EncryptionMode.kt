@@ -53,6 +53,20 @@ public sealed class EncryptionMode(
 
     public object XSalsa20Poly1305Lite : EncryptionMode("xsalsa20_poly1305_lite")
 
+    public companion object {
+        /**
+         * A [List] of all known [EncryptionMode]s.
+         */
+        public val entries: List<EncryptionMode> by lazy(mode = PUBLICATION) {
+            listOf(
+                XSalsa20Poly1305,
+                XSalsa20Poly1305Suffix,
+                XSalsa20Poly1305Lite,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<EncryptionMode> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.voice.EncryptionMode", PrimitiveKind.STRING)
@@ -67,19 +81,5 @@ public sealed class EncryptionMode(
             "xsalsa20_poly1305_lite" -> XSalsa20Poly1305Lite
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [EncryptionMode]s.
-         */
-        public val entries: List<EncryptionMode> by lazy(mode = PUBLICATION) {
-            listOf(
-                XSalsa20Poly1305,
-                XSalsa20Poly1305Suffix,
-                XSalsa20Poly1305Lite,
-            )
-        }
-
     }
 }

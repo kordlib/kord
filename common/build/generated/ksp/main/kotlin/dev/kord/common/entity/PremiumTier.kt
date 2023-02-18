@@ -67,6 +67,21 @@ public sealed class PremiumTier(
      */
     public object Three : PremiumTier(3)
 
+    public companion object {
+        /**
+         * A [List] of all known [PremiumTier]s.
+         */
+        public val entries: List<PremiumTier> by lazy(mode = PUBLICATION) {
+            listOf(
+                None,
+                One,
+                Two,
+                Three,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<PremiumTier> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.PremiumTier", PrimitiveKind.INT)
@@ -81,20 +96,5 @@ public sealed class PremiumTier(
             3 -> Three
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [PremiumTier]s.
-         */
-        public val entries: List<PremiumTier> by lazy(mode = PUBLICATION) {
-            listOf(
-                None,
-                One,
-                Two,
-                Three,
-            )
-        }
-
     }
 }

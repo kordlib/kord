@@ -168,49 +168,6 @@ public sealed class MessageType(
     )
     public object UserPremiumGuildSubscriptionThree : MessageType(11)
 
-    internal object Serializer : KSerializer<MessageType> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageType", PrimitiveKind.INT)
-
-        public override fun serialize(encoder: Encoder, `value`: MessageType) =
-                encoder.encodeInt(value.code)
-
-        public override fun deserialize(decoder: Decoder) = when (val code = decoder.decodeInt()) {
-            0 -> Default
-            1 -> RecipientAdd
-            2 -> RecipientRemove
-            3 -> Call
-            4 -> ChannelNameChange
-            5 -> ChannelIconChange
-            6 -> ChannelPinnedMessage
-            7 -> UserJoin
-            8 -> GuildBoost
-            9 -> GuildBoostTier1
-            10 -> GuildBoostTier2
-            11 -> GuildBoostTier3
-            12 -> ChannelFollowAdd
-            14 -> GuildDiscoveryDisqualified
-            15 -> GuildDiscoveryRequalified
-            16 -> GuildDiscoveryGracePeriodInitialWarning
-            17 -> GuildDiscoveryGracePeriodFinalWarning
-            18 -> ThreadCreated
-            19 -> Reply
-            20 -> ChatInputCommand
-            21 -> ThreadStarterMessage
-            22 -> GuildInviteReminder
-            23 -> ContextMenuCommand
-            24 -> AutoModerationAction
-            26 -> InteractionPremiumUpsell
-            27 -> StageStart
-            28 -> StageEnd
-            29 -> StageSpeaker
-            30 -> StageRaiseHand
-            31 -> StageTopic
-            32 -> GuildApplicationPremiumSubscription
-            else -> Unknown(code)
-        }
-    }
-
     public companion object {
         /**
          * A [List] of all known [MessageType]s.
@@ -259,5 +216,48 @@ public sealed class MessageType(
         )
         public val values: Set<MessageType>
             get() = entries.toSet()
+    }
+
+    internal object Serializer : KSerializer<MessageType> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageType", PrimitiveKind.INT)
+
+        public override fun serialize(encoder: Encoder, `value`: MessageType) =
+                encoder.encodeInt(value.code)
+
+        public override fun deserialize(decoder: Decoder) = when (val code = decoder.decodeInt()) {
+            0 -> Default
+            1 -> RecipientAdd
+            2 -> RecipientRemove
+            3 -> Call
+            4 -> ChannelNameChange
+            5 -> ChannelIconChange
+            6 -> ChannelPinnedMessage
+            7 -> UserJoin
+            8 -> GuildBoost
+            9 -> GuildBoostTier1
+            10 -> GuildBoostTier2
+            11 -> GuildBoostTier3
+            12 -> ChannelFollowAdd
+            14 -> GuildDiscoveryDisqualified
+            15 -> GuildDiscoveryRequalified
+            16 -> GuildDiscoveryGracePeriodInitialWarning
+            17 -> GuildDiscoveryGracePeriodFinalWarning
+            18 -> ThreadCreated
+            19 -> Reply
+            20 -> ChatInputCommand
+            21 -> ThreadStarterMessage
+            22 -> GuildInviteReminder
+            23 -> ContextMenuCommand
+            24 -> AutoModerationAction
+            26 -> InteractionPremiumUpsell
+            27 -> StageStart
+            28 -> StageEnd
+            29 -> StageSpeaker
+            30 -> StageRaiseHand
+            31 -> StageTopic
+            32 -> GuildApplicationPremiumSubscription
+            else -> Unknown(code)
+        }
     }
 }

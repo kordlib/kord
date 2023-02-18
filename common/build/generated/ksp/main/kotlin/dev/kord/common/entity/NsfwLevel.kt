@@ -55,6 +55,21 @@ public sealed class NsfwLevel(
 
     public object AgeRestricted : NsfwLevel(3)
 
+    public companion object {
+        /**
+         * A [List] of all known [NsfwLevel]s.
+         */
+        public val entries: List<NsfwLevel> by lazy(mode = PUBLICATION) {
+            listOf(
+                Default,
+                Explicit,
+                Safe,
+                AgeRestricted,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<NsfwLevel> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.NsfwLevel", PrimitiveKind.INT)
@@ -69,20 +84,5 @@ public sealed class NsfwLevel(
             3 -> AgeRestricted
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [NsfwLevel]s.
-         */
-        public val entries: List<NsfwLevel> by lazy(mode = PUBLICATION) {
-            listOf(
-                Default,
-                Explicit,
-                Safe,
-                AgeRestricted,
-            )
-        }
-
     }
 }

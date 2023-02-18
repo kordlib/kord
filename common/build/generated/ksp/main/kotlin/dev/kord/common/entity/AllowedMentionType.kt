@@ -62,6 +62,20 @@ public sealed class AllowedMentionType(
      */
     public object EveryoneMentions : AllowedMentionType("everyone")
 
+    public companion object {
+        /**
+         * A [List] of all known [AllowedMentionType]s.
+         */
+        public val entries: List<AllowedMentionType> by lazy(mode = PUBLICATION) {
+            listOf(
+                RoleMentions,
+                UserMentions,
+                EveryoneMentions,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<AllowedMentionType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AllowedMentionType",
@@ -77,19 +91,5 @@ public sealed class AllowedMentionType(
             "everyone" -> EveryoneMentions
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [AllowedMentionType]s.
-         */
-        public val entries: List<AllowedMentionType> by lazy(mode = PUBLICATION) {
-            listOf(
-                RoleMentions,
-                UserMentions,
-                EveryoneMentions,
-            )
-        }
-
     }
 }

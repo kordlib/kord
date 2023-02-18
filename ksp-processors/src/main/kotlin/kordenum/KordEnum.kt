@@ -3,11 +3,11 @@ package dev.kord.ksp.kordenum
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSAnnotation
 import com.google.devtools.ksp.symbol.KSType
+import com.squareup.kotlinpoet.ClassName
 import dev.kord.ksp.AnnotationArguments.Companion.annotationArguments
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.ValueType
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.GenerateKordEnum.ValueType.*
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
@@ -30,6 +30,7 @@ internal class KordEnum(
     val valuesPropertyName: String?,
     val valuesPropertyType: ValuesPropertyType,
     val deprecatedSerializerName: String?,
+    val isFlags: Boolean
 ) {
     internal class Entry(
         val name: String,
@@ -44,6 +45,15 @@ internal class KordEnum(
         override fun compareTo(other: Entry) = with(NATURAL_ORDER) { compare(value, other.value) }
     }
 }
+
+internal data class ProcessingContext(
+    val packageName: String,
+    val enumName: ClassName,
+    val valueTypeName: ClassName,
+    val encodingPostfix: String,
+    val valueFormat: String,
+    val relevantEntriesForSerializerAndCompanion: List<Entry>
+)
 
 /**
  * Maps [KSAnnotation] for [GenerateKordEnum] to [KordEnum].
@@ -75,13 +85,14 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
         }
     }
     val deprecatedSerializerName = (args[GenerateKordEnum::deprecatedSerializerName] as String).ifEmpty { null }
+    val isFlags = args[GenerateKordEnum::isFlags] as Boolean
 
     return KordEnum(
         name, kDoc, docUrl, valueType, valueName,
         entries.map { it.toEntryOrNull(valueType, isDeprecated = false, logger) ?: return null },
         deprecatedEntries.map { it.toEntryOrNull(valueType, isDeprecated = true, logger) ?: return null },
 
-        valuesPropertyName, valuesPropertyType, deprecatedSerializerName,
+        valuesPropertyName, valuesPropertyType, deprecatedSerializerName, isFlags
     )
 }
 
@@ -89,6 +100,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
 private fun Any?.toValueType() = when (val name = (this as KSType).declaration.qualifiedName?.asString()) {
     "dev.kord.ksp.GenerateKordEnum.ValueType.INT" -> INT
     "dev.kord.ksp.GenerateKordEnum.ValueType.STRING" -> STRING
+    "dev.kord.ksp.GenerateKordEnum.ValueType.BITSET" -> BITSET
     else -> error("Unknown GenerateKordEnum.ValueType: $name")
 }
 
@@ -112,6 +124,7 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
     val name = args[GenerateKordEnum.Entry::name] as String
     val intValue = args[GenerateKordEnum.Entry::intValue] as Int
     val stringValue = args[GenerateKordEnum.Entry::stringValue] as String
+    val longValue = args[GenerateKordEnum.Entry::longValue] as Long
     val kDoc = args[GenerateKordEnum.Entry::kDoc].toKDoc()
     val isKordExperimental = args[GenerateKordEnum.Entry::isKordExperimental] as Boolean
     val deprecationMessage = args[GenerateKordEnum.Entry::deprecationMessage] as String
@@ -124,6 +137,10 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
                 logger.error("Specified stringValue for valueType $valueType", symbol = this)
                 return null
             }
+            if (longValue != GenerateKordEnum.Entry.DEFAULT_LONG_VALUE) {
+                logger.error("Specified longValue for valueType $valueType", symbol = this)
+                return null
+            }
             if (intValue == GenerateKordEnum.Entry.DEFAULT_INT_VALUE) {
                 logger.error("Didn't specify intValue for valueType $valueType", symbol = this)
                 return null
@@ -131,9 +148,14 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
 
             intValue
         }
+
         STRING -> {
             if (intValue != GenerateKordEnum.Entry.DEFAULT_INT_VALUE) {
                 logger.error("Specified intValue for valueType $valueType", symbol = this)
+                return null
+            }
+            if (longValue != GenerateKordEnum.Entry.DEFAULT_LONG_VALUE) {
+                logger.error("Specified longValue for valueType $valueType", symbol = this)
                 return null
             }
             if (stringValue == GenerateKordEnum.Entry.DEFAULT_STRING_VALUE) {
@@ -142,6 +164,22 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
             }
 
             stringValue
+        }
+        BITSET -> {
+            if (intValue != GenerateKordEnum.Entry.DEFAULT_INT_VALUE) {
+                logger.error("Specified intValue for valueType $valueType", symbol = this)
+                return null
+            }
+            if (stringValue != GenerateKordEnum.Entry.DEFAULT_STRING_VALUE) {
+                logger.error("Specified stringValue for valueType $valueType", symbol = this)
+                return null
+            }
+            if (longValue == GenerateKordEnum.Entry.DEFAULT_LONG_VALUE) {
+                logger.error("Didn't specify longValue for valueType $valueType", symbol = this)
+                return null
+            }
+
+            longValue
         }
     }
 

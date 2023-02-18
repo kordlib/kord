@@ -59,23 +59,6 @@ public sealed class MessageStickerType(
 
     public object GIF : MessageStickerType(4)
 
-    internal object Serializer : KSerializer<MessageStickerType> {
-        public override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageStickerType",
-                PrimitiveKind.INT)
-
-        public override fun serialize(encoder: Encoder, `value`: MessageStickerType) =
-                encoder.encodeInt(value.value)
-
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
-            1 -> PNG
-            2 -> APNG
-            3 -> LOTTIE
-            4 -> GIF
-            else -> Unknown(value)
-        }
-    }
-
     public companion object {
         /**
          * A [List] of all known [MessageStickerType]s.
@@ -97,5 +80,22 @@ public sealed class MessageStickerType(
         )
         public val values: Set<MessageStickerType>
             get() = entries.toSet()
+    }
+
+    internal object Serializer : KSerializer<MessageStickerType> {
+        public override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageStickerType",
+                PrimitiveKind.INT)
+
+        public override fun serialize(encoder: Encoder, `value`: MessageStickerType) =
+                encoder.encodeInt(value.value)
+
+        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+            1 -> PNG
+            2 -> APNG
+            3 -> LOTTIE
+            4 -> GIF
+            else -> Unknown(value)
+        }
     }
 }

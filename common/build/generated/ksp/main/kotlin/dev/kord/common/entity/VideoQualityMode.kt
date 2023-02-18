@@ -57,6 +57,19 @@ public sealed class VideoQualityMode(
      */
     public object Full : VideoQualityMode(2)
 
+    public companion object {
+        /**
+         * A [List] of all known [VideoQualityMode]s.
+         */
+        public val entries: List<VideoQualityMode> by lazy(mode = PUBLICATION) {
+            listOf(
+                Auto,
+                Full,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<VideoQualityMode> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.VideoQualityMode",
@@ -70,18 +83,5 @@ public sealed class VideoQualityMode(
             2 -> Full
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [VideoQualityMode]s.
-         */
-        public val entries: List<VideoQualityMode> by lazy(mode = PUBLICATION) {
-            listOf(
-                Auto,
-                Full,
-            )
-        }
-
     }
 }

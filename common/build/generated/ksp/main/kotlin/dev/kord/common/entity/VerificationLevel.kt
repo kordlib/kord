@@ -72,6 +72,22 @@ public sealed class VerificationLevel(
      */
     public object VeryHigh : VerificationLevel(4)
 
+    public companion object {
+        /**
+         * A [List] of all known [VerificationLevel]s.
+         */
+        public val entries: List<VerificationLevel> by lazy(mode = PUBLICATION) {
+            listOf(
+                None,
+                Low,
+                Medium,
+                High,
+                VeryHigh,
+            )
+        }
+
+    }
+
     internal object Serializer : KSerializer<VerificationLevel> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.VerificationLevel",
@@ -88,21 +104,5 @@ public sealed class VerificationLevel(
             4 -> VeryHigh
             else -> Unknown(value)
         }
-    }
-
-    public companion object {
-        /**
-         * A [List] of all known [VerificationLevel]s.
-         */
-        public val entries: List<VerificationLevel> by lazy(mode = PUBLICATION) {
-            listOf(
-                None,
-                Low,
-                Medium,
-                High,
-                VeryHigh,
-            )
-        }
-
     }
 }
