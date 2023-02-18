@@ -66,18 +66,18 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum(additionalValuePropertyMod
         primaryConstructor {
             addCodeParameter()
         }
-        addProperty("name", STRING, KModifier.OVERRIDE) {
+        addProperty("name", STRING, KModifier.PROTECTED, KModifier.OVERRIDE) {
             initializer("%S", collectionName.simpleName)
         }
 
         addFunction("buildUpon") {
-            addModifiers(KModifier.PUBLIC, KModifier.OVERRIDE)
+            addModifiers(KModifier.INTERNAL, KModifier.OVERRIDE)
             returns(builderName)
             addCode("return %T(code)", builderName)
         }
 
         addFunction("Implementation") {
-            addModifiers(KModifier.PUBLIC, KModifier.OVERRIDE)
+            addModifiers(KModifier.PROTECTED, KModifier.OVERRIDE)
             addParameter("flags", valueTypeName)
             returns(collectionName)
             addCode("return %T(flags)", collectionName)

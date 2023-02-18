@@ -77,11 +77,11 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 public class MessageFlags(
     code: Int = 0,
 ) : IntBitFlags<MessageFlag, MessageFlags, MessageFlags.Builder>(MessageFlag.entries, code) {
-    public override val name: String = "MessageFlags"
+    protected override val name: String = "MessageFlags"
 
-    public override fun buildUpon(): Builder = Builder(code)
+    internal override fun buildUpon(): Builder = Builder(code)
 
-    public override fun Implementation(flags: Int): MessageFlags = MessageFlags(flags)
+    protected override fun Implementation(flags: Int): MessageFlags = MessageFlags(flags)
 
     public class Builder(
         code: Int = 0,
@@ -95,7 +95,7 @@ public class MessageFlags(
     }
 
     public companion object : BitFlags.Companion<Int, MessageFlag, MessageFlags, Builder>() {
-        public override fun Builder(): Builder = MessageFlags.Builder()
+        internal override fun Builder(): Builder = MessageFlags.Builder()
     }
 }
 

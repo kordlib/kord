@@ -21,7 +21,7 @@ internal fun TypeSpec.Builder.addCompanion(
         )
 
         addFunction("Builder") {
-            addModifiers(KModifier.OVERRIDE)
+            addModifiers(KModifier.INTERNAL, KModifier.OVERRIDE)
             returns(builderName)
             addCode("return %T.%T()", builderName.enclosingClassName(), builderName)
         }
