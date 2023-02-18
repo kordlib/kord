@@ -32,7 +32,6 @@
         Entry("StageStart", intValue = 27),
         Entry("StageEnd", intValue = 28),
         Entry("StageSpeaker", intValue = 29),
-        Entry("StageRaiseHand", intValue = 30),
         Entry("StageTopic", intValue = 31),
         Entry("GuildApplicationPremiumSubscription", intValue = 32),
     ],

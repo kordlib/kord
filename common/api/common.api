@@ -7098,10 +7098,6 @@ public final class dev/kord/common/entity/MessageType$StageEnd : dev/kord/common
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageEnd;
 }
 
-public final class dev/kord/common/entity/MessageType$StageRaiseHand : dev/kord/common/entity/MessageType {
-	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageRaiseHand;
-}
-
 public final class dev/kord/common/entity/MessageType$StageSpeaker : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$StageSpeaker;
 }
