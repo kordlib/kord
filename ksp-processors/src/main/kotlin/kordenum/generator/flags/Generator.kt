@@ -59,6 +59,7 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum(additionalValuePropertyMod
     val builderName = collectionName.nestedClass("Builder")
     val serializerName = collectionName.nestedClass("Serializer")
     this@FileSpecBuilder.addClass(collectionName) {
+        addFlagsDoc(collectionName, builderName)
         val collectionSuperType = valueType.collectionSuperType()
         superclass(collectionSuperType.parameterizedBy(enumName, collectionName, builderName))
 

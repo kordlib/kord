@@ -5,7 +5,6 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.flags.BitFlags
-import dev.kord.common.entity.flags.copy
 import dev.kord.common.entity.flags.IntBitFlag
 import dev.kord.common.entity.flags.IntBitFlags
 import kotlin.Int
@@ -18,57 +17,61 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 
 /**
- * Convinience container of multiple [MessageFlags][MessageFlag] which can be combined into one.
+ * Convenience container of multiple [MessageFlags][MessageFlag] which can be combined into one.
  *
  * ## Creating a collection of message flags
  * You can create an [MessageFlags] object using the following methods
  * ```kotlin
  * // From flags
- * val flags1 = MessageFlags(MessageFlag.CrossPosted, MessageFlag.CrossPost)
+ * val flags1 = MessageFlags(MessageFlag.CrossPosted, MessageFlag.IsCrossPost)
  * // From an iterable
- * val flags2 = MessageFlags(listOf(MessageFlag.CrossPosted, MessageFlag.CrossPost))
+ * val flags2 = MessageFlags(listOf(MessageFlag.CrossPosted, MessageFlag.IsCrossPost))
  * // Using a builder
  * val flags3 = MessageFlags {
  *  +MessageFlag.CrossPosted
- *  -MessageFlag.CrossPost
+ *  -MessageFlag.IsCrossPost
  * }
  * ```
  *
  * ## Modifying existing flags
- * You can crate a modified copy of a [MessageFlags] instance using the [copy] method
+ * You can crate a modified copy of a [MessageFlags] instance using the
+ * [dev.kord.common.entity.flags.copy] method
  *
  * ```kotlin
  * flags.copy {
- *  +MessageFlag.SuppressNotifications
+ *  +MessageFlag.CrossPosted
  * }
  * ```
  *
- * ## Mathmatical operators
+ * ## Mathematical operators
  * All [MessageFlags] objects can use +/- operators
  *
  * ```kotlin
- * val flags = MessageFlags(MessageFlag.SuppressNotifications)
- * val flags2 = flags + MessageFlag.SuppressEmbeds
- * val otherFlags = flags - MessageFlag.SuppressNotifications
+ * val flags = MessageFlags(MessageFlag.CrossPosted)
+ * val flags2 = flags + MessageFlag.IsCrossPost
+ * val otherFlags = flags - MessageFlag.SuppressEmbeds
  * val flags3 = flags + otherFlags
  * ```
  *
  * ## Checking for a flag
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
- * val supressesEmbeds = MessageFlag.SuppressEmbeds in message.flags
- * val hasFlags = MessageFlags(MessageFlag.SuppressEmbeds, MessageFlag.SuppressNotifications) in message.flags
+ * val hasFlag = MessageFlag.CrossPosted in message.flags
+ * val hasFlags = MessageFlags(MessageFlag.SourceMessageDeleted,
+ * MessageFlag.Urgent) in message.flags
  * ```
  *
  * ## Unknown flag
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as [MessageFlag.Unknown].
+ * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * [MessageFlag.Unknown].
  * You can also use that to check for an yet unsupported flag
  * ```kotlin
  * val hasFlags = MessageFlag.Unknown(1 shl 69) in message.flags
  * ```
  * @see MessageFlag
- * @see Builder
+ * @see MessageFlags.Builder
+ * @property code numeric value of all [MessageFlag]s
  */
 @Serializable(with = MessageFlags.Serializer::class)
 public class MessageFlags(
