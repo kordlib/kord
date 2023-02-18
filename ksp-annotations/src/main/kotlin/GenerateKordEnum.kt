@@ -41,6 +41,10 @@ annotation class GenerateKordEnum(
      * Generate a Discord bit flags builder.
      */
     val isFlags: Boolean = false,
+    /**
+     * Optional [BitFlagDescription] when using [isFlags] is true
+     */
+    val bitFlagsDescriptor: BitFlagDescription = BitFlagDescription()
 ) {
     enum class ValueType { INT, STRING, BITSET }
     enum class ValuesPropertyType { NONE, SET }
@@ -78,4 +82,17 @@ annotation class GenerateKordEnum(
             const val DEFAULT_STRING_VALUE = ""
         }
     }
+
+    /**
+     * Description of the `flags` field using the generated enum.
+     *
+     * @property objectName the typical name of the object using this enum
+     * @property flagsFieldName the name of the  "flags field"
+     */
+    @Retention(SOURCE)
+    @Target() // Only used as parameter
+    annotation class BitFlagDescription(
+        val objectName: String = "obj",
+        val flagsFieldName: String = "flags"
+    )
 }

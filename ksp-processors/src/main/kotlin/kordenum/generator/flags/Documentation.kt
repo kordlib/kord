@@ -45,8 +45,8 @@ private val docString = """
  ## Checking for a flag
  You can use the [contains] operator to check whether a collection contains a specific flag
  ```kotlin
- val hasFlag = %T in message.flags
- val hasFlags = %T(%T, %T)·in·message.flags
+ val hasFlag = %T in %O.%F
+ val hasFlags = %T(%T, %T)·in·%O.%F
  ```
  
  ## Unknown flag
@@ -54,7 +54,7 @@ private val docString = """
  Whenever a newly added flag has not been added to Kord yet it will get deserialized as [%T].
  You can also use that to check for an yet unsupported flag
  ```kotlin
- val hasFlags = %T(1 shl 69) in message.flags
+ val hasFlags = %T(1 shl 69) in %O.%F
  ```
  @see %T
  @see %T
@@ -66,22 +66,32 @@ internal fun TypeSpec.Builder.addFlagsDoc(collectionName: ClassName, builderName
     val possibleValues = entries.map { enumName.nestedClass(it.name) }
     val unknown = enumName.nestedClass("Unknown")
     addKdoc(
-        CodeBlock.of(docString,
-            collectionName.simpleName, enumName,
+        CodeBlock.of(
+            docString.replace("%O", flagsDescriptor.objectName).replace("%F", flagsDescriptor.fieldName),
+            collectionName.simpleName,
+            enumName,
             collectionName,
-            collectionName, possibleValues.getSafe(0), possibleValues.getSafe(1),
-            collectionName, possibleValues.getSafe(0), possibleValues.getSafe(1),
             collectionName,
             possibleValues.getSafe(0),
             possibleValues.getSafe(1),
-            collectionName, COPY_METHOD,
+            collectionName,
+            possibleValues.getSafe(0),
+            possibleValues.getSafe(1),
+            collectionName,
+            possibleValues.getSafe(0),
+            possibleValues.getSafe(1),
+            collectionName,
+            COPY_METHOD,
             possibleValues.getSafe(0),
             collectionName,
-            collectionName, possibleValues.getSafe(0),
+            collectionName,
+            possibleValues.getSafe(0),
             possibleValues.getSafe(1),
             possibleValues.getSafe(2),
             possibleValues.getSafe(0),
-            collectionName, possibleValues.getSafe(3,), possibleValues.getSafe(4),
+            collectionName,
+            possibleValues.getSafe(3),
+            possibleValues.getSafe(4),
             unknown,
             unknown,
             enumName,

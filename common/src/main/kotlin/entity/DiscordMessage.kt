@@ -69,6 +69,7 @@
     name = "MessageFlag",
     valueType = INT,
     isFlags = true,
+    bitFlagsDescriptor = GenerateKordEnum.BitFlagDescription(objectName = "message"),
     valueName = "code",
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-flags",
     entries = [
@@ -184,17 +185,9 @@ import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.*
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.HIDDEN
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 /**
  * Represents [a message sent in a channel within Discord](https://discord.com/developers/docs/resources/channel#message-object).

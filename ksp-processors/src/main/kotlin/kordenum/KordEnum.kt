@@ -30,7 +30,8 @@ internal class KordEnum(
     val valuesPropertyName: String?,
     val valuesPropertyType: ValuesPropertyType,
     val deprecatedSerializerName: String?,
-    val isFlags: Boolean
+    val isFlags: Boolean,
+    val flagsDescriptor: FlagsDescriptor
 ) {
     internal class Entry(
         val name: String,
@@ -44,6 +45,8 @@ internal class KordEnum(
     ) : Comparable<Entry> {
         override fun compareTo(other: Entry) = with(NATURAL_ORDER) { compare(value, other.value) }
     }
+
+    internal class FlagsDescriptor(val objectName: String, val fieldName: String)
 }
 
 internal data class ProcessingContext(
@@ -86,13 +89,15 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     }
     val deprecatedSerializerName = (args[GenerateKordEnum::deprecatedSerializerName] as String).ifEmpty { null }
     val isFlags = args[GenerateKordEnum::isFlags] as Boolean
+    val bitFlagsDescriptor = args[GenerateKordEnum::bitFlagsDescriptor] ?: error("Missing flags descriptor")
 
     return KordEnum(
         name, kDoc, docUrl, valueType, valueName,
         entries.map { it.toEntryOrNull(valueType, isDeprecated = false, logger) ?: return null },
         deprecatedEntries.map { it.toEntryOrNull(valueType, isDeprecated = true, logger) ?: return null },
 
-        valuesPropertyName, valuesPropertyType, deprecatedSerializerName, isFlags
+        valuesPropertyName, valuesPropertyType, deprecatedSerializerName, isFlags,
+        bitFlagsDescriptor.toFlagsDescriptor()
     )
 }
 
@@ -111,6 +116,15 @@ private fun Any?.toValuesPropertyType() = when (val name = (this as KSType).decl
     "dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE" -> NONE
     "dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET" -> SET
     else -> error("Unknown GenerateKordEnum.ValuesPropertyType: $name")
+}
+
+private fun Any.toFlagsDescriptor(): KordEnum.FlagsDescriptor {
+    val args = (this as KSAnnotation).annotationArguments
+
+    val objectName = args[GenerateKordEnum.BitFlagDescription::objectName] as String
+    val fieldName = args[GenerateKordEnum.BitFlagDescription::flagsFieldName] as String
+
+    return KordEnum.FlagsDescriptor(objectName, fieldName)
 }
 
 /**
