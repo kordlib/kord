@@ -92,7 +92,7 @@ public class MessageFlags(
     }
 
     public companion object : BitFlags.Companion<Int, MessageFlag, MessageFlags, Builder>() {
-        public override fun Builder(): Builder = Builder()
+        public override fun Builder(): Builder = MessageFlags.Builder()
     }
 }
 
