@@ -66,7 +66,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.serialization.DurationInDaysSerializer
 import dev.kord.common.serialization.DurationInSecondsSerializer
-import dev.kord.common.serialization.IntOrStringSerializer
+import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
@@ -380,14 +380,14 @@ public sealed class AuditLogChangeKey<T>(public val name: String, public val ser
     public object Id : AuditLogChangeKey<Snowflake>("id", serializer())
 
     /**
-     * The actual supertype is [AuditLogChangeKey<Int | String>][AuditLogChangeKey] but Kotlin does not support union
-     * types yet. [Int]s are instead converted to a [String].
+     * The actual supertype is [AuditLogChangeKey<Long | String>][AuditLogChangeKey] but Kotlin does not support union
+     * types yet. [Long]s are instead converted to a [String].
      */
     // Audit Log Change Key "type" has integer or string values, so we need some sort of union serializer
     // (see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-change-key)
     // TODO use union type `String | Int` if Kotlin ever introduces them
     @SerialName("type")
-    public object Type : AuditLogChangeKey<String>("type", IntOrStringSerializer)
+    public object Type : AuditLogChangeKey<String>("type", LongOrStringSerializer)
 
     @SerialName("enable_emoticons")
     public object EnableEmoticons : AuditLogChangeKey<Boolean>("enable_emoticons", serializer())
