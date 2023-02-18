@@ -2,6 +2,7 @@ package dev.kord.ksp.kordenum.generator
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.jvm.jvmField
 import dev.kord.ksp.*
 import dev.kord.ksp.addCompanionObject
 import dev.kord.ksp.addProperty
@@ -61,7 +62,7 @@ fun TypeSpec.Builder.addCompanionObject() = addCompanionObject {
         addProperty(deprecatedSerializerName, deprecatedSerializer, KModifier.PUBLIC) {
             addAnnotation(Suppress("DEPRECATION_ERROR"))
             addAnnotation(Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN))
-            addAnnotation(JvmField())
+            jvmField()
             initializer("%T", deprecatedSerializer)
         }
     }
