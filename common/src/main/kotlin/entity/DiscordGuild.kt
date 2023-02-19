@@ -83,8 +83,7 @@
         Entry("Banner", stringValue = "BANNER", kDoc = "Guild has access to set a guild banner image."),
         Entry(
             "Community", stringValue = "COMMUNITY",
-            kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " +
-                    "receives community updates.",
+            kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " + "receives community updates.",
         ),
         Entry(
             "DeveloperSupportServer", stringValue = "DEVELOPER_SUPPORT_SERVER",
@@ -135,10 +134,7 @@
         Entry(
             "Commerce", stringValue = "COMMERCE",
             kDoc = "Guild has access to use commerce features (i.e. create store channels).\n\n@suppress",
-            deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
-                    "Discord and store channels were removed on March 10, 2022. See " +
-                    "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
-                    " for more information.",
+            deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " + "Discord and store channels were removed on March 10, 2022. See " + "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" + " for more information.",
             deprecationLevel = HIDDEN,
         ),
         Entry(
@@ -159,6 +155,17 @@
     ],
 )
 
+@file:GenerateKordEnum(
+    name = "SystemChannelFlag",
+    valueType = INT,
+    isFlags = true,
+    entries = [Entry(
+        "SuppressJoinNotifications",
+        intValue = 1 shl 0,
+        kDoc = "Suppress member join notifications."
+    ), Entry("SuppressPremiumSubscriptions", intValue = 1 shl 1, kDoc = "Suppress server boost notificationΩ.")]
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -171,14 +178,8 @@ import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.DeprecationLevel.WARNING
 
@@ -298,13 +299,10 @@ public data class DiscordGuild(
     @SerialName("approximate_presence_count") val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("welcome_screen") val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
     @SerialName("nsfw_level") val nsfwLevel: NsfwLevel,
-    @SerialName("stage_instances")
-    val stageInstances: Optional<List<DiscordStageInstance>> = Optional.Missing(),
+    @SerialName("stage_instances") val stageInstances: Optional<List<DiscordStageInstance>> = Optional.Missing(),
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
-    @SerialName("guild_scheduled_events")
-    val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
-    @SerialName("premium_progress_bar_enabled")
-    val premiumProgressBarEnabled: Boolean
+    @SerialName("guild_scheduled_events") val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
+    @SerialName("premium_progress_bar_enabled") val premiumProgressBarEnabled: Boolean
 )
 
 /**
@@ -332,50 +330,12 @@ public data class DiscordPartialGuild(
     val banner: Optional<String?> = Optional.Missing(),
     val splash: Optional<String?> = Optional.Missing(),
     @SerialName("nsfw_level") val nsfwLevel: Optional<NsfwLevel> = Optional.Missing(),
-    @SerialName("verification_level")
-    val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
-    @SerialName("stage_instances")
-    val stageInstances: Optional<List<DiscordStageInstance>> = Optional.Missing(),
+    @SerialName("verification_level") val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
+    @SerialName("stage_instances") val stageInstances: Optional<List<DiscordStageInstance>> = Optional.Missing(),
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
-    @SerialName("guild_scheduled_events")
-    val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
-    @SerialName("premium_progress_bar_enabled")
-    val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("guild_scheduled_events") val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
+    @SerialName("premium_progress_bar_enabled") val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
 )
-
-@Serializable(with = SystemChannelFlags.Companion::class)
-public data class SystemChannelFlags(val code: Int) {
-
-    public operator fun contains(flag: SystemChannelFlags): Boolean {
-        return this.code and flag.code == flag.code
-    }
-
-    public companion object : KSerializer<SystemChannelFlags> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("system_channel_flags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): SystemChannelFlags {
-            return SystemChannelFlags(decoder.decodeInt())
-        }
-
-        override fun serialize(encoder: Encoder, value: SystemChannelFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-}
-
-/**
- * A representation of a [Discord Channels Flag](https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags).
- */
-public enum class SystemChannelFlag(public val code: Int) {
-    /** Suppress member join notifications. **/
-    SuppressJoinNotifications(1.shl(0)),
-
-    /** Suppress server boost notifications. **/
-    SuppressPremiumSubscriptions(1.shl(1))
-}
 
 @Serializable
 public data class DiscordGuildBan(
