@@ -244,50 +244,66 @@ public final class dev/kord/voice/FrameInterceptorConfiguration {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/voice/SpeakingFlag : java/lang/Enum {
-	public static final field Microphone Ldev/kord/voice/SpeakingFlag;
-	public static final field Priority Ldev/kord/voice/SpeakingFlag;
-	public static final field Soundshare Ldev/kord/voice/SpeakingFlag;
-	public final fun getCode ()I
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
-	public static fun values ()[Ldev/kord/voice/SpeakingFlag;
+public abstract class dev/kord/voice/SpeakingFlag : dev/kord/common/entity/flags/IntBitFlag {
+	public static final field Companion Ldev/kord/voice/SpeakingFlag$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public fun getCode ()Ljava/lang/Integer;
+	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/voice/SpeakingFlagKt {
-	public static final fun SpeakingFlags (Ljava/lang/Iterable;)Ldev/kord/voice/SpeakingFlags;
-	public static final fun SpeakingFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/voice/SpeakingFlags;
-	public static final fun SpeakingFlags ([Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
-	public static final fun SpeakingFlags ([Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/SpeakingFlags;
-	public static final fun SpeakingFlagsWithIterable (Ljava/lang/Iterable;)Ldev/kord/voice/SpeakingFlags;
+public final class dev/kord/voice/SpeakingFlag$Companion {
+	public final fun getEntries ()Ljava/util/List;
 }
 
-public final class dev/kord/voice/SpeakingFlags {
+public final class dev/kord/voice/SpeakingFlag$Microphone : dev/kord/voice/SpeakingFlag {
+	public static final field INSTANCE Ldev/kord/voice/SpeakingFlag$Microphone;
+}
+
+public final class dev/kord/voice/SpeakingFlag$Priority : dev/kord/voice/SpeakingFlag {
+	public static final field INSTANCE Ldev/kord/voice/SpeakingFlag$Priority;
+}
+
+public final class dev/kord/voice/SpeakingFlag$Soundshare : dev/kord/voice/SpeakingFlag {
+	public static final field INSTANCE Ldev/kord/voice/SpeakingFlag$Soundshare;
+}
+
+public final class dev/kord/voice/SpeakingFlag$Unknown : dev/kord/voice/SpeakingFlag {
+	public fun <init> (I)V
+}
+
+public final class dev/kord/voice/SpeakingFlags : dev/kord/common/entity/flags/IntBitFlags {
 	public static final field Companion Ldev/kord/voice/SpeakingFlags$Companion;
-	public final fun contains (Ldev/kord/voice/SpeakingFlag;)Z
-	public final fun contains (Ldev/kord/voice/SpeakingFlags;)Z
-	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/voice/SpeakingFlags;
-	public final fun getCode ()I
-	public final fun getFlags ()Ljava/util/List;
-	public final fun minus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
-	public final fun minus (Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/SpeakingFlags;
-	public final fun plus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
-	public final fun plus (Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/SpeakingFlags;
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/voice/SpeakingFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun flags ()Ldev/kord/voice/SpeakingFlags;
-	public final fun unaryMinus (Ldev/kord/voice/SpeakingFlag;)V
-	public final fun unaryMinus (Ldev/kord/voice/SpeakingFlags;)V
-	public final fun unaryPlus (Ldev/kord/voice/SpeakingFlag;)V
-	public final fun unaryPlus (Ldev/kord/voice/SpeakingFlags;)V
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
+	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public fun buildUpon ()Ldev/kord/voice/SpeakingFlags$Builder;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 }
 
-public final class dev/kord/voice/SpeakingFlags$Companion {
+public final class dev/kord/voice/SpeakingFlags$Builder : dev/kord/common/entity/flags/IntBitFlags$Builder {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun flags ()Ldev/kord/common/entity/flags/BitFlags;
+	public fun flags ()Ldev/kord/voice/SpeakingFlags;
+}
+
+public final class dev/kord/voice/SpeakingFlags$Companion : dev/kord/common/entity/flags/BitFlags$Companion {
+	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public fun Builder ()Ldev/kord/voice/SpeakingFlags$Builder;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/SpeakingFlags$Serializer : dev/kord/common/entity/flags/BitFlags$Serializer {
+	public fun <init> ()V
+	public fun Implementation (I)Ldev/kord/voice/SpeakingFlags;
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
 }
 
 public final class dev/kord/voice/VoiceConnection {

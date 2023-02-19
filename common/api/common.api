@@ -183,28 +183,90 @@ public abstract interface annotation class dev/kord/common/annotation/KordUnsafe
 public abstract interface annotation class dev/kord/common/annotation/KordVoice : java/lang/annotation/Annotation {
 }
 
-public final class dev/kord/common/entity/ActivityFlag : java/lang/Enum {
-	public static final field Instance Ldev/kord/common/entity/ActivityFlag;
-	public static final field Join Ldev/kord/common/entity/ActivityFlag;
-	public static final field JoinRequest Ldev/kord/common/entity/ActivityFlag;
-	public static final field Play Ldev/kord/common/entity/ActivityFlag;
-	public static final field Spectate Ldev/kord/common/entity/ActivityFlag;
-	public static final field Sync Ldev/kord/common/entity/ActivityFlag;
-	public final fun getValue ()I
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ActivityFlag;
-	public static fun values ()[Ldev/kord/common/entity/ActivityFlag;
+public abstract class dev/kord/common/entity/ActivityFlag : dev/kord/common/entity/flags/IntBitFlag {
+	public static final field Companion Ldev/kord/common/entity/ActivityFlag$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public fun getCode ()Ljava/lang/Integer;
+	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/ActivityFlags {
-	public static final field Companion Ldev/kord/common/entity/ActivityFlags$Companion;
+public final class dev/kord/common/entity/ActivityFlag$Companion {
+	public final fun getEntries ()Ljava/util/List;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$Embed : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$Embed;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$Instance : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$Instance;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$Join : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$Join;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$JoinRequest : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$JoinRequest;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$PartyPrivacVoiceChannel : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$PartyPrivacVoiceChannel;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$PartyPrivacyFriends : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$PartyPrivacyFriends;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$Play : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$Play;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$Spectate : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$Spectate;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$Sync : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$Sync;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$Unknown : dev/kord/common/entity/ActivityFlag {
 	public fun <init> (I)V
-	public final fun contains (Ldev/kord/common/entity/ActivityFlag;)Z
-	public final fun getFlags ()Ljava/util/Set;
-	public final fun getValue ()I
 }
 
-public final class dev/kord/common/entity/ActivityFlags$Companion {
+public final class dev/kord/common/entity/ActivityFlags : dev/kord/common/entity/flags/IntBitFlags {
+	public static final field Companion Ldev/kord/common/entity/ActivityFlags$Companion;
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
+	public fun buildUpon ()Ldev/kord/common/entity/ActivityFlags$Builder;
+	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/ActivityFlags$Builder : dev/kord/common/entity/flags/IntBitFlags$Builder {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun flags ()Ldev/kord/common/entity/ActivityFlags;
+	public synthetic fun flags ()Ldev/kord/common/entity/flags/BitFlags;
+}
+
+public final class dev/kord/common/entity/ActivityFlags$Companion : dev/kord/common/entity/flags/BitFlags$Companion {
+	public fun Builder ()Ldev/kord/common/entity/ActivityFlags$Builder;
+	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/ActivityFlags$Serializer : dev/kord/common/entity/flags/BitFlags$Serializer {
+	public fun <init> ()V
+	public fun Implementation (I)Ldev/kord/common/entity/ActivityFlags;
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
 }
 
 public abstract class dev/kord/common/entity/ActivityType {
@@ -551,55 +613,90 @@ public final class dev/kord/common/entity/ApplicationCommandType$User : dev/kord
 	public static final field INSTANCE Ldev/kord/common/entity/ApplicationCommandType$User;
 }
 
-public final class dev/kord/common/entity/ApplicationFlag : java/lang/Enum {
-	public static final field ApplicationCommandBadge Ldev/kord/common/entity/ApplicationFlag;
-	public static final field Embedded Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayGuildMembers Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayGuildMembersLimited Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayMessageContent Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayMessageContentLimited Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayPresence Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayPresenceLimited Ldev/kord/common/entity/ApplicationFlag;
-	public static final field VerificationPendingGuildLimit Ldev/kord/common/entity/ApplicationFlag;
-	public final fun getCode ()I
-	public final fun plus (Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
-	public final fun plus (Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ApplicationFlag;
-	public static fun values ()[Ldev/kord/common/entity/ApplicationFlag;
+public abstract class dev/kord/common/entity/ApplicationFlag : dev/kord/common/entity/flags/IntBitFlag {
+	public static final field Companion Ldev/kord/common/entity/ApplicationFlag$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public fun getCode ()Ljava/lang/Integer;
+	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/ApplicationFlags {
+public final class dev/kord/common/entity/ApplicationFlag$ApplicationCommandBadge : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$ApplicationCommandBadge;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$Companion {
+	public final fun getEntries ()Ljava/util/List;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$Embedded : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$Embedded;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$GatewayGuildMembers : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$GatewayGuildMembers;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$GatewayGuildMembersLimited : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$GatewayGuildMembersLimited;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$GatewayMessageContent : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$GatewayMessageContent;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$GatewayMessageContentLimited : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$GatewayMessageContentLimited;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$GatewayPresence : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$GatewayPresence;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$GatewayPresenceLimited : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$GatewayPresenceLimited;
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$Unknown : dev/kord/common/entity/ApplicationFlag {
+	public fun <init> (I)V
+}
+
+public final class dev/kord/common/entity/ApplicationFlag$VerificationPendingGuildLimit : dev/kord/common/entity/ApplicationFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ApplicationFlag$VerificationPendingGuildLimit;
+}
+
+public final class dev/kord/common/entity/ApplicationFlags : dev/kord/common/entity/flags/IntBitFlags {
 	public static final field Companion Ldev/kord/common/entity/ApplicationFlags$Companion;
-	public final fun component1 ()I
-	public final fun contains (Ldev/kord/common/entity/ApplicationFlag;)Z
-	public final fun contains (Ldev/kord/common/entity/ApplicationFlags;)Z
-	public final fun copy (I)Ldev/kord/common/entity/ApplicationFlags;
-	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/ApplicationFlags;IILjava/lang/Object;)Ldev/kord/common/entity/ApplicationFlags;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()I
-	public final fun getFlags ()Ljava/util/List;
-	public fun hashCode ()I
-	public final fun minus (Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
-	public final fun minus (Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
-	public final fun plus (Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
-	public final fun plus (Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/common/entity/ApplicationFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun flags ()Ldev/kord/common/entity/ApplicationFlags;
-	public final fun unaryMinus (Ldev/kord/common/entity/ApplicationFlag;)V
-	public final fun unaryMinus (Ldev/kord/common/entity/ApplicationFlags;)V
-	public final fun unaryPlus (Ldev/kord/common/entity/ApplicationFlag;)V
-	public final fun unaryPlus (Ldev/kord/common/entity/ApplicationFlags;)V
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
+	public fun buildUpon ()Ldev/kord/common/entity/ApplicationFlags$Builder;
+	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 }
 
-public final class dev/kord/common/entity/ApplicationFlags$Companion {
+public final class dev/kord/common/entity/ApplicationFlags$Builder : dev/kord/common/entity/flags/IntBitFlags$Builder {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun flags ()Ldev/kord/common/entity/ApplicationFlags;
+	public synthetic fun flags ()Ldev/kord/common/entity/flags/BitFlags;
+}
+
+public final class dev/kord/common/entity/ApplicationFlags$Companion : dev/kord/common/entity/flags/BitFlags$Companion {
+	public fun Builder ()Ldev/kord/common/entity/ApplicationFlags$Builder;
+	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/ApplicationFlags$Serializer : dev/kord/common/entity/flags/BitFlags$Serializer {
+	public fun <init> ()V
+	public fun Implementation (I)Ldev/kord/common/entity/ApplicationFlags;
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
 }
 
 public abstract class dev/kord/common/entity/ArchiveDuration {
@@ -2323,14 +2420,6 @@ public final class dev/kord/common/entity/DiscordApplicationCommand$$serializer 
 
 public final class dev/kord/common/entity/DiscordApplicationCommand$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/common/entity/DiscordApplicationKt {
-	public static final fun ApplicationFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final fun ApplicationFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final fun ApplicationFlagsWithIterable (Ljava/lang/Iterable;)Ldev/kord/common/entity/ApplicationFlags;
 }
 
 public final class dev/kord/common/entity/DiscordAttachment {
@@ -5805,10 +5894,6 @@ public final class dev/kord/common/entity/DiscordUser$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/DiscordUserKt {
-	public static final fun UserFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
-}
-
 public final class dev/kord/common/entity/DiscordVoiceRegion {
 	public static final field Companion Ldev/kord/common/entity/DiscordVoiceRegion$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -6274,41 +6359,70 @@ public final class dev/kord/common/entity/GuildFeature$WelcomeScreenEnabled : de
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$WelcomeScreenEnabled;
 }
 
-public final class dev/kord/common/entity/GuildMemberFlag : java/lang/Enum {
-	public static final field BYPASSES_VERIFICATION Ldev/kord/common/entity/GuildMemberFlag;
-	public static final field COMPLETED_ONBOARDING Ldev/kord/common/entity/GuildMemberFlag;
+public abstract class dev/kord/common/entity/GuildMemberFlag : dev/kord/common/entity/flags/IntBitFlag {
 	public static final field Companion Ldev/kord/common/entity/GuildMemberFlag$Companion;
-	public static final field DID_REJOIN Ldev/kord/common/entity/GuildMemberFlag;
-	public static final field STARTED_ONBOARDING Ldev/kord/common/entity/GuildMemberFlag;
-	public final fun getCode ()I
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlag;
-	public static fun values ()[Ldev/kord/common/entity/GuildMemberFlag;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public fun getCode ()Ljava/lang/Integer;
+	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/GuildMemberFlag$BypassesVerification : dev/kord/common/entity/GuildMemberFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildMemberFlag$BypassesVerification;
 }
 
 public final class dev/kord/common/entity/GuildMemberFlag$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+	public final fun getEntries ()Ljava/util/List;
 }
 
-public final class dev/kord/common/entity/GuildMemberFlags {
-	public static final field Companion Ldev/kord/common/entity/GuildMemberFlags$Companion;
+public final class dev/kord/common/entity/GuildMemberFlag$CompletedOnboarding : dev/kord/common/entity/GuildMemberFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildMemberFlag$CompletedOnboarding;
+}
+
+public final class dev/kord/common/entity/GuildMemberFlag$DidRejoin : dev/kord/common/entity/GuildMemberFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildMemberFlag$DidRejoin;
+}
+
+public final class dev/kord/common/entity/GuildMemberFlag$StartedOnboarding : dev/kord/common/entity/GuildMemberFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildMemberFlag$StartedOnboarding;
+}
+
+public final class dev/kord/common/entity/GuildMemberFlag$Unknown : dev/kord/common/entity/GuildMemberFlag {
 	public fun <init> (I)V
-	public final fun component1 ()I
-	public final fun contains (Ldev/kord/common/entity/GuildMemberFlags;)Z
-	public final fun copy (I)Ldev/kord/common/entity/GuildMemberFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/GuildMemberFlags;IILjava/lang/Object;)Ldev/kord/common/entity/GuildMemberFlags;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/GuildMemberFlags$Companion : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/GuildMemberFlags;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/GuildMemberFlags;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/common/entity/GuildMemberFlags : dev/kord/common/entity/flags/IntBitFlags {
+	public static final field Companion Ldev/kord/common/entity/GuildMemberFlags$Companion;
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
+	public fun buildUpon ()Ldev/kord/common/entity/GuildMemberFlags$Builder;
+	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/GuildMemberFlags$Builder : dev/kord/common/entity/flags/IntBitFlags$Builder {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun flags ()Ldev/kord/common/entity/GuildMemberFlags;
+	public synthetic fun flags ()Ldev/kord/common/entity/flags/BitFlags;
+}
+
+public final class dev/kord/common/entity/GuildMemberFlags$Companion : dev/kord/common/entity/flags/BitFlags$Companion {
+	public fun Builder ()Ldev/kord/common/entity/GuildMemberFlags$Builder;
+	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/GuildMemberFlags$Serializer : dev/kord/common/entity/flags/BitFlags$Serializer {
+	public fun <init> ()V
+	public fun Implementation (I)Ldev/kord/common/entity/GuildMemberFlags;
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
 }
 
 public final class dev/kord/common/entity/GuildScheduledEventEntityMetadata {
@@ -6816,8 +6930,11 @@ public final class dev/kord/common/entity/MessageApplication$Companion {
 public abstract class dev/kord/common/entity/MessageFlag : dev/kord/common/entity/flags/IntBitFlag {
 	public static final field Companion Ldev/kord/common/entity/MessageFlag$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public fun getCode ()Ljava/lang/Integer;
 	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/MessageFlag$Companion {
@@ -6870,7 +6987,10 @@ public final class dev/kord/common/entity/MessageFlags : dev/kord/common/entity/
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
+	public fun buildUpon ()Ldev/kord/common/entity/MessageFlags$Builder;
 	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 }
 
 public final class dev/kord/common/entity/MessageFlags$Builder : dev/kord/common/entity/flags/IntBitFlags$Builder {
@@ -6882,6 +7002,7 @@ public final class dev/kord/common/entity/MessageFlags$Builder : dev/kord/common
 }
 
 public final class dev/kord/common/entity/MessageFlags$Companion : dev/kord/common/entity/flags/BitFlags$Companion {
+	public fun Builder ()Ldev/kord/common/entity/MessageFlags$Builder;
 	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7278,11 +7399,15 @@ public final class dev/kord/common/entity/OverwriteType$Unknown : dev/kord/commo
 	public fun <init> (I)V
 }
 
-public abstract class dev/kord/common/entity/Permission {
+public abstract class dev/kord/common/entity/Permission : dev/kord/common/entity/flags/DiscordBitSetFlag {
 	public static final field Companion Ldev/kord/common/entity/Permission$Companion;
 	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> ([JLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
+	public final fun equals (Ljava/lang/Object;)Z
+	public fun getCode ()Ldev/kord/common/DiscordBitSet;
+	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/Permission$AddReactions : dev/kord/common/entity/Permission {
@@ -7310,7 +7435,7 @@ public final class dev/kord/common/entity/Permission$ChangeNickname : dev/kord/c
 }
 
 public final class dev/kord/common/entity/Permission$Companion {
-	public final fun getValues ()Ljava/util/Set;
+	public final fun getEntries ()Ljava/util/List;
 }
 
 public final class dev/kord/common/entity/Permission$Connect : dev/kord/common/entity/Permission {
@@ -7462,52 +7587,37 @@ public final class dev/kord/common/entity/Permission$ViewGuildInsights : dev/kor
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$ViewGuildInsights;
 }
 
-public final class dev/kord/common/entity/PermissionKt {
-	public static final fun PermissionWithIterable (Ljava/lang/Iterable;)Ldev/kord/common/entity/Permissions;
-	public static final fun Permissions (Ljava/lang/Iterable;)Ldev/kord/common/entity/Permissions;
-	public static final fun Permissions (Ljava/lang/String;)Ldev/kord/common/entity/Permissions;
-	public static final fun Permissions (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
-	public static final fun Permissions ([Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
-	public static final fun Permissions ([Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
-	public static synthetic fun Permissions$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
-}
-
-public final class dev/kord/common/entity/Permissions {
+public final class dev/kord/common/entity/Permissions : dev/kord/common/entity/flags/DiscordBitSetFlags {
 	public static final field Companion Ldev/kord/common/entity/Permissions$Companion;
+	public fun <init> ()V
 	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
-	public final fun component1 ()Ldev/kord/common/DiscordBitSet;
-	public final fun contains (Ldev/kord/common/entity/Permission;)Z
-	public final fun contains (Ldev/kord/common/entity/Permissions;)Z
-	public final fun copy (Ldev/kord/common/DiscordBitSet;)Ldev/kord/common/entity/Permissions;
-	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/Permissions;Ldev/kord/common/DiscordBitSet;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
+	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
+	public fun buildUpon ()Ldev/kord/common/entity/Permissions$Builder;
+	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
-	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
-	public final fun minus (Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
-	public final fun minus (Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
-	public final fun plus (Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
-	public final fun plus (Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
-	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/Permissions$Companion : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/Permissions;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/Permissions;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/common/entity/Permissions$Builder : dev/kord/common/entity/flags/DiscordBitSetFlags$Builder {
+	public fun <init> ()V
+	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
+	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun flags ()Ldev/kord/common/entity/Permissions;
+	public synthetic fun flags ()Ldev/kord/common/entity/flags/BitFlags;
+}
+
+public final class dev/kord/common/entity/Permissions$Companion : dev/kord/common/entity/flags/DiscordBitSetFlags$Companion {
+	public fun Builder ()Ldev/kord/common/entity/Permissions$Builder;
+	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public synthetic fun Implementation (Ldev/kord/common/DiscordBitSet;)Ldev/kord/common/entity/flags/DiscordBitSetFlags;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/Permissions$PermissionsBuilder {
-	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
-	public final fun permissions ()Ldev/kord/common/entity/Permissions;
-	public final fun unaryMinus (Ldev/kord/common/entity/Permission;)V
-	public final fun unaryMinus (Ldev/kord/common/entity/Permissions;)V
-	public final fun unaryPlus (Ldev/kord/common/entity/Permission;)V
-	public final fun unaryPlus (Ldev/kord/common/entity/Permissions;)V
+public final class dev/kord/common/entity/Permissions$Serializer : dev/kord/common/entity/flags/BitFlags$Serializer {
+	public fun <init> ()V
+	public fun Implementation (Ldev/kord/common/DiscordBitSet;)Ldev/kord/common/entity/Permissions;
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
 }
 
 public abstract class dev/kord/common/entity/PremiumTier {
@@ -7813,34 +7923,78 @@ public final class dev/kord/common/entity/SubCommand$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/SystemChannelFlag : java/lang/Enum {
-	public static final field SuppressJoinNotifications Ldev/kord/common/entity/SystemChannelFlag;
-	public static final field SuppressPremiumSubscriptions Ldev/kord/common/entity/SystemChannelFlag;
-	public final fun getCode ()I
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/SystemChannelFlag;
-	public static fun values ()[Ldev/kord/common/entity/SystemChannelFlag;
+public abstract class dev/kord/common/entity/SystemChannelFlag : dev/kord/common/entity/flags/IntBitFlag {
+	public static final field Companion Ldev/kord/common/entity/SystemChannelFlag$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public fun getCode ()Ljava/lang/Integer;
+	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/SystemChannelFlags {
-	public static final field Companion Ldev/kord/common/entity/SystemChannelFlags$Companion;
+public final class dev/kord/common/entity/SystemChannelFlag$Companion {
+	public final fun getEntries ()Ljava/util/List;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlag$SuppressGuildReminderNotifications : dev/kord/common/entity/SystemChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/SystemChannelFlag$SuppressGuildReminderNotifications;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlag$SuppressJoinNotificationReplies : dev/kord/common/entity/SystemChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/SystemChannelFlag$SuppressJoinNotificationReplies;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlag$SuppressJoinNotifications : dev/kord/common/entity/SystemChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/SystemChannelFlag$SuppressJoinNotifications;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlag$SuppressPremiumSubscriptions : dev/kord/common/entity/SystemChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/SystemChannelFlag$SuppressPremiumSubscriptions;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlag$SuppressRoleSubscriptionPurchaseNotificationReplies : dev/kord/common/entity/SystemChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/SystemChannelFlag$SuppressRoleSubscriptionPurchaseNotificationReplies;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlag$SuppressRoleSubscriptionPurchaseNotifications : dev/kord/common/entity/SystemChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/SystemChannelFlag$SuppressRoleSubscriptionPurchaseNotifications;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlag$Unknown : dev/kord/common/entity/SystemChannelFlag {
 	public fun <init> (I)V
-	public final fun component1 ()I
-	public final fun contains (Ldev/kord/common/entity/SystemChannelFlags;)Z
-	public final fun copy (I)Ldev/kord/common/entity/SystemChannelFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/SystemChannelFlags;IILjava/lang/Object;)Ldev/kord/common/entity/SystemChannelFlags;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/SystemChannelFlags$Companion : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/SystemChannelFlags;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/SystemChannelFlags;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/common/entity/SystemChannelFlags : dev/kord/common/entity/flags/IntBitFlags {
+	public static final field Companion Ldev/kord/common/entity/SystemChannelFlags$Companion;
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
+	public fun buildUpon ()Ldev/kord/common/entity/SystemChannelFlags$Builder;
+	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+}
+
+public final class dev/kord/common/entity/SystemChannelFlags$Builder : dev/kord/common/entity/flags/IntBitFlags$Builder {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun flags ()Ldev/kord/common/entity/SystemChannelFlags;
+	public synthetic fun flags ()Ldev/kord/common/entity/flags/BitFlags;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlags$Companion : dev/kord/common/entity/flags/BitFlags$Companion {
+	public fun Builder ()Ldev/kord/common/entity/SystemChannelFlags$Builder;
+	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlags$Serializer : dev/kord/common/entity/flags/BitFlags$Serializer {
+	public fun <init> ()V
+	public fun Implementation (I)Ldev/kord/common/entity/SystemChannelFlags;
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
 }
 
 public abstract class dev/kord/common/entity/TeamMembershipState {
@@ -7906,61 +8060,118 @@ public final class dev/kord/common/entity/TextInputStyle$Unknown : dev/kord/comm
 	public fun <init> (I)V
 }
 
-public final class dev/kord/common/entity/UserFlag : java/lang/Enum {
-	public static final field ActiveDeveloper Ldev/kord/common/entity/UserFlag;
-	public static final field BotHttpInteractions Ldev/kord/common/entity/UserFlag;
-	public static final field BugHunterLevel1 Ldev/kord/common/entity/UserFlag;
-	public static final field BugHunterLevel2 Ldev/kord/common/entity/UserFlag;
-	public static final field DiscordCertifiedModerator Ldev/kord/common/entity/UserFlag;
-	public static final field DiscordEmployee Ldev/kord/common/entity/UserFlag;
-	public static final field DiscordPartner Ldev/kord/common/entity/UserFlag;
-	public static final field EarlySupporter Ldev/kord/common/entity/UserFlag;
-	public static final field HouseBalance Ldev/kord/common/entity/UserFlag;
-	public static final field HouseBravery Ldev/kord/common/entity/UserFlag;
-	public static final field HouseBrilliance Ldev/kord/common/entity/UserFlag;
-	public static final field HypeSquad Ldev/kord/common/entity/UserFlag;
-	public static final field System Ldev/kord/common/entity/UserFlag;
-	public static final field TeamUser Ldev/kord/common/entity/UserFlag;
-	public static final field VerifiedBot Ldev/kord/common/entity/UserFlag;
-	public static final field VerifiedBotDeveloper Ldev/kord/common/entity/UserFlag;
-	public final fun getCode ()I
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/UserFlag;
-	public static fun values ()[Ldev/kord/common/entity/UserFlag;
+public abstract class dev/kord/common/entity/UserFlag : dev/kord/common/entity/flags/IntBitFlag {
+	public static final field Companion Ldev/kord/common/entity/UserFlag$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public fun getCode ()Ljava/lang/Integer;
+	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun hashCode ()I
+	public final fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/UserFlags {
-	public static final field UserFlagsSerializer Ldev/kord/common/entity/UserFlags$UserFlagsSerializer;
+public final class dev/kord/common/entity/UserFlag$ActiveDeveloper : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$ActiveDeveloper;
+}
+
+public final class dev/kord/common/entity/UserFlag$BotHttpInteractions : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$BotHttpInteractions;
+}
+
+public final class dev/kord/common/entity/UserFlag$BugHunterLevel1 : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$BugHunterLevel1;
+}
+
+public final class dev/kord/common/entity/UserFlag$BugHunterLevel2 : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$BugHunterLevel2;
+}
+
+public final class dev/kord/common/entity/UserFlag$Companion {
+	public final fun getEntries ()Ljava/util/List;
+}
+
+public final class dev/kord/common/entity/UserFlag$DiscordCertifiedModerator : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$DiscordCertifiedModerator;
+}
+
+public final class dev/kord/common/entity/UserFlag$DiscordEmployee : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$DiscordEmployee;
+}
+
+public final class dev/kord/common/entity/UserFlag$DiscordPartner : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$DiscordPartner;
+}
+
+public final class dev/kord/common/entity/UserFlag$EarlySupporter : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$EarlySupporter;
+}
+
+public final class dev/kord/common/entity/UserFlag$HouseBalance : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$HouseBalance;
+}
+
+public final class dev/kord/common/entity/UserFlag$HouseBravery : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$HouseBravery;
+}
+
+public final class dev/kord/common/entity/UserFlag$HouseBrilliance : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$HouseBrilliance;
+}
+
+public final class dev/kord/common/entity/UserFlag$HypeSquad : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$HypeSquad;
+}
+
+public final class dev/kord/common/entity/UserFlag$System : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$System;
+}
+
+public final class dev/kord/common/entity/UserFlag$TeamUser : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$TeamUser;
+}
+
+public final class dev/kord/common/entity/UserFlag$Unknown : dev/kord/common/entity/UserFlag {
 	public fun <init> (I)V
-	public final fun component1 ()I
-	public final fun contains (Ldev/kord/common/entity/UserFlag;)Z
-	public final fun copy (I)Ldev/kord/common/entity/UserFlags;
-	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/UserFlags;IILjava/lang/Object;)Ldev/kord/common/entity/UserFlags;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()I
-	public final fun getFlags ()Ljava/util/List;
-	public fun hashCode ()I
-	public final fun minus (Ldev/kord/common/entity/UserFlag;)Ldev/kord/common/entity/UserFlags;
-	public final fun plus (Ldev/kord/common/entity/UserFlags;)Ldev/kord/common/entity/UserFlags;
-	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/UserFlags$UserFlagsBuilder {
+public final class dev/kord/common/entity/UserFlag$VerifiedBot : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$VerifiedBot;
+}
+
+public final class dev/kord/common/entity/UserFlag$VerifiedBotDeveloper : dev/kord/common/entity/UserFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$VerifiedBotDeveloper;
+}
+
+public final class dev/kord/common/entity/UserFlags : dev/kord/common/entity/flags/IntBitFlags {
+	public static final field Companion Ldev/kord/common/entity/UserFlags$Companion;
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun flags ()Ldev/kord/common/entity/UserFlags;
-	public final fun unaryMinus (Ldev/kord/common/entity/UserFlag;)V
-	public final fun unaryPlus (Ldev/kord/common/entity/UserFlag;)V
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
+	public fun buildUpon ()Ldev/kord/common/entity/UserFlags$Builder;
+	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 }
 
-public final class dev/kord/common/entity/UserFlags$UserFlagsSerializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/UserFlags;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/UserFlags;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/common/entity/UserFlags$Builder : dev/kord/common/entity/flags/IntBitFlags$Builder {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun flags ()Ldev/kord/common/entity/UserFlags;
+	public synthetic fun flags ()Ldev/kord/common/entity/flags/BitFlags;
+}
+
+public final class dev/kord/common/entity/UserFlags$Companion : dev/kord/common/entity/flags/BitFlags$Companion {
+	public fun Builder ()Ldev/kord/common/entity/UserFlags$Builder;
+	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/UserFlags$Serializer : dev/kord/common/entity/flags/BitFlags$Serializer {
+	public fun <init> ()V
+	public fun Implementation (I)Ldev/kord/common/entity/UserFlags;
+	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
 }
 
 public abstract class dev/kord/common/entity/UserPremium {
@@ -8182,6 +8393,12 @@ public abstract class dev/kord/common/entity/flags/DiscordBitSetFlags$Builder : 
 	public synthetic fun unaryPlus (Ldev/kord/common/entity/flags/BitFlags;)V
 	public fun unaryPlus (Ldev/kord/common/entity/flags/DiscordBitSetFlag;)V
 	public fun unaryPlus (Ldev/kord/common/entity/flags/DiscordBitSetFlags;)V
+}
+
+public abstract class dev/kord/common/entity/flags/DiscordBitSetFlags$Companion : dev/kord/common/entity/flags/BitFlags$Companion {
+	public fun <init> ()V
+	protected abstract fun Implementation (Ldev/kord/common/DiscordBitSet;)Ldev/kord/common/entity/flags/DiscordBitSetFlags;
+	public final fun invoke (Ljava/lang/String;)Ldev/kord/common/entity/flags/DiscordBitSetFlags;
 }
 
 public abstract interface class dev/kord/common/entity/flags/IntBitFlag : dev/kord/common/entity/flags/BitFlag {
