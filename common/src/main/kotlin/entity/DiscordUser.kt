@@ -10,6 +10,29 @@
     ],
 )
 
+@file:GenerateKordEnum(
+    name = "UserFlag", valueType = INT,
+    isFlags = true,
+    entries = [
+        Entry("DiscordEmployee", intValue = 1 shl 0),
+        Entry("DiscordPartner", intValue = 1 shl 1),
+        Entry("HypeSquad", intValue = 1 shl 2),
+        Entry("BugHunterLevel1", intValue = 1 shl 3),
+        Entry("HouseBravery", intValue = 1 shl 6),
+        Entry("HouseBrilliance", intValue = 1 shl 7),
+        Entry("HouseBalance", intValue = 1 shl 8),
+        Entry("EarlySupporter", intValue = 1 shl 9),
+        Entry("TeamUser", intValue = 1 shl 10),
+        Entry("System", intValue = 1 shl 12),
+        Entry("BugHunterLevel2", intValue = 1 shl 14),
+        Entry("VerifiedBot", intValue = 1 shl 16),
+        Entry("VerifiedBotDeveloper", intValue = 1 shl 17),
+        Entry("DiscordCertifiedModerator", intValue = 1 shl 18),
+        Entry("BotHttpInteractions", intValue = 1 shl 19),
+        Entry("ActiveDeveloper", intValue = 1 shl 22)
+    ]
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -18,17 +41,9 @@ import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonNames
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 /**
  * A representation of the [Discord User structure](https://discord.com/developers/docs/resources/user).
@@ -110,87 +125,3 @@ public data class DiscordOptionallyMemberUser(
     @JsonNames("member", "guild_member")
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )
-
-
-public enum class UserFlag(public val code: Int) {
-    DiscordEmployee(1 shl 0),
-    DiscordPartner(1 shl 1),
-    HypeSquad(1 shl 2),
-    BugHunterLevel1(1 shl 3),
-    HouseBravery(1 shl 6),
-    HouseBrilliance(1 shl 7),
-    HouseBalance(1 shl 8),
-    EarlySupporter(1 shl 9),
-    TeamUser(1 shl 10),
-    System(1 shl 12),
-    BugHunterLevel2(1 shl 14),
-    VerifiedBot(1 shl 16),
-    VerifiedBotDeveloper(1 shl 17),
-    DiscordCertifiedModerator(1 shl 18),
-    BotHttpInteractions(1 shl 19),
-    ActiveDeveloper(1 shl 22)
-}
-
-@Serializable(with = UserFlags.UserFlagsSerializer::class)
-public data class UserFlags(val code: Int) {
-
-    val flags: List<UserFlag> = UserFlag.values().filter { code and it.code != 0 }
-
-    public operator fun contains(flag: UserFlag): Boolean = flag in flags
-
-    public operator fun plus(flags: UserFlags): UserFlags = when {
-        code and flags.code == flags.code -> this
-        else -> UserFlags(this.code or flags.code)
-    }
-
-    public operator fun minus(flag: UserFlag): UserFlags = when {
-        code and flag.code == flag.code -> UserFlags(code xor flag.code)
-        else -> this
-    }
-
-    public inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
-        contract {
-            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-        }
-        val builder = UserFlagsBuilder(code)
-        builder.apply(block)
-        return builder.flags()
-    }
-
-
-    public companion object UserFlagsSerializer : KSerializer<UserFlags> {
-
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("userFlag", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): UserFlags {
-            val flags = decoder.decodeInt()
-            return UserFlags(flags)
-        }
-
-        override fun serialize(encoder: Encoder, value: UserFlags) {
-            encoder.encodeInt(value.code)
-        }
-
-    }
-
-    public class UserFlagsBuilder(internal var code: Int = 0) {
-        public operator fun UserFlag.unaryPlus() {
-            this@UserFlagsBuilder.code = this@UserFlagsBuilder.code or code
-        }
-
-        public operator fun UserFlag.unaryMinus() {
-            if (this@UserFlagsBuilder.code and code == code) {
-                this@UserFlagsBuilder.code = this@UserFlagsBuilder.code xor code
-            }
-        }
-
-        public fun flags(): UserFlags = UserFlags(code)
-    }
-
-}
-
-
-public inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return UserFlags.UserFlagsBuilder().apply(builder).flags()
-}
