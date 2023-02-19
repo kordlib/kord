@@ -6,6 +6,7 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import dev.kord.ksp.*
 import dev.kord.ksp.addClass
+import dev.kord.ksp.kordenum.*
 import dev.kord.ksp.kordenum.DISCORD_BIT_SET
 import dev.kord.ksp.kordenum.KordEnum
 import dev.kord.ksp.kordenum.ProcessingContext
@@ -69,6 +70,8 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum(additionalValuePropertyMod
         addProperty("name", STRING, KModifier.PROTECTED, KModifier.OVERRIDE) {
             initializer("%S", collectionName.simpleName)
         }
+
+        addEqualsAndHashCode()
 
         addFunction("buildUpon") {
             addModifiers(KModifier.INTERNAL, KModifier.OVERRIDE)

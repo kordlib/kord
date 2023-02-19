@@ -159,6 +159,13 @@ internal inline fun TypeSpec.Builder.addEnum(
         addSuperclassConstructorParameter(valueName)
     }
 
+    addEqualsAndHashCode(FINAL)
+
+    addFunction("toString") {
+        addModifiers(FINAL, OVERRIDE)
+        returns<String>()
+        addStatement("return \"%T.\${this::class.simpleName}($valueName=\$$valueName)\"", enumName)
+    }
 
     for (entry in entries) {
         addObject(entry.name) {
@@ -185,4 +192,20 @@ private fun TypeSpec.Builder.entry(entry: Entry) {
     addModifiers(PUBLIC)
     superclass(enumName)
     addSuperclassConstructorParameter(valueFormat, entry.value)
+}
+
+context (KordEnum, ProcessingContext)
+internal fun TypeSpec.Builder.addEqualsAndHashCode(vararg additionalParameters: KModifier) {
+    addFunction("equals") {
+        addModifiers(OVERRIDE, *additionalParameters)
+        returns<Boolean>()
+        addParameter<Any?>("other")
+        addStatement("return this·===·other || (other·is·%T·&&·this.$valueName·==·other.$valueName)", enumName)
+    }
+
+    addFunction("hashCode") {
+        addModifiers(OVERRIDE, *additionalParameters)
+        returns<Int>()
+        addStatement("return $valueName.hashCode()")
+    }
 }

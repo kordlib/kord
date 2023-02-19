@@ -76,6 +76,11 @@ public class MessageFlags(
 ) : IntBitFlags<MessageFlag, MessageFlags, MessageFlags.Builder>(MessageFlag.entries, code) {
     protected override val name: String = "MessageFlags"
 
+    public override fun equals(other: Any?): Boolean = this === other ||
+            (other is MessageFlag && this.code == other.code)
+
+    public override fun hashCode(): Int = code.hashCode()
+
     internal override fun buildUpon(): Builder = Builder(code)
 
     protected override fun Implementation(flags: Int): MessageFlags = MessageFlags(flags)
@@ -106,6 +111,14 @@ public sealed class MessageFlag(
      */
     public override val code: Int,
 ) : IntBitFlag {
+    public final override fun equals(other: Any?): Boolean = this === other ||
+            (other is MessageFlag && this.code == other.code)
+
+    public final override fun hashCode(): Int = code.hashCode()
+
+    public final override fun toString(): String =
+            "MessageFlag.${this::class.simpleName}(code=$code)"
+
     /**
      * An unknown [MessageFlag].
      *
