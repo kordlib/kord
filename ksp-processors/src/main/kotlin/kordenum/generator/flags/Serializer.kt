@@ -2,14 +2,13 @@ package dev.kord.ksp.kordenum.generator.flags
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import dev.kord.ksp.*
+import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.addAnnotation
 import dev.kord.ksp.addClass
 import dev.kord.ksp.addFunction
-import dev.kord.ksp.kordenum.DISCORD_BIT_SET
 import dev.kord.ksp.kordenum.KordEnum
 import dev.kord.ksp.kordenum.ProcessingContext
-import dev.kord.ksp.toPrimitiveKind
+import dev.kord.ksp.kordenum.toPrimitiveKind
 import kotlinx.serialization.Serializable
 
 private val SERIALIZER_METHOD = MemberName("kotlinx.serialization.builtins", "serializer")
