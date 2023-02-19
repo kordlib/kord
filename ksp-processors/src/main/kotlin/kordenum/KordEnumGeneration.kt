@@ -15,6 +15,7 @@ import dev.kord.ksp.kordenum.generator.addCompanionObject
 import dev.kord.ksp.kordenum.generator.enum.addNormalEnum
 import dev.kord.ksp.kordenum.generator.flags.addFlagEnum
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlin.DeprecationLevel.*
 import com.squareup.kotlinpoet.INT as INT_CLASS_NAME
 import com.squareup.kotlinpoet.SET as SET_CLASS_NAME
@@ -64,6 +65,12 @@ internal fun ValuesPropertyType.toFromListConversion() = when (this) {
     NONE -> error("did not expect $this")
     SET -> ".toSet()"
 }
+
+internal fun ValueType.toPrimitiveKind() = when (this) {
+    INT -> PrimitiveKind.INT::class
+    STRING, BITSET -> PrimitiveKind.STRING::class
+}
+
 
 internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 

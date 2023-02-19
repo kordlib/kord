@@ -3,7 +3,6 @@ package dev.kord.ksp
 import com.google.devtools.ksp.processing.SymbolProcessor
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.MemberName.Companion.member
-import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.TYPE
 
@@ -146,8 +145,3 @@ internal inline fun CodeBlock.Builder.withControlFlow(
     vararg args: Any?,
     builder: CodeBlockBuilder,
 ) = beginControlFlow(controlFlow, *args).apply(builder).endControlFlow()
-
-internal fun GenerateKordEnum.ValueType.toPrimitiveKind() = when (this) {
-    GenerateKordEnum.ValueType.INT -> PrimitiveKind.INT::class
-    GenerateKordEnum.ValueType.STRING, GenerateKordEnum.ValueType.BITSET -> PrimitiveKind.STRING::class
-}
