@@ -85,7 +85,7 @@ public class GuildMemberFlags(
 
     public override fun hashCode(): Int = code.hashCode()
 
-    internal override fun buildUpon(): Builder = Builder(code)
+    public override fun buildUpon(): Builder = Builder(code)
 
     protected override fun Implementation(flags: Int): GuildMemberFlags = GuildMemberFlags(flags)
 
@@ -103,7 +103,7 @@ public class GuildMemberFlags(
 
     public companion object : BitFlags.Companion<Int, GuildMemberFlag, GuildMemberFlags, Builder>()
             {
-        internal override fun Builder(): Builder = GuildMemberFlags.Builder()
+        public override fun Builder(): Builder = GuildMemberFlags.Builder()
     }
 }
 

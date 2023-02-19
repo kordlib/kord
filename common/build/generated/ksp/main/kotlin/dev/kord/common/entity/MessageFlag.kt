@@ -81,7 +81,7 @@ public class MessageFlags(
 
     public override fun hashCode(): Int = code.hashCode()
 
-    internal override fun buildUpon(): Builder = Builder(code)
+    public override fun buildUpon(): Builder = Builder(code)
 
     protected override fun Implementation(flags: Int): MessageFlags = MessageFlags(flags)
 
@@ -97,7 +97,7 @@ public class MessageFlags(
     }
 
     public companion object : BitFlags.Companion<Int, MessageFlag, MessageFlags, Builder>() {
-        internal override fun Builder(): Builder = MessageFlags.Builder()
+        public override fun Builder(): Builder = MessageFlags.Builder()
     }
 }
 

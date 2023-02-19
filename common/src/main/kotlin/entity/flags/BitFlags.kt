@@ -68,8 +68,7 @@ public abstract class BitFlags<Type,
      */
     public abstract operator fun contains(flags: Implementation): Boolean
 
-    @PublishedApi
-    internal abstract fun buildUpon(): Builder
+    public abstract fun buildUpon(): Builder
     protected abstract fun Implementation(flags: Type): Implementation
     protected fun Implementation(flags: Implementation): Implementation = Implementation(flags.code)
 
@@ -88,8 +87,7 @@ public abstract class BitFlags<Type,
             Implementation : BitFlags<Type, T, Implementation, Builder>,
             Builder : BitFlags.Builder<Type, T, Implementation>
             > {
-        @PublishedApi
-        internal abstract fun Builder(): Builder
+        public abstract fun Builder(): Builder
 
         /**
          * Creates a new container and applies [builder] to it.
