@@ -356,7 +356,7 @@ public sealed class Permission(
     /**
      * A combination of all [Permission]s
      */
-    public class All : Permission(buildAll())
+    public object All : Permission(buildAll())
 
     public companion object {
         /**

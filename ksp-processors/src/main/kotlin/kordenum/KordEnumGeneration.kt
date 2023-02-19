@@ -204,7 +204,7 @@ internal inline fun TypeSpec.Builder.addEnum(
     }
 
     if (hasCombinerFlag) {
-        addClass("All") {
+        addObject("All") {
             addKdoc("A combination of all [%T]s", enumName)
             addModifiers(PUBLIC)
             superclass(enumName)
