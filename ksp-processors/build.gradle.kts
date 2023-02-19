@@ -15,7 +15,7 @@ dependencies {
 }
 
 tasks {
-    withType<KotlinCompile> {
+    withType<KotlinCompile>().configureEach {
         compilerOptions {
             freeCompilerArgs.add("-Xcontext-receivers")
         }
