@@ -71,7 +71,9 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     val entries = args[GenerateKordEnum::entries] as List<*>
     val kDoc = args[GenerateKordEnum::kDoc].toKDoc()
     val docUrl = (args[GenerateKordEnum::docUrl] as String).ifBlank { null }
-    val valueName = args[GenerateKordEnum::valueName] as String
+    val isFlags = args[GenerateKordEnum::isFlags] as Boolean
+    val valueName = (args[GenerateKordEnum::valueName] as String)
+        .takeIf { !isFlags } ?: "code"
     val deprecatedEntries = args[GenerateKordEnum::deprecatedEntries] as List<*>
 
     val valuesPropertyName = (args[GenerateKordEnum::valuesPropertyName] as String).ifEmpty { null }
@@ -88,7 +90,6 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
         }
     }
     val deprecatedSerializerName = (args[GenerateKordEnum::deprecatedSerializerName] as String).ifEmpty { null }
-    val isFlags = args[GenerateKordEnum::isFlags] as Boolean
     val bitFlagsDescriptor = args[GenerateKordEnum::bitFlagsDescriptor] ?: error("Missing flags descriptor")
 
     return KordEnum(

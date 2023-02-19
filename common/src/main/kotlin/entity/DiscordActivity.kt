@@ -1,9 +1,27 @@
+@file:GenerateKordEnum(
+    name = "ActivityFlag",
+    valueType = GenerateKordEnum.ValueType.INT,
+    isFlags = true,
+    entries = [
+        GenerateKordEnum.Entry(name = "Instance", intValue = 1 shl 0),
+        GenerateKordEnum.Entry(name = "Join", intValue = 1 shl 1),
+        GenerateKordEnum.Entry(name = "Spectate", intValue = 1 shl 2),
+        GenerateKordEnum.Entry(name = "JoinRequest", intValue = 1 shl 3),
+        GenerateKordEnum.Entry(name = "Sync", intValue =1 shl 4),
+        GenerateKordEnum.Entry(name = "Play", intValue = 1 shl 5),
+        GenerateKordEnum.Entry(name = "PartyPrivacyFriends", intValue = 1 shl 6),
+        GenerateKordEnum.Entry(name = "PartyPrivacVoiceChannel", intValue = 1 shl 7),
+        GenerateKordEnum.Entry(name = "Embed", intValue = 1 shl 8),
+    ]
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
+import dev.kord.ksp.GenerateKordEnum
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -43,35 +61,6 @@ public data class DiscordActivity(
     val flags: Optional<ActivityFlags> = Optional.Missing(),
     val buttons: Optional<List<String>> = Optional.Missing()
 )
-
-public enum class ActivityFlag(public val value: Int) {
-    Instance(1),
-    Join(2),
-    Spectate(4),
-    JoinRequest(8),
-    Sync(16),
-    Play(32)
-}
-
-@Serializable(with = ActivityFlags.Serializer::class)
-public class ActivityFlags(public val value: Int) {
-
-    public val flags: Set<ActivityFlag>
-        get() = ActivityFlag.values().filter { (it.value and value) == it.value }.toSet()
-
-    public operator fun contains(flag: ActivityFlag): Boolean = (flag.value and value) == flag.value
-
-    internal object Serializer : KSerializer<ActivityFlags> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("Kord.ActivityFlags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ActivityFlags = ActivityFlags(decoder.decodeInt())
-
-        override fun serialize(encoder: Encoder, value: ActivityFlags) {
-            encoder.encodeInt(value.value)
-        }
-    }
-}
 
 @Serializable
 public data class DiscordActivityTimestamps(
@@ -190,13 +179,27 @@ public sealed class ActivityType(public val code: Int) {
         private val UNKNOWN = Unknown(Int.MIN_VALUE) // like old enum entry `Unknown`
 
         // @formatter:off
-        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Unknown: ActivityType = UNKNOWN
-        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Game: ActivityType = Game
-        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Streaming: ActivityType = Streaming
-        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Listening: ActivityType = Listening
-        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Watching: ActivityType = Watching
-        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Custom: ActivityType = Custom
-        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Competing: ActivityType = Competing
+        @Deprecated("Binary compatibility", level = HIDDEN)
+        @JvmField
+        public val Unknown: ActivityType = UNKNOWN
+        @Deprecated("Binary compatibility", level = HIDDEN)
+        @JvmField
+        public val Game: ActivityType = Game
+        @Deprecated("Binary compatibility", level = HIDDEN)
+        @JvmField
+        public val Streaming: ActivityType = Streaming
+        @Deprecated("Binary compatibility", level = HIDDEN)
+        @JvmField
+        public val Listening: ActivityType = Listening
+        @Deprecated("Binary compatibility", level = HIDDEN)
+        @JvmField
+        public val Watching: ActivityType = Watching
+        @Deprecated("Binary compatibility", level = HIDDEN)
+        @JvmField
+        public val Custom: ActivityType = Custom
+        @Deprecated("Binary compatibility", level = HIDDEN)
+        @JvmField
+        public val Competing: ActivityType = Competing
         // @formatter:on
 
         /** @suppress */
