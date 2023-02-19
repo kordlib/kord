@@ -97,8 +97,6 @@ public sealed class MessageType(
 
     public object StageSpeaker : MessageType(29)
 
-    public object StageRaiseHand : MessageType(30)
-
     public object StageTopic : MessageType(31)
 
     public object GuildApplicationPremiumSubscription : MessageType(32)
@@ -194,7 +192,6 @@ public sealed class MessageType(
             27 -> StageStart
             28 -> StageEnd
             29 -> StageSpeaker
-            30 -> StageRaiseHand
             31 -> StageTopic
             32 -> GuildApplicationPremiumSubscription
             else -> Unknown(code)
@@ -235,7 +232,6 @@ public sealed class MessageType(
                 StageStart,
                 StageEnd,
                 StageSpeaker,
-                StageRaiseHand,
                 StageTopic,
                 GuildApplicationPremiumSubscription,
             )

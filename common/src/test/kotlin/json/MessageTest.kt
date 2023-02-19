@@ -46,7 +46,7 @@ class MessageTest {
             channelId shouldBe "290926798999357250"
             mentions shouldBe emptyList()
             type.code shouldBe 0
-            nonce shouldBe "1234"
+            nonce shouldBe "1676368321197"
         }
     }
 
