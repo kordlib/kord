@@ -1,5 +1,6 @@
 package dev.kord.core.cache.data
 
+import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.ApplicationCommandPermissionType
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermission
 import dev.kord.common.entity.Snowflake
@@ -60,6 +61,7 @@ public data class GuildApplicationCommandPermissionData(
             is ApplicationCommandPermissionType.Unknown -> DiscordGuildApplicationCommandPermission.Type.Unknown(value, null)
         }
 
+        @OptIn(KordUnsafe::class)
         @Suppress("DEPRECATION_ERROR")
         private fun DiscordGuildApplicationCommandPermission.Type.toNewType() = when (this) {
             DiscordGuildApplicationCommandPermission.Type.Role -> ApplicationCommandPermissionType.Role
