@@ -23,8 +23,10 @@ import com.squareup.kotlinpoet.STRING as STRING_CLASS_NAME
 
 internal val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
 internal val KORD_EXPERIMENTAL = ClassName("dev.kord.common.annotation", "KordExperimental")
+internal val KORD_UNSAFE = ClassName("dev.kord.common.annotation", "KordUnsafe")
 internal val K_SERIALIZER = KSerializer::class.asClassName()
 internal val DISCORD_BIT_SET = ClassName("dev.kord.common", "DiscordBitSet")
+internal val OPT_IN = ClassName("kotlin", "OptIn")
 
 internal val Entry.warningSuppressedName
     get() = when {
@@ -150,6 +152,7 @@ internal inline fun TypeSpec.Builder.addEnum(
         )
         addModifiers(PUBLIC)
         primaryConstructor {
+            addAnnotation(KORD_UNSAFE)
             addParameter(valueName, valueTypeName)
         }
         superclass(enumName)

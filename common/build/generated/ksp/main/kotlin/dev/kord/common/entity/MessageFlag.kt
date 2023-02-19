@@ -4,6 +4,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.`annotation`.KordUnsafe
 import dev.kord.common.entity.flags.BitFlags
 import dev.kord.common.entity.flags.IntBitFlag
 import dev.kord.common.entity.flags.IntBitFlags
@@ -110,7 +111,7 @@ public sealed class MessageFlag(
      *
      * This is used as a fallback for [MessageFlag]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown @KordUnsafe constructor(
         code: Int,
     ) : MessageFlag(code)
 

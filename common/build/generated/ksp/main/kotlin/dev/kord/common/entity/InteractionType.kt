@@ -4,6 +4,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -18,6 +19,7 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type).
  */
 @Serializable(with = InteractionType.Serializer::class)
+@OptIn(KordUnsafe::class)
 public sealed class InteractionType(
     /**
      * The raw type used by Discord.
@@ -37,7 +39,7 @@ public sealed class InteractionType(
      *
      * This is used as a fallback for [InteractionType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown @KordUnsafe constructor(
         type: Int,
     ) : InteractionType(type)
 

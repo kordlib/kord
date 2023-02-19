@@ -4,6 +4,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
@@ -19,6 +20,7 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-types).
  */
 @Serializable(with = ScheduledEntityType.NewSerializer::class)
+@OptIn(KordUnsafe::class)
 public sealed class ScheduledEntityType(
     /**
      * The raw value used by Discord.
@@ -38,7 +40,7 @@ public sealed class ScheduledEntityType(
      *
      * This is used as a fallback for [ScheduledEntityType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown @KordUnsafe constructor(
         `value`: Int,
     ) : ScheduledEntityType(value)
 

@@ -4,6 +4,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -18,6 +19,7 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types).
  */
 @Serializable(with = AllowedMentionType.Serializer::class)
+@OptIn(KordUnsafe::class)
 public sealed class AllowedMentionType(
     /**
      * The raw value used by Discord.
@@ -37,7 +39,7 @@ public sealed class AllowedMentionType(
      *
      * This is used as a fallback for [AllowedMentionType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown @KordUnsafe constructor(
         `value`: String,
     ) : AllowedMentionType(value)
 

@@ -17,6 +17,9 @@ fun TypeSpec.Builder.addEnumSerializer() {
     addAnnotation<Serializable> {
         addMember("with·=·%T.$internalSerializerName::class", enumName)
     }
+    addAnnotation(OPT_IN) {
+        addMember("%T::class", KORD_UNSAFE)
+    }
 
     addObject(internalSerializerName) {
         addModifiers(KModifier.INTERNAL)

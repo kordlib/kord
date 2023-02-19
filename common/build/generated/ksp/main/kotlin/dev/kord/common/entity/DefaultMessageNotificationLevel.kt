@@ -4,6 +4,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -18,6 +19,7 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level).
  */
 @Serializable(with = DefaultMessageNotificationLevel.Serializer::class)
+@OptIn(KordUnsafe::class)
 public sealed class DefaultMessageNotificationLevel(
     /**
      * The raw value used by Discord.
@@ -38,7 +40,7 @@ public sealed class DefaultMessageNotificationLevel(
      * This is used as a fallback for [DefaultMessageNotificationLevel]s that haven't been added to
      * Kord yet.
      */
-    public class Unknown(
+    public class Unknown @KordUnsafe constructor(
         `value`: Int,
     ) : DefaultMessageNotificationLevel(value)
 

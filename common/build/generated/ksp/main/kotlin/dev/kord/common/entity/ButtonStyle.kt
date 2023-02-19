@@ -4,6 +4,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
@@ -21,6 +22,7 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).
  */
 @Serializable(with = ButtonStyle.NewSerializer::class)
+@OptIn(KordUnsafe::class)
 public sealed class ButtonStyle(
     /**
      * The raw value used by Discord.
@@ -40,7 +42,7 @@ public sealed class ButtonStyle(
      *
      * This is used as a fallback for [ButtonStyle]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown @KordUnsafe constructor(
         `value`: Int,
     ) : ButtonStyle(value)
 
