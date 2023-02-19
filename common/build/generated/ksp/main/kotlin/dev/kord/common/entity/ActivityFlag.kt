@@ -101,6 +101,10 @@ public class ActivityFlags(
     }
 }
 
+/**
+ * See [ActivityFlag]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags).
+ */
 public sealed class ActivityFlag(
     /**
      * The raw code used by Discord.

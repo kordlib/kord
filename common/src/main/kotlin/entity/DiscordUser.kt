@@ -13,23 +13,28 @@
 @file:GenerateKordEnum(
     name = "UserFlag", valueType = INT,
     isFlags = true,
+    kDoc = "https://discord.com/developers/docs/resources/user#user-object-user-flags",
     entries = [
-        Entry("DiscordEmployee", intValue = 1 shl 0),
-        Entry("DiscordPartner", intValue = 1 shl 1),
-        Entry("HypeSquad", intValue = 1 shl 2),
-        Entry("BugHunterLevel1", intValue = 1 shl 3),
-        Entry("HouseBravery", intValue = 1 shl 6),
-        Entry("HouseBrilliance", intValue = 1 shl 7),
-        Entry("HouseBalance", intValue = 1 shl 8),
-        Entry("EarlySupporter", intValue = 1 shl 9),
-        Entry("TeamUser", intValue = 1 shl 10),
-        Entry("System", intValue = 1 shl 12),
-        Entry("BugHunterLevel2", intValue = 1 shl 14),
-        Entry("VerifiedBot", intValue = 1 shl 16),
-        Entry("VerifiedBotDeveloper", intValue = 1 shl 17),
-        Entry("DiscordCertifiedModerator", intValue = 1 shl 18),
-        Entry("BotHttpInteractions", intValue = 1 shl 19),
-        Entry("ActiveDeveloper", intValue = 1 shl 22)
+        Entry("DiscordEmployee", intValue = 1 shl 0, kDoc = "Discord Employee"),
+        Entry("DiscordPartner", intValue = 1 shl 1, kDoc = "Partnered Server Owner"),
+        Entry("HypeSquad", intValue = 1 shl 2, kDoc = "HypeSquad Events Member"),
+        Entry("BugHunterLevel1", intValue = 1 shl 3, kDoc = "Bug Hunter Level 1"),
+        Entry("HouseBravery", intValue = 1 shl 6, kDoc = "House Bravery Member"),
+        Entry("HouseBrilliance", intValue = 1 shl 7, kDoc = "House Brilliance Member"),
+        Entry("HouseBalance", intValue = 1 shl 8, kDoc = "House Balance Member"),
+        Entry("EarlySupporter", intValue = 1 shl 9, kDoc = "Early Nitro Supporter"),
+        Entry("TeamUser", intValue = 1 shl 10, kDoc = "User is a team"),
+        Entry("BugHunterLevel2", intValue = 1 shl 14, kDoc = "Bug Hunter Level 2"),
+        Entry("VerifiedBot", intValue = 1 shl 16, kDoc = "Verified Bot"),
+        Entry("VerifiedBotDeveloper", intValue = 1 shl 17, kDoc = "Early Verified Bot Developer"),
+        Entry("DiscordCertifiedModerator", intValue = 1 shl 18, kDoc = "Moderator Programs Alumni"),
+        Entry(
+            "BotHttpInteractions",
+            intValue = 1 shl 19,
+            kDoc = "Bot uses only HTTP interactions and is shown in the online member list"
+        ),
+        Entry("ActiveDeveloper", intValue = 1 shl 22, kDoc = "User is an Active Developer"),
+        Entry("System", intValue = 1 shl 12)
     ]
 )
 

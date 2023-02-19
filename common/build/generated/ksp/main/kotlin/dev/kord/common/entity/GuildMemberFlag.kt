@@ -107,6 +107,10 @@ public class GuildMemberFlags(
     }
 }
 
+/**
+ * See [GuildMemberFlag]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags).
+ */
 public sealed class GuildMemberFlag(
     /**
      * The raw code used by Discord.
@@ -130,12 +134,24 @@ public sealed class GuildMemberFlag(
         code: Int,
     ) : GuildMemberFlag(code)
 
+    /**
+     * Member has left and rejoined the guild
+     */
     public object DidRejoin : GuildMemberFlag(1)
 
+    /**
+     * Member has completed onboarding
+     */
     public object CompletedOnboarding : GuildMemberFlag(2)
 
+    /**
+     * Member is exempt from guild verification requirements
+     */
     public object BypassesVerification : GuildMemberFlag(4)
 
+    /**
+     * Member has started onboarding
+     */
     public object StartedOnboarding : GuildMemberFlag(8)
 
     public companion object {

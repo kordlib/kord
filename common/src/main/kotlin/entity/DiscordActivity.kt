@@ -2,6 +2,7 @@
     name = "ActivityFlag",
     valueType = GenerateKordEnum.ValueType.INT,
     isFlags = true,
+    docUrl = "https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags",
     entries = [
         GenerateKordEnum.Entry(name = "Instance", intValue = 1 shl 0),
         GenerateKordEnum.Entry(name = "Join", intValue = 1 shl 1),

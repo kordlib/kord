@@ -108,6 +108,10 @@ public class ApplicationFlags(
     }
 }
 
+/**
+ * See [ApplicationFlag]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/application#application-object-application-flags).
+ */
 public sealed class ApplicationFlag(
     /**
      * The raw code used by Discord.

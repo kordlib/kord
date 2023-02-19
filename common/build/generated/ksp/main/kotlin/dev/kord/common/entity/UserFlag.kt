@@ -100,6 +100,9 @@ public class UserFlags(
     }
 }
 
+/**
+ * https://discord.com/developers/docs/resources/user#user-object-user-flags
+ */
 public sealed class UserFlag(
     /**
      * The raw code used by Discord.
@@ -122,37 +125,82 @@ public sealed class UserFlag(
         code: Int,
     ) : UserFlag(code)
 
+    /**
+     * Discord Employee
+     */
     public object DiscordEmployee : UserFlag(1)
 
+    /**
+     * Partnered Server Owner
+     */
     public object DiscordPartner : UserFlag(2)
 
+    /**
+     * HypeSquad Events Member
+     */
     public object HypeSquad : UserFlag(4)
 
+    /**
+     * Bug Hunter Level 1
+     */
     public object BugHunterLevel1 : UserFlag(8)
 
+    /**
+     * House Bravery Member
+     */
     public object HouseBravery : UserFlag(64)
 
+    /**
+     * House Brilliance Member
+     */
     public object HouseBrilliance : UserFlag(128)
 
+    /**
+     * House Balance Member
+     */
     public object HouseBalance : UserFlag(256)
 
+    /**
+     * Early Nitro Supporter
+     */
     public object EarlySupporter : UserFlag(512)
 
+    /**
+     * User is a team
+     */
     public object TeamUser : UserFlag(1024)
 
-    public object System : UserFlag(4096)
-
+    /**
+     * Bug Hunter Level 2
+     */
     public object BugHunterLevel2 : UserFlag(16384)
 
+    /**
+     * Verified Bot
+     */
     public object VerifiedBot : UserFlag(65536)
 
+    /**
+     * Early Verified Bot Developer
+     */
     public object VerifiedBotDeveloper : UserFlag(131072)
 
+    /**
+     * Moderator Programs Alumni
+     */
     public object DiscordCertifiedModerator : UserFlag(262144)
 
+    /**
+     * Bot uses only HTTP interactions and is shown in the online member list
+     */
     public object BotHttpInteractions : UserFlag(524288)
 
+    /**
+     * User is an Active Developer
+     */
     public object ActiveDeveloper : UserFlag(4194304)
+
+    public object System : UserFlag(4096)
 
     public companion object {
         /**
@@ -169,13 +217,13 @@ public sealed class UserFlag(
                 HouseBalance,
                 EarlySupporter,
                 TeamUser,
-                System,
                 BugHunterLevel2,
                 VerifiedBot,
                 VerifiedBotDeveloper,
                 DiscordCertifiedModerator,
                 BotHttpInteractions,
                 ActiveDeveloper,
+                System,
             )
         }
 

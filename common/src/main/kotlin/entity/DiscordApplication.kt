@@ -2,6 +2,7 @@
     name = "ApplicationFlag",
     valueType = GenerateKordEnum.ValueType.INT,
     isFlags = true,
+    docUrl = "https://discord.com/developers/docs/resources/application#application-object-application-flags",
     entries = [
         GenerateKordEnum.Entry(name = "GatewayPresence", intValue = 1 shl 12, kDoc = """
          Intent required for bots in **100 or more servers** to receive

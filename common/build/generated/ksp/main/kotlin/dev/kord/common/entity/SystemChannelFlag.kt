@@ -49,7 +49,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications)
  * val flags2 = flags + SystemChannelFlag.SuppressPremiumSubscriptions
- * val otherFlags = flags - SystemChannelFlag.SuppressPremiumSubscriptions
+ * val otherFlags = flags - SystemChannelFlag.SuppressGuildReminderNotifications
  * val flags3 = flags + otherFlags
  * ```
  *
@@ -57,8 +57,8 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = SystemChannelFlag.SuppressJoinNotifications in obj.flags
- * val hasFlags = SystemChannelFlags(SystemChannelFlag.SuppressPremiumSubscriptions,
- * SystemChannelFlag.SuppressPremiumSubscriptions) in obj.flags
+ * val hasFlags = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotificationReplies,
+ * SystemChannelFlag.SuppressRoleSubscriptionPurchaseNotifications) in obj.flags
  * ```
  *
  * ## Unknown flag
@@ -109,6 +109,10 @@ public class SystemChannelFlags(
     }
 }
 
+/**
+ * See [SystemChannelFlag]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags).
+ */
 public sealed class SystemChannelFlag(
     /**
      * The raw code used by Discord.
@@ -142,6 +146,26 @@ public sealed class SystemChannelFlag(
      */
     public object SuppressPremiumSubscriptions : SystemChannelFlag(2)
 
+    /**
+     * Suppress server setup tips
+     */
+    public object SuppressGuildReminderNotifications : SystemChannelFlag(4)
+
+    /**
+     * Hide member join sticker reply buttons
+     */
+    public object SuppressJoinNotificationReplies : SystemChannelFlag(8)
+
+    /**
+     * Suppress role subscription purchase and renewal notifications
+     */
+    public object SuppressRoleSubscriptionPurchaseNotifications : SystemChannelFlag(16)
+
+    /**
+     * Hide role subscription sticker reply buttons
+     */
+    public object SuppressRoleSubscriptionPurchaseNotificationReplies : SystemChannelFlag(32)
+
     public companion object {
         /**
          * A [List] of all known [SystemChannelFlag]s.
@@ -150,6 +174,10 @@ public sealed class SystemChannelFlag(
             listOf(
                 SuppressJoinNotifications,
                 SuppressPremiumSubscriptions,
+                SuppressGuildReminderNotifications,
+                SuppressJoinNotificationReplies,
+                SuppressRoleSubscriptionPurchaseNotifications,
+                SuppressRoleSubscriptionPurchaseNotificationReplies,
             )
         }
 
