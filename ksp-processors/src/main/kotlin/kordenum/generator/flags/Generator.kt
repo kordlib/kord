@@ -49,7 +49,7 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum(additionalValuePropertyMod
         addParameter(valueName, valueTypeName)
     }
     if (valueType == GenerateKordEnum.ValueType.BITSET) {
-        constructor {
+        addConstructor {
             addModifiers(KModifier.PROTECTED)
             addParameter("values", LONG, KModifier.VARARG)
             callThisConstructor(CodeBlock.of("%T(values)", DISCORD_BIT_SET))
@@ -92,7 +92,7 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum(additionalValuePropertyMod
 
 context(KordEnum, ProcessingContext)
 fun FunSpec.Builder.addCodeParameter() {
-    parameter(valueName, valueTypeName) {
+    addParameter(valueName, valueTypeName) {
         defaultValue(valueType.defaultParameter())
     }
 }
