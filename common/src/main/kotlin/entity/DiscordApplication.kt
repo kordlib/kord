@@ -1,17 +1,47 @@
+@file:GenerateKordEnum(
+    name = "ApplicationFlag",
+    valueType = GenerateKordEnum.ValueType.INT,
+    isFlags = true,
+    entries = [
+        GenerateKordEnum.Entry(name = "GatewayPresence", intValue = 1 shl 12, kDoc = """
+         Intent required for bots in **100 or more servers** to receive
+         [`PresenceUpdate`·events](https://discord.com/developers/docs/topics/gateway#presence-update)."""),
+        GenerateKordEnum.Entry(name = "GatewayPresenceLimited", intValue = 1 shl 13, kDoc = """
+         Intent required for bots in under 100 servers to receive
+         [`PresenceUpdate`·events](https://discord.com/developers/docs/topics/gateway#presence-update), found in Bot
+         Settings."""),
+        GenerateKordEnum.Entry(name = "GatewayGuildMembers", intValue = 1 shl 14, kDoc = """
+         Intent required for bots in **100 or more servers** to receive member-related events like `GuildMemberAdd`.
+         
+         See list of member-related events under
+         [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents)."""),
+
+        GenerateKordEnum.Entry(name = "GatewayGuildMembersLimited", intValue = 1 shl 15, kDoc = """
+         Intent required for bots in under 100 servers to receive member-related events like `GuildMemberAdd`, found in
+         Bot Settings.
+         
+         See list of member-related events under
+         [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents)."""),
+        GenerateKordEnum.Entry(name = "VerificationPendingGuildLimit", intValue = 1 shl 16, kDoc = "Indicates unusual growth of an app that prevents verification."),
+        GenerateKordEnum.Entry(name = "Embedded", intValue = 1 shl 17, kDoc = "Indicates if an app is embedded within the Discord client (currently unavailable publicly)."),
+        GenerateKordEnum.Entry(name = "GatewayMessageContent", intValue = 1 shl 18, kDoc = """
+         Intent required for bots in **100 or more servers*to receive
+         [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055)."""),
+
+        GenerateKordEnum.Entry(name = "GatewayMessageContentLimited", intValue = 1 shl 19, kDoc = """
+         Intent required for bots in under 100 servers to receive
+         [message·content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found in Bot Settings."""),
+        GenerateKordEnum.Entry(name = "ApplicationCommandBadge", intValue = 1 shl 23, kDoc = "Indicates if an app has registered global application commands.")
+    ]
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.KSerializer
+import dev.kord.ksp.GenerateKordEnum
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 public sealed interface BaseDiscordApplication {
     public val id: Snowflake
@@ -34,8 +64,8 @@ public sealed interface BaseDiscordApplication {
 }
 
 /**
- * A representation of the
- * [Application Structure](https://discord.com/developers/docs/resources/application#application-object-application-structure).
+ A representation of the
+ [Application Structure](https://discord.com/developers/docs/resources/application#application-object-application-structure).
  */
 @Serializable
 public data class DiscordApplication(
@@ -73,9 +103,9 @@ public data class DiscordApplication(
 ) : BaseDiscordApplication
 
 /**
- * A representation of the partial
- * [Application Structure](https://discord.com/developers/docs/resources/application#application-object-application-structure)
- * sent in [invite create events](https://discord.com/developers/docs/topics/gateway#invite-create).
+ A representation of the partial
+ [Application Structure](https://discord.com/developers/docs/resources/application#application-object-application-structure)
+ sent in [invite create events](https://discord.com/developers/docs/topics/gateway#invite-create).
  */
 @Serializable
 public data class DiscordPartialApplication(
@@ -107,152 +137,10 @@ public data class DiscordPartialApplication(
     override val customInstallUrl: Optional<String> = Optional.Missing(),
 ) : BaseDiscordApplication
 
-public enum class ApplicationFlag(public val code: Int) {
-
-    /**
-     * Intent required for bots in **100 or more servers** to receive
-     * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update).
-     */
-    GatewayPresence(1 shl 12),
-
-    /**
-     * Intent required for bots in under 100 servers to receive
-     * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update), found in Bot
-     * Settings.
-     */
-    GatewayPresenceLimited(1 shl 13),
-
-    /**
-     * Intent required for bots in **100 or more servers** to receive member-related events like `GuildMemberAdd`.
-     *
-     * See list of member-related events under
-     * [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
-     */
-    GatewayGuildMembers(1 shl 14),
-
-    /**
-     * Intent required for bots in under 100 servers to receive member-related events like `GuildMemberAdd`, found in
-     * Bot Settings.
-     *
-     * See list of member-related events under
-     * [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
-     */
-    GatewayGuildMembersLimited(1 shl 15),
-
-    /** Indicates unusual growth of an app that prevents verification. */
-    VerificationPendingGuildLimit(1 shl 16),
-
-    /** Indicates if an app is embedded within the Discord client (currently unavailable publicly). */
-    Embedded(1 shl 17),
-
-    /**
-     * Intent required for bots in **100 or more servers** to receive
-     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
-     */
-    GatewayMessageContent(1 shl 18),
-
-    /**
-     * Intent required for bots in under 100 servers to receive
-     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found in Bot Settings.
-     */
-    GatewayMessageContentLimited(1 shl 19),
-
-    /** Indicates if an app has registered global application commands. */
-    ApplicationCommandBadge(1 shl 23);
-
-    public operator fun plus(flag: ApplicationFlag): ApplicationFlags = ApplicationFlags(this.code or flag.code)
-
-    public operator fun plus(flags: ApplicationFlags): ApplicationFlags = flags + this
-}
-
-@Serializable(with = ApplicationFlags.Serializer::class)
-public data class ApplicationFlags internal constructor(val code: Int) {
-
-    val flags: List<ApplicationFlag> get() = ApplicationFlag.values().filter { this.contains(it) }
-
-    public operator fun contains(flag: ApplicationFlag): Boolean = this.code and flag.code == flag.code
-
-    public operator fun contains(flags: ApplicationFlags): Boolean = this.code and flags.code == flags.code
-
-    public operator fun plus(flag: ApplicationFlag): ApplicationFlags = ApplicationFlags(this.code or flag.code)
-
-    public operator fun plus(flags: ApplicationFlags): ApplicationFlags = ApplicationFlags(this.code or flags.code)
-
-    public operator fun minus(flag: ApplicationFlag): ApplicationFlags =
-        ApplicationFlags(this.code and flag.code.inv())
-
-    public operator fun minus(flags: ApplicationFlags): ApplicationFlags =
-        ApplicationFlags(this.code and flags.code.inv())
-
-
-    public inline fun copy(builder: Builder.() -> Unit): ApplicationFlags {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return Builder(code).apply(builder).flags()
-    }
-
-
-    internal object Serializer : KSerializer<ApplicationFlags> {
-
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ApplicationFlags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ApplicationFlags {
-            val flags = decoder.decodeInt()
-            return ApplicationFlags(flags)
-        }
-
-        override fun serialize(encoder: Encoder, value: ApplicationFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-
-    public class Builder(internal var code: Int = 0) {
-        public operator fun ApplicationFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ApplicationFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ApplicationFlag.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public operator fun ApplicationFlags.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public fun flags(): ApplicationFlags = ApplicationFlags(code)
-    }
-}
-
-public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit): ApplicationFlags {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return ApplicationFlags.Builder().apply(builder).flags()
-}
-
-public fun ApplicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
-public fun ApplicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
-public fun ApplicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
-@JvmName("ApplicationFlagsWithIterable")
-public fun ApplicationFlags(flags: Iterable<ApplicationFlags>): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
 @Serializable
 public data class InstallParams(
-    /** The scopes to add the application to the server with. */
+    /*The scopes to add the application to the server with. */
     val scopes: List<String>,
-    /** The permissions to request for the bot role. */
+    /*The permissions to request for the bot role. */
     val permissions: Permissions,
 )
