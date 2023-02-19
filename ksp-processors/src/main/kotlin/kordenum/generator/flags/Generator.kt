@@ -71,7 +71,7 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum(additionalValuePropertyMod
             initializer("%S", collectionName.simpleName)
         }
 
-        addEqualsAndHashCode()
+        addEqualsAndHashCode(collectionName)
 
         addFunction("buildUpon") {
             addModifiers(KModifier.INTERNAL, KModifier.OVERRIDE)

@@ -77,7 +77,7 @@ public class MessageFlags(
     protected override val name: String = "MessageFlags"
 
     public override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageFlag && this.code == other.code)
+            (other is MessageFlags && this.code == other.code)
 
     public override fun hashCode(): Int = code.hashCode()
 
