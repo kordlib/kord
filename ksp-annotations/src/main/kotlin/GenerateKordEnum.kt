@@ -44,7 +44,11 @@ annotation class GenerateKordEnum(
     /**
      * Optional [BitFlagDescription] when using [isFlags] is true
      */
-    val bitFlagsDescriptor: BitFlagDescription = BitFlagDescription()
+    val bitFlagsDescriptor: BitFlagDescription = BitFlagDescription(),
+    /**
+     * Whether to add an "All" flag combinding all flags into one.
+     */
+    val hasCombinerFlag: Boolean = false
 ) {
     enum class ValueType { INT, STRING, BITSET }
     enum class ValuesPropertyType { NONE, SET }

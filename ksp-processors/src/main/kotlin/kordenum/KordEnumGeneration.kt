@@ -28,6 +28,20 @@ internal val K_SERIALIZER = KSerializer::class.asClassName()
 internal val DISCORD_BIT_SET = ClassName("dev.kord.common", "DiscordBitSet")
 internal val OPT_IN = ClassName("kotlin", "OptIn")
 
+internal fun ValueType.defaultParameter(): CodeBlock {
+    val (code, value) = defaultParameterBlock()
+
+    return CodeBlock.of(code, value)
+}
+
+internal fun ValueType.defaultParameterBlock() = when (this) {
+    INT -> "%L" to 0
+    STRING -> "%S" to ""
+    BITSET -> "%M()" to MemberName("dev.kord.common", "EmptyBitSet")
+    else -> error("Unsupported type for bit flags")
+}
+
+
 internal val Entry.warningSuppressedName
     get() = when {
         isDeprecated -> "@Suppress(\"${
@@ -145,6 +159,7 @@ internal inline fun TypeSpec.Builder.addEnum(
         initializer(valueName)
     }
 
+
     addClass("Unknown") {
         addKdoc(
             "An unknown [%1T].\n\nThis is used as a fallback for [%1T]s that haven't been added to Kord yet.",
@@ -154,6 +169,13 @@ internal inline fun TypeSpec.Builder.addEnum(
         primaryConstructor {
             addAnnotation(KORD_UNSAFE)
             addParameter(valueName, valueTypeName)
+        }
+        if (valueType == BITSET) {
+            addConstructor {
+                addAnnotation(KORD_UNSAFE)
+                addParameter(valueName, LONG, VARARG)
+                callThisConstructor(CodeBlock.of("%T($valueName)", DISCORD_BIT_SET))
+            }
         }
         superclass(enumName)
         addSuperclassConstructorParameter(valueName)
@@ -178,6 +200,15 @@ internal inline fun TypeSpec.Builder.addEnum(
             entry(entry)
             @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
             addAnnotation(Deprecated(entry.deprecationMessage, entry.replaceWith, entry.deprecationLevel))
+        }
+    }
+
+    if (hasCombinerFlag) {
+        addClass("All") {
+            addKdoc("A combination of all [%T]s", enumName)
+            addModifiers(PUBLIC)
+            superclass(enumName)
+            addSuperclassConstructorParameter("buildAll()")
         }
     }
 

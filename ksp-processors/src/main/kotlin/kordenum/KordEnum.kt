@@ -31,7 +31,8 @@ internal class KordEnum(
     val valuesPropertyType: ValuesPropertyType,
     val deprecatedSerializerName: String?,
     val isFlags: Boolean,
-    val flagsDescriptor: FlagsDescriptor
+    val flagsDescriptor: FlagsDescriptor,
+    val hasCombinerFlag: Boolean
 ) {
     internal class Entry(
         val name: String,
@@ -91,6 +92,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     }
     val deprecatedSerializerName = (args[GenerateKordEnum::deprecatedSerializerName] as String).ifEmpty { null }
     val bitFlagsDescriptor = args[GenerateKordEnum::bitFlagsDescriptor] ?: error("Missing flags descriptor")
+    val hasCombinerFlag = args[GenerateKordEnum::hasCombinerFlag] as Boolean
 
     return KordEnum(
         name, kDoc, docUrl, valueType, valueName,
@@ -98,7 +100,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
         deprecatedEntries.map { it.toEntryOrNull(valueType, isDeprecated = true, logger) ?: return null },
 
         valuesPropertyName, valuesPropertyType, deprecatedSerializerName, isFlags,
-        bitFlagsDescriptor.toFlagsDescriptor()
+        bitFlagsDescriptor.toFlagsDescriptor(), hasCombinerFlag
     )
 }
 

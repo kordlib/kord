@@ -33,6 +33,21 @@ fun TypeSpec.Builder.addCompanionObject() = addCompanionObject {
         }
     }
 
+    if (hasCombinerFlag) {
+        addFunction("buildAll") {
+            addComment("""We cannot inline this into the "All" object, because that causes a weird compiler bug""")
+            addModifiers(KModifier.PRIVATE)
+            returns(valueTypeName)
+
+            val (code, parameter) = valueType.defaultParameterBlock()
+            addCode("""
+                    return entries.fold($code)·{·acc,·value·->
+                    ⇥ acc + value.$valueName
+                    ⇤}
+                """.trimIndent(), parameter)
+        }
+    }
+
     // TODO bump deprecation level and remove eventually
     if (valuesPropertyName != null) {
         addProperty(

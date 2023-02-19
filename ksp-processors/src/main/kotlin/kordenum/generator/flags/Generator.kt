@@ -20,7 +20,7 @@ internal val BIT_FLAGs = ClassName(PACKAGE_NAME, "BitFlags")
 private val INT_BIT_FLAG = ClassName(PACKAGE_NAME, "IntBitFlag")
 private val INT_BIT_FLAGS = INT_BIT_FLAG.flagsClass()
 private val BIT_SET_BIT_FLAG = ClassName(PACKAGE_NAME, "DiscordBitSetFlag")
-private val BIT_SET_BIT_FLAGS = BIT_SET_BIT_FLAG.flagsClass()
+internal val BIT_SET_BIT_FLAGS = BIT_SET_BIT_FLAG.flagsClass()
 
 private fun GenerateKordEnum.ValueType.collectionSuperType() = when (this) {
     GenerateKordEnum.ValueType.INT -> INT_BIT_FLAGS
@@ -31,13 +31,6 @@ private fun GenerateKordEnum.ValueType.collectionSuperType() = when (this) {
 private fun GenerateKordEnum.ValueType.superType() = when (this) {
     GenerateKordEnum.ValueType.INT -> INT_BIT_FLAG
     GenerateKordEnum.ValueType.BITSET -> BIT_SET_BIT_FLAG
-    else -> error("Unsupported type for bit flags")
-}
-
-private fun GenerateKordEnum.ValueType.defaultParameter() = when (this) {
-    GenerateKordEnum.ValueType.INT -> CodeBlock.of("%L", 0)
-    GenerateKordEnum.ValueType.STRING -> CodeBlock.of("%S", "")
-    GenerateKordEnum.ValueType.BITSET -> CodeBlock.of("%M()", MemberName("dev.kord.common", "EmptyBitSet"))
     else -> error("Unsupported type for bit flags")
 }
 

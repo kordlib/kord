@@ -70,4 +70,21 @@ public abstract class DiscordBitSetFlags<T : DiscordBitSetFlag,
             this@Builder.code.remove(code)
         }
     }
+
+    /**
+     * Utility class for builder functions for bit set flags.
+     *
+     * @param T the [BitFlag] type
+     * @param Implementation this class
+     * @param Builder the Builder for this class
+     */
+    public abstract class Companion<T : DiscordBitSetFlag, Implementation : DiscordBitSetFlags<T, Implementation, Builder>, Builder : DiscordBitSetFlags.Builder<T, Implementation>> :
+        BitFlags.Companion<DiscordBitSet, T, Implementation, Builder>() {
+        protected abstract fun Implementation(flags: DiscordBitSet): Implementation
+
+        /**
+         * Creates an [Implementation] from [flags].
+         */
+        public operator fun invoke(flags: String): Implementation = Implementation(DiscordBitSet(flags))
+    }
 }
