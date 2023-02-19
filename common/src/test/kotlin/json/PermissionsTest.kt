@@ -12,7 +12,7 @@ class PermissionsTest {
 
     @Test
     fun `adding permissions together does not swallow the universe`() {
-        Permission.values.fold(Permissions(DiscordBitSet(0))) { acc, permission ->
+        Permission.entries.fold(Permissions(DiscordBitSet(0))) { acc, permission ->
             acc + permission
         }
     }
