@@ -48,7 +48,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = GuildMemberFlags(GuildMemberFlag.DidRejoin)
  * val flags2 = flags + GuildMemberFlag.CompletedOnboarding
- * val otherFlags = flags - GuildMemberFlag.BypassesVerification
+ * val otherFlags = flags - GuildMemberFlag.CompletedOnboarding
  * val flags3 = flags + otherFlags
  * ```
  *
@@ -56,8 +56,8 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = GuildMemberFlag.DidRejoin in obj.flags
- * val hasFlags = GuildMemberFlags(GuildMemberFlag.StartedOnboarding,
- * GuildMemberFlag.StartedOnboarding) in obj.flags
+ * val hasFlags = GuildMemberFlag(GuildMemberFlag.CompletedOnboarding,
+ * GuildMemberFlag.CompletedOnboarding) in obj.flags
  * ```
  *
  * ## Unknown flag
@@ -70,7 +70,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see GuildMemberFlag
  * @see GuildMemberFlags.Builder
- * @property code numeric value of all [GuildMemberFlag]s
+ * @property code numeric value of all [GuildMemberFlags]s
  */
 @Serializable(with = GuildMemberFlags.Serializer::class)
 public class GuildMemberFlags(

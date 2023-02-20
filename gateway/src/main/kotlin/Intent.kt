@@ -4,7 +4,7 @@
     isFlags = true,
     kDoc = "Values that enable a group of events as [defined by Discord](https://discord.com/developers/docs/topics/gateway#gateway-intents).",
     additionalImports = ["dev.kord.common.entity.DiscordMessage"],
-    bitFlagsDescriptor = GenerateKordEnum.BitFlagDescription("gateway", "intents"),
+    bitFlagsDescriptor = GenerateKordEnum.BitFlagDescription("gateway", "intents", "an", "intent"),
     entries = [
         Entry(
             "Guilds", longValue = 1 shl 0, kDoc = """
@@ -29,7 +29,10 @@
          """
         ),
         Entry(
-            "GuildMembers", longValue = 1 shl 1, additionalOptInMarkerAnnotations = [privilegedIntentAnnotation], kDoc = """
+            "GuildMembers",
+            longValue = 1 shl 1,
+            additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
+            kDoc = """
          Enables the following events:
          - [GuildMemberAdd]
          - [GuildMemberUpdate]
@@ -79,7 +82,10 @@
             """
         ),
         Entry(
-            "GuildPresences", longValue = 1 shl 8, additionalOptInMarkerAnnotations = [privilegedIntentAnnotation], kDoc = """
+            "GuildPresences",
+            longValue = 1 shl 8,
+            additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
+            kDoc = """
          Enables the following events:
          - [PresenceUpdate]
          """
@@ -133,7 +139,10 @@
          """
         ),
         Entry(
-            "MessageContent", longValue = 1 shl 15, additionalOptInMarkerAnnotations = [privilegedIntentAnnotation], kDoc = """
+            "MessageContent",
+            longValue = 1 shl 15,
+            additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
+            kDoc = """
          [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly associated with any
          Gateway [event][Event]s. Instead, access to [MessageContent] permits your app to receive message content data
          across the APIs.

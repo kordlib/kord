@@ -46,7 +46,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = UserFlags(UserFlag.DiscordEmployee)
  * val flags2 = flags + UserFlag.DiscordPartner
- * val otherFlags = flags - UserFlag.HypeSquad
+ * val otherFlags = flags - UserFlag.DiscordPartner
  * val flags3 = flags + otherFlags
  * ```
  *
@@ -54,7 +54,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = UserFlag.DiscordEmployee in obj.flags
- * val hasFlags = UserFlags(UserFlag.BugHunterLevel1, UserFlag.HouseBravery) in obj.flags
+ * val hasFlags = UserFlag(UserFlag.DiscordPartner, UserFlag.DiscordPartner) in obj.flags
  * ```
  *
  * ## Unknown flag
@@ -67,7 +67,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see UserFlag
  * @see UserFlags.Builder
- * @property code numeric value of all [UserFlag]s
+ * @property code numeric value of all [UserFlags]s
  */
 @Serializable(with = UserFlags.Serializer::class)
 public class UserFlags(

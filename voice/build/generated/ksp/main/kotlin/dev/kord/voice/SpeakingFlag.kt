@@ -46,7 +46,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = SpeakingFlags(SpeakingFlag.Microphone)
  * val flags2 = flags + SpeakingFlag.Soundshare
- * val otherFlags = flags - SpeakingFlag.Priority
+ * val otherFlags = flags - SpeakingFlag.Soundshare
  * val flags3 = flags + otherFlags
  * ```
  *
@@ -54,7 +54,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = SpeakingFlag.Microphone in obj.flags
- * val hasFlags = SpeakingFlags(SpeakingFlag.Priority, SpeakingFlag.Priority) in obj.flags
+ * val hasFlags = SpeakingFlag(SpeakingFlag.Soundshare, SpeakingFlag.Soundshare) in obj.flags
  * ```
  *
  * ## Unknown flag
@@ -67,7 +67,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see SpeakingFlag
  * @see SpeakingFlags.Builder
- * @property code numeric value of all [SpeakingFlag]s
+ * @property code numeric value of all [SpeakingFlags]s
  */
 @Serializable(with = SpeakingFlags.Serializer::class)
 public class SpeakingFlags(

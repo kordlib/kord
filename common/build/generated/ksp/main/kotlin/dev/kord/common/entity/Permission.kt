@@ -31,7 +31,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * }
  * ```
  *
- * ## Modifying existing flags
+ * ## Modifying existing permissions
  * You can crate a modified copy of a [Permissions] instance using the
  * [dev.kord.common.entity.flags.copy] method
  *
@@ -47,19 +47,18 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = Permissions(Permission.CreateInstantInvite)
  * val flags2 = flags + Permission.KickMembers
- * val otherFlags = flags - Permission.BanMembers
+ * val otherFlags = flags - Permission.KickMembers
  * val flags3 = flags + otherFlags
  * ```
  *
- * ## Checking for a flag
+ * ## Checking for a permission
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = Permission.CreateInstantInvite in member.permissions
- * val hasFlags = Permissions(Permission.Administrator,
- * Permission.ManageChannels) in member.permissions
+ * val hasFlags = Permission(Permission.KickMembers, Permission.KickMembers) in member.permissions
  * ```
  *
- * ## Unknown flag
+ * ## Unknown permission
  *
  * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
  * [Permission.Unknown].
@@ -69,7 +68,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see Permission
  * @see Permissions.Builder
- * @property code numeric value of all [Permission]s
+ * @property code numeric value of all [Permissions]s
  */
 @Serializable(with = Permissions.Serializer::class)
 public class Permissions(

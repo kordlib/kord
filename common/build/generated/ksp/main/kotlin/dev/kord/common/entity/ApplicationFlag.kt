@@ -49,7 +49,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = ApplicationFlags(ApplicationFlag.GatewayPresence)
  * val flags2 = flags + ApplicationFlag.GatewayPresenceLimited
- * val otherFlags = flags - ApplicationFlag.GatewayGuildMembers
+ * val otherFlags = flags - ApplicationFlag.GatewayPresenceLimited
  * val flags3 = flags + otherFlags
  * ```
  *
@@ -57,8 +57,8 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = ApplicationFlag.GatewayPresence in obj.flags
- * val hasFlags = ApplicationFlags(ApplicationFlag.GatewayGuildMembersLimited,
- * ApplicationFlag.VerificationPendingGuildLimit) in obj.flags
+ * val hasFlags = ApplicationFlag(ApplicationFlag.GatewayPresenceLimited,
+ * ApplicationFlag.GatewayPresenceLimited) in obj.flags
  * ```
  *
  * ## Unknown flag
@@ -71,7 +71,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see ApplicationFlag
  * @see ApplicationFlags.Builder
- * @property code numeric value of all [ApplicationFlag]s
+ * @property code numeric value of all [ApplicationFlags]s
  */
 @Serializable(with = ApplicationFlags.Serializer::class)
 public class ApplicationFlags(

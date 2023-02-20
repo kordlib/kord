@@ -97,11 +97,15 @@ annotation class GenerateKordEnum(
      *
      * @property objectName the typical name of the object using this enum
      * @property flagsFieldName the name of the  "flags field"
+     * @property article the article for [name]
+     * @property name the name used in documentation
      */
     @Retention(SOURCE)
     @Target() // Only used as parameter
     annotation class BitFlagDescription(
         val objectName: String = "obj",
-        val flagsFieldName: String = "flags"
+        val flagsFieldName: String = "flags",
+        val article: String = "a",
+        val name: String = "flag"
     )
 }

@@ -4,7 +4,7 @@
     isFlags = true,
     docUrl = "https://discord.com/developers/docs/topics/permissions",
     hasCombinerFlag = true,
-    bitFlagsDescriptor = BitFlagDescription("member", "permissions"),
+    bitFlagsDescriptor = BitFlagDescription("member", "permissions", name = "permission"),
     entries = [
         Entry(
             "CreateInstantInvite",

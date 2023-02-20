@@ -49,7 +49,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications)
  * val flags2 = flags + SystemChannelFlag.SuppressPremiumSubscriptions
- * val otherFlags = flags - SystemChannelFlag.SuppressGuildReminderNotifications
+ * val otherFlags = flags - SystemChannelFlag.SuppressPremiumSubscriptions
  * val flags3 = flags + otherFlags
  * ```
  *
@@ -57,8 +57,8 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = SystemChannelFlag.SuppressJoinNotifications in obj.flags
- * val hasFlags = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotificationReplies,
- * SystemChannelFlag.SuppressRoleSubscriptionPurchaseNotifications) in obj.flags
+ * val hasFlags = SystemChannelFlag(SystemChannelFlag.SuppressPremiumSubscriptions,
+ * SystemChannelFlag.SuppressPremiumSubscriptions) in obj.flags
  * ```
  *
  * ## Unknown flag
@@ -71,7 +71,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see SystemChannelFlag
  * @see SystemChannelFlags.Builder
- * @property code numeric value of all [SystemChannelFlag]s
+ * @property code numeric value of all [SystemChannelFlags]s
  */
 @Serializable(with = SystemChannelFlags.Serializer::class)
 public class SystemChannelFlags(

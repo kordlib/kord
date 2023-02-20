@@ -46,7 +46,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = ActivityFlags(ActivityFlag.Instance)
  * val flags2 = flags + ActivityFlag.Join
- * val otherFlags = flags - ActivityFlag.Spectate
+ * val otherFlags = flags - ActivityFlag.Join
  * val flags3 = flags + otherFlags
  * ```
  *
@@ -54,7 +54,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = ActivityFlag.Instance in obj.flags
- * val hasFlags = ActivityFlags(ActivityFlag.JoinRequest, ActivityFlag.Sync) in obj.flags
+ * val hasFlags = ActivityFlag(ActivityFlag.Join, ActivityFlag.Join) in obj.flags
  * ```
  *
  * ## Unknown flag
@@ -67,7 +67,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see ActivityFlag
  * @see ActivityFlags.Builder
- * @property code numeric value of all [ActivityFlag]s
+ * @property code numeric value of all [ActivityFlags]s
  */
 @Serializable(with = ActivityFlags.Serializer::class)
 public class ActivityFlags(

@@ -32,7 +32,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * }
  * ```
  *
- * ## Modifying existing flags
+ * ## Modifying existing intents
  * You can crate a modified copy of a [Intents] instance using the
  * [dev.kord.common.entity.flags.copy] method
  *
@@ -48,18 +48,18 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = Intents(Intent.Guilds)
  * val flags2 = flags + Intent.GuildMembers
- * val otherFlags = flags - Intent.GuildBans
+ * val otherFlags = flags - Intent.GuildMembers
  * val flags3 = flags + otherFlags
  * ```
  *
- * ## Checking for a flag
+ * ## Checking for an intent
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = Intent.Guilds in gateway.intents
- * val hasFlags = Intents(Intent.GuildEmojis, Intent.GuildIntegrations) in gateway.intents
+ * val hasFlags = Intent(Intent.GuildMembers, Intent.GuildMembers) in gateway.intents
  * ```
  *
- * ## Unknown flag
+ * ## Unknown intent
  *
  * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
  * [Intent.Unknown].
@@ -69,7 +69,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see Intent
  * @see Intents.Builder
- * @property code numeric value of all [Intent]s
+ * @property code numeric value of all [Intents]s
  */
 @Serializable(with = Intents.Serializer::class)
 public class Intents(

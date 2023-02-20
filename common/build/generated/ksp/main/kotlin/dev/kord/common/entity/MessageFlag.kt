@@ -46,7 +46,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```kotlin
  * val flags = MessageFlags(MessageFlag.CrossPosted)
  * val flags2 = flags + MessageFlag.IsCrossPost
- * val otherFlags = flags - MessageFlag.SuppressEmbeds
+ * val otherFlags = flags - MessageFlag.IsCrossPost
  * val flags3 = flags + otherFlags
  * ```
  *
@@ -54,8 +54,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * You can use the [contains] operator to check whether a collection contains a specific flag
  * ```kotlin
  * val hasFlag = MessageFlag.CrossPosted in message.flags
- * val hasFlags = MessageFlags(MessageFlag.SourceMessageDeleted,
- * MessageFlag.Urgent) in message.flags
+ * val hasFlags = MessageFlag(MessageFlag.IsCrossPost, MessageFlag.IsCrossPost) in message.flags
  * ```
  *
  * ## Unknown flag
@@ -68,7 +67,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
  * ```
  * @see MessageFlag
  * @see MessageFlags.Builder
- * @property code numeric value of all [MessageFlag]s
+ * @property code numeric value of all [MessageFlags]s
  */
 @Serializable(with = MessageFlags.Serializer::class)
 public class MessageFlags(

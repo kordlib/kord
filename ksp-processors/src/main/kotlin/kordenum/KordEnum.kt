@@ -44,12 +44,12 @@ internal class KordEnum(
         val deprecationMessage: String,
         val replaceWith: ReplaceWith,
         val deprecationLevel: DeprecationLevel,
-        val additionalOptInMarkerAnnotations: List<String>
+        val additionalOptInMarkerAnnotations: List<String>,
     ) : Comparable<Entry> {
         override fun compareTo(other: Entry) = with(NATURAL_ORDER) { compare(value, other.value) }
     }
 
-    internal class FlagsDescriptor(val objectName: String, val fieldName: String)
+    internal class FlagsDescriptor(val objectName: String, val fieldName: String, val article: String, val name: String)
 }
 
 internal data class ProcessingContext(
@@ -129,8 +129,10 @@ private fun Any.toFlagsDescriptor(): KordEnum.FlagsDescriptor {
 
     val objectName = args[GenerateKordEnum.BitFlagDescription::objectName] as String
     val fieldName = args[GenerateKordEnum.BitFlagDescription::flagsFieldName] as String
+    val article = args[GenerateKordEnum.BitFlagDescription::article] as String
+    val name = args[GenerateKordEnum.BitFlagDescription::name] as String
 
-    return KordEnum.FlagsDescriptor(objectName, fieldName)
+    return KordEnum.FlagsDescriptor(objectName, fieldName, article, name)
 }
 
 /**
@@ -150,8 +152,10 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
     val deprecationMessage = args[GenerateKordEnum.Entry::deprecationMessage] as String
     val replaceWith = args[GenerateKordEnum.Entry::replaceWith].toReplaceWith()
     val deprecationLevel = args[GenerateKordEnum.Entry::deprecationLevel].toDeprecationLevel()
+
     @Suppress("UNCHECKED_CAST")
-    val additionalOptInMarkerAnnotations = args[GenerateKordEnum.Entry::additionalOptInMarkerAnnotations] as List<String>
+    val additionalOptInMarkerAnnotations =
+        args[GenerateKordEnum.Entry::additionalOptInMarkerAnnotations] as List<String>
 
     val value = when (valueType) {
         INT -> {
@@ -187,6 +191,7 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
 
             stringValue
         }
+
         BITSET -> {
             if (intValue != GenerateKordEnum.Entry.DEFAULT_INT_VALUE) {
                 logger.error("Specified intValue for valueType $valueType", symbol = this)
@@ -225,7 +230,17 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
         }
     }
 
-    return Entry(name, kDoc, value, isKordExperimental, isDeprecated, deprecationMessage, replaceWith, deprecationLevel, additionalOptInMarkerAnnotations)
+    return Entry(
+        name,
+        kDoc,
+        value,
+        isKordExperimental,
+        isDeprecated,
+        deprecationMessage,
+        replaceWith,
+        deprecationLevel,
+        additionalOptInMarkerAnnotations
+    )
 }
 
 /** Maps [KSAnnotation] to [ReplaceWith]. */
