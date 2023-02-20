@@ -28,6 +28,13 @@
         Entry("GuildInviteReminder", intValue = 22),
         Entry("ContextMenuCommand", intValue = 23),
         Entry("AutoModerationAction", intValue = 24),
+        Entry("InteractionPremiumUpsell", intValue = 26),
+        Entry("StageStart", intValue = 27),
+        Entry("StageEnd", intValue = 28),
+        Entry("StageSpeaker", intValue = 29),
+        Entry("StageRaiseHand", intValue = 30),
+        Entry("StageTopic", intValue = 31),
+        Entry("GuildApplicationPremiumSubscription", intValue = 32),
     ],
     deprecatedEntries = [
         Entry(
@@ -101,6 +108,7 @@
         Entry("PNG", intValue = 1),
         Entry("APNG", intValue = 2),
         Entry("LOTTIE", intValue = 3),
+        Entry("GIF", intValue = 4)
     ],
 )
 

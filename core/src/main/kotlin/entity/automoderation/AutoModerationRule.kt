@@ -121,9 +121,9 @@ public class KeywordAutoModerationRule(data: AutoModerationRuleData, kord: Kord,
     /**
      * Substrings which will be searched for in content.
      *
-     * A keyword can be a phrase which contains multiple words. Wildcard symbols can be used to customize how each
-     * keyword will be matched. See
-     * [keyword matching strategies](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies).
+     * A keyword can be a phrase which contains multiple words.
+     * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+     * can be used to customize how each keyword will be matched.
      */
     public val keywords: List<String> get() = data.triggerMetadata.keywordFilter.orEmpty()
 
@@ -133,6 +133,15 @@ public class KeywordAutoModerationRule(data: AutoModerationRuleData, kord: Kord,
      * Only Rust flavored regex is currently supported.
      */
     public val regexPatterns: List<String> get() = data.triggerMetadata.regexPatterns.orEmpty()
+
+    /**
+     * Substrings which should not trigger the rule.
+     *
+     * A keyword can be a phrase which contains multiple words.
+     * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+     * can be used to customize how each keyword will be matched.
+     */
+    public val allowedKeywords: List<String> get() = data.triggerMetadata.allowList.orEmpty()
 
     override suspend fun asAutoModerationRuleOrNull(): KeywordAutoModerationRule = this
     override suspend fun asAutoModerationRule(): KeywordAutoModerationRule = this
@@ -166,9 +175,11 @@ public class KeywordPresetAutoModerationRule(data: AutoModerationRuleData, kord:
     public val presets: List<AutoModerationRuleKeywordPresetType> get() = data.triggerMetadata.presets.orEmpty()
 
     /**
-     * Substrings which will be exempt from triggering the [presets].
+     * Substrings which should not trigger the rule.
      *
      * A keyword can be a phrase which contains multiple words.
+     * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
+     * can be used to customize how each keyword will be matched.
      */
     public val allowedKeywords: List<String> get() = data.triggerMetadata.allowList.orEmpty()
 

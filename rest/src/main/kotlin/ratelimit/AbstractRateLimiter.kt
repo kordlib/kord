@@ -19,7 +19,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     internal abstract val logger: KLogger
 
     internal val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
-    internal val globalSuspensionPoint = atomic(Reset(clock.now()))
+    private val globalSuspensionPoint = atomic(Reset(clock.now()))
     internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
     internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
 
@@ -60,7 +60,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                 if (key != null) {
                     if (identity.addBucket(key)) {
 
-                        logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for" }
+                        logger.trace { "[DISCOVERED]:[BUCKET]:Bucket discovered for ${key.bucket.id.value}" }
                         buckets[key] = key.bucket
                     }
                 }

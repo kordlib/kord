@@ -205,6 +205,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of reactions reached (20). */
     MaxReactions(30010),
 
+    /** Maximum number of group DMs reached (10). */
+    MaxGroupDMs(30011),
+
     /** Maximum number of guild channels reached (500). */
     MaxGuildChannels(30013),
 
@@ -259,6 +262,18 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Bitrate is too high for channel of this type. */
     BitrateTooHigh(30052),
 
+    /** Maximum number of premium emojis reached (25). */
+    MaxPremiumEmojis(30056),
+
+    /** Maximum number of webhooks per guild reached (1000). */
+    MaxGuildWebhooks(30058),
+
+    /** Maximum number of channel permission overwrites reached (1000). */
+    MaxChannelPermissionOverwrites(30060),
+
+    /** The channels for this guild are too large. */
+    ChannelsTooLarge(30061),
+
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),
 
@@ -297,6 +312,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Interaction has already been acknowledged. */
     InteractionAlreadyAcknowledged(40060),
+
+    /** Service resource is being rate limited. */
+    ResourceIsRateLimited(40062),
 
     /** Missing access. */
     MissingAccess(50001),
@@ -408,6 +426,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Invalid Guild. */
     InvalidGuild(50055),
 
+    /** Invalid request origin. */
+    InvalidRequestOrigin(50067),
+
     /** Invalid message type. */
     InvalidMessageType(50068),
 
@@ -440,6 +461,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Community server channels must be text channels. */
     CommunityServerChannelMustBeTextChannel(50086),
 
+    /** The entity type of the event is different from the entity you are trying to start the event for. */
+    EntityOfEventDifferentFromEventEntity(50091),
+
     /** This server is not available in your location. */
     ServerNotAvailableInLocation(50095),
 
@@ -457,6 +481,12 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Failed to resize the asset below the maximum size: 262144. */
     FailedToResizeAssetBelowMaximumSize(50138),
+
+    /** Cannot mix subscription and non subscription roles for an emoji. */
+    CannotMixSubscriptionAndNonSubscriptionRoles(50144),
+
+    /** Cannot convert between premium emoji and normal emoji. */
+    CannotConvertBetweenPremiumAndNormalEmoji(50145),
 
     /** Uploaded file not found. */
     UnknownUpload(50146),

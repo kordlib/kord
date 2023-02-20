@@ -86,7 +86,14 @@ public class ReactionAddEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
+    @Deprecated(
+        "Deprecated in favour of getGuildOrNull() as it provides more clarity over the functionality",
+        ReplaceWith("getGuildOrNull()"),
+        DeprecationLevel.WARNING
+    )
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+
+    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**
      * Requests to get the message triggering the event as a [Message]

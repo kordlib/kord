@@ -18,7 +18,7 @@ public class StageChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, StageChannelBehavior {
+) : StageChannelBehavior, TopGuildMessageChannel {
 
     /**
      * The bitrate (in bits) of this channel.

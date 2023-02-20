@@ -379,13 +379,13 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
 
 
-    BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
+    BanAddEvent::class, BanRemoveEvent::class, GuildAuditLogEntryCreateEvent::class -> +GuildBans
 
 
     EmojisUpdateEvent::class -> +GuildEmojis
 
 
-    IntegrationsUpdateEvent::class -> +GuildIntegrations
+    IntegrationCreateEvent::class, IntegrationUpdateEvent::class, IntegrationsUpdateEvent::class, IntegrationDeleteEvent::class -> +GuildIntegrations
 
 
     WebhookUpdateEvent::class -> +GuildWebhooks

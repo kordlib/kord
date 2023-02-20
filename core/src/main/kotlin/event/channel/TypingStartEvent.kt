@@ -107,7 +107,20 @@ public class TypingStartEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
+    @Deprecated(
+        "Deprecated in favour of getGuildOrNull() as it provides more clarity over the functionality",
+        ReplaceWith("getGuildOrNull()"),
+        DeprecationLevel.WARNING
+    )
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+
+    /**
+     * Requests to get the guild this event was triggered in,
+     * returns null if the [Guild] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**
      * Returns a copy of this class with a new [supplier] provided by the [strategy].
