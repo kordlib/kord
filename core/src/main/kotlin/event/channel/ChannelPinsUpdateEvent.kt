@@ -73,9 +73,6 @@ public class ChannelPinsUpdateEvent(
      */
     public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
-    /**
-     * Returns a copy of this class with a new [supplier] provided by the [strategy].
-     */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ChannelPinsUpdateEvent =
         ChannelPinsUpdateEvent(data, kord, shard, customContext, strategy.supply(kord))
 

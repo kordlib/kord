@@ -122,9 +122,6 @@ public class TypingStartEvent(
      */
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
-    /**
-     * Returns a copy of this class with a new [supplier] provided by the [strategy].
-     */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): TypingStartEvent =
         TypingStartEvent(data, kord, shard, customContext, strategy.supply(kord))
 

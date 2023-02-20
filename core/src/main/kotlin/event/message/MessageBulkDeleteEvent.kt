@@ -75,6 +75,12 @@ public class MessageBulkDeleteEvent(
     )
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
+    /**
+     * Requests to get the channel triggering the event.
+     * Returns `null` if the guild is not present
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): MessageBulkDeleteEvent =
