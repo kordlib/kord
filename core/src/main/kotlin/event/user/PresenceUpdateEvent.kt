@@ -12,6 +12,17 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * The event dispatched when a [Presence] is updated.
+ *
+ * See [Presence Update](https://discord.com/developers/docs/topics/gateway-events#guild-role-update)
+ *
+ * @param oldUser The old [User] that triggered the event. It may be `null` if it was not stored in the cache.
+ * @param user The [DiscordPresenceUser] that triggered the event.
+ * @param guildId The ID of the guild the event was triggered from.
+ * @param old The old [Presence] that triggered the event. It may be `null` if it was not stored in the cache.
+ * @param presence The new [Presence] that triggered the event.
+ */
 public class PresenceUpdateEvent(
     public val oldUser: User?,
     public val user: DiscordPresenceUser,

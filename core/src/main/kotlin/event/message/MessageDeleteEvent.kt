@@ -24,7 +24,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
  *
  * @param messageId The ID of the message that triggered the event
  * @param channelId The ID of the channel that triggered the event
- * @param guildId The Id of the guild that triggered the event. It may be `null` if the message was not stored in the cache
+ * @param guildId The ID of the guild that triggered the event. It may be `null` if the message was not stored in the cache
  * @param message The message that triggered the event. It may be `null` if the message was not stored in the cache
  */
 public class MessageDeleteEvent(
