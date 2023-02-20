@@ -8,15 +8,15 @@ private val copyMethod = MemberName("dev.kord.common.entity.flags", "copy")
 
 /**
  * Template doc string with following variables
- * - `1L` Collection class name as a literal
- * - `2T` enum type name
- * - `3T` collection class name,
- * - `4T` 1 th place-holder enum value
- * - `5T` 2 th place-holder enum value
- * - `6T` 3 th place-holder enum value
- * - `7M` reference to BitFlags.copy() method
- * - `8T` reference to Unknown class
- * - `9T` reference to Builder class
+ * - `%1L` Collection class name as a literal
+ * - `%2T` enum type name
+ * - `%3T` collection class name,
+ * - `%4T` 1 th place-holder enum value
+ * - `%5T` 2 th place-holder enum value
+ * - `%6T` 3 th place-holder enum value
+ * - `%7M` reference to BitFlags.copy() method
+ * - `%8T` reference to Unknown class
+ * - `%9T` reference to Builder class
  * - `%O` typical name of an object having this kind of flags
  * - `%F` name of flags field on `%O`
  * - `%A` article for flags name
