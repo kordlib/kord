@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.PresenceStatus
 import dev.kord.gateway.DiscordPresence
 import dev.kord.gateway.Intents
+import dev.kord.gateway.nonPrivileged
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -20,7 +21,7 @@ public class LoginBuilder {
         this.presence = PresenceBuilder().apply(builder).toPresence()
     }
 
-    public inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {
+    public inline fun intents(builder: Intents.Builder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         this.intents = Intents(builder)
     }

@@ -151,9 +151,9 @@ public final class dev/kord/core/Unsafe {
 }
 
 public final class dev/kord/core/UtilKt {
-	public static final fun enableEvent (Ldev/kord/gateway/Intents$IntentsBuilder;Lkotlin/reflect/KClass;)V
-	public static final fun enableEvents (Ldev/kord/gateway/Intents$IntentsBuilder;Ljava/lang/Iterable;)V
-	public static final fun enableEvents (Ldev/kord/gateway/Intents$IntentsBuilder;[Lkotlin/reflect/KClass;)V
+	public static final fun enableEvent (Ldev/kord/gateway/Intents$Builder;Lkotlin/reflect/KClass;)V
+	public static final fun enableEvents (Ldev/kord/gateway/Intents$Builder;Ljava/lang/Iterable;)V
+	public static final fun enableEvents (Ldev/kord/gateway/Intents$Builder;[Lkotlin/reflect/KClass;)V
 }
 
 public abstract interface class dev/kord/core/behavior/ApplicationCommandBehavior : dev/kord/core/entity/Entity {

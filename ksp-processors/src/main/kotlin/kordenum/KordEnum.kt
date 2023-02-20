@@ -32,7 +32,8 @@ internal class KordEnum(
     val deprecatedSerializerName: String?,
     val isFlags: Boolean,
     val flagsDescriptor: FlagsDescriptor,
-    val hasCombinerFlag: Boolean
+    val hasCombinerFlag: Boolean,
+    val additionalImports: List<String>
 ) {
     internal class Entry(
         val name: String,
@@ -43,6 +44,7 @@ internal class KordEnum(
         val deprecationMessage: String,
         val replaceWith: ReplaceWith,
         val deprecationLevel: DeprecationLevel,
+        val additionalOptInMarkerAnnotations: List<String>
     ) : Comparable<Entry> {
         override fun compareTo(other: Entry) = with(NATURAL_ORDER) { compare(value, other.value) }
     }
@@ -93,6 +95,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     val deprecatedSerializerName = (args[GenerateKordEnum::deprecatedSerializerName] as String).ifEmpty { null }
     val bitFlagsDescriptor = args[GenerateKordEnum::bitFlagsDescriptor] ?: error("Missing flags descriptor")
     val hasCombinerFlag = args[GenerateKordEnum::hasCombinerFlag] as Boolean
+    @Suppress("UNCHECKED_CAST") val additionalImports = args[GenerateKordEnum::additionalImports] as List<String>
 
     return KordEnum(
         name, kDoc, docUrl, valueType, valueName,
@@ -100,7 +103,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
         deprecatedEntries.map { it.toEntryOrNull(valueType, isDeprecated = true, logger) ?: return null },
 
         valuesPropertyName, valuesPropertyType, deprecatedSerializerName, isFlags,
-        bitFlagsDescriptor.toFlagsDescriptor(), hasCombinerFlag
+        bitFlagsDescriptor.toFlagsDescriptor(), hasCombinerFlag, additionalImports
     )
 }
 
@@ -147,6 +150,8 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
     val deprecationMessage = args[GenerateKordEnum.Entry::deprecationMessage] as String
     val replaceWith = args[GenerateKordEnum.Entry::replaceWith].toReplaceWith()
     val deprecationLevel = args[GenerateKordEnum.Entry::deprecationLevel].toDeprecationLevel()
+    @Suppress("UNCHECKED_CAST")
+    val additionalOptInMarkerAnnotations = args[GenerateKordEnum.Entry::additionalOptInMarkerAnnotations] as List<String>
 
     val value = when (valueType) {
         INT -> {
@@ -220,7 +225,7 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
         }
     }
 
-    return Entry(name, kDoc, value, isKordExperimental, isDeprecated, deprecationMessage, replaceWith, deprecationLevel)
+    return Entry(name, kDoc, value, isKordExperimental, isDeprecated, deprecationMessage, replaceWith, deprecationLevel, additionalOptInMarkerAnnotations)
 }
 
 /** Maps [KSAnnotation] to [ReplaceWith]. */

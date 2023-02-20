@@ -1,10 +1,7 @@
 package dev.kord.ksp
 
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
-import dev.kord.ksp.GenerateKordEnum.ValueType.BITSET
+import dev.kord.ksp.GenerateKordEnum.*
+import dev.kord.ksp.GenerateKordEnum.ValueType.*
 import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
 import kotlin.DeprecationLevel.WARNING
 import kotlin.annotation.AnnotationRetention.SOURCE
@@ -48,7 +45,11 @@ annotation class GenerateKordEnum(
     /**
      * Whether to add an "All" flag combinding all flags into one.
      */
-    val hasCombinerFlag: Boolean = false
+    val hasCombinerFlag: Boolean = false,
+    /**
+     * Additional imports (e.g. for KDoc).
+     */
+    val additionalImports: Array<String> = []
 ) {
     enum class ValueType { INT, STRING, BITSET }
     enum class ValuesPropertyType { NONE, SET }
@@ -74,6 +75,10 @@ annotation class GenerateKordEnum(
         val replaceWith: ReplaceWith = ReplaceWith(""),
         /** [Deprecated.level] for a [deprecated entry][GenerateKordEnum.deprecatedEntries]. */
         val deprecationLevel: DeprecationLevel = WARNING,
+        /**
+         * Additional annotations to add to this entry.
+         */
+        val additionalOptInMarkerAnnotations: Array<String> = []
     ) {
         companion object {
             /** Default value for [intValue]. */

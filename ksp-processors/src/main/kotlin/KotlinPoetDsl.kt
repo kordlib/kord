@@ -66,6 +66,8 @@ internal inline fun <reified A : Annotation> TypeSpec.Builder.addAnnotation(buil
 
 internal inline fun TypeSpec.Builder.addAnnotation(annotation: ClassName, builder: AnnotationSpecBuilder) =
     addAnnotation(AnnotationSpec.builder(annotation).apply(builder).build())
+internal inline fun PropertySpec.Builder.addAnnotation(annotation: ClassName, builder: AnnotationSpecBuilder) =
+    addAnnotation(AnnotationSpec.builder(annotation).apply(builder).build())
 
 @DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
 internal fun TypeSpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =

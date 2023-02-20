@@ -18,8 +18,24 @@ context(KordEnum, ProcessingContext, FileSpec.Builder)
 fun TypeSpec.Builder.addCompanionObject() = addCompanionObject {
     addModifiers(KModifier.PUBLIC)
 
+    val additionalOptIns = entries.flatMap(KordEnum.Entry::additionalOptInMarkerAnnotations)
+        .toSet()
+        .map(ClassName::bestGuess)
+
+    fun PropertySpec.Builder.addOptIns() {
+        if (additionalOptIns.isNotEmpty()) {
+            addAnnotation(OPT_IN) {
+                val code = additionalOptIns
+                    .map { CodeBlock.of("%T::class", it) }
+                    .joinToCode()
+                addMember(code)
+            }
+        }
+    }
+
     addProperty("entries", LIST.parameterizedBy(enumName), KModifier.PUBLIC) {
         addKdoc("A [List] of all known [%T]s.", enumName)
+        addOptIns()
         delegate {
             withControlFlow("lazy(mode·=·%M)", LazyThreadSafetyMode.PUBLICATION.asMemberName()) {
                 addStatement("listOf(")
@@ -55,6 +71,7 @@ fun TypeSpec.Builder.addCompanionObject() = addCompanionObject {
             valuesPropertyType.toClassName().parameterizedBy(enumName),
             KModifier.PUBLIC,
         ) {
+            addOptIns()
             @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
             addAnnotation(
                 Deprecated(

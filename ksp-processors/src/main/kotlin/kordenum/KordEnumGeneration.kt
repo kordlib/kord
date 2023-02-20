@@ -150,6 +150,11 @@ internal inline fun TypeSpec.Builder.addEnum(
         combinedKDocFormat?.let { format -> addKdoc(format, enumName) }
     }
 
+    additionalImports.forEach {
+        val import = ClassName.bestGuess(it)
+        addImport(import.packageName, import.simpleName)
+    }
+
     addModifiers(PUBLIC, SEALED)
     primaryConstructor {
         addParameter(valueName, valueTypeName)
@@ -220,6 +225,7 @@ context (ProcessingContext)
 private fun TypeSpec.Builder.entry(entry: Entry) {
     entry.kDoc?.let { addKdoc(it) }
     if (entry.isKordExperimental) addAnnotation(KORD_EXPERIMENTAL)
+    addAnnotations(entry.additionalOptInMarkerAnnotations.map { AnnotationSpec.builder(ClassName.bestGuess(it)).build() })
     addModifiers(PUBLIC)
     superclass(enumName)
     addSuperclassConstructorParameter(valueFormat, entry.value)

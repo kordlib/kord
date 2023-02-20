@@ -11,6 +11,9 @@ dependencies {
     api(libs.ktor.client.websockets)
     api(libs.ktor.client.cio)
 
+    compileOnly(projects.kspAnnotations)
+    ksp(projects.kspProcessors)
+
     testImplementation(libs.bundles.test.implementation)
     testRuntimeOnly(libs.bundles.test.runtime)
 }
