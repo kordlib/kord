@@ -26,94 +26,287 @@ import dev.kord.rest.service.InteractionService
 @KordUnsafe
 @KordExperimental
 public class Unsafe(private val kord: Kord) {
-
+    /**
+     * Returns an [AutoModerationRuleBehavior] for a given [guildId].
+     *
+     * @param guildId The ID to create the [AutoModerationRuleBehavior] for
+     * @param ruleId The ID of the [AutoModerationRuleBehavior]
+     * @return The created [AutoModerationRuleBehaviorImpl]
+     */
     public fun autoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRuleBehavior =
         AutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
+    /**
+     * Returns an [KeywordAutoModerationRuleBehavior] for a given [guildId].
+     *
+     * @param guildId The ID to create the [KeywordAutoModerationRuleBehavior] for
+     * @param ruleId The ID of the [KeywordAutoModerationRuleBehavior]
+     * @return The created [KeywordAutoModerationRuleBehaviorImpl]
+     */
     public fun keywordAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): KeywordAutoModerationRuleBehavior =
         KeywordAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
+    /**
+     * Returns an [SpamAutoModerationRuleBehavior] for a given [guildId].
+     *
+     * @param guildId The ID to create the [SpamAutoModerationRuleBehavior] for
+     * @param ruleId The ID of the [SpamAutoModerationRuleBehavior]
+     * @return The created [SpamAutoModerationRuleBehaviorImpl]
+     */
     public fun spamAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): SpamAutoModerationRuleBehavior =
         SpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
+    /**
+     * Returns an [KeywordPresetAutoModerationRuleBehavior] for a given [guildId].
+     *
+     * @param guildId The ID to create the [KeywordPresetAutoModerationRuleBehavior] for
+     * @param ruleId The ID of the [KeywordPresetAutoModerationRuleBehavior]
+     * @return The created [KeywordPresetAutoModerationRuleBehaviorImpl]
+     */
     public fun keywordPresetAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,
     ): KeywordPresetAutoModerationRuleBehavior = KeywordPresetAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
+    /**
+     * Returns an [MentionSpamAutoModerationRuleBehavior] for a given [guildId].
+     *
+     * @param guildId The ID to create the [MentionSpamAutoModerationRuleBehavior] for
+     * @param ruleId The ID of the [MentionSpamAutoModerationRuleBehavior]
+     * @return The created [MentionSpamAutoModerationRuleBehaviorImpl]
+     */
     public fun mentionSpamAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,
     ): MentionSpamAutoModerationRuleBehavior = MentionSpamAutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
 
+    /**
+     * Returns a [MessageBehavior] for a given [messageId]
+     *
+     * @param channelId The ID of the channel the message was sent in
+     * @param messageId The ID of the message
+     * @return The [MessageBehavior] for the message
+     */
     public fun message(channelId: Snowflake, messageId: Snowflake): MessageBehavior =
         MessageBehavior(channelId = channelId, messageId = messageId, kord = kord)
 
+    /**
+     * Returns a [ChannelBehavior] for a given [id]
+     *
+     * @param id The ID of the channel
+     * @return The [ChannelBehavior] for the channel
+     */
     public fun channel(id: Snowflake): ChannelBehavior =
         ChannelBehavior(id, kord)
 
+    /**
+     * Returns a [MessageChannelBehavior] for a given [id]
+     *
+     * @param id The ID of the channel
+     * @return The [MessageChannelBehavior] for the channel
+     */
     public fun messageChannel(id: Snowflake): MessageChannelBehavior =
         MessageChannelBehavior(id, kord)
 
+    /**
+     * Returns a [TopGuildChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the channel is in
+     * @param id The ID of the channel
+     * @return The [TopGuildChannelBehavior] for the channel
+     */
     public fun topGuildChannel(guildId: Snowflake, id: Snowflake): TopGuildChannelBehavior =
         TopGuildChannelBehavior(guildId = guildId, id = id, kord = kord)
 
+    /**
+     * Returns a [CategorizableChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the channel is in
+     * @param id The ID of the channel
+     * @return The [CategorizableChannelBehavior] for the channel
+     */
     public fun categorizableChannel(guildId: Snowflake, id: Snowflake): CategorizableChannelBehavior =
         CategorizableChannelBehavior(guildId, id, kord)
 
+    /**
+     * Returns a [TopGuildMessageChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the channel is in
+     * @param id The ID of the channel
+     * @return The [TopGuildMessageChannelBehavior] for the channel
+     */
     public fun topGuildMessageChannel(guildId: Snowflake, id: Snowflake): TopGuildMessageChannelBehavior =
         TopGuildMessageChannelBehavior(guildId = guildId, id = id, kord = kord)
 
+    /**
+     * Returns a [GuildChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the channel is in
+     * @param id The ID of the channel
+     * @return The [GuildChannelBehavior] for the channel
+     */
     public fun guildChannel(guildId: Snowflake, id: Snowflake): GuildChannelBehavior =
         GuildChannelBehavior(guildId, id, kord)
 
+    /**
+     * Returns a [GuildMessageChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the channel is in
+     * @param id The ID of the channel
+     * @return The [GuildMessageChannelBehavior] for the channel
+     */
     public fun guildMessageChannel(guildId: Snowflake, id: Snowflake): GuildMessageChannelBehavior =
         GuildMessageChannelBehavior(guildId, id, kord)
 
+    /**
+     * Returns a [NewsChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the channel is in
+     * @param id The ID of the channel
+     * @return The [NewsChannelBehavior] for the channel
+     */
     public fun newsChannel(guildId: Snowflake, id: Snowflake): NewsChannelBehavior =
         NewsChannelBehavior(guildId = guildId, id = id, kord = kord)
 
+    /**
+     * Returns a [TextChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the channel is in
+     * @param id The ID of the channel
+     * @return The [TextChannelBehavior] for the channel
+     */
     public fun textChannel(guildId: Snowflake, id: Snowflake): TextChannelBehavior =
         TextChannelBehavior(guildId = guildId, id = id, kord = kord)
 
+    /**
+     * Returns a [VoiceChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the channel is in
+     * @param id The ID of the channel
+     * @return The [VoiceChannelBehavior] for the channel
+     */
     public fun voiceChannel(guildId: Snowflake, id: Snowflake): VoiceChannelBehavior =
         VoiceChannelBehavior(guildId = guildId, id = id, kord = kord)
 
+    /**
+     * Returns a [ThreadParentChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the thread parent is in
+     * @param id The ID of the channel
+     * @return The [ThreadParentChannelBehavior] for the channel
+     */
     public fun publicThreadParent(guildId: Snowflake, id: Snowflake): ThreadParentChannelBehavior =
         ThreadParentChannelBehavior(guildId, id, kord)
 
+    /**
+     * Returns a [PrivateThreadParentChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the thread parent is in
+     * @param id The ID of the channel
+     * @return The [PrivateThreadParentChannelBehavior] for the channel
+     */
     public fun privateThreadParent(guildId: Snowflake, id: Snowflake): PrivateThreadParentChannelBehavior =
         PrivateThreadParentChannelBehavior(guildId, id, kord)
 
+    /**
+     * Returns a [ThreadChannelBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the thread parent is in
+     * @param parentId The ID of the parent channel for the thread
+     * @param id The ID of the channel
+     * @return The [ThreadChannelBehavior] for the channel
+     */
     public fun thread(guildId: Snowflake, parentId: Snowflake, id: Snowflake): ThreadChannelBehavior =
         ThreadChannelBehavior(guildId, parentId, id, kord)
 
-
+    /**
+     * Returns a [GuildBehavior] for a given [id]
+     *
+     * @param id The ID of the guild
+     * @return The [GuildBehavior] for the ID
+     */
     public fun guild(id: Snowflake): GuildBehavior =
         GuildBehavior(id, kord)
 
+    /**
+     * Returns a [GuildEmojiBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the emoji is in
+     * @param id The ID of the emoji
+     * @param kord The Kord instance for the bot
+     * @return The [GuildEmojiBehavior] for the ID
+     */
     public fun guildEmoji(guildId: Snowflake, id: Snowflake, kord: Kord): GuildEmojiBehavior =
         GuildEmojiBehavior(guildId = guildId, id = id, kord = kord)
 
+    /**
+     * Returns a [RoleBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the role is in
+     * @param id The ID of the role
+     * @return The [RoleBehavior] for the ID
+     */
     public fun role(guildId: Snowflake, id: Snowflake): RoleBehavior =
         RoleBehavior(guildId = guildId, id = id, kord = kord)
 
+    /**
+     * Returns a [UserBehavior] for a given [id]
+     *
+     * @param id The ID of the user
+     * @return The [UserBehavior] for the ID
+     */
     public fun user(id: Snowflake): UserBehavior =
         UserBehavior(id, kord)
 
+    /**
+     * Returns a [ThreadMemberBehavior] for a given [id]
+     *
+     * @param id The ID of the user
+     * @param threadId The ID of the thread
+     * @return The [ThreadMemberBehavior] for the ID
+     */
     public fun threadMember(id: Snowflake, threadId: Snowflake): ThreadMemberBehavior =
         ThreadMemberBehavior(id, threadId, kord)
 
+    /**
+     * Returns a [MemberBehavior] for a given [id]
+     *
+     * @param guildId The ID of the guild the member is in
+     * @param id The ID of the user
+     * @return The [MemberBehavior] for the ID
+     */
     public fun member(guildId: Snowflake, id: Snowflake): MemberBehavior =
         MemberBehavior(guildId = guildId, id = id, kord = kord)
 
+    /**
+     * Returns a [WebhookBehavior] for a given [id]
+     *
+     * @param id The ID of the guild
+     * @return The [WebhookBehavior] for the ID
+     */
     public fun webhook(id: Snowflake): WebhookBehavior =
         WebhookBehavior(id, kord)
 
+    /**
+     * Returns a [StageInstanceBehavior] for a given [id]
+     *
+     * @param id The ID of the stage instance
+     * @param channelId The ID of the channel the instance is in
+     * @return The [StageInstanceBehavior] for the ID
+     */
     public fun stageInstance(id: Snowflake, channelId: Snowflake): StageInstanceBehavior = StageInstanceBehavior(
         id, channelId, kord, kord.defaultSupplier
     )
 
+    /**
+     * Returns a [ApplicationCommandInteractionBehavior] for a given [id]
+     *
+     * @param id The ID of the application command
+     * @param channelId The ID of the channel the interaction took place in
+     * @param token The interactions token
+     * @param applicationId The ID of the application the interaction happened with
+     * @return The [ApplicationCommandInteractionBehavior] for the ID
+     */
     public fun applicationCommandInteraction(
         id: Snowflake,
         channelId: Snowflake,
@@ -123,7 +316,13 @@ public class Unsafe(private val kord: Kord) {
         return ApplicationCommandInteractionBehavior(id, channelId, token, applicationId, kord)
     }
 
-
+    /**
+     * Returns a [GlobalApplicationCommandBehavior] for a given [id]
+     *
+     * @param applicationId The ID of the application the interaction happened with
+     * @param id The ID of the application command
+     * @return The [GlobalApplicationCommandBehavior] for the ID
+     */
     public fun globalApplicationCommand(
         applicationId: Snowflake,
         id: Snowflake
@@ -132,6 +331,14 @@ public class Unsafe(private val kord: Kord) {
     }
 
 
+    /**
+     * Returns a [GuildApplicationCommandBehavior] for a given [id]
+     *
+     * @param applicationId The ID of the application the interaction happened with
+     * @param guildId The ID of the guild the interaction happened in
+     * @param id The ID of the application command
+     * @return The [GuildApplicationCommandBehavior] for the ID
+     */
     public fun globalApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
@@ -145,6 +352,15 @@ public class Unsafe(private val kord: Kord) {
         return "Unsafe"
     }
 
+    /**
+     * Returns a [GuildApplicationCommandBehavior] for a given [commandId]
+     *
+     * @param guildId The ID of the guild the interaction happened in
+     * @param applicationId The ID of the application the interaction happened with
+     * @param commandId The ID of the application command
+     * @param service The interaction service for the command
+     * @return The [GuildApplicationCommandBehavior] for the ID
+     */
     public fun guildApplicationCommand(
         guildId: Snowflake,
         applicationId: Snowflake,
@@ -153,6 +369,14 @@ public class Unsafe(private val kord: Kord) {
     ): GuildApplicationCommandBehavior =
         GuildApplicationCommandBehavior(guildId, applicationId, commandId, service)
 
+    /**
+     * Returns a [GlobalApplicationCommandBehavior] for a given [commandId]
+     *
+     * @param applicationId The ID of the application the interaction happened with
+     * @param commandId The ID of the application command
+     * @param service The interaction service for the command
+     * @return The [GlobalApplicationCommandBehavior] for the ID
+     */
     public fun globalApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
@@ -173,6 +397,13 @@ public class Unsafe(private val kord: Kord) {
         id, channelId, token, applicationId, kord
     )
 
+    /**
+     * Returns a [GuildScheduledEventBehavior] for a given [id]
+     *
+     * @param id The ID of the event
+     * @param guildId The ID of the event the guild is for
+     * @return The [GuildScheduledEventBehavior] for the ID
+     */
     public fun guildScheduledEvent(id: Snowflake, guildId: Snowflake): GuildScheduledEventBehavior =
         GuildScheduledEventBehavior(
             id,
