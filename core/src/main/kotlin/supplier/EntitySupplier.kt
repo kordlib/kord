@@ -445,43 +445,141 @@ public interface EntitySupplier {
     public suspend fun getTemplate(code: String): Template =
         getTemplateOrNull(code) ?: EntityNotFoundException.templateNotFound(code)
 
+    /**
+     * Requests the templates for a guild
+     *
+     * @param guildId The ID of the guild to get the templates from
+     * @return a [Flow] of [Template]s for the given [guildId].
+     * @throws RequestException if something went wrong while retrieving the templates
+     */
     public fun getTemplates(guildId: Snowflake): Flow<Template>
 
+    /**
+     * Requests the [StageInstance]s for a channel.
+     * returns `null` when the instance is not present
+     *
+     * @param channelId The ID of the channel to get the instance for
+     * @return a nullable [StageInstance] for the given [channelId]
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance?
 
+    /**
+     * Requests the [StageInstance]s for a channel.
+     *
+     * @param channelId The ID of the channel to get the instance for
+     * @return a [StageInstance] for the given [channelId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the state instance was null
+     */
     public suspend fun getStageInstance(channelId: Snowflake): StageInstance =
         getStageInstanceOrNull(channelId) ?: EntityNotFoundException.stageInstanceNotFound(channelId)
 
+    /**
+     * Requests the [ThreadMember]s for a thread channel.
+     *
+     * @param channelId The ID of the thread channel to get the members for
+     * @return a [Flow] of [ThreadMember]s for the given [channelId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the thread members was null
+     */
     public fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember>
 
+    /**
+     * Requests the [ThreadChannel]s that are active for a guild.
+     *
+     * @param guildId The ID of the guild to get the thread channels for
+     * @return a [Flow] of [ThreadChannel]s for the given [guildId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the active threads was null
+     */
     public fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel>
 
+    /**
+     * Requests the public [ThreadChannel]s that are archived for a guild.
+     *
+     * @param channelId The ID of the channel to get the public archived thread channels for
+     * @param before The [Instant] to look before
+     * @param limit The limit on the number of [ThreadChannel]s to collect for the flow
+     * @return a [Flow] of [ThreadChannel]s for the given [channelId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the active threads was null
+     */
     public fun getPublicArchivedThreads(
         channelId: Snowflake,
         before: Instant? = null,
         limit: Int? = null,
     ): Flow<ThreadChannel>
 
+    /**
+     * Requests the private [ThreadChannel]s that are archived for a guild.
+     *
+     * @param channelId The ID of the channel to get the private archived thread channels for
+     * @param before The [Instant] to look before
+     * @param limit The limit on the number of [ThreadChannel]s to collect for the flow
+     * @return a [Flow] of [ThreadChannel]s for the given [channelId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the active threads was null
+     */
     public fun getPrivateArchivedThreads(
         channelId: Snowflake,
         before: Instant? = null,
         limit: Int? = null,
     ): Flow<ThreadChannel>
 
+    /**
+     * Requests the joined private [ThreadChannel]s that are archived for a guild.
+     *
+     * @param channelId The ID of the channel to get the joined private archived thread channels for
+     * @param before The [Instant] to look before
+     * @param limit The limit on the number of [ThreadChannel]s to collect for the flow
+     * @return a [Flow] of [ThreadChannel]s for the given [channelId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the active threads was null
+     */
     public fun getJoinedPrivateArchivedThreads(
         channelId: Snowflake,
         before: Snowflake? = null,
         limit: Int? = null,
     ): Flow<ThreadChannel>
 
+    /**
+     * Gets the [GuildApplicationCommand]s for a given [guildId].
+     *
+     * @param applicationId The application to get the commands for
+     * @param guildId The ID of the guild to get the commands for
+     * @param withLocalizations Whether to get the commands with localizations or not. Defaults to `null`
+     * @return a [Flow] of [GuildApplicationCommand]s for the given [guildId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the flow was null
+     */
     public fun getGuildApplicationCommands(applicationId: Snowflake, guildId: Snowflake, withLocalizations: Boolean? = null): Flow<GuildApplicationCommand>
 
+    /**
+     * Gets a [GuildApplicationCommand] based on the [guildId] and [commandId].
+     * returns `null` if the command was not found
+     *
+     * @param guildId The ID of the guild to get the command from
+     * @param commandId The ID of the command to get
+     * @return The [GuildApplicationCommand] or `null` if it was not found.
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getGuildApplicationCommandOrNull(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake
     ): GuildApplicationCommand?
 
+    /**
+     * Gets a [GuildApplicationCommand] for a given [guildId] and [commandId].
+     *
+     * @param applicationId The application to get the command for
+     * @param guildId The ID of the guild to get the command for
+     * @param commandId The ID of the command
+     * @return a [GuildApplicationCommand] for the given [commandId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the flow was null
+     */
     public suspend fun getGuildApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
@@ -493,11 +591,29 @@ public interface EntitySupplier {
                 commandId
             )
 
+    /**
+     * Gets a [GlobalApplicationCommand] for a given [commandId].
+     *
+     * @param applicationId The application to get the command for
+     * @param commandId The ID of the command
+     * @return a [GlobalApplicationCommand] for the given [commandId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the flow was null
+     */
     public suspend fun getGlobalApplicationCommandOrNull(
         applicationId: Snowflake,
         commandId: Snowflake
     ): GlobalApplicationCommand?
 
+    /**
+     * Gets a [GlobalApplicationCommand] for a given [commandId].
+     * returns `null` if the command was not present
+     *
+     * @param applicationId The application to get the command for
+     * @param commandId The ID of the command
+     * @return a [GlobalApplicationCommand] for the given [commandId].
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getGlobalApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake
@@ -505,16 +621,44 @@ public interface EntitySupplier {
         getGlobalApplicationCommandOrNull(applicationId, commandId)
             ?: EntityNotFoundException.applicationCommandNotFound<GlobalApplicationCommand>(commandId)
 
+    /**
+     * Gets the [GlobalApplicationCommand]s for a given [applicationId].
+     *
+     * @param applicationId The application to get the commands for
+     * @param withLocalizations Whether to get the commands with localizations or not. Defaults to `null`
+     * @return a [Flow] of [GlobalApplicationCommand]s for the given [applicationId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the flow was null
+     */
     public fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean? = null): Flow<GlobalApplicationCommand>
 
 
+    /**
+     * Gets the [ApplicationCommandPermissions] for a given [commandId].
+     * returns `null` if the permissions are not found
+     *
+     * @param applicationId The ID of the application to get the command for
+     * @param guildId The ID of the guild
+     * @param commandId The ID of the command to get
+     * @return The [ApplicationCommandPermissions] or `null` if they were not found
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getApplicationCommandPermissionsOrNull(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
     ): ApplicationCommandPermissions?
 
-
+    /**
+     * Gets the [ApplicationCommandPermissions] for a given [commandId].
+     *
+     * @param applicationId The ID of the application to get the command for
+     * @param guildId The ID of the guild
+     * @param commandId The ID of the command to get
+     * @return The [ApplicationCommandPermissions] or throws an [EntityNotFoundException] if they were not found
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the permissions was null
+     */
     public suspend fun getApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
@@ -523,6 +667,15 @@ public interface EntitySupplier {
         ?: EntityNotFoundException.applicationCommandPermissionsNotFound(commandId)
 
 
+    /**
+     * Gets the [ApplicationCommandPermissions] for a given [guildId].
+     *
+     * @param applicationId The ID of the application to get the command for
+     * @param guildId The ID of the guild
+     * @return a [Flow] of  [ApplicationCommandPermissions] for the given [guildId]
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the flow was null
+     */
     public fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
@@ -554,17 +707,61 @@ public interface EntitySupplier {
         getFollowupMessageOrNull(applicationId, interactionToken, messageId)
             ?: EntityNotFoundException.followupMessageNotFound(interactionToken, messageId)
 
+    /**
+     * Gets the [GuildScheduledEvent] for a given [guildId].
+     *
+     * @param guildId The ID of the guild
+     * @return a [Flow] of  [GuildScheduledEvent] for the given [guildId]
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the flow was null
+     */
     public fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent>
 
+    /**
+     * Gets the [GuildScheduledEvent] for a given [eventId].
+     * returns `null` if the event was not found
+     *
+     * @param guildId The ID of the guild
+     * @param eventId The ID of the event to get
+     * @return The [GuildScheduledEvent] or `null` if it was not found
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent?
 
+    /**
+     * Gets the [GuildScheduledEvent] for a given [eventId].
+     *
+     * @param guildId The ID of the guild
+     * @param eventId The ID of the event to get
+     * @return The [GuildScheduledEvent] or throws an [EntityNotFoundException] if it was not found
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the event was null
+     */
     public suspend fun getGuildScheduledEvent(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent =
         getGuildScheduledEventOrNull(guildId, eventId) ?: EntityNotFoundException.guildScheduledEventNotFound(eventId)
 
-
+    /**
+     * Gets the [GuildScheduledEvent] [User]s for a given [eventId].
+     *
+     * @param guildId The ID of the guild
+     * @param eventId The ID of the event to get
+     * @param limit The limit on the number of [User]s that can be collected for the flow
+     * @return A [Flow] of [User]s for the [eventId]
+     * @throws RequestException if something went wrong during the request
+     */
     public fun getGuildScheduledEventUsers(guildId: Snowflake, eventId: Snowflake, limit: Int? = null): Flow<User> =
         getGuildScheduledEventUsersAfter(guildId, eventId, after = Snowflake.min, limit)
 
+    /**
+     * Gets the [GuildScheduledEvent] [User]s for a given [eventId] before a given time.
+     *
+     * @param guildId The ID of the guild
+     * @param eventId The ID of the event to get
+     * @param before The ID to look before
+     * @param limit The limit on the number of [User]s that can be collected for the flow
+     * @return A [Flow] of [User]s for the [eventId]
+     * @throws RequestException if something went wrong during the request
+     */
     public fun getGuildScheduledEventUsersBefore(
         guildId: Snowflake,
         eventId: Snowflake,
@@ -572,6 +769,16 @@ public interface EntitySupplier {
         limit: Int? = null,
     ): Flow<User>
 
+    /**
+     * Gets the [GuildScheduledEvent] [User]s for a given [eventId] after a given time.
+     *
+     * @param guildId The ID of the guild
+     * @param eventId The ID of the event to get
+     * @param after The ID to look after
+     * @param limit The limit on the number of [User]s that can be collected for the flow
+     * @return A [Flow] of [User]s for the [eventId]
+     * @throws RequestException if something went wrong during the request
+     */
     public fun getGuildScheduledEventUsersAfter(
         guildId: Snowflake,
         eventId: Snowflake,
@@ -579,10 +786,28 @@ public interface EntitySupplier {
         limit: Int? = null,
     ): Flow<User>
 
-
+    /**
+     * Gets the [GuildScheduledEvent] [Member]s for a given [eventId].
+     *
+     * @param guildId The ID of the guild
+     * @param eventId The ID of the event to get
+     * @param limit The limit on the number of [Member]s that can be collected for the flow
+     * @return A [Flow] of [Message]s for the [eventId]
+     * @throws RequestException if something went wrong during the request
+     */
     public fun getGuildScheduledEventMembers(guildId: Snowflake, eventId: Snowflake, limit: Int? = null): Flow<Member> =
         getGuildScheduledEventMembersAfter(guildId, eventId, after = Snowflake.min, limit)
 
+    /**
+     * Gets the [GuildScheduledEvent] [Member]s for a given [eventId] before a given time.
+     *
+     * @param guildId The ID of the guild
+     * @param eventId The ID of the event to get
+     * @param before The ID to look before
+     * @param limit The limit on the number of [Member]s that can be collected for the flow
+     * @return A [Flow] of [Message]s for the [eventId]
+     * @throws RequestException if something went wrong during the request
+     */
     public fun getGuildScheduledEventMembersBefore(
         guildId: Snowflake,
         eventId: Snowflake,
@@ -590,6 +815,16 @@ public interface EntitySupplier {
         limit: Int? = null,
     ): Flow<Member>
 
+    /**
+     * Gets the [GuildScheduledEvent] [Member]s for a given [eventId] after a given time.
+     *
+     * @param guildId The ID of the guild
+     * @param eventId The ID of the event to get
+     * @param after The ID to look after
+     * @param limit The limit on the number of [Member]s that can be collected for the flow
+     * @return A [Flow] of [Message]s for the [eventId]
+     * @throws RequestException if something went wrong during the request
+     */
     public fun getGuildScheduledEventMembersAfter(
         guildId: Snowflake,
         eventId: Snowflake,
@@ -598,18 +833,63 @@ public interface EntitySupplier {
     ): Flow<Member>
 
 
+    /**
+     * Gets a [Sticker] from a given [id].
+     * returns `null` if the sticker was not found
+     *
+     * @param id The ID of the sticker to get
+     * @return The [Sticker] or null
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getStickerOrNull(id: Snowflake): Sticker?
 
+    /**
+     * Gets a [Sticker] from a given [id].
+     *
+     * @param id The ID of the sticker to get
+     * @return The [Sticker] or throws an [EntityNotFoundException] if the sticker was not found
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the sticker was null
+     */
     public suspend fun getSticker(id: Snowflake): Sticker =
         getStickerOrNull(id) ?: EntityNotFoundException.stickerNotFound(id)
 
+    /**
+     * Gets a [GuildSticker] from a given [id].
+     * returns `null` if the sticker was not found
+     *
+     * @param id The ID of the sticker to get
+     * @return The [GuildSticker] or null
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker?
 
+    /**
+     * Gets a [GuildSticker] from a given [id].
+     *
+     * @param id The ID of the sticker to get
+     * @return The [GuildSticker] or throws an [EntityNotFoundException] if the sticker was not found
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the sticker was null
+     */
     public suspend fun getGuildSticker(guildId: Snowflake, id: Snowflake): GuildSticker =
         getGuildStickerOrNull(guildId, id) ?: EntityNotFoundException.stickerNotFound(id)
 
+    /**
+     * Gets the [StickerPack]s that require nitro.
+     *
+     * @return A [Flow] of [StickerPack]s that require nitro
+     * @throws RequestException if something went wrong during the request
+     */
     public fun getNitroStickerPacks(): Flow<StickerPack>
 
+    /**
+     * Gets the [GuildSticker]s from a given [guildId].
+     *
+     * @param guildId The ID of the guild to get stickers for
+     * @return A [Flow] of [GuildSticker]s
+     * @throws RequestException if something went wrong during the request
+     */
     public fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker>
 
     /**

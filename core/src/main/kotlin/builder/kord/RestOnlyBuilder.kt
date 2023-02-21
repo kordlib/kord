@@ -19,6 +19,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 
+/**
+ * The Builder for the RestOnly client
+ */
 public abstract class RestOnlyBuilder {
     protected var handlerBuilder: (resources: ClientResources) -> RequestHandler =
         { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = it.token) }
@@ -36,6 +39,9 @@ public abstract class RestOnlyBuilder {
      */
     public var httpClient: HttpClient? = null
 
+    /**
+     * The [Snowflake] ID for the application
+     */
     public abstract var applicationId: Snowflake
 
     /**
@@ -51,6 +57,9 @@ public abstract class RestOnlyBuilder {
         this.handlerBuilder = handlerBuilder
     }
 
+    /**
+     * Builds the rest only [Kord] instance
+     */
     public fun build(): Kord {
         val client = httpClient.configure()
         val selfId = applicationId

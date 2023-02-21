@@ -98,6 +98,9 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             Member(it, userData, kord)
         }
 
+    /**
+     *  fetches all cached [Role]s
+     */
     public suspend fun getRole(id: Snowflake): Role? {
         val data = cache.query<RoleData> { idEq(RoleData::id, id) }.singleOrNull() ?: return null
 

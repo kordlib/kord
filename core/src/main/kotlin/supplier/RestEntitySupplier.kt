@@ -202,6 +202,15 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
+    /**
+     * Gets the [User]s that reactive to a given [messageId]
+     *
+     * @param channelId The ID of the channel the message was in
+     * @param messageId The ID of the message reacted too
+     * @param emoji The [ReactionEmoji] that was reacted with
+     * @return a [Flow] of [User]s that reacted to a message
+     * @throws RestRequestException when the request failed.
+     */
     public fun getReactors(channelId: Snowflake, messageId: Snowflake, emoji: ReactionEmoji): Flow<User> =
         // max batchSize/limit: see https://discord.com/developers/docs/resources/channel#get-reactions
         paginateForwards(batchSize = 100, idSelector = { it.id }) { after ->
@@ -269,6 +278,16 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Message(data, kord)
     }
 
+    /**
+     * Gets an [Invite] from a given [code].
+     * returns `null` if the invite was not found
+     *
+     * @param code The invite code
+     * @param withCounts Whether the invite should contain approximate member counts
+     * @param withExpiration Whether the invite should contain the expiration date
+     * @param scheduledEventId The guild scheduled event to include with the invite
+     * @throws RestRequestException when the request failed.
+     */
     public suspend fun getInviteOrNull(
         code: String,
         withCounts: Boolean = true,
@@ -279,6 +298,16 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Invite(InviteData.from(response), kord)
     }
 
+    /**
+     * Gets an [Invite] from a given [code]
+     *
+     * @param code The invite code
+     * @param withCounts Whether the invite should contain approximate member counts
+     * @param withExpiration Whether the invite should contain the expiration date
+     * @param scheduledEventId The guild scheduled event to include with the invite
+     * @throws RestRequestException when the request failed.
+     * @throws EntityNotFoundException if the invite was null
+     */
     public suspend fun getInvite(
         code: String,
         withCounts: Boolean = true,
@@ -315,7 +344,14 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         }
     }
 
-
+    /**
+     * Gets the [DiscordAuditLogEntry]s for a given [guildId]
+     *
+     * @param guildId The ID of the guild to get the entries for
+     * @param builder The [AuditLogGetRequestBuilder] to modify the request
+     * @return A [Flow] of [DiscordAuditLogEntry]s for the [guildId]
+     * @throws RestRequestException when the request failed.
+     */
     public inline fun getAuditLogEntries(
         guildId: Snowflake,
         builder: AuditLogGetRequestBuilder.() -> Unit
@@ -324,15 +360,39 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         return getAuditLogEntries(guildId, AuditLogGetRequestBuilder().apply(builder).toRequest())
     }
 
+    /**
+     * Gets the [WelcomeScreen] for a given [guildId].
+     * returns `null` if the screen was not found
+     *
+     * @param guildId The ID of the guild to get the screen for
+     * @return The [WelcomeScreen] or `null`
+     * @throws RestRequestException when the request failed.
+     */
     public suspend fun getGuildWelcomeScreenOrNull(guildId: Snowflake): WelcomeScreen? = catchNotFound {
         val response = guild.getGuildWelcomeScreen(guildId)
         WelcomeScreen(WelcomeScreenData.from(response), kord)
     }
 
+    /**
+     * Gets the [WelcomeScreen] for a given [guild]
+     *
+     * @param guildId The ID of the guild to get the screen for
+     * @return The [WelcomeScreen]
+     * @throws RestRequestException when the request failed.
+     * @throws EntityNotFoundException if the screen was null
+     */
     public suspend fun getGuildWelcomeScreen(guildId: Snowflake): WelcomeScreen =
         getGuildWelcomeScreenOrNull(guildId) ?: EntityNotFoundException.welcomeScreenNotFound(guildId)
 
 
+    /**
+     * Gets the [DiscordAuditLogEntry]s for a given [guildId]
+     *
+     * @param guildId The ID of the guild to get the entries for
+     * @param request The [AuditLogGetRequest]
+     * @return A [Flow] of [DiscordAuditLogEntry]s for the [guildId]
+     * @throws RestRequestException when the request failed.
+     */
     // maxBatchSize: see https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
     public fun getAuditLogEntries(
         guildId: Snowflake,

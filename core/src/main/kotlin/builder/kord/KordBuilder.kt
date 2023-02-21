@@ -64,6 +64,11 @@ public operator fun DefaultGateway.Companion.invoke(
 private val logger = KotlinLogging.logger { }
 private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
 
+/**
+ * The builder for the [Kord] instance.
+ *
+ * @property token The bots token
+ */
 public class KordBuilder(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
@@ -123,6 +128,9 @@ public class KordBuilder(public val token: String) {
      */
     public var httpClient: HttpClient? = null
 
+    /**
+     * The [Snowflake] ID for the application.
+     */
     public var applicationId: Snowflake? = null
 
     /**
@@ -234,6 +242,8 @@ public class KordBuilder(public val token: String) {
     }
 
     /**
+     * Builds the [Kord] instance
+     *
      * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
      */
     public suspend fun build(): Kord {
