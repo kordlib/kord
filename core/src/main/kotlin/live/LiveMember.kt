@@ -9,24 +9,50 @@ import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.guild.MemberLeaveEvent
 import dev.kord.core.event.guild.MemberUpdateEvent
+import dev.kord.core.live.channel.LiveChannel
 import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.*
 
+/**
+ * Returns a [LiveMember] for a given [Member].
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveChannel] with
+ * @return the created [LiveMember]
+ */
 @KordPreview
 public fun Member.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ): LiveMember = LiveMember(this, coroutineScope)
 
+/**
+ * Returns a [LiveMember] for a given [Member] with configuration.
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveChannel] with
+ * @param block The [LiveMember] configuration
+ * @return the created [LiveMember]
+ */
 @KordPreview
 public inline fun Member.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveMember.() -> Unit
 ): LiveMember = this.live(coroutineScope).apply(block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveMember.onUpdate(scope: CoroutineScope = this, block: suspend (MemberUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * A [AbstractLiveKordEntity] for a [Member]
+ *
+ * @property member The [Member] to get the live entity for
+ * @property coroutineContext The [CoroutineScope] to create the live object with
+ */
 @KordPreview
 public class LiveMember(
     member: Member,
@@ -36,6 +62,9 @@ public class LiveMember(
     override val id: Snowflake
         get() = member.id
 
+    /**
+     * The [Member] to create the live entity for
+     */
     public var member: Member = member
         private set
 

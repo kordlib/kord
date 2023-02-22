@@ -11,21 +11,46 @@ import dev.kord.core.event.role.RoleUpdateEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.*
 
+/**
+ * Returns a [LiveRole] for a given [Role].
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveRole] with
+ * @return the created [LiveRole]
+ */
 @KordPreview
 public fun Role.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ): LiveRole = LiveRole(this, coroutineScope)
 
+/**
+ * Returns a [LiveRole] for a given [Role] with configuration.
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveRole] with
+ * @param block The [LiveRole] configuration
+ * @return the created [LiveRole]
+ */
 @KordPreview
 public inline fun Role.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveRole.() -> Unit
 ): LiveRole = this.live(coroutineScope).apply(block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveRole.onUpdate(scope: CoroutineScope = this, block: suspend (RoleUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * A [AbstractLiveKordEntity] for a [Role]
+ *
+ * @property role The [Role] to get the live entity for
+ * @property coroutineContext The [CoroutineScope] to create the live object with
+ */
 @KordPreview
 public class LiveRole(
     role: Role,
@@ -35,6 +60,9 @@ public class LiveRole(
     override val id: Snowflake
         get() = role.id
 
+    /**
+     * The [Role] to get the live entity for
+     */
     public var role: Role = role
         private set
 

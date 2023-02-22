@@ -7,16 +7,13 @@ import kotlinx.coroutines.flow.merge
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.microseconds
 
+/**
+ * The Default [MasterGateway] implementation.
+ */
 public class DefaultMasterGateway(
     override val gateways: Map<Int, Gateway>,
 ): MasterGateway {
 
-    /**
-     * Calculates the average [Gateway.ping] of all running [gateways].
-     *
-     * Gateways that return `null` are not counted into the average, if all [gateways]
-     * return `null` then this property will return `null` as well.
-     */
     override val averagePing: Duration?
         get(): Duration? {
             val pings = gateways.values.mapNotNull { it.ping.value?.inWholeMicroseconds }

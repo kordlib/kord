@@ -19,11 +19,22 @@ import kotlinx.coroutines.flow.*
  */
 @KordPreview
 public interface LiveKordEntity : KordEntity, CoroutineScope {
+    /**
+     * A [Flow] of [Event]s for this entity
+     */
     public val events: Flow<Event>
 
+    /**
+     * Shuts down a Live event with a cancellation exception.
+     *
+     * @param cause An optional cause to provide for the cancellation. Defaults to "The live entity is shut down"
+     */
     public fun shutDown(cause: CancellationException = CancellationException("The live entity is shut down", null))
 }
 
+/**
+ * An abstract [LiveKordEntity] with an attached [CoroutineScope`]
+ */
 @KordPreview
 public abstract class AbstractLiveKordEntity(
     final override val kord: Kord,
@@ -33,7 +44,16 @@ public abstract class AbstractLiveKordEntity(
     final override val events: SharedFlow<Event> =
         kord.events.filter { filter(it) }.onEach { update(it) }.shareIn(this, SharingStarted.Eagerly)
 
+    /**
+     * Filters for a specific [Event] that matches the [event].
+     *
+     * @return Whether the [Event] matches the [event] or not
+     */
     protected abstract fun filter(event: Event): Boolean
+
+    /**
+     * Updates an [Event]
+     */
     protected abstract fun update(event: Event)
 
     override fun shutDown(cause: CancellationException): Unit = cancel(cause)
