@@ -1,16 +1,22 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.IntegrationData
 import dev.kord.core.cache.data.RoleTagsData
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.common.exception.RequestException
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * The tags for a role.
+ *
+ * @param data The [RoleTagsData] for the role tags
+ * @param guildId The ID of the guild the roles are in
+ */
 public class RoleTags(
     public val data: RoleTagsData,
     public val guildId: Snowflake,
@@ -24,7 +30,7 @@ public class RoleTags(
     public val botId: Snowflake? get() = data.botId.value
 
     /**
-     * The ID of the of the [Integration] this role belongs to.
+     * The ID of the [Integration] this role belongs to.
      */
     public val integrationId: Snowflake? get() = data.integrationId.value
 

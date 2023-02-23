@@ -13,10 +13,13 @@ import dev.kord.rest.Image
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
+ *
+ * @param data The [UserData] for the discord user
  */
 public open class User(
     public val data: UserData,
-    override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : UserBehavior {
 
     override val id: Snowflake
@@ -28,6 +31,9 @@ public open class User(
     public val avatar: Icon?
         get() = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
 
+    /**
+     * The default avatar for the user as [Icon] object.
+     */
     public val defaultAvatar: Icon get() = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
 
     /**
@@ -63,8 +69,17 @@ public open class User(
      */
     public val isBot: Boolean get() = data.bot.discordBoolean
 
+    /**
+     * The user's banner color as a [Color] object
+     */
     public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
+    /**
+     * Requests to get the URL of the users banner in the requested [format]
+     *
+     * @param format The [Image.Format] to return the banner in
+     * @return The URL of the users banner
+     */
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
@@ -85,6 +100,11 @@ public open class User(
         return "User(data=$data, kord=$kord, supplier=$supplier)"
     }
 
+    /**
+     * A class to easily build an avatar for a [User] based off of the provided [UserData]
+     *
+     * @param data The [UserData] to build the avatar for
+     */
     public data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**

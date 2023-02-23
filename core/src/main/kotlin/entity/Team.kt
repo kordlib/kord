@@ -12,6 +12,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * A Discord [developer team](https://discord.com/developers/docs/topics/teams) which can own applications.
+ *
+ * @param data The [TeamData] for the team
  */
 public class Team(
     public val data: TeamData,
@@ -68,6 +70,9 @@ public class Team(
 
 /**
  * A member of a Discord developer team.
+ *
+ * @param data The [TeamMemberData] for the team member
+ * @param kord The [Kord] instance that created this object
  */
 public class TeamMember(public val data: TeamMemberData, public val kord: Kord) {
     /**
