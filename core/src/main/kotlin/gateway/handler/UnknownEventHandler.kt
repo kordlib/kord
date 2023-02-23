@@ -14,7 +14,7 @@ internal class UnknownEventHandler : BaseGatewayEventHandler() {
     ): dev.kord.core.event.Event? {
         return if (event is UnknownDispatchEvent) {
             UnknownEvent(
-                kord, shard, context?.get(), event.data, event.name
+                event.name, event.data, kord, shard, context?.get()
             )
         } else {
             null
