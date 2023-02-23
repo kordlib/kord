@@ -121,34 +121,28 @@ public sealed class Event {
                     decoder.decodeNullableSerializableElement(descriptor, index, JsonElement.serializer().nullable)
                     null //https://github.com/kordlib/kord/issues/42
                 }
-
                 "RESUMED" -> {
                     decoder.decodeNullableSerializableElement(descriptor, index, JsonElement.serializer().nullable)
                     Resumed(sequence)
                 }
-
                 "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
                 "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
                     decoder.decodeSerializableElement(
                         descriptor, index, DiscordGuildApplicationCommandPermissions.serializer()
                     ), sequence
                 )
-
                 "AUTO_MODERATION_RULE_CREATE" -> AutoModerationRuleCreate(
                     rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
                     sequence,
                 )
-
                 "AUTO_MODERATION_RULE_UPDATE" -> AutoModerationRuleUpdate(
                     rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
                     sequence,
                 )
-
                 "AUTO_MODERATION_RULE_DELETE" -> AutoModerationRuleDelete(
                     rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
                     sequence,
                 )
-
                 "AUTO_MODERATION_ACTION_EXECUTION" -> AutoModerationActionExecution(
                     actionExecution = decoder.decodeSerializableElement(
                         descriptor,
@@ -157,7 +151,6 @@ public sealed class Event {
                     ),
                     sequence,
                 )
-
                 "CHANNEL_CREATE" -> ChannelCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -165,7 +158,6 @@ public sealed class Event {
                         DiscordChannel.serializer()
                     ), sequence
                 )
-
                 "CHANNEL_UPDATE" -> ChannelUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -173,7 +165,6 @@ public sealed class Event {
                         DiscordChannel.serializer()
                     ), sequence
                 )
-
                 "CHANNEL_DELETE" -> ChannelDelete(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -181,7 +172,6 @@ public sealed class Event {
                         DiscordChannel.serializer()
                     ), sequence
                 )
-
                 "CHANNEL_PINS_UPDATE" -> ChannelPinsUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -189,7 +179,6 @@ public sealed class Event {
                         DiscordPinsUpdateData.serializer()
                     ), sequence
                 )
-
                 "TYPING_START" -> TypingStart(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -211,7 +200,6 @@ public sealed class Event {
                         DiscordGuild.serializer()
                     ), sequence
                 )
-
                 "GUILD_UPDATE" -> GuildUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -219,7 +207,6 @@ public sealed class Event {
                         DiscordGuild.serializer()
                     ), sequence
                 )
-
                 "GUILD_DELETE" -> GuildDelete(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -227,7 +214,6 @@ public sealed class Event {
                         DiscordUnavailableGuild.serializer()
                     ), sequence
                 )
-
                 "GUILD_BAN_ADD" -> GuildBanAdd(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -235,7 +221,6 @@ public sealed class Event {
                         DiscordGuildBan.serializer()
                     ), sequence
                 )
-
                 "GUILD_BAN_REMOVE" -> GuildBanRemove(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -243,7 +228,6 @@ public sealed class Event {
                         DiscordGuildBan.serializer()
                     ), sequence
                 )
-
                 "GUILD_EMOJIS_UPDATE" -> GuildEmojisUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -251,7 +235,6 @@ public sealed class Event {
                         DiscordUpdatedEmojis.serializer()
                     ), sequence
                 )
-
                 "GUILD_INTEGRATIONS_UPDATE" -> GuildIntegrationsUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -287,7 +270,6 @@ public sealed class Event {
                         DiscordAddedGuildMember.serializer()
                     ), sequence
                 )
-
                 "GUILD_MEMBER_REMOVE" -> GuildMemberRemove(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -295,7 +277,6 @@ public sealed class Event {
                         DiscordRemovedGuildMember.serializer()
                     ), sequence
                 )
-
                 "GUILD_MEMBER_UPDATE" -> GuildMemberUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -303,7 +284,6 @@ public sealed class Event {
                         DiscordUpdatedGuildMember.serializer()
                     ), sequence
                 )
-
                 "GUILD_ROLE_CREATE" -> GuildRoleCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -311,7 +291,6 @@ public sealed class Event {
                         DiscordGuildRole.serializer()
                     ), sequence
                 )
-
                 "GUILD_ROLE_UPDATE" -> GuildRoleUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -319,7 +298,6 @@ public sealed class Event {
                         DiscordGuildRole.serializer()
                     ), sequence
                 )
-
                 "GUILD_ROLE_DELETE" -> GuildRoleDelete(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -327,7 +305,6 @@ public sealed class Event {
                         DiscordDeletedGuildRole.serializer()
                     ), sequence
                 )
-
                 "GUILD_MEMBERS_CHUNK" -> GuildMembersChunk(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -335,7 +312,6 @@ public sealed class Event {
                         GuildMembersChunkData.serializer()
                     ), sequence
                 )
-
                 "INVITE_CREATE" -> InviteCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -343,7 +319,6 @@ public sealed class Event {
                         DiscordCreatedInvite.serializer()
                     ), sequence
                 )
-
                 "INVITE_DELETE" -> InviteDelete(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -351,7 +326,6 @@ public sealed class Event {
                         DiscordDeletedInvite.serializer()
                     ), sequence
                 )
-
                 "MESSAGE_CREATE" -> MessageCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -359,7 +333,6 @@ public sealed class Event {
                         DiscordMessage.serializer()
                     ), sequence
                 )
-
                 "MESSAGE_UPDATE" -> MessageUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -367,7 +340,6 @@ public sealed class Event {
                         DiscordPartialMessage.serializer()
                     ), sequence
                 )
-
                 "MESSAGE_DELETE" -> MessageDelete(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -375,7 +347,6 @@ public sealed class Event {
                         DeletedMessage.serializer()
                     ), sequence
                 )
-
                 "MESSAGE_DELETE_BULK" -> MessageDeleteBulk(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -383,7 +354,6 @@ public sealed class Event {
                         BulkDeleteData.serializer()
                     ), sequence
                 )
-
                 "MESSAGE_REACTION_ADD" -> MessageReactionAdd(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -391,7 +361,6 @@ public sealed class Event {
                         MessageReactionAddData.serializer()
                     ), sequence
                 )
-
                 "MESSAGE_REACTION_REMOVE" -> MessageReactionRemove(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -399,7 +368,6 @@ public sealed class Event {
                         MessageReactionRemoveData.serializer()
                     ), sequence
                 )
-
                 "MESSAGE_REACTION_REMOVE_EMOJI" -> MessageReactionRemoveEmoji(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -407,7 +375,6 @@ public sealed class Event {
                         DiscordRemovedEmoji.serializer()
                     ), sequence
                 )
-
                 "MESSAGE_REACTION_REMOVE_ALL" -> MessageReactionRemoveAll(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -415,7 +382,6 @@ public sealed class Event {
                         AllRemovedMessageReactions.serializer()
                     ), sequence
                 )
-
                 "PRESENCE_UPDATE" -> PresenceUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -423,7 +389,6 @@ public sealed class Event {
                         DiscordPresenceUpdate.serializer()
                     ), sequence
                 )
-
                 "USER_UPDATE" -> UserUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -431,7 +396,6 @@ public sealed class Event {
                         DiscordUser.serializer()
                     ), sequence
                 )
-
                 "VOICE_STATE_UPDATE" -> VoiceStateUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -439,7 +403,6 @@ public sealed class Event {
                         DiscordVoiceState.serializer()
                     ), sequence
                 )
-
                 "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -447,7 +410,6 @@ public sealed class Event {
                         DiscordVoiceServerUpdateData.serializer()
                     ), sequence
                 )
-
                 "WEBHOOKS_UPDATE" -> WebhooksUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -455,7 +417,6 @@ public sealed class Event {
                         DiscordWebhooksUpdateData.serializer()
                     ), sequence
                 )
-
                 "INTERACTION_CREATE" -> InteractionCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -463,70 +424,54 @@ public sealed class Event {
                         DiscordInteraction.serializer()
                     ), sequence
                 )
-
                 "APPLICATION_COMMAND_CREATE" -> ApplicationCommandCreate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
                     sequence
                 )
-
                 "APPLICATION_COMMAND_UPDATE" -> ApplicationCommandUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
                     sequence
                 )
-
                 "APPLICATION_COMMAND_DELETE" -> ApplicationCommandDelete(
                     decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
                     sequence
                 )
-
                 "THREAD_CREATE" -> ThreadCreate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
                     sequence
                 )
-
-
                 "THREAD_DELETE" -> ThreadDelete(
                     decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
                     sequence
                 )
-
-
                 "THREAD_UPDATE" -> ThreadUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
                     sequence
                 )
-
                 "THREAD_LIST_SYNC" -> ThreadListSync(
                     decoder.decodeSerializableElement(descriptor, index, DiscordThreadListSync.serializer()),
                     sequence
                 )
-
                 "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordThreadMember.serializer()),
                     sequence
                 )
-
-
                 "THREAD_MEMBERS_UPDATE" -> ThreadMembersUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordThreadMembersUpdate.serializer()),
                     sequence
                 )
-
                 "GUILD_SCHEDULED_EVENT_CREATE" -> GuildScheduledEventCreate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
                     sequence
                 )
-
                 "GUILD_SCHEDULED_EVENT_UPDATE" -> GuildScheduledEventUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
                     sequence
                 )
-
                 "GUILD_SCHEDULED_EVENT_DELETE" -> GuildScheduledEventDelete(
                     decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
                     sequence
                 )
-
                 "GUILD_SCHEDULED_EVENT_USER_ADD" -> GuildScheduledEventUserAdd(
                     data = decoder.decodeSerializableElement(
                         descriptor,
@@ -535,7 +480,6 @@ public sealed class Event {
                     ),
                     sequence
                 )
-
                 "GUILD_SCHEDULED_EVENT_USER_REMOVE" -> GuildScheduledEventUserRemove(
                     data = decoder.decodeSerializableElement(
                         descriptor,
@@ -733,10 +677,13 @@ public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence
 public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
 public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
+
 public data class IntegrationDelete(val integration: DiscordGuildIntegrationsDeleted, override val sequence: Int?) :
     DispatchEvent()
+
 public data class IntegrationCreate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
+
 public data class IntegrationUpdate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
 
