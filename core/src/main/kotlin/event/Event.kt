@@ -65,7 +65,6 @@ public class UnknownEvent(
     override val shard: Int,
     override val customContext: Any?,
 ) : Event {
-    override fun toString(): String {
-        return "UnknownEvent(kord=$kord, shard=$shard, customContext=$customContext, data=$data, name=$name)"
-    }
+    override fun toString(): String =
+        "UnknownEvent(name=$name, data=$data, kord=$kord, shard=$shard, customContext=$customContext)"
 }
