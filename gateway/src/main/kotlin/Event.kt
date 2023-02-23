@@ -72,10 +72,8 @@ public sealed class Event {
                                 else -> {}
                             }
                         }
-
                         1 -> eventName =
                             decodeNullableSerializableElement(descriptor, index, String.serializer().nullable)
-
                         2 -> sequence = decodeNullableSerializableElement(descriptor, index, Int.serializer().nullable)
                         3 -> data = when (op) {
                             OpCode.Dispatch -> getByDispatchEvent(index, this, eventName, sequence)
@@ -84,13 +82,11 @@ public sealed class Event {
                                 this.decodeSerializableElement(descriptor, index, NullDecoder)
                                 HeartbeatACK
                             }
-
                             OpCode.InvalidSession -> decodeSerializableElement(
                                 descriptor,
                                 index,
                                 InvalidSession.serializer()
                             )
-
                             OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
                             //some events contain undocumented data fields, we'll only assume an unknown opcode with no data to be an error
                             else -> if (data == null) {
@@ -312,6 +308,7 @@ public sealed class Event {
                         GuildMembersChunkData.serializer()
                     ), sequence
                 )
+
                 "INVITE_CREATE" -> InviteCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -326,6 +323,7 @@ public sealed class Event {
                         DiscordDeletedInvite.serializer()
                     ), sequence
                 )
+
                 "MESSAGE_CREATE" -> MessageCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -375,6 +373,7 @@ public sealed class Event {
                         DiscordRemovedEmoji.serializer()
                     ), sequence
                 )
+
                 "MESSAGE_REACTION_REMOVE_ALL" -> MessageReactionRemoveAll(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -428,38 +427,50 @@ public sealed class Event {
                     decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
                     sequence
                 )
+
                 "APPLICATION_COMMAND_UPDATE" -> ApplicationCommandUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
                     sequence
                 )
+
                 "APPLICATION_COMMAND_DELETE" -> ApplicationCommandDelete(
                     decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
                     sequence
                 )
+
                 "THREAD_CREATE" -> ThreadCreate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
                     sequence
                 )
+
+
                 "THREAD_DELETE" -> ThreadDelete(
                     decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
                     sequence
                 )
+
+
                 "THREAD_UPDATE" -> ThreadUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
                     sequence
                 )
+
                 "THREAD_LIST_SYNC" -> ThreadListSync(
                     decoder.decodeSerializableElement(descriptor, index, DiscordThreadListSync.serializer()),
                     sequence
                 )
+
                 "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordThreadMember.serializer()),
                     sequence
                 )
+
+
                 "THREAD_MEMBERS_UPDATE" -> ThreadMembersUpdate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordThreadMembersUpdate.serializer()),
                     sequence
                 )
+
                 "GUILD_SCHEDULED_EVENT_CREATE" -> GuildScheduledEventCreate(
                     decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
                     sequence
@@ -666,9 +677,7 @@ public data class ChannelDelete(val channel: DiscordChannel, override val sequen
 public data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
 public data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
-public data class GuildAuditLogEntryCreate(val entry: DiscordAuditLogEntry, override val sequence: Int?) :
-    DispatchEvent()
-
+public data class GuildAuditLogEntryCreate(val entry: DiscordAuditLogEntry, override val sequence: Int?): DispatchEvent()
 public data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
@@ -677,13 +686,10 @@ public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence
 public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
 public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
-
 public data class IntegrationDelete(val integration: DiscordGuildIntegrationsDeleted, override val sequence: Int?) :
     DispatchEvent()
-
 public data class IntegrationCreate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
-
 public data class IntegrationUpdate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
 
