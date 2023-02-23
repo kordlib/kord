@@ -24,13 +24,12 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up JDK 8
-        uses: actions/setup-java@v1
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
         with:
-          java-version: 8
-
+          distribution: temurin
+          java-version: 19
       - name: Set SHORT_SHA environment variable to short commit hash
         run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
 
@@ -60,14 +59,14 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Set up JDK 8
-        uses: actions/setup-java@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v3
         with:
-          java-version: 8
-
+          distribution: temurin
+          java-version: 19
       - name: Set SHORT_SHA environment variable to short commit hash
         run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
 
