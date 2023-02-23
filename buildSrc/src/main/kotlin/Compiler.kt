@@ -9,6 +9,7 @@ object CompilerArguments {
     const val kordVoice = "-opt-in=dev.kord.common.annotation.KordVoice"
 
     const val progressive = "-progressive"
+    const val jdkRelease = "-Xjdk-release=1.8"
 }
 
 object Jvm {
@@ -17,5 +18,5 @@ object Jvm {
 
 fun KotlinJvmCompilerOptions.applyKordCompilerOptions() {
     allWarningsAsErrors.set(true)
-    freeCompilerArgs.add(CompilerArguments.progressive)
+    freeCompilerArgs.addAll(CompilerArguments.progressive, CompilerArguments.jdkRelease)
 }
