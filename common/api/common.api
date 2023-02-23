@@ -7713,6 +7713,7 @@ public final class dev/kord/common/entity/Snowflake$Companion {
 	public final fun getEndOfTime ()Lkotlinx/datetime/Instant;
 	public final fun getMax ()Ldev/kord/common/entity/Snowflake;
 	public final fun getMin ()Ldev/kord/common/entity/Snowflake;
+	public final fun getTimestampComparator ()Ljava/util/Comparator;
 	public final fun getValidValues ()Lkotlin/ranges/ULongRange;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
