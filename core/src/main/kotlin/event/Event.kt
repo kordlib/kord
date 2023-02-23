@@ -5,7 +5,13 @@ import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.entity.Strategizable
 import dev.kord.gateway.Gateway
+import kotlinx.serialization.json.JsonElement
 
+/**
+ * Representation of an event received from the Discord gateway.
+ *
+ * @see UnknownEvent
+ */
 public interface Event : KordObject {
     /**
      * The Gateway that spawned this event.
@@ -45,3 +51,17 @@ public interface Event : KordObject {
     @KordPreview
     public val customContext: Any?
 }
+
+/**
+ * Representation of an event that has not been documented / added to Kord yet.
+ *
+ * @property data the raw [json body][JsonElement] of this event if provided
+ * @property name the name of the event if provided
+ */
+public data class UnknownEvent(
+    override val kord: Kord,
+    override val shard: Int,
+    override val customContext: Any?,
+    val data: JsonElement?,
+    val name: String?
+) : Event

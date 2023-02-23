@@ -504,8 +504,8 @@ public sealed class Event {
                 else -> {
                     jsonLogger.warn { "unknown gateway event name $name" }
                     // consume json elements that are unknown to us
-                    decoder.decodeSerializableElement(descriptor, index, JsonElement.serializer().nullable)
-                    null
+                    val data = decoder.decodeSerializableElement(descriptor, index, JsonElement.serializer().nullable)
+                    UnknownDispatchEvent(data, sequence, name)
                 }
             }
 
@@ -837,6 +837,12 @@ public data class GuildScheduledEventUserAdd(
 public data class GuildScheduledEventUserRemove(
     val data: GuildScheduledEventUserMetadata,
     override val sequence: Int?,
+) : DispatchEvent()
+
+public data class UnknownDispatchEvent(
+    val data: JsonElement?,
+    override val sequence: Int?,
+    val name: String?
 ) : DispatchEvent()
 
 @Serializable
