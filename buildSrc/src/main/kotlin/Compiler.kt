@@ -1,21 +1,32 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
+import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
+
+object OptIns {
+    const val time = "kotlin.time.ExperimentalTime"
+    const val contracts = "kotlin.contracts.ExperimentalContracts"
+
+    const val kordPreview = "dev.kord.common.annotation.KordPreview"
+    const val kordExperimental = "dev.kord.common.annotation.KordExperimental"
+    const val kordVoice = "dev.kord.common.annotation.KordVoice"
+}
 
 object CompilerArguments {
-    const val time = "-opt-in=kotlin.time.ExperimentalTime"
-    const val contracts = "-opt-in=kotlin.contracts.ExperimentalContracts"
+    val time = OptIns.time.asOptIn()
+    val contracts = OptIns.contracts.asOptIn()
 
-    const val kordPreview = "-opt-in=dev.kord.common.annotation.KordPreview"
-    const val kordExperimental = "-opt-in=dev.kord.common.annotation.KordExperimental"
-    const val kordVoice = "-opt-in=dev.kord.common.annotation.KordVoice"
+    val kordPreview = OptIns.kordPreview.asOptIn()
+    val kordExperimental = OptIns.kordExperimental.asOptIn()
+    val kordVoice = OptIns.kordVoice.asOptIn()
 
     const val progressive = "-progressive"
 }
+
+private fun String.asOptIn() = "-opt-in=$this"
 
 object Jvm {
     const val target = 8
 }
 
-fun KotlinJvmCompilerOptions.applyKordCompilerOptions() {
+fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     allWarningsAsErrors.set(true)
     freeCompilerArgs.add(CompilerArguments.progressive)
 }

@@ -1,22 +1,65 @@
 @Suppress("DSL_SCOPE_VIOLATION") // false positive for `libs` in IntelliJ
 plugins {
-    `kord-module`
-    `kord-sampled-module`
-    `kord-publishing`
+    `kord-multiplatform-module`
+    `kotlinx-atomicfu`
+    `kotlinx-serialization`
     alias(libs.plugins.buildconfig)
 }
 
+kotlin {
+    explicitApi()
+
+    sourceSets {
+        all {
+            languageSettings {
+                listOf(
+                    OptIns.time,
+                    OptIns.contracts,
+                    OptIns.kordPreview,
+                    OptIns.kordExperimental,
+                    OptIns.kordVoice,
+                ).forEach(::optIn)
+            }
+        }
+        commonMain {
+            dependencies {
+                api(libs.kotlinx.coroutines.core)
+                api(libs.kotlinx.serialization.json)
+                api(libs.kotlinx.datetime)
+                api(libs.kotlin.logging)
+                api(libs.bignum)
+                // Replacement for java.io
+                api(libs.ktor.utils)
+
+                compileOnly(projects.kspAnnotations)
+                // The plugin should add this automatically, but it doesn't
+                compileOnly(libs.kotlinx.atomicfu)
+            }
+        }
+
+        commonTest {
+            dependencies {
+                implementation(libs.bundles.test.common)
+            }
+        }
+        jvmTest {
+            dependencies {
+                runtimeOnly(libs.bundles.test.runtime)
+                implementation(libs.bundles.test.implementation)
+                implementation(libs.bundles.test.common)
+            }
+        }
+        jsTest {
+            dependencies {
+                implementation(libs.kotlin.test.js)
+                implementation(libs.kotlinx.nodejs)
+            }
+        }
+    }
+}
+
 dependencies {
-    api(libs.kotlinx.coroutines.core)
-    api(libs.kotlinx.serialization.json)
-    api(libs.kotlinx.datetime)
-    api(libs.kotlin.logging)
-
-    compileOnly(projects.kspAnnotations)
-    ksp(projects.kspProcessors)
-
-    testImplementation(libs.bundles.test.implementation)
-    testRuntimeOnly(libs.bundles.test.runtime)
+    kspCommonMainMetadata(projects.kspProcessors)
 }
 
 /*

@@ -1,3 +1,3 @@
 plugins {
-    `kord-internal-module`
+    `kord-multiplatform-module`
 }
