@@ -1,4 +1,4 @@
-# This workflow will build and push docs to the gh-pages branch whenever something is pushed to 0.8.x.
+# This workflow will build and push docs to GitHub Pages whenever something is pushed to 0.8.x.
 
 name: Docs
 on:
