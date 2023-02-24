@@ -1,10 +1,12 @@
-# This workflow will build and push docs to GitHub Pages whenever something is pushed to 0.8.x.
+# This workflow will build and push docs to GitHub Pages whenever something is pushed to 0.8.x
 
 name: Docs
+
 on:
   push:
     branches:
       - 0.8.x
+
 permissions:
   contents: read
   pages: write
@@ -12,18 +14,16 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: true
 
 jobs:
-  update_docs:
-    name: Update docs
+  build:
+    name: Build docs
     runs-on: ubuntu-latest
-
     env:
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
       GITHUB_BRANCH_NAME: ${{ github.ref }}
-
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK
@@ -42,12 +42,13 @@ jobs:
         with:
           path: build/dokka/htmlMultiModule
   deploy:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: update_docs
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy docs to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
