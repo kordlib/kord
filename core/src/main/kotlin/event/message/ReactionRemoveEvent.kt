@@ -41,7 +41,14 @@ public class ReactionRemoveEvent(
 
     public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
+    @Deprecated(
+        "Deprecated in favour of getGuildOrNull() as it provides more clarity over the functionality",
+        ReplaceWith("getGuildOrNull()"),
+        DeprecationLevel.WARNING
+    )
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
+
+    public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     public suspend fun getMessage(): Message = supplier.getMessage(channelId = channelId, messageId = messageId)
 

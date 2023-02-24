@@ -208,6 +208,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of reactions reached (20). */
     MaxReactions(30010),
 
+    /** Maximum number of group DMs reached (10). */
+    MaxGroupDMs(30011),
+
     /** Maximum number of guild channels reached (500). */
     MaxGuildChannels(30013),
 
@@ -273,6 +276,12 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Maximum number of webhooks per guild reached (1000). */
     MaxGuildWebhooks(30058),
+
+    /** Maximum number of channel permission overwrites reached (1000). */
+    MaxChannelPermissionOverwrites(30060),
+
+    /** The channels for this guild are too large. */
+    ChannelsTooLarge(30061),
 
     /** Unauthorized. Provide a valid token and try again. */
     Unauthorized(40001),

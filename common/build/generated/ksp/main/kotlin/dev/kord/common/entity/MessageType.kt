@@ -101,6 +101,14 @@ public sealed class MessageType(
 
     public object InteractionPremiumUpsell : MessageType(26)
 
+    public object StageStart : MessageType(27)
+
+    public object StageEnd : MessageType(28)
+
+    public object StageSpeaker : MessageType(29)
+
+    public object StageTopic : MessageType(31)
+
     public object GuildApplicationPremiumSubscription : MessageType(32)
 
     /**
@@ -191,6 +199,10 @@ public sealed class MessageType(
             23 -> ContextMenuCommand
             24 -> AutoModerationAction
             26 -> InteractionPremiumUpsell
+            27 -> StageStart
+            28 -> StageEnd
+            29 -> StageSpeaker
+            31 -> StageTopic
             32 -> GuildApplicationPremiumSubscription
             else -> Unknown(code)
         }
@@ -227,6 +239,10 @@ public sealed class MessageType(
                 ContextMenuCommand,
                 AutoModerationAction,
                 InteractionPremiumUpsell,
+                StageStart,
+                StageEnd,
+                StageSpeaker,
+                StageTopic,
                 GuildApplicationPremiumSubscription,
             )
         }

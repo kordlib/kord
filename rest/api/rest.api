@@ -84,10 +84,12 @@ public abstract interface class dev/kord/rest/builder/RequestBuilder {
 public final class dev/kord/rest/builder/auditlog/AuditLogGetRequestBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
 	public final fun getAction ()Ldev/kord/common/entity/AuditLogEvent;
+	public final fun getAfter ()Ldev/kord/common/entity/Snowflake;
 	public final fun getBefore ()Ldev/kord/common/entity/Snowflake;
 	public final fun getLimit ()Ljava/lang/Integer;
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public final fun setAction (Ldev/kord/common/entity/AuditLogEvent;)V
+	public final fun setAfter (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setBefore (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setLimit (Ljava/lang/Integer;)V
 	public final fun setUserId (Ldev/kord/common/entity/Snowflake;)V
@@ -2321,6 +2323,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field CannotUpdateFinishedEvent Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelVerificationTooHigh Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelWriteRateLimit Ldev/kord/rest/json/JsonErrorCode;
+	public static final field ChannelsTooLarge Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CommunityServerChannelMustBeTextChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Companion Ldev/kord/rest/json/JsonErrorCode$Companion;
 	public static final field ConnectionRevoked Ldev/kord/rest/json/JsonErrorCode;
@@ -2363,9 +2366,11 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field MaxApplicationCommands Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxAttachments Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxBanFetches Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxChannelPermissionOverwrites Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxDailyApplicationCommandCreates Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxEmojis Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxFriends Ldev/kord/rest/json/JsonErrorCode;
+	public static final field MaxGroupDMs Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildRoles Ldev/kord/rest/json/JsonErrorCode;
 	public static final field MaxGuildWebhooks Ldev/kord/rest/json/JsonErrorCode;
@@ -2588,16 +2593,18 @@ public final class dev/kord/rest/json/request/ApplicationCommandModifyRequest$Co
 
 public final class dev/kord/rest/json/request/AuditLogGetRequest {
 	public fun <init> ()V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AuditLogEvent;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AuditLogEvent;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AuditLogEvent;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AuditLogEvent;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/AuditLogEvent;
 	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component4 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AuditLogEvent;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Ldev/kord/rest/json/request/AuditLogGetRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/AuditLogGetRequest;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AuditLogEvent;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/rest/json/request/AuditLogGetRequest;
+	public final fun component4 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AuditLogEvent;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Ldev/kord/rest/json/request/AuditLogGetRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/AuditLogGetRequest;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/AuditLogEvent;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/rest/json/request/AuditLogGetRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAction ()Ldev/kord/common/entity/AuditLogEvent;
+	public final fun getAfter ()Ldev/kord/common/entity/Snowflake;
 	public final fun getBefore ()Ldev/kord/common/entity/Snowflake;
 	public final fun getLimit ()Ljava/lang/Integer;
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;

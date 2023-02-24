@@ -5,7 +5,8 @@ plugins {
     `kord-publishing`
 }
 
-val voice by sourceSets.creating
+val voice: SourceSet by sourceSets.creating
+val voiceApi: Configuration by configurations.getting
 
 configurations {
     getByName("voiceImplementation") {
@@ -17,8 +18,8 @@ dependencies {
     api(projects.common)
     api(projects.rest)
     api(projects.gateway)
-    "voiceApi"(projects.core)
-    "voiceApi"(projects.voice)
+    voiceApi(projects.core)
+    voiceApi(projects.voice)
 
     api(libs.kord.cache.api)
     api(libs.kord.cache.map)
