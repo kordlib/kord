@@ -36,7 +36,7 @@ kotlin {
         }
         commonMain {
             // mark ksp src dir
-            kotlin.srcDir("build/generated/ksp/main/kotlin")
+            kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
         }
     }
 }
