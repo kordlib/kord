@@ -39,8 +39,7 @@ kotlin {
 
         jsTest {
             dependencies {
-                implementation(libs.kotlin.test.js)
-                implementation(libs.kotlinx.nodejs)
+                implementation(libs.bundles.test.js)
             }
         }
 

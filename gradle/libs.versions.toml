@@ -91,6 +91,7 @@ ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serializat
 test-implementation = ["kotlinx-coroutines-test", "kotlin-test", "junit-jupiter-api", "mockk"]
 test-common = ["kotlinx-coroutines-test", "kotlin-test", "kotlin-test-annotations-common"]
 test-runtime = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
+test-js = ["kotlin-test-js", "kotlinx-nodejs"]
 stately = ["stately-collections", "stately-concurrency"]
 
 pluginsForBuildSrc = [
