@@ -140,7 +140,7 @@ public sealed interface AllowedKeywordsAutoModerationRuleBuilder : TypedAutoMode
      *
      * A keyword can be a phrase which contains multiple words.
      * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
-     * can be used to customize how each keyword will be matched. Each keyword must be 30 characters or less.
+     * can be used to customize how each keyword will be matched. Each keyword must be 60 characters or less.
      */
     public var allowedKeywords: MutableList<String>?
 }
@@ -150,7 +150,7 @@ public sealed interface AllowedKeywordsAutoModerationRuleBuilder : TypedAutoMode
  *
  * A keyword can be a phrase which contains multiple words.
  * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * can be used to customize how each keyword will be matched. Each keyword must be 30 characters or less.
+ * can be used to customize how each keyword will be matched. Each keyword must be 60 characters or less.
  */
 public fun AllowedKeywordsAutoModerationRuleBuilder.allowKeyword(keyword: String) {
     allowedKeywords?.add(keyword) ?: run { allowedKeywords = mutableListOf(keyword) }
@@ -161,7 +161,7 @@ public fun AllowedKeywordsAutoModerationRuleBuilder.allowKeyword(keyword: String
  * [Prefix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
  * to [allowedKeywords][AllowedKeywordsAutoModerationRuleBuilder.allowedKeywords].
  *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
  */
 public fun AllowedKeywordsAutoModerationRuleBuilder.allowPrefixKeyword(keyword: String) {
     allowKeyword("$keyword*")
@@ -172,7 +172,7 @@ public fun AllowedKeywordsAutoModerationRuleBuilder.allowPrefixKeyword(keyword: 
  * [Suffix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
  * to [allowedKeywords][AllowedKeywordsAutoModerationRuleBuilder.allowedKeywords].
  *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
  */
 public fun AllowedKeywordsAutoModerationRuleBuilder.allowSuffixKeyword(keyword: String) {
     allowKeyword("*$keyword")
@@ -183,7 +183,7 @@ public fun AllowedKeywordsAutoModerationRuleBuilder.allowSuffixKeyword(keyword: 
  * [Anywhere](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
  * to [allowedKeywords][AllowedKeywordsAutoModerationRuleBuilder.allowedKeywords].
  *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
  */
 public fun AllowedKeywordsAutoModerationRuleBuilder.allowAnywhereKeyword(keyword: String) {
     allowKeyword("*$keyword*")
@@ -203,7 +203,7 @@ public sealed interface KeywordAutoModerationRuleBuilder :
      *
      * A keyword can be a phrase which contains multiple words.
      * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
-     * can be used to customize how each keyword will be matched. Each keyword must be 30 characters or less.
+     * can be used to customize how each keyword will be matched. Each keyword must be 60 characters or less.
      */
     public var keywords: MutableList<String>?
 
@@ -220,7 +220,7 @@ public sealed interface KeywordAutoModerationRuleBuilder :
  *
  * A keyword can be a phrase which contains multiple words.
  * [Wildcard symbols](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
- * can be used to customize how each keyword will be matched. Each keyword must be 30 characters or less.
+ * can be used to customize how each keyword will be matched. Each keyword must be 60 characters or less.
  */
 public fun KeywordAutoModerationRuleBuilder.keyword(keyword: String) {
     keywords?.add(keyword) ?: run { keywords = mutableListOf(keyword) }
@@ -231,7 +231,7 @@ public fun KeywordAutoModerationRuleBuilder.keyword(keyword: String) {
  * [Prefix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
  * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
  *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
  */
 public fun KeywordAutoModerationRuleBuilder.prefixKeyword(keyword: String) {
     keyword("$keyword*")
@@ -242,7 +242,7 @@ public fun KeywordAutoModerationRuleBuilder.prefixKeyword(keyword: String) {
  * [Suffix](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
  * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
  *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
  */
 public fun KeywordAutoModerationRuleBuilder.suffixKeyword(keyword: String) {
     keyword("*$keyword")
@@ -253,7 +253,7 @@ public fun KeywordAutoModerationRuleBuilder.suffixKeyword(keyword: String) {
  * [Anywhere](https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-matching-strategies)
  * to [keywords][KeywordAutoModerationRuleBuilder.keywords] (maximum of 1000).
  *
- * A keyword can be a phrase which contains multiple words. Each keyword must be 30 characters or less.
+ * A keyword can be a phrase which contains multiple words. Each keyword must be 60 characters or less.
  */
 public fun KeywordAutoModerationRuleBuilder.anywhereKeyword(keyword: String) {
     keyword("*$keyword*")
