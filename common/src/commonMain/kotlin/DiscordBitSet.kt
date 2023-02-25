@@ -31,11 +31,10 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
     public val value: String
         get() {
             // need to convert from little-endian data to big-endian expected by BigInteger
-            val buffer = withBuffer(data.size * Long.SIZE_BYTES) {
+            return withBuffer(data.size * Long.SIZE_BYTES) {
                 writeFully(data.reversedArray())
-                this.readBytes()
+                BigInteger.fromByteArray(readBytes(), Sign.POSITIVE).toString()
             }
-            return BigInteger.fromByteArray(buffer, Sign.POSITIVE).toString()
         }
 
     public val size: Int
