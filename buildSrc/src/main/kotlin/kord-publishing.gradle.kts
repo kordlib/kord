@@ -6,18 +6,21 @@ plugins {
     signing
 }
 
-val dokkaJar by tasks.registering(Jar::class) {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles Kotlin docs with Dokka"
-    archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml)
+if(tasks.findByName("dokkaHtml") != null) {
+    val dokkaJar by tasks.registering(Jar::class) {
+        group = JavaBasePlugin.DOCUMENTATION_GROUP
+        description = "Assembles Kotlin docs with Dokka"
+        archiveClassifier.set("javadoc")
+        from(tasks.dokkaHtml)
+    }
+    publishing.publications.withType<MavenPublication> {
+        artifact(dokkaJar)
+    }
 }
 
 publishing {
     publications {
         withType<MavenPublication> {
-            artifact(dokkaJar)
-
             groupId = Library.group
             artifactId = "kord-${artifactId}"
             version = Library.version
