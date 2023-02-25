@@ -8,8 +8,6 @@ plugins {
 }
 
 kotlin {
-    explicitApi()
-
     sourceSets {
         commonMain {
             dependencies {
