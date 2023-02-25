@@ -3,7 +3,7 @@ package json
 import dev.kord.gateway.Event
 import dev.kord.gateway.Reconnect
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 private fun file(name: String): String {
     val loader = SerializationTest::class.java.classLoader

@@ -19,14 +19,14 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Disabled
-import org.junit.jupiter.api.Test
+import kotlin.test.Ignore
+import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
 class DefaultGatewayTest {
     @OptIn(DelicateCoroutinesApi::class)
     @Test
-    @Disabled
+    @Ignore
     fun `default gateway functions correctly`() {
         val token = System.getenv("KORD_TEST_TOKEN")
 

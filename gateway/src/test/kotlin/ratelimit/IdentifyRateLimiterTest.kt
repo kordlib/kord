@@ -15,12 +15,12 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.assertThrows
 import kotlin.coroutines.ContinuationInterceptor
 import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -54,9 +54,9 @@ class IdentifyRateLimiterTest {
 
     @Test
     fun `IdentifyRateLimiter throws IAEs`() = runBlocking<Unit> {
-        assertThrows<IllegalArgumentException> { IdentifyRateLimiter(maxConcurrency = 0) }
-        assertThrows<IllegalArgumentException> { IdentifyRateLimiter(maxConcurrency = -1) }
-        assertThrows<IllegalArgumentException> {
+        assertFailsWith<IllegalArgumentException> { IdentifyRateLimiter(maxConcurrency = 0) }
+        assertFailsWith<IllegalArgumentException> { IdentifyRateLimiter(maxConcurrency = -1) }
+        assertFailsWith<IllegalArgumentException> {
             val rateLimiter = IdentifyRateLimiter(maxConcurrency = 1)
             rateLimiter.consume(shardId = -1, events = MutableSharedFlow())
         }

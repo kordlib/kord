@@ -11,9 +11,8 @@ import dev.kord.common.entity.optional.optionalInt
 import dev.kord.gateway.*
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.*
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
-import java.util.*
+import kotlin.test.assertEquals
+import kotlin.test.Test
 
 private val json = Json { encodeDefaults = false }
 
@@ -122,7 +121,7 @@ class CommandTest {
             put("d", buildJsonObject {
                 put("since", since)
                 put("activities", JsonArray(emptyList()))
-                put("status", status.value.lowercase(Locale.getDefault()))
+                put("status", status.value.lowercase())
                 put("afk", afk)
             })
         })
