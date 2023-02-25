@@ -1,3 +1,4 @@
+import gradle.kotlin.dsl.accessors._e5121a5856746b077c6819bbe5a86a2f.dokkaHtml
 import java.util.Base64
 
 plugins {
@@ -5,11 +6,20 @@ plugins {
     signing
 }
 
+val dokkaJar by tasks.registering(Jar::class) {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "Assembles Kotlin docs with Dokka"
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaHtml)
+}
+
 publishing {
     publications {
-        create<MavenPublication>(Library.name) {
+        withType<MavenPublication> {
+            artifact(dokkaJar)
+
             groupId = Library.group
-            artifactId = "kord-${project.name}"
+            artifactId = "kord-${artifactId}"
             version = Library.version
 
             pom {

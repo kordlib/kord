@@ -1,6 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION") // false positive for `libs` in IntelliJ
 plugins {
     `kord-multiplatform-module`
+    `kord-publishing`
     `kotlinx-atomicfu`
     `kotlinx-serialization`
     alias(libs.plugins.buildconfig)

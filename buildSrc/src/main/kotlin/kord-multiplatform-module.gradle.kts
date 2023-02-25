@@ -66,11 +66,10 @@ tasks {
     }
 
     afterEvaluate {
-        getByName("compileKotlinJvm") {
-            dependsOnKspKotlin("kspCommonMainKotlinMetadata")
-        }
-        getByName("compileKotlinJs") {
-            dependsOnKspKotlin("kspCommonMainKotlinMetadata")
+        listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar", "sourcesJar").forEach {
+            getByName(it) {
+                dependsOnKspKotlin("kspCommonMainKotlinMetadata")
+            }
         }
     }
 

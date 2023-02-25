@@ -68,17 +68,9 @@ tasks {
     }
 }
 
-val dokkaJar by tasks.registering(Jar::class) {
-    group = JavaBasePlugin.DOCUMENTATION_GROUP
-    description = "Assembles Kotlin docs with Dokka"
-    archiveClassifier.set("javadoc")
-    from(tasks.dokkaHtml)
-}
-
 publishing {
-    publications.withType<MavenPublication>().configureEach {
+    publications.register<MavenPublication>(Library.name) {
         from(components["java"])
         artifact(tasks.kotlinSourcesJar)
-        artifact(dokkaJar)
     }
 }
