@@ -3,7 +3,6 @@ import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.gateway.*
 import dev.kord.gateway.retry.LinearRetry
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.serialization.kotlinx.json.*
@@ -16,13 +15,6 @@ suspend fun main(args: Array<String>) {
     val token = args.firstOrNull() ?: error("expected a token")
 
     val gateway = DefaultGateway {
-        client = HttpClient(CIO) {
-            install(WebSockets)
-            install(ContentNegotiation) {
-                json()
-            }
-        }
-
         reconnectRetry = LinearRetry(2.seconds, 20.seconds, 10)
         sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
     }

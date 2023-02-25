@@ -13,6 +13,7 @@ include(
     "ksp-processors",
     "rest",
     "voice",
+    "js-test"
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
