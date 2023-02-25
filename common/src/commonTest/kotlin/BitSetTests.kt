@@ -65,7 +65,7 @@ class BitSetTests {
     @JsName("test6")
     fun `get a bit out of range`() {
         val a = DiscordBitSet(0b101, 0)
-        assert(!a[10000])
+        assertFalse(a[10000])
     }
 
     @Test
