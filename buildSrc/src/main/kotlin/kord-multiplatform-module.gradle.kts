@@ -1,4 +1,6 @@
 import gradle.kotlin.dsl.accessors._e5121a5856746b077c6819bbe5a86a2f.main
+import gradle.kotlin.dsl.accessors._e5121a5856746b077c6819bbe5a86a2f.testing
+import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -37,6 +39,14 @@ kotlin {
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+        }
+    }
+}
+
+tasks {
+    tasks {
+        getByName<KotlinJvmTest>("jvmTest") {
+            useJUnitPlatform()
         }
     }
 }

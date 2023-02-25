@@ -45,8 +45,7 @@ kotlin {
         jvmTest {
             dependencies {
                 runtimeOnly(libs.bundles.test.runtime)
-                implementation(libs.bundles.test.implementation)
-                implementation(libs.bundles.test.common)
+                implementation(libs.kotlin.test.junit5)
             }
         }
         jsTest {
