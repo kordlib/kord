@@ -10,17 +10,6 @@ kotlin {
     explicitApi()
 
     sourceSets {
-        all {
-            languageSettings {
-                listOf(
-                    OptIns.time,
-                    OptIns.contracts,
-                    OptIns.kordPreview,
-                    OptIns.kordExperimental,
-                    OptIns.kordVoice,
-                ).forEach(::optIn)
-            }
-        }
         commonMain {
             dependencies {
                 api(libs.kotlinx.coroutines.core)

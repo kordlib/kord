@@ -1,5 +1,4 @@
-import gradle.kotlin.dsl.accessors._e5121a5856746b077c6819bbe5a86a2f.main
-import gradle.kotlin.dsl.accessors._e5121a5856746b077c6819bbe5a86a2f.testing
+import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 plugins {
@@ -32,8 +31,22 @@ kotlin {
 
     sourceSets {
         all {
-            if ("Test" in name) {
-                languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+            languageSettings {
+                if ("Test" in name) {
+                    optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                }
+                listOf(
+                    OptIns.time,
+                    OptIns.contracts,
+                    OptIns.kordPreview,
+                    OptIns.kordExperimental,
+                    OptIns.kordVoice,
+                ).forEach(::optIn)
+            }
+
+            repositories {
+                // until Dokka 1.8.0 is released and we no longer need dev builds, see https://github.com/kordlib/kord/pull/755
+                maven("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
             }
         }
         commonMain {
@@ -44,9 +57,47 @@ kotlin {
 }
 
 tasks {
-    tasks {
-        getByName<KotlinJvmTest>("jvmTest") {
-            useJUnitPlatform()
+    getByName<KotlinJvmTest>("jvmTest") {
+        useJUnitPlatform()
+    }
+
+    withType<KotlinJsTest>() {
+        environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
+    }
+
+    afterEvaluate {
+        getByName("compileKotlinJvm") {
+            dependsOnKspKotlin("kspCommonMainKotlinMetadata")
         }
+        getByName("compileKotlinJs") {
+            dependsOnKspKotlin("kspCommonMainKotlinMetadata")
+        }
+    }
+
+    configureDokka {
+        dependsOnKspKotlin("kspCommonMainKotlinMetadata")
+
+        dokkaSourceSets {
+            val map = asMap
+
+            if (map.containsKey("jsMain")) {
+                named("jsMain") {
+                    displayName.set("JS")
+                }
+            }
+
+            if (map.containsKey("jvmMain")) {
+                named("jvmMain") {
+                    displayName.set("JVM")
+                }
+            }
+
+            if (map.containsKey("commonMain")) {
+                named("jvmMain") {
+                    displayName.set("Common")
+                }
+            }
+        }
+
     }
 }

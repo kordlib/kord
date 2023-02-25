@@ -15,7 +15,7 @@ public final class dev/kord/common/Color$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/ColorKt {
+public final class dev/kord/common/ColorJvm {
 	public static final fun getKColor (Ljava/awt/Color;)Ldev/kord/common/Color;
 }
 
@@ -102,7 +102,6 @@ public final class dev/kord/common/Locale {
 	public static final field Companion Ldev/kord/common/Locale$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun asJavaLocale ()Ljava/util/Locale;
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Ldev/kord/common/Locale;
@@ -161,6 +160,7 @@ public final class dev/kord/common/Locale$Serializer : kotlinx/serialization/KSe
 }
 
 public final class dev/kord/common/LocaleKt {
+	public static final fun asJavaLocale (Ldev/kord/common/Locale;)Ljava/util/Locale;
 	public static final fun getKLocale (Ljava/util/Locale;)Ldev/kord/common/Locale;
 }
 

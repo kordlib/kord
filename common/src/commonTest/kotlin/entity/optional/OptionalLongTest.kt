@@ -53,7 +53,7 @@ internal class OptionalLongTest {
         val entity = Json.decodeFromString<ValueOptionalEntity>(json)
         assertIs<OptionalLong.Value>(entity.value)
 
-        assertSame(5, entity.value.value)
+        assertEquals(5, entity.value.value)
     }
 
 }

@@ -8,6 +8,7 @@ kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serializatio
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "3.0.5" # https://github.com/oshai/kotlin-logging
 kord-cache = { strictly = "[0.3.0, 0.4.0[", prefer = "latest.release" }
+stately = "2.0.0-rc1"
 
 # code generation
 ksp = "1.8.10-1.0.9" # https://github.com/google/ksp
@@ -34,6 +35,8 @@ kord-cache-map = { module = "dev.kord.cache:cache-map", version.ref = "kord-cach
 # ktor
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
@@ -58,6 +61,8 @@ kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlin
 
 # JDK Replacements
 bignum = { module = "com.ionspin.kotlin:bignum", version = "0.3.8" }
+stately-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately" }
+stately-concurrency = { module = "co.touchlab:stately-concurrency", version.ref = "stately" }
 
 # tests
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
@@ -86,6 +91,7 @@ ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serializat
 test-implementation = ["kotlinx-coroutines-test", "kotlin-test", "junit-jupiter-api", "mockk"]
 test-common = ["kotlinx-coroutines-test", "kotlin-test", "kotlin-test-annotations-common"]
 test-runtime = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
+stately = ["stately-collections", "stately-concurrency"]
 
 pluginsForBuildSrc = [
     "kotlin-jvm-plugin",
