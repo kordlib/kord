@@ -51,7 +51,9 @@ public sealed class AutoModerationActionType(
     ) : AutoModerationActionType(value)
 
     /**
-     * Blocks the content of a message according to the rule.
+     * Blocks a member's message and prevents it from being posted.
+     *
+     * A custom explanation can be specified and shown to members whenever their message is blocked.
      */
     public object BlockMessage : AutoModerationActionType(1)
 
