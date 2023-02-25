@@ -4,6 +4,7 @@ plugins {
     `kord-publishing`
     `kotlinx-atomicfu`
     `kotlinx-serialization`
+    `kord-sampled-multiplatform-module`
     alias(libs.plugins.buildconfig)
 }
 
