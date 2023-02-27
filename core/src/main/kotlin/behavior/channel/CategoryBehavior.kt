@@ -11,9 +11,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.channel.CategoryModifyBuilder
-import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
-import dev.kord.rest.builder.channel.TextChannelCreateBuilder
-import dev.kord.rest.builder.channel.VoiceChannelCreateBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.createNewsChannel
 import dev.kord.rest.service.createTextChannel

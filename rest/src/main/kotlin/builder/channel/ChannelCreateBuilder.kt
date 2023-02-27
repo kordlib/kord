@@ -1,6 +1,5 @@
 package dev.kord.rest.builder.channel
 
-import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Overwrite
@@ -13,11 +12,14 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 
-@KordDsl
-public class NewsChannelCreateBuilder(public var name: String) :
-    PermissionOverwritesCreateBuilder,
-    AuditRequestBuilder<GuildChannelCreateRequest> {
+public class ChannelCreateBuilder(
+    public var name: String,
+    public var channelType: ChannelType,
+): PermissionOverwritesCreateBuilder, AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
+
+    private var _position: OptionalInt = OptionalInt.Missing
+    public var position: Int? by ::_position.delegate()
 
     private var _topic: Optional<String> = Optional.Missing()
     public var topic: String? by ::_topic.delegate()
@@ -27,9 +29,6 @@ public class NewsChannelCreateBuilder(public var name: String) :
 
     private var _parentId: OptionalSnowflake = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
-
-    private var _position: OptionalInt = OptionalInt.Missing
-    public var position: Int? by ::_position.delegate()
 
     private var _defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
 
@@ -41,6 +40,13 @@ public class NewsChannelCreateBuilder(public var name: String) :
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
+    private var _bitrate: OptionalInt = OptionalInt.Missing
+    public var bitrate: Int? by ::_bitrate.delegate()
+
+    private var _userLimit: OptionalInt = OptionalInt.Missing
+    public var userLimit: Int? by ::_userLimit.delegate()
+
+
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
         topic = _topic,
@@ -48,7 +54,9 @@ public class NewsChannelCreateBuilder(public var name: String) :
         parentId = _parentId,
         position = _position,
         permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
-        type = ChannelType.GuildNews,
+        type = channelType,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
+        bitrate = _bitrate,
+        userLimit = _userLimit
     )
 }

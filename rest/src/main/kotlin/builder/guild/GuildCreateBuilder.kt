@@ -11,9 +11,6 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.rest.Image
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.builder.channel.CategoryCreateBuilder
-import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
-import dev.kord.rest.builder.channel.TextChannelCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 import dev.kord.rest.json.request.GuildCreateRequest
