@@ -1,4 +1,3 @@
-import gradle.kotlin.dsl.accessors._e5121a5856746b077c6819bbe5a86a2f.dokkaHtml
 import java.util.Base64
 
 plugins {
@@ -11,7 +10,7 @@ if(tasks.findByName("dokkaHtml") != null) {
         group = JavaBasePlugin.DOCUMENTATION_GROUP
         description = "Assembles Kotlin docs with Dokka"
         archiveClassifier.set("javadoc")
-        from(tasks.dokkaHtml)
+        from(tasks.getByName("dokkaHtml"))
     }
     publishing.publications.withType<MavenPublication> {
         artifact(dokkaJar)

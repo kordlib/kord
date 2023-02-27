@@ -73,9 +73,9 @@ class BitSetTests {
     fun `add and remove a bit`() {
         val a = DiscordBitSet(0b101, 0)
         a.add(DiscordBitSet(0b111))
-        assert(a.value == 0b111.toString())
+        assertEquals(0b111.toString(), a.value)
         a.remove(DiscordBitSet(0b001))
-        assert(a.value == 0b110.toString())
+        assertEquals(0b110.toString(), a.value)
     }
 
     @Test
@@ -83,7 +83,7 @@ class BitSetTests {
     fun `remove a bit`() {
         val a = DiscordBitSet(0b101, 0)
         a.remove(DiscordBitSet(0b111))
-        assert(a.value == "0")
+        assertEquals("0", a.value)
     }
 
     @Test
