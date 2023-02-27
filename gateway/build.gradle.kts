@@ -2,7 +2,6 @@ plugins {
     `kord-multiplatform-module`
     `kord-publishing`
     `kotlinx-serialization`
-    `kord-sampled-multiplatform-module`
 }
 
 kotlin {
