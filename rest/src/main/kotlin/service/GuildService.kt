@@ -534,40 +534,40 @@ public suspend inline fun GuildService.modifyGuildWelcomeScreen(
 public suspend inline fun GuildService.createTextChannel(
     guildId: Snowflake,
     name: String,
-    builder: TextChannelCreateBuilder.() -> Unit
+    builder: ChannelCreateBuilder.() -> Unit
 ): DiscordChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val createBuilder = TextChannelCreateBuilder(name).apply(builder)
+    val createBuilder = ChannelCreateBuilder(name, ChannelType.GuildText).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
 public suspend inline fun GuildService.createNewsChannel(
     guildId: Snowflake,
     name: String,
-    builder: NewsChannelCreateBuilder.() -> Unit
+    builder: ChannelCreateBuilder.() -> Unit
 ): DiscordChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val createBuilder = NewsChannelCreateBuilder(name).apply(builder)
+    val createBuilder = ChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
 public suspend inline fun GuildService.createVoiceChannel(
     guildId: Snowflake,
     name: String,
-    builder: VoiceChannelCreateBuilder.() -> Unit
+    builder: ChannelCreateBuilder.() -> Unit
 ): DiscordChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val createBuilder = VoiceChannelCreateBuilder(name).apply(builder)
+    val createBuilder = ChannelCreateBuilder(name, ChannelType.GuildVoice).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
 public suspend inline fun GuildService.createCategory(
     guildId: Snowflake,
     name: String,
-    builder: CategoryCreateBuilder.() -> Unit
+    builder: ChannelCreateBuilder.() -> Unit
 ): DiscordChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val createBuilder = CategoryCreateBuilder(name).apply(builder)
+    val createBuilder = ChannelCreateBuilder(name, ChannelType.GuildCategory).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 

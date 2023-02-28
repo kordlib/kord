@@ -1,16 +1,14 @@
 package dev.kord.rest.builder.guild
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.DefaultMessageNotificationLevel
-import dev.kord.common.entity.ExplicitContentFilter
-import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.VerificationLevel
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
 import dev.kord.rest.Image
 import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.builder.channel.ChannelCreateBuilder
 import dev.kord.rest.builder.role.RoleCreateBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
 import dev.kord.rest.json.request.GuildCreateRequest
@@ -89,36 +87,36 @@ public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildC
     public inline fun textChannel(
         name: String,
         id: Snowflake = newUniqueSnowflake(),
-        builder: TextChannelCreateBuilder.() -> Unit
+        builder:    ChannelCreateBuilder.() -> Unit
     ): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(TextChannelCreateBuilder(name).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
+        channels.add(ChannelCreateBuilder(name, ChannelType.GuildText).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
         return id
     }
 
     public inline fun newsChannel(
         name: String,
         id: Snowflake = newUniqueSnowflake(),
-        builder: NewsChannelCreateBuilder.() -> Unit
+        builder: ChannelCreateBuilder.() -> Unit
     ): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(NewsChannelCreateBuilder(name).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
+        channels.add(ChannelCreateBuilder(name, ChannelType.GuildNews).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
         return id
     }
 
     public inline fun category(
         name: String,
         id: Snowflake = newUniqueSnowflake(),
-        builder: CategoryCreateBuilder.() -> Unit
+        builder: ChannelCreateBuilder.() -> Unit
     ): Snowflake {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
-        channels.add(CategoryCreateBuilder(name).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
+        channels.add(ChannelCreateBuilder(name, ChannelType.GuildCategory).apply(builder).toRequest().copy(id = OptionalSnowflake.Value(id)))
         return id
     }
 
