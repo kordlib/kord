@@ -1918,6 +1918,10 @@ public final class dev/kord/gateway/UserUpdate : dev/kord/gateway/DispatchEvent 
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/gateway/UtilsKt {
+	public static final fun error (Lmu/KLogger;Ljava/lang/Throwable;)V
+}
+
 public final class dev/kord/gateway/VoiceServerUpdate : dev/kord/gateway/DispatchEvent {
 	public fun <init> (Ldev/kord/common/entity/DiscordVoiceServerUpdateData;Ljava/lang/Integer;)V
 	public final fun component1 ()Ldev/kord/common/entity/DiscordVoiceServerUpdateData;
