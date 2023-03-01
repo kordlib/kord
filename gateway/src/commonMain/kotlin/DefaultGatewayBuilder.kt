@@ -1,6 +1,7 @@
 package dev.kord.gateway
 
 import dev.kord.common.KordConfiguration
+import dev.kord.common.http.HttpEngine
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.ratelimit.IdentifyRateLimiter

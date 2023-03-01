@@ -18,27 +18,21 @@ kotlin {
                 api(libs.bignum)
                 // Replacement for java.io
                 api(libs.ktor.utils)
+                api(libs.ktor.client.core)
 
                 compileOnly(projects.kspAnnotations)
                 // The plugin should add this automatically, but it doesn't
                 compileOnly(libs.kotlinx.atomicfu)
             }
         }
-
-        commonTest {
+        jvmMain {
             dependencies {
-                implementation(libs.bundles.test.common)
+                api(libs.ktor.client.cio)
             }
         }
-        jvmTest {
+        jsMain {
             dependencies {
-                runtimeOnly(libs.bundles.test.runtime)
-                implementation(libs.kotlin.test.junit5)
-            }
-        }
-        jsTest {
-            dependencies {
-                implementation(libs.bundles.test.js)
+                api(libs.ktor.client.js)
             }
         }
     }

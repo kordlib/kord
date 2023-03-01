@@ -3,7 +3,9 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
 object OptIns {
     const val time = "kotlin.time.ExperimentalTime"
     const val contracts = "kotlin.contracts.ExperimentalContracts"
+    const val coroutines = "kotlinx.coroutines.ExperimentalCoroutinesApi"
 
+    const val kordInternal = "dev.kord.common.annotation.KordInternal"
     const val kordPreview = "dev.kord.common.annotation.KordPreview"
     const val kordExperimental = "dev.kord.common.annotation.KordExperimental"
     const val kordVoice = "dev.kord.common.annotation.KordVoice"

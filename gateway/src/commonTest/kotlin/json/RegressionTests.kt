@@ -2,7 +2,6 @@ package json
 
 import dev.kord.gateway.Event
 import dev.kord.gateway.Reconnect
-import dev.kord.gateway.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName

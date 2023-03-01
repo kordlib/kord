@@ -25,7 +25,7 @@ kotlin {
 
         commonTest {
             dependencies {
-                implementation(libs.bundles.test.common)
+                implementation(projects.testKit)
                 implementation(libs.ktor.client.mock)
             }
         }
@@ -36,22 +36,10 @@ kotlin {
             }
         }
 
-        jsTest {
-            dependencies {
-                implementation(libs.bundles.test.js)
-            }
-        }
 
         jvmMain {
             dependencies {
                 api(libs.ktor.client.cio)
-            }
-        }
-
-        jvmTest {
-            dependencies {
-                runtimeOnly(libs.bundles.test.runtime)
-                implementation(libs.kotlin.test.junit5)
             }
         }
     }

@@ -164,6 +164,13 @@ public final class dev/kord/common/LocaleKt {
 	public static final fun getKLocale (Ljava/util/Locale;)Ldev/kord/common/Locale;
 }
 
+public final class dev/kord/common/Platform {
+	public static final field INSTANCE Ldev/kord/common/Platform;
+	public final fun getIS_BROWSER ()Z
+	public final fun getIS_JVM ()Z
+	public final fun getIS_NODE ()Z
+}
+
 public abstract interface annotation class dev/kord/common/annotation/DeprecatedSinceKord : java/lang/annotation/Annotation {
 	public abstract fun version ()Ljava/lang/String;
 }
@@ -172,6 +179,9 @@ public abstract interface annotation class dev/kord/common/annotation/KordDsl : 
 }
 
 public abstract interface annotation class dev/kord/common/annotation/KordExperimental : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class dev/kord/common/annotation/KordInternal : java/lang/annotation/Annotation {
 }
 
 public abstract interface annotation class dev/kord/common/annotation/KordPreview : java/lang/annotation/Annotation {
@@ -8502,6 +8512,11 @@ public abstract class dev/kord/common/exception/RequestException : java/lang/Exc
 	public fun <init> (Ljava/lang/String;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/Throwable;)V
 	public fun <init> (Ljava/lang/Throwable;)V
+}
+
+public final class dev/kord/common/http/HttpEngine : io/ktor/client/engine/HttpClientEngineFactory {
+	public static final field INSTANCE Ldev/kord/common/http/HttpEngine;
+	public fun create (Lkotlin/jvm/functions/Function1;)Lio/ktor/client/engine/HttpClientEngine;
 }
 
 public abstract class dev/kord/common/ratelimit/AbstractIntervalRateLimiter : dev/kord/common/ratelimit/IntervalRateLimiter {

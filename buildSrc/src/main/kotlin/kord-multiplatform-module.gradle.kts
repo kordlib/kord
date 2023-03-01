@@ -35,8 +35,9 @@ kotlin {
         all {
             languageSettings {
                 if ("Test" in name) {
-                    optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
+                    optIn(OptIns.coroutines)
                 }
+                optIn(OptIns.kordInternal)
                 listOf(
                     OptIns.time,
                     OptIns.contracts,
@@ -54,6 +55,15 @@ kotlin {
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+        }
+
+        targets.forEach {
+            val safeName = if(it.name == "metadata") "common" else it.name
+            findByName("${safeName}Test")?.apply {
+                dependencies {
+                    implementation(project(":test-kit"))
+                }
+            }
         }
     }
 }

@@ -1,8 +1,8 @@
 package dev.kord.common.annotation
 
+import kotlin.RequiresOptIn.Level.ERROR
 import kotlin.RequiresOptIn.Level.WARNING
 import kotlin.annotation.AnnotationRetention.BINARY
-import kotlin.annotation.AnnotationRetention.RUNTIME
 import kotlin.annotation.AnnotationTarget.*
 
 /** [DslMarker] for Kord DSLs. */
@@ -80,3 +80,12 @@ public annotation class KordUnsafe
 @Retention(BINARY)
 @Target(CLASS, ANNOTATION_CLASS, PROPERTY, CONSTRUCTOR, FUNCTION, PROPERTY_GETTER, PROPERTY_SETTER, TYPEALIAS)
 public annotation class DeprecatedSinceKord(val version: String)
+
+/**
+ * Marks an API for internal use only.
+ */
+@MustBeDocumented
+@RequiresOptIn("This Api is intended for internal use only", level = ERROR)
+@Retention(BINARY)
+@Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
+public annotation class KordInternal

@@ -1,7 +1,7 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.rest.request.HttpEngine
+import dev.kord.common.http.HttpEngine
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*

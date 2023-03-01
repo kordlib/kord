@@ -2,8 +2,11 @@ plugins {
     org.jetbrains.dokka // for dokkaHtmlMultiModule task
 }
 
-repositories {
-    mavenCentral()
+allprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
 }
 
 group = Library.group
