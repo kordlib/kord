@@ -196,8 +196,10 @@ public abstract class dev/kord/rest/builder/automoderation/AutoModerationRuleMod
 
 public final class dev/kord/rest/builder/automoderation/BlockMessageAutoModerationActionBuilder : dev/kord/rest/builder/automoderation/AutoModerationActionBuilder {
 	public fun <init> ()V
+	public final fun getCustomMessage ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/AutoModerationActionType$BlockMessage;
 	public synthetic fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
+	public final fun setCustomMessage (Ljava/lang/String;)V
 }
 
 public abstract interface class dev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder, dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
