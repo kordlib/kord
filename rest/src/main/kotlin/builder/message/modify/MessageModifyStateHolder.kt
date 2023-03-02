@@ -1,9 +1,7 @@
 package dev.kord.rest.builder.message.modify
 
 import dev.kord.common.entity.DiscordAttachment
-import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
@@ -21,13 +19,9 @@ internal class MessageModifyStateHolder {
 
     var embeds: Optional<MutableList<EmbedBuilder>> = Optional.Missing()
 
-    var flags: Optional<MessageFlags?> = Optional.Missing()
-
     var allowedMentions: Optional<AllowedMentionsBuilder> = Optional.Missing()
 
     var attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing()
 
     var components: Optional<MutableList<MessageComponentBuilder>> = Optional.Missing()
-
-    var suppressEmbeds: OptionalBoolean = OptionalBoolean.Missing
 }
