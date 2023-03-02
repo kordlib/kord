@@ -11,6 +11,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.builder.channel.CategoryModifyBuilder
+import dev.kord.rest.builder.channel.ChannelCreateBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.createNewsChannel
 import dev.kord.rest.service.createTextChannel
@@ -135,7 +136,7 @@ public suspend fun CategoryBehavior.edit(builder: CategoryModifyBuilder.() -> Un
  */
 public suspend inline fun CategoryBehavior.createTextChannel(
     name: String,
-    builder: TextChannelCreateBuilder.() -> Unit = {}
+    builder: ChannelCreateBuilder.() -> Unit = {}
 ): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -159,7 +160,7 @@ public suspend inline fun CategoryBehavior.createTextChannel(
  */
 public suspend inline fun CategoryBehavior.createVoiceChannel(
     name: String,
-    builder: VoiceChannelCreateBuilder.() -> Unit = {}
+    builder: ChannelCreateBuilder.() -> Unit = {}
 ): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -182,7 +183,7 @@ public suspend inline fun CategoryBehavior.createVoiceChannel(
  */
 public suspend inline fun CategoryBehavior.createNewsChannel(
     name: String,
-    builder: NewsChannelCreateBuilder.() -> Unit = {}
+    builder: ChannelCreateBuilder.() -> Unit = {}
 ): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

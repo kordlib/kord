@@ -547,7 +547,7 @@ public suspend inline fun GuildService.createNewsChannel(
     builder: ChannelCreateBuilder.() -> Unit
 ): DiscordChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val createBuilder = ChannelCreateBuilder(name).apply(builder)
+    val createBuilder = ChannelCreateBuilder(name, ChannelType.GuildNews).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 

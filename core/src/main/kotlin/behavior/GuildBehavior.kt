@@ -745,7 +745,7 @@ public suspend inline fun GuildBehavior.createEmoji(
 
 public suspend inline fun GuildBehavior.createTextChannel(
     name: String,
-    builder: TextChannelCreateBuilder.() -> Unit = {}
+    builder: ChannelCreateBuilder.() -> Unit = {}
 ): TextChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -765,7 +765,7 @@ public suspend inline fun GuildBehavior.createTextChannel(
  */
 public suspend inline fun GuildBehavior.createVoiceChannel(
     name: String,
-    builder: VoiceChannelCreateBuilder.() -> Unit = {}
+    builder: ChannelCreateBuilder.() -> Unit = {}
 ): VoiceChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -785,7 +785,7 @@ public suspend inline fun GuildBehavior.createVoiceChannel(
  */
 public suspend inline fun GuildBehavior.createNewsChannel(
     name: String,
-    builder: NewsChannelCreateBuilder.() -> Unit = {}
+    builder: ChannelCreateBuilder.() -> Unit = {}
 ): NewsChannel {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -806,7 +806,7 @@ public suspend inline fun GuildBehavior.createNewsChannel(
  */
 public suspend inline fun GuildBehavior.createCategory(
     name: String,
-    builder: CategoryCreateBuilder.() -> Unit = {}
+    builder: ChannelCreateBuilder.() -> Unit = {}
 ): Category {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
