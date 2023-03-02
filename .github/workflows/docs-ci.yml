@@ -40,15 +40,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: build/dokka/htmlMultiModule
-  deploy:
-    name: Deploy docs
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy docs to GitHub Pages
+          # Upload entire repository
+          path: 'build/dokka/htmlMultiModule'
+      - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
