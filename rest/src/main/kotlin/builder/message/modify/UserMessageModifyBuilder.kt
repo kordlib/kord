@@ -30,7 +30,7 @@ public class UserMessageModifyBuilder
 
     override var embeds: MutableList<EmbedBuilder>? by state::embeds.delegate()
 
-    override val flags: MessageFlags? by state::flags.delegate()
+    override var flags: MessageFlags? by state::flags.delegate()
     override var suppressEmbeds: Boolean? by state::suppressEmbeds.delegate()
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()

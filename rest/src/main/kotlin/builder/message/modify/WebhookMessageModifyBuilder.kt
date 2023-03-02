@@ -32,7 +32,7 @@ public class WebhookMessageModifyBuilder :
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
-    override val flags: MessageFlags? = null
+    override var flags: MessageFlags? = null
     override var suppressEmbeds: Boolean? = null
 
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()

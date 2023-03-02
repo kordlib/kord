@@ -43,7 +43,7 @@ public sealed interface MessageModifyBuilder {
      *
      * @see suppressEmbeds
      */
-    public val flags: MessageFlags?
+    public var flags: MessageFlags?
 
     /**
      * Do not include any embeds when serializing this message.

@@ -32,7 +32,7 @@ public class FollowupMessageModifyBuilder :
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
-    override val flags: MessageFlags? by state::flags.delegate()
+    override var flags: MessageFlags? by state::flags.delegate()
     override var suppressEmbeds: Boolean? by state::suppressEmbeds.delegate()
 
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
