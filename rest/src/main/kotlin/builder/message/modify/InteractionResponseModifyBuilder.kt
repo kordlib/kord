@@ -44,7 +44,7 @@ public class InteractionResponseModifyBuilder : MessageModifyBuilder,
                 allowedMentions = state.allowedMentions.map { it.build() },
                 components = state.components.mapList { it.build() },
                 attachments = state.attachments,
-                flags = buildMessageFlags(flags, suppressEmbeds = suppressEmbeds)
+                flags = buildMessageFlags(flags, suppressEmbeds)
             ), state.files
         )
     }

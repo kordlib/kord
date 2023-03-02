@@ -112,7 +112,7 @@ public sealed interface MessageCreateBuilder {
 
 internal fun buildMessageFlags(
     base: MessageFlags?,
-    suppressEmbeds: Boolean? = null,
+    suppressEmbeds: Boolean?,
     suppressNotifications: Boolean? = null,
     ephemeral: Boolean? = null
 ): Optional<MessageFlags> {
@@ -124,18 +124,18 @@ internal fun buildMessageFlags(
         }
     }
 
+    if (base == null && suppressEmbeds == null && suppressNotifications == null && ephemeral == null) {
+        return Optional.Missing()
+    }
+
     val flags = MessageFlags {
+        if (base != null) +base
         add(suppressEmbeds, MessageFlag.SuppressEmbeds)
         add(suppressNotifications, MessageFlag.SuppressNotifications)
         add(ephemeral, MessageFlag.Ephemeral)
-    }.takeIf { it.code > 0 }
-
-    val allFlags = listOfNotNull(base, flags)
-    return if (allFlags.isEmpty()) {
-        Optional.Missing()
-    } else {
-        Optional(MessageFlags(allFlags))
     }
+
+    return Optional.Value(flags)
 }
 
 /**

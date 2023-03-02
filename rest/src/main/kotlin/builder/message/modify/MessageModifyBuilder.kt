@@ -122,7 +122,7 @@ public inline fun MessageModifyBuilder.actionRow(builder: ActionRowBuilder.() ->
  *
  * **Only supports [MessageFlag.SuppressEmbeds]**
  */
-public inline fun MessageCreateBuilder.messageFlags(builder: MessageFlags.Builder.() -> Unit) {
+public inline fun MessageModifyBuilder.messageFlags(builder: MessageFlags.Builder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
