@@ -14,6 +14,9 @@ import kotlin.text.String
 
 private val globalVoiceSocketLogger = KotlinLogging.logger { }
 
+private const val REQUEST: Short = 0x01
+private const val RESPONSE: Short = 0x02
+
 /**
  * A global [VoiceUdpSocket] for all [dev.kord.voice.VoiceConnection]s, unless specified otherwise.
  * Initiated once and kept open for the lifetime of this process.
@@ -28,6 +31,8 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
 
     private val socket = aSocket(ActorSelectorManager(socketScope.coroutineContext)).udp().bind()
 
+    private val EMPTY_DATA = ByteArray(66)
+
     init {
         socket.incoming
             .consumeAsFlow()
@@ -40,12 +45,16 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
         globalVoiceSocketLogger.trace { "discovering ip" }
 
         send(packet(address) {
+            writeShort(REQUEST)
+            writeShort(70) // the length of the rest of the message
             writeInt(ssrc)
-            writeFully(ByteArray(66))
+            writeFully(EMPTY_DATA)
         })
 
         return with(receiveFrom(address).packet) {
-            discard(4)
+            require(readShort() == RESPONSE) { "did not receive a response." }
+            discardExact(6) // length (2) + ssrc (4)
+
             val ip = String(readBytes(64)).trimEnd(0.toChar())
             val port = readUShort().toInt()
 
