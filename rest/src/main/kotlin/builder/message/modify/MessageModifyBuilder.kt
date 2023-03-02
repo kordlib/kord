@@ -39,7 +39,7 @@ public sealed interface MessageModifyBuilder {
     public var attachments: MutableList<DiscordAttachment>?
 
     /**
-     * Optional custom [MessageFlags] to add to the message created.
+     * Optional custom [MessageFlags] to update in this message.
      *
      * @see suppressEmbeds
      */
