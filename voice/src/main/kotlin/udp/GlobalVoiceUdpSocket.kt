@@ -14,6 +14,9 @@ import kotlin.text.String
 
 private val globalVoiceSocketLogger = KotlinLogging.logger { }
 
+private const val MESSAGE_LENGTH: Short = 70
+private const val DISCOVERY_DATA_SIZE: Int = 66
+
 private const val REQUEST: Short = 0x01
 private const val RESPONSE: Short = 0x02
 
@@ -31,7 +34,7 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
 
     private val socket = aSocket(ActorSelectorManager(socketScope.coroutineContext)).udp().bind()
 
-    private val EMPTY_DATA = ByteArray(66)
+    private val EMPTY_DATA = ByteArray(DISCOVERY_DATA_SIZE)
 
     init {
         socket.incoming
@@ -46,14 +49,15 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
 
         send(packet(address) {
             writeShort(REQUEST)
-            writeShort(70) // the length of the rest of the message
+            writeShort(MESSAGE_LENGTH)
             writeInt(ssrc)
             writeFully(EMPTY_DATA)
         })
 
         return with(receiveFrom(address).packet) {
             require(readShort() == RESPONSE) { "did not receive a response." }
-            discardExact(6) // length (2) + ssrc (4)
+            require(readShort() == MESSAGE_LENGTH) { "expected $MESSAGE_LENGTH bytes of data."}
+            discardExact(4) // ssrc
 
             val ip = String(readBytes(64)).trimEnd(0.toChar())
             val port = readUShort().toInt()
