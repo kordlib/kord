@@ -28,6 +28,7 @@ public class AuditLogService(requestHandler: RequestHandler) : RestService(reque
         request.userId?.let { parameter("user_id", it) }
         request.action?.let { parameter("action_type", "${it.value}") }
         request.before?.let { parameter("before", it) }
+        request.after?.let { parameter("after", it) }
         request.limit?.let { parameter("limit", it) }
     }
 }

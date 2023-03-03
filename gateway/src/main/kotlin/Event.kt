@@ -182,6 +182,13 @@ public sealed class Event {
                         DiscordTyping.serializer()
                     ), sequence
                 )
+                "GUILD_AUDIT_LOG_ENTRY_CREATE" -> GuildAuditLogEntryCreate(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordAuditLogEntry.serializer()
+                    ), sequence
+                )
                 "GUILD_CREATE" -> GuildCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -225,6 +232,27 @@ public sealed class Event {
                     ), sequence
                 )
                 "GUILD_INTEGRATIONS_UPDATE" -> GuildIntegrationsUpdate(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordGuildIntegrations.serializer()
+                    ), sequence
+                )
+                "INTEGRATION_CREATE" -> IntegrationCreate(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordGuildIntegrations.serializer()
+                    ), sequence
+                )
+                "INTEGRATION_DELETE" -> IntegrationDelete(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordGuildIntegrationsDeleted.serializer()
+                    ), sequence
+                )
+                "INTEGRATION_UPDATE" -> IntegrationUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
@@ -649,6 +677,7 @@ public data class ChannelDelete(val channel: DiscordChannel, override val sequen
 public data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
 public data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
+public data class GuildAuditLogEntryCreate(val entry: DiscordAuditLogEntry, override val sequence: Int?): DispatchEvent()
 public data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
@@ -656,6 +685,12 @@ public data class GuildBanAdd(val ban: DiscordGuildBan, override val sequence: I
 public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
 public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
 public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
+    DispatchEvent()
+public data class IntegrationDelete(val integration: DiscordGuildIntegrationsDeleted, override val sequence: Int?) :
+    DispatchEvent()
+public data class IntegrationCreate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
+    DispatchEvent()
+public data class IntegrationUpdate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
 
 public data class GuildMemberAdd(val member: DiscordAddedGuildMember, override val sequence: Int?) : DispatchEvent()

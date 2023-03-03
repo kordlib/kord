@@ -415,6 +415,13 @@ public data class DiscordGuildIntegrations(
 )
 
 @Serializable
+public data class DiscordGuildIntegrationsDeleted(
+    val id: Snowflake,
+    @SerialName("guild_id") val guildId: Snowflake,
+    @SerialName("application_id") val applicationId: Snowflake?
+)
+
+@Serializable
 public data class DiscordIntegrationAccount(
     val id: String,
     val name: String,

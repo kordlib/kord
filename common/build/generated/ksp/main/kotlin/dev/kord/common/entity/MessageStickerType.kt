@@ -57,6 +57,8 @@ public sealed class MessageStickerType(
 
     public object LOTTIE : MessageStickerType(3)
 
+    public object GIF : MessageStickerType(4)
+
     internal object Serializer : KSerializer<MessageStickerType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MessageStickerType",
@@ -69,6 +71,7 @@ public sealed class MessageStickerType(
             1 -> PNG
             2 -> APNG
             3 -> LOTTIE
+            4 -> GIF
             else -> Unknown(value)
         }
     }
@@ -82,6 +85,7 @@ public sealed class MessageStickerType(
                 PNG,
                 APNG,
                 LOTTIE,
+                GIF,
             )
         }
 
