@@ -1,9 +1,6 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.InteractionType
-import dev.kord.common.entity.MessageFlags
-import dev.kord.common.entity.MessageType
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
@@ -287,6 +284,11 @@ public class Message(
      * Returns null if this message was not send using a webhook.
      */
     public val webhookId: Snowflake? get() = data.webhookId.value
+
+    /**
+     * The [RoleSubscription] data that triggered this message.
+     */
+    public val roleSubscriptionData: RoleSubscription? get() = data.roleSubscriptionData.value
 
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>

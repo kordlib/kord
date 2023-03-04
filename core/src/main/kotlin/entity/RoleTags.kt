@@ -34,6 +34,16 @@ public class RoleTags(
     public val isPremiumRole: Boolean get() = data.premiumSubscriber
 
     /**
+     * The ID of this role's subscription sku and listing.
+     */
+    public val subscriptionListingId: Snowflake? get() = data.subscriptionListingId.value
+
+    /**
+     * Whether this role is avaialble for purchase.
+     */
+    public val isAvailableForPurchase: Boolean get() = data.availableForPurchase
+
+    /**
      * The guild behavior this tag belongs to.
      */
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
