@@ -37,7 +37,7 @@ public data class MessageData(
     val referencedMessage: Optional<MessageData?> = Optional.Missing(),
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
     val components: Optional<List<ComponentData>> = Optional.Missing(),
-    val roleSubscriptionData: Optional<RoleSubscription?> = Optional.Missing(),
+    val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
 ) {
 
     public fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {

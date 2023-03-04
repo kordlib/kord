@@ -87,7 +87,7 @@
                     "receives community updates.",
         ),
         Entry(
-            "CreatorMonetizableProvision", stringValue = "CREATOR_MONETIZABLE_PROVISIONAL",
+            "CreatorMonetizableProvisional", stringValue = "CREATOR_MONETIZABLE_PROVISIONAL",
             kDoc = "Guild has enabled monetization."
         ),
         Entry(
@@ -115,7 +115,6 @@
             "MemberVerificationGateEnabled", stringValue = "MEMBER_VERIFICATION_GATE_ENABLED",
             kDoc = "Guild has enabled Membership Screening.",
         ),
-        Entry("MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization."),
         Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
         Entry("News", stringValue = "NEWS", kDoc = "Guild has access to create announcement channels."),
         Entry("Partnered", stringValue = "PARTNERED", kDoc = "Guild is partnered."),
@@ -154,6 +153,14 @@
                     "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
                     " for more information.",
             deprecationLevel = HIDDEN,
+        ),
+        Entry(
+            "MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization.",
+            deprecationMessage = "Replaced by CreatorMonetizableProvisional.", deprecationLevel = WARNING,
+            replaceWith = ReplaceWith(
+                "GuildFeature.CreatorMonetizableProvisional",
+                imports = ["dev.kord.common.entitiy.GuildFeature"],
+            ),
         ),
         Entry(
             "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
@@ -390,16 +397,16 @@ public enum class SystemChannelFlag(public val code: Int) {
     /** Suppress server boost notifications. **/
     SuppressPremiumSubscriptions(1.shl(1)),
 
-    /** Suppress guild reminder notifications **/
+    /** Suppress server setup tips. **/
     SuppressGuildReminderNotifications(1.shl(2)),
 
-    /** Suppress join notification replies **/
+    /** Hide member join sticker reply buttons. **/
     SuppressJoinNotificationReplies(1.shl(3)),
 
-    /** Suppress role subscription notifications **/
+    /** Suppress role subscription purchase and renewal notifications. **/
     SuppressRoleSubscriptionPurchaseNotifications(1.shl(4)),
 
-    /** Suppress role subscription notification replies **/
+    /** Hide role subscription sticker reply buttons. **/
     SuppressRoleSubscriptionPurchaseNotificationReplies(1.shl(5)),
 }
 

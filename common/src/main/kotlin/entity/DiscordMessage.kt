@@ -228,7 +228,7 @@ public data class DiscordMessage(
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     @SerialName("role_subscription_data")
-    val roleSubscriptionData: Optional<RoleSubscription?> = Optional.Missing(),
+    val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
 
     /*
      * don't trust the docs:

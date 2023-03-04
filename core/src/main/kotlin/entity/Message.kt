@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.MessageType.RoleSubscriptionPurchase
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
@@ -285,9 +286,7 @@ public class Message(
      */
     public val webhookId: Snowflake? get() = data.webhookId.value
 
-    /**
-     * The [RoleSubscription] data that triggered this message.
-     */
+    /** The data of the [RoleSubscription] purchase or renewal that prompted this [RoleSubscriptionPurchase] message. */
     public val roleSubscriptionData: RoleSubscription? get() = data.roleSubscriptionData.value
 
     /** The [ActionRowComponent]s of this message. */
