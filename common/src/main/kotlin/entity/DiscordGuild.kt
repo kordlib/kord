@@ -397,7 +397,7 @@ public enum class SystemChannelFlag(public val code: Int) {
     /** Suppress server boost notifications. **/
     SuppressPremiumSubscriptions(1.shl(1)),
 
-    /** Suppress server setup tips. **/
+    /** Hide server setup tips. **/
     SuppressGuildReminderNotifications(1.shl(2)),
 
     /** Hide member join sticker reply buttons. **/
