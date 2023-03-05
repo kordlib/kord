@@ -6208,8 +6208,8 @@ public final class dev/kord/common/entity/GuildFeature$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/GuildFeature$CreatorMonetizableProvision : dev/kord/common/entity/GuildFeature {
-	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$CreatorMonetizableProvision;
+public final class dev/kord/common/entity/GuildFeature$CreatorMonetizableProvisional : dev/kord/common/entity/GuildFeature {
+	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$CreatorMonetizableProvisional;
 }
 
 public final class dev/kord/common/entity/GuildFeature$CreatorStorePage : dev/kord/common/entity/GuildFeature {

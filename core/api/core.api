@@ -6848,6 +6848,7 @@ public final class dev/kord/core/entity/RoleTags : dev/kord/core/KordObject, dev
 	public final fun getSubscriptionListingId ()Ldev/kord/common/entity/Snowflake;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun isAvailableForPurchase ()Z
+	public final fun isLinkedRole ()Z
 	public final fun isPremiumRole ()Z
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }

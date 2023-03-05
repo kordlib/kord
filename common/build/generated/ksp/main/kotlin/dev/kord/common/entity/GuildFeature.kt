@@ -10,6 +10,7 @@ import kotlin.Deprecated
 import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -84,7 +85,7 @@ public sealed class GuildFeature(
     /**
      * Guild has enabled monetization.
      */
-    public object CreatorMonetizableProvision : GuildFeature("CREATOR_MONETIZABLE_PROVISIONAL")
+    public object CreatorMonetizableProvisional : GuildFeature("CREATOR_MONETIZABLE_PROVISIONAL")
 
     /**
      * Guild has enabled the role subscription promo page.
@@ -120,11 +121,6 @@ public sealed class GuildFeature(
      * Guild has enabled Membership Screening.
      */
     public object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
-
-    /**
-     * Guild has enabled monetization.
-     */
-    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
 
     /**
      * Guild has increased custom sticker slots.
@@ -200,6 +196,16 @@ public sealed class GuildFeature(
     public object Commerce : GuildFeature("COMMERCE")
 
     /**
+     * Guild has enabled monetization.
+     */
+    @Deprecated(
+        message = "Replaced by CreatorMonetizableProvisional.",
+        replaceWith = ReplaceWith(expression = "GuildFeature.CreatorMonetizableProvisional", imports
+                    = arrayOf("dev.kord.common.entitiy.GuildFeature")),
+    )
+    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
+
+    /**
      * Guild has access to create private threads
      */
     @Deprecated(message = "Creating a private thread no longer requires the server to be boosted.")
@@ -244,7 +250,7 @@ public sealed class GuildFeature(
             "BANNER" -> Banner
             "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "COMMUNITY" -> Community
-            "CREATOR_MONETIZABLE_PROVISIONAL" -> CreatorMonetizableProvision
+            "CREATOR_MONETIZABLE_PROVISIONAL" -> CreatorMonetizableProvisional
             "CREATOR_STORE_PAGE" -> CreatorStorePage
             "DEVELOPER_SUPPORT_SERVER" -> DeveloperSupportServer
             "DISCOVERABLE" -> Discoverable
@@ -252,7 +258,7 @@ public sealed class GuildFeature(
             "INVITES_DISABLED" -> InvitesDisabled
             "INVITE_SPLASH" -> InviteSplash
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
-            "MONETIZATION_ENABLED" -> MonetizationEnabled
+            "MONETIZATION_ENABLED" -> @Suppress("DEPRECATION") MonetizationEnabled
             "MORE_STICKERS" -> MoreStickers
             "NEWS" -> News
             "PARTNERED" -> Partnered
@@ -285,7 +291,7 @@ public sealed class GuildFeature(
                 Banner,
                 @Suppress("DEPRECATION_ERROR") Commerce,
                 Community,
-                CreatorMonetizableProvision,
+                CreatorMonetizableProvisional,
                 CreatorStorePage,
                 DeveloperSupportServer,
                 Discoverable,
@@ -293,7 +299,7 @@ public sealed class GuildFeature(
                 InvitesDisabled,
                 InviteSplash,
                 MemberVerificationGateEnabled,
-                MonetizationEnabled,
+                @Suppress("DEPRECATION") MonetizationEnabled,
                 MoreStickers,
                 News,
                 Partnered,

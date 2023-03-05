@@ -24,12 +24,12 @@ public class RoleTags(
     public val botId: Snowflake? get() = data.botId.value
 
     /**
-     * The ID of the of the [Integration] this role belongs to.
+     * The ID of the [Integration] this role belongs to.
      */
     public val integrationId: Snowflake? get() = data.integrationId.value
 
     /**
-     * Whether this is the guild's premium subscriber role.
+     * Whether this is the guild's Booster role.
      */
     public val isPremiumRole: Boolean get() = data.premiumSubscriber
 
@@ -39,9 +39,12 @@ public class RoleTags(
     public val subscriptionListingId: Snowflake? get() = data.subscriptionListingId.value
 
     /**
-     * Whether this role is avaialble for purchase.
+     * Whether this role is available for purchase.
      */
     public val isAvailableForPurchase: Boolean get() = data.availableForPurchase
+
+    /** Whether this role is a guild's linked role. */
+    public val isLinkedRole: Boolean get() = data.guildConnections
 
     /**
      * The guild behavior this tag belongs to.

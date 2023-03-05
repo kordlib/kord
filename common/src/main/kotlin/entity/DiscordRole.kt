@@ -25,6 +25,7 @@ public data class DiscordRole(
 
 @Serializable
 public data class DiscordRoleTags(
+    @SerialName("bot_id")
     val botId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("integration_id")
     val integrationId: OptionalSnowflake = OptionalSnowflake.Missing,
