@@ -13,19 +13,20 @@ import kotlin.math.max
 import kotlin.math.min
 
 private const val SAFE_LENGTH = 19
-private const val WIDTH = Byte.SIZE_BITS
+private const val WIDTH = Long.SIZE_BITS
 
 @Suppress("FunctionName")
-public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet(0)
+public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet()
 
 @Serializable(with = DiscordBitSetSerializer::class)
-public class DiscordBitSet(internal var data: LongArray) {
+public class DiscordBitSet(internal var data: LongArray) { // data is in little-endian order
 
     public val isEmpty: Boolean
         get() = data.all { it == 0L }
 
     public val value: String
         get() {
+            // need to convert from little-endian data to big-endian expected by BigInteger
             val buffer = ByteBuffer.allocate(data.size * Long.SIZE_BYTES)
             buffer.asLongBuffer().put(data.reversedArray())
             return BigInteger(buffer.array()).toString()
@@ -35,53 +36,64 @@ public class DiscordBitSet(internal var data: LongArray) {
         get() = data.size * WIDTH
 
     public val binary: String
-        get() = data.joinToString("") { it.toULong().toString(2) }.reversed().padEnd(8, '0')
+        get() = data.map { it.toULong().toString(radix = 2).padStart(length = ULong.SIZE_BITS, '0') }
+            .reversed()
+            .joinToString(separator = "")
+            .trimStart('0')
+            .ifEmpty { "0" }
 
     override fun equals(other: Any?): Boolean {
         if (other !is DiscordBitSet) return false
-        for (i in 0 until max(data.size, other.data.size)) {
-            if (getOrZero(i) != getOrZero(i)) return false
+        // trailing zeros are ignored -> getOrZero
+        for (i in 0 until max(this.data.size, other.data.size)) {
+            if (this.getOrZero(i) != other.getOrZero(i)) return false
         }
         return true
+    }
+
+    override fun hashCode(): Int {
+        var result = 1
+        // trailing zeros are ignored to have the same hashCode for equal bit sets
+        for (i in 0..(data.indexOfLast { it != 0L })) {
+            result = (31 * result) + data[i].hashCode()
+        }
+        return result
     }
 
     private fun getOrZero(i: Int) = data.getOrNull(i) ?: 0L
 
     public operator fun get(index: Int): Boolean {
-        if (index !in 0 until size) return false
+        require(index >= 0)
+        if (index >= size) return false
         val indexOfWidth = index / WIDTH
         val bitIndex = index % WIDTH
         return data[indexOfWidth] and (1L shl bitIndex) != 0L
     }
 
     public operator fun contains(other: DiscordBitSet): Boolean {
-        if (other.size > size) return false
-        for (i in other.data.indices) {
-            if (data[i] and other.data[i] != other.data[i]) return false
+        for ((index, value) in other.data.withIndex()) {
+            if ((this.getOrZero(index) and value) != value) return false
         }
         return true
     }
 
     public operator fun set(index: Int, value: Boolean) {
-        if (index !in 0 until size) data.copyOf((63 + index) / WIDTH)
+        require(index >= 0)
         val indexOfWidth = index / WIDTH
+        if (index >= size) data = data.copyOf(indexOfWidth + 1)
         val bitIndex = index % WIDTH
-        val bit = if (value) 1L else 0L
-        data[index] = data[indexOfWidth] or (bit shl bitIndex)
+        val prev = data[indexOfWidth]
+        data[indexOfWidth] = if (value) prev or (1L shl bitIndex) else prev and (1L shl bitIndex).inv()
     }
 
     public operator fun plus(another: DiscordBitSet): DiscordBitSet {
-        val dist = LongArray(data.size)
-        data.copyInto(dist)
-        val copy = DiscordBitSet(dist)
+        val copy = DiscordBitSet(data.copyOf())
         copy.add(another)
         return copy
     }
 
     public operator fun minus(another: DiscordBitSet): DiscordBitSet {
-        val dist = LongArray(data.size)
-        data.copyInto(dist)
-        val copy = DiscordBitSet(dist)
+        val copy = DiscordBitSet(data.copyOf())
         copy.remove(another)
         return copy
     }
@@ -100,11 +112,6 @@ public class DiscordBitSet(internal var data: LongArray) {
         }
     }
 
-    override fun hashCode(): Int {
-        var result = data.contentHashCode()
-        result = 31 * result + size
-        return result
-    }
 
     override fun toString(): String {
         return "DiscordBitSet($binary)"

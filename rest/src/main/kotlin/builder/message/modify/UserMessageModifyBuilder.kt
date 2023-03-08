@@ -11,6 +11,7 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
+import dev.kord.rest.builder.message.create.buildMessageFlags
 import dev.kord.rest.json.request.MessageEditPatchRequest
 import dev.kord.rest.json.request.MultipartMessagePatchRequest
 
@@ -29,7 +30,8 @@ public class UserMessageModifyBuilder
 
     override var embeds: MutableList<EmbedBuilder>? by state::embeds.delegate()
 
-    public var flags: MessageFlags? by state::flags.delegate()
+    override var flags: MessageFlags? = null
+    override var suppressEmbeds: Boolean? = null
 
     override var allowedMentions: AllowedMentionsBuilder? by state::allowedMentions.delegate()
 
@@ -40,10 +42,10 @@ public class UserMessageModifyBuilder
         MessageEditPatchRequest(
             content = state.content,
             embeds = state.embeds.mapList { it.toRequest() },
-            flags = state.flags,
+            flags = buildMessageFlags(flags, suppressEmbeds),
             allowedMentions = state.allowedMentions.map { it.build() },
             components = state.components.mapList { it.build() },
-            attachments = state.attachments
+            attachments = state.attachments,
         ),
         state.files,
     )

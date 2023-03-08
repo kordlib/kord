@@ -87,6 +87,14 @@
                     "receives community updates.",
         ),
         Entry(
+            "CreatorMonetizableProvisional", stringValue = "CREATOR_MONETIZABLE_PROVISIONAL",
+            kDoc = "Guild has enabled monetization."
+        ),
+        Entry(
+            "CreatorStorePage", stringValue = "CREATOR_STORE_PAGE",
+            kDoc = "Guild has enabled the role subscription promo page."
+        ),
+        Entry(
             "DeveloperSupportServer", stringValue = "DEVELOPER_SUPPORT_SERVER",
             kDoc = "Guild has been set as a support server on the App Directory.",
         ),
@@ -107,7 +115,6 @@
             "MemberVerificationGateEnabled", stringValue = "MEMBER_VERIFICATION_GATE_ENABLED",
             kDoc = "Guild has enabled Membership Screening.",
         ),
-        Entry("MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization."),
         Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
         Entry("News", stringValue = "NEWS", kDoc = "Guild has access to create announcement channels."),
         Entry("Partnered", stringValue = "PARTNERED", kDoc = "Guild is partnered."),
@@ -116,6 +123,12 @@
             kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
         ),
         Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
+        Entry("RoleSubscriptionsAvailableForPurchase", stringValue = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+            kDoc = "Guild has role subscriptions that can be purchased."
+        ),
+        Entry("RoleSubscriptionsEnabled", stringValue = "ROLE_SUBSCRIPTIONS_ENABLED",
+            kDoc = "Guild has enabled role subscriptions."
+        ),
         Entry(
             "TicketedEventsEnabled", stringValue = "TICKETED_EVENTS_ENABLED",
             kDoc = "Guild has enabled ticketed events.",
@@ -140,6 +153,14 @@
                     "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
                     " for more information.",
             deprecationLevel = HIDDEN,
+        ),
+        Entry(
+            "MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization.",
+            deprecationMessage = "Replaced by CreatorMonetizableProvisional.", deprecationLevel = WARNING,
+            replaceWith = ReplaceWith(
+                "GuildFeature.CreatorMonetizableProvisional",
+                imports = ["dev.kord.common.entitiy.GuildFeature"],
+            ),
         ),
         Entry(
             "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
@@ -374,7 +395,19 @@ public enum class SystemChannelFlag(public val code: Int) {
     SuppressJoinNotifications(1.shl(0)),
 
     /** Suppress server boost notifications. **/
-    SuppressPremiumSubscriptions(1.shl(1))
+    SuppressPremiumSubscriptions(1.shl(1)),
+
+    /** Hide server setup tips. **/
+    SuppressGuildReminderNotifications(1.shl(2)),
+
+    /** Hide member join sticker reply buttons. **/
+    SuppressJoinNotificationReplies(1.shl(3)),
+
+    /** Suppress role subscription purchase and renewal notifications. **/
+    SuppressRoleSubscriptionPurchaseNotifications(1.shl(4)),
+
+    /** Hide role subscription sticker reply buttons. **/
+    SuppressRoleSubscriptionPurchaseNotificationReplies(1.shl(5)),
 }
 
 @Serializable

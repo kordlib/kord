@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ChannelType.GuildForum
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.NamedFile
@@ -37,6 +38,10 @@ public class WebhookMessageCreateBuilder :
 
     override val files: MutableList<NamedFile> = mutableListOf()
 
+    override var flags: MessageFlags? = null
+    override var suppressEmbeds: Boolean? = null
+    override var suppressNotifications: Boolean? = null
+
     private var _threadName: Optional<String> = Optional.Missing()
 
     /** Name of the thread to create (requires the webhook channel to be a [GuildForum] channel). */
@@ -52,6 +57,7 @@ public class WebhookMessageCreateBuilder :
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
+                flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
                 threadName = _threadName,
             ),
             files

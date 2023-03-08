@@ -1,4 +1,4 @@
-# This workflow will build and push docs to GitHub Pages whenever something is pushed to 0.8.x
+# This workflow will build and deploy docs to GitHub Pages whenever something is pushed to 0.8.x
 
 name: Docs
 
@@ -8,9 +8,7 @@ on:
       - 0.8.x
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # Allow one concurrent deployment
 concurrency:
@@ -18,8 +16,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build docs
+  docs:
+    name: Build and deploy docs
     runs-on: ubuntu-latest
     env:
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
@@ -35,20 +33,11 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           arguments: --stacktrace --info dokkaHtmlMultiModule
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: build/dokka/htmlMultiModule
-  deploy:
-    name: Deploy docs
-    runs-on: ubuntu-latest
-    needs: build
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
       - name: Deploy docs to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build/dokka/htmlMultiModule
+          branch: gh-pages
+          git-config-name: GitHub Actions
+          git-config-email: actions@github.com
+          commit-message: Update docs

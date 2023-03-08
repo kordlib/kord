@@ -45,6 +45,9 @@ public class BlockMessageAutoModerationAction(
 
     override val type: BlockMessage get() = BlockMessage
 
+    /** Additional explanation that will be shown to members whenever their message is blocked. */
+    public val customMessage: String? get() = data.metadata.value?.customMessage?.value
+
     override fun toString(): String = "BlockMessageAutoModerationAction(data=$data)"
 }
 

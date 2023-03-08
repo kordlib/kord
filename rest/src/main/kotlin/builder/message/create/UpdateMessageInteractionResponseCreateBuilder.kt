@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.InteractionResponseType
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
@@ -30,6 +31,10 @@ public class UpdateMessageInteractionResponseCreateBuilder :
 
     override var components: MutableList<MessageComponentBuilder> = mutableListOf()
 
+    override var flags: MessageFlags? = null
+    override var suppressEmbeds: Boolean? = null
+    override var suppressNotifications: Boolean? = null
+
     override fun toRequest(): MultipartInteractionResponseCreateRequest {
         return MultipartInteractionResponseCreateRequest(
             InteractionResponseCreateRequest(
@@ -40,6 +45,7 @@ public class UpdateMessageInteractionResponseCreateBuilder :
                     allowedMentions = Optional(allowedMentions).map { it.build() },
                     components = Optional(components).mapList { it.build() },
                     tts = Optional(tts).coerceToMissing().toPrimitive(),
+                    flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications)
                 ).optional()
             ),
             Optional(files)

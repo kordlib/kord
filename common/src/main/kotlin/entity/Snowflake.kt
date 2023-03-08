@@ -13,21 +13,16 @@ import kotlin.time.Duration
 import kotlin.time.TimeMark
 
 /**
- * A unique identifier for entities [used by discord](https://discord.com/developers/docs/reference#snowflakes).
- * Snowflakes are IDs with a [timestamp], which makes them [comparable][Comparable] based on their timestamp.
+ * A unique identifier for entities [used by Discord](https://discord.com/developers/docs/reference#snowflakes).
  *
- * Note: this class has a natural ordering that is inconsistent with [equals],
- * since [compareTo] only compares the first 42 bits of the ULong [value] (comparing the timestamp),
- * whereas [equals] uses all bits of the ULong [value].
- * [compareTo] can return `0` even if [equals] returns `false`,
- * but [equals] only returns `true` if [compareTo] returns `0`.
+ * Snowflakes are IDs with a [timestamp], which makes them [comparable][compareTo] based on their timestamp.
  */
 @Serializable(with = Snowflake.Serializer::class)
 public class Snowflake : Comparable<Snowflake> {
 
     /**
-     * The raw value of this Snowflake as specified
-     * [here](https://discord.com/developers/docs/reference#snowflakes).
+     * The raw value of this Snowflake as specified by the
+     * [Discord Developer Documentation](https://discord.com/developers/docs/reference#snowflakes).
      */
     public val value: ULong
 
@@ -138,17 +133,22 @@ public class Snowflake : Comparable<Snowflake> {
     public operator fun component4(): UShort = increment
 
 
-    override fun compareTo(other: Snowflake): Int =
-        millisecondsSinceDiscordEpoch.compareTo(other.millisecondsSinceDiscordEpoch)
-
     /**
-     * A [String] representation of this Snowflake's [value].
+     * Compares this Snowflake to [another Snowflake][other].
+     *
+     * The comparison is based first on the value of the [timestamp], then on the value of the [workerId], then on the
+     * value of the [processId] and finally on the value of the [increment]. It is *consistent with equals*, as defined
+     * by [Comparable][java.lang.Comparable].
      */
-    override fun toString(): String = value.toString()
-
-    override fun hashCode(): Int = value.hashCode()
+    override fun compareTo(other: Snowflake): Int {
+        // the layout of Snowflake values from MSB to LSB is timestamp, workerId, processId, increment,
+        // so they can be compared using normal ULong comparison to achieve the documented behavior
+        return this.value.compareTo(other.value)
+    }
 
     override fun equals(other: Any?): Boolean = other is Snowflake && this.value == other.value
+    override fun hashCode(): Int = value.hashCode()
+    override fun toString(): String = value.toString()
 
 
     public companion object {
@@ -166,6 +166,25 @@ public class Snowflake : Comparable<Snowflake> {
 
         private const val INCREMENT_MASK = 0xFFFuL
 
+
+        /**
+         * A [Comparator] that compares Snowflakes solely by their [timestamp]s.
+         *
+         * The ordering imposed by this comparator is different from the [natural ordering][compareTo] of Snowflakes in
+         * the sense that two Snowflakes with the same [timestamp] are always considered equal and their [workerId],
+         * [processId] and [increment] are not taken into account.
+         *
+         * Note: this comparator imposes an ordering that is *inconsistent with equals*, as defined by
+         * [Comparator][java.util.Comparator]. It therefore shouldn't be used to order a
+         * [SortedSet][java.util.SortedSet] or [SortedMap][java.util.SortedMap]. This is because `TimestampComparator`
+         * only compares the first 42 bits of the ULong [value] (comparing the timestamp), whereas
+         * [equals][Snowflake.equals] compares all the bits of the [value]. `TimestampComparator` can return `0` even if
+         * [equals][Snowflake.equals] returns `false`, but [equals][Snowflake.equals] only returns `true` if
+         * `TimestampComparator` returns `0`.
+         */
+        public val TimestampComparator: Comparator<Snowflake> = Comparator { s1, s2 ->
+            s1.millisecondsSinceDiscordEpoch.compareTo(s2.millisecondsSinceDiscordEpoch)
+        }
 
         /**
          * A range that contains all valid raw Snowflake [value]s.
