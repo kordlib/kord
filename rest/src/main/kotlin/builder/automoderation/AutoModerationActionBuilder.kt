@@ -7,6 +7,7 @@ import dev.kord.common.entity.DiscordAutoModerationAction
 import dev.kord.common.entity.DiscordAutoModerationActionMetadata
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.optional
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.rest.builder.RequestBuilder
@@ -31,10 +32,27 @@ public sealed class AutoModerationActionBuilder : RequestBuilder<DiscordAutoMode
 }
 
 /** An [AutoModerationActionBuilder] for building actions with type [BlockMessage]. */
-@Suppress("CanSealedSubClassBeObject") // keep it as a class in case we want to add more in the future
 @KordDsl
 public class BlockMessageAutoModerationActionBuilder : AutoModerationActionBuilder() {
+
     override val type: BlockMessage get() = BlockMessage
+
+    private var _customMessage: Optional<String> = Optional.Missing()
+
+    /**
+     * Additional explanation that will be shown to members whenever their message is blocked (maximum of 150
+     * characters).
+     */
+    public var customMessage: String? by ::_customMessage.delegate()
+
+    override fun buildMetadata(): Optional<DiscordAutoModerationActionMetadata> {
+        val customMessage = _customMessage
+        return if (customMessage is Optional.Value) {
+            DiscordAutoModerationActionMetadata(customMessage = customMessage).optional()
+        } else {
+            Optional.Missing()
+        }
+    }
 }
 
 /** An [AutoModerationActionBuilder] for building actions with type [SendAlertMessage]. */

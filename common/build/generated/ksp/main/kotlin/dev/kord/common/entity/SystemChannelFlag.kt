@@ -142,27 +142,27 @@ public sealed class SystemChannelFlag(
     public object SuppressJoinNotifications : SystemChannelFlag(1)
 
     /**
-     * Suppress server boost notificationΩ.
+     * Suppress server boost notifications.
      */
     public object SuppressPremiumSubscriptions : SystemChannelFlag(2)
 
     /**
-     * Suppress server setup tips
+     * Hide server setup tips.
      */
     public object SuppressGuildReminderNotifications : SystemChannelFlag(4)
 
     /**
-     * Hide member join sticker reply buttons
+     * Hide member join sticker reply buttons.
      */
     public object SuppressJoinNotificationReplies : SystemChannelFlag(8)
 
     /**
-     * Suppress role subscription purchase and renewal notifications
+     * Suppress role subscription purchase and renewal notifications.
      */
     public object SuppressRoleSubscriptionPurchaseNotifications : SystemChannelFlag(16)
 
     /**
-     * Hide role subscription sticker reply buttons
+     * Hide role subscription sticker reply buttons.
      */
     public object SuppressRoleSubscriptionPurchaseNotificationReplies : SystemChannelFlag(32)
 

@@ -76,6 +76,16 @@ public sealed class GuildFeature(
     public object Community : GuildFeature("COMMUNITY")
 
     /**
+     * Guild has enabled monetization.
+     */
+    public object CreatorMonetizableProvisional : GuildFeature("CREATOR_MONETIZABLE_PROVISIONAL")
+
+    /**
+     * Guild has enabled the role subscription promo page.
+     */
+    public object CreatorStorePage : GuildFeature("CREATOR_STORE_PAGE")
+
+    /**
      * Guild has been set as a support server on the App Directory.
      */
     public object DeveloperSupportServer : GuildFeature("DEVELOPER_SUPPORT_SERVER")
@@ -106,11 +116,6 @@ public sealed class GuildFeature(
     public object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
 
     /**
-     * Guild has enabled monetization.
-     */
-    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
-
-    /**
      * Guild has increased custom sticker slots.
      */
     public object MoreStickers : GuildFeature("MORE_STICKERS")
@@ -134,6 +139,17 @@ public sealed class GuildFeature(
      * Guild is able to set role icons.
      */
     public object RoleIcons : GuildFeature("ROLE_ICONS")
+
+    /**
+     * Guild has role subscriptions that can be purchased.
+     */
+    public object RoleSubscriptionsAvailableForPurchase :
+            GuildFeature("ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE")
+
+    /**
+     * Guild has enabled role subscriptions.
+     */
+    public object RoleSubscriptionsEnabled : GuildFeature("ROLE_SUBSCRIPTIONS_ENABLED")
 
     /**
      * Guild has enabled ticketed events.
@@ -171,6 +187,16 @@ public sealed class GuildFeature(
                 "Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were removed on March 10, 2022. See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more information.",
     )
     public object Commerce : GuildFeature("COMMERCE")
+
+    /**
+     * Guild has enabled monetization.
+     */
+    @Deprecated(
+        message = "Replaced by CreatorMonetizableProvisional.",
+        replaceWith = ReplaceWith(expression = "GuildFeature.CreatorMonetizableProvisional", imports
+                    = arrayOf("dev.kord.common.entitiy.GuildFeature")),
+    )
+    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
 
     /**
      * Guild has access to create private threads
@@ -217,19 +243,23 @@ public sealed class GuildFeature(
             "BANNER" -> Banner
             "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "COMMUNITY" -> Community
+            "CREATOR_MONETIZABLE_PROVISIONAL" -> CreatorMonetizableProvisional
+            "CREATOR_STORE_PAGE" -> CreatorStorePage
             "DEVELOPER_SUPPORT_SERVER" -> DeveloperSupportServer
             "DISCOVERABLE" -> Discoverable
             "FEATURABLE" -> Featurable
             "INVITES_DISABLED" -> InvitesDisabled
             "INVITE_SPLASH" -> InviteSplash
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
-            "MONETIZATION_ENABLED" -> MonetizationEnabled
+            "MONETIZATION_ENABLED" -> @Suppress("DEPRECATION") MonetizationEnabled
             "MORE_STICKERS" -> MoreStickers
             "NEWS" -> News
             "PARTNERED" -> Partnered
             "PREVIEW_ENABLED" -> PreviewEnabled
             "PRIVATE_THREADS" -> @Suppress("DEPRECATION") PrivateThreads
             "ROLE_ICONS" -> RoleIcons
+            "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE" -> RoleSubscriptionsAvailableForPurchase
+            "ROLE_SUBSCRIPTIONS_ENABLED" -> RoleSubscriptionsEnabled
             "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive
             "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive
             "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
@@ -254,19 +284,23 @@ public sealed class GuildFeature(
                 Banner,
                 @Suppress("DEPRECATION_ERROR") Commerce,
                 Community,
+                CreatorMonetizableProvisional,
+                CreatorStorePage,
                 DeveloperSupportServer,
                 Discoverable,
                 Featurable,
                 InvitesDisabled,
                 InviteSplash,
                 MemberVerificationGateEnabled,
-                MonetizationEnabled,
+                @Suppress("DEPRECATION") MonetizationEnabled,
                 MoreStickers,
                 News,
                 Partnered,
                 PreviewEnabled,
                 @Suppress("DEPRECATION") PrivateThreads,
                 RoleIcons,
+                RoleSubscriptionsAvailableForPurchase,
+                RoleSubscriptionsEnabled,
                 @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive,
                 @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive,
                 TicketedEventsEnabled,

@@ -86,4 +86,43 @@ class SnowflakeTest {
         assertEquals(0b01101u, process)
         assertEquals(0b101100111101u, increment)
     }
+
+    @Test
+    fun `Snowflakes are compared correctly`() {
+        //                      timestamp  worker  process  increment
+        //                        vvv        vvv    vvv         vvv
+        val a = Snowflake(0b0000000000000001_00010_00100_000000001000_u)
+        val b = Snowflake(0b0000000000000010_00001_00010_000000000100_u)
+        val c = Snowflake(0b0000000000000011_00000_00001_000000000010_u)
+        val d = Snowflake(0b0000000000000011_00001_00000_000000000001_u)
+        val e = Snowflake(0b0000000000000011_00001_00001_000000000000_u)
+        val f = Snowflake(0b0000000000000011_00001_00001_000000000001_u)
+        assertTrue(a < b)
+        assertTrue(b < c)
+        assertTrue(a < c)
+        assertTrue(c < d)
+        assertTrue(d < e)
+        assertTrue(e < f)
+        assertTrue(a < f)
+        assertTrue(c < f)
+        with(Snowflake.TimestampComparator) {
+            assertTrue(compare(a, b) < 0)
+            assertTrue(compare(b, c) < 0)
+            assertTrue(compare(a, c) < 0)
+            assertEquals(0, compare(c, d))
+            assertEquals(0, compare(d, e))
+            assertEquals(0, compare(e, f))
+            assertTrue(compare(a, f) < 0)
+            assertEquals(0, compare(c, f))
+        }
+    }
+
+    @Test
+    fun `Snowflake's natural order works with SortedSets`() {
+        val a = Snowflake(0b0_00000_00000_000000000000_u)
+        val b = Snowflake(0b0_00000_00000_000000000001_u)
+        val c = Snowflake(0b1_00000_00000_000000000000_u)
+        assertEquals(2, sortedSetOf(a, b).size)
+        assertEquals(2, sortedSetOf(a, c).size)
+    }
 }

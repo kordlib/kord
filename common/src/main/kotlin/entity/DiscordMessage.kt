@@ -28,6 +28,7 @@
         Entry("GuildInviteReminder", intValue = 22),
         Entry("ContextMenuCommand", intValue = 23),
         Entry("AutoModerationAction", intValue = 24),
+        Entry("RoleSubscriptionPurchase", intValue = 25),
         Entry("InteractionPremiumUpsell", intValue = 26),
         Entry("StageStart", intValue = 27),
         Entry("StageEnd", intValue = 28),
@@ -120,6 +121,11 @@
             name = "FailedToMentionSomeRolesInThread",
             intValue = 1 shl 8,
             kDoc = "This message failed to mention some roles and add their members to the thread."
+        ),
+
+        Entry(
+            "SuppressNotifications", intValue = 1 shl 12,
+            kDoc = "This message will not trigger push and desktop notifications."
         ),
     ]
 )
@@ -233,6 +239,7 @@ import kotlin.DeprecationLevel.HIDDEN
  * @param flags Message flags.
  * @param stickers The stickers sent with the message (bots currently can only receive messages with stickers, not send).
  * @param referencedMessage the message associated with [messageReference].
+ * @param roleSubscriptionData [RoleSubscription] object data of the role subscription purchase or renewal that prompted this message.
  * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
  * @param components a list of [components][DiscordComponent] which have been added to this message
  */
@@ -277,6 +284,9 @@ public data class DiscordMessage(
     val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
+    @SerialName("role_subscription_data")
+    val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
+
     /*
      * don't trust the docs:
      * This is a list even though the docs say it's a component
@@ -718,11 +728,22 @@ public data class AllowedMentions(
     val repliedUser: OptionalBoolean = OptionalBoolean.Missing,
 )
 
-
 @Serializable
 public data class DiscordMessageInteraction(
     val id: Snowflake,
     val type: InteractionType,
     val name: String,
     val user: DiscordUser,
+)
+
+@Serializable
+public data class RoleSubscription(
+    @SerialName("role_subscription_listing_id")
+    val subscriptionId: Snowflake,
+    @SerialName("tier_name")
+    val tierName: String,
+    @SerialName("total_months_subscribed")
+    val totalMonthsSubscribed: Int,
+    @SerialName("is_renewal")
+    val isRenewal: Boolean
 )

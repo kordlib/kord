@@ -172,6 +172,11 @@ public sealed class MessageFlag(
      */
     public object FailedToMentionSomeRolesInThread : MessageFlag(256)
 
+    /**
+     * This message will not trigger push and desktop notifications.
+     */
+    public object SuppressNotifications : MessageFlag(4096)
+
     public companion object {
         /**
          * A [List] of all known [MessageFlag]s.
@@ -187,6 +192,7 @@ public sealed class MessageFlag(
                 Ephemeral,
                 Loading,
                 FailedToMentionSomeRolesInThread,
+                SuppressNotifications,
             )
         }
 

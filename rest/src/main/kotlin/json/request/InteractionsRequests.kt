@@ -123,7 +123,8 @@ public data class FollowupMessageModifyRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
-    val attachments: Optional<List<DiscordAttachment>?> = Optional.Missing()
+    val attachments: Optional<List<DiscordAttachment>?> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing()
 )
 
 public data class MultipartFollowupMessageModifyRequest(

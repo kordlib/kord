@@ -86,6 +86,14 @@
             kDoc = "Guild can enable welcome screen, Membership Screening, stage channels and discovery, and " + "receives community updates.",
         ),
         Entry(
+            "CreatorMonetizableProvisional", stringValue = "CREATOR_MONETIZABLE_PROVISIONAL",
+            kDoc = "Guild has enabled monetization."
+        ),
+        Entry(
+            "CreatorStorePage", stringValue = "CREATOR_STORE_PAGE",
+            kDoc = "Guild has enabled the role subscription promo page."
+        ),
+        Entry(
             "DeveloperSupportServer", stringValue = "DEVELOPER_SUPPORT_SERVER",
             kDoc = "Guild has been set as a support server on the App Directory.",
         ),
@@ -106,7 +114,6 @@
             "MemberVerificationGateEnabled", stringValue = "MEMBER_VERIFICATION_GATE_ENABLED",
             kDoc = "Guild has enabled Membership Screening.",
         ),
-        Entry("MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization."),
         Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
         Entry("News", stringValue = "NEWS", kDoc = "Guild has access to create announcement channels."),
         Entry("Partnered", stringValue = "PARTNERED", kDoc = "Guild is partnered."),
@@ -115,6 +122,12 @@
             kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
         ),
         Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
+        Entry("RoleSubscriptionsAvailableForPurchase", stringValue = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
+            kDoc = "Guild has role subscriptions that can be purchased."
+        ),
+        Entry("RoleSubscriptionsEnabled", stringValue = "ROLE_SUBSCRIPTIONS_ENABLED",
+            kDoc = "Guild has enabled role subscriptions."
+        ),
         Entry(
             "TicketedEventsEnabled", stringValue = "TICKETED_EVENTS_ENABLED",
             kDoc = "Guild has enabled ticketed events.",
@@ -136,6 +149,14 @@
             kDoc = "Guild has access to use commerce features (i.e. create store channels).\n\n@suppress",
             deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " + "Discord and store channels were removed on March 10, 2022. See " + "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" + " for more information.",
             deprecationLevel = HIDDEN,
+        ),
+        Entry(
+            "MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization.",
+            deprecationMessage = "Replaced by CreatorMonetizableProvisional.", deprecationLevel = WARNING,
+            replaceWith = ReplaceWith(
+                "GuildFeature.CreatorMonetizableProvisional",
+                imports = ["dev.kord.common.entitiy.GuildFeature"],
+            ),
         ),
         Entry(
             "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
@@ -162,18 +183,18 @@
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
     entries = [
         Entry("SuppressJoinNotifications", intValue = 1 shl 0, kDoc = "Suppress member join notifications."),
-        Entry("SuppressPremiumSubscriptions", intValue = 1 shl 1, kDoc = "Suppress server boost notificationΩ."),
-        Entry("SuppressGuildReminderNotifications", intValue = 1 shl 2, kDoc = "Suppress server setup tips"),
-        Entry("SuppressJoinNotificationReplies", intValue = 1 shl 3, kDoc = "Hide member join sticker reply buttons"),
+        Entry("SuppressPremiumSubscriptions", intValue = 1 shl 1, kDoc = "Suppress server boost notifications."),
+        Entry("SuppressGuildReminderNotifications", intValue = 1 shl 2, kDoc = "Hide server setup tips."),
+        Entry("SuppressJoinNotificationReplies", intValue = 1 shl 3, kDoc = "Hide member join sticker reply buttons."),
         Entry(
             "SuppressRoleSubscriptionPurchaseNotifications",
             intValue = 1 shl 4,
-            kDoc = "Suppress role subscription purchase and renewal notifications"
+            kDoc = "Suppress role subscription purchase and renewal notifications."
         ),
         Entry(
             "SuppressRoleSubscriptionPurchaseNotificationReplies",
             intValue = 1 shl 5,
-            kDoc = "Hide role subscription sticker reply buttons"
+            kDoc = "Hide role subscription sticker reply buttons."
         ),
     ]
 )

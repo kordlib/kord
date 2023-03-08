@@ -1819,6 +1819,21 @@ public final class dev/kord/gateway/TypingStart : dev/kord/gateway/DispatchEvent
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/gateway/UnknownDispatchEvent : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lkotlinx/serialization/json/JsonElement;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/Integer;)Ldev/kord/gateway/UnknownDispatchEvent;
+	public static synthetic fun copy$default (Ldev/kord/gateway/UnknownDispatchEvent;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/UnknownDispatchEvent;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Lkotlinx/serialization/json/JsonElement;
+	public final fun getName ()Ljava/lang/String;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/gateway/UpdateStatus : dev/kord/gateway/Command {
 	public static final field Companion Ldev/kord/gateway/UpdateStatus$Companion;
 	public synthetic fun <init> (ILkotlinx/datetime/Instant;Ljava/util/List;Ldev/kord/common/entity/PresenceStatus;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
