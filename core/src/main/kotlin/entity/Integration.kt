@@ -38,7 +38,7 @@ public class Integration(
         get() = data.name
 
     /**
-     * The type of integration. (`"twitch"`, `"youtube"`, etc)
+     * The type of integration. (`"twitch"`, `"youtube"`, `"discord"` or `"guild_subscription"`)
      */
     public val type: String
         get() = data.type

@@ -35,8 +35,9 @@ public class ForumMessageCreateBuilder : MessageCreateBuilder,
     private var _stickerIds: Optional<MutableList<Snowflake>> = Optional.Missing()
     public val stickerIds: MutableList<Snowflake>? by ::_stickerIds.delegate()
 
-    private var _flags: Optional<MessageFlags> = Optional.Missing()
-    public var flags: MessageFlags? by ::_flags.delegate()
+    override var flags: MessageFlags? = null
+    override var suppressEmbeds: Boolean? = null
+    override var suppressNotifications: Boolean? = null
 
     override fun toRequest(): MultipartForumThreadMessageCreateRequest {
         return MultipartForumThreadMessageCreateRequest(
@@ -46,7 +47,7 @@ public class ForumMessageCreateBuilder : MessageCreateBuilder,
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
                 stickerIds = _stickerIds,
-                flags = _flags
+                flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
             ),
             files
         )

@@ -9,6 +9,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.NothingSerializer
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -27,20 +28,6 @@ private val jsonLogger = KotlinLogging.logger { }
 
 public sealed class DispatchEvent : Event() {
     public abstract val sequence: Int?
-}
-
-private object NullDecoder : KDeserializationStrategy<Nothing?> {
-    override val descriptor: SerialDescriptor
-        get() = PrimitiveSerialDescriptor("null", PrimitiveKind.STRING)
-
-    @OptIn(ExperimentalSerializationApi::class)
-    override fun deserialize(decoder: Decoder): Nothing? {
-        // decodeNull() doesn't consume the literal null therefore parsing doesn't end and in e.g. a heartbeat event
-        // the null gets parsed as a key
-        decoder.decodeNotNullMark()
-        return decoder.decodeNull()
-    }
-
 }
 
 public sealed class Event {
@@ -79,7 +66,8 @@ public sealed class Event {
                             OpCode.Dispatch -> getByDispatchEvent(index, this, eventName, sequence)
                             OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
                             OpCode.HeartbeatACK -> {
-                                this.decodeSerializableElement(descriptor, index, NullDecoder)
+                                @Suppress("IMPLICIT_NOTHING_TYPE_ARGUMENT_IN_RETURN_POSITION")
+                                decodeNullableSerializableElement(descriptor, index, NothingSerializer())
                                 HeartbeatACK
                             }
                             OpCode.InvalidSession -> decodeSerializableElement(
@@ -182,6 +170,13 @@ public sealed class Event {
                         DiscordTyping.serializer()
                     ), sequence
                 )
+                "GUILD_AUDIT_LOG_ENTRY_CREATE" -> GuildAuditLogEntryCreate(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordAuditLogEntry.serializer()
+                    ), sequence
+                )
                 "GUILD_CREATE" -> GuildCreate(
                     decoder.decodeSerializableElement(
                         descriptor,
@@ -225,6 +220,27 @@ public sealed class Event {
                     ), sequence
                 )
                 "GUILD_INTEGRATIONS_UPDATE" -> GuildIntegrationsUpdate(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordGuildIntegrations.serializer()
+                    ), sequence
+                )
+                "INTEGRATION_CREATE" -> IntegrationCreate(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordGuildIntegrations.serializer()
+                    ), sequence
+                )
+                "INTEGRATION_DELETE" -> IntegrationDelete(
+                    decoder.decodeSerializableElement(
+                        descriptor,
+                        index,
+                        DiscordGuildIntegrationsDeleted.serializer()
+                    ), sequence
+                )
+                "INTEGRATION_UPDATE" -> IntegrationUpdate(
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
@@ -476,8 +492,8 @@ public sealed class Event {
                 else -> {
                     jsonLogger.warn { "unknown gateway event name $name" }
                     // consume json elements that are unknown to us
-                    decoder.decodeSerializableElement(descriptor, index, JsonElement.serializer().nullable)
-                    null
+                    val data = decoder.decodeSerializableElement(descriptor, index, JsonElement.serializer().nullable)
+                    UnknownDispatchEvent(name, data, sequence)
                 }
             }
 
@@ -649,6 +665,7 @@ public data class ChannelDelete(val channel: DiscordChannel, override val sequen
 public data class ChannelPinsUpdate(val pins: DiscordPinsUpdateData, override val sequence: Int?) : DispatchEvent()
 
 public data class TypingStart(val data: DiscordTyping, override val sequence: Int?) : DispatchEvent()
+public data class GuildAuditLogEntryCreate(val entry: DiscordAuditLogEntry, override val sequence: Int?): DispatchEvent()
 public data class GuildCreate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildUpdate(val guild: DiscordGuild, override val sequence: Int?) : DispatchEvent()
 public data class GuildDelete(val guild: DiscordUnavailableGuild, override val sequence: Int?) : DispatchEvent()
@@ -656,6 +673,12 @@ public data class GuildBanAdd(val ban: DiscordGuildBan, override val sequence: I
 public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence: Int?) : DispatchEvent()
 public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
 public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
+    DispatchEvent()
+public data class IntegrationDelete(val integration: DiscordGuildIntegrationsDeleted, override val sequence: Int?) :
+    DispatchEvent()
+public data class IntegrationCreate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
+    DispatchEvent()
+public data class IntegrationUpdate(val integration: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
 
 public data class GuildMemberAdd(val member: DiscordAddedGuildMember, override val sequence: Int?) : DispatchEvent()
@@ -802,6 +825,12 @@ public data class GuildScheduledEventUserAdd(
 public data class GuildScheduledEventUserRemove(
     val data: GuildScheduledEventUserMetadata,
     override val sequence: Int?,
+) : DispatchEvent()
+
+public data class UnknownDispatchEvent(
+    val name: String?,
+    val data: JsonElement?,
+    override val sequence: Int?
 ) : DispatchEvent()
 
 @Serializable

@@ -99,7 +99,17 @@ public sealed class MessageType(
 
     public object AutoModerationAction : MessageType(24)
 
+    public object RoleSubscriptionPurchase : MessageType(25)
+
     public object InteractionPremiumUpsell : MessageType(26)
+
+    public object StageStart : MessageType(27)
+
+    public object StageEnd : MessageType(28)
+
+    public object StageSpeaker : MessageType(29)
+
+    public object StageTopic : MessageType(31)
 
     public object GuildApplicationPremiumSubscription : MessageType(32)
 
@@ -190,7 +200,12 @@ public sealed class MessageType(
             22 -> GuildInviteReminder
             23 -> ContextMenuCommand
             24 -> AutoModerationAction
+            25 -> RoleSubscriptionPurchase
             26 -> InteractionPremiumUpsell
+            27 -> StageStart
+            28 -> StageEnd
+            29 -> StageSpeaker
+            31 -> StageTopic
             32 -> GuildApplicationPremiumSubscription
             else -> Unknown(code)
         }
@@ -226,7 +241,12 @@ public sealed class MessageType(
                 GuildInviteReminder,
                 ContextMenuCommand,
                 AutoModerationAction,
+                RoleSubscriptionPurchase,
                 InteractionPremiumUpsell,
+                StageStart,
+                StageEnd,
+                StageSpeaker,
+                StageTopic,
                 GuildApplicationPremiumSubscription,
             )
         }

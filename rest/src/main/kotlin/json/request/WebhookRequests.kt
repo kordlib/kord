@@ -3,6 +3,7 @@ package dev.kord.rest.json.request
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.DiscordComponent
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -32,6 +33,7 @@ public data class WebhookExecuteRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing(),
     @SerialName("thread_name")
     val threadName: Optional<String> = Optional.Missing(),
 )
@@ -48,7 +50,8 @@ public data class WebhookEditMessageRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing()
+    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing()
 )
 
 public data class MultipartWebhookEditMessageRequest(

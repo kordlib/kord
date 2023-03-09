@@ -1,27 +1,27 @@
 [versions]
 
 # api dependencies
-kotlin = "1.8.0" # https://github.com/JetBrains/kotlin
-ktor = "2.2.1" # https://github.com/ktorio/ktor
+kotlin = "1.8.10" # https://github.com/JetBrains/kotlin
+ktor = "2.2.4" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
-kotlinx-serialization = "1.4.1" # https://github.com/Kotlin/kotlinx.serialization
+kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "2.1.23" # https://github.com/MicroUtils/kotlin-logging
 kord-cache = { strictly = "[0.3.0, 0.4.0[", prefer = "latest.release" }
 
 # code generation
-ksp = "1.8.0-1.0.8" # https://github.com/google/ksp
+ksp = "1.8.10-1.0.9" # https://github.com/google/ksp
 kotlinpoet = "1.12.0" # https://github.com/square/kotlinpoet
 
 # tests
-junit5 = "5.9.1" # https://github.com/junit-team/junit5
-mockk = "1.13.2" # https://github.com/mockk/mockk
+junit5 = "5.9.2" # https://github.com/junit-team/junit5
+mockk = "1.13.4" # https://github.com/mockk/mockk
 slf4j = "1.7.36" # https://www.slf4j.org
 
 # plugins
-dokka = "1.7.20" # https://github.com/Kotlin/dokka
-kotlinx-atomicfu = "0.19.0" # https://github.com/Kotlin/kotlinx-atomicfu
-binary-compatibility-validator = "0.12.1" # https://github.com/Kotlin/binary-compatibility-validator
+dokka = "1.8.10" # https://github.com/Kotlin/dokka
+kotlinx-atomicfu = "0.20.0" # https://github.com/Kotlin/kotlinx-atomicfu
+binary-compatibility-validator = "0.13.0" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
 
 

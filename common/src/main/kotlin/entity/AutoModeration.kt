@@ -38,7 +38,11 @@
     kDoc = "The type of action.",
     docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-types",
     entries = [
-        Entry("BlockMessage", intValue = 1, kDoc = "Blocks the content of a message according to the rule."),
+        Entry(
+            "BlockMessage", intValue = 1,
+            kDoc = "Blocks a member's message and prevents it from being posted.\n\nA custom explanation can be " +
+                "specified and shown to members whenever their message is blocked.",
+        ),
         Entry("SendAlertMessage", intValue = 2, kDoc = "Logs user content to a specified channel."),
         Entry(
             "Timeout", intValue = 3,
@@ -107,7 +111,9 @@ public data class DiscordAutoModerationAction(
 @Serializable
 public data class DiscordAutoModerationActionMetadata(
     @SerialName("channel_id")
-    public val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("duration_seconds")
-    public val durationSeconds: Optional<DurationInSeconds> = Optional.Missing(),
+    val durationSeconds: Optional<DurationInSeconds> = Optional.Missing(),
+    @SerialName("custom_message")
+    val customMessage: Optional<String> = Optional.Missing(),
 )

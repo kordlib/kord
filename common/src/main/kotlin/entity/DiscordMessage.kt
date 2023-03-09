@@ -28,7 +28,12 @@
         Entry("GuildInviteReminder", intValue = 22),
         Entry("ContextMenuCommand", intValue = 23),
         Entry("AutoModerationAction", intValue = 24),
+        Entry("RoleSubscriptionPurchase", intValue = 25),
         Entry("InteractionPremiumUpsell", intValue = 26),
+        Entry("StageStart", intValue = 27),
+        Entry("StageEnd", intValue = 28),
+        Entry("StageSpeaker", intValue = 29),
+        Entry("StageTopic", intValue = 31),
         Entry("GuildApplicationPremiumSubscription", intValue = 32),
     ],
     deprecatedEntries = [
@@ -103,6 +108,7 @@
         Entry("PNG", intValue = 1),
         Entry("APNG", intValue = 2),
         Entry("LOTTIE", intValue = 3),
+        Entry("GIF", intValue = 4)
     ],
 )
 
@@ -112,7 +118,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.serialization.IntOrStringSerializer
+import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
@@ -176,6 +182,7 @@ import kotlin.contracts.contract
  * @param flags Message flags.
  * @param stickers The stickers sent with the message (bots currently can only receive messages with stickers, not send).
  * @param referencedMessage the message associated with [messageReference].
+ * @param roleSubscriptionData [RoleSubscription] object data of the role subscription purchase or renewal that prompted this message.
  * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
  * @param components a list of [components][DiscordComponent] which have been added to this message
  */
@@ -204,7 +211,7 @@ public data class DiscordMessage(
     val attachments: List<DiscordAttachment>,
     val embeds: List<DiscordEmbed>,
     val reactions: Optional<List<Reaction>> = Optional.Missing(),
-    val nonce: Optional<@Serializable(with = IntOrStringSerializer::class) String> = Optional.Missing(),
+    val nonce: Optional<@Serializable(with = LongOrStringSerializer::class) String> = Optional.Missing(),
     val pinned: Boolean,
     @SerialName("webhook_id")
     val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -220,13 +227,17 @@ public data class DiscordMessage(
     val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
+    @SerialName("role_subscription_data")
+    val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
+
     /*
      * don't trust the docs:
      * This is a list even though the docs say it's a component
      */
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
-    val thread: Optional<DiscordChannel> = Optional.Missing()
+    val thread: Optional<DiscordChannel> = Optional.Missing(),
+    val position: OptionalInt = OptionalInt.Missing
 )
 
 /**
@@ -361,6 +372,7 @@ public data class DiscordPartialMessage(
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
+    val position: OptionalInt = OptionalInt.Missing,
 )
 
 @Serializable
@@ -419,6 +431,9 @@ public enum class MessageFlag(public val code: Int) {
 
     /** This message failed to mention some roles and add their members to the thread. */
     FailedToMentionSomeRolesInThread(1 shl 8),
+
+    /** This message will not trigger push and desktop notifications. */
+    SuppressNotifications(1 shl 12)
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
@@ -780,11 +795,22 @@ public data class AllowedMentions(
     val repliedUser: OptionalBoolean = OptionalBoolean.Missing,
 )
 
-
 @Serializable
 public data class DiscordMessageInteraction(
     val id: Snowflake,
     val type: InteractionType,
     val name: String,
     val user: DiscordUser,
+)
+
+@Serializable
+public data class RoleSubscription(
+    @SerialName("role_subscription_listing_id")
+    val subscriptionId: Snowflake,
+    @SerialName("tier_name")
+    val tierName: String,
+    @SerialName("total_months_subscribed")
+    val totalMonthsSubscribed: Int,
+    @SerialName("is_renewal")
+    val isRenewal: Boolean
 )
