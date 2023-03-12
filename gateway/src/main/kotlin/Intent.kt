@@ -66,7 +66,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [ThreadListSync]
      * - [ThreadMemberUpdate]
      * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
-     * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
+     * [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
      */
     public object Guilds : Intent(1 shl 0)
 
@@ -76,16 +76,16 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [GuildMemberUpdate]
      * - [GuildMemberRemove]
      * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
-     * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
+     * [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
      */
     @PrivilegedIntent
     public object GuildMembers : Intent(1 shl 1)
 
     /**
      * Enables the following events:
+     * - [GuildAuditLogEntryCreate]
      * - [GuildBanAdd]
      * - [GuildBanRemove]
-     * - [AuditLogEntryCreateEvent]
      */
     public object GuildBans : Intent(1 shl 2)
 
@@ -98,6 +98,9 @@ public sealed class Intent(public val code: DiscordBitSet) {
     /**
      * Enables the following events:
      * - [GuildIntegrationsUpdate]
+     * - [IntegrationCreate]
+     * - [IntegrationUpdate]
+     * - [IntegrationDelete]
      */
     public object GuildIntegrations : Intent(1 shl 4)
 
@@ -186,9 +189,10 @@ public sealed class Intent(public val code: DiscordBitSet) {
      *
      * Apps **without** this intent will receive empty values in fields that contain user-inputted content with a few
      * exceptions:
-     * - content in messages that an app sends
-     * - content in DMs with the app
-     * - content in which the app is mentioned
+     * - Content in messages that an app sends
+     * - Content in DMs with the app
+     * - Content in which the app is mentioned
+     * - Content of the message a message context menu command is used on
      */
     @PrivilegedIntent
     public object MessageContent : Intent(1 shl 15)
