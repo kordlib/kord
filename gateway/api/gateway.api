@@ -1194,39 +1194,39 @@ public final class dev/kord/gateway/IdentifyProperties$Companion {
 }
 
 public final class dev/kord/gateway/IntegrationCreate : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/gateway/DiscordIntegrations;
+	public fun <init> (Ldev/kord/common/entity/DiscordIntegration;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordIntegration;
 	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationCreate;
-	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationCreate;Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationCreate;
+	public final fun copy (Ldev/kord/common/entity/DiscordIntegration;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationCreate;Ldev/kord/common/entity/DiscordIntegration;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationCreate;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getIntegration ()Ldev/kord/gateway/DiscordIntegrations;
+	public final fun getIntegration ()Ldev/kord/common/entity/DiscordIntegration;
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/IntegrationDelete : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/common/entity/DiscordIntegrationsDeleted;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/common/entity/DiscordIntegrationsDeleted;
+	public fun <init> (Ldev/kord/common/entity/DiscordIntegrationDelete;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordIntegrationDelete;
 	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/common/entity/DiscordIntegrationsDeleted;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationDelete;
-	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationDelete;Ldev/kord/common/entity/DiscordIntegrationsDeleted;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationDelete;
+	public final fun copy (Ldev/kord/common/entity/DiscordIntegrationDelete;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationDelete;Ldev/kord/common/entity/DiscordIntegrationDelete;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationDelete;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getIntegration ()Ldev/kord/common/entity/DiscordIntegrationsDeleted;
+	public final fun getIntegration ()Ldev/kord/common/entity/DiscordIntegrationDelete;
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/IntegrationUpdate : dev/kord/gateway/DispatchEvent {
-	public fun <init> (Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;)V
-	public final fun component1 ()Ldev/kord/gateway/DiscordIntegrations;
+	public fun <init> (Ldev/kord/common/entity/DiscordIntegration;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordIntegration;
 	public final fun component2 ()Ljava/lang/Integer;
-	public final fun copy (Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationUpdate;
-	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationUpdate;Ldev/kord/gateway/DiscordIntegrations;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationUpdate;
+	public final fun copy (Ldev/kord/common/entity/DiscordIntegration;Ljava/lang/Integer;)Ldev/kord/gateway/IntegrationUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/IntegrationUpdate;Ldev/kord/common/entity/DiscordIntegration;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/IntegrationUpdate;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getIntegration ()Ldev/kord/gateway/DiscordIntegrations;
+	public final fun getIntegration ()Ldev/kord/common/entity/DiscordIntegration;
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

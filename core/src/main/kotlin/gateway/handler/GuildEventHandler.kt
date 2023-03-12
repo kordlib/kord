@@ -214,7 +214,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): IntegrationDeleteEvent {
-        return IntegrationDeleteEvent(event.integration.id, event.integration.guildId, event.integration.applicationId, kord, shard, context?.get())
+        return IntegrationDeleteEvent(event.integration.id, event.integration.guildId, event.integration.applicationId.value, kord, shard, context?.get())
     }
 
     private suspend fun handle(

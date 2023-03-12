@@ -249,7 +249,7 @@ public sealed class Event {
                     decoder.decodeSerializableElement(
                         descriptor,
                         index,
-                        DiscordIntegrationsDeleted.serializer()
+                        DiscordIntegrationDelete.serializer(),
                     ), sequence
                 )
                 "INTEGRATION_UPDATE" -> IntegrationUpdate(
@@ -686,7 +686,7 @@ public data class GuildBanRemove(val ban: DiscordGuildBan, override val sequence
 public data class GuildEmojisUpdate(val emoji: DiscordUpdatedEmojis, override val sequence: Int?) : DispatchEvent()
 public data class GuildIntegrationsUpdate(val integrations: DiscordGuildIntegrations, override val sequence: Int?) :
     DispatchEvent()
-public data class IntegrationDelete(val integration: DiscordIntegrationsDeleted, override val sequence: Int?) :
+public data class IntegrationDelete(val integration: DiscordIntegrationDelete, override val sequence: Int?) :
     DispatchEvent()
 public data class IntegrationCreate(val integration: DiscordIntegration, override val sequence: Int?) :
     DispatchEvent()
