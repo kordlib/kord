@@ -29,7 +29,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.Objects
+import java.util.*
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -314,6 +314,18 @@ public class Message(
         val author = author ?: return null
         val guildId = getGuildOrNull()?.id ?: return null
         return author.asMember(guildId)
+    }
+
+    /**
+     * Requests to get the [author] as a member.
+     *
+     * Returns null if the message was not sent in a [TopGuildMessageChannel], if the [author] is not a [User], or if
+     * the [author] as a member is `null`.
+     */
+    public suspend fun getAuthorAsMemberOrNull(): Member? {
+        val author = author ?: return null
+        val guildId = getGuildOrNull()?.id ?: return null
+        return author.asMemberOrNull(guildId)
     }
 
     /**
