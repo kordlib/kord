@@ -6528,6 +6528,7 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public final fun getAuthorAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAuthorAsMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAuthorAsMemberOrThrow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getAuthorAsMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
@@ -13645,4 +13646,3 @@ public final class dev/kord/core/supplier/StoreEntitySupplier : dev/kord/core/su
 	public fun getWebhookWithTokenOrNull (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 }
-
