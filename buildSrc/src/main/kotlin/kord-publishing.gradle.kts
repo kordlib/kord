@@ -13,37 +13,37 @@ publishing {
             version = Library.version
 
             pom {
-                name.set(Library.name)
-                description.set(Library.description)
-                url.set(Library.projectUrl)
+                name = Library.name
+                description = Library.description
+                url = Library.projectUrl
 
                 organization {
-                    name.set("Kord")
-                    url.set("https://github.com/kordlib")
+                    name = "Kord"
+                    url = "https://github.com/kordlib"
                 }
 
                 developers {
                     developer {
-                        name.set("The Kord Team")
+                        name = "The Kord Team"
                     }
                 }
 
                 issueManagement {
-                    system.set("GitHub")
-                    url.set("https://github.com/kordlib/kord/issues")
+                    system = "GitHub"
+                    url = "https://github.com/kordlib/kord/issues"
                 }
 
                 licenses {
                     license {
-                        name.set("MIT")
-                        url.set("http://opensource.org/licenses/MIT")
+                        name = "MIT"
+                        url = "http://opensource.org/licenses/MIT"
                     }
                 }
 
                 scm {
-                    connection.set("scm:git:ssh://github.com/kordlib/kord.git")
-                    developerConnection.set("scm:git:ssh://git@github.com:kordlib/kord.git")
-                    url.set(Library.projectUrl)
+                    connection = "scm:git:ssh://github.com/kordlib/kord.git"
+                    developerConnection = "scm:git:ssh://git@github.com:kordlib/kord.git"
+                    url = Library.projectUrl
                 }
             }
 
