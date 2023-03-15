@@ -16,6 +16,6 @@ object Jvm {
 }
 
 fun KotlinJvmCompilerOptions.applyKordCompilerOptions() {
-    allWarningsAsErrors = true
+    allWarningsAsErrors.set(true)
     freeCompilerArgs.add(CompilerArguments.progressive)
 }
