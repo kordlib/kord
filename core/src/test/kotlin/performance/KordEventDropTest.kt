@@ -14,16 +14,16 @@ import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
+import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withTimeout
 import kotlinx.datetime.Clock
 import java.util.concurrent.CountDownLatch
-import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.Test
@@ -52,7 +52,14 @@ class KordEventDropTest {
     }
 
     val kord = Kord(
-        resources = ClientResources("token", Snowflake(0u), Shards(1), maxConcurrency = 1, HttpClient(), EntitySupplyStrategy.cache),
+        resources = ClientResources(
+            "token",
+            Snowflake(0u),
+            Shards(1),
+            maxConcurrency = 1,
+            HttpClient(),
+            EntitySupplyStrategy.cache
+        ),
         cache = DataCache.none(),
         DefaultMasterGateway(mapOf(0 to SpammyGateway)),
         RestClient(KtorRequestHandler("token", clock = Clock.System)),
@@ -63,7 +70,7 @@ class KordEventDropTest {
     )
 
     @Test
-    fun `hammering the gateway does not drop core events`() = runBlocking {
+    fun `hammering the gateway does not drop core events`() = runTest {
         val amount = 1_000
 
         val event = GuildCreate(
@@ -97,10 +104,10 @@ class KordEventDropTest {
             ), 0
         )
 
-        val counter = AtomicInteger(0)
+        var counter by atomic(0)
         val countdown = CountDownLatch(amount)
         kord.on<GuildCreateEvent> {
-            counter.incrementAndGet()
+            counter++
             countdown.countDown()
         }
 
@@ -111,7 +118,7 @@ class KordEventDropTest {
         withTimeout(1.minutes.inWholeMilliseconds) {
             countdown.await()
         }
-        assertEquals(amount, counter.get())
+        assertEquals(amount, counter)
     }
 
 }

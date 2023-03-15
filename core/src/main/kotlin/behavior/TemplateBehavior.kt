@@ -6,9 +6,9 @@ import dev.kord.core.KordObject
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Template
+import dev.kord.core.hash
 import dev.kord.rest.builder.template.GuildFromTemplateCreateBuilder
 import dev.kord.rest.builder.template.GuildTemplateModifyBuilder
-import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -52,7 +52,7 @@ public fun TemplateBehavior(guildId: Snowflake, code: String, kord: Kord): Templ
         override val guildId: Snowflake = guildId
         override val kord: Kord = kord
 
-        override fun hashCode(): Int = Objects.hash(code)
+        override fun hashCode(): Int = hash(code)
 
         override fun equals(other: Any?): Boolean =
             other is TemplateBehavior && other.code == code

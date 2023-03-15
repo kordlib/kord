@@ -8,6 +8,7 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Role
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.indexOfFirstOrNull
 import dev.kord.core.sorted
 import dev.kord.core.supplier.EntitySupplier
@@ -17,7 +18,6 @@ import dev.kord.rest.request.RestRequestException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.map
-import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -129,7 +129,7 @@ public fun RoleBehavior(
     override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
 
-    override fun hashCode(): Int = Objects.hash(id, guildId)
+    override fun hashCode(): Int = hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is RoleBehavior -> other.id == id && other.guildId == guildId

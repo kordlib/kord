@@ -10,11 +10,11 @@ import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.*
 
 /**
  * An instance of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
@@ -134,7 +134,7 @@ public class Member(
     override suspend fun asMemberOrNull(): Member = this
 
 
-    override fun hashCode(): Int = Objects.hash(id, guildId)
+    override fun hashCode(): Int = hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is MemberBehavior -> other.id == id && other.guildId == guildId

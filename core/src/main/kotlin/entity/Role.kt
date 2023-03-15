@@ -7,9 +7,9 @@ import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.cache.data.RoleData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.*
 
 public data class Role(
     val data: RoleData,
@@ -60,7 +60,7 @@ public data class Role(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Role = Role(data, kord, strategy.supply(kord))
 
-    override fun hashCode(): Int = Objects.hash(id, guildId)
+    override fun hashCode(): Int = hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is RoleBehavior -> other.id == id && other.guildId == guildId

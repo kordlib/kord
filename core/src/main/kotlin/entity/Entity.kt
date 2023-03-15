@@ -2,7 +2,6 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.KordObject
-import java.util.Comparator
 
 public interface Entity : Comparable<Entity> {
     /**

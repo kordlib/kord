@@ -11,11 +11,11 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.PartialGuildData
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
-import java.util.*
 
 public class PartialGuild(
     public val data: PartialGuildData,
@@ -154,7 +154,7 @@ public class PartialGuild(
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(id)
 
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildBehavior -> other.id == id

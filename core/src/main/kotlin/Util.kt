@@ -473,3 +473,6 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
 
     else -> Unit
 }
+
+// Replacement of Objects.hash
+internal fun hash(vararg values: Any?) = values.contentHashCode()

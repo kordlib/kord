@@ -7,12 +7,12 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.request.RestRequestException
-import java.util.*
 
 /**
  * The behavior of a [Discord Channel](https://discord.com/developers/docs/resources/channel)
@@ -101,7 +101,7 @@ public fun ChannelBehavior(id: Snowflake, kord: Kord, strategy: EntitySupplyStra
         override val supplier: EntitySupplier = strategy.supply(kord)
 
 
-        override fun hashCode(): Int = Objects.hash(id)
+        override fun hashCode(): Int = hash(id)
 
         override fun equals(other: Any?): Boolean = when (other) {
             is ChannelBehavior -> other.id == id

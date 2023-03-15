@@ -7,9 +7,9 @@ import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.TextChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.*
 import kotlin.time.Duration
 
 /**
@@ -45,7 +45,7 @@ public class TextChannel(
 
     override suspend fun asChannelOrNull(): TextChannel = this
 
-    override fun hashCode(): Int = Objects.hash(id, guildId)
+    override fun hashCode(): Int = hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId

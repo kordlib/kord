@@ -3,7 +3,7 @@ package dev.kord.core.entity
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.cache.data.RegionData
-import java.util.*
+import dev.kord.core.hash
 
 public class Region(public val data: RegionData, override val kord: Kord) : KordObject {
     public val id: String
@@ -17,7 +17,7 @@ public class Region(public val data: RegionData, override val kord: Kord) : Kord
 
     public val isOptimal: Boolean get() = data.optimal
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is Region -> other.id == id

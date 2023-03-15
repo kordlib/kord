@@ -8,13 +8,13 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.User
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.map
-import java.util.*
 
 /**
  * An instance of a Discord DM channel.
@@ -60,7 +60,7 @@ public data class DmChannel(
         DmChannel(data, kord, strategy.supply(kord))
 
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is ChannelBehavior -> other.id == id

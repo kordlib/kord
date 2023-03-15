@@ -13,11 +13,11 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.automoderation.*
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.request.RestRequestException
-import java.util.Objects
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
@@ -106,7 +106,7 @@ internal class AutoModerationRuleBehaviorImpl(
 internal fun AutoModerationRuleBehavior.autoModerationRuleEquals(other: Any?) =
     this === other || (other is AutoModerationRuleBehavior && this.id == other.id && this.guildId == other.guildId)
 
-internal fun AutoModerationRuleBehavior.autoModerationRuleHashCode() = Objects.hash(id, guildId)
+internal fun AutoModerationRuleBehavior.autoModerationRuleHashCode() = hash(id, guildId)
 
 /**
  * Requests to edit this [AutoModerationRule] and returns the edited rule.

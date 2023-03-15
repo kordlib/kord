@@ -10,9 +10,9 @@ import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.*
 
 /**
  * The behavior of a Discord channel associated to a [guild].
@@ -110,7 +110,7 @@ public fun GuildChannelBehavior(
     override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
 
-    override fun hashCode(): Int = Objects.hash(id, guildId)
+    override fun hashCode(): Int = hash(id, guildId)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildChannelBehavior -> other.id == id && other.guildId == guildId

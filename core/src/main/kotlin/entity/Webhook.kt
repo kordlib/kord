@@ -11,11 +11,11 @@ import dev.kord.core.cache.data.WebhookData
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import java.util.Objects
 
 public data class Webhook(
     val data: WebhookData,
@@ -72,7 +72,7 @@ public data class Webhook(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Webhook =
         Webhook(data, kord, strategy.supply(kord))
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is WebhookBehavior -> other.id == id

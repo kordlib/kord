@@ -11,9 +11,9 @@ import dev.kord.core.cache.data.ApplicationData
 import dev.kord.core.cache.data.BaseApplicationData
 import dev.kord.core.cache.data.PartialApplicationData
 import dev.kord.core.event.guild.InviteCreateEvent
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import java.util.Objects
 
 public sealed class BaseApplication(
     final override val kord: Kord,
@@ -74,7 +74,7 @@ public sealed class BaseApplication(
     abstract override fun withStrategy(strategy: EntitySupplyStrategy<*>): BaseApplication
 
 
-    final override fun hashCode(): Int = Objects.hash(id)
+    final override fun hashCode(): Int = hash(id)
 
     final override fun equals(other: Any?): Boolean = other is BaseApplication && this.id == other.id
 }

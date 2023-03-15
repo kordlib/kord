@@ -22,6 +22,7 @@ import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.*
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.gateway.Gateway
@@ -53,7 +54,6 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.Objects
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
@@ -658,7 +658,7 @@ public fun GuildBehavior(
     override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildBehavior -> other.id == id
@@ -676,7 +676,7 @@ public suspend inline fun GuildBehavior.createChatInputCommand(
     description: String,
     builder: ChatInputCreateBuilder.() -> Unit = {},
 ): GuildChatInputCommand {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
     return kord.createGuildChatInputCommand(id, name, description, builder)
 }
 
@@ -685,7 +685,7 @@ public suspend inline fun GuildBehavior.createMessageCommand(
     name: String,
     builder: MessageCommandCreateBuilder.() -> Unit = {},
 ): GuildMessageCommand {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
     return kord.createGuildMessageCommand(id, name, builder)
 }
 
@@ -694,7 +694,7 @@ public suspend inline fun GuildBehavior.createUserCommand(
     name: String,
     builder: UserCommandCreateBuilder.() -> Unit = {},
 ): GuildUserCommand {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
     return kord.createGuildUserCommand(id, name, builder)
 }
 
@@ -702,7 +702,7 @@ public suspend inline fun GuildBehavior.createUserCommand(
 public suspend inline fun GuildBehavior.createApplicationCommands(
     builder: GuildMultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
     return kord.createGuildApplicationCommands(id, builder)
 }
 
@@ -715,7 +715,7 @@ public suspend inline fun GuildBehavior.createApplicationCommands(
  */
 public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> Unit): Guild {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     val response = kord.rest.guild.modifyGuild(id, builder)
     val data = GuildData.from(response)
@@ -729,7 +729,7 @@ public suspend inline fun GuildBehavior.createEmoji(
     builder: EmojiCreateBuilder.() -> Unit = {}
 ): GuildEmoji {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     val discordEmoji = kord.rest.emoji.createEmoji(guildId = id, name, image, builder)
     return GuildEmoji(EmojiData.from(guildId = id, id = discordEmoji.id!!, discordEmoji), kord)
@@ -748,7 +748,7 @@ public suspend inline fun GuildBehavior.createTextChannel(
     builder: TextChannelCreateBuilder.() -> Unit = {}
 ): TextChannel {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     val response = kord.rest.guild.createTextChannel(id, name, builder)
     val data = ChannelData.from(response)
@@ -768,7 +768,7 @@ public suspend inline fun GuildBehavior.createVoiceChannel(
     builder: VoiceChannelCreateBuilder.() -> Unit = {}
 ): VoiceChannel {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     val response = kord.rest.guild.createVoiceChannel(id, name, builder)
     val data = ChannelData.from(response)
@@ -788,7 +788,7 @@ public suspend inline fun GuildBehavior.createNewsChannel(
     builder: NewsChannelCreateBuilder.() -> Unit = {}
 ): NewsChannel {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     val response = kord.rest.guild.createNewsChannel(id, name, builder)
     val data = ChannelData.from(response)
@@ -809,7 +809,7 @@ public suspend inline fun GuildBehavior.createCategory(
     builder: CategoryCreateBuilder.() -> Unit = {}
 ): Category {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     val response = kord.rest.guild.createCategory(id, name, builder)
     val data = ChannelData.from(response)
@@ -824,7 +824,7 @@ public suspend inline fun GuildBehavior.createCategory(
  */
 public suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChannelPositionModifyBuilder.() -> Unit) {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     kord.rest.guild.modifyGuildChannelPosition(id, builder)
 }
@@ -841,7 +841,7 @@ public suspend inline fun GuildBehavior.swapChannelPositions(builder: GuildChann
  */
 public suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositionsModifyBuilder.() -> Unit): Flow<Role> {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     val response = kord.rest.guild.modifyGuildRolePosition(id, builder)
     return response.asFlow().map { RoleData.from(id, it) }.map { Role(it, kord) }
@@ -857,7 +857,7 @@ public suspend inline fun GuildBehavior.swapRolePositions(builder: RolePositions
  */
 public suspend inline fun GuildBehavior.createRole(builder: RoleCreateBuilder.() -> Unit = {}): Role {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     val response = kord.rest.guild.createGuildRole(id, builder)
     val data = RoleData.from(id, response)
@@ -872,7 +872,7 @@ public suspend inline fun GuildBehavior.createRole(builder: RoleCreateBuilder.()
  */
 public suspend inline fun GuildBehavior.ban(userId: Snowflake, builder: BanCreateBuilder.() -> Unit) {
     contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(builder, EXACTLY_ONCE)
     }
     kord.rest.guild.addGuildBan(guildId = id, userId = userId, builder = builder)
 }
@@ -906,7 +906,7 @@ public suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfO
 }
 
 public suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
 }
 
@@ -926,7 +926,7 @@ public suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBui
  *  ```
  */
 public inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBuilder.() -> Unit = {}): Flow<AuditLogEntry> {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
     return kord.with(rest).getAuditLogEntries(id, builder).map { AuditLogEntry(it, kord) }
 }
 
@@ -949,7 +949,7 @@ public inline fun GuildBehavior.getAuditLogEntries(builder: AuditLogGetRequestBu
  */
 @PrivilegedIntent
 public inline fun GuildBehavior.requestMembers(builder: RequestGuildMembersBuilder.() -> Unit = { requestAllMembers() }): Flow<MembersChunkEvent> {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
     val request = RequestGuildMembersBuilder(id).apply(builder).toRequest()
     return requestMembers(request)
 }
@@ -964,7 +964,7 @@ public suspend fun GuildBehavior.createScheduledEvent(
     entityType: ScheduledEntityType,
     builder: ScheduledEventCreateBuilder.() -> Unit
 ): GuildScheduledEvent {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
 
     val event = kord.rest.guild.createScheduledEvent(id, name, privacyLevel, scheduledStartTime, entityType, builder)
     val data = GuildScheduledEventData.from(event)

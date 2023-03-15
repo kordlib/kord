@@ -6,11 +6,11 @@ import dev.kord.core.cache.data.EmojiData
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.GuildEmoji
 import dev.kord.core.entity.Strategizable
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -57,7 +57,7 @@ internal fun GuildEmojiBehavior(
     override val kord: Kord = kord
     override val supplier: EntitySupplier = strategy.supply(kord)
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildEmojiBehavior -> other.id == id

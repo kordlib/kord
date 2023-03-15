@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.Locale
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.exception.RequestException
@@ -15,6 +16,7 @@ import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.channel.*
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
@@ -24,7 +26,6 @@ import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
-import java.util.*
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
@@ -225,7 +226,7 @@ public class Guild(
             TopGuildMessageChannelBehavior(guildId = id, id = it, kord = kord)
         }
 
-    public val preferredLocale: Locale get() = Locale.forLanguageTag(data.preferredLocale)
+    public val preferredLocale: Locale get() = Locale.fromString(data.preferredLocale)
 
     /**
      * The behaviors of all [channels][TopGuildChannel].
@@ -508,7 +509,7 @@ public class Guild(
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Guild = Guild(data, kord, strategy.supply(kord))
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is GuildBehavior -> other.id == id

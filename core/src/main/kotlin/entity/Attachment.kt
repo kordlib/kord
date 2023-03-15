@@ -5,8 +5,8 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.AttachmentData
+import dev.kord.core.hash
 import dev.kord.rest.Image
-import java.util.*
 
 /**
  * An instance of a [Discord Attachment](https://discord.com/developers/docs/resources/channel#attachment-object).
@@ -69,7 +69,7 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
      */
     val isImage: Boolean get() = Image.Format.isSupported(filename)
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is Attachment -> other.id == id

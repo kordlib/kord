@@ -6090,7 +6090,7 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public final fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getOwnerOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getPermissions ()Ldev/kord/common/entity/Permissions;
-	public final fun getPreferredLocale ()Ljava/util/Locale;
+	public final fun getPreferredLocale ()Ldev/kord/common/Locale;
 	public final fun getPremiumProgressBarEnabled ()Z
 	public final fun getPremiumSubscriptionCount ()Ljava/lang/Integer;
 	public final fun getPremiumTier ()Ldev/kord/common/entity/PremiumTier;

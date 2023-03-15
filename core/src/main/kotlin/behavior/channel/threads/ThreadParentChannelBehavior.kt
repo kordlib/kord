@@ -13,6 +13,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
@@ -20,7 +21,6 @@ import dev.kord.rest.json.request.StartThreadRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.datetime.Instant
-import java.util.*
 
 /**
  * Behavior of channels that can contain public threads.
@@ -173,7 +173,7 @@ internal fun ThreadParentChannelBehavior(
         override val supplier: EntitySupplier
             get() = supplier
 
-        override fun hashCode(): Int = Objects.hash(id, guildId)
+        override fun hashCode(): Int = hash(id, guildId)
 
         override fun equals(other: Any?): Boolean = when (other) {
             is GuildChannelBehavior -> other.id == id && other.guildId == guildId
@@ -205,7 +205,7 @@ internal fun PrivateThreadParentChannelBehavior(
         override val supplier: EntitySupplier
             get() = supplier
 
-        override fun hashCode(): Int = Objects.hash(id, guildId)
+        override fun hashCode(): Int = hash(id, guildId)
 
         override fun equals(other: Any?): Boolean = when (other) {
             is GuildChannelBehavior -> other.id == id && other.guildId == guildId
