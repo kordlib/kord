@@ -1,5 +1,6 @@
 package dev.kord.rest.builder.guild
 
+import dev.kord.common.Locale
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
@@ -9,7 +10,6 @@ import dev.kord.common.entity.optional.map
 import dev.kord.rest.Image
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildModifyRequest
-import java.util.*
 import kotlin.time.Duration
 
 @KordDsl

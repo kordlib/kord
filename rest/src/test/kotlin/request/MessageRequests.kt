@@ -10,11 +10,11 @@ import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.io.path.toPath
 
 private val mockId = Snowflake(42)
@@ -46,7 +46,7 @@ private val mockMessage = DiscordMessage(
 
 class MessageRequests {
     @Test
-    fun `attachment channel is read and closed lazily`() = runBlocking {
+    fun `attachment channel is read and closed lazily`() = runTest {
 
         val mockEngine = MockEngine { request ->
             request.body.toByteArray() // `toByteArray()` reads `fileChannel`

@@ -1,8 +1,7 @@
-import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class EmojiModifyBuilderTest {
 
@@ -12,7 +11,6 @@ class EmojiModifyBuilderTest {
 
         val request = builder.toRequest()
 
-        Assertions.assertEquals(Optional.Missing<Iterable<Snowflake>>(), request.roles)
+        assertEquals(Optional.Missing(), request.roles)
     }
-
 }

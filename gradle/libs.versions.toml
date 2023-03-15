@@ -56,8 +56,8 @@ kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
 
 # JDK Replacements
-# JDK Replacements
 bignum = { module = "com.ionspin.kotlin:bignum", version = "0.3.8" }
+stately-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately" }
 stately-concurrency = { module = "co.touchlab:stately-concurrency", version.ref = "stately" }
 
 # tests
@@ -84,6 +84,8 @@ ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serializat
 
 test-implementation = ["kotlinx-coroutines-test", "kotlin-test", "junit-jupiter-api", "mockk"]
 test-runtime = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
+
+stately = ["stately-collections", "stately-concurrency"]
 
 pluginsForBuildSrc = [
     "kotlin-jvm-plugin",

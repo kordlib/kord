@@ -9,15 +9,15 @@ import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
 import java.nio.file.Path
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.io.path.name
 
 @KordDsl
 public sealed interface MessageModifyBuilder {
@@ -64,7 +64,7 @@ public sealed interface MessageModifyBuilder {
             "io.ktor.client.request.forms.ChannelProvider",
             "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
     public fun addFile(name: String, content: InputStream): NamedFile =
         addFile(name, ChannelProvider { content.toByteReadChannel() })
@@ -72,6 +72,10 @@ public sealed interface MessageModifyBuilder {
     /**
      * Adds a file with the given [path] to the attachments.
      */
+    @Deprecated(
+        "Replaced by addLocalFile",
+        ReplaceWith("addLocalFile(path)", "dev.kord.rest.builder.message.modify.addLocalFile")
+    )
     public suspend fun addFile(path: Path): NamedFile =
         addFile(path.fileName.toString(), ChannelProvider { path.readChannel() })
 
@@ -85,6 +89,13 @@ public sealed interface MessageModifyBuilder {
             }
         }
 }
+
+
+/**
+ * Adds a file with the given [path] to the attachments.
+ */
+public fun MessageModifyBuilder.addLocalFile(path: Path): NamedFile =
+    addFile(path.name, ChannelProvider(block = path::readChannel))
 
 public inline fun MessageModifyBuilder.embed(block: EmbedBuilder.() -> Unit) {
     contract {

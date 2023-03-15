@@ -14,9 +14,10 @@ import io.ktor.util.cio.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
 import java.nio.file.Path
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.io.path.name
 
 /**
  * The base builder for creating a new message.
@@ -88,7 +89,7 @@ public sealed interface MessageCreateBuilder {
             "io.ktor.client.request.forms.ChannelProvider",
             "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
     public fun addFile(name: String, content: InputStream): NamedFile =
         addFile(name, ChannelProvider { content.toByteReadChannel() })
@@ -105,10 +106,19 @@ public sealed interface MessageCreateBuilder {
     /**
      * Adds a file with the given [path] to the attachments.
      */
+    @Deprecated(
+        "Replaced by addLocalFile",
+        ReplaceWith("addLocalFile(path)", "dev.kord.rest.builder.message.create.addLocalFile")
+    )
     public suspend fun addFile(path: Path): NamedFile =
         addFile(path.fileName.toString(), ChannelProvider { path.readChannel() })
-
 }
+
+/**
+ * Adds a file with the given [path] to the attachments.
+ */
+public fun MessageCreateBuilder.addLocalFile(path: Path): NamedFile =
+    addFile(path.name, ChannelProvider(block = path::readChannel))
 
 internal fun buildMessageFlags(
     base: MessageFlags?,

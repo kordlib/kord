@@ -4,6 +4,16 @@
 
 package dev.kord.common.entity
 
+import kotlin.Any
+import kotlin.Boolean
+import kotlin.Deprecated
+import kotlin.DeprecationLevel
+import kotlin.Int
+import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.ReplaceWith
+import kotlin.String
+import kotlin.Suppress
+import kotlin.collections.List
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -11,7 +21,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.LazyThreadSafetyMode.PUBLICATION
 
 /**
  * See [GuildFeature]s in the
