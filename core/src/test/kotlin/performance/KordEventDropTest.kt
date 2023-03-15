@@ -33,6 +33,7 @@ import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 class KordEventDropTest {
+    var counter by atomic(0)
 
     object SpammyGateway : Gateway {
 
@@ -104,7 +105,6 @@ class KordEventDropTest {
             ), 0
         )
 
-        var counter by atomic(0)
         val countdown = CountDownLatch(amount)
         kord.on<GuildCreateEvent> {
             counter++
@@ -120,5 +120,4 @@ class KordEventDropTest {
         }
         assertEquals(amount, counter)
     }
-
 }
