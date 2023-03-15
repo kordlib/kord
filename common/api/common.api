@@ -12,6 +12,7 @@ public final class dev/kord/common/Color {
 }
 
 public final class dev/kord/common/Color$Companion {
+	public final fun parseHex (Ljava/lang/String;)Ldev/kord/common/Color;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -162,6 +163,7 @@ public final class dev/kord/common/Locale$Serializer : kotlinx/serialization/KSe
 
 public final class dev/kord/common/LocaleKt {
 	public static final fun getKLocale (Ljava/util/Locale;)Ldev/kord/common/Locale;
+	public static final fun toJavaLocale (Ldev/kord/common/Locale;)Ljava/util/Locale;
 }
 
 public abstract interface annotation class dev/kord/common/annotation/DeprecatedSinceKord : java/lang/annotation/Annotation {

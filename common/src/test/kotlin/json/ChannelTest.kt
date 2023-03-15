@@ -1,9 +1,9 @@
-package json
+package dev.kord.common.json
 
 import dev.kord.common.entity.DiscordChannel
 import dev.kord.common.entity.optional.value
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import kotlin.time.Duration.Companion.seconds
 
 private fun file(name: String): String {

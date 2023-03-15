@@ -1,3 +1,5 @@
+package dev.kord.common
+
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 

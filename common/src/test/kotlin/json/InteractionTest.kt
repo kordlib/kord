@@ -1,9 +1,9 @@
-package json
+package dev.kord.common.json
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 private fun file(name: String): String {
     val loader = InteractionTest::class.java.classLoader

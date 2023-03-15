@@ -1,14 +1,13 @@
-package json
+package dev.kord.common.json
 
 import dev.kord.common.entity.DiscordEmoji
 import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
-
+import kotlin.test.Test
 
 private fun file(name: String): String {
     val loader = ChannelTest::class.java.classLoader
-    return loader.getResource("json/emoji/$name.json").readText()
+    return loader.getResource("json/emoji/$name.json")!!.readText()
 }
 
 class EmojiTest {

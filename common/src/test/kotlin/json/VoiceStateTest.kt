@@ -1,9 +1,9 @@
-package json
+package dev.kord.common.json
 
 import dev.kord.common.entity.DiscordVoiceState
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 private fun file(name: String): String {
     val loader = ChannelTest::class.java.classLoader
@@ -28,6 +28,5 @@ class VoiceStateTest {
             suppress shouldBe false
             requestToSpeakTimestamp shouldBe Instant.parse("2021-03-31T18:45:31.297561+00:00")
         }
-
     }
 }

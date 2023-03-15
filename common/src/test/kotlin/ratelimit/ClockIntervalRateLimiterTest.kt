@@ -1,8 +1,6 @@
-package ratelimit
+package dev.kord.common.ratelimit
 
-import dev.kord.common.ratelimit.ClockIntervalRateLimiter
-import dev.kord.common.ratelimit.IntervalRateLimiter
-import fixed
+import dev.kord.common.fixed
 import kotlinx.datetime.Clock
 import kotlin.time.Duration
 

@@ -7,6 +7,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import java.awt.Color as JColor
 
 
 @Serializable(with = Color.Serializer::class)
@@ -36,6 +37,15 @@ public class Color(rgb: Int) {
     public companion object {
         private const val MIN_COLOR = 0
         private const val MAX_COLOR = 0xFFFFFF
+
+        /**
+         * Creates a [Color] from a [hex] string.
+         */
+        public fun parseHex(hex: String): Color {
+            require(hex.startsWith("#")) { "Hex hex needs to start with #" }
+            val int = hex.drop(1).toInt(16)
+            return Color(int)
+        }
     }
 
     internal object Serializer : KSerializer<Color> {
@@ -61,4 +71,4 @@ private fun rgb(red: Int, green: Int, blue: Int): Int {
             (blue and 0xFF) shl 0
 }
 
-public val java.awt.Color.kColor: Color get() = Color(rgb)
+public val JColor.kColor: Color get() = Color(rgb)

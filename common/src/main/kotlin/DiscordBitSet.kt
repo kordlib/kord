@@ -1,5 +1,8 @@
 package dev.kord.common
 
+import com.ionspin.kotlin.bignum.integer.BigInteger
+import com.ionspin.kotlin.bignum.integer.Sign
+import io.ktor.utils.io.core.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -7,8 +10,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.math.BigInteger
-import java.nio.ByteBuffer
 import kotlin.math.max
 import kotlin.math.min
 
@@ -27,9 +28,10 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
     public val value: String
         get() {
             // need to convert from little-endian data to big-endian expected by BigInteger
-            val buffer = ByteBuffer.allocate(data.size * Long.SIZE_BYTES)
-            buffer.asLongBuffer().put(data.reversedArray())
-            return BigInteger(buffer.array()).toString()
+            return withBuffer(data.size * Long.SIZE_BYTES) {
+                writeFully(data.reversedArray())
+                BigInteger.fromByteArray(readBytes(), Sign.POSITIVE).toString()
+            }
         }
 
     public val size: Int
@@ -128,7 +130,7 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
         return DiscordBitSet(longArrayOf(value.toULong().toLong()))
     }
 
-    val bytes = BigInteger(value).toByteArray()
+    val bytes = BigInteger.parseString(value).toByteArray()
 
     val longSize = (bytes.size / Long.SIZE_BYTES) + 1
     val destination = LongArray(longSize)

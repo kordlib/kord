@@ -8,6 +8,7 @@ kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serializatio
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "2.1.23" # https://github.com/MicroUtils/kotlin-logging
 kord-cache = { strictly = "[0.3.0, 0.4.0[", prefer = "latest.release" }
+stately = "2.0.0-rc1" # https://github.com/touchlab/Stately
 
 # code generation
 ksp = "1.8.10-1.0.9" # https://github.com/google/ksp
@@ -38,6 +39,7 @@ ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
+ktor-io = { module = "io.ktor:ktor-io", version.ref = "ktor" }
 
 # kotlinx
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -52,6 +54,11 @@ kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref =
 ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
+
+# JDK Replacements
+# JDK Replacements
+bignum = { module = "com.ionspin.kotlin:bignum", version = "0.3.8" }
+stately-concurrency = { module = "co.touchlab:stately-concurrency", version.ref = "stately" }
 
 # tests
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

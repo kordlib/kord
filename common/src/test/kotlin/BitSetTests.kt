@@ -1,5 +1,5 @@
-import dev.kord.common.DiscordBitSet
-import dev.kord.common.EmptyBitSet
+package dev.kord.common
+
 import kotlin.test.*
 
 class BitSetTests {
@@ -58,16 +58,16 @@ class BitSetTests {
     @Test
     fun `get a bit out of range`() {
         val a = DiscordBitSet(0b101, 0)
-        assert(!a[10000])
+        assertFalse(a[10000])
     }
 
     @Test
     fun `add and remove a bit`() {
         val a = DiscordBitSet(0b101, 0)
         a.add(DiscordBitSet(0b111))
-        assert(a.value == 0b111.toString())
+        assertEquals(0b111.toString(), a.value)
         a.remove(DiscordBitSet(0b001))
-        assert(a.value == 0b110.toString())
+        assertEquals(0b110.toString(), a.value)
     }
 
     @Test

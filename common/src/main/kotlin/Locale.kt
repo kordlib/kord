@@ -20,6 +20,7 @@ public data class Locale(val language: String, val country: String? = null) {
     /**
      * Converts this into a [JLocale].
      */
+    @Deprecated("Moved to extension", ReplaceWith("toJavaLocale()", "dev.kord.common.toJavaLocale"))
     public fun asJavaLocale(): JLocale = JLocale(language, country ?: "")
 
     public companion object {
@@ -253,3 +254,9 @@ public data class Locale(val language: String, val country: String? = null) {
  */
 public val JLocale.kLocale: Locale
     get() = Locale(language, country.ifBlank { null })
+
+/**
+ * Converts this into a [JLocale].
+ */
+public fun Locale.toJavaLocale(): JLocale = JLocale(language, country ?: "")
+

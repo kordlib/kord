@@ -4,9 +4,10 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.intellij.lang.annotations.Language
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
+import kotlin.test.assertFailsWith
+import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 internal class OptionalBooleanTest {
 
@@ -14,24 +15,24 @@ internal class OptionalBooleanTest {
     private class EmptyOptionalEntity(val value: OptionalBoolean = OptionalBoolean.Missing)
 
     @Test
-    fun `deserializing nothing in optional assigns Missing`(){
-        @Language("json")
+    fun `deserializing nothing in optional assigns Missing`() {
+        //language=json
         val json = """{}"""
 
         val entity = Json.decodeFromString<EmptyOptionalEntity>(json)
 
-        assert(entity.value is OptionalBoolean.Missing)
+        assertIs<OptionalBoolean.Missing>(entity.value)
     }
 
     @Serializable
     private class NullOptionalEntity(@Suppress("unused") val value: OptionalBoolean = OptionalBoolean.Missing)
 
     @Test
-    fun `deserializing null in optional throws SerializationException`(){
-        @Language("json")
+    fun `deserializing null in optional throws SerializationException`() {
+        //language=json
         val json = """{ "value":null }"""
 
-        org.junit.jupiter.api.assertThrows<SerializationException> {
+        assertFailsWith<SerializationException> {
             Json.decodeFromString<NullOptionalEntity>(json)
         }
     }
@@ -40,15 +41,13 @@ internal class OptionalBooleanTest {
     private class ValueOptionalEntity(@Suppress("unused") val value: OptionalBoolean = OptionalBoolean.Missing)
 
     @Test
-    fun `deserializing value in optional assigns Value`(){
-        @Language("json")
+    fun `deserializing value in optional assigns Value`() {
+        //language=json
         val json = """{ "value":true }"""
 
 
         val entity = Json.decodeFromString<ValueOptionalEntity>(json)
-        require(entity.value is OptionalBoolean.Value)
-
-        Assertions.assertEquals(true, entity.value.value)
+        assertIs<OptionalBoolean.Value>(entity.value)
+        assertTrue(entity.value.value)
     }
-
 }

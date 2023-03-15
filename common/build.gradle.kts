@@ -11,6 +11,8 @@ dependencies {
     api(libs.kotlinx.serialization.json)
     api(libs.kotlinx.datetime)
     api(libs.kotlin.logging)
+    api(libs.ktor.io)
+    api(libs.bignum)
 
     compileOnly(projects.kspAnnotations)
     ksp(projects.kspProcessors)

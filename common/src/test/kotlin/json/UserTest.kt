@@ -1,13 +1,13 @@
-package json
+package dev.kord.common.json
 
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.UserFlags
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 private fun file(name: String): String {
     val loader = ChannelTest::class.java.classLoader
-    return loader.getResource("json/user/$name.json").readText()
+    return loader.getResource("json/user/$name.json")!!.readText()
 }
 
 class UserTest {

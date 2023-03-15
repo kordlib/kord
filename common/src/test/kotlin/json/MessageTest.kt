@@ -1,9 +1,11 @@
-package json
+package dev.kord.common.json
 
-import dev.kord.common.entity.*
+import dev.kord.common.entity.DiscordMessage
+import dev.kord.common.entity.MessageFlag
+import dev.kord.common.entity.MessageFlags
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 
 
 private fun file(name: String): String {

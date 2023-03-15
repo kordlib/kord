@@ -4,18 +4,21 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import org.intellij.lang.annotations.Language
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertIs
 
 internal class OptionalTest {
 
     @Test
     fun `creating optional from nullable value returns Value on non-null value`() {
+        @Suppress("RedundantNullableReturnType")
         val value: Int? = 5
         val optional = Optional(value)
 
-        assert(optional is Optional.Value)
-        assert((optional as Optional.Value).value == value)
+        assertIs<Optional.Value<*>>(optional)
+        assertEquals(value, optional.value as Int?)
     }
 
     @Test
@@ -23,63 +26,58 @@ internal class OptionalTest {
         val value: Int? = null
         val optional = Optional(value)
 
-        assert(optional is Optional.Null)
+        assertIs<Optional.Null<*>>(optional)
     }
-
 
     @Serializable
     private class NullOptionalEntity(val value: Optional<String?>)
 
     @Test
     fun `deserializing null in nullable optional assigns Null`() {
-        @Language("json")
+        //language=json
         val json = """{ "value":null }"""
 
         val entity = Json.decodeFromString<NullOptionalEntity>(json)
 
-        assert(entity.value is Optional.Null)
+        assertIs<Optional.Null<*>>(entity.value)
     }
-
 
     @Serializable
     class EmptyOptionalEntity(val value: Optional<String?> = Optional.Missing())
 
     @Test
     fun `deserializing nothing in nullable optional assigns Missing`() {
-        @Language("json")
+        //language=json
         val json = """{}"""
 
         val entity = Json.decodeFromString<EmptyOptionalEntity>(json)
 
-        assert(entity.value is Optional.Missing)
+        assertIs<Optional.Missing<*>>(entity.value)
     }
-
 
     @Serializable
     class UnexpectedEmptyOptionalEntity(val value: Optional<String> = Optional.Missing())
 
     @Test
     fun `deserializing nothing in non-nullable optional assigns Missing`() {
-        @Language("json")
+        //language=json
         val json = """{}"""
 
         val entity = Json.decodeFromString<UnexpectedEmptyOptionalEntity>(json)
 
-        assert(entity.value is Optional.Missing)
+        assertIs<Optional.Missing<*>>(entity.value)
     }
-
 
     @Serializable
     private class UnexpectedNullOptionalEntity(@Suppress("unused") val value: Optional<String> = Optional.Missing())
 
     @Test
     fun `deserializing null in non-nullable optional throws SerializationException`() {
-        @Language("json")
+        //language=json
         val json = """{ "value":null }"""
 
-        org.junit.jupiter.api.assertThrows<SerializationException> {
+        assertFailsWith<SerializationException> {
             Json.decodeFromString<UnexpectedNullOptionalEntity>(json)
         }
     }
-
 }
