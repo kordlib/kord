@@ -11,8 +11,8 @@ import dev.kord.common.entity.optional.optionalInt
 import dev.kord.gateway.*
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.*
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
+import kotlin.test.Test
 import java.util.*
 
 private val json = Json { encodeDefaults = false }

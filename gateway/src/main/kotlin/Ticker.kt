@@ -1,10 +1,10 @@
 package dev.kord.gateway
 
-import io.ktor.util.logging.*
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.channels.ticker
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import mu.KotlinLogging
@@ -17,7 +17,6 @@ private val logger = KotlinLogging.logger { }
  *
  * @param dispatcher The dispatchers the events will be fired on.
  */
-@ObsoleteCoroutinesApi
 public class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.Default) : CoroutineScope {
 
 
@@ -25,29 +24,35 @@ public class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.De
 
     private val mutex = Mutex()
 
-    private var ticker: ReceiveChannel<Unit>? = null
+    private var ticker: Flow<Unit>? = null
+    private var listener: Job? = null
 
     public suspend fun tickAt(intervalMillis: Long, block: suspend () -> Unit) {
         stop()
         mutex.withLock {
-            ticker = ticker(intervalMillis)
+            ticker = tickingFlow(intervalMillis)
 
-            launch {
-                ticker?.consumeEach {
-                    try {
-                        block()
-                    } catch (exception: Exception) {
-                        logger.error(exception)
-                    }
+            listener = ticker?.onEach {
+                try {
+                    block()
+                } catch (exception: Exception) {
+                    logger.error(exception) { "An error occurred whilst ticking" }
                 }
-            }
+            }?.launchIn(this)
         }
     }
 
     public suspend fun stop() {
         mutex.withLock {
-            ticker?.cancel()
+            listener?.cancel()
         }
     }
 
+}
+
+private fun tickingFlow(period: Long): Flow<Unit> = flow {
+    while (true) {
+        emit(Unit)
+        delay(period)
+    }
 }
