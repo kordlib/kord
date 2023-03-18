@@ -4,6 +4,7 @@ import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ChannelType.*
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.ChannelData
@@ -47,22 +48,25 @@ public interface Channel : ChannelBehavior {
             data: ChannelData,
             kord: Kord,
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-        ): Channel = when (data.type) {
-            GuildText -> TextChannel(data, kord)
-            DM, GroupDM -> DmChannel(data, kord)
-            GuildStageVoice -> StageChannel(data, kord)
-            GuildVoice -> VoiceChannel(data, kord)
-            GuildCategory -> Category(data, kord)
-            GuildNews -> NewsChannel(data, kord)
-            GuildForum -> ForumChannel(data, kord)
-            PublicNewsThread -> NewsChannelThread(data, kord)
-            PrivateThread, PublicGuildThread -> {
-                TextChannelThread(data, kord)
-            }
+        ): Channel {
+            if(data.type == PublicGuildThread && data.appliedTags is Optional.Value) return ForumChannelThread(data, kord)
+            return when (data.type) {
+                GuildText -> TextChannel(data, kord)
+                DM, GroupDM -> DmChannel(data, kord)
+                GuildStageVoice -> StageChannel(data, kord)
+                GuildVoice -> VoiceChannel(data, kord)
+                GuildCategory -> Category(data, kord)
+                GuildNews -> NewsChannel(data, kord)
+                GuildForum -> ForumChannel(data, kord)
+                PublicNewsThread -> NewsChannelThread(data, kord)
+                PrivateThread, PublicGuildThread -> {
+                    TextChannelThread(data, kord)
+                }
 
-            GuildDirectory, is Unknown -> {
-                if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))
-                else ThreadChannel(data, kord, strategy.supply(kord))
+                GuildDirectory, is Unknown -> {
+                    if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))
+                    else ThreadChannel(data, kord, strategy.supply(kord))
+                }
             }
         }
     }
