@@ -4,11 +4,9 @@ import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ChannelType.*
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.entity.channel.thread.ForumChannelThread
 import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -48,9 +46,7 @@ public interface Channel : ChannelBehavior {
             data: ChannelData,
             kord: Kord,
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
-        ): Channel {
-            if(data.type == PublicGuildThread && data.appliedTags is Optional.Value) return ForumChannelThread(data, kord)
-            return when (data.type) {
+        ): Channel = when (data.type) {
                 GuildText -> TextChannel(data, kord)
                 DM, GroupDM -> DmChannel(data, kord)
                 GuildStageVoice -> StageChannel(data, kord)
@@ -70,7 +66,7 @@ public interface Channel : ChannelBehavior {
             }
         }
     }
-}
+
 
 internal fun Channel(
     data: ChannelData,

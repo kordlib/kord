@@ -11,10 +11,16 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.cache.data.toData
+import dev.kord.core.entity.Message
+import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.builder.channel.thread.ForumThreadModifyBuilder
 import kotlinx.datetime.Instant
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.Duration
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
@@ -100,12 +106,27 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     public val member: ThreadMember? get() = data.member.unwrap { ThreadMember(it, kord) }
 
 
+    /**
+     * Only available when creating a thread in a forum channel
+     */
+    public val message: Message? get() = data.message.unwrap { Message(it, kord) }
+
+    /**
+     * Only available when creating a thread in a forum channel
+     */
+    public val appliedTags: List<Snowflake>? get() = data.appliedTags.value
+
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
         return ThreadChannel(data, kord, strategy.supply(kord))
     }
 
 }
-
+public suspend inline fun ThreadChannel.editAsForumThread(builder: ForumThreadModifyBuilder.() -> Unit): TextChannelThread {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val appliedBuilder = ForumThreadModifyBuilder().apply(builder)
+    val patchedChannel = kord.rest.channel.patchThread(id, appliedBuilder.toRequest(), appliedBuilder.reason)
+    return Channel.from(patchedChannel.toData(), kord) as TextChannelThread
+}
 internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier): ThreadChannel {
     return object : ThreadChannel {
 

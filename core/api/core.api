@@ -1515,49 +1515,6 @@ public final class dev/kord/core/behavior/channel/VoiceChannelBehaviorKt {
 	public static final fun edit (Ldev/kord/core/behavior/channel/VoiceChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class dev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior : dev/kord/core/behavior/channel/threads/ThreadChannelBehavior {
-}
-
-public final class dev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior$DefaultImpls {
-	public static fun addUser (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun asChannel (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun asChannelOrNull (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun bulkDelete (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun bulkDelete (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun compareTo (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/core/entity/Entity;)I
-	public static fun createMessage (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun delete (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun deleteMessage (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun fetchChannel (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun fetchChannelOrNull (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getGuild (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;)Ldev/kord/core/behavior/GuildBehavior;
-	public static fun getGuild (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getGuildOrNull (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getMembers (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;)Lkotlinx/coroutines/flow/Flow;
-	public static fun getMention (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;)Ljava/lang/String;
-	public static fun getMessage (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getMessageOrNull (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getMessages (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;)Lkotlinx/coroutines/flow/Flow;
-	public static fun getMessagesAfter (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
-	public static fun getMessagesAround (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/common/entity/Snowflake;I)Lkotlinx/coroutines/flow/Flow;
-	public static fun getMessagesBefore (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
-	public static fun getParent (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
-	public static fun getParent (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getParentOrNull (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPinnedMessages (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;)Lkotlinx/coroutines/flow/Flow;
-	public static fun join (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun leave (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun removeUser (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun type (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun typeUntil (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/time/TimeMark;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun typeUntil (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlinx/datetime/Instant;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun withStrategy (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;
-}
-
-public final class dev/kord/core/behavior/channel/threads/ForumChannelThreadBehaviorKt {
-	public static final fun edit (Ldev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public abstract interface class dev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior : dev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior {
 	public abstract fun getJoinedPrivateArchivedThreads (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getPrivateArchivedThreads (Lkotlinx/datetime/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
@@ -7815,12 +7772,7 @@ public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/beh
 	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public final fun createTag (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun createTag$default (Ldev/kord/core/entity/channel/ForumChannel;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun deleteTag (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun deleteTag$default (Ldev/kord/core/entity/channel/ForumChannel;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun editTag (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getActiveThreads ()Lkotlinx/coroutines/flow/Flow;
@@ -8485,84 +8437,6 @@ public final class dev/kord/core/entity/channel/thread/DeletedThreadChannel : de
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/DeletedThreadChannel;
 }
 
-public final class dev/kord/core/entity/channel/thread/ForumChannelThread : dev/kord/core/behavior/channel/threads/ForumChannelThreadBehavior, dev/kord/core/entity/channel/thread/ThreadChannel {
-	public fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun addUser (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun bulkDelete (Ljava/lang/Iterable;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun bulkDelete (Ljava/lang/Iterable;ZLjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public fun createMessage (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun deleteMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getAppliedTags ()Ljava/util/List;
-	public fun getArchiveTimestamp ()Lkotlinx/datetime/Instant;
-	public fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
-	public fun getCreateTimestamp ()Lkotlinx/datetime/Instant;
-	public fun getData ()Ldev/kord/core/cache/data/ChannelData;
-	public fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
-	public fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
-	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
-	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getLastMessage ()Ldev/kord/core/behavior/MessageBehavior;
-	public fun getLastMessage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getLastMessageId ()Ldev/kord/common/entity/Snowflake;
-	public fun getLastPinTimestamp ()Lkotlinx/datetime/Instant;
-	public fun getMember ()Ldev/kord/core/entity/channel/thread/ThreadMember;
-	public fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
-	public fun getMembers ()Lkotlinx/coroutines/flow/Flow;
-	public fun getMention ()Ljava/lang/String;
-	public final fun getMessage ()Ldev/kord/core/entity/Message;
-	public fun getMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
-	public fun getMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getMessages ()Lkotlinx/coroutines/flow/Flow;
-	public fun getMessagesAfter (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
-	public fun getMessagesAround (Ldev/kord/common/entity/Snowflake;I)Lkotlinx/coroutines/flow/Flow;
-	public fun getMessagesBefore (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
-	public fun getName ()Ljava/lang/String;
-	public fun getOwner ()Ldev/kord/core/behavior/UserBehavior;
-	public fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
-	public fun getParent ()Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
-	public fun getParent (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getParentId ()Ldev/kord/common/entity/Snowflake;
-	public fun getParentOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPinnedMessages ()Lkotlinx/coroutines/flow/Flow;
-	public fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
-	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public fun getType ()Ldev/kord/common/entity/ChannelType;
-	public fun isArchived ()Z
-	public fun isLocked ()Z
-	public fun isNsfw ()Z
-	public fun join (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun leave (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun removeUser (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun toString ()Ljava/lang/String;
-	public fun type (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun typeUntil (Lkotlin/time/TimeMark;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun typeUntil (Lkotlinx/datetime/Instant;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/Channel;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildChannel;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/GuildMessageChannel;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/MessageChannel;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/ThreadChannel;
-}
-
 public final class dev/kord/core/entity/channel/thread/NewsChannelThread : dev/kord/core/entity/channel/thread/ThreadChannel {
 	public fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -8578,6 +8452,7 @@ public final class dev/kord/core/entity/channel/thread/NewsChannelThread : dev/k
 	public fun deleteMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAppliedTags ()Ljava/util/List;
 	public fun getArchiveTimestamp ()Lkotlinx/datetime/Instant;
 	public fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public fun getCreateTimestamp ()Lkotlinx/datetime/Instant;
@@ -8598,6 +8473,7 @@ public final class dev/kord/core/entity/channel/thread/NewsChannelThread : dev/k
 	public fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMembers ()Lkotlinx/coroutines/flow/Flow;
 	public fun getMention ()Ljava/lang/String;
+	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8654,6 +8530,7 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 	public fun deleteMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAppliedTags ()Ljava/util/List;
 	public fun getArchiveTimestamp ()Lkotlinx/datetime/Instant;
 	public fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public fun getCreateTimestamp ()Lkotlinx/datetime/Instant;
@@ -8674,6 +8551,7 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 	public fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMembers ()Lkotlinx/coroutines/flow/Flow;
 	public fun getMention ()Ljava/lang/String;
+	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun getMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8718,12 +8596,14 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 }
 
 public abstract interface class dev/kord/core/entity/channel/thread/ThreadChannel : dev/kord/core/behavior/channel/threads/ThreadChannelBehavior, dev/kord/core/entity/channel/GuildMessageChannel {
+	public abstract fun getAppliedTags ()Ljava/util/List;
 	public abstract fun getArchiveTimestamp ()Lkotlinx/datetime/Instant;
 	public abstract fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public abstract fun getCreateTimestamp ()Lkotlinx/datetime/Instant;
 	public abstract fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public abstract fun getMember ()Ldev/kord/core/entity/channel/thread/ThreadMember;
 	public abstract fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public abstract fun getMessage ()Ldev/kord/core/entity/Message;
 	public abstract fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public abstract fun getOwner ()Ldev/kord/core/behavior/UserBehavior;
 	public abstract fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
@@ -8747,6 +8627,7 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun deleteMessage (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun fetchChannel (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun fetchChannelOrNull (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getAppliedTags (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ljava/util/List;
 	public static fun getArchiveTimestamp (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlinx/datetime/Instant;
 	public static fun getAutoArchiveDuration (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/ArchiveDuration;
 	public static fun getCreateTimestamp (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlinx/datetime/Instant;
@@ -8765,6 +8646,7 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun getMemberCount (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/optional/OptionalInt;
 	public static fun getMembers (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getMention (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ljava/lang/String;
+	public static fun getMessage (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/core/entity/Message;
 	public static fun getMessage (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getMessageCount (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/optional/OptionalInt;
 	public static fun getMessageOrNull (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -8792,6 +8674,10 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun typeUntil (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/time/TimeMark;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun typeUntil (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlinx/datetime/Instant;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun withStrategy (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/ThreadChannel;
+}
+
+public final class dev/kord/core/entity/channel/thread/ThreadChannelKt {
+	public static final fun editAsForumThread (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/entity/channel/thread/ThreadMember : dev/kord/core/behavior/ThreadMemberBehavior {
