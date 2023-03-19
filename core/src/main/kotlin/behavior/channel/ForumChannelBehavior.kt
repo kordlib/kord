@@ -18,12 +18,14 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 public interface ForumChannelBehavior : ThreadParentChannelBehavior {
+
     override val activeThreads: Flow<TextChannelThread>
         get() = super.activeThreads.filterIsInstance()
 
     override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<TextChannelThread> {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
     }
+
     public suspend fun createTag(name: String, builder: ForumTagBuilder.() -> Unit = {}): ForumChannel {
         val request = kord.rest.channel.createForumTag(id, name, builder)
         val data = ChannelData.from(request)
