@@ -31,8 +31,8 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
     private var _invitable: OptionalBoolean = OptionalBoolean.Missing
     public var invitable: Boolean? by ::_invitable.delegate()
 
-    private var _appliedTags: Optional<List<Snowflake>> = Optional.Missing()
-    public var appliedTags: List<Snowflake>? by ::_appliedTags.delegate()
+    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
+    public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest {
         return ChannelModifyPatchRequest(
