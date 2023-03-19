@@ -2,6 +2,7 @@ package dev.kord.ksp
 
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.KSAnnotation
+import com.google.devtools.ksp.symbol.KSClassDeclaration
 import kotlin.reflect.KProperty1
 
 internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(inDepth: Boolean = false) =
@@ -18,3 +19,13 @@ internal class AnnotationArguments private constructor(private val map: Map<Stri
             get() = AnnotationArguments(arguments.associate { it.name!!.getShortName() to it.value!! })
     }
 }
+
+internal val KSClassDeclaration.binaryName: String
+    get() {
+        val parent = parentDeclaration
+        return if (parent is KSClassDeclaration) {
+            "${parent.binaryName}\$${simpleName.asString()}"
+        } else {
+            qualifiedName!!.asString()
+        }
+    }

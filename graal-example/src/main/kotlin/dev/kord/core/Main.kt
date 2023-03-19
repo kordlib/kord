@@ -5,7 +5,9 @@ import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
 
 suspend fun main(args: Array<String>) {
-    val kord = Kord(args.firstOrNull() ?: error("token required"))
+    val kord = Kord(args.firstOrNull() ?: error("token required")) {
+        enableShutdownHook = true
+    }
 
     kord.on<MessageCreateEvent> {
         if (message.author?.isBot == true) return@on

@@ -3,7 +3,9 @@ package dev.kord.ksp.graal
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
+import dev.kord.ksp.binaryName
 import dev.kord.ksp.getSymbolsWithAnnotation
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 
 class KordGraalProcessorProvider : SymbolProcessorProvider {
@@ -51,19 +53,36 @@ private class KordGraalProcessor(private val codeGenerator: CodeGenerator, priva
     }
 
     private fun processClass(clazz: KSClassDeclaration): List<ReflectConfigEntry> {
-        val qualifiedName = clazz.qualifiedName?.asString() ?: run {
-            logger.warn("Invalid Serializable element received", clazz)
-            return emptyList()
-        }
+        val name = clazz.findCompanionObjectName()
+
+        val qualifiedName = clazz.binaryName
         val companionField = ReflectConfigEntry(
             name = qualifiedName,
-            fields = listOf(ReflectConfigEntry.Field("Companion"))
+            fields = listOf(ReflectConfigEntry.Field(name))
         )
         val companionObject = ReflectConfigEntry(
-            name = "$qualifiedName\$Companion",
-            methods = listOf(ReflectConfigEntry.Method("serializer"))
+            name = "$qualifiedName\$$name",
+            methods = listOf(
+                ReflectConfigEntry.Method(
+                    "serializer",
+                    generateTypeParameters(clazz.typeParameters.count()).also {
+                        logger.info("Class ${clazz.qualifiedName?.asString()} has ${it.size} type parameters")
+                    }
+                )
+            )
         )
 
         return listOf(companionField, companionObject)
     }
+
+    private fun KSClassDeclaration.findCompanionObjectName(): String {
+        val companionObject = declarations.firstOrNull {
+            (it as? KSClassDeclaration)?.isCompanionObject == true
+        }
+
+        return companionObject?.qualifiedName?.getShortName() ?: "Companion"
+    }
+
+    private fun generateTypeParameters(n: Int): List<String> = List(n) { KSerializer::class.qualifiedName!! }
+
 }
