@@ -24,6 +24,7 @@ dependencies {
     api(libs.kord.cache.api)
     api(libs.kord.cache.map)
 
+    compileOnly(projects.kspAnnotations)
     ksp(projects.kspProcessors)
 
     samplesImplementation(libs.slf4j.simple)

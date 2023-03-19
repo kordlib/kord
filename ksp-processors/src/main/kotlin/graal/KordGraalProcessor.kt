@@ -3,6 +3,7 @@ package dev.kord.ksp.graal
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
+import dev.kord.ksp.GraalVisible
 import dev.kord.ksp.binaryName
 import dev.kord.ksp.getSymbolsWithAnnotation
 import kotlinx.serialization.KSerializer
@@ -38,6 +39,11 @@ private class KordGraalProcessor(private val codeGenerator: CodeGenerator, priva
             .flatMap(::processClass)
             .toList()
 
+        entries += resolver
+            .getSymbolsWithAnnotation<GraalVisible>()
+            .filterIsInstance<KSClassDeclaration>()
+            .map { ReflectConfigEntry(name = it.binaryName) }
+
         logger.info("KordEnumProcessor finished processing annotations")
 
         return emptyList() // we never have to defer any symbols
@@ -45,7 +51,7 @@ private class KordGraalProcessor(private val codeGenerator: CodeGenerator, priva
 
     private fun flushEntries() {
         if (entries.isNotEmpty()) {
-            val config = ReflectConfig(entries)
+            val config = ReflectConfig(entries.distinctBy(ReflectConfigEntry::name))
             val file = codeGenerator
                 .createNewFile(Dependencies.ALL_FILES, "META-INF.native-image", "reflect-config", "json")
             file.bufferedWriter().use { it.write(config.encode()) }
