@@ -1,13 +1,10 @@
 package dev.kord.core
 
-import dev.kord.common.entity.AutoModerationRuleEventType
 import dev.kord.core.event.message.MessageCreateEvent
 import dev.kord.gateway.Intent
 import dev.kord.gateway.PrivilegedIntent
-import kotlinx.serialization.serializer
 
 suspend fun main(args: Array<String>) {
-    println(serializer<AutoModerationRuleEventType>())
     val kord = Kord(args.firstOrNull() ?: error("token required"))
 
     kord.on<MessageCreateEvent> {

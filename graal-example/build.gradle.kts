@@ -1,7 +1,8 @@
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     `kord-internal-module`
     application
-    id("org.graalvm.buildtools.native") version "0.9.20"
+    alias(libs.plugins.graal)
 }
 
 dependencies {
