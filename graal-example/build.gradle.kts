@@ -2,25 +2,15 @@
 plugins {
     `kord-internal-module`
     application
-    alias(libs.plugins.graal)
+    org.graalvm.buildtools.native
 }
 
 dependencies {
     implementation(projects.core)
     implementation(libs.slf4j.simple)
+    implementation(kotlin("reflect"))
 }
 
 application {
     mainClass.set("dev.kord.core.MainKt")
-}
-
-graalvmNative {
-    binaries {
-        named("main") {
-            javaLauncher.set(javaToolchains.launcherFor {
-                languageVersion.set(JavaLanguageVersion.of(19))
-                vendor.set(JvmVendorSpec.matching("GraalVM Community"))
-            })
-        }
-    }
 }

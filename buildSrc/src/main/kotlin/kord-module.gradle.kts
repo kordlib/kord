@@ -1,4 +1,3 @@
-import com.google.devtools.ksp.gradle.KspTask
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URL
@@ -11,6 +10,7 @@ plugins {
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
     `maven-publish`
+    org.graalvm.buildtools.native
 }
 
 repositories {
@@ -130,6 +130,18 @@ publishing {
     publications.withType<MavenPublication>().configureEach {
         from(components["java"])
         artifact(tasks.kotlinSourcesJar)
-        artifact(dokkaJar)
+    }
+}
+
+graalvmNative {
+    binaries {
+        named("test") {
+            buildArgs(
+                """-H:IncludeResources=".*/.*json"""",
+                """-H:IncludeResources=".*/.*png"""",
+                """-H:IncludeResources=".*/.*kotlin_builtins"""",
+                "-H:ReflectionConfigurationFiles=${rootProject.file("graal/test-reflect-config.json").absolutePath}",
+            )
+        }
     }
 }

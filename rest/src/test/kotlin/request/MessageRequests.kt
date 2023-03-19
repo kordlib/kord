@@ -56,7 +56,7 @@ class MessageRequests {
 
         val channelService = ChannelService(KtorRequestHandler(client = HttpClient(mockEngine), token = ""))
 
-        val fileChannel = ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel()
+        val fileChannel = ClassLoader.getSystemResourceAsStream("images/kord.png")!!.toByteReadChannel()
 
         with(fileChannel) {
             assert(!isClosedForWrite)

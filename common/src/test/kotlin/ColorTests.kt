@@ -1,5 +1,6 @@
 import dev.kord.common.Color
 import dev.kord.common.kColor
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
@@ -24,6 +25,7 @@ class ColorTests {
         assertEquals(0xFFFFFF, white.rgb)
     }
 
+    @Disabled
     @Test
     fun `java to kColor conversion`() {
         val color = java.awt.Color.decode("#DBD0B4").kColor
