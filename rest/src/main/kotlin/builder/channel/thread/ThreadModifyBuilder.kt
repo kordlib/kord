@@ -2,6 +2,7 @@ package dev.kord.rest.builder.channel.thread
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.delegate.delegate
@@ -30,6 +31,9 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
     private var _invitable: OptionalBoolean = OptionalBoolean.Missing
     public var invitable: Boolean? by ::_invitable.delegate()
 
+    private var _appliedTags: Optional<List<Snowflake>> = Optional.Missing()
+    public var appliedTags: List<Snowflake>? by ::_appliedTags.delegate()
+
     override fun toRequest(): ChannelModifyPatchRequest {
         return ChannelModifyPatchRequest(
             name = _name,
@@ -38,6 +42,7 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
             autoArchiveDuration = _autoArchiveDuration,
             rateLimitPerUser = _rateLimitPerUser,
             invitable = _invitable,
+            appliedTags = _appliedTags
         )
     }
 

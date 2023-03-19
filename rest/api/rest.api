@@ -865,6 +865,7 @@ public final class dev/kord/rest/builder/channel/thread/StartThreadWithoutMessag
 
 public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
+	public final fun getAppliedTags ()Ljava/util/List;
 	public final fun getArchived ()Ljava/lang/Boolean;
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getInvitable ()Ljava/lang/Boolean;
@@ -872,6 +873,7 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getReason ()Ljava/lang/String;
+	public final fun setAppliedTags (Ljava/util/List;)V
 	public final fun setArchived (Ljava/lang/Boolean;)V
 	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setInvitable (Ljava/lang/Boolean;)V
