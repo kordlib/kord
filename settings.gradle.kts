@@ -13,6 +13,7 @@ include(
     "ksp-processors",
     "rest",
     "voice",
+    "graal-example"
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

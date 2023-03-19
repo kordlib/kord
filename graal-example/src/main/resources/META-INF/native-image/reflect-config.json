@@ -1,0 +1,17 @@
+[
+  {
+    "name": "kotlin.internal.jdk8.JDK8PlatformImplementations",
+    "allPublicMethods": true,
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true,
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.ktor.network.selector.InterestSuspensionsMap",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.ktor.utils.io.pool.DefaultPool",
+    "allDeclaredFields": true
+  }
+]
