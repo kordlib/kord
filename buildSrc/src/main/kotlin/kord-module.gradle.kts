@@ -119,6 +119,10 @@ tasks {
     }
 }
 
+ksp {
+    arg("project", project.name)
+}
+
 val dokkaJar by tasks.registering(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles Kotlin docs with Dokka"

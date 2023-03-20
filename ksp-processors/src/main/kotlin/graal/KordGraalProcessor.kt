@@ -12,14 +12,18 @@ import kotlinx.serialization.Serializable
 class KordGraalProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
         return KordGraalProcessor(
-            environment.codeGenerator, environment.logger
+            environment.codeGenerator, environment.logger, environment.options["project"]!!
         )
     }
 }
 
 private val entries = mutableListOf<ReflectConfigEntry>()
 
-private class KordGraalProcessor(private val codeGenerator: CodeGenerator, private val logger: KSPLogger) :
+private class KordGraalProcessor(
+    private val codeGenerator: CodeGenerator,
+    private val logger: KSPLogger,
+    private val project: String
+) :
     SymbolProcessor {
     override fun finish() {
         flushEntries()
@@ -53,7 +57,12 @@ private class KordGraalProcessor(private val codeGenerator: CodeGenerator, priva
         if (entries.isNotEmpty()) {
             val config = ReflectConfig(entries.distinctBy(ReflectConfigEntry::name))
             val file = codeGenerator
-                .createNewFile(Dependencies.ALL_FILES, "META-INF.native-image", "reflect-config", "json")
+                .createNewFile(
+                    Dependencies.ALL_FILES,
+                    "META-INF.native-image/dev.kord/kord-${project}",
+                    "reflect-config",
+                    "json"
+                )
             file.bufferedWriter().use { it.write(config.encode()) }
         }
     }
