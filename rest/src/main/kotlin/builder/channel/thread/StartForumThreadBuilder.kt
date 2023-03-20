@@ -2,7 +2,6 @@ package dev.kord.rest.builder.channel.thread
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
-import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
@@ -28,9 +27,6 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
     private var _appliedTags: Optional<MutableList<Snowflake>?> = Optional.Missing()
     public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
-    public var flags: ChannelFlags? by ::_flags.delegate()
-
     public var message: ForumMessageCreateBuilder? = null
 
     public fun createMessage(content: String) {
@@ -54,8 +50,7 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
                 autoArchiveDuration = _autoArchiveDuration,
                 rateLimitPerUser = _rateLimitPerUser,
                 message = Optional(messageRequest?.request).coerceToMissing(),
-                appliedTags = _appliedTags,
-                flags = _flags
+                appliedTags = _appliedTags
             ),
             Optional(messageRequest?.files).coerceToMissing()
         )
