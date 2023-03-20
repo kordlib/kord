@@ -24,14 +24,12 @@ jobs:
             gu-binary: gu
     steps:
       - uses: actions/checkout@v3
-      - uses: DeLaGuardo/setup-graalvm@5.0
+      - uses: graalvm/setup-graalvm@v1
         with:
-          graalvm: '21.0.0.2'
-          java: 'java8'
-          arch: 'amd64'
-      - name: Install native-image component
-        run: |
-          ${{ matrix.gu-binary }} install native-image
+          version: 'latest'
+          java-version: '17'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
