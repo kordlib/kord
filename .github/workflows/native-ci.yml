@@ -23,7 +23,7 @@ jobs:
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Add msbuild to PATH
-        if: ${{ matrix.os == windows-latest }}
+        if: ${{ matrix.os == 'windows-latest' }}
         uses: microsoft/setup-msbuild@v1.1
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
