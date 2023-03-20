@@ -9,11 +9,11 @@ include(
     "common",
     "core",
     "gateway",
+    "graal-example",
     "ksp-annotations",
     "ksp-processors",
     "rest",
     "voice",
-    "graal-example"
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

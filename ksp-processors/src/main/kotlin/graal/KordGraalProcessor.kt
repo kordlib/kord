@@ -4,8 +4,8 @@ import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
 import dev.kord.ksp.GraalVisible
-import dev.kord.ksp.binaryName
 import dev.kord.ksp.getSymbolsWithAnnotation
+import dev.kord.ksp.jvmBinaryName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 
@@ -42,7 +42,7 @@ private class KordGraalProcessor(private val codeGenerator: CodeGenerator, priva
         entries += resolver
             .getSymbolsWithAnnotation<GraalVisible>()
             .filterIsInstance<KSClassDeclaration>()
-            .map { ReflectConfigEntry(name = it.binaryName) }
+            .map { ReflectConfigEntry(name = it.jvmBinaryName) }
 
         logger.info("KordEnumProcessor finished processing annotations")
 
@@ -61,7 +61,7 @@ private class KordGraalProcessor(private val codeGenerator: CodeGenerator, priva
     private fun processClass(clazz: KSClassDeclaration): List<ReflectConfigEntry> {
         val name = clazz.findCompanionObjectName()
 
-        val qualifiedName = clazz.binaryName
+        val qualifiedName = clazz.jvmBinaryName
         val companionField = ReflectConfigEntry(
             name = qualifiedName,
             fields = listOf(ReflectConfigEntry.Field(name))
