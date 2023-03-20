@@ -23,7 +23,7 @@ dokka = "1.8.10" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.20.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.13.0" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
-graal = "0.9.20" # https://central.sonatype.com/artifact/org.graalvm.buildtools.native/org.graalvm.buildtools.native.gradle.plugin/0.9.20
+graal = "0.9.20" # https://github.com/graalvm/native-build-tools
 
 
 [libraries]
