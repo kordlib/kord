@@ -30,8 +30,6 @@ class ColorTests {
     @DisabledIfSystemProperty(named = "org.graalvm.nativeimage.imagecode", matches = ".+")
     @Test
     fun `java to kColor conversion`() {
-        if(!System.getProperty("").isNullOrBlank()) return
-
         val color = java.awt.Color.decode("#DBD0B4").kColor
 
         assertEquals(219, color.red)
