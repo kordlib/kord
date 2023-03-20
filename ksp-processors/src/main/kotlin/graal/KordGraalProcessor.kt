@@ -57,10 +57,9 @@ private class KordGraalProcessor(
         if (entries.isNotEmpty()) {
             val config = ReflectConfig(entries.distinctBy(ReflectConfigEntry::name))
             val file = codeGenerator
-                .createNewFile(
+                .createNewFileByPath(
                     Dependencies.ALL_FILES,
-                    "META-INF.native-image/dev.kord/kord-${project}",
-                    "reflect-config",
+                    "META-INF.native-image/dev.kord/kord-${project}/reflect-config",
                     "json"
                 )
             file.bufferedWriter().use { it.write(config.encode()) }
