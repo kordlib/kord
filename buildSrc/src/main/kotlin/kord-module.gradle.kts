@@ -142,11 +142,8 @@ graalvmNative {
     binaries {
         named("test") {
             buildArgs(
-                """-H:IncludeResources=".*json"""",
-                """-H:IncludeResources=".*png"""",
-                """-H:IncludeResources=".*kotlin_builtins"""",
-                """-H:IncludeResources="META-INF/services/.*"""",
-                "-H:ReflectionConfigurationFiles=${rootProject.file("graal/test-reflect-config.json").absolutePath}",
+                "-H:ResourceConfigurationFiles=${rootProject.file("graal/test-resource-config.json").absolutePath}",
+                "-H:ReflectionConfigurationFiles=${rootProject.file("graal/test-reflect-config.json").absolutePath}"
             )
         }
     }

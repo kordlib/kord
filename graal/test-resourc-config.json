@@ -1,0 +1,10 @@
+{
+  "resources": {
+    "includes": [
+      {"pattern": ".*json"},
+      {"pattern": ".*png"},
+      {"pattern": ".*kotlin_builtins"},
+      {"pattern": "META-INF/services/.*"}
+    ]
+  }
+}
