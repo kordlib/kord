@@ -70,7 +70,7 @@ dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref
 atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", version.ref = "kotlinx-atomicfu" }
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
-
+graal-plugin = { module = "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin", version.ref = "graal" }
 
 [bundles]
 
@@ -86,10 +86,10 @@ pluginsForBuildSrc = [
     "atomicfu-plugin",
     "binary-compatibility-validator-plugin",
     "ksp-plugin",
+    "graal-plugin"
 ]
 
 
 [plugins]
 
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
-graal = { id = "org.graalvm.buildtools.native", version.ref = "graal" }

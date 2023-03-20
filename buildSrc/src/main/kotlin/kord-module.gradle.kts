@@ -130,6 +130,7 @@ publishing {
     publications.withType<MavenPublication>().configureEach {
         from(components["java"])
         artifact(tasks.kotlinSourcesJar)
+        artifact(dokkaJar)
     }
 }
 
