@@ -36,7 +36,8 @@ data class ReflectConfigEntry(
     data class QueriedMethod(val name: String)
 
     @Serializable
-    data class Method(val name: String, val parameterTypes: List<String>) {
-        constructor(name: String) : this(name, emptyList())
-    }
+    data class Method(
+        val name: String,
+        @EncodeDefault val parameterTypes: List<String> = emptyList(),
+    )
 }
