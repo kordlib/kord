@@ -17,13 +17,15 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.NewsChannelModifyBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import dev.kord.rest.json.request.ChannelFollowRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchNewsChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import java.util.*
+import java.util.Objects
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -87,7 +89,21 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
         reason: String? = null
     ): NewsChannelThread {
-        return unsafeStartThread(name, archiveDuration, ChannelType.PublicNewsThread) { this.reason = reason } as NewsChannelThread
+        return startPublicThread(name) {
+            this.reason = reason
+            this.autoArchiveDuration = archiveDuration
+        }
+    }
+
+    public suspend fun startPublicThread(
+        name: String,
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+    ): NewsChannelThread {
+        return unsafeStartThread(name) {
+            builder()
+
+            type = ChannelType.PublicNewsThread
+        } as NewsChannelThread
     }
 
     public suspend fun startPublicThreadWithMessage(
@@ -96,7 +112,18 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
         reason: String? = null
     ): NewsChannelThread {
-        return unsafeStartPublicThreadWithMessage(messageId, name, archiveDuration, reason) as NewsChannelThread
+        return startPublicThreadWithMessage(messageId, name) {
+            this.reason = reason
+            this.autoArchiveDuration = archiveDuration
+        }
+    }
+
+    public suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        builder: StartThreadWithMessageBuilder.() -> Unit = {}
+    ): NewsChannelThread {
+        return unsafeStartPublicThreadWithMessage(messageId, name, builder) as NewsChannelThread
     }
 
 

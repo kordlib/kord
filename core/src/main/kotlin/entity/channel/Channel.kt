@@ -1,5 +1,6 @@
 package dev.kord.core.entity.channel
 
+import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ChannelType.*
 import dev.kord.common.entity.Snowflake
@@ -26,6 +27,9 @@ public interface Channel : ChannelBehavior {
      */
     public val type: ChannelType get() = data.type
 
+    /** The flags of this channel, if present. */
+    public val flags: ChannelFlags? get() = data.flags.value
+
     /**
      * Returns a new [Channel] with the given [strategy].
      */
@@ -43,22 +47,26 @@ public interface Channel : ChannelBehavior {
             kord: Kord,
             strategy: EntitySupplyStrategy<*> = kord.resources.defaultStrategy
         ): Channel = when (data.type) {
-            GuildText -> TextChannel(data, kord)
-            DM, GroupDM -> DmChannel(data, kord)
-            GuildStageVoice -> StageChannel(data, kord)
-            GuildVoice -> VoiceChannel(data, kord)
-            GuildCategory -> Category(data, kord)
-            GuildNews -> NewsChannel(data, kord)
-            PublicNewsThread -> NewsChannelThread(data, kord)
-            PrivateThread, PublicGuildThread -> TextChannelThread(data, kord)
+                GuildText -> TextChannel(data, kord)
+                DM, GroupDM -> DmChannel(data, kord)
+                GuildStageVoice -> StageChannel(data, kord)
+                GuildVoice -> VoiceChannel(data, kord)
+                GuildCategory -> Category(data, kord)
+                GuildNews -> NewsChannel(data, kord)
+                GuildForum -> ForumChannel(data, kord)
+                PublicNewsThread -> NewsChannelThread(data, kord)
+                PrivateThread, PublicGuildThread -> {
+                    TextChannelThread(data, kord)
+                }
 
-            GuildDirectory, is Unknown -> {
-                if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))
-                else ThreadChannel(data, kord, strategy.supply(kord))
+                GuildDirectory, is Unknown -> {
+                    if (data.threadMetadata.value == null) Channel(data, kord, strategy.supply(kord))
+                    else ThreadChannel(data, kord, strategy.supply(kord))
+                }
             }
         }
     }
-}
+
 
 internal fun Channel(
     data: ChannelData,

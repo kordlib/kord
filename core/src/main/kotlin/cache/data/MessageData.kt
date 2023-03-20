@@ -38,6 +38,7 @@ public data class MessageData(
     val interaction: Optional<MessageInteractionData> = Optional.Missing(),
     val components: Optional<List<ComponentData>> = Optional.Missing(),
     val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
+    val position: OptionalInt = OptionalInt.Missing,
 ) {
 
     public fun plus(selfId: Snowflake, reaction: MessageReactionAddData): MessageData {
@@ -106,7 +107,8 @@ public data class MessageData(
             referencedMessage = referencedMessage,
             interaction = interaction,
             components = components,
-            roleSubscriptionData = roleSubscriptionData
+            roleSubscriptionData = roleSubscriptionData,
+            position = position,
         )
     }
 
@@ -143,7 +145,8 @@ public data class MessageData(
                 referencedMessage.mapNotNull { from(it) },
                 interaction.map { MessageInteractionData.from(it) },
                 components = components.mapList { ComponentData.from(it) },
-                roleSubscriptionData = roleSubscriptionData
+                roleSubscriptionData = roleSubscriptionData,
+                position = position,
             )
         }
     }

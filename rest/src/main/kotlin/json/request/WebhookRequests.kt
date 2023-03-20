@@ -33,7 +33,9 @@ public data class WebhookExecuteRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val flags: Optional<MessageFlags> = Optional.Missing(),
+    @SerialName("thread_name")
+    val threadName: Optional<String> = Optional.Missing(),
 )
 
 public data class MultiPartWebhookExecuteRequest(

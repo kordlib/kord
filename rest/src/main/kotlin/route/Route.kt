@@ -3,6 +3,7 @@ package dev.kord.rest.route
 import dev.kord.common.KordConfiguration
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
+import dev.kord.rest.json.request.ForumTagRequest
 import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
 import dev.kord.rest.json.response.*
 import io.ktor.http.*
@@ -81,6 +82,7 @@ public sealed class Route<T>(
     public object ScheduledEventId : Key("{event.id}", true)
     public object StickerId : Key("{sticker.id}")
     public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
+    public object TagId : Key("{tag.id}")
 
 
     protected constructor(
@@ -1011,5 +1013,26 @@ public sealed class Route<T>(
             HttpMethod.Patch,
             "/guilds/$GuildId/stickers/$StickerId",
             DiscordMessageSticker.serializer()
+        )
+
+    public object ForumTagPost :
+        Route<DiscordChannel>(
+            HttpMethod.Post,
+            "/channels/$ChannelId/tags",
+            DiscordChannel.serializer()
+        )
+
+    public object ForumTagDelete :
+        Route<DiscordChannel>(
+            HttpMethod.Delete,
+            "/channels/$ChannelId/tags/$TagId",
+            DiscordChannel.serializer()
+        )
+
+    public object ForumTagPut :
+        Route<DiscordChannel>(
+            HttpMethod.Put,
+            "/channels/$ChannelId/tags/$TagId",
+            DiscordChannel.serializer()
         )
 }
