@@ -10,6 +10,7 @@ import kotlinx.serialization.json.Json
 
 private val json = Json {
     encodeDefaults = false
+    prettyPrint = true
 }
 
 fun ReflectConfig.encode() = json.encodeToString(this)
