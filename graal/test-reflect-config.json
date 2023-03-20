@@ -33,12 +33,5 @@
   },
   {
     "name": "kotlin.KotlinVersion$Companion[]"
-  },
-  {
-    "name": "io.mockk.impl.JvmMockKGateway",
-    "allPublicMethods": true,
-    "allDeclaredFields": true,
-    "allDeclaredMethods": true,
-    "allDeclaredConstructors": true
   }
 ]

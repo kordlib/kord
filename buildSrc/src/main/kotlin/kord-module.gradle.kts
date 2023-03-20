@@ -145,6 +145,9 @@ graalvmNative {
                 """-H:IncludeResources=".*/.*json"""",
                 """-H:IncludeResources=".*/.*png"""",
                 """-H:IncludeResources=".*/.*kotlin_builtins"""",
+                """-H:IncludeResources="META-INF/services/.*"""",
+                "--allow-incomplete-classpath",
+                "--report-unsupported-elements-at-runtime",
                 "-H:ReflectionConfigurationFiles=${rootProject.file("graal/test-reflect-config.json").absolutePath}",
             )
         }
