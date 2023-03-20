@@ -2,14 +2,14 @@ package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
+import dev.kord.rest.json.request.ForumTagRequest
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.Duration
 
 @KordDsl
@@ -104,8 +104,17 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
-    private var _availableTags: Optional<List<DiscordForumTag>> = Optional.Missing()
-    public var availableTags: List<DiscordForumTag>? by ::_availableTags.delegate()
+    private var _availableTags: Optional<MutableList<ForumTagRequest>?> = Optional.Missing()
+    public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
+
+    public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        if (availableTags == null) availableTags = mutableListOf()
+
+        val tagBuilder = ForumTagBuilder(name).apply(builder)
+        availableTags?.add(tagBuilder.toRequest())
+    }
 
     private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
     public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
@@ -277,4 +286,30 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         permissionOverwrites = _permissionOverwrites,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
     )
+}
+
+@KordDsl
+public class ModifyForumTagBuilder : AuditRequestBuilder<ForumTagRequest> {
+    private var _name: Optional<String> = Optional.Missing()
+    public var name: String? by ::_name.delegate()
+
+    private var _moderated: OptionalBoolean = OptionalBoolean.Missing
+    public var moderated: Boolean? by ::_moderated.delegate()
+
+    private var _reactionEmojiId: Optional<Snowflake?> = Optional.Missing()
+    public var reactionEmojiId: Snowflake? by ::_reactionEmojiId.delegate()
+
+    private var _reactionEmojiName: Optional<String?> = Optional.Missing()
+    public var reactionEmojiName: String? by ::_reactionEmojiName.delegate()
+
+    override var reason: String? = null
+
+    override fun toRequest(): ForumTagRequest {
+        return ForumTagRequest(
+            name = _name,
+            moderated = _moderated,
+            emojiId = _reactionEmojiId,
+            emojiName = _reactionEmojiName
+        )
+    }
 }

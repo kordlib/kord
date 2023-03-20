@@ -3,8 +3,9 @@ package dev.kord.rest.service
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
-import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
@@ -311,18 +312,30 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         builder: StartThreadWithMessageBuilder.() -> Unit
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val startBuilder = StartThreadWithMessageBuilder(name, archiveDuration).apply(builder)
+        val startBuilder = StartThreadWithMessageBuilder(name).apply {
+            this.autoArchiveDuration = archiveDuration
+            builder()
+        }
         return startThreadWithMessage(channelId, messageId, startBuilder.toRequest(), startBuilder.reason)
+    }
+
+    public suspend fun startThread(
+        channelId: Snowflake,
+        multipartRequest: MultipartStartThreadRequest,
+        reason: String? = null,
+    ): DiscordChannel = call(Route.StartThreadPost) {
+        keys[Route.ChannelId] = channelId
+        body(StartThreadRequest.serializer(), multipartRequest.request)
+        auditLogReason(reason)
+        multipartRequest.files.value?.forEach { file(it) }
     }
 
     public suspend fun startThread(
         channelId: Snowflake,
         request: StartThreadRequest,
         reason: String? = null,
-    ): DiscordChannel = call(Route.StartThreadPost) {
-        keys[Route.ChannelId] = channelId
-        body(StartThreadRequest.serializer(), request)
-        auditLogReason(reason)
+    ): DiscordChannel {
+        return startThread(channelId, MultipartStartThreadRequest(request), reason)
     }
 
     public suspend fun startThread(
@@ -330,10 +343,23 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         name: String,
         archiveDuration: ArchiveDuration,
         type: ChannelType,
-        builder: StartThreadBuilder.() -> Unit = {}
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val startBuilder = StartThreadBuilder(name, archiveDuration, type).apply(builder)
+        val startBuilder = StartThreadWithoutMessageBuilder(name).apply {
+            this.autoArchiveDuration = archiveDuration
+            this.type = type
+        }
+        return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
+    }
+
+    public suspend fun startForumThread(
+        channelId: Snowflake,
+        name: String,
+        builder: StartForumThreadBuilder.() -> Unit = {}
+    ): DiscordChannel {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val startBuilder = StartForumThreadBuilder(name).apply(builder)
         return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
     }
 
@@ -400,6 +426,56 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         if (before != null) parameter("before", before)
         if (limit != null) parameter("limit", limit)
     }
+
+    public suspend fun createForumTag(
+        channelId: Snowflake,
+        name: String,
+        builder: ForumTagBuilder.() -> Unit = {}
+    ): DiscordChannel {
+        val forumTagBuilder = ForumTagBuilder(name).apply(builder)
+        return createForumTag(channelId, forumTagBuilder.toRequest(), forumTagBuilder.reason)
+    }
+
+    public suspend fun createForumTag(
+        channelId: Snowflake,
+        request: ForumTagRequest,
+        reason: String? = null
+    ): DiscordChannel = call(Route.ForumTagPost) {
+        keys[Route.ChannelId] = channelId
+
+        body(ForumTagRequest.serializer(), request)
+        auditLogReason(reason)
+    }
+
+    public suspend fun deleteForumTag(channelId: Snowflake, tagId: Snowflake, reason: String? = null): DiscordChannel =
+        call(Route.ForumTagDelete) {
+            keys[Route.ChannelId] = channelId
+            keys[Route.TagId] = tagId
+
+            auditLogReason(reason)
+        }
+
+    public suspend fun editForumTag(
+        channelId: Snowflake,
+        tagId: Snowflake,
+        builder: ModifyForumTagBuilder.() -> Unit
+    ): DiscordChannel {
+        val forumTagBuilder = ModifyForumTagBuilder().apply(builder)
+        return editForumTag(channelId, tagId, forumTagBuilder.toRequest(), forumTagBuilder.reason)
+    }
+
+    public suspend fun editForumTag(
+        channelId: Snowflake,
+        tagId: Snowflake,
+        request: ForumTagRequest,
+        reason: String? = null
+    ): DiscordChannel = call(Route.ForumTagPut) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.TagId] = tagId
+
+        body(ForumTagRequest.serializer(), request)
+        auditLogReason(reason)
+    }
 }
 
 public suspend inline fun ChannelService.patchTextChannel(
@@ -422,6 +498,7 @@ public suspend inline fun ChannelService.patchForumChannel(
     val modifyBuilder = ForumChannelModifyBuilder().apply(builder)
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
+
 public suspend inline fun ChannelService.patchVoiceChannel(
     channelId: Snowflake,
     builder: VoiceChannelModifyBuilder.() -> Unit

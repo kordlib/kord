@@ -160,6 +160,9 @@ public data class DiscordChannel(
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     @SerialName("default_forum_layout")
     val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
+    // Forum thread original message
+    // see in: https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
+    val message: Optional<DiscordMessage> = Optional.Missing(),
 )
 
 public enum class ChannelFlag(public val code: Int) {

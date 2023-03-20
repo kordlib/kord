@@ -2,6 +2,7 @@ package dev.kord.rest.builder.channel.thread
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
+import dev.kord.common.entity.ChannelFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -11,7 +12,7 @@ import dev.kord.rest.json.request.ChannelModifyPatchRequest
 import kotlin.time.Duration
 
 @KordDsl
-public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
+public class ForumThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
 
     private var _name: Optional<String> = Optional.Missing()
     public var name: String? by ::_name.delegate()
@@ -31,6 +32,9 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
     private var _invitable: OptionalBoolean = OptionalBoolean.Missing
     public var invitable: Boolean? by ::_invitable.delegate()
 
+    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    public var flags: ChannelFlags? by ::_flags.delegate()
+
     private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
     public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
@@ -42,6 +46,7 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
             autoArchiveDuration = _autoArchiveDuration,
             rateLimitPerUser = _rateLimitPerUser,
             invitable = _invitable,
+            flags = _flags,
             appliedTags = _appliedTags
         )
     }

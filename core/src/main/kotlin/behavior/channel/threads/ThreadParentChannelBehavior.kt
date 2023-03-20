@@ -1,7 +1,5 @@
 package dev.kord.core.behavior.channel.threads
 
-import dev.kord.common.entity.ArchiveDuration
-import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -15,8 +13,8 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.channel.thread.StartThreadBuilder
-import dev.kord.rest.json.request.StartThreadRequest
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.datetime.Instant
@@ -128,12 +126,10 @@ public interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavio
  */
 internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
     name: String,
-    archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-    type: ChannelType,
-    builder: StartThreadBuilder.() -> Unit
+    builder: StartThreadWithoutMessageBuilder.() -> Unit
 ): ThreadChannel {
-    val response =
-        kord.rest.channel.startThread(id, name, archiveDuration, type, builder)
+    val startBuilder = StartThreadWithoutMessageBuilder(name).apply(builder)
+    val response = kord.rest.channel.startThread(id, startBuilder.toRequest(), startBuilder.reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel
@@ -142,12 +138,10 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
 internal suspend fun ThreadParentChannelBehavior.unsafeStartPublicThreadWithMessage(
     messageId: Snowflake,
     name: String,
-    archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-    reason: String? = null
+    builder: StartThreadWithMessageBuilder.() -> Unit = {}
 ): ThreadChannel {
-
-    val response =
-        kord.rest.channel.startThreadWithMessage(id, messageId, StartThreadRequest(name, archiveDuration), reason)
+    val request = StartThreadWithMessageBuilder(name).apply(builder).toRequest()
+    val response = kord.rest.channel.startThreadWithMessage(id, messageId, request)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

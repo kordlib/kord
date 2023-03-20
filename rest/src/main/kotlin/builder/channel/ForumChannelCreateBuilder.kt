@@ -2,14 +2,14 @@ package dev.kord.rest.builder.channel
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.ForumTagRequest
 import dev.kord.rest.json.request.GuildChannelCreateRequest
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.Duration
 
 @KordDsl
@@ -48,8 +48,17 @@ public class ForumChannelCreateBuilder(public var name: String) :
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
-    private var _availableTags: Optional<List<DiscordForumTag>?> = Optional.Missing()
-    public var availableTags: List<DiscordForumTag>? by ::_availableTags.delegate()
+    private var _availableTags: Optional<MutableList<ForumTagRequest>?> = Optional.Missing()
+    public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
+
+    public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        if (availableTags == null) availableTags = mutableListOf()
+
+        val tagBuilder = ForumTagBuilder(name).apply(builder)
+        availableTags?.add(tagBuilder.toRequest())
+    }
 
     private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
     public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
@@ -59,6 +68,9 @@ public class ForumChannelCreateBuilder(public var name: String) :
 
     private var _defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing()
     public var defaultForumLayout: ForumLayoutType? by ::_defaultForumLayout.delegate()
+
+    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    public var flags: ChannelFlags? by ::_flags.delegate()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
@@ -81,6 +93,30 @@ public class ForumChannelCreateBuilder(public var name: String) :
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
         availableTags = _availableTags,
         defaultSortOrder = _defaultSortOrder,
+        flags = _flags,
         defaultForumLayout = _defaultForumLayout,
     )
+}
+
+@KordDsl
+public class ForumTagBuilder(private val name: String) : AuditRequestBuilder<ForumTagRequest> {
+    private var _moderated: OptionalBoolean = OptionalBoolean.Missing
+    public var moderated: Boolean? by ::_moderated.delegate()
+
+    private var _reactionEmojiId: Optional<Snowflake?> = Optional.Missing()
+    public var reactionEmojiId: Snowflake? by ::_reactionEmojiId.delegate()
+
+    private var _reactionEmojiName: Optional<String?> = Optional.Missing()
+    public var reactionEmojiName: String? by ::_reactionEmojiName.delegate()
+
+    override var reason: String? = null
+
+    override fun toRequest(): ForumTagRequest {
+        return ForumTagRequest(
+            name = Optional(name),
+            moderated = _moderated,
+            emojiId = _reactionEmojiId,
+            emojiName = _reactionEmojiName
+        )
+    }
 }
