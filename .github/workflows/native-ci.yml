@@ -1,0 +1,38 @@
+name: GraalVM Native Image CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build Kord
+    runs-on: ubuntu-latest
+    env:
+      KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        gu-binary: [gu, gu.cmd]
+        exclude:
+          - os: ubuntu-latest
+            gu-binary: gu.cmd
+          - os: macos-latest
+            gu-binary: gu.cmd
+          - os: windows-latest
+            gu-binary: gu
+    steps:
+      - uses: actions/checkout@v3
+      - uses: DeLaGuardo/setup-graalvm@5.0
+        with:
+          graalvm: '21.0.0.2'
+          java: 'java8'
+          arch: 'amd64'
+      - name: Install native-image component
+        run: |
+          ${{ matrix.gu-binary }} install native-image
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: nativeTest
