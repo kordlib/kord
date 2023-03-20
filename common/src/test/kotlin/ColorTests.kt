@@ -25,9 +25,12 @@ class ColorTests {
         assertEquals(0xFFFFFF, white.rgb)
     }
 
-    @Disabled
     @Test
     fun `java to kColor conversion`() {
+        // Currently java.awt.Color doesn't work on Graal native images
+        // See: https://github.com/oracle/graal/issues/3084
+        if(!System.getProperty("org.graalvm.nativeimage.imagecode").isNullOrBlank()) return
+
         val color = java.awt.Color.decode("#DBD0B4").kColor
 
         assertEquals(219, color.red)
