@@ -8,7 +8,6 @@ import dev.kord.ksp.GraalVisible
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@GraalVisible
 @Serializable
 public data class StickerData(
     val id: Snowflake,
