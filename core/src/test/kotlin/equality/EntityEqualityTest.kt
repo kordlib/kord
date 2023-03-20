@@ -2,6 +2,7 @@ package equality
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty
 import kotlin.random.Random
 import kotlin.random.nextULong
 import kotlin.test.Test
@@ -14,6 +15,8 @@ val ids = generateSequence {
 
 fun randomId() = Snowflake(ids.next())
 
+// Mockk currently doesn't work on Graal
+@DisabledIfSystemProperty(named = "org.graalvm.nativeimage.imagecode", matches = ".+")
 interface EntityEqualityTest<T : KordEntity> {
 
     fun newEntity(id: Snowflake): T

@@ -1,16 +1,20 @@
 package interaction
 
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.ApplicationCommandOptionType
 import dev.kord.common.entity.InteractionCallbackData
 import dev.kord.core.cache.data.ApplicationInteractionData
-import dev.kord.core.entity.interaction.*
+import dev.kord.core.entity.interaction.GroupCommand
+import dev.kord.core.entity.interaction.InteractionCommand
+import dev.kord.core.entity.interaction.RootCommand
+import dev.kord.core.entity.interaction.SubCommand
 import kotlinx.serialization.json.*
 import mockKord
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty
 import kotlin.test.assertEquals
 
 
+@DisabledIfSystemProperty(named = "org.graalvm.nativeimage.imagecode", matches = ".+")
 class CommandsTypeTests {
     val arg = buildJsonObject {
         put("type", ApplicationCommandOptionType.Integer.type)

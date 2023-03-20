@@ -1,8 +1,8 @@
 import dev.kord.common.Color
 import dev.kord.common.kColor
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty
 import kotlin.test.assertEquals
 
 class ColorTests {
@@ -25,11 +25,12 @@ class ColorTests {
         assertEquals(0xFFFFFF, white.rgb)
     }
 
+    // Currently java.awt.Color doesn't work on Graal native images
+    // See: https://github.com/oracle/graal/issues/3084
+    @DisabledIfSystemProperty(named = "org.graalvm.nativeimage.imagecode", matches = ".+")
     @Test
     fun `java to kColor conversion`() {
-        // Currently java.awt.Color doesn't work on Graal native images
-        // See: https://github.com/oracle/graal/issues/3084
-        if(!System.getProperty("org.graalvm.nativeimage.imagecode").isNullOrBlank()) return
+        if(!System.getProperty("").isNullOrBlank()) return
 
         val color = java.awt.Color.decode("#DBD0B4").kColor
 
