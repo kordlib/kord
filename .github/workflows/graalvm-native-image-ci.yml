@@ -13,14 +13,14 @@ jobs:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     strategy:
       matrix:
-        os: [macos-latest]
+        os: [ macos-latest ]
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
         with:
-          version: 'latest'
-          java-version: '17'
-          components: 'native-image'
+          version: latest
+          java-version: 17
+          components: native-image
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Add msbuild to PATH
         if: ${{ matrix.os == 'windows-latest' }}

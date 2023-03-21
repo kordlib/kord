@@ -1,23 +1,27 @@
-package dev.kord.ksp.graal
+package dev.kord.ksp.graalvm
 
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
-import dev.kord.ksp.GraalVisible
+import dev.kord.ksp.AvailableForReflectionOnGraalVMNativeImage
 import dev.kord.ksp.getSymbolsWithAnnotation
 import dev.kord.ksp.jvmBinaryName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 
-class GraalProcessorProvider : SymbolProcessorProvider {
-    override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
-        return GraalProcessor(
-            environment.codeGenerator, environment.logger, environment.options["project"]!!
-        )
-    }
+/** [SymbolProcessorProvider] for [GraalVMNativeImageProcessor]. */
+class GraalVMNativeImageProcessorProvider : SymbolProcessorProvider {
+    override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
+        GraalVMNativeImageProcessor(environment.codeGenerator, environment.logger, environment.options["project"]!!)
 }
 
-private class GraalProcessor(
+/**
+ * [SymbolProcessor] that reads [Serializable] and [AvailableForReflectionOnGraalVMNativeImage] annotations and
+ * generates [`reflect-config.json`](https://www.graalvm.org/latest/reference-manual/native-image/metadata/#reflection)
+ * files for building native executables with
+ * [GraalVM Native Image](https://www.graalvm.org/latest/reference-manual/native-image/).
+ */
+private class GraalVMNativeImageProcessor(
     private val codeGenerator: CodeGenerator,
     private val logger: KSPLogger,
     private val project: String,
@@ -27,20 +31,21 @@ private class GraalProcessor(
     private val entries = mutableListOf<ReflectConfigEntry>()
 
     override fun finish() {
-        logger.info("GraalProcessor received finish signal")
+        logger.info("GraalVMNativeImageProcessor received finish signal")
         flushEntries()
     }
 
     override fun onError() {
+        val count = entries.size
         if (flushedEntries) {
-            logger.info("GraalProcessor received error signal after ${entries.size} entries were flushed")
+            logger.info("GraalVMNativeImageProcessor received error signal after $count entries were flushed")
         } else {
-            logger.warn("GraalProcessor received error signal while having ${entries.size} unflushed entries")
+            logger.warn("GraalVMNativeImageProcessor received error signal while having $count unflushed entries")
         }
     }
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        logger.info("GraalProcessor got called, resolving annotations...")
+        logger.info("GraalVMNativeImageProcessor got called, resolving annotations...")
 
         entries += resolver
             .getSymbolsWithAnnotation<Serializable>()
@@ -49,12 +54,12 @@ private class GraalProcessor(
             .toList()
 
         entries += resolver
-            .getSymbolsWithAnnotation<GraalVisible>()
+            .getSymbolsWithAnnotation<AvailableForReflectionOnGraalVMNativeImage>()
             .onEach { if (it !is KSClassDeclaration) logger.warn("found annotation on wrong symbol", symbol = it) }
             .filterIsInstance<KSClassDeclaration>()
             .map { ReflectConfigEntry(name = it.jvmBinaryName) }
 
-        logger.info("GraalProcessor finished processing annotations")
+        logger.info("GraalVMNativeImageProcessor finished processing annotations")
 
         return emptyList() // we never have to defer any symbols
     }

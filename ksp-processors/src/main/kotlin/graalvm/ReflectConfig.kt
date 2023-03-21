@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalSerializationApi::class)
 
-package dev.kord.ksp.graal
+package dev.kord.ksp.graalvm
 
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.EncodeDefault.Mode.ALWAYS
@@ -16,7 +16,6 @@ private val json = Json {
 }
 
 fun List<ReflectConfigEntry>.encodeToJson() = json.encodeToString(this)
-
 
 /**
  * An entry of a

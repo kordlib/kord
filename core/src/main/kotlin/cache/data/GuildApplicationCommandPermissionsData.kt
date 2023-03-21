@@ -4,9 +4,9 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
-import dev.kord.ksp.GraalVisible
+import dev.kord.ksp.AvailableForReflectionOnGraalVMNativeImage
 
-@GraalVisible
+@AvailableForReflectionOnGraalVMNativeImage
 public data class GuildApplicationCommandPermissionsData(
     val id: Snowflake,
     val applicationId: Snowflake,

@@ -15,7 +15,7 @@ val ids = generateSequence {
 
 fun randomId() = Snowflake(ids.next())
 
-// Mockk currently doesn't work on Graal
+// MockK currently doesn't work on GraalVM Native Image
 @DisabledIfSystemProperty(named = "org.graalvm.nativeimage.imagecode", matches = ".+")
 interface EntityEqualityTest<T : KordEntity> {
 

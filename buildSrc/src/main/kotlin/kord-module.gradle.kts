@@ -140,7 +140,7 @@ publishing {
 
 graalvmNative {
     binaries.named("test") {
-        configurationFileDirectories.from(rootProject.file("graal-test-config"))
+        configurationFileDirectories.from(rootProject.file("graalvm-native-image-test-config"))
         resources {
             autodetection {
                 enabled.set(true)

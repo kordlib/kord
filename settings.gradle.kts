@@ -9,7 +9,7 @@ include(
     "common",
     "core",
     "gateway",
-    "graal-example",
+    "graalvm-native-image-example",
     "ksp-annotations",
     "ksp-processors",
     "rest",

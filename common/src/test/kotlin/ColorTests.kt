@@ -25,7 +25,7 @@ class ColorTests {
         assertEquals(0xFFFFFF, white.rgb)
     }
 
-    // Currently java.awt.Color doesn't work on Graal native images
+    // Currently java.awt.Color doesn't work on GraalVM Native Image
     // See: https://github.com/oracle/graal/issues/3084
     @DisabledIfSystemProperty(named = "org.graalvm.nativeimage.imagecode", matches = ".+")
     @Test
