@@ -17,21 +17,26 @@ class GraalProcessorProvider : SymbolProcessorProvider {
     }
 }
 
-private val entries = mutableListOf<ReflectConfigEntry>()
-
 private class GraalProcessor(
     private val codeGenerator: CodeGenerator,
     private val logger: KSPLogger,
-    private val project: String
-) :
-    SymbolProcessor {
+    private val project: String,
+) : SymbolProcessor {
+
+    private var flushedEntries = false
+    private val entries = mutableListOf<ReflectConfigEntry>()
+
     override fun finish() {
-        flushEntries()
         logger.info("GraalProcessor received finish signal")
+        flushEntries()
     }
 
     override fun onError() {
-        logger.info("GraalProcessor received error signal")
+        if (flushedEntries) {
+            logger.info("GraalProcessor received error signal after ${entries.size} entries were flushed")
+        } else {
+            logger.warn("GraalProcessor received error signal while having ${entries.size} unflushed entries")
+        }
     }
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
@@ -45,6 +50,7 @@ private class GraalProcessor(
 
         entries += resolver
             .getSymbolsWithAnnotation<GraalVisible>()
+            .onEach { if (it !is KSClassDeclaration) logger.warn("found annotation on wrong symbol", symbol = it) }
             .filterIsInstance<KSClassDeclaration>()
             .map { ReflectConfigEntry(name = it.jvmBinaryName) }
 
@@ -54,7 +60,10 @@ private class GraalProcessor(
     }
 
     private fun flushEntries() {
+        check(!flushedEntries) { "already flushed entries" }
+        flushedEntries = true
         if (entries.isNotEmpty()) {
+            logger.info("flushing entries for project $project...")
             val file = codeGenerator
                 .createNewFileByPath(
                     Dependencies.ALL_FILES,
@@ -62,6 +71,7 @@ private class GraalProcessor(
                     "json"
                 )
             file.bufferedWriter().use { it.write(entries.encodeToJson()) }
+            logger.info("finished flushing entries for project $project...")
         }
     }
 
