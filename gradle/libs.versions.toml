@@ -23,7 +23,7 @@ dokka = "1.8.10" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.20.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.13.0" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
-graal = "0.9.20" # https://github.com/graalvm/native-build-tools
+graalvm-native-build-tools = "0.9.20" # https://github.com/graalvm/native-build-tools
 
 
 [libraries]
@@ -70,7 +70,8 @@ dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref
 atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", version.ref = "kotlinx-atomicfu" }
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
-graal-plugin = { module = "org.graalvm.buildtools.native:org.graalvm.buildtools.native.gradle.plugin", version.ref = "graal" }
+graalvm-native-build-tools-plugin = { module = "org.graalvm.buildtools:native-gradle-plugin", version.ref = "graalvm-native-build-tools" }
+
 
 [bundles]
 
@@ -86,7 +87,7 @@ pluginsForBuildSrc = [
     "atomicfu-plugin",
     "binary-compatibility-validator-plugin",
     "ksp-plugin",
-    "graal-plugin"
+    "graalvm-native-build-tools-plugin"
 ]
 
 

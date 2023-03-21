@@ -5,7 +5,10 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
 
-private fun file(name: String) = ClassLoader.getSystemResource("json/voice/$name.json")!!.readText()
+private fun file(name: String): String {
+    val loader = ChannelTest::class.java.classLoader
+    return loader.getResource("json/voice/$name.json")!!.readText()
+}
 
 class VoiceStateTest {
 

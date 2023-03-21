@@ -31,6 +31,10 @@ kotlin {
     }
 }
 
+ksp {
+    arg("project", project.name)
+}
+
 // https://github.com/Kotlin/kotlinx-atomicfu/issues/210
 atomicfu {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
@@ -119,10 +123,6 @@ tasks {
     }
 }
 
-ksp {
-    arg("project", project.name)
-}
-
 val dokkaJar by tasks.registering(Jar::class) {
     group = JavaBasePlugin.DOCUMENTATION_GROUP
     description = "Assembles Kotlin docs with Dokka"
@@ -139,12 +139,15 @@ publishing {
 }
 
 graalvmNative {
-    binaries {
-        named("test") {
-            buildArgs(
-                "-H:ResourceConfigurationFiles=${rootProject.file("graal/test-resource-config.json").absolutePath}",
-                "-H:ReflectionConfigurationFiles=${rootProject.file("graal/test-reflect-config.json").absolutePath}"
-            )
+    binaries.named("test") {
+        configurationFileDirectories.from(rootProject.file("graal-test-config"))
+        resources {
+            autodetection {
+                enabled.set(true)
+                restrictToProjectDependencies.set(false)
+            }
+            // language=regexp
+            includedPatterns.addAll(""".*\.json""", """.*\.png""")
         }
     }
 }
