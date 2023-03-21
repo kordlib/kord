@@ -55,14 +55,13 @@ private class GraalProcessor(
 
     private fun flushEntries() {
         if (entries.isNotEmpty()) {
-            val config = ReflectConfig(entries.distinctBy(ReflectConfigEntry::name))
             val file = codeGenerator
                 .createNewFileByPath(
                     Dependencies.ALL_FILES,
                     "META-INF/native-image/dev.kord/kord-${project}/reflect-config",
                     "json"
                 )
-            file.bufferedWriter().use { it.write(config.encode()) }
+            file.bufferedWriter().use { it.write(entries.encodeToJson()) }
         }
     }
 

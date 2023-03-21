@@ -3,6 +3,7 @@
 package dev.kord.ksp.graal
 
 import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.EncodeDefault.Mode.ALWAYS
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -14,37 +15,39 @@ private val json = Json {
     prettyPrintIndent = "  "
 }
 
-fun ReflectConfig.encode() = json.encodeToString(this)
+fun List<ReflectConfigEntry>.encodeToJson() = json.encodeToString(this)
 
 
-// Reference: https://www.graalvm.org/latest/reference-manual/native-image/metadata/#specifying-reflection-metadata-in-json
-@Serializable
-@JvmInline
-value class ReflectConfig(val entries: List<ReflectConfigEntry>) : List<ReflectConfigEntry> by entries
-
+/**
+ * An entry of a
+ * [`reflect-config.json`](https://www.graalvm.org/latest/reference-manual/native-image/metadata/#specifying-reflection-metadata-in-json)
+ * file.
+ */
 @Serializable
 data class ReflectConfigEntry(
-    val name: String,
     val condition: Condition? = null,
-    val queryAllDeclaredConstructors: Boolean = false,
-    val queryAllPublicConstructors: Boolean = false,
-    val queryAllDeclaredMethods: Boolean = false,
-    val queryAllPublicMethods: Boolean = false,
-    val allDeclaredClasses: Boolean = false,
-    val allPublicClasses: Boolean = false,
-    val fields: List<Field> = emptyList(),
+    val name: String,
     val methods: List<Method> = emptyList(),
     val queriedMethods: List<Method> = emptyList(),
+    val fields: List<Field> = emptyList(),
+    val allDeclaredMethods: Boolean = false,
+    val allDeclaredFields: Boolean = false,
+    val allDeclaredConstructors: Boolean = false,
+    val allPublicMethods: Boolean = false,
+    val allPublicFields: Boolean = false,
+    val allPublicConstructors: Boolean = false,
+    val queryAllDeclaredMethods: Boolean = false,
+    val queryAllDeclaredConstructors: Boolean = false,
+    val queryAllPublicMethods: Boolean = false,
+    val queryAllPublicConstructors: Boolean = false,
+    val unsafeAllocated: Boolean = false,
 ) {
     @Serializable
-    data class Field(val name: String)
-
-    @Serializable
-    data class Method(
-        val name: String,
-        @EncodeDefault val parameterTypes: List<String> = emptyList(),
-    )
-
-    @Serializable
     data class Condition(val typeReachable: String)
+
+    @Serializable
+    data class Method(val name: String, @EncodeDefault(ALWAYS) val parameterTypes: List<String> = emptyList())
+
+    @Serializable
+    data class Field(val name: String)
 }
