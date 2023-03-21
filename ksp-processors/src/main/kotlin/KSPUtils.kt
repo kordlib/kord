@@ -39,3 +39,6 @@ internal val KSClassDeclaration.jvmBinaryName: String
         )
         else -> error("$this has an unexpected parentDeclaration: $parent")
     }
+
+internal val KSClassDeclaration.companionObject
+    get() = declarations.filterIsInstance<KSClassDeclaration>().firstOrNull { it.isCompanionObject }
