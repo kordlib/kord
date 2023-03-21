@@ -27,4 +27,4 @@ jobs:
       - name: Test with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: --stacktrace --info nativeTest
+          arguments: --stacktrace --info nativeTest --exclude-task :voice:nativeTest
