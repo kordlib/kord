@@ -1,416 +1,416 @@
 [
-    {
-        "name": "dev.kord.gateway.Identify",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+  {
+    "name": "dev.kord.gateway.Identify",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Identify$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Identify$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.IdentifyProperties",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.IdentifyProperties$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.IdentifyProperties",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.GuildMembersChunkData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.GuildMembersChunkData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.IdentifyProperties$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordPresence",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordPresence$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.GuildMembersChunkData",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Resume",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Resume$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.GuildMembersChunkData$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.RequestGuildMembers",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.RequestGuildMembers$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordPresence",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.UpdateVoiceStatus",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.UpdateVoiceStatus$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordPresence$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.UpdateStatus",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.UpdateStatus$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Resume",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Hello",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Hello$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Resume$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.ReadyData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.ReadyData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.RequestGuildMembers",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Heartbeat",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Heartbeat$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.RequestGuildMembers$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Resumed",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Resumed$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.UpdateVoiceStatus",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.InvalidSession",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.InvalidSession$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.UpdateVoiceStatus$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordAutoModerationActionExecution",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordAutoModerationActionExecution$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.UpdateStatus",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordDeletedInvite",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordDeletedInvite$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.UpdateStatus$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordCreatedInvite",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordCreatedInvite$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Hello",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordRemovedEmoji",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordRemovedEmoji$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Hello$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordRemovedReactionEmoji",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordRemovedReactionEmoji$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.ReadyData",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.GuildScheduledEventUserMetadata",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.GuildScheduledEventUserMetadata$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.ReadyData$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordThreadListSync",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordThreadListSync$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Heartbeat",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordThreadMembersUpdate",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.DiscordThreadMembersUpdate$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Heartbeat$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Intents",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.Intents$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Resumed",
-        "fields": [
-            {
-                "name": "Companion"
-            }
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.OpCode",
+    "fields": [
+      {
+        "name": "OpCodeSerializer"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.gateway.OpCode$OpCodeSerializer",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
         ]
-    },
-    {
-        "name": "dev.kord.gateway.Resumed$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.InvalidSession",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.InvalidSession$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordAutoModerationActionExecution",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordAutoModerationActionExecution$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordDeletedInvite",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordDeletedInvite$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordCreatedInvite",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordCreatedInvite$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordRemovedEmoji",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordRemovedEmoji$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordRemovedReactionEmoji",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordRemovedReactionEmoji$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.GuildScheduledEventUserMetadata",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.GuildScheduledEventUserMetadata$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordThreadListSync",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordThreadListSync$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordThreadMembersUpdate",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.DiscordThreadMembersUpdate$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.Intents",
-        "fields": [
-            {
-                "name": "Companion"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.Intents$Companion",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.OpCode",
-        "fields": [
-            {
-                "name": "OpCodeSerializer"
-            }
-        ]
-    },
-    {
-        "name": "dev.kord.gateway.OpCode$OpCodeSerializer",
-        "methods": [
-            {
-                "name": "serializer",
-                "parameterTypes": [
-                ]
-            }
-        ]
-    }
+      }
+    ]
+  }
 ]

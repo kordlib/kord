@@ -11,6 +11,7 @@ import kotlinx.serialization.json.Json
 private val json = Json {
     encodeDefaults = false
     prettyPrint = true
+    prettyPrintIndent = "  "
 }
 
 fun ReflectConfig.encode() = json.encodeToString(this)
@@ -33,7 +34,7 @@ data class ReflectConfigEntry(
     val allPublicClasses: Boolean = false,
     val fields: List<Field> = emptyList(),
     val methods: List<Method> = emptyList(),
-    val queriedMethods: List<Method> = emptyList()
+    val queriedMethods: List<Method> = emptyList(),
 ) {
     @Serializable
     data class Field(val name: String)
