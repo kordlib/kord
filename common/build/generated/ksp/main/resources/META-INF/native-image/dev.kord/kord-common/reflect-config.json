@@ -434,6 +434,24 @@
     ]
   },
   {
+    "name": "dev.kord.common.entity.ChannelFlags",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ChannelFlags$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.common.entity.ChannelType",
     "fields": [
       {
@@ -1013,6 +1031,24 @@
     ]
   },
   {
+    "name": "dev.kord.common.entity.DiscordDefaultReaction",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.DiscordDefaultReaction$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.common.entity.DiscordDeletedGuildRole",
     "fields": [
       {
@@ -1184,6 +1220,24 @@
   },
   {
     "name": "dev.kord.common.entity.DiscordEmoji$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.DiscordForumTag",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.DiscordForumTag$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -2363,6 +2417,24 @@
     ]
   },
   {
+    "name": "dev.kord.common.entity.ForumLayoutType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ForumLayoutType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.common.entity.GuildFeature",
     "fields": [
       {
@@ -2966,6 +3038,24 @@
   },
   {
     "name": "dev.kord.common.entity.Snowflake$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.SortOrderType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.SortOrderType$Companion",
     "methods": [
       {
         "name": "serializer",
