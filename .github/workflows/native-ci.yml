@@ -9,7 +9,7 @@ jobs:
     name: Build Kord
     runs-on: ${{ matrix.os }}
     env:
-      KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
+      #KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     strategy:
       matrix:
