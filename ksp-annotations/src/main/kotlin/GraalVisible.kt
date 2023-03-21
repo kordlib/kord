@@ -1,10 +1,13 @@
 package dev.kord.ksp
 
+import kotlin.annotation.AnnotationRetention.SOURCE
+import kotlin.annotation.AnnotationTarget.CLASS
+
 /**
- * Marks this class as visible via Reflection in Graal.
+ * Marks this class as visible via Reflection in GraalVM Native Image.
  *
- * **This is only needed for types not annotated with [Serializable]**
+ * **This is only needed for types not annotated with `@kotlinx.serialization.Serializable`.**
  */
-@Retention(AnnotationRetention.SOURCE)
-@Target(AnnotationTarget.CLASS)
+@Retention(SOURCE)
+@Target(CLASS)
 annotation class GraalVisible
