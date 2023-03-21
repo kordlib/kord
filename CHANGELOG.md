@@ -1,15 +1,5 @@
 # 0.8.0
 
-## Changes
-
-* Bump `DeprecationLevel`s by @Lukellmann in #716
-* Use `libs.versions.toml` and clean gradle files by @Lukellmann in #719
-* Deprecate `GuildFeature.PrivateThreads` by @Lukellmann in #724
-* Use AtomicFU compiler plugin by @Lukellmann in #740
-* Stabilize `KordConfiguration` and `KordConstants` by @Lukellmann in #753
-* Make StageChannel implement TopGuildMessageChannel by @DRSchlaubi in #756
-* Deprecate `getGuild()` functions that call `getGuildOrNull()` under the hood by @NoComment1105 in #728
-
 ## Additions
 
 * Add forums in #684
@@ -33,6 +23,27 @@
 * Add Role subscriptions by @NoComment1105 & @Lukellmann in (#743 #781)
 * Add `BlockMessageAutoModerationAction.customMessage` by @Lukellmann in #774
 
+## Changes
+
+* Bump `DeprecationLevel`s by @Lukellmann in #716
+* Use `libs.versions.toml` and clean gradle files by @Lukellmann in #719
+* Deprecate `GuildFeature.PrivateThreads` by @Lukellmann in #724
+* Use AtomicFU compiler plugin by @Lukellmann in #740
+* Stabilize `KordConfiguration` and `KordConstants` by @Lukellmann in #753
+* Make StageChannel implement TopGuildMessageChannel by @DRSchlaubi in #756
+* Deprecate `getGuild()` functions that call `getGuildOrNull()` under the hood by @NoComment1105 in #728
+
+## Fixes
+
+* Fix deprecation propagation for new select menus by @Lukellmann in #721
+* Fix CI badge in readme by @DRSchlaubi in #741
+* Fix nonce deserialization for big integers by @Lukellmann in #765
+* Fix `MessageChannelBehavior.typeUntil` by @Lukellmann in #768
+* Fix(voice): use 74 byte ip discovery packet instead of the deprecated 70 byte discovery packet by @lost-illusi0n in #776
+* Fix(voice): generate EncryptionMode instead of using an enum by @lost-illusi0n in #737
+* Fix various bugs in `DiscordBitSet` by @Lukellmann in #772
+* Make `Snowflake`'s ordering consistent with `equals` by @Lukellmann in #773
+
 ## Dependencies
 
 * Gradle 7.6 -> 8.0.2
@@ -50,17 +61,6 @@
 
 * Clean up by @Lukellmann in #730
 * docs-ci changes and fixes by @DRSchlaubi and @Lukellmann in #778 #780 #770
-
-## Fixes
-
-* Fix deprecation propagation for new select menus by @Lukellmann in #721
-* Fix CI badge in readme by @DRSchlaubi in #741
-* Fix nonce deserialization for big integers by @Lukellmann in #765
-* Fix `MessageChannelBehavior.typeUntil` by @Lukellmann in #768
-* Fix(voice): use 74 byte ip discovery packet instead of the deprecated 70 byte discovery packet by @lost-illusi0n in #776
-* Fix(voice): generate EncryptionMode instead of using an enum by @lost-illusi0n in #737
-* Fix various bugs in `DiscordBitSet` by @Lukellmann in #772
-* Make `Snowflake`'s ordering consistent with `equals` by @Lukellmann in #773
 
 # 0.8.0-M17
 
