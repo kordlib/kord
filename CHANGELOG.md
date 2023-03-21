@@ -41,13 +41,15 @@
 
 ## Dependencies
 
-Updated in #732, #739, #755 and #782
+Updated in #732, #739, #755, #782 and #788
 
 * Gradle 7.5.1 -> 8.0.2
 * Kotlin 1.7.20 -> 1.8.10
 * KSP 1.7.20-1.0.8 -> 1.8.10-1.0.9
 * Ktor 2.1.3 -> 2.2.4
 * kotlinx.serialization 1.4.1 -> 1.5.0
+* kotlin-logging 2.1.23 -> 3.0.5
+* SLF4J 1.7.36 -> 2.0.7
 * Dokka 1.7.20 -> 1.8.10
 * AtomicFU 0.18.5 -> 0.20.0
 * Binary compatibility validator 0.12.1 -> 0.13.0
