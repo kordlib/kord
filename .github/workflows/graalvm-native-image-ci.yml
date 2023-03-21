@@ -5,12 +5,11 @@ on:
   pull_request:
 
 jobs:
-  build:
-    name: Build Kord
+  test-on-graalvm-native-image:
+    name: Test Kord on GraalVM Native Image
     runs-on: ${{ matrix.os }}
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     strategy:
       matrix:
         os: [ macos-latest ]
@@ -24,8 +23,8 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Add msbuild to PATH
         if: ${{ matrix.os == 'windows-latest' }}
-        uses: microsoft/setup-msbuild@v1.1
-      - name: Build with Gradle
+        uses: microsoft/setup-msbuild@v1
+      - name: Test with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: nativeTest -i --stacktrace
+          arguments: --stacktrace --info nativeTest
