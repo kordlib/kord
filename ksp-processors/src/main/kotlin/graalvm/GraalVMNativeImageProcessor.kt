@@ -3,6 +3,7 @@ package dev.kord.ksp.graalvm
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
+import com.google.devtools.ksp.symbol.KSFile
 import dev.kord.ksp.AvailableForReflectionOnGraalVMNativeImage
 import dev.kord.ksp.getSymbolsWithAnnotation
 import dev.kord.ksp.jvmBinaryName
@@ -29,6 +30,7 @@ private class GraalVMNativeImageProcessor(
 
     private var flushedEntries = false
     private val entries = mutableListOf<ReflectConfigEntry>()
+    private val sources = mutableListOf<KSFile>()
 
     override fun finish() {
         logger.info("GraalVMNativeImageProcessor received finish signal")
@@ -50,6 +52,7 @@ private class GraalVMNativeImageProcessor(
         entries += resolver
             .getSymbolsWithAnnotation<Serializable>()
             .filterIsInstance<KSClassDeclaration>()
+            .onEach { it.containingFile?.let(sources::add) }
             .flatMap(::processClass)
             .toList()
 
@@ -57,6 +60,7 @@ private class GraalVMNativeImageProcessor(
             .getSymbolsWithAnnotation<AvailableForReflectionOnGraalVMNativeImage>()
             .onEach { if (it !is KSClassDeclaration) logger.warn("found annotation on wrong symbol", symbol = it) }
             .filterIsInstance<KSClassDeclaration>()
+            .onEach { it.containingFile?.let(sources::add) }
             .map { ReflectConfigEntry(name = it.jvmBinaryName) }
 
         logger.info("GraalVMNativeImageProcessor finished processing annotations")
@@ -69,12 +73,12 @@ private class GraalVMNativeImageProcessor(
         flushedEntries = true
         if (entries.isNotEmpty()) {
             logger.info("flushing entries for project $project...")
-            val file = codeGenerator
-                .createNewFileByPath(
-                    Dependencies.ALL_FILES,
-                    "META-INF/native-image/dev.kord/kord-${project}/reflect-config",
-                    "json"
-                )
+            // this output is aggregating, see https://kotlinlang.org/docs/ksp-incremental.html#aggregating-vs-isolating
+            val file = codeGenerator.createNewFileByPath(
+                Dependencies(aggregating = true, *sources.toTypedArray()),
+                path = "META-INF/native-image/dev.kord/kord-${project}/reflect-config",
+                extensionName = "json",
+            )
             file.bufferedWriter().use { it.write(entries.encodeToJson()) }
             logger.info("finished flushing entries for project $project...")
         }
