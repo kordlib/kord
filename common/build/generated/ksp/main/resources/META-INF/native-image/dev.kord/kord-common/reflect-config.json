@@ -2544,6 +2544,132 @@
     ]
   },
   {
+    "name": "dev.kord.common.entity.ScheduledEntityType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ScheduledEntityType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ExplicitContentFilter",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ExplicitContentFilter$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.DiscordConnectionVisibility",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.DiscordConnectionVisibility$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.AutoModerationActionType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.AutoModerationActionType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.UserPremium",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.UserPremium$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.TextInputStyle",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.TextInputStyle$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.WebhookType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.WebhookType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.common.entity.AllowedMentionType",
     "fields": [
       {
@@ -2562,7 +2688,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.ApplicationCommandOptionType",
+    "name": "dev.kord.common.entity.DefaultMessageNotificationLevel",
     "fields": [
       {
         "name": "Companion"
@@ -2570,7 +2696,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.ApplicationCommandOptionType$Companion",
+    "name": "dev.kord.common.entity.DefaultMessageNotificationLevel$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -2580,7 +2706,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.ApplicationCommandPermissionType",
+    "name": "dev.kord.common.entity.StageInstancePrivacyLevel",
     "fields": [
       {
         "name": "Companion"
@@ -2588,7 +2714,79 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.ApplicationCommandPermissionType$Companion",
+    "name": "dev.kord.common.entity.StageInstancePrivacyLevel$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.GuildScheduledEventStatus",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.GuildScheduledEventStatus$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.MessageActivityType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.MessageActivityType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.PremiumTier",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.PremiumTier$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.GuildFeature",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.GuildFeature$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -2616,7 +2814,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.AuditLogEvent",
+    "name": "dev.kord.common.entity.PresenceStatus",
     "fields": [
       {
         "name": "Companion"
@@ -2624,7 +2822,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.AuditLogEvent$Companion",
+    "name": "dev.kord.common.entity.PresenceStatus$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -2634,7 +2832,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.AutoModerationActionType",
+    "name": "dev.kord.common.entity.InteractionType",
     "fields": [
       {
         "name": "Companion"
@@ -2642,7 +2840,241 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.AutoModerationActionType$Companion",
+    "name": "dev.kord.common.entity.InteractionType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ComponentType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ComponentType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ButtonStyle",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ButtonStyle$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.InviteTargetType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.InviteTargetType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.InteractionResponseType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.InteractionResponseType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.IntegrationExpireBehavior",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.IntegrationExpireBehavior$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.AutoModerationRuleTriggerType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.AutoModerationRuleTriggerType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.MessageStickerType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.MessageStickerType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.VerificationLevel",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.VerificationLevel$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.OverwriteType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.OverwriteType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.MessageType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.MessageType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.EmbedType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.EmbedType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.MFALevel",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.MFALevel$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ChannelType",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.ChannelType$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -2688,456 +3120,6 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.AutoModerationRuleTriggerType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.AutoModerationRuleTriggerType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ButtonStyle",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ButtonStyle$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ChannelType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ChannelType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ComponentType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ComponentType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.DefaultMessageNotificationLevel",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.DefaultMessageNotificationLevel$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.DiscordConnectionVisibility",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.DiscordConnectionVisibility$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.EmbedType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.EmbedType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ExplicitContentFilter",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ExplicitContentFilter$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.GuildFeature",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.GuildFeature$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.GuildScheduledEventPrivacyLevel",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.GuildScheduledEventPrivacyLevel$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.GuildScheduledEventStatus",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.GuildScheduledEventStatus$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.IntegrationExpireBehavior",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.IntegrationExpireBehavior$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.InteractionResponseType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.InteractionResponseType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.InteractionType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.InteractionType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.InviteTargetType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.InviteTargetType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.MessageActivityType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.MessageActivityType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.MessageStickerType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.MessageStickerType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.MessageType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.MessageType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.MFALevel",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.MFALevel$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.NsfwLevel",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.NsfwLevel$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.OverwriteType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.OverwriteType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.PremiumTier",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.PremiumTier$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.PresenceStatus",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.PresenceStatus$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ScheduledEntityType",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.ScheduledEntityType$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.StageInstancePrivacyLevel",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.StageInstancePrivacyLevel$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
     "name": "dev.kord.common.entity.TeamMembershipState",
     "fields": [
       {
@@ -3156,7 +3138,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.TextInputStyle",
+    "name": "dev.kord.common.entity.ApplicationCommandOptionType",
     "fields": [
       {
         "name": "Companion"
@@ -3164,43 +3146,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.TextInputStyle$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.UserPremium",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.UserPremium$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.VerificationLevel",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.common.entity.VerificationLevel$Companion",
+    "name": "dev.kord.common.entity.ApplicationCommandOptionType$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -3228,7 +3174,7 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.WebhookType",
+    "name": "dev.kord.common.entity.ApplicationCommandPermissionType",
     "fields": [
       {
         "name": "Companion"
@@ -3236,7 +3182,61 @@
     ]
   },
   {
-    "name": "dev.kord.common.entity.WebhookType$Companion",
+    "name": "dev.kord.common.entity.ApplicationCommandPermissionType$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.AuditLogEvent",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.AuditLogEvent$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.NsfwLevel",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.NsfwLevel$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.GuildScheduledEventPrivacyLevel",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.common.entity.GuildScheduledEventPrivacyLevel$Companion",
     "methods": [
       {
         "name": "serializer",

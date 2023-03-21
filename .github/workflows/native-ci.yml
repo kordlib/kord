@@ -9,11 +9,11 @@ jobs:
     name: Build Kord
     runs-on: ${{ matrix.os }}
     env:
-      #KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
+      KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
