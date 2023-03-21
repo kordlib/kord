@@ -1,6 +1,6 @@
 [
   {
-    "name": "dev.kord.voice.SpeakingFlags",
+    "name": "dev.kord.voice.EncryptionMode",
     "fields": [
       {
         "name": "Companion"
@@ -8,7 +8,7 @@
     ]
   },
   {
-    "name": "dev.kord.voice.SpeakingFlags$Companion",
+    "name": "dev.kord.voice.EncryptionMode$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -18,7 +18,7 @@
     ]
   },
   {
-    "name": "dev.kord.voice.gateway.Identify",
+    "name": "dev.kord.voice.SpeakingFlags",
     "fields": [
       {
         "name": "Companion"
@@ -26,7 +26,7 @@
     ]
   },
   {
-    "name": "dev.kord.voice.gateway.Identify$Companion",
+    "name": "dev.kord.voice.SpeakingFlags$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -54,7 +54,7 @@
     ]
   },
   {
-    "name": "dev.kord.voice.gateway.SendSpeaking",
+    "name": "dev.kord.voice.gateway.HeartbeatAck",
     "fields": [
       {
         "name": "Companion"
@@ -62,7 +62,97 @@
     ]
   },
   {
-    "name": "dev.kord.voice.gateway.SendSpeaking$Companion",
+    "name": "dev.kord.voice.gateway.HeartbeatAck$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Hello",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Hello$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Identify",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Identify$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Ready",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Ready$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Resume",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Resume$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Resumed",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.voice.gateway.Resumed$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -108,7 +198,7 @@
     ]
   },
   {
-    "name": "dev.kord.voice.gateway.Resume",
+    "name": "dev.kord.voice.gateway.SendSpeaking",
     "fields": [
       {
         "name": "Companion"
@@ -116,61 +206,7 @@
     ]
   },
   {
-    "name": "dev.kord.voice.gateway.Resume$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.gateway.Ready",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.gateway.Ready$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.gateway.Hello",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.gateway.Hello$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.gateway.HeartbeatAck",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.gateway.HeartbeatAck$Companion",
+    "name": "dev.kord.voice.gateway.SendSpeaking$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -207,42 +243,6 @@
   },
   {
     "name": "dev.kord.voice.gateway.Speaking$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.gateway.Resumed",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.gateway.Resumed$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.EncryptionMode",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.voice.EncryptionMode$Companion",
     "methods": [
       {
         "name": "serializer",

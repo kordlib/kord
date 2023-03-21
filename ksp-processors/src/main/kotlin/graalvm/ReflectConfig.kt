@@ -15,7 +15,7 @@ private val json = Json {
     prettyPrintIndent = "  "
 }
 
-fun List<ReflectConfigEntry>.encodeToJson() = json.encodeToString(this)
+fun List<ReflectConfigEntry>.encodeToReflectConfigJson() = json.encodeToString(this)
 
 /**
  * An entry of a

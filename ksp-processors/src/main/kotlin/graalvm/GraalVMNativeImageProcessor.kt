@@ -75,13 +75,15 @@ private class GraalVMNativeImageProcessor(
         flushedEntries = true
         if (entries.isNotEmpty()) {
             logger.info("flushing entries for project $project...")
+            // sort by name to have a deterministic order
+            val reflectConfigJson = entries.sortedBy { it.name }.encodeToReflectConfigJson()
             // this output is aggregating, see https://kotlinlang.org/docs/ksp-incremental.html#aggregating-vs-isolating
             val file = codeGenerator.createNewFileByPath(
                 Dependencies(aggregating = true, *sources.toTypedArray()),
                 path = "META-INF/native-image/dev.kord/kord-${project}/reflect-config",
                 extensionName = "json",
             )
-            file.bufferedWriter().use { it.write(entries.encodeToJson()) }
+            file.writer().use { it.write(reflectConfigJson) }
             logger.info("finished flushing entries for project $project...")
         }
     }

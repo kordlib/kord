@@ -36,24 +36,6 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.ApplicationCommandOptionData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.ApplicationCommandOptionData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
     "name": "dev.kord.core.cache.data.ApplicationCommandGroupData",
     "fields": [
       {
@@ -63,42 +45,6 @@
   },
   {
     "name": "dev.kord.core.cache.data.ApplicationCommandGroupData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.ApplicationCommandSubcommandData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.ApplicationCommandSubcommandData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.ApplicationCommandParameterData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.ApplicationCommandParameterData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -126,6 +72,60 @@
     ]
   },
   {
+    "name": "dev.kord.core.cache.data.ApplicationCommandOptionData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ApplicationCommandOptionData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ApplicationCommandParameterData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ApplicationCommandParameterData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ApplicationCommandSubcommandData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ApplicationCommandSubcommandData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.core.cache.data.ApplicationData",
     "fields": [
       {
@@ -144,7 +144,7 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.PartialApplicationData",
+    "name": "dev.kord.core.cache.data.ApplicationInteractionData",
     "fields": [
       {
         "name": "Companion"
@@ -152,7 +152,7 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.PartialApplicationData$Companion",
+    "name": "dev.kord.core.cache.data.ApplicationInteractionData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -171,42 +171,6 @@
   },
   {
     "name": "dev.kord.core.cache.data.AttachmentData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.AutoModerationRuleData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.AutoModerationRuleData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.AutoModerationRuleTriggerMetadataData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.AutoModerationRuleTriggerMetadataData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -252,6 +216,42 @@
     ]
   },
   {
+    "name": "dev.kord.core.cache.data.AutoModerationRuleData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.AutoModerationRuleData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.AutoModerationRuleTriggerMetadataData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.AutoModerationRuleTriggerMetadataData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.core.cache.data.BanData",
     "fields": [
       {
@@ -288,7 +288,7 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.ThreadMetadataData",
+    "name": "dev.kord.core.cache.data.ChatComponentData",
     "fields": [
       {
         "name": "Companion"
@@ -296,7 +296,7 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.ThreadMetadataData$Companion",
+    "name": "dev.kord.core.cache.data.ChatComponentData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -342,7 +342,7 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.ChatComponentData",
+    "name": "dev.kord.core.cache.data.EmbedAuthorData",
     "fields": [
       {
         "name": "Companion"
@@ -350,25 +350,7 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.ChatComponentData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.TextInputComponentData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.TextInputComponentData$Companion",
+    "name": "dev.kord.core.cache.data.EmbedAuthorData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -387,6 +369,24 @@
   },
   {
     "name": "dev.kord.core.cache.data.EmbedData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.EmbedFieldData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.EmbedFieldData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -432,6 +432,24 @@
     ]
   },
   {
+    "name": "dev.kord.core.cache.data.EmbedProviderData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.EmbedProviderData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.core.cache.data.EmbedThumbnailData",
     "fields": [
       {
@@ -468,60 +486,6 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.EmbedProviderData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.EmbedProviderData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.EmbedAuthorData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.EmbedAuthorData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.EmbedFieldData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.EmbedFieldData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
     "name": "dev.kord.core.cache.data.EmojiData",
     "fields": [
       {
@@ -538,6 +502,9 @@
         ]
       }
     ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.GuildApplicationCommandPermissionsData"
   },
   {
     "name": "dev.kord.core.cache.data.GuildData",
@@ -666,60 +633,6 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.ResolvedObjectsData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.ResolvedObjectsData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.ApplicationInteractionData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.ApplicationInteractionData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.OptionData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.OptionData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
     "name": "dev.kord.core.cache.data.InviteCreateData",
     "fields": [
       {
@@ -756,24 +669,6 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.InviteWithMetadataData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.InviteWithMetadataData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
     "name": "dev.kord.core.cache.data.InviteDeleteData",
     "fields": [
       {
@@ -783,6 +678,24 @@
   },
   {
     "name": "dev.kord.core.cache.data.InviteDeleteData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.InviteWithMetadataData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.InviteWithMetadataData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -882,6 +795,42 @@
     ]
   },
   {
+    "name": "dev.kord.core.cache.data.OptionData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.OptionData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.PartialApplicationData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.PartialApplicationData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.core.cache.data.PartialGuildData",
     "fields": [
       {
@@ -954,24 +903,6 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.RemovedReactionData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.RemovedReactionData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
     "name": "dev.kord.core.cache.data.ReactionRemoveEmojiData",
     "fields": [
       {
@@ -999,6 +930,42 @@
   },
   {
     "name": "dev.kord.core.cache.data.RegionData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.RemovedReactionData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.RemovedReactionData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ResolvedObjectsData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ResolvedObjectsData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -1116,6 +1083,9 @@
     ]
   },
   {
+    "name": "dev.kord.core.cache.data.StickerPackData"
+  },
+  {
     "name": "dev.kord.core.cache.data.TeamData",
     "fields": [
       {
@@ -1170,6 +1140,24 @@
     ]
   },
   {
+    "name": "dev.kord.core.cache.data.TextInputComponentData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.TextInputComponentData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
     "name": "dev.kord.core.cache.data.ThreadMemberData",
     "fields": [
       {
@@ -1179,6 +1167,24 @@
   },
   {
     "name": "dev.kord.core.cache.data.ThreadMemberData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ThreadMetadataData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.ThreadMetadataData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -1242,24 +1248,6 @@
     ]
   },
   {
-    "name": "dev.kord.core.cache.data.WelcomeScreenData",
-    "fields": [
-      {
-        "name": "Companion"
-      }
-    ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.WelcomeScreenData$Companion",
-    "methods": [
-      {
-        "name": "serializer",
-        "parameterTypes": [
-        ]
-      }
-    ]
-  },
-  {
     "name": "dev.kord.core.cache.data.WelcomeScreenChannelData",
     "fields": [
       {
@@ -1269,6 +1257,24 @@
   },
   {
     "name": "dev.kord.core.cache.data.WelcomeScreenChannelData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.WelcomeScreenData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.core.cache.data.WelcomeScreenData$Companion",
     "methods": [
       {
         "name": "serializer",
@@ -1330,11 +1336,5 @@
         ]
       }
     ]
-  },
-  {
-    "name": "dev.kord.core.cache.data.GuildApplicationCommandPermissionsData"
-  },
-  {
-    "name": "dev.kord.core.cache.data.StickerPackData"
   }
 ]
