@@ -15,7 +15,6 @@ import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.junit.jupiter.api.Test
-import kotlin.io.path.toPath
 
 private val mockId = Snowflake(42)
 private const val fileName = "linus.png"
