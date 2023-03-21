@@ -145,6 +145,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Unknown Guild Scheduled Event User. */
     UnknownGuildScheduledEventUser(10071),
 
+    /** Unknown Tag. */
+    UnknownTag(10087),
+
     /** Bots cannot use this endpoint. */
     NonBotEndpoint(20001),
 
@@ -259,6 +262,12 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of edits to messages older than 1 hour reached. Try again later. */
     MaxOldMessageEdits(30046),
 
+    /** Maximum number of pinned threads in a forum channel has been reached. */
+    MaxPinnedThreadsInForumChannel(30047),
+
+    /** Maximum number of tags in a forum channel has been reached. */
+    MaxTagsInForumChannel(30048),
+
     /** Bitrate is too high for channel of this type. */
     BitrateTooHigh(30052),
 
@@ -310,11 +319,23 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Application interaction failed to send. */
     InteractionFailedToSend(40043),
 
+    /** Cannot send a message in a forum channel. */
+    CannotSendMessageInForumChannel(40058),
+
     /** Interaction has already been acknowledged. */
     InteractionAlreadyAcknowledged(40060),
 
+    /** Tag names must be unique. */
+    TagNamesMustBeUnique(40061),
+
     /** Service resource is being rate limited. */
     ResourceIsRateLimited(40062),
+
+    /** There are no tags available that can be set by non-moderators. */
+    NoSettableTagsAvailable(40066),
+
+    /** A tag is required to create a forum post in this channel. */
+    TagRequired(40067),
 
     /** Missing access. */
     MissingAccess(50001),
@@ -559,6 +580,18 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Title was blocked by automatic moderation. */
     TitleBlockedByAutomaticModeration(200001),
+
+    /** Webhooks posted to forum channels must have a thread_name or thread_id. */
+    WebhookMissingThreadNameOrThreadId(220001),
+
+    /** Webhooks posted to forum channels cannot have both a thread_name and thread_id. */
+    WebhookCannotHaveThreadNameAndThreadId(220002),
+
+    /** Webhooks can only create threads in forum channels. */
+    WebhooksCanOnlyCreateThreadsInForumChannels(220003),
+
+    /** Webhook services cannot be used in forum channels. */
+    WebhookServicesCannotBeUsedInForumChannels(220004),
 
     /** Message blocked by harmful links filter. */
     MessageBlockedByHarmfulLinksFilter(240000),

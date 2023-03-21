@@ -49,5 +49,4 @@ public class TextChannelThread(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): TextChannelThread {
         return TextChannelThread(data, kord, strategy.supply(kord))
     }
-
 }

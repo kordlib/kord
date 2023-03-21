@@ -86,7 +86,7 @@ public sealed class ChannelType(
     public object PublicNewsThread : ChannelType(10)
 
     /**
-     * A temporary sub-channel within a [GuildText] channel.
+     * A temporary sub-channel within a [GuildText] or [GuildForum] channel.
      */
     public object PublicGuildThread : ChannelType(11)
 
@@ -109,6 +109,11 @@ public sealed class ChannelType(
      */
     public object GuildDirectory : ChannelType(14)
 
+    /**
+     * A channel that can only contain threads.
+     */
+    public object GuildForum : ChannelType(15)
+
     internal object Serializer : KSerializer<ChannelType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelType", PrimitiveKind.INT)
@@ -128,6 +133,7 @@ public sealed class ChannelType(
             12 -> PrivateThread
             13 -> GuildStageVoice
             14 -> GuildDirectory
+            15 -> GuildForum
             else -> Unknown(value)
         }
     }
@@ -149,6 +155,7 @@ public sealed class ChannelType(
                 PrivateThread,
                 GuildStageVoice,
                 GuildDirectory,
+                GuildForum,
             )
         }
 
