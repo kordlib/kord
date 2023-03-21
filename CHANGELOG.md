@@ -1,3 +1,67 @@
+# 0.8.0
+
+## Changes
+
+* Bump `DeprecationLevel`s by @Lukellmann in #716
+* Use `libs.versions.toml` and clean gradle files by @Lukellmann in #719
+* Deprecate `GuildFeature.PrivateThreads` by @Lukellmann in #724
+* Use AtomicFU compiler plugin by @Lukellmann in #740
+* Stabilize `KordConfiguration` and `KordConstants` by @Lukellmann in #753
+* Make StageChannel implement TopGuildMessageChannel by @DRSchlaubi in #756
+* Deprecate `getGuild()` functions that call `getGuildOrNull()` under the hood by @NoComment1105 in #728
+
+## Additions
+
+* Add forums in #684
+* Add `Locale.INDONESIAN` by @Lukellmann in #738
+* Add `KeywordAutoModerationRule.allowedKeywords` by @Lukellmann in #731
+* Add support for nsfw commands by @Lukellmann in #725
+* Add missing message types by @NoComment1105 in #744
+* Add missing error codes by @NoComment1105 in #742
+* Add ActiveDeveloper user flag by @oluiss in #720
+* Add new `GuildFeature`s and allow editing them by @Lukellmann in #722
+* Add new error codes by @Lukellmann in #723
+* Add Select menu types by @oluiss in #707
+* Add `after` to audit log get by @NoComment1105 in #745
+* Add more JSON Error codes by @NoComment1105 in #757
+* Add support for gif stickers by @NoComment1105 in #750
+* Add stage channel message types by @NoComment1105 in #759
+* Add bucket ID to the discovered bucket trace log by @MrPowerGamerBR in #699
+* Add guild member flags by @NoComment1105 in #760
+* Add ability to receive Unknown events by @DRSchlaubi in #769
+* Add messages by @DRSchlaubi in #762
+* Add Role subscriptions by @NoComment1105 & @Lukellmann in (#743 #781)
+* Add `BlockMessageAutoModerationAction.customMessage` by @Lukellmann in #774
+
+## Dependencies
+
+* Gradle 7.6 -> 8.0.2
+* Kotlin 1.7.2 -> 1.8.10
+* KSP 1.8.0-1.0.8 -> 1.8.10-1.0.9
+* Ktor 2.2.1 -> 2.2.4
+* kotlinx.serialization 1.4.1 -> 1.5.0
+* Dokka 1.8.0-dev-194 -> 1.8.10
+* AtomicFU 0.19.0 -> 0.20.0
+* Binary compatibility validator 0.12.1 -> 0.13.0
+* JUnit 5 5.9.1 -> 5.9.2
+* MockK 1.13.2 -> 1.13.4
+
+## House-keeping
+
+* Clean up by @Lukellmann in #730
+* docs-ci changes and fixes by @DRSchlaubi and @Lukellmann in #778 #780 #770
+
+## Fixes
+
+* Fix deprecation propagation for new select menus by @Lukellmann in #721
+* Fix CI badge in readme by @DRSchlaubi in #741
+* Fix nonce deserialization for big integers by @Lukellmann in #765
+* Fix `MessageChannelBehavior.typeUntil` by @Lukellmann in #768
+* Fix(voice): use 74 byte ip discovery packet instead of the deprecated 70 byte discovery packet by @lost-illusi0n in #776
+* Fix(voice): generate EncryptionMode instead of using an enum by @lost-illusi0n in #737
+* Fix various bugs in `DiscordBitSet` by @Lukellmann in #772
+* Make `Snowflake`'s ordering consistent with `equals` by @Lukellmann in #773
+
 # 0.8.0-M17
 
 ## Additions
