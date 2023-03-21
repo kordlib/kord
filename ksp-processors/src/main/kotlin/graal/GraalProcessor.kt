@@ -9,9 +9,9 @@ import dev.kord.ksp.jvmBinaryName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 
-class KordGraalProcessorProvider : SymbolProcessorProvider {
+class GraalProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
-        return KordGraalProcessor(
+        return GraalProcessor(
             environment.codeGenerator, environment.logger, environment.options["project"]!!
         )
     }
@@ -19,7 +19,7 @@ class KordGraalProcessorProvider : SymbolProcessorProvider {
 
 private val entries = mutableListOf<ReflectConfigEntry>()
 
-private class KordGraalProcessor(
+private class GraalProcessor(
     private val codeGenerator: CodeGenerator,
     private val logger: KSPLogger,
     private val project: String
@@ -27,15 +27,15 @@ private class KordGraalProcessor(
     SymbolProcessor {
     override fun finish() {
         flushEntries()
-        logger.info("KordGraalProcessor received finish signal")
+        logger.info("GraalProcessor received finish signal")
     }
 
     override fun onError() {
-        logger.info("KordGraalProcessor received error signal")
+        logger.info("GraalProcessor received error signal")
     }
 
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        logger.info("KordGraalProcessor got called, resolving annotations...")
+        logger.info("GraalProcessor got called, resolving annotations...")
 
         entries += resolver
             .getSymbolsWithAnnotation<Serializable>()
@@ -48,7 +48,7 @@ private class KordGraalProcessor(
             .filterIsInstance<KSClassDeclaration>()
             .map { ReflectConfigEntry(name = it.jvmBinaryName) }
 
-        logger.info("KordEnumProcessor finished processing annotations")
+        logger.info("GraalProcessor finished processing annotations")
 
         return emptyList() // we never have to defer any symbols
     }
