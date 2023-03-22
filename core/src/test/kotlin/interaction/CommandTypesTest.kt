@@ -10,11 +10,11 @@ import dev.kord.core.entity.interaction.SubCommand
 import kotlinx.serialization.json.*
 import mockKord
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.condition.DisabledIfSystemProperty
+import org.junit.jupiter.api.condition.DisabledInNativeImage
 import kotlin.test.assertEquals
 
 
-@DisabledIfSystemProperty(named = "org.graalvm.nativeimage.imagecode", matches = ".+")
+@DisabledInNativeImage
 class CommandsTypeTests {
     val arg = buildJsonObject {
         put("type", ApplicationCommandOptionType.Integer.type)
