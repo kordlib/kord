@@ -2,22 +2,23 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.MessageFlags
-import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.coerceToMissing
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.NamedFile
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.json.request.FollowupMessageCreateRequest
-import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
+import dev.kord.rest.json.request.ForumThreadMessageRequest
+import dev.kord.rest.json.request.MultipartForumThreadMessageCreateRequest
 
-/**
- * Message builder for creating messages following up interaction responses.
- */
 @KordDsl
-public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
-    MessageCreateBuilder,
-    RequestBuilder<MultipartFollowupMessageCreateRequest> {
+public class ForumMessageCreateBuilder : MessageCreateBuilder,
+    RequestBuilder<MultipartForumThreadMessageCreateRequest> {
 
     override var content: String? = null
 
@@ -27,27 +28,28 @@ public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
 
     override var allowedMentions: AllowedMentionsBuilder? = null
 
-
     override val components: MutableList<MessageComponentBuilder> = mutableListOf()
 
     override val files: MutableList<NamedFile> = mutableListOf()
+
+    private var _stickerIds: Optional<MutableList<Snowflake>> = Optional.Missing()
+    public val stickerIds: MutableList<Snowflake>? by ::_stickerIds.delegate()
 
     override var flags: MessageFlags? = null
     override var suppressEmbeds: Boolean? = null
     override var suppressNotifications: Boolean? = null
 
-    override fun toRequest(): MultipartFollowupMessageCreateRequest {
-        return MultipartFollowupMessageCreateRequest(
-            FollowupMessageCreateRequest(
+    override fun toRequest(): MultipartForumThreadMessageCreateRequest {
+        return MultipartForumThreadMessageCreateRequest(
+            ForumThreadMessageRequest(
                 content = Optional(content).coerceToMissing(),
-                tts = Optional(tts).coerceToMissing().toPrimitive(),
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
-                flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications, ephemeral)
+                stickerIds = _stickerIds,
+                flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
             ),
             files
         )
     }
-
 }

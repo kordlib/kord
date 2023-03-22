@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordMessageReference
+import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
 import dev.kord.rest.NamedFile
@@ -53,6 +54,10 @@ public class UserMessageCreateBuilder
 
     override val files: MutableList<NamedFile> = mutableListOf()
 
+    override var flags: MessageFlags? = null
+    override var suppressEmbeds: Boolean? = null
+    override var suppressNotifications: Boolean? = null
+
     override fun toRequest(): MultipartMessageCreateRequest {
         return MultipartMessageCreateRequest(
             MessageCreateRequest(
@@ -69,7 +74,8 @@ public class UserMessageCreateBuilder
                         )
                     )
                 } ?: Optional.Missing(),
-                components = Optional(components).coerceToMissing().mapList { it.build() }
+                components = Optional(components).coerceToMissing().mapList { it.build() },
+                flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications)
             ),
             files
         )

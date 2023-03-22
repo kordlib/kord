@@ -238,7 +238,7 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      * @throws [RestRequestException] if something went wrong during the request.
      */
     public suspend fun typeUntil(instant: Instant) {
-        while (instant < Clock.System.now()) {
+        while (Clock.System.now() < instant) {
             type()
             delay(8.seconds) //bracing ourselves for some network delays
         }

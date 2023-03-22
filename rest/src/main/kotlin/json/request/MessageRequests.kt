@@ -19,7 +19,8 @@ public data class MessageCreateRequest(
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     @SerialName("message_reference")
     val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing()
 )
 
 public data class MultipartMessageCreateRequest(
@@ -78,7 +79,7 @@ public data class MessageEditPatchRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing()
+    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing(),
 )
 
 public data class MultipartMessagePatchRequest(
@@ -88,3 +89,21 @@ public data class MultipartMessagePatchRequest(
 
 @Serializable
 public data class BulkDeleteRequest(val messages: List<Snowflake>)
+
+@Serializable
+public data class ForumThreadMessageRequest(
+    val content: Optional<String> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    @SerialName("allowed_mentions")
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+    @SerialName("message_reference")
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    @SerialName("sticker_ids")
+    val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing()
+)
+
+public data class MultipartForumThreadMessageCreateRequest(
+    val request: ForumThreadMessageRequest,
+    val files: List<NamedFile> = emptyList(),
+)
