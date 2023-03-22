@@ -139,6 +139,13 @@ publishing {
 }
 
 graalvmNative {
+    binaries.all {
+        javaLauncher.set(javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(19))
+            vendor.set(JvmVendorSpec.GRAAL_VM)
+        })
+    }
+
     binaries.named("test") {
         configurationFileDirectories.from(rootProject.file("graalvm-native-image-test-config"))
         resources {
