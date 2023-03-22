@@ -11740,7 +11740,8 @@ public final class dev/kord/core/event/guild/IntegrationCreateEvent : dev/kord/c
 	public fun getShard ()I
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun toString ()Ljava/lang/String;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/event/guild/IntegrationCreateEvent;
 }
 
 public final class dev/kord/core/event/guild/IntegrationDeleteEvent : dev/kord/core/entity/Strategizable, dev/kord/core/event/Event {
