@@ -24,10 +24,9 @@ public class IntegrationCreateEvent(
 
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): IntegrationCreateEvent =
         IntegrationCreateEvent(integration, kord, shard, customContext, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "IntegrationCreateEvent(integration=$integration, guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"
-    }
+    override fun toString(): String = "IntegrationCreateEvent(integration=$integration, kord=$kord, shard=$shard, " +
+        "customContext=$customContext, supplier=$supplier)"
 }

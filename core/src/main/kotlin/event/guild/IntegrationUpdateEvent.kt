@@ -27,7 +27,6 @@ public class IntegrationUpdateEvent(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): IntegrationUpdateEvent =
         IntegrationUpdateEvent(integration, kord, shard, customContext, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "IntegrationUpdateEvent(integration=$integration, guildId=$guildId, kord=$kord, shard=$shard, supplier=$supplier)"
-    }
+    override fun toString(): String = "IntegrationUpdateEvent(integration=$integration, kord=$kord, shard=$shard, " +
+        "customContext=$customContext, supplier=$supplier)"
 }
