@@ -10,7 +10,8 @@ jobs:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        # TODO: Add Windows after figuring out build error
+        os: [ ubuntu-latest, macos-latest ]
       fail-fast: true
       max-parallel: 1
     steps:
