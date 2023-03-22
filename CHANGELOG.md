@@ -62,7 +62,7 @@ Updated in #732, #739, #755, #782 and #788
 * Clean up (by @Lukellmann in #730)
 * Use AtomicFU compiler plugin (by @Lukellmann in #740)
 * Fix CI badge in readme (by @DRSchlaubi in #741)
-* CI updates and fixes (by @DRSchlaubi and @Lukellmann in #770, #778 and #780)
+* CI updates and fixes (by @DRSchlaubi and @Lukellmann in #770, #778, #780 and #790)
 
 # 0.8.0-M17
 
