@@ -41,11 +41,12 @@ public data class DiscordIntegration(
     val account: DiscordIntegrationsAccount,
     @SerialName("synced_at")
     val syncedAt: Optional<Instant> = Optional.Missing(),
+    @SerialName("subscriber_count")
     val subscriberCount: OptionalInt = OptionalInt.Missing,
     val revoked: OptionalBoolean = OptionalBoolean.Missing,
     val application: Optional<IntegrationApplication> = Optional.Missing(),
-    @SerialName("guild_id")
-    val guildId: OptionalSnowflake = OptionalSnowflake.Missing
+    @SerialName("guild_id") // available in Integration Create and Integration Update events
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
 
 @Serializable
