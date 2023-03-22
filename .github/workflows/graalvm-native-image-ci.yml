@@ -12,8 +12,6 @@ jobs:
       matrix:
         # TODO: Add Windows after figuring out build error
         os: [ ubuntu-latest, macos-latest ]
-      fail-fast: true
-      max-parallel: 1
     steps:
       - uses: actions/checkout@v3
       - uses: graalvm/setup-graalvm@v1
@@ -28,4 +26,4 @@ jobs:
       - name: Test with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: --stacktrace --debug --no-parallel nativeTest
+          arguments: --stacktrace --info --no-parallel nativeTest
