@@ -27,4 +27,4 @@ jobs:
       - name: Test with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: --stacktrace --debug --no-daemon nativeTest
+          arguments: --stacktrace --debug --no-parralel nativeTest
