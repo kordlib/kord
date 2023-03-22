@@ -2,7 +2,9 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.IntegrationExpireBehavior
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
+import dev.kord.common.serialization.DurationInDays
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.RoleBehavior
@@ -17,7 +19,6 @@ import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.time.Duration
 
 /**
  * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
@@ -52,8 +53,8 @@ public class Integration(
     /**
      * Whether this integrations is syncing.
      */
-    public val isSyncing: Boolean
-        get() = data.syncing
+    public val isSyncing: Boolean?
+        get() = data.syncing.value
 
     /**
      * The id of the [guild][Guild] this integration is tied to.
@@ -89,13 +90,13 @@ public class Integration(
     /**
      * The behavior used to expire subscribers.
      */
-    public val expireBehavior: IntegrationExpireBehavior
-        get() = data.expireBehavior
+    public val expireBehavior: IntegrationExpireBehavior?
+        get() = data.expireBehavior.value
 
     /**
      * The grace period before expiring subscribers.
      */
-    public val expireGracePeriod: Duration get() = data.expireGracePeriod
+    public val expireGracePeriod: DurationInDays? get() = data.expireGracePeriod.value
 
     /**
      * The id of the [user][User] for this integration.
@@ -112,7 +113,7 @@ public class Integration(
     /**
      * When this integration was last synced.
      */
-    public val syncedAt: Instant get() = data.syncedAt
+    public val syncedAt: Instant? get() = data.syncedAt.value
 
     /**
      * Requests to get the guild this integration is tied to.

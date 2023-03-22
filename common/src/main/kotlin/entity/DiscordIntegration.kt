@@ -12,6 +12,8 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInDays
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
@@ -26,22 +28,24 @@ public data class DiscordIntegration(
     val name: String,
     val type: String,
     val enabled: Boolean,
-    val syncing: Boolean,
+    val syncing: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("role_id")
-    val roleId: Snowflake,
+    val roleId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("enable_emoticons")
     val enableEmoticons: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("expire_behavior")
-    val expireBehavior: IntegrationExpireBehavior,
+    val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing(),
     @SerialName("expire_grace_period")
-    val expireGracePeriod: DurationInDays,
-    val user: DiscordUser,
+    val expireGracePeriod: Optional<DurationInDays> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing(),
     val account: DiscordIntegrationsAccount,
     @SerialName("synced_at")
-    val syncedAt: Instant,
-    val subscriberCount: Int,
-    val revoked: Boolean,
-    val application: IntegrationApplication
+    val syncedAt: Optional<Instant> = Optional.Missing(),
+    val subscriberCount: OptionalInt = OptionalInt.Missing,
+    val revoked: OptionalBoolean = OptionalBoolean.Missing,
+    val application: Optional<IntegrationApplication> = Optional.Missing(),
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing
 )
 
 @Serializable

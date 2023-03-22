@@ -196,7 +196,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): IntegrationCreateEvent {
-        return IntegrationCreateEvent(event.integration.integration, event.integration.guildId, kord, shard, context?.get())
+        return IntegrationCreateEvent(event.integration, kord, shard, context?.get())
     }
 
     private suspend fun handle(
@@ -205,7 +205,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?
     ): IntegrationUpdateEvent {
-        return IntegrationUpdateEvent(event.integration.integration, event.integration.guildId, kord, shard, context?.get())
+        return IntegrationUpdateEvent(event.integration, kord, shard, context?.get())
     }
 
     private suspend fun handle(
