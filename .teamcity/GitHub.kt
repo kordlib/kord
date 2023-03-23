@@ -2,6 +2,7 @@ import jetbrains.buildServer.configs.kotlin.BuildFeatures
 import jetbrains.buildServer.configs.kotlin.DslContext
 import jetbrains.buildServer.configs.kotlin.ProjectFeatures
 import jetbrains.buildServer.configs.kotlin.buildFeatures.commitStatusPublisher
+import jetbrains.buildServer.configs.kotlin.buildFeatures.pullRequests
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubIssues
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 
@@ -27,7 +28,13 @@ fun BuildFeatures.installGitHubPublisher() = commitStatusPublisher {
     }
     param("github_oauth_user", "DRSchlaubi")
 }
-
+fun BuildFeatures.installGitHubPullRequest() = pullRequests {
+    github {
+        authType = token {
+            token = "credentialsJSON:8a0ab174-fa52-45d4-950a-05a3c36d0e63"
+        }
+    }
+}
 fun ProjectFeatures.installGitHubIssueTracker() = githubIssues {
     id = "PROJECT_EXT_2"
     displayName = "GitHub"
