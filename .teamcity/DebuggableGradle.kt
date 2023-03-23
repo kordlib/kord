@@ -10,7 +10,6 @@ const val debugParamName = "debug"
 fun BuildSteps.debuggableGradle(name: String, configure: GradleBuildStep.() -> Unit) {
     gradle {
         this.name = "$name (Debug)"
-        id = name
         conditions {
             equals(debugParamName, true.toString())
         }
@@ -20,7 +19,6 @@ fun BuildSteps.debuggableGradle(name: String, configure: GradleBuildStep.() -> U
 
     gradle {
         this.name = name
-        id="${name}_debug"
         conditions {
             equals(debugParamName, false.toString())
         }
