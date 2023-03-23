@@ -62,7 +62,7 @@ object Build : BuildType({
         gradle {
             name = "build"
             tasks = "nativeTest"
-            gradleParams = "--stacktrace"
+            gradleParams = "--stacktrace -d"
         }
     }
 
