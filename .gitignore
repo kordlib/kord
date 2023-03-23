@@ -6,5 +6,6 @@ out/
 **/build/*
 !**/build/generated/
 **/build/generated/**/test
+.teamcity/target/
 # re-exclude BuildConfigGenerated.kt
 common/build/generated/source/buildConfig/main/main/dev/kord/common/BuildConfigGenerated.kt
