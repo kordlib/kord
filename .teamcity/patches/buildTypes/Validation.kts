@@ -12,5 +12,9 @@ in the root project, and delete the patch script.
 create(DslContext.projectId, BuildType({
     id("Validation")
     name = "Validation"
+
+    vcs {
+        root(DslContext.settingsRoot)
+    }
 }))
 
