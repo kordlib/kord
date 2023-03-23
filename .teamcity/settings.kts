@@ -59,7 +59,6 @@ object Build : BuildType({
     steps {
         gradle {
             tasks = "nativeTest"
-            dockerImage = "ghcr.io/graalvm/native-image:ol9-java17-22.3.1"
             dockerImagePlatform = GradleBuildStep.ImagePlatform.Linux
         }
     }
