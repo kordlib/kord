@@ -11,6 +11,8 @@ fun KordBuild(name: String, configure: BuildType.() -> Unit) = object : BuildTyp
 
     params {
         checkbox(debugParamName, false.toString(), "Debug Mode", "Run build with debug logging enabled")
+
+        param("env.GITHUB_BRANCH", "%teamcity.build.branch%")
     }
 
     features {
