@@ -29,7 +29,7 @@ fun BuildFeatures.installGitHubPublisher() = commitStatusPublisher {
     param("github_oauth_user", "DRSchlaubi")
 }
 fun BuildFeatures.installGitHubPullRequest() = pullRequests {
-    github {
+    provider = github {
         authType = token {
             token = "credentialsJSON:8a0ab174-fa52-45d4-950a-05a3c36d0e63"
         }
