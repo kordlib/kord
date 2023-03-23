@@ -1,8 +1,8 @@
 import jetbrains.buildServer.configs.kotlin.*
 import jetbrains.buildServer.configs.kotlin.buildFeatures.commitStatusPublisher
 import jetbrains.buildServer.configs.kotlin.buildFeatures.perfmon
-import jetbrains.buildServer.configs.kotlin.buildSteps.GradleBuildStep
-import jetbrains.buildServer.configs.kotlin.buildSteps.gradle
+import jetbrains.buildServer.configs.kotlin.buildSteps.ScriptBuildStep
+import jetbrains.buildServer.configs.kotlin.buildSteps.script
 import jetbrains.buildServer.configs.kotlin.projectFeatures.githubIssues
 import jetbrains.buildServer.configs.kotlin.triggers.vcs
 import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
@@ -57,9 +57,14 @@ object Build : BuildType({
     }
 
     steps {
-        gradle {
-            tasks = "nativeTest"
-            dockerImagePlatform = GradleBuildStep.ImagePlatform.Linux
+        script {
+            name = "Build"
+            scriptContent = """
+                microdnf install findutils
+                ./gradlew nativeTest
+            """.trimIndent()
+            dockerImage = "ghcr.io/graalvm/native-image:22.3.1"
+            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
 
