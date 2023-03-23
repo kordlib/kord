@@ -19,6 +19,10 @@ val ValidationCI = KordBuild("Validate Code") {
         failOnSignificantDecreaseOf(BuildFailureOnMetric.MetricType.TEST_COUNT)
         failOnSignificantDecreaseOf(BuildFailureOnMetric.MetricType.TEST_IGNORED_COUNT)
     }
+
+    features {
+        installGitHubPullRequest()
+    }
 }
 
 private fun FailureConditions.failOnSignificantDecreaseOf(metricType: BuildFailureOnMetric.MetricType) {
