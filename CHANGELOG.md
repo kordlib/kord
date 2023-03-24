@@ -38,6 +38,8 @@
 * Make `Snowflake`'s ordering consistent with `equals` (by @Lukellmann in #773)
 * Fix various bugs in `DiscordBitSet` (by @Lukellmann in #772)
 * Use 74 byte ip discovery packet instead of the deprecated 70 byte discovery packet (by @lost-illusi0n in #776)
+* Integration event fixes (#764)
+
 
 ## Dependencies
 
@@ -95,7 +97,6 @@ Updated in #732, #739, #755, #782 and #788
 * Fix `with_count` parameter typo (#690)
 * Fix default avatar URL not working (#691)
 * Make `LinearRetry` behave linearly for all inputs (#702)
-* Integration event fixes (#764)
 
 ## Dependencies
 
