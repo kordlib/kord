@@ -28,7 +28,7 @@ import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
+public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateThreadParentChannelBehavior {
 
     override val activeThreads: Flow<TextChannelThread>
         get() = super.activeThreads.filterIsInstance()
@@ -40,7 +40,7 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
      * @throws [EntityNotFoundException] if the channel wasn't present.
      * @throws [ClassCastException] if the channel isn't a [TextChannel].
      */
-    override suspend fun asChannel(): TextChannel = super.asChannel() as TextChannel
+    override suspend fun asChannel(): TextChannel = super<TopGuildMessageChannelBehavior>.asChannel() as TextChannel
 
     /**
      * Requests to get this behavior as a [TextChannel],
@@ -48,7 +48,7 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    override suspend fun asChannelOrNull(): TextChannel? = super.asChannelOrNull() as? TextChannel
+    override suspend fun asChannelOrNull(): TextChannel? = super<TopGuildMessageChannelBehavior>.asChannelOrNull() as? TextChannel
 
     /**
      * Retrieve the [TextChannel] associated with this behaviour from the provided [EntitySupplier]
@@ -56,7 +56,7 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    override suspend fun fetchChannel(): TextChannel = super.fetchChannel() as TextChannel
+    override suspend fun fetchChannel(): TextChannel = super<TopGuildMessageChannelBehavior>.fetchChannel() as TextChannel
 
 
     /**
@@ -65,16 +65,19 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    override suspend fun fetchChannelOrNull(): TextChannel? = super.fetchChannelOrNull() as? TextChannel
+    override suspend fun fetchChannelOrNull(): TextChannel? = super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? TextChannel
 
+    @Deprecated(
+        "Replaced by overload with autoArchiveDuration in builder lambda",
+        ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
+        level = WARNING,
+    )
     public suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null,
         builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
     ): TextChannelThread {
         return startPublicThread(name) {
-            this.reason = reason
             this.autoArchiveDuration = archiveDuration
             builder()
         }
@@ -91,14 +94,17 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         } as TextChannelThread
     }
 
+    @Deprecated(
+        "Replaced by overload with autoArchiveDuration in builder lambda",
+        ReplaceWith("this.startPrivateThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
+        level = WARNING,
+    )
     public suspend fun startPrivateThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null,
         builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
     ): TextChannelThread {
         return startPrivateThread(name) {
-            this.reason = reason
             this.autoArchiveDuration = archiveDuration
             builder()
         }
@@ -116,15 +122,17 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
 
     @Deprecated(
         "Replaced by builder overload",
-        ReplaceWith("this.startPublicThreadWithMessage(messageId, name) { this@startPublicThreadWithMessage.reason = reason }"),
+        ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
         level = WARNING,
     )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
         reason: String? = null
     ): TextChannelThread {
         return startPublicThreadWithMessage(messageId, name) {
+            this.autoArchiveDuration = archiveDuration
             this.reason = reason
         }
     }

@@ -3,9 +3,9 @@ package dev.kord.core.behavior.channel.threads
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.CategorizableChannelBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
@@ -23,7 +23,7 @@ import java.util.*
 /**
  * Behavior of channels that can contain public threads.
  */
-public interface ThreadParentChannelBehavior : TopGuildChannelBehavior {
+public interface ThreadParentChannelBehavior : CategorizableChannelBehavior {
     /**
      * Returns all active public and private threads in the channel.
      * Threads are ordered by their id, in descending order.

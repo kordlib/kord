@@ -33,7 +33,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord News Channel associated to a guild.
  */
-public interface NewsChannelBehavior : ThreadParentChannelBehavior {
+public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadParentChannelBehavior {
 
     override val activeThreads: Flow<NewsChannelThread>
         get() = super.activeThreads.filterIsInstance()
@@ -45,7 +45,7 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
      * @throws [EntityNotFoundException] if the channel wasn't present.
      * @throws [ClassCastException] if the channel isn't a [NewsChannel].
      */
-    override suspend fun asChannel(): NewsChannel = super.asChannel() as NewsChannel
+    override suspend fun asChannel(): NewsChannel = super<TopGuildMessageChannelBehavior>.asChannel() as NewsChannel
 
     /**
      * Requests to get this behavior as a [NewsChannel],
@@ -53,7 +53,7 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
      *
      * @throws [RequestException] if something went wrong during the request.
      */
-    override suspend fun asChannelOrNull(): NewsChannel? = super.asChannelOrNull() as? NewsChannel
+    override suspend fun asChannelOrNull(): NewsChannel? = super<TopGuildMessageChannelBehavior>.asChannelOrNull() as? NewsChannel
 
     /**
      * Retrieve the [NewsChannel] associated with this behaviour from the provided [EntitySupplier]
@@ -61,7 +61,7 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the user wasn't present.
      */
-    override suspend fun fetchChannel(): NewsChannel = super.fetchChannel() as NewsChannel
+    override suspend fun fetchChannel(): NewsChannel = super<TopGuildMessageChannelBehavior>.fetchChannel() as NewsChannel
 
 
     /**
@@ -70,7 +70,7 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    override suspend fun fetchChannelOrNull(): NewsChannel? = super.fetchChannelOrNull() as? NewsChannel
+    override suspend fun fetchChannelOrNull(): NewsChannel? = super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? NewsChannel
 
 
     /**
