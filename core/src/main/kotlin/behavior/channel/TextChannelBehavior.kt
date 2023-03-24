@@ -122,6 +122,18 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
             type = ChannelType.PrivateThread
         } as TextChannelThread
     }
+
+    public suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        reason: String? = null,
+        builder: StartThreadWithMessageBuilder.() -> Unit = {}
+    ): TextChannelThread {
+        return unsafeStartPublicThreadWithMessage(messageId, name) {
+            this.reason = reason
+            builder()
+        } as TextChannelThread
+    }
     @Deprecated(
         "Replace with overloaded method.",
         replaceWith = ReplaceWith("startPublicThreadWithMessage(messageId, name, reason)"),
@@ -150,15 +162,6 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as TextChannelThread
     }
 
-
-    public suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        reason: String? = null,
-        builder: StartThreadWithMessageBuilder.() -> Unit = {}
-    ): TextChannelThread {
-        return unsafeStartPublicThreadWithMessage(messageId, name, builder) as TextChannelThread
-    }
     override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<TextChannelThread> {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
     }

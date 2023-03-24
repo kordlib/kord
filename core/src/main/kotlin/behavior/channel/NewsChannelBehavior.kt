@@ -83,6 +83,22 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target))
     }
 
+
+    public suspend fun startPublicThread(
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null,
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+    ): NewsChannelThread {
+        return unsafeStartThread(name) {
+            this.reason = reason
+            this.autoArchiveDuration = archiveDuration
+            builder()
+
+            type = ChannelType.PublicNewsThread
+        } as NewsChannelThread
+    }
+
     @Deprecated(
         "Replace with overloaded method.",
         replaceWith = ReplaceWith("startPublicThread(name, archiveDuration, reason)"),
@@ -117,18 +133,19 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         } as NewsChannelThread
     }
 
-    public suspend fun startPublicThread(
-        name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
-    ): NewsChannelThread {
-        return unsafeStartThread(name) {
-            builder()
 
-            type = ChannelType.PublicNewsThread
+    public suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        reason: String? = null,
+        builder: StartThreadWithMessageBuilder.() -> Unit = {}
+    ): NewsChannelThread {
+        return unsafeStartPublicThreadWithMessage(messageId, name, ) {
+            this.reason = reason
+            builder()
         } as NewsChannelThread
     }
+
     @Deprecated(
         "Replace with overloaded method.",
         replaceWith = ReplaceWith("startPublicThreadWithMessage(messageId, name, archiveDuration, reason)"),
@@ -159,14 +176,6 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as NewsChannelThread
     }
 
-    public suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        reason: String? = null,
-        builder: StartThreadWithMessageBuilder.() -> Unit = {}
-    ): NewsChannelThread {
-        return unsafeStartPublicThreadWithMessage(messageId, name, builder) as NewsChannelThread
-    }
 
     override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<NewsChannelThread> {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
