@@ -554,22 +554,6 @@ public final class dev/kord/rest/builder/channel/InviteCreateBuilder : dev/kord/
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/ModifyForumTagBuilder : dev/kord/rest/builder/AuditRequestBuilder {
-	public fun <init> ()V
-	public final fun getModerated ()Ljava/lang/Boolean;
-	public final fun getName ()Ljava/lang/String;
-	public final fun getReactionEmojiId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getReactionEmojiName ()Ljava/lang/String;
-	public fun getReason ()Ljava/lang/String;
-	public final fun setModerated (Ljava/lang/Boolean;)V
-	public final fun setName (Ljava/lang/String;)V
-	public final fun setReactionEmojiId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setReactionEmojiName (Ljava/lang/String;)V
-	public fun setReason (Ljava/lang/String;)V
-	public fun toRequest ()Ldev/kord/rest/json/request/ForumTagRequest;
-	public synthetic fun toRequest ()Ljava/lang/Object;
-}
-
 public final class dev/kord/rest/builder/channel/NewsChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
@@ -6402,18 +6386,6 @@ public final class dev/kord/rest/route/Route$FollowupMessageModify : dev/kord/re
 	public static final field INSTANCE Ldev/kord/rest/route/Route$FollowupMessageModify;
 }
 
-public final class dev/kord/rest/route/Route$ForumTagDelete : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$ForumTagDelete;
-}
-
-public final class dev/kord/rest/route/Route$ForumTagPost : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$ForumTagPost;
-}
-
-public final class dev/kord/rest/route/Route$ForumTagPut : dev/kord/rest/route/Route {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$ForumTagPut;
-}
-
 public final class dev/kord/rest/route/Route$GatewayBotGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GatewayBotGet;
 }
@@ -6934,10 +6906,6 @@ public final class dev/kord/rest/route/Route$StickerId : dev/kord/rest/route/Rou
 	public static final field INSTANCE Ldev/kord/rest/route/Route$StickerId;
 }
 
-public final class dev/kord/rest/route/Route$TagId : dev/kord/rest/route/Route$Key {
-	public static final field INSTANCE Ldev/kord/rest/route/Route$TagId;
-}
-
 public final class dev/kord/rest/route/Route$TemplateCode : dev/kord/rest/route/Route$Key {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$TemplateCode;
 }
@@ -7058,10 +7026,6 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public final fun addUserToThread (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun bulkDelete (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/BulkDeleteRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun bulkDelete$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/BulkDeleteRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun createForumTag (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ForumTagRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun createForumTag (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun createForumTag$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ForumTagRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun createForumTag$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createInvite (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createInvite$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MultipartMessageCreateRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7074,8 +7038,6 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public static synthetic fun deleteChannel$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun deleteChannelPermission (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun deleteChannelPermission$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun deleteForumTag (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun deleteForumTag$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun deleteMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun deleteMessage$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun deleteOwnReaction (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7084,9 +7046,6 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public final fun deleteReaction (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun editChannelPermissions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ChannelPermissionEditRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun editChannelPermissions$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ChannelPermissionEditRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun editForumTag (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ForumTagRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun editForumTag (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun editForumTag$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ForumTagRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MessageEditPatchRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MultipartMessagePatchRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MultipartWebhookEditMessageRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

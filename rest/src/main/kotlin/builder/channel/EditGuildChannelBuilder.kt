@@ -286,29 +286,3 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
     )
 }
-
-@KordDsl
-public class ModifyForumTagBuilder : AuditRequestBuilder<ForumTagRequest> {
-    private var _name: Optional<String> = Optional.Missing()
-    public var name: String? by ::_name.delegate()
-
-    private var _moderated: OptionalBoolean = OptionalBoolean.Missing
-    public var moderated: Boolean? by ::_moderated.delegate()
-
-    private var _reactionEmojiId: Optional<Snowflake?> = Optional.Missing()
-    public var reactionEmojiId: Snowflake? by ::_reactionEmojiId.delegate()
-
-    private var _reactionEmojiName: Optional<String?> = Optional.Missing()
-    public var reactionEmojiName: String? by ::_reactionEmojiName.delegate()
-
-    override var reason: String? = null
-
-    override fun toRequest(): ForumTagRequest {
-        return ForumTagRequest(
-            name = _name,
-            moderated = _moderated,
-            emojiId = _reactionEmojiId,
-            emojiName = _reactionEmojiName
-        )
-    }
-}
