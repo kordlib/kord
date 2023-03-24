@@ -52,7 +52,7 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
                 message = Optional(messageRequest?.request).coerceToMissing(),
                 appliedTags = _appliedTags
             ),
-            Optional(messageRequest?.files).coerceToMissing()
+            files = messageRequest?.files ?: emptyList()
         )
     }
 

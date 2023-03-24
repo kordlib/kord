@@ -327,7 +327,7 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         keys[Route.ChannelId] = channelId
         body(StartThreadRequest.serializer(), multipartRequest.request)
         auditLogReason(reason)
-        multipartRequest.files.value?.forEach { file(it) }
+        multipartRequest.files.forEach { file(it) }
     }
 
     public suspend fun startThread(

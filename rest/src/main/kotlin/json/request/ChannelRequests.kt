@@ -92,7 +92,7 @@ public data class StartThreadRequest(
 
 public data class MultipartStartThreadRequest(
     val request: StartThreadRequest,
-    val files: Optional<List<NamedFile>?> = Optional.Missing(),
+    val files: List<NamedFile> = emptyList(),
 )
 
 public data class ListThreadsBySnowflakeRequest(
