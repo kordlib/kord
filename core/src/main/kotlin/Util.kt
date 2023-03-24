@@ -334,6 +334,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelCreateEvent::class,
     StageChannelCreateEvent::class,
     TextChannelCreateEvent::class,
+    ForumChannelCreateEvent::class,
     UnknownChannelCreateEvent::class,
     VoiceChannelCreateEvent::class,
 
@@ -343,6 +344,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelUpdateEvent::class,
     StageChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
+    ForumChannelUpdateEvent::class,
     UnknownChannelUpdateEvent::class,
     VoiceChannelUpdateEvent::class,
 
@@ -352,6 +354,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelDeleteEvent::class,
     StageChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
+    ForumChannelDeleteEvent::class,
     UnknownChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,
 
