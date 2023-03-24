@@ -24,7 +24,7 @@ val ValidationCI = KordBuild("Validate Code") {
 
             conditions {
                 // Meaning: Do not run on Pull Requests
-                doesNotExist("eamcity.pullRequest.number")
+                doesNotExist("teamcity.pullRequest.number")
             }
 
             tasks = "publish"
