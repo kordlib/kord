@@ -865,10 +865,3 @@ public data class DiscordThreadMembersUpdate(
     @SerialName("removed_member_ids")
     val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
 )
-
-@Serializable
-public data class DiscordIntegrations(
-    val integration: DiscordIntegration,
-    @SerialName("guild_id")
-    val guildId: Snowflake
-)
