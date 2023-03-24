@@ -10,7 +10,6 @@ val ValidationCI = KordBuild("Validate Code") {
     }
 
     steps {
-        password("env.KORD_TEST_TOKEN", "credentialsJSON:cbd8be1d-4808-42ff-90cf-551e9f60e83d")
         debuggableGradle("Run checks") {
             tasks = "check"
         }
