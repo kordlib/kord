@@ -38,7 +38,7 @@
 * Make `Snowflake`'s ordering consistent with `equals` (by @Lukellmann in #773)
 * Fix various bugs in `DiscordBitSet` (by @Lukellmann in #772)
 * Use 74 byte ip discovery packet instead of the deprecated 70 byte discovery packet (by @lost-illusi0n in #776)
-* Integration event fixes (#764)
+* Fix Integration event serialization (#764)
 
 
 ## Dependencies
