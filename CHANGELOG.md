@@ -95,6 +95,7 @@ Updated in #732, #739, #755, #782 and #788
 * Fix `with_count` parameter typo (#690)
 * Fix default avatar URL not working (#691)
 * Make `LinearRetry` behave linearly for all inputs (#702)
+* Integration event fixes (#764)
 
 ## Dependencies
 
