@@ -96,7 +96,6 @@ public data class ForumThreadMessageRequest(
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    @SerialName("message_reference")
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     @SerialName("sticker_ids")
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
