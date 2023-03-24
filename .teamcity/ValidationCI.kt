@@ -13,6 +13,23 @@ val ValidationCI = KordBuild("Validate Code") {
         debuggableGradle("Run checks") {
             tasks = "check"
         }
+
+        debuggableGradle("Publish Artifacts") {
+            // Secrets need to be specified
+            enabled = false
+            param("env.NEXUS_USER", "TODO")
+            param("env.NEXUS_PASSWORD", "TODO")
+            param("system.org.gradle.project.signingKey", "TODO")
+            param("system.org.gradle.project.signingPassword", "TODO")
+
+            conditions {
+                // Meaning: Do not run on Pull Requests
+                doesNotExist("eamcity.pullRequest.number")
+            }
+
+            tasks = "publish"
+            gradleParams = "-x test"
+        }
     }
 
     failureConditions {

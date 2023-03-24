@@ -22,8 +22,8 @@ mvnDebug org.jetbrains.teamcity:teamcity-configs-maven-plugin:generate
 
 # Builds
 
-| Name               | Description                              | Definition                                         |
-|--------------------|------------------------------------------|----------------------------------------------------|
-| Validation         | Runs checks (Test, binary compatibility) | [ValidationCI.kt](ValidationCI.kt)                 |
-| Docs               | Deploys documentation to GitHub Pages    | [DocsCI.kt](DocsCI.kt)                             |
-| GraalVM Validation | Runs GraalVM Native image Tests          | [GraalVMNativeImageCI.kt](GraalVMNativeImageCI.kt) |
+| Name               | Description                                                          | Definition                                         |
+|--------------------|----------------------------------------------------------------------|----------------------------------------------------|
+| Validation         | Runs checks (Test, binary compatibility) and publish Maven artifacts | [ValidationCI.kt](ValidationCI.kt)                 |
+| Docs               | Deploys documentation to GitHub Pages                                | [DocsCI.kt](DocsCI.kt)                             |
+| GraalVM Validation | Runs GraalVM Native image Tests                                      | [GraalVMNativeImageCI.kt](GraalVMNativeImageCI.kt) |
