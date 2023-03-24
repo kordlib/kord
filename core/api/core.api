@@ -1079,9 +1079,14 @@ public final class dev/kord/core/behavior/channel/ChannelBehaviorKt {
 }
 
 public abstract interface class dev/kord/core/behavior/channel/ForumChannelBehavior : dev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior {
+	public abstract fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getActiveThreads ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getPublicArchivedThreads (Lkotlinx/datetime/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun startPublicThread (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ForumChannelBehavior;
 }
 
 public final class dev/kord/core/behavior/channel/ForumChannelBehavior$DefaultImpls {
@@ -7839,6 +7844,7 @@ public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/beh
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ForumChannelBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/GuildChannelBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildChannelBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;
