@@ -44,13 +44,6 @@ public class TextChannel(
     override suspend fun asChannel(): TextChannel = this
 
     override suspend fun asChannelOrNull(): TextChannel = this
-    override suspend fun fetchChannel(): TextChannel {
-        return super<TextChannelBehavior>.fetchChannel()
-    }
-
-    override suspend fun fetchChannelOrNull(): TextChannel? {
-        return super<TextChannelBehavior>.fetchChannelOrNull()
-    }
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 
