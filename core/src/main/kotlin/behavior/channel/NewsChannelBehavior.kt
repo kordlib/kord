@@ -83,6 +83,11 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target))
     }
 
+    @Deprecated(
+        "Replace with overloaded method.",
+        replaceWith = ReplaceWith("startPublicThread(name, archiveDuration, reason)"),
+        level = DeprecationLevel.HIDDEN
+    )
 
     public suspend fun startPublicThread(
         name: String,
@@ -95,6 +100,12 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         }
     }
 
+    @Deprecated(
+        "Replace with overloaded method.",
+        replaceWith = ReplaceWith("startPublicThread(name, builder = builder)"),
+        level = DeprecationLevel.HIDDEN
+    )
+
     public suspend fun startPublicThread(
         name: String,
         builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
@@ -106,6 +117,23 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         } as NewsChannelThread
     }
 
+    public suspend fun startPublicThread(
+        name: String,
+        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
+        reason: String? = null,
+        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+    ): NewsChannelThread {
+        return unsafeStartThread(name) {
+            builder()
+
+            type = ChannelType.PublicNewsThread
+        } as NewsChannelThread
+    }
+    @Deprecated(
+        "Replace with overloaded method.",
+        replaceWith = ReplaceWith("startPublicThreadWithMessage(messageId, name, archiveDuration, reason)"),
+        level = DeprecationLevel.HIDDEN
+    )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
@@ -118,6 +146,11 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         }
     }
 
+    @Deprecated(
+        "Replace with overloaded method.",
+        replaceWith = ReplaceWith("startPublicThreadWithMessage(messageId, name, builder = builder)"),
+        level = DeprecationLevel.HIDDEN
+    )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
@@ -126,6 +159,14 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as NewsChannelThread
     }
 
+    public suspend fun startPublicThreadWithMessage(
+        messageId: Snowflake,
+        name: String,
+        reason: String? = null,
+        builder: StartThreadWithMessageBuilder.() -> Unit = {}
+    ): NewsChannelThread {
+        return unsafeStartPublicThreadWithMessage(messageId, name, builder) as NewsChannelThread
+    }
 
     override fun getPublicArchivedThreads(before: Instant?, limit: Int?): Flow<NewsChannelThread> {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
