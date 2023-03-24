@@ -7,6 +7,9 @@ project {
     vcsRoot(GitHub)
 
     buildType(ValidationCI)
+    buildType(DocsCI)
+    // TODO: Await Response from JetBrains to resolve toolchain issues
+    //buildType(GraalVMNativeImageCI)
 
     features {
         installGitHubIssueTracker()
