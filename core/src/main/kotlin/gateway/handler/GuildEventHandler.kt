@@ -93,9 +93,6 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?
     ): GuildAuditLogEntryCreateEvent {
         val entry = AuditLogEntry(event.entry, kord)
-
-        kord.cache.put(entry)
-
         return GuildAuditLogEntryCreateEvent(entry, kord, shard, context?.get())
     }
 
