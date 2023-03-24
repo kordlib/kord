@@ -829,23 +829,9 @@ public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilder 
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBuilder : dev/kord/rest/builder/AuditRequestBuilder {
-	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;)V
-	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
-	public final fun getName ()Ljava/lang/String;
-	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
-	public fun getReason ()Ljava/lang/String;
-	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
-	public final fun setName (Ljava/lang/String;)V
-	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
-	public fun setReason (Ljava/lang/String;)V
-	public fun toRequest ()Ldev/kord/rest/json/request/StartThreadRequest;
-	public synthetic fun toRequest ()Ljava/lang/Object;
-}
-
-public final class dev/kord/rest/builder/channel/thread/StartThreadWithoutMessageBuilder : dev/kord/rest/builder/AuditRequestBuilder {
-	public fun <init> (Ljava/lang/String;)V
+public final class dev/kord/rest/builder/channel/thread/StartThreadBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/ChannelType;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;)V
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getInvitable ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
@@ -857,7 +843,21 @@ public final class dev/kord/rest/builder/channel/thread/StartThreadWithoutMessag
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
 	public fun setReason (Ljava/lang/String;)V
-	public final fun setType (Ldev/kord/common/entity/ChannelType;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/StartThreadRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;)V
+	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
+	public fun getReason ()Ljava/lang/String;
+	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
+	public final fun setName (Ljava/lang/String;)V
+	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
+	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/StartThreadRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }

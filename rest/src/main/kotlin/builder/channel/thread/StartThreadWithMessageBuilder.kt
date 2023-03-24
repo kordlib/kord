@@ -39,6 +39,3 @@ public class StartThreadWithMessageBuilder(public var name: String) : AuditReque
         )
     }
 }
-
-@Deprecated("Renamed to StartThreadWithMessageBuilder", replaceWith = ReplaceWith("dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder"))
-public typealias StartThreadBuilder = StartThreadWithMessageBuilder

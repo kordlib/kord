@@ -5,7 +5,7 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
@@ -343,12 +343,11 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         name: String,
         archiveDuration: ArchiveDuration,
         type: ChannelType,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+        builder: StartThreadBuilder.() -> Unit = {}
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val startBuilder = StartThreadWithoutMessageBuilder(name).apply {
+        val startBuilder = StartThreadBuilder(name, type).apply {
             this.autoArchiveDuration = archiveDuration
-            this.type = type
         }
         return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
     }

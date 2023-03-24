@@ -17,7 +17,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
@@ -75,7 +75,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     public suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+        builder: StartThreadBuilder.() -> Unit = {}
     ): TextChannelThread {
         return startPublicThread(name) {
             this.autoArchiveDuration = archiveDuration
@@ -85,13 +85,9 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
 
     public suspend fun startPublicThread(
         name: String,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit,
+        builder: StartThreadBuilder.() -> Unit,
     ): TextChannelThread {
-        return unsafeStartThread(name) {
-            builder()
-
-            type = ChannelType.PublicGuildThread
-        } as TextChannelThread
+        return unsafeStartThread(name, type = ChannelType.PublicGuildThread, builder) as TextChannelThread
     }
 
     @Deprecated(
@@ -102,7 +98,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     public suspend fun startPrivateThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+        builder: StartThreadBuilder.() -> Unit = {}
     ): TextChannelThread {
         return startPrivateThread(name) {
             this.autoArchiveDuration = archiveDuration
@@ -112,12 +108,9 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
 
     public suspend fun startPrivateThread(
         name: String,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
+        builder: StartThreadBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
     ): TextChannelThread {
-        return unsafeStartThread(name) {
-            builder()
-            type = ChannelType.PrivateThread
-        } as TextChannelThread
+        return unsafeStartThread(name, type = ChannelType.PrivateThread, builder) as TextChannelThread
     }
 
     @Deprecated(

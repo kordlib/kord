@@ -17,8 +17,8 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.NewsChannelModifyBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
 import dev.kord.rest.json.request.ChannelFollowRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchNewsChannel
@@ -102,13 +102,9 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
 
     public suspend fun startPublicThread(
         name: String,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
+        builder: StartThreadBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
     ): NewsChannelThread {
-        return unsafeStartThread(name) {
-            builder()
-
-            type = ChannelType.PublicNewsThread
-        } as NewsChannelThread
+        return unsafeStartThread(name, type = ChannelType.PublicNewsThread, builder) as NewsChannelThread
     }
 
     @Deprecated(
