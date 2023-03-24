@@ -17,7 +17,7 @@ public class IntegrationDeleteEvent(
     override val shard: Int,
     override val customContext: Any?,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-): Event, Strategizable {
+) : Event, Strategizable {
 
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
@@ -25,10 +25,9 @@ public class IntegrationDeleteEvent(
 
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable =
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): IntegrationDeleteEvent =
         IntegrationDeleteEvent(id, guildId, applicationId, kord, shard, customContext, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "IntegrationDeleteEvent(id=$id, guildId=$guildId, applicationId=$applicationId, shard=$shard, supplier=$supplier"
-    }
+    override fun toString(): String = "IntegrationDeleteEvent(id=$id, guildId=$guildId, " +
+        "applicationId=$applicationId, kord=$kord, shard=$shard, customContext=$customContext, supplier=$supplier)"
 }
