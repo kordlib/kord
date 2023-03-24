@@ -34,11 +34,10 @@ public class ForumChannel(
      */
     public val defaultForumLayout: ForumLayoutType? get() = data.defaultForumLayout.value
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ForumChannel {
-        return ForumChannel(data,kord, strategy.supply(kord))
-    }
+    override suspend fun asChannel(): ForumChannel = this
+    override suspend fun asChannelOrNull(): ForumChannel = this
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ForumChannel =
+        ForumChannel(data, kord, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "ForumChannel(data=$data, kord=$kord, supplier=$supplier)"
-    }
+    override fun toString(): String = "ForumChannel(data=$data, kord=$kord, supplier=$supplier)"
 }
