@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
 import java.util.Objects
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -83,28 +84,11 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target))
     }
 
-
-    public suspend fun startPublicThread(
-        name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
-    ): NewsChannelThread {
-        return unsafeStartThread(name) {
-            this.reason = reason
-            this.autoArchiveDuration = archiveDuration
-            builder()
-
-            type = ChannelType.PublicNewsThread
-        } as NewsChannelThread
-    }
-
     @Deprecated(
-        "Replace with overloaded method.",
-        replaceWith = ReplaceWith("startPublicThread(name, archiveDuration, reason)"),
-        level = DeprecationLevel.HIDDEN
+        "Replaced by builder overload",
+        ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
+        level = WARNING,
     )
-
     public suspend fun startPublicThread(
         name: String,
         archiveDuration: ArchiveDuration = ArchiveDuration.Day,
@@ -116,15 +100,9 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         }
     }
 
-    @Deprecated(
-        "Replace with overloaded method.",
-        replaceWith = ReplaceWith("startPublicThread(name, builder = builder)"),
-        level = DeprecationLevel.HIDDEN
-    )
-
     public suspend fun startPublicThread(
         name: String,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+        builder: StartThreadWithoutMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
     ): NewsChannelThread {
         return unsafeStartThread(name) {
             builder()
@@ -133,23 +111,10 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         } as NewsChannelThread
     }
 
-
-    public suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        reason: String? = null,
-        builder: StartThreadWithMessageBuilder.() -> Unit = {}
-    ): NewsChannelThread {
-        return unsafeStartPublicThreadWithMessage(messageId, name, ) {
-            this.reason = reason
-            builder()
-        } as NewsChannelThread
-    }
-
     @Deprecated(
-        "Replace with overloaded method.",
-        replaceWith = ReplaceWith("startPublicThreadWithMessage(messageId, name, archiveDuration, reason)"),
-        level = DeprecationLevel.HIDDEN
+        "Replaced by builder overload",
+        ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
+        level = WARNING,
     )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
@@ -163,15 +128,10 @@ public interface NewsChannelBehavior : ThreadParentChannelBehavior {
         }
     }
 
-    @Deprecated(
-        "Replace with overloaded method.",
-        replaceWith = ReplaceWith("startPublicThreadWithMessage(messageId, name, builder = builder)"),
-        level = DeprecationLevel.HIDDEN
-    )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        builder: StartThreadWithMessageBuilder.() -> Unit = {}
+        builder: StartThreadWithMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
     ): NewsChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as NewsChannelThread
     }

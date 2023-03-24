@@ -140,8 +140,8 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartPublicThreadWithMess
     name: String,
     builder: StartThreadWithMessageBuilder.() -> Unit = {}
 ): ThreadChannel {
-    val request = StartThreadWithMessageBuilder(name).apply(builder).toRequest()
-    val response = kord.rest.channel.startThreadWithMessage(id, messageId, request)
+    val startBuilder = StartThreadWithMessageBuilder(name).apply(builder)
+    val response = kord.rest.channel.startThreadWithMessage(id, messageId, startBuilder.toRequest(), startBuilder.reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

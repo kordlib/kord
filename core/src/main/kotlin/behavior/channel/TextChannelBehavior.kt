@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
 import java.util.*
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -78,15 +79,10 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
             builder()
         }
     }
-    @Deprecated(
-        "Replace with overloaded method.",
-        replaceWith = ReplaceWith("startPublicThread(name, builder = builder)"),
-        level = DeprecationLevel.HIDDEN
-    )
 
     public suspend fun startPublicThread(
         name: String,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+        builder: StartThreadWithoutMessageBuilder.() -> Unit,
     ): TextChannelThread {
         return unsafeStartThread(name) {
             builder()
@@ -107,15 +103,10 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
             builder()
         }
     }
-    @Deprecated(
-        "Replace with overloaded method.",
-        replaceWith = ReplaceWith("startPrivateThread(name, builder = builder)"),
-        level = DeprecationLevel.HIDDEN
-    )
 
     public suspend fun startPrivateThread(
         name: String,
-        builder: StartThreadWithoutMessageBuilder.() -> Unit = {}
+        builder: StartThreadWithoutMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
     ): TextChannelThread {
         return unsafeStartThread(name) {
             builder()
@@ -123,21 +114,10 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         } as TextChannelThread
     }
 
-    public suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        reason: String? = null,
-        builder: StartThreadWithMessageBuilder.() -> Unit = {}
-    ): TextChannelThread {
-        return unsafeStartPublicThreadWithMessage(messageId, name) {
-            this.reason = reason
-            builder()
-        } as TextChannelThread
-    }
     @Deprecated(
-        "Replace with overloaded method.",
-        replaceWith = ReplaceWith("startPublicThreadWithMessage(messageId, name, reason)"),
-        level = DeprecationLevel.HIDDEN
+        "Replaced by builder overload",
+        ReplaceWith("this.startPublicThreadWithMessage(messageId, name) { this@startPublicThreadWithMessage.reason = reason }"),
+        level = WARNING,
     )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
@@ -149,15 +129,10 @@ public interface TextChannelBehavior : PrivateThreadParentChannelBehavior {
         }
     }
 
-    @Deprecated(
-        "Replace with overloaded method.",
-        replaceWith = ReplaceWith("startPublicThreadWithMessage(messageId, name, reason, builder)"),
-        level = DeprecationLevel.HIDDEN
-    )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        builder: StartThreadWithMessageBuilder.() -> Unit = {}
+        builder: StartThreadWithMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
     ): TextChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as TextChannelThread
     }
