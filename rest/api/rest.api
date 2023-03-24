@@ -829,8 +829,9 @@ public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilder 
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+public final class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
