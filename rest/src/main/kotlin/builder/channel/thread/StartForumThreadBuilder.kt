@@ -24,7 +24,7 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
     private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _appliedTags: Optional<MutableList<Snowflake>?> = Optional.Missing()
+    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
     public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
     public var message: ForumMessageCreateBuilder? = null

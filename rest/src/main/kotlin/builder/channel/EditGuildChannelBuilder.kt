@@ -5,7 +5,6 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
-import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ChannelModifyPatchRequest
 import dev.kord.rest.json.request.ForumTagRequest
 import kotlin.contracts.InvocationKind
@@ -104,7 +103,7 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
-    private var _availableTags: Optional<MutableList<ForumTagRequest>?> = Optional.Missing()
+    private var _availableTags: Optional<MutableList<ForumTagRequest>> = Optional.Missing()
     public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
 
     public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
