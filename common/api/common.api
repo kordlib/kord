@@ -6488,11 +6488,11 @@ public final class dev/kord/common/entity/GuildFeature$WelcomeScreenEnabled : de
 }
 
 public final class dev/kord/common/entity/GuildMemberFlag : java/lang/Enum {
-	public static final field BYPASSES_VERIFICATION Ldev/kord/common/entity/GuildMemberFlag;
-	public static final field COMPLETED_ONBOARDING Ldev/kord/common/entity/GuildMemberFlag;
+	public static final field BypassesVerification Ldev/kord/common/entity/GuildMemberFlag;
 	public static final field Companion Ldev/kord/common/entity/GuildMemberFlag$Companion;
-	public static final field DID_REJOIN Ldev/kord/common/entity/GuildMemberFlag;
-	public static final field STARTED_ONBOARDING Ldev/kord/common/entity/GuildMemberFlag;
+	public static final field CompletedOnboarding Ldev/kord/common/entity/GuildMemberFlag;
+	public static final field DidRejoin Ldev/kord/common/entity/GuildMemberFlag;
+	public static final field StartedOnboarding Ldev/kord/common/entity/GuildMemberFlag;
 	public final fun getCode ()I
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlag;
 	public static fun values ()[Ldev/kord/common/entity/GuildMemberFlag;
