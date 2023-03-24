@@ -41,6 +41,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
             is StageChannel -> StageChannelCreateEvent(channel, shard, context?.get())
             is VoiceChannel -> VoiceChannelCreateEvent(channel, shard, context?.get())
             is Category -> CategoryCreateEvent(channel, shard, context?.get())
+            is ForumChannel -> ForumChannelCreateEvent(channel, shard, context?.get())
             is ThreadChannel -> return null
             else -> UnknownChannelCreateEvent(channel, shard, context?.get())
 
@@ -61,6 +62,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
             is StageChannel -> StageChannelUpdateEvent(channel, old as? StageChannel, shard, context?.get())
             is VoiceChannel -> VoiceChannelUpdateEvent(channel, old as? VoiceChannel, shard, context?.get())
             is Category -> CategoryUpdateEvent(channel, old as? Category, shard, context?.get())
+            is ForumChannel -> ForumChannelUpdateEvent(channel, old as? ForumChannel, shard, context?.get())
             is ThreadChannel -> return null
             else -> UnknownChannelUpdateEvent(channel, old, shard, context?.get())
 
@@ -80,6 +82,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
             is StageChannel -> StageChannelDeleteEvent(channel, shard, context?.get())
             is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard, context?.get())
             is Category -> CategoryDeleteEvent(channel, shard, context?.get())
+            is ForumChannel -> ForumChannelDeleteEvent(channel, shard, context?.get())
             is ThreadChannel -> return null
             else -> UnknownChannelDeleteEvent(channel, shard, context?.get())
         }
