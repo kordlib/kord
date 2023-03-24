@@ -11,6 +11,7 @@ val ValidationCI = KordBuild("Validate Code") {
 
     steps {
         debuggableGradle("Run checks") {
+            param("env.KOTLIN_TEST_TOKEN", "credentialsJSON:cbd8be1d-4808-42ff-90cf-551e9f60e83d")
             tasks = "check"
         }
 
