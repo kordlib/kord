@@ -29,6 +29,8 @@ dokka = "1.8.10" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.20.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.13.0" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
+graalvm-native-build-tools = "0.9.20" # https://github.com/graalvm/native-build-tools
+git-publish = "4.1.1" # https://github.com/ajoberstar/gradle-git-publish
 
 
 [libraries]
@@ -107,3 +109,4 @@ pluginsForBuildSrc = [
 [plugins]
 
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
+git-publish = { id = "org.ajoberstar.git-publish", version.ref = "git-publish" }
