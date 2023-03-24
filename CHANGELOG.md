@@ -15,6 +15,7 @@
 * Add support for gif stickers (by @NoComment1105 in #750)
 * Add stage channel message types (by @NoComment1105 in #759)
 * Add audit log entry create event (by @NoComment1105 in #751 and #761)
+* Add missing integration events (by @NoComment1105 in #761, #763 and #764)
 * Add guild member flags (by @NoComment1105 in #760)
 * Add the ability to receive unknown events (by @DRSchlaubi in #769)
 * Add `BlockMessageAutoModerationAction.customMessage` (by @Lukellmann in #774)
@@ -38,8 +39,6 @@
 * Make `Snowflake`'s ordering consistent with `equals` (by @Lukellmann in #773)
 * Fix various bugs in `DiscordBitSet` (by @Lukellmann in #772)
 * Use 74 byte ip discovery packet instead of the deprecated 70 byte discovery packet (by @lost-illusi0n in #776)
-* Fix Integration event serialization (#764)
-
 
 ## Dependencies
 
