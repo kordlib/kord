@@ -4,7 +4,6 @@ import dev.kord.common.entity.IntegrationExpireBehavior
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
-import dev.kord.common.serialization.DurationInDays
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.RoleBehavior
@@ -17,8 +16,10 @@ import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
 import java.util.*
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.time.Duration
 
 /**
  * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
@@ -49,6 +50,9 @@ public class Integration(
      */
     public val isEnabled: Boolean
         get() = data.enabled
+
+    @Deprecated("Binary compatibility, was non-nullable before. Keep for some releases.", level = HIDDEN)
+    public fun isSyncing(): Boolean = isSyncing!!
 
     /**
      * Whether this integrations is syncing.
@@ -93,10 +97,14 @@ public class Integration(
     public val expireBehavior: IntegrationExpireBehavior?
         get() = data.expireBehavior.value
 
+    @Deprecated("Binary compatibility, was non-nullable before. Keep for some releases.", level = HIDDEN)
+    @JvmName("getExpireGracePeriod-UwyO8pc")
+    public fun expireGracePeriod0(): Duration = expireGracePeriod!!
+
     /**
      * The grace period before expiring subscribers.
      */
-    public val expireGracePeriod: DurationInDays? get() = data.expireGracePeriod.value
+    public val expireGracePeriod: Duration? get() = data.expireGracePeriod.value
 
     /**
      * The id of the [user][User] for this integration.

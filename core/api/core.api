@@ -6371,6 +6371,7 @@ public final class dev/kord/core/entity/Integration : dev/kord/core/entity/KordE
 	public final fun getEnablesEmoticons ()Z
 	public final fun getExpireBehavior ()Ldev/kord/common/entity/IntegrationExpireBehavior;
 	public final fun getExpireGracePeriod-FghU774 ()Lkotlin/time/Duration;
+	public final synthetic fun getExpireGracePeriod-UwyO8pc ()J
 	public final fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public final fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
@@ -6390,6 +6391,7 @@ public final class dev/kord/core/entity/Integration : dev/kord/core/entity/KordE
 	public fun hashCode ()I
 	public final fun isEnabled ()Z
 	public final fun isSyncing ()Ljava/lang/Boolean;
+	public final synthetic fun isSyncing ()Z
 	public final fun sync (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Integration;
