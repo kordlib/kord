@@ -6515,12 +6515,7 @@ public final class dev/kord/common/entity/GuildMemberFlags {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/GuildMemberFlags$Companion : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/GuildMemberFlags;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/GuildMemberFlags;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/common/entity/GuildMemberFlags$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
