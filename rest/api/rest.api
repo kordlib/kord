@@ -494,16 +494,16 @@ public final class dev/kord/rest/builder/channel/ForumChannelModifyBuilder : dev
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/ForumTagBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+public final class dev/kord/rest/builder/channel/ForumTagBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getModerated ()Ljava/lang/Boolean;
+	public final fun getName ()Ljava/lang/String;
 	public final fun getReactionEmojiId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getReactionEmojiName ()Ljava/lang/String;
-	public fun getReason ()Ljava/lang/String;
 	public final fun setModerated (Ljava/lang/Boolean;)V
+	public final fun setName (Ljava/lang/String;)V
 	public final fun setReactionEmojiId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setReactionEmojiName (Ljava/lang/String;)V
-	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ForumTagRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
