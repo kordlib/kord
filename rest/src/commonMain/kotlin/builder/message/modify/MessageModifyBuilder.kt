@@ -44,13 +44,6 @@ public sealed interface MessageModifyBuilder {
      */
     public var suppressEmbeds: Boolean?
 
-
-    /**
-     * Adds a file with the given [path] to the attachments.
-     */
-    public suspend fun addFile(path: Path): NamedFile =
-        addFile(path.fileName.toString(), ChannelProvider { path.readChannel() })
-
     /**
      * Adds a file with the [name] and [contentProvider] to the attachments.
      */
