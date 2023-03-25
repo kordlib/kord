@@ -8526,12 +8526,14 @@ public final class dev/kord/core/entity/channel/thread/NewsChannelThread : dev/k
 	public fun getLastMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun getLastPinTimestamp ()Lkotlinx/datetime/Instant;
 	public fun getMember ()Ldev/kord/core/entity/channel/thread/ThreadMember;
-	public fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public synthetic fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public fun getMemberCount ()Ljava/lang/Integer;
 	public fun getMembers ()Lkotlinx/coroutines/flow/Flow;
 	public fun getMention ()Ljava/lang/String;
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public synthetic fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public fun getMessageCount ()Ljava/lang/Integer;
 	public fun getMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getMessages ()Lkotlinx/coroutines/flow/Flow;
 	public fun getMessagesAfter (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
@@ -8547,6 +8549,7 @@ public final class dev/kord/core/entity/channel/thread/NewsChannelThread : dev/k
 	public fun getPinnedMessages ()Lkotlinx/coroutines/flow/Flow;
 	public fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public fun getTotalMessageSent ()Ljava/lang/Integer;
 	public fun getType ()Ldev/kord/common/entity/ChannelType;
 	public fun isArchived ()Z
 	public fun isLocked ()Z
@@ -8604,12 +8607,14 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 	public fun getLastMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun getLastPinTimestamp ()Lkotlinx/datetime/Instant;
 	public fun getMember ()Ldev/kord/core/entity/channel/thread/ThreadMember;
-	public fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public synthetic fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public fun getMemberCount ()Ljava/lang/Integer;
 	public fun getMembers ()Lkotlinx/coroutines/flow/Flow;
 	public fun getMention ()Ljava/lang/String;
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getMessage (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public synthetic fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public fun getMessageCount ()Ljava/lang/Integer;
 	public fun getMessageOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getMessages ()Lkotlinx/coroutines/flow/Flow;
 	public fun getMessagesAfter (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
@@ -8625,6 +8630,7 @@ public final class dev/kord/core/entity/channel/thread/TextChannelThread : dev/k
 	public fun getPinnedMessages ()Lkotlinx/coroutines/flow/Flow;
 	public fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public fun getTotalMessageSent ()Ljava/lang/Integer;
 	public fun getType ()Ldev/kord/common/entity/ChannelType;
 	public fun isArchived ()Z
 	public final fun isInvitable ()Z
@@ -8658,13 +8664,16 @@ public abstract interface class dev/kord/core/entity/channel/thread/ThreadChanne
 	public abstract fun getCreateTimestamp ()Lkotlinx/datetime/Instant;
 	public abstract fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public abstract fun getMember ()Ldev/kord/core/entity/channel/thread/ThreadMember;
-	public abstract fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public abstract synthetic fun getMemberCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public abstract fun getMemberCount ()Ljava/lang/Integer;
 	public abstract fun getMessage ()Ldev/kord/core/entity/Message;
-	public abstract fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public abstract synthetic fun getMessageCount ()Ldev/kord/common/entity/optional/OptionalInt;
+	public abstract fun getMessageCount ()Ljava/lang/Integer;
 	public abstract fun getOwner ()Ldev/kord/core/behavior/UserBehavior;
 	public abstract fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getParentId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
+	public abstract fun getTotalMessageSent ()Ljava/lang/Integer;
 	public abstract fun isArchived ()Z
 	public abstract fun isLocked ()Z
 	public abstract fun isNsfw ()Z
@@ -8699,12 +8708,14 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun getLastMessageId (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/Snowflake;
 	public static fun getLastPinTimestamp (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlinx/datetime/Instant;
 	public static fun getMember (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/core/entity/channel/thread/ThreadMember;
-	public static fun getMemberCount (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/optional/OptionalInt;
+	public static synthetic fun getMemberCount (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/optional/OptionalInt;
+	public static fun getMemberCount (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ljava/lang/Integer;
 	public static fun getMembers (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getMention (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ljava/lang/String;
 	public static fun getMessage (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/core/entity/Message;
 	public static fun getMessage (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getMessageCount (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/optional/OptionalInt;
+	public static synthetic fun getMessageCount (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/optional/OptionalInt;
+	public static fun getMessageCount (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ljava/lang/Integer;
 	public static fun getMessageOrNull (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getMessages (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getMessagesAfter (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
@@ -8719,6 +8730,7 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun getParentOrNull (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getPinnedMessages (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getRateLimitPerUser-FghU774 (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Lkotlin/time/Duration;
+	public static fun getTotalMessageSent (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ljava/lang/Integer;
 	public static fun getType (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Ldev/kord/common/entity/ChannelType;
 	public static fun isArchived (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Z
 	public static fun isLocked (Ldev/kord/core/entity/channel/thread/ThreadChannel;)Z

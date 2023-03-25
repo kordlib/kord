@@ -19,6 +19,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.thread.ForumThreadModifyBuilder
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
@@ -83,17 +84,27 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      */
     public val rateLimitPerUser: Duration? get() = data.rateLimitPerUser.value
 
-    /**
-     * member count for this thread.
-     * approximate maximum value is 50.
-     */
-    public val memberCount: OptionalInt get() = data.memberCount
+    @Deprecated("Binary compatibility, had different return type before. Keep for some releases.", level = HIDDEN)
+    public fun getMemberCount(): OptionalInt = data.memberCount
+
+    /** An approximate count of users in this thread, stops counting at 50. */
+    public val memberCount: Int? get() = data.memberCount.value
+
+    @Deprecated("Binary compatibility, had different return type before. Keep for some releases.", level = HIDDEN)
+    public fun getMessageCount(): OptionalInt = data.messageCount
 
     /**
-     * message count for this thread.
-     * approximate maximum value is 50.
+     * Number of messages (not including the initial message or deleted messages) in this thread.
+     *
+     * For threads created before July 1, 2022, the message count is inaccurate when it's greater than 50.
      */
-    public val messageCount: OptionalInt get() = data.messageCount
+    public val messageCount: Int? get() = data.messageCount.value
+
+    /**
+     * Number of messages ever sent in this thread, it's similar to [messageCount] on message creation, but will not
+     * decrement the number when a message is deleted.
+     */
+    public val totalMessageSent: Int? get() = data.totalMessageSent.value
 
     /**
      * The default duration setup pre-selected for this thread.
