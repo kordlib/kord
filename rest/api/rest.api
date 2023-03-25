@@ -769,30 +769,6 @@ public final class dev/kord/rest/builder/channel/VoiceChannelModifyBuilder : dev
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
-public final class dev/kord/rest/builder/channel/thread/ForumThreadModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
-	public fun <init> ()V
-	public final fun getAppliedTags ()Ljava/util/List;
-	public final fun getArchived ()Ljava/lang/Boolean;
-	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
-	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
-	public final fun getInvitable ()Ljava/lang/Boolean;
-	public final fun getLocked ()Ljava/lang/Boolean;
-	public final fun getName ()Ljava/lang/String;
-	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
-	public fun getReason ()Ljava/lang/String;
-	public final fun setAppliedTags (Ljava/util/List;)V
-	public final fun setArchived (Ljava/lang/Boolean;)V
-	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
-	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
-	public final fun setInvitable (Ljava/lang/Boolean;)V
-	public final fun setLocked (Ljava/lang/Boolean;)V
-	public final fun setName (Ljava/lang/String;)V
-	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
-	public fun setReason (Ljava/lang/String;)V
-	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
-	public synthetic fun toRequest ()Ljava/lang/Object;
-}
-
 public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun createMessage (Ljava/lang/String;)V
@@ -851,6 +827,7 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public final fun getAppliedTags ()Ljava/util/List;
 	public final fun getArchived ()Ljava/lang/Boolean;
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
+	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun getInvitable ()Ljava/lang/Boolean;
 	public final fun getLocked ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
@@ -859,6 +836,7 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public final fun setAppliedTags (Ljava/util/List;)V
 	public final fun setArchived (Ljava/lang/Boolean;)V
 	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
+	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun setInvitable (Ljava/lang/Boolean;)V
 	public final fun setLocked (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V

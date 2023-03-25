@@ -8744,10 +8744,6 @@ public final class dev/kord/core/entity/channel/thread/ThreadChannel$DefaultImpl
 	public static fun withStrategy (Ldev/kord/core/entity/channel/thread/ThreadChannel;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/thread/ThreadChannel;
 }
 
-public final class dev/kord/core/entity/channel/thread/ThreadChannelKt {
-	public static final fun editAsForumThread (Ldev/kord/core/entity/channel/thread/ThreadChannel;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public final class dev/kord/core/entity/channel/thread/ThreadMember : dev/kord/core/behavior/ThreadMemberBehavior {
 	public fun <init> (Ldev/kord/core/cache/data/ThreadMemberData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/ThreadMemberData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V

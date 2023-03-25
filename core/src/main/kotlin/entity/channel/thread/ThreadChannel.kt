@@ -11,17 +11,12 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
-import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.channel.thread.ForumThreadModifyBuilder
 import kotlinx.datetime.Instant
 import kotlin.DeprecationLevel.HIDDEN
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 import kotlin.time.Duration
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
@@ -132,12 +127,7 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     }
 
 }
-public suspend inline fun ThreadChannel.editAsForumThread(builder: ForumThreadModifyBuilder.() -> Unit): TextChannelThread {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val appliedBuilder = ForumThreadModifyBuilder().apply(builder)
-    val patchedChannel = kord.rest.channel.patchThread(id, appliedBuilder.toRequest(), appliedBuilder.reason)
-    return Channel.from(patchedChannel.toData(), kord) as TextChannelThread
-}
+
 internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier): ThreadChannel {
     return object : ThreadChannel {
 
