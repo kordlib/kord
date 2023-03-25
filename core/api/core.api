@@ -2169,7 +2169,7 @@ public final class dev/kord/core/cache/CachingGateway : dev/kord/cache/api/DataC
 }
 
 public final class dev/kord/core/cache/DataCacheExtensionsKt {
-	public static final fun createView (Ldev/kord/cache/api/DataCache;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun createView (Ldev/kord/cache/api/DataCache;)Ldev/kord/core/cache/DataCacheView;
 	public static final fun registerKordData (Ldev/kord/cache/api/DataCache;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
