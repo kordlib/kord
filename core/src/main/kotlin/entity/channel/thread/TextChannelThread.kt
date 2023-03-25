@@ -4,14 +4,13 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
+import dev.kord.core.entity.channel.ForumChannel
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
 
 /**
- * A thread channel instance whose parent is a [TextChannel].
+ * A thread channel instance whose parent is a [TextChannel] or [ForumChannel].
  */
 public class TextChannelThread(
     override val data: ChannelData,
@@ -30,14 +29,6 @@ public class TextChannelThread(
      * This is only applicable to [private][isPrivate] threads and will always be `false` for public threads.
      */
     public val isInvitable: Boolean get() = data.threadMetadata.value!!.invitable.discordBoolean
-
-    override suspend fun getParent(): TextChannel {
-        return supplier.getChannelOf(parentId)
-    }
-
-    override suspend fun getParentOrNull(): TextChannel? {
-        return supplier.getChannelOfOrNull(parentId)
-    }
 
     override val guildId: Snowflake
         get() = data.guildId.value!!
