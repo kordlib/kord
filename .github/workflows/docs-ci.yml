@@ -1,11 +1,11 @@
-# This workflow will build and deploy docs to GitHub Pages whenever something is pushed to 0.8.x
+# This workflow will build and deploy docs to GitHub Pages whenever something is pushed to 0.9.x
 
 name: Docs
 
 on:
   push:
     branches:
-      - 0.8.x
+      - 0.9.x
 
 permissions:
   contents: write
