@@ -304,7 +304,6 @@ public sealed class Permission(public val code: DiscordBitSet) {
         // We cannot inline this into the "All" object, because that causes a weird compiler error
         private fun buildAll(): DiscordBitSet = values.fold(EmptyBitSet()) { acc, value -> acc + value.code }
 
-        @Suppress("DEPRECATION")
         public val values: Set<Permission>
             get() = setOf(
                 CreateInstantInvite,
@@ -337,7 +336,6 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 ManageNicknames,
                 ManageRoles,
                 ManageWebhooks,
-                ManageEmojisAndStickers,
                 ManageGuildExpressions,
                 UseApplicationCommands,
                 RequestToSpeak,
