@@ -29,7 +29,7 @@ public interface ForumChannelBehavior : ThreadParentChannelBehavior {
 
     public suspend fun startPublicThread(
         name: String,
-        builder: StartForumThreadBuilder.() -> Unit = {},
+        builder: StartForumThreadBuilder.() -> Unit,
     ): TextChannelThread {
         return unsafeStartForumThread(name, builder)
     }

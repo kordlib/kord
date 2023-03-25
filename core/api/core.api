@@ -1112,7 +1112,6 @@ public final class dev/kord/core/behavior/channel/ForumChannelBehavior$DefaultIm
 	public static fun getPublicArchivedThreads (Ldev/kord/core/behavior/channel/ForumChannelBehavior;Lkotlinx/datetime/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getWebhooks (Ldev/kord/core/behavior/channel/ForumChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun startPublicThread (Ldev/kord/core/behavior/channel/ForumChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun startPublicThread$default (Ldev/kord/core/behavior/channel/ForumChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/behavior/channel/ForumChannelBehaviorKt {
