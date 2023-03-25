@@ -86,7 +86,7 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
 
     @Deprecated(
         "Replaced by builder overload",
-        ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
+        ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThread.reason = reason\n}"),
         level = WARNING,
     )
     public suspend fun startPublicThread(
