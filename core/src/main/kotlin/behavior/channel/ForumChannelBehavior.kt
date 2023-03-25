@@ -31,7 +31,7 @@ public interface ForumChannelBehavior : ThreadParentChannelBehavior {
         name: String,
         builder: StartForumThreadBuilder.() -> Unit = {},
     ): TextChannelThread {
-        return unsafeStartThread(name, builder)
+        return unsafeStartForumThread(name, builder)
     }
 
     /**
@@ -70,7 +70,7 @@ public interface ForumChannelBehavior : ThreadParentChannelBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ForumChannelBehavior
 }
 
-internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
+internal suspend fun ThreadParentChannelBehavior.unsafeStartForumThread(
     name: String,
     builder: StartForumThreadBuilder.() -> Unit,
 ): TextChannelThread {
