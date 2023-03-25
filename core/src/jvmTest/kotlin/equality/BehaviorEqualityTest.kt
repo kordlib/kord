@@ -1,6 +1,7 @@
 package equality
 
 import dev.kord.core.entity.KordEntity
+import randomId
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

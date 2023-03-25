@@ -1,5 +1,6 @@
 package dev.kord.core.builder.kord
 
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.http.HttpEngine
 import io.ktor.client.*
@@ -18,7 +19,8 @@ internal fun HttpClientConfig<*>.defaultConfig() {
     install(WebSockets)
 }
 
-internal fun HttpClient?.configure(): HttpClient {
+@KordInternal
+public fun HttpClient?.configure(): HttpClient {
     if (this != null) return this.config {
         defaultConfig()
     }
@@ -38,8 +40,8 @@ internal fun HttpClient?.configure(): HttpClient {
     }
 }
 
-
-internal fun getBotIdFromToken(token: String) = try {
+@KordInternal
+public fun getBotIdFromToken(token: String): Snowflake = try {
     Snowflake(token.substringBefore('.').decodeBase64String())
 } catch (exception: IllegalArgumentException) {
     throw IllegalArgumentException("Malformed bot token: '$token'. Make sure that your token is correct.")

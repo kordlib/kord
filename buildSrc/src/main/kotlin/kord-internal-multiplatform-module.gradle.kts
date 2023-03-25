@@ -13,6 +13,9 @@ kotlin {
     }
     jvmToolchain(Jvm.target)
 
+    sourceSets {
+        applyKordSourceSetOptions()
+    }
     targets {
         all {
             compilations.all {

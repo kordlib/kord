@@ -2,6 +2,7 @@ package equality
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity
+import randomId
 import kotlin.test.Test
 import kotlin.test.assertNotEquals
 

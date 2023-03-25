@@ -4,11 +4,13 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.entity.KordEntity
 import mockKord
+import randomId
+import kotlin.test.Test
 import kotlin.test.assertEquals
 
 interface ChannelEqualityTest<T: KordEntity> : EntityEqualityTest<T> {
 
-    @kotlin.test.Test
+    @Test
     fun `Channel is equal to Channel with the same id`() {
         val id = randomId()
         val kord = mockKord()

@@ -32,26 +32,7 @@ kotlin {
     }
 
     sourceSets {
-        all {
-            languageSettings {
-                if ("Test" in name) {
-                    optIn(OptIns.coroutines)
-                }
-                optIn(OptIns.kordInternal)
-                listOf(
-                    OptIns.time,
-                    OptIns.contracts,
-                    OptIns.kordPreview,
-                    OptIns.kordExperimental,
-                    OptIns.kordVoice,
-                ).forEach(::optIn)
-            }
-
-            repositories {
-                // until Dokka 1.8.0 is released and we no longer need dev builds, see https://github.com/kordlib/kord/pull/755
-                maven("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
-            }
-        }
+        applyKordSourceSetOptions()
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
@@ -61,15 +42,10 @@ kotlin {
             dependsOn(commonMain.get())
         }
 
+        addTestKit(targets)
         targets.forEach {
-            val safeName = if(it.name == "metadata") "common" else it.name
-            findByName("${safeName}Test")?.apply {
-                dependencies {
-                    implementation(project(":test-kit"))
-                }
-            }
-            if (safeName != "jvm" && safeName != "common") {
-                findByName("${safeName}Main")?.apply {
+            if (it.safeName != "jvm" && it.safeName != "common") {
+                findByName("${it.safeName}Main")?.apply {
                     dependsOn(nonJvm)
                 }
             }

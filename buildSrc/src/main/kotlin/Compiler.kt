@@ -1,4 +1,6 @@
+import org.gradle.api.NamedDomainObjectContainer
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 object OptIns {
     const val time = "kotlin.time.ExperimentalTime"
@@ -31,4 +33,22 @@ object Jvm {
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     allWarningsAsErrors.set(false)
     freeCompilerArgs.add(CompilerArguments.progressive)
+}
+
+fun NamedDomainObjectContainer<KotlinSourceSet>.applyKordSourceSetOptions() {
+    all {
+        languageSettings {
+            if ("Test" in name) {
+                optIn(OptIns.coroutines)
+            }
+            optIn(OptIns.kordInternal)
+            listOf(
+                OptIns.time,
+                OptIns.contracts,
+                OptIns.kordPreview,
+                OptIns.kordExperimental,
+                OptIns.kordVoice,
+            ).forEach(::optIn)
+        }
+    }
 }
