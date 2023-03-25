@@ -10,7 +10,10 @@ object GitHub : GitVcsRoot({
     name = "https://github.com/kordlib/kord#refs/heads/0.8.x"
     url = "https://github.com/kordlib/kord"
     branch = "refs/heads/0.8.x"
-    branchSpec = "refs/heads/*"
+    branchSpec = """
+        +:refs/heads/*
+        -:refs/heads/gh-pages
+    """.trimIndent()
     authMethod = password {
         userName = "DRSchlaubi"
         password = "credentialsJSON:6c4cf2b5-741b-420a-bd80-587c4746b827"
