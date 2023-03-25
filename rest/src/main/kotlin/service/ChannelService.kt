@@ -348,6 +348,7 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val startBuilder = StartThreadBuilder(name, type).apply {
             this.autoArchiveDuration = archiveDuration
+            builder()
         }
         return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
     }
