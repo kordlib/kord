@@ -40,7 +40,7 @@ public data class ChannelData(
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     val totalMessageSent: OptionalInt = OptionalInt.Missing,
     val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
-    val availableTags: Optional<List<DiscordForumTag>> = Optional.Missing(),
+    val availableTags: Optional<List<ForumTag>> = Optional.Missing(),
     val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
     val defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing(),
     val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),

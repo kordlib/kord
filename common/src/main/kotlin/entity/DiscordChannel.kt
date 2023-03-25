@@ -149,7 +149,7 @@ public data class DiscordChannel(
     @SerialName("total_message_sent")
     val totalMessageSent: OptionalInt = OptionalInt.Missing,
     @SerialName("available_tags")
-    val availableTags: Optional<List<DiscordForumTag>> = Optional.Missing(),
+    val availableTags: Optional<List<ForumTag>> = Optional.Missing(),
     @SerialName("applied_tags")
     val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
     @SerialName("default_reaction_emoji")
@@ -340,7 +340,7 @@ public data class DiscordDefaultReaction(
 )
 
 @Serializable
-public data class DiscordForumTag(
+public data class ForumTag(
     val id: Snowflake,
     val name: String,
     val moderated: Boolean,
