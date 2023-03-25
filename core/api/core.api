@@ -7809,7 +7809,7 @@ public final class dev/kord/core/entity/channel/DmChannel : dev/kord/core/entity
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/MessageChannel;
 }
 
-public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/behavior/channel/ForumChannelBehavior, dev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior, dev/kord/core/entity/channel/ThreadParentChannel {
+public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/behavior/channel/ForumChannelBehavior, dev/kord/core/entity/channel/ThreadParentChannel {
 	public fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun addOverwrite (Ldev/kord/core/entity/PermissionOverwrite;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
