@@ -4,7 +4,6 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.builder.message.create.ForumMessageCreateBuilder
@@ -27,33 +26,29 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
     private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
     public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
-    public var message: ForumMessageCreateBuilder? = null
+    public var message: ForumMessageCreateBuilder = ForumMessageCreateBuilder()
 
-    public fun createMessage(content: String) {
-        createMessage {
-            this.content = content
-        }
+    public fun message(content: String) {
+        message.content = content
     }
 
-    public inline fun createMessage(builder: ForumMessageCreateBuilder.() -> Unit) {
+    public inline fun message(builder: ForumMessageCreateBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-
-        message = ForumMessageCreateBuilder().apply(builder)
+        message.apply(builder)
     }
 
     override fun toRequest(): MultipartStartThreadRequest {
-        val messageRequest = message?.toRequest()
+        val messageRequest = message.toRequest()
 
         return MultipartStartThreadRequest(
             StartThreadRequest(
                 name = name,
                 autoArchiveDuration = _autoArchiveDuration,
                 rateLimitPerUser = _rateLimitPerUser,
-                message = Optional(messageRequest?.request).coerceToMissing(),
+                message = Optional(messageRequest.request),
                 appliedTags = _appliedTags
             ),
-            files = messageRequest?.files ?: emptyList()
+            files = messageRequest.files,
         )
     }
-
 }
