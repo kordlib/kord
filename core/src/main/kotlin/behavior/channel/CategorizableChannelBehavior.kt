@@ -4,12 +4,15 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.InviteWithMetadataData
+import dev.kord.core.cache.data.WebhookData
 import dev.kord.core.entity.InviteWithMetadata
+import dev.kord.core.entity.Webhook
 import dev.kord.core.entity.channel.CategorizableChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.InviteCreateBuilder
+import dev.kord.rest.builder.webhook.WebhookCreateBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
@@ -36,6 +39,22 @@ public interface CategorizableChannelBehavior : TopGuildChannelBehavior {
                 val data = InviteWithMetadataData.from(response)
 
                 emit(InviteWithMetadata(data, kord))
+            }
+        }
+
+    /**
+     * Requests to get all webhooks for this channel.
+     *
+     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
+    public val webhooks: Flow<Webhook>
+        get() = flow {
+            for (response in kord.rest.webhook.getChannelWebhooks(id)) {
+                val data = WebhookData.from(response)
+                emit(Webhook(data, kord))
             }
         }
 
@@ -115,4 +134,23 @@ public suspend inline fun CategorizableChannelBehavior.createInvite(builder: Inv
     val data = InviteWithMetadataData.from(response)
 
     return InviteWithMetadata(data, kord)
+}
+
+/**
+ * Requests to create a new webhook configured by the [builder].
+ *
+ * @return The created [Webhook] with the [Webhook.token] field present.
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+public suspend inline fun CategorizableChannelBehavior.createWebhook(
+    name: String,
+    builder: WebhookCreateBuilder.() -> Unit = {},
+): Webhook {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+    val response = kord.rest.webhook.createWebhook(id, name, builder)
+    val data = WebhookData.from(response)
+
+    return Webhook(data, kord)
 }

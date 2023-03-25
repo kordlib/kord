@@ -979,6 +979,7 @@ public final class dev/kord/core/behavior/channel/BaseVoiceChannelBehavior$Defau
 	public static fun getMention (Ldev/kord/core/behavior/channel/BaseVoiceChannelBehavior;)Ljava/lang/String;
 	public static fun getPosition (Ldev/kord/core/behavior/channel/BaseVoiceChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getVoiceStates (Ldev/kord/core/behavior/channel/BaseVoiceChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getWebhooks (Ldev/kord/core/behavior/channel/BaseVoiceChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun withStrategy (Ldev/kord/core/behavior/channel/BaseVoiceChannelBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
 }
 
@@ -988,6 +989,7 @@ public abstract interface class dev/kord/core/behavior/channel/CategorizableChan
 	public abstract fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getInvites ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun getWebhooks ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
 }
 
@@ -1005,12 +1007,15 @@ public final class dev/kord/core/behavior/channel/CategorizableChannelBehavior$D
 	public static fun getInvites (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getMention (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;)Ljava/lang/String;
 	public static fun getPosition (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getWebhooks (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun withStrategy (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
 }
 
 public final class dev/kord/core/behavior/channel/CategorizableChannelBehaviorKt {
 	public static final fun createInvite (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createInvite$default (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun createWebhook (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun createWebhook$default (Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract interface class dev/kord/core/behavior/channel/CategoryBehavior : dev/kord/core/behavior/channel/TopGuildChannelBehavior {
@@ -1105,6 +1110,7 @@ public final class dev/kord/core/behavior/channel/ForumChannelBehavior$DefaultIm
 	public static fun getMention (Ldev/kord/core/behavior/channel/ForumChannelBehavior;)Ljava/lang/String;
 	public static fun getPosition (Ldev/kord/core/behavior/channel/ForumChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getPublicArchivedThreads (Ldev/kord/core/behavior/channel/ForumChannelBehavior;Lkotlinx/datetime/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getWebhooks (Ldev/kord/core/behavior/channel/ForumChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun startPublicThread (Ldev/kord/core/behavior/channel/ForumChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun startPublicThread$default (Ldev/kord/core/behavior/channel/ForumChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
@@ -1460,7 +1466,6 @@ public abstract interface class dev/kord/core/behavior/channel/TopGuildMessageCh
 	public abstract fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getWebhooks ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;
 }
 
@@ -1497,7 +1502,7 @@ public final class dev/kord/core/behavior/channel/TopGuildMessageChannelBehavior
 }
 
 public final class dev/kord/core/behavior/channel/TopGuildMessageChannelBehaviorKt {
-	public static final fun createWebhook (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final synthetic fun createWebhook (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createWebhook$default (Ldev/kord/core/behavior/channel/TopGuildMessageChannelBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
@@ -1573,6 +1578,7 @@ public final class dev/kord/core/behavior/channel/threads/PrivateThreadParentCha
 	public static fun getPrivateArchivedThreads (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Lkotlinx/datetime/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getPrivateArchivedThreads$default (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Lkotlinx/datetime/Instant;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getPublicArchivedThreads (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;Lkotlinx/datetime/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getWebhooks (Ldev/kord/core/behavior/channel/threads/PrivateThreadParentChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public abstract interface class dev/kord/core/behavior/channel/threads/ThreadChannelBehavior : dev/kord/core/behavior/channel/GuildMessageChannelBehavior {
@@ -1658,6 +1664,7 @@ public final class dev/kord/core/behavior/channel/threads/ThreadParentChannelBeh
 	public static fun getPosition (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getPublicArchivedThreads (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Lkotlinx/datetime/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getPublicArchivedThreads$default (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;Lkotlinx/datetime/Instant;Ljava/lang/Integer;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getWebhooks (Ldev/kord/core/behavior/channel/threads/ThreadParentChannelBehavior;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public abstract interface class dev/kord/core/behavior/interaction/ActionInteractionBehavior : dev/kord/core/behavior/interaction/InteractionBehavior {
@@ -7675,6 +7682,7 @@ public final class dev/kord/core/entity/channel/CategorizableChannel$DefaultImpl
 	public static fun getPosition (Ldev/kord/core/entity/channel/CategorizableChannel;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getRawPosition (Ldev/kord/core/entity/channel/CategorizableChannel;)I
 	public static fun getType (Ldev/kord/core/entity/channel/CategorizableChannel;)Ldev/kord/common/entity/ChannelType;
+	public static fun getWebhooks (Ldev/kord/core/entity/channel/CategorizableChannel;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public final class dev/kord/core/entity/channel/Category : dev/kord/core/behavior/channel/CategoryBehavior, dev/kord/core/entity/channel/TopGuildChannel {
@@ -7840,6 +7848,7 @@ public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/beh
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun getTopic ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/ChannelType;
+	public fun getWebhooks ()Lkotlinx/coroutines/flow/Flow;
 	public fun startPublicThread (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/CategorizableChannelBehavior;
@@ -8266,6 +8275,7 @@ public final class dev/kord/core/entity/channel/ThreadParentChannel$DefaultImpls
 	public static fun getPublicArchivedThreads (Ldev/kord/core/entity/channel/ThreadParentChannel;Lkotlinx/datetime/Instant;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getRawPosition (Ldev/kord/core/entity/channel/ThreadParentChannel;)I
 	public static fun getType (Ldev/kord/core/entity/channel/ThreadParentChannel;)Ldev/kord/common/entity/ChannelType;
+	public static fun getWebhooks (Ldev/kord/core/entity/channel/ThreadParentChannel;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public abstract interface class dev/kord/core/entity/channel/TopGuildChannel : dev/kord/core/behavior/channel/TopGuildChannelBehavior, dev/kord/core/entity/channel/GuildChannel {
