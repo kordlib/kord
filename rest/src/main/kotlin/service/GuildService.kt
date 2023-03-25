@@ -19,7 +19,7 @@ import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -594,7 +594,7 @@ public suspend inline fun GuildService.modifyCurrentVoiceState(
     ReplaceWith(
         "this.modifyCurrentVoiceState(guildId) {\nthis@modifyCurrentVoiceState.channelId = channelId\nbuilder()\n}"
     ),
-    level = ERROR,
+    level = HIDDEN,
 )
 public suspend inline fun GuildService.modifyCurrentVoiceState(
     guildId: Snowflake,

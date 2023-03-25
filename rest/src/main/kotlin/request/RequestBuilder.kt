@@ -9,7 +9,7 @@ import io.ktor.util.cio.*
 import kotlinx.serialization.SerializationStrategy
 import java.io.InputStream
 import java.nio.file.Path
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
 
@@ -62,11 +62,11 @@ public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
             "io.ktor.client.request.forms.ChannelProvider",
             "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
     @Suppress("DEPRECATION_ERROR")
     public fun file(name: String, input: InputStream) {
-        files.add(NamedFile(name, input))
+        files.add(NamedFile(input, name))
     }
 
     public fun file(path: Path) {

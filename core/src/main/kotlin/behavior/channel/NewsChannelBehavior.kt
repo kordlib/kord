@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
 import java.util.Objects
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -87,7 +87,7 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
     @Deprecated(
         "Replaced by builder overload",
         ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThread.reason = reason\n}"),
-        level = WARNING,
+        level = ERROR,
     )
     public suspend fun startPublicThread(
         name: String,
@@ -110,7 +110,7 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
     @Deprecated(
         "Replaced by builder overload",
         ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
-        level = WARNING,
+        level = ERROR,
     )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,

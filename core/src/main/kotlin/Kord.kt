@@ -34,7 +34,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -227,7 +227,7 @@ public class Kord(
         "This function has an inconsistent name for its nullable return type and has been deprecated in favour of " +
                 "'getGuildOrNull()'.",
         ReplaceWith("this.getGuildOrNull(id, strategy)"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun getGuild(
         id: Snowflake,

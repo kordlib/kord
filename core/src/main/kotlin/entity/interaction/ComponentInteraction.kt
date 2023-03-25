@@ -59,7 +59,7 @@ public sealed interface GuildComponentInteraction : ComponentInteraction, GuildI
  *
  * @throws Exception if the interaction is not from a [ButtonComponent] or a [SelectMenuComponent].
  */
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 public fun ComponentInteraction(
     data: InteractionData,
     kord: Kord,

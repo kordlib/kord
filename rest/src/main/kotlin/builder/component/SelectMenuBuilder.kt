@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION_ERROR")
 
 package dev.kord.rest.builder.component
 
@@ -11,7 +11,7 @@ import dev.kord.common.entity.optional.mapCopy
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -27,7 +27,7 @@ public open class SelectMenuBuilder
     "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
             "constructor of one of the subtypes.",
     ReplaceWith("StringSelectBuilder(customId)", "dev.kord.rest.builder.component.StringSelectBuilder"),
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public constructor(public var customId: String) : ActionRowComponentBuilder() {
 
@@ -41,7 +41,7 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
             "dev.kord.rest.builder.component.StringSelectBuilder",
             "dev.kord.rest.builder.component.options",
         ),
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
     @kotlin.internal.LowPriorityInOverloadResolution
@@ -80,7 +80,7 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
             "dev.kord.rest.builder.component.StringSelectBuilder",
             "dev.kord.rest.builder.component.option",
         ),
-        level = WARNING,
+        level = ERROR,
     )
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
     @kotlin.internal.LowPriorityInOverloadResolution

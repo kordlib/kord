@@ -3,7 +3,7 @@ package dev.kord.rest
 import io.ktor.client.request.forms.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 public class NamedFile(public val name: String, public val contentProvider: ChannelProvider) {
     /** @suppress */
@@ -16,9 +16,12 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
             "io.ktor.client.request.forms.ChannelProvider",
             "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
-    public constructor(name: String, inputStream: InputStream) : this(
+    public constructor(name: String, inputStream: InputStream) : this(inputStream, name)
+
+    // TODO remove when above constructor is removed
+    internal constructor(inputStream: InputStream, name: String) : this(
         name,
         ChannelProvider { inputStream.toByteReadChannel() },
     )
@@ -32,9 +35,10 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
             "contentProvider.block().toInputStream()",
             "io.ktor.utils.io.jvm.javaio.toInputStream",
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
-    public val inputStream: InputStream get() = contentProvider.block().toInputStream()
+    public val inputStream: InputStream get() = _inputStream
+    private val _inputStream get() = contentProvider.block().toInputStream() // TODO remove with `inputStream`
 
     public operator fun component1(): String = name
     public operator fun component2(): ChannelProvider = contentProvider
@@ -43,5 +47,5 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     @JvmName("component2")
     @Suppress("DEPRECATION_ERROR", "FunctionName")
-    public fun _component2(): InputStream = inputStream
+    public fun _component2(): InputStream = _inputStream
 }

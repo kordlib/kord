@@ -1,4 +1,4 @@
-@file:Suppress("DEPRECATION")
+@file:Suppress("DEPRECATION_ERROR")
 
 package dev.kord.core.entity.component
 
@@ -20,7 +20,7 @@ public open class SelectMenuComponent
     "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
             "constructor of one of the subtypes.",
     ReplaceWith("StringSelectComponent(data)", "dev.kord.core.entity.component.StringSelectComponent"),
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public constructor(override val data: ComponentData) : Component {
 
@@ -50,7 +50,7 @@ public constructor(override val data: ComponentData) : Component {
             "dev.kord.core.entity.component.StringSelectComponent",
             "dev.kord.core.entity.component.options",
         ),
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
     @kotlin.internal.LowPriorityInOverloadResolution

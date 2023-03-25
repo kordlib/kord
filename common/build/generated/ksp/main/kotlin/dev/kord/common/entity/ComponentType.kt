@@ -95,6 +95,7 @@ public sealed class ComponentType(
      * A select menu for picking from choices.
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Renamed by discord",
         replaceWith = ReplaceWith(expression = "StringSelect", imports =
                     arrayOf("dev.kord.common.entity.ComponentType.StringSelect")),
@@ -122,14 +123,14 @@ public sealed class ComponentType(
     }
 
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Use 'ComponentType.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
                     arrayOf("dev.kord.common.entity.ComponentType")),
     )
     public object Serializer : KSerializer<ComponentType> by NewSerializer {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Use 'ComponentType.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
                         arrayOf("dev.kord.common.entity.ComponentType")),

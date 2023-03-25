@@ -58,13 +58,13 @@ public final class dev/kord/rest/Image$Size : java/lang/Enum {
 
 public final class dev/kord/rest/NamedFile {
 	public fun <init> (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)V
-	public fun <init> (Ljava/lang/String;Ljava/io/InputStream;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/io/InputStream;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lio/ktor/client/request/forms/ChannelProvider;
 	public final synthetic fun component2 ()Ljava/io/InputStream;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun getContentProvider ()Lio/ktor/client/request/forms/ChannelProvider;
-	public final fun getInputStream ()Ljava/io/InputStream;
+	public final synthetic fun getInputStream ()Ljava/io/InputStream;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/lang/String;
 }
@@ -355,10 +355,10 @@ public final class dev/kord/rest/builder/automoderation/UntypedAutoModerationRul
 public final class dev/kord/rest/builder/ban/BanCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
 	public final fun getDeleteMessageDuration-FghU774 ()Lkotlin/time/Duration;
-	public final fun getDeleteMessagesDays ()Ljava/lang/Integer;
+	public final synthetic fun getDeleteMessagesDays ()Ljava/lang/Integer;
 	public fun getReason ()Ljava/lang/String;
 	public final fun setDeleteMessageDuration-BwNAW2A (Lkotlin/time/Duration;)V
-	public final fun setDeleteMessagesDays (Ljava/lang/Integer;)V
+	public final synthetic fun setDeleteMessagesDays (Ljava/lang/Integer;)V
 	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildBanCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -993,7 +993,7 @@ public final class dev/kord/rest/builder/component/UserSelectBuilder : dev/kord/
 
 public final class dev/kord/rest/builder/guild/CurrentVoiceStateModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;)V
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getRequestToSpeakTimestamp ()Lkotlinx/datetime/Instant;
 	public final fun getSuppress ()Ljava/lang/Boolean;
@@ -1909,7 +1909,7 @@ public final class dev/kord/rest/builder/message/EmbedBuilder$Thumbnail : dev/ko
 public final class dev/kord/rest/builder/message/create/FollowupMessageCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> (Z)V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -1934,7 +1934,7 @@ public final class dev/kord/rest/builder/message/create/FollowupMessageCreateBui
 public final class dev/kord/rest/builder/message/create/ForumMessageCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -1961,7 +1961,7 @@ public final class dev/kord/rest/builder/message/create/InteractionResponseCreat
 	public fun <init> (Z)V
 	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -1985,7 +1985,7 @@ public final class dev/kord/rest/builder/message/create/InteractionResponseCreat
 
 public abstract interface class dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public abstract fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public abstract fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public abstract synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public abstract fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public abstract fun getComponents ()Ljava/util/List;
@@ -2006,7 +2006,7 @@ public abstract interface class dev/kord/rest/builder/message/create/MessageCrea
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$DefaultImpls {
 	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public static synthetic fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -2021,7 +2021,7 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -2048,7 +2048,7 @@ public final class dev/kord/rest/builder/message/create/UpdateMessageInteraction
 public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
@@ -2078,7 +2078,7 @@ public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder
 public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public final fun getAvatarUrl ()Ljava/lang/String;
@@ -2108,7 +2108,7 @@ public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuil
 public final class dev/kord/rest/builder/message/modify/FollowupMessageModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getAttachments ()Ljava/util/List;
@@ -2133,7 +2133,7 @@ public final class dev/kord/rest/builder/message/modify/FollowupMessageModifyBui
 public final class dev/kord/rest/builder/message/modify/InteractionResponseModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getAttachments ()Ljava/util/List;
@@ -2157,7 +2157,7 @@ public final class dev/kord/rest/builder/message/modify/InteractionResponseModif
 
 public abstract interface class dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public abstract fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public abstract fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public abstract synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public abstract fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public abstract fun getAttachments ()Ljava/util/List;
@@ -2179,7 +2179,7 @@ public abstract interface class dev/kord/rest/builder/message/modify/MessageModi
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$DefaultImpls {
 	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public static synthetic fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -2194,7 +2194,7 @@ public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderKt {
 public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getAttachments ()Ljava/util/List;
@@ -2219,7 +2219,7 @@ public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder
 public final class dev/kord/rest/builder/message/modify/WebhookMessageModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/modify/MessageModifyBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
+	public synthetic fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
 	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getAttachments ()Ljava/util/List;
@@ -3722,8 +3722,8 @@ public final class dev/kord/rest/json/request/GuildBanCreateRequest {
 	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildBanCreateRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildBanCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDeleteMessageSeconds ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getDeleteMessagesDays ()Ldev/kord/common/entity/optional/OptionalInt;
-	public final fun getReason ()Ldev/kord/common/entity/optional/Optional;
+	public final synthetic fun getDeleteMessagesDays ()Ldev/kord/common/entity/optional/OptionalInt;
+	public final synthetic fun getReason ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Ldev/kord/rest/json/request/GuildBanCreateRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -6057,7 +6057,7 @@ public final class dev/kord/rest/request/RequestBuilder {
 	public final fun build ()Ldev/kord/rest/request/Request;
 	public final fun file (Ldev/kord/rest/NamedFile;)V
 	public final fun file (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)V
-	public final fun file (Ljava/lang/String;Ljava/io/InputStream;)V
+	public final synthetic fun file (Ljava/lang/String;Ljava/io/InputStream;)V
 	public final fun file (Ljava/nio/file/Path;)V
 	public final fun getBaseUrl ()Ljava/lang/String;
 	public final fun getKeys ()Ljava/util/Map;
@@ -7177,7 +7177,7 @@ public final class dev/kord/rest/service/GuildServiceKt {
 	public static synthetic fun createScheduledEvent$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/ScheduledEntityType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createTextChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createVoiceChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun modifyCurrentVoiceState (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final synthetic fun modifyCurrentVoiceState (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun modifyCurrentVoiceState (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun modifyGuildWelcomeScreen (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun modifyScheduledEvent (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

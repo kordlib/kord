@@ -7,7 +7,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.interaction.IntegerOptionBuilder
 import dev.kord.rest.builder.interaction.NumberOptionBuilder
 import dev.kord.rest.builder.interaction.StringChoiceBuilder
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -27,7 +27,7 @@ public interface AutoCompleteInteractionBehavior : DataInteractionBehavior {
 @Deprecated(
     "Renamed to 'suggestInteger'.",
     ReplaceWith("this.suggestInteger { builder() }", "dev.kord.core.behavior.interaction.suggestInteger"),
-    level = WARNING,
+    level = ERROR,
 )
 public suspend inline fun AutoCompleteInteractionBehavior.suggestInt(builder: IntegerOptionBuilder.() -> Unit) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
