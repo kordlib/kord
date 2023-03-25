@@ -33,6 +33,8 @@ public class TextChannel(
      */
     public val userRateLimit: Duration? get() = data.rateLimitPerUser.value
 
+    public val defaultThreadRateLimitPerUser: Duration? get() = data.defaultThreadRateLimitPerUser.value
+
     /**
      * returns a new [TextChannel] with the given [strategy].
      *
