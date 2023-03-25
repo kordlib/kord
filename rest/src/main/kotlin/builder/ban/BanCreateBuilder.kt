@@ -6,7 +6,7 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildBanCreateRequest
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 @KordDsl
@@ -21,7 +21,7 @@ public class BanCreateBuilder : AuditRequestBuilder<GuildBanCreateRequest> {
      *
      * @suppress
      */
-    @Deprecated("Use 'deleteMessageDuration' instead.", ReplaceWith("this.deleteMessageDuration"), level = ERROR)
+    @Deprecated("Use 'deleteMessageDuration' instead.", ReplaceWith("this.deleteMessageDuration"), level = HIDDEN)
     public var deleteMessagesDays: Int? by ::_deleteMessagesDays.delegate()
 
     private var _deleteMessageDuration: Optional<Duration> = Optional.Missing()

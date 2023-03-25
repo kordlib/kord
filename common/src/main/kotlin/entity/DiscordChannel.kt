@@ -17,7 +17,10 @@
                     "(https://support.discord.com/hc/en-us/articles/360032008192).",
         ),
         Entry("PublicNewsThread", intValue = 10, kDoc = "A temporary sub-channel within a [GuildNews] channel."),
-        Entry("PublicGuildThread", intValue = 11, kDoc = "A temporary sub-channel within a [GuildText] channel."),
+        Entry(
+            "PublicGuildThread", intValue = 11,
+            kDoc = "A temporary sub-channel within a [GuildText] or [GuildForum] channel."
+        ),
         Entry(
             "PrivateThread", intValue = 12,
             kDoc = "A temporary sub-channel within a [GuildText] channel that is only viewable by those invited and " +
@@ -33,6 +36,7 @@
             kDoc = "The channel in a [hub](https://support.discord.com/hc/en-us/articles/4406046651927-Discord-" +
                     "Student-Hubs-FAQ) containing the listed servers.",
         ),
+        Entry("GuildForum", intValue = 15, kDoc = "A channel that can only contain threads."),
     ],
 )
 
@@ -46,6 +50,25 @@
 )
 
 @file:GenerateKordEnum(
+    name = "SortOrderType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types",
+    entries = [
+        Entry("LatestActivity", intValue = 0, kDoc = "Sort forum posts by activity."),
+        Entry("CreationDate", intValue = 1, kDoc = "Sort forum posts by creation time (from most recent to oldest)."),
+    ],
+)
+
+@file:GenerateKordEnum(
+    name = "ForumLayoutType", valueType = INT,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types",
+    entries = [
+        Entry("NotSet", intValue = 0, kDoc = "No default has been set for forum channel."),
+        Entry("ListView", intValue = 1, kDoc = "Display posts as a list."),
+        Entry("GalleryView", intValue = 2, kDoc = "Display posts as a collection of tiles."),
+    ],
+)
+
+@file:GenerateKordEnum(
     name = "OverwriteType", valueType = INT,
     docUrl = "https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure",
     entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
@@ -53,6 +76,7 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.entity.ChannelType.GuildForum
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -66,36 +90,18 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
-/**
- * A representation of a [Discord Channel Structure](https://discord.com/developers/docs/resources/channel).
- *
- * @param id The id of the channel.
- * @param type the Type of channel.
- * @param guildId the id of the guild.
- * @param position The sorting position of the channel.
- * @param permissionOverwrites The explicit permission overwrite for members and roles.
- * @param name The name of the channel.
- * @param topic The channel topic.
- * @param nsfw Whether the channel is nsfw.
- * @param lastMessageId The id of the last message sent in this channel (may not point to an existing or valid message).
- * @param bitrate The bitrate (in bits) of the voice channel.
- * @param userLimit The user limit of the voice channel.
- * @param rateLimitPerUser amount of time a user has to wait before sending another message; bots,
- * as well as users with the permission [Permission.ManageMessages] or [Permission.ManageChannels] are unaffected.
- * @param recipients The recipients of the DM.
- * @param icon The icon hash.
- * @param ownerId The id of DM creator.
- * @param applicationId The application id of the group DM creator if it is bot-created.
- * @param parentId The id of the parent category for a channel.
- * @param lastPinTimestamp When the last pinned message was pinned.
- */
 @Serializable
 public data class DiscordChannel(
     val id: Snowflake,
@@ -138,8 +144,116 @@ public data class DiscordChannel(
     val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing(),
     @SerialName("default_auto_archive_duration")
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
-    val member: Optional<DiscordThreadMember> = Optional.Missing()
+    val member: Optional<DiscordThreadMember> = Optional.Missing(),
+    val flags: Optional<ChannelFlags> = Optional.Missing(),
+    @SerialName("total_message_sent")
+    val totalMessageSent: OptionalInt = OptionalInt.Missing,
+    @SerialName("available_tags")
+    val availableTags: Optional<List<ForumTag>> = Optional.Missing(),
+    @SerialName("applied_tags")
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    @SerialName("default_reaction_emoji")
+    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing(),
+    @SerialName("default_thread_rate_limit_per_user")
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
+    @SerialName("default_sort_order")
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    @SerialName("default_forum_layout")
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
+    // Forum thread original message
+    // see in: https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
+    val message: Optional<DiscordMessage> = Optional.Missing(),
 )
+
+public enum class ChannelFlag(public val code: Int) {
+
+    /** This thread is pinned to the top of its parent [GuildForum] channel. */
+    Pinned(1 shl 1),
+
+    /** Whether a tag is required to be specified when creating a thread in a [GuildForum] channel. */
+    RequireTag(1 shl 4);
+
+
+    public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
+
+    public operator fun plus(flags: ChannelFlags): ChannelFlags = flags + this
+}
+
+@Serializable(with = ChannelFlags.Serializer::class)
+public data class ChannelFlags internal constructor(public val code: Int) {
+
+    public val flags: List<ChannelFlag> get() = ChannelFlag.values().filter { it in this }
+
+    public operator fun contains(flag: ChannelFlag): Boolean = this.code and flag.code == flag.code
+
+    public operator fun contains(flags: ChannelFlags): Boolean = this.code and flags.code == flags.code
+
+    public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
+
+    public operator fun plus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code or flags.code)
+
+    public operator fun minus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code and flag.code.inv())
+
+    public operator fun minus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code and flags.code.inv())
+
+
+    public inline fun copy(builder: Builder.() -> Unit): ChannelFlags {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return Builder(code).apply(builder).build()
+    }
+
+
+    internal object Serializer : KSerializer<ChannelFlags> {
+
+        override val descriptor: SerialDescriptor =
+            PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelFlags", PrimitiveKind.INT)
+
+        override fun deserialize(decoder: Decoder): ChannelFlags {
+            val code = decoder.decodeInt()
+            return ChannelFlags(code)
+        }
+
+        override fun serialize(encoder: Encoder, value: ChannelFlags) {
+            encoder.encodeInt(value.code)
+        }
+    }
+
+
+    public class Builder(private var code: Int = 0) {
+
+        public operator fun ChannelFlag.unaryPlus() {
+            this@Builder.code = this@Builder.code or this.code
+        }
+
+        public operator fun ChannelFlags.unaryPlus() {
+            this@Builder.code = this@Builder.code or this.code
+        }
+
+        public operator fun ChannelFlag.unaryMinus() {
+            this@Builder.code = this@Builder.code and this.code.inv()
+        }
+
+        public operator fun ChannelFlags.unaryMinus() {
+            this@Builder.code = this@Builder.code and this.code.inv()
+        }
+
+        public fun build(): ChannelFlags = ChannelFlags(code)
+    }
+}
+
+public inline fun ChannelFlags(builder: ChannelFlags.Builder.() -> Unit): ChannelFlags {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return ChannelFlags.Builder().apply(builder).build()
+}
+
+public fun ChannelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+
+public fun ChannelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+
+public fun ChannelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+
+@JvmName("ChannelFlags0")
+public fun ChannelFlags(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
 @Serializable
 public data class Overwrite(
@@ -204,15 +318,34 @@ public sealed class ArchiveDuration(
             listOf(Hour, Day, ThreeDays, Week)
         }
 
-        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = ERROR)
+        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = HIDDEN)
         public val values: Set<ArchiveDuration> get() = entries.toSet()
     }
 
     @Deprecated(
         "Use 'ArchiveDuration.serializer()' instead.",
         ReplaceWith("ArchiveDuration.serializer()", "dev.kord.common.entity.ArchiveDuration"),
-        level = ERROR,
+        level = HIDDEN,
     )
     // TODO rename internal `NewSerializer` to `Serializer` when this is removed
     public object Serializer : KSerializer<ArchiveDuration> by NewSerializer
 }
+
+@Serializable
+public data class DefaultReaction(
+    @SerialName("emoji_id")
+    val emojiId: Snowflake?,
+    @SerialName("emoji_name")
+    val emojiName: String?,
+)
+
+@Serializable
+public data class ForumTag(
+    val id: Snowflake,
+    val name: String,
+    val moderated: Boolean,
+    @SerialName("emoji_id")
+    val emojiId: Snowflake?,
+    @SerialName("emoji_name")
+    val emojiName: String?,
+)

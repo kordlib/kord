@@ -1,3 +1,72 @@
+# 0.8.0
+
+## Additions
+
+* Add forums (#684)
+* Add new select menu types (by @oluiss in #707 and @Lukellmann in #721)
+* Add `UserFlag.ActiveDeveloper` (by @oluiss in #720)
+* Add new `GuildFeature`s and allow editing them (by @Lukellmann in #722)
+* Add new error codes (by @Lukellmann in #723 and @NoComment1105 in #742 and #757)
+* Add `Locale.INDONESIAN` (by @Lukellmann in #738)
+* Add `KeywordAutoModerationRule.allowedKeywords` (by @Lukellmann in #731)
+* Add support for nsfw commands (by @Lukellmann in #725)
+* Add missing `MessageType`s (by @NoComment1105 in #744)
+* Add `after` to audit log get (by @NoComment1105 in #745)
+* Add support for gif stickers (by @NoComment1105 in #750)
+* Add stage channel message types (by @NoComment1105 in #759)
+* Add audit log entry create event (by @NoComment1105 in #751 and #761)
+* Add missing integration events (by @NoComment1105 in #761, #763 and #764)
+* Add guild member flags (by @NoComment1105 in #760)
+* Add the ability to receive unknown events (by @DRSchlaubi in #769)
+* Add `BlockMessageAutoModerationAction.customMessage` (by @Lukellmann in #774)
+* Add silent messages and extend builders (by @DRSchlaubi in #762)
+* Add Role subscriptions (by @NoComment1105 in #743 and @Lukellmann in #781)
+* Add a nullable variant of `getAuthorAsMember` (by @NoComment1105 in #784)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @Lukellmann in #716)
+* Deprecate `GuildFeature.PrivateThreads` (by @Lukellmann in #724)
+* Stabilize `KordConfiguration` and `KordConstants` (by @Lukellmann in #753)
+* Make `StageChannel` implement `TopGuildMessageChannel` (by @DRSchlaubi in #756)
+* Deprecate `getGuild()` functions that call `getGuildOrNull()` under the hood (by @NoComment1105 in #728)
+* Add bucket ID to the discovered bucket trace log (by @MrPowerGamerBR in #699)
+
+## Fixes
+
+* Generate `EncryptionMode` instead of using an enum (by @lost-illusi0n in #737)
+* Fix nonce deserialization for big integers (by @Lukellmann in #765)
+* Fix `MessageChannelBehavior.typeUntil` (by @Lukellmann in #768)
+* Make `Snowflake`'s ordering consistent with `equals` (by @Lukellmann in #773)
+* Fix various bugs in `DiscordBitSet` (by @Lukellmann in #772)
+* Use 74 byte ip discovery packet instead of the deprecated 70 byte discovery packet (by @lost-illusi0n in #776)
+* Fix breaking changes and bugs before release (by @Lukellmann in #793)
+
+## Dependencies
+
+Updated in #732, #739, #755, #782 and #788
+
+* Gradle 7.5.1 -> 8.0.2
+* Kotlin 1.7.20 -> 1.8.10
+* KSP 1.7.20-1.0.8 -> 1.8.10-1.0.9
+* Ktor 2.1.3 -> 2.2.4
+* kotlinx.serialization 1.4.1 -> 1.5.0
+* kotlin-logging 2.1.23 -> 3.0.5
+* SLF4J 1.7.36 -> 2.0.7
+* Dokka 1.7.20 -> 1.8.10
+* AtomicFU 0.18.5 -> 0.20.0
+* Binary compatibility validator 0.12.1 -> 0.13.0
+* JUnit 5 5.9.1 -> 5.9.2
+* MockK 1.13.2 -> 1.13.4
+
+## House-keeping
+
+* Use `libs.versions.toml` and clean gradle files (by @Lukellmann in #719)
+* Clean up (by @Lukellmann in #730)
+* Use AtomicFU compiler plugin (by @Lukellmann in #740)
+* Fix CI badge in readme (by @DRSchlaubi in #741)
+* CI updates and fixes (by @DRSchlaubi and @Lukellmann in #770, #778, #780 and #790)
+
 # 0.8.0-M17
 
 ## Additions

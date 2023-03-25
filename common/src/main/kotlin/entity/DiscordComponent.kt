@@ -15,7 +15,7 @@
     deprecatedEntries = [
         Entry("SelectMenu", intValue = 3, kDoc = "A select menu for picking from choices.",
             deprecationMessage = "Renamed by discord", replaceWith = ReplaceWith("StringSelect", "dev.kord.common.entity.ComponentType.StringSelect"),
-            deprecationLevel = DeprecationLevel.WARNING
+            deprecationLevel = DeprecationLevel.ERROR
         ),
     ],
 )

@@ -79,6 +79,18 @@ public class StageChannelUpdateEvent(
     }
 }
 
+public class ForumChannelUpdateEvent(
+    override val channel: ForumChannel,
+    override val old: ForumChannel?,
+    override val shard: Int,
+    override val customContext: Any?,
+) : ChannelUpdateEvent {
+    override fun toString(): String {
+        return "ForumChannelUpdateEvent(channel=$channel, old=$old, shard=$shard)"
+    }
+}
+
+
 public class UnknownChannelUpdateEvent(
     override val channel: Channel,
     override val old: Channel?,

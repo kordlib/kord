@@ -19,7 +19,7 @@ public class TextChannel(
     override val data: ChannelData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier
-) : CategorizableChannel, TextChannelBehavior, ThreadParentChannel {
+) : CategorizableChannel, TextChannelBehavior, ThreadParentChannel, TopGuildMessageChannel {
 
     /**
      * Whether the channel is nsfw.
@@ -32,6 +32,8 @@ public class TextChannel(
      * Bots, as well as users with the permission [ManageMessages] or [ManageChannels], are unaffected.
      */
     public val userRateLimit: Duration? get() = data.rateLimitPerUser.value
+
+    public val defaultThreadRateLimitPerUser: Duration? get() = data.defaultThreadRateLimitPerUser.value
 
     /**
      * returns a new [TextChannel] with the given [strategy].

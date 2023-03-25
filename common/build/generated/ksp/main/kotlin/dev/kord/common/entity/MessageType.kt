@@ -113,61 +113,6 @@ public sealed class MessageType(
 
     public object GuildApplicationPremiumSubscription : MessageType(32)
 
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed to 'UserJoin'.",
-        replaceWith = ReplaceWith(expression = "UserJoin", imports =
-                    arrayOf("dev.kord.common.entity.MessageType.UserJoin")),
-    )
-    public object GuildMemberJoin : MessageType(7)
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed to 'GuildBoost'.",
-        replaceWith = ReplaceWith(expression = "GuildBoost", imports =
-                    arrayOf("dev.kord.common.entity.MessageType.GuildBoost")),
-    )
-    public object UserPremiumGuildSubscription : MessageType(8)
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed to 'GuildBoostTier1'.",
-        replaceWith = ReplaceWith(expression = "GuildBoostTier1", imports =
-                    arrayOf("dev.kord.common.entity.MessageType.GuildBoostTier1")),
-    )
-    public object UserPremiumGuildSubscriptionTierOne : MessageType(9)
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed to 'GuildBoostTier2'.",
-        replaceWith = ReplaceWith(expression = "GuildBoostTier2", imports =
-                    arrayOf("dev.kord.common.entity.MessageType.GuildBoostTier2")),
-    )
-    public object UserPremiumGuildSubscriptionTwo : MessageType(10)
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed to 'GuildBoostTier3'.",
-        replaceWith = ReplaceWith(expression = "GuildBoostTier3", imports =
-                    arrayOf("dev.kord.common.entity.MessageType.GuildBoostTier3")),
-    )
-    public object UserPremiumGuildSubscriptionThree : MessageType(11)
-
     internal object Serializer : KSerializer<MessageType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MessageType", PrimitiveKind.INT)
@@ -253,7 +198,7 @@ public sealed class MessageType(
 
 
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Renamed to 'entries'.",
             replaceWith = ReplaceWith(expression = "this.entries", imports = arrayOf()),
         )

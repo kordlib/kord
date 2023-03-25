@@ -43,8 +43,12 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         val data = MessageData.from(this)
         kord.cache.put(data)
 
-        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
-            it.copy(lastMessageId = data.id.optionalSnowflake())
+        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update { channel ->
+            channel.copy(
+                lastMessageId = data.id.optionalSnowflake(),
+                messageCount = channel.messageCount.map { it + 1 },
+                totalMessageSent = channel.totalMessageSent.map { it + 1 },
+            )
         }
 
         //get the user data only if it exists and the user isn't a webhook
@@ -109,6 +113,10 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
 
+        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update { channel ->
+            channel.copy(messageCount = channel.messageCount.map { it - 1 })
+        }
+
         MessageDeleteEvent(id, channelId, guildId.value, removed, kord, shard, context?.get())
     }
 
@@ -119,12 +127,16 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?,
     ): MessageBulkDeleteEvent =
         with(event.messageBulk) {
+            val ids = ids.toSet()
+
             val query = kord.cache.query<MessageData> { MessageData::id `in` ids }
 
             val removed = query.asFlow().map { Message(it, kord) }.toSet()
             query.remove()
 
-            val ids = ids.asSequence().map { it }.toSet()
+            kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update { channel ->
+                channel.copy(messageCount = channel.messageCount.map { it - ids.size })
+            }
 
             MessageBulkDeleteEvent(
                 ids,

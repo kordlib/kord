@@ -184,21 +184,10 @@ public sealed class GuildFeature(
     public object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
 
     /**
-     * Guild has access to use commerce features (i.e. create store channels).
-     *
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message =
-                "Discord no longer offers the ability to purchase a license to sell PC games on Discord and store channels were removed on March 10, 2022. See https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation for more information.",
-    )
-    public object Commerce : GuildFeature("COMMERCE")
-
-    /**
      * Guild has enabled monetization.
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Replaced by CreatorMonetizableProvisional.",
         replaceWith = ReplaceWith(expression = "GuildFeature.CreatorMonetizableProvisional", imports
                     = arrayOf("dev.kord.common.entitiy.GuildFeature")),
@@ -208,30 +197,11 @@ public sealed class GuildFeature(
     /**
      * Guild has access to create private threads
      */
-    @Deprecated(message = "Creating a private thread no longer requires the server to be boosted.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Creating a private thread no longer requires the server to be boosted.",
+    )
     public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
-
-    /**
-     * Guild has access to the seven day archive time for threads.
-     *
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Thread archive durations are no longer boost locked.",
-    )
-    public object SevenDayThreadArchive : GuildFeature("SEVEN_DAY_THREAD_ARCHIVE")
-
-    /**
-     * Guild has access to the three-day archive time for threads.
-     *
-     * @suppress
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Thread archive durations are no longer boost locked.",
-    )
-    public object ThreeDayThreadArchive : GuildFeature("THREE_DAY_THREAD_ARCHIVE")
 
     internal object Serializer : KSerializer<GuildFeature> {
         public override val descriptor: SerialDescriptor =
@@ -248,7 +218,6 @@ public sealed class GuildFeature(
             "APPLICATION_COMMAND_PERMISSIONS_V2" -> ApplicationCommandPermissionsV2
             "AUTO_MODERATION" -> AutoModeration
             "BANNER" -> Banner
-            "COMMERCE" -> @Suppress("DEPRECATION_ERROR") Commerce
             "COMMUNITY" -> Community
             "CREATOR_MONETIZABLE_PROVISIONAL" -> CreatorMonetizableProvisional
             "CREATOR_STORE_PAGE" -> CreatorStorePage
@@ -258,17 +227,15 @@ public sealed class GuildFeature(
             "INVITES_DISABLED" -> InvitesDisabled
             "INVITE_SPLASH" -> InviteSplash
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
-            "MONETIZATION_ENABLED" -> @Suppress("DEPRECATION") MonetizationEnabled
+            "MONETIZATION_ENABLED" -> @Suppress("DEPRECATION_ERROR") MonetizationEnabled
             "MORE_STICKERS" -> MoreStickers
             "NEWS" -> News
             "PARTNERED" -> Partnered
             "PREVIEW_ENABLED" -> PreviewEnabled
-            "PRIVATE_THREADS" -> @Suppress("DEPRECATION") PrivateThreads
+            "PRIVATE_THREADS" -> @Suppress("DEPRECATION_ERROR") PrivateThreads
             "ROLE_ICONS" -> RoleIcons
             "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE" -> RoleSubscriptionsAvailableForPurchase
             "ROLE_SUBSCRIPTIONS_ENABLED" -> RoleSubscriptionsEnabled
-            "SEVEN_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive
-            "THREE_DAY_THREAD_ARCHIVE" -> @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive
             "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
             "VANITY_URL" -> VanityUrl
             "VERIFIED" -> Verified
@@ -289,7 +256,6 @@ public sealed class GuildFeature(
                 ApplicationCommandPermissionsV2,
                 AutoModeration,
                 Banner,
-                @Suppress("DEPRECATION_ERROR") Commerce,
                 Community,
                 CreatorMonetizableProvisional,
                 CreatorStorePage,
@@ -299,17 +265,15 @@ public sealed class GuildFeature(
                 InvitesDisabled,
                 InviteSplash,
                 MemberVerificationGateEnabled,
-                @Suppress("DEPRECATION") MonetizationEnabled,
+                @Suppress("DEPRECATION_ERROR") MonetizationEnabled,
                 MoreStickers,
                 News,
                 Partnered,
                 PreviewEnabled,
-                @Suppress("DEPRECATION") PrivateThreads,
+                @Suppress("DEPRECATION_ERROR") PrivateThreads,
                 RoleIcons,
                 RoleSubscriptionsAvailableForPurchase,
                 RoleSubscriptionsEnabled,
-                @Suppress("DEPRECATION_ERROR") SevenDayThreadArchive,
-                @Suppress("DEPRECATION_ERROR") ThreeDayThreadArchive,
                 TicketedEventsEnabled,
                 VanityUrl,
                 Verified,

@@ -500,14 +500,14 @@ class RestServiceTest {
     @Disabled("Requires Community Guild")
     fun `create thread`() = runBlocking {
 
-        val publicThread = channel.startPublicThread("TEST THREAD")
+        val publicThread = channel.startPublicThread("TEST THREAD") {}
         val active = channel.activeThreads
         assertEquals(false, publicThread.isPrivate)
 
         assertTrue(active.toList().isNotEmpty())
         publicThread.join()
 
-        val privateThread = channel.startPrivateThread("TEST PRIVATE THREAD")
+        val privateThread = channel.startPrivateThread("TEST PRIVATE THREAD") {}
 
         privateThread.join()
 

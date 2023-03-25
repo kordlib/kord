@@ -3,8 +3,9 @@ package dev.kord.rest.service
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
-import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
@@ -311,18 +312,30 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         builder: StartThreadWithMessageBuilder.() -> Unit
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val startBuilder = StartThreadWithMessageBuilder(name, archiveDuration).apply(builder)
+        val startBuilder = StartThreadWithMessageBuilder(name).apply {
+            this.autoArchiveDuration = archiveDuration
+            builder()
+        }
         return startThreadWithMessage(channelId, messageId, startBuilder.toRequest(), startBuilder.reason)
+    }
+
+    public suspend fun startThread(
+        channelId: Snowflake,
+        multipartRequest: MultipartStartThreadRequest,
+        reason: String? = null,
+    ): DiscordChannel = call(Route.StartThreadPost) {
+        keys[Route.ChannelId] = channelId
+        body(StartThreadRequest.serializer(), multipartRequest.request)
+        auditLogReason(reason)
+        multipartRequest.files.forEach { file(it) }
     }
 
     public suspend fun startThread(
         channelId: Snowflake,
         request: StartThreadRequest,
         reason: String? = null,
-    ): DiscordChannel = call(Route.StartThreadPost) {
-        keys[Route.ChannelId] = channelId
-        body(StartThreadRequest.serializer(), request)
-        auditLogReason(reason)
+    ): DiscordChannel {
+        return startThread(channelId, MultipartStartThreadRequest(request), reason)
     }
 
     public suspend fun startThread(
@@ -333,7 +346,20 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         builder: StartThreadBuilder.() -> Unit = {}
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val startBuilder = StartThreadBuilder(name, archiveDuration, type).apply(builder)
+        val startBuilder = StartThreadBuilder(name, type).apply {
+            this.autoArchiveDuration = archiveDuration
+            builder()
+        }
+        return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
+    }
+
+    public suspend fun startForumThread(
+        channelId: Snowflake,
+        name: String,
+        builder: StartForumThreadBuilder.() -> Unit = {}
+    ): DiscordChannel {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val startBuilder = StartForumThreadBuilder(name).apply(builder)
         return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
     }
 
@@ -410,6 +436,16 @@ public suspend inline fun ChannelService.patchTextChannel(
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
     val modifyBuilder = TextChannelModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
+}
+
+
+public suspend inline fun ChannelService.patchForumChannel(
+    channelId: Snowflake,
+    builder: ForumChannelModifyBuilder.() -> Unit
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val modifyBuilder = ForumChannelModifyBuilder().apply(builder)
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 

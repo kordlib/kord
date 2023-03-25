@@ -146,17 +146,8 @@
     ],
     deprecatedEntries = [
         Entry(
-            "Commerce", stringValue = "COMMERCE",
-            kDoc = "Guild has access to use commerce features (i.e. create store channels).\n\n@suppress",
-            deprecationMessage = "Discord no longer offers the ability to purchase a license to sell PC games on " +
-                    "Discord and store channels were removed on March 10, 2022. See " +
-                    "https://support-dev.discord.com/hc/en-us/articles/6309018858647-Self-serve-Game-Selling-Deprecation" +
-                    " for more information.",
-            deprecationLevel = HIDDEN,
-        ),
-        Entry(
             "MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization.",
-            deprecationMessage = "Replaced by CreatorMonetizableProvisional.", deprecationLevel = WARNING,
+            deprecationMessage = "Replaced by CreatorMonetizableProvisional.", deprecationLevel = ERROR,
             replaceWith = ReplaceWith(
                 "GuildFeature.CreatorMonetizableProvisional",
                 imports = ["dev.kord.common.entitiy.GuildFeature"],
@@ -165,17 +156,7 @@
         Entry(
             "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
             deprecationMessage = "Creating a private thread no longer requires the server to be boosted.",
-            deprecationLevel = WARNING,
-        ),
-        Entry(
-            "SevenDayThreadArchive", stringValue = "SEVEN_DAY_THREAD_ARCHIVE",
-            kDoc = "Guild has access to the seven day archive time for threads.\n\n@suppress",
-            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = HIDDEN,
-        ),
-        Entry(
-            "ThreeDayThreadArchive", stringValue = "THREE_DAY_THREAD_ARCHIVE",
-            kDoc = "Guild has access to the three-day archive time for threads.\n\n@suppress",
-            deprecationMessage = "Thread archive durations are no longer boost locked.", deprecationLevel = HIDDEN,
+            deprecationLevel = ERROR,
         ),
     ],
 )
@@ -200,8 +181,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -422,10 +402,10 @@ public data class DiscordGuildIntegrations(
 )
 
 @Serializable
-public data class DiscordGuildIntegrationsDeleted(
+public data class DiscordIntegrationDelete(
     val id: Snowflake,
     @SerialName("guild_id") val guildId: Snowflake,
-    @SerialName("application_id") val applicationId: Snowflake?
+    @SerialName("application_id") val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
 
 @Serializable

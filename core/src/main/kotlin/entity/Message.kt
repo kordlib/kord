@@ -5,6 +5,7 @@ import dev.kord.common.entity.MessageType.RoleSubscriptionPurchase
 import dev.kord.common.entity.optional.mapNullable
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
+import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
@@ -289,6 +290,12 @@ public class Message(
     /** The data of the [RoleSubscription] purchase or renewal that prompted this [RoleSubscriptionPurchase] message. */
     public val roleSubscriptionData: RoleSubscription? get() = data.roleSubscriptionData.value
 
+    /**
+     * A generally increasing integer that represents the **approximate** position of the message in the thread.
+     * Can be used to estimate the relative position along with total_message_sent on the parent thread,
+     */
+    public val position: Int? get() = data.position.value
+
     /** The [ActionRowComponent]s of this message. */
     public val actionRows: List<ActionRowComponent>
         get() = data.components.orEmpty().map { ActionRowComponent(it) }
@@ -303,10 +310,39 @@ public class Message(
      *
      * Returns null if the message was not send in a [TopGuildMessageChannel], or if the [author] is not a [User].
      */
+    @Deprecated(
+        "Deprecated in favour of getAuthorAsMemberOrNull(), as it more accurately describes function",
+        ReplaceWith("getAuthorAsMemberOrNull()"),
+        DeprecationLevel.ERROR
+    )
     public suspend fun getAuthorAsMember(): Member? {
         val author = author ?: return null
         val guildId = getGuildOrNull()?.id ?: return null
         return author.asMember(guildId)
+    }
+
+    /**
+     * Requests to get the [author] as a member.
+     *
+     * @throws EntityNotFoundException if the message was not sent in a [TopGuildMessageChannel], if the member was not found
+     * or if the guild was null, or if the author is not a user
+     */
+    public suspend fun getAuthorAsMemberOrThrow(): Member {
+        val author = author ?: throw EntityNotFoundException("Author is not a Discord User")
+        val guildId = getGuild().id
+        return author.asMember(guildId)
+    }
+
+    /**
+     * Requests to get the [author] as a member.
+     *
+     * Returns null if the message was not sent in a [TopGuildMessageChannel], if the [author] is not a [User], or if
+     * the [author] as a member is `null`.
+     */
+    public suspend fun getAuthorAsMemberOrNull(): Member? {
+        val author = author ?: return null
+        val guildId = getGuildOrNull()?.id ?: return null
+        return author.asMemberOrNull(guildId)
     }
 
     /**

@@ -91,8 +91,7 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
-import kotlin.DeprecationLevel.HIDDEN
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 @Serializable
 public data class DiscordApplicationCommand(
@@ -173,12 +172,12 @@ public sealed class Choice<out T> {
     public abstract val nameLocalizations: Optional<Map<Locale, String>?>
     public abstract val value: T
 
-    @Deprecated("Renamed to 'IntegerChoice'.", level = WARNING)
+    @Deprecated("Renamed to 'IntegerChoice'.", level = ERROR)
     public data class IntChoice
     @Deprecated(
         "Renamed to 'IntegerChoice'.",
         ReplaceWith("IntegerChoice(name, nameLocalizations, value)", "dev.kord.common.entity.Choice.IntegerChoice"),
-        level = WARNING,
+        level = ERROR,
     ) public constructor(
         override val name: String,
         override val nameLocalizations: Optional<Map<Locale, String>?>,
@@ -241,7 +240,7 @@ public sealed class Choice<out T> {
             encodeStringElement(descriptor, 0, value.name)
 
             when (value) {
-                is @Suppress("DEPRECATION") IntChoice -> encodeLongElement(descriptor, 1, value.value)
+                is @Suppress("DEPRECATION_ERROR") IntChoice -> encodeLongElement(descriptor, 1, value.value)
                 is IntegerChoice -> encodeLongElement(descriptor, 1, value.value)
                 is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
                 is StringChoice -> encodeStringElement(descriptor, 1, value.value)
@@ -699,7 +698,7 @@ public data class CommandGroup(
 @Deprecated(
     "Use an is-check or cast instead.",
     ReplaceWith("(this as CommandArgument.IntegerArgument).value", "dev.kord.common.entity.CommandArgument"),
-    level = WARNING,
+    level = ERROR,
 )
 public fun CommandArgument<*>.int(): Long {
     return value as? Long ?: error("$value wasn't an int.")
@@ -709,7 +708,7 @@ public fun CommandArgument<*>.int(): Long {
 @Deprecated(
     "This function calls value.toString() which might be unexpected. Use an explicit value.toString() instead.",
     ReplaceWith("this.value.toString()"),
-    level = WARNING,
+    level = ERROR,
 )
 public fun CommandArgument<*>.string(): String {
     return value.toString()
@@ -719,7 +718,7 @@ public fun CommandArgument<*>.string(): String {
 @Deprecated(
     "Use an is-check or cast instead.",
     ReplaceWith("(this as CommandArgument.BooleanArgument).value", "dev.kord.common.entity.CommandArgument"),
-    level = WARNING,
+    level = ERROR,
 )
 public fun CommandArgument<*>.boolean(): Boolean {
     return value as? Boolean ?: error("$value wasn't a Boolean.")
@@ -729,7 +728,7 @@ public fun CommandArgument<*>.boolean(): Boolean {
 @Deprecated(
     "This function calls value.toString() which might be unexpected. Use an explicit value.toString() instead.",
     ReplaceWith("Snowflake(this.value.toString())", "dev.kord.common.entity.Snowflake"),
-    level = WARNING,
+    level = ERROR,
 )
 public fun CommandArgument<*>.snowflake(): Snowflake {
     val id = value.toString().toULongOrNull() ?: error("$value wasn't a Snowflake")
@@ -752,138 +751,7 @@ public data class DiscordGuildApplicationCommandPermission(
     val id: Snowflake,
     val type: ApplicationCommandPermissionType,
     val permission: Boolean
-) {
-
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "'DiscordGuildApplicationCommandPermission.Type' is replaced by 'ApplicationCommandPermissionType'",
-        level = HIDDEN,
-    )
-    public constructor(id: Snowflake, type: Type, permission: Boolean) : this(id, type.toNewType(), permission)
-
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Binary compatibility", level = HIDDEN)
-    @get:JvmName("getType")
-    public val type0: Type get() = type.toDeprecatedType()
-
-    @Suppress("DEPRECATION_ERROR", "FunctionName")
-    @Deprecated("Binary compatibility", level = HIDDEN)
-    @JvmName("component2")
-    public fun _component2(): Type = type.toDeprecatedType()
-
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "'DiscordGuildApplicationCommandPermission.Type' is replaced by 'ApplicationCommandPermissionType'",
-        level = HIDDEN,
-    )
-    public fun copy(
-        id: Snowflake = this.id,
-        type: Type = this.type.toDeprecatedType(),
-        permission: Boolean = this.permission,
-    ): DiscordGuildApplicationCommandPermission = DiscordGuildApplicationCommandPermission(id, type.toNewType(), permission)
-
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "Replaced by 'ApplicationCommandPermissionType'",
-        ReplaceWith("ApplicationCommandPermissionType", "dev.kord.common.entity.ApplicationCommandPermissionType"),
-        level = HIDDEN,
-    )
-    @Serializable(with = Type.Serializer::class)
-    public sealed class Type(public val value: Int) {
-        @Deprecated(
-            "Replaced by 'ApplicationCommandPermissionType.Role'",
-            ReplaceWith(
-                "ApplicationCommandPermissionType.Role",
-                "dev.kord.common.entity.ApplicationCommandPermissionType",
-            ),
-            level = HIDDEN,
-        )
-        public object Role : Type(1)
-
-        @Deprecated(
-            "Replaced by 'ApplicationCommandPermissionType.User'",
-            ReplaceWith(
-                "ApplicationCommandPermissionType.User",
-                "dev.kord.common.entity.ApplicationCommandPermissionType",
-            ),
-            level = HIDDEN,
-        )
-        public object User : Type(2)
-
-        @Deprecated(
-            "Replaced by 'ApplicationCommandPermissionType.Channel'",
-            ReplaceWith(
-                "ApplicationCommandPermissionType.Channel",
-                "dev.kord.common.entity.ApplicationCommandPermissionType",
-            ),
-            level = HIDDEN,
-        )
-        public object Channel : Type(3)
-
-        @Deprecated(
-            "Replaced by 'ApplicationCommandPermissionType.Unknown'",
-            ReplaceWith(
-                "ApplicationCommandPermissionType.Unknown",
-                "dev.kord.common.entity.ApplicationCommandPermissionType",
-            ),
-            level = HIDDEN,
-        )
-        public class Unknown internal constructor(value: Int, @Suppress("UNUSED_PARAMETER") unused: Nothing?) : Type(value) {
-            @Deprecated(
-                "Replaced by 'ApplicationCommandPermissionType.Unknown'",
-                ReplaceWith(
-                    "ApplicationCommandPermissionType.Unknown(value)",
-                    "dev.kord.common.entity.ApplicationCommandPermissionType",
-                ),
-                level = HIDDEN,
-            )
-            public constructor(value: Int) : this(value, null)
-        }
-
-        @Deprecated(
-            "Replaced by 'ApplicationCommandPermissionType.serializer()'",
-            ReplaceWith(
-                "ApplicationCommandPermissionType.serializer()",
-                "dev.kord.common.entity.ApplicationCommandPermissionType",
-            ),
-            level = HIDDEN,
-        )
-        public object Serializer : KSerializer<Type> {
-            override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("type", PrimitiveKind.INT)
-
-            override fun deserialize(decoder: Decoder): Type =
-                when (val value = decoder.decodeInt()) {
-                    1 -> Role
-                    2 -> User
-                    3 -> Channel
-                    else -> Unknown(value, null)
-                }
-
-            override fun serialize(encoder: Encoder, value: Type): Unit = encoder.encodeInt(value.value)
-        }
-    }
-
-    // functions for migration purposes, remove when bumping deprecations
-    // (public companion object can be removed, it's generated by kxser)
-    public companion object {
-        @Suppress("DEPRECATION_ERROR")
-        private fun ApplicationCommandPermissionType.toDeprecatedType() = when (this) {
-            ApplicationCommandPermissionType.Role -> Type.Role
-            ApplicationCommandPermissionType.User -> Type.User
-            ApplicationCommandPermissionType.Channel -> Type.Channel
-            is ApplicationCommandPermissionType.Unknown -> Type.Unknown(value, null)
-        }
-
-        @Suppress("DEPRECATION_ERROR")
-        private fun Type.toNewType() = when (this) {
-            Type.Role -> ApplicationCommandPermissionType.Role
-            Type.User -> ApplicationCommandPermissionType.User
-            Type.Channel -> ApplicationCommandPermissionType.Channel
-            is Type.Unknown -> ApplicationCommandPermissionType.Unknown(value)
-        }
-    }
-}
+)
 
 @Serializable
 public data class DiscordAutoComplete<T>(

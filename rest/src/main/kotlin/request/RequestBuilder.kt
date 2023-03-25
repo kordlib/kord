@@ -67,7 +67,7 @@ public class RequestBuilder<T>(public val route: Route<T>, keySize: Int = 2) {
     )
     @Suppress("DEPRECATION_ERROR")
     public fun file(name: String, input: InputStream) {
-        files.add(NamedFile(name, ChannelProvider(block = input::toByteReadChannel)))
+        files.add(NamedFile(input, name))
     }
 
     @Deprecated("Replaced by localFile", ReplaceWith("localFile(path)", "dev.kord.rest.request.localFile"))

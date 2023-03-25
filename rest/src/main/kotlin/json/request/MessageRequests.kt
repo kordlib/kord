@@ -89,3 +89,20 @@ public data class MultipartMessagePatchRequest(
 
 @Serializable
 public data class BulkDeleteRequest(val messages: List<Snowflake>)
+
+@Serializable
+public data class ForumThreadMessageRequest(
+    val content: Optional<String> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    @SerialName("allowed_mentions")
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    @SerialName("sticker_ids")
+    val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
+    val flags: Optional<MessageFlags> = Optional.Missing()
+)
+
+public data class MultipartForumThreadMessageCreateRequest(
+    val request: ForumThreadMessageRequest,
+    val files: List<NamedFile> = emptyList(),
+)

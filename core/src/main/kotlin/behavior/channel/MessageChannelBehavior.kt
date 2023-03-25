@@ -26,10 +26,8 @@ import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.coroutines.coroutineContext
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeMark
 
@@ -298,27 +296,6 @@ public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder
         callsInPlace(block, InvocationKind.EXACTLY_ONCE)
     }
     return createMessage { embed(block) }
-}
-
-@Deprecated("Binary compatibility.", level = HIDDEN)
-public suspend inline fun <T : MessageChannelBehavior> T.withTyping(block: T.() -> Unit) {
-    contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-    }
-    var typing = true
-
-    kord.launch(context = coroutineContext) {
-        while (typing) {
-            type()
-            delay(8.seconds)
-        }
-    }
-
-    try {
-        block()
-    } finally {
-        typing = false
-    }
 }
 
 /**

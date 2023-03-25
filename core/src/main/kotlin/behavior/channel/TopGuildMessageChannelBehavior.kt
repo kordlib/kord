@@ -3,7 +3,6 @@ package dev.kord.core.behavior.channel
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.WebhookData
 import dev.kord.core.entity.Webhook
 import dev.kord.core.entity.channel.TopGuildMessageChannel
 import dev.kord.core.exception.EntityNotFoundException
@@ -15,6 +14,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -25,22 +25,6 @@ import kotlin.contracts.contract
  *
  */
 public interface TopGuildMessageChannelBehavior : CategorizableChannelBehavior, GuildMessageChannelBehavior {
-
-    /**
-     * Requests to get all webhooks for this channel.
-     *
-     * This property is not resolvable through cache and will always use the [RestClient] instead.
-     *
-     * The returned flow is lazily executed, any [RequestException] will be thrown on
-     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
-     */
-    public val webhooks: Flow<Webhook>
-        get() = flow {
-            for (response in kord.rest.webhook.getChannelWebhooks(id)) {
-                val data = WebhookData.from(response)
-                emit(Webhook(data, kord))
-            }
-        }
 
     /**
      * Requests to get the this behavior as a [TopGuildMessageChannel].
@@ -112,13 +96,10 @@ internal fun TopGuildMessageChannelBehavior(
 }
 
 
-/**
- * Requests to create a new webhook configured by the [builder].
- *
- * @return The created [Webhook] with the [Webhook.token] field present.
- *
- * @throws [RestRequestException] if something went wrong during the request.
- */
+@Deprecated(
+    "Binary compatibility, this is now available on the CategorizableChannelBehavior supertype. Keep for some releases.",
+    level = HIDDEN,
+)
 public suspend inline fun TopGuildMessageChannelBehavior.createWebhook(
     name: String,
     builder: WebhookCreateBuilder.() -> Unit = {}
@@ -126,8 +107,5 @@ public suspend inline fun TopGuildMessageChannelBehavior.createWebhook(
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
     }
-    val response = kord.rest.webhook.createWebhook(id, name, builder)
-    val data = WebhookData.from(response)
-
-    return Webhook(data, kord)
+    return (this as CategorizableChannelBehavior).createWebhook(name, builder)
 }

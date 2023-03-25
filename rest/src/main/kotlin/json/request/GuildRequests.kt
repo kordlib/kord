@@ -18,7 +18,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
 public data class GuildCreateRequest(
@@ -59,6 +59,17 @@ public data class GuildChannelCreateRequest(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("default_auto_archive_duration")
     val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
+    @SerialName("default_reaction_emoji")
+    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing(),
+    @SerialName("default_thread_rate_limit_per_user")
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
+    val flags: Optional<ChannelFlags> = Optional.Missing(),
+    @SerialName("available_tags")
+    val availableTags: Optional<List<ForumTagRequest>?> = Optional.Missing(),
+    @SerialName("default_sort_order")
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    @SerialName("default_forum_layout")
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
 )
 
 @Serializable
@@ -121,23 +132,27 @@ public data class GuildMemberModifyRequest(
 
 
 @Serializable
-public data class GuildBanCreateRequest @Deprecated(
-    "'reason' and 'deleteMessageDays' are deprecated, use other constructor instead.",
-    ReplaceWith("GuildBanCreateRequest(deleteMessageSeconds)"),
-    level = ERROR,
-) public constructor(
+public data class GuildBanCreateRequest
+// actually:
+//@Deprecated(
+//    "'reason' and 'deleteMessageDays' are deprecated, use other constructor instead.",
+//    ReplaceWith("GuildBanCreateRequest(deleteMessageSeconds)"),
+//    level = HIDDEN,
+//)
+//public constructor(
+// but hidden constructor can not be called from other one
+@PublishedApi internal constructor(
     /** @suppress*/
-    @Deprecated("Use 'X-Audit-Log-Reason' header instead.", level = ERROR)
+    @Deprecated("Use 'X-Audit-Log-Reason' header instead.", level = HIDDEN)
     val reason: Optional<String> = Optional.Missing(),
     /** @suppress*/
-    @Deprecated("Use 'deleteMessageSeconds' instead.", ReplaceWith("this.deleteMessageSeconds"), level = ERROR)
+    @Deprecated("Use 'deleteMessageSeconds' instead.", ReplaceWith("this.deleteMessageSeconds"), level = HIDDEN)
     @SerialName("delete_message_days")
     val deleteMessagesDays: OptionalInt = OptionalInt.Missing,
     @SerialName("delete_message_seconds")
     val deleteMessageSeconds: Optional<DurationInSeconds> = Optional.Missing(),
 ) {
     // use this as primary constructor when other constructor is removed
-    @Suppress("DEPRECATION_ERROR")
     public constructor(deleteMessageSeconds: Optional<DurationInSeconds> = Optional.Missing()) : this(
         reason = Optional.Missing(),
         deleteMessagesDays = OptionalInt.Missing,

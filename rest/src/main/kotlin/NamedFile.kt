@@ -18,7 +18,10 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
         ),
         level = HIDDEN,
     )
-    public constructor(name: String, inputStream: InputStream) : this(
+    public constructor(name: String, inputStream: InputStream) : this(inputStream, name)
+
+    // TODO remove when above constructor is removed
+    internal constructor(inputStream: InputStream, name: String) : this(
         name,
         ChannelProvider { inputStream.toByteReadChannel() },
     )
@@ -34,7 +37,8 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
         ),
         level = HIDDEN,
     )
-    public val inputStream: InputStream get() = contentProvider.block().toInputStream()
+    public val inputStream: InputStream get() = _inputStream
+    private val _inputStream get() = contentProvider.block().toInputStream() // TODO remove with `inputStream`
 
     public operator fun component1(): String = name
     public operator fun component2(): ChannelProvider = contentProvider
@@ -43,5 +47,5 @@ public class NamedFile(public val name: String, public val contentProvider: Chan
     @Deprecated("Binary compatibility", level = HIDDEN)
     @JvmName("component2")
     @Suppress("DEPRECATION_ERROR", "FunctionName")
-    public fun _component2(): InputStream = contentProvider.block().toInputStream()
+    public fun _component2(): InputStream = _inputStream
 }

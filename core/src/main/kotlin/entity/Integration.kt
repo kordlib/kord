@@ -2,6 +2,7 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.IntegrationExpireBehavior
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
@@ -15,6 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
@@ -49,11 +51,14 @@ public class Integration(
     public val isEnabled: Boolean
         get() = data.enabled
 
+    @Deprecated("Binary compatibility, was non-nullable before. Keep for some releases.", level = HIDDEN)
+    public fun isSyncing(): Boolean = isSyncing!!
+
     /**
      * Whether this integrations is syncing.
      */
-    public val isSyncing: Boolean
-        get() = data.syncing
+    public val isSyncing: Boolean?
+        get() = data.syncing.value
 
     /**
      * The id of the [guild][Guild] this integration is tied to.
@@ -89,13 +94,17 @@ public class Integration(
     /**
      * The behavior used to expire subscribers.
      */
-    public val expireBehavior: IntegrationExpireBehavior
-        get() = data.expireBehavior
+    public val expireBehavior: IntegrationExpireBehavior?
+        get() = data.expireBehavior.value
+
+    @Deprecated("Binary compatibility, was non-nullable before. Keep for some releases.", level = HIDDEN)
+    @JvmName("getExpireGracePeriod-UwyO8pc")
+    public fun expireGracePeriod0(): Duration = expireGracePeriod!!
 
     /**
      * The grace period before expiring subscribers.
      */
-    public val expireGracePeriod: Duration get() = data.expireGracePeriod
+    public val expireGracePeriod: Duration? get() = data.expireGracePeriod.value
 
     /**
      * The id of the [user][User] for this integration.
@@ -112,7 +121,7 @@ public class Integration(
     /**
      * When this integration was last synced.
      */
-    public val syncedAt: Instant get() = data.syncedAt
+    public val syncedAt: Instant? get() = data.syncedAt.value
 
     /**
      * Requests to get the guild this integration is tied to.

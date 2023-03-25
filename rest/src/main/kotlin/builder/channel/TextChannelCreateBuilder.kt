@@ -45,6 +45,9 @@ public class TextChannelCreateBuilder(public var name: String) :
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
+
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(
         name = name,
         type = ChannelType.GuildText,
@@ -55,5 +58,6 @@ public class TextChannelCreateBuilder(public var name: String) :
         nsfw = _nsfw,
         permissionOverwrite = Optional.missingOnEmpty(permissionOverwrites),
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
+        defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser
     )
 }

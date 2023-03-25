@@ -19,7 +19,7 @@ import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -541,6 +541,15 @@ public suspend inline fun GuildService.createTextChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+public suspend inline fun GuildService.createForumChannel(
+    guildId: Snowflake,
+    name: String,
+    builder: ForumChannelCreateBuilder.() -> Unit
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val createBuilder = ForumChannelCreateBuilder(name).apply(builder)
+    return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
 public suspend inline fun GuildService.createNewsChannel(
     guildId: Snowflake,
     name: String,
@@ -585,7 +594,7 @@ public suspend inline fun GuildService.modifyCurrentVoiceState(
     ReplaceWith(
         "this.modifyCurrentVoiceState(guildId) {\nthis@modifyCurrentVoiceState.channelId = channelId\nbuilder()\n}"
     ),
-    level = ERROR,
+    level = HIDDEN,
 )
 public suspend inline fun GuildService.modifyCurrentVoiceState(
     guildId: Snowflake,

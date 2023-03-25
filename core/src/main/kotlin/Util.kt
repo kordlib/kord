@@ -334,6 +334,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelCreateEvent::class,
     StageChannelCreateEvent::class,
     TextChannelCreateEvent::class,
+    ForumChannelCreateEvent::class,
     UnknownChannelCreateEvent::class,
     VoiceChannelCreateEvent::class,
 
@@ -343,6 +344,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelUpdateEvent::class,
     StageChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
+    ForumChannelUpdateEvent::class,
     UnknownChannelUpdateEvent::class,
     VoiceChannelUpdateEvent::class,
 
@@ -352,6 +354,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     NewsChannelDeleteEvent::class,
     StageChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
+    ForumChannelDeleteEvent::class,
     UnknownChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,
 
@@ -379,13 +382,13 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
 
 
-    BanAddEvent::class, BanRemoveEvent::class, GuildAuditLogEntryCreateEvent::class -> +GuildBans
+    GuildAuditLogEntryCreateEvent::class, BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
 
 
     EmojisUpdateEvent::class -> +GuildEmojis
 
 
-    IntegrationCreateEvent::class, IntegrationUpdateEvent::class, IntegrationsUpdateEvent::class, IntegrationDeleteEvent::class -> +GuildIntegrations
+    IntegrationsUpdateEvent::class, IntegrationCreateEvent::class, IntegrationUpdateEvent::class, IntegrationDeleteEvent::class -> +GuildIntegrations
 
 
     WebhookUpdateEvent::class -> +GuildWebhooks

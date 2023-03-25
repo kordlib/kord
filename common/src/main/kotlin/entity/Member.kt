@@ -114,14 +114,14 @@ public data class DiscordThreadMember(
     val flags: Int
 )
 
-@Serializable(with = GuildMemberFlags.Companion::class)
+@Serializable(with = GuildMemberFlags.Serializer::class)
 public data class GuildMemberFlags(val code: Int) {
 
     public operator fun contains(flag: GuildMemberFlags): Boolean {
         return this.code and flag.code == flag.code
     }
 
-    public companion object : KSerializer<GuildMemberFlags> {
+    internal object Serializer : KSerializer<GuildMemberFlags> {
 
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("flags", PrimitiveKind.INT)
@@ -139,8 +139,8 @@ public data class GuildMemberFlags(val code: Int) {
 
 @Serializable
 public enum class GuildMemberFlag(public val code: Int) {
-    DID_REJOIN(1.shl(0)),
-    COMPLETED_ONBOARDING(1.shl(1)),
-    BYPASSES_VERIFICATION(1.shl(2)),
-    STARTED_ONBOARDING(1.shl(3))
+    DidRejoin(1.shl(0)),
+    CompletedOnboarding(1.shl(1)),
+    BypassesVerification(1.shl(2)),
+    StartedOnboarding(1.shl(3)),
 }

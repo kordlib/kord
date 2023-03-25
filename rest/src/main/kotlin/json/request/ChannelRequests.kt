@@ -6,6 +6,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
+import dev.kord.rest.NamedFile
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -53,6 +54,19 @@ public data class ChannelModifyPatchRequest(
     val videoQualityMode: Optional<VideoQualityMode?> = Optional.Missing(),
     @SerialName("default_auto_archive_duration")
     val defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing(),
+    @SerialName("default_reaction_emoji")
+    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing(),
+    @SerialName("default_thread_rate_limit_per_user")
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
+    val flags: Optional<ChannelFlags> = Optional.Missing(),
+    @SerialName("available_tags")
+    val availableTags: Optional<List<ForumTagRequest>> = Optional.Missing(),
+    @SerialName("applied_tags")
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    @SerialName("default_sort_order")
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    @SerialName("default_forum_layout")
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
 )
 
 @Serializable
@@ -66,9 +80,19 @@ public data class ChannelPermissionEditRequest(
 public data class StartThreadRequest(
     val name: String,
     @SerialName("auto_archive_duration")
-    val autoArchiveDuration: ArchiveDuration,
+    val autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
     val type: Optional<ChannelType> = Optional.Missing(),
-    val invitable: OptionalBoolean = OptionalBoolean.Missing
+    val invitable: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("rate_limit_per_user")
+    val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
+    val message: Optional<ForumThreadMessageRequest> = Optional.Missing(),
+    @SerialName("applied_tags")
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+)
+
+public data class MultipartStartThreadRequest(
+    val request: StartThreadRequest,
+    val files: List<NamedFile> = emptyList(),
 )
 
 public data class ListThreadsBySnowflakeRequest(
@@ -79,4 +103,14 @@ public data class ListThreadsBySnowflakeRequest(
 public data class ListThreadsByTimestampRequest(
     val before: Instant? = null,
     val limit: Int? = null
+)
+
+@Serializable
+public data class ForumTagRequest(
+    val name: String,
+    val moderated: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("emoji_id")
+    val emojiId: Optional<Snowflake?> = Optional.Missing(),
+    @SerialName("emoji_name")
+    val emojiName: Optional<String?> = Optional.Missing()
 )

@@ -71,14 +71,14 @@ public sealed class TeamMembershipState(
     }
 
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Use 'TeamMembershipState.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "TeamMembershipState.serializer()", imports =
                     arrayOf("dev.kord.common.entity.TeamMembershipState")),
     )
     public object TeamMembershipStateSerializer : KSerializer<TeamMembershipState> by Serializer {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Use 'TeamMembershipState.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "TeamMembershipState.serializer()", imports =
                         arrayOf("dev.kord.common.entity.TeamMembershipState")),
