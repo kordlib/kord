@@ -1,11 +1,12 @@
 package dev.kord.core.behavior.channel.threads
 
+import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.CategorizableChannelBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
 import dev.kord.core.behavior.channel.GuildChannelBehavior
-import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ThreadParentChannel
@@ -14,7 +15,7 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadWithoutMessageBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.datetime.Instant
@@ -23,7 +24,7 @@ import java.util.*
 /**
  * Behavior of channels that can contain public threads.
  */
-public interface ThreadParentChannelBehavior : TopGuildChannelBehavior {
+public interface ThreadParentChannelBehavior : CategorizableChannelBehavior {
     /**
      * Returns all active public and private threads in the channel.
      * Threads are ordered by their id, in descending order.
@@ -126,9 +127,10 @@ public interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavio
  */
 internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
     name: String,
-    builder: StartThreadWithoutMessageBuilder.() -> Unit
+    type: ChannelType,
+    builder: StartThreadBuilder.() -> Unit
 ): ThreadChannel {
-    val startBuilder = StartThreadWithoutMessageBuilder(name).apply(builder)
+    val startBuilder = StartThreadBuilder(name, type).apply(builder)
     val response = kord.rest.channel.startThread(id, startBuilder.toRequest(), startBuilder.reason)
     val data = ChannelData.from(response)
 
@@ -138,10 +140,10 @@ internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
 internal suspend fun ThreadParentChannelBehavior.unsafeStartPublicThreadWithMessage(
     messageId: Snowflake,
     name: String,
-    builder: StartThreadWithMessageBuilder.() -> Unit = {}
+    builder: StartThreadWithMessageBuilder.() -> Unit,
 ): ThreadChannel {
-    val request = StartThreadWithMessageBuilder(name).apply(builder).toRequest()
-    val response = kord.rest.channel.startThreadWithMessage(id, messageId, request)
+    val startBuilder = StartThreadWithMessageBuilder(name).apply(builder)
+    val response = kord.rest.channel.startThreadWithMessage(id, messageId, startBuilder.toRequest(), startBuilder.reason)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as ThreadChannel

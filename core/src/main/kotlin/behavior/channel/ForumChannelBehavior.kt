@@ -1,14 +1,15 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.ForumChannel
 import dev.kord.core.entity.channel.thread.TextChannelThread
+import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.supplier.EntitySupplier
+import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.ForumChannelModifyBuilder
-import dev.kord.rest.builder.channel.ForumTagBuilder
-import dev.kord.rest.builder.channel.ModifyForumTagBuilder
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import dev.kord.rest.service.patchForumChannel
 import kotlinx.coroutines.flow.Flow
@@ -26,38 +27,52 @@ public interface ForumChannelBehavior : ThreadParentChannelBehavior {
         return super.getPublicArchivedThreads(before, limit).filterIsInstance()
     }
 
-    public suspend fun createTag(name: String, builder: ForumTagBuilder.() -> Unit = {}): ForumChannel {
-        val request = kord.rest.channel.createForumTag(id, name, builder)
-        val data = ChannelData.from(request)
-
-        return Channel.from(data, kord) as ForumChannel
-    }
-
-    public suspend fun deleteTag(tagId: Snowflake, reason: String? = null): ForumChannel {
-        val request = kord.rest.channel.deleteForumTag(id, tagId, reason)
-        val data = ChannelData.from(request)
-
-        return Channel.from(data, kord) as ForumChannel
-    }
-
-    public suspend fun editTag(tagId: Snowflake, builder: ModifyForumTagBuilder.() -> Unit): ForumChannel {
-        val request = kord.rest.channel.editForumTag(id, tagId, builder)
-        val data = ChannelData.from(request)
-
-        return Channel.from(data, kord) as ForumChannel
-    }
-
     public suspend fun startPublicThread(
         name: String,
-        builder: StartForumThreadBuilder.() -> Unit = {}
+        builder: StartForumThreadBuilder.() -> Unit,
     ): TextChannelThread {
-        return unsafeStartThread(name, builder)
+        return unsafeStartForumThread(name, builder)
     }
+
+    /**
+     * Requests to get this behavior as a [ForumChannel].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the channel wasn't present.
+     * @throws ClassCastException if the channel isn't a [ForumChannel].
+     */
+    override suspend fun asChannel(): ForumChannel = super.asChannel() as ForumChannel
+
+    /**
+     * Requests to get this behavior as a [ForumChannel],
+     * returns null if the channel isn't present or if the channel isn't a [ForumChannel].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    override suspend fun asChannelOrNull(): ForumChannel? = super.asChannelOrNull() as? ForumChannel
+
+    /**
+     * Retrieve the [ForumChannel] associated with this behaviour from the provided [EntitySupplier].
+     *
+     * @throws RequestException if anything went wrong during the request.
+     * @throws EntityNotFoundException if the user wasn't present.
+     */
+    override suspend fun fetchChannel(): ForumChannel = super.fetchChannel() as ForumChannel
+
+    /**
+     * Retrieve the [ForumChannel] associated with this behaviour from the provided [EntitySupplier]
+     * returns null if the [ForumChannel] isn't present.
+     *
+     * @throws RequestException if anything went wrong during the request.
+     */
+    override suspend fun fetchChannelOrNull(): ForumChannel? = super.fetchChannelOrNull() as? ForumChannel
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ForumChannelBehavior
 }
 
-internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
+internal suspend fun ThreadParentChannelBehavior.unsafeStartForumThread(
     name: String,
-    builder: StartForumThreadBuilder.() -> Unit
+    builder: StartForumThreadBuilder.() -> Unit,
 ): TextChannelThread {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
 

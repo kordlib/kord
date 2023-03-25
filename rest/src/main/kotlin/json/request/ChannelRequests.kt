@@ -55,14 +55,14 @@ public data class ChannelModifyPatchRequest(
     @SerialName("default_auto_archive_duration")
     val defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing(),
     @SerialName("default_reaction_emoji")
-    val defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing(),
+    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing(),
     @SerialName("default_thread_rate_limit_per_user")
-    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
-    val flags: Optional<ChannelFlags?> = Optional.Missing(),
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
+    val flags: Optional<ChannelFlags> = Optional.Missing(),
     @SerialName("available_tags")
-    val availableTags: Optional<List<ForumTagRequest>?> = Optional.Missing(),
+    val availableTags: Optional<List<ForumTagRequest>> = Optional.Missing(),
     @SerialName("applied_tags")
-    val appliedTags: Optional<List<Snowflake>?> = Optional.Missing(),
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
     @SerialName("default_sort_order")
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     @SerialName("default_forum_layout")
@@ -85,14 +85,14 @@ public data class StartThreadRequest(
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("rate_limit_per_user")
     val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
-    val message: Optional<ForumThreadMessageRequest?> = Optional.Missing(),
+    val message: Optional<ForumThreadMessageRequest> = Optional.Missing(),
     @SerialName("applied_tags")
-    val appliedTags: Optional<List<Snowflake>?> = Optional.Missing()
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
 )
 
 public data class MultipartStartThreadRequest(
     val request: StartThreadRequest,
-    val files: Optional<List<NamedFile>?> = Optional.Missing(),
+    val files: List<NamedFile> = emptyList(),
 )
 
 public data class ListThreadsBySnowflakeRequest(
@@ -107,8 +107,8 @@ public data class ListThreadsByTimestampRequest(
 
 @Serializable
 public data class ForumTagRequest(
-    val name: Optional<String> = Optional.Missing(),
-    val moderated: OptionalBoolean? = OptionalBoolean.Missing,
+    val name: String,
+    val moderated: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("emoji_id")
     val emojiId: Optional<Snowflake?> = Optional.Missing(),
     @SerialName("emoji_name")

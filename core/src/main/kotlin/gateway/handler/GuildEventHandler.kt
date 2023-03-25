@@ -93,9 +93,6 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?
     ): GuildAuditLogEntryCreateEvent {
         val entry = AuditLogEntry(event.entry, kord)
-
-        kord.cache.put(entry)
-
         return GuildAuditLogEntryCreateEvent(entry, kord, shard, context?.get())
     }
 
@@ -196,7 +193,9 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): IntegrationCreateEvent {
-        return IntegrationCreateEvent(event.integration, kord, shard, context?.get())
+        val integration = event.integration
+        val data = IntegrationData.from(integration.guildId.value!!, integration)
+        return IntegrationCreateEvent(Integration(data, kord), kord, shard, context?.get())
     }
 
     private suspend fun handle(
@@ -205,7 +204,9 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?
     ): IntegrationUpdateEvent {
-        return IntegrationUpdateEvent(event.integration, kord, shard, context?.get())
+        val integration = event.integration
+        val data = IntegrationData.from(integration.guildId.value!!, integration)
+        return IntegrationUpdateEvent(Integration(data, kord), kord, shard, context?.get())
     }
 
     private suspend fun handle(
@@ -214,7 +215,8 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): IntegrationDeleteEvent {
-        return IntegrationDeleteEvent(event.integration.id, event.integration.guildId, event.integration.applicationId.value, kord, shard, context?.get())
+        val integration = event.integration
+        return IntegrationDeleteEvent(integration.id, integration.guildId, integration.applicationId.value, kord, shard, context?.get())
     }
 
     private suspend fun handle(

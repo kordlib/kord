@@ -43,8 +43,8 @@ public class ForumChannelCreateBuilder(public var name: String) :
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
-    private var _defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing()
-    public var defaultReactionEmoji: DiscordDefaultReaction? by ::_defaultReactionEmoji.delegate()
+    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing()
+    public var defaultReactionEmoji: DefaultReaction? by ::_defaultReactionEmoji.delegate()
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
@@ -84,7 +84,7 @@ public class ForumChannelCreateBuilder(public var name: String) :
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
         defaultReactionEmoji = when {
             defaultReactionEmojiId != null || defaultReactionEmojiName != null ->
-                DiscordDefaultReaction(
+                DefaultReaction(
                     emojiId = defaultReactionEmojiId,
                     emojiName = defaultReactionEmojiName,
                 ).optional()
@@ -99,7 +99,7 @@ public class ForumChannelCreateBuilder(public var name: String) :
 }
 
 @KordDsl
-public class ForumTagBuilder(private val name: String) : AuditRequestBuilder<ForumTagRequest> {
+public class ForumTagBuilder(public var name: String) : RequestBuilder<ForumTagRequest> {
     private var _moderated: OptionalBoolean = OptionalBoolean.Missing
     public var moderated: Boolean? by ::_moderated.delegate()
 
@@ -109,11 +109,9 @@ public class ForumTagBuilder(private val name: String) : AuditRequestBuilder<For
     private var _reactionEmojiName: Optional<String?> = Optional.Missing()
     public var reactionEmojiName: String? by ::_reactionEmojiName.delegate()
 
-    override var reason: String? = null
-
     override fun toRequest(): ForumTagRequest {
         return ForumTagRequest(
-            name = Optional(name),
+            name = name,
             moderated = _moderated,
             emojiId = _reactionEmojiId,
             emojiName = _reactionEmojiName

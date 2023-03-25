@@ -29,13 +29,6 @@ public class NewsChannel(
     override suspend fun asChannel(): NewsChannel = this
 
     override suspend fun asChannelOrNull(): NewsChannel = this
-    override suspend fun fetchChannel(): NewsChannel {
-        return super<NewsChannelBehavior>.fetchChannel()
-    }
-
-    override suspend fun fetchChannelOrNull(): NewsChannel? {
-        return super<NewsChannelBehavior>.fetchChannelOrNull()
-    }
 
     /**
      * Returns a new [NewsChannel] with the given [strategy].

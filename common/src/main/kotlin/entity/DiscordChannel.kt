@@ -149,11 +149,11 @@ public data class DiscordChannel(
     @SerialName("total_message_sent")
     val totalMessageSent: OptionalInt = OptionalInt.Missing,
     @SerialName("available_tags")
-    val availableTags: Optional<List<DiscordForumTag>> = Optional.Missing(),
+    val availableTags: Optional<List<ForumTag>> = Optional.Missing(),
     @SerialName("applied_tags")
     val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
     @SerialName("default_reaction_emoji")
-    val defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing(),
+    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing(),
     @SerialName("default_thread_rate_limit_per_user")
     val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
     @SerialName("default_sort_order")
@@ -332,7 +332,7 @@ public sealed class ArchiveDuration(
 }
 
 @Serializable
-public data class DiscordDefaultReaction(
+public data class DefaultReaction(
     @SerialName("emoji_id")
     val emojiId: Snowflake?,
     @SerialName("emoji_name")
@@ -340,7 +340,7 @@ public data class DiscordDefaultReaction(
 )
 
 @Serializable
-public data class DiscordForumTag(
+public data class ForumTag(
     val id: Snowflake,
     val name: String,
     val moderated: Boolean,

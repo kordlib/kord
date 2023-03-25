@@ -9,8 +9,7 @@ public class GuildAuditLogEntryCreateEvent(
     override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?
-): Event {
-    override fun toString(): String {
-        return "GuildAuditLogEntryCreate(auditLogEntry=$auditLogEntry, shard=$shard)"
-    }
+) : Event {
+    override fun toString(): String = "GuildAuditLogEntryCreateEvent(auditLogEntry=$auditLogEntry, kord=$kord, " +
+        "shard=$shard, customContext=$customContext)"
 }

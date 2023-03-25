@@ -33,6 +33,8 @@ public class TextChannel(
      */
     public val userRateLimit: Duration? get() = data.rateLimitPerUser.value
 
+    public val defaultThreadRateLimitPerUser: Duration? get() = data.defaultThreadRateLimitPerUser.value
+
     /**
      * returns a new [TextChannel] with the given [strategy].
      *
@@ -44,13 +46,6 @@ public class TextChannel(
     override suspend fun asChannel(): TextChannel = this
 
     override suspend fun asChannelOrNull(): TextChannel = this
-    override suspend fun fetchChannel(): TextChannel {
-        return super<TextChannelBehavior>.fetchChannel()
-    }
-
-    override suspend fun fetchChannelOrNull(): TextChannel? {
-        return super<TextChannelBehavior>.fetchChannelOrNull()
-    }
 
     override fun hashCode(): Int = Objects.hash(id, guildId)
 

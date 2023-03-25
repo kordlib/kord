@@ -11,16 +11,12 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.cache.data.ChannelData
-import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.Message
-import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.GuildMessageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.builder.channel.thread.ForumThreadModifyBuilder
 import kotlinx.datetime.Instant
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
@@ -83,17 +79,27 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      */
     public val rateLimitPerUser: Duration? get() = data.rateLimitPerUser.value
 
-    /**
-     * member count for this thread.
-     * approximate maximum value is 50.
-     */
-    public val memberCount: OptionalInt get() = data.memberCount
+    @Deprecated("Binary compatibility, had different return type before. Keep for some releases.", level = HIDDEN)
+    public fun getMemberCount(): OptionalInt = data.memberCount
+
+    /** An approximate count of users in this thread, stops counting at 50. */
+    public val memberCount: Int? get() = data.memberCount.value
+
+    @Deprecated("Binary compatibility, had different return type before. Keep for some releases.", level = HIDDEN)
+    public fun getMessageCount(): OptionalInt = data.messageCount
 
     /**
-     * message count for this thread.
-     * approximate maximum value is 50.
+     * Number of messages (not including the initial message or deleted messages) in this thread.
+     *
+     * For threads created before July 1, 2022, the message count is inaccurate when it's greater than 50.
      */
-    public val messageCount: OptionalInt get() = data.messageCount
+    public val messageCount: Int? get() = data.messageCount.value
+
+    /**
+     * Number of messages ever sent in this thread, it's similar to [messageCount] on message creation, but will not
+     * decrement the number when a message is deleted.
+     */
+    public val totalMessageSent: Int? get() = data.totalMessageSent.value
 
     /**
      * The default duration setup pre-selected for this thread.
@@ -114,19 +120,14 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     /**
      * Only available when creating a thread in a forum channel
      */
-    public val appliedTags: List<Snowflake>? get() = data.appliedTags.value
+    public val appliedTags: List<Snowflake> get() = data.appliedTags.value ?: emptyList()
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
         return ThreadChannel(data, kord, strategy.supply(kord))
     }
 
 }
-public suspend inline fun ThreadChannel.editAsForumThread(builder: ForumThreadModifyBuilder.() -> Unit): TextChannelThread {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val appliedBuilder = ForumThreadModifyBuilder().apply(builder)
-    val patchedChannel = kord.rest.channel.patchThread(id, appliedBuilder.toRequest(), appliedBuilder.reason)
-    return Channel.from(patchedChannel.toData(), kord) as TextChannelThread
-}
+
 internal fun ThreadChannel(data: ChannelData, kord: Kord, supplier: EntitySupplier = kord.defaultSupplier): ThreadChannel {
     return object : ThreadChannel {
 
