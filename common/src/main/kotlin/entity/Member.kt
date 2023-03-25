@@ -139,8 +139,8 @@ public data class GuildMemberFlags(val code: Int) {
 
 @Serializable
 public enum class GuildMemberFlag(public val code: Int) {
-    DID_REJOIN(1.shl(0)),
-    COMPLETED_ONBOARDING(1.shl(1)),
-    BYPASSES_VERIFICATION(1.shl(2)),
-    STARTED_ONBOARDING(1.shl(3))
+    DidRejoin(1.shl(0)),
+    CompletedOnboarding(1.shl(1)),
+    BypassesVerification(1.shl(2)),
+    StartedOnboarding(1.shl(3)),
 }
