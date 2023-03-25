@@ -1,3 +1,9 @@
+# 0.8.1
+
+## Fixes
+
+* Fix `ClassCastException` caused by `TextChannelThread.getParent()` (by @Lukellmann in #796)
+
 # 0.8.0
 
 ## Additions
