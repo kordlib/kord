@@ -95,7 +95,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -318,14 +318,14 @@ public sealed class ArchiveDuration(
             listOf(Hour, Day, ThreeDays, Week)
         }
 
-        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = ERROR)
+        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = HIDDEN)
         public val values: Set<ArchiveDuration> get() = entries.toSet()
     }
 
     @Deprecated(
         "Use 'ArchiveDuration.serializer()' instead.",
         ReplaceWith("ArchiveDuration.serializer()", "dev.kord.common.entity.ArchiveDuration"),
-        level = ERROR,
+        level = HIDDEN,
     )
     // TODO rename internal `NewSerializer` to `Serializer` when this is removed
     public object Serializer : KSerializer<ArchiveDuration> by NewSerializer

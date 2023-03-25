@@ -72,14 +72,14 @@ public sealed class IntegrationExpireBehavior(
     }
 
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Use 'IntegrationExpireBehavior.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.serializer()", imports =
                     arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
     )
     public object Serializer : KSerializer<IntegrationExpireBehavior> by NewSerializer {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Use 'IntegrationExpireBehavior.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.serializer()", imports
                         = arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),

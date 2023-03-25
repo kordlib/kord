@@ -96,14 +96,14 @@ public sealed class PresenceStatus(
     }
 
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Use 'PresenceStatus.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "PresenceStatus.serializer()", imports =
                     arrayOf("dev.kord.common.entity.PresenceStatus")),
     )
     public object StatusSerializer : KSerializer<PresenceStatus> by Serializer {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Use 'PresenceStatus.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "PresenceStatus.serializer()", imports =
                         arrayOf("dev.kord.common.entity.PresenceStatus")),

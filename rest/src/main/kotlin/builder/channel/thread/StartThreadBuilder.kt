@@ -9,7 +9,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.optional
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.StartThreadRequest
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.time.Duration
 
 @KordDsl
@@ -23,7 +23,7 @@ public class StartThreadBuilder(
             "StartThreadBuilder(name, type).apply { this@apply.autoArchiveDuration = autoArchiveDuration }",
             imports = ["dev.kord.rest.builder.channel.thread.StartThreadBuilder"]
         ),
-        level = WARNING,
+        level = ERROR,
     )
     public constructor(name: String, autoArchiveDuration: ArchiveDuration, type: ChannelType) : this(name, type) {
         this.autoArchiveDuration = autoArchiveDuration

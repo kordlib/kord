@@ -36,7 +36,7 @@ public class MessageBulkDeleteEvent(
     @Deprecated(
         "Deprecated in favour of getGuildOrNull() as it provides more clarity over the functionality",
         ReplaceWith("getGuildOrNull()"),
-        DeprecationLevel.WARNING
+        DeprecationLevel.ERROR
     )
     public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 

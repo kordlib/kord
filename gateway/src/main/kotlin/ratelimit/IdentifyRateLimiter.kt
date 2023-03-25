@@ -11,11 +11,8 @@ import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.selects.select
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.ERROR
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.times
-import dev.kord.common.ratelimit.IntervalRateLimiter as CommonIntervalRateLimiter
-import dev.kord.common.ratelimit.RateLimiter as CommonRateLimiter
 
 /**
  * A rate limiter that follows [Discord's rate limits](https://discord.com/developers/docs/topics/gateway#rate-limiting)
@@ -257,24 +254,4 @@ private class IdentifyRateLimiterImpl(
             )
         }
     }
-}
-
-
-@Deprecated("For migration purposes, remove once DefaultGatewayData.oldIdentifyRateLimiter is removed", level = ERROR)
-internal class IdentifyRateLimiterFromCommonRateLimiter(
-    val commonRateLimiter: CommonRateLimiter,
-) : IdentifyRateLimiter {
-
-    override val maxConcurrency
-        get() = if (commonRateLimiter is CommonIntervalRateLimiter && commonRateLimiter.interval == 5.seconds) {
-            commonRateLimiter.limit
-        } else throw UnsupportedOperationException()
-
-    override suspend fun consume(shardId: Int, events: SharedFlow<Event>) {
-        // check unused param to fulfil documented contract
-        require(shardId >= 0) { "shardId must be non-negative but was $shardId" }
-        commonRateLimiter.consume()
-    }
-
-    override fun toString() = "IdentifyRateLimiterFromCommonRateLimiter(commonRateLimiter=$commonRateLimiter)"
 }

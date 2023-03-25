@@ -1,6 +1,6 @@
 public final class dev/kord/core/ClientResources {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/builder/Shards;ILio/ktor/client/HttpClient;Ldev/kord/core/supplier/EntitySupplyStrategy;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/builder/Shards;Lio/ktor/client/HttpClient;Ldev/kord/core/supplier/EntitySupplyStrategy;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Ldev/kord/gateway/builder/Shards;Lio/ktor/client/HttpClient;Ldev/kord/core/supplier/EntitySupplyStrategy;)V
 	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultStrategy ()Ldev/kord/core/supplier/EntitySupplyStrategy;
 	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
@@ -45,7 +45,7 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public final fun getGlobalApplicationCommandOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGlobalApplicationCommands (Ljava/lang/Boolean;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getGlobalApplicationCommands$default (Ldev/kord/core/Kord;Ljava/lang/Boolean;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
-	public final fun getGuild (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun getGuild (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuild$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildApplicationCommand (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildApplicationCommandOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1242,7 +1242,6 @@ public final class dev/kord/core/behavior/channel/MessageChannelBehaviorKt {
 	public static synthetic fun MessageChannelBehavior$default (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILjava/lang/Object;)Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public static final fun createEmbed (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createMessage (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final synthetic fun withTyping (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun withTyping (Ldev/kord/core/behavior/channel/MessageChannelBehavior;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -2109,7 +2108,7 @@ public final class dev/kord/core/builder/kord/KordBuilder {
 }
 
 public final class dev/kord/core/builder/kord/KordBuilderKt {
-	public static final fun invoke (Ldev/kord/gateway/DefaultGateway$Companion;Ldev/kord/core/ClientResources;Ldev/kord/gateway/retry/Retry;)Ldev/kord/gateway/DefaultGateway;
+	public static final synthetic fun invoke (Ldev/kord/gateway/DefaultGateway$Companion;Ldev/kord/core/ClientResources;Ldev/kord/gateway/retry/Retry;)Ldev/kord/gateway/DefaultGateway;
 	public static synthetic fun invoke$default (Ldev/kord/gateway/DefaultGateway$Companion;Ldev/kord/core/ClientResources;Ldev/kord/gateway/retry/Retry;ILjava/lang/Object;)Ldev/kord/gateway/DefaultGateway;
 }
 
@@ -3513,20 +3512,15 @@ public final class dev/kord/core/cache/data/EmojiDataKt {
 public final class dev/kord/core/cache/data/GuildApplicationCommandPermissionData {
 	public static final field Companion Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData$Companion;
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ApplicationCommandPermissionType;Z)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;Z)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/ApplicationCommandPermissionType;
-	public final synthetic fun component2 ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
 	public final fun component3 ()Z
 	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ApplicationCommandPermissionType;Z)Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
-	public final synthetic fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;Z)Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
 	public static synthetic fun copy$default (Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ApplicationCommandPermissionType;ZILjava/lang/Object;)Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;ZILjava/lang/Object;)Ldev/kord/core/cache/data/GuildApplicationCommandPermissionData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPermission ()Z
 	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandPermissionType;
-	public final synthetic fun getType ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -6170,7 +6164,6 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public fun getTemplate (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getTemplateOrNull (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getTemplates ()Lkotlinx/coroutines/flow/Flow;
-	public final synthetic fun getThreads ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getVanityCode ()Ljava/lang/String;
 	public final fun getVanityUrl ()Ljava/lang/String;
 	public fun getVanityUrl (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7360,7 +7353,6 @@ public final class dev/kord/core/entity/application/GuildApplicationCommandPermi
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPermission ()Z
 	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandPermissionType;
-	public final synthetic fun getType ()Ldev/kord/common/entity/DiscordGuildApplicationCommandPermission$Type;
 }
 
 public final class dev/kord/core/entity/application/GuildChatInputCommand : dev/kord/core/behavior/GuildChatInputCommandBehavior, dev/kord/core/entity/application/ChatInputCommandCommand, dev/kord/core/entity/application/GuildApplicationCommand {

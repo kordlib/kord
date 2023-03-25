@@ -96,14 +96,14 @@ public sealed class ButtonStyle(
     }
 
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Use 'ButtonStyle.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "ButtonStyle.serializer()", imports =
                     arrayOf("dev.kord.common.entity.ButtonStyle")),
     )
     public object Serializer : KSerializer<ButtonStyle> by NewSerializer {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Use 'ButtonStyle.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "ButtonStyle.serializer()", imports =
                         arrayOf("dev.kord.common.entity.ButtonStyle")),

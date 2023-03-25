@@ -27,7 +27,6 @@ import mu.KotlinLogging
 import java.io.ByteArrayOutputStream
 import java.util.zip.Inflater
 import java.util.zip.InflaterOutputStream
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -57,68 +56,7 @@ public data class DefaultGatewayData(
     val identifyRateLimiter: IdentifyRateLimiter,
     val dispatcher: CoroutineDispatcher,
     val eventFlow: MutableSharedFlow<Event>,
-) {
-    /** @suppress */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "Identifying now uses IdentifyRateLimiter instead of RateLimiter to better work with multiple shards.",
-        ReplaceWith(
-            "DefaultGatewayData(url, client, reconnectRetry, sendRateLimiter, IdentifyRateLimiter(maxConcurrency = 1 " +
-                    "/* can be obtained by calling the Route.GatewayBotGet endpoint */, dispatcher), dispatcher, " +
-                    "eventFlow)",
-            "dev.kord.gateway.IdentifyRateLimiter"
-        ),
-        level = HIDDEN,
-    )
-    public constructor(
-        url: String, client: HttpClient, reconnectRetry: Retry, sendRateLimiter: RateLimiter,
-        identifyRateLimiter: RateLimiter, dispatcher: CoroutineDispatcher, eventFlow: MutableSharedFlow<Event>,
-    ) : this(url, client, reconnectRetry, sendRateLimiter, identifyRateLimiter, eventFlow, dispatcher)
-
-    // same as hidden public constructor but changed last two params, so it can still be used internally
-    // can be removed when deprecated stuff in this class is removed
-    @Suppress("DEPRECATION_ERROR")
-    private constructor(
-        url: String, client: HttpClient, reconnectRetry: Retry, sendRateLimiter: RateLimiter,
-        identifyRateLimiter: RateLimiter, eventFlow: MutableSharedFlow<Event>, dispatcher: CoroutineDispatcher,
-    ) : this(
-        url, client, reconnectRetry, sendRateLimiter,
-        dev.kord.gateway.ratelimit.IdentifyRateLimiterFromCommonRateLimiter(identifyRateLimiter), dispatcher, eventFlow,
-    )
-
-    @Suppress("DEPRECATION_ERROR")
-    private val oldIdentifyRateLimiter
-        get() = (identifyRateLimiter as? dev.kord.gateway.ratelimit.IdentifyRateLimiterFromCommonRateLimiter)
-            ?.commonRateLimiter
-
-    @Deprecated("Binary compatibility", level = HIDDEN)
-    @get:JvmName("getIdentifyRateLimiter")
-    public val identifyRateLimiter0: RateLimiter? get() = oldIdentifyRateLimiter
-
-    @Suppress("FunctionName")
-    @Deprecated("Binary compatibility", level = HIDDEN)
-    @JvmName("component5")
-    public fun _component5(): RateLimiter? = oldIdentifyRateLimiter
-
-    /** @suppress */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "Identifying now uses IdentifyRateLimiter instead of RateLimiter to better work with multiple shards.",
-        ReplaceWith(
-            "copy(url, client, reconnectRetry, sendRateLimiter, IdentifyRateLimiter(maxConcurrency = 1 /* can be " +
-                    "obtained by calling the Route.GatewayBotGet endpoint */, dispatcher), dispatcher, eventFlow)",
-            "dev.kord.gateway.IdentifyRateLimiter"
-        ),
-        level = HIDDEN,
-    )
-    public fun copy(
-        url: String = this.url, client: HttpClient = this.client, reconnectRetry: Retry = this.reconnectRetry,
-        sendRateLimiter: RateLimiter = this.sendRateLimiter,
-        identifyRateLimiter: RateLimiter = oldIdentifyRateLimiter!!, dispatcher: CoroutineDispatcher = this.dispatcher,
-        eventFlow: MutableSharedFlow<Event> = this.eventFlow,
-    ): DefaultGatewayData =
-        DefaultGatewayData(url, client, reconnectRetry, sendRateLimiter, identifyRateLimiter, eventFlow, dispatcher)
-}
+)
 
 /**
  * The default Gateway implementation of Kord, using an [HttpClient] for the underlying webSocket

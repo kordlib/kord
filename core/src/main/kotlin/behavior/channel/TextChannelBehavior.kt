@@ -16,15 +16,15 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
 import java.util.*
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -70,7 +70,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     @Deprecated(
         "Replaced by overload with autoArchiveDuration in builder lambda",
         ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
-        level = WARNING,
+        level = ERROR,
     )
     public suspend fun startPublicThread(
         name: String,
@@ -93,7 +93,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     @Deprecated(
         "Replaced by overload with autoArchiveDuration in builder lambda",
         ReplaceWith("this.startPrivateThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
-        level = WARNING,
+        level = ERROR,
     )
     public suspend fun startPrivateThread(
         name: String,
@@ -116,7 +116,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     @Deprecated(
         "Replaced by builder overload",
         ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
-        level = WARNING,
+        level = ERROR,
     )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,

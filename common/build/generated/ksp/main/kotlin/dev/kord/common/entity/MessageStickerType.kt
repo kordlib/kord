@@ -91,7 +91,7 @@ public sealed class MessageStickerType(
 
 
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Renamed to 'entries'.",
             replaceWith = ReplaceWith(expression = "this.entries", imports = arrayOf()),
         )

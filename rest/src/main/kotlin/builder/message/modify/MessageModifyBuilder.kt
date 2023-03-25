@@ -9,13 +9,12 @@ import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.jvm.javaio.*
 import java.io.InputStream
 import java.nio.file.Path
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -64,7 +63,7 @@ public sealed interface MessageModifyBuilder {
             "io.ktor.client.request.forms.ChannelProvider",
             "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
     public fun addFile(name: String, content: InputStream): NamedFile =
         addFile(name, ChannelProvider { content.toByteReadChannel() })

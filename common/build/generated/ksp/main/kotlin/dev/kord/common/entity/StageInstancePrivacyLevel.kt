@@ -79,14 +79,14 @@ public sealed class StageInstancePrivacyLevel(
     }
 
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Use 'StageInstancePrivacyLevel.serializer()' instead.",
         replaceWith = ReplaceWith(expression = "StageInstancePrivacyLevel.serializer()", imports =
                     arrayOf("dev.kord.common.entity.StageInstancePrivacyLevel")),
     )
     public object Serializer : KSerializer<StageInstancePrivacyLevel> by NewSerializer {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Use 'StageInstancePrivacyLevel.serializer()' instead.",
             replaceWith = ReplaceWith(expression = "StageInstancePrivacyLevel.serializer()", imports
                         = arrayOf("dev.kord.common.entity.StageInstancePrivacyLevel")),

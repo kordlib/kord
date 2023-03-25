@@ -31,7 +31,7 @@ public sealed interface Component {
  * @see SelectMenuComponent
  * @see UnknownComponent
  */
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 public fun Component(data: ComponentData): Component = when (data.type) {
     ComponentType.ActionRow -> ActionRowComponent(data)
     ComponentType.Button -> ButtonComponent(data as ChatComponentData)

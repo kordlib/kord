@@ -13,7 +13,6 @@ import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.channel.*
-import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -25,7 +24,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import java.util.*
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 /**
@@ -50,15 +48,6 @@ public class Guild(
 
     public val afkChannel: VoiceChannelBehavior?
         get() = afkChannelId?.let { VoiceChannelBehavior(guildId = id, id = it, kord = kord) }
-
-    @Deprecated("Use 'cachedThreads' instead.", ReplaceWith("cachedThreads"), level = HIDDEN)
-    public val threads: Flow<ThreadChannel>
-        get() = flow {
-            data.threads.mapList {
-                val channel = Channel.from(it, kord)
-                if (channel is ThreadChannel) emit(channel)
-            }
-        }
 
     /**
      * The afk timeout.
