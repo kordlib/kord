@@ -6526,6 +6526,8 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public final fun getAttachments ()Ljava/util/Set;
 	public final fun getAuthor ()Ldev/kord/core/entity/User;
 	public final fun getAuthorAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getAuthorAsMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getAuthorAsMemberOrThrow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;

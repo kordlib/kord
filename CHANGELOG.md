@@ -21,6 +21,7 @@
 * Add `BlockMessageAutoModerationAction.customMessage` (by @Lukellmann in #774)
 * Add silent messages and extend builders (by @DRSchlaubi in #762)
 * Add Role subscriptions (by @NoComment1105 in #743 and @Lukellmann in #781)
+* Add a nullable variant of `getAuthorAsMember` (by @NoComment1105 in #784)
 
 ## Changes
 
