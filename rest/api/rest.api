@@ -1929,8 +1929,6 @@ public final class dev/kord/rest/builder/message/create/FollowupMessageCreateBui
 public final class dev/kord/rest/builder/message/create/ForumMessageCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/message/create/MessageCreateBuilder {
 	public fun <init> ()V
 	public fun addFile (Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/lang/String;Ljava/io/InputStream;)Ldev/kord/rest/NamedFile;
-	public fun addFile (Ljava/nio/file/Path;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAllowedMentions ()Ldev/kord/rest/builder/message/AllowedMentionsBuilder;
 	public fun getComponents ()Ljava/util/List;
 	public fun getContent ()Ljava/lang/String;
