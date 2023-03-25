@@ -22,7 +22,7 @@ public class ForumChannel(
      */
     public val topic: String? get() = data.topic.value
 
-    public val availableTags: List<ForumTag>? get() = data.availableTags.value
+    public val availableTags: List<ForumTag> get() = data.availableTags.value ?: emptyList()
 
     public val defaultReactionEmoji: DiscordDefaultReaction? get() = data.defaultReactionEmoji.value
 

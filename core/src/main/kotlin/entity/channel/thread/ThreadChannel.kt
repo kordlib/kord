@@ -114,7 +114,7 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
     /**
      * Only available when creating a thread in a forum channel
      */
-    public val appliedTags: List<Snowflake>? get() = data.appliedTags.value
+    public val appliedTags: List<Snowflake> get() = data.appliedTags.value ?: emptyList()
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadChannel {
         return ThreadChannel(data, kord, strategy.supply(kord))

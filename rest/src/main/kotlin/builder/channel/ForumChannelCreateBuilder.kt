@@ -113,7 +113,7 @@ public class ForumTagBuilder(private val name: String) : AuditRequestBuilder<For
 
     override fun toRequest(): ForumTagRequest {
         return ForumTagRequest(
-            name = Optional(name),
+            name = name,
             moderated = _moderated,
             emojiId = _reactionEmojiId,
             emojiName = _reactionEmojiName

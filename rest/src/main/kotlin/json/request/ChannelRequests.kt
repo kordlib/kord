@@ -107,7 +107,7 @@ public data class ListThreadsByTimestampRequest(
 
 @Serializable
 public data class ForumTagRequest(
-    val name: Optional<String> = Optional.Missing(),
+    val name: String,
     val moderated: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("emoji_id")
     val emojiId: Optional<Snowflake?> = Optional.Missing(),
