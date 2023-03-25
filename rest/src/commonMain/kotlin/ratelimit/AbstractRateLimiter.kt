@@ -1,6 +1,6 @@
 package dev.kord.rest.ratelimit
 
-import co.touchlab.stately.collections.ConcurrentMutableMap
+import dev.kord.common.ConcurrentHashMap
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
@@ -19,8 +19,8 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
 
     internal val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
     private val globalSuspensionPoint = atomic(Reset(clock.now()))
-    internal val buckets = ConcurrentMutableMap<BucketKey, Bucket>()
-    internal val routeBuckets = ConcurrentMutableMap<RequestIdentifier, MutableSet<BucketKey>>()
+    internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
+    internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
 
     internal val BucketKey.bucket get() = buckets.getOrPut(this) { Bucket(this) }
     internal val Request<*, *>.buckets get() = routeBuckets[identifier].orEmpty().map { it.bucket }

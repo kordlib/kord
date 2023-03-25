@@ -1,7 +1,5 @@
 package dev.kord.common
 
-import com.ionspin.kotlin.bignum.integer.BigInteger
-import com.ionspin.kotlin.bignum.integer.Sign
 import io.ktor.utils.io.bits.*
 import io.ktor.utils.io.core.*
 import io.ktor.utils.io.core.internal.*
@@ -22,6 +20,9 @@ private const val WIDTH = Long.SIZE_BITS
 @Suppress("FunctionName")
 public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet()
 
+internal expect fun formatIntegerFromByteArray(data: ByteArray): String
+internal expect fun parseIntegerToByteArray(value: String): ByteArray
+
 @Serializable(with = DiscordBitSetSerializer::class)
 public class DiscordBitSet(internal var data: LongArray) { // data is in little-endian order
 
@@ -33,7 +34,7 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
             // need to convert from little-endian data to big-endian expected by BigInteger
             return withBuffer(data.size * Long.SIZE_BYTES) {
                 writeFully(data.reversedArray())
-                BigInteger.fromByteArray(readBytes(), Sign.POSITIVE).toString()
+                formatIntegerFromByteArray(readBytes())
             }
         }
 
@@ -133,7 +134,7 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
         return DiscordBitSet(longArrayOf(value.toULong().toLong()))
     }
 
-    val bytes = BigInteger.parseString(value, 10).toByteArray()
+    val bytes = parseIntegerToByteArray(value)
 
     val longSize = (bytes.size / Long.SIZE_BYTES) + 1
     val destination = LongArray(longSize)

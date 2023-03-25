@@ -1,6 +1,5 @@
 package dev.kord.core.cache
 
-import co.touchlab.stately.collections.ConcurrentMutableMap
 import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.DataEntryCache
 import dev.kord.cache.api.data.DataDescription
@@ -8,6 +7,7 @@ import dev.kord.cache.api.delegate.DelegatingDataCache
 import dev.kord.cache.api.delegate.EntrySupplier
 import dev.kord.cache.map.MapLikeCollection
 import dev.kord.cache.map.internal.MapEntryCache
+import dev.kord.common.ConcurrentHashMap
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.*
 
@@ -16,10 +16,10 @@ public typealias Generator<I, T> = (cache: DataCache, description: DataDescripti
 public class KordCacheBuilder {
 
     /**
-     * The default behavior for all types not explicitly configured, by default a [ConcurrentMutableMap] is supplied.
+     * The default behavior for all types not explicitly configured, by default a [ConcurrentHashMap] is supplied.
      */
     public var defaultGenerator: Generator<Any, Any> = { cache, description ->
-        MapEntryCache(cache, description, MapLikeCollection.concurrentHashMap())
+       MapEntryCache(cache, description, MapLikeCollection.concurrentHashMap())
     }
 
     private val descriptionGenerators: MutableMap<DataDescription<*, *>, Generator<*, *>> = mutableMapOf()

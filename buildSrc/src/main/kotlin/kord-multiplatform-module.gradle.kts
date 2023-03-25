@@ -57,11 +57,20 @@ kotlin {
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
         }
 
+        val nonJvm by creating {
+            dependsOn(commonMain.get())
+        }
+
         targets.forEach {
             val safeName = if(it.name == "metadata") "common" else it.name
             findByName("${safeName}Test")?.apply {
                 dependencies {
                     implementation(project(":test-kit"))
+                }
+            }
+            if (safeName != "jvm" && safeName != "common") {
+                findByName("${safeName}Main")?.apply {
+                    dependsOn(nonJvm)
                 }
             }
         }
