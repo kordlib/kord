@@ -10,15 +10,17 @@ import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.IntegrationData
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
-import java.util.*
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.js.JsName
+import kotlin.jvm.JvmName
 import kotlin.time.Duration
 
 /**
@@ -52,6 +54,7 @@ public class Integration(
         get() = data.enabled
 
     @Deprecated("Binary compatibility, was non-nullable before. Keep for some releases.", level = HIDDEN)
+    @JsName("_isSyncing") // binary compatibility with js doesn't matter as this is the first JS release
     public fun isSyncing(): Boolean = isSyncing!!
 
     /**
@@ -171,7 +174,7 @@ public class Integration(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Integration =
         Integration(data, kord, strategy.supply(kord))
 
-    override fun hashCode(): Int = Objects.hash(id)
+    override fun hashCode(): Int = hash(id)
 
     override fun equals(other: Any?): Boolean = when (other) {
         is Integration -> other.id == id && other.guildId == guildId
