@@ -43,8 +43,8 @@ public class ForumChannelCreateBuilder(public var name: String) :
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
-    private var _defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing()
-    public var defaultReactionEmoji: DiscordDefaultReaction? by ::_defaultReactionEmoji.delegate()
+    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing()
+    public var defaultReactionEmoji: DefaultReaction? by ::_defaultReactionEmoji.delegate()
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
@@ -84,7 +84,7 @@ public class ForumChannelCreateBuilder(public var name: String) :
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
         defaultReactionEmoji = when {
             defaultReactionEmojiId != null || defaultReactionEmojiName != null ->
-                DiscordDefaultReaction(
+                DefaultReaction(
                     emojiId = defaultReactionEmojiId,
                     emojiName = defaultReactionEmojiName,
                 ).optional()

@@ -1,6 +1,6 @@
 package dev.kord.core.entity.channel
 
-import dev.kord.common.entity.DiscordDefaultReaction
+import dev.kord.common.entity.DefaultReaction
 import dev.kord.common.entity.ForumTag
 import dev.kord.common.entity.ForumLayoutType
 import dev.kord.core.Kord
@@ -23,7 +23,7 @@ public class ForumChannel(
 
     public val availableTags: List<ForumTag> get() = data.availableTags.value ?: emptyList()
 
-    public val defaultReactionEmoji: DiscordDefaultReaction? get() = data.defaultReactionEmoji.value
+    public val defaultReactionEmoji: DefaultReaction? get() = data.defaultReactionEmoji.value
 
     public val defaultThreadRateLimitPerUser: Duration? get() = data.defaultThreadRateLimitPerUser.value
 

@@ -7826,7 +7826,7 @@ public final class dev/kord/core/entity/channel/ForumChannel : dev/kord/core/beh
 	public fun getCategoryId ()Ldev/kord/common/entity/Snowflake;
 	public fun getData ()Ldev/kord/core/cache/data/ChannelData;
 	public final fun getDefaultForumLayout ()Ldev/kord/common/entity/ForumLayoutType;
-	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DiscordDefaultReaction;
+	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DefaultReaction;
 	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
 	public fun getEffectivePermissions (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFlags ()Ldev/kord/common/entity/ChannelFlags;

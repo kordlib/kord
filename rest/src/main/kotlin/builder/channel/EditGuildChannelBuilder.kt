@@ -98,8 +98,8 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _flags: Optional<ChannelFlags> = Optional.Missing()
     public var flags: ChannelFlags? by ::_flags.delegate()
 
-    private var _defaultReactionEmoji: Optional<DiscordDefaultReaction?> = Optional.Missing()
-    public var defaultReactionEmoji: DiscordDefaultReaction? by ::_defaultReactionEmoji.delegate()
+    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing()
+    public var defaultReactionEmoji: DefaultReaction? by ::_defaultReactionEmoji.delegate()
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
@@ -135,7 +135,7 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
         defaultReactionEmoji = when {
             defaultReactionEmojiId != null || defaultReactionEmojiName != null ->
-                DiscordDefaultReaction(
+                DefaultReaction(
                     emojiId = defaultReactionEmojiId,
                     emojiName = defaultReactionEmojiName,
                 ).optional()

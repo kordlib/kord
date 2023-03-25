@@ -414,7 +414,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev
 	public final fun getAvailableTags ()Ljava/util/List;
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getDefaultForumLayout ()Ldev/kord/common/entity/ForumLayoutType;
-	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DiscordDefaultReaction;
+	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DefaultReaction;
 	public final fun getDefaultReactionEmojiId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultReactionEmojiName ()Ljava/lang/String;
 	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
@@ -431,7 +431,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev
 	public final fun setAvailableTags (Ljava/util/List;)V
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setDefaultForumLayout (Ldev/kord/common/entity/ForumLayoutType;)V
-	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DiscordDefaultReaction;)V
+	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DefaultReaction;)V
 	public final fun setDefaultReactionEmojiId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDefaultReactionEmojiName (Ljava/lang/String;)V
 	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
@@ -457,7 +457,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelModifyBuilder : dev
 	public final fun getAvailableTags ()Ljava/util/List;
 	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getDefaultForumLayout ()Ldev/kord/common/entity/ForumLayoutType;
-	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DiscordDefaultReaction;
+	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DefaultReaction;
 	public final fun getDefaultReactionEmojiId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultReactionEmojiName ()Ljava/lang/String;
 	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
@@ -474,7 +474,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelModifyBuilder : dev
 	public final fun setAvailableTags (Ljava/util/List;)V
 	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun setDefaultForumLayout (Ldev/kord/common/entity/ForumLayoutType;)V
-	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DiscordDefaultReaction;)V
+	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DefaultReaction;)V
 	public final fun setDefaultReactionEmojiId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDefaultReactionEmojiName (Ljava/lang/String;)V
 	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
