@@ -14,6 +14,5 @@ internal class KordTest {
         val job = kord.on<ReadyEvent> {}
         kord.shutdown()
         assertEquals(false, job.isActive)
-
     }
 }

@@ -41,6 +41,7 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
 import testToken
+import withKord
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.js.JsName
@@ -117,52 +118,28 @@ class CrashingHandler(val client: HttpClient, override val token: String) : Requ
 }
 
 class CacheMissingRegressions {
-    lateinit var kord: Kord
-
-    @BeforeTest
-    fun setup() = runTest { //TODO, move this over to entity supplier tests instead, eventually.
-        val token = testToken
-        val resources = ClientResources(
-            token,
-            getBotIdFromToken(token),
-            Shards(1),
-            maxConcurrency = 1,
-            null.configure(),
-            EntitySupplyStrategy.cacheWithRestFallback,
-        )
-        kord = Kord(
-            resources,
-            MapDataCache().also { it.registerKordData() },
-            DefaultMasterGateway(mapOf(0 to FakeGateway)),
-            RestClient(CrashingHandler(resources.httpClient, resources.token)),
-            getBotIdFromToken(token),
-            MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
-            Dispatchers.Default,
-            DefaultGatewayEventInterceptor(),
-        )
-    }
-
 
     @Test
     @JsName("test1")
-    fun `if data not in cache explode`() {
-        val id = 5uL
-        assertFailsWith<IllegalStateException> {
-            runTest {
-                kord.getChannel(Snowflake(id))
+    fun `if data not in cache explode`() = runTest {
+        withKord { kord ->
+            val id = 5uL
+            assertFailsWith<IllegalStateException> {
+                runTest {
+                    kord.getChannel(Snowflake(id))
+                }
             }
         }
     }
 
     @Test
     @JsName("test2")
-    fun `if data in cache don't fetch from rest`() {
-        runTest {
+    fun `if data in cache don't fetch from rest`() = runTest {
+        withKord { kord ->
             val id = Snowflake(5uL)
             kord.cache.put(ChannelData(id, ChannelType.GuildText))
 
             kord.getChannel(id)
         }
     }
-
 }
