@@ -25,14 +25,9 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
-import java.io.ByteArrayOutputStream
-import java.util.zip.Inflater
-import java.util.zip.InflaterOutputStream
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
-import kotlin.jvm.JvmName
 import kotlin.time.Duration
 
 private val defaultGatewayLogger = KotlinLogging.logger { }

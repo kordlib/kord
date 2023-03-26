@@ -72,25 +72,6 @@ public sealed interface MessageCreateBuilder {
     public var suppressNotifications: Boolean?
 
     /**
-     * Adds a file with the [name] and [content] to the attachments.
-     *
-     * @suppress
-     */
-    @Deprecated(
-        "Use lazy ChannelProvider instead of InputStream. You should also make sure that the stream/channel is only " +
-                "opened inside the block of the ChannelProvider because it could otherwise be read multiple times " +
-                "(which isn't allowed).",
-        ReplaceWith(
-            "addFile(name, ChannelProvider { content.toByteReadChannel() })",
-            "io.ktor.client.request.forms.ChannelProvider",
-            "io.ktor.utils.io.jvm.javaio.toByteReadChannel",
-        ),
-        level = ERROR,
-    )
-    public fun addFile(name: String, content: InputStream): NamedFile =
-        addFile(name, ChannelProvider { content.toByteReadChannel() })
-
-    /**
      * Adds a file with the [name] and [contentProvider] to the attachments.
      */
     public fun addFile(name: String, contentProvider: ChannelProvider): NamedFile {
