@@ -70,30 +70,32 @@ tasks {
         }
     }
 
-    configureDokka {
-        dependsOnKspKotlin("kspCommonMainKotlinMetadata")
+    afterEvaluate {
+        configureDokka {
+            dependsOnKspKotlin("kspCommonMainKotlinMetadata")
 
-        dokkaSourceSets {
-            val map = asMap
+            dokkaSourceSets {
+                val map = asMap
 
-            if (map.containsKey("jsMain")) {
-                named("jsMain") {
-                    displayName.set("JS")
+                if (map.containsKey("jsMain")) {
+                    named("jsMain") {
+                        displayName.set("JS")
+                    }
+                }
+
+                if (map.containsKey("jvmMain")) {
+                    named("jvmMain") {
+                        displayName.set("JVM")
+                    }
+                }
+
+                if (map.containsKey("commonMain")) {
+                    named("jvmMain") {
+                        displayName.set("Common")
+                    }
                 }
             }
 
-            if (map.containsKey("jvmMain")) {
-                named("jvmMain") {
-                    displayName.set("JVM")
-                }
-            }
-
-            if (map.containsKey("commonMain")) {
-                named("jvmMain") {
-                    displayName.set("Common")
-                }
-            }
         }
-
     }
 }
