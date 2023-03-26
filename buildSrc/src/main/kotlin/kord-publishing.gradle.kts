@@ -5,14 +5,15 @@ plugins {
     signing
 }
 
-if(tasks.findByName("dokkaHtml") != null) {
-    val dokkaJar by tasks.registering(Jar::class) {
-        group = JavaBasePlugin.DOCUMENTATION_GROUP
-        description = "Assembles Kotlin docs with Dokka"
-        archiveClassifier.set("javadoc")
-        from(tasks.getByName("dokkaHtml"))
-    }
-    publishing.publications.withType<MavenPublication> {
+fun MavenPublication.addDokkaIfNeeded() {
+    if (tasks.findByName("dokkaHtml") != null) {
+        val platform = name.substringAfterLast('-')
+        val dokkaJar = tasks.register("${platform}DokkaJar", Jar::class) {
+            dependsOn("dokkaHtml")
+            archiveClassifier.set("javadoc")
+            destinationDirectory.set(buildDir.resolve(platform))
+            from(tasks.getByName("dokkaHtml"))
+        }
         artifact(dokkaJar)
     }
 }
@@ -20,6 +21,7 @@ if(tasks.findByName("dokkaHtml") != null) {
 publishing {
     publications {
         withType<MavenPublication> {
+            addDokkaIfNeeded()
             groupId = Library.group
             artifactId = "kord-${artifactId}"
             version = Library.version
