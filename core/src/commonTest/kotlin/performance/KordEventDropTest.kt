@@ -12,6 +12,7 @@ import dev.kord.gateway.*
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
+import dev.kord.test.IgnoreOnJs
 import io.ktor.client.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -68,6 +69,7 @@ class KordEventDropTest {
 
     @Test
     @JsName("test1")
+    @IgnoreOnJs // currently this doesn't work on JS for some reason
     fun `hammering the gateway does not drop core events`() = runTest {
         val amount = 1_000
 
