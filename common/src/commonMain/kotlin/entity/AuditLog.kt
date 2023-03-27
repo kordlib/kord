@@ -55,11 +55,7 @@
         Entry("AutoModerationRuleDelete", intValue = 142, kDoc = "Auto Moderation rule was deleted."),
         Entry("AutoModerationBlockMessage", intValue = 143, kDoc = "Message was blocked by Auto Moderation."),
         Entry("AutoModerationFlagToChannel", intValue = 144, kDoc = "Message was flagged by Auto Moderation."),
-        Entry(
-            "AutoModerationUserCommunicationDisabled",
-            intValue = 145,
-            kDoc = "Member was timed out by Auto Moderation."
-        ),
+        Entry("AutoModerationUserCommunicationDisabled", intValue = 145, kDoc = "Member was timed out by Auto Moderation."),
     ],
 )
 
@@ -206,7 +202,6 @@ public data class AuditLogChange<T>(
                         index,
                         AuditLogChangeKey.Serializer(Unit.serializer())
                     )
-
                     CompositeDecoder.DECODE_DONE -> break
                     else -> throw SerializationException("unknown index: $index")
                 }

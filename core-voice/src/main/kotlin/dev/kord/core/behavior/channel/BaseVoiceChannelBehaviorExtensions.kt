@@ -1,5 +1,3 @@
-@file:JvmName("BaseVoiceChannelBehaviorJvm")
-
 package dev.kord.core.behavior.channel
 
 import dev.kord.common.annotation.KordVoice

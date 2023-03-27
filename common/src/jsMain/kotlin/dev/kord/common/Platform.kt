@@ -1,5 +1,8 @@
 package dev.kord.common
 
+import dev.kord.common.annotation.KordInternal
+
+@KordInternal
 public actual object Platform {
     public actual val IS_JVM: Boolean = false
     public actual val IS_NODE: Boolean
