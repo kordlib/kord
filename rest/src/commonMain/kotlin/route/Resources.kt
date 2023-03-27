@@ -195,6 +195,9 @@
                     public class ById(public val overrideId: Snowflake)
                 }
 
+                @Resource("webhooks")
+                public class Webhooks
+
             }
         }
         @Resource("/invites")
