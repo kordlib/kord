@@ -3,8 +3,8 @@ package dev.kord.rest.route
 import dev.kord.common.entity.Snowflake
 import io.ktor.resources.*
 
-    @Resource("/users")
-    public class Users {
+@Resource("/users")
+public class Users {
         @Resource("@me")
         public class Me {
             @Resource("guilds")
@@ -27,6 +27,8 @@ import io.ktor.resources.*
 public class Guilds {
     @Resource("{guildId}")
     public class ById(public val guildId: Snowflake) {
+        @Resource("audit-log")
+        public class AuditLog
         @Resource("mfa")
         public class MFA
         @Resource("prune")
@@ -108,6 +110,48 @@ public class Guilds {
         public class VoiceStates {
             @Resource("{voiceStateId}")
             public class ById(public val id: Snowflake)
+        }
+        @Resource("emojis")
+        public class Emojis {
+            public class ById(public val emojiId: Snowflake)
+        }
+
+        @Resource("auto-moderation")
+        public class AutoModeration {
+            @Resource("rules")
+            public class Rules {
+                public class ById(public val autoModerationRuleId: Snowflake)
+            }
+        }
+    }
+}
+
+@Resource("/invites")
+public class Invites {
+    @Resource("{inviteCode}")
+    public class ById(public val inviteCode: String)
+}
+@Resource("/stickers")
+public class Stickers {
+    public class ById(public val stickerId: Snowflake)
+}
+@Resource("/webhooks")
+public class Webhooks {
+    public class ById(public val webhookId: Snowflake){
+        @Resource("{token}")
+        public class WithToken(public val token: String) {
+            @Resource("github")
+            public class Github
+            @Resource("slack")
+            public class Slack
+
+            @Resource("messages")
+            public class Messages {
+                @Resource("{messageId}")
+                public class ById(public val messageId: Snowflake)
+                @Resource("original")
+                public class Original
+            }
         }
     }
 }
