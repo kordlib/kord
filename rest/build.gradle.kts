@@ -8,7 +8,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.common)
-
+                api(libs.ktor.resources)
                 api(libs.bundles.ktor.client.serialization)
             }
         }
