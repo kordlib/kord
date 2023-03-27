@@ -1,4 +1,3 @@
-@file:JvmName("ColorCommon")
 package dev.kord.common
 
 import kotlinx.serialization.KSerializer
@@ -8,7 +7,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.jvm.JvmName
 
 
 @Serializable(with = Color.Serializer::class)
@@ -38,6 +36,17 @@ public class Color(rgb: Int) {
     public companion object {
         private const val MIN_COLOR = 0
         private const val MAX_COLOR = 0xFFFFFF
+
+        private fun rgb(red: Int, green: Int, blue: Int): Int {
+            require(red in 0..255) { "Red should be in range of 0..255 but was $red" }
+            require(green in 0..255) { "Green should be in range of 0..255 but was $green" }
+            require(blue in 0..255) { "Blue should be in range of 0..255 but was $blue" }
+
+
+            return red and 0xFF shl 16 or
+                (green and 0xFF shl 8) or
+                (blue and 0xFF) shl 0
+        }
     }
 
     internal object Serializer : KSerializer<Color> {
@@ -51,15 +60,3 @@ public class Color(rgb: Int) {
         }
     }
 }
-
-private fun rgb(red: Int, green: Int, blue: Int): Int {
-    require(red in 0..255) { "Red should be in range of 0..255 but was $red" }
-    require(green in 0..255) { "Green should be in range of 0..255 but was $green" }
-    require(blue in 0..255) { "Blue should be in range of 0..255 but was $blue" }
-
-
-    return red and 0xFF shl 16 or
-            (green and 0xFF shl 8) or
-            (blue and 0xFF) shl 0
-}
-
