@@ -16,11 +16,4 @@ kotlin {
     sourceSets {
         applyKordSourceSetOptions()
     }
-    targets {
-        all {
-            compilations.all {
-                compilerOptions.options.applyKordCompilerOptions()
-            }
-        }
-    }
 }

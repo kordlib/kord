@@ -14,6 +14,13 @@ kotlin {
         }
         addTestKit(targets)
     }
+    targets {
+        all {
+            compilations.all {
+                compilerOptions.options.applyKordCompilerOptions()
+            }
+        }
+    }
 }
 
 tasks {
