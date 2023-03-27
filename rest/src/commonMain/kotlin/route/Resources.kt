@@ -139,6 +139,7 @@ public class Stickers {
 
 @Resource("/webhooks")
 public class Webhooks {
+    @Resource("{webhookId}")
     public class ById(public val webhookId: Snowflake){
         @Resource("{token}")
         public class WithToken(public val token: String) {
