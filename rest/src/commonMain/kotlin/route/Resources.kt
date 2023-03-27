@@ -19,7 +19,7 @@
 
 
                     }
-                    @Resource("/{userId}")
+                    @Resource("{userId}")
                     public class ById(public val parent: Users = Users(), public val userId: Snowflake)
                 }
 
@@ -96,7 +96,7 @@
                     @Resource("invites")
                     public class Invites(public val parent: Guilds = Guilds()) {
                         @Resource("{inviteId}")
-                        public class ById(public val parent: Invites = Invites(), public val inviteId: Snowflake)
+                        public class ById(public val inviteId: Snowflake, public val parent: Invites = Invites())
                     }
                     @Resource("integrations")
                     public class Integrations(public val parent: Guilds = Guilds()) {
