@@ -40,7 +40,7 @@ class PermissionsTest {
         }
         val actual = Json.decodeFromJsonElement(DiscordRole.serializer(), expected)
         assertEquals(
-            actual.permissions.code.value, "123456789876543000000000000",
+            "123456789876543000000000000", actual.permissions.code.value,
             "1234567898765430000000000 was expected but ${actual.permissions.code.value} was found"
         )
 

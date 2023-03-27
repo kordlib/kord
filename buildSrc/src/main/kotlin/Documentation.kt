@@ -17,7 +17,7 @@ fun TaskContainer.configureDokka(additionalConfiguration: AbstractDokkaLeafTask.
             jdkVersion.set(Jvm.target)
 
             val baseRemoteUrl =
-                "https://github.com/kordlib/kord/blob/${Library.commitHashOrDefault("0.8.x")}/${project.name}"
+                "https://github.com/kordlib/kord/blob/${Library.commitHashOrDefault("0.9.x")}/${project.name}"
 
             sourceLink {
                 localDirectory.set(project.file("src/main/kotlin"))
