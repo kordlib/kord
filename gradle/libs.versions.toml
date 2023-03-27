@@ -6,7 +6,7 @@ ktor = "2.2.4" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
-kotlin-logging = "3.0.5" # https://github.com/MicroUtils/kotlin-logging
+kotlin-logging = "3.0.5" # https://github.com/oshai/kotlin-logging
 kord-cache = "0.4.0"
 stately = "2.0.0-rc1"
 
