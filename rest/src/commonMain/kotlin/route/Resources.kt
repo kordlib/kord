@@ -131,10 +131,12 @@ public class Invites {
     @Resource("{inviteCode}")
     public class ById(public val inviteCode: String)
 }
+
 @Resource("/stickers")
 public class Stickers {
     public class ById(public val stickerId: Snowflake)
 }
+
 @Resource("/webhooks")
 public class Webhooks {
     public class ById(public val webhookId: Snowflake){
