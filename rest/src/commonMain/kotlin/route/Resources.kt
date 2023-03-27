@@ -1,5 +1,6 @@
 package dev.kord.rest.route
 
+import dev.kord.common.entity.Snowflake
 import io.ktor.resources.*
 
     @Resource("/users")
@@ -9,7 +10,7 @@ import io.ktor.resources.*
             @Resource("guilds")
             public class Guilds {
                 @Resource("{guildId}")
-                public class ById
+                public class ById(public val guildId: Snowflake)
             }
             @Resource("channels")
             public class Channels
@@ -25,7 +26,7 @@ import io.ktor.resources.*
 @Resource("/guilds")
 public class Guilds {
     @Resource("{guildId}")
-    public class ById {
+    public class ById(public val guildId: Snowflake) {
         @Resource("mfa")
         public class MFA
         @Resource("prune")
@@ -43,11 +44,11 @@ public class Guilds {
         @Resource("members")
         public class Members {
             @Resource("{userId}")
-            public class ById {
+            public class ById(public val userId: Snowflake) {
                 @Resource("roles")
                 public class Roles {
-                    @Resource("roleId")
-                    public class ById
+                    @Resource("{roleId}")
+                    public class ById(public val roleId: Snowflake)
                 }
             }
             @Resource("search")
@@ -61,7 +62,7 @@ public class Guilds {
         @Resource("scheduled-events")
         public class ScheduledEvents  {
             @Resource("{scheduledEventId}")
-            public class ById {
+            public class ById(public val scheduledEventId: Snowflake) {
                 @Resource("users")
                 public class Users
             }
@@ -69,12 +70,12 @@ public class Guilds {
         @Resource("stickers")
         public class Stickers {
             @Resource("{stickerId}")
-            public class ById
+            public class ById(public val stickerId: Snowflake)
         }
         @Resource("bans")
         public class Bans {
             @Resource("{userId}")
-            public class ById
+            public class ById(public val userId: Snowflake)
         }
         @Resource("channels")
         public class Channels
@@ -88,25 +89,25 @@ public class Guilds {
         @Resource("templates")
         public class Templates {
             @Resource("templateCode")
-            public class ById
+            public class ById(public val templateCode: String)
         }
         @Resource("invites")
         public class Invites {
             @Resource("{inviteId}")
-            public class ById
+            public class ById(public val inviteId: Snowflake)
         }
         @Resource("integrations")
         public class Integrations {
-            @Resource("integrationId")
-            public class ById {
+            @Resource("{integrationId}")
+            public class ById(public val integrationId: Snowflake) {
                 @Resource("sync")
                 public class Sync
             }
         }
         @Resource("voice-states")
         public class VoiceStates {
-            @Resource("voiceStateId")
-            public class ById
+            @Resource("{voiceStateId}")
+            public class ById(public val id: Snowflake)
         }
     }
 }
