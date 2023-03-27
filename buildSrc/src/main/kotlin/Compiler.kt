@@ -8,28 +8,18 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 object OptIns {
-    const val time = "kotlin.time.ExperimentalTime"
-    const val contracts = "kotlin.contracts.ExperimentalContracts"
     const val coroutines = "kotlinx.coroutines.ExperimentalCoroutinesApi"
-
-    const val kordInternal = "dev.kord.common.annotation.KordInternal"
-    const val kordPreview = "dev.kord.common.annotation.KordPreview"
-    const val kordExperimental = "dev.kord.common.annotation.KordExperimental"
-    const val kordVoice = "dev.kord.common.annotation.KordVoice"
 }
 
-object CompilerArguments {
-    val time = OptIns.time.asOptIn()
-    val contracts = OptIns.contracts.asOptIn()
+val kordOptIns = listOf(
+    "kotlin.time.ExperimentalTime",
+    "kotlin.contracts.ExperimentalContracts",
 
-    val kordPreview = OptIns.kordPreview.asOptIn()
-    val kordExperimental = OptIns.kordExperimental.asOptIn()
-    val kordVoice = OptIns.kordVoice.asOptIn()
-
-    const val progressive = "-progressive"
-}
-
-private fun String.asOptIn() = "-opt-in=$this"
+    "dev.kord.common.annotation.KordInternal",
+    "dev.kord.common.annotation.KordPreview",
+    "dev.kord.common.annotation.KordExperimental",
+    "dev.kord.common.annotation.KordVoice",
+)
 
 object Jvm {
     const val target = 8
@@ -38,23 +28,14 @@ object Jvm {
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     // TODO: Enable again once https://youtrack.jetbrains.com/issue/KT-51110 is fixed
     allWarningsAsErrors.set(false)
-    freeCompilerArgs.add(CompilerArguments.progressive)
+    freeCompilerArgs.add("-progressive")
 }
 
-fun NamedDomainObjectContainer<KotlinSourceSet>.applyKordSourceSetOptions() {
+fun NamedDomainObjectContainer<KotlinSourceSet>.applyKordOptIns() {
     all {
         languageSettings {
-            if ("Test" in name) {
-                optIn(OptIns.coroutines)
-            }
-            optIn(OptIns.kordInternal)
-            listOf(
-                OptIns.time,
-                OptIns.contracts,
-                OptIns.kordPreview,
-                OptIns.kordExperimental,
-                OptIns.kordVoice,
-            ).forEach(::optIn)
+            if ("Test" in name) optIn(OptIns.coroutines)
+            kordOptIns.forEach(::optIn)
         }
     }
 }

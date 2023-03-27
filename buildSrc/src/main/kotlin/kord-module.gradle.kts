@@ -1,7 +1,4 @@
-import com.google.devtools.ksp.gradle.KspTask
-import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.net.URL
 
 plugins {
     org.jetbrains.kotlin.jvm
@@ -37,14 +34,7 @@ tasks {
     withType<KotlinCompile> {
         compilerOptions {
             applyKordCompilerOptions()
-            freeCompilerArgs.addAll(
-                CompilerArguments.time,
-                CompilerArguments.contracts,
-
-                CompilerArguments.kordPreview,
-                CompilerArguments.kordExperimental,
-                CompilerArguments.kordVoice,
-            )
+            freeCompilerArgs.addAll(kordOptIns.map { "-opt-in=$it" })
         }
     }
 

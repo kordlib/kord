@@ -20,8 +20,8 @@ private const val WIDTH = Long.SIZE_BITS
 @Suppress("FunctionName")
 public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet()
 
-internal expect fun formatBigEndianIntegerFromByteArray(data: ByteArray): String
-internal expect fun parseBigEndianIntegerToByteArray(value: String): ByteArray
+internal expect fun formatIntegerFromBigEndianByteArray(data: ByteArray): String
+internal expect fun parseIntegerToBigEndianByteArray(value: String): ByteArray
 
 @Serializable(with = DiscordBitSetSerializer::class)
 public class DiscordBitSet(internal var data: LongArray) { // data is in little-endian order
@@ -34,7 +34,7 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
             // need to convert from little-endian data to big-endian expected by BigInteger
             return withBuffer(data.size * Long.SIZE_BYTES) {
                 writeFully(data.reversedArray())
-                formatBigEndianIntegerFromByteArray(readBytes())
+                formatIntegerFromBigEndianByteArray(readBytes())
             }
         }
 
@@ -134,7 +134,7 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
         return DiscordBitSet(longArrayOf(value.toULong().toLong()))
     }
 
-    val bytes = parseBigEndianIntegerToByteArray(value)
+    val bytes = parseIntegerToBigEndianByteArray(value)
 
     val longSize = (bytes.size / Long.SIZE_BYTES) + 1
     val destination = LongArray(longSize)

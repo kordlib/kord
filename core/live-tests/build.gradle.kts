@@ -13,7 +13,7 @@ kotlin {
         addTestKit(targets)
     }
     sourceSets {
-        applyKordSourceSetOptions()
+        applyKordOptIns()
     }
 }
 

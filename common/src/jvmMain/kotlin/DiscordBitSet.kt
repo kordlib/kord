@@ -3,5 +3,5 @@ package dev.kord.common
 
 import java.math.BigInteger
 
-internal actual fun formatBigEndianIntegerFromByteArray(data: ByteArray): String = BigInteger(data).toString()
-internal actual fun parseBigEndianIntegerToByteArray(value: String): ByteArray = BigInteger(value).toByteArray()
+internal actual fun formatIntegerFromBigEndianByteArray(data: ByteArray): String = BigInteger(data).toString()
+internal actual fun parseIntegerToBigEndianByteArray(value: String): ByteArray = BigInteger(value).toByteArray()
