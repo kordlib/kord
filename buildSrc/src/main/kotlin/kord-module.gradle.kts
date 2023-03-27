@@ -31,11 +31,7 @@ kotlin {
     }
 }
 
-// https://github.com/Kotlin/kotlinx-atomicfu/issues/210
-atomicfu {
-    val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-    dependenciesVersion = libs.findVersion("kotlinx-atomicfu").get().requiredVersion
-}
+configureAtomicFU()
 
 tasks {
     withType<KotlinCompile> {

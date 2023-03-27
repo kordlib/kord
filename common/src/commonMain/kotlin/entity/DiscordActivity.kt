@@ -197,8 +197,7 @@ public sealed class ActivityType(public val code: Int) {
         @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Listening: ActivityType = Listening
         @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Watching: ActivityType = Watching
         @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Custom: ActivityType = Custom
-        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField
-        public val Competing: ActivityType = Competing
+        @Deprecated("Binary compatibility", level = HIDDEN) @JvmField public val Competing: ActivityType = Competing
         // @formatter:on
 
         /** @suppress */

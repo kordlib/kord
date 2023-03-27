@@ -1,4 +1,3 @@
-@file:JvmName("ColorJvm")
 package dev.kord.common
 
 import java.awt.Color as AwtColor

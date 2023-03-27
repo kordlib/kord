@@ -5,23 +5,16 @@ plugins {
     signing
 }
 
-fun MavenPublication.addDokkaIfNeeded() {
-    if (tasks.findByName("dokkaHtml") != null) {
-        val platform = name.substringAfterLast('-')
-        val dokkaJar = tasks.register("${platform}DokkaJar", Jar::class) {
-            dependsOn("dokkaHtml")
-            archiveClassifier.set("javadoc")
-            destinationDirectory.set(buildDir.resolve(platform))
-            from(tasks.getByName("dokkaHtml"))
-        }
-        artifact(dokkaJar)
-    }
-}
-
 publishing {
     publications {
         withType<MavenPublication> {
-            addDokkaIfNeeded()
+            val platform = name.substringAfterLast('-')
+            val dokkaJar = tasks.register("${platform}DokkaJar", Jar::class) {
+                archiveClassifier.set("javadoc")
+                destinationDirectory.set(buildDir.resolve(platform))
+                from(tasks.getByName("dokkaHtml"))
+            }
+            artifact(dokkaJar)
             groupId = Library.group
             artifactId = "kord-${artifactId}"
             version = Library.version

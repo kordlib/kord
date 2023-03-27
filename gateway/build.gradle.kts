@@ -15,9 +15,6 @@ kotlin {
                 api(libs.ktor.client.core)
                 api(libs.kotlinx.coroutines.core)
                 api(libs.ktor.client.websockets)
-
-                // The plugin should add this automatically, but it doesn't
-                compileOnly(libs.kotlinx.atomicfu)
             }
         }
 

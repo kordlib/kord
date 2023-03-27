@@ -17,13 +17,6 @@ kotlin {
             }
         }
 
-        commonTest {
-            dependencies {
-                // The plugin should add this automatically, but it doesn't
-                compileOnly(libs.kotlinx.atomicfu)
-            }
-        }
-
         jvmTest {
             dependencies {
                 implementation(libs.mockk)

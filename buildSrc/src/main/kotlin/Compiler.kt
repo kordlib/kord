@@ -1,4 +1,9 @@
+import kotlinx.atomicfu.plugin.gradle.AtomicFUPluginExtension
 import org.gradle.api.NamedDomainObjectContainer
+import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
@@ -50,5 +55,13 @@ fun NamedDomainObjectContainer<KotlinSourceSet>.applyKordSourceSetOptions() {
                 OptIns.kordVoice,
             ).forEach(::optIn)
         }
+    }
+}
+
+fun Project.configureAtomicFU() {
+    // https://github.com/Kotlin/kotlinx-atomicfu/issues/210
+    configure<AtomicFUPluginExtension> {
+        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
+        dependenciesVersion = libs.findVersion("kotlinx-atomicfu").get().requiredVersion
     }
 }

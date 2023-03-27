@@ -2,8 +2,6 @@
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
-    `kotlinx-atomicfu`
-    `kotlinx-serialization`
     alias(libs.plugins.buildconfig)
 }
 
@@ -20,8 +18,6 @@ kotlin {
                 api(libs.ktor.client.core)
 
                 compileOnly(projects.kspAnnotations)
-                // The plugin should add this automatically, but it doesn't
-                compileOnly(libs.kotlinx.atomicfu)
             }
         }
         jvmMain {
@@ -31,9 +27,8 @@ kotlin {
         }
         nonJvm {
             dependencies {
-                api(libs.bignum)
-
-                api(libs.bundles.stately)
+                implementation(libs.bignum)
+                implementation(libs.bundles.stately)
             }
         }
         jsMain {

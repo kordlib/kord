@@ -15,11 +15,7 @@ kotlin {
 
                 api(libs.bundles.ktor.client.serialization)
                 api(libs.ktor.client.core)
-                api(libs.bundles.stately)
                 compileOnly(projects.kspAnnotations)
-
-                // The plugin should add this automatically, but it doesn't
-                compileOnly(libs.kotlinx.atomicfu)
             }
         }
 
@@ -35,7 +31,6 @@ kotlin {
                 api(libs.ktor.client.js)
             }
         }
-
 
         jvmMain {
             dependencies {
