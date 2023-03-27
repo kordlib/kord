@@ -24,3 +24,9 @@ kotlin {
         }
     }
 }
+
+tasks {
+    dokkaHtmlMultiModule {
+        enabled = false
+    }
+}

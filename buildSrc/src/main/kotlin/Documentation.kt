@@ -18,8 +18,8 @@ fun TaskContainer.configureDokka(additionalConfiguration: AbstractDokkaLeafTask.
                 "https://github.com/kordlib/kord/blob/${Library.commitHashOrDefault("0.9.x")}/${project.name}"
 
             sourceLink {
-                localDirectory.set(project.file("src/main/kotlin"))
-                remoteUrl.set(URL("$baseRemoteUrl/src/main/kotlin"))
+                localDirectory.set(project.file("src/${name}Main/kotlin"))
+                remoteUrl.set(URL("$baseRemoteUrl/src/${name}Main/kotlin"))
                 remoteLineSuffix.set("#L")
             }
 
@@ -27,8 +27,8 @@ fun TaskContainer.configureDokka(additionalConfiguration: AbstractDokkaLeafTask.
             suppressGeneratedFiles.set(false)
             sourceLink {
                 // will fail if dir doesn't exist -> always create it, won't harm if not needed
-                localDirectory.set(project.file("build/generated/ksp/main/kotlin").apply { mkdirs() })
-                remoteUrl.set(URL("$baseRemoteUrl/build/generated/ksp/main/kotlin"))
+                localDirectory.set(project.file("build/generated/ksp/metadata/commonMain/kotlin").apply { mkdirs() })
+                remoteUrl.set(URL("$baseRemoteUrl/build/generated/ksp/metadata/commonMain/kotlin"))
                 remoteLineSuffix.set("#L")
             }
 

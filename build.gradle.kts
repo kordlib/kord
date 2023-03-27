@@ -4,3 +4,7 @@ plugins {
 
 group = Library.group
 version = Library.version
+
+repositories {
+    mavenCentral()
+}

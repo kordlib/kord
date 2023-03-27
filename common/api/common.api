@@ -15,7 +15,7 @@ public final class dev/kord/common/Color$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/ColorJvm {
+public final class dev/kord/common/ColorKt {
 	public static final fun getKColor (Ljava/awt/Color;)Ldev/kord/common/Color;
 }
 
@@ -166,9 +166,9 @@ public final class dev/kord/common/LocaleKt {
 
 public final class dev/kord/common/Platform {
 	public static final field INSTANCE Ldev/kord/common/Platform;
-	public final fun getIS_BROWSER ()Z
-	public final fun getIS_JVM ()Z
-	public final fun getIS_NODE ()Z
+	public static final field IS_BROWSER Z
+	public static final field IS_JVM Z
+	public static final field IS_NODE Z
 }
 
 public abstract interface annotation class dev/kord/common/annotation/DeprecatedSinceKord : java/lang/annotation/Annotation {
