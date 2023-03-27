@@ -39,11 +39,7 @@
         Entry("IntegrationDelete", intValue = 82, kDoc = "App was removed from server."),
         Entry("StageInstanceCreate", intValue = 83, kDoc = "Stage instance was created (stage channel becomes live)."),
         Entry("StageInstanceUpdate", intValue = 84, kDoc = "Stage instance details were updated."),
-        Entry(
-            "StageInstanceDelete",
-            intValue = 85,
-            kDoc = "Stage instance was deleted (stage channel no longer live)."
-        ),
+        Entry("StageInstanceDelete", intValue = 85, kDoc = "Stage instance was deleted (stage channel no longer live)."),
         Entry("StickerCreate", intValue = 90, kDoc = "Sticker was created."),
         Entry("StickerUpdate", intValue = 91, kDoc = "Sticker details were updated."),
         Entry("StickerDelete", intValue = 92, kDoc = "Sticker was deleted."),
