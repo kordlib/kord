@@ -7,7 +7,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                compileOnly(projects.kspAnnotations)
                 api(projects.common)
                 api(projects.rest)
                 api(projects.gateway)

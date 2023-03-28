@@ -6,7 +6,6 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                compileOnly(projects.kspAnnotations)
                 api(libs.bundles.test.common)
                 api(libs.ktor.utils)
                 api(projects.common)

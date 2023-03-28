@@ -34,6 +34,8 @@ kotlin {
         jsMain {
             dependencies {
                 api(libs.ktor.client.js)
+                // When targeting K/JS needs to be present at compile time for users
+                api(projects.kspAnnotations)
             }
         }
     }

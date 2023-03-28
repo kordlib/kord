@@ -9,7 +9,6 @@ kotlin {
         commonMain {
             dependencies {
                 api(projects.common)
-                compileOnly(projects.kspAnnotations)
 
                 api(libs.bundles.ktor.client.serialization)
                 api(libs.ktor.client.core)
