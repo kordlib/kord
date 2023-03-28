@@ -29,25 +29,25 @@ public class Guilds {
     @Resource("{guildId}")
     public class ById(public val guildId: Snowflake, public val parent: Guilds = Guilds()) {
         @Resource("audit-log")
-        public class AuditLog(public val parent: Guilds = Guilds())
+        public class AuditLog(public val parent: ById)
         @Resource("mfa")
-        public class MFA(public val parent: Guilds = Guilds())
+        public class MFA(public val parent: ById)
         @Resource("prune")
-        public class Prune(public val parent: Guilds = Guilds())
+        public class Prune(public val parent: ById)
         @Resource("regions")
-        public class Regions(public val parent: Guilds = Guilds())
+        public class Regions(public val parent: ById)
         @Resource("widget")
-        public class Widget(public val parent: Guilds = Guilds())
+        public class Widget(public val parent: ById)
         @Resource("vanity-url")
-        public class VanityUrl(public val parent: Guilds = Guilds())
+        public class VanityUrl(public val parent: ById)
         @Resource("welcome-screen")
-        public class WelcomeScreen(public val parent: Guilds = Guilds())
+        public class WelcomeScreen(public val parent: ById)
         @Resource("preview")
-        public class Preview(public val parent: Guilds = Guilds())
+        public class Preview(public val parent: ById)
         @Resource("members")
-        public class Members(public val parent: Guilds = Guilds()) {
+        public class Members(public val parent: ById) {
             @Resource("{userId}")
-            public class ById(public val parent: Members = Members(), public val userId: Snowflake) {
+            public class ById(public val userId: Snowflake, public val parent: Members) {
                 @Resource("roles")
                 public class Roles(public val parent: ById) {
                     @Resource("{roleId}")
@@ -55,73 +55,73 @@ public class Guilds {
                 }
             }
             @Resource("search")
-            public class Search
+            public class Search(public val parent: Members)
             @Resource("me")
-            public class Me {
+            public class Me(public val parent: Members) {
                 @Resource("nick")
-                public class Nick
+                public class Nick(public val parent: Me)
             }
         }
         @Resource("scheduled-events")
-        public class ScheduledEvents(public val parent: Guilds = Guilds())  {
+        public class ScheduledEvents(public val parent: ById)  {
             @Resource("{scheduledEventId}")
-            public class ById(public val scheduledEventId: Snowflake) {
+            public class ById(public val scheduledEventId: Snowflake, public val parent: ScheduledEvents) {
                 @Resource("users")
                 public class Users(public val parent: ById)
             }
         }
         @Resource("stickers")
-        public class Stickers(public val parent: Guilds = Guilds()) {
+        public class Stickers(public val parent: ById) {
             @Resource("{stickerId}")
-            public class ById(public val stickerId: Snowflake, public val parent: Stickers = Stickers())
+            public class ById(public val stickerId: Snowflake, public val parent: Stickers)
         }
         @Resource("bans")
-        public class Bans(public val parent: Guilds = Guilds()) {
+        public class Bans(public val parent: ById) {
             @Resource("{userId}")
-            public class ById(public val userId: Snowflake, public val parent: Bans = Bans())
+            public class ById(public val userId: Snowflake, public val parent: Bans)
         }
         @Resource("channels")
-        public class Channels(public val parent: Guilds = Guilds())
+        public class Channels(public val parent: ById)
         @Resource("threads")
-        public class Threads(public val parent: Guilds = Guilds()) {
+        public class Threads(public val parent: ById) {
             @Resource("active")
-            public class Active(public val parent: Threads = Threads())
+            public class Active(public val parent: Threads)
         }
         @Resource("webhooks")
-        public class Webhooks(public val parent: Guilds = Guilds())
+        public class Webhooks(public val parent: ById)
         @Resource("templates")
-        public class Templates(public val parent: Guilds = Guilds()) {
+        public class Templates(public val parent: ById) {
             @Resource("templateCode")
-            public class ById(public val templateCode: String, public val parent: Templates = Templates())
+            public class ById(public val templateCode: String, public val parent: Templates)
         }
         @Resource("invites")
-        public class Invites(public val parent: Guilds = Guilds()) {
+        public class Invites(public val parent: ById) {
             @Resource("{inviteId}")
-            public class ById(public val inviteId: Snowflake, public val parent: Invites = Invites())
+            public class ById(public val inviteId: Snowflake, public val parent: Invites)
         }
         @Resource("integrations")
-        public class Integrations(public val parent: Guilds = Guilds()) {
+        public class Integrations(public val parent: ById) {
             @Resource("{integrationId}")
-            public class ById(public val integrationId: Snowflake, public val parent: Integrations = Integrations()) {
+            public class ById(public val integrationId: Snowflake, public val parent: Integrations) {
                 @Resource("sync")
                 public class Sync(public val parent: ById)
             }
         }
         @Resource("voice-states")
-        public class VoiceStates(public val parent: Guilds = Guilds()) {
+        public class VoiceStates(public val parent: ById) {
             @Resource("{voiceStateId}")
-            public class ById(public val id: Snowflake, public val parent: VoiceStates = VoiceStates())
+            public class ById(public val id: Snowflake, public val parent: VoiceStates)
         }
         @Resource("emojis")
-        public class Emojis(public val parent: Guilds = Guilds()) {
-            public class ById( public val emojiId: Snowflake, public val parent: Emojis = Emojis())
+        public class Emojis(public val parent: Guilds.ById) {
+            public class ById( public val emojiId: Snowflake, public val parent: Emojis)
         }
 
         @Resource("auto-moderation")
-        public class AutoModeration(public val parent: Guilds = Guilds()) {
+        public class AutoModeration(public val parent: ById) {
             @Resource("rules")
-            public class Rules(public val parent: AutoModeration = AutoModeration()) {
-                public class ById(public val autoModerationRuleId: Snowflake, public val parent: Rules = Rules())
+            public class Rules(public val parent: AutoModeration) {
+                public class ById(public val autoModerationRuleId: Snowflake, public val parent: Rules)
             }
         }
     }
@@ -183,7 +183,7 @@ public class Channels {
                 public class Reactions(public val parent: Messages.ById) {
                     public class ById(public val emojiId: Snowflake, public val parent: Reactions) {
                         @Resource("@me")
-                        public class Me(@Contextual public val parent: ById)
+                        public class Me(public val parent: Guilds.ById.Emojis)
                         @Resource("{userId}")
                         public class ReactorById(public val userId: Snowflake,@Contextual public val parent: ById)
 
