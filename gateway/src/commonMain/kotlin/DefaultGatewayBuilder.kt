@@ -2,6 +2,7 @@ package dev.kord.gateway
 
 import dev.kord.common.KordConfiguration
 import dev.kord.common.http.HttpEngine
+import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.ratelimit.IdentifyRateLimiter
@@ -12,10 +13,11 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
+import io.ktor.serialization.kotlinx.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.serialization.json.Json
 import kotlin.time.Duration.Companion.seconds
 
 public class DefaultGatewayBuilder {
@@ -28,11 +30,15 @@ public class DefaultGatewayBuilder {
     public var dispatcher: CoroutineDispatcher = Dispatchers.Default
     public var eventFlow: MutableSharedFlow<Event> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
 
+    @OptIn(KordUnsafe::class)
     public fun build(): DefaultGateway {
-        val client = client ?: HttpClient(HttpEngine) {
-            install(WebSockets)
-            install(ContentNegotiation) {
-                json()
+        val client = client ?: HttpClient(CIO) {
+            install(WebSockets) {
+                contentConverter = KotlinxWebsocketSerializationConverter(Json)
+
+                extensions {
+                    install(WebSocketCompression)
+                }
             }
         }
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)

@@ -8,25 +8,30 @@ import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
 import kotlinx.atomicfu.atomic
 import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.SerializationStrategy as KSerializationStrategy
 
+@Serializable(with = Command.SerializationStrategy::class)
 public sealed class Command {
 
     public data class Heartbeat(val sequenceNumber: Int?) : Command()
 
-    public object SerializationStrategy : KSerializationStrategy<Command> {
+    public object SerializationStrategy : KSerializer<Command> {
 
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Command") {
             element("op", OpCode.serializer().descriptor)
             element("d", JsonElement.serializer().descriptor)
         }
+
+        override fun deserialize(decoder: Decoder): Command =
+            TODO("Deserializing gateway commands is not supported yet")
 
         @OptIn(PrivilegedIntent::class)
         override fun serialize(encoder: Encoder, value: Command) {

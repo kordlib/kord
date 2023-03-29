@@ -16,12 +16,12 @@ import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.json.Json
 import mu.KotlinLogging
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -76,13 +76,6 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private val handshakeHandler: HandshakeHandler
 
-    private lateinit var inflater: Inflater
-
-    private val jsonParser = Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
-
     private val stateMutex = Mutex()
 
     init {
@@ -110,14 +103,9 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 }
 
                 defaultGatewayLogger.trace { "opening gateway connection to $gatewayUrl" }
-                socket = data.client.webSocketSession { url(gatewayUrl) }
-
-                /**
-                 * https://discord.com/developers/docs/topics/gateway#transport-compression
-                 *
-                 * > Every connection to the gateway should use its own unique zlib context.
-                 */
-                inflater = Inflater()
+                socket = data.client.webSocketSession {
+                    url(gatewayUrl)
+                }
             } catch (exception: Exception) {
                 defaultGatewayLogger.error(exception)
                 if (exception.isTimeout()) {
@@ -167,31 +155,12 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private suspend fun readSocket() {
-        socket.incoming.asFlow().buffer(Channel.UNLIMITED).collect {
-            when (it) {
-                is Frame.Binary, is Frame.Text -> read(it)
-                else -> { /*ignore*/
-                }
-            }
-        }
-    }
-
-    private suspend fun read(frame: Frame) {
-        defaultGatewayLogger.trace { "Received raw frame: $frame" }
-        val json = when {
-            compression -> with(inflater) { frame.inflateData() }
-            else -> frame.data.decodeToString()
-        }
-
-        try {
-            defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json) ?: return
+        while (!socket.incoming.isClosedForReceive) {
+            val event = socket.receiveDeserialized<Event>()
             data.eventFlow.emit(event)
-        } catch (exception: Exception) {
-            defaultGatewayLogger.error(exception)
         }
-
     }
 
     private suspend fun handleClose() {
@@ -209,6 +178,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 state.update { State.Stopped }
                 throw IllegalStateException("Gateway closed: ${reason.code} ${reason.message}")
             }
+
             discordReason.resetSession -> {
                 setStopped()
             }
@@ -218,14 +188,6 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     // This avoids a bug with the atomicfu compiler plugin
     private fun setStopped() {
         state.update { State.Running(true) }
-    }
-
-    private fun <T> ReceiveChannel<T>.asFlow() = flow {
-        try {
-            for (value in this@asFlow) emit(value)
-        } catch (ignore: CancellationException) {
-            //reading was stopped from somewhere else, ignore
-        }
     }
 
     override suspend fun stop() {
@@ -268,14 +230,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
-        val json = Json.encodeToString(Command.SerializationStrategy, command)
-        if (command is Identify) {
-            defaultGatewayLogger.trace {
-                val copy = command.copy(token = "token")
-                "Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
-            }
-        } else defaultGatewayLogger.trace { "Gateway >>> $json" }
-        socket.send(Frame.Text(json))
+        socket.sendSerialized(command)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)

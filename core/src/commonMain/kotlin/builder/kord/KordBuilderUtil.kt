@@ -1,22 +1,37 @@
 package dev.kord.core.builder.kord
 
 import dev.kord.common.annotation.KordInternal
+import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.http.HttpEngine
+import dev.kord.gateway.WebSocketCompression
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
+import io.ktor.serialization.kotlinx.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.util.*
 import kotlinx.serialization.json.Json
 
+@OptIn(KordUnsafe::class)
 internal fun HttpClientConfig<*>.defaultConfig() {
     expectSuccess = false
 
-    install(ContentNegotiation) {
-        json()
+    val json = Json {
+        encodeDefaults = false
+        allowStructuredMapKeys = true
+        ignoreUnknownKeys = true
+        isLenient = true
     }
-    install(WebSockets)
+    install(ContentNegotiation) {
+        json(json)
+    }
+    install(WebSockets) {
+        contentConverter = KotlinxWebsocketSerializationConverter(json)
+        extensions {
+            install(WebSocketCompression)
+        }
+    }
 }
 
 /** @suppress */
@@ -26,18 +41,8 @@ public fun HttpClient?.configure(): HttpClient {
         defaultConfig()
     }
 
-    val json = Json {
-        encodeDefaults = false
-        allowStructuredMapKeys = true
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
-
     return HttpClient(HttpEngine) {
         defaultConfig()
-        install(ContentNegotiation) {
-            json(json)
-        }
     }
 }
 
