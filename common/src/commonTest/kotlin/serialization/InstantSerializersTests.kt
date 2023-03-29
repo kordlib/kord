@@ -63,7 +63,7 @@ abstract class InstantSerializerTest(
     }
 
     @Test
-    @JsName("testtest6")
+    @JsName("test6")
     fun `past Instant can be deserialized`() {
         assertEquals(expected = mirroredInstant, actual = deserialize("-$json"))
     }
