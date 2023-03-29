@@ -2452,6 +2452,7 @@ public final class dev/kord/core/cache/data/ApplicationCommandParameterData {
 	public static final field Companion Ldev/kord/core/cache/data/ApplicationCommandParameterData$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalBoolean;
@@ -2489,6 +2490,7 @@ public final class dev/kord/core/cache/data/ApplicationCommandSubcommandData {
 	public static final field Companion Ldev/kord/core/cache/data/ApplicationCommandSubcommandData$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalBoolean;
@@ -4746,6 +4748,7 @@ public final class dev/kord/core/cache/data/RegionData {
 	public static final field Companion Ldev/kord/core/cache/data/RegionData$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZ)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalSnowflake;Ljava/lang/String;ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun component3 ()Ljava/lang/String;

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 public data class RegionData(
     val id: String,
-    val guildId: OptionalSnowflake,
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: String,
     val optimal: Boolean,
     val deprecated: Boolean,

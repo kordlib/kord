@@ -1,7 +1,7 @@
 package dev.kord.ksp
 
 import com.google.devtools.ksp.processing.Resolver
-import com.google.devtools.ksp.symbol.KSAnnotation
+import com.google.devtools.ksp.symbol.*
 import kotlin.reflect.KProperty1
 
 internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(inDepth: Boolean = false) =
@@ -18,3 +18,12 @@ internal class AnnotationArguments private constructor(private val map: Map<Stri
             get() = AnnotationArguments(arguments.associate { it.name!!.getShortName() to it.value!! })
     }
 }
+
+internal val KSReferenceElement.isClassifierReference: Boolean
+    get() = when (this) {
+        is KSDynamicReference, is KSCallableReference -> false
+        is KSClassifierReference -> true
+        is KSDefNonNullReference -> enclosedType.isClassifierReference
+        is KSParenthesizedReference -> element.isClassifierReference
+        else -> error("Unexpected KSReferenceElement: $this")
+    }
