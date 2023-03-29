@@ -28,7 +28,7 @@ internal class OptionalTest {
 
 
     @Serializable
-    private class NullOptionalEntity(val value: Optional<String?>)
+    private class NullOptionalEntity(val value: Optional<String?> = Optional.Missing())
 
     @Test
     fun `deserializing null in nullable optional assigns Null`() {

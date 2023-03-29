@@ -112,8 +112,8 @@ public fun ApplicationCommandGroupData(data: ApplicationCommandOptionData): Appl
 public data class ApplicationCommandSubcommandData(
     val name: String,
     val description: String,
-    val isDefault: OptionalBoolean,
-    val parameters: Optional<List<ApplicationCommandParameterData>>
+    val isDefault: OptionalBoolean = OptionalBoolean.Missing,
+    val parameters: Optional<List<ApplicationCommandParameterData>> = Optional.Missing(),
 )
 
 
@@ -133,9 +133,9 @@ public fun ApplicationCommandSubCommandData(data: ApplicationCommandOptionData):
 public data class ApplicationCommandParameterData(
     val name: String,
     val description: String,
-    val required: OptionalBoolean,
-    val choices: Optional<List<ApplicationCommandOptionChoiceData>>,
-    val channelTypes: Optional<List<ChannelType>>
+    val required: OptionalBoolean = OptionalBoolean.Missing,
+    val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
 )
 
 
