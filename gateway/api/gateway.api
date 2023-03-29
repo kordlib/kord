@@ -199,6 +199,11 @@ public final class dev/kord/gateway/Close$ZombieConnection : dev/kord/gateway/Cl
 }
 
 public abstract class dev/kord/gateway/Command {
+	public static final field Companion Ldev/kord/gateway/Command$Companion;
+}
+
+public final class dev/kord/gateway/Command$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/Command$Heartbeat : dev/kord/gateway/Command {
@@ -212,8 +217,10 @@ public final class dev/kord/gateway/Command$Heartbeat : dev/kord/gateway/Command
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/gateway/Command$SerializationStrategy : kotlinx/serialization/SerializationStrategy {
+public final class dev/kord/gateway/Command$SerializationStrategy : kotlinx/serialization/KSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Command$SerializationStrategy;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Command;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Command;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
@@ -598,13 +605,20 @@ public abstract class dev/kord/gateway/DispatchEvent : dev/kord/gateway/Event {
 }
 
 public abstract class dev/kord/gateway/Event {
+	public static final field Companion Ldev/kord/gateway/Event$Companion;
 }
 
-public final class dev/kord/gateway/Event$DeserializationStrategy : kotlinx/serialization/DeserializationStrategy {
+public final class dev/kord/gateway/Event$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/Event$DeserializationStrategy : kotlinx/serialization/KSerializer {
 	public static final field INSTANCE Ldev/kord/gateway/Event$DeserializationStrategy;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/Event;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Event;)Ljava/lang/Void;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
 public abstract interface class dev/kord/gateway/Gateway : kotlinx/coroutines/CoroutineScope {
@@ -1946,6 +1960,26 @@ public final class dev/kord/gateway/VoiceStateUpdate : dev/kord/gateway/Dispatch
 	public final fun getVoiceState ()Ldev/kord/common/entity/DiscordVoiceState;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/WebSocketCompression : io/ktor/websocket/WebSocketExtension {
+	public static final field Companion Ldev/kord/gateway/WebSocketCompression$Companion;
+	public fun <init> ()V
+	public fun clientNegotiation (Ljava/util/List;)Z
+	public fun getFactory ()Lio/ktor/websocket/WebSocketExtensionFactory;
+	public fun getProtocols ()Ljava/util/List;
+	public fun processIncomingFrame (Lio/ktor/websocket/Frame;)Lio/ktor/websocket/Frame;
+	public fun processOutgoingFrame (Lio/ktor/websocket/Frame;)Lio/ktor/websocket/Frame;
+	public fun serverNegotiation (Ljava/util/List;)Ljava/util/List;
+}
+
+public final class dev/kord/gateway/WebSocketCompression$Companion : io/ktor/websocket/WebSocketExtensionFactory {
+	public fun getKey ()Lio/ktor/util/AttributeKey;
+	public fun getRsv1 ()Z
+	public fun getRsv2 ()Z
+	public fun getRsv3 ()Z
+	public fun install (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/WebSocketCompression;
+	public synthetic fun install (Lkotlin/jvm/functions/Function1;)Lio/ktor/websocket/WebSocketExtension;
 }
 
 public final class dev/kord/gateway/WebhooksUpdate : dev/kord/gateway/DispatchEvent {
