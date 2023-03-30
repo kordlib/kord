@@ -651,6 +651,7 @@ public abstract interface class dev/kord/gateway/Gateway : kotlinx/coroutines/Co
 }
 
 public final class dev/kord/gateway/Gateway$Companion {
+	public final fun fromConnectionProvider (Ldev/kord/gateway/connection/GatewayConnectionProvider;Ldev/kord/gateway/DefaultGatewayData;)Ldev/kord/gateway/Gateway;
 	public final fun none ()Ldev/kord/gateway/Gateway;
 }
 
@@ -2049,6 +2050,138 @@ public final class dev/kord/gateway/builder/Shards {
 	public final fun getTotalShards ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public class dev/kord/gateway/connection/DefaultGatewayConnection : dev/kord/gateway/connection/GatewayConnection {
+	protected static final field Companion Ldev/kord/gateway/connection/DefaultGatewayConnection$Companion;
+	public fun <init> ()V
+	public fun close (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPing ()Lkotlinx/coroutines/flow/MutableStateFlow;
+	public synthetic fun getPing ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun open (Ldev/kord/gateway/connection/GatewayConnection$Data;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun send (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+protected final class dev/kord/gateway/connection/DefaultGatewayConnection$Companion {
+}
+
+protected abstract interface class dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater : java/io/Closeable {
+	public abstract fun inflate (Lio/ktor/websocket/Frame;)[B
+}
+
+public final class dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater$None : dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater {
+	public static final field INSTANCE Ldev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater$None;
+	public fun close ()V
+	public fun inflate (Lio/ktor/websocket/Frame;)[B
+}
+
+public final class dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater$ZLib : dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater {
+	public fun <init> ()V
+	public fun close ()V
+	public fun inflate (Lio/ktor/websocket/Frame;)[B
+}
+
+protected final class dev/kord/gateway/connection/DefaultGatewayConnection$State : java/lang/Enum {
+	public static final field Closed Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
+	public static final field Closing Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
+	public static final field Open Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
+	public static final field Opening Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
+	public static final field Uninitialized Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
+	public static fun valueOf (Ljava/lang/String;)Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
+	public static fun values ()[Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
+}
+
+public abstract interface class dev/kord/gateway/connection/GatewayConnection {
+	public abstract fun close (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPing ()Lkotlinx/coroutines/flow/StateFlow;
+	public abstract fun open (Ldev/kord/gateway/connection/GatewayConnection$Data;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun send (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class dev/kord/gateway/connection/GatewayConnection$CloseReason {
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$CloseReason$Error : dev/kord/gateway/connection/GatewayConnection$CloseReason {
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun getCause ()Ljava/lang/Throwable;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$CloseReason$InvalidSession : dev/kord/gateway/connection/GatewayConnection$CloseReason {
+	public static final field INSTANCE Ldev/kord/gateway/connection/GatewayConnection$CloseReason$InvalidSession;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$CloseReason$Manual : dev/kord/gateway/connection/GatewayConnection$CloseReason {
+	public static final field INSTANCE Ldev/kord/gateway/connection/GatewayConnection$CloseReason$Manual;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$CloseReason$Plain : dev/kord/gateway/connection/GatewayConnection$CloseReason {
+	public fun <init> (ILjava/lang/String;Ldev/kord/gateway/Resume;)V
+	public final fun getCode ()I
+	public final fun getMessage ()Ljava/lang/String;
+	public final fun getResume ()Ldev/kord/gateway/Resume;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$CloseReason$Reconnect : dev/kord/gateway/connection/GatewayConnection$CloseReason {
+	public static final field INSTANCE Ldev/kord/gateway/connection/GatewayConnection$CloseReason$Reconnect;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$CloseReason$ResumableInvalidSession : dev/kord/gateway/connection/GatewayConnection$CloseReason {
+	public fun <init> (Ldev/kord/gateway/Resume;)V
+	public final fun getResume ()Ldev/kord/gateway/Resume;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$CloseReason$ResumableReconnect : dev/kord/gateway/connection/GatewayConnection$CloseReason {
+	public fun <init> (Ldev/kord/gateway/Resume;)V
+	public final fun getResume ()Ldev/kord/gateway/Resume;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$Data {
+	public fun <init> (Ldev/kord/common/entity/DiscordShard;Ljava/net/URI;Ldev/kord/gateway/connection/GatewayConnection$Session;Lio/ktor/client/HttpClient;Lkotlinx/serialization/json/Json;Lkotlinx/coroutines/flow/MutableSharedFlow;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Ldev/kord/gateway/retry/Retry;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordShard;
+	public final fun component2 ()Ljava/net/URI;
+	public final fun component3 ()Ldev/kord/gateway/connection/GatewayConnection$Session;
+	public final fun component4 ()Lio/ktor/client/HttpClient;
+	public final fun component5 ()Lkotlinx/serialization/json/Json;
+	public final fun component6 ()Lkotlinx/coroutines/flow/MutableSharedFlow;
+	public final fun component7 ()Ldev/kord/common/ratelimit/RateLimiter;
+	public final fun component8 ()Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
+	public final fun component9 ()Ldev/kord/gateway/retry/Retry;
+	public final fun copy (Ldev/kord/common/entity/DiscordShard;Ljava/net/URI;Ldev/kord/gateway/connection/GatewayConnection$Session;Lio/ktor/client/HttpClient;Lkotlinx/serialization/json/Json;Lkotlinx/coroutines/flow/MutableSharedFlow;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Ldev/kord/gateway/retry/Retry;)Ldev/kord/gateway/connection/GatewayConnection$Data;
+	public static synthetic fun copy$default (Ldev/kord/gateway/connection/GatewayConnection$Data;Ldev/kord/common/entity/DiscordShard;Ljava/net/URI;Ldev/kord/gateway/connection/GatewayConnection$Session;Lio/ktor/client/HttpClient;Lkotlinx/serialization/json/Json;Lkotlinx/coroutines/flow/MutableSharedFlow;Ldev/kord/common/ratelimit/RateLimiter;Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;Ldev/kord/gateway/retry/Retry;ILjava/lang/Object;)Ldev/kord/gateway/connection/GatewayConnection$Data;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClient ()Lio/ktor/client/HttpClient;
+	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
+	public final fun getIdentifyRateLimiter ()Ldev/kord/gateway/ratelimit/IdentifyRateLimiter;
+	public final fun getJson ()Lkotlinx/serialization/json/Json;
+	public final fun getReconnectRetry ()Ldev/kord/gateway/retry/Retry;
+	public final fun getSendRateLimiter ()Ldev/kord/common/ratelimit/RateLimiter;
+	public final fun getSession ()Ldev/kord/gateway/connection/GatewayConnection$Session;
+	public final fun getShard ()Ldev/kord/common/entity/DiscordShard;
+	public final fun getUri ()Ljava/net/URI;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class dev/kord/gateway/connection/GatewayConnection$Session {
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$Session$New : dev/kord/gateway/connection/GatewayConnection$Session {
+	public fun <init> (Ldev/kord/gateway/Identify;)V
+	public final fun getIdentify ()Ldev/kord/gateway/Identify;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnection$Session$Resumed : dev/kord/gateway/connection/GatewayConnection$Session {
+	public fun <init> (Ldev/kord/gateway/Resume;)V
+	public final fun getResume ()Ldev/kord/gateway/Resume;
+}
+
+public abstract interface class dev/kord/gateway/connection/GatewayConnectionProvider {
+	public static final field Companion Ldev/kord/gateway/connection/GatewayConnectionProvider$Companion;
+	public abstract fun provide (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class dev/kord/gateway/connection/GatewayConnectionProvider$Companion {
+	public final fun default ()Ldev/kord/gateway/connection/GatewayConnectionProvider;
 }
 
 public abstract interface class dev/kord/gateway/ratelimit/IdentifyRateLimiter {
