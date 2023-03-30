@@ -17,7 +17,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.ban.BanCreateBuilder
 import dev.kord.rest.builder.member.MemberModifyBuilder
 import dev.kord.rest.request.RestRequestException
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

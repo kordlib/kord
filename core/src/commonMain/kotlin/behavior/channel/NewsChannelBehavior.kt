@@ -25,7 +25,6 @@ import dev.kord.rest.service.patchNewsChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.WARNING
 import dev.kord.core.hash
 import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind

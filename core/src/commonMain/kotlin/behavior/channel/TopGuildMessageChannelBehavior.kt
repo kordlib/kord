@@ -10,10 +10,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.webhook.WebhookCreateBuilder
 import kotlin.DeprecationLevel.HIDDEN
-import dev.kord.rest.request.RestRequestException
-import dev.kord.rest.service.RestClient
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
