@@ -7,6 +7,9 @@ import kotlin.reflect.KProperty1
 internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(inDepth: Boolean = false) =
     getSymbolsWithAnnotation(A::class.qualifiedName!!, inDepth)
 
+internal fun Resolver.resolveAllNewClasses() = getNewFiles()
+    .flatMap { it.declarations.filterIsInstance<KSClassDeclaration>() }
+
 internal inline fun <reified A : Annotation> KSAnnotation.isOfType() = shortName.asString() == A::class.simpleName!!
         && annotationType.resolve().declaration.qualifiedName?.asString() == A::class.qualifiedName!!
 
@@ -19,6 +22,7 @@ internal class AnnotationArguments private constructor(private val map: Map<Stri
     }
 }
 
+@Suppress("RecursivePropertyAccessor")
 internal val KSReferenceElement.isClassifierReference: Boolean
     get() = when (this) {
         is KSDynamicReference, is KSCallableReference -> false
