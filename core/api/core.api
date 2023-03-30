@@ -2081,14 +2081,7 @@ public final class dev/kord/core/builder/components/ButtonBuilderExtensionsKt {
 	public static final fun emoji (Ldev/kord/rest/builder/component/ButtonBuilder;Ldev/kord/core/entity/ReactionEmoji$Unicode;)V
 }
 
-public final class dev/kord/core/builder/kord/KordBuilder : dev/kord/core/builder/kord/KordBuilderBase {
-	public fun <init> (Ljava/lang/String;)V
-	public fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getEnableShutdownHook ()Z
-	public final fun setEnableShutdownHook (Z)V
-}
-
-public abstract class dev/kord/core/builder/kord/KordBuilderBase {
+public abstract class dev/kord/core/builder/kord/BaseKordBuilder {
 	public fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	protected final fun buildBase (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun cache (Lkotlin/jvm/functions/Function2;)V
@@ -2110,6 +2103,13 @@ public abstract class dev/kord/core/builder/kord/KordBuilderBase {
 	public final fun setHttpClient (Lio/ktor/client/HttpClient;)V
 	public final fun setStackTraceRecovery (Z)V
 	public final fun sharding (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class dev/kord/core/builder/kord/KordBuilder : dev/kord/core/builder/kord/BaseKordBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getEnableShutdownHook ()Z
+	public final fun setEnableShutdownHook (Z)V
 }
 
 public final class dev/kord/core/builder/kord/KordBuilderKt {

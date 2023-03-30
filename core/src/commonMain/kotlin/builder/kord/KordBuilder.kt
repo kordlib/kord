@@ -38,7 +38,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -63,9 +62,9 @@ public operator fun DefaultGateway.Companion.invoke(
 private val logger = KotlinLogging.logger { }
 private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
 
-public expect class KordBuilder(token: String) : KordBuilderBase
+public expect class KordBuilder(token: String) : BaseKordBuilder
 
-public abstract class KordBuilderBase internal constructor(public val token: String) {
+public abstract class BaseKordBuilder internal constructor(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->

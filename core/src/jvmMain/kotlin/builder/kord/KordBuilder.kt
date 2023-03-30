@@ -5,7 +5,7 @@ import dev.kord.gateway.Gateway
 import kotlinx.coroutines.runBlocking
 import kotlin.concurrent.thread
 
-public actual class KordBuilder actual constructor(token: String) : KordBuilderBase(token) {
+public actual class KordBuilder actual constructor(token: String) : BaseKordBuilder(token) {
     /**
      * Enable adding a [Runtime.addShutdownHook] to log out of the [Gateway] when the process is killed.
      */
