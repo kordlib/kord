@@ -7,7 +7,7 @@ import java.util.zip.InflaterOutputStream
 internal actual class Inflater {
     private val delegate = java.util.zip.Inflater()
 
-    actual suspend fun Frame.inflateData(): String {
+    actual fun Frame.inflateData(): String {
         val outputStream = ByteArrayOutputStream()
         InflaterOutputStream(outputStream, delegate).use {
             it.write(data)

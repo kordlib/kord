@@ -16,8 +16,6 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlin.DeprecationLevel.HIDDEN
-import kotlin.jvm.JvmName
 import kotlin.time.Duration.Companion.seconds
 
 public class DefaultGatewayBuilder {

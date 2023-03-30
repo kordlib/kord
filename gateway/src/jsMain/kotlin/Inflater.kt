@@ -8,7 +8,7 @@ import node.buffer.BufferEncoding
 internal actual class Inflater {
     private val inflate = Inflate()
 
-    actual suspend fun Frame.inflateData(): String {
+    actual fun Frame.inflateData(): String {
         val buffer = Buffer.from(data)
 
         return inflate.process(buffer).toString(BufferEncoding.utf8)
