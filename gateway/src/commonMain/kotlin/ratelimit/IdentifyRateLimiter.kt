@@ -11,7 +11,6 @@ import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.selects.select
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.ERROR
 import kotlin.jvm.JvmField
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.times
