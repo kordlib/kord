@@ -13,8 +13,6 @@ internal actual class Inflater {
             it.write(data)
         }
 
-        return outputStream.use {
-            String(outputStream.toByteArray(), 0, outputStream.size(), Charsets.UTF_8)
-        }
+        return outputStream.use { it.toByteArray().decodeToString() }
     }
 }
