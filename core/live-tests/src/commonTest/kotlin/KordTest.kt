@@ -4,7 +4,7 @@ import dev.kord.core.event.gateway.ReadyEvent
 import kotlinx.coroutines.test.runTest
 import kotlin.js.JsName
 import kotlin.test.Test
-import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
 internal class KordTest {
     @Test
@@ -13,6 +13,6 @@ internal class KordTest {
         val kord = Kord.restOnly(testToken)
         val job = kord.on<ReadyEvent> {}
         kord.shutdown()
-        assertEquals(false, job.isActive)
+        assertFalse(job.isActive)
     }
 }
