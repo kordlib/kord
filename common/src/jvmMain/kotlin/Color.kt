@@ -1,5 +1,3 @@
 package dev.kord.common
 
-import java.awt.Color as AwtColor
-
-public val AwtColor.kColor: Color get() = Color(rgb)
+public val java.awt.Color.kColor: Color get() = Color(rgb)
