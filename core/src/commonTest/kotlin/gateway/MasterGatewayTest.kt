@@ -1,6 +1,5 @@
-package gateway
+package dev.kord.core.gateway
 
-import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.gateway.Command
 import dev.kord.gateway.Event
 import dev.kord.gateway.Gateway

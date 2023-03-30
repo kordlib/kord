@@ -1,3 +1,5 @@
+package dev.kord.core
+
 import dev.kord.common.entity.Snowflake
 import kotlin.random.Random
 import kotlin.random.nextULong

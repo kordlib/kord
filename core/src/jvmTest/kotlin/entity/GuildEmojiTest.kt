@@ -1,10 +1,10 @@
 package dev.kord.core.entity
 
 import dev.kord.core.cache.data.EmojiData
-import equality.GuildEntityEqualityTest
+import dev.kord.core.equality.GuildEntityEqualityTest
+import dev.kord.core.mockKord
 import io.mockk.every
 import io.mockk.mockk
-import mockKord
 
 internal class GuildEmojiTest : GuildEntityEqualityTest<GuildEmoji> by GuildEntityEqualityTest({ id, guildId ->
     val kord = mockKord()

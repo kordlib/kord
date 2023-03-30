@@ -1,7 +1,7 @@
 package dev.kord.core.behavior.channel
 
-import equality.ChannelEqualityTest
-import mockKord
+import dev.kord.core.equality.ChannelEqualityTest
+import dev.kord.core.mockKord
 
 @Suppress("DELEGATED_MEMBER_HIDES_SUPERTYPE_OVERRIDE")
 internal class ChannelBehaviorTest : ChannelEqualityTest<ChannelBehavior> by ChannelEqualityTest({ id ->

@@ -1,6 +1,6 @@
+package dev.kord.core
+
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.paginateBackwards
-import dev.kord.core.paginateForwards
 import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.test.runTest
 import kotlin.js.JsName

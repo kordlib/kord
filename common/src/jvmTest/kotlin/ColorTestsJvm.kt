@@ -1,9 +1,10 @@
-import dev.kord.common.kColor
+package dev.kord.common
+
 import kotlin.test.assertEquals
 
 import kotlin.test.Test
 
-class ColorTests {
+class ColorTestsJvm {
     @Test
     fun `java to kColor conversion`() {
         val color = java.awt.Color.decode("#DBD0B4").kColor

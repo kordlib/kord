@@ -1,4 +1,4 @@
-package regression
+package dev.kord.core.regression
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.ReactionEmoji

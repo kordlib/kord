@@ -1,6 +1,5 @@
-package serialization
+package dev.kord.common.serialization
 
-import dev.kord.common.serialization.*
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName

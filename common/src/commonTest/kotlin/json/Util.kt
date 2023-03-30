@@ -1,4 +1,4 @@
-package json
+package dev.kord.common.json
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*

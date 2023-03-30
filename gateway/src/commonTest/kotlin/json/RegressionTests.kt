@@ -1,4 +1,4 @@
-package json
+package dev.kord.gateway.json
 
 import dev.kord.gateway.Event
 import dev.kord.gateway.Reconnect

@@ -1,10 +1,10 @@
 package dev.kord.core.entity
 
 import dev.kord.core.cache.data.IntegrationData
-import equality.GuildEntityEqualityTest
+import dev.kord.core.equality.GuildEntityEqualityTest
 import io.mockk.every
 import io.mockk.mockk
-import mockKord
+import dev.kord.core.mockKord
 
 internal class IntegrationTest : GuildEntityEqualityTest<Integration> by GuildEntityEqualityTest ({ id, guildId ->
     val kord = mockKord()

@@ -4,11 +4,11 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
-import equality.BehaviorEqualityTest
-import equality.GuildEntityEqualityTest
+import dev.kord.core.equality.BehaviorEqualityTest
+import dev.kord.core.equality.GuildEntityEqualityTest
 import io.mockk.every
 import io.mockk.mockk
-import mockKord
+import dev.kord.core.mockKord
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

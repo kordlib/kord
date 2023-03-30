@@ -1,6 +1,5 @@
-package helper
+package dev.kord.gateway.retry
 
-import dev.kord.gateway.retry.LinearRetry
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test

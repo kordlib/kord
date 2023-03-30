@@ -1,4 +1,4 @@
-package rest
+package dev.kord.core.rest
 
 import dev.kord.common.Color
 import dev.kord.common.entity.*

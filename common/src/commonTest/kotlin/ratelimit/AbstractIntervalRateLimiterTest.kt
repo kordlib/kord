@@ -1,6 +1,5 @@
 package dev.kord.common.ratelimit
 
-import dev.kord.common.ratelimit.IntervalRateLimiter
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
 import kotlin.js.JsName

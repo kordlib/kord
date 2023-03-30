@@ -1,4 +1,4 @@
-package json
+package dev.kord.gateway.json
 
 import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.UserPremium

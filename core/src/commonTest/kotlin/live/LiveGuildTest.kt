@@ -1,4 +1,4 @@
-package live
+package dev.kord.core.live
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
@@ -7,14 +7,13 @@ import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.ReactionEmoji
 import dev.kord.core.event.guild.GuildDeleteEvent
-import dev.kord.core.live.*
 import dev.kord.core.live.exception.LiveCancellationException
+import dev.kord.core.randomId
 import dev.kord.gateway.*
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.JsonObject
-import randomId
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore

@@ -2,11 +2,11 @@ package dev.kord.core.entity
 
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.cache.data.MessageData
-import equality.BehaviorEqualityTest
-import equality.EntityEqualityTest
+import dev.kord.core.equality.BehaviorEqualityTest
+import dev.kord.core.equality.EntityEqualityTest
+import dev.kord.core.mockKord
 import io.mockk.every
 import io.mockk.mockk
-import mockKord
 
 internal class MessageTest : EntityEqualityTest<Message> by EntityEqualityTest({
     val kord = mockKord()

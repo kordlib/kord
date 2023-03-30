@@ -3,11 +3,11 @@ package dev.kord.core.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.cache.data.RoleData
-import equality.BehaviorEqualityTest
-import equality.GuildEntityEqualityTest
+import dev.kord.core.equality.BehaviorEqualityTest
+import dev.kord.core.equality.GuildEntityEqualityTest
+import dev.kord.core.mockKord
 import io.mockk.every
 import io.mockk.mockk
-import mockKord
 
 internal class RoleTest : GuildEntityEqualityTest<Role> by GuildEntityEqualityTest({ id, guildId ->
     val kord = mockKord()

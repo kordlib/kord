@@ -1,4 +1,4 @@
-package live.channel
+package dev.kord.core.live.channel
 
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DiscordChannel
@@ -7,13 +7,11 @@ import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.TopGuildChannel
-import dev.kord.core.live.channel.LiveGuildChannel
-import dev.kord.core.live.channel.onUpdate
+import dev.kord.core.randomId
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.ChannelUpdate
 import kotlinx.coroutines.test.runTest
-import randomId
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore

@@ -1,7 +1,5 @@
-package serialization
+package dev.kord.common.serialization
 
-import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
-import dev.kord.common.serialization.InstantInEpochSecondsSerializer
 import dev.kord.test.IgnoreOnJs
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer

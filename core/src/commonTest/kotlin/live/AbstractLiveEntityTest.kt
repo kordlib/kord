@@ -1,4 +1,4 @@
-package live
+package dev.kord.core.live
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.entity.Snowflake
@@ -6,7 +6,7 @@ import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
-import dev.kord.core.live.AbstractLiveKordEntity
+import dev.kord.core.randomId
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Command
 import dev.kord.gateway.Event
@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.test.runTest
-import randomId
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.test.*

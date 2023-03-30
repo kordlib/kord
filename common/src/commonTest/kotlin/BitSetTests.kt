@@ -1,5 +1,5 @@
-import dev.kord.common.DiscordBitSet
-import dev.kord.common.EmptyBitSet
+package dev.kord.common
+
 import kotlin.js.JsName
 import kotlin.test.*
 

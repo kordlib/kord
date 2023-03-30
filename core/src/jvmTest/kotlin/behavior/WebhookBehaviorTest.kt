@@ -1,7 +1,7 @@
 package dev.kord.core.behavior
 
-import equality.EntityEqualityTest
-import mockKord
+import dev.kord.core.equality.EntityEqualityTest
+import dev.kord.core.mockKord
 
 internal class WebhookBehaviorTest : EntityEqualityTest<WebhookBehavior> by EntityEqualityTest({
     val kord = mockKord()

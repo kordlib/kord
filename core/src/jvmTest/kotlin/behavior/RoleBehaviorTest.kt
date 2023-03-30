@@ -1,8 +1,8 @@
 package dev.kord.core.behavior
 
 import dev.kord.common.entity.Snowflake
-import equality.GuildEntityEqualityTest
-import mockKord
+import dev.kord.core.equality.GuildEntityEqualityTest
+import dev.kord.core.mockKord
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

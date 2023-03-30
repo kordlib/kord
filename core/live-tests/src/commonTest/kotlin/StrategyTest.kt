@@ -1,9 +1,13 @@
+package dev.kord.core
+
 import dev.kord.cache.api.put
-import dev.kord.core.Kord
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.test.runTest
 import kotlin.js.JsName
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class StrategyTest {
 

@@ -1,7 +1,7 @@
 package dev.kord.core.behavior
 
-import equality.EntityEqualityTest
-import mockKord
+import dev.kord.core.equality.EntityEqualityTest
+import dev.kord.core.mockKord
 
 internal class UserBehaviorTest : EntityEqualityTest<UserBehavior> by EntityEqualityTest({
     val kord = mockKord()

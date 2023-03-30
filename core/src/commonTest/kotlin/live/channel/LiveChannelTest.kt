@@ -1,4 +1,4 @@
-package live.channel
+package dev.kord.core.live.channel
 
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.DiscordChannel
@@ -8,14 +8,13 @@ import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.*
 import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
-import dev.kord.core.live.channel.*
+import dev.kord.core.live.AbstractLiveEntityTest
 import dev.kord.core.live.exception.LiveCancellationException
+import dev.kord.core.randomId
 import dev.kord.gateway.ChannelDelete
 import dev.kord.gateway.GuildDelete
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import live.AbstractLiveEntityTest
-import randomId
 import kotlin.js.JsName
 import kotlin.reflect.KClass
 import kotlin.test.Ignore

@@ -1,11 +1,10 @@
-package entity
+package dev.kord.core.entity
 
 import dev.kord.core.cache.data.ApplicationData
-import dev.kord.core.entity.Application
-import equality.EntityEqualityTest
+import dev.kord.core.equality.EntityEqualityTest
+import dev.kord.core.mockKord
 import io.mockk.every
 import io.mockk.mockk
-import mockKord
 
 internal class ApplicationTest : EntityEqualityTest<Application> by EntityEqualityTest({
     val kord = mockKord()

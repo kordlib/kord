@@ -1,6 +1,5 @@
-package entity
+package dev.kord.common.entity
 
-import dev.kord.common.entity.Snowflake
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 

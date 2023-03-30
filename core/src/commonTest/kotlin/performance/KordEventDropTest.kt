@@ -1,4 +1,4 @@
-package performance
+package dev.kord.core.performance
 
 import dev.kord.cache.api.DataCache
 import dev.kord.common.entity.*

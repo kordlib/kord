@@ -1,3 +1,5 @@
+package dev.kord.rest.builder
+
 import dev.kord.common.entity.optional.Optional
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import kotlin.js.JsName

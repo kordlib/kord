@@ -1,4 +1,4 @@
-package live
+package dev.kord.core.live
 
 import dev.kord.common.entity.*
 import dev.kord.core.cache.data.MessageData
@@ -9,10 +9,9 @@ import dev.kord.core.event.channel.ChannelDeleteEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.message.MessageBulkDeleteEvent
 import dev.kord.core.event.message.MessageDeleteEvent
-import dev.kord.core.live.*
 import dev.kord.core.live.exception.LiveCancellationException
+import dev.kord.core.randomId
 import dev.kord.gateway.*
-import randomId
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant

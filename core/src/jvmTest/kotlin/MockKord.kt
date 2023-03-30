@@ -1,4 +1,5 @@
-import dev.kord.core.Kord
+package dev.kord.core
+
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import io.mockk.every

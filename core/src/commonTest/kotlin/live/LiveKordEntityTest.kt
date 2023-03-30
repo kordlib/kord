@@ -1,4 +1,4 @@
-package live
+package dev.kord.core.live
 
 import dev.kord.common.entity.*
 import dev.kord.core.Kord
@@ -7,15 +7,15 @@ import dev.kord.core.event.Event
 import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.message.ReactionAddEvent
-import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.exception.LiveCancellationException
-import dev.kord.core.live.on
+import dev.kord.core.randomId
 import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.MessageReactionAdd
-import kotlinx.coroutines.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
-import randomId
 import kotlin.js.JsName
 import kotlin.test.*
 import kotlin.time.Duration.Companion.milliseconds

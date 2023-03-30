@@ -1,4 +1,4 @@
-package equality
+package dev.kord.core.equality
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity

@@ -1,4 +1,4 @@
-package ratelimit
+package dev.kord.gateway.ratelimit
 
 import dev.kord.common.KordConfiguration
 import dev.kord.common.entity.DiscordUser
@@ -8,7 +8,6 @@ import dev.kord.gateway.GatewayCloseCode.Unknown
 import dev.kord.gateway.InvalidSession
 import dev.kord.gateway.Ready
 import dev.kord.gateway.ReadyData
-import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*

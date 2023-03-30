@@ -1,6 +1,6 @@
-import dev.kord.core.Kord
+package dev.kord.core
+
 import dev.kord.core.event.gateway.ReadyEvent
-import dev.kord.core.on
 import kotlinx.coroutines.test.runTest
 import kotlin.js.JsName
 import kotlin.test.Test

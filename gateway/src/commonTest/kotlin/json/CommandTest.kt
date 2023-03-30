@@ -1,4 +1,4 @@
-package json
+package dev.kord.gateway.json
 
 import dev.kord.common.entity.DiscordBotActivity
 import dev.kord.common.entity.DiscordShard
@@ -12,8 +12,8 @@ import dev.kord.gateway.*
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.*
 import kotlin.js.JsName
-import kotlin.test.assertEquals
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 private val json = Json { encodeDefaults = false }
 

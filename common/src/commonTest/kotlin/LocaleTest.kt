@@ -1,6 +1,5 @@
 package dev.kord.common
 
-import dev.kord.common.Locale
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json

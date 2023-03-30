@@ -1,6 +1,5 @@
-package entity
+package dev.kord.common.entity
 
-import dev.kord.common.entity.Snowflake
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.js.JsName

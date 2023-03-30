@@ -1,8 +1,6 @@
-package cache.data
+package dev.kord.core.cache.data
 
 import dev.kord.common.entity.ComponentType
-import dev.kord.core.cache.data.ChatComponentData
-import dev.kord.core.cache.data.ComponentData
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName

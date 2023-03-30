@@ -1,7 +1,7 @@
 package dev.kord.core.behavior.channel
 
-import equality.GuildChannelEqualityTest
-import mockKord
+import dev.kord.core.equality.GuildChannelEqualityTest
+import dev.kord.core.mockKord
 
 @Suppress("DELEGATED_MEMBER_HIDES_SUPERTYPE_OVERRIDE")
 internal class VoiceChannelBehaviorTest : GuildChannelEqualityTest<VoiceChannelBehavior> by GuildChannelEqualityTest({ id, guildId ->

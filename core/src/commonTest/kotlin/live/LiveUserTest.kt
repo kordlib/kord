@@ -1,14 +1,12 @@
-package live
+package dev.kord.core.live
 
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.User
-import dev.kord.core.live.LiveUser
-import dev.kord.core.live.onUpdate
+import dev.kord.core.randomId
 import dev.kord.gateway.UserUpdate
 import kotlinx.coroutines.test.runTest
-import randomId
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore

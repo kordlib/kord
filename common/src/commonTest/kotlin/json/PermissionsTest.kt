@@ -1,4 +1,4 @@
-package json
+package dev.kord.common.json
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.entity.*

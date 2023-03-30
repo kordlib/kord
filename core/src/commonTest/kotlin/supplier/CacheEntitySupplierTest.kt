@@ -1,4 +1,4 @@
-package supplier
+package dev.kord.core.supplier
 
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.Snowflake
@@ -7,7 +7,6 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.KordCacheBuilder
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
-import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.request.KtorRequestHandler

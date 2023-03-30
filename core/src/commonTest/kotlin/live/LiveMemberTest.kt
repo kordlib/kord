@@ -1,4 +1,4 @@
-package live
+package dev.kord.core.live
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
@@ -8,9 +8,8 @@ import dev.kord.core.entity.Member
 import dev.kord.core.event.guild.BanAddEvent
 import dev.kord.core.event.guild.GuildDeleteEvent
 import dev.kord.core.event.guild.MemberLeaveEvent
-import dev.kord.core.live.LiveMember
 import dev.kord.core.live.exception.LiveCancellationException
-import dev.kord.core.live.onUpdate
+import dev.kord.core.randomId
 import dev.kord.gateway.GuildBanAdd
 import dev.kord.gateway.GuildDelete
 import dev.kord.gateway.GuildMemberRemove
@@ -18,7 +17,6 @@ import dev.kord.gateway.GuildMemberUpdate
 import kotlinx.coroutines.job
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
-import randomId
 import kotlin.js.JsName
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
