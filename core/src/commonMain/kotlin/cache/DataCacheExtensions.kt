@@ -4,6 +4,8 @@ import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.query
 import dev.kord.common.annotation.KordInternal
 import dev.kord.core.cache.data.*
+import kotlin.DeprecationLevel.HIDDEN
+import kotlin.jvm.JvmName
 
 /**
  * Registers all Kord data classes for this cache
@@ -55,3 +57,8 @@ internal suspend fun DataCache.removeKordData() {
  * directly to this instance.
  */
 public fun DataCache.createView(): DataCacheView = DataCacheView(this)
+
+@Suppress("RedundantSuspendModifier")
+@Deprecated("Binary compatibility, keep for some releases.", level = HIDDEN)
+@JvmName("createView")
+public suspend fun DataCache.createView0(): DataCacheView = createView()
