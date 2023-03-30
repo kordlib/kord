@@ -2204,7 +2204,7 @@ public final class dev/kord/core/cache/KordCacheBuilder {
 	public final fun webhooks (Lkotlin/jvm/functions/Function2;)V
 }
 
-public final class dev/kord/core/cache/KordCacheBuilderJvm {
+public final class dev/kord/core/cache/KordCacheBuilderKt {
 	public static final fun lruCache (Ldev/kord/core/cache/KordCacheBuilder;I)Lkotlin/jvm/functions/Function2;
 	public static synthetic fun lruCache$default (Ldev/kord/core/cache/KordCacheBuilder;IILjava/lang/Object;)Lkotlin/jvm/functions/Function2;
 }

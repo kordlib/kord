@@ -1997,7 +1997,7 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$Def
 	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
 }
 
-public final class dev/kord/rest/builder/message/create/MessageCreateBuilderJvm {
+public final class dev/kord/rest/builder/message/create/MessageCreateBuilderJvmKt {
 	public static final fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
 }
 
@@ -2160,7 +2160,7 @@ public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$Def
 	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
 }
 
-public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderJvm {
+public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderJvmKt {
 	public static final fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
 }
 

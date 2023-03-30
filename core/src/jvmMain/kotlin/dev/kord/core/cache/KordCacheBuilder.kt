@@ -1,5 +1,3 @@
-@file:JvmName("KordCacheBuilderJvm")
-
 package dev.kord.core.cache
 
 import dev.kord.cache.api.DataEntryCache

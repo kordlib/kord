@@ -1,4 +1,3 @@
-@file:JvmName("DiscordBitSetJvm")
 package dev.kord.common
 
 import java.math.BigInteger

@@ -1,4 +1,3 @@
-@file:JvmName("DefaultGatewayJvm")
 package dev.kord.gateway
 
 import java.nio.channels.UnresolvedAddressException

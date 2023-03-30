@@ -1,5 +1,3 @@
-@file:JvmName("MessageModifyBuilderJvm")
-
 package dev.kord.rest.builder.message.modify
 
 import dev.kord.rest.NamedFile

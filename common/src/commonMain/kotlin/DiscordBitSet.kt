@@ -1,9 +1,6 @@
 package dev.kord.common
 
-import io.ktor.utils.io.bits.*
 import io.ktor.utils.io.core.*
-import io.ktor.utils.io.core.internal.*
-import io.ktor.utils.io.pool.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
