@@ -7,14 +7,13 @@ import kotlin.reflect.KProperty1
 internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(inDepth: Boolean = false) =
     getSymbolsWithAnnotation(A::class.qualifiedName!!, inDepth)
 
-internal fun Resolver.getNewClasses() = getNewFiles()
-    .flatMap { it.declarations.filterIsInstance<KSClassDeclaration>() }
+internal fun Resolver.getNewClasses() = getNewFiles().flatMap { it.declarations.filterIsInstance<KSClassDeclaration>() }
 
-internal inline fun <reified A : Annotation> KSAnnotation.isOfType() =
-    isOfType(A::class.qualifiedName!!.substringAfterLast('.'), A::class.simpleName!!)
+internal inline fun <reified A : Annotation> KSAnnotation.isOfType() = isOfType(A::class.qualifiedName!!)
 
-internal fun KSAnnotation.isOfType(qualifier: String, simpleName: String) = shortName.asString() == simpleName
-        && annotationType.resolve().declaration.qualifiedName?.asString() == "$qualifier.$simpleName"
+internal fun KSAnnotation.isOfType(qualifiedName: String) =
+    shortName.asString() == qualifiedName.substringAfterLast('.')
+        && annotationType.resolve().declaration.qualifiedName?.asString() == qualifiedName
 
 internal class AnnotationArguments private constructor(private val map: Map<String, Any>) {
     internal operator fun get(parameter: KProperty1<out Annotation, Any>) = map[parameter.name]

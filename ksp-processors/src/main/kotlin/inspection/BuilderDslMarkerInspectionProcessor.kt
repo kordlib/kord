@@ -19,7 +19,7 @@ private class BuilderDslMarkerInspectionProcessor(private val logger: KSPLogger)
             .filterNot { Modifier.INTERNAL in it.modifiers }
             .filter {
                 it.annotations.none { annotation ->
-                    annotation.isOfType("dev.kord.common.annotation", "KordDsl")
+                    annotation.isOfType("dev.kord.common.annotation.KordDsl")
                 }
             }
             .filter {
