@@ -10,7 +10,6 @@ import dev.kord.rest.service.ChannelService
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
-import io.ktor.util.cio.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
@@ -64,13 +63,14 @@ class MessageRequests {
         val fileChannel = readFile("images/kord.png")
 
         with(fileChannel) {
+            assertFalse(isClosedForWrite)
             assertFalse(isClosedForRead)
-            assertTrue(totalBytesRead == 0L)
+            assertEquals(0L, totalBytesRead)
 
             val createdMessage = channelService.createMessage(mockId) {
                 addFile(fileName, ChannelProvider { fileChannel })
             }
-            assertEquals(createdMessage, mockMessage)
+            assertEquals(mockMessage, createdMessage)
 
             assertTrue(isClosedForWrite)
             assertTrue(isClosedForRead)
