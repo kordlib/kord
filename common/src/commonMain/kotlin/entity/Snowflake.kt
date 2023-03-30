@@ -138,7 +138,7 @@ public class Snowflake : Comparable<Snowflake> {
      *
      * The comparison is based first on the value of the [timestamp], then on the value of the [workerId], then on the
      * value of the [processId] and finally on the value of the [increment]. It is *consistent with equals*, as defined
-     * by [Comparable][java.lang.Comparable].
+     * by [Comparable](https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html).
      */
     override fun compareTo(other: Snowflake): Int {
         // the layout of Snowflake values from MSB to LSB is timestamp, workerId, processId, increment,
@@ -175,9 +175,10 @@ public class Snowflake : Comparable<Snowflake> {
          * [processId] and [increment] are not taken into account.
          *
          * Note: this comparator imposes an ordering that is *inconsistent with equals*, as defined by
-         * [Comparator][java.util.Comparator]. It therefore shouldn't be used to order a
-         * [SortedSet][java.util.SortedSet] or [SortedMap][java.util.SortedMap]. This is because `TimestampComparator`
-         * only compares the first 42 bits of the ULong [value] (comparing the timestamp), whereas
+         * [Comparator](https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html). It therefore shouldn't be
+         * used to order a [SortedSet](https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html) or
+         * [SortedMap](https://docs.oracle.com/javase/8/docs/api/java/util/SortedMap.html). This is because
+         * `TimestampComparator` only compares the first 42 bits of the ULong [value] (comparing the timestamp), whereas
          * [equals][Snowflake.equals] compares all the bits of the [value]. `TimestampComparator` can return `0` even if
          * [equals][Snowflake.equals] returns `false`, but [equals][Snowflake.equals] only returns `true` if
          * `TimestampComparator` returns `0`.
