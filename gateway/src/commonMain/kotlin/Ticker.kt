@@ -52,7 +52,7 @@ public class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.De
 
 private fun tickingFlow(period: Long): Flow<Unit> = flow {
     while (true) {
-        emit(Unit)
         delay(period)
+        emit(Unit)
     }
 }
