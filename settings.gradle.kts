@@ -8,15 +8,15 @@ include(
     "bom",
     "common",
     "core",
+    "core:live-tests",
+    "core-voice",
     "gateway",
     "ksp-annotations",
     "ksp-processors",
     "rest",
-    "voice",
-    "core-voice",
-    "test-kit",
     "samples",
-    "core:live-tests"
+    "test-kit",
+    "voice",
 )
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
