@@ -108,7 +108,7 @@ dependencies {
 
 <dependency>
     <groupId>dev.kord</groupId>
-    <artifactId>kord-gateway</artifactId>
+    <artifactId>kord-gateway-jvm</artifactId>
     <version>{version}</version>
 </dependency>
 ```
