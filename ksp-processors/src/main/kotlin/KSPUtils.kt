@@ -7,11 +7,14 @@ import kotlin.reflect.KProperty1
 internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(inDepth: Boolean = false) =
     getSymbolsWithAnnotation(A::class.qualifiedName!!, inDepth)
 
-internal fun Resolver.resolveAllNewClasses() = getNewFiles()
+internal fun Resolver.getNewClasses() = getNewFiles()
     .flatMap { it.declarations.filterIsInstance<KSClassDeclaration>() }
 
-internal inline fun <reified A : Annotation> KSAnnotation.isOfType() = shortName.asString() == A::class.simpleName!!
-        && annotationType.resolve().declaration.qualifiedName?.asString() == A::class.qualifiedName!!
+internal inline fun <reified A : Annotation> KSAnnotation.isOfType() =
+    isOfType(A::class.qualifiedName!!.substringAfterLast('.'), A::class.simpleName!!)
+
+internal fun KSAnnotation.isOfType(qualifier: String, simpleName: String) = shortName.asString() == simpleName
+        && annotationType.resolve().declaration.qualifiedName?.asString() == "$qualifier.$simpleName"
 
 internal class AnnotationArguments private constructor(private val map: Map<String, Any>) {
     internal operator fun get(parameter: KProperty1<out Annotation, Any>) = map[parameter.name]
@@ -32,15 +35,9 @@ internal val KSReferenceElement.isClassifierReference: Boolean
         else -> error("Unexpected KSReferenceElement: $this")
     }
 
-internal val KSClassDeclaration.allSupertypes: Sequence<KSClassDeclaration>
-    get() = superTypes.flatMap {
-        val declaration = it.classDeclaration
-        declaration.allSupertypes + declaration
-    }
-
 @Suppress("RecursivePropertyAccessor")
 private val KSTypeReference.classDeclaration: KSClassDeclaration
-    get() = when(val declaration = resolve().declaration) {
+    get() = when (val declaration = resolve().declaration) {
         is KSClassDeclaration -> declaration
         is KSTypeAlias -> declaration.type.classDeclaration
         else -> error("Unsupported type: $declaration")
