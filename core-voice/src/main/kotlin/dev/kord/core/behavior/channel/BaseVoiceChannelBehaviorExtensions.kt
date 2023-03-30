@@ -1,3 +1,5 @@
+@file:JvmName("VoiceBaseVoiceChannelBehaviorKt") // preserve old name for binary compatibility
+
 package dev.kord.core.behavior.channel
 
 import dev.kord.common.annotation.KordVoice
