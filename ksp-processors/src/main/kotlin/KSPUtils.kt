@@ -34,11 +34,3 @@ internal val KSReferenceElement.isClassifierReference: Boolean
         is KSParenthesizedReference -> element.isClassifierReference
         else -> error("Unexpected KSReferenceElement: $this")
     }
-
-@Suppress("RecursivePropertyAccessor")
-private val KSTypeReference.classDeclaration: KSClassDeclaration
-    get() = when (val declaration = resolve().declaration) {
-        is KSClassDeclaration -> declaration
-        is KSTypeAlias -> declaration.type.classDeclaration
-        else -> error("Unsupported type: $declaration")
-    }
