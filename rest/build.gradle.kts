@@ -2,8 +2,6 @@
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
-    `kotlinx-atomicfu`
-    `kotlinx-serialization`
     alias(libs.plugins.buildconfig)
 }
 
@@ -37,4 +35,8 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    kspCommonMainMetadata(projects.kspProcessors)
 }

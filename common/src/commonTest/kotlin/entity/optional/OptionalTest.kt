@@ -33,7 +33,7 @@ internal class OptionalTest {
 
 
     @Serializable
-    private class NullOptionalEntity(val value: Optional<String?>)
+    private class NullOptionalEntity(val value: Optional<String?> = Optional.Missing())
 
     @Test
     @JsName("test3")

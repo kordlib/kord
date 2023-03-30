@@ -1,7 +1,6 @@
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
-    `kotlinx-serialization`
 }
 
 kotlin {
@@ -51,4 +50,8 @@ kotlin {
             }
         }
     }
+}
+
+dependencies {
+    kspCommonMainMetadata(projects.kspProcessors)
 }
