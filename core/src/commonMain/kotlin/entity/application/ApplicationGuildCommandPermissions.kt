@@ -6,8 +6,6 @@ import dev.kord.core.cache.data.GuildApplicationCommandPermissionData
 import dev.kord.core.cache.data.GuildApplicationCommandPermissionsData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlin.DeprecationLevel.HIDDEN
-import kotlin.jvm.JvmName
 
 public class GuildApplicationCommandPermission(public val data: GuildApplicationCommandPermissionData) {
 

@@ -110,11 +110,7 @@ class CacheMissingRegressions {
     fun `if data not in cache explode`() = runTest {
         withKord { kord ->
             val id = 5uL
-            assertFailsWith<IllegalStateException> {
-                runTest {
-                    kord.getChannel(Snowflake(id))
-                }
-            }
+            assertFailsWith<IllegalStateException> { kord.getChannel(Snowflake(id)) }
         }
     }
 
