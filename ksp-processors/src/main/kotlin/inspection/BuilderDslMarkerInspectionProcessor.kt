@@ -2,6 +2,8 @@ package dev.kord.ksp.inspection
 
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
+import com.google.devtools.ksp.symbol.Modifier
+import dev.kord.ksp.allSupertypes
 import dev.kord.ksp.resolveAllNewClasses
 
 class BuilderDslMarkerInspectionProcessorProvider : SymbolProcessorProvider {
@@ -12,10 +14,12 @@ class BuilderDslMarkerInspectionProcessorProvider : SymbolProcessorProvider {
 class BuilderDslMarkerInspectionProcessor(private val logger: KSPLogger) : SymbolProcessor {
     override fun process(resolver: Resolver): List<KSAnnotated> {
         resolver.resolveAllNewClasses()
+            // some internal implementations are not annotated with
+            // @KordDsl on purpose
+            .filter { Modifier.INTERNAL !in it.modifiers }
             .filter {
-                it.superTypes.any { reference ->
-                    val type = reference.resolve()
-                    type.declaration.qualifiedName?.asString() == "dev.kord.rest.builder.RequestBuilder"
+                it.allSupertypes.any { declaration ->
+                    declaration.qualifiedName?.asString() == "dev.kord.rest.builder.RequestBuilder"
                 }
             }
             .filter {

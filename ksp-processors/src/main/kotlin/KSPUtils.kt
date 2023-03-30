@@ -31,3 +31,17 @@ internal val KSReferenceElement.isClassifierReference: Boolean
         is KSParenthesizedReference -> element.isClassifierReference
         else -> error("Unexpected KSReferenceElement: $this")
     }
+
+internal val KSClassDeclaration.allSupertypes: Sequence<KSClassDeclaration>
+    get() = superTypes.flatMap {
+        val declaration = it.classDeclaration
+        declaration.allSupertypes + declaration
+    }
+
+@Suppress("RecursivePropertyAccessor")
+private val KSTypeReference.classDeclaration: KSClassDeclaration
+    get() = when(val declaration = resolve().declaration) {
+        is KSClassDeclaration -> declaration
+        is KSTypeAlias -> declaration.type.classDeclaration
+        else -> error("Unsupported type: $declaration")
+    }
