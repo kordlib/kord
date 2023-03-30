@@ -4,16 +4,13 @@ plugins {
 
 kotlin {
     sourceSets {
-        commonMain {
+        applyKordOptIns()
+        addTestKit(targets)
+        commonTest {
             dependencies {
                 implementation(projects.core)
-                implementation(projects.kspAnnotations)
             }
         }
-        addTestKit(targets)
-    }
-    sourceSets {
-        applyKordOptIns()
     }
 }
 
