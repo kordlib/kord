@@ -11,8 +11,6 @@ import kotlin.test.assertNull
 
 class StrategyTest {
 
-    lateinit var kord: Kord
-
     @Test
     @JsName("test1")
     fun `rest only`() = runTest {
