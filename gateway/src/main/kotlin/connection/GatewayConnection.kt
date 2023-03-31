@@ -21,6 +21,10 @@ import kotlin.time.Duration
  */
 public interface GatewayConnection {
 
+    /**
+     * The current ping of the connection.
+     * Null if the connection is closed or not opened yet.
+     */
     public val ping: StateFlow<Duration?>
 
     /**
@@ -59,9 +63,19 @@ public interface GatewayConnection {
         val reconnectRetry: Retry
     )
 
+    /**
+     * Represents a gateway connection session.
+     */
     public sealed interface Session {
 
+        /**
+         * Represents a new session.
+         */
         public class New(public val identify: Identify) : Session
+
+        /**
+         * Represents a resumed session.
+         */
         public class Resumed(public val resume: Resume) : Session
     }
 

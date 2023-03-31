@@ -24,6 +24,9 @@ import kotlin.time.TimeSource
 import kotlin.time.TimeSource.Monotonic.ValueTimeMark
 import io.ktor.websocket.CloseReason as KtorCloseReason
 
+/**
+ * Default implementation of [GatewayConnection].
+ */
 public open class DefaultGatewayConnection : GatewayConnection {
 
     override val ping: MutableStateFlow<Duration?> = MutableStateFlow(null)
