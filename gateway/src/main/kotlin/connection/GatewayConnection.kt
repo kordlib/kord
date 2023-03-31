@@ -16,6 +16,12 @@ import java.net.URI
 import kotlin.time.Duration
 
 /**
+ * Creates default [GatewayConnection] implementation.
+ * @see [GatewayConnection]
+ */
+public fun GatewayConnection(): GatewayConnection = DefaultGatewayConnection()
+
+/**
  * Represents a connection to the Discord gateway.
  * Lifecycle of a connection is very simple: [open] and [close].
  */

@@ -27,7 +27,7 @@ import io.ktor.websocket.CloseReason as KtorCloseReason
 /**
  * Default implementation of [GatewayConnection].
  */
-public open class DefaultGatewayConnection : GatewayConnection {
+internal class DefaultGatewayConnection : GatewayConnection {
 
     override val ping: MutableStateFlow<Duration?> = MutableStateFlow(null)
     private lateinit var inflater: FrameInflater
@@ -40,7 +40,7 @@ public open class DefaultGatewayConnection : GatewayConnection {
     private val sequence: Int? by atomicSequence
     private val log: KLogger = KotlinLogging.logger { }
     private val atomicHeartbeatTimeMark: AtomicRef<ValueTimeMark> = atomic(TimeSource.Monotonic.markNow())
-    private var heartbeatTimeMark by atomicHeartbeatTimeMark
+    private var heartbeatTimeMark: ValueTimeMark by atomicHeartbeatTimeMark
     private val atomicReceivedHello: AtomicBoolean = atomic(false)
     private val atomicReadyData: AtomicRef<ReadyData?> = atomic(null)
     private val atomicReconnectRequested: AtomicBoolean = atomic(false)
@@ -241,16 +241,16 @@ public open class DefaultGatewayConnection : GatewayConnection {
         }
     }
 
-    protected interface FrameInflater : Closeable {
+    private interface FrameInflater : Closeable {
 
-        public fun inflate(frame: Frame): ByteArray
+        fun inflate(frame: Frame): ByteArray
 
-        public object None : FrameInflater {
+        object None : FrameInflater {
             override fun inflate(frame: Frame): ByteArray = frame.data
             override fun close() {}
         }
 
-        public class ZLib : FrameInflater {
+        class ZLib : FrameInflater {
 
             private val buffer = ByteArrayOutputStream()
             private val inflaterOutput = InflaterOutputStream(buffer)
@@ -272,9 +272,9 @@ public open class DefaultGatewayConnection : GatewayConnection {
         }
     }
 
-    protected enum class State { Uninitialized, Opening, Open, Closing, Closed }
+    private enum class State { Uninitialized, Opening, Open, Closing, Closed }
 
-    protected companion object {
+    private companion object {
 
         private val CLOSE_REASON_LEAVING = KtorCloseReason(code = KtorCloseReason.Codes.NORMAL, message = "Leaving")
         private val CLOSE_REASON_RECONNECTING = KtorCloseReason(code = 4900, message = "Reconnecting")

@@ -5,7 +5,6 @@ import dev.kord.common.entity.optional.optionalInt
 import dev.kord.gateway.connection.GatewayConnection
 import dev.kord.gateway.connection.GatewayConnection.CloseReason
 import dev.kord.gateway.connection.GatewayConnection.Session
-import dev.kord.gateway.connection.GatewayConnectionProvider
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.loop
@@ -21,7 +20,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
 internal class ConnectionManagedGateway(
-    private val connectionProvider: GatewayConnectionProvider,
+    private val connectionProvider: suspend () -> GatewayConnection,
     private val data: DefaultGatewayData
 ) : BaseGateway() {
 
@@ -39,7 +38,7 @@ internal class ConnectionManagedGateway(
     override suspend fun onStart(configuration: GatewayConfiguration) {
         data.reconnectRetry.reset()
         while (data.reconnectRetry.hasNext && state is State.Running) {
-            val connection = connectionProvider.provide().also { atomicConnection.value = it }
+            val connection = connectionProvider().also { atomicConnection.value = it }
             val pingForward = connection.ping.onEach { ping.value = it }.launchIn(this)
             val session = atomicSession.value ?: newSessionFromConfig(configuration).also { atomicSession.value = it }
             val connectionData = GatewayConnection.Data(
