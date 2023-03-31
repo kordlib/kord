@@ -651,7 +651,7 @@ public abstract interface class dev/kord/gateway/Gateway : kotlinx/coroutines/Co
 }
 
 public final class dev/kord/gateway/Gateway$Companion {
-	public final fun fromConnectionProvider (Ldev/kord/gateway/connection/GatewayConnectionProvider;Ldev/kord/gateway/DefaultGatewayData;)Ldev/kord/gateway/Gateway;
+	public final fun connectionManaged (Ldev/kord/gateway/DefaultGatewayData;Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Gateway;
 	public final fun none ()Ldev/kord/gateway/Gateway;
 }
 
@@ -2052,45 +2052,6 @@ public final class dev/kord/gateway/builder/Shards {
 	public fun toString ()Ljava/lang/String;
 }
 
-public class dev/kord/gateway/connection/DefaultGatewayConnection : dev/kord/gateway/connection/GatewayConnection {
-	protected static final field Companion Ldev/kord/gateway/connection/DefaultGatewayConnection$Companion;
-	public fun <init> ()V
-	public fun close (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPing ()Lkotlinx/coroutines/flow/MutableStateFlow;
-	public synthetic fun getPing ()Lkotlinx/coroutines/flow/StateFlow;
-	public fun open (Ldev/kord/gateway/connection/GatewayConnection$Data;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun send (Ldev/kord/gateway/Command;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-protected final class dev/kord/gateway/connection/DefaultGatewayConnection$Companion {
-}
-
-protected abstract interface class dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater : java/io/Closeable {
-	public abstract fun inflate (Lio/ktor/websocket/Frame;)[B
-}
-
-public final class dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater$None : dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater {
-	public static final field INSTANCE Ldev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater$None;
-	public fun close ()V
-	public fun inflate (Lio/ktor/websocket/Frame;)[B
-}
-
-public final class dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater$ZLib : dev/kord/gateway/connection/DefaultGatewayConnection$FrameInflater {
-	public fun <init> ()V
-	public fun close ()V
-	public fun inflate (Lio/ktor/websocket/Frame;)[B
-}
-
-protected final class dev/kord/gateway/connection/DefaultGatewayConnection$State : java/lang/Enum {
-	public static final field Closed Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
-	public static final field Closing Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
-	public static final field Open Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
-	public static final field Opening Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
-	public static final field Uninitialized Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
-	public static fun values ()[Ldev/kord/gateway/connection/DefaultGatewayConnection$State;
-}
-
 public abstract interface class dev/kord/gateway/connection/GatewayConnection {
 	public abstract fun close (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPing ()Lkotlinx/coroutines/flow/StateFlow;
@@ -2175,13 +2136,8 @@ public final class dev/kord/gateway/connection/GatewayConnection$Session$Resumed
 	public final fun getResume ()Ldev/kord/gateway/Resume;
 }
 
-public abstract interface class dev/kord/gateway/connection/GatewayConnectionProvider {
-	public static final field Companion Ldev/kord/gateway/connection/GatewayConnectionProvider$Companion;
-	public abstract fun provide (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class dev/kord/gateway/connection/GatewayConnectionProvider$Companion {
-	public final fun default ()Ldev/kord/gateway/connection/GatewayConnectionProvider;
+public final class dev/kord/gateway/connection/GatewayConnectionKt {
+	public static final fun GatewayConnection ()Ldev/kord/gateway/connection/GatewayConnection;
 }
 
 public abstract interface class dev/kord/gateway/ratelimit/IdentifyRateLimiter {
