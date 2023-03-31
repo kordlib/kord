@@ -30,7 +30,6 @@ public abstract class BaseGateway : Gateway {
 
     /**
      * The current state of this gateway.
-     * To change it use the [atomicState] reference.
      * @see State
      */
     protected var state: State by atomicState
