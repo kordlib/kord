@@ -32,10 +32,7 @@ class RegressionTests {
     @Test
     @JsName("test4")
     fun `Unknown event with successfully parses`() = runTest {
-        Json.decodeFromString(
-            Event.DeserializationStrategy,
-            file("eventWithUnknownData")
-        ) //dispatch event with non-existent type
+        Json.decodeFromString(Event.DeserializationStrategy, file("eventWithUnknownData")) //dispatch event with non-existent type
     }
 
 }
