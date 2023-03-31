@@ -10,9 +10,8 @@ kotlin {
                 api(projects.common)
 
                 api(libs.bundles.ktor.client.serialization)
-                api(libs.ktor.client.core)
-                api(libs.kotlinx.coroutines.core)
                 api(libs.ktor.client.websockets)
+                api(libs.ktor.client.core)
             }
         }
 
