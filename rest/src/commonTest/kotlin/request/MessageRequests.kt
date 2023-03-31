@@ -1,5 +1,6 @@
 package dev.kord.rest.request
 
+import dev.kord.common.Platform
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.DiscordUser
@@ -63,7 +64,7 @@ class MessageRequests {
         val fileChannel = readFile("images/kord.png")
 
         with(fileChannel) {
-            assertFalse(isClosedForWrite)
+            if (Platform.IS_JVM) assertFalse(isClosedForWrite) // only read lazily on jvm
             assertFalse(isClosedForRead)
             assertEquals(0L, totalBytesRead)
 
