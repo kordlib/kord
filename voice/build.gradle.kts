@@ -10,7 +10,6 @@ dependencies {
     api(projects.gateway)
 
     compileOnly(projects.kspAnnotations)
-    ksp(projects.kspProcessors)
 
     api(libs.ktor.network)
 }

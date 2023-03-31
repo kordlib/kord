@@ -24,10 +24,6 @@ kotlin {
     }
 }
 
-dependencies {
-    kspCommonMainMetadata(projects.kspProcessors)
-}
-
 tasks {
     dokkaHtmlMultiModule {
         enabled = false

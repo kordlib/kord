@@ -15,6 +15,10 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    kspCommonMainMetadata(project(":ksp-processors"))
+}
+
 kotlin {
     explicitApi()
 
@@ -61,7 +65,7 @@ kotlin {
 configureAtomicFU()
 
 tasks {
-    named<KotlinJvmTest>("jvmTest") {
+    withType<Test>().configureEach {
         useJUnitPlatform()
     }
 
@@ -69,18 +73,14 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    afterEvaluate {
-        listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar", "sourcesJar").forEach { task ->
-            named(task) {
-                dependsOn("kspCommonMainKotlinMetadata")
-            }
+    for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
+        named(task) {
+            dependsOn("kspCommonMainKotlinMetadata")
         }
     }
 
-    afterEvaluate {
-        withType<AbstractDokkaLeafTask>().configureEach {
-            applyKordDokkaOptions()
-            dependsOn("kspCommonMainKotlinMetadata")
-        }
+    withType<AbstractDokkaLeafTask>().configureEach {
+        applyKordDokkaOptions()
+        dependsOn("kspCommonMainKotlinMetadata")
     }
 }

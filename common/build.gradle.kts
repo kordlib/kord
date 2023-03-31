@@ -41,10 +41,6 @@ kotlin {
     }
 }
 
-dependencies {
-    kspCommonMainMetadata(projects.kspProcessors)
-}
-
 /*
 This will generate a file named "BuildConfigGenerated.kt" that looks like:
 

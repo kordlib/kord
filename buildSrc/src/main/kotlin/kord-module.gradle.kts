@@ -15,24 +15,25 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    ksp(project(":ksp-processors"))
+}
+
 kotlin {
     explicitApi()
 
     jvmToolchain(Jvm.target)
 
     sourceSets {
-        // mark ksp src dir
-        main { kotlin.srcDir("build/generated/ksp/main/kotlin") }
-
         // allow `ExperimentalCoroutinesApi` for `runTest {}`
-        test { languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi") }
+        test { languageSettings.optIn(OptIns.coroutines) }
     }
 }
 
 configureAtomicFU()
 
 tasks {
-    withType<KotlinCompile> {
+    withType<KotlinCompile>().configureEach {
         compilerOptions {
             applyKordCompilerOptions()
             freeCompilerArgs.addAll(kordOptIns.map { "-opt-in=$it" })

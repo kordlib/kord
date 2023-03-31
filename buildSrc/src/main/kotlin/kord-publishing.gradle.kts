@@ -7,16 +7,16 @@ plugins {
 
 publishing {
     publications {
-        withType<MavenPublication> {
+        withType<MavenPublication>().configureEach {
             val platform = name.substringAfterLast('-')
-            val dokkaJar = tasks.register("${platform}DokkaJar", Jar::class) {
+            val dokkaJar = tasks.register<Jar>("${platform}DokkaJar") {
                 archiveClassifier.set("javadoc")
                 destinationDirectory.set(buildDir.resolve(platform))
-                from(tasks.getByName("dokkaHtml"))
+                from(tasks.named("dokkaHtml"))
             }
             artifact(dokkaJar)
             groupId = Library.group
-            artifactId = "kord-${artifactId}"
+            artifactId = "kord-$artifactId"
             version = Library.version
 
             pom {
