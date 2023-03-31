@@ -3,7 +3,6 @@ package dev.kord.core.gateway.handler
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.gateway.ShardEvent
-import io.ktor.util.logging.*
 import mu.KotlinLogging
 import dev.kord.core.event.Event as CoreEvent
 
@@ -60,7 +59,7 @@ public class DefaultGatewayEventInterceptor @KordPreview public constructor(
             }
             return null
         }.onFailure {
-            logger.error(it) {}
+            logger.error(it) { "" }
         }.getOrNull()
     }
 }
