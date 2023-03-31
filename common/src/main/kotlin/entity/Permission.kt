@@ -288,10 +288,10 @@ public sealed class Permission(public val code: DiscordBitSet) {
      */
     public object ModerateMembers : Permission(1L shl 40)
 
-    /** Allows for viewing role subscription insights */
+    /** Allows for viewing role subscription insights. */
     public object ViewCreatorMonetizationAnalytics : Permission(1L shl 41)
 
-    /** Allows for using the soundboard in a voice channel */
+    /** Allows for using soundboard in a voice channel. */
     public object UseSoundboard : Permission(1L shl 42)
 
 
