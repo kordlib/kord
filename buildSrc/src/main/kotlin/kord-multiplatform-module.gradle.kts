@@ -42,12 +42,10 @@ kotlin {
         all {
             applyKordOptIns()
         }
-
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
         }
-
         val nonJvm by creating {
             dependsOn(commonMain.get())
         }

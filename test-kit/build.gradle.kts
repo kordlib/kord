@@ -11,13 +11,11 @@ kotlin {
                 api(projects.common)
             }
         }
-
         jsMain {
             dependencies {
                 api(libs.bundles.test.js)
             }
         }
-
         jvmMain {
             dependencies {
                 api(libs.bundles.test.runtime)

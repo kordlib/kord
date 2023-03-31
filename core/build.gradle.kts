@@ -15,7 +15,6 @@ kotlin {
                 api(libs.kord.cache.map)
             }
         }
-
         jvmTest {
             dependencies {
                 implementation(libs.mockk)

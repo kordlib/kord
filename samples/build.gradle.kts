@@ -13,7 +13,6 @@ kotlin {
                 implementation(projects.core)
             }
         }
-
         jvmMain {
             dependencies {
                 runtimeOnly(libs.slf4j.simple)
