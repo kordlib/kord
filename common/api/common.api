@@ -7540,6 +7540,10 @@ public final class dev/kord/common/entity/Permission$ManageGuild : dev/kord/comm
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$ManageGuild;
 }
 
+public final class dev/kord/common/entity/Permission$ManageGuildExpressions : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$ManageGuildExpressions;
+}
+
 public final class dev/kord/common/entity/Permission$ManageMessages : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$ManageMessages;
 }
@@ -7629,6 +7633,10 @@ public final class dev/kord/common/entity/Permission$UseExternalStickers : dev/k
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$UseExternalStickers;
 }
 
+public final class dev/kord/common/entity/Permission$UseSoundboard : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$UseSoundboard;
+}
+
 public final class dev/kord/common/entity/Permission$UseVAD : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$UseVAD;
 }
@@ -7639,6 +7647,10 @@ public final class dev/kord/common/entity/Permission$ViewAuditLog : dev/kord/com
 
 public final class dev/kord/common/entity/Permission$ViewChannel : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$ViewChannel;
+}
+
+public final class dev/kord/common/entity/Permission$ViewCreatorMonetizationAnalytics : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$ViewCreatorMonetizationAnalytics;
 }
 
 public final class dev/kord/common/entity/Permission$ViewGuildInsights : dev/kord/common/entity/Permission {
