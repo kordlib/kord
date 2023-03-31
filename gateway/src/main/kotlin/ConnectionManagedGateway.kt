@@ -20,7 +20,7 @@ import java.net.URI
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
-internal class FlexibleGateway(
+internal class ConnectionManagedGateway(
     private val connectionProvider: GatewayConnectionProvider,
     private val data: DefaultGatewayData
 ) : BaseGateway() {

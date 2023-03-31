@@ -103,7 +103,7 @@ public interface Gateway : CoroutineScope {
         public fun fromConnectionProvider(
             connectionProvider: GatewayConnectionProvider,
             data: DefaultGatewayData
-        ): Gateway = FlexibleGateway(connectionProvider, data)
+        ): Gateway = ConnectionManagedGateway(connectionProvider, data)
 
     }
 }
