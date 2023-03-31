@@ -1,5 +1,4 @@
 import kotlinx.atomicfu.plugin.gradle.AtomicFUPluginExtension
-import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
@@ -31,12 +30,10 @@ fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     freeCompilerArgs.add("-progressive")
 }
 
-fun NamedDomainObjectContainer<KotlinSourceSet>.applyKordOptIns() {
-    all {
-        languageSettings {
-            if ("Test" in name) optIn(OptIns.coroutines)
-            kordOptIns.forEach(::optIn)
-        }
+fun KotlinSourceSet.applyKordOptIns() {
+    languageSettings {
+        if ("Test" in name) optIn(OptIns.coroutines)
+        kordOptIns.forEach(::optIn)
     }
 }
 

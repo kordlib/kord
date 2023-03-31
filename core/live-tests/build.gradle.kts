@@ -3,9 +3,13 @@ plugins {
 }
 
 kotlin {
+    addTestKit()
+
     sourceSets {
-        applyKordOptIns()
-        addTestKit(targets)
+        all {
+            applyKordOptIns()
+        }
+
         commonTest {
             dependencies {
                 implementation(projects.core)
@@ -15,7 +19,7 @@ kotlin {
 }
 
 tasks {
-    withType<AbstractTestTask> {
+    withType<AbstractTestTask>().configureEach {
         enabled = !System.getenv("KORD_TEST_TOKEN").isNullOrBlank()
     }
 }

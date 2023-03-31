@@ -1,3 +1,4 @@
+import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
@@ -31,8 +32,13 @@ kotlin {
         }
     }
 
+    addTestKit()
+
     sourceSets {
-        applyKordOptIns()
+        all {
+            applyKordOptIns()
+        }
+
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
@@ -42,7 +48,6 @@ kotlin {
             dependsOn(commonMain.get())
         }
 
-        addTestKit(targets)
         targets.forEach {
             if (it.safeName != "jvm" && it.safeName != "common") {
                 findByName("${it.safeName}Main")?.apply {
@@ -56,25 +61,26 @@ kotlin {
 configureAtomicFU()
 
 tasks {
-    getByName<KotlinJvmTest>("jvmTest") {
+    named<KotlinJvmTest>("jvmTest") {
         useJUnitPlatform()
     }
 
-    withType<KotlinJsTest>() {
+    withType<KotlinJsTest>().configureEach {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
     afterEvaluate {
-        listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar", "sourcesJar").forEach {
-            getByName(it) {
-                dependsOnKspKotlin("kspCommonMainKotlinMetadata")
+        listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar", "sourcesJar").forEach { task ->
+            named(task) {
+                dependsOn("kspCommonMainKotlinMetadata")
             }
         }
     }
 
     afterEvaluate {
-        configureDokka {
-            dependsOnKspKotlin("kspCommonMainKotlinMetadata")
+        withType<AbstractDokkaLeafTask>().configureEach {
+            applyKordDokkaOptions()
+            dependsOn("kspCommonMainKotlinMetadata")
         }
     }
 }
