@@ -552,6 +552,7 @@ public final class dev/kord/common/entity/ApplicationCommandType$User : dev/kord
 }
 
 public final class dev/kord/common/entity/ApplicationFlag : java/lang/Enum {
+	public static final field ApplicationAutoModerationRuleCreateBadge Ldev/kord/common/entity/ApplicationFlag;
 	public static final field ApplicationCommandBadge Ldev/kord/common/entity/ApplicationFlag;
 	public static final field Embedded Ldev/kord/common/entity/ApplicationFlag;
 	public static final field GatewayGuildMembers Ldev/kord/common/entity/ApplicationFlag;
