@@ -4,7 +4,7 @@ import dev.kord.common.annotation.KordInternal
 
 @KordInternal
 public actual object Platform {
-    public actual val IS_JVM: Boolean = false
+    public actual const val IS_JVM: Boolean = false
     public actual val IS_NODE: Boolean
         get() = js(
             "typeof process !== 'undefined' && process.versions != null && process.versions.node != null"
