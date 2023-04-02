@@ -2413,6 +2413,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field BotsEndpoint Ldev/kord/rest/json/JsonErrorCode;
 	public static final field BulkDeleteOldMessage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotConvertBetweenPremiumAndNormalEmoji Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotDeleteGuildSubscriptionIntegration Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotDeleteRequiredCommunityChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotEditMessageByAnotherUser Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotEditStickersWithinMessage Ldev/kord/rest/json/JsonErrorCode;
