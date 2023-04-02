@@ -109,6 +109,9 @@ public data class DiscordPartialApplication(
 
 public enum class ApplicationFlag(public val code: Int) {
 
+    /** Indicates if an app uses the Auto Moderation API. */
+    ApplicationAutoModerationRuleCreateBadge(1 shl 6),
+
     /**
      * Intent required for bots in **100 or more servers** to receive
      * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update).
