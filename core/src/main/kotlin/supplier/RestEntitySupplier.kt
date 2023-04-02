@@ -103,6 +103,11 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GuildPreview(GuildPreviewData.from(discordPreview), kord)
     }
 
+    override suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding? = catchNotFound {
+        val onboarding = guild.getGuildOnboarding(guildId)
+        GuildOnboarding(GuildOnboardingData.from(onboarding), kord)
+    }
+
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? = catchNotFound {
         val member = guild.getGuildMember(guildId = guildId, userId = userId)
         val memberData = member.toData(guildId = guildId, userId = userId)

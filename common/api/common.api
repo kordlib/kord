@@ -4707,20 +4707,19 @@ public final class dev/kord/common/entity/DiscordOnboardingPrompt$Companion {
 
 public final class dev/kord/common/entity/DiscordOnboardingPromptOption {
 	public static final field Companion Ldev/kord/common/entity/DiscordOnboardingPromptOption$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Ldev/kord/common/entity/DiscordEmoji;
 	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordOnboardingPromptOption;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordOnboardingPromptOption;Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordOnboardingPromptOption;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ljava/lang/String;)Ldev/kord/common/entity/DiscordOnboardingPromptOption;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordOnboardingPromptOption;Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordOnboardingPromptOption;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelIds ()Ljava/util/List;
-	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEmoji ()Ldev/kord/common/entity/DiscordEmoji;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getRoleIds ()Ljava/util/List;

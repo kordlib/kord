@@ -78,6 +78,23 @@ public interface EntitySupplier {
         getGuildPreviewOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild Preview", guildId)
 
     /**
+     * Requests to get the onboarding for the guild matching the [guildId].
+     * Returns `null` if the onboarding was not found.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding?
+
+    /**
+     * Requests to get the onboarding for the guild matching the [guildId].
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the onboarding was not found.
+     */
+    public suspend fun getGuildOnboarding(guildId: Snowflake): GuildOnboarding =
+            getGuildOnboardingOrNull(guildId) ?: EntityNotFoundException.entityNotFound("Guild Onboarding", guildId)
+
+    /**
      * Requests to get the widget of a [Guild] with the given [id][guildId],
      * returns null if the [GuildWidget] isn't present.
      *
