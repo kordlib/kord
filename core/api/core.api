@@ -6243,6 +6243,8 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public final fun getMfaLevel ()Ldev/kord/common/entity/MFALevel;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ldev/kord/common/entity/NsfwLevel;
+	public final fun getOnboarding (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getOnboardingOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getOwner ()Ldev/kord/core/behavior/MemberBehavior;
 	public final fun getOwner (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getOwnerId ()Ldev/kord/common/entity/Snowflake;

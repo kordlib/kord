@@ -493,6 +493,24 @@ public class Guild(
         widgetChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
+     * Requests to get the guild onboarding.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [GuildOnboarding] wasn't present.
+     */
+    public suspend fun getOnboarding(): GuildOnboarding =
+            supplier.getGuildOnboarding(id)
+
+    /**
+     * Requests to get the guild onboarding.
+     * returns null if the [GuildOnboarding] isn't present
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getOnboardingOrNull(): GuildOnboarding? =
+            supplier.getGuildOnboardingOrNull(id)
+
+    /**
      * Returns a new [Guild] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Guild = Guild(data, kord, strategy.supply(kord))
