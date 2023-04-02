@@ -512,6 +512,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Uploaded file not found. */
     UnknownUpload(50146),
 
+    /** Cannot delete guild subscription integration. */
+    CannotDeleteGuildSubscriptionIntegration(50163),
+
     /** You do not have permission to send this sticker. */
     StickerPermissionLack(50600),
 
