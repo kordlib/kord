@@ -322,6 +322,11 @@ public class Guild(
     public val maxVideoChannelUsers: Int? get() = data.maxVideoChannelUsers.value
 
     /**
+     * The maximum amount of users in a stage video channel, if present.
+     */
+    public val maxStageVideoChannelUsers: Int? get() = data.maxStageVideoChannelUsers.value
+
+    /**
      * The welcome screen of a Community guild, shown to new members, returned in an [Invite]'s guild object
      */
     public val welcomeScreen: WelcomeScreen? get() = data.welcomeScreen.unwrap { WelcomeScreen(it, kord) }

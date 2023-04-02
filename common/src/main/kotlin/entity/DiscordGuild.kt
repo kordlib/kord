@@ -261,6 +261,7 @@ public data class DiscordUnavailableGuild(
  * @param preferredLocale The preferred locale of a Community guild; used in server discovery and notices from Discord; defaults to "en-US".
  * @param publicUpdatesChannelId The id of the channel where admins and moderators of Community guilds receive notices from Discord.
  * @param maxVideoChannelUsers The maximum amount of users in a video channel.
+ * @param maxStageVideoChannelUsers The maximum amount of users in a stage video channel.
  * @param approximateMemberCount The approximate number of members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
  * @param approximatePresenceCount The approximate number of non-offline members in this guild, returned from the `GET /guild/<id>` endpoint when `with_counts` is `true`.
  * @param welcomeScreen The welcome screen of a Community guild, shown to new members.
@@ -315,6 +316,7 @@ public data class DiscordGuild(
     @SerialName("preferred_locale") val preferredLocale: String,
     @SerialName("public_updates_channel_id") val publicUpdatesChannelId: Snowflake?,
     @SerialName("max_video_channel_users") val maxVideoChannelUsers: OptionalInt = OptionalInt.Missing,
+    @SerialName("max_stage_video_channel_users") val maxStageVideoChannelUsers: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_member_count") val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_presence_count") val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("welcome_screen") val welcomeScreen: Optional<DiscordWelcomeScreen> = Optional.Missing(),
