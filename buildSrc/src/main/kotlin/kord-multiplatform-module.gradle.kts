@@ -1,7 +1,5 @@
-import gradle.kotlin.dsl.accessors._e5121a5856746b077c6819bbe5a86a2f.apiValidation
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
-import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -21,9 +19,8 @@ dependencies {
 }
 
 apiValidation {
-    applyKordOptions()
+    applyKordBCVOptions()
 }
-
 
 kotlin {
     explicitApi()

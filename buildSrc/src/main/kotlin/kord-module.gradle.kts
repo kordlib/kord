@@ -15,12 +15,12 @@ repositories {
     mavenCentral()
 }
 
-apiValidation {
-    applyKordOptions()
-}
-
 dependencies {
     ksp(project(":ksp-processors"))
+}
+
+apiValidation {
+    applyKordBCVOptions()
 }
 
 kotlin {
