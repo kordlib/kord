@@ -5,15 +5,14 @@ plugins {
     signing
 }
 
+val dokkaJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+    from(tasks.named("dokkaHtml"))
+}
+
 publishing {
     publications {
         withType<MavenPublication>().configureEach {
-            val platform = name.substringAfterLast('-')
-            val dokkaJar = tasks.register<Jar>("${platform}DokkaJar") {
-                archiveClassifier.set("javadoc")
-                destinationDirectory.set(buildDir.resolve(platform))
-                from(tasks.named("dokkaHtml"))
-            }
             artifact(dokkaJar)
             groupId = Library.group
             artifactId = "kord-$artifactId"
@@ -54,16 +53,16 @@ publishing {
                 }
             }
         }
+    }
 
-        if (!isJitPack) {
-            repositories {
-                maven {
-                    url = uri(if (Library.isSnapshot) Repo.snapshotsUrl else Repo.releasesUrl)
+    if (!isJitPack) {
+        repositories {
+            maven {
+                url = uri(if (Library.isSnapshot) Repo.snapshotsUrl else Repo.releasesUrl)
 
-                    credentials {
-                        username = System.getenv("NEXUS_USER")
-                        password = System.getenv("NEXUS_PASSWORD")
-                    }
+                credentials {
+                    username = System.getenv("NEXUS_USER")
+                    password = System.getenv("NEXUS_PASSWORD")
                 }
             }
         }
