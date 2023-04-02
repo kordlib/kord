@@ -1,10 +1,10 @@
 package dev.kord.core.entity.onboarding
 
-import dev.kord.common.entity.DiscordGuildOnboarding
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.cache.data.GuildOnboardingData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.TopGuildChannel
@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 
 public class GuildOnboarding(
-    public val data: DiscordGuildOnboarding,
+    public val data: GuildOnboardingData,
     override val kord: Kord,
     override val supplier: EntitySupplier
 ) : KordObject, Strategizable {
