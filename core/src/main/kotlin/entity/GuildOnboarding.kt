@@ -1,15 +1,10 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.DiscordEmoji
-import dev.kord.common.entity.OnboardingPromptType
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.cache.data.GuildOnboardingData
-import dev.kord.core.cache.data.OnboardingPromptData
-import dev.kord.core.cache.data.OnboardingPromptOptionData
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
@@ -23,7 +18,7 @@ import kotlinx.coroutines.flow.filter
  * @param data The data for the onboarding.
  */
 public class GuildOnboarding(
-        public val data: GuildOnboardingData,
+        public val data: DiscordGuildOnboarding,
         override val kord: Kord,
         override val supplier: EntitySupplier = kord.defaultSupplier
 ) : KordObject, Strategizable {
@@ -74,7 +69,7 @@ public class GuildOnboarding(
  * @param guildId The ID of the guild the prompt belongs too.
  */
 public class OnboardingPrompt(
-        public val data: OnboardingPromptData,
+        public val data: DiscordOnboardingPrompt,
         public val guildId: Snowflake,
         override val kord: Kord
 ) : KordEntity {
@@ -108,7 +103,7 @@ public class OnboardingPrompt(
  * @param guildId The ID of the guild the onboarding belongs too
  */
 public class OnboardingPromptOption(
-        public val data: OnboardingPromptOptionData,
+        public val data: DiscordOnboardingPromptOption,
         public val guildId: Snowflake,
         override val kord: Kord,
         override val supplier: EntitySupplier = kord.defaultSupplier

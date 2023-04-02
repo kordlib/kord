@@ -42,10 +42,6 @@ public class StoreEntitySupplier(
         return storeAndReturn(supplier.getGuildPreviewOrNull(guildId)) { it.data }
     }
 
-    override suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding? {
-        return storeAndReturn(supplier.getGuildOnboardingOrNull(guildId)) { it.data }
-    }
-
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? {
         return storeAndReturn(supplier.getGuildWidgetOrNull(guildId)) { it.data }
     }

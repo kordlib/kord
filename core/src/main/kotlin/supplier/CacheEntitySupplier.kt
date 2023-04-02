@@ -110,12 +110,6 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GuildPreview(data, kord)
     }
 
-    override suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding? {
-        val data = cache.query<GuildOnboardingData>() { idEq(GuildOnboardingData::guildId, guildId)}.singleOrNull() ?: return null
-
-        return GuildOnboarding(data, kord)
-    }
-
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? = null
 
     override suspend fun getChannelOrNull(id: Snowflake): Channel? {

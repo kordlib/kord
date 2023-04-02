@@ -118,9 +118,6 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? =
         first.getGuildPreviewOrNull(guildId) ?: second.getGuildPreviewOrNull(guildId)
 
-    override suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding? =
-        first.getGuildOnboardingOrNull(guildId) ?: second.getGuildOnboardingOrNull(guildId)
-
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? =
         first.getGuildWidgetOrNull(guildId) ?: second.getGuildWidgetOrNull(guildId)
 
