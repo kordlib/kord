@@ -6567,6 +6567,10 @@ public final class dev/kord/rest/route/Route$GuildMembersSearchGet : dev/kord/re
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildMembersSearchGet;
 }
 
+public final class dev/kord/rest/route/Route$GuildOnboardingGet : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildOnboardingGet;
+}
+
 public final class dev/kord/rest/route/Route$GuildPatch : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildPatch;
 }
