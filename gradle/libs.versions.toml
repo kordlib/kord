@@ -7,8 +7,11 @@ kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "3.0.5" # https://github.com/oshai/kotlin-logging
-kord-cache = "0.4.0"
-stately = "2.0.0-rc1"
+kord-cache = "0.4.0" # https://github.com/kordlib/cache
+
+# implementation dependencies
+stately = "2.0.0-rc1" # https://github.com/touchlab/Stately
+fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
 ksp = "1.8.10-1.0.9" # https://github.com/google/ksp
