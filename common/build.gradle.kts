@@ -28,7 +28,7 @@ kotlin {
             dependencies {
                 implementation(libs.ktor.utils)
                 implementation(libs.bignum)
-                implementation(libs.bundles.stately)
+                implementation(libs.stately.collections)
             }
         }
         jsMain {

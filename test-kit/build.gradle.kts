@@ -18,8 +18,7 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                api(libs.bundles.test.runtime)
-                api(libs.kotlin.test.junit5)
+                api(libs.bundles.test.jvm)
             }
         }
     }
