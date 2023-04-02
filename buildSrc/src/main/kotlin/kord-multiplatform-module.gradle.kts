@@ -1,3 +1,4 @@
+import gradle.kotlin.dsl.accessors._e5121a5856746b077c6819bbe5a86a2f.apiValidation
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
@@ -18,6 +19,11 @@ repositories {
 dependencies {
     kspCommonMainMetadata(project(":ksp-processors"))
 }
+
+apiValidation {
+    applyKordOptions()
+}
+
 
 kotlin {
     explicitApi()

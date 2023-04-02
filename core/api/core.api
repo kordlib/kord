@@ -2118,8 +2118,6 @@ public final class dev/kord/core/builder/kord/KordBuilderKt {
 }
 
 public final class dev/kord/core/builder/kord/KordBuilderUtilKt {
-	public static final fun configure (Lio/ktor/client/HttpClient;)Lio/ktor/client/HttpClient;
-	public static final fun getBotIdFromToken (Ljava/lang/String;)Ldev/kord/common/entity/Snowflake;
 }
 
 public final class dev/kord/core/builder/kord/KordProxyBuilder : dev/kord/core/builder/kord/RestOnlyBuilder {
@@ -2171,7 +2169,6 @@ public final class dev/kord/core/cache/CachingGateway : dev/kord/cache/api/DataC
 public final class dev/kord/core/cache/DataCacheExtensionsKt {
 	public static final fun createView (Ldev/kord/cache/api/DataCache;)Ldev/kord/core/cache/DataCacheView;
 	public static final synthetic fun createView (Ldev/kord/cache/api/DataCache;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun registerKordData (Ldev/kord/cache/api/DataCache;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/cache/DataCacheView : dev/kord/cache/api/DataCache {
