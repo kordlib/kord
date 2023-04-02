@@ -13,8 +13,7 @@ kotlin {
                 api(libs.kotlinx.serialization.json)
                 api(libs.kotlinx.datetime)
                 api(libs.kotlin.logging)
-                // Replacement for java.io
-                api(libs.ktor.utils)
+
                 api(libs.ktor.client.core)
 
                 compileOnly(projects.kspAnnotations)
@@ -27,6 +26,7 @@ kotlin {
         }
         nonJvm {
             dependencies {
+                api(libs.ktor.utils)
                 implementation(libs.bignum)
                 implementation(libs.bundles.stately)
             }

@@ -1,6 +1,5 @@
 package dev.kord.common
 
-import io.ktor.utils.io.core.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -17,7 +16,7 @@ private const val WIDTH = Long.SIZE_BITS
 @Suppress("FunctionName")
 public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet()
 
-internal expect fun formatIntegerFromBigEndianByteArray(data: ByteArray): String
+internal expect fun formatIntegerFromLittleEndianLongArray(data: LongArray): String
 internal expect fun parseIntegerToBigEndianByteArray(value: String): ByteArray
 
 @Serializable(with = DiscordBitSetSerializer::class)
@@ -26,14 +25,7 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
     public val isEmpty: Boolean
         get() = data.all { it == 0L }
 
-    public val value: String
-        get() {
-            // need to convert from little-endian data to big-endian expected by BigInteger
-            return withBuffer(data.size * Long.SIZE_BYTES) {
-                writeFully(data.reversedArray())
-                formatIntegerFromBigEndianByteArray(readBytes())
-            }
-        }
+    public val value: String get() = formatIntegerFromLittleEndianLongArray(data)
 
     public val size: Int
         get() = data.size * WIDTH
