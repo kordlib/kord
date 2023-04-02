@@ -1,11 +1,11 @@
 package dev.kord.core.entity.onboarding
 
 import dev.kord.common.entity.DiscordEmoji
+import dev.kord.common.entity.DiscordOnboardingPromptOption
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.cache.data.OnboardingPromptOptionData
 
 public class OnboardingPromptOption(
-    public val data: OnboardingPromptOptionData,
+        public val data: DiscordOnboardingPromptOption,
 ) {
     public val id: Snowflake get() = data.id
 

@@ -1,18 +1,17 @@
 package dev.kord.core.entity.onboarding
 
+import dev.kord.common.entity.DiscordOnboardingPrompt
 import dev.kord.common.entity.OnboardingPromptType
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.cache.data.OnboardingPromptData
-import dev.kord.core.cache.data.OnboardingPromptOptionData
 
 public class OnboardingPrompt(
-    public val data: OnboardingPromptData,
+        public val data: DiscordOnboardingPrompt,
 ) {
     public val id: Snowflake get() = data.id
 
     public val type: OnboardingPromptType get() = data.type
 
-    public val options: List<OnboardingPromptOptionData> get() = data.options
+    public val options: List<OnboardingPromptOption> get() = data.options.map { OnboardingPromptOption(it) }
 
     public val title: String get() = data.title
 

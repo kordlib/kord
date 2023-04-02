@@ -3682,42 +3682,6 @@ public final class dev/kord/core/cache/data/GuildDataKt {
 	public static final fun toData (Ldev/kord/common/entity/DiscordGuild;)Ldev/kord/core/cache/data/GuildData;
 }
 
-public final class dev/kord/core/cache/data/GuildOnboardingData {
-	public static final field Companion Ldev/kord/core/cache/data/GuildOnboardingData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;ZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Z)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ljava/util/List;
-	public final fun component3 ()Ljava/util/List;
-	public final fun component4 ()Z
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Z)Ldev/kord/core/cache/data/GuildOnboardingData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/GuildOnboardingData;Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;ZILjava/lang/Object;)Ldev/kord/core/cache/data/GuildOnboardingData;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getDefaultChannelIds ()Ljava/util/List;
-	public final fun getEnabled ()Z
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getPrompts ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/GuildOnboardingData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class dev/kord/core/cache/data/GuildOnboardingData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/core/cache/data/GuildOnboardingData$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/core/cache/data/GuildOnboardingData;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/core/cache/data/GuildOnboardingData;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/core/cache/data/GuildOnboardingData$Companion {
-	public final fun from (Ldev/kord/common/entity/DiscordGuildOnboarding;)Ldev/kord/core/cache/data/GuildOnboardingData;
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public final class dev/kord/core/cache/data/GuildPreviewData {
 	public static final field Companion Ldev/kord/core/cache/data/GuildPreviewData$Companion;
 	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Ljava/util/List;IILjava/lang/String;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -4474,89 +4438,6 @@ public final class dev/kord/core/cache/data/NotSerializable : kotlinx/serializat
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)Ljava/lang/Void;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-}
-
-public final class dev/kord/core/cache/data/OnboardingPromptData {
-	public static final field Companion Ldev/kord/core/cache/data/OnboardingPromptData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZ)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ldev/kord/common/entity/OnboardingPromptType;
-	public final fun component3 ()Ljava/util/List;
-	public final fun component4 ()Ljava/lang/String;
-	public final fun component5 ()Z
-	public final fun component6 ()Z
-	public final fun component7 ()Z
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZ)Ldev/kord/core/cache/data/OnboardingPromptData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/OnboardingPromptData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZILjava/lang/Object;)Ldev/kord/core/cache/data/OnboardingPromptData;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getInOnboarding ()Z
-	public final fun getOptions ()Ljava/util/List;
-	public final fun getRequired ()Z
-	public final fun getSingleSelect ()Z
-	public final fun getTitle ()Ljava/lang/String;
-	public final fun getType ()Ldev/kord/common/entity/OnboardingPromptType;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/OnboardingPromptData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class dev/kord/core/cache/data/OnboardingPromptData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/core/cache/data/OnboardingPromptData$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/core/cache/data/OnboardingPromptData;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/core/cache/data/OnboardingPromptData;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/core/cache/data/OnboardingPromptData$Companion {
-	public final fun from (Ldev/kord/common/entity/DiscordOnboardingPrompt;)Ldev/kord/core/cache/data/OnboardingPromptData;
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/core/cache/data/OnboardingPromptOptionData {
-	public static final field Companion Ldev/kord/core/cache/data/OnboardingPromptOptionData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ljava/util/List;
-	public final fun component3 ()Ljava/util/List;
-	public final fun component4 ()Ldev/kord/common/entity/DiscordEmoji;
-	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/core/cache/data/OnboardingPromptOptionData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/OnboardingPromptOptionData;Ldev/kord/common/entity/Snowflake;Ljava/util/List;Ljava/util/List;Ldev/kord/common/entity/DiscordEmoji;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/core/cache/data/OnboardingPromptOptionData;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getChannelIds ()Ljava/util/List;
-	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getEmoji ()Ldev/kord/common/entity/DiscordEmoji;
-	public final fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getRoleIds ()Ljava/util/List;
-	public final fun getTitle ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/OnboardingPromptOptionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class dev/kord/core/cache/data/OnboardingPromptOptionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/core/cache/data/OnboardingPromptOptionData$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/core/cache/data/OnboardingPromptOptionData;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/core/cache/data/OnboardingPromptOptionData;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/core/cache/data/OnboardingPromptOptionData$Companion {
-	public final fun from (Ldev/kord/common/entity/DiscordOnboardingPromptOption;)Ldev/kord/core/cache/data/OnboardingPromptOptionData;
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/core/cache/data/OptionData {
@@ -10656,8 +10537,8 @@ public final class dev/kord/core/entity/interaction/response/PublicMessageIntera
 }
 
 public final class dev/kord/core/entity/onboarding/GuildOnboarding : dev/kord/core/KordObject, dev/kord/core/entity/Strategizable {
-	public fun <init> (Ldev/kord/core/cache/data/GuildOnboardingData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
-	public final fun getData ()Ldev/kord/core/cache/data/GuildOnboardingData;
+	public fun <init> (Ldev/kord/common/entity/DiscordGuildOnboarding;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public final fun getData ()Ldev/kord/common/entity/DiscordGuildOnboarding;
 	public final fun getDefaultChannelIds ()Ljava/util/List;
 	public final fun getDefaultChannels (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getEnabled ()Z
@@ -10673,8 +10554,8 @@ public final class dev/kord/core/entity/onboarding/GuildOnboarding : dev/kord/co
 }
 
 public final class dev/kord/core/entity/onboarding/OnboardingPrompt {
-	public fun <init> (Ldev/kord/core/cache/data/OnboardingPromptData;)V
-	public final fun getData ()Ldev/kord/core/cache/data/OnboardingPromptData;
+	public fun <init> (Ldev/kord/common/entity/DiscordOnboardingPrompt;)V
+	public final fun getData ()Ldev/kord/common/entity/DiscordOnboardingPrompt;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getInOnboarding ()Z
 	public final fun getOptions ()Ljava/util/List;
@@ -10685,9 +10566,9 @@ public final class dev/kord/core/entity/onboarding/OnboardingPrompt {
 }
 
 public final class dev/kord/core/entity/onboarding/OnboardingPromptOption {
-	public fun <init> (Ldev/kord/core/cache/data/OnboardingPromptOptionData;)V
+	public fun <init> (Ldev/kord/common/entity/DiscordOnboardingPromptOption;)V
 	public final fun getChannelIds ()Ljava/util/List;
-	public final fun getData ()Ldev/kord/core/cache/data/OnboardingPromptOptionData;
+	public final fun getData ()Ldev/kord/common/entity/DiscordOnboardingPromptOption;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEmoji ()Ldev/kord/common/entity/DiscordEmoji;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
