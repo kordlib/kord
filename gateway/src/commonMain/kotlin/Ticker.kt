@@ -24,21 +24,18 @@ public class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.De
 
     private val mutex = Mutex()
 
-    private var ticker: Flow<Unit>? = null
     private var listener: Job? = null
 
     public suspend fun tickAt(intervalMillis: Long, block: suspend () -> Unit) {
-        stop()
         mutex.withLock {
-            ticker = tickingFlow(intervalMillis)
-
-            listener = ticker?.onEach {
+            listener?.cancel()
+            listener = tickingFlow(intervalMillis).onEach {
                 try {
                     block()
                 } catch (exception: Exception) {
                     logger.error(exception)
                 }
-            }?.launchIn(this)
+            }.launchIn(this)
         }
     }
 
