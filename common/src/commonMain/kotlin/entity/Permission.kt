@@ -244,7 +244,11 @@ public sealed class Permission(public val code: DiscordBitSet) {
     public object ManageWebhooks : Permission(1L shl 29)
 
     /** Allows management and editing of emojis and stickers. */
+    @Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.WARNING)
     public object ManageEmojisAndStickers : Permission(1L shl 30)
+
+    /** Allows management and editing of emojis, stickers and soundboard sounds. */
+    public object ManageGuildExpressions : Permission(1L shl 30)
 
     /** Allows members to use application commands, including slash commands and context menu commands. */
     public object UseApplicationCommands : Permission(1L shl 31)
@@ -284,6 +288,12 @@ public sealed class Permission(public val code: DiscordBitSet) {
      * speaking in voice and stage channels.
      */
     public object ModerateMembers : Permission(1L shl 40)
+
+    /** Allows for viewing role subscription insights. */
+    public object ViewCreatorMonetizationAnalytics : Permission(1L shl 41)
+
+    /** Allows for using soundboard in a voice channel. */
+    public object UseSoundboard : Permission(1L shl 42)
 
 
     /** All [Permission]s combined into one. */
@@ -327,7 +337,7 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 ManageNicknames,
                 ManageRoles,
                 ManageWebhooks,
-                ManageEmojisAndStickers,
+                ManageGuildExpressions,
                 UseApplicationCommands,
                 RequestToSpeak,
                 ManageEvents,
@@ -337,7 +347,9 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 UseExternalStickers,
                 SendMessagesInThreads,
                 UseEmbeddedActivities,
-                ModerateMembers
+                ModerateMembers,
+                ViewCreatorMonetizationAnalytics,
+                UseSoundboard
             )
     }
 }

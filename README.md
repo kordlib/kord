@@ -139,3 +139,7 @@ Currently we're supporting both Kotlin/JVM and Kotlin/JS for the majority of our
 ## When will you document your code?
 
 Yes.
+
+# This project is supported by JetBrains
+
+[![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)](https://jb.gg/OpenSourceSupport)

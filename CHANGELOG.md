@@ -1,3 +1,13 @@
+# 0.8.2
+
+## Additions
+
+* Add new permissions (by @NoComment1105 in #795) 
+
+## House-keeping
+
+* Add inspection for missing Optional default values (by @Lukellmann in #797) 
+
 # 0.8.1
 
 ## Fixes
