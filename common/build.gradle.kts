@@ -26,7 +26,7 @@ kotlin {
         }
         nonJvm {
             dependencies {
-                api(libs.ktor.utils)
+                implementation(libs.ktor.utils)
                 implementation(libs.bignum)
                 implementation(libs.bundles.stately)
             }
