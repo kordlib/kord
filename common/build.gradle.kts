@@ -34,8 +34,10 @@ kotlin {
         jsMain {
             dependencies {
                 api(libs.ktor.client.js)
-                // When targeting K/JS needs to be present at compile time for users
-                api(projects.kspAnnotations)
+
+                // workaround for https://youtrack.jetbrains.com/issue/KT-43500
+                // (intended to be compileOnly in commonMain only)
+                implementation(projects.kspAnnotations)
             }
         }
     }
