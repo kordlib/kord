@@ -109,9 +109,7 @@ public data class DiscordPartialApplication(
 
 public enum class ApplicationFlag(public val code: Int) {
 
-    /**
-     * Indicates if an app uses the Auto Moderation API
-     */
+    /** Indicates if an app uses the Auto Moderation API. */
     ApplicationAutoModerationRuleCreateBadge(1 shl 6),
 
     /**
