@@ -146,5 +146,5 @@ public class OnboardingPromptOption(
     public val roles: Flow<Role> get() = supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): OnboardingPromptOption =
-            OnboardingPromptOption(data, guildId, kord, supplier)
+        OnboardingPromptOption(data, guildId, kord, strategy.supply(kord))
 }
