@@ -61,10 +61,8 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     val valueName = args.getOrDefault(GenerateKordEnum::valueName, "value")
     val deprecatedEntries = args.getRaw(GenerateKordEnum::deprecatedEntries) as List<*>? ?: emptyList<Any>()
 
-    val valuesPropertyName = args.getOrDefault(GenerateKordEnum::valuesPropertyName, "")
-        .ifEmpty { null }
-    val valuesPropertyType = args.getRaw(GenerateKordEnum::valuesPropertyType)?.toValuesPropertyType()
-        ?: NONE
+    val valuesPropertyName = args.getOrDefault(GenerateKordEnum::valuesPropertyName, "").ifEmpty { null }
+    val valuesPropertyType = args.getRaw(GenerateKordEnum::valuesPropertyType)?.toValuesPropertyType() ?: NONE
     if (valuesPropertyName != null) {
         if (valuesPropertyType == NONE) {
             logger.error("Didn't specify valuesPropertyType", symbol = this)
@@ -117,10 +115,8 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
     val kDoc = args.getOrDefault(GenerateKordEnum.Entry::kDoc, "").toKDoc()
     val isKordExperimental = args.getOrDefault(GenerateKordEnum.Entry::isKordExperimental, false)
     val deprecationMessage = args.getOrDefault(GenerateKordEnum.Entry::deprecationMessage, "")
-    @Suppress("RemoveRedundantSpreadOperator") // Removing the emptyArray() will cause a compiler error
-    val replaceWith = args.getRaw(GenerateKordEnum.Entry::replaceWith)?.toReplaceWith() ?: ReplaceWith("", *emptyArray())
-    val deprecationLevel = args.getRaw(GenerateKordEnum.Entry::deprecationLevel)?.toDeprecationLevel()
-        ?: WARNING
+    val replaceWith = args.getRaw(GenerateKordEnum.Entry::replaceWith)?.toReplaceWith() ?: ReplaceWith("", imports = emptyArray())
+    val deprecationLevel = args.getRaw(GenerateKordEnum.Entry::deprecationLevel)?.toDeprecationLevel() ?: WARNING
 
     val value = when (valueType) {
         INT -> {
@@ -135,7 +131,6 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
 
             intValue
         }
-
         STRING -> {
             if (intValue != GenerateKordEnum.Entry.DEFAULT_INT_VALUE) {
                 logger.error("Specified intValue for valueType $valueType", symbol = this)
