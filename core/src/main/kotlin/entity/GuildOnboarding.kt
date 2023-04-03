@@ -116,9 +116,11 @@ public class OnboardingPromptOption(
     /** The IDs for roles assigned to a member when the option is selected. */
     public val roleIds: List<Snowflake> get() = data.roleIds
 
-    // TODO Make a standard emoji type to allow this to not be the common type.
     /** The emoji of the option. */
-    public val emoji: DiscordEmoji get() = data.emoji
+    public val emoji: Emoji get() = when (data.emoji.id) {
+        null -> Emoji.Standard(data.emoji.name!!)
+        else -> Emoji.Guild(data.emoji.id!!, data.emoji.name ?: "", data.emoji.animated.discordBoolean)
+    }
 
     /** The title of the option. */
     public val title: String get() = data.title

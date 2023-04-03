@@ -6030,6 +6030,45 @@ public final class dev/kord/core/entity/Embed$Video : dev/kord/core/KordObject {
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract class dev/kord/core/entity/Emoji {
+	public static final field Companion Ldev/kord/core/entity/Emoji$Companion;
+	public abstract fun getMention ()Ljava/lang/String;
+	public abstract fun getName ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/entity/Emoji$Companion {
+	public final fun from (Ldev/kord/common/entity/DiscordEmoji;)Ldev/kord/core/entity/Emoji;
+	public final fun from (Ldev/kord/core/entity/Emoji$Guild;)Ldev/kord/core/entity/Emoji$Guild;
+}
+
+public final class dev/kord/core/entity/Emoji$Guild : dev/kord/core/entity/Emoji {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Z)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Z
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Z)Ldev/kord/core/entity/Emoji$Guild;
+	public static synthetic fun copy$default (Ldev/kord/core/entity/Emoji$Guild;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZILjava/lang/Object;)Ldev/kord/core/entity/Emoji$Guild;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getMention ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isAnimated ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/entity/Emoji$Standard : dev/kord/core/entity/Emoji {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Ldev/kord/core/entity/Emoji$Standard;
+	public static synthetic fun copy$default (Ldev/kord/core/entity/Emoji$Standard;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/core/entity/Emoji$Standard;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getMention ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract interface class dev/kord/core/entity/Entity : java/lang/Comparable {
 	public static final field Companion Ldev/kord/core/entity/Entity$Companion;
 	public abstract fun compareTo (Ldev/kord/core/entity/Entity;)I
@@ -6640,7 +6679,7 @@ public final class dev/kord/core/entity/OnboardingPromptOption : dev/kord/core/e
 	public final fun getChannels ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getData ()Ldev/kord/common/entity/DiscordOnboardingPromptOption;
 	public final fun getDescription ()Ljava/lang/String;
-	public final fun getEmoji ()Ldev/kord/common/entity/DiscordEmoji;
+	public final fun getEmoji ()Ldev/kord/core/entity/Emoji;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
