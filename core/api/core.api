@@ -6038,7 +6038,7 @@ public abstract class dev/kord/core/entity/Emoji {
 
 public final class dev/kord/core/entity/Emoji$Companion {
 	public final fun from (Ldev/kord/common/entity/DiscordEmoji;)Ldev/kord/core/entity/Emoji;
-	public final fun from (Ldev/kord/core/entity/Emoji$Guild;)Ldev/kord/core/entity/Emoji$Guild;
+	public final fun from (Ldev/kord/core/entity/GuildEmoji;)Ldev/kord/core/entity/Emoji$Guild;
 }
 
 public final class dev/kord/core/entity/Emoji$Guild : dev/kord/core/entity/Emoji {

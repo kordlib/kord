@@ -103,6 +103,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GuildPreview(GuildPreviewData.from(discordPreview), kord)
     }
 
+    /**
+     * Returns the onboarding for a specified [guildId], or null if one cannot be found.
+     * @param guildId The ID of the guild to get the onboarding for.
+     */
     public suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding? = catchNotFound {
         val onboarding = guild.getGuildOnboarding(guildId)
         GuildOnboarding(onboarding, kord)
