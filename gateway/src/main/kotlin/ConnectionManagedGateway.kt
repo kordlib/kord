@@ -19,8 +19,10 @@ import java.net.URI
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
+internal typealias ConnectionProvider = suspend () -> GatewayConnection
+
 internal class ConnectionManagedGateway(
-    private val connectionProvider: suspend () -> GatewayConnection,
+    private val connectionProvider: ConnectionProvider,
     private val data: DefaultGatewayData
 ) : BaseGateway() {
 
