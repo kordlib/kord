@@ -1,6 +1,6 @@
 package dev.kord.core.cache.api
 
-public interface Cache<Value> {
+public interface EntryCache<Value: Any> {
 
     /**
      * Returns the value associated with [key] in this cache, or null if there is no
@@ -22,6 +22,8 @@ public interface Cache<Value> {
      * Discards all entries in the cache.
      */
     public fun discardAll()
+
+    public fun addObserver(cache: EntryCache<Any>)
 
     /**
      * Returns a defensive copy of cache entries as [Map].
