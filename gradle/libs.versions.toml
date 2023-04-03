@@ -1,7 +1,7 @@
 [versions]
 
 # api dependencies
-kotlin = "1.8.10" # https://github.com/JetBrains/kotlin
+kotlin = "1.8.20" # https://github.com/JetBrains/kotlin
 ktor = "2.2.4" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serialization
@@ -10,7 +10,7 @@ kotlin-logging = "3.0.5" # https://github.com/oshai/kotlin-logging
 kord-cache = { strictly = "[0.3.0, 0.4.0[", prefer = "latest.release" }
 
 # code generation
-ksp = "1.8.10-1.0.9" # https://github.com/google/ksp
+ksp = "1.8.20-RC2-1.0.9" # https://github.com/google/ksp
 kotlinpoet = "1.12.0" # https://github.com/square/kotlinpoet
 
 # tests

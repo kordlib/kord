@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.KotlinJvmCompilerOptions
 object CompilerArguments {
     const val time = "-opt-in=kotlin.time.ExperimentalTime"
     const val contracts = "-opt-in=kotlin.contracts.ExperimentalContracts"
+    const val encoding = "-opt-in=kotlin.io.encoding.ExperimentalEncodingApi"
 
     const val kordPreview = "-opt-in=dev.kord.common.annotation.KordPreview"
     const val kordExperimental = "-opt-in=dev.kord.common.annotation.KordExperimental"
