@@ -28,7 +28,7 @@ internal class AnnotationArguments private constructor(private val map: Map<Stri
     internal fun getRaw(parameter: KProperty1<out Annotation, Any>) = map[parameter.name]
 
     internal companion object {
-        internal val KSAnnotation.annotationArguments: AnnotationArguments
+        internal val KSAnnotation.annotationArguments
             get() = AnnotationArguments(arguments.associate { it.name!!.getShortName() to it.value })
     }
 }
