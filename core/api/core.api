@@ -264,6 +264,8 @@ public abstract interface class dev/kord/core/behavior/GuildBehavior : dev/kord/
 	public abstract fun getMemberOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getMembers ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getMembers (Ljava/lang/String;I)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun getOnboarding (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getOnboardingOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPresences ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getPreview (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPreviewOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -337,6 +339,8 @@ public final class dev/kord/core/behavior/GuildBehavior$DefaultImpls {
 	public static fun getMembers (Ldev/kord/core/behavior/GuildBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getMembers (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;I)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getMembers$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;IILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getOnboarding (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getOnboardingOrNull (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getPresences (Ldev/kord/core/behavior/GuildBehavior;)Lkotlinx/coroutines/flow/Flow;
 	public static fun getPreview (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getPreviewOrNull (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -6030,43 +6034,9 @@ public final class dev/kord/core/entity/Embed$Video : dev/kord/core/KordObject {
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class dev/kord/core/entity/Emoji {
-	public static final field Companion Ldev/kord/core/entity/Emoji$Companion;
+public abstract interface class dev/kord/core/entity/Emoji {
 	public abstract fun getMention ()Ljava/lang/String;
 	public abstract fun getName ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/entity/Emoji$Companion {
-	public final fun from (Ldev/kord/common/entity/DiscordEmoji;)Ldev/kord/core/entity/Emoji;
-	public final fun from (Ldev/kord/core/entity/GuildEmoji;)Ldev/kord/core/entity/Emoji$Guild;
-}
-
-public final class dev/kord/core/entity/Emoji$Guild : dev/kord/core/entity/Emoji {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Z)V
-	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Z
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Z)Ldev/kord/core/entity/Emoji$Guild;
-	public static synthetic fun copy$default (Ldev/kord/core/entity/Emoji$Guild;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZILjava/lang/Object;)Ldev/kord/core/entity/Emoji$Guild;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getMention ()Ljava/lang/String;
-	public fun getName ()Ljava/lang/String;
-	public fun hashCode ()I
-	public final fun isAnimated ()Z
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/entity/Emoji$Standard : dev/kord/core/entity/Emoji {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Ldev/kord/core/entity/Emoji$Standard;
-	public static synthetic fun copy$default (Ldev/kord/core/entity/Emoji$Standard;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/core/entity/Emoji$Standard;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun getMention ()Ljava/lang/String;
-	public fun getName ()Ljava/lang/String;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class dev/kord/core/entity/Entity : java/lang/Comparable {
@@ -6164,6 +6134,8 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public final fun getMfaLevel ()Ldev/kord/common/entity/MFALevel;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ldev/kord/common/entity/NsfwLevel;
+	public fun getOnboarding (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOnboardingOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getOwner ()Ldev/kord/core/behavior/MemberBehavior;
 	public final fun getOwner (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
@@ -6235,7 +6207,7 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
-public final class dev/kord/core/entity/GuildEmoji : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
+public final class dev/kord/core/entity/GuildEmoji : dev/kord/core/entity/Emoji, dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
 	public fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/EmojiData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
@@ -6251,8 +6223,8 @@ public final class dev/kord/core/entity/GuildEmoji : dev/kord/core/entity/KordEn
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMember ()Ldev/kord/core/behavior/MemberBehavior;
 	public final fun getMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getMention ()Ljava/lang/String;
-	public final fun getName ()Ljava/lang/String;
+	public fun getMention ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
 	public final fun getRequiresColons ()Z
 	public final fun getRoleBehaviors ()Ljava/util/Set;
 	public final fun getRoleIds ()Ljava/util/Set;
@@ -6285,6 +6257,49 @@ public final class dev/kord/core/entity/GuildOnboarding : dev/kord/core/KordObje
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun isEnabled ()Z
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/GuildOnboarding;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
+public final class dev/kord/core/entity/GuildOnboarding$Prompt : dev/kord/core/entity/KordEntity {
+	public fun <init> (Ldev/kord/common/entity/DiscordOnboardingPrompt;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)V
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Ldev/kord/common/entity/DiscordOnboardingPrompt;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getOptions ()Ljava/util/List;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ldev/kord/common/entity/OnboardingPromptType;
+	public fun hashCode ()I
+	public final fun isInOnboarding ()Z
+	public final fun isRequired ()Z
+	public final fun isSingleSelect ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/entity/GuildOnboarding$Prompt$Option : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
+	public fun <init> (Ldev/kord/common/entity/DiscordOnboardingPromptOption;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/DiscordOnboardingPromptOption;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun compareTo (Ldev/kord/core/entity/Entity;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChannelIds ()Ljava/util/List;
+	public final fun getChannels ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getData ()Ldev/kord/common/entity/DiscordOnboardingPromptOption;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEmoji ()Ldev/kord/core/entity/Emoji;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getRoleIds ()Ljava/util/List;
+	public final fun getRoles ()Lkotlinx/coroutines/flow/Flow;
+	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
+	public final fun getTitle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/GuildOnboarding$Prompt$Option;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
@@ -6654,43 +6669,6 @@ public final class dev/kord/core/entity/MessageReference : dev/kord/core/KordObj
 	public final fun getMessage ()Ldev/kord/core/behavior/MessageBehavior;
 }
 
-public final class dev/kord/core/entity/OnboardingPrompt : dev/kord/core/entity/KordEntity {
-	public fun <init> (Ldev/kord/common/entity/DiscordOnboardingPrompt;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public final fun getData ()Ldev/kord/common/entity/DiscordOnboardingPrompt;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getOptions ()Ljava/util/List;
-	public final fun getTitle ()Ljava/lang/String;
-	public final fun getType ()Ldev/kord/common/entity/OnboardingPromptType;
-	public final fun isInOnboarding ()Z
-	public final fun isRequired ()Z
-	public final fun isSingleSelect ()Z
-}
-
-public final class dev/kord/core/entity/OnboardingPromptOption : dev/kord/core/entity/KordEntity, dev/kord/core/entity/Strategizable {
-	public fun <init> (Ldev/kord/common/entity/DiscordOnboardingPromptOption;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/DiscordOnboardingPromptOption;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public final fun getChannelIds ()Ljava/util/List;
-	public final fun getChannels ()Lkotlinx/coroutines/flow/Flow;
-	public final fun getData ()Ldev/kord/common/entity/DiscordOnboardingPromptOption;
-	public final fun getDescription ()Ljava/lang/String;
-	public final fun getEmoji ()Ldev/kord/core/entity/Emoji;
-	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getRoleIds ()Ljava/util/List;
-	public final fun getRoles ()Lkotlinx/coroutines/flow/Flow;
-	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun getTitle ()Ljava/lang/String;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/OnboardingPromptOption;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
-}
-
 public final class dev/kord/core/entity/PartialApplication : dev/kord/core/entity/BaseApplication {
 	public fun <init> (Ldev/kord/core/cache/data/PartialApplicationData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/PartialApplicationData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -6758,6 +6736,8 @@ public final class dev/kord/core/entity/PartialGuild : dev/kord/core/behavior/Gu
 	public fun getMembers (Ljava/lang/String;I)Lkotlinx/coroutines/flow/Flow;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ldev/kord/common/entity/NsfwLevel;
+	public fun getOnboarding (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getOnboardingOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getOwner ()Ljava/lang/Boolean;
 	public final fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getPresences ()Lkotlinx/coroutines/flow/Flow;
@@ -7013,6 +6993,12 @@ public final class dev/kord/core/entity/StageInstance : dev/kord/core/behavior/S
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/StageInstanceBehavior;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/StageInstance;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+}
+
+public final class dev/kord/core/entity/StandardEmoji : dev/kord/core/entity/Emoji {
+	public fun <init> (Ljava/lang/String;)V
+	public fun getMention ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
 }
 
 public class dev/kord/core/entity/Sticker : dev/kord/core/entity/KordEntity {
@@ -13582,6 +13568,7 @@ public final class dev/kord/core/supplier/RestEntitySupplier : dev/kord/core/sup
 	public fun getGuildBans (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildChannels (Ldev/kord/common/entity/Snowflake;)Lkotlinx/coroutines/flow/Flow;
 	public fun getGuildMembers (Ldev/kord/common/entity/Snowflake;Ljava/lang/Integer;)Lkotlinx/coroutines/flow/Flow;
+	public final fun getGuildOnboarding (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildOnboardingOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildPreview (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

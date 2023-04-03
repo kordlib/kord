@@ -53,7 +53,7 @@ import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.Objects
+import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
@@ -510,6 +510,21 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * @throws RequestException if the guild does not exist or is not public.
      */
     public suspend fun getPreviewOrNull(): GuildPreview? = kord.with(rest).getGuildPreviewOrNull(id)
+
+    /**
+     * Returns the onboarding for the guild, or null if one cannot be found.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getOnboarding(): GuildOnboarding = kord.with(rest).getGuildOnboarding(id)
+
+    /**
+     * Returns the onboarding for the guild.
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the preview was not found.
+     */
+    public suspend fun getOnboardingOrNull(): GuildOnboarding? = kord.with(rest).getGuildOnboardingOrNull(id)
 
     /**
      * Requests to get the amount of users that would be pruned in this guild.
