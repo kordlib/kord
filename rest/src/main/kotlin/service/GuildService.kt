@@ -50,7 +50,7 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         keys[Route.GuildId] = guildId
     }
 
-    /** Returns the onboarding for this [guildId]. */
+    /** Returns the [onboarding][DiscordGuildOnboarding] object for the [guildId]. */
     public suspend fun getGuildOnboarding(guildId: Snowflake): DiscordGuildOnboarding = call(Route.GuildOnboardingGet) {
         keys[Route.GuildId] = guildId
     }

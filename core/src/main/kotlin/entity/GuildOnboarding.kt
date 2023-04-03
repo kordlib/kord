@@ -15,32 +15,31 @@ import kotlinx.coroutines.flow.filter
 import java.util.*
 
 /**
- * Represents an instance of a Guild Onboarding
- *
- * @param data The data for the onboarding.
+ * Represents the [onboarding](https://support.discord.com/hc/en-us/articles/11074987197975-Community-Onboarding-FAQ)
+ * flow for a [Guild].
  */
 public class GuildOnboarding(
-        public val data: DiscordGuildOnboarding,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    public val data: DiscordGuildOnboarding,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordObject, Strategizable {
-    /** The ID of the guild the onboarding is for. */
+    /** The ID of the [Guild] this onboarding is part of. */
     public val guildId: Snowflake get() = data.guildId
 
-    /** The [GuildBehavior] for the onboarding. */
+    /** The [GuildBehavior] for this onboarding. */
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    /** A list of [Prompt]s for the onboarding. */
+    /** The [Prompt]s shown during onboarding and in customize community. */
     public val prompts: List<Prompt> get() = data.prompts.map { Prompt(it, guildId, kord) }
 
-    /** A list of [Snowflake] channel Ids that are defaulted for the onboarding. */
+    /** The IDs of the [channels][TopGuildChannel] that [Member]s get opted into automatically. */
     public val defaultChannelIds: List<Snowflake> get() = data.defaultChannelIds
 
-    /** Whether the onboarding is enabled or not. */
+    /** Whether onboarding is enabled in the [guild]. */
     public val isEnabled: Boolean get() = data.enabled
 
     /**
-     * Requests the [Guild] for the onboarding.
+     * Requests the [Guild] this onboarding is part of.
      *
      * @throws RequestException if something went wrong while retrieving the guild.
      * @throws EntityNotFoundException if the guild is null.
@@ -48,17 +47,20 @@ public class GuildOnboarding(
     public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
     /**
-     * Requests the [Guild] for the onboarding, returns `null` when the guild isn't present.
+     * Requests the [Guild] this onboarding is part of, returns `null` when the guild isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the guild.
      */
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
     /**
-     * A [Flow] of [TopGuildChannel]s for the default channels
+     * Requests the [channels][TopGuildChannel] that [Member]s get opted into automatically.
+     *
+     * The returned [Flow] is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public val defaultChannels: Flow<TopGuildChannel> =
-            supplier.getGuildChannels(guildId).filter { it.id in defaultChannelIds }
+        supplier.getGuildChannels(guildId).filter { it.id in defaultChannelIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildOnboarding =
             GuildOnboarding(data, kord, strategy.supply(kord))
@@ -74,25 +76,26 @@ public class GuildOnboarding(
             public val guildId: Snowflake,
             override val kord: Kord
     ) : KordEntity {
-        public override val id: Snowflake get() = data.id
+        override val id: Snowflake get() = data.id
 
-        /** The [OnboardingPromptType] for this prompt. */
+        /** The [type][OnboardingPromptType] of this prompt. */
         public val type: OnboardingPromptType get() = data.type
 
-        /** A [List] of [Option]s for the prompt. */
+        /** The [Option]s available within this prompt. */
         public val options: List<Option> get() = data.options.map { Option(it, guildId, kord) }
 
-        /** The title of the prompt. */
+        /** The title of this prompt. */
         public val title: String get() = data.title
 
-        /** Whether only one option can be selected for the prompt or not. */
+        /** Indicates whether users are limited to selecting one option for this prompt. */
         public val isSingleSelect: Boolean get() = data.singleSelect
 
-        /** Whether the prompt is required before the onboarding flow is complete. */
+        /** Indicates whether this prompt is required before a user completes the onboarding flow. */
         public val isRequired: Boolean get() = data.required
 
         /**
-         * Whether the prompt is present in the onboarding flow. If `false` this will only appear in the Channels & Roles tab.
+         * Indicates whether this prompt is present in the onboarding flow. If `false`, this prompt will only appear in the
+         * Channels & Roles tab.
          */
         public val isInOnboarding: Boolean get() = data.inOnboarding
 
@@ -109,8 +112,7 @@ public class GuildOnboarding(
         /**
          * Represents an option for a [Prompt].
          *
-         * @param data The data for the prompt option
-         * @param guildId The ID of the guild the onboarding belongs too
+         * @property guildId The ID of the [Guild] the [onboarding][GuildOnboarding] is part of.
          */
         public class Option(
                 public val data: DiscordOnboardingPromptOption,
@@ -118,35 +120,45 @@ public class GuildOnboarding(
                 override val kord: Kord,
                 override val supplier: EntitySupplier = kord.defaultSupplier
         ) : KordEntity, Strategizable {
-            public override val id: Snowflake get() = data.id
+            override val id: Snowflake get() = data.id
 
-            /** The IDs for the channels a member is added to when the option is selected. */
+            /** The IDs for the [channels][TopGuildChannel] a [Member] is added to when this option is selected. */
             public val channelIds: List<Snowflake> get() = data.channelIds
 
-            /** The IDs for roles assigned to a member when the option is selected. */
+            /** The IDs for the [Role]s assigned to a [Member] when this option is selected. */
             public val roleIds: List<Snowflake> get() = data.roleIds
 
-            /** The emoji of the option. */
+            /** The [Emoji] of this option. */
             public val emoji: Emoji
                 get() = when (data.emoji.id) {
                     null -> StandardEmoji(data.emoji.name!!)
                     else -> GuildEmoji(data.emoji.toData(guildId, data.emoji.id!!), kord)
                 }
 
-            /** The title of the option. */
+            /** The title of this option. */
             public val title: String get() = data.title
 
-            /** The description of the option. */
+            /** The description of this option. */
             public val description: String? get() = data.description
 
-            /** A [Flow] of [TopGuildChannel]s for the [channelIds] of the option. */
+            /**
+             * Requests the [channels][TopGuildChannel] a [Member] is added to when this option is selected.
+             *
+             * The returned [Flow] is lazily executed, any [RequestException] will be thrown on
+             * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+             */
             public val channels: Flow<TopGuildChannel> get() = supplier.getGuildChannels(guildId).filter { it.id in channelIds }
 
-            /** A [Flow] of [Role]s for the [roleIds] of the option. */
+            /**
+             * Requests the [Role]s assigned to a [Member] when this option is selected.
+             *
+             * The returned [Flow] is lazily executed, any [RequestException] will be thrown on
+             * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+             */
             public val roles: Flow<Role> get() = supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
             override fun withStrategy(strategy: EntitySupplyStrategy<*>): Option =
-                    Option(data, guildId, kord, supplier)
+                    Option(data, guildId, kord, strategy.supply(kord))
 
             override fun toString(): String =
                     "OnboardingPromptOption(data=$data, guildId=$guildId, kord=$kord, supplier=$supplier)"
