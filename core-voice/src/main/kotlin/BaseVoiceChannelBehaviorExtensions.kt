@@ -1,4 +1,4 @@
-@file:JvmName("VoiceBaseVoiceChannelBehavior") // preserve old name for binary compatibility
+@file:JvmName("VoiceBaseVoiceChannelBehavior")
 
 package dev.kord.core.behavior.channel
 
