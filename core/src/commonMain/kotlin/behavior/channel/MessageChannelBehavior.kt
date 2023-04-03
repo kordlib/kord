@@ -8,6 +8,7 @@ import dev.kord.core.entity.Message
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.EmbedBuilder
@@ -25,11 +26,8 @@ import kotlinx.coroutines.flow.takeWhile
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.coroutines.coroutineContext
 import kotlin.js.JsName
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.TimeMark
@@ -215,7 +213,7 @@ public interface MessageChannelBehavior : ChannelBehavior, Strategizable {
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */
-    @JsName("sendTyping") // otherwise clashes with channel typefield
+    @JsName("sendTyping") // otherwise clashes with Channel.type property
     public suspend fun type() {
         kord.rest.channel.triggerTypingIndicator(id)
     }
