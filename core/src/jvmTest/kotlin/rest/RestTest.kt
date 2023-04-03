@@ -172,7 +172,7 @@ class RestServiceTest {
                 content = "TEST REPLY"
             }
 
-            assert(reply.referencedMessage?.id == referenceMessage.id)
+            assertEquals(referenceMessage.id, reply.referencedMessage?.id)
         }
 
         val messages = channel.messages.toList()
@@ -371,10 +371,10 @@ class RestServiceTest {
         val category = guild.createCategory("my category")
 
         val textChannel = category.createTextChannel("test child text channel")
-        assert(textChannel.category == category)
+        assertEquals(category, textChannel.category)
 
         val voiceChannel = category.createVoiceChannel("test child voice channel")
-        assert(voiceChannel.category == category)
+        assertEquals(category, voiceChannel.category)
     }
 
     @Test

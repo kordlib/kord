@@ -11,6 +11,7 @@ import dev.kord.core.mockKord
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 
 
 class CommandsTypeTests {
@@ -54,8 +55,7 @@ class CommandsTypeTests {
         val serializedRoot = Json.decodeFromJsonElement(InteractionCallbackData.serializer(), root)
         val data = ApplicationInteractionData.from(serializedRoot, null)
         val command = InteractionCommand(data, mockKord())
-        assert(command is RootCommand)
-        command as RootCommand
+        assertIs<RootCommand>(command)
         assertEquals(1L, command.integers["argument"])
         assertEquals("root", command.rootName)
 
@@ -66,8 +66,7 @@ class CommandsTypeTests {
         val sub = Json.decodeFromJsonElement(InteractionCallbackData.serializer(), subCommand)
         val data = ApplicationInteractionData.from(sub, null)
         val command = InteractionCommand(data, mockKord())
-        assert(command is SubCommand)
-        command as SubCommand
+        assertIs<SubCommand>(command)
         assertEquals(1L, command.integers["argument"])
         assertEquals("root", command.rootName)
         assertEquals("subCommand", command.name)
@@ -79,8 +78,7 @@ class CommandsTypeTests {
         val grouping = Json.decodeFromJsonElement(InteractionCallbackData.serializer(), group)
         val data = ApplicationInteractionData.from(grouping, null)
         val command = InteractionCommand(data, mockKord())
-        assert(command is GroupCommand)
-        command as GroupCommand
+        assertIs<GroupCommand>(command)
         assertEquals(1L, command.integers["argument"])
         assertEquals("root", command.rootName)
         assertEquals("group", command.groupName)
