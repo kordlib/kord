@@ -4,6 +4,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
+import dev.kord.gateway.connection.GatewayConnection
 import io.ktor.util.logging.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
@@ -98,6 +99,14 @@ public interface Gateway : CoroutineScope {
          * Returns a [Gateway] with no-op behavior, an empty [Gateway.events] flow and a ping of [Duration.ZERO].
          */
         public fun none(): Gateway = None
+
+        /**
+         * Creates a [Gateway] that will use the provided connection and [data] to connect to the Discord gateway.
+         */
+        public fun connectionManaged(
+            data: DefaultGatewayData,
+            connectionProvider: suspend () -> GatewayConnection
+        ): Gateway = ConnectionManagedGateway(connectionProvider, data)
 
     }
 }
