@@ -18,7 +18,7 @@ import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-/** Either a [StandardEmoji] or a [GuildEmoji] */
+/** Either a [StandardEmoji] or a [GuildEmoji]. */
 public sealed interface Emoji {
     /**
      * Either the unicode representation of the emoji if it's a [StandardEmoji] or the emoji name if it's a
@@ -34,7 +34,8 @@ public sealed interface Emoji {
 }
 
 /**
- * An instance of a [standard emoji](https://discord.com/developers/docs/resources/emoji#emoji-object).
+ * An instance of a
+ * [standard emoji](https://discord.com/developers/docs/resources/emoji#emoji-object-standard-emoji-example).
  *
  * @property name The unicode representation of this emoji.
  */
