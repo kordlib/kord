@@ -39,8 +39,6 @@ kotlin {
         }
     }
 
-    addTestKit()
-
     sourceSets {
         all {
             applyKordOptIns()
@@ -49,17 +47,22 @@ kotlin {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
         }
+        commonTest {
+            dependencies {
+                implementation(project(":test-kit"))
+            }
+        }
         val nonJvmMain by creating {
             dependsOn(commonMain.get())
         }
-
-        targets.forEach {
-            if (it.safeName != "jvm" && it.safeName != "common") {
-                findByName("${it.safeName}Main")?.apply {
+        targets
+            .map { it.name }
+            .filter { it != "jvm" && it != "metadata" }
+            .forEach { target ->
+                sourceSets.getByName("${target}Main") {
                     dependsOn(nonJvmMain)
                 }
             }
-        }
     }
 }
 

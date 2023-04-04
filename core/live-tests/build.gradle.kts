@@ -3,16 +3,14 @@ plugins {
 }
 
 kotlin {
-    addTestKit()
-
     sourceSets {
         all {
             applyKordOptIns()
         }
-
         commonTest {
             dependencies {
                 implementation(projects.core)
+                implementation(projects.testKit)
             }
         }
     }
