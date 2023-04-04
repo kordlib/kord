@@ -50,6 +50,11 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         keys[Route.GuildId] = guildId
     }
 
+    /** Returns the [onboarding][DiscordGuildOnboarding] object for the [guildId]. */
+    public suspend fun getGuildOnboarding(guildId: Snowflake): DiscordGuildOnboarding = call(Route.GuildOnboardingGet) {
+        keys[Route.GuildId] = guildId
+    }
+
     public suspend inline fun modifyGuild(guildId: Snowflake, builder: GuildModifyBuilder.() -> Unit): DiscordGuild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

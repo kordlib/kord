@@ -548,6 +548,25 @@ public interface GuildBehavior : KordEntity, Strategizable {
     }
 
     /**
+     * Requests the [onboarding][GuildOnboarding] object for this guild.
+     *
+     * This is not resolvable through cache and will always use the [rest strategy][EntitySupplyStrategy.rest] instead.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [onboarding][GuildOnboarding] wasn't found.
+     */
+    public suspend fun getOnboarding(): GuildOnboarding = kord.with(rest).getGuildOnboarding(id)
+
+    /**
+     * Requests the [onboarding][GuildOnboarding] object for this guild. Returns `null` if it wasn't found.
+     *
+     * This is not resolvable through cache and will always use the [rest strategy][EntitySupplyStrategy.rest] instead.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getOnboardingOrNull(): GuildOnboarding? = kord.with(rest).getGuildOnboardingOrNull(id)
+
+    /**
      * Requests to get the vanity url of this guild, if present.
      *
      * This function is not resolvable through cache and will always use the [RestClient] instead.
