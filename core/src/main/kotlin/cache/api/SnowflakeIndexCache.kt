@@ -1,5 +1,6 @@
 package dev.kord.core.cache.api
 
+import dev.kord.common.entity.Snowflake
 import io.ktor.util.collections.*
 
 /**
@@ -9,19 +10,19 @@ import io.ktor.util.collections.*
  * @param indexFactory The factory that generates indices for values stored in this cache.
  * @param relation The relation between this cache and other caches, used to discard related entries.
  */
-public class IndexCache<Value : Any>(
-    public val indexFactory: IndexFactory<Value>,
-    public val relation: Relation<Value>
+public class SnowflakeIndexCache<Value : Any>(
+    public val relation: Relation<Value>,
+    public val indexGenerator: (Value) -> Set<Snowflake>
 ) : EntryCache<Value> {
-    
-    private val source: ConcurrentMap<Index<Value>, Value> = ConcurrentMap()
-    
+
+    private val source: ConcurrentMap<Index, Value> = ConcurrentMap()
+
     /**
      * Gets the value associated with the given [key].
      *
      * @return The value associated with the given [key], or `null` if not found.
      */
-    override fun get(key: Index<Value>): Value? {
+    override fun get(key: Index): Value? {
         return source[key]
     }
 
@@ -40,8 +41,9 @@ public class IndexCache<Value : Any>(
      * @param transform The function used to determine which values to discard.
      */
     override fun discardIf(transform: (Value) -> Boolean) {
-        val value = get(transform)
-        if(value != null) source.remove(indexFactory.create(value))
+        val value = get(transform) ?: return
+        val index = MutliSnowflakeIndex(indexGenerator(value))
+        source.remove(index)
     }
 
     /**
@@ -49,7 +51,7 @@ public class IndexCache<Value : Any>(
      *
      * @return The value associated with the given [index], or `null` if not found.
      */
-    override fun discard(index: Index<Value>): Value? {
+    override fun discard(index: Index): Value? {
         return source.remove(index)
     }
 
@@ -58,8 +60,9 @@ public class IndexCache<Value : Any>(
      *
      * @return The [Index] associated with the added [value].
      */
-    override fun put(value: Value): Index<Value> {
-        val index = indexFactory.create(value)
+    override fun put(value: Value): Index {
+        val snowflakes = indexGenerator(value)
+        val index = MutliSnowflakeIndex(snowflakes)
         source[index] = value
         return index
     }
@@ -86,24 +89,7 @@ public class IndexCache<Value : Any>(
      *
      * @return A defensive copy of the underlying [ConcurrentMap].
      */
-    override fun asMap(): Map<Index<Value>, Value> {
+    override fun asMap(): Map<Index, Value> {
         return source.toMap()
-    }
-
-    /**
-     * A factory that creates instances of the [IndexCache] class.
-     */
-    public object Factory: CacheFactory {
-
-        /**
-         * Creates a new instance of the [IndexCache] class.
-         *
-         * @return A new instance of the [IndexCache] class.
-         */
-        override fun <T : Any> create(): EntryCache<T> {
-            val indexFactory: IndexFactory<T> = TODO()
-            val relation = BasicRelation()
-            return IndexCache(indexFactory, relation)
-        }
     }
 }
