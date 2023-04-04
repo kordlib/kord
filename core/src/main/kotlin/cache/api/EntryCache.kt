@@ -8,7 +8,7 @@ public interface EntryCache<Value : Any> {
      * Returns the value associated with the [key] [Index] in this cache, or null if there is no
      * cached value for [key].
      */
-    public fun get(key: Index<Value>): Value?
+    public fun get(key: Index): Value?
 
     /**
      * Returns the first [Value] that satisfies the given [transform] function, or null if none is found.
@@ -20,7 +20,7 @@ public interface EntryCache<Value : Any> {
      * value associated with the same [Index], the old value is replaced by [value].
      * Returns the newly generated [Index] for [value].
      */
-    public fun put(value: Value): Index<Value>
+    public fun put(value: Value): Index
 
     /**
      * Discards any cached [Value] that satisfies the given [transform] function.
@@ -31,7 +31,7 @@ public interface EntryCache<Value : Any> {
      * Discards the cached [Value] associated with the given [Index], if it exists.
      * Returns the discarded [Value], or null if it wasn't found.
      */
-    public fun discard(index: Index<Value>): Value?
+    public fun discard(index: Index): Value?
 
     /**
      * Discards all entries in the cache.
@@ -47,5 +47,5 @@ public interface EntryCache<Value : Any> {
     /**
      * Returns a defensive copy of the cache entries as a [Map] of [Index] to [Value].
      */
-    public fun asMap(): Map<Index<Value>, Value>
+    public fun asMap(): Map<Index, Value>
 }

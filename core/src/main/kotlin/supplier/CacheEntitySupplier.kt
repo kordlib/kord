@@ -58,7 +58,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      */
     public val channels: Flow<Channel>
         get() = cache.getType<ChannelData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .map { Channel.from(it, kord) }
 
@@ -70,7 +70,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      */
     override val guilds: Flow<Guild>
         get() = cache.getType<GuildData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .map { Guild(it, kord) }
 
@@ -82,7 +82,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      */
     override val regions: Flow<Region>
         get() = cache.getType<RegionData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .map { Region(it, kord) }
 
@@ -91,7 +91,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      */
     public val roles: Flow<Role>
         get() = cache.getType<RoleData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .map { Role(it, kord) }
 
@@ -100,7 +100,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      */
     public val users: Flow<User>
         get() = cache.getType<UserData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .map { User(it, kord) }
 
@@ -109,7 +109,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
      */
     public val members: Flow<Member>
         get() = cache.getType<MemberData>()
-            .asSet()
+            .asMap()
             .asFlow().mapNotNull { member ->
             val userData = cache.getType<UserData>().get { it.id == member.userId } ?: return@mapNotNull null
             Member(member, userData, kord)
@@ -134,14 +134,14 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> =
         cache.getType<ChannelData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .map { Channel.from(it, kord) }
             .filterIsInstance()
 
     override fun getChannelPins(channelId: Snowflake): Flow<Message> =
         cache.getType<MessageData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.channelId == channelId && it.pinned }
             .map { Message(it, kord) }
@@ -165,7 +165,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> {
         checkLimit(limit)
         return cache.getType<MessageData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.channelId == channelId && it.id > messageId }
             .map { Message(it, kord) }
@@ -175,7 +175,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> {
         checkLimit(limit)
         return cache.getType<MessageData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.channelId == channelId && it.id < messageId }
             .map { Message(it, kord) }.limit(limit)
@@ -200,7 +200,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getGuildRoles(guildId: Snowflake): Flow<Role> =
         cache.getType<RoleData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.guildId == guildId }
             .map { Role(it, kord) }
@@ -213,7 +213,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> {
         checkLimit(limit)
         return cache.getType<BanData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.guildId == guildId }
             .map { Ban(it, kord) }
@@ -223,7 +223,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
         checkLimit(limit)
         return cache.getType<MemberData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .mapNotNull { memberData ->
                 val userData = cache.getType<UserData>().get { it.id == memberData.userId }
@@ -233,7 +233,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = cache.getType<RegionData>()
-        .asSet()
+        .asMap()
         .asFlow()
         .filter { it.guildId.value == guildId }
         .map { Region(it, kord) }
@@ -244,7 +244,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = cache.getType<EmojiData>()
-        .asSet()
+        .asMap()
         .asFlow()
         .filter { it.guildId == guildId }
         .map { GuildEmoji(it, kord) }
@@ -258,13 +258,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = cache.getType<WebhookData>()
-        .asSet()
+        .asMap()
         .filter { it.channelId == channelId }
         .asFlow()
         .map { Webhook(it, kord) }
 
     override fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> = cache.getType<WebhookData>()
-        .asSet()
+        .asMap()
         .asFlow()
         .filter{ it.guildId.value == guildId }
         .map { Webhook(it, kord) }
@@ -304,7 +304,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getTemplates(guildId: Snowflake): Flow<Template> {
         return cache.getType<TemplateData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.sourceGuildId == guildId }
             .map { Template(it, kord) }
@@ -314,7 +314,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> {
         return cache.getType<ThreadMemberData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.id == channelId }
             .map { ThreadMember(it, kord) }
@@ -322,7 +322,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> =
         cache.getType<ChannelData>()
-            .asSet()
+            .asMap()
             .sortedByDescending { it.id }
             .asFlow()
             .filter { it.threadMetadata.value?.archived != true }
@@ -333,7 +333,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
         checkLimit(limit)
         return cache.getType<ChannelData>()
-            .asSet()
+            .asMap()
             .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
             .asFlow()
             .filter {
@@ -352,7 +352,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
         checkLimit(limit)
         return cache.getType<ChannelData>()
-            .asSet()
+            .asMap()
             .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
             .asFlow()
             .filter {
@@ -376,7 +376,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         checkLimit(limit)
         checkLimit(limit)
         return cache.getType<ChannelData>()
-            .asSet()
+            .asMap()
             .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
             .asFlow()
             .filter {
@@ -397,7 +397,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         withLocalizations: Boolean?
     ): Flow<GuildApplicationCommand> =
         cache.getType<ApplicationCommandData>()
-        .asSet()
+        .asMap()
         .asFlow()
         .filter { it.guildId.value == guildId  && it.applicationId == applicationId }
         .map {
@@ -431,7 +431,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
         cache.getType<ApplicationCommandData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.applicationId == applicationId && it.guildId.value == null }
             .map {
@@ -449,7 +449,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         guildId: Snowflake
     ): Flow<ApplicationCommandPermissions> = cache.getType<GuildApplicationCommandPermissionsData>()
-        .asSet()
+        .asMap()
         .asFlow()
         .filter {it.applicationId == applicationId && it.guildId == guildId }
         .map { ApplicationCommandPermissions(it) }
@@ -489,7 +489,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         checkLimit(limit)
         return cache
             .getType<MemberData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.guildId == guildId && it.userId < before }
             .mapNotNull {
@@ -516,7 +516,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         checkLimit(limit)
         return cache
             .getType<MemberData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.guildId == guildId && it.userId > after }
             .mapNotNull {
@@ -546,21 +546,21 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getNitroStickerPacks(): Flow<StickerPack> {
         return cache.getType<StickerPackData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .map { StickerPack(it, kord) }
     }
 
     override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> {
         return cache.getType<StickerData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .map { GuildSticker(it, kord) }
     }
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
         cache.getType<GuildScheduledEventData>()
-            .asSet()
+            .asMap()
             .asFlow()
             .filter { it.guildId == guildId }
             .map { GuildScheduledEvent(it, kord) }

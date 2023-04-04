@@ -27,18 +27,6 @@ public class TypedSetCache : TypedCache {
     }
 
     /**
-     * Creates a new [EntryCache] using the specified [CacheFactory] and adds it to the [TypedSetCache].
-     * @throws IllegalArgumentException if a cache for the same type already exists.
-     */
-    override fun <T : Any> putCache(factory: CacheFactory): EntryCache<T> {
-        require(getTypeOrNull<T>() == null) { "There must be only one cache of the same type" }
-        val instance = factory.create<T>()
-        @Suppress("UNCHECKED_CAST")
-        types.add(instance as EntryCache<Any>)
-        return instance
-    }
-
-    /**
      * Adds the specified [EntryCache] to the [TypedSetCache].
      * @throws IllegalArgumentException if a cache for the same type already exists.
      */
