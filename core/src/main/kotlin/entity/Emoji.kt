@@ -102,7 +102,7 @@ public class GuildEmoji(
      * The behaviors of the [roles][Role] for which this emoji was whitelisted.
      */
     public val roleBehaviors: Set<RoleBehavior>
-        get() = data.roles.orEmpty().map { RoleBehavior(guildId = guildId, id = id, kord = kord) }.toSet()
+        get() = data.roles.orEmpty().map { roleId -> RoleBehavior(guildId = guildId, id = roleId, kord = kord) }.toSet()
 
     /**
      * The [roles][Role] for which this emoji was whitelisted.

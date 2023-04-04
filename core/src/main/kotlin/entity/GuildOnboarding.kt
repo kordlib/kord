@@ -5,6 +5,8 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.RoleBehavior
+import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.cache.data.toData
 import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.exception.EntityNotFoundException
@@ -35,6 +37,10 @@ public class GuildOnboarding(
 
     /** The IDs of the [channels][TopGuildChannel] that [Member]s get opted into automatically. */
     public val defaultChannelIds: List<Snowflake> get() = data.defaultChannelIds
+
+    /** The behaviors of the [channels][TopGuildChannel] that [Member]s get opted into automatically. */
+    public val defaultChannelBehaviors: List<TopGuildChannelBehavior>
+        get() = defaultChannelIds.map { channelId -> TopGuildChannelBehavior(guildId, id = channelId, kord) }
 
     /** Whether onboarding is enabled in the [guild]. */
     public val isEnabled: Boolean get() = data.enabled
@@ -128,8 +134,18 @@ public class GuildOnboarding(
             /** The IDs for the [channels][TopGuildChannel] a [Member] is added to when this option is selected. */
             public val channelIds: List<Snowflake> get() = data.channelIds
 
+            /**
+             * The behaviors for the [channels][TopGuildChannel] a [Member] is added to when this option is selected.
+             */
+            public val channelBehaviors: List<TopGuildChannelBehavior>
+                get() = channelIds.map { channelId -> TopGuildChannelBehavior(guildId, id = channelId, kord) }
+
             /** The IDs for the [Role]s assigned to a [Member] when this option is selected. */
             public val roleIds: List<Snowflake> get() = data.roleIds
+
+            /** The behaviors for the [Role]s assigned to a [Member] when this option is selected. */
+            public val roleBehaviors: List<RoleBehavior>
+                get() = roleIds.map { roleId -> RoleBehavior(guildId, id = roleId, kord) }
 
             /** The [Emoji] of this option. */
             public val emoji: Emoji
