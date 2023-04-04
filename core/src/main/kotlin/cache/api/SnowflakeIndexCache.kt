@@ -75,14 +75,14 @@ public class SnowflakeIndexCache<Value : Any>(
         source.clear()
     }
 
-    /**
-     * Adds an observer and discards related entries based on [relation].
-     *
-     * @param cache The cache to observe.
-     */
-    override fun addObserver(cache: EntryCache<Any>) {
-        relation.putCache(cache)
+    override fun getRelations(): Relation<Value> {
+        return relation
     }
+
+    override fun <R : Any> relate(cache: EntryCache<R>, handler: RelationHandler<Value, R>) {
+        relation.to(cache, handler)
+    }
+
 
     /**
      * Returns a defensive copy of the underlying [ConcurrentMap].

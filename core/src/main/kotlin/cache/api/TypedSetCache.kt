@@ -1,7 +1,7 @@
 package dev.kord.core.cache.api
 
 /**
- * A [TypedCache] implementation that stores a set of [EntryCache]s.
+ * An implementation of [TypedCache] that stores a set of [EntryCache]s.
  */
 public class TypedSetCache : TypedCache {
 
@@ -19,6 +19,7 @@ public class TypedSetCache : TypedCache {
 
     /**
      * Returns the [EntryCache] for the specified type, throwing an exception if it is not found.
+     * @throws IllegalArgumentException if a cache for the specified type is not found.
      */
     override fun <T : Any> getType(): EntryCache<T> {
         val instance = getTypeOrNull<T>()

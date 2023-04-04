@@ -1,5 +1,11 @@
 package dev.kord.core.cache.api
 
+/**
+ * A typealias for a function that determines the relationship between two entities of type `T` and `R`
+ * in a bi-directional link.
+ * The `value` parameter represents the entity of type `T` and the `friend` parameter represents the entity of type `R`.
+ * The function should return `true` if the two entities are related, or `false` otherwise.
+ */
 public typealias RelationHandler<T, R> = (value: T, friend: R) -> Boolean
 
 /**
@@ -9,7 +15,6 @@ public typealias RelationHandler<T, R> = (value: T, friend: R) -> Boolean
  *
  * @param T the type of the first entity in the relation.
  */
-
 public interface Relation<T: Any> {
 
     /**
@@ -30,14 +35,7 @@ public interface Relation<T: Any> {
      * Associates an [EntryCache] of type `T` with this relation.
      *
      * @param cache the cache to associate with this relation.
+     * @param handler the `RelationHandler` that defines the relationship between entities of type `T` and `R`.
      */
-    public fun <T: Any> putCache(cache: EntryCache<T>)
-
-    /**
-     * Associates a `RelationHandler` with this relation.
-     *
-     * @param handler the `RelationHandler` to associate with this relation.
-     * @param R the type of the second entity in the relation.
-     */
-    public fun <R: Any> relate(handler: RelationHandler<T, R>)
+    public fun <R: Any> to(cache: EntryCache<R>, handler: RelationHandler<T, R>)
 }

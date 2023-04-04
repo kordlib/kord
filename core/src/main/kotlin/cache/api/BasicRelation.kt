@@ -35,18 +35,9 @@ public class BasicRelation<T: Any> : Relation<T> {
      * @param cache the cache to add.
      * @param T the type of the related values.
      */
-    override fun <T : Any> putCache(cache: EntryCache<T>) {
+    override fun <R: Any> to(cache: EntryCache<R>, relation: RelationHandler<T, R>) {
         caches.putCache(cache)
-    }
-
-    /**
-     * Adds a [RelationHandler] to the [relationships] set.
-     *
-     * @param handler the handler to add.
-     * @param R the type of the related values.
-     */
-    override fun <R : Any> relate(handler: RelationHandler<T, R>) {
-        relationships.add(safe(handler))
+        relationships.add(safe(relation))
     }
 
     /**
