@@ -8,7 +8,7 @@ import js.core.get
 import node.process.process
 
 actual object Platform {
-    actual val IS_JVM: Boolean = false
+    actual const val IS_JVM: Boolean = false
     actual val IS_NODE: Boolean
         get() = js(
             "typeof process !== 'undefined' && process.versions != null && process.versions.node != null"
