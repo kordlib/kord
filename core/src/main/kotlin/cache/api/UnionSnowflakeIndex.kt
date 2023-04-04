@@ -2,7 +2,7 @@ package dev.kord.core.cache.api
 
 import dev.kord.common.entity.Snowflake
 
-public data class MutliSnowflakeIndex(public val snowflakes: Set<Snowflake>): Index {
+public data class UnionSnowflakeIndex(public val snowflakes: Set<Snowflake>): Index {
     public fun getValue(): String {
         return snowflakes.toString()
     }

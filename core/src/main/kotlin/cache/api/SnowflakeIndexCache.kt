@@ -42,7 +42,7 @@ public class SnowflakeIndexCache<Value : Any>(
      */
     override fun discardIf(transform: (Value) -> Boolean) {
         val value = get(transform) ?: return
-        val index = MutliSnowflakeIndex(indexGenerator(value))
+        val index = UnionSnowflakeIndex(indexGenerator(value))
         source.remove(index)
     }
 
@@ -62,7 +62,7 @@ public class SnowflakeIndexCache<Value : Any>(
      */
     override fun put(value: Value): Index {
         val snowflakes = indexGenerator(value)
-        val index = MutliSnowflakeIndex(snowflakes)
+        val index = UnionSnowflakeIndex(snowflakes)
         source[index] = value
         return index
     }
