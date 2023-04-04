@@ -18,25 +18,42 @@ import java.util.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
+/** Either a [StandardEmoji] or a [GuildEmoji] */
 public sealed interface Emoji {
     /**
-     * Either the unicode representation if it's a [Standard] emoji, or the emoji name if it's a [Guild] emoji.
+     * Either the unicode representation of the emoji if it's a [StandardEmoji] or the emoji name if it's a
+     * [GuildEmoji].
      */
     public val name: String?
 
     /**
-     * Either the mention string formatted as <:name:id> if it's a [Guild] emoji or the name if it's a [Standard] emoji.
+     * Either the unicode representation of the emoji if it's a [StandardEmoji] or the
+     * [mention string](https://discord.com/developers/docs/reference#message-formatting) if it's a [GuildEmoji].
      */
     public val mention: String
 }
 
 /**
- * An instance of a [Discord emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific guild.
+ * An instance of a [standard emoji](https://discord.com/developers/docs/resources/emoji#emoji-object).
+ *
+ * @property name The unicode representation of this emoji.
+ */
+public class StandardEmoji(override val name: String) : Emoji {
+    /** The unicode representation of this emoji. */
+    override val mention: String get() = name
+    override fun equals(other: Any?): Boolean = other is StandardEmoji && this.name == other.name
+    override fun hashCode(): Int = name.hashCode()
+    override fun toString(): String = "StandardEmoji(name=$name)"
+}
+
+/**
+ * An instance of an [emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific
+ * [Guild].
  */
 public class GuildEmoji(
-        public val data: EmojiData,
-        override val kord: Kord,
-        override val supplier: EntitySupplier = kord.defaultSupplier
+    public val data: EmojiData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier
 ) : Emoji, KordEntity, Strategizable {
 
     override val id: Snowflake
@@ -45,7 +62,7 @@ public class GuildEmoji(
     public val guildId: Snowflake
         get() = data.guildId
 
-    public override val mention: String
+    override val mention: String
         get() = if (isAnimated) "<a:$name:$id>" else "<:$name:$id>"
 
     /**
@@ -68,7 +85,7 @@ public class GuildEmoji(
      *
      * This property can be null when trying to get the name of an emoji that was deleted.
      */
-    public override val name: String? get() = data.name
+    override val name: String? get() = data.name
 
     /**
      * Whether this emoji needs to be wrapped in colons.
@@ -172,12 +189,4 @@ public class GuildEmoji(
     override fun toString(): String {
         return "GuildEmoji(data=$data, kord=$kord, supplier=$supplier)"
     }
-}
-
-/**
- * Representation of a [StandardEmoji].
- * @param name Either the unicode representation if it's a [StandardEmoji], or the emoji name if it's a [Guild] emoji.
- */
-public class StandardEmoji(override val name: String): Emoji {
-    override val mention: String get() = name
 }
