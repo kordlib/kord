@@ -1,6 +1,5 @@
 package dev.kord.rest.request
 
-import dev.kord.common.Platform
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.DiscordUser
@@ -8,6 +7,7 @@ import dev.kord.common.entity.MessageType.Default
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.json.readFile
 import dev.kord.rest.service.ChannelService
+import dev.kord.test.Platform
 import io.ktor.client.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.request.forms.*
