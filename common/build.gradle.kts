@@ -24,7 +24,7 @@ kotlin {
                 api(libs.ktor.client.cio)
             }
         }
-        nonJvm {
+        nonJvmMain {
             dependencies {
                 implementation(libs.ktor.utils)
                 implementation(libs.bignum)

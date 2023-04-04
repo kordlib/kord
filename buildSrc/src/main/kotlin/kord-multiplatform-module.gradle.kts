@@ -49,14 +49,14 @@ kotlin {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
         }
-        val nonJvm by creating {
+        val nonJvmMain by creating {
             dependsOn(commonMain.get())
         }
 
         targets.forEach {
             if (it.safeName != "jvm" && it.safeName != "common") {
                 findByName("${it.safeName}Main")?.apply {
-                    dependsOn(nonJvm)
+                    dependsOn(nonJvmMain)
                 }
             }
         }
