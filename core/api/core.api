@@ -2214,6 +2214,76 @@ public final class dev/kord/core/cache/ViewKeys {
 	public final fun getKeys ()Ljava/util/Set;
 }
 
+public final class dev/kord/core/cache/api/BasicRelation : dev/kord/core/cache/api/Relation {
+	public fun <init> ()V
+	public fun discard (Ljava/lang/Object;)V
+	public fun getCaches ()Ldev/kord/core/cache/api/TypedCache;
+	public fun putCache (Ldev/kord/core/cache/api/EntryCache;)V
+	public fun relate (Lkotlin/jvm/functions/Function2;)V
+}
+
+public abstract interface class dev/kord/core/cache/api/EntryCache {
+	public abstract fun addObserver (Ldev/kord/core/cache/api/EntryCache;)V
+	public abstract fun asMap ()Ljava/util/Map;
+	public abstract fun discard (Ldev/kord/core/cache/api/Index;)Ljava/lang/Object;
+	public abstract fun discardAll ()V
+	public abstract fun discardIf (Lkotlin/jvm/functions/Function1;)V
+	public abstract fun get (Ldev/kord/core/cache/api/Index;)Ljava/lang/Object;
+	public abstract fun get (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public abstract fun put (Ljava/lang/Object;)Ldev/kord/core/cache/api/Index;
+}
+
+public abstract interface class dev/kord/core/cache/api/Index : java/lang/Comparable {
+}
+
+public abstract interface class dev/kord/core/cache/api/Relation {
+	public abstract fun discard (Ljava/lang/Object;)V
+	public abstract fun getCaches ()Ldev/kord/core/cache/api/TypedCache;
+	public abstract fun putCache (Ldev/kord/core/cache/api/EntryCache;)V
+	public abstract fun relate (Lkotlin/jvm/functions/Function2;)V
+}
+
+public final class dev/kord/core/cache/api/SnowflakeIndexCache : dev/kord/core/cache/api/EntryCache {
+	public fun <init> (Ldev/kord/core/cache/api/Relation;Lkotlin/jvm/functions/Function1;)V
+	public fun addObserver (Ldev/kord/core/cache/api/EntryCache;)V
+	public fun asMap ()Ljava/util/Map;
+	public fun discard (Ldev/kord/core/cache/api/Index;)Ljava/lang/Object;
+	public fun discardAll ()V
+	public fun discardIf (Lkotlin/jvm/functions/Function1;)V
+	public fun get (Ldev/kord/core/cache/api/Index;)Ljava/lang/Object;
+	public fun get (Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public final fun getIndexGenerator ()Lkotlin/jvm/functions/Function1;
+	public final fun getRelation ()Ldev/kord/core/cache/api/Relation;
+	public fun put (Ljava/lang/Object;)Ldev/kord/core/cache/api/Index;
+}
+
+public abstract interface class dev/kord/core/cache/api/TypedCache {
+	public abstract fun getType ()Ldev/kord/core/cache/api/EntryCache;
+	public abstract fun putCache (Ldev/kord/core/cache/api/EntryCache;)V
+	public abstract fun toSet ()Ljava/util/Set;
+}
+
+public final class dev/kord/core/cache/api/TypedSetCache : dev/kord/core/cache/api/TypedCache {
+	public fun <init> ()V
+	public fun getType ()Ldev/kord/core/cache/api/EntryCache;
+	public fun putCache (Ldev/kord/core/cache/api/EntryCache;)V
+	public fun toSet ()Ljava/util/Set;
+}
+
+public final class dev/kord/core/cache/api/UnionSnowflakeIndex : dev/kord/core/cache/api/Index {
+	public fun <init> (Ljava/util/Set;)V
+	public fun compareTo (Ldev/kord/core/cache/api/Index;)I
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public final fun component1 ()Ljava/util/Set;
+	public final fun copy (Ljava/util/Set;)Ldev/kord/core/cache/api/UnionSnowflakeIndex;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/api/UnionSnowflakeIndex;Ljava/util/Set;ILjava/lang/Object;)Ldev/kord/core/cache/api/UnionSnowflakeIndex;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSnowflakes ()Ljava/util/Set;
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/core/cache/data/ActivityData {
 	public static final field Companion Ldev/kord/core/cache/data/ActivityData$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
