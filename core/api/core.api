@@ -12909,6 +12909,7 @@ public final class dev/kord/core/exception/EntityNotFoundException$Companion {
 	public final fun inviteNotFound (Ljava/lang/String;)Ljava/lang/Void;
 	public final fun memberNotFound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
 	public final fun messageNotFound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
+	public final fun onboardingNotFound (Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
 	public final fun roleNotFound (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
 	public final fun selfNotFound ()Ljava/lang/Void;
 	public final fun stageInstanceNotFound (Ldev/kord/common/entity/Snowflake;)Ljava/lang/Void;
