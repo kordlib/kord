@@ -6,9 +6,10 @@ package dev.kord.core.cache.api
  *
  * @param T the type of the related values.
  */
-public class BasicRelation<T: Any> : Relation<T> {
+public class BasicRelation<T : Any> : Relation<T> {
 
     private val relationships: MutableSet<RelationHandler<T, Any>> = mutableSetOf()
+
     private val caches: TypedCache = TypedSetCache()
 
     /**
@@ -33,21 +34,21 @@ public class BasicRelation<T: Any> : Relation<T> {
      * Adds an [EntryCache] to the [caches].
      *
      * @param cache the cache to add.
-     * @param T the type of the related values.
+     * @param R the type of the related values.
      */
-    override fun <R: Any> to(cache: EntryCache<R>, relation: RelationHandler<T, R>) {
+    override fun <R : Any> to(cache: EntryCache<R>, relation: RelationHandler<T, R>) {
         caches.putCache(cache)
         relationships.add(safe(relation))
     }
 
     /**
      * Converts a [RelationHandler] of type [R] to [RelationHandler] of type [Any].
-     * The new only applies relate function to type [R].
+     * The new one only applies relate function to type [R].
      *
      * @param handler the handler to convert.
      * @param R the type of the related values.
      */
-    private fun <R: Any> safe(handler: RelationHandler<T, R>): RelationHandler<T, Any> {
+    private fun <R : Any> safe(handler: RelationHandler<T, R>): RelationHandler<T, Any> {
         return object : RelationHandler<T, Any> {
             override fun invoke(value: T, friend: Any): Boolean {
                 @Suppress("UNCHECKED_CAST")
