@@ -1,7 +1,5 @@
 package dev.kord.core.cache.api
 
-import kotlin.reflect.typeOf
-
 /**
  * A basic implementation of [Relation] that maintains a set of relationships and caches.
  * This implementation is thread-safe.
