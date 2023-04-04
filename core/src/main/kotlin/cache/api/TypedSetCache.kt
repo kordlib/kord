@@ -32,6 +32,7 @@ public class TypedSetCache : TypedCache {
      */
     override fun <T : Any> putCache(cache: EntryCache<T>) {
         require(getTypeOrNull<T>() == null) { "There must be only one cache of the same type" }
+        @Suppress("UNCHECKED_CAST")
         types.add(cache as EntryCache<Any>)
     }
 
