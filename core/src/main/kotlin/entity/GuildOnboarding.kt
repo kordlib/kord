@@ -29,7 +29,7 @@ public class GuildOnboarding(
     /** The ID of the [Guild] this onboarding is part of. */
     public val guildId: Snowflake get() = data.guildId
 
-    /** The [GuildBehavior] for this onboarding. */
+    /** The behavior of the [Guild] this onboarding is part of. */
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
     /** The [Prompt]s shown during onboarding and in customize community. */
