@@ -9,7 +9,6 @@ internal actual fun RecoveredStackTrace.sanitizeStackTrace() {
     // at _no_name_provided__304.invoke_29q9u6(/home/mik/IdeaProjects/ktor-suspend-function-gun-tests/src/commonTest/kotlin/Test.kt:9)
     val dynamic = asDynamic()
     val stack = dynamic.stack as String? ?: ""
-    stackTraceToString()
     dynamic.stack = stack.lines().toMutableList().apply {
         repeat(2) {
             removeAt(1)

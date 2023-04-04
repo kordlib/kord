@@ -2,11 +2,22 @@
 
 package dev.kord.test
 
-import dev.kord.common.Platform
 import dev.kord.common.annotation.KordInternal
 import io.ktor.utils.io.*
 import js.core.get
 import node.process.process
+
+actual object Platform {
+    actual val IS_JVM: Boolean = false
+    actual val IS_NODE: Boolean
+        get() = js(
+            "typeof process !== 'undefined' && process.versions != null && process.versions.node != null"
+        ) as Boolean
+    actual val IS_BROWSER: Boolean
+        get() = js(
+            "typeof window !== 'undefined' && typeof window.document !== 'undefined' || typeof self !== 'undefined' && typeof self.location !== 'undefined'"
+        ) as Boolean
+}
 
 actual fun getEnv(name: String) = process.env[name]
 
