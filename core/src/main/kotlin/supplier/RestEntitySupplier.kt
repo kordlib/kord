@@ -4,7 +4,6 @@ import dev.kord.common.entity.DiscordAuditLogEntry
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.optionalSnowflake
-import dev.kord.common.exception.RequestException
 import dev.kord.core.*
 import dev.kord.core.cache.data.*
 import dev.kord.core.entity.*
@@ -103,26 +102,6 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         val discordPreview = guild.getGuildPreview(guildId)
         GuildPreview(GuildPreviewData.from(discordPreview), kord)
     }
-
-    /**
-     * Returns the onboarding for a specified [guildId], or null if one cannot be found.
-     *
-     * @param guildId The ID of the guild to get the onboarding for.
-     * @throws RequestException if something went wrong during the request.
-     */
-    public suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding? = catchNotFound {
-        val onboarding = guild.getGuildOnboarding(guildId)
-        GuildOnboarding(onboarding, kord)
-    }
-
-    /**
-     * Returns the onboarding for a specified [guildId].
-     * @param guildId The ID of the guild to get the onboarding for.
-     * @throws RequestException if something went wrong during the request.
-     * @throws EntityNotFoundException if the preview was not found.
-     */
-    public suspend fun getGuildOnboarding(guildId: Snowflake): GuildOnboarding =
-            GuildOnboarding(guild.getGuildOnboarding(guildId), kord)
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? = catchNotFound {
         val member = guild.getGuildMember(guildId = guildId, userId = userId)
@@ -352,6 +331,26 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     public suspend fun getGuildWelcomeScreen(guildId: Snowflake): WelcomeScreen =
         getGuildWelcomeScreenOrNull(guildId) ?: EntityNotFoundException.welcomeScreenNotFound(guildId)
+
+    /**
+     * Requests the [onboarding][GuildOnboarding] object for the [Guild] with the given [guildId]. Returns `null` if it
+     * wasn't found.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding? = catchNotFound {
+        val onboarding = guild.getGuildOnboarding(guildId)
+        GuildOnboarding(onboarding, kord)
+    }
+
+    /**
+     * Requests the [onboarding][GuildOnboarding] object for the [Guild] with the given [guildId].
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [onboarding][GuildOnboarding] wasn't found.
+     */
+    public suspend fun getGuildOnboarding(guildId: Snowflake): GuildOnboarding =
+        getGuildOnboardingOrNull(guildId) ?: EntityNotFoundException.onboardingNotFound(guildId)
 
 
     // maxBatchSize: see https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log

@@ -512,21 +512,6 @@ public interface GuildBehavior : KordEntity, Strategizable {
     public suspend fun getPreviewOrNull(): GuildPreview? = kord.with(rest).getGuildPreviewOrNull(id)
 
     /**
-     * Returns the onboarding for the guild, or null if one cannot be found.
-     *
-     * @throws RequestException if something went wrong during the request.
-     */
-    public suspend fun getOnboarding(): GuildOnboarding = kord.with(rest).getGuildOnboarding(id)
-
-    /**
-     * Returns the onboarding for the guild.
-     *
-     * @throws RequestException if something went wrong during the request.
-     * @throws EntityNotFoundException if the preview was not found.
-     */
-    public suspend fun getOnboardingOrNull(): GuildOnboarding? = kord.with(rest).getGuildOnboardingOrNull(id)
-
-    /**
      * Requests to get the amount of users that would be pruned in this guild.
      *
      * A user is pruned if they have not been seen within the given [days]
@@ -561,6 +546,25 @@ public interface GuildBehavior : KordEntity, Strategizable {
         val data = WelcomeScreenData.from(request)
         return WelcomeScreen(data, kord)
     }
+
+    /**
+     * Requests the [onboarding][GuildOnboarding] object for this guild.
+     *
+     * This is not resolvable through cache and will always use the [rest strategy][EntitySupplyStrategy.rest] instead.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [onboarding][GuildOnboarding] wasn't found.
+     */
+    public suspend fun getOnboarding(): GuildOnboarding = kord.with(rest).getGuildOnboarding(id)
+
+    /**
+     * Requests the [onboarding][GuildOnboarding] object for this guild. Returns `null` if it wasn't found.
+     *
+     * This is not resolvable through cache and will always use the [rest strategy][EntitySupplyStrategy.rest] instead.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getOnboardingOrNull(): GuildOnboarding? = kord.with(rest).getGuildOnboardingOrNull(id)
 
     /**
      * Requests to get the vanity url of this guild, if present.
