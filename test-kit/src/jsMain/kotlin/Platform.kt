@@ -1,8 +1,5 @@
-@file:OptIn(KordInternal::class)
-
 package dev.kord.test
 
-import dev.kord.common.annotation.KordInternal
 import io.ktor.utils.io.*
 import js.core.get
 import node.process.process
