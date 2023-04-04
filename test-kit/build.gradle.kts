@@ -8,7 +8,6 @@ kotlin {
             dependencies {
                 api(libs.bundles.test.common)
                 api(libs.ktor.utils)
-                api(projects.common)
             }
         }
         jsMain {
