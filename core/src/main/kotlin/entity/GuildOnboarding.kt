@@ -148,13 +148,11 @@ public class GuildOnboarding(
                 get() = roleIds.map { roleId -> RoleBehavior(guildId, id = roleId, kord) }
 
             /** The [Emoji] of this option. */
-            public val emoji: Emoji
+            public val emoji: Emoji?
                 get() {
                     val emoji = data.emoji
-                    return when (val emojiId = emoji.id) {
-                        null -> StandardEmoji(emoji.name!!)
-                        else -> GuildEmoji(emoji.toData(guildId, emojiId), kord)
-                    }
+                    return emoji.id?.let { emojiId -> GuildEmoji(emoji.toData(guildId, emojiId), kord) }
+                        ?: emoji.name?.let(::StandardEmoji)
                 }
 
             /** The title of this option. */
