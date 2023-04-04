@@ -189,4 +189,5 @@ public class GuildEmoji(
     override fun toString(): String {
         return "GuildEmoji(data=$data, kord=$kord, supplier=$supplier)"
     }
+
 }

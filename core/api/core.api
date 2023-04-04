@@ -6256,6 +6256,7 @@ public final class dev/kord/core/entity/GuildOnboarding : dev/kord/core/KordObje
 	public final fun getPrompts ()Ljava/util/List;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun isEnabled ()Z
+	public fun toString ()Ljava/lang/String;
 	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/GuildOnboarding;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
@@ -6997,8 +6998,11 @@ public final class dev/kord/core/entity/StageInstance : dev/kord/core/behavior/S
 
 public final class dev/kord/core/entity/StandardEmoji : dev/kord/core/entity/Emoji {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
 	public fun getMention ()Ljava/lang/String;
 	public fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public class dev/kord/core/entity/Sticker : dev/kord/core/entity/KordEntity {
