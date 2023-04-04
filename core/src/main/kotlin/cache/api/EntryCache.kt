@@ -43,7 +43,7 @@ public interface EntryCache<Value : Any> {
      * Adds an observer cache to this cache. Whenever a value is discarded from this cache, the
      * observer cache will also discard any values that are related to it.
      */
-    public fun <R: Any> relate(other: EntryCache<R>, handler: RelationHandler<Value, R>)
+    public fun <R: Any> relatesTo(other: EntryCache<R>, handler: RelationHandler<Value, R>)
 
     /**
      * Returns the [Relation] object for this cache, which contains information about any other

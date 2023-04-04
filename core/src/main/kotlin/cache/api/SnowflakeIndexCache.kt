@@ -79,7 +79,7 @@ public class SnowflakeIndexCache<Value : Any>(
         return relation
     }
 
-    override fun <R : Any> relate(cache: EntryCache<R>, handler: RelationHandler<Value, R>) {
+    override fun <R : Any> relatesTo(cache: EntryCache<R>, handler: RelationHandler<Value, R>) {
         relation.to(cache, handler)
     }
 
