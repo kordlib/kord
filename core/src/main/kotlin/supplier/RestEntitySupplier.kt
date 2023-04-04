@@ -332,6 +332,26 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     public suspend fun getGuildWelcomeScreen(guildId: Snowflake): WelcomeScreen =
         getGuildWelcomeScreenOrNull(guildId) ?: EntityNotFoundException.welcomeScreenNotFound(guildId)
 
+    /**
+     * Requests the [onboarding][GuildOnboarding] object for the [Guild] with the given [guildId]. Returns `null` if it
+     * wasn't found.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getGuildOnboardingOrNull(guildId: Snowflake): GuildOnboarding? = catchNotFound {
+        val onboarding = guild.getGuildOnboarding(guildId)
+        GuildOnboarding(onboarding, kord)
+    }
+
+    /**
+     * Requests the [onboarding][GuildOnboarding] object for the [Guild] with the given [guildId].
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [onboarding][GuildOnboarding] wasn't found.
+     */
+    public suspend fun getGuildOnboarding(guildId: Snowflake): GuildOnboarding =
+        getGuildOnboardingOrNull(guildId) ?: EntityNotFoundException.onboardingNotFound(guildId)
+
 
     // maxBatchSize: see https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
     public fun getAuditLogEntries(

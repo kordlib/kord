@@ -6568,6 +6568,10 @@ public final class dev/kord/rest/route/Route$GuildMembersSearchGet : dev/kord/re
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildMembersSearchGet;
 }
 
+public final class dev/kord/rest/route/Route$GuildOnboardingGet : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildOnboardingGet;
+}
+
 public final class dev/kord/rest/route/Route$GuildPatch : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildPatch;
 }
@@ -7130,6 +7134,7 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun getGuildMembers (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuildMembers$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position$After;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun getGuildMembers$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getGuildOnboarding (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildPreview (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGuildPruneCount (Ldev/kord/common/entity/Snowflake;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuildPruneCount$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;ILkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
