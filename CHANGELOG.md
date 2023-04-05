@@ -1,3 +1,12 @@
+# 0.8.3
+
+## Additions
+
+* Add `ApplicationFlag.ApplicationAutoModerationRuleCreateBadge` (by @NoComment1105 in #802)
+* Add error code 50163 (by @NoComment1105 in #803)
+* Add `Guild.maxStageVideoChannelUsers` (by @NoComment1105 in #804)
+* Add guild onboarding (by @NoComment1105 and @Lukellmann in #805)
+
 # 0.8.2
 
 ## Additions
