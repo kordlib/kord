@@ -2,7 +2,6 @@ package dev.kord.voice.gateway.handler
 
 import dev.kord.voice.gateway.*
 import kotlinx.atomicfu.atomic
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -10,7 +9,6 @@ import kotlin.time.Duration
 import kotlin.time.TimeMark
 import kotlin.time.TimeSource
 
-@OptIn(ObsoleteCoroutinesApi::class)
 internal class HeartbeatHandler(
     flow: Flow<VoiceEvent>,
     private val send: suspend (Command) -> Unit,

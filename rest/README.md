@@ -84,7 +84,7 @@ dependencies {
 
 <dependency>
     <groupId>dev.kord</groupId>
-    <artifactId>kord-rest</artifactId>
+    <artifactId>kord-rest-jvm</artifactId>
     <version>{version}</version>
 </dependency>
 ```
