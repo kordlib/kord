@@ -1,19 +1,20 @@
+import org.gradle.kotlin.dsl.assign
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import java.net.URL
 
 fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
-    failOnWarning.set(true)
+    failOnWarning = true
 
     dokkaSourceSets.configureEach {
 
-        jdkVersion.set(Jvm.target)
+        jdkVersion = Jvm.target
 
-        suppressGeneratedFiles.set(false)
+        suppressGeneratedFiles = false
 
         sourceLink {
-            localDirectory.set(project.projectDir)
-            remoteUrl.set(URL("https://github.com/kordlib/kord/blob/${Library.commitHashOrDefault("0.9.x")}/${project.name}"))
-            remoteLineSuffix.set("#L")
+            localDirectory = project.projectDir
+            remoteUrl = URL("https://github.com/kordlib/kord/blob/${Library.commitHashOrDefault("0.9.x")}/${project.name}")
+            remoteLineSuffix = "#L"
         }
 
         externalDocumentationLink("https://kotlinlang.org/api/kotlinx.coroutines/")
@@ -26,8 +27,8 @@ fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
 
         // don't list `TweetNaclFast` in docs
         perPackageOption {
-            matchingRegex.set("""com\.iwebpp\.crypto""")
-            suppress.set(true)
+            matchingRegex = """com\.iwebpp\.crypto"""
+            suppress = true
         }
     }
 }
