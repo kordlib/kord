@@ -8,9 +8,12 @@ import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.Markdown
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.ChannelBehavior
+import dev.kord.core.behavior.channel.asChannelOf
+import dev.kord.core.behavior.channel.asChannelOfOrNull
 import dev.kord.core.behavior.interaction.response.InteractionResponseBehavior
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.cache.data.MessageInteractionData
@@ -23,13 +26,17 @@ import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.parseMarkdown
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import java.util.Objects
+import java.util.*
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
@@ -122,6 +129,51 @@ public class Message(
      */
     public val content: String get() = data.content
 
+    private val contentDisplay: Deferred<String> = kord.async(start = CoroutineStart.LAZY) {
+        val contentCopy = StringBuilder(content)
+        val guildChannel = channel.asChannelOfOrNull<GuildChannel>()
+        if (guildChannel != null) {
+            mentionedRoles.toList().forEach {
+                contentCopy.replace(it.mention.toRegex(), "@${it.name}")
+            }
+            mentionedChannels.toList().forEach {
+                contentCopy.replace(it.mention.toRegex(), "#${it.asChannelOf<GuildChannel>().name}")
+            }
+        }
+        mentionedUsers.toList().forEach {
+            val nickname = guildChannel?.guild?.getMember(it.id)?.nickname
+            val effectiveName = nickname ?: it.username
+
+            contentCopy.replace(it.mention.toRegex(), "@$effectiveName")
+        }
+
+        contentCopy.replace("<a?:([a-zA-Z0-9_]+):([0-9]+)>".toRegex(), ":$1:")
+
+        contentCopy.toString()
+    }
+
+    /**
+     * Calculates the content how it would be displayed in Discord.
+     * This includes resolving:
+     *   - Users / Members to their @Username/@Nickname format,
+     *   - TextChannels to their #ChannelName format,
+     *   - Roles to their @RoleName format
+     *   - Emotes (not emojis!) to their :name: format.
+     */
+    public suspend fun contentDisplay(): String = contentDisplay.await()
+
+    private val contentStripped: Deferred<String> = kord.async(start = CoroutineStart.LAZY) {
+        contentDisplay().parseMarkdown().strip()
+    }
+
+    /**
+     * Calculates the content of this [Message] how it would be displayed in the Discord client (without Markdown)
+     *
+     * @see Markdown
+     * @see contentDisplay
+     */
+    public suspend fun contentStripped(): String = contentStripped.await()
+
     /**
      * The instant when this message was last edited, if ever.
      *
@@ -181,7 +233,13 @@ public class Message(
      * so its state is unknown.
      * If the field exists but is null, the referenced message was deleted.
      */
-    public val messageReference: MessageReference? get() = data.messageReference.value?.let { MessageReference(it, kord) }
+    public val messageReference: MessageReference?
+        get() = data.messageReference.value?.let {
+            MessageReference(
+                it,
+                kord
+            )
+        }
 
     /**
      * The [Channels][Channel] specifically mentioned in this message.

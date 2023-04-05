@@ -70,6 +70,7 @@ atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", ver
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
 
+markdown = { group = "org.jetbrains", name = "markdown", version = "0.2.4" }
 
 [bundles]
 
