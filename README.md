@@ -60,7 +60,7 @@ Replace `{version}` with the latest version number on maven central.
 
 For Snapshots replace `{version}` with `{branch}-SNAPSHOT`
 
-e.g: `0.7.x-SNAPSHOT` or `feature-mpp-SNAPSHOT` for the branch `feature/mpp`
+e.g: `0.9.x-SNAPSHOT` for the branch `0.9.x` or `feature-mpp-SNAPSHOT` for the branch `feature/mpp`
 
 [![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
 
