@@ -8,10 +8,14 @@ include(
     "bom",
     "common",
     "core",
+    "core:live-tests",
+    "core-voice",
     "gateway",
     "ksp-annotations",
     "ksp-processors",
     "rest",
+    "samples",
+    "test-kit",
     "voice",
 )
 

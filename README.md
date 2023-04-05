@@ -9,7 +9,7 @@ you to try out our library, we don't recommend you use this in production just y
 
 If you have any feedback, we'd love to hear it, hit us up on discord or write up an issue if you have any suggestions!
 
-## What is Kord
+## What is Kord?
 
 Kord is a [coroutine-based](https://kotlinlang.org/docs/reference/coroutines-overview.html), modularized implementation
 of the Discord API, written 100% in [Kotlin](https://kotlinlang.org/).
@@ -26,28 +26,42 @@ unconventional things, and we want to allow you to do those in a safe and suppor
 
 ## Status of Kord
 
-* [X] [Discord Gateway](https://github.com/kordlib/kord/tree/master/gateway)
-* [x] [Discord Rest API](https://github.com/kordlib/kord/tree/master/rest)
-* [X] [High level abstraction + caching](https://github.com/kordlib/kord/tree/master/core)
-* [X] [Discord Voice](https://github.com/kordlib/kord/tree/master/voice)
+* [X] [Discord Gateway](gateway)
+* [x] [Discord Rest API](rest)
+* [X] [High level abstraction + caching](core)
+* [X] [Discord Voice](voice)
 * [ ] Support for multiple processes [#7](https://github.com/kordlib/kord/issues/7)
 
-Right now Kord *should* provide a full mapping of the non-voice API. We're currently working on a testing library for
-easy bot testing against a semi mocked client as well as our own command system to facilitate more complex bot
-development.
+Right now, Kord *should* provide a full mapping of the non-voice API on Kotlin/JVM and Kotlin/JS and an experimental
+mapping of the Voice API on Kotlin/JVM
 
 ## Documentation
 
 * [Dokka docs](https://kordlib.github.io/kord/)
 * [Wiki](https://github.com/kordlib/kord/wiki)
 
+## Modules
+
+| Module                   | Docs                                                    | Artifact          | JVM | JS | Native² |
+|--------------------------|---------------------------------------------------------|-------------------|-----|----|---------|
+| [common](common)         | [common](https://kordlib.github.io/kord/common)         | `kord-common`¹    | ✅   | ✅  | ❌       |
+| [rest](rest)             | [rest](https://kordlib.github.io/kord/rest)             | `kord-rest`¹      | ✅   | ✅  | ❌       |
+| [gateway](gateway)       | [gateway](https://kordlib.github.io/kord/gateway)       | `kord-gateway`¹   | ✅   | ✅  | ❌       |
+| [core](core)             | [core](https://kordlib.github.io/kord/core)             | `kord-core`¹      | ✅   | ✅  | ❌       |
+| [voice](voice)           | [voice](https://kordlib.github.io/kord/voice)           | `kord-voice`      | ✅   | ❌³ | ❌       |
+| [core-voice](core-voice) | [core-voice](https://kordlib.github.io/kord/core-voice) | `kord-core-voice` | ✅   | ❌  | ❌       |
+
+¹ These artifacts only supports Gradle Version 5.3 or higher, for older Gradle versions and Maven please append `-jvm`  
+² For Native Support please see #69  
+³ For Voice JS please see #69
+
 ## Installation
 
 Replace `{version}` with the latest version number on maven central.
 
-For Snapshots replace `{version}` with `{branch}-SNAPSHOT` 
+For Snapshots replace `{version}` with `{branch}-SNAPSHOT`
 
-e.g: `0.7.x-SNAPSHOT`
+e.g: `0.9.x-SNAPSHOT` for the branch `0.9.x` or `feature-mpp-SNAPSHOT` for the branch `feature/mpp`
 
 [![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
 
@@ -111,126 +125,19 @@ dependencies {
 
 <dependency>
     <groupId>dev.kord</groupId>
-    <artifactId>kord-core</artifactId>
+    <artifactId>kord-core-jvm</artifactId>
     <version>{version}</version>
 </dependency>
-```
-
-## Modules
-
-### Core
-
-A higher level API, combining `rest` and `gateway`, with additional (optional) caching. Unless you're writing your own
-abstractions, we'd recommend using this.
-
-```kotlin
-suspend fun main() {
-    val kord = Kord("your bot token")
-    val pingPong = ReactionEmoji.Unicode("\uD83C\uDFD3")
-
-    kord.on<MessageCreateEvent> {
-        if (message.content != "!ping") return@on
-
-        val response = message.channel.createMessage("Pong!")
-        response.addReaction(pingPong)
-
-        delay(5000)
-        message.delete()
-        response.delete()
-    }
-
-    kord.login {
-        @OptIn(PrivilegedIntent::class)
-        intents += Intent.MessageContent
-    }
-}
-```
-
-### Rest
-
-A low level mapping of Discord's REST API. Requests follow
-Discord's [rate limits](https://discord.com/developers/docs/topics/rate-limits).
-
-```kotlin
-suspend fun main() {
-    val rest = RestClient("your bot token")
-    val channelId = Snowflake(605212557522763787)
-
-    rest.channel.createMessage(channelId) {
-        content = "Hello Kord!"
-
-        embed {
-            color = Color(red = 0, green = 0, blue = 255)
-            description = "Hello embed!"
-        }
-    }
-}
-```
-
-### Gateway
-
-A low level mapping of [Discord's Gateway](https://discord.com/developers/docs/topics/gateway), which maintains the
-connection and rate limits commands.
-
-```kotlin
-suspend fun main() {
-    val gateway = DefaultGateway()
-
-    gateway.on<MessageCreate> {
-        println("${message.author.username}: ${message.content}")
-        val words = message.content.split(' ')
-        when (words.firstOrNull()) {
-            "!close" -> gateway.stop()
-            "!detach" -> gateway.detach()
-        }
-    }
-
-    gateway.start("your bot token") {
-        @OptIn(PrivilegedIntent::class)
-        intents += Intent.MessageContent
-    }
-}
-```
-
-
-### Voice
-
-A mapping of [Discord's Voice Connection](https://discord.com/developers/docs/topics/voice-connections), which maintains the connection and handles audio transmission.
-
-If you want to use voice, you need to enable the voice capability,
-which is only available for Gradle
-
-```kotlin
-dependencies {
-    implementation("dev.kord", "core", "<version>") {
-        capabilities {
-            requireCapability("dev.kord:core-voice:<version>")
-        }
-    }
-}
-```
-
-```kotlin
-suspend fun main() {
-    val kord = Kord("your token")
-    val voiceChannel = kord.getChannelOf<VoiceChannel>(id = Snowflake(1))!!
-
-    voiceChannel.connect {
-        audioProvider { AudioFrame.fromData(/* your opus encoded audio */) }
-    }
-
-    kord.login()
-}
 ```
 
 ## FAQ
 
 ## Will you support kotlin multi-platform
 
-We will, there's an [issue](https://github.com/kordlib/kord/issues/69) open to track the features we want/need to make a
-transition to MPP smooth.
+Currently we're supporting both Kotlin/JVM and Kotlin/JS for the majority of our API, for more information check
+[Modules](#modules) and #69
 
-## When will you document your code
+## When will you document your code?
 
 Yes.
 

@@ -1,42 +1,40 @@
 plugins {
-    java
-    `kord-module`
-    `kord-sampled-module`
+    `kord-multiplatform-module`
     `kord-publishing`
 }
 
-val voice: SourceSet by sourceSets.creating
-val voiceApi: Configuration by configurations.getting
+kotlin {
+    js {
+        nodejs {
+            testTask {
+                useMocha {
+                    timeout = "10000" // KordEventDropTest is too slow for default 2 seconds timeout
+                }
+            }
+        }
+    }
 
-configurations {
-    getByName("voiceImplementation") {
-        extendsFrom(implementation.get())
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(projects.common)
+                api(projects.rest)
+                api(projects.gateway)
+
+                api(libs.kord.cache.api)
+                api(libs.kord.cache.map)
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation(libs.mockk)
+            }
+        }
     }
 }
 
-dependencies {
-    api(projects.common)
-    api(projects.rest)
-    api(projects.gateway)
-    voiceApi(projects.core)
-    voiceApi(projects.voice)
-
-    api(libs.kord.cache.api)
-    api(libs.kord.cache.map)
-
-    ksp(projects.kspProcessors)
-
-    samplesImplementation(libs.slf4j.simple)
-
-    testImplementation(libs.bundles.test.implementation)
-    testRuntimeOnly(libs.bundles.test.runtime)
-}
-
-java {
-    registerFeature("voice") {
-        usingSourceSet(voice)
-        withJavadocJar()
-        withSourcesJar()
-        capability("dev.kord", "core-voice", version as String)
+tasks {
+    dokkaHtmlMultiModule {
+        enabled = false
     }
 }

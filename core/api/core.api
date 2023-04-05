@@ -2085,15 +2085,14 @@ public final class dev/kord/core/builder/components/ButtonBuilderExtensionsKt {
 	public static final fun emoji (Ldev/kord/rest/builder/component/ButtonBuilder;Ldev/kord/core/entity/ReactionEmoji$Unicode;)V
 }
 
-public final class dev/kord/core/builder/kord/KordBuilder {
-	public fun <init> (Ljava/lang/String;)V
-	public final fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract class dev/kord/core/builder/kord/BaseKordBuilder {
+	public fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	protected final fun buildBase (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun cache (Lkotlin/jvm/functions/Function2;)V
 	public final fun gateways (Lkotlin/jvm/functions/Function2;)V
 	public final fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
 	public final fun getDefaultStrategy ()Ldev/kord/core/supplier/EntitySupplyStrategy;
-	public final fun getEnableShutdownHook ()Z
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
 	public final fun getGatewayEventInterceptor ()Ldev/kord/core/gateway/handler/GatewayEventInterceptor;
 	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
@@ -2103,7 +2102,6 @@ public final class dev/kord/core/builder/kord/KordBuilder {
 	public final fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDefaultDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public final fun setDefaultStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)V
-	public final fun setEnableShutdownHook (Z)V
 	public final fun setEventFlow (Lkotlinx/coroutines/flow/MutableSharedFlow;)V
 	public final fun setGatewayEventInterceptor (Ldev/kord/core/gateway/handler/GatewayEventInterceptor;)V
 	public final fun setHttpClient (Lio/ktor/client/HttpClient;)V
@@ -2111,9 +2109,19 @@ public final class dev/kord/core/builder/kord/KordBuilder {
 	public final fun sharding (Lkotlin/jvm/functions/Function1;)V
 }
 
+public final class dev/kord/core/builder/kord/KordBuilder : dev/kord/core/builder/kord/BaseKordBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getEnableShutdownHook ()Z
+	public final fun setEnableShutdownHook (Z)V
+}
+
 public final class dev/kord/core/builder/kord/KordBuilderKt {
 	public static final synthetic fun invoke (Ldev/kord/gateway/DefaultGateway$Companion;Ldev/kord/core/ClientResources;Ldev/kord/gateway/retry/Retry;)Ldev/kord/gateway/DefaultGateway;
 	public static synthetic fun invoke$default (Ldev/kord/gateway/DefaultGateway$Companion;Ldev/kord/core/ClientResources;Ldev/kord/gateway/retry/Retry;ILjava/lang/Object;)Ldev/kord/gateway/DefaultGateway;
+}
+
+public final class dev/kord/core/builder/kord/KordBuilderUtilKt {
 }
 
 public final class dev/kord/core/builder/kord/KordProxyBuilder : dev/kord/core/builder/kord/RestOnlyBuilder {
@@ -2185,8 +2193,6 @@ public final class dev/kord/core/cache/KordCacheBuilder {
 	public final fun forDescription (Ldev/kord/cache/api/data/DataDescription;Lkotlin/jvm/functions/Function2;)V
 	public final fun getDefaultGenerator ()Lkotlin/jvm/functions/Function2;
 	public final fun guilds (Lkotlin/jvm/functions/Function2;)V
-	public final fun lruCache (I)Lkotlin/jvm/functions/Function2;
-	public static synthetic fun lruCache$default (Ldev/kord/core/cache/KordCacheBuilder;IILjava/lang/Object;)Lkotlin/jvm/functions/Function2;
 	public final fun members (Lkotlin/jvm/functions/Function2;)V
 	public final fun messages (Lkotlin/jvm/functions/Function2;)V
 	public final fun none ()Lkotlin/jvm/functions/Function2;
@@ -2197,6 +2203,11 @@ public final class dev/kord/core/cache/KordCacheBuilder {
 	public final fun users (Lkotlin/jvm/functions/Function2;)V
 	public final fun voiceState (Lkotlin/jvm/functions/Function2;)V
 	public final fun webhooks (Lkotlin/jvm/functions/Function2;)V
+}
+
+public final class dev/kord/core/cache/KordCacheBuilderKt {
+	public static final fun lruCache (Ldev/kord/core/cache/KordCacheBuilder;I)Lkotlin/jvm/functions/Function2;
+	public static synthetic fun lruCache$default (Ldev/kord/core/cache/KordCacheBuilder;IILjava/lang/Object;)Lkotlin/jvm/functions/Function2;
 }
 
 public final class dev/kord/core/cache/QueryKt {
@@ -6144,7 +6155,7 @@ public final class dev/kord/core/entity/Guild : dev/kord/core/behavior/GuildBeha
 	public final fun getOwnerId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getOwnerOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getPermissions ()Ldev/kord/common/entity/Permissions;
-	public final fun getPreferredLocale ()Ljava/util/Locale;
+	public final fun getPreferredLocale ()Ldev/kord/common/Locale;
 	public final fun getPremiumProgressBarEnabled ()Z
 	public final fun getPremiumSubscriptionCount ()Ljava/lang/Integer;
 	public final fun getPremiumTier ()Ldev/kord/common/entity/PremiumTier;
