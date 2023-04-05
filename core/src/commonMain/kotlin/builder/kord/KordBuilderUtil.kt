@@ -19,6 +19,7 @@ internal fun HttpClientConfig<*>.defaultConfig() {
     install(WebSockets)
 }
 
+/** @suppress */
 @KordInternal
 public fun HttpClient?.configure(): HttpClient {
     if (this != null) return this.config {
@@ -40,6 +41,7 @@ public fun HttpClient?.configure(): HttpClient {
     }
 }
 
+/** @suppress */
 @KordInternal
 public fun getBotIdFromToken(token: String): Snowflake = try {
     Snowflake(token.substringBefore('.').decodeBase64String())

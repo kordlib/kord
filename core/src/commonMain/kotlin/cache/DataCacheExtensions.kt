@@ -7,6 +7,8 @@ import dev.kord.core.cache.data.*
 
 /**
  * Registers all Kord data classes for this cache
+ *
+ * @suppress
  */
 @KordInternal
 public suspend fun DataCache.registerKordData(): Unit = register(
