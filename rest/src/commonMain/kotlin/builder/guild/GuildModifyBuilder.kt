@@ -94,7 +94,7 @@ public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
         _systemChannelId,
         _rulesChannelId,
         _publicUpdatesChannelId,
-        _preferredLocale.map { "${it.language}-${it.country}" },
+        _preferredLocale.map { locale -> "${locale.language}${locale.country?.let { "-$it" } ?: ""}" },
         features = _features,
     )
 }
