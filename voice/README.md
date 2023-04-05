@@ -148,7 +148,7 @@ dependencies {
 ```xml
 <dependency>
     <groupId>dev.kord</groupId>
-    <artifactId>kord-voice-jvm</artifactId>
+    <artifactId>kord-voice</artifactId>
     <version>{version}</version>
 </dependency>
 ```
