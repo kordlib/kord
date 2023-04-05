@@ -25,7 +25,7 @@ object Jvm {
 }
 
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
-    // TODO: Enable again once https://youtrack.jetbrains.com/issue/KT-51110 is fixed
+    // TODO: set to true again once https://github.com/Kotlin/kotlinx-atomicfu/issues/289 is fixed
     allWarningsAsErrors.set(false)
     freeCompilerArgs.add("-progressive")
 }
