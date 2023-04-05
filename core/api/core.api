@@ -5771,8 +5771,10 @@ public final class dev/kord/core/entity/Application : dev/kord/core/entity/BaseA
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
-public abstract class dev/kord/core/entity/Asset : dev/kord/core/KordObject {
-	public synthetic fun <init> (Ldev/kord/rest/Image$Format;Ldev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+public final class dev/kord/core/entity/Asset : dev/kord/core/KordObject {
+	public static final field Companion Ldev/kord/core/entity/Asset$Companion;
+	public fun <init> (Ldev/kord/rest/Image$Format;Ldev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;)V
+	public fun <init> (ZLdev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;)V
 	public final fun getAnimated ()Z
 	public final fun getCdnUrl ()Ldev/kord/rest/route/CdnUrl;
 	public final fun getFormat ()Ldev/kord/rest/Image$Format;
@@ -5782,71 +5784,25 @@ public abstract class dev/kord/core/entity/Asset : dev/kord/core/KordObject {
 	public final fun getImage (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getUrl ()Ljava/lang/String;
-	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/core/entity/Asset$ApplicationCover : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$ApplicationIcon : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$DefaultUserAvatar : dev/kord/core/entity/Asset {
-	public fun <init> (ILdev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$Emoji : dev/kord/core/entity/Asset {
-	public fun <init> (ZLdev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$GuildBanner : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$GuildDiscoverySplash : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$GuildEventCover : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$GuildIcon : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$GuildSplash : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$MemberAvatar : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$MemberBanner : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$RoleIcon : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$StickerPackBanner : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$TeamIcon : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$UserAvatar : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
-}
-
-public final class dev/kord/core/entity/Asset$UserBanner : dev/kord/core/entity/Asset {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)V
+public final class dev/kord/core/entity/Asset$Companion {
+	public final fun applicationCover (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun applicationIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun defaultUserAvatar (ILdev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun emoji (ZLdev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun guildBanner (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun guildDiscoverySplash (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun guildEventCover (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun guildIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun guildSplash (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun memberAvatar (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun memberBanner (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun roleIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun stickerPackBanner (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun teamIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun userAvatar (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun userBanner (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
 }
 
 public final class dev/kord/core/entity/Attachment : dev/kord/core/entity/KordEntity {
@@ -6438,7 +6394,6 @@ public final class dev/kord/core/entity/GuildScheduledEvent : dev/kord/core/beha
 	public fun fetchGuildScheduledEventOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getCover ()Ldev/kord/core/entity/Asset;
 	public final fun getCreator ()Ldev/kord/core/entity/User;
 	public final fun getCreatorId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getData ()Ldev/kord/core/cache/data/GuildScheduledEventData;
@@ -6450,6 +6405,7 @@ public final class dev/kord/core/entity/GuildScheduledEvent : dev/kord/core/beha
 	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getImage ()Ldev/kord/core/entity/Asset;
 	public final fun getImageHash ()Ljava/lang/String;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getMembers ()Lkotlinx/coroutines/flow/Flow;

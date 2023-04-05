@@ -9,7 +9,11 @@ import dev.kord.rest.Image
 import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
-@Deprecated("Icon class does not cover all cdn endpoints", ReplaceWith("Asset"), DeprecationLevel.WARNING)
+@Deprecated(
+    "Icon class does not cover all cdn endpoints",
+    ReplaceWith("Asset", "dev.kord.core.entity.Asset"),
+    DeprecationLevel.WARNING
+)
 public sealed class Icon(
     public val format: Image.Format,
     public val animated: Boolean,

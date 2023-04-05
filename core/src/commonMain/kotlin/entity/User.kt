@@ -36,14 +36,14 @@ public open class User(
      * The users avatar as [Asset] object
      */
     public val avatar: Asset?
-        get() = data.avatar?.let { Asset.UserAvatar(data.id, it, kord) }
+        get() = data.avatar?.let { Asset.userAvatar(data.id, it, kord) }
 
     @Suppress("DEPRECATION")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     @get:JvmName("getDefaultAvatar")
     public val defaultAvatar0: Icon get() = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
 
-    public val defaultAvatar: Asset get() = Asset.DefaultUserAvatar(data.discriminator.toInt(), kord)
+    public val defaultAvatar: Asset get() = Asset.defaultUserAvatar(data.discriminator.toInt(), kord)
 
     /**
      * The username of this user.
@@ -84,7 +84,7 @@ public open class User(
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
-    public val banner: Asset? get() = data.banner?.let { Asset.UserBanner(id, it, kord) }
+    public val banner: Asset? get() = data.banner?.let { Asset.userBanner(id, it, kord) }
 
     override fun hashCode(): Int = id.hashCode()
 

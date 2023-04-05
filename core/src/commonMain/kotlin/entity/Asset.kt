@@ -7,11 +7,17 @@ import dev.kord.rest.Image
 import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
-public sealed class Asset(
+public class Asset(
     public val format: Image.Format,
     public val cdnUrl: CdnUrl,
     override val kord: Kord
 ) : KordObject {
+    public constructor(
+        animated: Boolean,
+        cdnUrl: CdnUrl,
+        kord: Kord
+    ) : this(format = if (animated) Image.Format.GIF else Image.Format.WEBP, cdnUrl, kord)
+
     public val url: String
         get() = cdnUrl.toUrl {
             this.format = this@Asset.format
@@ -19,12 +25,9 @@ public sealed class Asset(
 
     public val animated: Boolean get() = format is Image.Format.GIF
 
-    public suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl())
+    public suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, url)
 
-    public suspend fun getImage(size: Image.Size): Image =
-        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
-            this.size = size
-        })
+    public suspend fun getImage(size: Image.Size): Image = getImage(format, size)
 
     public suspend fun getImage(format: Image.Format): Image =
         Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
@@ -37,52 +40,73 @@ public sealed class Asset(
             this.size = size
         })
 
-    public class Emoji(animated: Boolean, emojiId: Snowflake, kord: Kord) : Asset(if (animated) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.emoji(emojiId), kord)
+    public companion object {
+        public fun emoji(animated: Boolean, emojiId: Snowflake, kord: Kord): Asset =
+            Asset(if (animated) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.emoji(emojiId), kord)
 
-    public class DefaultUserAvatar(discriminator: Int, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.defaultAvatar(discriminator), kord)
+        public fun defaultUserAvatar(discriminator: Int, kord: Kord): Asset =
+            Asset(false, DiscordCdn.defaultAvatar(discriminator), kord)
 
-    public class UserAvatar(userId: Snowflake, avatarHash: String, kord: Kord) :
-        Asset(if (avatarHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.userAvatar(userId, avatarHash), kord)
+        public fun userAvatar(userId: Snowflake, avatarHash: String, kord: Kord): Asset =
+            Asset(
+                avatarHash.startsWith("a_"),
+                DiscordCdn.userAvatar(userId, avatarHash),
+                kord
+            )
 
-    public class UserBanner(userId: Snowflake, bannerHash: String, kord: Kord) :
-        Asset(if (bannerHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.userBanner(userId, bannerHash), kord)
+        public fun userBanner(userId: Snowflake, bannerHash: String, kord: Kord): Asset =
+            Asset(
+                bannerHash.startsWith("a_"),
+                DiscordCdn.userBanner(userId, bannerHash),
+                kord
+            )
 
-    public class MemberAvatar(guildId: Snowflake, userId: Snowflake, avatarHash: String, kord: Kord) :
-        Asset(if (avatarHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.memberAvatar(guildId, userId, avatarHash), kord)
+        public fun memberAvatar(guildId: Snowflake, userId: Snowflake, avatarHash: String, kord: Kord): Asset =
+            Asset(
+                avatarHash.startsWith("a_"),
+                DiscordCdn.memberAvatar(guildId, userId, avatarHash),
+                kord
+            )
 
-    public class MemberBanner(guildId: Snowflake, userId: Snowflake, bannerHash: String, kord: Kord) :
-        Asset(if (bannerHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.memberBanner(guildId, userId, bannerHash), kord)
+        public fun memberBanner(guildId: Snowflake, userId: Snowflake, bannerHash: String, kord: Kord): Asset =
+            Asset(
+                bannerHash.startsWith("a_"),
+                DiscordCdn.memberBanner(guildId, userId, bannerHash),
+                kord
+            )
 
-    public class RoleIcon(roleId: Snowflake, iconHash: String, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.roleIcon(roleId, iconHash), kord)
+        public fun roleIcon(roleId: Snowflake, iconHash: String, kord: Kord): Asset =
+            Asset(false, DiscordCdn.roleIcon(roleId, iconHash), kord)
 
-    public class GuildIcon(guildId: Snowflake, iconHash: String, kord: Kord) :
-        Asset(if (iconHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.guildIcon(guildId, iconHash), kord)
+        public fun guildIcon(guildId: Snowflake, iconHash: String, kord: Kord): Asset =
+            Asset(
+                iconHash.startsWith("a_"),
+                DiscordCdn.guildIcon(guildId, iconHash),
+                kord
+            )
 
-    public class GuildSplash(guildId: Snowflake, splashHash: String, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.guildSplash(guildId, splashHash), kord)
+        public fun guildSplash(guildId: Snowflake, splashHash: String, kord: Kord): Asset =
+            Asset(false, DiscordCdn.guildSplash(guildId, splashHash), kord)
 
-    public class GuildDiscoverySplash(guildId: Snowflake, splashHash: String, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.guildDiscoverySplash(guildId, splashHash), kord)
+        public fun guildDiscoverySplash(guildId: Snowflake, splashHash: String, kord: Kord): Asset =
+            Asset(false, DiscordCdn.guildDiscoverySplash(guildId, splashHash), kord)
 
-    public class GuildBanner(guildId: Snowflake, bannerHash: String, kord: Kord) :
-        Asset(if (bannerHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, DiscordCdn.guildBanner(guildId, bannerHash), kord)
+        public fun guildBanner(guildId: Snowflake, bannerHash: String, kord: Kord): Asset =
+            Asset(false, DiscordCdn.guildBanner(guildId, bannerHash), kord)
 
-    public class GuildEventCover(guildId: Snowflake, coverHash: String, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.guildEventCover(guildId, coverHash), kord)
+        public fun guildEventCover(guildId: Snowflake, coverHash: String, kord: Kord): Asset =
+            Asset(false, DiscordCdn.guildEventCover(guildId, coverHash), kord)
 
-    public class ApplicationIcon(applicationId: Snowflake, iconHash: String, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.applicationIcon(applicationId, iconHash), kord)
+        public fun applicationIcon(applicationId: Snowflake, iconHash: String, kord: Kord): Asset =
+            Asset(false, DiscordCdn.applicationIcon(applicationId, iconHash), kord)
 
-    public class ApplicationCover(applicationId: Snowflake, coverHash: String, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.applicationCover(applicationId, coverHash), kord)
+        public fun applicationCover(applicationId: Snowflake, coverHash: String, kord: Kord): Asset =
+            Asset(false, DiscordCdn.applicationCover(applicationId, coverHash), kord)
 
-    public class TeamIcon(teamId: Snowflake, iconHash: String, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.teamIcon(teamId, iconHash), kord)
+        public fun teamIcon(teamId: Snowflake, iconHash: String, kord: Kord): Asset =
+            Asset(false, DiscordCdn.teamIcon(teamId, iconHash), kord)
 
-    public class StickerPackBanner(assetId: Snowflake, kord: Kord) :
-        Asset(Image.Format.PNG, DiscordCdn.stickerPackBanner(assetId), kord)
-
-    override fun toString(): String = "Asset.${this::class.simpleName}(format=$format, cdnUrl=$cdnUrl, kord=$kord)"
+        public fun stickerPackBanner(stickerPackId: Snowflake, kord: Kord): Asset =
+            Asset(false, DiscordCdn.stickerPackBanner(stickerPackId), kord)
+    }
 }

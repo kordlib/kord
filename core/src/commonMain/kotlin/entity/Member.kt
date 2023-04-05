@@ -48,7 +48,7 @@ public class Member(
      * The members guild avatar as [Asset] object
      */
     public val memberAvatar: Asset?
-        get() = memberData.avatar.value?.let { Asset.MemberAvatar(memberData.guildId, id, it, kord) }
+        get() = memberData.avatar.value?.let { Asset.memberAvatar(memberData.guildId, id, it, kord) }
 
     /**
      * When the user joined this [guild].

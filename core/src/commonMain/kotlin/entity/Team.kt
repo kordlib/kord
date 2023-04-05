@@ -37,7 +37,7 @@ public class Team(
      */
     public val iconHash: String? get() = data.icon
 
-    public val icon: Asset? get() = data.icon?.let { Asset.TeamIcon(data.id, it, kord) }
+    public val icon: Asset? get() = data.icon?.let { Asset.teamIcon(data.id, it, kord) }
 
     /**
      * A collection of all members of this team.
