@@ -26,10 +26,10 @@ unconventional things, and we want to allow you to do those in a safe and suppor
 
 ## Status of Kord
 
-* [X] [Discord Gateway](https://github.com/kordlib/kord/tree/0.9.x/gateway)
-* [x] [Discord Rest API](https://github.com/kordlib/kord/tree/0.9.x/rest)
-* [X] [High level abstraction + caching](https://github.com/kordlib/kord/tree/0.9.x/core)
-* [X] [Discord Voice](https://github.com/kordlib/kord/tree/0.9.x/voice)
+* [X] [Discord Gateway](/gateway)
+* [x] [Discord Rest API](/rest)
+* [X] [High level abstraction + caching](/core)
+* [X] [Discord Voice](/voice)
 * [ ] Support for multiple processes [#7](https://github.com/kordlib/kord/issues/7)
 
 Right now, Kord *should* provide a full mapping of the non-voice API on Kotlin/JVM and Kotlin/JS and an experimental
