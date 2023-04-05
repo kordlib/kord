@@ -199,7 +199,7 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of guild roles reached (250). */
     MaxGuildRoles(30005),
 
-    /** Maximum number of webhooks reached (10). */
+    /** Maximum number of webhooks reached (15). */
     MaxWebhooks(30007),
 
     /** Maximum number of emojis reached. */
