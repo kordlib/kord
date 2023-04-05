@@ -21,7 +21,6 @@ jobs:
       && !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'kordlib/kord')
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK
@@ -47,11 +46,8 @@ jobs:
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       ORG_GRADLE_PROJECT_signingKey: ${{ secrets.signingKey }}
       ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
-      GITHUB_EVENT_NAME: ${{ github.event_name }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
-      GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }}
       GITHUB_BRANCH_NAME: ${{ github.ref }}
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
       - uses: actions/checkout@v3
         with:

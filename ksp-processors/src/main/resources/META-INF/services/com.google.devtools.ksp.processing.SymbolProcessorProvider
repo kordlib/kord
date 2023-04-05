@@ -1,1 +1,3 @@
+dev.kord.ksp.inspection.BuilderDslMarkerInspectionProcessorProvider
+dev.kord.ksp.inspection.OptionalDefaultInspectionProcessorProvider
 dev.kord.ksp.kordenum.KordEnumProcessorProvider
