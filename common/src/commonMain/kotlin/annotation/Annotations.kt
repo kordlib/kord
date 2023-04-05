@@ -85,7 +85,7 @@ public annotation class DeprecatedSinceKord(val version: String)
  * Marks an API for internal use only.
  */
 @MustBeDocumented
-@RequiresOptIn("This API is intended for internal use only", level = ERROR)
+@RequiresOptIn("This API is intended for internal use only.", level = ERROR)
 @Retention(BINARY)
 @Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
 public annotation class KordInternal
