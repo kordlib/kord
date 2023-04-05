@@ -26,10 +26,10 @@ unconventional things, and we want to allow you to do those in a safe and suppor
 
 ## Status of Kord
 
-* [X] [Discord Gateway](/gateway)
-* [x] [Discord Rest API](/rest)
-* [X] [High level abstraction + caching](/core)
-* [X] [Discord Voice](/voice)
+* [X] [Discord Gateway](gateway)
+* [x] [Discord Rest API](rest)
+* [X] [High level abstraction + caching](core)
+* [X] [Discord Voice](voice)
 * [ ] Support for multiple processes [#7](https://github.com/kordlib/kord/issues/7)
 
 Right now, Kord *should* provide a full mapping of the non-voice API on Kotlin/JVM and Kotlin/JS and an experimental
@@ -42,17 +42,18 @@ mapping of the Voice API on Kotlin/JVM
 
 ## Modules
 
-| Module                   | Docs                                                    | Artifact¹         | JVM | JS | Native² |
+| Module                   | Docs                                                    | Artifact          | JVM | JS | Native² |
 |--------------------------|---------------------------------------------------------|-------------------|-----|----|---------|
-| [rest](rest)             | [rest](https://kordlib.github.io/kord/rest)             | `kord-rest`       | ✅   | ✅  | ❌       |
-| [gateway](gateway)       | [gateway](https://kordlib.github.io/kord/gateway)       | `kord-gateway`    | ✅   | ✅  | ❌       |
-| [core](core)             | [core](https://kordlib.github.io/kord/core)             | `kord-core`       | ✅   | ✅  | ❌       |
+| [common](common)         | [common](https://kordlib.github.io/kord/common)         | `kord-common`¹    | ✅   | ✅  | ❌       |
+| [rest](rest)             | [rest](https://kordlib.github.io/kord/rest)             | `kord-rest`¹      | ✅   | ✅  | ❌       |
+| [gateway](gateway)       | [gateway](https://kordlib.github.io/kord/gateway)       | `kord-gateway`¹   | ✅   | ✅  | ❌       |
+| [core](core)             | [core](https://kordlib.github.io/kord/core)             | `kord-core`¹      | ✅   | ✅  | ❌       |
 | [voice](voice)           | [voice](https://kordlib.github.io/kord/voice)           | `kord-voice`      | ✅   | ❌³ | ❌       |
 | [core-voice](core-voice) | [core-voice](https://kordlib.github.io/kord/core-voice) | `kord-core-voice` | ✅   | ❌  | ❌       |
 
 ¹ These artifacts only supports Gradle Version 5.3 or higher, for older Gradle versions and Maven please append `-jvm`  
 ² For Native Support please see #69  
-³ For Voice JS please see #69  
+³ For Voice JS please see #69
 
 ## Installation
 
