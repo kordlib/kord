@@ -3,6 +3,9 @@ import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import java.net.URL
 
 fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
+
+    moduleName = "kord-${project.name}"
+
     failOnWarning = true
 
     dokkaSourceSets.configureEach {
