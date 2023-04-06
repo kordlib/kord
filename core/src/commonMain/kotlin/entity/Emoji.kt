@@ -8,13 +8,13 @@ import dev.kord.core.behavior.MemberBehavior
 import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.EmojiData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.guild.EmojiModifyBuilder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filter
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -37,7 +37,7 @@ public sealed interface Emoji {
  * An instance of a
  * [standard emoji](https://discord.com/developers/docs/resources/emoji#emoji-object-standard-emoji-example).
  *
- * @property name The unicode representation of this emoji.
+ * @param name The unicode representation of this emoji.
  */
 public class StandardEmoji(override val name: String) : Emoji {
     /** The unicode representation of this emoji. */
@@ -50,6 +50,8 @@ public class StandardEmoji(override val name: String) : Emoji {
 /**
  * An instance of an [emoji](https://discord.com/developers/docs/resources/emoji#emoji-object) belonging to a specific
  * [Guild].
+ *
+ * @param data The [EmojiData] for the guild emoji
  */
 public class GuildEmoji(
     public val data: EmojiData,

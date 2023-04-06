@@ -25,6 +25,8 @@ import kotlin.time.Duration
 
 /**
  * A [Discord integration](https://discord.com/developers/docs/resources/guild#get-guild-integrations).
+ *
+ * @param data The [IntegrationData] for the integration
  */
 public class Integration(
     public val data: IntegrationData,
@@ -58,7 +60,7 @@ public class Integration(
     public fun isSyncing(): Boolean = isSyncing!!
 
     /**
-     * Whether this integrations is syncing.
+     * Whether this integration is syncing.
      */
     public val isSyncing: Boolean?
         get() = data.syncing.value

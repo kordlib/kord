@@ -10,14 +10,19 @@ import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
+ *
+ * @param memberData The [MemberData] for the Member
+ * @param userData The [UserData] of the member
+ * @param kord The kord instance that created this object
+ * @param supplier The supplier used to request entities
  */
 public class Member(
     public val memberData: MemberData,
@@ -70,7 +75,7 @@ public class Member(
      * The [roles][Role] that apply to this user.
      *
      * This request uses state [data] to resolve the entities belonging to the flow,
-     * as such it can't guarantee an up to date representation if the [data] is outdated.
+     * as such it can't guarantee an up-to-date representation if the [data] is outdated.
      *
      * The returned flow is lazily executed, any [RequestException] will be thrown on
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.

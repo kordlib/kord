@@ -18,6 +18,8 @@ import kotlinx.datetime.Instant
  * An instance of a
  * [Guild scheduled event](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event)
  * belonging to a specific guild.
+ *
+ * @param data The [GuildScheduledEventData] for the event
  */
 public class GuildScheduledEvent(
     public val data: GuildScheduledEventData,

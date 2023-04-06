@@ -15,6 +15,7 @@ import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.channel.*
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
@@ -24,11 +25,12 @@ import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
 import kotlin.time.Duration
 
 /**
  * An instance of a [Discord Guild](https://discord.com/developers/docs/resources/guild).
+ *
+ * @param data The [GuildData] for the guild
  */
 public class Guild(
     public val data: GuildData,
