@@ -53,16 +53,16 @@ internal class KordEnum(
 internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     val args = annotationArguments
 
-    val name = args[GenerateKordEnum::name] as String
-    val valueType = args[GenerateKordEnum::valueType].toValueType()
-    val entries = args[GenerateKordEnum::entries] as List<*>
-    val kDoc = args[GenerateKordEnum::kDoc].toKDoc()
-    val docUrl = (args[GenerateKordEnum::docUrl] as String).ifBlank { null }
-    val valueName = args[GenerateKordEnum::valueName] as String
-    val deprecatedEntries = args[GenerateKordEnum::deprecatedEntries] as List<*>
+    val name = args.getSafe(GenerateKordEnum::name)
+    val valueType = args.getRaw(GenerateKordEnum::valueType).toValueType()
+    val entries = args.getRaw(GenerateKordEnum::entries) as List<*>
+    val kDoc = args.getOrDefault(GenerateKordEnum::kDoc, "").toKDoc()
+    val docUrl = args.getOrDefault(GenerateKordEnum::docUrl, "").ifBlank { null }
+    val valueName = args.getOrDefault(GenerateKordEnum::valueName, "value")
+    val deprecatedEntries = args.getRaw(GenerateKordEnum::deprecatedEntries) as List<*>? ?: emptyList<Any>()
 
-    val valuesPropertyName = (args[GenerateKordEnum::valuesPropertyName] as String).ifEmpty { null }
-    val valuesPropertyType = args[GenerateKordEnum::valuesPropertyType].toValuesPropertyType()
+    val valuesPropertyName = args.getOrDefault(GenerateKordEnum::valuesPropertyName, "").ifEmpty { null }
+    val valuesPropertyType = args.getRaw(GenerateKordEnum::valuesPropertyType)?.toValuesPropertyType() ?: NONE
     if (valuesPropertyName != null) {
         if (valuesPropertyType == NONE) {
             logger.error("Didn't specify valuesPropertyType", symbol = this)
@@ -74,7 +74,7 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
             return null
         }
     }
-    val deprecatedSerializerName = (args[GenerateKordEnum::deprecatedSerializerName] as String).ifEmpty { null }
+    val deprecatedSerializerName = args.getOrDefault(GenerateKordEnum::deprecatedSerializerName, "").ifEmpty { null }
 
     return KordEnum(
         name, kDoc, docUrl, valueType, valueName,
@@ -109,14 +109,14 @@ private fun Any?.toValuesPropertyType() = when (val name = (this as KSType).decl
 private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logger: KSPLogger): Entry? {
     val args = (this as KSAnnotation).annotationArguments
 
-    val name = args[GenerateKordEnum.Entry::name] as String
-    val intValue = args[GenerateKordEnum.Entry::intValue] as Int
-    val stringValue = args[GenerateKordEnum.Entry::stringValue] as String
-    val kDoc = args[GenerateKordEnum.Entry::kDoc].toKDoc()
-    val isKordExperimental = args[GenerateKordEnum.Entry::isKordExperimental] as Boolean
-    val deprecationMessage = args[GenerateKordEnum.Entry::deprecationMessage] as String
-    val replaceWith = args[GenerateKordEnum.Entry::replaceWith].toReplaceWith()
-    val deprecationLevel = args[GenerateKordEnum.Entry::deprecationLevel].toDeprecationLevel()
+    val name = args.getSafe(GenerateKordEnum.Entry::name)
+    val intValue = args.getOrDefault(GenerateKordEnum.Entry::intValue, GenerateKordEnum.Entry.DEFAULT_INT_VALUE)
+    val stringValue = args.getOrDefault(GenerateKordEnum.Entry::stringValue, GenerateKordEnum.Entry.DEFAULT_STRING_VALUE)
+    val kDoc = args.getOrDefault(GenerateKordEnum.Entry::kDoc, "").toKDoc()
+    val isKordExperimental = args.getOrDefault(GenerateKordEnum.Entry::isKordExperimental, false)
+    val deprecationMessage = args.getOrDefault(GenerateKordEnum.Entry::deprecationMessage, "")
+    val replaceWith = args.getRaw(GenerateKordEnum.Entry::replaceWith)?.toReplaceWith() ?: ReplaceWith("", imports = emptyArray())
+    val deprecationLevel = args.getRaw(GenerateKordEnum.Entry::deprecationLevel)?.toDeprecationLevel() ?: WARNING
 
     val value = when (valueType) {
         INT -> {
@@ -172,8 +172,8 @@ private fun Any?.toEntryOrNull(valueType: ValueType, isDeprecated: Boolean, logg
 private fun Any?.toReplaceWith(): ReplaceWith {
     val args = (this as KSAnnotation).annotationArguments
 
-    val expression = args[ReplaceWith::expression] as String
-    val imports = @Suppress("UNCHECKED_CAST") (args[ReplaceWith::imports] as List<String>)
+    val expression = args.getSafe(ReplaceWith::expression)
+    val imports = @Suppress("UNCHECKED_CAST") (args.getRaw(ReplaceWith::imports) as List<String>)
 
     return ReplaceWith(expression, *imports.toTypedArray())
 }

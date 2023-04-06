@@ -1,0 +1,4 @@
+public final class dev/kord/core/behavior/channel/VoiceBaseVoiceChannelBehavior {
+	public static final fun connect (Ldev/kord/core/behavior/channel/BaseVoiceChannelBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
