@@ -272,8 +272,9 @@ public data class DiscordInteraction(
     val data: InteractionCallbackData,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val channel: Optional<DiscordPartialChannel> = Optional.Missing(),
     @SerialName("channel_id")
-    val channelId: Snowflake,
+    val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
     val user: Optional<DiscordUser> = Optional.Missing(),
     val token: String,

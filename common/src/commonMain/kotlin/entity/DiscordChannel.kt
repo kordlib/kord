@@ -166,6 +166,18 @@ public data class DiscordChannel(
     val message: Optional<DiscordMessage> = Optional.Missing(),
 )
 
+@Serializable
+public data class DiscordPartialChannel(
+    val id: Snowflake,
+    val type: ChannelType,
+    val name: Optional<String?> = Optional.Missing(),
+    @SerialName("parent_id")
+    val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
+    val permissions: Optional<Permissions> = Optional.Missing(),
+    @SerialName("thread_metadata")
+    val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing(),
+)
+
 public enum class ChannelFlag(public val code: Int) {
 
     /** This thread is pinned to the top of its parent [GuildForum] channel. */
