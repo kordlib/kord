@@ -4,6 +4,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
 import dev.kord.rest.Image
+import dev.kord.rest.Image.Format.*
 import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
@@ -11,15 +12,13 @@ public class Asset private constructor(
     public val isAnimated: Boolean,
     public val cdnUrl: CdnUrl,
     override val kord: Kord,
+    private val forcedFormat: Image.Format? = null,
 ) : KordObject {
 
-    public suspend fun getImage(
-        format: Image.Format = if (isAnimated) Image.Format.GIF else Image.Format.WEBP,
-        size: Image.Size? = null
-    ): Image = Image.fromUrl(
+    public suspend fun getImage(format: Image.Format? = null, size: Image.Size? = null): Image = Image.fromUrl(
         client = kord.resources.httpClient,
         url = cdnUrl.toUrl {
-            this.format = format
+            this.format = forcedFormat ?: format ?: if (isAnimated) GIF else WEBP
             if (size != null) this.size = size
         },
     )
@@ -46,7 +45,7 @@ public class Asset private constructor(
             Asset(hash.isAnimated, DiscordCdn.userBanner(userId, hash), kord)
 
         public fun defaultUserAvatar(discriminator: Int, kord: Kord): Asset =
-            Asset(isAnimated = false, DiscordCdn.defaultAvatar(discriminator), kord)
+            Asset(isAnimated = false, DiscordCdn.defaultAvatar(discriminator), kord, forcedFormat = PNG)
 
         public fun userAvatar(userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.userAvatar(userId, hash), kord)
