@@ -18,7 +18,7 @@ public data class InteractionData(
     val type: InteractionType,
     val data: ApplicationInteractionData,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val channel: Optional<PartialChannelData> = Optional.Missing(),
+    val channel: Optional<ChannelData> = Optional.Missing(),
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     val member: Optional<MemberData> = Optional.Missing(),
     val user: Optional<UserData> = Optional.Missing(),
@@ -39,7 +39,7 @@ public data class InteractionData(
                     type,
                     ApplicationInteractionData.from(data, guildId.value),
                     guildId,
-                    channel.map { PartialChannelData.from(it) },
+                    channel.map { ChannelData.from(it) },
                     channelId,
                     member.map { it.toData(it.user.value!!.id, guildId.value!!) },
                     //borrow user from member if present

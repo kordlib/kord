@@ -4561,36 +4561,6 @@ public final class dev/kord/core/cache/data/PartialApplicationData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/core/cache/data/PartialChannelData {
-	public static final field Companion Ldev/kord/core/cache/data/PartialChannelData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/ChannelType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalSnowflake;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getName ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getParentId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
-	public final fun getPermissions ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getThreadMetadata ()Ldev/kord/common/entity/optional/Optional;
-	public final fun getType ()Ldev/kord/common/entity/ChannelType;
-	public static final fun write$Self (Ldev/kord/core/cache/data/PartialChannelData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class dev/kord/core/cache/data/PartialChannelData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/core/cache/data/PartialChannelData$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/core/cache/data/PartialChannelData;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/core/cache/data/PartialChannelData;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/core/cache/data/PartialChannelData$Companion {
-	public final fun from (Ldev/kord/common/entity/DiscordPartialChannel;)Ldev/kord/core/cache/data/PartialChannelData;
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public final class dev/kord/core/cache/data/PartialGuildData {
 	public static final field Companion Ldev/kord/core/cache/data/PartialGuildData$Companion;
 	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ljava/util/List;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -8183,34 +8153,6 @@ public final class dev/kord/core/entity/channel/NewsChannel : dev/kord/core/beha
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/TopGuildMessageChannel;
 }
 
-public final class dev/kord/core/entity/channel/PartialChannel : dev/kord/core/behavior/channel/ChannelBehavior {
-	public fun <init> (Ldev/kord/core/cache/data/PartialChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;)V
-	public synthetic fun <init> (Ldev/kord/core/cache/data/PartialChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun asChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun asChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun compareTo (Ldev/kord/core/entity/Entity;)I
-	public synthetic fun compareTo (Ljava/lang/Object;)I
-	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun fetchChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun fetchChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getData ()Ldev/kord/core/cache/data/PartialChannelData;
-	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public fun getKord ()Ldev/kord/core/Kord;
-	public fun getMention ()Ljava/lang/String;
-	public final fun getName ()Ljava/lang/String;
-	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getPermissions ()Ldev/kord/common/entity/Permissions;
-	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
-	public final fun getThreadData ()Ldev/kord/core/cache/data/ThreadMetadataData;
-	public final fun getType ()Ldev/kord/common/entity/ChannelType;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/channel/ChannelBehavior;
-	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/channel/PartialChannel;
-}
-
 public final class dev/kord/core/entity/channel/ResolvedChannel : dev/kord/core/entity/channel/Channel {
 	public fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;)V
 	public synthetic fun <init> (Ldev/kord/core/cache/data/ChannelData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplyStrategy;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -9081,7 +9023,7 @@ public final class dev/kord/core/entity/interaction/ActionInteraction$DefaultImp
 	public static fun getLocale (Ldev/kord/core/entity/interaction/ActionInteraction;)Ldev/kord/common/Locale;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/ActionInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/ActionInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ActionInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ActionInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getToken (Ldev/kord/core/entity/interaction/ActionInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ActionInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ActionInteraction;)I
@@ -9116,7 +9058,7 @@ public final class dev/kord/core/entity/interaction/ApplicationCommandInteractio
 	public static fun getLocale (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)Ldev/kord/common/Locale;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getToken (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ApplicationCommandInteraction;)Ldev/kord/common/entity/InteractionType;
@@ -9158,7 +9100,7 @@ public final class dev/kord/core/entity/interaction/AutoCompleteInteraction$Defa
 	public static fun getGuildLocale (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ldev/kord/common/Locale;
 	public static fun getId (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ldev/kord/common/entity/Snowflake;
 	public static fun getLocale (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ldev/kord/common/Locale;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getToken (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/AutoCompleteInteraction;)I
@@ -9199,7 +9141,7 @@ public final class dev/kord/core/entity/interaction/ButtonInteraction$DefaultImp
 	public static fun getMessage (Ldev/kord/core/entity/interaction/ButtonInteraction;)Ldev/kord/core/entity/Message;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/ButtonInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/ButtonInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ButtonInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ButtonInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getToken (Ldev/kord/core/entity/interaction/ButtonInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ButtonInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ButtonInteraction;)I
@@ -9241,7 +9183,7 @@ public final class dev/kord/core/entity/interaction/ChatInputCommandInteraction$
 	public static fun getLocale (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)Ldev/kord/common/Locale;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getToken (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ChatInputCommandInteraction;)Ldev/kord/common/entity/InteractionType;
@@ -9277,7 +9219,7 @@ public final class dev/kord/core/entity/interaction/ComponentInteraction$Default
 	public static fun getMessage (Ldev/kord/core/entity/interaction/ComponentInteraction;)Ldev/kord/core/entity/Message;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/ComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/ComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ComponentInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ComponentInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getToken (Ldev/kord/core/entity/interaction/ComponentInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ComponentInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/ComponentInteraction;)I
@@ -9302,7 +9244,7 @@ public final class dev/kord/core/entity/interaction/DataInteraction$DefaultImpls
 	public static fun getGuildLocale (Ldev/kord/core/entity/interaction/DataInteraction;)Ldev/kord/common/Locale;
 	public static fun getId (Ldev/kord/core/entity/interaction/DataInteraction;)Ldev/kord/common/entity/Snowflake;
 	public static fun getLocale (Ldev/kord/core/entity/interaction/DataInteraction;)Ldev/kord/common/Locale;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/DataInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/DataInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getToken (Ldev/kord/core/entity/interaction/DataInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/DataInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/DataInteraction;)I
@@ -9332,7 +9274,7 @@ public final class dev/kord/core/entity/interaction/GlobalApplicationCommandInte
 	public static fun getLocale (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)Ldev/kord/common/Locale;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getToken (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/GlobalApplicationCommandInteraction;)Ldev/kord/common/entity/InteractionType;
@@ -9359,7 +9301,7 @@ public final class dev/kord/core/entity/interaction/GlobalAutoCompleteInteractio
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getLocale ()Ldev/kord/common/Locale;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getToken ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/InteractionType;
@@ -9407,7 +9349,7 @@ public final class dev/kord/core/entity/interaction/GlobalButtonInteraction : de
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getToken ()Ljava/lang/String;
 	public fun getType ()Ldev/kord/common/entity/InteractionType;
@@ -9456,7 +9398,7 @@ public final class dev/kord/core/entity/interaction/GlobalChatInputCommandIntera
 	public fun getLocale ()Ldev/kord/common/Locale;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getToken ()Ljava/lang/String;
@@ -9505,7 +9447,7 @@ public final class dev/kord/core/entity/interaction/GlobalComponentInteraction$D
 	public static fun getMessage (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)Ldev/kord/core/entity/Message;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getToken (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GlobalComponentInteraction;)Ldev/kord/core/entity/User;
@@ -9527,7 +9469,7 @@ public final class dev/kord/core/entity/interaction/GlobalInteraction$DefaultImp
 	public static fun getGuildLocale (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/common/Locale;
 	public static fun getId (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/common/entity/Snowflake;
 	public static fun getLocale (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/common/Locale;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getToken (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getUser (Ldev/kord/core/entity/interaction/GlobalInteraction;)Ldev/kord/core/entity/User;
@@ -9560,7 +9502,7 @@ public final class dev/kord/core/entity/interaction/GlobalMessageCommandInteract
 	public fun getMessages ()Ljava/util/Map;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTarget ()Ldev/kord/core/behavior/MessageBehavior;
@@ -9615,7 +9557,7 @@ public final class dev/kord/core/entity/interaction/GlobalModalSubmitInteraction
 	public fun getModalId ()Ljava/lang/String;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTextInputs ()Ljava/util/Map;
 	public fun getToken ()Ljava/lang/String;
@@ -9664,7 +9606,7 @@ public final class dev/kord/core/entity/interaction/GlobalSelectMenuInteraction 
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getToken ()Ljava/lang/String;
@@ -9714,7 +9656,7 @@ public final class dev/kord/core/entity/interaction/GlobalUserCommandInteraction
 	public fun getLocale ()Ldev/kord/common/Locale;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTarget ()Ldev/kord/core/behavior/UserBehavior;
@@ -9794,7 +9736,7 @@ public final class dev/kord/core/entity/interaction/GuildApplicationCommandInter
 	public static fun getLocale (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)Ldev/kord/common/Locale;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getPermissions (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)Ldev/kord/common/entity/Permissions;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getToken (Ldev/kord/core/entity/interaction/GuildApplicationCommandInteraction;)Ljava/lang/String;
@@ -9828,7 +9770,7 @@ public final class dev/kord/core/entity/interaction/GuildAutoCompleteInteraction
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public fun getLocale ()Ldev/kord/common/Locale;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getToken ()Ljava/lang/String;
@@ -9884,7 +9826,7 @@ public final class dev/kord/core/entity/interaction/GuildButtonInteraction : dev
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getToken ()Ljava/lang/String;
@@ -9941,7 +9883,7 @@ public final class dev/kord/core/entity/interaction/GuildChatInputCommandInterac
 	public fun getLocale ()Ldev/kord/common/Locale;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
@@ -9997,7 +9939,7 @@ public final class dev/kord/core/entity/interaction/GuildComponentInteraction$De
 	public static fun getMessage (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)Ldev/kord/core/entity/Message;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/GuildComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/GuildComponentInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getPermissions (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)Ldev/kord/common/entity/Permissions;
 	public static fun getToken (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/GuildComponentInteraction;)Ldev/kord/common/entity/InteractionType;
@@ -10028,7 +9970,7 @@ public final class dev/kord/core/entity/interaction/GuildInteraction$DefaultImpl
 	public static fun getGuildOrNull (Ldev/kord/core/entity/interaction/GuildInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getId (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/common/entity/Snowflake;
 	public static fun getLocale (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/common/Locale;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getPermissions (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/common/entity/Permissions;
 	public static fun getToken (Ldev/kord/core/entity/interaction/GuildInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/GuildInteraction;)Ldev/kord/common/entity/InteractionType;
@@ -10068,7 +10010,7 @@ public final class dev/kord/core/entity/interaction/GuildMessageCommandInteracti
 	public fun getMessages ()Ljava/util/Map;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
@@ -10131,7 +10073,7 @@ public final class dev/kord/core/entity/interaction/GuildModalSubmitInteraction 
 	public fun getModalId ()Ljava/lang/String;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public fun getTextInputs ()Ljava/util/Map;
@@ -10188,7 +10130,7 @@ public final class dev/kord/core/entity/interaction/GuildSelectMenuInteraction :
 	public fun getMessage ()Ldev/kord/core/entity/Message;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
@@ -10246,7 +10188,7 @@ public final class dev/kord/core/entity/interaction/GuildUserCommandInteraction 
 	public fun getLocale ()Ldev/kord/common/Locale;
 	public fun getOriginalInteractionResponse (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOriginalInteractionResponseOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public fun getResolvedObjects ()Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
@@ -10293,7 +10235,7 @@ public abstract interface class dev/kord/core/entity/interaction/Interaction : d
 	public abstract fun getGuildLocale ()Ldev/kord/common/Locale;
 	public abstract fun getId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getLocale ()Ldev/kord/common/Locale;
-	public abstract fun getPartialChannel ()Ldev/kord/core/entity/channel/PartialChannel;
+	public abstract fun getPartialChannel ()Ldev/kord/core/entity/channel/Channel;
 	public abstract fun getToken ()Ljava/lang/String;
 	public abstract fun getType ()Ldev/kord/common/entity/InteractionType;
 	public abstract fun getUser ()Ldev/kord/core/entity/User;
@@ -10316,7 +10258,7 @@ public final class dev/kord/core/entity/interaction/Interaction$DefaultImpls {
 	public static fun getGuildLocale (Ldev/kord/core/entity/interaction/Interaction;)Ldev/kord/common/Locale;
 	public static fun getId (Ldev/kord/core/entity/interaction/Interaction;)Ldev/kord/common/entity/Snowflake;
 	public static fun getLocale (Ldev/kord/core/entity/interaction/Interaction;)Ldev/kord/common/Locale;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/Interaction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/Interaction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getToken (Ldev/kord/core/entity/interaction/Interaction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/Interaction;)Ldev/kord/common/entity/InteractionType;
 	public static fun getVersion (Ldev/kord/core/entity/interaction/Interaction;)I
@@ -10407,7 +10349,7 @@ public final class dev/kord/core/entity/interaction/MessageCommandInteraction$De
 	public static fun getMessages (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ljava/util/Map;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/MessageCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/MessageCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getTarget (Ldev/kord/core/entity/interaction/MessageCommandInteraction;)Ldev/kord/core/behavior/MessageBehavior;
 	public static fun getTarget (Ldev/kord/core/entity/interaction/MessageCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -10447,7 +10389,7 @@ public final class dev/kord/core/entity/interaction/ModalSubmitInteraction$Defau
 	public static fun getModalId (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/lang/String;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getTextInputs (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/util/Map;
 	public static fun getToken (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/ModalSubmitInteraction;)Ldev/kord/common/entity/InteractionType;
@@ -10553,7 +10495,7 @@ public final class dev/kord/core/entity/interaction/SelectMenuInteraction$Defaul
 	public static fun getMessage (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)Ldev/kord/core/entity/Message;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/SelectMenuInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/SelectMenuInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getToken (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)Ljava/lang/String;
 	public static fun getType (Ldev/kord/core/entity/interaction/SelectMenuInteraction;)Ldev/kord/common/entity/InteractionType;
@@ -10619,7 +10561,7 @@ public final class dev/kord/core/entity/interaction/UserCommandInteraction$Defau
 	public static fun getLocale (Ldev/kord/core/entity/interaction/UserCommandInteraction;)Ldev/kord/common/Locale;
 	public static fun getOriginalInteractionResponse (Ldev/kord/core/entity/interaction/UserCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getOriginalInteractionResponseOrNull (Ldev/kord/core/entity/interaction/UserCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/UserCommandInteraction;)Ldev/kord/core/entity/channel/PartialChannel;
+	public static fun getPartialChannel (Ldev/kord/core/entity/interaction/UserCommandInteraction;)Ldev/kord/core/entity/channel/Channel;
 	public static fun getResolvedObjects (Ldev/kord/core/entity/interaction/UserCommandInteraction;)Ldev/kord/core/entity/interaction/ResolvedObjects;
 	public static fun getTarget (Ldev/kord/core/entity/interaction/UserCommandInteraction;)Ldev/kord/core/behavior/UserBehavior;
 	public static fun getTarget (Ldev/kord/core/entity/interaction/UserCommandInteraction;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
