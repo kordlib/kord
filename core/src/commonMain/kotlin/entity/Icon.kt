@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package dev.kord.core.entity
 
 import dev.kord.common.entity.Snowflake
@@ -9,6 +7,7 @@ import dev.kord.rest.Image
 import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
+@Suppress("DEPRECATION")
 @Deprecated(
     "Icon class does not cover all cdn endpoints",
     ReplaceWith("Asset", "dev.kord.core.entity.Asset"),
