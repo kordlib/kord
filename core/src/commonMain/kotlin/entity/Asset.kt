@@ -10,12 +10,12 @@ import dev.kord.rest.route.DiscordCdn
 public class Asset(
     public val format: Image.Format,
     public val cdnUrl: CdnUrl,
-    override val kord: Kord
+    override val kord: Kord,
 ) : KordObject {
     public constructor(
         animated: Boolean,
         cdnUrl: CdnUrl,
-        kord: Kord
+        kord: Kord,
     ) : this(format = if (animated) Image.Format.GIF else Image.Format.WEBP, cdnUrl, kord)
 
     public val url: String
@@ -25,20 +25,13 @@ public class Asset(
 
     public val animated: Boolean get() = format is Image.Format.GIF
 
-    public suspend fun getImage(): Image = Image.fromUrl(kord.resources.httpClient, url)
-
-    public suspend fun getImage(size: Image.Size): Image = getImage(format, size)
-
-    public suspend fun getImage(format: Image.Format): Image =
-        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
+    public suspend fun getImage(format: Image.Format = this.format, size: Image.Size? = null): Image = Image.fromUrl(
+        client = kord.resources.httpClient,
+        url = cdnUrl.toUrl {
             this.format = format
-        })
-
-    public suspend fun getImage(format: Image.Format, size: Image.Size): Image =
-        Image.fromUrl(kord.resources.httpClient, cdnUrl.toUrl {
-            this.format = format
-            this.size = size
-        })
+            if (size != null) this.size = size
+        },
+    )
 
     public companion object {
         public fun emoji(animated: Boolean, emojiId: Snowflake, kord: Kord): Asset =
