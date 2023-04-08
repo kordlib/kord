@@ -5773,15 +5773,12 @@ public final class dev/kord/core/entity/Application : dev/kord/core/entity/BaseA
 
 public final class dev/kord/core/entity/Asset : dev/kord/core/KordObject {
 	public static final field Companion Ldev/kord/core/entity/Asset$Companion;
-	public fun <init> (Ldev/kord/rest/Image$Format;Ldev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;)V
-	public fun <init> (ZLdev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;)V
-	public final fun getAnimated ()Z
+	public synthetic fun <init> (ZLdev/kord/rest/route/CdnUrl;Ldev/kord/core/Kord;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getCdnUrl ()Ldev/kord/rest/route/CdnUrl;
-	public final fun getFormat ()Ldev/kord/rest/Image$Format;
 	public final fun getImage (Ldev/kord/rest/Image$Format;Ldev/kord/rest/Image$Size;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getImage$default (Ldev/kord/core/entity/Asset;Ldev/kord/rest/Image$Format;Ldev/kord/rest/Image$Size;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
-	public final fun getUrl ()Ljava/lang/String;
+	public final fun isAnimated ()Z
 }
 
 public final class dev/kord/core/entity/Asset$Companion {

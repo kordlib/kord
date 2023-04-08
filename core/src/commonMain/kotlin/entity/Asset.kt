@@ -7,25 +7,16 @@ import dev.kord.rest.Image
 import dev.kord.rest.route.CdnUrl
 import dev.kord.rest.route.DiscordCdn
 
-public class Asset(
-    public val format: Image.Format,
+public class Asset private constructor(
+    public val isAnimated: Boolean,
     public val cdnUrl: CdnUrl,
     override val kord: Kord,
 ) : KordObject {
-    public constructor(
-        isAnimated: Boolean,
-        cdnUrl: CdnUrl,
-        kord: Kord,
-    ) : this(format = if (isAnimated) Image.Format.GIF else Image.Format.WEBP, cdnUrl, kord)
 
-    public val url: String
-        get() = cdnUrl.toUrl {
-            this.format = this@Asset.format
-        }
-
-    public val animated: Boolean get() = format is Image.Format.GIF
-
-    public suspend fun getImage(format: Image.Format = this.format, size: Image.Size? = null): Image = Image.fromUrl(
+    public suspend fun getImage(
+        format: Image.Format = if (isAnimated) Image.Format.GIF else Image.Format.WEBP,
+        size: Image.Size? = null
+    ): Image = Image.fromUrl(
         client = kord.resources.httpClient,
         url = cdnUrl.toUrl {
             this.format = format
