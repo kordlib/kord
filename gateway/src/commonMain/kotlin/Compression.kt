@@ -3,9 +3,6 @@ package dev.kord.gateway
 import dev.kord.common.annotation.KordUnsafe
 import io.ktor.util.*
 import io.ktor.websocket.*
-import java.io.ByteArrayOutputStream
-import java.util.zip.Inflater
-import java.util.zip.InflaterOutputStream
 
 /**
  * [WebSocketExtension] inflating incoming websocket requests using `zlib`.
@@ -35,7 +32,7 @@ public class WebSocketCompression : WebSocketExtension<Unit> {
 
     override fun processIncomingFrame(frame: Frame): Frame {
         return if (frame is Frame.Binary) {
-            frame.deflateData()
+            with(inflater) { Frame.Text(frame.inflateData()) }
         } else {
             frame
         }
@@ -46,18 +43,6 @@ public class WebSocketCompression : WebSocketExtension<Unit> {
 
     override fun serverNegotiation(requestedProtocols: List<WebSocketExtensionHeader>): List<WebSocketExtensionHeader> =
         requestedProtocols
-
-    private fun Frame.deflateData(): Frame {
-        val outputStream = ByteArrayOutputStream()
-        InflaterOutputStream(outputStream, inflater).use {
-            it.write(data)
-        }
-
-        return outputStream.use {
-            val raw = String(outputStream.toByteArray(), 0, outputStream.size(), Charsets.UTF_8)
-            Frame.Text(raw)
-        }
-    }
 
     public companion object : WebSocketExtensionFactory<Unit, WebSocketCompression> {
         override val key: AttributeKey<WebSocketCompression> = AttributeKey("WebSocketCompression")
