@@ -25,7 +25,7 @@ public sealed class BaseApplication(
 
     public val name: String get() = data.name
 
-    public val icon: Asset? get() = data.icon?.let { Asset.applicationIcon(id, it, kord) }
+    public val icon: Asset? get() = iconHash?.let { Asset.applicationIcon(id, it, kord) }
 
     public val iconHash: String? get() = data.icon
 
@@ -54,7 +54,7 @@ public sealed class BaseApplication(
 
     public val slug: String? get() = data.slug.value
 
-    public val coverImage: Asset? get() = data.coverImage.value?.let { Asset.applicationCover(id, it, kord) }
+    public val coverImage: Asset? get() = coverImageHash?.let { Asset.applicationCover(id, it, kord) }
 
     public val coverImageHash: String? get() = data.coverImage.value
 
@@ -68,6 +68,7 @@ public sealed class BaseApplication(
 
     /** The application's default custom authorization link, if enabled. */
     public val customInstallUrl: String? get() = data.customInstallUrl.value
+
 
     public suspend fun getOwnerOrNull(): User? = ownerId?.let { supplier.getUserOrNull(it) }
 
