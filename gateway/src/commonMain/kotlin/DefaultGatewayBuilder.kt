@@ -1,15 +1,14 @@
 package dev.kord.gateway
 
 import dev.kord.common.KordConfiguration
-import dev.kord.common.http.HttpEngine
 import dev.kord.common.annotation.KordUnsafe
+import dev.kord.common.http.HttpEngine
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.common.ratelimit.RateLimiter
 import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
-import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -32,7 +31,7 @@ public class DefaultGatewayBuilder {
 
     @OptIn(KordUnsafe::class)
     public fun build(): DefaultGateway {
-        val client = client ?: HttpClient(CIO) {
+        val client = client ?: HttpClient(HttpEngine) {
             install(WebSockets) {
                 contentConverter = KotlinxWebsocketSerializationConverter(Json)
 
