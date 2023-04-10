@@ -18,12 +18,14 @@ public class Asset private constructor(
     public suspend fun getImage(format: Image.Format? = null, size: Image.Size? = null): Image = Image.fromUrl(
         client = kord.resources.httpClient,
         url = cdnUrl.toUrl {
-            this.format = forcedFormat ?: format ?: if (isAnimated) GIF else WEBP
+            this.format = forcedFormat ?: format ?: if (isAnimated) GIF else PNG
             if (size != null) this.size = size
         },
     )
 
     public companion object {
+        // see https://discord.com/developers/docs/reference#image-formatting-cdn-endpoints
+
         private val String.isAnimated get() = startsWith("a_")
 
         public fun emoji(emojiId: Snowflake, isAnimated: Boolean, kord: Kord): Asset =

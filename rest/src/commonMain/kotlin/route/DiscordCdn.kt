@@ -3,6 +3,7 @@ package dev.kord.rest.route
 import dev.kord.common.entity.Snowflake
 
 public object DiscordCdn {
+    // see https://discord.com/developers/docs/reference#image-formatting-cdn-endpoints
 
     private const val BASE_URL = "https://cdn.discordapp.com"
 
