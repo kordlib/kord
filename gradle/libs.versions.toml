@@ -7,7 +7,13 @@ kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "3.0.5" # https://github.com/oshai/kotlin-logging
-kord-cache = { strictly = "[0.3.0, 0.4.0[", prefer = "latest.release" }
+kord-cache = "0.4.0" # https://github.com/kordlib/cache
+
+# implementation dependencies
+kotlinx-nodejs = "18.14.0-pre.502" # https://github.com/JetBrains/kotlin-wrappers
+bignum = "0.3.8" # https://github.com/ionspin/kotlin-multiplatform-bignum
+stately = "2.0.0-rc1" # https://github.com/touchlab/Stately
+fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
 ksp = "1.8.10-1.0.9" # https://github.com/google/ksp
@@ -36,19 +42,27 @@ kord-cache-map = { module = "dev.kord.cache:cache-map", version.ref = "kord-cach
 # ktor
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 ktor-network = { module = "io.ktor:ktor-network", version.ref = "ktor" }
+ktor-utils = { module = "io.ktor:ktor-utils", version.ref = "ktor" }
 
 # kotlinx
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-nodejs = { module = "org.jetbrains.kotlin-wrappers:kotlin-node", version.ref = "kotlinx-nodejs" }
 
 # other
 kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlin-logging" }
+
+# JDK replacements
+bignum = { module = "com.ionspin.kotlin:bignum", version.ref = "bignum" }
+stately-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately" }
 
 # code generation
 ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
@@ -56,9 +70,10 @@ kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }
 
 # tests
-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
+kotlin-test-js = { module = "org.jetbrains.kotlin:kotlin-test-js", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit5" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
@@ -78,8 +93,9 @@ graalvm-native-build-tools-plugin = { module = "org.graalvm.buildtools:native-gr
 
 ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
 
-test-implementation = ["kotlinx-coroutines-test", "kotlin-test", "junit-jupiter-api", "mockk"]
-test-runtime = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
+test-common = ["kotlin-test-annotations-common", "kotlin-test", "kotlinx-coroutines-test"]
+test-js = ["kotlin-test-js", "kotlinx-nodejs"]
+test-jvm = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
 
 pluginsForBuildSrc = [
     "kotlin-jvm-plugin",

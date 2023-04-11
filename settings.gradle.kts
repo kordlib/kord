@@ -8,11 +8,15 @@ include(
     "bom",
     "common",
     "core",
+    "core:live-tests",
+    "core-voice",
     "gateway",
     "graalvm-native-image-example",
     "ksp-annotations",
     "ksp-processors",
     "rest",
+    "samples",
+    "test-kit",
     "voice",
 )
 

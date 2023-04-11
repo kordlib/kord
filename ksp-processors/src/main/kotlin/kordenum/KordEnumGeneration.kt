@@ -235,7 +235,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                 val deprecatedAnnotation = Deprecated(
                     "Use '$name.serializer()' instead.",
                     ReplaceWith("$name.serializer()", "$packageName.$name"),
-                    level = ERROR,
+                    level = HIDDEN,
                 )
                 val kSerializer = K_SERIALIZER.parameterizedBy(enumName)
 
@@ -284,7 +284,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                             Deprecated(
                                 "Renamed to 'entries'.",
                                 ReplaceWith("this.entries", imports = emptyArray()),
-                                level = ERROR,
+                                level = HIDDEN,
                             )
                         )
                         getter {
