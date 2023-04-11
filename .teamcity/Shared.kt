@@ -21,7 +21,7 @@ fun KordBuild(name: String, configure: BuildType.() -> Unit) = object : BuildTyp
     features {
         installGitHubPublisher()
         buildCache {
-            name = "gradle_cache",
+            this.name = "gradle_cache"
             rules = """
                 .gradle/
                 buildSrc/.gradle
