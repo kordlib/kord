@@ -23,6 +23,7 @@ kotlin {
 
                 api(libs.kord.cache.api)
                 api(libs.kord.cache.map)
+                compileOnly(projects.kspAnnotations)
             }
         }
         jvmTest {
@@ -37,4 +38,8 @@ tasks {
     dokkaHtmlMultiModule {
         enabled = false
     }
+}
+
+dependencies {
+    kspCommonMainMetadata(projects.kspProcessors)
 }

@@ -1,0 +1,1479 @@
+[
+  {
+    "name": "dev.kord.rest.json.JsonErrorCode",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.JsonErrorCode$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ApplicationCommandCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ApplicationCommandCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ApplicationCommandModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ApplicationCommandModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.AutoCompleteResponseCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.AutoCompleteResponseCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+          "kotlinx.serialization.KSerializer"
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.AutoModerationRuleCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.AutoModerationRuleCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.AutoModerationRuleModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.AutoModerationRuleModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.BulkDeleteRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.BulkDeleteRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelFollowRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelFollowRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelModifyPatchRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelModifyPatchRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelModifyPutRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelModifyPutRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelPermissionEditRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelPermissionEditRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelPositionSwapRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ChannelPositionSwapRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.CurrentUserModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.CurrentUserModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.CurrentUserNicknameModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.CurrentUserNicknameModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.CurrentVoiceStateModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.CurrentVoiceStateModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.DMCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.DMCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedAuthorRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedAuthorRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedFieldRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedFieldRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedFooterRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedFooterRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedImageRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedImageRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedThumbnailRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmbedThumbnailRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmojiCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmojiCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmojiModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.EmojiModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.FollowupMessageCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.FollowupMessageCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.FollowupMessageModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.FollowupMessageModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ForumTagRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ForumTagRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ForumThreadMessageRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ForumThreadMessageRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GroupDMCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GroupDMCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildBanCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildBanCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildChannelCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildChannelCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildChannelPositionModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildChannelPositionModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildFromTemplateCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildFromTemplateCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildIntegrationCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildIntegrationCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildIntegrationModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildIntegrationModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildMFALevelModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildMFALevelModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildMemberAddRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildMemberAddRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildMemberModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildMemberModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildRoleCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildRoleCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildRoleModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildRoleModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildRolePositionModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildRolePositionModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildRolePositionModifyRequest$RolePosition",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildRolePositionModifyRequest$RolePosition$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildScheduledEventCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildScheduledEventCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildScheduledEventUsersResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildScheduledEventUsersResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildStickerCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildStickerCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildStickerModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildStickerModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildTemplateCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildTemplateCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildTemplateModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildTemplateModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildWelcomeScreenModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildWidgetModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.GuildWidgetModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.InteractionApplicationCommandCallbackData",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.InteractionApplicationCommandCallbackData$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.InteractionResponseCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.InteractionResponseCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.InteractionResponseModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.InteractionResponseModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.InviteCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.InviteCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.MessageCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.MessageCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.MessageEditPatchRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.MessageEditPatchRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ModalResponseCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ModalResponseCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ScheduledEventModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.ScheduledEventModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.StageInstanceCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.StageInstanceCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.StageInstanceModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.StageInstanceModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.StartThreadRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.StartThreadRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.UserAddDMRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.UserAddDMRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.VoiceStateModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.VoiceStateModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.WebhookCreateRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.WebhookCreateRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.WebhookEditMessageRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.WebhookEditMessageRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.WebhookExecuteRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.WebhookExecuteRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.WebhookModifyRequest",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.request.WebhookModifyRequest$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.BanResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.BanResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.BotGatewayResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.BotGatewayResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.Connection",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.Connection$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.CurrentUserNicknameModifyResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.CurrentUserNicknameModifyResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.DiscordErrorResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.DiscordErrorResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.FollowedChannelResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.FollowedChannelResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.GatewayResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.GatewayResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.GetPruneResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.GetPruneResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.GuildMFALevelModifyResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.GuildMFALevelModifyResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.ListThreadsResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.ListThreadsResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.PartialChannelResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.PartialChannelResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.PruneResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.PruneResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.SessionStartLimitResponse",
+    "fields": [
+      {
+        "name": "Companion"
+      }
+    ]
+  },
+  {
+    "name": "dev.kord.rest.json.response.SessionStartLimitResponse$Companion",
+    "methods": [
+      {
+        "name": "serializer",
+        "parameterTypes": [
+        ]
+      }
+    ]
+  }
+]

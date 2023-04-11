@@ -1,10 +1,10 @@
 package dev.kord.common
 
+import dev.kord.test.IgnoreOnNativeImage
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import org.junit.jupiter.api.condition.DisabledInNativeImage
 
 class ColorTests {
     @Test
@@ -30,7 +30,7 @@ class ColorTests {
 
     // Currently java.awt.Color doesn't work on GraalVM Native Image
     // See: https://github.com/oracle/graal/issues/3084
-    @DisabledInNativeImage
+    @IgnoreOnNativeImage
     @Test
     @JsName("test3")
     fun `Color implementation should drop alpha values if given`() {

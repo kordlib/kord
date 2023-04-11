@@ -35,10 +35,7 @@ kotlin {
     }
 }
 
-ksp {
-    arg("project", project.name)
-}
-
+configureKsp()
 configureAtomicFU()
 
 tasks {
