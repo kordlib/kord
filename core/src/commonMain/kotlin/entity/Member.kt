@@ -42,9 +42,10 @@ public class Member(
     public fun getMemberAvatar(): Icon? =
         memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }
 
+    public val memberAvatarHash: String? get() = memberData.avatar.value
+
     /** The guild avatar of this member as an [Asset]. */
-    public val memberAvatar: Asset?
-        get() = memberData.avatar.value?.let { Asset.memberAvatar(guildId, id, it, kord) }
+    public val memberAvatar: Asset? get() = memberAvatarHash?.let { Asset.memberAvatar(guildId, id, it, kord) }
 
     /**
      * When the user joined this [guild].

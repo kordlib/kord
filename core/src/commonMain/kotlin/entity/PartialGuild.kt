@@ -113,7 +113,7 @@ public class PartialGuild(
     @Suppress("DEPRECATION")
     @Deprecated(
         "This method uses the wrong hash.",
-        ReplaceWith("this.discoverySplash?.getImage(format)"),
+        ReplaceWith("this.splash?.getImage(format)"),
         level = WARNING,
     )
     public suspend fun getDiscoverySplash(format: Image.Format): Image? {

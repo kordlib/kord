@@ -6603,6 +6603,7 @@ public final class dev/kord/core/entity/Member : dev/kord/core/entity/User, dev/
 	public final fun getJoinedAt ()Lkotlinx/datetime/Instant;
 	public final fun getMemberAvatar ()Ldev/kord/core/entity/Asset;
 	public final synthetic fun getMemberAvatar ()Ldev/kord/core/entity/Icon;
+	public final fun getMemberAvatarHash ()Ljava/lang/String;
 	public final fun getMemberData ()Ldev/kord/core/cache/data/MemberData;
 	public final fun getNickname ()Ljava/lang/String;
 	public final fun getPermissions (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
