@@ -33,8 +33,8 @@ public object DiscordCdn {
     public fun applicationCover(applicationId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/app-icons/$applicationId/$hash")
 
-    public fun stickerPackBanner(bannerAssetId: Snowflake): CdnUrl =
-        CdnUrl("$BASE_URL/app-assets/710982414301790216/store/$bannerAssetId")
+    public fun stickerPackBanner(bannerId: Snowflake): CdnUrl =
+        CdnUrl("$BASE_URL/app-assets/710982414301790216/store/$bannerId")
 
     public fun teamIcon(teamId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/team-icons/$teamId/$hash")
 

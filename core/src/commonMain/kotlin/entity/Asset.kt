@@ -66,8 +66,8 @@ public class Asset private constructor(
         public fun applicationCover(applicationId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.applicationCover(applicationId, hash), kord)
 
-        public fun stickerPackBanner(bannerAssetId: Snowflake, kord: Kord): Asset =
-            Asset(isAnimated = false, DiscordCdn.stickerPackBanner(bannerAssetId), kord)
+        public fun stickerPackBanner(bannerId: Snowflake, kord: Kord): Asset =
+            Asset(isAnimated = false, DiscordCdn.stickerPackBanner(bannerId), kord)
 
         public fun teamIcon(teamId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.teamIcon(teamId, hash), kord)
