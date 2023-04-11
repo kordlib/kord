@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.filter
 import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.jvm.JvmName
 
 /** Either a [StandardEmoji] or a [GuildEmoji]. */
 public sealed interface Emoji {
@@ -138,12 +137,9 @@ public class GuildEmoji(
      */
     @Suppress("DEPRECATION")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    @get:JvmName("getImage")
-    public val image0: Icon get() = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
+    public fun getImage(): Icon = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
 
-    /**
-     * The image as [Asset] object for the emoji
-     */
+    /** The image of this emoji as an [Asset]. */
     public val image: Asset get() = Asset.emoji(id, isAnimated, kord)
 
     /**

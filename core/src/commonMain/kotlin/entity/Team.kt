@@ -9,7 +9,6 @@ import dev.kord.core.cache.data.TeamMemberData
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlin.jvm.JvmName
 
 /**
  * A Discord [developer team](https://discord.com/developers/docs/topics/teams) which can own applications.
@@ -29,15 +28,12 @@ public class Team(
      * The hash of this team's icon.
      */
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    @get:JvmName("getIcon")
-    public val icon0: String? get() = data.icon
+    public fun getIcon(): String? = data.icon
 
-    /**
-     * The hash of this team's icon.
-     */
+    /** The hash of this team's icon. */
     public val iconHash: String? get() = data.icon
 
-    public val icon: Asset? get() = data.icon?.let { Asset.teamIcon(data.id, it, kord) }
+    public val icon: Asset? get() = iconHash?.let { Asset.teamIcon(id, it, kord) }
 
     /**
      * A collection of all members of this team.

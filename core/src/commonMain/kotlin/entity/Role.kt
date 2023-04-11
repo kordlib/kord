@@ -10,7 +10,6 @@ import dev.kord.core.cache.data.RoleData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.hash
-import kotlin.jvm.JvmName
 
 public data class Role(
     val data: RoleData,
@@ -30,10 +29,11 @@ public data class Role(
 
     @Suppress("DEPRECATION")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    @get:JvmName("getIcon")
-    val icon0: Icon? get() = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
+    public fun getIcon(): Icon? = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
 
-    val icon: Asset? get() = data.icon.value?.let { Asset.roleIcon(data.id, it, kord) }
+    val iconHash: String? get() = data.icon.value
+
+    val icon: Asset? get() = iconHash?.let { Asset.roleIcon(id, it, kord) }
 
     val unicodeEmoji: String? = data.unicodeEmoji.value
 

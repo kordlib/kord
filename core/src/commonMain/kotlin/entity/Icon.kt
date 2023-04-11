@@ -9,7 +9,7 @@ import dev.kord.rest.route.DiscordCdn
 
 @Suppress("DEPRECATION")
 @Deprecated(
-    "Icon class does not cover all cdn endpoints",
+    "Icon class does not cover all cdn endpoints and has some inconsistencies.",
     ReplaceWith("Asset", "dev.kord.core.entity.Asset"),
     DeprecationLevel.WARNING
 )

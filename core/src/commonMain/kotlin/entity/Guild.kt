@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
 import dev.kord.core.hash
+import kotlin.DeprecationLevel.WARNING
 import kotlin.time.Duration
 
 /**
@@ -105,7 +106,7 @@ public class Guild(
      */
     public val bannerHash: String? get() = data.banner
 
-    public val banner: Asset? get() = data.banner?.let { Asset.guildBanner(data.id, it, kord) }
+    public val banner: Asset? get() = bannerHash?.let { Asset.guildBanner(id, it, kord) }
 
     /**
      * The ids of all [channels][TopGuildChannel].
@@ -158,7 +159,7 @@ public class Guild(
      */
     public val iconHash: String? get() = data.icon
 
-    public val icon: Asset? get() = data.icon?.let { Asset.guildIcon(data.id, it, kord) }
+    public val icon: Asset? get() = iconHash?.let { Asset.guildIcon(id, it, kord) }
 
     /**
      * The time at which this guild was joined, if present.
@@ -263,15 +264,14 @@ public class Guild(
      */
     public val splashHash: String? get() = data.splash.value
 
-    public val splash: Asset? get() = data.splash.value?.let { Asset.guildSplash(data.id, it, kord) }
+    public val splash: Asset? get() = splashHash?.let { Asset.guildSplash(id, it, kord) }
 
     /**
      * The hash of the discovery splash, if present.
      */
     public val discoverySplashHash: String? get() = data.discoverySplash.value
 
-    public val discoverySplash: Asset?
-        get() = data.discoverySplash.value?.let { Asset.guildDiscoverySplash(data.id, it, kord) }
+    public val discoverySplash: Asset? get() = discoverySplashHash?.let { Asset.guildDiscoverySplash(id, it, kord) }
 
     /**
      * The id of the channel to which system messages are sent.
@@ -358,7 +358,7 @@ public class Guild(
     /**
      * Gets the banner url in the specified format.
      */
-    @Deprecated("Old method", ReplaceWith("this.banner"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = WARNING)
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
@@ -366,7 +366,7 @@ public class Guild(
      * Requests to get the banner image in the specified [format], if present.
      */
     @Suppress("DEPRECATION")
-    @Deprecated("Old method", ReplaceWith("this.banner"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.banner?.getImage(format)"), level = WARNING)
     public suspend fun getBanner(format: Image.Format): Image? {
         val url = getBannerUrl(format) ?: return null
 
@@ -419,7 +419,11 @@ public class Guild(
     /**
      * Gets the discovery splash url in the specified [format], if present.
      */
-    @Deprecated("Old method", ReplaceWith("this.discoverySplash"), DeprecationLevel.WARNING)
+    @Deprecated(
+        "Old method",
+        ReplaceWith("this.discoverySplash?.cdnUrl?.toUrl { this@toUrl.format = format }"),
+        level = WARNING,
+    )
     public fun getDiscoverySplashUrl(format: Image.Format): String? =
         splashHash?.let { "discovery-splashes/$id/${it}.${format.extension}" }
 
@@ -429,7 +433,7 @@ public class Guild(
      * This property is not resolvable through cache and will always use the [RestClient] instead.
      */
     @Suppress("DEPRECATION")
-    @Deprecated("Old method", ReplaceWith("this.discoverySplash"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.discoverySplash?.getImage(format)"), level = WARNING)
     public suspend fun getDiscoverySplash(format: Image.Format): Image? {
         val url = getDiscoverySplashUrl(format) ?: return null
 
@@ -439,7 +443,7 @@ public class Guild(
     /**
      * Gets the icon url, if present.
      */
-    @Deprecated("Old method", ReplaceWith("this.icon"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.icon?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = WARNING)
     public fun getIconUrl(format: Image.Format): String? =
         data.icon?.let { "https://cdn.discordapp.com/icons/$id/$it.${format.extension}" }
 
@@ -447,7 +451,7 @@ public class Guild(
      * Requests to get the icon image in the specified [format], if present.
      */
     @Suppress("DEPRECATION")
-    @Deprecated("Old method", ReplaceWith("this.icon"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.icon?.getImage(format)"), level = WARNING)
     public suspend fun getIcon(format: Image.Format): Image? {
         val url = getIconUrl(format) ?: return null
 
@@ -486,7 +490,7 @@ public class Guild(
     /**
      * Gets the splash url in the specified [format], if present.
      */
-    @Deprecated("Old method", ReplaceWith("this.splash"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.splash?.cdnUrl?.toUrl { this@toUrl.format = format }"), WARNING)
     public fun getSplashUrl(format: Image.Format): String? =
         data.splash.value?.let { "https://cdn.discordapp.com/splashes/$id/$it.${format.extension}" }
 
@@ -494,7 +498,7 @@ public class Guild(
      * Requests to get the splash image in the specified [format], if present.
      */
     @Suppress("DEPRECATION")
-    @Deprecated("Old method", ReplaceWith("this.splash"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.splash?.getImage(format)"), WARNING)
     public suspend fun getSplash(format: Image.Format): Image? {
         val url = getSplashUrl(format) ?: return null
 

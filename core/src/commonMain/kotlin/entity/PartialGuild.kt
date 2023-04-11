@@ -16,6 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
 import dev.kord.core.hash
+import kotlin.DeprecationLevel.WARNING
 
 public class PartialGuild(
     public val data: PartialGuildData,
@@ -36,7 +37,7 @@ public class PartialGuild(
      */
     public val iconHash: String? get() = data.icon
 
-    public val icon: Asset? get() = data.icon?.let { Asset.guildIcon(data.id, it, kord) }
+    public val icon: Asset? get() = iconHash?.let { Asset.guildIcon(id, it, kord) }
 
     /**
      * wither who created the invite is the owner or not.
@@ -87,13 +88,20 @@ public class PartialGuild(
 
     public val splashHash: String? get() = data.splash.value
 
-    public val splash: Asset? get() = data.splash.value?.let { Asset.guildSplash(data.id, it, kord) }
+    public val splash: Asset? get() = splashHash?.let { Asset.guildSplash(id, it, kord) }
 
-    public val banner: Asset? get() = data.banner.value?.let { Asset.guildBanner(data.id, it, kord) }
+    public val bannerHash: String? get() = data.banner.value
+
+    public val banner: Asset? get() = bannerHash?.let { Asset.guildBanner(id, it, kord) }
 
     /**
      * Gets the discovery splash url in the specified [format], if present.
      */
+    @Deprecated(
+        "This method uses the wrong hash.",
+        ReplaceWith("this.splash?.cdnUrl?.toUrl { this@toUrl.format = format }"),
+        level = WARNING,
+    )
     public fun getDiscoverySplashUrl(format: Image.Format): String? =
         splashHash?.let { "discovery-splashes/$id/${it}.${format.extension}" }
 
@@ -102,6 +110,12 @@ public class PartialGuild(
      *
      * This property is not resolvable through cache and will always use the [RestClient] instead.
      */
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        "This method uses the wrong hash.",
+        ReplaceWith("this.discoverySplash?.getImage(format)"),
+        level = WARNING,
+    )
     public suspend fun getDiscoverySplash(format: Image.Format): Image? {
         val url = getDiscoverySplashUrl(format) ?: return null
 
@@ -112,7 +126,7 @@ public class PartialGuild(
     /**
      * Gets the icon url, if present.
      */
-    @Deprecated("Old method", ReplaceWith("this.icon"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.icon?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = WARNING)
     public fun getIconUrl(format: Image.Format): String? =
         iconHash?.let { "https://cdn.discordapp.com/icons/$id/$it.${format.extension}" }
 
@@ -121,7 +135,7 @@ public class PartialGuild(
      * Requests to get the icon image in the specified [format], if present.
      */
     @Suppress("DEPRECATION")
-    @Deprecated("Old method", ReplaceWith("this.icon"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.icon?.getImage(format)"), level = WARNING)
     public suspend fun getIcon(format: Image.Format): Image? {
         val url = getIconUrl(format) ?: return null
 
@@ -132,7 +146,7 @@ public class PartialGuild(
     /**
      * Gets the banner url in the specified format.
      */
-    @Deprecated("Old method", ReplaceWith("this.banner"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = WARNING)
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner.value?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
@@ -140,7 +154,7 @@ public class PartialGuild(
      * Requests to get the banner image in the specified [format], if present.
      */
     @Suppress("DEPRECATION")
-    @Deprecated("Old method", ReplaceWith("this.banner"), DeprecationLevel.WARNING)
+    @Deprecated("Old method", ReplaceWith("this.banner?.getImage(format)"), level = WARNING)
     public suspend fun getBanner(format: Image.Format): Image? {
         val url = getBannerUrl(format) ?: return null
 

@@ -15,7 +15,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 import dev.kord.core.hash
-import kotlin.jvm.JvmName
 
 /**
  * An instance of a [Discord Member](https://discord.com/developers/docs/resources/guild#guild-member-object).
@@ -40,15 +39,12 @@ public class Member(
      */
     @Suppress("DEPRECATION")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    @get:JvmName("getMemberAvatar")
-    public val memberAvatar0: Icon?
-        get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }
+    public fun getMemberAvatar(): Icon? =
+        memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }
 
-    /**
-     * The members guild avatar as [Asset] object
-     */
+    /** The guild avatar of this member as an [Asset]. */
     public val memberAvatar: Asset?
-        get() = memberData.avatar.value?.let { Asset.memberAvatar(memberData.guildId, id, it, kord) }
+        get() = memberData.avatar.value?.let { Asset.memberAvatar(guildId, id, it, kord) }
 
     /**
      * When the user joined this [guild].

@@ -123,5 +123,7 @@ public class StickerPack(public val data: StickerPackData, override val kord: Ko
 
     public val stickers: List<Sticker> get() = data.stickers.map { Sticker(it, kord) }
 
-    public val banner: Asset get() = Asset.stickerPackBanner(data.bannerAssetId, kord)
+    public val bannerId: Snowflake get() = data.bannerAssetId
+
+    public val banner: Asset get() = Asset.stickerPackBanner(bannerId, kord)
 }

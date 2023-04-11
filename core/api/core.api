@@ -6762,6 +6762,7 @@ public final class dev/kord/core/entity/PartialGuild : dev/kord/core/behavior/Gu
 	public fun getBanOrNull (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getBanner ()Ldev/kord/core/entity/Asset;
 	public final fun getBanner (Ldev/kord/rest/Image$Format;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getBannerHash ()Ljava/lang/String;
 	public final fun getBannerUrl (Ldev/kord/rest/Image$Format;)Ljava/lang/String;
 	public fun getBans ()Lkotlinx/coroutines/flow/Flow;
 	public fun getCachedThreads ()Lkotlinx/coroutines/flow/Flow;
@@ -6991,6 +6992,7 @@ public final class dev/kord/core/entity/Role : dev/kord/core/behavior/RoleBehavi
 	public final fun getHoisted ()Z
 	public final fun getIcon ()Ldev/kord/core/entity/Asset;
 	public final synthetic fun getIcon ()Ldev/kord/core/entity/Icon;
+	public final fun getIconHash ()Ljava/lang/String;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getManaged ()Z
@@ -7102,6 +7104,7 @@ public final class dev/kord/core/entity/StickerPack : dev/kord/core/entity/KordE
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
 	public final fun getBanner ()Ldev/kord/core/entity/Asset;
+	public final fun getBannerId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getCoverStickerId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getData ()Ldev/kord/core/cache/data/StickerPackData;
 	public final fun getDescription ()Ljava/lang/String;
@@ -7186,7 +7189,9 @@ public class dev/kord/core/entity/User : dev/kord/core/behavior/UserBehavior {
 	public final fun getAccentColor ()Ldev/kord/common/Color;
 	public final fun getAvatar ()Ldev/kord/core/entity/Asset;
 	public final synthetic fun getAvatar ()Ldev/kord/core/entity/Icon;
+	public final fun getAvatarHash ()Ljava/lang/String;
 	public final fun getBanner ()Ldev/kord/core/entity/Asset;
+	public final fun getBannerHash ()Ljava/lang/String;
 	public final fun getBannerUrl (Ldev/kord/rest/Image$Format;)Ljava/lang/String;
 	public final fun getData ()Ldev/kord/core/cache/data/UserData;
 	public final fun getDefaultAvatar ()Ldev/kord/core/entity/Asset;
