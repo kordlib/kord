@@ -7072,12 +7072,12 @@ public class dev/kord/core/entity/Sticker : dev/kord/core/entity/KordEntity {
 	public fun <init> (Ldev/kord/core/cache/data/StickerData;Ldev/kord/core/Kord;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public final fun getAsset ()Ldev/kord/core/entity/Asset;
 	public final fun getAvailable ()Z
 	public final fun getData ()Ldev/kord/core/cache/data/StickerData;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getFormatType ()Ldev/kord/common/entity/MessageStickerType;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getImage ()Ldev/kord/core/entity/Asset;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getPackId ()Ldev/kord/common/entity/Snowflake;
@@ -7091,10 +7091,10 @@ public final class dev/kord/core/entity/StickerItem : dev/kord/core/entity/KordE
 	public synthetic fun <init> (Ldev/kord/core/cache/data/StickerItemData;Ldev/kord/core/Kord;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun compareTo (Ldev/kord/core/entity/Entity;)I
 	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public final fun getAsset ()Ldev/kord/core/entity/Asset;
 	public final fun getData ()Ldev/kord/core/cache/data/StickerItemData;
 	public final fun getFormatType ()Ldev/kord/common/entity/MessageStickerType;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getImage ()Ldev/kord/core/entity/Asset;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getSticker (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
