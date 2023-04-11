@@ -5794,6 +5794,7 @@ public final class dev/kord/core/entity/Asset$Companion {
 	public final fun memberAvatar (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
 	public final fun memberBanner (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
 	public final fun roleIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
+	public final fun sticker (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MessageStickerType;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
 	public final fun stickerPackBanner (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
 	public final fun teamIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
 	public final fun userAvatar (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/core/Kord;)Ldev/kord/core/entity/Asset;
@@ -7076,6 +7077,7 @@ public class dev/kord/core/entity/Sticker : dev/kord/core/entity/KordEntity {
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getFormatType ()Ldev/kord/common/entity/MessageStickerType;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getImage ()Ldev/kord/core/entity/Asset;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getPackId ()Ldev/kord/common/entity/Snowflake;
@@ -7092,6 +7094,7 @@ public final class dev/kord/core/entity/StickerItem : dev/kord/core/entity/KordE
 	public final fun getData ()Ldev/kord/core/cache/data/StickerItemData;
 	public final fun getFormatType ()Ldev/kord/common/entity/MessageStickerType;
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getImage ()Ldev/kord/core/entity/Asset;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getSticker (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

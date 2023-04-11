@@ -33,6 +33,10 @@ public final class dev/kord/rest/Image$Format$JPEG : dev/kord/rest/Image$Format 
 	public static final field INSTANCE Ldev/kord/rest/Image$Format$JPEG;
 }
 
+public final class dev/kord/rest/Image$Format$LOTTIE : dev/kord/rest/Image$Format {
+	public static final field INSTANCE Ldev/kord/rest/Image$Format$LOTTIE;
+}
+
 public final class dev/kord/rest/Image$Format$PNG : dev/kord/rest/Image$Format {
 	public static final field INSTANCE Ldev/kord/rest/Image$Format$PNG;
 }
@@ -6141,6 +6145,7 @@ public final class dev/kord/rest/route/DiscordCdn {
 	public final fun memberAvatar (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun memberBanner (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun roleIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun sticker (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
 	public final fun stickerPackBanner (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
 	public final fun teamIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun userAvatar (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;

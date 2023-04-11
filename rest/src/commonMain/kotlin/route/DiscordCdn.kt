@@ -38,6 +38,8 @@ public object DiscordCdn {
 
     public fun teamIcon(teamId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/team-icons/$teamId/$hash")
 
+    public fun sticker(stickerId: Snowflake): CdnUrl = CdnUrl("$BASE_URL/stickers/$stickerId")
+
     public fun roleIcon(roleId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/role-icons/$roleId/$hash")
 
     public fun guildScheduledEventCover(eventId: Snowflake, hash: String): CdnUrl =

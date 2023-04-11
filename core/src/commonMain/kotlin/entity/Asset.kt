@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.MessageStickerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.KordObject
@@ -12,13 +13,13 @@ public class Asset private constructor(
     public val isAnimated: Boolean,
     public val cdnUrl: CdnUrl,
     override val kord: Kord,
-    private val forcedFormat: Image.Format? = null,
+    private val recommendedFormat: Image.Format? = null,
 ) : KordObject {
 
     public suspend fun getImage(format: Image.Format? = null, size: Image.Size? = null): Image = Image.fromUrl(
         client = kord.resources.httpClient,
         url = cdnUrl.toUrl {
-            this.format = forcedFormat ?: format ?: if (isAnimated) GIF else PNG
+            this.format = format ?: recommendedFormat ?: if (isAnimated) GIF else PNG
             if (size != null) this.size = size
         },
     )
@@ -27,6 +28,10 @@ public class Asset private constructor(
         // see https://discord.com/developers/docs/reference#image-formatting-cdn-endpoints
 
         private val String.isAnimated get() = startsWith("a_")
+
+        private fun unknownFormatType(formatType: MessageStickerType): Nothing =
+            throw IllegalArgumentException("Unknown formatType: $formatType")
+
 
         public fun emoji(emojiId: Snowflake, isAnimated: Boolean, kord: Kord): Asset =
             Asset(isAnimated, DiscordCdn.emoji(emojiId), kord)
@@ -47,7 +52,7 @@ public class Asset private constructor(
             Asset(hash.isAnimated, DiscordCdn.userBanner(userId, hash), kord)
 
         public fun defaultUserAvatar(discriminator: Int, kord: Kord): Asset =
-            Asset(isAnimated = false, DiscordCdn.defaultAvatar(discriminator), kord, forcedFormat = PNG)
+            Asset(isAnimated = false, DiscordCdn.defaultAvatar(discriminator), kord, recommendedFormat = PNG)
 
         public fun userAvatar(userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.userAvatar(userId, hash), kord)
@@ -66,6 +71,22 @@ public class Asset private constructor(
 
         public fun teamIcon(teamId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.teamIcon(teamId, hash), kord)
+
+        public fun sticker(stickerId: Snowflake, formatType: MessageStickerType, kord: Kord): Asset = Asset(
+            isAnimated = when (formatType) {
+                MessageStickerType.PNG -> false
+                MessageStickerType.APNG, MessageStickerType.LOTTIE, MessageStickerType.GIF -> true
+                is MessageStickerType.Unknown -> unknownFormatType(formatType)
+            },
+            DiscordCdn.sticker(stickerId),
+            kord,
+            recommendedFormat = when (formatType) {
+                MessageStickerType.PNG, MessageStickerType.APNG -> PNG
+                MessageStickerType.LOTTIE -> LOTTIE
+                MessageStickerType.GIF -> GIF
+                is MessageStickerType.Unknown -> unknownFormatType(formatType)
+            },
+        )
 
         public fun roleIcon(roleId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.roleIcon(roleId, hash), kord)

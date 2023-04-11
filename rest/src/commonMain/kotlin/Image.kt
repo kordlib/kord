@@ -34,6 +34,7 @@ public class Image private constructor(public val data: ByteArray, public val fo
         public object PNG : Format("png")
         public object WEBP : Format("webp")
         public object GIF : Format("gif")
+        public object LOTTIE : Format("json")
 
         public companion object {
             public val values: Set<Format>
@@ -42,6 +43,7 @@ public class Image private constructor(public val data: ByteArray, public val fo
                     PNG,
                     WEBP,
                     GIF,
+                    LOTTIE,
                 )
 
             public fun isSupported(fileName: String): Boolean {
@@ -55,6 +57,7 @@ public class Image private constructor(public val data: ByteArray, public val fo
                 "image/png" -> PNG
                 "image/webp" -> WEBP
                 "image/gif" -> GIF
+                "application/json" -> LOTTIE
                 else -> error(type)
             }
         }

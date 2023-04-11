@@ -53,6 +53,8 @@ public open class Sticker(public val data: StickerData, override val kord: Kord)
     public val formatType: MessageStickerType
         get() = data.formatType
 
+    public val image: Asset get() = Asset.sticker(id, formatType, kord)
+
     public val available: Boolean
         get() = data.available.discordBoolean
 
@@ -95,6 +97,8 @@ public class StickerItem(
 
     public val formatType: MessageStickerType
         get() = data.formatType
+
+    public val image: Asset get() = Asset.sticker(id, formatType, kord)
 
     public suspend fun getStickerOrNull(): Sticker? =
         supplier.getStickerOrNull(id)
