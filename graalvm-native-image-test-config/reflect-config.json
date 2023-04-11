@@ -1,0 +1,18 @@
+[
+  {
+    "name": "kotlin.internal.jdk8.JDK8PlatformImplementations",
+    "allDeclaredConstructors": true
+  },
+  {
+    "name": "io.ktor.network.selector.InterestSuspensionsMap",
+    "allDeclaredFields": true
+  },
+  {
+    "name": "io.ktor.utils.io.pool.DefaultPool",
+    "fields": [
+      {
+        "name": "top"
+      }
+    ]
+  }
+]

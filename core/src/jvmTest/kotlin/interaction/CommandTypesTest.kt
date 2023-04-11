@@ -8,12 +8,14 @@ import dev.kord.core.entity.interaction.InteractionCommand
 import dev.kord.core.entity.interaction.RootCommand
 import dev.kord.core.entity.interaction.SubCommand
 import dev.kord.core.mockKord
+import dev.kord.test.IgnoreOnNativeImage
 import kotlinx.serialization.json.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 
+@IgnoreOnNativeImage
 class CommandsTypeTests {
     val arg = buildJsonObject {
         put("type", ApplicationCommandOptionType.Integer.type)
@@ -85,3 +87,4 @@ class CommandsTypeTests {
         assertEquals("subCommand", command.name)
     }
 }
+

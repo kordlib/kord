@@ -10,12 +10,13 @@ import dev.kord.ksp.isOfType
 
 /** [SymbolProcessorProvider] for [KordEnumProcessor]. */
 class KordEnumProcessorProvider : SymbolProcessorProvider {
-    override fun create(environment: SymbolProcessorEnvironment) =
+    override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
         KordEnumProcessor(environment.codeGenerator, environment.logger)
 }
 
 /** [SymbolProcessor] for [GenerateKordEnum] annotation. */
-class KordEnumProcessor(private val codeGenerator: CodeGenerator, private val logger: KSPLogger) : SymbolProcessor {
+private class KordEnumProcessor(private val codeGenerator: CodeGenerator, private val logger: KSPLogger) :
+    SymbolProcessor {
 
     override fun finish() {
         logger.info("KordEnumProcessor received finish signal")

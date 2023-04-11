@@ -4,6 +4,7 @@ import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.*
+import dev.kord.ksp.AvailableForReflectionOnGraalVMNativeImage
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -49,7 +50,7 @@ public data class StickerItemData(
     }
 }
 
-
+@AvailableForReflectionOnGraalVMNativeImage
 public data class StickerPackData(
     val id: Snowflake,
     val stickers: List<StickerData>,

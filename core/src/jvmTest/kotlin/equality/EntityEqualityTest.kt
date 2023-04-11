@@ -3,10 +3,13 @@ package dev.kord.core.equality
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.randomId
+import dev.kord.test.IgnoreOnNativeImage
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
+// MockK currently doesn't work on GraalVM Native Image
+@IgnoreOnNativeImage
 interface EntityEqualityTest<T : KordEntity> {
 
     fun newEntity(id: Snowflake): T

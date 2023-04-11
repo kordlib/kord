@@ -9,6 +9,7 @@ plugins {
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
     `maven-publish`
+    org.graalvm.buildtools.native
 }
 
 repositories {
@@ -34,6 +35,7 @@ kotlin {
     }
 }
 
+configureKsp()
 configureAtomicFU()
 
 tasks {
@@ -61,5 +63,26 @@ publishing {
     publications.register<MavenPublication>(Library.name) {
         from(components["java"])
         artifact(tasks.kotlinSourcesJar)
+    }
+}
+
+graalvmNative {
+    binaries.all {
+        javaLauncher.set(javaToolchains.launcherFor {
+            languageVersion.set(JavaLanguageVersion.of(17))
+            vendor.set(JvmVendorSpec.GRAAL_VM)
+        })
+    }
+
+    binaries.named("test") {
+        configurationFileDirectories.from(rootProject.file("graalvm-native-image-test-config"))
+        resources {
+            autodetection {
+                enabled.set(true)
+                restrictToProjectDependencies.set(false)
+            }
+            // language=regexp
+            includedPatterns.addAll(""".*\.json""", """.*\.png""")
+        }
     }
 }

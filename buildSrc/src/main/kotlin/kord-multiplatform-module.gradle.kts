@@ -64,6 +64,7 @@ kotlin {
     }
 }
 
+configureKsp()
 configureAtomicFU()
 
 tasks {

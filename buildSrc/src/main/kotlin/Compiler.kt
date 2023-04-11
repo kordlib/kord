@@ -1,3 +1,4 @@
+import com.google.devtools.ksp.gradle.KspExtension
 import kotlinx.atomicfu.plugin.gradle.AtomicFUPluginExtension
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -43,4 +44,8 @@ fun Project.configureAtomicFU() {
         val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
         dependenciesVersion = libs.findVersion("kotlinx-atomicfu").get().requiredVersion
     }
+}
+
+fun Project.configureKsp() = configure<KspExtension> {
+    arg("project", project.name)
 }

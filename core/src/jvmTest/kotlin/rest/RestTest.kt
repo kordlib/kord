@@ -22,7 +22,6 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
-import kotlin.io.path.toPath
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -156,7 +155,7 @@ class RestServiceTest {
 
             addFile(
                 "test.txt",
-                ChannelProvider { ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel() }
+                ChannelProvider { ClassLoader.getSystemResourceAsStream("images/kord.png")!!.toByteReadChannel() }
             )
         }
 
@@ -385,7 +384,7 @@ class RestServiceTest {
 
             addFile(
                 "test.txt",
-                ChannelProvider { ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel() }
+                ChannelProvider { ClassLoader.getSystemResourceAsStream("images/kord.png")!!.toByteReadChannel() }
             )
         }
 
@@ -400,7 +399,7 @@ class RestServiceTest {
         val message = channel.createMessage {
             addFile(
                 "test.txt",
-                ChannelProvider { ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel() }
+                ChannelProvider { ClassLoader.getSystemResourceAsStream("images/kord.png")!!.toByteReadChannel() }
             )
         }
 
@@ -416,7 +415,7 @@ class RestServiceTest {
 
             addFile(
                 "test.txt",
-                ChannelProvider { ClassLoader.getSystemResource("images/kord.png").toURI().toPath().readChannel() }
+                ChannelProvider { ClassLoader.getSystemResourceAsStream("images/kord.png")!!.toByteReadChannel() }
             )
         }
 

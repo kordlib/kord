@@ -14,3 +14,10 @@ expect annotation class IgnoreOnJs()
 @Target(CLASS, FUNCTION)
 @OptionalExpectation
 expect annotation class IgnoreOnJvm()
+
+/**
+ * Ignores this tests in GraalVM native images.
+ */
+@Target(CLASS, FUNCTION)
+@OptionalExpectation
+expect annotation class IgnoreOnNativeImage()

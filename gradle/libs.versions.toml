@@ -29,6 +29,8 @@ dokka = "1.8.10" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.20.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.13.0" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
+graalvm-native-build-tools = "0.9.20" # https://github.com/graalvm/native-build-tools
+git-publish = "4.1.1" # https://github.com/ajoberstar/gradle-git-publish
 
 
 [libraries]
@@ -84,6 +86,7 @@ dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref
 atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", version.ref = "kotlinx-atomicfu" }
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
+graalvm-native-build-tools-plugin = { module = "org.graalvm.buildtools:native-gradle-plugin", version.ref = "graalvm-native-build-tools" }
 
 
 [bundles]
@@ -101,9 +104,11 @@ pluginsForBuildSrc = [
     "atomicfu-plugin",
     "binary-compatibility-validator-plugin",
     "ksp-plugin",
+    "graalvm-native-build-tools-plugin"
 ]
 
 
 [plugins]
 
 buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }
+git-publish = { id = "org.ajoberstar.git-publish", version.ref = "git-publish" }
