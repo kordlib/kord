@@ -1,4 +1,5 @@
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildFeatures.buildCache
 
 @Suppress("FunctionName")
 fun KordBuild(name: String, configure: BuildType.() -> Unit) = object : BuildType({
@@ -19,5 +20,14 @@ fun KordBuild(name: String, configure: BuildType.() -> Unit) = object : BuildTyp
 
     features {
         installGitHubPublisher()
+        buildCache {
+            name = "gradle_cache",
+            rules = """
+                .gradle/
+                buildSrc/.gradle
+                buildSrc/build
+                ~/.gradle/caches
+            """.trimIndent()
+        }
     }
 }) {}
