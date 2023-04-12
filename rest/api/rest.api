@@ -6117,6 +6117,8 @@ public final class dev/kord/rest/request/StackTraceRecoveringKtorRequestHandlerK
 
 public final class dev/kord/rest/route/CdnUrl {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public final fun toUrl ()Ljava/lang/String;
 	public final fun toUrl (Ldev/kord/rest/route/CdnUrl$UrlFormatBuilder;)Ljava/lang/String;
