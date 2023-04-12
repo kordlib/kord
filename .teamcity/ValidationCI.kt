@@ -15,10 +15,10 @@ val ValidationCI = KordBuild("Validate Code") {
         }
 
         debuggableGradle("Publish Artifacts") {
-            param("env.NEXUS_USER", "credentialsJSON:20058a9f-54e6-4d5a-afbc-a025ab0bf426")
-            param("env.NEXUS_PASSWORD", "credentialsJSON:a534b2f5-84e0-4d95-a620-9ef1344d07b3")
-//            param("system.org.gradle.project.signingKey", "TODO")
-//            param("system.org.gradle.project.signingPassword", "TODO")
+            param("env.NEXUS_USER", "credentialsJSON:1fcb58be-049c-43cc-b002-582f691f12c0")
+            param("env.NEXUS_PASSWORD", "credentialsJSON:f7652101-08d1-4abf-842a-4926fdaa749c")
+            param("system.org.gradle.project.signingKey", "credentialsJSON:aebe42c4-8827-4b93-afaf-7a1bf4f46a51")
+            param("system.org.gradle.project.signingPassword", "credentialsJSON:7de31dac-638d-43b6-a070-9e9d9ed3db22")
 
             conditions {
                 // Meaning: Do not run on Pull Requests
