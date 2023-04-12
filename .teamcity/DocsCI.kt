@@ -9,10 +9,4 @@ val DocsCI = KordBuild("Deploy documentation") {
             branchFilter = "+:0.8.x"
         }
     }
-
-    steps {
-        debuggableGradle("Deploy documentation") {
-            tasks = "gitPublishPush"
-        }
-    }
 }

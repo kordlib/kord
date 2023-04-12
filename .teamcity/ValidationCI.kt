@@ -15,12 +15,10 @@ val ValidationCI = KordBuild("Validate Code") {
         }
 
         debuggableGradle("Publish Artifacts") {
-            // Secrets need to be specified
-            enabled = false
-            param("env.NEXUS_USER", "TODO")
-            param("env.NEXUS_PASSWORD", "TODO")
-            param("system.org.gradle.project.signingKey", "TODO")
-            param("system.org.gradle.project.signingPassword", "TODO")
+            param("env.NEXUS_USER", "credentialsJSON:20058a9f-54e6-4d5a-afbc-a025ab0bf426")
+            param("env.NEXUS_PASSWORD", "credentialsJSON:a534b2f5-84e0-4d95-a620-9ef1344d07b3")
+//            param("system.org.gradle.project.signingKey", "TODO")
+//            param("system.org.gradle.project.signingPassword", "TODO")
 
             conditions {
                 // Meaning: Do not run on Pull Requests
