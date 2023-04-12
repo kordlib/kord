@@ -9,17 +9,19 @@ val DeploymentCI = KordBuild("Deployment") {
         vcs()
     }
 
+    params {
+        password("env.NEXUS_USER", "credentialsJSON:1fcb58be-049c-43cc-b002-582f691f12c0")
+        password("env.NEXUS_PASSWORD", "credentialsJSON:f7652101-08d1-4abf-842a-4926fdaa749c")
+        password("system.org.gradle.project.signingKey", "credentialsJSON:aebe42c4-8827-4b93-afaf-7a1bf4f46a51")
+        password("system.org.gradle.project.signingPassword", "credentialsJSON:7de31dac-638d-43b6-a070-9e9d9ed3db22")
+    }
+
     steps {
         debuggableGradle("Run checks") {
             tasks = "check"
         }
 
         debuggableGradle("Publish Artifacts") {
-            param("env.NEXUS_USER", "credentialsJSON:1fcb58be-049c-43cc-b002-582f691f12c0")
-            param("env.NEXUS_PASSWORD", "credentialsJSON:f7652101-08d1-4abf-842a-4926fdaa749c")
-            param("system.org.gradle.project.signingKey", "credentialsJSON:aebe42c4-8827-4b93-afaf-7a1bf4f46a51")
-            param("system.org.gradle.project.signingPassword", "credentialsJSON:7de31dac-638d-43b6-a070-9e9d9ed3db22")
-
             conditions {
                 // Meaning: Do not run on Pull Requests
                 doesNotExist("teamcity.pullRequest.number")
