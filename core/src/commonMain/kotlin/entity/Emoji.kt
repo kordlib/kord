@@ -135,7 +135,12 @@ public class GuildEmoji(
     /**
      * The image as [Icon] object for the emoji
      */
-    public val image: Icon get() = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun getImage(): Icon = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
+
+    /** The image of this emoji as an [Asset]. */
+    public val image: Asset get() = Asset.emoji(id, isAnimated, kord)
 
     /**
      * Requests to delete this emoji, with the given [reason].

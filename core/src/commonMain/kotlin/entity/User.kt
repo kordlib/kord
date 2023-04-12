@@ -10,6 +10,7 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.Image
+import kotlin.DeprecationLevel.WARNING
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
@@ -25,10 +26,20 @@ public open class User(
     /**
      * The users avatar as [Icon] object
      */
-    public val avatar: Icon?
-        get() = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun getAvatar(): Icon? = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
 
-    public val defaultAvatar: Icon get() = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
+    public val avatarHash: String? get() = data.avatar
+
+    /** The avatar of this user as an [Asset]. */
+    public val avatar: Asset? get() = avatarHash?.let { Asset.userAvatar(data.id, it, kord) }
+
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun getDefaultAvatar(): Icon = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
+
+    public val defaultAvatar: Asset get() = Asset.defaultUserAvatar(discriminator.toInt(), kord)
 
     /**
      * The username of this user.
@@ -65,9 +76,13 @@ public open class User(
 
     public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
+    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = WARNING)
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
+    public val bannerHash: String? get() = data.banner
+
+    public val banner: Asset? get() = bannerHash?.let { Asset.userBanner(id, it, kord) }
 
     override fun hashCode(): Int = id.hashCode()
 
@@ -85,6 +100,7 @@ public open class User(
         return "User(data=$data, kord=$kord, supplier=$supplier)"
     }
 
+    @Deprecated("Old class", ReplaceWith("Asset", "dev.kord.core.entity.Asset"), level = WARNING)
     public data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**

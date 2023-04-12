@@ -33,6 +33,10 @@ public final class dev/kord/rest/Image$Format$JPEG : dev/kord/rest/Image$Format 
 	public static final field INSTANCE Ldev/kord/rest/Image$Format$JPEG;
 }
 
+public final class dev/kord/rest/Image$Format$LOTTIE : dev/kord/rest/Image$Format {
+	public static final field INSTANCE Ldev/kord/rest/Image$Format$LOTTIE;
+}
+
 public final class dev/kord/rest/Image$Format$PNG : dev/kord/rest/Image$Format {
 	public static final field INSTANCE Ldev/kord/rest/Image$Format$PNG;
 }
@@ -6113,6 +6117,8 @@ public final class dev/kord/rest/request/StackTraceRecoveringKtorRequestHandlerK
 
 public final class dev/kord/rest/route/CdnUrl {
 	public fun <init> (Ljava/lang/String;)V
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public final fun toUrl ()Ljava/lang/String;
 	public final fun toUrl (Ldev/kord/rest/route/CdnUrl$UrlFormatBuilder;)Ljava/lang/String;
@@ -6129,11 +6135,23 @@ public final class dev/kord/rest/route/CdnUrl$UrlFormatBuilder {
 
 public final class dev/kord/rest/route/DiscordCdn {
 	public static final field INSTANCE Ldev/kord/rest/route/DiscordCdn;
+	public final fun applicationCover (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun applicationIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun defaultAvatar (I)Ldev/kord/rest/route/CdnUrl;
 	public final fun emoji (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
+	public final fun guildBanner (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun guildDiscoverySplash (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun guildIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun guildScheduledEventCover (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun guildSplash (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun memberAvatar (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun memberBanner (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun roleIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun sticker (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
+	public final fun stickerPackBanner (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
+	public final fun teamIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun userAvatar (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun userBanner (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 }
 
 public abstract interface class dev/kord/rest/route/Position {

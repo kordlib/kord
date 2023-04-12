@@ -25,6 +25,8 @@ public sealed class BaseApplication(
 
     public val name: String get() = data.name
 
+    public val icon: Asset? get() = iconHash?.let { Asset.applicationIcon(id, it, kord) }
+
     public val iconHash: String? get() = data.icon
 
     public val description: String get() = data.description
@@ -51,6 +53,8 @@ public sealed class BaseApplication(
     public val primarySkuId: Snowflake? get() = data.primarySkuId.value
 
     public val slug: String? get() = data.slug.value
+
+    public val coverImage: Asset? get() = coverImageHash?.let { Asset.applicationCover(id, it, kord) }
 
     public val coverImageHash: String? get() = data.coverImage.value
 

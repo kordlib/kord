@@ -37,8 +37,15 @@ public class Member(
     /**
      * The members guild avatar as [Icon] object
      */
-    public val memberAvatar: Icon?
-        get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, data.id, it, kord) }
+    @Suppress("DEPRECATION")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun getMemberAvatar(): Icon? =
+        memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }
+
+    public val memberAvatarHash: String? get() = memberData.avatar.value
+
+    /** The guild avatar of this member as an [Asset]. */
+    public val memberAvatar: Asset? get() = memberAvatarHash?.let { Asset.memberAvatar(guildId, id, it, kord) }
 
     /**
      * When the user joined this [guild].

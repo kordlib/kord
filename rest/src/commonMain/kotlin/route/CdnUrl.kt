@@ -19,9 +19,9 @@ public class CdnUrl(private val rawAssetUri: String) {
         return urlBuilder.toString()
     }
 
-    override fun toString(): String {
-        return "CdnUrl(rawAssetUri=$rawAssetUri)"
-    }
+    override fun equals(other: Any?): Boolean = other is CdnUrl && this.rawAssetUri == other.rawAssetUri
+    override fun hashCode(): Int = rawAssetUri.hashCode()
+    override fun toString(): String = "CdnUrl(rawAssetUri=$rawAssetUri)"
 
     public class UrlFormatBuilder {
         public var format: Image.Format = Image.Format.WEBP
