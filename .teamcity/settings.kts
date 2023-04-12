@@ -6,8 +6,9 @@ version = "2022.10"
 project {
     vcsRoot(GitHub)
 
-    buildType(ValidationCI)
+    buildType(DeploymentCI)
     buildType(DocsCI)
+    buildType(QodanaCI)
     // TODO: Await Response from JetBrains to resolve toolchain issues
     //buildType(GraalVMNativeImageCI)
 
