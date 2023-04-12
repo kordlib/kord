@@ -19,7 +19,7 @@ fun KordBuild(name: String, configure: BuildType.() -> Unit) = object : BuildTyp
 
         param("env.GITHUB_BRANCH", "%teamcity.build.branch%")
 
-        password("env.KORD_TEST_TOKEN", "credentialsJSON:c4175048-ffe1-4312-97ec-6a0e2eb5647d")
+        password("env.KORD_TEST_TOKEN", "credentialsJSON:6f4d984c-83d2-4914-8dea-dc0ed996d81d")
     }
 
     features {
