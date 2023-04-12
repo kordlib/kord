@@ -16,4 +16,8 @@ val QodanaCI = KordBuild("Qodana") {
             linter = Qodana.Linter.Jvm()
         }
     }
+
+    features {
+        installGitHubPullRequest()
+    }
 }
