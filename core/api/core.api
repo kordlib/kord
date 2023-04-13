@@ -2171,7 +2171,8 @@ public final class dev/kord/core/cache/CachingGateway : dev/kord/cache/api/DataC
 }
 
 public final class dev/kord/core/cache/DataCacheExtensionsKt {
-	public static final fun createView (Ldev/kord/cache/api/DataCache;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun createView (Ldev/kord/cache/api/DataCache;)Ldev/kord/core/cache/DataCacheView;
+	public static final synthetic fun createView (Ldev/kord/cache/api/DataCache;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/core/cache/DataCacheView : dev/kord/cache/api/DataCache {
@@ -11430,6 +11431,7 @@ public final class dev/kord/core/event/channel/thread/ThreadListSyncEvent : dev/
 	public synthetic fun <init> (Ldev/kord/core/cache/data/ThreadListSyncData;Ldev/kord/core/Kord;ILjava/lang/Object;Ldev/kord/core/supplier/EntitySupplier;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getChannelBehaviors ()Ljava/util/List;
 	public final fun getChannelIds ()Ljava/util/List;
+	public final fun getChannels ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getChannels (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getCustomContext ()Ljava/lang/Object;
 	public final fun getData ()Ldev/kord/core/cache/data/ThreadListSyncData;
@@ -11602,7 +11604,8 @@ public final class dev/kord/core/event/gateway/ReadyEvent : dev/kord/core/event/
 	public final fun getGatewayVersion ()I
 	public final fun getGuildIds ()Ljava/util/Set;
 	public final fun getGuilds ()Ljava/util/Set;
-	public final fun getGuilds (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getGuilds ()Lkotlinx/coroutines/flow/Flow;
+	public final synthetic fun getGuilds (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getResumeGatewayUrl ()Ljava/lang/String;
 	public final fun getSelf ()Ldev/kord/core/entity/User;
