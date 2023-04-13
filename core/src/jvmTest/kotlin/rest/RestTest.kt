@@ -18,12 +18,14 @@ import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.io.path.toPath
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 fun imageBinary(path: String): Image {
@@ -573,5 +575,11 @@ class RestServiceTest {
             hoist = true
             unicodeEmoji = "\uD83D\uDE04"
         }
+    }
+
+    @Test
+    fun `list Nitro Sticker Packs`(): Unit = runBlocking {
+        val pack = kord.nitroStickerPacks.firstOrNull()
+        assertNotNull(pack, "Could not list Nitro Sticker Packs")
     }
 }

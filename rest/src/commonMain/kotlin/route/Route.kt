@@ -983,10 +983,10 @@ public sealed class Route<T>(
         Route<DiscordMessageSticker>(HttpMethod.Get, "/stickers/$StickerId", DiscordMessageSticker.serializer())
 
     public object NitroStickerPacks :
-        Route<List<DiscordStickerPack>>(
+        Route<NitroStickerPacksResponse>(
             HttpMethod.Get,
             "/sticker-packs",
-            ListSerializer(DiscordStickerPack.serializer())
+            NitroStickerPacksResponse.serializer(),
         )
 
     public object GuildStickersGet :
