@@ -33,7 +33,7 @@ public abstract class AbstractLiveKordEntity(
     final override val coroutineContext: CoroutineContext
         get() = coroutineScope.coroutineContext
 
-    @Suppress("LeakingThis")
+    @Suppress("LeakingThis") // only used as CoroutineScope; coroutineContext can not be overridden in subclasses
     final override val events: SharedFlow<Event> =
         kord.events.filter { filter(it) }.onEach { update(it) }.shareIn(this, SharingStarted.Eagerly)
 
