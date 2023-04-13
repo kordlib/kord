@@ -34,7 +34,7 @@ public data class HttpStatus(val code: Int, val message: String)
  * Implementation of the [RestRequestException] for [RestServices][RestService] using Ktor.
  */
 public class KtorRequestException(
-    public val httpResponse: KtorResponse,
+    @Suppress("MemberVisibilityCanBePrivate") public val httpResponse: KtorResponse,
     request: Request<*, *>,
     discordError: DiscordErrorResponse?,
 ) : RestRequestException(request, HttpStatus(httpResponse.status.value, httpResponse.status.description), discordError)

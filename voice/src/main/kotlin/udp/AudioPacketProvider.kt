@@ -12,7 +12,7 @@ public abstract class AudioPacketProvider(public val key: ByteArray, public val 
     public abstract fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView
 }
 
-private class CouldNotEncryptDataException(val data: ByteArray) :
+private class CouldNotEncryptDataException(data: ByteArray) :
     RuntimeException("Couldn't encrypt the following data: [${data.joinToString(", ")}]")
 
 public class DefaultAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStrategy) :
