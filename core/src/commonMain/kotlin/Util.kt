@@ -1,7 +1,6 @@
 package dev.kord.core
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
@@ -174,22 +173,6 @@ internal fun <T : Any> paginateForwards(
 )
 
 /**
- *  Selects the [Position.After] the youngest item in the batch.
- */
-internal fun <T : KordEntity> paginateForwards(
-    batchSize: Int,
-    start: Snowflake = Snowflake.min,
-    request: suspend (after: Position.After) -> Collection<T>,
-): Flow<T> = paginate(
-    start,
-    batchSize,
-    itemSelector = youngestItem { it.id },
-    idSelector = { it.id },
-    directionSelector = Position::After,
-    request,
-)
-
-/**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
 internal fun <T : Any> paginateBackwards(
@@ -202,22 +185,6 @@ internal fun <T : Any> paginateBackwards(
     batchSize,
     itemSelector = oldestItem(idSelector),
     idSelector,
-    directionSelector = Position::Before,
-    request,
-)
-
-/**
- *  Selects the [Position.Before] the oldest item in the batch.
- */
-internal fun <T : KordEntity> paginateBackwards(
-    batchSize: Int,
-    start: Snowflake = Snowflake.max,
-    request: suspend (before: Position.Before) -> Collection<T>,
-): Flow<T> = paginate(
-    start,
-    batchSize,
-    itemSelector = oldestItem { it.id },
-    idSelector = { it.id },
     directionSelector = Position::Before,
     request,
 )
