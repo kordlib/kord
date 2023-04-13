@@ -16,7 +16,7 @@ fun KordBuild(name: String, configure: BuildType.() -> Unit) = object : BuildTyp
 
     params {
         checkbox(debugParamName, false.toString(), "Debug Mode", "Run build with debug logging enabled")
-        param("env.GITHUB_BRANCH_NAME", "%teamcity.build.branch%")
+        param("env.GITHUB_BRANCH_NAMEf", "%teamcity.build.branch%")
         password("env.KORD_TEST_TOKEN", "credentialsJSON:6f4d984c-83d2-4914-8dea-dc0ed996d81d")
         password("env.NEXUS_USER", "credentialsJSON:edc94be8-135e-40eb-a99a-999975c4d736")
         password("env.NEXUS_PASSWORD", "credentialsJSON:f7652101-08d1-4abf-842a-4926fdaa749c")
