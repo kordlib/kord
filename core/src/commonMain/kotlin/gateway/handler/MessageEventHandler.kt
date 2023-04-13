@@ -72,8 +72,8 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         mentions.forEach {
             val user = UserData.from(it)
             kord.cache.put(user)
-            it.member.value?.let {
-                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+            it.member.value?.let { member ->
+                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, member))
             }
         }
 
@@ -94,8 +94,8 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         mentions.orEmpty().forEach {
             val user = UserData.from(it)
             kord.cache.put(user)
-            it.member.value?.let {
-                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, it))
+            it.member.value?.let { member ->
+                kord.cache.put(MemberData.from(userId = user.id, guildId = guildId.value!!, member))
             }
         }
 
