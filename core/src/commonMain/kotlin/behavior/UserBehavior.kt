@@ -128,11 +128,6 @@ public interface UserBehavior : KordEntity, Strategizable {
         }
     }
 
-    /**
-     * returns a new [UserBehavior] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
-     */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): UserBehavior = UserBehavior(id, kord, strategy)
 }
 

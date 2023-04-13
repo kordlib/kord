@@ -15,6 +15,7 @@ import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.entity.channel.*
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
@@ -24,7 +25,6 @@ import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
 import kotlin.DeprecationLevel.WARNING
 import kotlin.time.Duration
 
@@ -374,8 +374,8 @@ public class Guild(
     }
 
     /**
-     * Requests to get the [TopGuildChannel] represented by the [embedChannel],
-     * returns null if the [TopGuildChannel] isn't present or [embedChannel] is null.
+     * Requests to get the [TopGuildChannel] represented by the [widgetChannelId],
+     * returns null if the [TopGuildChannel] isn't present or [widgetChannelId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */

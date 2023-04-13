@@ -61,7 +61,6 @@ import kotlinx.serialization.json.*
  * Represent a [interactable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
  *
  * @property type the [ComponentType] of the component
- * @property style the [ButtonStyle] of the component (if it is a button)
  * @property emoji an [DiscordPartialEmoji] that appears on the button (if the component is a button)
  * @property customId a developer-defined identifier for the button, max 100 characters
  * @property url a url for link-style buttons

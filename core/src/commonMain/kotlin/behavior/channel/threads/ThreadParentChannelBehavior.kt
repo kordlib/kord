@@ -121,8 +121,9 @@ public interface PrivateThreadParentChannelBehavior : ThreadParentChannelBehavio
 }
 
 /**
- * starts a thread in the current thread parent based on [type] using given [name] and archived after [archiveDuration].
- * [type] should match the parent types.
+ * Starts a thread in the current thread parent based on [type] using the given [name]. [type] should match the parent
+ * types.
+ *
  * @throws [RequestException] if something went wrong during the request.
  */
 internal suspend fun ThreadParentChannelBehavior.unsafeStartThread(
