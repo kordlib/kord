@@ -30,6 +30,7 @@ public abstract class AbstractLiveKordEntity(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) : LiveKordEntity, CoroutineScope by coroutineScope {
 
+    @Suppress("LeakingThis") // CoroutineScope.coroutineContext is not overridden in subclasses
     final override val events: SharedFlow<Event> =
         kord.events.filter { filter(it) }.onEach { update(it) }.shareIn(this, SharingStarted.Eagerly)
 
