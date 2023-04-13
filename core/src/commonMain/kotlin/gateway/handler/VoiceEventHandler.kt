@@ -33,7 +33,7 @@ internal class VoiceEventHandler : BaseGatewayEventHandler() {
     ): VoiceStateUpdateEvent {
         val data = VoiceStateData.from(event.voiceState.guildId.value!!, event.voiceState)
 
-        val old = kord.cache.query<VoiceStateData> { idEq(VoiceStateData::id, data.id) }
+        val old = kord.cache.query { idEq(VoiceStateData::id, data.id) }
             .asFlow().map { VoiceState(it, kord) }.singleOrNull()
 
         kord.cache.put(data)

@@ -91,7 +91,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
      */
     public val cachedThreads: Flow<ThreadChannel>
         get() = kord.cache
-            .query<ChannelData> { idEq(ChannelData::guildId, this@GuildBehavior.id) }
+            .query { idEq(ChannelData::guildId, this@GuildBehavior.id) }
             .asFlow()
             .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
 
@@ -139,7 +139,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * This property is not resolvable through REST and will always use [Kord.cache] instead.
      */
     public val presences: Flow<Presence>
-        get() = kord.cache.query<PresenceData> { idEq(PresenceData::guildId, id) }
+        get() = kord.cache.query { idEq(PresenceData::guildId, id) }
             .asFlow()
             .map { Presence(it, kord) }
 
@@ -191,7 +191,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
      */
     public val voiceStates: Flow<VoiceState>
         get() = kord.cache
-            .query<VoiceStateData> { idEq(VoiceStateData::guildId, id) }
+            .query { idEq(VoiceStateData::guildId, id) }
             .asFlow()
             .map { VoiceState(it, kord) }
 

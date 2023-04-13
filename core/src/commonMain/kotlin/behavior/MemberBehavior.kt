@@ -135,7 +135,7 @@ public interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getPresenceOrNull(): Presence? {
-        val data = kord.cache.query<PresenceData> {
+        val data = kord.cache.query {
             idEq(PresenceData::userId, id)
             idEq(PresenceData::guildId, guildId)
         }.singleOrNull() ?: return null
@@ -166,7 +166,7 @@ public interface MemberBehavior : KordEntity, UserBehavior {
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getVoiceStateOrNull(): VoiceState? {
-        val data = kord.cache.query<VoiceStateData> {
+        val data = kord.cache.query {
             idEq(VoiceStateData::userId, id)
             idEq(VoiceStateData::guildId, guildId)
         }.singleOrNull() ?: return null

@@ -43,7 +43,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         val data = MessageData.from(this)
         kord.cache.put(data)
 
-        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update { channel ->
+        kord.cache.query { idEq(ChannelData::id, channelId) }.update { channel ->
             channel.copy(
                 lastMessageId = data.id.optionalSnowflake(),
                 messageCount = channel.messageCount.map { it + 1 },
@@ -86,7 +86,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): MessageUpdateEvent = with(event.message) {
-        val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
+        val query = kord.cache.query { idEq(MessageData::id, id) }
 
         val old = query.asFlow().map { Message(it, kord) }.singleOrNull()
         query.update { it + this }
@@ -108,12 +108,12 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): MessageDeleteEvent = with(event.message) {
-        val query = kord.cache.query<MessageData> { idEq(MessageData::id, id) }
+        val query = kord.cache.query { idEq(MessageData::id, id) }
 
         val removed = query.singleOrNull()?.let { Message(it, kord) }
         query.remove()
 
-        kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update { channel ->
+        kord.cache.query { idEq(ChannelData::id, channelId) }.update { channel ->
             channel.copy(messageCount = channel.messageCount.map { it - 1 })
         }
 
@@ -129,12 +129,12 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         with(event.messageBulk) {
             val ids = ids.toSet()
 
-            val query = kord.cache.query<MessageData> { MessageData::id `in` ids }
+            val query = kord.cache.query { MessageData::id `in` ids }
 
             val removed = query.asFlow().map { Message(it, kord) }.toSet()
             query.remove()
 
-            kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update { channel ->
+            kord.cache.query { idEq(ChannelData::id, channelId) }.update { channel ->
                 channel.copy(messageCount = channel.messageCount.map { it - ids.size })
             }
 
@@ -165,7 +165,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
                 else -> ReactionEmoji.Custom(id, emoji.name!!, emoji.animated.orElse(false))
             }
 
-            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            kord.cache.query { idEq(MessageData::id, messageId) }.update {
                 val isMe = kord.selfId == event.reaction.userId
 
                 val reactions = if (it.reactions.value.isNullOrEmpty()) {
@@ -217,7 +217,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
                 else -> ReactionEmoji.Custom(id, emoji.name ?: "", emoji.animated.orElse(false))
             }
 
-            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }.update {
+            kord.cache.query { idEq(MessageData::id, messageId) }.update {
                 val oldReactions = it.reactions.value ?: return@update it
                 if (oldReactions.isEmpty()) return@update it
 
@@ -258,7 +258,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?,
     ): ReactionRemoveAllEvent =
         with(event.reactions) {
-            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
+            kord.cache.query { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = Optional.Missing()) }
 
             ReactionRemoveAllEvent(
@@ -278,7 +278,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?,
     ): ReactionRemoveEmojiEvent =
         with(event.reaction) {
-            kord.cache.query<MessageData> { idEq(MessageData::id, messageId) }
+            kord.cache.query { idEq(MessageData::id, messageId) }
                 .update { it.copy(reactions = it.reactions.map { list -> list.filter { data -> data.emojiName != emoji.name } }) }
 
             val data = ReactionRemoveEmojiData.from(this)
