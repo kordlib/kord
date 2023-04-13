@@ -3,10 +3,6 @@ package dev.kord.gateway
 import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.gateway.retry.LinearRetry
-import io.ktor.client.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.websocket.*
-import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
