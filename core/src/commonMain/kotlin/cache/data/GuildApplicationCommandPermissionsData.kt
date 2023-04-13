@@ -2,7 +2,6 @@ package dev.kord.core.cache.data
 
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
-import dev.kord.common.annotation.KordPreview
 import dev.kord.common.entity.DiscordGuildApplicationCommandPermissions
 import dev.kord.common.entity.Snowflake
 

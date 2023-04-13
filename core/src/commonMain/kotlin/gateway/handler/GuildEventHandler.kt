@@ -116,7 +116,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?,
     ): GuildUpdateEvent {
         val data = GuildData.from(event.guild)
-        val old = kord.cache.query<GuildData> { idEq(GuildData::id, event.guild.id) }.singleOrNull()
+        val old = kord.cache.query { idEq(GuildData::id, event.guild.id) }.singleOrNull()
         kord.cache.put(data)
         event.guild.cache(kord.cache)
 
@@ -129,7 +129,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): GuildDeleteEvent = with(event.guild) {
-        val query = kord.cache.query<GuildData> { idEq(GuildData::id, id) }
+        val query = kord.cache.query { idEq(GuildData::id, id) }
 
         val old = query.asFlow().map { Guild(it, kord) }.singleOrNull()
         query.remove()
@@ -173,14 +173,14 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         with(event.emoji) {
 
             val data = emojis.map { EmojiData.from(guildId, it.id!!, it) }
-            val old = kord.cache.query<EmojiData> { idEq(EmojiData::guildId, guildId) }.asFlow().map {
+            val old = kord.cache.query { idEq(EmojiData::guildId, guildId) }.asFlow().map {
                 GuildEmoji(it, kord)
             }.toSet()
             kord.cache.putAll(data)
 
             val emojis = data.map { GuildEmoji(it, kord) }
 
-            kord.cache.query<GuildData> { idEq(GuildData::id, guildId) }.update {
+            kord.cache.query { idEq(GuildData::id, guildId) }.update {
                 it.copy(emojis = emojis.map { emoji -> emoji.id })
             }
 
@@ -254,12 +254,12 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         with(event.member) {
             val userData = UserData.from(user)
 
-            val oldData = kord.cache.query<MemberData> {
+            val oldData = kord.cache.query {
                 idEq(MemberData::userId, userData.id)
                 idEq(MemberData::guildId, guildId)
             }.singleOrNull()
 
-            kord.cache.query<UserData> { idEq(UserData::id, userData.id) }.remove()
+            kord.cache.query { idEq(UserData::id, userData.id) }.remove()
 
             val user = User(userData, kord)
             val old = oldData?.let { Member(it, userData, kord) }
@@ -277,7 +277,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             val userData = UserData.from(user)
             kord.cache.put(userData)
 
-            val query = kord.cache.query<MemberData> {
+            val query = kord.cache.query {
                 idEq(MemberData::userId, userData.id)
                 idEq(MemberData::guildId, guildId)
             }
@@ -309,7 +309,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
     ): RoleUpdateEvent {
         val data = RoleData.from(event.role)
 
-        val oldData = kord.cache.query<RoleData> {
+        val oldData = kord.cache.query {
             idEq(RoleData::id, data.id)
             idEq(RoleData::guildId, data.guildId) // TODO("Is this worth keeping?")
         }.singleOrNull()
@@ -326,7 +326,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): RoleDeleteEvent = with(event.role) {
-        val query = kord.cache.query<RoleData> { idEq(RoleData::id, event.role.id) }
+        val query = kord.cache.query { idEq(RoleData::id, event.role.id) }
 
         val old = run {
             val data = query.singleOrNull() ?: return@run null
@@ -377,7 +377,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?,
     ): GuildScheduledEventUpdateEvent {
         val eventData = GuildScheduledEventData.from(event.event)
-        val oldData = kord.cache.query<GuildScheduledEventData> {
+        val oldData = kord.cache.query {
             idEq(GuildScheduledEventData::id, event.event.id)
         }.singleOrNull()
         val old = oldData?.let { GuildScheduledEvent(it, kord) }
@@ -393,7 +393,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         kord: Kord,
         context: LazyContext?,
     ): GuildScheduledEventDeleteEvent {
-        val query = kord.cache.query<GuildScheduledEvent> {
+        val query = kord.cache.query {
             idEq(GuildScheduledEvent::id, event.event.id)
         }
         query.remove()
@@ -445,14 +445,14 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
         with(event.presence) {
             val data = PresenceData.from(this.guildId.value!!, this)
 
-            val old = kord.cache.query<PresenceData> { idEq(PresenceData::id, data.id) }
+            val old = kord.cache.query { idEq(PresenceData::id, data.id) }
                 .asFlow().map { Presence(it, kord) }.singleOrNull()
 
             kord.cache.put(data)
             val new = Presence(data, kord)
 
             val user = kord.cache
-                .query<UserData> { idEq(UserData::id, event.presence.user.id) }
+                .query { idEq(UserData::id, event.presence.user.id) }
                 .singleOrNull()
                 ?.let { User(it, kord) }
 

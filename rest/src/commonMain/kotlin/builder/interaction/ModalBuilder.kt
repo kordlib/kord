@@ -4,7 +4,6 @@ import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordModal
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.ActionRowBuilder
-import dev.kord.rest.builder.component.MessageComponentBuilder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 

@@ -5,12 +5,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
-import dev.kord.core.behavior.channel.GuildChannelBehavior
 import dev.kord.core.behavior.channel.threads.ThreadParentChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Strategizable
-import dev.kord.core.entity.channel.GuildChannel
 import dev.kord.core.entity.channel.ThreadParentChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier

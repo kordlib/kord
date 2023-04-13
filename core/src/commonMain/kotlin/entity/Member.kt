@@ -30,7 +30,7 @@ public class Member(
         get() = memberData.guildId
 
     /**
-     * The name as shown in the discord client, prioritizing the [nickname] over the [use].
+     * The name as shown in the discord client, prioritizing the [nickname] over the [username].
      */
     public val displayName: String get() = nickname ?: username
 

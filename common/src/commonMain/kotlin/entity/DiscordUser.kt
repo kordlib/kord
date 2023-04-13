@@ -138,15 +138,11 @@ public data class UserFlags(val code: Int) {
 
     public operator fun contains(flag: UserFlag): Boolean = flag in flags
 
-    public operator fun plus(flags: UserFlags): UserFlags = when {
-        code and flags.code == flags.code -> this
-        else -> UserFlags(this.code or flags.code)
-    }
+    public operator fun plus(flags: UserFlags): UserFlags =
+        if (code and flags.code == flags.code) this else UserFlags(this.code or flags.code)
 
-    public operator fun minus(flag: UserFlag): UserFlags = when {
-        code and flag.code == flag.code -> UserFlags(code xor flag.code)
-        else -> this
-    }
+    public operator fun minus(flag: UserFlag): UserFlags =
+        if (code and flag.code == flag.code) UserFlags(code xor flag.code) else this
 
     public inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
         contract {

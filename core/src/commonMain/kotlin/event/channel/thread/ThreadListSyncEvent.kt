@@ -65,8 +65,12 @@ public class ThreadListSyncEvent(
         return supplier.getGuildOrNull(guildId)
     }
 
+    public val channels: Flow<TopGuildChannel> get() = supplier.getGuildChannels(guildId).filter { it.id in channelIds }
+
+    @Suppress("RedundantSuspendModifier")
+    @Deprecated("Replaced by 'channels' property.", ReplaceWith("this.channels"), DeprecationLevel.WARNING)
     public suspend fun getChannels(): Flow<TopGuildChannel> {
-        return supplier.getGuildChannels(guildId).filter { it.id in channelIds }
+        return channels
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadListSyncEvent =

@@ -31,9 +31,7 @@ public class StageChannel(
     public val userLimit: Int get() = data.userLimit.getOrThrow()
 
     /**
-     * returns a new [StageChannel] with the given [strategy].
-     *
-     * @param strategy the strategy to use for the new instance. By default [EntitySupplyStrategy.CacheWithRestFallback].
+     * Returns a new [StageChannel] with the given [strategy].
      */
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): StageChannel =
         StageChannel(data, kord, strategy.supply(kord))

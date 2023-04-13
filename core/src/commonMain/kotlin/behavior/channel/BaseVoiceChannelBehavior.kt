@@ -20,7 +20,7 @@ public interface BaseVoiceChannelBehavior : CategorizableChannelBehavior {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public val voiceStates: Flow<VoiceState>
-        get() = kord.cache.query<VoiceStateData> { idEq(VoiceStateData::channelId, id) }
+        get() = kord.cache.query { idEq(VoiceStateData::channelId, id) }
             .asFlow()
             .map { VoiceState(it, kord) }
 }
