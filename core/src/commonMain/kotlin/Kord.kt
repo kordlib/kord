@@ -373,15 +373,10 @@ public class Kord(
         gateway.sendAll(status)
     }
 
-    override fun equals(other: Any?): Boolean {
-        val kord = other as? Kord ?: return false
-
-        return resources.token == kord.resources.token
-    }
-
-    override fun toString(): String {
-        return "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId)"
-    }
+    override fun equals(other: Any?): Boolean = other is Kord && this.resources.token == other.resources.token
+    override fun hashCode(): Int = resources.token.hashCode()
+    override fun toString(): String =
+        "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId)"
 
     public companion object {
 
