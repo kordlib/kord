@@ -1,0 +1,21 @@
+version: "1.0"
+linter: jetbrains/qodana-jvm:2022.3-eap
+exclude:
+  # We cannot change that file
+  - name: All
+    paths:
+      - voice/src/main/java/com/iwebpp/crypto/TweetNaclFast.java
+include:
+  - name: CStyleArrayDeclaration
+  - name: KotlinUnusedImport
+  - name: RedundantSuspendModifier
+  - name: KDocUnresolvedReference
+  - name: MemberVisibilityCanBePrivate
+  - name: RemoveExplicitTypeArguments
+  - name: PropertyName
+  - name: PrivatePropertyName
+  - name: CanBeParameter
+  - name: UnusedSymbol
+  - name: NestedLambdaShadowedImplicitParameter
+  - name: IntroduceWhenSubject
+  - name: RedundantNullableReturnType
