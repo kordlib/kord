@@ -15,29 +15,29 @@ import kotlin.test.assertIs
 
 
 class CommandsTypeTests {
-    val arg = buildJsonObject {
+    private val arg = buildJsonObject {
         put("type", ApplicationCommandOptionType.Integer.type)
         put("name", "argument")
         put("value", 1)
     }
-    val root = buildJsonObject {
+    private val root = buildJsonObject {
         put("id", "792107855418490901")
         put("name", "root")
         putJsonArray("options") { add(arg) }
     }
-    val partialSubCommand = buildJsonObject {
+    private val partialSubCommand = buildJsonObject {
         put("type", ApplicationCommandOptionType.SubCommand.type)
         put("name", "subCommand")
         putJsonArray("options") { add(arg) }
     }
-    val subCommand =
+    private val subCommand =
         buildJsonObject {
             putJsonArray("options") { add(partialSubCommand) }
             put("name", "root")
             put("id", "792107855418490901")
         }
 
-    val group = buildJsonObject {
+    private val group = buildJsonObject {
 
         putJsonArray("options") {
             addJsonObject {

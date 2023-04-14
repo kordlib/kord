@@ -4,6 +4,7 @@ import dev.kord.cache.api.DataCache
 import dev.kord.cache.api.put
 import dev.kord.cache.api.putAll
 import dev.kord.cache.api.query
+import dev.kord.common.entity.DiscordGuild
 import dev.kord.common.entity.optional.optionalSnowflake
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
@@ -19,7 +20,6 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.singleOrNull
 import kotlinx.coroutines.flow.toSet
-import dev.kord.common.entity.DiscordGuild as GatewayGuild
 import dev.kord.core.event.Event as CoreEvent
 
 internal class GuildEventHandler : BaseGatewayEventHandler() {
@@ -55,7 +55,7 @@ internal class GuildEventHandler : BaseGatewayEventHandler() {
             else -> null
         }
 
-    private suspend fun GatewayGuild.cache(cache: DataCache) {
+    private suspend fun DiscordGuild.cache(cache: DataCache) {
         for (member in members.orEmpty()) {
             cache.put(MemberData.from(member.user.value!!.id, id, member))
             cache.put(UserData.from(member.user.value!!))

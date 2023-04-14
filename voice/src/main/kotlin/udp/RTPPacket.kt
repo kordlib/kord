@@ -23,7 +23,6 @@ internal const val RTP_HEADER_LENGTH = 12
  * - SSRCs are stored as UInt (4 bytes) not long.
  * - And most notably, the extension header is not exactly after the RTP header. Discord instead encrypts it along with the payload...
  */
-@Suppress("ArrayInDataClass")
 @OptIn(ExperimentalUnsignedTypes::class)
 public data class RTPPacket(
     val paddingBytes: UByte,

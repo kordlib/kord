@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package dev.kord.rest.request
 
 import dev.kord.rest.ratelimit.BucketKey

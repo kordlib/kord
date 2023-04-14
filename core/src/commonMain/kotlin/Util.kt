@@ -27,7 +27,6 @@ import kotlinx.datetime.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
-import kotlinx.coroutines.flow.firstOrNull as coroutinesFirstOrNull
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
@@ -66,7 +65,7 @@ internal fun <T : Comparable<T>> Flow<T>.sorted(): Flow<T> = flow {
  * The flow's collection is cancelled when a match is found.
  */
 internal suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
-    coroutinesFirstOrNull { predicate(it) } != null
+    firstOrNull { predicate(it) } != null
 
 /**
  * The non-terminal operator that returns a new flow that will emit values of the second [flow] only after the first

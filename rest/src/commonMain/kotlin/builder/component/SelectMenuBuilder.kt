@@ -27,7 +27,7 @@ public open class SelectMenuBuilder
     "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
             "constructor of one of the subtypes.",
     ReplaceWith("StringSelectBuilder(customId)", "dev.kord.rest.builder.component.StringSelectBuilder"),
-    level = DeprecationLevel.ERROR,
+    level = ERROR,
 )
 public constructor(public var customId: String) : ActionRowComponentBuilder() {
 
@@ -41,7 +41,7 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
             "dev.kord.rest.builder.component.StringSelectBuilder",
             "dev.kord.rest.builder.component.options",
         ),
-        level = DeprecationLevel.ERROR,
+        level = ERROR,
     )
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
     @kotlin.internal.LowPriorityInOverloadResolution

@@ -40,7 +40,7 @@ internal class OptionalIntTest {
     }
 
     @Serializable
-    class ValueOptionalEntity(@Suppress("unused") val value: OptionalInt = OptionalInt.Missing)
+    class ValueOptionalEntity(val value: OptionalInt = OptionalInt.Missing)
 
     @Test
     @JsName("test3")

@@ -105,9 +105,10 @@ public sealed class DiscordComponent {
         override fun selectDeserializer(element: JsonElement): KSerializer<out DiscordComponent> {
             val componentType = element.jsonObject["type"]?.jsonPrimitive?.intOrNull ?: error("Missing component type ID!")
 
-            return when (componentType) {
-                ComponentType.TextInput.value -> DiscordTextInputComponent.serializer()
-                else -> DiscordChatComponent.serializer()
+            return if (componentType == ComponentType.TextInput.value) {
+                DiscordTextInputComponent.serializer()
+            } else {
+                DiscordChatComponent.serializer()
             }
         }
     }
