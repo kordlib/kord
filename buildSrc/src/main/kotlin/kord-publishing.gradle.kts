@@ -42,7 +42,7 @@ publishing {
                 licenses {
                     license {
                         name = "MIT"
-                        url = "http://opensource.org/licenses/MIT"
+                        url = "https://opensource.org/licenses/MIT"
                     }
                 }
 

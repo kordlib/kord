@@ -25,7 +25,7 @@ public open class SelectMenuComponent
 )
 public constructor(override val data: ComponentData) : Component {
 
-    @Suppress("DEPRECATION", "INAPPLICABLE_JVM_NAME")
+    @Suppress("INAPPLICABLE_JVM_NAME")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     @get:JvmName("getType")
     public open val type0: ComponentType.SelectMenu get() = ComponentType.SelectMenu

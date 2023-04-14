@@ -17,7 +17,6 @@ import kotlinx.datetime.Instant
  * Inline Markdown links are supported in in all description-like fields.
  */
 @KordDsl
-@Suppress("unused")
 public class EmbedBuilder : RequestBuilder<EmbedRequest> {
     public companion object {
         /**

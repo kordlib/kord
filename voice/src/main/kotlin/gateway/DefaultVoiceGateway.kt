@@ -6,7 +6,6 @@ import dev.kord.gateway.retry.Retry
 import dev.kord.voice.gateway.handler.HandshakeHandler
 import dev.kord.voice.gateway.handler.HeartbeatHandler
 import io.ktor.client.*
-import io.ktor.client.plugins.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
 import io.ktor.util.logging.*
@@ -187,18 +186,18 @@ public class DefaultVoiceGateway(
 
     private suspend fun sendUnsafe(command: Command) {
         val json = Json.encodeToString(Command.SerializationStrategy, command)
-        if (command is Identify) {
-            defaultVoiceGatewayLogger.trace {
-                val copy = command.copy(token = "token")
-                "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
+        defaultVoiceGatewayLogger.trace {
+            when (command) {
+                is Identify -> {
+                    val copy = command.copy(token = "token")
+                    "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
+                }
+                is SelectProtocol -> {
+                    val copy = command.copy(data = command.data.copy(address = "ip"))
+                    "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
+                }
+                is Heartbeat, is Resume, is SendSpeaking -> "Voice Gateway >>> $json"
             }
-        } else if (command is SelectProtocol) {
-            defaultVoiceGatewayLogger.trace {
-                val copy = command.copy(data = command.data.copy(address = "ip"))
-                "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
-            }
-        } else {
-            defaultVoiceGatewayLogger.trace { "Voice Gateway >>> $json" }
         }
         socket.send(Frame.Text(json))
     }
