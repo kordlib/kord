@@ -18,11 +18,13 @@ public data class AttachmentData(
     val proxyUrl: String,
     val height: OptionalInt? = OptionalInt.Missing,
     val width: OptionalInt? = OptionalInt.Missing,
-    val ephemeral: OptionalBoolean = OptionalBoolean.Missing
+    val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
+    val durationSecs: Optional<Float> = Optional.Missing(),
+    val waveform: Optional<String> = Optional.Missing()
 ) {
     public companion object {
         public fun from(entity: DiscordAttachment): AttachmentData = with(entity) {
-            AttachmentData(id, filename, description, contentType, size, url, proxyUrl, height, width, ephemeral)
+            AttachmentData(id, filename, description, contentType, size, url, proxyUrl, height, width, ephemeral, durationSecs, waveform)
         }
     }
 }

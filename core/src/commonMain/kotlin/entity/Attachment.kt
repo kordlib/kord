@@ -2,11 +2,16 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.AttachmentData
-import dev.kord.rest.Image
 import dev.kord.core.hash
+import dev.kord.rest.Image
+import io.ktor.util.*
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 /**
  * An instance of a [Discord Attachment](https://discord.com/developers/docs/resources/channel#attachment-object).
@@ -59,11 +64,29 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
     val width: Int? get() = data.width.value
 
     /**
+     * The duration of the audio file (currently for voice messages).
+     */
+    val duration: Duration? get() = data.durationSecs.value
+        ?.times(1000)?.toInt()?.toDuration(DurationUnit.MILLISECONDS)
+
+    /**
+     * A sampled waveform (currently for voice messages).
+     */
+    val waveForm: ByteArray? by lazy {
+        if (data.waveform is Optional.Value<String>) {
+            data.waveform.value.decodeBase64Bytes()
+        } else {
+            null
+        }
+    }
+
+    /**
      * If this file is displayed as a spoiler. Denoted by the `SPOILER_` prefix in the name.
      */
     val isSpoiler: Boolean get() = filename.startsWith("SPOILER_")
 
-    val isEphemeral: Boolean  get() = data.ephemeral.discordBoolean
+    val isEphemeral: Boolean get() = data.ephemeral.discordBoolean
+
     /**
      * If this file is an image. Denoted by the presence of a [width] and [height].
      */

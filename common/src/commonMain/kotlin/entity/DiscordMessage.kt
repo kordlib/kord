@@ -406,7 +406,12 @@ public enum class MessageFlag(public val code: Int) {
     FailedToMentionSomeRolesInThread(1 shl 8),
 
     /** This message will not trigger push and desktop notifications. */
-    SuppressNotifications(1 shl 12)
+    SuppressNotifications(1 shl 12),
+
+    /**
+     * This message is a voice message.
+     */
+    IsVoiceMessage(1 shl 13)
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
@@ -502,15 +507,18 @@ public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFl
 /**
  * A representation of a [Discord Attachment structure](https://discord.com/developers/docs/resources/channel#attachment-object).
  *
- * @param id The attachment id.
- * @param filename The name of the attached file.
- * @param description The description for the file.
- * @param contentType The attachment's [media type](https://en.wikipedia.org/wiki/Media_type).
- * @param size The size of the file in bytes.
- * @param url The source url of the file.
- * @param proxyUrl A proxied url of the field.
- * @param height The height of the file (if it is an image).
- * @param width The width of the file (if it is an image).
+ * @property id The attachment id.
+ * @property filename The name of the attached file.
+ * @property description The description for the file.
+ * @property contentType The attachment's [media type](https://en.wikipedia.org/wiki/Media_type).
+ * @property size The size of the file in bytes.
+ * @property url The source url of the file.
+ * @property proxyUrl A proxied url of the field.
+ * @property height The height of the file (if it is an image).
+ * @property width The width of the file (if it is an image).
+ * @property ephemeral Whether this attachment is ephemeral
+ * @property durationSecs The duration of the audio file (currently for voice messages)
+ * @property waveform Base64 encoded bytearray representing a sampled waveform (currently for voice messages)
  */
 @Serializable
 public data class DiscordAttachment(
@@ -534,7 +542,9 @@ public data class DiscordAttachment(
     */
     val width: OptionalInt? = OptionalInt.Missing,
 
-    val ephemeral: OptionalBoolean = OptionalBoolean.Missing
+    val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
+    val durationSecs: Optional<Float> = Optional.Missing(),
+    val waveform: Optional<String> = Optional.Missing()
 )
 
 /**
