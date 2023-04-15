@@ -353,7 +353,8 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 UseEmbeddedActivities,
                 ModerateMembers,
                 ViewCreatorMonetizationAnalytics,
-                UseSoundboard
+                UseSoundboard,
+                SendVoiceMessages
             )
     }
 }
