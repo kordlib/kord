@@ -91,6 +91,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInFloatingPointSeconds
 import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
@@ -544,7 +545,7 @@ public data class DiscordAttachment(
 
     val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("duration_secs")
-    val durationSecs: Optional<Float> = Optional.Missing(),
+    val durationSecs: Optional<DurationInFloatingPointSeconds> = Optional.Missing(),
     val waveform: Optional<String> = Optional.Missing()
 )
 

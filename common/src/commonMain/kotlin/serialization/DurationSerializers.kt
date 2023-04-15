@@ -45,6 +45,33 @@ public sealed class DurationAsLongSerializer(
     }
 }
 
+/** A [Duration] that is [serializable][Serializable] with [DurationInFloatingPointSecondsSerializer]. */
+public typealias DurationInFloatingPointSeconds = @Serializable(with = DurationInFloatingPointSecondsSerializer::class) Duration
+
+/** Serializer that encodes and decodes [Duration]s as a [Double] number of seconds */
+public object DurationInFloatingPointSecondsSerializer : KSerializer<Duration> {
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("dev.kord.common.serialization.DurationInFloatingPointSeconds", PrimitiveKind.DOUBLE)
+
+    override fun serialize(encoder: Encoder, value: Duration) {
+        when (val valueAsDouble = value.toDouble(MILLISECONDS)) {
+            Double.MIN_VALUE, Double.MAX_VALUE -> throw SerializationException(
+                if (value.isInfinite()) {
+                    "Infinite Durations cannot be serialized, got $value"
+                } else {
+                    "The Duration $value expressed as a number of SECONDS does not fit in the range of Long type and therefore cannot be serialized with DurationInFloatingPointSecondsSerializer"
+                }
+            )
+
+            else -> encoder.encodeDouble(valueAsDouble)
+        }
+    }
+
+    override fun deserialize(decoder: Decoder): Duration {
+        return decoder.decodeDouble().div(1000).toDuration(MILLISECONDS)
+    }
+}
+
 
 // nanoseconds
 
