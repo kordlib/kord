@@ -113,33 +113,29 @@ public enum class ApplicationFlag(public val code: Int) {
     /** Indicates if an app uses the Auto Moderation API. */
     ApplicationAutoModerationRuleCreateBadge(1 shl 6),
 
-    /**
-     * Intent required for bots in **100 or more servers** to receive
-     * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update).
-     */
+    /** Intent required for bots in **100 or more servers** to receive `PresenceUpdate` events. */
     GatewayPresence(1 shl 12),
 
     /**
-     * Intent required for bots in under 100 servers to receive
-     * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update), found in Bot
-     * Settings.
+     * Intent required for bots in under 100 servers to receive `PresenceUpdate` events, found on the **Bot** page in
+     * your app's settings.
      */
     GatewayPresenceLimited(1 shl 13),
 
     /**
      * Intent required for bots in **100 or more servers** to receive member-related events like `GuildMemberAdd`.
      *
-     * See list of member-related events under
-     * [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
+     * See the list of member-related events
+     * [under `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
      */
     GatewayGuildMembers(1 shl 14),
 
     /**
-     * Intent required for bots in under 100 servers to receive member-related events like `GuildMemberAdd`, found in
-     * Bot Settings.
+     * Intent required for bots in under 100 servers to receive member-related events like `GuildMemberAdd`, found on
+     * the **Bot** page in your app's settings.
      *
-     * See list of member-related events under
-     * [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
+     * See the list of member-related events
+     * [under `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
      */
     GatewayGuildMembersLimited(1 shl 15),
 
@@ -157,7 +153,8 @@ public enum class ApplicationFlag(public val code: Int) {
 
     /**
      * Intent required for bots in under 100 servers to receive
-     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found in Bot Settings.
+     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found on the **Bot** page in
+     * your app's settings.
      */
     GatewayMessageContentLimited(1 shl 19),
 
