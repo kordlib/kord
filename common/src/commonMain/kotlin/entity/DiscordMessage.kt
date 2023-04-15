@@ -543,6 +543,7 @@ public data class DiscordAttachment(
     val width: OptionalInt? = OptionalInt.Missing,
 
     val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("duration_secs")
     val durationSecs: Optional<Float> = Optional.Missing(),
     val waveform: Optional<String> = Optional.Missing()
 )
