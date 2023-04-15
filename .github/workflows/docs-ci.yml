@@ -1,25 +1,23 @@
-# This workflow will build and deploy docs to GitHub Pages whenever something is pushed to the default branch
+name: Build docs
 
-name: Docs
+on:
+  push:
+    branches: [ "main" ]
 
-on: push # but only to default branch, see if below
-
+# Gives the workflow permissions to clone the repo and create a page deployment
 permissions:
-  contents: write
+  id-token: write
+  pages: write
 
 jobs:
-  docs:
-    name: Build and deploy docs
+  build-job:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
-    concurrency: # Allow one concurrent deployment
-      group: pages
-      cancel-in-progress: true
-    env:
-      GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
-      GITHUB_BRANCH_NAME: ${{ github.ref }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
@@ -28,12 +26,13 @@ jobs:
       - name: Build docs with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: --stacktrace --info dokkaHtmlMultiModule
-      - name: Deploy docs to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+          arguments: dokkaHtmlMultiModule
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          folder: build/dokka/htmlMultiModule
-          branch: gh-pages
-          git-config-name: GitHub Actions
-          git-config-email: actions@github.com
-          commit-message: Update docs
+          path: build/dokka/htmlMultiModule
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
