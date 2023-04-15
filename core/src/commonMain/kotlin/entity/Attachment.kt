@@ -73,11 +73,7 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
      * A sampled waveform (currently for voice messages).
      */
     val waveForm: ByteArray? by lazy {
-        if (data.waveform is Optional.Value<String>) {
-            data.waveform.value.decodeBase64Bytes()
-        } else {
-            null
-        }
+        data.waveform.value?.let { it.decodeBase64Bytes() }
     }
 
     /**
