@@ -592,10 +592,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     override fun getNitroStickerPacks(): Flow<StickerPack> = flow {
-        val responses = sticker.getNitroStickerPacks()
+        val response = sticker.getNitroStickerPacks()
 
-        responses.forEach { response ->
-            val data = StickerPackData.from(response)
+        response.stickerPacks.forEach { pack ->
+            val data = StickerPackData.from(pack)
             emit(StickerPack(data, kord))
         }
     }
