@@ -30,6 +30,7 @@ fun KordBuild(name: String, configure: BuildType.() -> Unit) = object : BuildTyp
             this.name = "gradle_cache"
             rules = """
                 .gradle/
+                $gradleHome
                 buildSrc/.gradle
                 buildSrc/build
                 ~/.gradle/caches
