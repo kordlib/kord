@@ -2,7 +2,7 @@ name: Build docs
 
 on:
   push:
-    branches: [ "main" ]
+#    branches: [ "main" ]
 
 # Gives the workflow permissions to clone the repo and create a page deployment
 permissions:
