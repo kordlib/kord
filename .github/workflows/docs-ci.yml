@@ -2,19 +2,32 @@ name: Build docs
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "0.9.x" ]
+  tag:
+  workflow_dispatch:
 
 # Gives the workflow permissions to clone the repo and create a page deployment
 permissions:
   id-token: write
   pages: write
 
+# This workflow updates the versioned docs on dokka.kord.dev using the following strategy
+# 1) pull cache to docs-cache
+# 2) Call dokkaHtmlMultiModule for current version
+#   - if this is a release build move current docs into docs-cache/$version
+#   - otherwise move it into docs-cache/current
+# 3) Build GitHub Pages artifact
+#   - Move all folders not named "current" into docs/<folder>
+#   - Move current into docs/
+# 4) Trigger deploy to GitHub Actions
 jobs:
   build-job:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
+    GITHUB_BRANCH_NAME: ${{ github.ref }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -23,16 +36,20 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
+      - uses: actions/cache@v3
+        with:
+          path: docs-cache
+          key: docs-cache
       - name: Build docs with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: dokkaHtmlMultiModule
+          arguments: :produceDocs
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          path: build/dokka/htmlMultiModule
+          path: docs
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
