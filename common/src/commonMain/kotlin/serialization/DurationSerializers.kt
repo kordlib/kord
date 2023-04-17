@@ -67,9 +67,7 @@ public object DurationInFloatingPointSecondsSerializer : KSerializer<Duration> {
         }
     }
 
-    override fun deserialize(decoder: Decoder): Duration {
-        return decoder.decodeDouble().div(1000).toDuration(MILLISECONDS)
-    }
+    override fun deserialize(decoder: Decoder): Duration = decoder.decodeDouble().toDuration(unit = SECONDS)
 }
 
 
