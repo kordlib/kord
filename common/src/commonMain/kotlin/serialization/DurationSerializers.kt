@@ -54,7 +54,7 @@ public object DurationInFloatingPointSecondsSerializer : KSerializer<Duration> {
         PrimitiveSerialDescriptor("dev.kord.common.serialization.DurationInFloatingPointSeconds", PrimitiveKind.DOUBLE)
 
     override fun serialize(encoder: Encoder, value: Duration) {
-        when (val valueAsDouble = value.toDouble(MILLISECONDS)) {
+        when (val valueAsDouble = value.toDouble(unit = SECONDS)) {
             Double.MIN_VALUE, Double.MAX_VALUE -> throw SerializationException(
                 if (value.isInfinite()) {
                     "Infinite Durations cannot be serialized, got $value"
