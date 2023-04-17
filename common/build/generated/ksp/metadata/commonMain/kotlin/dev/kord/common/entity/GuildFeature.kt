@@ -123,6 +123,17 @@ public sealed class GuildFeature(
     public object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
 
     /**
+     * Guild has enabled monetization.
+     */
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Replaced by CreatorMonetizableProvisional.",
+        replaceWith = ReplaceWith(expression = "GuildFeature.CreatorMonetizableProvisional", imports
+                    = arrayOf("dev.kord.common.entitiy.GuildFeature")),
+    )
+    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
+
+    /**
      * Guild has increased custom sticker slots.
      */
     public object MoreStickers : GuildFeature("MORE_STICKERS")
@@ -141,6 +152,15 @@ public sealed class GuildFeature(
      * Guild can be previewed before joining via Membership Screening or the directory.
      */
     public object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
+
+    /**
+     * Guild has access to create private threads
+     */
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "Creating a private thread no longer requires the server to be boosted.",
+    )
+    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
     /**
      * Guild is able to set role icons.
@@ -182,26 +202,6 @@ public sealed class GuildFeature(
      * Guild has enabled the welcome screen.
      */
     public object WelcomeScreenEnabled : GuildFeature("WELCOME_SCREEN_ENABLED")
-
-    /**
-     * Guild has enabled monetization.
-     */
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Replaced by CreatorMonetizableProvisional.",
-        replaceWith = ReplaceWith(expression = "GuildFeature.CreatorMonetizableProvisional", imports
-                    = arrayOf("dev.kord.common.entitiy.GuildFeature")),
-    )
-    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
-
-    /**
-     * Guild has access to create private threads
-     */
-    @Deprecated(
-        level = DeprecationLevel.ERROR,
-        message = "Creating a private thread no longer requires the server to be boosted.",
-    )
-    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
     internal object Serializer : KSerializer<GuildFeature> {
         public override val descriptor: SerialDescriptor =

@@ -11,11 +11,13 @@
         Entry("RoleSelect", intValue = 6, kDoc = "Select menu for roles."),
         Entry("MentionableSelect", intValue = 7, kDoc = "Select menu for mentionables (users and roles)."),
         Entry("ChannelSelect", intValue = 8, kDoc = "Select menu for channels."),
-    ],
-    deprecatedEntries = [
-        Entry("SelectMenu", intValue = 3, kDoc = "A select menu for picking from choices.",
-            deprecationMessage = "Renamed by discord", replaceWith = ReplaceWith("StringSelect", "dev.kord.common.entity.ComponentType.StringSelect"),
-            deprecationLevel = DeprecationLevel.ERROR
+        Entry(
+            "SelectMenu", intValue = 3, kDoc = "A select menu for picking from choices.",
+            deprecated = Deprecated(
+                "Renamed by discord",
+                ReplaceWith("StringSelect", "dev.kord.common.entity.ComponentType.StringSelect"),
+                DeprecationLevel.ERROR
+            ),
         ),
     ],
 )

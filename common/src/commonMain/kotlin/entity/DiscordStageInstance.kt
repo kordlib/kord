@@ -3,13 +3,11 @@
     deprecatedSerializerName = "Serializer",
     docUrl = "https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level",
     entries = [
-        Entry("GuildOnly", intValue = 2, kDoc = "The Stage instance is visible to only guild members."),
-    ],
-    deprecatedEntries = [
         Entry(
             "Public", intValue = 1, kDoc = "The Stage instance is visible publicly.",
-            deprecationMessage = "Stages are no longer discoverable", deprecationLevel = WARNING,
+            deprecated = Deprecated("Stages are no longer discoverable", level = WARNING),
         ),
+        Entry("GuildOnly", intValue = 2, kDoc = "The Stage instance is visible to only guild members."),
     ],
 )
 
