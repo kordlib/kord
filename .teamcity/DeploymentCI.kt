@@ -31,7 +31,7 @@ val DeploymentCI = KordBuild("Deployment") {
     }
 
     features {
-        installGitHubPullRequest()
+        //installGitHubPullRequest()
     }
 }
 
