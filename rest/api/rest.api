@@ -2891,11 +2891,11 @@ public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest 
 	public final fun getType ()Ldev/kord/common/entity/InteractionResponseType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/rest/json/request/AutoCompleteResponseCreateRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;Lkotlinx/serialization/KSerializer;)V
+	public static final synthetic fun write$Self (Ldev/kord/rest/json/request/AutoCompleteResponseCreateRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public synthetic fun <init> (Lkotlinx/serialization/KSerializer;)V
+	public static final field INSTANCE Ldev/kord/rest/json/request/AutoCompleteResponseCreateRequest$$serializer;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/AutoCompleteResponseCreateRequest;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2906,6 +2906,7 @@ public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$
 }
 
 public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
@@ -7389,6 +7390,8 @@ public final class dev/kord/rest/service/GuildServiceKt {
 
 public final class dev/kord/rest/service/InteractionService : dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun createAutoCompleteInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/DiscordAutoComplete;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun createBuilderAutoCompleteInteractionResponse (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/builder/interaction/BaseChoiceBuilder;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createFollowupMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/json/request/MultipartFollowupMessageCreateRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createFollowupMessage (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createFollowupMessage$default (Ldev/kord/rest/service/InteractionService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;

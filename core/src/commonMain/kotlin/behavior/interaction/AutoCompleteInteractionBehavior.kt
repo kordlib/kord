@@ -73,7 +73,7 @@ public suspend inline fun AutoCompleteInteractionBehavior.suggestString(builder:
  *
  * The provided choices are only suggestions and the user can provide any other input as well.
  */
-public suspend inline fun <reified T> AutoCompleteInteractionBehavior.suggest(choices: List<Choice<T>>) {
+public suspend fun AutoCompleteInteractionBehavior.suggest(choices: List<Choice>) {
     kord.rest.interaction.createAutoCompleteInteractionResponse(
         id,
         token,

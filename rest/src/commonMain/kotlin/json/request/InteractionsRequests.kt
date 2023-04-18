@@ -5,6 +5,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.rest.NamedFile
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -70,10 +71,21 @@ public data class InteractionResponseCreateRequest(
 )
 
 @Serializable
-public data class AutoCompleteResponseCreateRequest<T>(
+public data class AutoCompleteResponseCreateRequest(
     val type: InteractionResponseType,
-    val data: DiscordAutoComplete<T>
-)
+    val data: DiscordAutoComplete,
+) {
+    public companion object {
+        @Suppress("UNUSED_PARAMETER")
+        @Deprecated(
+            "AutoCompleteResponseCreateRequest is no longer generic",
+            ReplaceWith("this.serializer()"),
+            DeprecationLevel.WARNING,
+        )
+        public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<AutoCompleteResponseCreateRequest> =
+            serializer()
+    }
+}
 
 @Serializable
 public data class ModalResponseCreateRequest(

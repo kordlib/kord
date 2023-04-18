@@ -1849,6 +1849,7 @@ public abstract class dev/kord/common/entity/Choice {
 }
 
 public final class dev/kord/common/entity/Choice$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
@@ -2915,11 +2916,11 @@ public final class dev/kord/common/entity/DiscordAutoComplete {
 	public final fun getChoices ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/common/entity/DiscordAutoComplete;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;Lkotlinx/serialization/KSerializer;)V
+	public static final synthetic fun write$Self (Ldev/kord/common/entity/DiscordAutoComplete;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordAutoComplete$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public synthetic fun <init> (Lkotlinx/serialization/KSerializer;)V
+	public static final field INSTANCE Ldev/kord/common/entity/DiscordAutoComplete$$serializer;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordAutoComplete;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
@@ -2930,6 +2931,7 @@ public final class dev/kord/common/entity/DiscordAutoComplete$$serializer : kotl
 }
 
 public final class dev/kord/common/entity/DiscordAutoComplete$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
