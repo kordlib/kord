@@ -2,14 +2,20 @@ name: Build docs
 
 on:
   push:
-    branches: [ "0.9.x" ]
-  tag:
+  release:
+    types:
+      - published
   workflow_dispatch:
 
 # Gives the workflow permissions to clone the repo and create a page deployment
 permissions:
   id-token: write
   pages: write
+
+# Allow one concurrent deployment
+concurrency:
+      group: pages
+      cancel-in-progress: true
 
 # This workflow updates the versioned docs on dokka.kord.dev using the following strategy
 # 1) pull cache to docs-cache
@@ -19,9 +25,10 @@ permissions:
 # 3) Build GitHub Pages artifact
 #   - Move all folders not named "current" into docs/<folder>
 #   - Move current into docs/
-# 4) Trigger deploy to GitHub Actions
+# 4) Trigger a deployment to GitHub Actions
 jobs:
   build-job:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -32,19 +39,32 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - name: Checkout cache
+        with:
+          ref: 'docs-cache'
+          path: 'docs-cache'
+        uses: actions/checkout@v3
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 8
-      - uses: actions/cache@v3
-        with:
-          path: docs-cache
-          key: docs-cache
       - name: Build docs with Gradle
         uses: gradle/gradle-build-action@v2
         with:
           arguments: :produceDocs
+      - name: Commit files
+        working-directory: docs-cache
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -a -m "Add changes"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: docs-cache
+          directory: docs-cache
       - name: Setup Pages
         uses: actions/configure-pages@v2
       - name: Upload artifact
