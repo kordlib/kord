@@ -44,7 +44,6 @@ fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
 
 fun AbstractDokkaTask.applyVersioningPlugin() {
     pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
-        version = Library.version
         olderVersions = listOf(project.rootProject.file("0.9.x"))
         renderVersionsNavigationOnAllPages = true
     }
