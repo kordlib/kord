@@ -5738,6 +5738,7 @@ public final class dev/kord/common/entity/DiscordSelectOption$Companion {
 
 public final class dev/kord/common/entity/DiscordShard {
 	public static final field Companion Ldev/kord/common/entity/DiscordShard$Companion;
+	public static final field NewCompanion Ldev/kord/common/entity/DiscordShard$NewCompanion;
 	public fun <init> (II)V
 	public final fun component1 ()I
 	public final fun component2 ()I
@@ -5756,6 +5757,10 @@ public final class dev/kord/common/entity/DiscordShard$Companion : kotlinx/seria
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordShard;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordShard$NewCompanion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
