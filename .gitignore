@@ -3,6 +3,10 @@
 .idea/
 out/
 
+# Versioned docs structure
+docs/
+old-docs/
+
 **/build/*
 !**/build/generated/
 # re-exclude BuildConfigGenerated.kt
