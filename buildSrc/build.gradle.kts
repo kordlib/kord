@@ -8,4 +8,5 @@ repositories {
 
 dependencies {
     implementation(libs.bundles.pluginsForBuildSrc)
+    implementation(libs.dokka.versioning.plugin)
 }

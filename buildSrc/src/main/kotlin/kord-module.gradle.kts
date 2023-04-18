@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     ksp(project(":ksp-processors"))
+    "dokkaHtmlPartialPlugin"(dokkaVersioningPlugin)
 }
 
 apiValidation {
