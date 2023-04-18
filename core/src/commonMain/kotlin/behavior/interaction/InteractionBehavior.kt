@@ -20,14 +20,14 @@ public interface InteractionBehavior : KordEntity, Strategizable {
     public val token: String
 
     /** The id of the channel the interaction was sent from. */
-    public val channelId: Snowflake
+    public val channelId: Snowflake?
 
     /** The behavior of the channel the interaction was sent from. */
-    public val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
+    public val channel: MessageChannelBehavior? get() = channelId?.let { MessageChannelBehavior(it, kord) }
 
-    public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
+    public suspend fun getChannelOrNull(): MessageChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
 
-    public suspend fun getChannel(): MessageChannel = supplier.getChannelOf(channelId)
+    public suspend fun getChannel(): MessageChannel = channelId?.let { supplier.getChannelOf(it) }!!
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior
 }

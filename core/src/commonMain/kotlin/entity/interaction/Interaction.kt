@@ -8,7 +8,6 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.User
-import dev.kord.core.entity.channel.Channel
 import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
@@ -25,12 +24,9 @@ public sealed interface Interaction : InteractionBehavior {
 
     override val applicationId: Snowflake get() = data.applicationId
 
-    override val channelId: Snowflake get() = data.channelId.value!!
+    public override val channelId: Snowflake? get() = data.channel.value?.id
 
     override val token: String get() = data.token
-
-    /** A Partial [Channel] object for the interaction. */
-    public val partialChannel: Channel? get() = data.channel.value?.let { Channel(it, kord, supplier) }
 
     /**
      * The type of the interaction.

@@ -10,7 +10,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public interface ApplicationCommandInteractionBehavior : ModalParentInteractionBehavior {
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ApplicationCommandInteractionBehavior =
-        ApplicationCommandInteractionBehavior(id, channelId, token, applicationId, kord, supplier)
+        ApplicationCommandInteractionBehavior(id, channelId!!, token, applicationId, kord, supplier)
 }
 
 internal fun ApplicationCommandInteractionBehavior(

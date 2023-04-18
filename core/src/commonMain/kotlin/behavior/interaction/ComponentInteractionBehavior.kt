@@ -59,7 +59,7 @@ public interface ComponentInteractionBehavior : ActionInteractionBehavior {
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ComponentInteractionBehavior =
-        ComponentInteractionBehavior(id, channelId, token, applicationId, kord, strategy)
+        ComponentInteractionBehavior(id, channelId!!, token, applicationId, kord, strategy)
 }
 
 /**

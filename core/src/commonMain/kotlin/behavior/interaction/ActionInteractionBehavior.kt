@@ -102,7 +102,7 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         kord.with(rest).getOriginalInteraction(applicationId, token)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ActionInteractionBehavior =
-        ActionInteractionBehavior(id, channelId, token, applicationId, kord, strategy)
+        ActionInteractionBehavior(id, channelId!!, token, applicationId, kord, strategy)
 }
 
 

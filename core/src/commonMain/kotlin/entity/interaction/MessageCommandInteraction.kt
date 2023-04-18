@@ -17,11 +17,11 @@ public sealed interface MessageCommandInteraction : ApplicationCommandInteractio
     public val targetId: Snowflake get() = data.data.targetId.value!!
 
     /** The behavior of the message targeted by the [MessageCommand]. */
-    public val target: MessageBehavior get() = MessageBehavior(channelId, targetId, kord)
+    public val target: MessageBehavior? get() = channelId?.let { MessageBehavior(it, targetId, kord) }
 
-    public suspend fun getTarget(): Message = supplier.getMessage(channelId, targetId)
+    public suspend fun getTarget(): Message = supplier.getMessage(channelId!!, targetId)
 
-    public suspend fun getTargetOrNull(): Message? = supplier.getMessageOrNull(channelId, targetId)
+    public suspend fun getTargetOrNull(): Message? = channelId?.let { supplier.getMessageOrNull(it, targetId) }
 
     public val messages: Map<Snowflake, Message> get() = resolvedObjects!!.messages!!
 
