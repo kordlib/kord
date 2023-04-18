@@ -1,9 +1,10 @@
+import org.gradle.api.Project
 import org.gradle.kotlin.dsl.assign
-import org.gradle.kotlin.dsl.dependencies
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.dokka.gradle.AbstractDokkaTask
 import org.jetbrains.dokka.versioning.VersioningConfiguration
 import org.jetbrains.dokka.versioning.VersioningPlugin
+import java.io.FileFilter
 import java.net.URL
 
 fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
@@ -36,15 +37,16 @@ fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
             suppress = true
         }
     }
-    project.dependencies {
-        "dokkaHtmlPartialPlugin"(project.libs.findLibrary("dokka-versioning-plugin").get())
-    }
     applyVersioningPlugin()
 }
 
 fun AbstractDokkaTask.applyVersioningPlugin() {
     pluginConfiguration<VersioningPlugin, VersioningConfiguration> {
-        olderVersions = listOf(project.rootProject.file("0.9.x"))
+        olderVersions = project.rootProject
+            .file("docs-cache").listFiles(FileFilter { it.isDirectory })?.toList() ?: emptyList()
         renderVersionsNavigationOnAllPages = true
     }
 }
+
+val Project.dokkaVersioningPlugin
+    get() = project.libs.findLibrary("dokka-versioning-plugin").get()
