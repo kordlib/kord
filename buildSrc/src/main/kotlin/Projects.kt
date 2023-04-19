@@ -1,29 +1,36 @@
+import org.ajoberstar.grgit.Grgit
+
 /**
  * whether the process has been invoked by JitPack
  */
 val isJitPack get() = "true" == System.getenv("JITPACK")
 
+private
+
 object Library {
+    private val git = Grgit.open()
+    private val head = git.head()
     const val name = "kord"
     const val group = "dev.kord"
+
     val version: String
         get() = if (isJitPack) System.getenv("RELEASE_TAG")
         else {
-            val tag = System.getenv("GITHUB_TAG_NAME")
-            val branch = System.getenv("GITHUB_BRANCH_NAME")
+            val tag = git.tag.list().firstOrNull {
+                it.commit == head
+            }
+            val branch = git.branch.current().name
             when {
-                !tag.isNullOrBlank() -> tag
+                tag != null -> tag.name
                 !branch.isNullOrBlank() -> branch.replace("/", "-") + "-SNAPSHOT"
                 else -> "undefined"
             }
 
         }
 
-    val commitHash get() = System.getenv("GITHUB_SHA") ?: "unknown"
-    fun commitHashOrDefault(default: String) = System.getenv("GITHUB_SHA") ?: default
+    val commitHash get() = head.id
 
-    // this environment variable isn't available out of the box, we set it ourselves
-    val shortCommitHash get() = System.getenv("SHORT_SHA") ?: "unknown"
+    val shortCommitHash get() = head.abbreviatedId
 
     const val description = "Idiomatic Kotlin Wrapper for The Discord API"
     const val projectUrl = "https://github.com/kordlib/kord"

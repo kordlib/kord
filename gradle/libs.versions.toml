@@ -24,6 +24,8 @@ junit5 = "5.9.2" # https://github.com/junit-team/junit5
 mockk = "1.13.4" # https://github.com/mockk/mockk
 slf4j = "2.0.7" # https://www.slf4j.org
 
+grgit = "5.0.0-rc.3"
+
 # plugins
 dokka = "1.8.10" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.20.0" # https://github.com/Kotlin/kotlinx-atomicfu
@@ -75,6 +77,8 @@ kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", versi
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+
+grgit = { module = "org.ajoberstar.grgit:grgit-gradle", version.ref = "grgit" }
 
 # actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
 # https://docs.gradle.org/current/userguide/custom_plugins.html#applying_external_plugins_in_precompiled_script_plugins
