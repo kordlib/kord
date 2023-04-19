@@ -2433,6 +2433,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field CannotSendMessageInForumChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendMessagesInNonTextChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendMessagesToUser Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotSendVoiceMessagesInThisChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotUpdateFinishedEvent Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelVerificationTooHigh Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelWriteRateLimit Ldev/kord/rest/json/JsonErrorCode;
@@ -2604,7 +2605,6 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field WebhookServicesCannotBeUsedInForumChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WebhooksCanOnlyCreateThreadsInForumChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WrongChannelType Ldev/kord/rest/json/JsonErrorCode;
-	public static final field YouCannotSendVoiceMessagesInThisChannel Ldev/kord/rest/json/JsonErrorCode;
 	public final fun getCode ()I
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/rest/json/JsonErrorCode;
 	public static fun values ()[Ldev/kord/rest/json/JsonErrorCode;
