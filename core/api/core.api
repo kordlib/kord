@@ -5827,7 +5827,7 @@ public final class dev/kord/core/entity/Attachment : dev/kord/core/entity/KordEn
 	public final fun getProxyUrl ()Ljava/lang/String;
 	public final fun getSize ()I
 	public final fun getUrl ()Ljava/lang/String;
-	public final fun getWaveForm ()[B
+	public final fun getWaveform ()[B
 	public final fun getWidth ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public final fun isEphemeral ()Z

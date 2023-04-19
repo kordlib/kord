@@ -68,7 +68,7 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
     /**
      * A sampled waveform (currently for voice messages).
      */
-    val waveForm: ByteArray? get() = data.waveform.value?.decodeBase64Bytes()
+    val waveform: ByteArray? get() = data.waveform.value?.decodeBase64Bytes()
 
     /**
      * If this file is displayed as a spoiler. Denoted by the `SPOILER_` prefix in the name.
