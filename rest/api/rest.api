@@ -2595,11 +2595,16 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field UserBannedFromGuild Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UserNotInVoice Ldev/kord/rest/json/JsonErrorCode;
 	public static final field VerifyAccount Ldev/kord/rest/json/JsonErrorCode;
+	public static final field VoiceMessagesCannotBeEdited Ldev/kord/rest/json/JsonErrorCode;
+	public static final field VoiceMessagesDoNotSupportAdditionalContent Ldev/kord/rest/json/JsonErrorCode;
+	public static final field VoiceMessagesMustHaveASingleAudioAttachment Ldev/kord/rest/json/JsonErrorCode;
+	public static final field VoiceMessagesMustHaveSupportingMetadata Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WebhookCannotHaveThreadNameAndThreadId Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WebhookMissingThreadNameOrThreadId Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WebhookServicesCannotBeUsedInForumChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WebhooksCanOnlyCreateThreadsInForumChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WrongChannelType Ldev/kord/rest/json/JsonErrorCode;
+	public static final field YouCannotSendVoiceMessagesInThisChannel Ldev/kord/rest/json/JsonErrorCode;
 	public final fun getCode ()I
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/rest/json/JsonErrorCode;
 	public static fun values ()[Ldev/kord/rest/json/JsonErrorCode;
