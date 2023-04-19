@@ -26,18 +26,13 @@ import com.squareup.kotlinpoet.SET as SET_CLASS_NAME
 import com.squareup.kotlinpoet.STRING as STRING_CLASS_NAME
 
 private val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
-private val KORD_EXPERIMENTAL = ClassName("dev.kord.common.annotation", "KordExperimental")
 private val K_SERIALIZER = KSerializer::class.asClassName()
 
 private val Entry.warningSuppressedName
-    get() = when {
-        isDeprecated -> "@Suppress(\"${
-            when (deprecationLevel) {
-                WARNING -> "DEPRECATION"
-                ERROR, HIDDEN -> "DEPRECATION_ERROR"
-            }
-        }\")·$name"
-        else -> name
+    get() = when (deprecated?.level) {
+        null -> name
+        WARNING -> """@Suppress("DEPRECATION")·$name"""
+        ERROR, HIDDEN -> """@Suppress("DEPRECATION_ERROR")·$name"""
     }
 
 private fun ValueType.toClassName() = when (this) {
@@ -78,20 +73,9 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
     val encodingPostfix = valueType.toEncodingPostfix()
     val valueFormat = valueType.toFormat()
 
-    val relevantEntriesForSerializerAndCompanion = run {
-        // don't keep deprecated entries with a non-deprecated replacement
-        val nonDeprecated = entries
-        val nonDeprecatedValues = nonDeprecated.map { it.value }
-        val deprecatedToKeep = deprecatedEntries.filter { it.value !in nonDeprecatedValues }
-
-        // merge nonDeprecated and deprecatedToKeep, preserving their order
-        val (result, taken) = nonDeprecated.fold(emptyList<Entry>() to 0) { (acc, taken), entry ->
-            val smallerDeprecated = deprecatedToKeep.drop(taken).takeWhile { it < entry }
-            (acc + smallerDeprecated + entry) to (taken + smallerDeprecated.size)
-        }
-
-        return@run result + deprecatedToKeep.drop(taken) // add all deprecated that weren't taken yet
-    }
+    val relevantEntriesForSerializerAndCompanion = entries
+        .groupBy { it.value } // one entry per unique value is relevant
+        .map { (_, group) -> group.firstOrNull { it.deprecated == null } ?: group.first() }
 
     // TODO remove eventually (always use "Serializer" then)
     val internalSerializerName = if (deprecatedSerializerName == "Serializer") "NewSerializer" else "Serializer"
@@ -118,12 +102,9 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 
             // KDoc for the kord enum
             run {
-                val docLink = docUrl?.let { url -> "See [%T]s in the [Discord·Developer·Documentation]($url)." }
-                val combinedKDocFormat = when {
-                    kDoc != null && docLink != null -> "$kDoc\n\n$docLink"
-                    else -> kDoc ?: docLink
-                }
-                combinedKDocFormat?.let { format -> addKdoc(format, enumName) }
+                val docLink = "See [%T]s in the [Discord·Developer·Documentation]($docUrl)."
+                val combinedKDocFormat = if (kDoc != null) "$kDoc\n\n$docLink" else docLink
+                addKdoc(combinedKDocFormat, enumName)
             }
 
             addAnnotation<Serializable> {
@@ -172,25 +153,14 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
 
 
-            fun TypeSpec.Builder.entry(entry: Entry) {
-                entry.kDoc?.let { addKdoc(it) }
-                if (entry.isKordExperimental) addAnnotation(KORD_EXPERIMENTAL)
-                addModifiers(PUBLIC)
-                superclass(enumName)
-                addSuperclassConstructorParameter(valueFormat, entry.value)
-            }
-
             for (entry in entries) {
                 addObject(entry.name) {
-                    entry(entry)
-                }
-            }
-
-            for (entry in deprecatedEntries) {
-                addObject(entry.name) {
-                    entry(entry)
+                    entry.kDoc?.let { addKdoc(it) }
                     @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
-                    addAnnotation(Deprecated(entry.deprecationMessage, entry.replaceWith, entry.deprecationLevel))
+                    entry.deprecated?.let { addAnnotation(it) }
+                    addModifiers(PUBLIC)
+                    superclass(enumName)
+                    addSuperclassConstructorParameter(valueFormat, entry.value)
                 }
             }
 

@@ -5672,6 +5672,35 @@ public final class dev/kord/rest/json/response/ListThreadsResponse$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/response/NitroStickerPacksResponse {
+	public static final field Companion Ldev/kord/rest/json/response/NitroStickerPacksResponse$Companion;
+	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Ldev/kord/rest/json/response/NitroStickerPacksResponse;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/response/NitroStickerPacksResponse;Ljava/util/List;ILjava/lang/Object;)Ldev/kord/rest/json/response/NitroStickerPacksResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStickerPacks ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Ldev/kord/rest/json/response/NitroStickerPacksResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/response/NitroStickerPacksResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/response/NitroStickerPacksResponse$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/response/NitroStickerPacksResponse;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/response/NitroStickerPacksResponse;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/response/NitroStickerPacksResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/response/PartialChannelResponse {
 	public static final field Companion Ldev/kord/rest/json/response/PartialChannelResponse$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ChannelType;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V

@@ -53,15 +53,15 @@ public sealed class StageInstancePrivacyLevel(
     ) : StageInstancePrivacyLevel(value)
 
     /**
-     * The Stage instance is visible to only guild members.
-     */
-    public object GuildOnly : StageInstancePrivacyLevel(2)
-
-    /**
      * The Stage instance is visible publicly.
      */
     @Deprecated(message = "Stages are no longer discoverable")
     public object Public : StageInstancePrivacyLevel(1)
+
+    /**
+     * The Stage instance is visible to only guild members.
+     */
+    public object GuildOnly : StageInstancePrivacyLevel(2)
 
     internal object NewSerializer : KSerializer<StageInstancePrivacyLevel> {
         public override val descriptor: SerialDescriptor =
