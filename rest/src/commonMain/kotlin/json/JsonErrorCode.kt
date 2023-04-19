@@ -515,6 +515,21 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Cannot delete guild subscription integration. */
     CannotDeleteGuildSubscriptionIntegration(50163),
 
+    /** Voice messages do not support additional content.*/
+    VoiceMessagesDoNotSupportAdditionalContent(50159),
+
+    /** Voice messages must have a single audio attachment. */
+    VoiceMessagesMustHaveASingleAudioAttachment(50160),
+
+    /** Voice messages must have supporting metadata. */
+    VoiceMessagesMustHaveSupportingMetadata(50161),
+
+    /** Voice messages cannot be edited. */
+    VoiceMessagesCannotBeEdited(50162),
+
+    /** You cannot send voice messages in this channel. */
+    YouCannotSendVoiceMessagesInThisChannel(50173),
+
     /** You do not have permission to send this sticker. */
     StickerPermissionLack(50600),
 
