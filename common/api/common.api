@@ -8714,8 +8714,8 @@ public final class dev/kord/common/serialization/DurationInDaysSerializer : dev/
 	public static final field INSTANCE Ldev/kord/common/serialization/DurationInDaysSerializer;
 }
 
-public final class dev/kord/common/serialization/DurationInFloatingPointSecondsSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/serialization/DurationInFloatingPointSecondsSerializer;
+public final class dev/kord/common/serialization/DurationInDoubleSecondsSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/kord/common/serialization/DurationInDoubleSecondsSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
 	public fun deserialize-5sfh64U (Lkotlinx/serialization/encoding/Decoder;)J
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;

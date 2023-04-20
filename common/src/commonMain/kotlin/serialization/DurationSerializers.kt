@@ -13,6 +13,26 @@ import kotlin.time.DurationUnit
 import kotlin.time.DurationUnit.*
 import kotlin.time.toDuration
 
+// -------- as Double --------
+
+/** Serializer that encodes and decodes [Duration]s as a [Double] number of seconds. */
+public object DurationInDoubleSecondsSerializer : KSerializer<Duration> {
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("dev.kord.common.serialization.DurationInDoubleSeconds", PrimitiveKind.DOUBLE)
+
+    override fun serialize(encoder: Encoder, value: Duration) {
+        if (value.isInfinite()) throw SerializationException("Infinite Durations cannot be serialized, got $value")
+        encoder.encodeDouble(value.toDouble(unit = SECONDS))
+    }
+
+    override fun deserialize(decoder: Decoder): Duration = decoder.decodeDouble().toDuration(unit = SECONDS)
+}
+
+/** A [Duration] that is [serializable][Serializable] with [DurationInDoubleSecondsSerializer]. */
+public typealias DurationInDoubleSeconds = @Serializable(with = DurationInDoubleSecondsSerializer::class) Duration
+
+
+// -------- as Long --------
 
 /** Serializer that encodes and decodes [Duration]s as a [Long] number of the specified [unit]. */
 public sealed class DurationAsLongSerializer(
@@ -43,31 +63,6 @@ public sealed class DurationAsLongSerializer(
     final override fun deserialize(decoder: Decoder): Duration {
         return decoder.decodeLong().toDuration(unit)
     }
-}
-
-/** A [Duration] that is [serializable][Serializable] with [DurationInFloatingPointSecondsSerializer]. */
-public typealias DurationInFloatingPointSeconds = @Serializable(with = DurationInFloatingPointSecondsSerializer::class) Duration
-
-/** Serializer that encodes and decodes [Duration]s as a [Double] number of seconds */
-public object DurationInFloatingPointSecondsSerializer : KSerializer<Duration> {
-    override val descriptor: SerialDescriptor =
-        PrimitiveSerialDescriptor("dev.kord.common.serialization.DurationInFloatingPointSeconds", PrimitiveKind.DOUBLE)
-
-    override fun serialize(encoder: Encoder, value: Duration) {
-        when (val valueAsDouble = value.toDouble(unit = SECONDS)) {
-            Double.MIN_VALUE, Double.MAX_VALUE -> throw SerializationException(
-                if (value.isInfinite()) {
-                    "Infinite Durations cannot be serialized, got $value"
-                } else {
-                    "The Duration $value expressed as a number of SECONDS does not fit in the range of Long type and therefore cannot be serialized with DurationInFloatingPointSecondsSerializer"
-                }
-            )
-
-            else -> encoder.encodeDouble(valueAsDouble)
-        }
-    }
-
-    override fun deserialize(decoder: Decoder): Duration = decoder.decodeDouble().toDuration(unit = SECONDS)
 }
 
 

@@ -5,7 +5,7 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.serialization.DurationInFloatingPointSeconds
+import dev.kord.common.serialization.DurationInDoubleSeconds
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -20,7 +20,7 @@ public data class AttachmentData(
     val height: OptionalInt? = OptionalInt.Missing,
     val width: OptionalInt? = OptionalInt.Missing,
     val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
-    val durationSecs: Optional<DurationInFloatingPointSeconds> = Optional.Missing(),
+    val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing(),
     val waveform: Optional<String> = Optional.Missing()
 ) {
     public companion object {
