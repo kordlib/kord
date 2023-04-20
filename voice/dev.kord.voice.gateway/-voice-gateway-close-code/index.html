@@ -1,0 +1,304 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>VoiceGatewayCloseCode</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+<a href="../../../index.html">
+<span>kord</span>            </a>    </div>
+    <div>0.9.x-SNAPSHOT
+    </div>
+    <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":voice:dokkaHtmlPartial/main">jvm</button>
+        </div>
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="kord-voice::dev.kord.voice.gateway/VoiceGatewayCloseCode///PointingToDeclaration//634246632">
+  <div class="breadcrumbs"><a href="../../index.html">kord-voice</a><span class="delimiter">/</span><a href="../index.html">dev.kord.voice.gateway</a><span class="delimiter">/</span><span class="current">VoiceGatewayCloseCode</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Voice</span><wbr><span>Gateway</span><wbr><span>Close</span><wbr><span><span>Code</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">class </span><a href="index.html">VoiceGatewayCloseCode</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/e9ec786b35e175bbf9e7a9e801268faac37f8f61/voice/src/main/kotlin/gateway/VoiceGateway.kt#L121">source</a>)</span></span></div><p class="paragraph">Representation of Discord's <a href="https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-close-event-codes">Voice Gateway close codes</a>.</p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-unknown/index.html">Unknown</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-unknown-opcode/index.html">UnknownOpcode</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-failed-to-decode-payload/index.html">FailedToDecodePayload</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-not-authenticated/index.html">NotAuthenticated</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-authentication-failed/index.html">AuthenticationFailed</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-already-authenticated/index.html">AlreadyAuthenticated</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-session-no-longer-valid/index.html">SessionNoLongerValid</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-session-timeout/index.html">SessionTimeout</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-server-not-found/index.html">ServerNotFound</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-unknown-protocol/index.html">UnknownProtocol</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-disconnect/index.html">Disconnect</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-voice-server-crashed/index.html">VoiceServerCrashed</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-unknown-encryption-mode/index.html">UnknownEncryptionMode</a></div></span></div><div></div></div></div></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="1279257465%2FClasslikes%2F634246632" anchor-label="AlreadyAuthenticated" id="1279257465%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-already-authenticated/index.html"><span>Already</span><wbr><span><span>Authenticated</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1279257465%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-already-authenticated/index.html">AlreadyAuthenticated</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-528727269%2FClasslikes%2F634246632" anchor-label="AuthenticationFailed" id="-528727269%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-authentication-failed/index.html"><span>Authentication</span><wbr><span><span>Failed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-528727269%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-authentication-failed/index.html">AuthenticationFailed</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-350246426%2FClasslikes%2F634246632" anchor-label="Companion" id="-350246426%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-350246426%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1959601164%2FClasslikes%2F634246632" anchor-label="Disconnect" id="-1959601164%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-disconnect/index.html"><span><span>Disconnect</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1959601164%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-disconnect/index.html">Disconnect</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1687528426%2FClasslikes%2F634246632" anchor-label="FailedToDecodePayload" id="1687528426%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-failed-to-decode-payload/index.html"><span>Failed</span><wbr><span>To</span><wbr><span>Decode</span><wbr><span><span>Payload</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1687528426%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-failed-to-decode-payload/index.html">FailedToDecodePayload</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-485484236%2FClasslikes%2F634246632" anchor-label="NotAuthenticated" id="-485484236%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-not-authenticated/index.html"><span>Not</span><wbr><span><span>Authenticated</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-485484236%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-not-authenticated/index.html">NotAuthenticated</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-247935746%2FClasslikes%2F634246632" anchor-label="ServerNotFound" id="-247935746%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-server-not-found/index.html"><span>Server</span><wbr><span>Not</span><wbr><span><span>Found</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-247935746%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-server-not-found/index.html">ServerNotFound</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1845826572%2FClasslikes%2F634246632" anchor-label="SessionNoLongerValid" id="-1845826572%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-session-no-longer-valid/index.html"><span>Session</span><wbr><span>No</span><wbr><span>Longer</span><wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1845826572%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-session-no-longer-valid/index.html">SessionNoLongerValid</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1961064955%2FClasslikes%2F634246632" anchor-label="SessionTimeout" id="-1961064955%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-session-timeout/index.html"><span>Session</span><wbr><span><span>Timeout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1961064955%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-session-timeout/index.html">SessionTimeout</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1916305752%2FClasslikes%2F634246632" anchor-label="Unknown" id="-1916305752%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-unknown/index.html"><span><span>Unknown</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1916305752%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">class </span><a href="-unknown/index.html">Unknown</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>code<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-24747710%2FClasslikes%2F634246632" anchor-label="UnknownEncryptionMode" id="-24747710%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-unknown-encryption-mode/index.html"><span>Unknown</span><wbr><span>Encryption</span><wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-24747710%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-unknown-encryption-mode/index.html">UnknownEncryptionMode</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1184879034%2FClasslikes%2F634246632" anchor-label="UnknownOpcode" id="1184879034%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-unknown-opcode/index.html"><span>Unknown</span><wbr><span><span>Opcode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1184879034%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-unknown-opcode/index.html">UnknownOpcode</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="38937584%2FClasslikes%2F634246632" anchor-label="UnknownProtocol" id="38937584%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-unknown-protocol/index.html"><span>Unknown</span><wbr><span><span>Protocol</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="38937584%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-unknown-protocol/index.html">UnknownProtocol</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="754326911%2FClasslikes%2F634246632" anchor-label="VoiceServerCrashed" id="754326911%2FClasslikes%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-voice-server-crashed/index.html"><span>Voice</span><wbr><span>Server</span><wbr><span><span>Crashed</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="754326911%2FClasslikes%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-voice-server-crashed/index.html">VoiceServerCrashed</a> : <a href="index.html">VoiceGatewayCloseCode</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="-765243314%2FProperties%2F634246632" anchor-label="code" id="-765243314%2FProperties%2F634246632" data-filterable-set=":voice:dokkaHtmlPartial/main"></a>
+          <div class="table-row" data-filterable-current=":voice:dokkaHtmlPartial/main" data-filterable-set=":voice:dokkaHtmlPartial/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="code.html"><span><span>code</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-765243314%2FProperties%2F634246632"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":voice:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="code.html">code</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
+

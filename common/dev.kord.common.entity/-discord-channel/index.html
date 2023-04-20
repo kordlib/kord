@@ -1,0 +1,619 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>DiscordChannel</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+<a href="../../../index.html">
+<span>kord</span>            </a>    </div>
+    <div>0.9.x-SNAPSHOT
+    </div>
+    <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":common:dokkaHtmlPartial/commonMain">common</button>
+        </div>
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="kord-common::dev.kord.common.entity/DiscordChannel///PointingToDeclaration//-1137157624">
+  <div class="breadcrumbs"><a href="../../index.html">kord-common</a><span class="delimiter">/</span><a href="../index.html">dev.kord.common.entity</a><span class="delimiter">/</span><span class="current">DiscordChannel</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Discord</span><wbr><span><span>Channel</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">DiscordChannel</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>id<span class="token operator">: </span><a href="../-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>type<span class="token operator">: </span><a href="../-channel-type/index.html">ChannelType</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>guildId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>position<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>permissionOverwrites<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-overwrite/index.html">Overwrite</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>name<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>topic<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>nsfw<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a><span class="token operator"> = </span>OptionalBoolean.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>lastMessageId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator">?</span><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>bitrate<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>userLimit<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>rateLimitPerUser<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.common.serialization/index.html#1207742382%2FClasslikes%2F-1137157624">DurationInSeconds</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>recipients<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-user/index.html">DiscordUser</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>icon<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>ownerId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>applicationId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>parentId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator">?</span><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>lastPinTimestamp<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/kotlinx.datetime/-instant/index.html">Instant</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>rtcRegion<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>videoQualityMode<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-video-quality-mode/index.html">VideoQualityMode</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>permissions<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-permissions/index.html">Permissions</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>messageCount<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>memberCount<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>threadMetadata<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-thread-metadata/index.html">DiscordThreadMetadata</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>defaultAutoArchiveDuration<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-archive-duration/index.html">ArchiveDuration</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>member<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-thread-member/index.html">DiscordThreadMember</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>flags<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-channel-flags/index.html">ChannelFlags</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>totalMessageSent<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>availableTags<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-forum-tag/index.html">ForumTag</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>appliedTags<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-snowflake/index.html">Snowflake</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>defaultReactionEmoji<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-default-reaction/index.html">DefaultReaction</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>defaultThreadRateLimitPerUser<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.common.serialization/index.html#1207742382%2FClasslikes%2F-1137157624">DurationInSeconds</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>defaultSortOrder<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-sort-order-type/index.html">SortOrderType</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>defaultForumLayout<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-forum-layout-type/index.html">ForumLayoutType</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>message<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-message/index.html">DiscordMessage</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()</span></span><span class="token punctuation">)</span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/e9ec786b35e175bbf9e7a9e801268faac37f8f61/common/src/commonMain/kotlin/entity/DiscordChannel.kt#L107">source</a>)</span></span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-1866978199%2FConstructors%2F-1137157624" anchor-label="DiscordChannel" id="-1866978199%2FConstructors%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-discord-channel.html"><span>Discord</span><wbr><span><span>Channel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1866978199%2FConstructors%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">id<span class="token operator">: </span><a href="../-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">type<span class="token operator">: </span><a href="../-channel-type/index.html">ChannelType</a><span class="token punctuation">, </span></span><span class="parameter ">guildId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter ">position<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">permissionOverwrites<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-overwrite/index.html">Overwrite</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">topic<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">nsfw<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a><span class="token operator"> = </span>OptionalBoolean.Missing<span class="token punctuation">, </span></span><span class="parameter ">lastMessageId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator">?</span><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter ">bitrate<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">userLimit<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">rateLimitPerUser<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.common.serialization/index.html#1207742382%2FClasslikes%2F-1137157624">DurationInSeconds</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">recipients<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-user/index.html">DiscordUser</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">icon<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">ownerId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter ">applicationId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter ">parentId<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator">?</span><span class="token operator"> = </span>OptionalSnowflake.Missing<span class="token punctuation">, </span></span><span class="parameter ">lastPinTimestamp<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/kotlinx.datetime/-instant/index.html">Instant</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">rtcRegion<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">videoQualityMode<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-video-quality-mode/index.html">VideoQualityMode</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">permissions<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-permissions/index.html">Permissions</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">messageCount<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">memberCount<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">threadMetadata<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-thread-metadata/index.html">DiscordThreadMetadata</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">defaultAutoArchiveDuration<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-archive-duration/index.html">ArchiveDuration</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">member<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-thread-member/index.html">DiscordThreadMember</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">flags<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-channel-flags/index.html">ChannelFlags</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">totalMessageSent<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a><span class="token operator"> = </span>OptionalInt.Missing<span class="token punctuation">, </span></span><span class="parameter ">availableTags<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-forum-tag/index.html">ForumTag</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">appliedTags<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-snowflake/index.html">Snowflake</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">defaultReactionEmoji<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-default-reaction/index.html">DefaultReaction</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">defaultThreadRateLimitPerUser<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.common.serialization/index.html#1207742382%2FClasslikes%2F-1137157624">DurationInSeconds</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">defaultSortOrder<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-sort-order-type/index.html">SortOrderType</a><span class="token operator">?</span><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">defaultForumLayout<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-forum-layout-type/index.html">ForumLayoutType</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()<span class="token punctuation">, </span></span><span class="parameter ">message<span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-message/index.html">DiscordMessage</a><span class="token operator">&gt;</span><span class="token operator"> = </span>Optional.Missing()</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="2122924194%2FProperties%2F-1137157624" anchor-label="applicationId" id="2122924194%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="application-id.html"><span>application</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2122924194%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="application-id.html">applicationId</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1397510999%2FProperties%2F-1137157624" anchor-label="appliedTags" id="1397510999%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="applied-tags.html"><span>applied</span><wbr><span><span>Tags</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1397510999%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="applied-tags.html">appliedTags</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-snowflake/index.html">Snowflake</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-950916981%2FProperties%2F-1137157624" anchor-label="availableTags" id="-950916981%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="available-tags.html"><span>available</span><wbr><span><span>Tags</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-950916981%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="available-tags.html">availableTags</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-forum-tag/index.html">ForumTag</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1224093184%2FProperties%2F-1137157624" anchor-label="bitrate" id="1224093184%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="bitrate.html"><span><span>bitrate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1224093184%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="bitrate.html">bitrate</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-465568601%2FProperties%2F-1137157624" anchor-label="defaultAutoArchiveDuration" id="-465568601%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="default-auto-archive-duration.html"><span>default</span><wbr><span>Auto</span><wbr><span>Archive</span><wbr><span><span>Duration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-465568601%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-auto-archive-duration.html">defaultAutoArchiveDuration</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-archive-duration/index.html">ArchiveDuration</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-803101373%2FProperties%2F-1137157624" anchor-label="defaultForumLayout" id="-803101373%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="default-forum-layout.html"><span>default</span><wbr><span>Forum</span><wbr><span><span>Layout</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-803101373%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-forum-layout.html">defaultForumLayout</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-forum-layout-type/index.html">ForumLayoutType</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="440752465%2FProperties%2F-1137157624" anchor-label="defaultReactionEmoji" id="440752465%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="default-reaction-emoji.html"><span>default</span><wbr><span>Reaction</span><wbr><span><span>Emoji</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="440752465%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-reaction-emoji.html">defaultReactionEmoji</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-default-reaction/index.html">DefaultReaction</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-170517378%2FProperties%2F-1137157624" anchor-label="defaultSortOrder" id="-170517378%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="default-sort-order.html"><span>default</span><wbr><span>Sort</span><wbr><span><span>Order</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-170517378%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-sort-order.html">defaultSortOrder</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-sort-order-type/index.html">SortOrderType</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="913210037%2FProperties%2F-1137157624" anchor-label="defaultThreadRateLimitPerUser" id="913210037%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="default-thread-rate-limit-per-user.html"><span>default</span><wbr><span>Thread</span><wbr><span>Rate</span><wbr><span>Limit</span><wbr><span>Per</span><wbr><span><span>User</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="913210037%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="default-thread-rate-limit-per-user.html">defaultThreadRateLimitPerUser</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.common.serialization/index.html#1207742382%2FClasslikes%2F-1137157624">DurationInSeconds</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="603230246%2FProperties%2F-1137157624" anchor-label="flags" id="603230246%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="flags.html"><span><span>flags</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="603230246%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="flags.html">flags</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-channel-flags/index.html">ChannelFlags</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="495061023%2FProperties%2F-1137157624" anchor-label="guildId" id="495061023%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="guild-id.html"><span>guild</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="495061023%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="guild-id.html">guildId</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1810565716%2FProperties%2F-1137157624" anchor-label="icon" id="1810565716%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="icon.html"><span><span>icon</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1810565716%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="icon.html">icon</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1915637746%2FProperties%2F-1137157624" anchor-label="id" id="1915637746%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="id.html"><span><span>id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1915637746%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="id.html">id</a><span class="token operator">: </span><a href="../-snowflake/index.html">Snowflake</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="490222785%2FProperties%2F-1137157624" anchor-label="lastMessageId" id="490222785%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="last-message-id.html"><span>last</span><wbr><span>Message</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="490222785%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="last-message-id.html">lastMessageId</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1774109738%2FProperties%2F-1137157624" anchor-label="lastPinTimestamp" id="-1774109738%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="last-pin-timestamp.html"><span>last</span><wbr><span>Pin</span><wbr><span><span>Timestamp</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1774109738%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="last-pin-timestamp.html">lastPinTimestamp</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/kotlinx.datetime/-instant/index.html">Instant</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1560196947%2FProperties%2F-1137157624" anchor-label="member" id="1560196947%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="member.html"><span><span>member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1560196947%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="member.html">member</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-thread-member/index.html">DiscordThreadMember</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1355257816%2FProperties%2F-1137157624" anchor-label="memberCount" id="1355257816%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="member-count.html"><span>member</span><wbr><span><span>Count</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1355257816%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="member-count.html">memberCount</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="250292902%2FProperties%2F-1137157624" anchor-label="message" id="250292902%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="message.html"><span><span>message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="250292902%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="message.html">message</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-message/index.html">DiscordMessage</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1119010715%2FProperties%2F-1137157624" anchor-label="messageCount" id="-1119010715%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="message-count.html"><span>message</span><wbr><span><span>Count</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1119010715%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="message-count.html">messageCount</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-711826302%2FProperties%2F-1137157624" anchor-label="name" id="-711826302%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="name.html"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-711826302%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="name.html">name</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1414876183%2FProperties%2F-1137157624" anchor-label="nsfw" id="1414876183%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="nsfw.html"><span><span>nsfw</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1414876183%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="nsfw.html">nsfw</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-boolean/index.html">OptionalBoolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1770776225%2FProperties%2F-1137157624" anchor-label="ownerId" id="-1770776225%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="owner-id.html"><span>owner</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1770776225%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="owner-id.html">ownerId</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1498652904%2FProperties%2F-1137157624" anchor-label="parentId" id="1498652904%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="parent-id.html"><span>parent</span><wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1498652904%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="parent-id.html">parentId</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-snowflake/index.html">OptionalSnowflake</a><span class="token operator">?</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-857341162%2FProperties%2F-1137157624" anchor-label="permissionOverwrites" id="-857341162%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="permission-overwrites.html"><span>permission</span><wbr><span><span>Overwrites</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-857341162%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="permission-overwrites.html">permissionOverwrites</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-overwrite/index.html">Overwrite</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-19643191%2FProperties%2F-1137157624" anchor-label="permissions" id="-19643191%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="permissions.html"><span><span>permissions</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-19643191%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="permissions.html">permissions</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-permissions/index.html">Permissions</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="385637284%2FProperties%2F-1137157624" anchor-label="position" id="385637284%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="position.html"><span><span>position</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="385637284%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="position.html">position</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1721775616%2FProperties%2F-1137157624" anchor-label="rateLimitPerUser" id="1721775616%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rate-limit-per-user.html"><span>rate</span><wbr><span>Limit</span><wbr><span>Per</span><wbr><span><span>User</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1721775616%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="rate-limit-per-user.html">rateLimitPerUser</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.common.serialization/index.html#1207742382%2FClasslikes%2F-1137157624">DurationInSeconds</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-901778317%2FProperties%2F-1137157624" anchor-label="recipients" id="-901778317%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="recipients.html"><span><span>recipients</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-901778317%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="recipients.html">recipients</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-user/index.html">DiscordUser</a><span class="token operator">&gt;</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-538909256%2FProperties%2F-1137157624" anchor-label="rtcRegion" id="-538909256%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rtc-region.html"><span>rtc</span><wbr><span><span>Region</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-538909256%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="rtc-region.html">rtcRegion</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="126489460%2FProperties%2F-1137157624" anchor-label="threadMetadata" id="126489460%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="thread-metadata.html"><span>thread</span><wbr><span><span>Metadata</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="126489460%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="thread-metadata.html">threadMetadata</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-discord-thread-metadata/index.html">DiscordThreadMetadata</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="446824062%2FProperties%2F-1137157624" anchor-label="topic" id="446824062%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="topic.html"><span><span>topic</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="446824062%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="topic.html">topic</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-525820238%2FProperties%2F-1137157624" anchor-label="totalMessageSent" id="-525820238%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="total-message-sent.html"><span>total</span><wbr><span>Message</span><wbr><span><span>Sent</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-525820238%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="total-message-sent.html">totalMessageSent</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="217948851%2FProperties%2F-1137157624" anchor-label="type" id="217948851%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="type.html"><span><span>type</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="217948851%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="type.html">type</a><span class="token operator">: </span><a href="../-channel-type/index.html">ChannelType</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2132455453%2FProperties%2F-1137157624" anchor-label="userLimit" id="2132455453%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="user-limit.html"><span>user</span><wbr><span><span>Limit</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2132455453%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="user-limit.html">userLimit</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional-int/index.html">OptionalInt</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="386183878%2FProperties%2F-1137157624" anchor-label="videoQualityMode" id="386183878%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="video-quality-mode.html"><span>video</span><wbr><span>Quality</span><wbr><span><span>Mode</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="386183878%2FProperties%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="video-quality-mode.html">videoQualityMode</a><span class="token operator">: </span><a href="../../dev.kord.common.entity.optional/-optional/index.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-video-quality-mode/index.html">VideoQualityMode</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
+

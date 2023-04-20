@@ -1,0 +1,1024 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>GuildService</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/jetbrains-mono.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+<div class="navigation-wrapper" id="navigation-wrapper">
+    <div id="leftToggler"><span class="icon-toggler"></span></div>
+    <div class="library-name">
+<a href="../../../index.html">
+<span>kord</span>            </a>    </div>
+    <div>0.9.x-SNAPSHOT
+    </div>
+    <div class="pull-right d-flex">
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector common-like" data-active="" data-filter=":rest:dokkaHtmlPartial/commonMain">common</button>
+        </div>
+        <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
+        <div id="searchBar"></div>
+    </div>
+</div>
+<div id="container">
+    <div id="leftColumn">
+        <div id="sideMenu"></div>
+    </div>
+    <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="kord-rest::dev.kord.rest.service/GuildService///PointingToDeclaration//-910358913">
+  <div class="breadcrumbs"><a href="../../index.html">kord-rest</a><span class="delimiter">/</span><a href="../index.html">dev.kord.rest.service</a><span class="delimiter">/</span><span class="current">GuildService</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Guild</span><wbr><span><span>Service</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">GuildService</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">requestHandler<span class="token operator">: </span><a href="../../dev.kord.rest.request/-request-handler/index.html">RequestHandler</a></span></span><span class="token punctuation">)</span> : <a href="../-rest-service/index.html">RestService</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/e9ec786b35e175bbf9e7a9e801268faac37f8f61/rest/src/commonMain/kotlin/service/GuildService.kt#L26">source</a>)</span></span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="490705422%2FConstructors%2F-910358913" anchor-label="GuildService" id="490705422%2FConstructors%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-guild-service.html"><span>Guild</span><wbr><span><span>Service</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="490705422%2FConstructors%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">requestHandler<span class="token operator">: </span><a href="../../dev.kord.rest.request/-request-handler/index.html">RequestHandler</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-815507348%2FFunctions%2F-910358913" anchor-label="addGuildBan" id="-815507348%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-guild-ban.html"><span>add</span><wbr><span>Guild</span><wbr><span><span>Ban</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-815507348%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="add-guild-ban.html"><span class="token function">addGuildBan</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.ban/-ban-create-builder/index.html">BanCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1783767681%2FFunctions%2F-910358913" anchor-label="addGuildMember" id="1783767681%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-guild-member.html"><span>add</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1783767681%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="add-guild-member.html"><span class="token function">addGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">token<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.member/-member-add-builder/index.html">MemberAddBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1449431103%2FFunctions%2F-910358913" anchor-label="addRoleToGuildMember" id="1449431103%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="add-role-to-guild-member.html"><span>add</span><wbr><span>Role</span><wbr><span>To</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1449431103%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="add-role-to-guild-member.html"><span class="token function">addRoleToGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">roleId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1686420627%2FFunctions%2F-910358913" anchor-label="beginGuildPrune" id="-1686420627%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="begin-guild-prune.html"><span>begin</span><wbr><span>Guild</span><wbr><span><span>Prune</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1686420627%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="begin-guild-prune.html"><span class="token function">beginGuildPrune</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">days<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">7</span><span class="token punctuation">, </span></span><span class="parameter ">computePruneCount<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">true</span><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.rest.json.response/-prune-response/index.html">PruneResponse</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1490172701%2FFunctions%2F-910358913" anchor-label="createCategory" id="1490172701%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../create-category.html"><span>create</span><wbr><span><span>Category</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1490172701%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../create-category.html"><span class="token function">createCategory</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.channel/-category-create-builder/index.html">CategoryCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-channel/index.html">DiscordChannel</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="994782549%2FFunctions%2F-910358913" anchor-label="createForumChannel" id="994782549%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../create-forum-channel.html"><span>create</span><wbr><span>Forum</span><wbr><span><span>Channel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="994782549%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../create-forum-channel.html"><span class="token function">createForumChannel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.channel/-forum-channel-create-builder/index.html">ForumChannelCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-channel/index.html">DiscordChannel</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1239414629%2FFunctions%2F-910358913" anchor-label="createGuild" id="1239414629%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-guild.html"><span>create</span><wbr><span><span>Guild</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1239414629%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="create-guild.html"><span class="token function">createGuild</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.guild/-guild-create-builder/index.html">GuildCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild/index.html">DiscordGuild</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1348519910%2FFunctions%2F-910358913" anchor-label="createGuildChannel" id="1348519910%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-guild-channel.html"><span>create</span><wbr><span>Guild</span><wbr><span><span>Channel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1348519910%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="create-guild-channel.html"><span class="token function">createGuildChannel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">channel<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-guild-channel-create-request/index.html">GuildChannelCreateRequest</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-channel/index.html">DiscordChannel</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1022252698%2FFunctions%2F-910358913" anchor-label="createGuildIntegration" id="1022252698%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-guild-integration.html"><span>create</span><wbr><span>Guild</span><wbr><span><span>Integration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1022252698%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="create-guild-integration.html"><span class="token function">createGuildIntegration</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">integration<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-guild-integration-create-request/index.html">GuildIntegrationCreateRequest</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1128897592%2FFunctions%2F-910358913" anchor-label="createGuildRole" id="1128897592%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-guild-role.html"><span>create</span><wbr><span>Guild</span><wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1128897592%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="create-guild-role.html"><span class="token function">createGuildRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.role/-role-create-builder/index.html">RoleCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-role/index.html">DiscordRole</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-962456757%2FFunctions%2F-910358913" anchor-label="createNewsChannel" id="-962456757%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../create-news-channel.html"><span>create</span><wbr><span>News</span><wbr><span><span>Channel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-962456757%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../create-news-channel.html"><span class="token function">createNewsChannel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.channel/-news-channel-create-builder/index.html">NewsChannelCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-channel/index.html">DiscordChannel</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="937215975%2FFunctions%2F-910358913" anchor-label="createScheduledEvent" id="937215975%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="create-scheduled-event.html"><span>create</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="937215975%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="create-scheduled-event.html"><span class="token function">createScheduledEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-guild-scheduled-event-create-request/index.html">GuildScheduledEventCreateRequest</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-scheduled-event/index.html">DiscordGuildScheduledEvent</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="841040071%2FFunctions%2F-910358913" anchor-label="createScheduledEvent" id="841040071%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../create-scheduled-event.html"><span>create</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="841040071%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../create-scheduled-event.html"><span class="token function">createScheduledEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">privacyLevel<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-guild-scheduled-event-privacy-level/index.html">GuildScheduledEventPrivacyLevel</a><span class="token punctuation">, </span></span><span class="parameter ">scheduledStartTime<span class="token operator">: </span><a href="https://kotlinlang.org/api/kotlinx-datetime/kotlinx-datetime/kotlinx.datetime/-instant/index.html">Instant</a><span class="token punctuation">, </span></span><span class="parameter ">entityType<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-scheduled-entity-type/index.html">ScheduledEntityType</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.guild/-scheduled-event-create-builder/index.html">ScheduledEventCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a><span class="token operator"> = </span>{}</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-scheduled-event/index.html">DiscordGuildScheduledEvent</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="206116235%2FFunctions%2F-910358913" anchor-label="createTextChannel" id="206116235%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../create-text-channel.html"><span>create</span><wbr><span>Text</span><wbr><span><span>Channel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="206116235%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../create-text-channel.html"><span class="token function">createTextChannel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.channel/-text-channel-create-builder/index.html">TextChannelCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-channel/index.html">DiscordChannel</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1333246537%2FFunctions%2F-910358913" anchor-label="createVoiceChannel" id="-1333246537%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../create-voice-channel.html"><span>create</span><wbr><span>Voice</span><wbr><span><span>Channel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1333246537%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../create-voice-channel.html"><span class="token function">createVoiceChannel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">name<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.channel/-voice-channel-create-builder/index.html">VoiceChannelCreateBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-channel/index.html">DiscordChannel</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1347291138%2FFunctions%2F-910358913" anchor-label="deleteGuild" id="1347291138%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-guild.html"><span>delete</span><wbr><span><span>Guild</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1347291138%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="delete-guild.html"><span class="token function">deleteGuild</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1322951875%2FFunctions%2F-910358913" anchor-label="deleteGuildBan" id="-1322951875%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-guild-ban.html"><span>delete</span><wbr><span>Guild</span><wbr><span><span>Ban</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1322951875%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="delete-guild-ban.html"><span class="token function">deleteGuildBan</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1909324568%2FFunctions%2F-910358913" anchor-label="deleteGuildIntegration" id="1909324568%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-guild-integration.html"><span>delete</span><wbr><span>Guild</span><wbr><span><span>Integration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1909324568%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="delete-guild-integration.html"><span class="token function">deleteGuildIntegration</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">integrationId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1308252402%2FFunctions%2F-910358913" anchor-label="deleteGuildMember" id="1308252402%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-guild-member.html"><span>delete</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1308252402%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="delete-guild-member.html"><span class="token function">deleteGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="918357654%2FFunctions%2F-910358913" anchor-label="deleteGuildRole" id="918357654%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-guild-role.html"><span>delete</span><wbr><span>Guild</span><wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="918357654%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="delete-guild-role.html"><span class="token function">deleteGuildRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">roleId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2052813878%2FFunctions%2F-910358913" anchor-label="deleteRoleFromGuildMember" id="2052813878%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-role-from-guild-member.html"><span>delete</span><wbr><span>Role</span><wbr><span>From</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2052813878%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="delete-role-from-guild-member.html"><span class="token function">deleteRoleFromGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">roleId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="413479570%2FFunctions%2F-910358913" anchor-label="deleteScheduledEvent" id="413479570%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="delete-scheduled-event.html"><span>delete</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="413479570%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="delete-scheduled-event.html"><span class="token function">deleteScheduledEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1152646311%2FFunctions%2F-910358913" anchor-label="getGuild" id="1152646311%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild.html"><span>get</span><wbr><span><span>Guild</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1152646311%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild.html"><span class="token function">getGuild</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">withCounts<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild/index.html">DiscordGuild</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-10012420%2FFunctions%2F-910358913" anchor-label="getGuildBan" id="-10012420%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-ban.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Ban</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-10012420%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-ban.html"><span class="token function">getGuildBan</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.rest.json.response/-ban-response/index.html">BanResponse</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1192093240%2FFunctions%2F-910358913" anchor-label="getGuildBans" id="1192093240%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-bans.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Bans</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1192093240%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-bans.html"><span class="token function">getGuildBans</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">position<span class="token operator">: </span><a href="../../dev.kord.rest.route/-position/-before-or-after/index.html">Position.BeforeOrAfter</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.rest.json.response/-ban-response/index.html">BanResponse</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-806789043%2FFunctions%2F-910358913" anchor-label="getGuildChannels" id="-806789043%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-channels.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Channels</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-806789043%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-channels.html"><span class="token function">getGuildChannels</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-channel/index.html">DiscordChannel</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="698545246%2FFunctions%2F-910358913" anchor-label="getGuildIntegrations" id="698545246%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-integrations.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Integrations</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="698545246%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-integrations.html"><span class="token function">getGuildIntegrations</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-integration/index.html">DiscordIntegration</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="358711069%2FFunctions%2F-910358913" anchor-label="getGuildInvites" id="358711069%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-invites.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Invites</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="358711069%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-invites.html"><span class="token function">getGuildInvites</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-invite-with-metadata/index.html">DiscordInviteWithMetadata</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1844563311%2FFunctions%2F-910358913" anchor-label="getGuildMember" id="-1844563311%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-member.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1844563311%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-member.html"><span class="token function">getGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-member/index.html">DiscordGuildMember</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-951343818%2FFunctions%2F-910358913" anchor-label="getGuildMembers" id="-951343818%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-members.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Members</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-951343818%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-members.html"><span class="token function">getGuildMembers</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">after<span class="token operator">: </span><a href="../../dev.kord.rest.route/-position/-after/index.html">Position.After</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-guild-member/index.html">DiscordGuildMember</a><span class="token operator">&gt;</span></div><br><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="../../../common/dev.kord.common.annotation/-kord-experimental/index.html"><span class="token annotation builtin">KordExperimental</span></a></div></div><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-members.html"><span class="token function">getGuildMembers</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">query<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-guild-member/index.html">DiscordGuildMember</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Requests members with a username or nickname starting with <a href="get-guild-members.html">query</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1601948254%2FFunctions%2F-910358913" anchor-label="getGuildOnboarding" id="-1601948254%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-onboarding.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Onboarding</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1601948254%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-onboarding.html"><span class="token function">getGuildOnboarding</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-onboarding/index.html">DiscordGuildOnboarding</a></div><div class="brief "><p class="paragraph">Returns the <a href="../../../common/dev.kord.common.entity/-discord-guild-onboarding/index.html">onboarding</a> object for the <a href="get-guild-onboarding.html">guildId</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-375060577%2FFunctions%2F-910358913" anchor-label="getGuildPreview" id="-375060577%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-preview.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Preview</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-375060577%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-preview.html"><span class="token function">getGuildPreview</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-preview/index.html">DiscordGuildPreview</a></div><div class="brief "><p class="paragraph">Returns the preview of this <a href="get-guild-preview.html">guildId</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-570401051%2FFunctions%2F-910358913" anchor-label="getGuildPruneCount" id="-570401051%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-prune-count.html"><span>get</span><wbr><span>Guild</span><wbr><span>Prune</span><wbr><span><span>Count</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-570401051%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-prune-count.html"><span class="token function">getGuildPruneCount</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">days<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">7</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.rest.json.response/-get-prune-response/index.html">GetPruneResponse</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2085939318%2FFunctions%2F-910358913" anchor-label="getGuildRoles" id="-2085939318%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-roles.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Roles</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2085939318%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-roles.html"><span class="token function">getGuildRoles</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-role/index.html">DiscordRole</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1594305840%2FFunctions%2F-910358913" anchor-label="getGuildVoiceRegions" id="-1594305840%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-voice-regions.html"><span>get</span><wbr><span>Guild</span><wbr><span>Voice</span><wbr><span><span>Regions</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1594305840%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-voice-regions.html"><span class="token function">getGuildVoiceRegions</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-voice-region/index.html">DiscordVoiceRegion</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="827213817%2FFunctions%2F-910358913" anchor-label="getGuildWelcomeScreen" id="827213817%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-welcome-screen.html"><span>get</span><wbr><span>Guild</span><wbr><span>Welcome</span><wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="827213817%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-welcome-screen.html"><span class="token function">getGuildWelcomeScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-welcome-screen/index.html">DiscordWelcomeScreen</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="9122585%2FFunctions%2F-910358913" anchor-label="getGuildWidget" id="9122585%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-guild-widget.html"><span>get</span><wbr><span>Guild</span><wbr><span><span>Widget</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="9122585%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-guild-widget.html"><span class="token function">getGuildWidget</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-widget/index.html">DiscordGuildWidget</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="448873997%2FFunctions%2F-910358913" anchor-label="getScheduledEvent" id="448873997%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-scheduled-event.html"><span>get</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="448873997%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-scheduled-event.html"><span class="token function">getScheduledEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-scheduled-event/index.html">DiscordGuildScheduledEvent</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1838024067%2FFunctions%2F-910358913" anchor-label="getScheduledEventUsers" id="-1838024067%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-scheduled-event-users.html"><span>get</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span><span>Users</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1838024067%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-scheduled-event-users.html"><span class="token function">getScheduledEventUsers</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">position<span class="token operator">: </span><a href="../../dev.kord.rest.route/-position/-before-or-after/index.html">Position.BeforeOrAfter</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">withMember<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.rest.json.request/-guild-scheduled-event-users-response/index.html">GuildScheduledEventUsersResponse</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1731539384%2FFunctions%2F-910358913" anchor-label="getScheduledEventUsersAfter" id="1731539384%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-scheduled-event-users-after.html"><span>get</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span>Users</span><wbr><span><span>After</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1731539384%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-scheduled-event-users-after.html"><span class="token function">getScheduledEventUsersAfter</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">after<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">withMember<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.rest.json.request/-guild-scheduled-event-users-response/index.html">GuildScheduledEventUsersResponse</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-120019173%2FFunctions%2F-910358913" anchor-label="getScheduledEventUsersBefore" id="-120019173%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-scheduled-event-users-before.html"><span>get</span><wbr><span>Scheduled</span><wbr><span>Event</span><wbr><span>Users</span><wbr><span><span>Before</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-120019173%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-scheduled-event-users-before.html"><span class="token function">getScheduledEventUsersBefore</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">before<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">withMember<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null<span class="token punctuation">, </span></span><span class="parameter ">limit<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../dev.kord.rest.json.request/-guild-scheduled-event-users-response/index.html">GuildScheduledEventUsersResponse</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1086310208%2FFunctions%2F-910358913" anchor-label="getVanityInvite" id="1086310208%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-vanity-invite.html"><span>get</span><wbr><span>Vanity</span><wbr><span><span>Invite</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1086310208%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="get-vanity-invite.html"><span class="token function">getVanityInvite</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-partial-invite/index.html">DiscordPartialInvite</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1342412773%2FFunctions%2F-910358913" anchor-label="listActiveThreads" id="1342412773%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="list-active-threads.html"><span>list</span><wbr><span>Active</span><wbr><span><span>Threads</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1342412773%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="list-active-threads.html"><span class="token function">listActiveThreads</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.rest.json.response/-list-threads-response/index.html">ListThreadsResponse</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="470261057%2FFunctions%2F-910358913" anchor-label="listScheduledEvents" id="470261057%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="list-scheduled-events.html"><span>list</span><wbr><span>Scheduled</span><wbr><span><span>Events</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="470261057%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="list-scheduled-events.html"><span class="token function">listScheduledEvents</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">withUserCount<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-guild-scheduled-event/index.html">DiscordGuildScheduledEvent</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-819298154%2FFunctions%2F-910358913" anchor-label="modifyCurrentUserNickname" id="-819298154%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-current-user-nickname.html"><span>modify</span><wbr><span>Current</span><wbr><span>User</span><wbr><span><span>Nickname</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-819298154%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="modify-current-user-nickname.html"><span class="token function">modifyCurrentUserNickname</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">nick<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-current-user-nickname-modify-request/index.html">CurrentUserNicknameModifyRequest</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.rest.json.response/-current-user-nickname-modify-response/index.html">CurrentUserNicknameModifyResponse</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="467993416%2FFunctions%2F-910358913" anchor-label="modifyCurrentVoiceState" id="467993416%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-current-voice-state.html"><span>modify</span><wbr><span>Current</span><wbr><span>Voice</span><wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="467993416%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="modify-current-voice-state.html"><span class="token function">modifyCurrentVoiceState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-current-voice-state-modify-request/index.html">CurrentVoiceStateModifyRequest</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1991456996%2FFunctions%2F-910358913" anchor-label="modifyCurrentVoiceState" id="1991456996%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../modify-current-voice-state.html"><span>modify</span><wbr><span>Current</span><wbr><span>Voice</span><wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1991456996%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../modify-current-voice-state.html"><span class="token function">modifyCurrentVoiceState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.guild/-current-voice-state-modify-builder/index.html">CurrentVoiceStateModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-921394852%2FFunctions%2F-910358913" anchor-label="modifyGuild" id="-921394852%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild.html"><span>modify</span><wbr><span><span>Guild</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-921394852%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="modify-guild.html"><span class="token function">modifyGuild</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.guild/-guild-modify-builder/index.html">GuildModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild/index.html">DiscordGuild</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1846386162%2FFunctions%2F-910358913" anchor-label="modifyGuildChannelPosition" id="1846386162%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild-channel-position.html"><span>modify</span><wbr><span>Guild</span><wbr><span>Channel</span><wbr><span><span>Position</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1846386162%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="modify-guild-channel-position.html"><span class="token function">modifyGuildChannelPosition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.channel/-guild-channel-position-modify-builder/index.html">GuildChannelPositionModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-916062122%2FFunctions%2F-910358913" anchor-label="modifyGuildIntegration" id="-916062122%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild-integration.html"><span>modify</span><wbr><span>Guild</span><wbr><span><span>Integration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-916062122%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="modify-guild-integration.html"><span class="token function">modifyGuildIntegration</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">integrationId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.integration/-integration-modify-builder/index.html">IntegrationModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1902629382%2FFunctions%2F-910358913" anchor-label="modifyGuildMember" id="-1902629382%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild-member.html"><span>modify</span><wbr><span>Guild</span><wbr><span><span>Member</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1902629382%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="modify-guild-member.html"><span class="token function">modifyGuildMember</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.member/-member-modify-builder/index.html">MemberModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-member/index.html">DiscordGuildMember</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1807893751%2FFunctions%2F-910358913" anchor-label="modifyGuildMFALevel" id="-1807893751%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild-m-f-a-level.html"><span>modify</span><wbr><span>Guild</span><wbr><span><span>MFALevel</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1807893751%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="modify-guild-m-f-a-level.html"><span class="token function">modifyGuildMFALevel</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">level<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-m-f-a-level/index.html">MFALevel</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../dev.kord.rest.json.response/-guild-m-f-a-level-modify-response/index.html">GuildMFALevelModifyResponse</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1505064414%2FFunctions%2F-910358913" anchor-label="modifyGuildRole" id="1505064414%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild-role.html"><span>modify</span><wbr><span>Guild</span><wbr><span><span>Role</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1505064414%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="modify-guild-role.html"><span class="token function">modifyGuildRole</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">roleId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.role/-role-modify-builder/index.html">RoleModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-role/index.html">DiscordRole</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="857795653%2FFunctions%2F-910358913" anchor-label="modifyGuildRolePosition" id="857795653%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild-role-position.html"><span>modify</span><wbr><span>Guild</span><wbr><span>Role</span><wbr><span><span>Position</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="857795653%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="modify-guild-role-position.html"><span class="token function">modifyGuildRolePosition</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.role/-role-positions-modify-builder/index.html">RolePositionsModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../../../common/dev.kord.common.entity/-discord-role/index.html">DiscordRole</a><span class="token operator">&gt;</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1966002516%2FFunctions%2F-910358913" anchor-label="modifyGuildWelcomeScreen" id="1966002516%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild-welcome-screen.html"><span>modify</span><wbr><span>Guild</span><wbr><span>Welcome</span><wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1966002516%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="modify-guild-welcome-screen.html"><span class="token function">modifyGuildWelcomeScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-guild-welcome-screen-modify-request/index.html">GuildWelcomeScreenModifyRequest</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-welcome-screen/index.html">DiscordWelcomeScreen</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="62532121%2FFunctions%2F-910358913" anchor-label="modifyGuildWelcomeScreen" id="62532121%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../modify-guild-welcome-screen.html"><span>modify</span><wbr><span>Guild</span><wbr><span>Welcome</span><wbr><span><span>Screen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="62532121%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../modify-guild-welcome-screen.html"><span class="token function">modifyGuildWelcomeScreen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.guild/-welcome-screen-modify-builder/index.html">WelcomeScreenModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-welcome-screen/index.html">DiscordWelcomeScreen</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="678217862%2FFunctions%2F-910358913" anchor-label="modifyGuildWidget" id="678217862%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-guild-widget.html"><span>modify</span><wbr><span>Guild</span><wbr><span><span>Widget</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="678217862%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="modify-guild-widget.html"><span class="token function">modifyGuildWidget</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.guild/-guild-widget-modify-builder/index.html">GuildWidgetModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-widget/index.html">DiscordGuildWidget</a></div><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="modify-guild-widget.html"><span class="token function">modifyGuildWidget</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">widget<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-guild-widget-modify-request/index.html">GuildWidgetModifyRequest</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-widget/index.html">DiscordGuildWidget</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="415330462%2FFunctions%2F-910358913" anchor-label="modifyScheduledEvent" id="415330462%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-scheduled-event.html"><span>modify</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="415330462%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="modify-scheduled-event.html"><span class="token function">modifyScheduledEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-scheduled-event-modify-request/index.html">ScheduledEventModifyRequest</a><span class="token punctuation">, </span></span><span class="parameter ">reason<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-scheduled-event/index.html">DiscordGuildScheduledEvent</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="561105608%2FFunctions%2F-910358913" anchor-label="modifyScheduledEvent" id="561105608%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../modify-scheduled-event.html"><span>modify</span><wbr><span>Scheduled</span><wbr><span><span>Event</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="561105608%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../modify-scheduled-event.html"><span class="token function">modifyScheduledEvent</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">eventId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.scheduled_events/-scheduled-event-modify-builder/index.html">ScheduledEventModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-discord-guild-scheduled-event/index.html">DiscordGuildScheduledEvent</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-986658624%2FFunctions%2F-910358913" anchor-label="modifyVoiceState" id="-986658624%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="modify-voice-state.html"><span>modify</span><wbr><span>Voice</span><wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-986658624%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="modify-voice-state.html"><span class="token function">modifyVoiceState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">request<span class="token operator">: </span><a href="../../dev.kord.rest.json.request/-voice-state-modify-request/index.html">VoiceStateModifyRequest</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1588046422%2FFunctions%2F-910358913" anchor-label="modifyVoiceState" id="-1588046422%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../modify-voice-state.html"><span>modify</span><wbr><span>Voice</span><wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1588046422%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline suspend </span><span class="token keyword">fun </span><a href="index.html">GuildService</a><span class="token punctuation">.</span><a href="../modify-voice-state.html"><span class="token function">modifyVoiceState</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">channelId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">userId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="../../dev.kord.rest.builder.guild/-voice-state-modify-builder/index.html">VoiceStateModifyBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1911979594%2FFunctions%2F-910358913" anchor-label="syncGuildIntegration" id="-1911979594%2FFunctions%2F-910358913" data-filterable-set=":rest:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":rest:dokkaHtmlPartial/commonMain" data-filterable-set=":rest:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sync-guild-integration.html"><span>sync</span><wbr><span>Guild</span><wbr><span><span>Integration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1911979594%2FFunctions%2F-910358913"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":rest:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">suspend </span><span class="token keyword">fun </span><a href="sync-guild-integration.html"><span class="token function">syncGuildIntegration</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">guildId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a><span class="token punctuation">, </span></span><span class="parameter ">integrationId<span class="token operator">: </span><a href="../../../common/dev.kord.common.entity/-snowflake/index.html">Snowflake</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2023 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+    </div>
+</div>
+</body>
+</html>
+
