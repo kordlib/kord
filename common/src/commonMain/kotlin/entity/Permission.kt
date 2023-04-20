@@ -295,6 +295,10 @@ public sealed class Permission(public val code: DiscordBitSet) {
     /** Allows for using soundboard in a voice channel. */
     public object UseSoundboard : Permission(1L shl 42)
 
+    /**
+     * Allows sending voice messages.
+     */
+    public object SendVoiceMessages : Permission(1L shl 46)
 
     /** All [Permission]s combined into one. */
     public object All : Permission(buildAll())
@@ -349,7 +353,8 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 UseEmbeddedActivities,
                 ModerateMembers,
                 ViewCreatorMonetizationAnalytics,
-                UseSoundboard
+                UseSoundboard,
+                SendVoiceMessages
             )
     }
 }

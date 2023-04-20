@@ -2418,11 +2418,13 @@ public final class dev/kord/common/entity/DiscordApplicationKt {
 
 public final class dev/kord/common/entity/DiscordAttachment {
 	public static final field Companion Ldev/kord/common/entity/DiscordAttachment$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component10 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component11 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component12 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
@@ -2431,11 +2433,12 @@ public final class dev/kord/common/entity/DiscordAttachment {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component9 ()Ldev/kord/common/entity/optional/OptionalInt;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/common/entity/DiscordAttachment;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAttachment;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAttachment;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordAttachment;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAttachment;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAttachment;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getContentType ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getDurationSecs ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getEphemeral ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getFilename ()Ljava/lang/String;
 	public final fun getHeight ()Ldev/kord/common/entity/optional/OptionalInt;
@@ -2443,6 +2446,7 @@ public final class dev/kord/common/entity/DiscordAttachment {
 	public final fun getProxyUrl ()Ljava/lang/String;
 	public final fun getSize ()I
 	public final fun getUrl ()Ljava/lang/String;
+	public final fun getWaveform ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -7096,6 +7100,7 @@ public final class dev/kord/common/entity/MessageFlag : java/lang/Enum {
 	public static final field FailedToMentionSomeRolesInThread Ldev/kord/common/entity/MessageFlag;
 	public static final field HasThread Ldev/kord/common/entity/MessageFlag;
 	public static final field IsCrossPost Ldev/kord/common/entity/MessageFlag;
+	public static final field IsVoiceMessage Ldev/kord/common/entity/MessageFlag;
 	public static final field Loading Ldev/kord/common/entity/MessageFlag;
 	public static final field SourceMessageDeleted Ldev/kord/common/entity/MessageFlag;
 	public static final field SuppressEmbeds Ldev/kord/common/entity/MessageFlag;
@@ -7677,6 +7682,10 @@ public final class dev/kord/common/entity/Permission$SendMessagesInThreads : dev
 
 public final class dev/kord/common/entity/Permission$SendTTSMessages : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$SendTTSMessages;
+}
+
+public final class dev/kord/common/entity/Permission$SendVoiceMessages : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$SendVoiceMessages;
 }
 
 public final class dev/kord/common/entity/Permission$Speak : dev/kord/common/entity/Permission {
@@ -8703,6 +8712,15 @@ public abstract class dev/kord/common/serialization/DurationAsLongSerializer : k
 
 public final class dev/kord/common/serialization/DurationInDaysSerializer : dev/kord/common/serialization/DurationAsLongSerializer {
 	public static final field INSTANCE Ldev/kord/common/serialization/DurationInDaysSerializer;
+}
+
+public final class dev/kord/common/serialization/DurationInDoubleSecondsSerializer : kotlinx/serialization/KSerializer {
+	public static final field INSTANCE Ldev/kord/common/serialization/DurationInDoubleSecondsSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize-5sfh64U (Lkotlinx/serialization/encoding/Decoder;)J
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize-HG0u8IE (Lkotlinx/serialization/encoding/Encoder;J)V
 }
 
 public final class dev/kord/common/serialization/DurationInHoursSerializer : dev/kord/common/serialization/DurationAsLongSerializer {
