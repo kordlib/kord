@@ -26,6 +26,7 @@ internal sealed class GenerationEntity(
     class KordEnum(
         name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
         override val valueType: ValueType,
+        val unknownConstructorWasPublic: Boolean,
     ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
         enum class ValueType : GenerationEntity.ValueType { INT, STRING }
     }
@@ -72,7 +73,7 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
             Generate::wasEnum, Generate::collectionWasDataClass, Generate::hadFlagsProperty,
             Generate::flagsPropertyWasSet, Generate::builderHadFlagsFunction,
         )
-        INT_FLAGS, BIT_SET_FLAGS -> true
+        INT_FLAGS, BIT_SET_FLAGS -> areNotSpecified(Generate::unknownConstructorWasPublic)
     }
 
     val mappedEntries = (entries zip args[Generate::entries]!!).mapNotNull { (entry, annotation) ->
@@ -84,8 +85,12 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
     } else {
         val kDoc = kDoc.toKDoc()
         when (entityType) {
-            INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT)
-            STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
+            INT_KORD_ENUM -> KordEnum(
+                name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT, unknownConstructorWasPublic,
+            )
+            STRING_KORD_ENUM -> KordEnum(
+                name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING, unknownConstructorWasPublic,
+            )
             INT_FLAGS -> BitFlags(
                 name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, wasEnum, collectionWasDataClass,
                 hadFlagsProperty, flagsPropertyWasSet, builderHadFlagsFunction,

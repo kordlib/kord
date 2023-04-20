@@ -33,14 +33,14 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             primaryConstructor {
                 addModifiers(INTERNAL)
                 addParameter(valueName, valueCN)
-                addParameter("unused", type = NOTHING.copy(nullable = true)) {
+                if (unknownConstructorWasPublic) addParameter("unused", type = NOTHING.copy(nullable = true)) {
                     @OptIn(DelicateKotlinPoetApi::class)
                     addAnnotation(Suppress("UNUSED_PARAMETER"))
                 }
             }
             addSuperclassConstructorParameter(valueName)
             // TODO bump deprecation level and remove eventually (also share code with bit flags then)
-            addConstructor {
+            if (unknownConstructorWasPublic) addConstructor {
                 @OptIn(DelicateKotlinPoetApi::class)
                 addAnnotation(
                     Deprecated(
@@ -69,7 +69,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                     for (entry in entriesDistinctByValue) {
                         addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
                     }
-                    addStatement("else·->·Unknown($valueName,·null)")
+                    addStatement(if (unknownConstructorWasPublic) "else·->·Unknown($valueName,·null)" else "else·->·Unknown($valueName)")
                 }
             }
         }

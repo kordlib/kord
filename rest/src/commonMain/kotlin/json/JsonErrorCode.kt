@@ -620,6 +620,12 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Message blocked by harmful links filter. */
     MessageBlockedByHarmfulLinksFilter(240000),
 
+    /** Cannot enable onboarding, requirements are not met. */
+    CannotEnableOnboarding(350000),
+
+    /** Cannot update onboarding while below requirements. */
+    CannotUpdateOnboarding(350001),
+
     ;
 
     internal object Serializer : KSerializer<JsonErrorCode> {

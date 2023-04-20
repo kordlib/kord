@@ -1,4 +1,14 @@
 @file:Generate(
+    INT_KORD_ENUM, name = "OnboardingMode", unknownConstructorWasPublic = false,
+    kDoc = "Defines the criteria used to satisfy Onboarding constraints that are required for enabling.",
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode",
+    entries = [
+        Entry("Default", intValue = 0, kDoc = "Counts only Default Channels towards constraints."),
+        Entry("Advanced", intValue = 1, kDoc = "Counts Default Channels and Questions towards constraints."),
+    ],
+)
+
+@file:Generate(
     INT_KORD_ENUM, name = "OnboardingPromptType",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-types",
     entries = [
@@ -21,6 +31,7 @@ public data class DiscordGuildOnboarding(
     val prompts: List<DiscordOnboardingPrompt>,
     @SerialName("default_channel_ids") val defaultChannelIds: List<Snowflake>,
     val enabled: Boolean,
+    val mode: OnboardingMode,
 )
 
 @Serializable

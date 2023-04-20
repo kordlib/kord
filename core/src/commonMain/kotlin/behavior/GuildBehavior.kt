@@ -5,6 +5,7 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
 import dev.kord.common.entity.Permission.ManageGuild
+import dev.kord.common.entity.Permission.ManageRoles
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
@@ -966,6 +967,21 @@ public suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfO
 public suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
+}
+
+/**
+ * Requests to edit the [GuildOnboarding] object of the guild and returns the edited onboarding object.
+ *
+ * This requires the [ManageGuild] and [ManageRoles] permissions.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.editOnboarding(
+    builder: GuildOnboardingModifyBuilder.() -> Unit,
+): GuildOnboarding {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val onboarding = kord.rest.guild.modifyGuildOnboarding(guildId = id, builder)
+    return GuildOnboarding(onboarding, kord)
 }
 
 /**

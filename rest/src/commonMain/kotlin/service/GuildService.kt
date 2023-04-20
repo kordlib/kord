@@ -54,6 +54,25 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         keys[Route.GuildId] = guildId
     }
 
+    public suspend fun modifyGuildOnboarding(
+        guildId: Snowflake,
+        request: GuildOnboardingModifyRequest,
+        reason: String? = null,
+    ): DiscordGuildOnboarding = call(Route.GuildOnboardingModify) {
+        keys[Route.GuildId] = guildId
+        body(GuildOnboardingModifyRequest.serializer(), request)
+        auditLogReason(reason)
+    }
+
+    public suspend inline fun modifyGuildOnboarding(
+        guildId: Snowflake,
+        builder: GuildOnboardingModifyBuilder.() -> Unit,
+    ): DiscordGuildOnboarding {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = GuildOnboardingModifyBuilder().apply(builder)
+        return modifyGuildOnboarding(guildId, request.toRequest(), request.reason)
+    }
+
     public suspend inline fun modifyGuild(guildId: Snowflake, builder: GuildModifyBuilder.() -> Unit): DiscordGuild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
