@@ -120,7 +120,7 @@
             deprecated = Deprecated(
                 "Replaced by CreatorMonetizableProvisional.",
                 ReplaceWith("GuildFeature.CreatorMonetizableProvisional", "dev.kord.common.entitiy.GuildFeature"),
-                level = ERROR,
+                level = HIDDEN,
             ),
         ),
         Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
@@ -133,7 +133,7 @@
         Entry(
             "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
             deprecated = Deprecated(
-                "Creating a private thread no longer requires the server to be boosted.", level = ERROR,
+                "Creating a private thread no longer requires the server to be boosted.", level = HIDDEN,
             ),
         ),
         Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
@@ -180,7 +180,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].

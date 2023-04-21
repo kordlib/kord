@@ -7,14 +7,11 @@ package dev.kord.common.entity
 import kotlin.Any
 import kotlin.Boolean
 import kotlin.Deprecated
-import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
-import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -27,7 +24,7 @@ import kotlinx.serialization.encoding.Encoder
  * See [StageInstancePrivacyLevel]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level).
  */
-@Serializable(with = StageInstancePrivacyLevel.NewSerializer::class)
+@Serializable(with = StageInstancePrivacyLevel.Serializer::class)
 public sealed class StageInstancePrivacyLevel(
     /**
      * The raw value used by Discord.
@@ -63,7 +60,7 @@ public sealed class StageInstancePrivacyLevel(
      */
     public object GuildOnly : StageInstancePrivacyLevel(2)
 
-    internal object NewSerializer : KSerializer<StageInstancePrivacyLevel> {
+    internal object Serializer : KSerializer<StageInstancePrivacyLevel> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.StageInstancePrivacyLevel",
                 PrimitiveKind.INT)
@@ -78,22 +75,6 @@ public sealed class StageInstancePrivacyLevel(
         }
     }
 
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Use 'StageInstancePrivacyLevel.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "StageInstancePrivacyLevel.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.StageInstancePrivacyLevel")),
-    )
-    public object Serializer : KSerializer<StageInstancePrivacyLevel> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Use 'StageInstancePrivacyLevel.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "StageInstancePrivacyLevel.serializer()", imports
-                        = arrayOf("dev.kord.common.entity.StageInstancePrivacyLevel")),
-        )
-        public fun serializer(): KSerializer<StageInstancePrivacyLevel> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [StageInstancePrivacyLevel]s.
@@ -105,13 +86,5 @@ public sealed class StageInstancePrivacyLevel(
             )
         }
 
-
-        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Serializer: Serializer = Serializer
     }
 }

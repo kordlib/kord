@@ -7,7 +7,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * Type to represent a Discord value that can only be null. This class cannot be instantiated.
@@ -19,7 +19,7 @@ import kotlin.DeprecationLevel.ERROR
         "'Nothing' is a serializable class. This means 'DiscordNull' isn't needed anymore and should be replaced " +
         "with 'Nothing'.",
     ReplaceWith("Nothing", imports = ["kotlin.Nothing"]),
-    level = ERROR,
+    level = HIDDEN,
 )
 @Serializable(with = DiscordNull.Serializer::class)
 public class DiscordNull private constructor() {

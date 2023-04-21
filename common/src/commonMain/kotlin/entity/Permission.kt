@@ -244,7 +244,7 @@ public sealed class Permission(public val code: DiscordBitSet) {
     public object ManageWebhooks : Permission(1L shl 29)
 
     /** Allows management and editing of emojis and stickers. */
-    @Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.WARNING)
+    @Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.ERROR)
     public object ManageEmojisAndStickers : Permission(1L shl 30)
 
     /** Allows management and editing of emojis, stickers and soundboard sounds. */

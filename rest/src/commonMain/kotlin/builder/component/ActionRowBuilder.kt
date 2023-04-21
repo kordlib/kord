@@ -6,7 +6,7 @@ import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.TextInputStyle
 import dev.kord.common.entity.optional.Optional
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -48,7 +48,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
     @Deprecated(
         "Renamed by discord to StringSelect",
         ReplaceWith("stringSelect(customId) { builder() }"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public inline fun selectMenu(customId: String, builder: SelectMenuBuilder.() -> Unit) {
         contract {

@@ -13,6 +13,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
@@ -23,8 +24,7 @@ import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -70,7 +70,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     @Deprecated(
         "Replaced by overload with autoArchiveDuration in builder lambda",
         ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun startPublicThread(
         name: String,
@@ -85,7 +85,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
 
     public suspend fun startPublicThread(
         name: String,
-        builder: StartThreadBuilder.() -> Unit,
+        builder: StartThreadBuilder.() -> Unit = {},
     ): TextChannelThread {
         return unsafeStartThread(name, type = ChannelType.PublicGuildThread, builder) as TextChannelThread
     }
@@ -93,7 +93,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     @Deprecated(
         "Replaced by overload with autoArchiveDuration in builder lambda",
         ReplaceWith("this.startPrivateThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun startPrivateThread(
         name: String,
@@ -108,7 +108,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
 
     public suspend fun startPrivateThread(
         name: String,
-        builder: StartThreadBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
+        builder: StartThreadBuilder.() -> Unit = {},
     ): TextChannelThread {
         return unsafeStartThread(name, type = ChannelType.PrivateThread, builder) as TextChannelThread
     }
@@ -116,7 +116,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     @Deprecated(
         "Replaced by builder overload",
         ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
@@ -133,7 +133,7 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        builder: StartThreadWithMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
+        builder: StartThreadWithMessageBuilder.() -> Unit = {},
     ): TextChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as TextChannelThread
     }

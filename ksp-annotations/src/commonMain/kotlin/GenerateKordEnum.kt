@@ -4,7 +4,6 @@ import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.FILE
 
@@ -25,17 +24,8 @@ annotation class GenerateKordEnum(
     val kDoc: String = "",
     /** Name of the value of the kord enum. */
     val valueName: String = "value",
-
-    // TODO remove eventually
-    /** For migration purposes. */
-    val valuesPropertyName: String = "",
-    /** For migration purposes. */
-    val valuesPropertyType: ValuesPropertyType = NONE,
-    /** For migration purposes. */
-    val deprecatedSerializerName: String = "",
 ) {
     enum class ValueType { INT, STRING }
-    enum class ValuesPropertyType { NONE, SET }
 
     @Retention(SOURCE)
     @Target() // only use as argument for `@GenerateKordEnum(...)`

@@ -27,7 +27,7 @@ public data class Role(
 
     public val hoisted: Boolean get() = data.hoisted
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     public fun getIcon(): Icon? = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
 

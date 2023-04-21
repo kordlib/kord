@@ -19,7 +19,6 @@ import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -591,26 +590,6 @@ public suspend inline fun GuildService.modifyCurrentVoiceState(
 ) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = CurrentVoiceStateModifyBuilder().apply(builder).toRequest()
-    modifyCurrentVoiceState(guildId, request)
-}
-
-@Deprecated(
-    "'channelId' is no longer required, use other overload instead.",
-    ReplaceWith(
-        "this.modifyCurrentVoiceState(guildId) {\nthis@modifyCurrentVoiceState.channelId = channelId\nbuilder()\n}"
-    ),
-    level = HIDDEN,
-)
-public suspend inline fun GuildService.modifyCurrentVoiceState(
-    guildId: Snowflake,
-    channelId: Snowflake,
-    builder: CurrentVoiceStateModifyBuilder.() -> Unit
-) {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val request = CurrentVoiceStateModifyBuilder()
-        .apply { this@apply.channelId = channelId }
-        .apply(builder)
-        .toRequest()
     modifyCurrentVoiceState(guildId, request)
 }
 

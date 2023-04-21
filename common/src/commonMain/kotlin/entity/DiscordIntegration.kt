@@ -1,6 +1,5 @@
 @file:GenerateKordEnum(
     name = "IntegrationExpireBehavior", valueType = INT,
-    deprecatedSerializerName = "Serializer",
     docUrl = "https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors",
     entries = [
         Entry("RemoveRole", intValue = 0),

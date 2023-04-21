@@ -6,15 +6,11 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
-import kotlin.Deprecated
-import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
-import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -27,7 +23,7 @@ import kotlinx.serialization.encoding.Encoder
  * See [IntegrationExpireBehavior]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors).
  */
-@Serializable(with = IntegrationExpireBehavior.NewSerializer::class)
+@Serializable(with = IntegrationExpireBehavior.Serializer::class)
 public sealed class IntegrationExpireBehavior(
     /**
      * The raw value used by Discord.
@@ -56,7 +52,7 @@ public sealed class IntegrationExpireBehavior(
 
     public object Kick : IntegrationExpireBehavior(1)
 
-    internal object NewSerializer : KSerializer<IntegrationExpireBehavior> {
+    internal object Serializer : KSerializer<IntegrationExpireBehavior> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.IntegrationExpireBehavior",
                 PrimitiveKind.INT)
@@ -71,22 +67,6 @@ public sealed class IntegrationExpireBehavior(
         }
     }
 
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Use 'IntegrationExpireBehavior.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
-    )
-    public object Serializer : KSerializer<IntegrationExpireBehavior> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Use 'IntegrationExpireBehavior.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.serializer()", imports
-                        = arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
-        )
-        public fun serializer(): KSerializer<IntegrationExpireBehavior> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [IntegrationExpireBehavior]s.
@@ -98,13 +78,5 @@ public sealed class IntegrationExpireBehavior(
             )
         }
 
-
-        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Serializer: Serializer = Serializer
     }
 }

@@ -6,15 +6,11 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
-import kotlin.Deprecated
-import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
-import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -27,7 +23,7 @@ import kotlinx.serialization.encoding.Encoder
  * See [ScheduledEntityType]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-types).
  */
-@Serializable(with = ScheduledEntityType.NewSerializer::class)
+@Serializable(with = ScheduledEntityType.Serializer::class)
 public sealed class ScheduledEntityType(
     /**
      * The raw value used by Discord.
@@ -57,7 +53,7 @@ public sealed class ScheduledEntityType(
 
     public object External : ScheduledEntityType(3)
 
-    internal object NewSerializer : KSerializer<ScheduledEntityType> {
+    internal object Serializer : KSerializer<ScheduledEntityType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ScheduledEntityType",
                 PrimitiveKind.INT)
@@ -73,22 +69,6 @@ public sealed class ScheduledEntityType(
         }
     }
 
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Use 'ScheduledEntityType.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "ScheduledEntityType.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.ScheduledEntityType")),
-    )
-    public object Serializer : KSerializer<ScheduledEntityType> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Use 'ScheduledEntityType.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "ScheduledEntityType.serializer()", imports =
-                        arrayOf("dev.kord.common.entity.ScheduledEntityType")),
-        )
-        public fun serializer(): KSerializer<ScheduledEntityType> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [ScheduledEntityType]s.
@@ -101,13 +81,5 @@ public sealed class ScheduledEntityType(
             )
         }
 
-
-        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Serializer: Serializer = Serializer
     }
 }

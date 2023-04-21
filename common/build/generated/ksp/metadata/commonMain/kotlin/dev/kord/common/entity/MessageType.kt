@@ -6,15 +6,11 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
-import kotlin.Deprecated
-import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
-import kotlin.collections.Set
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -196,13 +192,5 @@ public sealed class MessageType(
             )
         }
 
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Renamed to 'entries'.",
-            replaceWith = ReplaceWith(expression = "this.entries", imports = arrayOf()),
-        )
-        public val values: Set<MessageType>
-            get() = entries.toSet()
     }
 }

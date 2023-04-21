@@ -1,6 +1,5 @@
 @file:GenerateKordEnum(
     name = "PresenceStatus", valueType = STRING,
-    deprecatedSerializerName = "StatusSerializer",
     docUrl = "https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types",
     entries = [
         Entry("Online", stringValue = "online", kDoc = "Online."),

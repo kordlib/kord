@@ -89,10 +89,10 @@ public final class dev/kord/common/KordConstants {
 	public static final field INSTANCE Ldev/kord/common/KordConstants;
 	public final fun getCOMMIT_HASH ()Ljava/lang/String;
 	public final fun getGITHUB_URL ()Ljava/lang/String;
-	public final fun getKORD_COMMIT_HASH ()Ljava/lang/String;
-	public final fun getKORD_GITHUB_URL ()Ljava/lang/String;
-	public final fun getKORD_SHORT_COMMIT_HASH ()Ljava/lang/String;
-	public final fun getKORD_VERSION ()Ljava/lang/String;
+	public final synthetic fun getKORD_COMMIT_HASH ()Ljava/lang/String;
+	public final synthetic fun getKORD_GITHUB_URL ()Ljava/lang/String;
+	public final synthetic fun getKORD_SHORT_COMMIT_HASH ()Ljava/lang/String;
+	public final synthetic fun getKORD_VERSION ()Ljava/lang/String;
 	public final fun getSHORT_COMMIT_HASH ()Ljava/lang/String;
 	public final fun getUSER_AGENT ()Ljava/lang/String;
 	public final fun getVERSION ()Ljava/lang/String;
@@ -211,39 +211,17 @@ public final class dev/kord/common/entity/ActivityFlags$Companion {
 }
 
 public abstract class dev/kord/common/entity/ActivityType {
-	public static final field ActivityTypeSerializer Ldev/kord/common/entity/ActivityType$ActivityTypeSerializer;
 	public static final field Companion Ldev/kord/common/entity/ActivityType$Companion;
-	public static final field Competing Ldev/kord/common/entity/ActivityType;
-	public static final field Custom Ldev/kord/common/entity/ActivityType;
-	public static final field Game Ldev/kord/common/entity/ActivityType;
-	public static final field Listening Ldev/kord/common/entity/ActivityType;
-	public static final field Streaming Ldev/kord/common/entity/ActivityType;
-	public static final field Unknown Ldev/kord/common/entity/ActivityType;
-	public static final field Watching Ldev/kord/common/entity/ActivityType;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun hashCode ()I
 	public final fun toString ()Ljava/lang/String;
-	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ActivityType;
-	public static synthetic fun values ()[Ldev/kord/common/entity/ActivityType;
-}
-
-public final class dev/kord/common/entity/ActivityType$ActivityTypeSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/ActivityType$ActivityTypeSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ActivityType;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ActivityType;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/ActivityType$Companion {
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ActivityType;
-	public synthetic fun values ()[Ldev/kord/common/entity/ActivityType;
 }
 
 public final class dev/kord/common/entity/ActivityType$Competing : dev/kord/common/entity/ActivityType {
@@ -617,7 +595,6 @@ public abstract class dev/kord/common/entity/ArchiveDuration {
 
 public final class dev/kord/common/entity/ArchiveDuration$Companion {
 	public final fun getEntries ()Ljava/util/List;
-	public final synthetic fun getValues ()Ljava/util/Set;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -627,15 +604,6 @@ public final class dev/kord/common/entity/ArchiveDuration$Day : dev/kord/common/
 
 public final class dev/kord/common/entity/ArchiveDuration$Hour : dev/kord/common/entity/ArchiveDuration {
 	public static final field INSTANCE Ldev/kord/common/entity/ArchiveDuration$Hour;
-}
-
-public final class dev/kord/common/entity/ArchiveDuration$Serializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/ArchiveDuration$Serializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ArchiveDuration;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ArchiveDuration;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
 public final class dev/kord/common/entity/ArchiveDuration$ThreeDays : dev/kord/common/entity/ArchiveDuration {
@@ -1393,7 +1361,6 @@ public final class dev/kord/common/entity/BulkDeleteData$Companion {
 
 public abstract class dev/kord/common/entity/ButtonStyle {
 	public static final field Companion Ldev/kord/common/entity/ButtonStyle$Companion;
-	public static final field Serializer Ldev/kord/common/entity/ButtonStyle$Serializer;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
@@ -1420,16 +1387,6 @@ public final class dev/kord/common/entity/ButtonStyle$Primary : dev/kord/common/
 
 public final class dev/kord/common/entity/ButtonStyle$Secondary : dev/kord/common/entity/ButtonStyle {
 	public static final field INSTANCE Ldev/kord/common/entity/ButtonStyle$Secondary;
-}
-
-public final class dev/kord/common/entity/ButtonStyle$Serializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/ButtonStyle$Serializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ButtonStyle;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ButtonStyle;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/ButtonStyle$Success : dev/kord/common/entity/ButtonStyle {
@@ -1562,7 +1519,7 @@ public final class dev/kord/common/entity/Choice$Companion {
 }
 
 public final class dev/kord/common/entity/Choice$IntChoice : dev/kord/common/entity/Choice {
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;J)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;J)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()J
@@ -1832,7 +1789,6 @@ public final class dev/kord/common/entity/CommandGroup : dev/kord/common/entity/
 
 public abstract class dev/kord/common/entity/ComponentType {
 	public static final field Companion Ldev/kord/common/entity/ComponentType$Companion;
-	public static final field Serializer Ldev/kord/common/entity/ComponentType$Serializer;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
@@ -1867,16 +1823,6 @@ public final class dev/kord/common/entity/ComponentType$RoleSelect : dev/kord/co
 
 public final class dev/kord/common/entity/ComponentType$SelectMenu : dev/kord/common/entity/ComponentType {
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$SelectMenu;
-}
-
-public final class dev/kord/common/entity/ComponentType$Serializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$Serializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ComponentType;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ComponentType;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/ComponentType$StringSelect : dev/kord/common/entity/ComponentType {
@@ -6647,7 +6593,6 @@ public final class dev/kord/common/entity/GuildScheduledEventPrivacyLevel$Unknow
 
 public abstract class dev/kord/common/entity/GuildScheduledEventStatus {
 	public static final field Companion Ldev/kord/common/entity/GuildScheduledEventStatus$Companion;
-	public static final field Serializer Ldev/kord/common/entity/GuildScheduledEventStatus$Serializer;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
@@ -6674,16 +6619,6 @@ public final class dev/kord/common/entity/GuildScheduledEventStatus$Completed : 
 
 public final class dev/kord/common/entity/GuildScheduledEventStatus$Scheduled : dev/kord/common/entity/GuildScheduledEventStatus {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildScheduledEventStatus$Scheduled;
-}
-
-public final class dev/kord/common/entity/GuildScheduledEventStatus$Serializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/GuildScheduledEventStatus$Serializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/GuildScheduledEventStatus;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/GuildScheduledEventStatus;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/GuildScheduledEventStatus$Unknown : dev/kord/common/entity/GuildScheduledEventStatus {
@@ -6761,7 +6696,6 @@ public final class dev/kord/common/entity/IntegrationApplication$Companion {
 
 public abstract class dev/kord/common/entity/IntegrationExpireBehavior {
 	public static final field Companion Ldev/kord/common/entity/IntegrationExpireBehavior$Companion;
-	public static final field Serializer Ldev/kord/common/entity/IntegrationExpireBehavior$Serializer;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
@@ -6780,16 +6714,6 @@ public final class dev/kord/common/entity/IntegrationExpireBehavior$Kick : dev/k
 
 public final class dev/kord/common/entity/IntegrationExpireBehavior$RemoveRole : dev/kord/common/entity/IntegrationExpireBehavior {
 	public static final field INSTANCE Ldev/kord/common/entity/IntegrationExpireBehavior$RemoveRole;
-}
-
-public final class dev/kord/common/entity/IntegrationExpireBehavior$Serializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/IntegrationExpireBehavior$Serializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/IntegrationExpireBehavior;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/IntegrationExpireBehavior;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/IntegrationExpireBehavior$Unknown : dev/kord/common/entity/IntegrationExpireBehavior {
@@ -6932,10 +6856,10 @@ public final class dev/kord/common/entity/InteractionType$Unknown : dev/kord/com
 }
 
 public final class dev/kord/common/entity/InteractionsKt {
-	public static final fun boolean (Ldev/kord/common/entity/CommandArgument;)Z
-	public static final fun int (Ldev/kord/common/entity/CommandArgument;)J
-	public static final fun snowflake (Ldev/kord/common/entity/CommandArgument;)Ldev/kord/common/entity/Snowflake;
-	public static final fun string (Ldev/kord/common/entity/CommandArgument;)Ljava/lang/String;
+	public static final synthetic fun boolean (Ldev/kord/common/entity/CommandArgument;)Z
+	public static final synthetic fun int (Ldev/kord/common/entity/CommandArgument;)J
+	public static final synthetic fun snowflake (Ldev/kord/common/entity/CommandArgument;)Ldev/kord/common/entity/Snowflake;
+	public static final synthetic fun string (Ldev/kord/common/entity/CommandArgument;)Ljava/lang/String;
 }
 
 public abstract class dev/kord/common/entity/InviteTargetType {
@@ -7238,7 +7162,6 @@ public final class dev/kord/common/entity/MessageStickerType$APNG : dev/kord/com
 
 public final class dev/kord/common/entity/MessageStickerType$Companion {
 	public final fun getEntries ()Ljava/util/List;
-	public final synthetic fun getValues ()Ljava/util/Set;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -7297,7 +7220,6 @@ public final class dev/kord/common/entity/MessageType$ChatInputCommand : dev/kor
 
 public final class dev/kord/common/entity/MessageType$Companion {
 	public final fun getEntries ()Ljava/util/List;
-	public final synthetic fun getValues ()Ljava/util/Set;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -7825,7 +7747,6 @@ public final class dev/kord/common/entity/PremiumTier$Unknown : dev/kord/common/
 
 public abstract class dev/kord/common/entity/PresenceStatus {
 	public static final field Companion Ldev/kord/common/entity/PresenceStatus$Companion;
-	public static final field StatusSerializer Ldev/kord/common/entity/PresenceStatus$StatusSerializer;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()Ljava/lang/String;
@@ -7856,16 +7777,6 @@ public final class dev/kord/common/entity/PresenceStatus$Offline : dev/kord/comm
 
 public final class dev/kord/common/entity/PresenceStatus$Online : dev/kord/common/entity/PresenceStatus {
 	public static final field INSTANCE Ldev/kord/common/entity/PresenceStatus$Online;
-}
-
-public final class dev/kord/common/entity/PresenceStatus$StatusSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/PresenceStatus$StatusSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/PresenceStatus;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/PresenceStatus;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/PresenceStatus$Unknown : dev/kord/common/entity/PresenceStatus {
@@ -7983,7 +7894,6 @@ public final class dev/kord/common/entity/RoleSubscription$Companion {
 
 public abstract class dev/kord/common/entity/ScheduledEntityType {
 	public static final field Companion Ldev/kord/common/entity/ScheduledEntityType$Companion;
-	public static final field Serializer Ldev/kord/common/entity/ScheduledEntityType$Serializer;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
@@ -7998,16 +7908,6 @@ public final class dev/kord/common/entity/ScheduledEntityType$Companion {
 
 public final class dev/kord/common/entity/ScheduledEntityType$External : dev/kord/common/entity/ScheduledEntityType {
 	public static final field INSTANCE Ldev/kord/common/entity/ScheduledEntityType$External;
-}
-
-public final class dev/kord/common/entity/ScheduledEntityType$Serializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/ScheduledEntityType$Serializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/ScheduledEntityType;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/ScheduledEntityType;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/ScheduledEntityType$StageInstance : dev/kord/common/entity/ScheduledEntityType {
@@ -8086,7 +7986,6 @@ public final class dev/kord/common/entity/SortOrderType$Unknown : dev/kord/commo
 
 public abstract class dev/kord/common/entity/StageInstancePrivacyLevel {
 	public static final field Companion Ldev/kord/common/entity/StageInstancePrivacyLevel$Companion;
-	public static final field Serializer Ldev/kord/common/entity/StageInstancePrivacyLevel$Serializer;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
@@ -8105,16 +8004,6 @@ public final class dev/kord/common/entity/StageInstancePrivacyLevel$GuildOnly : 
 
 public final class dev/kord/common/entity/StageInstancePrivacyLevel$Public : dev/kord/common/entity/StageInstancePrivacyLevel {
 	public static final field INSTANCE Ldev/kord/common/entity/StageInstancePrivacyLevel$Public;
-}
-
-public final class dev/kord/common/entity/StageInstancePrivacyLevel$Serializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/StageInstancePrivacyLevel$Serializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/StageInstancePrivacyLevel;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/StageInstancePrivacyLevel;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/StageInstancePrivacyLevel$Unknown : dev/kord/common/entity/StageInstancePrivacyLevel {
@@ -8190,7 +8079,6 @@ public final class dev/kord/common/entity/SystemChannelFlags$Companion : kotlinx
 
 public abstract class dev/kord/common/entity/TeamMembershipState {
 	public static final field Companion Ldev/kord/common/entity/TeamMembershipState$Companion;
-	public static final field TeamMembershipStateSerializer Ldev/kord/common/entity/TeamMembershipState$TeamMembershipStateSerializer;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getValue ()I
@@ -8209,16 +8097,6 @@ public final class dev/kord/common/entity/TeamMembershipState$Companion {
 
 public final class dev/kord/common/entity/TeamMembershipState$Invited : dev/kord/common/entity/TeamMembershipState {
 	public static final field INSTANCE Ldev/kord/common/entity/TeamMembershipState$Invited;
-}
-
-public final class dev/kord/common/entity/TeamMembershipState$TeamMembershipStateSerializer : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/TeamMembershipState$TeamMembershipStateSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/TeamMembershipState;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/TeamMembershipState;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/TeamMembershipState$Unknown : dev/kord/common/entity/TeamMembershipState {

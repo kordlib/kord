@@ -14,6 +14,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.NewsChannel
 import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.NewsChannelModifyBuilder
@@ -25,8 +26,7 @@ import dev.kord.rest.service.patchNewsChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -87,7 +87,7 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
     @Deprecated(
         "Replaced by builder overload",
         ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThread.reason = reason\n}"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun startPublicThread(
         name: String,
@@ -102,7 +102,7 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
 
     public suspend fun startPublicThread(
         name: String,
-        builder: StartThreadBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
+        builder: StartThreadBuilder.() -> Unit = {},
     ): NewsChannelThread {
         return unsafeStartThread(name, type = ChannelType.PublicNewsThread, builder) as NewsChannelThread
     }
@@ -110,7 +110,7 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
     @Deprecated(
         "Replaced by builder overload",
         ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
-        level = ERROR,
+        level = HIDDEN,
     )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
@@ -127,7 +127,7 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        builder: StartThreadWithMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
+        builder: StartThreadWithMessageBuilder.() -> Unit = {},
     ): NewsChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as NewsChannelThread
     }
