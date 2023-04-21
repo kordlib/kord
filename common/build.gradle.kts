@@ -60,7 +60,7 @@ buildConfig {
         internalVisibility = true
     }
 
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"${Library.version}\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"${Library.commitHash}\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"${Library.shortCommitHash}\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"${kordVersion}\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"${commitHash}\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"${shortCommitHash}\"")
 }

@@ -53,7 +53,7 @@ tasks {
     }
 
     withType<PublishToMavenRepository>().configureEach {
-        doFirst { require(!Library.isUndefined) { "No release/snapshot version found." } }
+        doFirst { require(!isUndefined) { "No release/snapshot version found." } }
     }
 }
 
