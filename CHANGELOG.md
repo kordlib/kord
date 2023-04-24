@@ -12,7 +12,7 @@
 
 ## Fixes
 
-* Fix some `EntitySupplyStrategy` `toString`s being incorrect (by @GreemDev #811)
+* Fix some `EntitySupplyStrategy` `toString`s being incorrect (by @GreemDev in #811)
 * Fix List Nitro Sticker Packs endpoint (by @Lukellmann in #816)
 * Fix `InstantInEpochMillisecondsSerializerTest` on JS (by @Lukellmann in #818)
 
