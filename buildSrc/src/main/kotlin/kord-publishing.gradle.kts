@@ -5,15 +5,18 @@ plugins {
     signing
 }
 
-val dokkaJar by tasks.registering(Jar::class) {
-    archiveClassifier = "javadoc"
-    from(tasks.named("dokkaHtml"))
-}
+fun MavenPublication.registerDokkaJar() =
+    tasks.register<Jar>("${name}DokkaJar") {
+        archiveClassifier = "javadoc"
+        destinationDirectory = destinationDirectory.get().dir(name)
+        from(tasks.named("dokkaHtml"))
+    }
 
 publishing {
     publications {
         withType<MavenPublication>().configureEach {
-            artifact(dokkaJar)
+            if (project.name != "bom") artifact(registerDokkaJar())
+
             groupId = Library.group
             artifactId = "kord-$artifactId"
             version = Library.version
@@ -76,6 +79,6 @@ if (!isJitPack && Library.isRelease) {
         if (signingKey != null && signingPassword != null) {
             useInMemoryPgpKeys(String(Base64.getDecoder().decode(signingKey)), signingPassword)
         }
-        sign(publishing.publications[Library.name])
+        sign(publishing.publications)
     }
 }

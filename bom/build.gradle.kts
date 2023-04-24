@@ -1,6 +1,6 @@
 plugins {
     `java-platform`
-    `kord-publishing`
+    `maven-publish`
 }
 
 val me = project
@@ -27,7 +27,9 @@ dependencies {
 }
 
 publishing {
-    publications.withType<MavenPublication>().configureEach {
+    publications.register<MavenPublication>(Library.name) {
         from(components["javaPlatform"])
     }
 }
+
+apply(plugin = "kord-publishing")
