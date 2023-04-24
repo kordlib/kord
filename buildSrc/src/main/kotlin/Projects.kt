@@ -13,7 +13,14 @@ private val Project.tag
         ?.lines()
         ?.single()
 
-val Project.libraryVersion get() = tag ?: "${git("branch", "--show-current").replace('/', '-')}-SNAPSHOT"
+val Project.libraryVersion
+    get() = tag ?: run {
+        val snapshotPrefix = when (val branch = git("branch", "--show-current")) {
+            "main" -> providers.gradleProperty("nextPlannedVersion").get()
+            else -> branch.replace('/', '-')
+        }
+        "$snapshotPrefix-SNAPSHOT"
+    }
 
 val Project.commitHash get() = git("rev-parse", "--verify", "HEAD")
 val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
