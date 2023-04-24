@@ -1,3 +1,34 @@
+# 0.9.0
+
+## Additions
+
+* Support Kotlin/JS (by @DRSchlaubi and @Lukellmann in #775)
+* Add support for voice messages (by @DRSchlaubi and @Lukellmann in #814)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @Lukellmann in #794)
+* Replace `Icon` with `Asset` (by @oluiss and @Lukellmann in #703)
+
+## Fixes
+
+* Fix some `EntitySupplyStrategy` `toString`s being incorrect (by @GreemDev in #811)
+* Fix List Nitro Sticker Packs endpoint (by @Lukellmann in #816)
+* Fix `InstantInEpochMillisecondsSerializerTest` on JS (by @Lukellmann in #818)
+
+## Dependencies
+
+Updated in #783
+
+* Gradle 8.0.2 -> 8.1
+
+## House-keeping
+
+* Add inspection for missing `@KordDsl` (by @DRSchlaubi in #800)
+* Fix Qodana findings (by @Lukellmann and @DRSchlaubi in #812)
+* Clean up (by @Lukellmann in #813)
+* Improve `GenerateKordEnum` and `AnnotationArguments` (by @Lukellmann in #817)
+
 # 0.8.3
 
 ## Additions
