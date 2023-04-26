@@ -1,3 +1,4 @@
+import java.lang.System.getenv
 import java.util.Base64
 
 plugins {
@@ -63,8 +64,8 @@ publishing {
             url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
 
             credentials {
-                username = System.getenv("NEXUS_USER")
-                password = System.getenv("NEXUS_PASSWORD")
+                username = getenv("NEXUS_USER")
+                password = getenv("NEXUS_PASSWORD")
             }
         }
     }
@@ -72,11 +73,9 @@ publishing {
 
 if (isRelease) {
     signing {
-        val signingKey = findProperty("signingKey")?.toString()
-        val signingPassword = findProperty("signingPassword")?.toString()
-        if (signingKey != null && signingPassword != null) {
-            useInMemoryPgpKeys(String(Base64.getDecoder().decode(signingKey)), signingPassword)
-        }
+        val secretKey = String(Base64.getDecoder().decode(getenv("SIGNING_KEY")))
+        val password = getenv("SIGNING_PASSWORD")
+        useInMemoryPgpKeys(secretKey, password)
         sign(publishing.publications)
     }
 }

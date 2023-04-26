@@ -42,8 +42,8 @@ jobs:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       NEXUS_USER: ${{ secrets.NEXUS_USER }}
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-      ORG_GRADLE_PROJECT_signingKey: ${{ secrets.signingKey }}
-      ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
+      SIGNING_KEY: ${{ secrets.signingKey }}
+      SIGNING_PASSWORD: ${{ secrets.signingPassword }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v3
