@@ -17,7 +17,6 @@ jobs:
       cancel-in-progress: true
     env:
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
-      GITHUB_BRANCH_NAME: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK

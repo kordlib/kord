@@ -28,8 +28,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
-      - name: Set SHORT_SHA environment variable to short commit hash
-        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -47,7 +45,6 @@ jobs:
       ORG_GRADLE_PROJECT_signingKey: ${{ secrets.signingKey }}
       ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
       GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
-      GITHUB_BRANCH_NAME: ${{ github.ref }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -57,8 +54,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
-      - name: Set SHORT_SHA environment variable to short commit hash
-        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:

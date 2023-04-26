@@ -19,7 +19,7 @@ publishing {
 
             groupId = Library.group
             artifactId = "kord-$artifactId"
-            version = Library.version
+            version = libraryVersion
 
             pom {
                 name = Library.name
@@ -61,7 +61,7 @@ publishing {
     if (!isJitPack) {
         repositories {
             maven {
-                url = uri(if (Library.isSnapshot) Repo.snapshotsUrl else Repo.releasesUrl)
+                url = uri(if (isSnapshot) Repo.snapshotsUrl else Repo.releasesUrl)
 
                 credentials {
                     username = System.getenv("NEXUS_USER")
@@ -72,7 +72,7 @@ publishing {
     }
 }
 
-if (!isJitPack && Library.isRelease) {
+if (!isJitPack && isRelease) {
     signing {
         val signingKey = findProperty("signingKey")?.toString()
         val signingPassword = findProperty("signingPassword")?.toString()
