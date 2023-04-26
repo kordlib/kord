@@ -58,21 +58,19 @@ publishing {
         }
     }
 
-    if (!isJitPack) {
-        repositories {
-            maven {
-                url = uri(if (isSnapshot) Repo.snapshotsUrl else Repo.releasesUrl)
+    repositories {
+        maven {
+            url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
 
-                credentials {
-                    username = System.getenv("NEXUS_USER")
-                    password = System.getenv("NEXUS_PASSWORD")
-                }
+            credentials {
+                username = System.getenv("NEXUS_USER")
+                password = System.getenv("NEXUS_PASSWORD")
             }
         }
     }
 }
 
-if (!isJitPack && isRelease) {
+if (isRelease) {
     signing {
         val signingKey = findProperty("signingKey")?.toString()
         val signingPassword = findProperty("signingPassword")?.toString()
