@@ -88,7 +88,7 @@ class RestServiceTest {
 
         guildId = guild.id
 
-        this@RestServiceTest.guild = kord.getGuildOrThrow(guildId)
+        this@RestServiceTest.guild = kord.getGuild(guildId)
 
         guild.edit {
             name = "Edited Guild Test"
@@ -557,7 +557,7 @@ class RestServiceTest {
     fun `create role with image icon`(): Unit = runBlocking {
         if (!boostEnabled)
             return@runBlocking
-        val guild = kord.getGuildOrThrow(publicGuildId)
+        val guild = kord.getGuild(publicGuildId)
         guild.createRole {
             name = "Test Image Icon"
             hoist = true
@@ -569,7 +569,7 @@ class RestServiceTest {
     fun `create role with unicode icon`(): Unit = runBlocking {
         if (!boostEnabled)
             return@runBlocking
-        val guild = kord.getGuildOrThrow(publicGuildId)
+        val guild = kord.getGuild(publicGuildId)
         guild.createRole {
             name = "Test Unicode Icon"
             hoist = true

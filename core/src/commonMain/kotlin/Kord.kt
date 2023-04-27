@@ -34,7 +34,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.HIDDEN
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -219,29 +219,23 @@ public class Kord(
     ): Guild? = strategy.supply(this).getGuildOrNull(id)
 
     /**
-     * Requests the [Guild] with the given [id], returns `null` when the guild isn't present.
-     *
-     * @throws RequestException if something went wrong while retrieving the guild.
-     */
-    @Deprecated(
-        "This function has an inconsistent name for its nullable return type and has been deprecated in favour of " +
-                "'getGuildOrNull()'.",
-        ReplaceWith("this.getGuildOrNull(id, strategy)"),
-        level = HIDDEN,
-    )
-    public suspend fun getGuild(
-        id: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
-    ): Guild? = strategy.supply(this).getGuildOrNull(id)
-
-    /**
      * Requests the [Guild] with the given [id].
-     *
-     * This will be renamed to `getGuild` once the [deprecated function][getGuild] is removed.
      *
      * @throws RequestException if something went wrong while retrieving the guild.
      * @throws EntityNotFoundException if the guild is null.
      */
+    public suspend fun getGuild(
+        id: Snowflake,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+    ): Guild = strategy.supply(this).getGuild(id)
+
+    /**
+     * Requests the [Guild] with the given [id].
+     *
+     * @throws RequestException if something went wrong while retrieving the guild.
+     * @throws EntityNotFoundException if the guild is null.
+     */
+    @Deprecated("Renamed to getGuild", ReplaceWith("this.getGuild(id, strategy)"), level = WARNING)
     public suspend fun getGuildOrThrow(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,

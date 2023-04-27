@@ -1,7 +1,5 @@
 @file:GenerateKordEnum(
     name = "MessageType", valueType = INT, valueName = "code",
-    // had `public val values: Set<MessageType>` in companion before -> replace with `entries`
-    valuesPropertyName = "values", valuesPropertyType = SET,
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-types",
     entries = [
         Entry("Default", intValue = 0),
@@ -74,8 +72,6 @@
 
 @file:GenerateKordEnum(
     name = "MessageStickerType", valueType = INT,
-    // had `public val values: Set<MessageStickerType>` in companion before -> replace with `entries`
-    valuesPropertyName = "values", valuesPropertyType = SET,
     docUrl = "https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types",
     entries = [
         Entry("PNG", intValue = 1),
@@ -97,7 +93,6 @@ import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName

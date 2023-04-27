@@ -7,11 +7,11 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.DiscordSelectOption
-import dev.kord.common.entity.optional.mapCopy
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
-import kotlin.DeprecationLevel.ERROR
+import dev.kord.common.entity.optional.mapCopy
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -23,29 +23,32 @@ import kotlin.contracts.contract
  */
 @KordDsl
 public open class SelectMenuBuilder
-@Deprecated(
-    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
-            "constructor of one of the subtypes.",
-    ReplaceWith("StringSelectBuilder(customId)", "dev.kord.rest.builder.component.StringSelectBuilder"),
-    level = ERROR,
-)
-public constructor(public var customId: String) : ActionRowComponentBuilder() {
+// actually:
+//@Deprecated(
+//    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
+//            "constructor of one of the subtypes.",
+//    ReplaceWith("StringSelectBuilder(customId)", "dev.kord.rest.builder.component.StringSelectBuilder"),
+//    level = HIDDEN,
+//)
+@PublishedApi internal constructor(public var customId: String) : ActionRowComponentBuilder() {
 
     /**
      * The choices in the select, max 25.
      */
-    @Deprecated(
-        "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
-        ReplaceWith(
-            "(this as? StringSelectBuilder)?.options ?: mutableListOf()",
-            "dev.kord.rest.builder.component.StringSelectBuilder",
-            "dev.kord.rest.builder.component.options",
-        ),
-        level = ERROR,
-    )
+    // actually:
+    //@Deprecated(
+    //    "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
+    //    ReplaceWith(
+    //        "(this as? StringSelectBuilder)?.options ?: mutableListOf()",
+    //        "dev.kord.rest.builder.component.StringSelectBuilder",
+    //        "dev.kord.rest.builder.component.options",
+    //    ),
+    //    level = HIDDEN,
+    //)
+    @PublishedApi
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
     @kotlin.internal.LowPriorityInOverloadResolution
-    public val options: MutableList<SelectOptionBuilder> get() = _options
+    internal val options: MutableList<SelectOptionBuilder> get() = _options
 
     @Suppress("PropertyName")
     internal var _options = mutableListOf<SelectOptionBuilder>()
@@ -80,7 +83,7 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
             "dev.kord.rest.builder.component.StringSelectBuilder",
             "dev.kord.rest.builder.component.option",
         ),
-        level = ERROR,
+        level = HIDDEN,
     )
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
     @kotlin.internal.LowPriorityInOverloadResolution
@@ -121,7 +124,6 @@ public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId)
 
 // TODO replace with member in StringSelectBuilder when SelectMenuBuilder.options is removed
 /** The choices in the select, max 25. */
-@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
 public var StringSelectBuilder.options: MutableList<SelectOptionBuilder>
     get() = _options
     set(value) {

@@ -37,7 +37,7 @@ public class Member(
     /**
      * The members guild avatar as [Icon] object
      */
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     public fun getMemberAvatar(): Icon? =
         memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }

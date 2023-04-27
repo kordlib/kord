@@ -126,7 +126,7 @@ public sealed class GuildFeature(
      * Guild has enabled monetization.
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Replaced by CreatorMonetizableProvisional.",
         replaceWith = ReplaceWith(expression = "GuildFeature.CreatorMonetizableProvisional", imports
                     = arrayOf("dev.kord.common.entitiy.GuildFeature")),
@@ -157,7 +157,7 @@ public sealed class GuildFeature(
      * Guild has access to create private threads
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Creating a private thread no longer requires the server to be boosted.",
     )
     public object PrivateThreads : GuildFeature("PRIVATE_THREADS")

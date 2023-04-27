@@ -95,7 +95,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -279,7 +278,7 @@ public data class DiscordThreadMetadata(
 
 // this should actually be generated with @file:GenerateKordEnum,
 // but it's not worth adding support for Duration just for this class
-@Serializable(with = ArchiveDuration.NewSerializer::class)
+@Serializable(with = ArchiveDuration.Serializer::class)
 public sealed class ArchiveDuration(
     /** The raw [Duration] used by Discord. */
     public val duration: Duration,
@@ -301,7 +300,7 @@ public sealed class ArchiveDuration(
     public object ThreeDays : ArchiveDuration(4320.minutes)
     public object Week : ArchiveDuration(10080.minutes)
 
-    internal object NewSerializer : KSerializer<ArchiveDuration> {
+    internal object Serializer : KSerializer<ArchiveDuration> {
         override val descriptor get() = DurationInMinutesSerializer.descriptor
 
         override fun serialize(encoder: Encoder, value: ArchiveDuration) =
@@ -318,18 +317,7 @@ public sealed class ArchiveDuration(
         public val entries: List<ArchiveDuration> by lazy(mode = PUBLICATION) {
             listOf(Hour, Day, ThreeDays, Week)
         }
-
-        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = HIDDEN)
-        public val values: Set<ArchiveDuration> get() = entries.toSet()
     }
-
-    @Deprecated(
-        "Use 'ArchiveDuration.serializer()' instead.",
-        ReplaceWith("ArchiveDuration.serializer()", "dev.kord.common.entity.ArchiveDuration"),
-        level = HIDDEN,
-    )
-    // TODO rename internal `NewSerializer` to `Serializer` when this is removed
-    public object Serializer : KSerializer<ArchiveDuration> by NewSerializer
 }
 
 @Serializable

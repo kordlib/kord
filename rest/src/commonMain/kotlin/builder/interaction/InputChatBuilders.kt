@@ -9,7 +9,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.json.request.ApplicationCommandCreateRequest
 import dev.kord.rest.json.request.ApplicationCommandModifyRequest
-import kotlin.DeprecationLevel.ERROR
+import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -86,7 +86,7 @@ public inline fun BaseInputChatBuilder.string(
 @Deprecated(
     "Renamed to 'integer'.",
     ReplaceWith("this.integer(name, description) { builder() }", "dev.kord.rest.builder.interaction.integer"),
-    level = ERROR,
+    level = HIDDEN,
 )
 public inline fun BaseInputChatBuilder.int(
     name: String,

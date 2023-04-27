@@ -6,7 +6,6 @@
 
 @file:GenerateKordEnum(
     name = "ScheduledEntityType", valueType = INT,
-    deprecatedSerializerName = "Serializer",
     docUrl = "https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-types",
     entries = [
         Entry("StageInstance", intValue = 1),
@@ -17,7 +16,6 @@
 
 @file:GenerateKordEnum(
     name = "GuildScheduledEventStatus", valueType = INT,
-    deprecatedSerializerName = "Serializer",
     docUrl = "https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-status",
     entries = [
         Entry("Scheduled", intValue = 1),
