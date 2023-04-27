@@ -9,12 +9,11 @@ import jetbrains.buildServer.configs.kotlin.vcs.GitVcsRoot
 object GitHub : GitVcsRoot({
     name = "https://github.com/kordlib/kord#refs/heads/0.8.x"
     url = "https://github.com/kordlib/kord"
-    // TODO: Replace this with correct root and spec before merge
-    branch = "refs/heads/feature/teamcity"
-//    branchSpec = """
-//        +:refs/heads/*
-//        -:refs/heads/gh-pages
-//    """.trimIndent()
+    branchSpec = """
+        +:refs/heads/*
+        +:refs/tags/*
+        -:refs/heads/gh-pages
+    """.trimIndent()
     authMethod = password {
         userName = "DRSchlaubi"
         password = "credentialsJSON:6c4cf2b5-741b-420a-bd80-587c4746b827"
