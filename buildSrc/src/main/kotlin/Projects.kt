@@ -13,7 +13,7 @@ val Project.libraryVersion: String
         return tag ?: "${git("branch", "--show-current").replace('/', '-')}-SNAPSHOT"
     }
 
-val Project.commitHash get() = git("rev-parse", "HEAD")
+val Project.commitHash get() = git("rev-parse", "--verify", "HEAD")
 val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
 
 val Project.isRelease get() = !libraryVersion.endsWith("-SNAPSHOT")
