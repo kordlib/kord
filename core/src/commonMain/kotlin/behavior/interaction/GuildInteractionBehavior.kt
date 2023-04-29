@@ -13,7 +13,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
 /** The behavior of a [GuildInteraction]. */
-public interface GuildInteractionBehavior : InteractionBehavior {
+public interface GuildInteractionBehavior : ChannelInteractionBehavior {
 
     /** The id of the guild the interaction was sent from. */
     public val guildId: Snowflake
@@ -28,6 +28,11 @@ public interface GuildInteractionBehavior : InteractionBehavior {
 
     public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
+    @Deprecated(
+        "Discord no longer provides a non-null variant channel",
+        replaceWith = ReplaceWith("getChannelOrNull()"),
+        level = DeprecationLevel.WARNING
+    )
     override suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId!!)
 
     override suspend fun getChannelOrNull(): GuildMessageChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
