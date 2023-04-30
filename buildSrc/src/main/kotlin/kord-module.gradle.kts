@@ -51,10 +51,6 @@ tasks {
     withType<AbstractDokkaLeafTask>().configureEach {
         applyKordDokkaOptions()
     }
-
-    withType<PublishToMavenRepository>().configureEach {
-        doFirst { require(!Library.isUndefined) { "No release/snapshot version found." } }
-    }
 }
 
 publishing {
