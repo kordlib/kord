@@ -15,8 +15,6 @@ jobs:
     concurrency: # Allow one concurrent deployment
       group: pages
       cancel-in-progress: true
-    env:
-      GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK

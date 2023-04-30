@@ -7,16 +7,18 @@ object Library {
     const val projectUrl = "https://github.com/kordlib/kord"
 }
 
-val Project.libraryVersion: String
-    get() {
-        val tag = System.getenv("GITHUB_TAG_NAME").takeUnless { it.isNullOrBlank() }
-        return tag ?: "${git("branch", "--show-current").replace('/', '-')}-SNAPSHOT"
-    }
+private val Project.tag
+    get() = git("tag", "--no-column", "--points-at", "HEAD")
+        .takeIf { it.isNotBlank() }
+        ?.lines()
+        ?.single()
+
+val Project.libraryVersion get() = tag ?: "${git("branch", "--show-current").replace('/', '-')}-SNAPSHOT"
 
 val Project.commitHash get() = git("rev-parse", "--verify", "HEAD")
 val Project.shortCommitHash get() = git("rev-parse", "--short", "HEAD")
 
-val Project.isRelease get() = !libraryVersion.endsWith("-SNAPSHOT")
+val Project.isRelease get() = tag != null
 
 object Repo {
     const val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
