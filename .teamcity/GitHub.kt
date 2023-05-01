@@ -35,7 +35,7 @@ fun BuildFeatures.installGitHubPublisher() = commitStatusPublisher {
 fun BuildFeatures.installGitHubPullRequest() = pullRequests {
     provider = github {
         authType = token {
-            token = "credentialsJSON:8a0ab174-fa52-45d4-950a-05a3c36d0e63"
+            token = "credentialsJSON:6c4cf2b5-741b-420a-bd80-587c4746b827"
         }
         filterSourceBranch = """
             :refs/-
@@ -49,6 +49,6 @@ fun ProjectFeatures.installGitHubIssueTracker() = githubIssues {
     displayName = "GitHub"
     repositoryURL = "https://github.com/kordlib/kord"
     authType = accessToken {
-        accessToken = "credentialsJSON:8a0ab174-fa52-45d4-950a-05a3c36d0e63"
+        accessToken = "credentialsJSON:6c4cf2b5-741b-420a-bd80-587c4746b827"
     }
 }
