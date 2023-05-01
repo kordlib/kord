@@ -5,10 +5,6 @@ import dev.kord.common.KordConstants
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
-import dev.kord.core.cache.CachingGateway
-import dev.kord.core.cache.KordCacheBuilder
-import dev.kord.core.cache.createView
-import dev.kord.core.cache.registerKordData
 import dev.kord.core.event.Event
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.DefaultMasterGateway
@@ -59,7 +55,6 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
 
     private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
         { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = token) }
-    private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
 
     /**
      * Enables stack trace recovery on the currently defined [RequestHandler].
@@ -157,27 +152,6 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
         this.handlerBuilder = handlerBuilder
     }
 
-    /**
-     * Configures the [DataCache] for caching.
-     *
-     *  ```
-     * Kord(token) {
-     *     cache {
-     *         defaultGenerator = lruCache()
-     *         forDescription(MessageData.description) { cache, description -> DataEntryCache.none() }
-     *         forDescription(UserData.description) { cache, description -> MapEntryCache(cache, description, MapLikeCollection.weakHashMap()) }
-     *     }
-     * }
-     * ```
-     */
-    public fun cache(builder: KordCacheBuilder.(resources: ClientResources) -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val old = cacheBuilder
-        cacheBuilder = { resources: ClientResources ->
-            old(resources)
-            builder(resources)
-        }
-    }
 
 
     /**
@@ -248,13 +222,9 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
             rawRequestHandler
         }
         val rest = RestClient(requestHandler)
-        val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
-        cache.registerKordData()
         val gateway = run {
             val gateways = buildMap<Int, Gateway> {
                 val gateways = gatewayBuilder(resources, shards)
-                    .map { CachingGateway(cache.createView(), it) }
-                    .onEach { it.registerKordData() }
 
                 shards.forEachIndexed { index, shard ->
                     put(shard, gateways[index])
@@ -267,7 +237,6 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
 
         return Kord(
             resources = resources,
-            cache = cache,
             gateway = gateway,
             rest = rest,
             selfId = self,

@@ -7,7 +7,7 @@ kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "3.0.5" # https://github.com/oshai/kotlin-logging
-kord-cache = "0.4.0" # https://github.com/kordlib/cache
+kord-cache = "0.5.0" # https://github.com/kordlib/cache
 
 # implementation dependencies
 kotlinx-nodejs = "18.14.0-pre.502" # https://github.com/JetBrains/kotlin-wrappers

@@ -1,6 +1,5 @@
 package dev.kord.core
 
-import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
@@ -11,6 +10,7 @@ import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
+import dev.kord.core.cache.data.TypedCache
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
@@ -48,13 +48,13 @@ public val kordLogger: KLogger = KotlinLogging.logger { }
  */
 public class Kord(
     public val resources: ClientResources,
-    public val cache: DataCache,
     public val gateway: MasterGateway,
     public val rest: RestClient,
     public val selfId: Snowflake,
-    private val eventFlow: MutableSharedFlow<Event>,
+    public val eventFlow: MutableSharedFlow<Event>,
+    public val interceptor: GatewayEventInterceptor,
+    public val cache: TypedCache,
     dispatcher: CoroutineDispatcher,
-    private val interceptor: GatewayEventInterceptor,
 ) : CoroutineScope {
 
     public val nitroStickerPacks: Flow<StickerPack>
@@ -370,7 +370,7 @@ public class Kord(
     override fun equals(other: Any?): Boolean = other is Kord && this.resources.token == other.resources.token
     override fun hashCode(): Int = resources.token.hashCode()
     override fun toString(): String =
-        "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId)"
+        "Kord(resources=$resources, gateway=$gateway, rest=$rest, selfId=$selfId)"
 
     public companion object {
 

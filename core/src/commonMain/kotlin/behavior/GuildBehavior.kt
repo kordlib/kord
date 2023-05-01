@@ -10,7 +10,6 @@ import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.*
-import dev.kord.core.cache.idEq
 import dev.kord.core.catchDiscordError
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.GuildApplicationCommand
@@ -24,6 +23,7 @@ import dev.kord.core.event.guild.MembersChunkEvent
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.hash
 import dev.kord.core.supplier.*
+import dev.kord.core.supplier.EntitySupplyStrategy.Companion.cache
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.PrivilegedIntent
@@ -89,11 +89,7 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public val cachedThreads: Flow<ThreadChannel>
-        get() = kord.cache
-            .query { idEq(ChannelData::guildId, this@GuildBehavior.id) }
-            .asFlow()
-            .mapNotNull { Channel.from(it, kord) as? ThreadChannel }
-
+        get() = kord.with(cache).getGuildChannels(id).filterIsInstance()
     /**
      * Requests to get all present webhooks for this guild.
      *
