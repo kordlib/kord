@@ -9,9 +9,6 @@ import dev.kord.ksp.*
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import dev.kord.ksp.kordenum.KordEnum.Entry
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -22,7 +19,6 @@ import kotlinx.serialization.encoding.Encoder
 import kotlin.DeprecationLevel.*
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import com.squareup.kotlinpoet.INT as INT_CLASS_NAME
-import com.squareup.kotlinpoet.SET as SET_CLASS_NAME
 import com.squareup.kotlinpoet.STRING as STRING_CLASS_NAME
 
 private val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
@@ -55,16 +51,6 @@ private fun ValueType.toPrimitiveKind() = when (this) {
     STRING -> PrimitiveKind.STRING::class
 }
 
-private fun ValuesPropertyType.toClassName() = when (this) {
-    NONE -> error("did not expect $this")
-    SET -> SET_CLASS_NAME
-}
-
-private fun ValuesPropertyType.toFromListConversion() = when (this) {
-    NONE -> error("did not expect $this")
-    SET -> ".toSet()"
-}
-
 internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 
     val packageName = originatingFile.packageName.asString()
@@ -76,9 +62,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
     val relevantEntriesForSerializerAndCompanion = entries
         .groupBy { it.value } // one entry per unique value is relevant
         .map { (_, group) -> group.firstOrNull { it.deprecated == null } ?: group.first() }
-
-    // TODO remove eventually (always use "Serializer" then)
-    val internalSerializerName = if (deprecatedSerializerName == "Serializer") "NewSerializer" else "Serializer"
 
     return FileSpec(packageName, fileName = name) {
         indent("    ")
@@ -108,7 +91,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
 
             addAnnotation<Serializable> {
-                addMember("with·=·%T.$internalSerializerName::class", enumName)
+                addMember("with·=·%T.Serializer::class", enumName)
             }
             addModifiers(PUBLIC, SEALED)
             primaryConstructor {
@@ -165,7 +148,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
 
 
-            addObject(internalSerializerName) {
+            addObject("Serializer") {
                 addModifiers(INTERNAL)
                 addSuperinterface(K_SERIALIZER.parameterizedBy(enumName))
 
@@ -198,32 +181,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
             }
 
 
-            // TODO bump deprecation level and remove eventually
-            @OptIn(DelicateKotlinPoetApi::class)
-            if (deprecatedSerializerName != null) {
-                val name = this@generateFileSpec.name
-                val deprecatedAnnotation = Deprecated(
-                    "Use '$name.serializer()' instead.",
-                    ReplaceWith("$name.serializer()", "$packageName.$name"),
-                    level = HIDDEN,
-                )
-                val kSerializer = K_SERIALIZER.parameterizedBy(enumName)
-
-                addObject(deprecatedSerializerName) {
-                    addAnnotation(deprecatedAnnotation)
-                    addModifiers(PUBLIC)
-                    addSuperinterface(kSerializer, delegate = CodeBlock.of(internalSerializerName))
-
-                    addFunction("serializer") {
-                        addAnnotation(deprecatedAnnotation)
-                        addModifiers(PUBLIC)
-                        returns(kSerializer)
-                        addStatement("return this")
-                    }
-                }
-            }
-
-
             addCompanionObject {
                 addModifiers(PUBLIC)
 
@@ -239,40 +196,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
                             }
                             addStatement(")")
                         }
-                    }
-                }
-
-                // TODO bump deprecation level and remove eventually
-                if (valuesPropertyName != null) {
-                    addProperty(
-                        valuesPropertyName,
-                        valuesPropertyType.toClassName().parameterizedBy(enumName),
-                        PUBLIC,
-                    ) {
-                        @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
-                        addAnnotation(
-                            Deprecated(
-                                "Renamed to 'entries'.",
-                                ReplaceWith("this.entries", imports = emptyArray()),
-                                level = HIDDEN,
-                            )
-                        )
-                        getter {
-                            addStatement("return entries${valuesPropertyType.toFromListConversion()}")
-                        }
-                    }
-                }
-
-                // TODO remove eventually
-                if (deprecatedSerializerName != null) {
-                    val deprecatedSerializer = enumName.nestedClass(deprecatedSerializerName)
-
-                    @OptIn(DelicateKotlinPoetApi::class)
-                    addProperty(deprecatedSerializerName, deprecatedSerializer, PUBLIC) {
-                        addAnnotation(Suppress("DEPRECATION_ERROR"))
-                        addAnnotation(Deprecated("Binary compatibility", level = HIDDEN))
-                        addAnnotation(JvmField())
-                        initializer("%T", deprecatedSerializer)
                     }
                 }
             }

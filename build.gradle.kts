@@ -7,4 +7,4 @@ repositories {
 }
 
 group = Library.group
-version = kordVersion
+version = libraryVersion

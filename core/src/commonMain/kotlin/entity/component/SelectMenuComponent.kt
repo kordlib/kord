@@ -17,13 +17,14 @@ import kotlin.jvm.JvmName
  */
 
 public open class SelectMenuComponent
-@Deprecated(
-    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
-            "constructor of one of the subtypes.",
-    ReplaceWith("StringSelectComponent(data)", "dev.kord.core.entity.component.StringSelectComponent"),
-    level = DeprecationLevel.ERROR,
-)
-public constructor(override val data: ComponentData) : Component {
+// actually:
+//@Deprecated(
+//    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
+//            "constructor of one of the subtypes.",
+//    ReplaceWith("StringSelectComponent(data)", "dev.kord.core.entity.component.StringSelectComponent"),
+//    level = DeprecationLevel.HIDDEN,
+//)
+@PublishedApi internal constructor(override val data: ComponentData) : Component {
 
     @Suppress("INAPPLICABLE_JVM_NAME")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
@@ -51,7 +52,7 @@ public constructor(override val data: ComponentData) : Component {
             "dev.kord.core.entity.component.StringSelectComponent",
             "dev.kord.core.entity.component.options",
         ),
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
     )
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
     @kotlin.internal.LowPriorityInOverloadResolution

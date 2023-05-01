@@ -10,7 +10,7 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.Image
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
@@ -26,7 +26,7 @@ public open class User(
     /**
      * The users avatar as [Icon] object
      */
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     public fun getAvatar(): Icon? = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
 
@@ -35,7 +35,7 @@ public open class User(
     /** The avatar of this user as an [Asset]. */
     public val avatar: Asset? get() = avatarHash?.let { Asset.userAvatar(data.id, it, kord) }
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     public fun getDefaultAvatar(): Icon = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
 
@@ -76,7 +76,7 @@ public open class User(
 
     public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
-    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = WARNING)
+    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = ERROR)
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
@@ -100,7 +100,7 @@ public open class User(
         return "User(data=$data, kord=$kord, supplier=$supplier)"
     }
 
-    @Deprecated("Old class", ReplaceWith("Asset", "dev.kord.core.entity.Asset"), level = WARNING)
+    @Deprecated("Old class", ReplaceWith("Asset", "dev.kord.core.entity.Asset"), level = ERROR)
     public data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**

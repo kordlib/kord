@@ -135,7 +135,7 @@ public class GuildEmoji(
     /**
      * The image as [Icon] object for the emoji
      */
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     public fun getImage(): Icon = Icon.EmojiIcon(data.animated.discordBoolean, data.id, kord)
 

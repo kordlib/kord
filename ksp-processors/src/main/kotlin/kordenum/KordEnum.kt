@@ -7,8 +7,6 @@ import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
 import dev.kord.ksp.kordenum.KordEnum.Entry
 import kotlin.DeprecationLevel.WARNING
 
@@ -20,11 +18,6 @@ internal class KordEnum(
     val valueType: ValueType,
     val valueName: String,
     val entries: List<Entry>,
-
-    // for migration purposes, TODO remove eventually
-    val valuesPropertyName: String?,
-    val valuesPropertyType: ValuesPropertyType,
-    val deprecatedSerializerName: String?,
 ) {
     class Entry(
         val name: String,
@@ -49,30 +42,11 @@ internal fun KSAnnotation.toKordEnumOrNull(logger: KSPLogger): KordEnum? {
     val kDoc = args[GenerateKordEnum::kDoc]?.toKDoc()
     val valueName = args[GenerateKordEnum::valueName] ?: "value"
 
-    val valuesPropertyName = args[GenerateKordEnum::valuesPropertyName]?.ifEmpty { null }
-    val valuesPropertyType = args[GenerateKordEnum::valuesPropertyType] ?: NONE
-    if (valuesPropertyName != null) {
-        if (valuesPropertyType == NONE) {
-            logger.error("Didn't specify valuesPropertyType", symbol = this)
-            return null
-        }
-    } else {
-        if (valuesPropertyType != NONE) {
-            logger.error("Specified valuesPropertyType", symbol = this)
-            return null
-        }
-    }
-    val deprecatedSerializerName = args[GenerateKordEnum::deprecatedSerializerName]?.ifEmpty { null }
-
     val mappedEntries = entries
         .mapNotNull { it.toEntryOrNull(valueType, logger) }
         .takeIf { it.size == entries.size } ?: return null // there were errors while mapping entries
 
-    return KordEnum(
-        name, kDoc, docUrl, valueType, valueName, mappedEntries,
-
-        valuesPropertyName, valuesPropertyType, deprecatedSerializerName,
-    )
+    return KordEnum(name, kDoc, docUrl, valueType, valueName, mappedEntries)
 }
 
 private fun String.toKDoc() = trimIndent().ifBlank { null }

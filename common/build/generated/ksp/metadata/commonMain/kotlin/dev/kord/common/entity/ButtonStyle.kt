@@ -6,15 +6,11 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
-import kotlin.Deprecated
-import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
-import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -29,7 +25,7 @@ import kotlinx.serialization.encoding.Encoder
  * See [ButtonStyle]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#button-object-button-styles).
  */
-@Serializable(with = ButtonStyle.NewSerializer::class)
+@Serializable(with = ButtonStyle.Serializer::class)
 public sealed class ButtonStyle(
     /**
      * The raw value used by Discord.
@@ -78,7 +74,7 @@ public sealed class ButtonStyle(
      */
     public object Link : ButtonStyle(5)
 
-    internal object NewSerializer : KSerializer<ButtonStyle> {
+    internal object Serializer : KSerializer<ButtonStyle> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ButtonStyle", PrimitiveKind.INT)
 
@@ -95,22 +91,6 @@ public sealed class ButtonStyle(
         }
     }
 
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Use 'ButtonStyle.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "ButtonStyle.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.ButtonStyle")),
-    )
-    public object Serializer : KSerializer<ButtonStyle> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Use 'ButtonStyle.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "ButtonStyle.serializer()", imports =
-                        arrayOf("dev.kord.common.entity.ButtonStyle")),
-        )
-        public fun serializer(): KSerializer<ButtonStyle> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [ButtonStyle]s.
@@ -125,13 +105,5 @@ public sealed class ButtonStyle(
             )
         }
 
-
-        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Serializer: Serializer = Serializer
     }
 }

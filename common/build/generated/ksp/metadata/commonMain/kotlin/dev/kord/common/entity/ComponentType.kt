@@ -14,7 +14,6 @@ import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
-import kotlin.jvm.JvmField
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -27,7 +26,7 @@ import kotlinx.serialization.encoding.Encoder
  * See [ComponentType]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#component-object-component-types).
  */
-@Serializable(with = ComponentType.NewSerializer::class)
+@Serializable(with = ComponentType.Serializer::class)
 public sealed class ComponentType(
     /**
      * The raw value used by Discord.
@@ -95,14 +94,14 @@ public sealed class ComponentType(
      * A select menu for picking from choices.
      */
     @Deprecated(
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
         message = "Renamed by discord",
         replaceWith = ReplaceWith(expression = "StringSelect", imports =
                     arrayOf("dev.kord.common.entity.ComponentType.StringSelect")),
     )
     public object SelectMenu : ComponentType(3)
 
-    internal object NewSerializer : KSerializer<ComponentType> {
+    internal object Serializer : KSerializer<ComponentType> {
         public override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
 
@@ -122,22 +121,6 @@ public sealed class ComponentType(
         }
     }
 
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Use 'ComponentType.serializer()' instead.",
-        replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
-                    arrayOf("dev.kord.common.entity.ComponentType")),
-    )
-    public object Serializer : KSerializer<ComponentType> by NewSerializer {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Use 'ComponentType.serializer()' instead.",
-            replaceWith = ReplaceWith(expression = "ComponentType.serializer()", imports =
-                        arrayOf("dev.kord.common.entity.ComponentType")),
-        )
-        public fun serializer(): KSerializer<ComponentType> = this
-    }
-
     public companion object {
         /**
          * A [List] of all known [ComponentType]s.
@@ -155,13 +138,5 @@ public sealed class ComponentType(
             )
         }
 
-
-        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Serializer: Serializer = Serializer
     }
 }

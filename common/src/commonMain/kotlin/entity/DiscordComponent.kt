@@ -1,6 +1,5 @@
 @file:GenerateKordEnum(
     name = "ComponentType", valueType = INT,
-    deprecatedSerializerName = "Serializer",
     docUrl = "https://discord.com/developers/docs/interactions/message-components#component-object-component-types",
     entries = [
         Entry("ActionRow", intValue = 1, kDoc = "A container for other components."),
@@ -16,7 +15,7 @@
             deprecated = Deprecated(
                 "Renamed by discord",
                 ReplaceWith("StringSelect", "dev.kord.common.entity.ComponentType.StringSelect"),
-                DeprecationLevel.ERROR
+                DeprecationLevel.HIDDEN
             ),
         ),
     ],
@@ -24,7 +23,6 @@
 
 @file:GenerateKordEnum(
     name = "ButtonStyle", valueType = INT,
-    deprecatedSerializerName = "Serializer",
     kDoc = "Style of a [button][dev.kord.common.entity.ComponentType.Button].",
     docUrl = "https://discord.com/developers/docs/interactions/message-components#button-object-button-styles",
     entries = [

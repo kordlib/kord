@@ -313,7 +313,7 @@ public class Message(
     @Deprecated(
         "Deprecated in favour of getAuthorAsMemberOrNull(), as it more accurately describes function",
         ReplaceWith("getAuthorAsMemberOrNull()"),
-        DeprecationLevel.ERROR
+        DeprecationLevel.HIDDEN
     )
     public suspend fun getAuthorAsMember(): Member? {
         val author = author ?: return null

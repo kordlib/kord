@@ -19,18 +19,6 @@ public interface GuildMessageChannelBehavior : GuildChannelBehavior, MessageChan
 
     /**
      * Requests to bulk delete the [messages].
-     * Messages older than 14 days will be deleted individually.
-     *
-     * @param reason the reason showing up in the audit log
-     * @throws [RestRequestException] if something went wrong during the request.
-     */
-    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    public suspend fun bulkDelete(messages: Iterable<Snowflake>, reason: String? = null) {
-        bulkDelete(messages, deleteOlderMessages = true, reason)
-    }
-
-    /**
-     * Requests to bulk delete the [messages].
      *
      * If [deleteOlderMessages] is `true` (default), messages older than 14
      * days will be deleted individually. Otherwise they will be ignored.
