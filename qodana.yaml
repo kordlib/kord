@@ -5,20 +5,6 @@ profile:
   name: qodana.recommended
 bootstrap: ./gradlew generateBuildConfig
 
-include:
-  - name: KotlinUnusedImport
-  - name: RedundantSuspendModifier
-  - name: KDocUnresolvedReference
-  - name: MemberVisibilityCanBePrivate
-  - name: RemoveExplicitTypeArguments
-  - name: PropertyName
-  - name: PrivatePropertyName
-  - name: CanBeParameter
-  - name: UnusedSymbol
-  - name: NestedLambdaShadowedImplicitParameter
-  - name: IntroduceWhenSubject
-  - name: RedundantNullableReturnType
-
 # We cannot change that file
 exclude:
   - name: All
