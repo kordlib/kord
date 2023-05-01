@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package dev.kord.ksp
 
 import com.squareup.kotlinpoet.*
