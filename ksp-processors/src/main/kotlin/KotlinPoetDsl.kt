@@ -55,6 +55,9 @@ internal inline fun TypeSpec.Builder.addCompanionObject(name: String? = null, bu
 internal inline fun TypeSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
     addFunction(FunSpec.builder(name).apply(builder).build())
 
+internal inline fun FileSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
+    addFunction(FunSpec.builder(name).apply(builder).build())
+
 internal inline fun TypeSpec.Builder.addObject(name: String, builder: TypeSpecBuilder) =
     addType(TypeSpec.objectBuilder(name).apply(builder).build())
 

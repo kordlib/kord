@@ -1,6 +1,8 @@
 package dev.kord.ksp
 
+import com.google.devtools.ksp.KspExperimental
 import com.google.devtools.ksp.findActualType
+import com.google.devtools.ksp.isAnnotationPresent
 import com.google.devtools.ksp.isDefault
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.*
@@ -13,6 +15,9 @@ internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(i
 internal fun Resolver.getNewClasses() = getNewFiles().flatMap { it.declarations.filterIsInstance<KSClassDeclaration>() }
 
 internal inline fun <reified A : Annotation> KSAnnotation.isOfType() = isOfType(A::class.qualifiedName!!)
+
+@OptIn(KspExperimental::class)
+internal inline fun <reified A : Annotation> KSAnnotated.hasAnnotation() = isAnnotationPresent(A::class)
 
 internal fun KSAnnotation.isOfType(qualifiedName: String) = annotationType.resolve()
     .declaration.let { if (it is KSTypeAlias) it.findActualType() else it }
@@ -65,3 +70,6 @@ internal val KSReferenceElement.isClassifierReference: Boolean
         is KSParenthesizedReference -> element.isClassifierReference
         else -> error("Unexpected KSReferenceElement: $this")
     }
+
+internal fun KSDeclaration.parentDeclaration(n: Int) =
+    (0 until n - 1).fold(parentDeclaration) { acc, _ -> acc?.parentDeclaration }
