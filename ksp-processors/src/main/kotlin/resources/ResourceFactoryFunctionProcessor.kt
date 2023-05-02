@@ -2,10 +2,8 @@ package dev.kord.ksp.resources
 
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.*
-import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.FileSpec
-import com.squareup.kotlinpoet.joinToCode
+import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import com.squareup.kotlinpoet.ksp.toClassName
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.kord.ksp.*
@@ -22,6 +20,7 @@ class ResourceFactoryFunctionProcessorProvider : SymbolProcessorProvider {
 
 private class ResourceFactoryFunctionProcessor(private val generator: CodeGenerator, private val logger: KSPLogger) :
     SymbolProcessor {
+    @OptIn(DelicateKotlinPoetApi::class)
     override fun process(resolver: Resolver): List<KSAnnotated> {
         resolver.getSymbolsWithAnnotation<Resource>()
             .filterIsInstance<KSClassDeclaration>()
@@ -60,6 +59,8 @@ private class ResourceFactoryFunctionProcessor(private val generator: CodeGenera
             }
             .groupBy(FactoryFunction::file).forEach { (file, functions) ->
                 val fileSpec = FileSpec("dev.kord.rest", "${file.fileName.dropLast(3)}Factories") {
+                    addKotlinDefaultImports(includeJvm = false, includeJs = false)
+                    addAnnotation(Suppress("NOTHING_TO_INLINE"))
                     functions.forEach {
                         with(it) {
                             addFunction()
@@ -67,7 +68,7 @@ private class ResourceFactoryFunctionProcessor(private val generator: CodeGenera
                     }
                 }
 
-                fileSpec.writeTo(generator, false, listOf(file))
+                fileSpec.writeTo(generator, false)
             }
 
         return emptyList()
@@ -116,6 +117,8 @@ private data class FactoryFunction(
     fun FileSpec.Builder.addFunction() {
         addFunction(this@FactoryFunction.name.simpleName) {
             returns(this@FactoryFunction.name)
+            addOriginatingKSFile(file)
+            addModifiers(KModifier.INLINE)
             if (receiver != null) {
                 receiver(receiver.nestedClass("Companion"))
             }
