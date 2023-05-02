@@ -7,27 +7,27 @@ import kotlinx.serialization.Contextual
 @Resource("/users")
 public class Users {
     @Resource("@me")
-    public class Me(public val parent: Users = Users()) {
+    public class Me(public val parent: Users) {
         @Resource("guilds")
-        public class Guilds(public val parent: Me = Me()) {
+        public class Guilds(public val parent: Me) {
             @Resource("{guildId}")
-            public class ById(public val parent: Guilds = Guilds(), public val guildId: Snowflake)
+            public class ById(public val parent: Guilds, public val guildId: Snowflake)
         }
         @Resource("channels")
-        public class Channels(public val parent: Me = Me())
+        public class Channels(public val parent: Me)
         @Resource("connections")
-        public class Connections(public val parent: Me = Me())
+        public class Connections(public val parent: Me)
 
 
     }
     @Resource("{userId}")
-    public class ById(public val userId: Snowflake, public val parent: Users = Users())
+    public class ById(public val userId: Snowflake, public val parent: Users)
 }
 
 @Resource("/guilds")
 public class Guilds {
     @Resource("{guildId}")
-    public class ById(public val guildId: Snowflake, public val parent: Guilds = Guilds()) {
+    public class ById(public val guildId: Snowflake, public val parent: Guilds) {
         @Resource("audit-log")
         public class AuditLog(public val parent: ById)
         @Resource("mfa")
@@ -129,7 +129,7 @@ public class Guilds {
 @Resource("/channels")
 public class Channels {
     @Resource("{channelId}")
-    public class ById(public val channelId: Snowflake, public val parent: Channels = Channels()) {
+    public class ById(public val channelId: Snowflake, public val parent: Channels) {
         @Resource("typing")
         public class Typing(public val parent: ById)
         @Resource("recipients")
@@ -204,18 +204,18 @@ public class Channels {
 @Resource("/invites")
 public class Invites {
     @Resource("{inviteCode}")
-    public class ById(public val inviteCode: String, public val parent: Invites = Invites())
+    public class ById(public val inviteCode: String, public val parent: Invites)
 }
 
 @Resource("/stickers")
 public class Stickers {
-    public class ById(public val stickerId: Snowflake, public val parent: Stickers = Stickers())
+    public class ById(public val stickerId: Snowflake, public val parent: Stickers)
 }
 
 @Resource("/webhooks")
 public class Webhooks {
     @Resource("{webhookId}")
-    public class ById(public val webhookId: Snowflake, public val parent: Webhooks = Webhooks()){
+    public class ById(public val webhookId: Snowflake, public val parent: Webhooks){
         @Resource("{token}")
         public class WithToken(public val parent: ById, public val token: String) {
             @Resource("github")
