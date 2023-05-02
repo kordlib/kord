@@ -1,15 +1,17 @@
-package dev.kord.core.cache.data
+package dev.kord.core.cache
 
 import dev.kord.cache.api.observables.Cache
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.cache.data.*
+import dev.kord.core.cache.data.RegionData as RegionData1
 
 public interface TypedCache {
     public fun bans(): Cache<Snowflake, BanData>
-    public fun members(): Cache<Snowflake, MemberData>
+    public fun members(): Cache<UnionSnowflake, MemberData>
     public fun users(): Cache<Snowflake, UserData>
     public fun channels(): Cache<Snowflake, ChannelData>
     public fun guilds(): Cache<Snowflake, GuildData>
-    public fun regions(): Cache<Snowflake, RegionData>
+    public fun regions(): Cache<Snowflake, RegionData1>
     public fun roles(): Cache<Snowflake, RoleData>
     public fun guildPreviews(): Cache<Snowflake, GuildPreviewData>
     public fun messages(): Cache<Snowflake, MessageData>
@@ -23,5 +25,7 @@ public interface TypedCache {
     public fun autoModerationRules(): Cache<Snowflake, AutoModerationRuleData>
     public fun guildScheduledEvents(): Cache<Snowflake, GuildScheduledEventData>
     public fun stickerPacks(): Cache<Snowflake, StickerPackData>
+    public fun presences(): Cache<Snowflake, PresenceData>
+    public fun voiceStates(): Cache<Snowflake, VoiceStateData>
 }
 

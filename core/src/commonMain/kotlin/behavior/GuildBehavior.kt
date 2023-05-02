@@ -134,8 +134,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * This property is not resolvable through REST and will always use [Kord.cache] instead.
      */
     public val presences: Flow<Presence>
-        get() = kord.cache.query { idEq(PresenceData::guildId, id) }
-            .asFlow()
+        get() = kord.cache.presences()
+            .filter { it.guildId == id }
             .map { Presence(it, kord) }
 
     /**
@@ -185,9 +185,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
      * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public val voiceStates: Flow<VoiceState>
-        get() = kord.cache
-            .query { idEq(VoiceStateData::guildId, id) }
-            .asFlow()
+        get() = kord.cache.voiceStates()
+            .filter { it.guildId == id }
             .map { VoiceState(it, kord) }
 
     /**
