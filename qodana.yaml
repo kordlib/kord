@@ -4,9 +4,12 @@ linter: jetbrains/qodana-jvm:2023.1-eap
 profile:
   name: qodana.recommended
 bootstrap: ./gradlew generateBuildConfig
+failThreshold: 0
 
-# We cannot change that file
 exclude:
+  # this file is just copied, we don't want to change it
   - name: All
     paths:
       - voice/src/main/java/com/iwebpp/crypto/TweetNaclFast.java
+  # we manage our public API with the Binary compatibility validator
+  - name: MemberVisibilityCanBePrivate

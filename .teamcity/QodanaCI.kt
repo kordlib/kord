@@ -12,7 +12,6 @@ val QodanaCI = KordBuild("Qodana") {
     steps {
         qodana {
             cloudToken = "credentialsJSON:acbac377-214a-4239-a3bb-bcf3ae29d83e"
-            additionalQodanaArguments = "--baseline .qodana/baseline.sarif.json"
             linter = Qodana.Linter.Jvm()
         }
     }
