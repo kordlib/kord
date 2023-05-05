@@ -30,9 +30,9 @@ public class Member(
         get() = memberData.guildId
 
     /**
-     * The name as shown in the discord client, prioritizing the [nickname] over the [username].
+     * The name as shown in the discord client, prioritizing [nickname] over [globalName] and [username].
      */
-    public val displayName: String get() = nickname ?: username
+    override val displayName: String get() = nickname ?: super.displayName
 
     /**
      * The members guild avatar as [Icon] object

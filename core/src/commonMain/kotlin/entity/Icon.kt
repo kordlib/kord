@@ -49,8 +49,12 @@ public sealed class Icon(
     public class EmojiIcon(animated: Boolean, emojiId: Snowflake, kord: Kord) :
         Icon(if (animated) Image.Format.GIF else Image.Format.WEBP, animated, DiscordCdn.emoji(emojiId), kord)
 
-    public class DefaultUserAvatar(discriminator: Int, kord: Kord) :
-        Icon(Image.Format.PNG /* Discord Default Avatars only support PNG */, false, DiscordCdn.defaultAvatar(discriminator), kord)
+    public class DefaultUserAvatar private constructor(cdnUrl: CdnUrl, kord: Kord) :
+        Icon(Image.Format.PNG /* Discord Default Avatars only support PNG */, false, cdnUrl, kord) {
+        @Suppress("DEPRECATION")
+        public constructor(discriminator: Int, kord: Kord) : this(DiscordCdn.defaultAvatar(discriminator), kord)
+        internal constructor(userId: Snowflake, kord: Kord) : this(DiscordCdn.defaultUserAvatar(userId), kord)
+    }
 
     public class UserAvatar(userId: Snowflake, avatarHash: String, kord: Kord) :
         Icon(if (avatarHash.startsWith("a_")) Image.Format.GIF else Image.Format.WEBP, avatarHash.startsWith("a_"), DiscordCdn.userAvatar(userId, avatarHash), kord)

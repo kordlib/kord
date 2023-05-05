@@ -45,7 +45,9 @@ class EmojiTest {
             roles shouldBe listOf("41771983429993000", "41771983429993111").map { Snowflake(it) }
             with(user.value!!) {
                 username shouldBe "Luigi"
+                @Suppress("DEPRECATION")
                 discriminator shouldBe "0002"
+                globalName shouldBe null
                 id shouldBe "96008815106887111"
                 avatar shouldBe "5500909a3274e1812beb4e8de6631111"
             }

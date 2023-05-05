@@ -109,7 +109,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),
@@ -135,7 +134,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),
@@ -347,7 +345,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             DiscordUser(
                                 id = randomId(),
                                 username = "",
-                                discriminator = "",
                                 avatar = null
                             )
                         ),
@@ -379,7 +376,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         ),
                         joinedAt = Instant.fromEpochMilliseconds(0),
@@ -406,7 +402,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),
@@ -569,7 +564,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         author = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         ),
                         content = "",
