@@ -6,7 +6,7 @@ import dev.kord.core.cache.data.*
 import dev.kord.core.cache.data.RegionData as RegionData1
 
 public interface TypedCache {
-    public fun bans(): Cache<Snowflake, BanData>
+    public fun bans(): Cache<UnionSnowflake, BanData>
     public fun members(): Cache<UnionSnowflake, MemberData>
     public fun users(): Cache<Snowflake, UserData>
     public fun channels(): Cache<Snowflake, ChannelData>
@@ -26,6 +26,5 @@ public interface TypedCache {
     public fun guildScheduledEvents(): Cache<Snowflake, GuildScheduledEventData>
     public fun stickerPacks(): Cache<Snowflake, StickerPackData>
     public fun presences(): Cache<Snowflake, PresenceData>
-    public fun voiceStates(): Cache<Snowflake, VoiceStateData>
+    public fun voiceStates(): Cache<UnionSnowflake, VoiceStateData>
 }
-

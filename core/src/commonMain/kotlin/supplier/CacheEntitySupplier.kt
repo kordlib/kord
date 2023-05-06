@@ -7,7 +7,8 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.any
-import dev.kord.core.cache.data.*
+import dev.kord.core.cache.TypedCache
+import dev.kord.core.cache.get
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.ApplicationCommandPermissions
 import dev.kord.core.entity.application.GlobalApplicationCommand
@@ -105,27 +106,23 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                 Member(it, userData.data, kord)
             }
 
-    public suspend fun getRole(id: Snowflake): Role? =
-        cache.roles()
-            .filter { it.id == id }
-            .map { Role(it, kord) }
-            .singleOrNull()
+    public suspend fun getRole(id: Snowflake): Role? {
+        val data = cache.roles().get(id) ?: return null
+        return Role(data, kord)
+    }
 
-    override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? =
-        cache.guildPreviews()
-            .filter { it.id == guildId }
-            .map { GuildPreview(it, kord) }
-            .singleOrNull()
+    override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? {
+        val data = cache.guildPreviews().get(guildId) ?: return null
+        return GuildPreview(data, kord)
+    }
 
 
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? = null
 
-    override suspend fun getChannelOrNull(id: Snowflake): Channel? =
-        cache.channels()
-            .filter { it.id == id }
-            .map { Channel.from(it, kord) }
-            .singleOrNull()
-
+    override suspend fun getChannelOrNull(id: Snowflake): Channel? {
+        val data = cache.channels().get(id) ?: return null
+        return Channel.from(data, kord)
+    }
 
     override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> =
         cache.channels()
@@ -138,27 +135,21 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .filter { it.id == channelId && it.pinned }
             .map { Message(it, kord) }
 
-    override suspend fun getGuildOrNull(id: Snowflake): Guild? =
-        cache.guilds()
-            .filter { it.id == id }
-            .map { Guild(it, kord) }
-            .singleOrNull()
+    override suspend fun getGuildOrNull(id: Snowflake): Guild? {
+        val data = cache.guilds().get(id) ?: return null
+        return Guild(data, kord)
+    }
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? {
         val user = getUserOrNull(userId) ?: return null
-        return cache.members()
-            .filter { it.guildId == guildId && it.userId == userId }
-            .map { Member(it, user.data, kord) }
-            .singleOrNull()
-
+        val data = cache.members().get(guildId, userId) ?: return null
+        return Member(data, user.data, kord)
     }
 
-    override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? =
-        cache.messages()
-            .filter { it.id == messageId && it.channelId == channelId }
-            .map { Message(it, kord) }
-            .singleOrNull()
-
+    override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
+        val data = cache.messages().get(messageId) ?: return null
+        return if(data.channelId != channelId) null else Message(data, kord)
+    }
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> {
         checkLimit(limit)
         return cache.messages()
@@ -187,11 +178,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override suspend fun getSelfOrNull(): User? = getUserOrNull(kord.selfId)
 
-    override suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role? =
-        cache.roles()
-            .filter { it.id == roleId && it.guildId == guildId }
-            .map { Role(it, kord) }
-            .singleOrNull()
+    override suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role? {
+        val data = cache.roles().get(roleId) ?: return null
+        return if (data.guildId != guildId) null else Role(data, kord)
+    }
 
 
     override fun getGuildRoles(guildId: Snowflake): Flow<Role> =
@@ -199,11 +189,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .filter { it.guildId == guildId }
             .map { Role(it, kord) }
 
-    override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? =
-        cache.bans()
-            .filter { it.userId == userId }
-            .map { Ban(it, kord) }
-            .singleOrNull()
+    override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? {
+        val data = cache.bans().get(guildId, userId) ?: return null
+        return Ban(data, kord)
+    }
 
     override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> {
         checkLimit(limit)
@@ -229,12 +218,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .filter { it.guildId.value == guildId }
             .map { Region(it, kord) }
 
-    override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? =
-        cache.emojis()
-            .filter { it.id == emojiId && it.guildId == guildId }
-            .map { GuildEmoji(it, kord) }
-            .singleOrNull()
-
+    override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? {
+        val data = cache.emojis().get(emojiId) ?: return null
+        return if(data.guildId != guildId) null else GuildEmoji(data, kord)
+    }
     override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> =
         cache.emojis()
             .filter { it.guildId == guildId }
@@ -257,44 +244,33 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .filter { it.guildId.value == guildId }
             .map { Webhook(it, kord) }
 
-    override suspend fun getWebhookOrNull(id: Snowflake): Webhook? =
-        cache.webhooks()
-            .filter { it.id == id }
-            .map { Webhook(it, kord) }
-            .singleOrNull()
-
-    override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? =
-        cache.webhooks()
-            .filter { it.id == id && it.token.value == token }
-            .map { Webhook(it, kord) }
-            .singleOrNull()
-
+    override suspend fun getWebhookOrNull(id: Snowflake): Webhook? {
+        val data = cache.webhooks().get(id) ?: return null
+        return Webhook(data, kord)
+    }
+    override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? {
+        val data = cache.webhooks().get(id) ?: return null
+        return if(data.token.value != token) null else Webhook(data, kord)
+    }
     override suspend fun getWebhookMessageOrNull(
         webhookId: Snowflake,
         token: String,
         messageId: Snowflake,
         threadId: Snowflake?,
-    ): Message? =
-        cache.messages()
-            .filter {
-                val result = it.id == webhookId && it.id == messageId
-                if (threadId == null) result else result && it.channelId == threadId
-            }
-            .map { Message(it, kord) }
-            .singleOrNull()
+    ): Message? {
+        val data = cache.messages().get(messageId) ?: return null
+        return if (data.webhookId.value != webhookId || threadId != null && data.channelId != threadId) null
+        else Message(data, kord)
+    }
+    override suspend fun getUserOrNull(id: Snowflake): User? {
+        val data = cache.users().get(id) ?: return null
+        return User(data, kord)
+    }
 
-
-    override suspend fun getUserOrNull(id: Snowflake): User? =
-        cache.users()
-            .filter { it.id == id }
-            .map { User(it, kord) }
-            .singleOrNull()
-
-    override suspend fun getTemplateOrNull(code: String): Template? =
-        cache.templates()
-            .filter { it.code == code }
-            .map { Template(it, kord) }
-            .singleOrNull()
+    override suspend fun getTemplateOrNull(code: String): Template? {
+        val data = cache.templates().get(code) ?: return null
+        return Template(data, kord)
+    }
 
     override fun getTemplates(guildId: Snowflake): Flow<Template> =
         cache.templates()
@@ -409,22 +385,20 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake
-    ): GuildApplicationCommand? =
-        cache.applicationCommands()
-            .filter { it.guildId.value == guildId && it.applicationId == applicationId && it.id == commandId }
-            .map { GuildApplicationCommand(it, kord.rest.interaction) }
-            .singleOrNull()
-
+    ): GuildApplicationCommand? {
+        val data = cache.applicationCommands().get(commandId) ?: return null
+        return if(data.guildId.value != guildId || data.applicationId != applicationId) null
+        else GuildApplicationCommand(data, kord.rest.interaction)
+    }
 
     override suspend fun getGlobalApplicationCommandOrNull(
         applicationId: Snowflake,
         commandId: Snowflake
-    ): GlobalApplicationCommand? =
-        cache.applicationCommands()
-            .filter { it.guildId.value == null && it.applicationId == applicationId && it.id == commandId }
-            .map { GlobalApplicationCommand(it, kord.rest.interaction) }
-            .singleOrNull()
-
+    ): GlobalApplicationCommand? {
+        val data = cache.applicationCommands().get(commandId) ?: return null
+        return if(data.applicationId != applicationId) null
+        else GlobalApplicationCommand(data, kord.rest.interaction)
+    }
 
     override fun getGlobalApplicationCommands(
         applicationId: Snowflake,
@@ -458,28 +432,27 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake
-    ): ApplicationCommandPermissions? =
-        cache.applicationCommandPermissions()
-            .filter { it.applicationId == applicationId && it.guildId == guildId  && it.id == commandId }
-            .map { ApplicationCommandPermissions(it) }
-            .singleOrNull()
-
+    ): ApplicationCommandPermissions? {
+        val data = cache.applicationCommandPermissions().get(commandId) ?: return null
+        return if(data.guildId != guildId || data.applicationId != applicationId) null
+        else ApplicationCommandPermissions(data)
+    }
     override suspend fun getFollowupMessageOrNull(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): FollowupMessage? =
-        cache.messages()
-            .filter {it.id == messageId && it.applicationId.value == applicationId }
-            .map { FollowupMessage(Message(it, kord), applicationId, interactionToken, kord) }
-            .singleOrNull()
+    ): FollowupMessage? {
+            val data = cache.messages().get(messageId) ?: return null
+            return if(data.applicationId.value != applicationId) null
+            else FollowupMessage(Message(data, kord), applicationId, interactionToken, kord)
+        }
 
 
-    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? =
-         cache.guildScheduledEvents()
-            .filter {it.id == eventId && it.guildId == guildId }
-            .map { GuildScheduledEvent(it, kord) }
-            .singleOrNull()
+    override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? {
+            val data = cache.guildScheduledEvents().get(eventId) ?: return null
+            return if(data.guildId != guildId) null
+            else GuildScheduledEvent(data, kord)
+        }
 
 
     override fun getGuildScheduledEventMembersBefore(
@@ -528,18 +501,16 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         limit: Int?,
     ): Flow<User> = getGuildScheduledEventMembersAfter(guildId, eventId, after, limit).map { it.asUser() }
 
-    override suspend fun getStickerOrNull(id: Snowflake): Sticker? =
-        cache.stickers()
-            .filter { it.id == id }
-            .map { Sticker(it, kord) }
-            .singleOrNull()
+    override suspend fun getStickerOrNull(id: Snowflake): Sticker? {
+        val data = cache.stickers().get(id) ?: return null
+        return Sticker(data, kord)
+    }
 
 
-    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? =
-        cache.stickers()
-            .filter { it.id == id && it.guildId.value == guildId }
-            .map { GuildSticker(it, kord) }
-            .singleOrNull()
+    override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? {
+        val data = cache.stickers().get(id) ?: return null
+        return if (data.guildId.value != guildId) null else GuildSticker(data, kord)
+    }
 
     override fun getNitroStickerPacks(): Flow<StickerPack> =
         cache.stickerPacks()
@@ -561,11 +532,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .filter { it.guildId == guildId }
             .map { AutoModerationRule(it, kord) }
 
-    override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
-        cache.autoModerationRules()
-            .filter { it.id == ruleId && it.guildId == guildId }
-            .map { AutoModerationRule(it, kord) }
-            .singleOrNull()
+    override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? {
+        val data = cache.autoModerationRules().get(ruleId) ?: return null
+        return if(data.guildId != guildId) null else AutoModerationRule(data, kord)
+    }
 
 
 
