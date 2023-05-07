@@ -314,11 +314,19 @@ public sealed interface MentionSpamAutoModerationRuleBuilder : TimeoutAutoModera
     override val triggerType: MentionSpam get() = MentionSpam
 
     /** Total number of unique role and user mentions allowed per message (maximum of 50). */
-    public val mentionLimit: Int?
+    public var mentionLimit: Int?
 
     /**
      * Use this to set [mentionLimit][MentionSpamAutoModerationRuleBuilder.mentionLimit] for
      * [MentionSpamAutoModerationRuleBuilder].
      */
+    @Deprecated(
+        "This can be replaced with 'mentionLimit', it is now a 'var'.",
+        ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
+        DeprecationLevel.WARNING,
+    )
     public fun assignMentionLimit(mentionLimit: Int)
+
+    /** Whether to automatically detect mention raids. */
+    public var mentionRaidProtectionEnabled: Boolean?
 }

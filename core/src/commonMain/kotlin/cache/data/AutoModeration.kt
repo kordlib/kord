@@ -3,10 +3,7 @@ package dev.kord.core.cache.data
 import dev.kord.cache.api.data.DataDescription
 import dev.kord.cache.api.data.description
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.*
 import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.serialization.Serializable
 
@@ -53,6 +50,7 @@ public data class AutoModerationRuleTriggerMetadataData(
     val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
     val allowList: Optional<List<String>> = Optional.Missing(),
     val mentionTotalLimit: OptionalInt = OptionalInt.Missing,
+    val mentionRaidProtectionEnabled: OptionalBoolean = OptionalBoolean.Missing,
 ) {
     public companion object {
         public fun from(metadata: DiscordAutoModerationRuleTriggerMetadata): AutoModerationRuleTriggerMetadataData =
@@ -63,6 +61,7 @@ public data class AutoModerationRuleTriggerMetadataData(
                     presets = presets,
                     allowList = allowList,
                     mentionTotalLimit = mentionTotalLimit,
+                    mentionRaidProtectionEnabled = mentionRaidProtectionEnabled,
                 )
             }
     }
