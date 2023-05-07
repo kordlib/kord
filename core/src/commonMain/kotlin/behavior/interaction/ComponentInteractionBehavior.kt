@@ -3,6 +3,7 @@ package dev.kord.core.behavior.interaction
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.interaction.response.EphemeralMessageInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.PublicMessageInteractionResponseBehavior
 import dev.kord.core.behavior.interaction.response.edit
@@ -76,6 +77,7 @@ public fun ComponentInteractionBehavior(
 ): ComponentInteractionBehavior = object : ComponentInteractionBehavior {
     override val id: Snowflake = id
     override val channelId: Snowflake = channelId
+    override val channel: MessageChannelBehavior = MessageChannelBehavior(channelId, kord)
     override val token: String = token
     override val applicationId: Snowflake = applicationId
     override val kord: Kord = kord

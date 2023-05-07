@@ -6,6 +6,7 @@ import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
 import dev.kord.core.entity.User
@@ -26,6 +27,8 @@ public sealed interface Interaction : InteractionBehavior {
     override val applicationId: Snowflake get() = data.applicationId
 
     override val channelId: Snowflake? get() = data.channel.value?.id ?: data.channelId.value
+
+    override val channel: MessageChannelBehavior? get() = channelId?.let { MessageChannelBehavior(it, kord) }
 
     override val token: String get() = data.token
 

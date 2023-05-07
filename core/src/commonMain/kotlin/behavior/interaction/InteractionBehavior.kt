@@ -1,6 +1,7 @@
 package dev.kord.core.behavior.interaction
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Strategizable
 import dev.kord.core.entity.interaction.Interaction
@@ -17,6 +18,9 @@ public interface InteractionBehavior : KordEntity, Strategizable {
 
     /** The id of the channel the interaction was sent from. */
     public val channelId: Snowflake?
+
+    /** The behavior of the channel the interaction was sent from. */
+    public val channel: MessageChannelBehavior?
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): InteractionBehavior
 }

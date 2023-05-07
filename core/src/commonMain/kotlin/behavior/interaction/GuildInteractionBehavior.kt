@@ -21,8 +21,8 @@ public interface GuildInteractionBehavior : ChannelInteractionBehavior {
     /** The behavior of the guild the interaction was sent from. */
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
-    override val channel: GuildMessageChannelBehavior?
-        get() = channelId?.let { GuildMessageChannelBehavior(guildId, it, kord) }
+    override val channel: GuildMessageChannelBehavior
+        get() = GuildMessageChannelBehavior(guildId, channelId, kord)
 
     public suspend fun getGuildOrNull(): Guild? = supplier.getGuildOrNull(guildId)
 
@@ -33,12 +33,12 @@ public interface GuildInteractionBehavior : ChannelInteractionBehavior {
         replaceWith = ReplaceWith("getChannelOrNull()"),
         level = DeprecationLevel.WARNING
     )
-    override suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId!!)
+    override suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId)
 
-    override suspend fun getChannelOrNull(): GuildMessageChannel? = channelId?.let { supplier.getChannelOfOrNull(it) }
+    override suspend fun getChannelOrNull(): GuildMessageChannel? =  supplier.getChannelOfOrNull(channelId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildInteractionBehavior =
-        GuildInteractionBehavior(guildId, id, channelId!!, applicationId, token, kord, supplier)
+        GuildInteractionBehavior(guildId, id, channelId, applicationId, token, kord, supplier)
 }
 
 public fun GuildInteractionBehavior(

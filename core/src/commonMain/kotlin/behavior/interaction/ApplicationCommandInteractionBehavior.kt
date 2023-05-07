@@ -2,6 +2,7 @@ package dev.kord.core.behavior.interaction
 
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.entity.interaction.ApplicationCommandInteraction
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
@@ -23,6 +24,7 @@ internal fun ApplicationCommandInteractionBehavior(
 ) = object : ApplicationCommandInteractionBehavior {
     override val id: Snowflake = id
     override val channelId: Snowflake = channelId
+    override val channel: MessageChannelBehavior = MessageChannelBehavior(channelId, kord)
     override val token: String = token
     override val applicationId: Snowflake = applicationId
     override val kord: Kord = kord
