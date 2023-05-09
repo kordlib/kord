@@ -29,21 +29,21 @@ public class Guilds {
     @Resource("{guildId}")
     public class ById(public val guildId: Snowflake, public val parent: Guilds) {
         @Resource("audit-log")
-        public class AuditLog(public val parent: ById)
+        public class AuditLog(public val parent: Guilds.ById)
         @Resource("mfa")
-        public class MFA(public val parent: ById)
+        public class MFA(public val parent: Guilds.ById)
         @Resource("prune")
-        public class Prune(public val parent: ById)
+        public class Prune(public val parent: Guilds.ById)
         @Resource("regions")
-        public class Regions(public val parent: ById)
+        public class Regions(public val parent: Guilds.ById)
         @Resource("widget")
-        public class Widget(public val parent: ById)
+        public class Widget(public val parent: Guilds.ById)
         @Resource("vanity-url")
-        public class VanityUrl(public val parent: ById)
+        public class VanityUrl(public val parent: Guilds.ById)
         @Resource("welcome-screen")
-        public class WelcomeScreen(public val parent: ById)
+        public class WelcomeScreen(public val parent: Guilds.ById)
         @Resource("preview")
-        public class Preview(public val parent: ById)
+        public class Preview(public val parent: Guilds.ById)
         @Resource("members")
         public class Members(public val parent: Guilds.ById) {
             @Resource("{userId}")
@@ -67,7 +67,7 @@ public class Guilds {
             @Resource("{scheduledEventId}")
             public class ById(public val scheduledEventId: Snowflake, public val parent: ScheduledEvents) {
                 @Resource("users")
-                public class Users(public val parent: ById)
+                public class Users(public val parent: ScheduledEvents.ById)
             }
         }
         @Resource("stickers")
@@ -81,17 +81,17 @@ public class Guilds {
             public class ById(public val userId: Snowflake, public val parent: Bans)
         }
         @Resource("channels")
-        public class Channels(public val parent: ById)
+        public class Channels(public val parent: ScheduledEvents.ById)
         @Resource("threads")
-        public class Threads(public val parent: ById) {
+        public class Threads(public val parent: Guilds.ById) {
             @Resource("active")
             public class Active(public val parent: Threads)
         }
         @Resource("webhooks")
-        public class Webhooks(public val parent: ById)
+        public class Webhooks(public val parent: Guilds.ById)
         @Resource("templates")
         public class Templates(public val parent: Guilds.ById) {
-            @Resource("templateCode")
+            @Resource("{templateCode}")
             public class ById(public val templateCode: String, public val parent: Templates)
         }
         @Resource("invites")
@@ -104,7 +104,7 @@ public class Guilds {
             @Resource("{integrationId}")
             public class ById(public val integrationId: Snowflake, public val parent: Integrations) {
                 @Resource("sync")
-                public class Sync(public val parent: ById)
+                public class Sync(public val parent: Integrations.ById)
             }
         }
         @Resource("voice-states")
@@ -118,7 +118,7 @@ public class Guilds {
         }
 
         @Resource("auto-moderation")
-        public class AutoModeration(public val parent: ById) {
+        public class AutoModeration(public val parent: Guilds.ById) {
             @Resource("rules")
             public class Rules(public val parent: AutoModeration) {
                 public class ById(public val autoModerationRuleId: Snowflake, public val parent: Rules)
@@ -131,7 +131,7 @@ public class Channels {
     @Resource("{channelId}")
     public class ById(public val channelId: Snowflake, public val parent: Channels) {
         @Resource("typing")
-        public class Typing(public val parent: ById)
+        public class Typing(public val parent: Channels.ById)
         @Resource("recipients")
         public class Recipients(public val parent: Channels.ById) {
             @Resource("{userId}")
@@ -139,7 +139,7 @@ public class Channels {
         }
 
         @Resource("threads")
-        public class Threads(public val parent: ById) {
+        public class Threads(public val parent: Channels.ById) {
             @Resource("private")
             public class Private(public val parent: Threads)
             @Resource("archived")
@@ -161,7 +161,7 @@ public class Channels {
 
         }
         @Resource("invites")
-        public class Invites(public val parent: ById)
+        public class Invites(public val parent: Channels.ById)
 
         @Resource("pins")
         public class Pins(public val parent: Channels.ById) {
@@ -176,17 +176,17 @@ public class Channels {
             @Resource("{messageId}")
             public class ById(public val messageId: Snowflake, public val parent: Messages) {
                 @Resource("threads")
-                public class Threads(public val parent: ById)
+                public class Threads(public val parent: Channels.ById)
                 @Resource("crosspost")
-                public class CrossPost(public val parent: ById)
+                public class CrossPost(public val parent: Channels.ById)
                 @Resource("reactions")
                 public class Reactions(public val parent: Messages.ById) {
                     @Resource("{emojiId}")
                     public class ById(public val emojiId: Snowflake, public val parent: Reactions) {
                         @Resource("@me")
-                        public class Me(public val parent: Guilds.ById.Emojis)
+                        public class Me(public val parent: Reactions.ById)
                         @Resource("{userId}")
-                        public class ReactorById(public val userId: Snowflake,@Contextual public val parent: ById)
+                        public class ReactorById(public val userId: Snowflake, public val parent: Reactions.ById)
 
                     }
                 }
@@ -198,7 +198,7 @@ public class Channels {
         }
 
         @Resource("webhooks")
-        public class Webhooks(public val parent: ById)
+        public class Webhooks(public val parent: Channels.ById)
 
     }
 }
@@ -218,7 +218,7 @@ public class Webhooks {
     @Resource("{webhookId}")
     public class ById(public val webhookId: Snowflake, public val parent: Webhooks){
         @Resource("{token}")
-        public class WithToken(public val token: String, public val parent: ById) {
+        public class WithToken(public val token: String, public val parent: Channels.ById) {
             @Resource("github")
             public class Github(public val parent: WithToken)
             @Resource("slack")

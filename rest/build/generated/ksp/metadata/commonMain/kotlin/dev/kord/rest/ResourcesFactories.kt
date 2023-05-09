@@ -100,8 +100,9 @@ public inline fun Guilds.ById.Companion.Bans(guildId: Snowflake): Guilds.ById.Ba
 public inline fun Guilds.ById.Bans.Companion.ById(guildId: Snowflake, userId: Snowflake):
     Guilds.ById.Bans.ById = Guilds.ById.Bans.ById(userId, Guilds.ById.Bans(guildId))
 
-public inline fun Guilds.ById.Companion.Channels(guildId: Snowflake): Guilds.ById.Channels =
-    Guilds.ById.Channels(Guilds.ById(guildId))
+public inline fun Guilds.ById.Companion.Channels(guildId: Snowflake, scheduledEventId: Snowflake):
+    Guilds.ById.Channels = Guilds.ById.Channels(Guilds.ById.ScheduledEvents.ById(guildId,
+    scheduledEventId))
 
 public inline fun Guilds.ById.Companion.Threads(guildId: Snowflake): Guilds.ById.Threads =
     Guilds.ById.Threads(Guilds.ById(guildId))
@@ -215,13 +216,13 @@ public inline fun Channels.ById.Messages.Companion.ById(channelId: Snowflake, me
     Channels.ById.Messages.ById = Channels.ById.Messages.ById(messageId,
     Channels.ById.Messages(channelId))
 
-public inline fun Channels.ById.Messages.ById.Companion.Threads(channelId: Snowflake,
-    messageId: Snowflake): Channels.ById.Messages.ById.Threads =
-    Channels.ById.Messages.ById.Threads(Channels.ById.Messages.ById(channelId, messageId))
+public inline fun Channels.ById.Messages.ById.Companion.Threads(channelId: Snowflake):
+    Channels.ById.Messages.ById.Threads =
+    Channels.ById.Messages.ById.Threads(Channels.ById(channelId))
 
-public inline fun Channels.ById.Messages.ById.Companion.CrossPost(channelId: Snowflake,
-    messageId: Snowflake): Channels.ById.Messages.ById.CrossPost =
-    Channels.ById.Messages.ById.CrossPost(Channels.ById.Messages.ById(channelId, messageId))
+public inline fun Channels.ById.Messages.ById.Companion.CrossPost(channelId: Snowflake):
+    Channels.ById.Messages.ById.CrossPost =
+    Channels.ById.Messages.ById.CrossPost(Channels.ById(channelId))
 
 public inline fun Channels.ById.Messages.ById.Companion.Reactions(channelId: Snowflake,
     messageId: Snowflake): Channels.ById.Messages.ById.Reactions =
@@ -234,9 +235,13 @@ public inline fun Channels.ById.Messages.ById.Reactions.Companion.ById(
 ): Channels.ById.Messages.ById.Reactions.ById = Channels.ById.Messages.ById.Reactions.ById(emojiId,
     Channels.ById.Messages.ById.Reactions(channelId, messageId))
 
-public inline fun Channels.ById.Messages.ById.Reactions.ById.Companion.Me(guildId: Snowflake):
-    Channels.ById.Messages.ById.Reactions.ById.Me =
-    Channels.ById.Messages.ById.Reactions.ById.Me(Guilds.ById.Emojis(guildId))
+public inline fun Channels.ById.Messages.ById.Reactions.ById.Companion.Me(
+  channelId: Snowflake,
+  messageId: Snowflake,
+  emojiId: Snowflake,
+): Channels.ById.Messages.ById.Reactions.ById.Me =
+    Channels.ById.Messages.ById.Reactions.ById.Me(Channels.ById.Messages.ById.Reactions.ById(channelId,
+    messageId, emojiId))
 
 public inline fun Channels.ById.Messages.ById.Reactions.ById.Companion.ReactorById(
   channelId: Snowflake,
@@ -259,28 +264,28 @@ public inline fun Invites.Companion.ById(inviteCode: String): Invites.ById =
 public inline fun Webhooks.Companion.ById(webhookId: Snowflake): Webhooks.ById =
     Webhooks.ById(webhookId, Webhooks())
 
-public inline fun Webhooks.ById.Companion.WithToken(webhookId: Snowflake, token: String):
-    Webhooks.ById.WithToken = Webhooks.ById.WithToken(token, Webhooks.ById(webhookId))
+public inline fun Webhooks.ById.Companion.WithToken(channelId: Snowflake, token: String):
+    Webhooks.ById.WithToken = Webhooks.ById.WithToken(token, Channels.ById(channelId))
 
-public inline fun Webhooks.ById.WithToken.Companion.Github(webhookId: Snowflake, token: String):
+public inline fun Webhooks.ById.WithToken.Companion.Github(channelId: Snowflake, token: String):
     Webhooks.ById.WithToken.Github =
-    Webhooks.ById.WithToken.Github(Webhooks.ById.WithToken(webhookId, token))
+    Webhooks.ById.WithToken.Github(Webhooks.ById.WithToken(channelId, token))
 
-public inline fun Webhooks.ById.WithToken.Companion.Slack(webhookId: Snowflake, token: String):
-    Webhooks.ById.WithToken.Slack = Webhooks.ById.WithToken.Slack(Webhooks.ById.WithToken(webhookId,
+public inline fun Webhooks.ById.WithToken.Companion.Slack(channelId: Snowflake, token: String):
+    Webhooks.ById.WithToken.Slack = Webhooks.ById.WithToken.Slack(Webhooks.ById.WithToken(channelId,
     token))
 
-public inline fun Webhooks.ById.WithToken.Companion.Messages(webhookId: Snowflake, token: String):
+public inline fun Webhooks.ById.WithToken.Companion.Messages(channelId: Snowflake, token: String):
     Webhooks.ById.WithToken.Messages =
-    Webhooks.ById.WithToken.Messages(Webhooks.ById.WithToken(webhookId, token))
+    Webhooks.ById.WithToken.Messages(Webhooks.ById.WithToken(channelId, token))
 
 public inline fun Webhooks.ById.WithToken.Messages.Companion.ById(
-  webhookId: Snowflake,
+  channelId: Snowflake,
   token: String,
   messageId: Snowflake,
 ): Webhooks.ById.WithToken.Messages.ById = Webhooks.ById.WithToken.Messages.ById(messageId,
-    Webhooks.ById.WithToken.Messages(webhookId, token))
+    Webhooks.ById.WithToken.Messages(channelId, token))
 
-public inline fun Webhooks.ById.WithToken.Messages.Companion.Original(webhookId: Snowflake,
+public inline fun Webhooks.ById.WithToken.Messages.Companion.Original(channelId: Snowflake,
     token: String): Webhooks.ById.WithToken.Messages.Original =
-    Webhooks.ById.WithToken.Messages.Original(Webhooks.ById.WithToken.Messages(webhookId, token))
+    Webhooks.ById.WithToken.Messages.Original(Webhooks.ById.WithToken.Messages(channelId, token))
