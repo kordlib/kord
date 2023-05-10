@@ -3,7 +3,9 @@ package dev.kord.rest.builder.channel
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.ChannelPositionSwapRequest
@@ -39,6 +41,8 @@ public class GuildChannelSwapBuilder(public var channelId: Snowflake) {
 
 
     private var _position: OptionalInt? = OptionalInt.Missing
+    private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
+    private var _lockPermissionsToParent: OptionalBoolean? = OptionalBoolean.Missing
 
     /**
      * The new position of this channel
@@ -53,7 +57,7 @@ public class GuildChannelSwapBuilder(public var channelId: Snowflake) {
      * This field is not officially supported by the Discord API, and might change/be removed in the future.
      */
     @KordExperimental
-    public var parentId: Snowflake? = null
+    public var parentId: Snowflake? by ::_parentId.delegate()
 
     /**
      * Locks the permissions of this channel to the new category it is moved to.
@@ -62,10 +66,10 @@ public class GuildChannelSwapBuilder(public var channelId: Snowflake) {
      * This field is not officially supported by the Discord API, and might change/be removed in the future.
      */
     @KordExperimental
-    public var lockPermissionsToParent: Boolean? = null
+    public var lockPermissionsToParent: Boolean? by ::_lockPermissionsToParent.delegate()
 
     public fun toRequest(): ChannelPositionSwapRequest = ChannelPositionSwapRequest(
-        channelId, _position, lockPermissionsToParent, parentId
+        channelId, _position, _lockPermissionsToParent, _parentId
     )
 
 }
