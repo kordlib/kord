@@ -10,7 +10,6 @@ import dev.kord.rest.json.request.CurrentUserModifyRequest
 import dev.kord.rest.json.request.DMCreateRequest
 import dev.kord.rest.json.request.GroupDMCreateRequest
 import dev.kord.rest.json.response.Connection
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind

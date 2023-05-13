@@ -7,7 +7,6 @@ import dev.kord.rest.json.request.GuildStickerCreateRequest
 import dev.kord.rest.json.request.GuildStickerModifyRequest
 import dev.kord.rest.json.request.MultipartGuildStickerCreateRequest
 import dev.kord.rest.json.response.NitroStickerPacksResponse
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

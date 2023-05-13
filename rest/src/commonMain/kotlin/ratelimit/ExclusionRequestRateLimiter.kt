@@ -1,8 +1,8 @@
 package dev.kord.rest.ratelimit
 
-import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
+import io.ktor.client.request.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.datetime.Clock
 import mu.KLogger
@@ -22,12 +22,12 @@ public class ExclusionRequestRateLimiter(clock: Clock = Clock.System) : Abstract
     override val logger: KLogger get() = requestLogger
     private val sequentialLock = Mutex()
 
-    override suspend fun await(request: Request<*, *>): RequestToken {
+    override suspend fun await(request: HttpRequestBuilder): RequestToken {
         sequentialLock.lock()
         return super.await(request)
     }
 
-    override fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken {
+    override fun newToken(request: HttpRequestBuilder, buckets: List<Bucket>): RequestToken {
         return ExclusionRequestToken(this, request.identifier, buckets)
     }
 

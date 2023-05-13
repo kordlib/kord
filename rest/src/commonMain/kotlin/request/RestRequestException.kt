@@ -2,8 +2,8 @@ package dev.kord.rest.request
 
 import dev.kord.common.exception.RequestException
 import dev.kord.rest.json.response.DiscordErrorResponse
-import dev.kord.rest.service.RestService
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
 
 private fun formatRestRequestExceptionMessage(status: HttpStatus, error: DiscordErrorResponse?): String {
     val statusCode = status.code
@@ -20,7 +20,7 @@ private fun formatRestRequestExceptionMessage(status: HttpStatus, error: Discord
  * * [error] &mdash; The JSON error body of the failed request, this is optionally present.
  */
 public abstract class RestRequestException(
-    public val request: Request<*, *>,
+    public val request: HttpRequest,
     public val status: HttpStatus,
     public val error: DiscordErrorResponse? = null,
 ) : RequestException(formatRestRequestExceptionMessage(status, error))
@@ -35,6 +35,6 @@ public data class HttpStatus(val code: Int, val message: String)
  */
 public class KtorRequestException(
     @Suppress("MemberVisibilityCanBePrivate") public val httpResponse: HttpResponse,
-    request: Request<*, *>,
+    request: HttpRequest,
     discordError: DiscordErrorResponse?,
 ) : RestRequestException(request, HttpStatus(httpResponse.status.value, httpResponse.status.description), discordError)

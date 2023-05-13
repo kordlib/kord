@@ -1,12 +1,12 @@
 package dev.kord.rest.ratelimit
 
 import dev.kord.common.annotation.KordUnsafe
-import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
+import io.ktor.client.request.*
+import kotlinx.datetime.Clock
 import mu.KLogger
 import mu.KotlinLogging
-import kotlinx.datetime.Clock
 
 private val parallelLogger = KotlinLogging.logger {}
 
@@ -29,7 +29,7 @@ public class ParallelRequestRateLimiter(clock: Clock = Clock.System) : AbstractR
     override val logger: KLogger
         get() = parallelLogger
 
-    override fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken =
+    override fun newToken(request: HttpRequestBuilder, buckets: List<Bucket>): RequestToken =
         ParallelRequestToken(this, request.identifier, buckets)
 
     private inner class ParallelRequestToken(rateLimiter: ParallelRequestRateLimiter, identity: RequestIdentifier, requestBuckets: List<Bucket>) :

@@ -6,7 +6,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.json.request.AutoModerationRuleCreateRequest
 import dev.kord.rest.json.request.AutoModerationRuleModifyRequest
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE

@@ -1,7 +1,9 @@
 package dev.kord.rest.request
 
 import dev.kord.rest.ratelimit.BucketKey
+import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.resources.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.seconds
@@ -18,8 +20,8 @@ private const val auditLogReason = "X-Audit-Log-Reason"
 /**
  * Sets the reason that will show up in the [Discord Audit Log]() to [reason] for this request.
  */
-public fun <T> RequestBuilder<T>.auditLogReason(reason: String?) {
-    reason?.let { urlEncodedHeader(auditLogReason, reason) }
+public fun <T> HttpRequestBuilder.auditLogReason(reason: String?) {
+    reason?.let { header(auditLogReason, reason) }
 }
 
 public val HttpResponse.channelResetPoint: Instant
@@ -48,21 +50,4 @@ public val HttpResponse.bucket: BucketKey? get() = headers[bucketRateLimitKey]?.
 public fun HttpResponse.globalSuspensionPoint(clock: Clock): Long {
     val secondsWait = headers[retryAfterHeader]?.toLong() ?: return clock.now().toEpochMilliseconds()
     return (secondsWait * 1000) + clock.now().toEpochMilliseconds()
-}
-
-public fun HttpResponse.logString(body: String): String =
-    "[RESPONSE]:${status.value}:${call.request.method.value}:${call.request.url} body:$body"
-
-public suspend fun HttpResponse.errorString(): String {
-    val message = bodyAsText()
-    return logString(message)
-}
-
-public fun Request<*, *>.logString(body: String): String {
-    val method = route.method.value
-    val path = route.path
-    val params = routeParams.entries
-        .joinToString(",", "[", "]") { (key, value) -> "$key=$value" }
-
-    return "[REQUEST]:$method:$path params:$params body:$body"
 }

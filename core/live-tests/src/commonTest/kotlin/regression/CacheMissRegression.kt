@@ -12,7 +12,6 @@ import dev.kord.gateway.GatewayConfiguration
 import dev.kord.rest.request.JsonRequest
 import dev.kord.rest.request.MultipartRequest
 import dev.kord.rest.request.Request
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import io.ktor.client.*
 import io.ktor.client.request.*

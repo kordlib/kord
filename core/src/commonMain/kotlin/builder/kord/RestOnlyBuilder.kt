@@ -11,7 +11,6 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
 import dev.kord.rest.request.KtorRequestHandler
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.CoroutineDispatcher

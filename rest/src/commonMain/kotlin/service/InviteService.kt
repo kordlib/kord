@@ -2,7 +2,6 @@ package dev.kord.rest.service
 
 import dev.kord.common.entity.DiscordInvite
 import dev.kord.common.entity.Snowflake
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
 

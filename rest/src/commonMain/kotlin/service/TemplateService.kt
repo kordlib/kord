@@ -9,7 +9,6 @@ import dev.kord.rest.builder.template.GuildTemplateModifyBuilder
 import dev.kord.rest.json.request.GuildFromTemplateCreateRequest
 import dev.kord.rest.json.request.GuildTemplateCreateRequest
 import dev.kord.rest.json.request.GuildTemplateModifyRequest
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract

@@ -1,6 +1,6 @@
 package dev.kord.rest.ratelimit
 
-import dev.kord.rest.request.Request
+import io.ktor.client.request.*
 import kotlinx.datetime.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -16,7 +16,7 @@ public interface RequestRateLimiter {
      * Awaits all active rate limits for the [request], returning a [RequestToken] used to process the result of the
      * [request].
      */
-    public suspend fun await(request: Request<*, *>): RequestToken
+    public suspend fun await(request: HttpRequestBuilder): RequestToken
 
 }
 
@@ -25,7 +25,7 @@ public interface RequestRateLimiter {
  * Throws an [IllegalStateException] if the supplied [RequestToken] was not completed.
  */
 public suspend inline fun <T> RequestRateLimiter.consume(
-    request: Request<*, *>,
+    request: HttpRequestBuilder,
     consumer: (token: RequestToken) -> T
 ): T {
     contract {

@@ -11,8 +11,6 @@ import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.FollowedChannelResponse
 import dev.kord.rest.json.response.ListThreadsResponse
-import dev.kord.rest.request.RequestBuilder
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route

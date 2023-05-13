@@ -14,7 +14,6 @@ import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.builder.scheduled_events.ScheduledEventModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.*
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route

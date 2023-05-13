@@ -11,8 +11,6 @@ import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.json.request.*
-import dev.kord.rest.request.RequestBuilder
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer

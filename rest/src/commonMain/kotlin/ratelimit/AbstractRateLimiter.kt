@@ -2,9 +2,9 @@ package dev.kord.rest.ratelimit
 
 import dev.kord.common.ConcurrentHashMap
 import dev.kord.common.ratelimit.IntervalRateLimiter
-import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
+import io.ktor.client.request.*
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
 import kotlinx.coroutines.CompletableDeferred
@@ -23,7 +23,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     private val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
 
     internal val BucketKey.bucket get() = buckets.getOrPut(this) { Bucket(this) }
-    private val Request<*, *>.buckets get() = routeBuckets[identifier].orEmpty().map { it.bucket }
+    private val HttpRequestBuilder.buckets get() = routeBuckets[identifier].orEmpty().map { it.bucket }
     internal fun RequestIdentifier.addBucket(id: BucketKey) = routeBuckets.getOrPut(this) { mutableSetOf() }.add(id)
 
     internal suspend fun Reset.await() {
@@ -32,7 +32,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
         delay(duration)
     }
 
-    override suspend fun await(request: Request<*, *>): RequestToken {
+    override suspend fun await(request: HttpRequestBuilder): RequestToken {
         globalSuspensionPoint.value.await()
         val buckets = request.buckets
         buckets.forEach { it.awaitAndLock() }
@@ -41,7 +41,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
         return newToken(request, buckets)
     }
 
-    internal abstract fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken
+    internal abstract fun newToken(request: HttpRequestBuilder, buckets: List<Bucket>): RequestToken
 
     internal abstract class AbstractRequestToken(
         private val rateLimiter: AbstractRateLimiter,

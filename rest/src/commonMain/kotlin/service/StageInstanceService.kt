@@ -6,7 +6,6 @@ import dev.kord.rest.builder.stage.StageInstanceCreateBuilder
 import dev.kord.rest.builder.stage.StageInstanceModifyBuilder
 import dev.kord.rest.json.request.StageInstanceCreateRequest
 import dev.kord.rest.json.request.StageInstanceModifyRequest
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind

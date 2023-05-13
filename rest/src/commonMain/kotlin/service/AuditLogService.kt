@@ -4,7 +4,6 @@ import dev.kord.common.entity.DiscordAuditLog
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
 import dev.kord.rest.json.request.AuditLogGetRequest
-import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
