@@ -271,4 +271,12 @@ public class Resources {
             }
         }
     }
+    @Resource("/oauth2")
+    public class OAuth2 {
+        @Resource("applications")
+        public class Applications {
+            @Resource("@me")
+            public class Me
+        }
+    }
 }
