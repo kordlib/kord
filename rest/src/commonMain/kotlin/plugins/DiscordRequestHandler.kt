@@ -16,7 +16,7 @@ public class DiscordRatelimitPluginConfig {
     public var clock: Clock = Clock.System
 }
 
-public var DiscordRatelimitPlugin: ClientPlugin<DiscordRatelimitPluginConfig> =  createClientPlugin("DiscordRequestHandler", ::DiscordRatelimitPluginConfig) {
+public var DiscordRatelimitPlugin: ClientPlugin<DiscordRatelimitPluginConfig> =  createClientPlugin("DiscordRatelimitPlugin", ::DiscordRatelimitPluginConfig) {
     val requestRateLimiter = pluginConfig.requestRateLimiter
     val clock = pluginConfig.clock
     val requestTokenKey = AttributeKey<RequestToken>("requestToken")
