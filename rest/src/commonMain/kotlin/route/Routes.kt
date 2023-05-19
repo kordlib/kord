@@ -287,6 +287,12 @@ public class Routes {
             }
         }
     }
+
+    @Resource("/voice")
+    public class Voice {
+        @Resource("regions")
+        public class Regions(public val parent: Voice)
+    }
     @Resource("/oauth2")
     public class OAuth2 {
         @Resource("applications")

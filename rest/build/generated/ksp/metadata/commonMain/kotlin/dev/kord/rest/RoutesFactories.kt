@@ -344,3 +344,6 @@ public inline fun Routes.Webhooks.ById.WithToken.Messages.Companion.Original(cha
     token: String): Routes.Webhooks.ById.WithToken.Messages.Original =
     Routes.Webhooks.ById.WithToken.Messages.Original(Routes.Webhooks.ById.WithToken.Messages(channelId,
     token))
+
+public inline fun Routes.Voice.Companion.Regions(): Routes.Voice.Regions =
+    Routes.Voice.Regions(Routes.Voice())
