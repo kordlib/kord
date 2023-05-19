@@ -190,7 +190,20 @@ public class Routes {
                 public class ById(public val userId: Snowflake, public val parent: ThreadMembers)
 
             }
-
+            @Resource("users")
+            public class Users(public val parent: Channels.ById) {
+                @Resource("@me")
+                public class Me(public val parent: Users) {
+                    @Resource("threads")
+                    public class Threads(public val parent: Me) {
+                        @Resource("archived")
+                        public class Archived(public val parent: Threads) {
+                            @Resource("private")
+                            public class Private(public val parent: Archived)
+                        }
+                    }
+                }
+            }
             @Resource("invites")
             public class Invites(public val parent: Channels.ById)
 
@@ -208,7 +221,7 @@ public class Routes {
                 @Resource("{messageId}")
                 public class ById(public val messageId: Snowflake, public val parent: Messages) {
                     @Resource("threads")
-                    public class Threads(public val parent: Channels.ById)
+                    public class Threads(public val parent: Messages.ById)
 
                     @Resource("crosspost")
                     public class CrossPost(public val parent: Messages.ById)

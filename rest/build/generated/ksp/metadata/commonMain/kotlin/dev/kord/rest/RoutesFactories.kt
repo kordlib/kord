@@ -218,6 +218,26 @@ public inline fun Routes.Channels.ById.ThreadMembers.Companion.ById(channelId: S
     userId: Snowflake): Routes.Channels.ById.ThreadMembers.ById =
     Routes.Channels.ById.ThreadMembers.ById(userId, Routes.Channels.ById.ThreadMembers(channelId))
 
+public inline fun Routes.Channels.ById.Companion.Users(channelId: Snowflake):
+    Routes.Channels.ById.Users = Routes.Channels.ById.Users(Routes.Channels.ById(channelId))
+
+public inline fun Routes.Channels.ById.Users.Companion.Me(channelId: Snowflake):
+    Routes.Channels.ById.Users.Me =
+    Routes.Channels.ById.Users.Me(Routes.Channels.ById.Users(channelId))
+
+public inline fun Routes.Channels.ById.Users.Me.Companion.Threads(channelId: Snowflake):
+    Routes.Channels.ById.Users.Me.Threads =
+    Routes.Channels.ById.Users.Me.Threads(Routes.Channels.ById.Users.Me(channelId))
+
+public inline fun Routes.Channels.ById.Users.Me.Threads.Companion.Archived(channelId: Snowflake):
+    Routes.Channels.ById.Users.Me.Threads.Archived =
+    Routes.Channels.ById.Users.Me.Threads.Archived(Routes.Channels.ById.Users.Me.Threads(channelId))
+
+public inline
+    fun Routes.Channels.ById.Users.Me.Threads.Archived.Companion.Private(channelId: Snowflake):
+    Routes.Channels.ById.Users.Me.Threads.Archived.Private =
+    Routes.Channels.ById.Users.Me.Threads.Archived.Private(Routes.Channels.ById.Users.Me.Threads.Archived(channelId))
+
 public inline fun Routes.Channels.ById.Companion.Invites(channelId: Snowflake):
     Routes.Channels.ById.Invites = Routes.Channels.ById.Invites(Routes.Channels.ById(channelId))
 
@@ -239,9 +259,10 @@ public inline fun Routes.Channels.ById.Messages.Companion.ById(channelId: Snowfl
     messageId: Snowflake): Routes.Channels.ById.Messages.ById =
     Routes.Channels.ById.Messages.ById(messageId, Routes.Channels.ById.Messages(channelId))
 
-public inline fun Routes.Channels.ById.Messages.ById.Companion.Threads(channelId: Snowflake):
-    Routes.Channels.ById.Messages.ById.Threads =
-    Routes.Channels.ById.Messages.ById.Threads(Routes.Channels.ById(channelId))
+public inline fun Routes.Channels.ById.Messages.ById.Companion.Threads(channelId: Snowflake,
+    messageId: Snowflake): Routes.Channels.ById.Messages.ById.Threads =
+    Routes.Channels.ById.Messages.ById.Threads(Routes.Channels.ById.Messages.ById(channelId,
+    messageId))
 
 public inline fun Routes.Channels.ById.Messages.ById.Companion.CrossPost(channelId: Snowflake,
     messageId: Snowflake): Routes.Channels.ById.Messages.ById.CrossPost =

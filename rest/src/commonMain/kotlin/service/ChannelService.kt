@@ -1,7 +1,6 @@
 package dev.kord.rest.service
 
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.*
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
@@ -14,17 +13,12 @@ import dev.kord.rest.json.response.FollowedChannelResponse
 import dev.kord.rest.json.response.ListThreadsResponse
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
-import dev.kord.rest.route.Route
 import dev.kord.rest.route.Routes
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
-import io.ktor.http.*
-import io.ktor.http.content.*
-import io.ktor.resources.*
-import io.ktor.resources.serialization.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -74,52 +68,60 @@ public class ChannelService(public val client: HttpClient) {
     public suspend fun getChannel(channelId: Snowflake): DiscordChannel =
         client.get(Routes.Channels.ById(channelId)).body()
 
-    public suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null): Unit =
-       client.put(Routes.Channels.ById.Pins.ById(channelId, messageId)) {
-           auditLogReason(reason)
-       }.body()
+    public suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null) {
+        client.put(Routes.Channels.ById.Pins.ById(channelId, messageId)) {
+            auditLogReason(reason)
+        }
+    }
 
     public suspend fun getChannelPins(channelId: Snowflake): List<DiscordMessage> =
         client.get(Routes.Channels.ById.Pins(channelId)).body()
-    public suspend fun createReaction(channelId: Snowflake, messageId: Snowflake, emoji: String): Unit =
-        client.put(Routes.Channels.ById.Messages.ById.Reactions.ById(channelId, messageId, emoji)).body()
+    public suspend fun createReaction(channelId: Snowflake, messageId: Snowflake, emoji: String) {
+        client.put(Routes.Channels.ById.Messages.ById.Reactions.ById(channelId, messageId, emoji))
+    }
 
     public suspend fun deleteReaction(
         channelId: Snowflake,
         messageId: Snowflake,
         userId: Snowflake,
         emoji: String,
-    ): Unit =
-        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById.ReactorById(channelId, messageId, emoji, userId)).body()
+    ) {
+        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById.ReactorById(channelId, messageId, emoji, userId))
+    }
+    public suspend fun deleteOwnReaction(channelId: Snowflake, messageId: Snowflake, emoji: String) {
+        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById.Me(channelId, messageId, emoji))
+    }
 
-    public suspend fun deleteOwnReaction(channelId: Snowflake, messageId: Snowflake, emoji: String): Unit =
-        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById.Me(channelId, messageId, emoji)).body()
 
+    public suspend fun deleteAllReactionsForEmoji(channelId: Snowflake, messageId: Snowflake, emoji: String) {
+        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById(channelId, messageId, emoji))
+    }
 
-    public suspend fun deleteAllReactionsForEmoji(channelId: Snowflake, messageId: Snowflake, emoji: String): Unit =
-        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById(channelId, messageId, emoji)).body()
-
-    public suspend fun deletePinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null): Unit =
+    public suspend fun deletePinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null) {
         client.delete(Routes.Channels.ById.Pins.ById(channelId, messageId)) {
             auditLogReason(reason)
-        }.body()
+        }
+    }
 
 
-    public suspend fun deleteAllReactions(channelId: Snowflake, messageId: Snowflake): Unit =
-        client.delete(Routes.Channels.ById.Messages.ById.Reactions(channelId, messageId)).body()
+    public suspend fun deleteAllReactions(channelId: Snowflake, messageId: Snowflake): Unit {
+        client.delete(Routes.Channels.ById.Messages.ById.Reactions(channelId, messageId))
+    }
 
 
-    public suspend fun deleteMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null): Unit =
+    public suspend fun deleteMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null) {
         client.delete(Routes.Channels.ById.Messages.ById(channelId, messageId)) {
             auditLogReason(reason)
-        }.body()
+        }
+    }
 
 
-    public suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String? = null): Unit =
+    public suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String? = null) {
         client.post(Routes.Channels.ById.Messages.BulkDelete(channelId)) {
             setBody(messages)
             auditLogReason(reason)
-        }.body()
+        }
+    }
 
     public suspend fun deleteChannel(channelId: Snowflake, reason: String? = null): DiscordChannel =
         client.delete(Routes.Channels.ById(channelId)){
@@ -130,22 +132,22 @@ public class ChannelService(public val client: HttpClient) {
         channelId: Snowflake,
         overwriteId: Snowflake,
         reason: String? = null,
-    ): Unit =
+    ) {
         client.delete(Routes.Channels.ById.Permissions.ById(channelId, overwriteId)) {
             auditLogReason(reason)
-        }.body()
-
+        }
+    }
     public suspend fun editChannelPermissions(
         channelId: Snowflake,
         overwriteId: Snowflake,
         permissions: ChannelPermissionEditRequest,
         reason: String? = null,
-    ): Unit =
+    ) {
         client.patch(Routes.Channels.ById.Permissions.ById(channelId, overwriteId)) {
             setBody(permissions)
             auditLogReason(reason)
-        }.body()
-
+        }
+    }
     public suspend fun getReactions(
         channelId: Snowflake,
         messageId: Snowflake,
@@ -159,16 +161,19 @@ public class ChannelService(public val client: HttpClient) {
         }.body()
     
 
-    public suspend fun triggerTypingIndicator(channelId: Snowflake): Unit =
-        client.post(Routes.Channels.ById.Typing(channelId)).body()
+    public suspend fun triggerTypingIndicator(channelId: Snowflake) {
+        client.post(Routes.Channels.ById.Typing(channelId))
+    }
 
-    public suspend fun removeFromGroup(channelId: Snowflake, userId: Snowflake): Unit =
-        client.delete(Routes.Channels.ById.Recipients.ById(channelId, userId)).body()
+    public suspend fun removeFromGroup(channelId: Snowflake, userId: Snowflake) {
+        client.delete(Routes.Channels.ById.Recipients.ById(channelId, userId))
+    }
 
-    public suspend fun addToGroup(channelId: Snowflake, userId: Snowflake, addUser: UserAddDMRequest): Unit =
+    public suspend fun addToGroup(channelId: Snowflake, userId: Snowflake, addUser: UserAddDMRequest) {
         client.put(Routes.Channels.ById.Recipients.ById(channelId, userId)) {
             setBody(addUser)
-        }.body()
+        }
+    }
 
     public suspend inline fun createInvite(
         channelId: Snowflake,
@@ -213,14 +218,11 @@ public class ChannelService(public val client: HttpClient) {
         channelId: Snowflake,
         messageId: Snowflake,
         request: MultipartWebhookEditMessageRequest,
-    ): DiscordMessage = call(Route.EditMessagePatch) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-        body(WebhookEditMessageRequest.serializer(), request.request)
-
-        request.files.orEmpty().forEach { file(it) }
-    }
-
+    ): DiscordMessage =
+        client.patch(Routes.Channels.ById.Messages.ById(channelId, messageId)) {
+            setBody(request.request)
+            // TODO("Files")
+    }.body()
     public suspend fun putChannel(
         channelId: Snowflake,
         channel: ChannelModifyPutRequest,
@@ -251,19 +253,19 @@ public class ChannelService(public val client: HttpClient) {
         client.post(Routes.Channels.ById.Messages.ById.CrossPost(channelId, messageId)).body()
 
     public suspend fun followNewsChannel(channelId: Snowflake, request: ChannelFollowRequest): FollowedChannelResponse =
-        client.post(Routes.Channels.ById.Followers)
+        client.post(Routes.Channels.ById.Followers(channelId)) {
+            setBody(request)
+        }.body()
 
     public suspend fun startThreadWithMessage(
         channelId: Snowflake,
         messageId: Snowflake,
         request: StartThreadRequest,
         reason: String? = null,
-    ): DiscordChannel = call(Route.StartPublicThreadWithMessagePost) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-        body(StartThreadRequest.serializer(), request)
+    ): DiscordChannel = client.post(Routes.Channels.ById.Messages.ById.Threads(channelId, messageId)) {
+        setBody(request)
         auditLogReason(reason)
-    }
+    }.body()
 
     public suspend fun startThreadWithMessage(
         channelId: Snowflake,
@@ -284,12 +286,11 @@ public class ChannelService(public val client: HttpClient) {
         channelId: Snowflake,
         multipartRequest: MultipartStartThreadRequest,
         reason: String? = null,
-    ): DiscordChannel = call(Route.StartThreadPost) {
-        keys[Route.ChannelId] = channelId
-        body(StartThreadRequest.serializer(), multipartRequest.request)
+    ): DiscordChannel = client.post(Routes.Channels.ById(channelId)) {
+        setBody(multipartRequest.request)
         auditLogReason(reason)
-        multipartRequest.files.forEach { file(it) }
-    }
+        // TODO("Files")
+    }.body()
 
     public suspend fun startThread(
         channelId: Snowflake,
@@ -325,60 +326,49 @@ public class ChannelService(public val client: HttpClient) {
     }
 
     public suspend fun joinThread(channelId: Snowflake) {
-        call(Route.JoinThreadPut) {
-            keys[Route.ChannelId] = channelId
-        }
+        client.post(Routes.Channels.ById.ThreadMembers.Me(channelId))
     }
 
     public suspend fun addUserToThread(channelId: Snowflake, userId: Snowflake) {
-        call(Route.AddThreadMemberPut) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.UserId] = userId
-        }
+        client.post(Routes.Channels.ById.ThreadMembers.ById(channelId, userId))
     }
 
     public suspend fun leaveThread(channelId: Snowflake) {
-        call(Route.LeaveThreadDelete) {
-            keys[Route.ChannelId] = channelId
-        }
+        client.delete(Routes.Channels.ById.ThreadMembers.Me(channelId))
     }
 
     public suspend fun removeUserFromThread(channelId: Snowflake, userId: Snowflake) {
-        call(Route.RemoveUserFromThreadDelete) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.UserId] = userId
-        }
+        client.delete(Routes.Channels.ById.ThreadMembers.ById(channelId, userId))
     }
 
     public suspend fun listThreadMembers(channelId: Snowflake): List<DiscordThreadMember> =
-        call(Route.ThreadMembersGet) {
-            keys[Route.ChannelId] = channelId
-        }
+        client.get(Routes.Channels.ById.ThreadMembers(channelId)).body()
+
 
     public suspend fun listPublicArchivedThreads(
         channelId: Snowflake,
         request: ListThreadsByTimestampRequest,
-    ): ListThreadsResponse = call(Route.PublicArchivedThreadsGet) {
-        listThreadsConfig(channelId, request.before, request.limit)
-    }
+    ): ListThreadsResponse =
+        client.get(Routes.Channels.ById.Threads.Archived.Public(channelId)) {
+            listThreadsConfig(request.before, request.limit)
+    }.body()
 
     public suspend fun listPrivateArchivedThreads(
         channelId: Snowflake,
         request: ListThreadsByTimestampRequest,
-    ): ListThreadsResponse = call(Route.PrivateArchivedThreadsGet) {
-        listThreadsConfig(channelId, request.before, request.limit)
-    }
+    ): ListThreadsResponse = client.get(Routes.Channels.ById.Threads.Archived.Private(channelId)) {
+        listThreadsConfig(request.before, request.limit)
+    }.body()
 
     public suspend fun listJoinedPrivateArchivedThreads(
         channelId: Snowflake,
         request: ListThreadsBySnowflakeRequest,
-    ): ListThreadsResponse = call(Route.JoinedPrivateArchivedThreadsGet) {
-        listThreadsConfig(channelId, request.before, request.limit)
-    }
+    ): ListThreadsResponse = client.get(Routes.Channels.ById.Users.Me.Threads.Archived.Private(channelId)) {
+        listThreadsConfig(request.before, request.limit)
+    }.body()
 }
 
-private fun RequestBuilder<ListThreadsResponse>.listThreadsConfig(channelId: Snowflake, before: Any?, limit: Int?) {
-    keys[Route.ChannelId] = channelId
+private fun HttpRequestBuilder.listThreadsConfig(before: Any?, limit: Int?) {
     if (before != null) parameter("before", before)
     if (limit != null) parameter("limit", limit)
 }
