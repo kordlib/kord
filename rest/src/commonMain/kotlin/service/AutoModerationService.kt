@@ -3,36 +3,39 @@ package dev.kord.rest.service
 import dev.kord.common.entity.AutoModerationRuleEventType
 import dev.kord.common.entity.DiscordAutoModerationRule
 import dev.kord.common.entity.Snowflake
+import dev.kord.rest.AutoModeration
+import dev.kord.rest.ById
+import dev.kord.rest.Rules
 import dev.kord.rest.builder.automoderation.*
 import dev.kord.rest.json.request.AutoModerationRuleCreateRequest
 import dev.kord.rest.json.request.AutoModerationRuleModifyRequest
 import dev.kord.rest.request.auditLogReason
+import dev.kord.rest.route.Routes
 import dev.kord.rest.route.Route
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.resources.*
+import io.ktor.client.request.*
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
-public class AutoModerationService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class AutoModerationService(public val client: HttpClient) {
 
     public suspend fun listAutoModerationRulesForGuild(guildId: Snowflake): List<DiscordAutoModerationRule> =
-        call(Route.AutoModerationRulesForGuildList) {
-            keys[Route.GuildId] = guildId
-        }
+        client.get(Routes.Guilds.ById.AutoModeration.Rules(guildId)).body()
 
     public suspend fun getAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): DiscordAutoModerationRule =
-        call(Route.AutoModerationRuleGet) {
-            keys[Route.GuildId] = guildId
-            keys[Route.AutoModerationRuleId] = ruleId
-        }
+        client.get(Routes.Guilds.ById.AutoModeration.Rules.ById(guildId, ruleId)).body()
 
     public suspend fun createAutoModerationRule(
         guildId: Snowflake,
         request: AutoModerationRuleCreateRequest,
         reason: String? = null,
-    ): DiscordAutoModerationRule = call(Route.AutoModerationRuleCreate) {
-        keys[Route.GuildId] = guildId
-        body(AutoModerationRuleCreateRequest.serializer(), request)
-        auditLogReason(reason)
-    }
+    ): DiscordAutoModerationRule =
+        client.post(Routes.Guilds.ById.AutoModeration(guildId)) {
+            setBody(request)
+            auditLogReason(reason)
+        }.body()
 
     public suspend inline fun createKeywordAutoModerationRule(
         guildId: Snowflake,
@@ -84,12 +87,11 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         ruleId: Snowflake,
         request: AutoModerationRuleModifyRequest,
         reason: String? = null,
-    ): DiscordAutoModerationRule = call(Route.AutoModerationRuleModify) {
-        keys[Route.GuildId] = guildId
-        keys[Route.AutoModerationRuleId] = ruleId
-        body(AutoModerationRuleModifyRequest.serializer(), request)
-        auditLogReason(reason)
-    }
+    ): DiscordAutoModerationRule =
+        client.patch(Routes.Guilds.ById.AutoModeration.Rules.ById(guildId, ruleId)) {
+            auditLogReason(reason)
+            setBody(request)
+        }.body()
 
     public suspend inline fun modifyUntypedAutoModerationRule(
         guildId: Snowflake,
@@ -145,9 +147,8 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         guildId: Snowflake,
         ruleId: Snowflake,
         reason: String? = null,
-    ): Unit = call(Route.AutoModerationRuleDelete) {
-        keys[Route.GuildId] = guildId
-        keys[Route.AutoModerationRuleId] = ruleId
-        auditLogReason(reason)
-    }
+    ): Unit =
+        client.delete(Routes.Guilds.ById.AutoModeration.Rules.ById(guildId, ruleId)) {
+            auditLogReason(reason)
+        }.body()
 }

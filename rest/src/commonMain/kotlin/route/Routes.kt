@@ -2,8 +2,8 @@ package dev.kord.rest.route
 
 import dev.kord.common.entity.Snowflake
 import io.ktor.resources.*
-import kotlinx.serialization.Contextual
-public class Resources {
+
+public class Routes {
     @Resource("/users")
     public class Users {
         @Resource("@me")
@@ -145,6 +145,7 @@ public class Resources {
             public class AutoModeration(public val parent: Guilds.ById) {
                 @Resource("rules")
                 public class Rules(public val parent: AutoModeration) {
+                    @Resource("{autoModerationRuleId}")
                     public class ById(public val autoModerationRuleId: Snowflake, public val parent: Rules)
                 }
             }
@@ -157,7 +158,8 @@ public class Resources {
         public class ById(public val channelId: Snowflake, public val parent: Channels) {
             @Resource("typing")
             public class Typing(public val parent: Channels.ById)
-
+            @Resource("followers")
+            public class Followers(public val parent: Channels.ById)
             @Resource("recipients")
             public class Recipients(public val parent: Channels.ById) {
                 @Resource("{userId}")
@@ -209,12 +211,12 @@ public class Resources {
                     public class Threads(public val parent: Channels.ById)
 
                     @Resource("crosspost")
-                    public class CrossPost(public val parent: Channels.ById)
+                    public class CrossPost(public val parent: Messages.ById)
 
                     @Resource("reactions")
                     public class Reactions(public val parent: Messages.ById) {
                         @Resource("{emojiId}")
-                        public class ById(public val emojiId: Snowflake, public val parent: Reactions) {
+                        public class ById(public val emojiId: String, public val parent: Reactions) {
                             @Resource("@me")
                             public class Me(public val parent: Reactions.ById)
 
@@ -228,7 +230,8 @@ public class Resources {
 
             @Resource("permissions")
             public class Permissions(public val parent: Messages) {
-                public class ById(public val permissions: Permissions, public val overrideId: Snowflake)
+                @Resource("{overwriteId}")
+                public class ById(public val overwriteId: Snowflake, public val parent: Permissions)
             }
 
             @Resource("webhooks")

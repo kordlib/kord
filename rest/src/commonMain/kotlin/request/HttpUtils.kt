@@ -20,7 +20,7 @@ private const val auditLogReason = "X-Audit-Log-Reason"
 /**
  * Sets the reason that will show up in the [Discord Audit Log]() to [reason] for this request.
  */
-public fun <T> HttpRequestBuilder.auditLogReason(reason: String?) {
+public fun HttpRequestBuilder.auditLogReason(reason: String?) {
     reason?.let { header(auditLogReason, reason) }
 }
 

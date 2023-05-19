@@ -2,6 +2,7 @@ package dev.kord.rest.service
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.rest.*
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
@@ -14,19 +15,37 @@ import dev.kord.rest.json.response.ListThreadsResponse
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
+import dev.kord.rest.route.Routes
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.resources.*
+import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
+import io.ktor.http.*
+import io.ktor.http.content.*
+import io.ktor.resources.*
+import io.ktor.resources.serialization.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public class ChannelService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class ChannelService(public val client: HttpClient) {
 
     public suspend fun createMessage(
         channelId: Snowflake,
         multipartRequest: MultipartMessageCreateRequest,
-    ): DiscordMessage = call(Route.MessagePost) {
-        keys[Route.ChannelId] = channelId
-        body(MessageCreateRequest.serializer(), multipartRequest.request)
-        multipartRequest.files.forEach { file(it) }
+    ): DiscordMessage {
+        val form = formData {
+            append(FormPart("payload_json", multipartRequest.request))
+            multipartRequest.files.forEachIndexed { index, namedFile ->
+                append("files[$index]", namedFile.contentProvider)
+            }
+        }
+        return client.post(Routes.Channels.ById(channelId)) {
+            setBody(form)
+        }.body()
     }
+
+
 
     public suspend inline fun createMessage(
         channelId: Snowflake,
@@ -41,124 +60,91 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         channelId: Snowflake,
         position: Position? = null,
         limit: Int? = null,
-    ): List<DiscordMessage> = call(Route.MessagesGet) {
-        keys[Route.ChannelId] = channelId
-        position?.let { parameter(it.key, it.value) }
-        limit?.let { parameter("limit", it) }
-    }
+    ): List<DiscordMessage> =
+        client.get(Routes.Channels.ById(channelId)) {
+            position?.let { parameter(it.key, it.value) }
+            limit?.let { parameter("limit", it) }
+        }.body()
 
-    public suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): DiscordMessage = call(Route.MessageGet) {
-        keys[Route.MessageId] = messageId
-        keys[Route.ChannelId] = channelId
-    }
-
+    public suspend fun getMessage(channelId: Snowflake, messageId: Snowflake): DiscordMessage =
+        client.get(Routes.Channels.ById.Messages.ById(channelId, messageId)).body()
     public suspend fun getChannelInvites(channelId: Snowflake): List<DiscordInviteWithMetadata> =
-        call(Route.InvitesGet) {
-            keys[Route.ChannelId] = channelId
-        }
+        client.get(Routes.Channels.ById.Invites(channelId)).body()
 
-    public suspend fun getChannel(channelId: Snowflake): DiscordChannel = call(Route.ChannelGet) {
-        keys[Route.ChannelId] = channelId
-    }
+    public suspend fun getChannel(channelId: Snowflake): DiscordChannel =
+        client.get(Routes.Channels.ById(channelId)).body()
 
     public suspend fun addPinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null): Unit =
-        call(Route.PinPut) {
-            keys[Route.MessageId] = messageId
-            keys[Route.ChannelId] = channelId
-            auditLogReason(reason)
-        }
+       client.put(Routes.Channels.ById.Pins.ById(channelId, messageId)) {
+           auditLogReason(reason)
+       }.body()
 
-    public suspend fun getChannelPins(channelId: Snowflake): List<DiscordMessage> = call(Route.PinsGet) {
-        keys[Route.ChannelId] = channelId
-    }
-
+    public suspend fun getChannelPins(channelId: Snowflake): List<DiscordMessage> =
+        client.get(Routes.Channels.ById.Pins(channelId)).body()
     public suspend fun createReaction(channelId: Snowflake, messageId: Snowflake, emoji: String): Unit =
-        call(Route.ReactionPut) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.MessageId] = messageId
-            keys[Route.Emoji] = emoji
-        }
+        client.put(Routes.Channels.ById.Messages.ById.Reactions.ById(channelId, messageId, emoji)).body()
 
     public suspend fun deleteReaction(
         channelId: Snowflake,
         messageId: Snowflake,
         userId: Snowflake,
         emoji: String,
-    ): Unit = call(Route.ReactionDelete) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-        keys[Route.Emoji] = emoji
-        keys[Route.UserId] = userId
-    }
+    ): Unit =
+        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById.ReactorById(channelId, messageId, emoji, userId)).body()
 
     public suspend fun deleteOwnReaction(channelId: Snowflake, messageId: Snowflake, emoji: String): Unit =
-        call(Route.OwnReactionDelete) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.MessageId] = messageId
-            keys[Route.Emoji] = emoji
-        }
+        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById.Me(channelId, messageId, emoji)).body()
+
 
     public suspend fun deleteAllReactionsForEmoji(channelId: Snowflake, messageId: Snowflake, emoji: String): Unit =
-        call(Route.DeleteAllReactionsForEmoji) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.MessageId] = messageId
-            keys[Route.Emoji] = emoji
-        }
+        client.delete(Routes.Channels.ById.Messages.ById.Reactions.ById(channelId, messageId, emoji)).body()
 
     public suspend fun deletePinnedMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null): Unit =
-        call(Route.PinDelete) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.MessageId] = messageId
+        client.delete(Routes.Channels.ById.Pins.ById(channelId, messageId)) {
             auditLogReason(reason)
-        }
+        }.body()
+
 
     public suspend fun deleteAllReactions(channelId: Snowflake, messageId: Snowflake): Unit =
-        call(Route.AllReactionsDelete) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.MessageId] = messageId
-        }
+        client.delete(Routes.Channels.ById.Messages.ById.Reactions(channelId, messageId)).body()
+
 
     public suspend fun deleteMessage(channelId: Snowflake, messageId: Snowflake, reason: String? = null): Unit =
-        call(Route.MessageDelete) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.MessageId] = messageId
+        client.delete(Routes.Channels.ById.Messages.ById(channelId, messageId)) {
             auditLogReason(reason)
-        }
+        }.body()
+
 
     public suspend fun bulkDelete(channelId: Snowflake, messages: BulkDeleteRequest, reason: String? = null): Unit =
-        call(Route.BulkMessageDeletePost) {
-            keys[Route.ChannelId] = channelId
-            body(BulkDeleteRequest.serializer(), messages)
+        client.post(Routes.Channels.ById.Messages.BulkDelete(channelId)) {
+            setBody(messages)
             auditLogReason(reason)
-        }
+        }.body()
 
     public suspend fun deleteChannel(channelId: Snowflake, reason: String? = null): DiscordChannel =
-        call(Route.ChannelDelete) {
-            keys[Route.ChannelId] = channelId
+        client.delete(Routes.Channels.ById(channelId)){
             auditLogReason(reason)
-        }
+        }.body()
 
     public suspend fun deleteChannelPermission(
         channelId: Snowflake,
         overwriteId: Snowflake,
         reason: String? = null,
-    ): Unit = call(Route.ChannelPermissionDelete) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.OverwriteId] = overwriteId
-        auditLogReason(reason)
-    }
+    ): Unit =
+        client.delete(Routes.Channels.ById.Permissions.ById(channelId, overwriteId)) {
+            auditLogReason(reason)
+        }.body()
 
     public suspend fun editChannelPermissions(
         channelId: Snowflake,
         overwriteId: Snowflake,
         permissions: ChannelPermissionEditRequest,
         reason: String? = null,
-    ): Unit = call(Route.ChannelPermissionPut) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.OverwriteId] = overwriteId
-        body(ChannelPermissionEditRequest.serializer(), permissions)
-        auditLogReason(reason)
-    }
+    ): Unit =
+        client.patch(Routes.Channels.ById.Permissions.ById(channelId, overwriteId)) {
+            setBody(permissions)
+            auditLogReason(reason)
+        }.body()
 
     public suspend fun getReactions(
         channelId: Snowflake,
@@ -166,44 +152,33 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         emoji: String,
         after: Position.After? = null,
         limit: Int? = null,
-    ): List<DiscordUser> = call(Route.ReactionsGet) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-        keys[Route.Emoji] = emoji
+    ): List<DiscordUser> = 
+        client.get(Routes.Channels.ById.Messages.ById.Reactions.ById(channelId, messageId, emoji)) {
+            after?.let { parameter(it.key, it.value) }
+            limit?.let { parameter("limit", it) }
+        }.body()
+    
 
-        after?.let { parameter(it.key, it.value) }
-        limit?.let { parameter("limit", it) }
-    }
+    public suspend fun triggerTypingIndicator(channelId: Snowflake): Unit =
+        client.post(Routes.Channels.ById.Typing(channelId)).body()
 
-    public suspend fun triggerTypingIndicator(channelId: Snowflake): Unit = call(Route.TypingIndicatorPost) {
-        keys[Route.ChannelId] = channelId
-    }
-
-    public suspend fun removeFromGroup(channelId: Snowflake, userId: Snowflake): Unit = call(Route.GroupDMUserDelete) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.UserId] = userId
-    }
+    public suspend fun removeFromGroup(channelId: Snowflake, userId: Snowflake): Unit =
+        client.delete(Routes.Channels.ById.Recipients.ById(channelId, userId)).body()
 
     public suspend fun addToGroup(channelId: Snowflake, userId: Snowflake, addUser: UserAddDMRequest): Unit =
-        call(Route.GroupDMUserPut) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.UserId] = userId
-            body(UserAddDMRequest.serializer(), addUser)
-        }
+        client.put(Routes.Channels.ById.Recipients.ById(channelId, userId)) {
+            setBody(addUser)
+        }.body()
 
     public suspend inline fun createInvite(
         channelId: Snowflake,
-        builder: InviteCreateBuilder.() -> Unit = {},
+        request: InviteCreateRequest,
+        reason: String? = null
     ): DiscordInviteWithMetadata {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-        return call(Route.InvitePost) {
-            keys[Route.ChannelId] = channelId
-            val request = InviteCreateBuilder().apply(builder)
-            body(InviteCreateRequest.serializer(), request.toRequest())
-            auditLogReason(request.reason)
-        }
+        return client.post(Routes.Channels.ById.Invites) {
+            setBody(request)
+            auditLogReason(reason)
+        }.body()
     }
 
     public suspend inline fun editMessage(
@@ -219,23 +194,20 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         channelId: Snowflake,
         messageId: Snowflake,
         request: MessageEditPatchRequest,
-    ): DiscordMessage = call(Route.EditMessagePatch) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-        body(MessageEditPatchRequest.serializer(), request)
-    }
+    ): DiscordMessage =
+        client.patch(Routes.Channels.ById.Messages.ById(channelId, messageId)) {
+        setBody(request)
+    }.body()
 
     public suspend fun editMessage(
         channelId: Snowflake,
         messageId: Snowflake,
         request: MultipartMessagePatchRequest,
-    ): DiscordMessage = call(Route.EditMessagePatch) {
-        keys[Route.ChannelId] = channelId
-        keys[Route.MessageId] = messageId
-        body(MessageEditPatchRequest.serializer(), request.requests)
-
-        request.files.orEmpty().forEach { file(it) }
-    }
+    ): DiscordMessage =
+        client.patch(Routes.Channels.ById.Messages.ById(channelId, messageId)) {
+        setBody(request)
+        // TODO("Files")
+    }.body()
 
     public suspend fun editMessage(
         channelId: Snowflake,
@@ -253,43 +225,33 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         channelId: Snowflake,
         channel: ChannelModifyPutRequest,
         reason: String? = null,
-    ): DiscordChannel = call(Route.ChannelPut) {
-        keys[Route.ChannelId] = channelId
-        body(ChannelModifyPutRequest.serializer(), channel)
+    ): DiscordChannel =
+        client.put(Routes.Channels.ById(channelId)) {
+        setBody(channel)
         auditLogReason(reason)
-    }
+    }.body()
 
     public suspend fun patchChannel(
         channelId: Snowflake,
         channel: ChannelModifyPatchRequest,
         reason: String? = null,
-    ): DiscordChannel = call(Route.ChannelPatch) {
-        keys[Route.ChannelId] = channelId
-        body(ChannelModifyPatchRequest.serializer(), channel)
+    ): DiscordChannel =
+        client.patch(Routes.Channels.ById(channelId)) {
+        setBody(channel)
         auditLogReason(reason)
-    }
+    }.body()
 
     public suspend fun patchThread(
         threadId: Snowflake,
         thread: ChannelModifyPatchRequest,
         reason: String? = null,
-    ): DiscordChannel = call(Route.ChannelPatch) {
-        keys[Route.ChannelId] = threadId
-        body(ChannelModifyPatchRequest.serializer(), thread)
-        auditLogReason(reason)
-    }
+    ): DiscordChannel = patchChannel(threadId, thread, reason)
 
     public suspend fun crossPost(channelId: Snowflake, messageId: Snowflake): DiscordMessage =
-        call(Route.MessageCrosspost) {
-            keys[Route.ChannelId] = channelId
-            keys[Route.MessageId] = messageId
-        }
+        client.post(Routes.Channels.ById.Messages.ById.CrossPost(channelId, messageId)).body()
 
     public suspend fun followNewsChannel(channelId: Snowflake, request: ChannelFollowRequest): FollowedChannelResponse =
-        call(Route.NewsChannelFollow) {
-            keys[Route.ChannelId] = channelId
-            body(ChannelFollowRequest.serializer(), request)
-        }
+        client.post(Routes.Channels.ById.Followers)
 
     public suspend fun startThreadWithMessage(
         channelId: Snowflake,
