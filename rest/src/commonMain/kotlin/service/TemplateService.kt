@@ -3,33 +3,37 @@ package dev.kord.rest.service
 import dev.kord.common.entity.DiscordGuild
 import dev.kord.common.entity.DiscordTemplate
 import dev.kord.common.entity.Snowflake
+import dev.kord.rest.ById
+import dev.kord.rest.Templates
 import dev.kord.rest.builder.template.GuildFromTemplateCreateBuilder
 import dev.kord.rest.builder.template.GuildTemplateCreateBuilder
 import dev.kord.rest.builder.template.GuildTemplateModifyBuilder
 import dev.kord.rest.json.request.GuildFromTemplateCreateRequest
 import dev.kord.rest.json.request.GuildTemplateCreateRequest
 import dev.kord.rest.json.request.GuildTemplateModifyRequest
-import dev.kord.rest.route.Route
+import dev.kord.rest.route.Routes
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.resources.*
+import io.ktor.client.request.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public class TemplateService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class TemplateService(public val client: HttpClient) {
 
     /**
      * Returns a [DiscordTemplate] from the given code.
      */
-    public suspend fun getGuildTemplate(code: String): DiscordTemplate = call(Route.TemplateGet) {
-        keys[Route.TemplateCode] = code
-    }
+    public suspend fun getGuildTemplate(code: String): DiscordTemplate =
+        client.put(Routes.Guilds.Templates.ById(code)).body()
 
     /**
      * Create a new guild based on a template with the given [code] and configured by the [request], returns the created guild.
      */
     public suspend fun createGuildFromTemplate(code: String, request: GuildFromTemplateCreateRequest): DiscordGuild =
-        call(Route.GuildFromTemplatePost) {
-            keys[Route.TemplateCode] = code
-            body(GuildFromTemplateCreateRequest.serializer(), request)
-        }
+        client.post(Routes.Guilds.Templates.ById(code)) {
+            setBody(request)
+        }.body()
 
     /**
      * Creates a template given [guildId] configured by [request]
@@ -37,17 +41,15 @@ public class TemplateService(requestHandler: RequestHandler) : RestService(reque
      * Returns created [DiscordTemplate].
      */
     public suspend fun createGuildTemplate(guildId: Snowflake, request: GuildTemplateCreateRequest): DiscordTemplate =
-        call(Route.GuildTemplatePost) {
-            keys[Route.GuildId] = guildId
-            body(GuildTemplateCreateRequest.serializer(), request)
-        }
+        client.post(Routes.Guilds.ById.Templates(guildId)) {
+            setBody(request)
+        }.body()
 
     /**
      * Returns a list of  [DiscordTemplate] given [guildId].
      */
-    public suspend fun getGuildTemplates(guildId: Snowflake): List<DiscordTemplate> = call(Route.GuildTemplatesGet) {
-        keys[Route.GuildId] = guildId
-    }
+    public suspend fun getGuildTemplates(guildId: Snowflake): List<DiscordTemplate> =
+        client.get(Routes.Guilds.ById.Templates(guildId)).body()
 
     /**
      * Synchronizes a template with [code] with the current state of the Guild with [guildId]
@@ -55,10 +57,7 @@ public class TemplateService(requestHandler: RequestHandler) : RestService(reque
      * Returns synchronized [DiscordTemplate].
      */
     public suspend fun syncGuildTemplate(guildId: Snowflake, code: String): DiscordTemplate =
-        call(Route.TemplateSyncPut) {
-            keys[Route.GuildId] = guildId
-            keys[Route.TemplateCode] = code
-        }
+        client.put(Routes.Guilds.ById.Templates.ById(guildId, code)).body()
 
     /**
      * Deletes a template given [code] and [guildId].
@@ -66,10 +65,7 @@ public class TemplateService(requestHandler: RequestHandler) : RestService(reque
      * Returns deleted [DiscordTemplate]
      */
     public suspend fun deleteGuildTemplate(guildId: Snowflake, code: String): DiscordTemplate =
-        call(Route.TemplateDelete) {
-            keys[Route.GuildId] = guildId
-            keys[Route.TemplateCode] = code
-        }
+        client.delete(Routes.Guilds.ById.Templates.ById(guildId, code)).body()
 
     /**
      * Modifies existing guild template configured by [request] given [code] and [guildId].
@@ -80,11 +76,10 @@ public class TemplateService(requestHandler: RequestHandler) : RestService(reque
         guildId: Snowflake,
         code: String,
         request: GuildTemplateModifyRequest,
-    ): DiscordTemplate = call(Route.TemplatePatch) {
-        keys[Route.GuildId] = guildId
-        keys[Route.TemplateCode] = code
-        body(GuildTemplateModifyRequest.serializer(), request)
-    }
+    ): DiscordTemplate =
+        client.patch(Routes.Guilds.ById.Templates.ById(guildId, code)) {
+        setBody(request)
+    }.body()
 
     /**
      * Create a new guild with a [name] based on a template with the given [code] and configured by the [builder], returns the created guild.

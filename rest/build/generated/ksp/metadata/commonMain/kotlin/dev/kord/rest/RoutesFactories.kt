@@ -157,6 +157,10 @@ public inline fun Routes.Guilds.ById.VoiceStates.Companion.ById(guildId: Snowfla
 public inline fun Routes.Guilds.ById.Companion.Emojis(guildId: Snowflake): Routes.Guilds.ById.Emojis
     = Routes.Guilds.ById.Emojis(Routes.Guilds.ById(guildId))
 
+public inline fun Routes.Guilds.ById.Emojis.Companion.ById(guildId: Snowflake, emojiId: Snowflake):
+    Routes.Guilds.ById.Emojis.ById = Routes.Guilds.ById.Emojis.ById(emojiId,
+    Routes.Guilds.ById.Emojis(guildId))
+
 public inline fun Routes.Guilds.ById.Companion.AutoModeration(guildId: Snowflake):
     Routes.Guilds.ById.AutoModeration =
     Routes.Guilds.ById.AutoModeration(Routes.Guilds.ById(guildId))
@@ -169,6 +173,13 @@ public inline fun Routes.Guilds.ById.AutoModeration.Rules.Companion.ById(guildId
     autoModerationRuleId: Snowflake): Routes.Guilds.ById.AutoModeration.Rules.ById =
     Routes.Guilds.ById.AutoModeration.Rules.ById(autoModerationRuleId,
     Routes.Guilds.ById.AutoModeration.Rules(guildId))
+
+public inline fun Routes.Guilds.Companion.Templates(): Routes.Guilds.Templates =
+    Routes.Guilds.Templates(Routes.Guilds())
+
+public inline fun Routes.Guilds.Templates.Companion.ById(templateCode: String):
+    Routes.Guilds.Templates.ById = Routes.Guilds.Templates.ById(templateCode,
+    Routes.Guilds.Templates())
 
 public inline fun Routes.Channels.Companion.ById(channelId: Snowflake): Routes.Channels.ById =
     Routes.Channels.ById(channelId, Routes.Channels())

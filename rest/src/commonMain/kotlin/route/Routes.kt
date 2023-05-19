@@ -29,6 +29,7 @@ public class Routes {
 
     @Resource("/guilds")
     public class Guilds {
+
         @Resource("{guildId}")
         public class ById(public val guildId: Snowflake, public val parent: Guilds) {
             @Resource("audit-log")
@@ -138,6 +139,7 @@ public class Routes {
 
             @Resource("emojis")
             public class Emojis(public val parent: Guilds.ById) {
+                @Resource("{emojiId}")
                 public class ById(public val emojiId: Snowflake, public val parent: Emojis)
             }
 
@@ -150,6 +152,13 @@ public class Routes {
                 }
             }
         }
+
+        @Resource("templates")
+        public class Templates(public val parent: Guilds) {
+            @Resource("{templateCode}")
+            public class ById(public val templateCode: String, public val parent: Templates)
+        }
+
     }
 
     @Resource("/channels")
