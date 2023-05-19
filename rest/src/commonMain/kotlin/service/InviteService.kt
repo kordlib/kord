@@ -10,7 +10,7 @@ import io.ktor.client.call.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
 
-public class InviteService(val client: HttpClient) {
+public class InviteService(public val client: HttpClient) {
 
     public suspend fun getInvite(
         code: String,
