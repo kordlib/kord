@@ -270,6 +270,7 @@ public class Routes {
 
     @Resource("/stickers")
     public class Stickers {
+        @Resource("{stickerId}")
         public class ById(public val stickerId: Snowflake, public val parent: Stickers)
     }
 
@@ -296,6 +297,8 @@ public class Routes {
             }
         }
     }
+    @Resource("/sticker-packs")
+    public class NitroStickerPacks
 
     @Resource("/voice")
     public class Voice {

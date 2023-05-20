@@ -2,28 +2,33 @@ package dev.kord.rest.service
 
 import dev.kord.common.entity.DiscordStageInstance
 import dev.kord.common.entity.Snowflake
+import dev.kord.rest.ById
 import dev.kord.rest.builder.stage.StageInstanceCreateBuilder
 import dev.kord.rest.builder.stage.StageInstanceModifyBuilder
 import dev.kord.rest.json.request.StageInstanceCreateRequest
 import dev.kord.rest.json.request.StageInstanceModifyRequest
 import dev.kord.rest.request.auditLogReason
-import dev.kord.rest.route.Route
+import dev.kord.rest.route.Routes
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.resources.*
+import io.ktor.client.request.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public class StageInstanceService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class StageInstanceService(public val client: HttpClient) {
 
-    public suspend fun getStageInstance(channelId: Snowflake): DiscordStageInstance = call(Route.StageInstanceGet) {
-        keys[Route.ChannelId] = channelId
-    }
+    public suspend fun getStageInstance(channelId: Snowflake): DiscordStageInstance =
+        client.get(Routes.Channels.ById(channelId)).body()
 
     public suspend fun createStageInstance(
         request: StageInstanceCreateRequest,
         reason: String? = null,
-    ): DiscordStageInstance = call(Route.StageInstancePost) {
-        body(StageInstanceCreateRequest.serializer(), request)
+    ): DiscordStageInstance =
+        client.post(Routes.Channels) {
+        setBody(request)
         auditLogReason(reason)
-    }
+    }.body()
 
     public suspend inline fun createStageInstance(
         channelId: Snowflake,
@@ -40,12 +45,10 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
         channelId: Snowflake,
         request: StageInstanceModifyRequest,
         reason: String? = null,
-    ): DiscordStageInstance = call(Route.StageInstancePatch) {
-        keys[Route.ChannelId] = channelId
-
-        body(StageInstanceModifyRequest.serializer(), request)
+    ): DiscordStageInstance = client.patch(Routes.Channels.ById(channelId)) {
+        setBody(request)
         auditLogReason(reason)
-    }
+    }.body()
 
     public suspend inline fun modifyStageInstance(
         channelId: Snowflake,
@@ -58,8 +61,7 @@ public class StageInstanceService(requestHandler: RequestHandler) : RestService(
     }
 
     public suspend fun deleteStageInstance(channelId: Snowflake, reason: String? = null): Unit =
-        call(Route.StageInstanceDelete) {
-            keys[Route.ChannelId] = channelId
+        client.delete(Routes.Channels.ById(channelId)) {
             auditLogReason(reason)
-        }
+        }.body()
 }

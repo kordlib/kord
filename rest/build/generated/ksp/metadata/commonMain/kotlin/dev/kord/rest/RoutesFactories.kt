@@ -324,6 +324,9 @@ public inline fun Routes.Channels.ById.Companion.Webhooks(channelId: Snowflake):
 public inline fun Routes.Invites.Companion.ById(inviteCode: String): Routes.Invites.ById =
     Routes.Invites.ById(inviteCode, Routes.Invites())
 
+public inline fun Routes.Stickers.Companion.ById(stickerId: Snowflake): Routes.Stickers.ById =
+    Routes.Stickers.ById(stickerId, Routes.Stickers())
+
 public inline fun Routes.Webhooks.Companion.ById(webhookId: Snowflake): Routes.Webhooks.ById =
     Routes.Webhooks.ById(webhookId, Routes.Webhooks())
 
