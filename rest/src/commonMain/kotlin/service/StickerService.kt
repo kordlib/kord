@@ -33,7 +33,7 @@ public class StickerService(public val client: HttpClient) {
 
     public suspend fun createGuildSticker(
         guildId: Snowflake,
-        multipartRequest: MultipartGuildStickerCreateRequest,
+        request: MultipartGuildStickerCreateRequest,
     ): DiscordMessageSticker = client.post(Routes.Guilds.ById.Stickers(guildId)) {
         setBody(request)
         file(multipartRequest.file)

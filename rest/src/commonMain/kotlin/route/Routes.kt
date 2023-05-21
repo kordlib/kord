@@ -56,6 +56,15 @@ public class Routes {
             @Resource("preview")
             public class Preview(public val parent: Guilds.ById)
 
+            @Resource("onboarding")
+            public class OnBoarding(public val parent: Guilds.ById)
+
+            @Resource("roles")
+            public class Roles(public val parent: Guilds.ById) {
+                @Resource("{roleId}")
+                public class ById(public val roleId: Snowflake, public val parent: Roles)
+            }
+
             @Resource("members")
             public class Members(public val parent: Guilds.ById) {
                 @Resource("{userId}")
@@ -99,7 +108,7 @@ public class Routes {
             }
 
             @Resource("channels")
-            public class Channels(public val parent: ScheduledEvents.ById)
+            public class Channels(public val parent: Guilds.ById)
 
             @Resource("threads")
             public class Threads(public val parent: Guilds.ById) {
@@ -135,6 +144,8 @@ public class Routes {
             public class VoiceStates(public val parent: Guilds.ById) {
                 @Resource("{voiceStateId}")
                 public class ById(public val id: Snowflake, public val parent: VoiceStates)
+                @Resource("@me")
+                public class Me(public val parent: VoiceStates)
             }
 
             @Resource("emojis")

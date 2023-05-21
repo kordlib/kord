@@ -49,6 +49,16 @@ public inline fun Routes.Guilds.ById.Companion.WelcomeScreen(guildId: Snowflake)
 public inline fun Routes.Guilds.ById.Companion.Preview(guildId: Snowflake):
     Routes.Guilds.ById.Preview = Routes.Guilds.ById.Preview(Routes.Guilds.ById(guildId))
 
+public inline fun Routes.Guilds.ById.Companion.OnBoarding(guildId: Snowflake):
+    Routes.Guilds.ById.OnBoarding = Routes.Guilds.ById.OnBoarding(Routes.Guilds.ById(guildId))
+
+public inline fun Routes.Guilds.ById.Companion.Roles(guildId: Snowflake): Routes.Guilds.ById.Roles =
+    Routes.Guilds.ById.Roles(Routes.Guilds.ById(guildId))
+
+public inline fun Routes.Guilds.ById.Roles.Companion.ById(guildId: Snowflake, roleId: Snowflake):
+    Routes.Guilds.ById.Roles.ById = Routes.Guilds.ById.Roles.ById(roleId,
+    Routes.Guilds.ById.Roles(guildId))
+
 public inline fun Routes.Guilds.ById.Companion.Members(guildId: Snowflake):
     Routes.Guilds.ById.Members = Routes.Guilds.ById.Members(Routes.Guilds.ById(guildId))
 
@@ -107,9 +117,8 @@ public inline fun Routes.Guilds.ById.Bans.Companion.ById(guildId: Snowflake, use
     Routes.Guilds.ById.Bans.ById = Routes.Guilds.ById.Bans.ById(userId,
     Routes.Guilds.ById.Bans(guildId))
 
-public inline fun Routes.Guilds.ById.Companion.Channels(guildId: Snowflake,
-    scheduledEventId: Snowflake): Routes.Guilds.ById.Channels =
-    Routes.Guilds.ById.Channels(Routes.Guilds.ById.ScheduledEvents.ById(guildId, scheduledEventId))
+public inline fun Routes.Guilds.ById.Companion.Channels(guildId: Snowflake):
+    Routes.Guilds.ById.Channels = Routes.Guilds.ById.Channels(Routes.Guilds.ById(guildId))
 
 public inline fun Routes.Guilds.ById.Companion.Threads(guildId: Snowflake):
     Routes.Guilds.ById.Threads = Routes.Guilds.ById.Threads(Routes.Guilds.ById(guildId))
@@ -153,6 +162,10 @@ public inline fun Routes.Guilds.ById.Companion.VoiceStates(guildId: Snowflake):
 public inline fun Routes.Guilds.ById.VoiceStates.Companion.ById(guildId: Snowflake, id: Snowflake):
     Routes.Guilds.ById.VoiceStates.ById = Routes.Guilds.ById.VoiceStates.ById(id,
     Routes.Guilds.ById.VoiceStates(guildId))
+
+public inline fun Routes.Guilds.ById.VoiceStates.Companion.Me(guildId: Snowflake):
+    Routes.Guilds.ById.VoiceStates.Me =
+    Routes.Guilds.ById.VoiceStates.Me(Routes.Guilds.ById.VoiceStates(guildId))
 
 public inline fun Routes.Guilds.ById.Companion.Emojis(guildId: Snowflake): Routes.Guilds.ById.Emojis
     = Routes.Guilds.ById.Emojis(Routes.Guilds.ById(guildId))
