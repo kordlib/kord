@@ -5,6 +5,7 @@ import dev.kord.common.entity.MessageFlag.Ephemeral
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
 import dev.kord.common.entity.optional.orEmpty
+import dev.kord.rest.*
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
@@ -12,113 +13,121 @@ import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.route.Route
+import dev.kord.rest.route.Routes
+import dev.kord.rest.route.Routes.Applications.ById.Guilds.ById.Commands.ById.Permissions
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.plugins.resources.*
+import io.ktor.client.request.*
+import io.ktor.http.*
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.serializer
-import kotlin.collections.set
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public class InteractionService(requestHandler: RequestHandler) : RestService(requestHandler) {
+public class InteractionService(public val client: HttpClient) {
 
-    public suspend fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean? = null): List<DiscordApplicationCommand> =
-        call(Route.GlobalApplicationCommandsGet) {
-            keys[Route.ApplicationId] = applicationId
+    public suspend fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean? = null
+    ): List<DiscordApplicationCommand> =
+        client.get(Routes.Applications.ById.Commands(applicationId)) {
             withLocalizations?.let { parameter("with_localizations", it) }
-        }
+        }.body()
 
     public suspend fun createGlobalApplicationCommand(
         applicationId: Snowflake,
         request: ApplicationCommandCreateRequest
-    ): DiscordApplicationCommand = call(Route.GlobalApplicationCommandCreate) {
-        keys[Route.ApplicationId] = applicationId
-        body(ApplicationCommandCreateRequest.serializer(), request)
-    }
+    ): DiscordApplicationCommand =
+        client.post(Routes.Applications.ById.Commands(applicationId)) {
+            setBody(request)
+        }.body()
 
     public suspend fun createGlobalApplicationCommands(
         applicationId: Snowflake,
         request: List<ApplicationCommandCreateRequest>
-    ): List<DiscordApplicationCommand> = call(Route.GlobalApplicationCommandsCreate) {
-        keys[Route.ApplicationId] = applicationId
-        body(ListSerializer(ApplicationCommandCreateRequest.serializer()), request)
-    }
+    ): List<DiscordApplicationCommand> =
+        client.post(Routes.Applications.ById.Commands(applicationId)) {
+            setBody(request)
+        }.body()
 
     public suspend fun modifyGlobalApplicationCommand(
         applicationId: Snowflake,
         commandId: Snowflake,
         request: ApplicationCommandModifyRequest,
-    ): DiscordApplicationCommand = call(Route.GlobalApplicationCommandModify) {
-        applicationIdCommandId(applicationId, commandId)
-        body(ApplicationCommandModifyRequest.serializer(), request)
-    }
+    ): DiscordApplicationCommand = client.patch(Routes.Applications.ById.Commands.ById(applicationId, commandId)) {
+        setBody(request)
+    }.body()
 
-    public suspend fun deleteGlobalApplicationCommand(applicationId: Snowflake, commandId: Snowflake): Unit =
-        call(Route.GlobalApplicationCommandDelete) {
-            applicationIdCommandId(applicationId, commandId)
-        }
+    public suspend fun deleteGlobalApplicationCommand(applicationId: Snowflake, commandId: Snowflake): Unit {
+        client.delete(Routes.Applications.ById.Commands.ById(applicationId, commandId))
+    }
 
     public suspend fun getGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
         withLocalizations: Boolean? = null
-    ): List<DiscordApplicationCommand> = call(Route.GuildApplicationCommandsGet) {
-        applicationIdGuildId(applicationId, guildId)
-        withLocalizations?.let { parameter("with_localizations", it) }
-    }
+    ): List<DiscordApplicationCommand> =
+        client.get(Routes.Applications.ById.Guilds.ById.Commands(applicationId, guildId)) {
+            withLocalizations?.let { parameter("with_localizations", it) }
+        }.body()
 
     public suspend fun createGuildApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         request: ApplicationCommandCreateRequest,
-    ): DiscordApplicationCommand = call(Route.GuildApplicationCommandCreate) {
-        applicationIdGuildId(applicationId, guildId)
-        body(ApplicationCommandCreateRequest.serializer(), request)
-    }
+    ): DiscordApplicationCommand =
+        client.post(Routes.Applications.ById.Guilds.ById.Commands(applicationId, guildId)) {
+            setBody(request)
+        }.body()
 
     public suspend fun createGuildApplicationCommands(
         applicationId: Snowflake,
         guildId: Snowflake,
         request: List<ApplicationCommandCreateRequest>,
-    ): List<DiscordApplicationCommand> = call(Route.GuildApplicationCommandsCreate) {
-        applicationIdGuildId(applicationId, guildId)
-        body(ListSerializer(ApplicationCommandCreateRequest.serializer()), request)
-    }
+    ): List<DiscordApplicationCommand> =
+        client.post(Routes.Applications.ById.Guilds.ById.Commands(applicationId, guildId)) {
+            setBody(request)
+        }.body()
+
 
     public suspend fun modifyGuildApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
         request: ApplicationCommandModifyRequest,
-    ): DiscordApplicationCommand = call(Route.GuildApplicationCommandModify) {
-        applicationIdGuildIdCommandId(applicationId, guildId, commandId)
-        body(ApplicationCommandModifyRequest.serializer(), request)
-    }
+    ): DiscordApplicationCommand =
+        client.patch(Routes.Applications.ById.Guilds.ById.Commands.ById(applicationId, guildId, commandId)) {
+            setBody(request)
+        }.body()
 
     public suspend fun deleteGuildApplicationCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-    ): Unit = call(Route.GuildApplicationCommandDelete) {
-        applicationIdGuildIdCommandId(applicationId, guildId, commandId)
+    ) {
+        client.delete(Routes.Applications.ById.Guilds.ById.Commands.ById(applicationId, guildId, commandId))
     }
 
     public suspend fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         request: MultipartInteractionResponseCreateRequest,
-    ): Unit = call(Route.InteractionResponseCreate) {
-        interactionIdInteractionToken(interactionId, interactionToken)
-        body(InteractionResponseCreateRequest.serializer(), request.request)
-        request.files.orEmpty().onEach { file(it) }
+    ) {
+        client.post(Routes.Interactions.ById.Token.Callback(interactionId, interactionToken)) {
+            setBody(request.request)
+            request.files.orEmpty().onEach { file(it) }
+        }
     }
 
     public suspend fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         request: InteractionResponseCreateRequest,
-    ): Unit = call(Route.InteractionResponseCreate) {
-        interactionIdInteractionToken(interactionId, interactionToken)
-        body(InteractionResponseCreateRequest.serializer(), request)
+    ) {
+        client.post(Routes.Interactions.ById.Token.Callback(interactionId, interactionToken)) {
+            setBody(request)
+        }
     }
 
     public suspend inline fun <reified T> createAutoCompleteInteractionResponse(
@@ -126,30 +135,25 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         interactionToken: String,
         autoComplete: DiscordAutoComplete<T>,
         typeSerializer: KSerializer<T> = serializer(),
-    ): Unit = call(Route.InteractionResponseCreate) {
-        interactionIdInteractionToken(interactionId, interactionToken)
-        body(
-            AutoCompleteResponseCreateRequest.serializer(typeSerializer),
-            AutoCompleteResponseCreateRequest(
-                InteractionResponseType.ApplicationCommandAutoCompleteResult,
-                autoComplete
+    ) {
+        client.post(Routes.Interactions.ById.Token.Callback(interactionId, interactionToken)) {
+            setBody(
+                AutoCompleteResponseCreateRequest(
+                    InteractionResponseType.ApplicationCommandAutoCompleteResult,
+                    autoComplete
+                )
             )
-        )
+        }
     }
 
     public suspend fun createModalInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         modal: DiscordModal
-    ): Unit = call(Route.InteractionResponseCreate) {
-        interactionIdInteractionToken(interactionId, interactionToken)
-        body(
-            ModalResponseCreateRequest.serializer(),
-            ModalResponseCreateRequest(
-                InteractionResponseType.Modal,
-                modal
-            )
-        )
+    ) {
+        client.post(Routes.Interactions.ById.Token.Callback(interactionId, interactionToken)) {
+            setBody(ModalResponseCreateRequest(InteractionResponseType.Modal, modal))
+        }
     }
 
     public suspend inline fun createModalInteractionResponse(
@@ -237,58 +241,52 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     }
 
     public suspend fun getInteractionResponse(applicationId: Snowflake, interactionToken: String): DiscordMessage =
-        call(Route.OriginalInteractionResponseGet) {
-            applicationIdInteractionToken(applicationId, interactionToken)
-        }
+        client.get(Routes.Webhooks.ById.WithToken.Messages.Original(applicationId, interactionToken)).body()
 
     public suspend fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
         multipartRequest: MultipartInteractionResponseModifyRequest,
-    ): DiscordMessage = call(Route.OriginalInteractionResponseModify) {
-        applicationIdInteractionToken(applicationId, interactionToken)
-        body(InteractionResponseModifyRequest.serializer(), multipartRequest.request)
+    ): DiscordMessage =
+        client.patch(Routes.Webhooks.ById.WithToken.Messages.Original(applicationId, interactionToken)) {
+        setBody(multipartRequest.request)
         multipartRequest.files.orEmpty().forEach { file(it) }
-    }
+    }.body()
 
     public suspend fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
         request: InteractionResponseModifyRequest,
-    ): DiscordMessage = call(Route.OriginalInteractionResponseModify) {
-        applicationIdInteractionToken(applicationId, interactionToken)
-        body(InteractionResponseModifyRequest.serializer(), request)
-    }
+    ): DiscordMessage = client.patch(Routes.Webhooks.ById.WithToken.Messages.Original(applicationId, interactionToken)) {
+        setBody(request)
+    }.body()
 
-    public suspend fun deleteOriginalInteractionResponse(applicationId: Snowflake, interactionToken: String): Unit =
-        call(Route.OriginalInteractionResponseDelete) {
-            applicationIdInteractionToken(applicationId, interactionToken)
-        }
+    public suspend fun deleteOriginalInteractionResponse(applicationId: Snowflake, interactionToken: String) {
+        client.delete(Routes.Webhooks.ById.WithToken.Messages.Original(applicationId, interactionToken))
+    }
 
     public suspend fun createFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         multipart: MultipartFollowupMessageCreateRequest,
-    ): DiscordMessage = call(Route.FollowupMessageCreate) {
-        applicationIdInteractionToken(applicationId, interactionToken)
-        body(FollowupMessageCreateRequest.serializer(), multipart.request)
+    ): DiscordMessage = client.post(Routes.Webhooks.ById.WithToken.Messages(applicationId, interactionToken)) {
+        setBody(multipart.request)
         multipart.files.forEach { file(it) }
-    }
+    }.body()
 
     public suspend fun getFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): DiscordMessage = call(Route.FollowupMessageGet) {
-        applicationIdInteractionTokenMessageId(applicationId, interactionToken, messageId)
-    }
+    ): DiscordMessage =
+        client.get(Routes.Webhooks.ById.WithToken.Messages.ById(applicationId, interactionToken, messageId)).body()
 
     public suspend fun deleteFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-    ): Unit = call(Route.FollowupMessageDelete) {
-        applicationIdInteractionTokenMessageId(applicationId, interactionToken, messageId)
+    ) {
+        client.delete(Routes.Webhooks.ById.WithToken.Messages.ById(applicationId, interactionToken, messageId))
     }
 
     public suspend fun modifyFollowupMessage(
@@ -296,49 +294,43 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         interactionToken: String,
         messageId: Snowflake,
         request: MultipartFollowupMessageModifyRequest,
-    ): DiscordMessage = call(Route.FollowupMessageModify) {
-        applicationIdInteractionTokenMessageId(applicationId, interactionToken, messageId)
-        body(FollowupMessageModifyRequest.serializer(), request.request)
+    ): DiscordMessage =
+        client.patch(Routes.Webhooks.ById.WithToken.Messages.ById(applicationId, interactionToken, messageId)) {
+        setBody(request.request)
         request.files.orEmpty().forEach { file(it) }
-    }
+    }.body()
 
     public suspend fun modifyFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
         request: FollowupMessageModifyRequest,
-    ): DiscordMessage = call(Route.FollowupMessageModify) {
-        applicationIdInteractionTokenMessageId(applicationId, interactionToken, messageId)
-        body(FollowupMessageModifyRequest.serializer(), request)
-    }
+    ): DiscordMessage = client.patch(Routes.Webhooks.ById.WithToken.Messages.ById(applicationId, interactionToken, messageId)) {
+        setBody(request)
+    }.body()
 
     public suspend fun getGlobalCommand(applicationId: Snowflake, commandId: Snowflake): DiscordApplicationCommand =
-        call(Route.GlobalApplicationCommandGet) {
-            applicationIdCommandId(applicationId, commandId)
-        }
+        client.get(Routes.Applications.ById.Commands.ById(applicationId, commandId)).body()
 
     public suspend fun getGuildCommand(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-    ): DiscordApplicationCommand = call(Route.GuildApplicationCommandGet) {
-        applicationIdGuildIdCommandId(applicationId, guildId, commandId)
-    }
-
+    ): DiscordApplicationCommand =
+        client.get(Routes.Applications.ById.Guilds.ById.Commands.ById(applicationId, guildId, commandId)).body()
+    )
     public suspend fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
-    ): List<DiscordGuildApplicationCommandPermissions> = call(Route.GuildApplicationCommandPermissionsGet) {
-        applicationIdGuildId(applicationId, guildId)
-    }
+    ): List<DiscordGuildApplicationCommandPermissions> =
+        client.get(Routes.Applications.ById.Guilds.ById.Permissions(applicationId, guildId)).body()
 
     public suspend fun getApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
         commandId: Snowflake,
-    ): DiscordGuildApplicationCommandPermissions = call(Route.ApplicationCommandPermissionsGet) {
-        applicationIdGuildIdCommandId(applicationId, guildId, commandId)
-    }
+    ): DiscordGuildApplicationCommandPermissions =
+        client.get(Routes.Applications.ById.Guilds.ById.Commands.ById.Permissions(applicationId, guildId, commandId)).body()
 
     public suspend inline fun createGlobalChatInputApplicationCommand(
         applicationId: Snowflake,
@@ -616,43 +608,4 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         val request = InteractionResponseCreateRequest(type = InteractionResponseType.DeferredUpdateMessage)
         createInteractionResponse(interactionId, interactionToken, request)
     }
-}
-
-private fun RequestBuilder<*>.applicationIdCommandId(applicationId: Snowflake, commandId: Snowflake) {
-    keys[Route.ApplicationId] = applicationId
-    keys[Route.CommandId] = commandId
-}
-
-private fun RequestBuilder<*>.applicationIdGuildId(applicationId: Snowflake, guildId: Snowflake) {
-    keys[Route.ApplicationId] = applicationId
-    keys[Route.GuildId] = guildId
-}
-
-private fun RequestBuilder<*>.applicationIdGuildIdCommandId(
-    applicationId: Snowflake,
-    guildId: Snowflake,
-    commandId: Snowflake,
-) {
-    applicationIdGuildId(applicationId, guildId)
-    keys[Route.CommandId] = commandId
-}
-
-@PublishedApi
-internal fun RequestBuilder<*>.interactionIdInteractionToken(interactionId: Snowflake, interactionToken: String) {
-    keys[Route.InteractionId] = interactionId
-    keys[Route.InteractionToken] = interactionToken
-}
-
-private fun RequestBuilder<*>.applicationIdInteractionToken(applicationId: Snowflake, interactionToken: String) {
-    keys[Route.ApplicationId] = applicationId
-    keys[Route.InteractionToken] = interactionToken
-}
-
-private fun RequestBuilder<*>.applicationIdInteractionTokenMessageId(
-    applicationId: Snowflake,
-    interactionToken: String,
-    messageId: Snowflake,
-) {
-    applicationIdInteractionToken(applicationId, interactionToken)
-    keys[Route.MessageId] = messageId
 }

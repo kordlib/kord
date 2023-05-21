@@ -374,3 +374,57 @@ public inline fun Routes.Webhooks.ById.WithToken.Messages.Companion.Original(cha
 
 public inline fun Routes.Voice.Companion.Regions(): Routes.Voice.Regions =
     Routes.Voice.Regions(Routes.Voice())
+
+public inline fun Routes.Applications.Companion.ById(applicationId: Snowflake):
+    Routes.Applications.ById = Routes.Applications.ById(applicationId, Routes.Applications())
+
+public inline fun Routes.Applications.ById.Companion.Commands(applicationId: Snowflake):
+    Routes.Applications.ById.Commands =
+    Routes.Applications.ById.Commands(Routes.Applications.ById(applicationId))
+
+public inline fun Routes.Applications.ById.Commands.Companion.ById(applicationId: Snowflake,
+    commandId: Snowflake): Routes.Applications.ById.Commands.ById =
+    Routes.Applications.ById.Commands.ById(commandId,
+    Routes.Applications.ById.Commands(applicationId))
+
+public inline fun Routes.Applications.ById.Companion.Guilds(applicationId: Snowflake):
+    Routes.Applications.ById.Guilds =
+    Routes.Applications.ById.Guilds(Routes.Applications.ById(applicationId))
+
+public inline fun Routes.Applications.ById.Guilds.Companion.ById(applicationId: Snowflake,
+    guildId: Snowflake): Routes.Applications.ById.Guilds.ById =
+    Routes.Applications.ById.Guilds.ById(guildId, Routes.Applications.ById.Guilds(applicationId))
+
+public inline
+    fun Routes.Applications.ById.Guilds.ById.Companion.Permissions(applicationId: Snowflake,
+    guildId: Snowflake): Routes.Applications.ById.Guilds.ById.Permissions =
+    Routes.Applications.ById.Guilds.ById.Permissions(Routes.Applications.ById.Guilds.ById(applicationId,
+    guildId))
+
+public inline fun Routes.Applications.ById.Guilds.ById.Companion.Commands(applicationId: Snowflake,
+    guildId: Snowflake): Routes.Applications.ById.Guilds.ById.Commands =
+    Routes.Applications.ById.Guilds.ById.Commands(Routes.Applications.ById.Guilds.ById(applicationId,
+    guildId))
+
+public inline fun Routes.Applications.ById.Guilds.ById.Commands.Companion.ById(
+  applicationId: Snowflake,
+  guildId: Snowflake,
+  commandId: Snowflake,
+): Routes.Applications.ById.Guilds.ById.Commands.ById =
+    Routes.Applications.ById.Guilds.ById.Commands.ById(commandId,
+    Routes.Applications.ById.Guilds.ById.Commands(applicationId, guildId))
+
+public inline fun Routes.Applications.ById.Guilds.ById.Commands.ById.Companion.Permissions(
+  applicationId: Snowflake,
+  guildId: Snowflake,
+  commandId: Snowflake,
+): Routes.Applications.ById.Guilds.ById.Commands.ById.Permissions =
+    Routes.Applications.ById.Guilds.ById.Commands.ById.Permissions(Routes.Applications.ById.Guilds.ById.Commands.ById(applicationId,
+    guildId, commandId))
+
+public inline fun Routes.Interactions.Companion.ById(interactionId: Snowflake):
+    Routes.Interactions.ById = Routes.Interactions.ById(interactionId, Routes.Interactions())
+
+public inline fun Routes.Interactions.ById.Token.Companion.Callback(interactionToken: String):
+    Routes.Interactions.ById.Token.Callback =
+    Routes.Interactions.ById.Token.Callback(Routes.Interactions.ById.Token(interactionToken))

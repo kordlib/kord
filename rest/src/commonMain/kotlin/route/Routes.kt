@@ -308,6 +308,7 @@ public class Routes {
             }
         }
     }
+
     @Resource("/sticker-packs")
     public class NitroStickerPacks
 
@@ -316,6 +317,57 @@ public class Routes {
         @Resource("regions")
         public class Regions(public val parent: Voice)
     }
+
+    @Resource("/applications")
+    public class Applications {
+
+        @Resource("{applicationId}")
+        public class ById(public val applicationId: Snowflake, public val parent: Applications) {
+
+            @Resource("commands")
+            public class Commands(public val parent: Applications.ById) {
+                @Resource("{commandId}")
+                public class ById(public val commandId: Snowflake, public val parent: Commands)
+            }
+
+            @Resource("guilds")
+            public class Guilds(public val parent: Applications.ById) {
+
+                @Resource("{guildId}")
+                public class ById(public val guildId: Snowflake, public val parent: Guilds) {
+
+                    @Resource("permissions")
+                    public class Permissions(public val parent: Guilds.ById)
+
+                    @Resource("commands")
+                    public class Commands(public val parent: Guilds.ById) {
+
+                        @Resource("{commandId}")
+                        public class ById(public val commandId: Snowflake, public val parent: Commands) {
+
+                            @Resource("permissions")
+                            public class Permissions(public val parent: Commands.ById)
+                        }
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    @Resource("/interactions")
+    public class Interactions {
+        @Resource("{interactionId}")
+        public class ById(public val interactionId: Snowflake, public val parent: Interactions) {
+            @Resource("{interactionToken}")
+            public class Token(public val interactionToken: String) {
+                @Resource("callback")
+                public class Callback(public val parent: Token)
+            }
+        }
+    }
+
     @Resource("/oauth2")
     public class OAuth2 {
         @Resource("applications")
@@ -324,4 +376,5 @@ public class Routes {
             public class Me
         }
     }
+
 }
