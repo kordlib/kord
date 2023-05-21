@@ -1,7 +1,6 @@
 package dev.kord.test
 
 import io.ktor.utils.io.*
-import js.core.get
 import node.process.process
 
 actual object Platform {

@@ -4,8 +4,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
-import kotlinx.datetime.Instant
+import dev.kord.common.serialization.InstantInEpochMilliseconds
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,8 +12,7 @@ public data class ActivityData(
     val name: String,
     val type: ActivityType,
     val url: Optional<String?> = Optional.Missing(),
-    @Serializable(with = InstantInEpochMillisecondsSerializer::class)
-    val createdAt: Instant,
+    val createdAt: InstantInEpochMilliseconds,
     val timestamps: Optional<DiscordActivityTimestamps> = Optional.Missing(),
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     val details: Optional<String?> = Optional.Missing(),
