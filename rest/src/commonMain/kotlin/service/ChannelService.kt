@@ -11,6 +11,7 @@ import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.FollowedChannelResponse
 import dev.kord.rest.json.response.ListThreadsResponse
+import dev.kord.rest.request.MultiPartRequest
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Routes
@@ -18,7 +19,6 @@ import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
-import io.ktor.client.request.forms.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -28,12 +28,7 @@ public class ChannelService(public val client: HttpClient) {
         channelId: Snowflake,
         multipartRequest: MultipartMessageCreateRequest,
     ): DiscordMessage {
-        val form = formData {
-            append(FormPart("payload_json", multipartRequest.request))
-            multipartRequest.files.forEachIndexed { index, namedFile ->
-                append("files[$index]", namedFile.contentProvider)
-            }
-        }
+        val form = MultiPartRequest(multipartRequest.request, multipartRequest.files)
         return client.post(Routes.Channels.ById(channelId)) {
             setBody(form)
         }.body()
@@ -104,7 +99,7 @@ public class ChannelService(public val client: HttpClient) {
     }
 
 
-    public suspend fun deleteAllReactions(channelId: Snowflake, messageId: Snowflake): Unit {
+    public suspend fun deleteAllReactions(channelId: Snowflake, messageId: Snowflake) {
         client.delete(Routes.Channels.ById.Messages.ById.Reactions(channelId, messageId))
     }
 
@@ -180,7 +175,7 @@ public class ChannelService(public val client: HttpClient) {
         request: InviteCreateRequest,
         reason: String? = null
     ): DiscordInviteWithMetadata {
-        return client.post(Routes.Channels.ById.Invites) {
+        return client.post(Routes.Channels.ById.Invites(channelId)) {
             setBody(request)
             auditLogReason(reason)
         }.body()

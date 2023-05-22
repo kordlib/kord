@@ -1,9 +1,11 @@
 package dev.kord.rest.request
 
+import dev.kord.rest.NamedFile
 import dev.kord.rest.ratelimit.BucketKey
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
-import io.ktor.resources.*
+import io.ktor.http.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.seconds
@@ -22,6 +24,20 @@ private const val auditLogReason = "X-Audit-Log-Reason"
  */
 public fun HttpRequestBuilder.auditLogReason(reason: String?) {
     reason?.let { header(auditLogReason, reason) }
+}
+
+public fun <T: Any> MultiPartRequest(jsonPayload: T, files: List<NamedFile>): MultiPartFormDataContent {
+    val form = formData {
+        append(FormPart("payload_json", jsonPayload))
+        files.forEachIndexed { index, (fileName, contentProvider) ->
+            append(
+                "file$index",
+                contentProvider,
+                headersOf(HttpHeaders.ContentDisposition, "filename=$fileName")
+            )
+        }
+    }
+    return MultiPartFormDataContent(form)
 }
 
 public val HttpResponse.channelResetPoint: Instant
