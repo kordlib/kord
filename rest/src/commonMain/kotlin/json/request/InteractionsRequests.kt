@@ -58,11 +58,6 @@ public data class InteractionResponseModifyRequest(
     val attachments: Optional<MutableList<DiscordAttachment>?> = Optional.Missing()
 )
 
-public data class MultipartInteractionResponseModifyRequest(
-    val request: InteractionResponseModifyRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing(),
-)
-
 @Serializable
 public data class InteractionResponseCreateRequest(
     val type: InteractionResponseType,
@@ -81,11 +76,6 @@ public data class ModalResponseCreateRequest(
     val data: DiscordModal
 )
 
-public data class MultipartInteractionResponseCreateRequest(
-    val request: InteractionResponseCreateRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing()
-)
-
 @Serializable
 public data class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
@@ -97,10 +87,6 @@ public data class InteractionApplicationCommandCallbackData(
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
 )
 
-public data class MultipartFollowupMessageCreateRequest(
-    val request: FollowupMessageCreateRequest,
-    val files: List<NamedFile> = emptyList(),
-)
 
 @Serializable
 public data class FollowupMessageCreateRequest(
@@ -125,9 +111,4 @@ public data class FollowupMessageModifyRequest(
     val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
     val attachments: Optional<List<DiscordAttachment>?> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing()
-)
-
-public data class MultipartFollowupMessageModifyRequest(
-    val request: FollowupMessageModifyRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing()
 )

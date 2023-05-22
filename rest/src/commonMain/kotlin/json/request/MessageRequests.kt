@@ -23,11 +23,6 @@ public data class MessageCreateRequest(
     val flags: Optional<MessageFlags> = Optional.Missing()
 )
 
-public data class MultipartMessageCreateRequest(
-    val request: MessageCreateRequest,
-    val files: List<NamedFile> = emptyList(),
-)
-
 @Serializable
 public data class EmbedRequest(
     val title: Optional<String> = Optional.Missing(),
@@ -82,11 +77,6 @@ public data class MessageEditPatchRequest(
     val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing(),
 )
 
-public data class MultipartMessagePatchRequest(
-    val requests: MessageEditPatchRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing()
-)
-
 @Serializable
 public data class BulkDeleteRequest(val messages: List<Snowflake>)
 
@@ -102,7 +92,3 @@ public data class ForumThreadMessageRequest(
     val flags: Optional<MessageFlags> = Optional.Missing()
 )
 
-public data class MultipartForumThreadMessageCreateRequest(
-    val request: ForumThreadMessageRequest,
-    val files: List<NamedFile> = emptyList(),
-)

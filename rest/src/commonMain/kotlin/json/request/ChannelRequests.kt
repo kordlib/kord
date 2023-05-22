@@ -90,11 +90,6 @@ public data class StartThreadRequest(
     val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
 )
 
-public data class MultipartStartThreadRequest(
-    val request: StartThreadRequest,
-    val files: List<NamedFile> = emptyList(),
-)
-
 public data class ListThreadsBySnowflakeRequest(
     val before: Snowflake? = null,
     val limit: Int? = null

@@ -9,12 +9,13 @@ import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.builder.message.create.ForumMessageCreateBuilder
 import dev.kord.rest.json.request.MultipartStartThreadRequest
 import dev.kord.rest.json.request.StartThreadRequest
+import dev.kord.rest.request.MultiPartRequest
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
 
 @KordDsl
-public class StartForumThreadBuilder(public var name: String) : AuditRequestBuilder<MultipartStartThreadRequest> {
+public class StartForumThreadBuilder(public var name: String) : AuditRequestBuilder<StartThreadRequest> {
     override var reason: String? = null
 
     private var _autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
@@ -48,7 +49,7 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
                 message = Optional(messageRequest.request),
                 appliedTags = _appliedTags
             ),
-            files = messageRequest.files,
+            messageRequest.
         )
     }
 }

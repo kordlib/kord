@@ -38,11 +38,6 @@ public data class WebhookExecuteRequest(
     val threadName: Optional<String> = Optional.Missing(),
 )
 
-public data class MultiPartWebhookExecuteRequest(
-    val request: WebhookExecuteRequest,
-    val files: List<NamedFile> = emptyList(),
-)
-
 @Serializable
 public data class WebhookEditMessageRequest(
     val content: Optional<String?> = Optional.Missing(),
@@ -52,9 +47,4 @@ public data class WebhookEditMessageRequest(
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing()
-)
-
-public data class MultipartWebhookEditMessageRequest(
-    val request: WebhookEditMessageRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing()
 )

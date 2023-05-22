@@ -15,6 +15,8 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.ForumThreadMessageRequest
 import dev.kord.rest.json.request.MultipartForumThreadMessageCreateRequest
+import dev.kord.rest.request.MultiPartRequest
+import io.ktor.client.request.forms.*
 
 @KordDsl
 public class ForumMessageCreateBuilder : MessageCreateBuilder,

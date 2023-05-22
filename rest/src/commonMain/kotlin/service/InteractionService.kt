@@ -318,7 +318,7 @@ public class InteractionService(public val client: HttpClient) {
         commandId: Snowflake,
     ): DiscordApplicationCommand =
         client.get(Routes.Applications.ById.Guilds.ById.Commands.ById(applicationId, guildId, commandId)).body()
-    )
+
     public suspend fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake,
