@@ -1,11 +1,6 @@
 package dev.kord.rest.service
 
-import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordUnsafe
 import io.ktor.client.*
-
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 public class RestClient(client: HttpClient) {
 
