@@ -1,5 +1,8 @@
 package dev.kord.rest.request
 
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.coerceToMissing
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.NamedFile
 import dev.kord.rest.ratelimit.BucketKey
 import io.ktor.client.request.*
@@ -38,6 +41,17 @@ public fun <T: Any> MultiPartRequest(jsonPayload: T, files: List<NamedFile>): Mu
         }
     }
     return MultiPartFormDataContent(form)
+}
+public fun <T: Any> MultiPartRequest(jsonPayload: T, files: Optional<List<NamedFile>>): MultiPartFormDataContent {
+    return MultiPartRequest(jsonPayload, files.orEmpty())
+}
+
+public inline fun <reified T: Any> HttpRequestBuilder.setBodyWithFiles(jsonPayload: T, files: List<NamedFile> = emptyList()) {
+    if(files.isEmpty()) setBody(jsonPayload) else MultiPartRequest(jsonPayload, files)
+}
+
+public inline fun <reified  T: Any> HttpRequestBuilder.setBody(jsonPayload: T, files: Optional<List<NamedFile>>) {
+    setBodyWithFiles(jsonPayload, files.orEmpty())
 }
 
 public val HttpResponse.channelResetPoint: Instant
