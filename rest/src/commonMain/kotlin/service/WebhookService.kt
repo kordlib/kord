@@ -5,10 +5,7 @@ import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.DiscordWebhook
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.orEmpty
-import dev.kord.rest.ById
-import dev.kord.rest.Github
-import dev.kord.rest.Webhooks
-import dev.kord.rest.WithToken
+import dev.kord.rest.*
 import dev.kord.rest.builder.message.create.WebhookMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.WebhookMessageModifyBuilder
 import dev.kord.rest.builder.webhook.WebhookCreateBuilder
@@ -85,7 +82,7 @@ public class WebhookService(public val client: HttpClient) {
         }.body()
     }
 
-    public suspend fun deleteWebhook(webhookId: Snowflake, reason: String? = null): Unit {
+    public suspend fun deleteWebhook(webhookId: Snowflake, reason: String? = null) {
         client.delete(Routes.Webhooks.ById(webhookId)) {
             auditLogReason(reason)
         }
@@ -121,7 +118,8 @@ public class WebhookService(public val client: HttpClient) {
         request: JsonObject,
         wait: Boolean? = null,
         threadId: Snowflake? = null,
-    ): Unit = client.post() {
+    ): Unit =
+        client.post(Routes.Webhooks.ById.WithToken.Slack(webhookId, token,)) {
         webhookIdTokenWaitThreadId(webhookId, token, wait, threadId)
         setBody(request)
     }.body()
