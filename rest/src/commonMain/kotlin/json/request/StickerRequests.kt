@@ -11,11 +11,6 @@ public data class GuildStickerCreateRequest(
     val tags: String,
 )
 
-public data class MultipartGuildStickerCreateRequest(
-    val request: GuildStickerCreateRequest,
-    val file: NamedFile
-)
-
 @Serializable
 public data class GuildStickerModifyRequest(
     val name: Optional<String> = Optional.Missing(),

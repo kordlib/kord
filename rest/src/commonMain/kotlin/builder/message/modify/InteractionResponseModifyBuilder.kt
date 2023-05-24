@@ -13,11 +13,11 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.builder.message.create.buildMessageFlags
 import dev.kord.rest.json.request.InteractionResponseModifyRequest
-import dev.kord.rest.json.request.MultipartInteractionResponseModifyRequest
+
 
 @KordDsl
 public class InteractionResponseModifyBuilder : MessageModifyBuilder,
-    RequestBuilder<MultipartInteractionResponseModifyRequest> {
+    RequestBuilder<InteractionResponseModifyRequest> {
 
     private var state = MessageModifyStateHolder()
 
@@ -36,16 +36,14 @@ public class InteractionResponseModifyBuilder : MessageModifyBuilder,
 
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
-    override fun toRequest(): MultipartInteractionResponseModifyRequest {
-        return MultipartInteractionResponseModifyRequest(
-            InteractionResponseModifyRequest(
+    override fun toRequest(): InteractionResponseModifyRequest {
+        return InteractionResponseModifyRequest(
                 content = state.content,
                 embeds = state.embeds.mapList { it.toRequest() },
                 allowedMentions = state.allowedMentions.map { it.build() },
                 components = state.components.mapList { it.build() },
                 attachments = state.attachments,
                 flags = buildMessageFlags(flags, suppressEmbeds)
-            ), state.files
         )
     }
 

@@ -11,7 +11,6 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
-import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 
 /**
  * Message builder for publicly responding to an interaction.
@@ -19,7 +18,7 @@ import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 @KordDsl
 public class InteractionResponseCreateBuilder(public val ephemeral: Boolean = false) :
     MessageCreateBuilder,
-    RequestBuilder<MultipartInteractionResponseCreateRequest> {
+    RequestBuilder<InteractionResponseCreateRequest> {
 
     override var content: String? = null
 
@@ -37,9 +36,8 @@ public class InteractionResponseCreateBuilder(public val ephemeral: Boolean = fa
     override var suppressEmbeds: Boolean? = null
     override var suppressNotifications: Boolean? = null
 
-    override fun toRequest(): MultipartInteractionResponseCreateRequest {
-        return MultipartInteractionResponseCreateRequest(
-            InteractionResponseCreateRequest(
+    override fun toRequest(): InteractionResponseCreateRequest {
+         return InteractionResponseCreateRequest(
                 type = InteractionResponseType.ChannelMessageWithSource,
                 data = Optional(
                     InteractionApplicationCommandCallbackData(
@@ -51,9 +49,7 @@ public class InteractionResponseCreateBuilder(public val ephemeral: Boolean = fa
                         flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications, ephemeral)
                     )
                 )
-            ),
-            Optional(files)
-        )
+            )
     }
 
 }

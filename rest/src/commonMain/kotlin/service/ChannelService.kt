@@ -11,8 +11,8 @@ import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.FollowedChannelResponse
 import dev.kord.rest.json.response.ListThreadsResponse
-import dev.kord.rest.request.MultiPartRequest
 import dev.kord.rest.request.auditLogReason
+import dev.kord.rest.request.setBodyWithFiles
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Routes
 import io.ktor.client.*
@@ -26,11 +26,11 @@ public class ChannelService(public val client: HttpClient) {
 
     public suspend fun createMessage(
         channelId: Snowflake,
-        multipartRequest: MultipartMessageCreateRequest,
+        request: MessageCreateRequest,
+        files: List<NamedFile>
     ): DiscordMessage {
-        val form = MultiPartRequest(multipartRequest.request, multipartRequest.files)
         return client.post(Routes.Channels.ById(channelId)) {
-            setBody(form)
+            setBodyWithFiles(request, files)
         }.body()
     }
 
@@ -41,8 +41,8 @@ public class ChannelService(public val client: HttpClient) {
         builder: UserMessageCreateBuilder.() -> Unit,
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        val multipartRequest = UserMessageCreateBuilder().apply(builder).toRequest()
-        return createMessage(channelId, multipartRequest)
+        val userMessageBuilder = UserMessageCreateBuilder().apply(builder)
+        return createMessage(channelId, userMessageBuilder.toRequest(), userMessageBuilder.files)
     }
 
     public suspend fun getMessages(
@@ -187,36 +187,28 @@ public class ChannelService(public val client: HttpClient) {
         builder: UserMessageModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return editMessage(channelId, messageId, UserMessageModifyBuilder().apply(builder).toRequest())
+        val userModifyBuilder = UserMessageModifyBuilder().apply(builder)
+        return editMessage(channelId, messageId, userModifyBuilder.toRequest(), userModifyBuilder.files.orEmpty())
     }
 
     public suspend fun editMessage(
         channelId: Snowflake,
         messageId: Snowflake,
         request: MessageEditPatchRequest,
+        files: List<NamedFile> = emptyList()
     ): DiscordMessage =
         client.patch(Routes.Channels.ById.Messages.ById(channelId, messageId)) {
-        setBody(request)
+        setBodyWithFiles(request, files)
     }.body()
 
     public suspend fun editMessage(
         channelId: Snowflake,
         messageId: Snowflake,
-        request: MultipartMessagePatchRequest,
+        request: WebhookEditMessageRequest,
+        files: List<NamedFile> = emptyList()
     ): DiscordMessage =
         client.patch(Routes.Channels.ById.Messages.ById(channelId, messageId)) {
-        setBody(request)
-        // TODO("Files")
-    }.body()
-
-    public suspend fun editMessage(
-        channelId: Snowflake,
-        messageId: Snowflake,
-        request: MultipartWebhookEditMessageRequest,
-    ): DiscordMessage =
-        client.patch(Routes.Channels.ById.Messages.ById(channelId, messageId)) {
-            setBody(request.request)
-            // TODO("Files")
+            setBodyWithFiles(request, files)
     }.body()
     public suspend fun putChannel(
         channelId: Snowflake,
@@ -279,21 +271,13 @@ public class ChannelService(public val client: HttpClient) {
 
     public suspend fun startThread(
         channelId: Snowflake,
-        multipartRequest: MultipartStartThreadRequest,
-        reason: String? = null,
-    ): DiscordChannel = client.post(Routes.Channels.ById(channelId)) {
-        setBody(multipartRequest.request)
-        auditLogReason(reason)
-        // TODO("Files")
-    }.body()
-
-    public suspend fun startThread(
-        channelId: Snowflake,
         request: StartThreadRequest,
         reason: String? = null,
-    ): DiscordChannel {
-        return startThread(channelId, MultipartStartThreadRequest(request), reason)
-    }
+        files: List<NamedFile> = emptyList()
+    ): DiscordChannel = client.post(Routes.Channels.ById(channelId)) {
+        setBodyWithFiles(request, files)
+        auditLogReason(reason)
+    }.body()
 
     public suspend fun startThread(
         channelId: Snowflake,
@@ -317,7 +301,7 @@ public class ChannelService(public val client: HttpClient) {
     ): DiscordChannel {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val startBuilder = StartForumThreadBuilder(name).apply(builder)
-        return startThread(channelId, startBuilder.toRequest(), startBuilder.reason)
+        return startThread(channelId, startBuilder.toRequest(), startBuilder.reason, startBuilder.message.files)
     }
 
     public suspend fun joinThread(channelId: Snowflake) {

@@ -425,6 +425,11 @@ public inline fun Routes.Applications.ById.Guilds.ById.Commands.ById.Companion.P
 public inline fun Routes.Interactions.Companion.ById(interactionId: Snowflake):
     Routes.Interactions.ById = Routes.Interactions.ById(interactionId, Routes.Interactions())
 
-public inline fun Routes.Interactions.ById.Token.Companion.Callback(interactionToken: String):
-    Routes.Interactions.ById.Token.Callback =
-    Routes.Interactions.ById.Token.Callback(Routes.Interactions.ById.Token(interactionToken))
+public inline fun Routes.Interactions.ById.Companion.Token(interactionId: Snowflake,
+    interactionToken: String): Routes.Interactions.ById.Token =
+    Routes.Interactions.ById.Token(interactionToken, Routes.Interactions.ById(interactionId))
+
+public inline fun Routes.Interactions.ById.Token.Companion.Callback(interactionId: Snowflake,
+    interactionToken: String): Routes.Interactions.ById.Token.Callback =
+    Routes.Interactions.ById.Token.Callback(Routes.Interactions.ById.Token(interactionId,
+    interactionToken))

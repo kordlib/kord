@@ -13,14 +13,13 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.builder.message.create.buildMessageFlags
 import dev.kord.rest.json.request.MessageEditPatchRequest
-import dev.kord.rest.json.request.MultipartMessagePatchRequest
 
 @KordDsl
 public class UserMessageModifyBuilder
     : MessageModifyBuilder,
-    RequestBuilder<MultipartMessagePatchRequest> {
+    RequestBuilder<MessageEditPatchRequest> {
 
-    private var state = MessageModifyStateHolder()
+    internal var state = MessageModifyStateHolder()
 
     override var files: MutableList<NamedFile>? by state::files.delegate()
 
@@ -38,7 +37,7 @@ public class UserMessageModifyBuilder
 
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
-    override fun toRequest(): MultipartMessagePatchRequest = MultipartMessagePatchRequest(
+    override fun toRequest(): MessageEditPatchRequest =
         MessageEditPatchRequest(
             content = state.content,
             embeds = state.embeds.mapList { it.toRequest() },
@@ -46,8 +45,5 @@ public class UserMessageModifyBuilder
             allowedMentions = state.allowedMentions.map { it.build() },
             components = state.components.mapList { it.build() },
             attachments = state.attachments,
-        ),
-        state.files,
-    )
-
+        )
 }

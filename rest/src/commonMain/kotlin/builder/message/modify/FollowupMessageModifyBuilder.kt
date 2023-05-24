@@ -13,12 +13,11 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.builder.message.create.buildMessageFlags
 import dev.kord.rest.json.request.FollowupMessageModifyRequest
-import dev.kord.rest.json.request.MultipartFollowupMessageModifyRequest
 
 @KordDsl
 public class FollowupMessageModifyBuilder :
     MessageModifyBuilder,
-    RequestBuilder<MultipartFollowupMessageModifyRequest> {
+    RequestBuilder<FollowupMessageModifyRequest> {
 
     private var state = MessageModifyStateHolder()
 
@@ -37,17 +36,14 @@ public class FollowupMessageModifyBuilder :
 
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
-    override fun toRequest(): MultipartFollowupMessageModifyRequest {
-        return MultipartFollowupMessageModifyRequest(
-            FollowupMessageModifyRequest(
-                content = state.content,
-                embeds = state.embeds.mapList { it.toRequest() },
-                allowedMentions = state.allowedMentions.map { it.build() },
-                components = state.components.mapList { it.build() },
-                attachments = state.attachments,
-                flags = buildMessageFlags(flags, suppressEmbeds)
-            ),
-            state.files
+    override fun toRequest(): FollowupMessageModifyRequest {
+        return FollowupMessageModifyRequest(
+            content = state.content,
+            embeds = state.embeds.mapList { it.toRequest() },
+            allowedMentions = state.allowedMentions.map { it.build() },
+            components = state.components.mapList { it.build() },
+            attachments = state.attachments,
+            flags = buildMessageFlags(flags, suppressEmbeds)
         )
     }
 }

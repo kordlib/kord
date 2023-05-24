@@ -11,12 +11,11 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
-import dev.kord.rest.json.request.MultipartInteractionResponseCreateRequest
 
 @KordDsl
 public class UpdateMessageInteractionResponseCreateBuilder :
     MessageCreateBuilder,
-    RequestBuilder<MultipartInteractionResponseCreateRequest> {
+    RequestBuilder<InteractionResponseCreateRequest> {
 
 
     override var files: MutableList<NamedFile> = mutableListOf()
@@ -35,9 +34,8 @@ public class UpdateMessageInteractionResponseCreateBuilder :
     override var suppressEmbeds: Boolean? = null
     override var suppressNotifications: Boolean? = null
 
-    override fun toRequest(): MultipartInteractionResponseCreateRequest {
-        return MultipartInteractionResponseCreateRequest(
-            InteractionResponseCreateRequest(
+    override fun toRequest(): InteractionResponseCreateRequest {
+            return InteractionResponseCreateRequest(
                 InteractionResponseType.UpdateMessage,
                 InteractionApplicationCommandCallbackData(
                     content = Optional(content).coerceToMissing(),
@@ -47,9 +45,6 @@ public class UpdateMessageInteractionResponseCreateBuilder :
                     tts = Optional(tts).coerceToMissing().toPrimitive(),
                     flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications)
                 ).optional()
-            ),
-            Optional(files)
-        )
-
+            )
     }
 }

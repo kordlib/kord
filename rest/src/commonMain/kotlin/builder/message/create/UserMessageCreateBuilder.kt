@@ -11,7 +11,8 @@ import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.MessageCreateRequest
-import dev.kord.rest.json.request.MultipartMessageCreateRequest
+import dev.kord.rest.request.MultiPartRequest
+import io.ktor.client.request.forms.*
 
 /**
  * Message builder for creating messages as a bot user.
@@ -19,7 +20,7 @@ import dev.kord.rest.json.request.MultipartMessageCreateRequest
 @KordDsl
 public class UserMessageCreateBuilder
     : MessageCreateBuilder,
-    RequestBuilder<MultipartMessageCreateRequest> {
+    RequestBuilder<MessageCreateRequest> {
 
     override var content: String? = null
 
@@ -58,9 +59,8 @@ public class UserMessageCreateBuilder
     override var suppressEmbeds: Boolean? = null
     override var suppressNotifications: Boolean? = null
 
-    override fun toRequest(): MultipartMessageCreateRequest {
-        return MultipartMessageCreateRequest(
-            MessageCreateRequest(
+    override fun toRequest(): MessageCreateRequest {
+        return MessageCreateRequest(
                 content = Optional(content).coerceToMissing(),
                 nonce = Optional(nonce).coerceToMissing(),
                 tts = Optional(tts).coerceToMissing().toPrimitive(),
@@ -76,9 +76,9 @@ public class UserMessageCreateBuilder
                 } ?: Optional.Missing(),
                 components = Optional(components).coerceToMissing().mapList { it.build() },
                 flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications)
-            ),
-            files
-        )
+            )
+
+
     }
 
 }

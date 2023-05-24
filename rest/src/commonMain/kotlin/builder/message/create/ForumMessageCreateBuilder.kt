@@ -14,13 +14,12 @@ import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.ForumThreadMessageRequest
-import dev.kord.rest.json.request.MultipartForumThreadMessageCreateRequest
 import dev.kord.rest.request.MultiPartRequest
 import io.ktor.client.request.forms.*
 
 @KordDsl
 public class ForumMessageCreateBuilder : MessageCreateBuilder,
-    RequestBuilder<MultipartForumThreadMessageCreateRequest> {
+    RequestBuilder<ForumThreadMessageRequest> {
 
     override var content: String? = null
 
@@ -41,17 +40,14 @@ public class ForumMessageCreateBuilder : MessageCreateBuilder,
     override var suppressEmbeds: Boolean? = null
     override var suppressNotifications: Boolean? = null
 
-    override fun toRequest(): MultipartForumThreadMessageCreateRequest {
-        return MultipartForumThreadMessageCreateRequest(
-            ForumThreadMessageRequest(
+    override fun toRequest(): ForumThreadMessageRequest {
+        return ForumThreadMessageRequest(
                 content = Optional(content).coerceToMissing(),
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
                 stickerIds = _stickerIds,
                 flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
-            ),
-            files
-        )
+            )
     }
 }

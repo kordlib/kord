@@ -10,7 +10,6 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
-import dev.kord.rest.json.request.MultiPartWebhookExecuteRequest
 import dev.kord.rest.json.request.WebhookExecuteRequest
 
 /**
@@ -19,7 +18,7 @@ import dev.kord.rest.json.request.WebhookExecuteRequest
 @KordDsl
 public class WebhookMessageCreateBuilder :
     MessageCreateBuilder,
-    RequestBuilder<MultiPartWebhookExecuteRequest> {
+    RequestBuilder<WebhookExecuteRequest> {
 
     override var content: String? = null
 
@@ -47,9 +46,8 @@ public class WebhookMessageCreateBuilder :
     /** Name of the thread to create (requires the webhook channel to be a [GuildForum] channel). */
     public var threadName: String? by ::_threadName.delegate()
 
-    override fun toRequest(): MultiPartWebhookExecuteRequest {
-        return MultiPartWebhookExecuteRequest(
-            WebhookExecuteRequest(
+    override fun toRequest(): WebhookExecuteRequest {
+            return WebhookExecuteRequest(
                 content = Optional(content).coerceToMissing(),
                 username = Optional(username).coerceToMissing(),
                 avatar = Optional(avatarUrl).coerceToMissing(),
@@ -59,8 +57,7 @@ public class WebhookMessageCreateBuilder :
                 components = Optional(components).coerceToMissing().mapList { it.build() },
                 flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
                 threadName = _threadName,
-            ),
-            files
-        )
+            )
+
     }
 }

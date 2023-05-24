@@ -9,7 +9,8 @@ import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.json.request.FollowupMessageCreateRequest
-import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
+import dev.kord.rest.request.MultiPartRequest
+import io.ktor.client.request.forms.*
 
 /**
  * Message builder for creating messages following up interaction responses.
@@ -17,7 +18,7 @@ import dev.kord.rest.json.request.MultipartFollowupMessageCreateRequest
 @KordDsl
 public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
     MessageCreateBuilder,
-    RequestBuilder<MultipartFollowupMessageCreateRequest> {
+    RequestBuilder<FollowupMessageCreateRequest> {
 
     override var content: String? = null
 
@@ -36,18 +37,15 @@ public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
     override var suppressEmbeds: Boolean? = null
     override var suppressNotifications: Boolean? = null
 
-    override fun toRequest(): MultipartFollowupMessageCreateRequest {
-        return MultipartFollowupMessageCreateRequest(
-            FollowupMessageCreateRequest(
+    override fun toRequest(): FollowupMessageCreateRequest {
+        return FollowupMessageCreateRequest(
                 content = Optional(content).coerceToMissing(),
                 tts = Optional(tts).coerceToMissing().toPrimitive(),
                 embeds = Optional(embeds).mapList { it.toRequest() },
                 allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
                 components = Optional(components).coerceToMissing().mapList { it.build() },
                 flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications, ephemeral)
-            ),
-            files
-        )
+            )
     }
 
 }

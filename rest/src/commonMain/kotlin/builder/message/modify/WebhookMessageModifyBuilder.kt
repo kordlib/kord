@@ -12,13 +12,12 @@ import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.builder.message.create.buildMessageFlags
-import dev.kord.rest.json.request.MultipartWebhookEditMessageRequest
 import dev.kord.rest.json.request.WebhookEditMessageRequest
 
 @KordDsl
 public class WebhookMessageModifyBuilder :
     MessageModifyBuilder,
-    RequestBuilder<MultipartWebhookEditMessageRequest> {
+    RequestBuilder<WebhookEditMessageRequest> {
 
     private var state = MessageModifyStateHolder()
 
@@ -37,18 +36,16 @@ public class WebhookMessageModifyBuilder :
 
     override var components: MutableList<MessageComponentBuilder>? by state::components.delegate()
 
-    override fun toRequest(): MultipartWebhookEditMessageRequest {
-        return MultipartWebhookEditMessageRequest(
-            WebhookEditMessageRequest(
+    override fun toRequest(): WebhookEditMessageRequest {
+        return WebhookEditMessageRequest(
                 content = state.content,
                 embeds = state.embeds.mapList { it.toRequest() },
                 allowedMentions = state.allowedMentions.map { it.build() },
                 components = state.components.mapList { it.build() },
                 attachments = state.attachments,
                 flags = buildMessageFlags(flags, suppressEmbeds)
-            ),
-            files = state.files
-        )
+            )
+
     }
 
 }

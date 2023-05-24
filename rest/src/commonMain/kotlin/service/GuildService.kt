@@ -17,7 +17,6 @@ import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.*
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
-import dev.kord.rest.route.Route
 import dev.kord.rest.route.Routes
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -93,7 +92,7 @@ public class GuildService(public val client: HttpClient) {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
         }
         // TODO("Do we need this?")
-        client.patch(Routes.Guilds.ById.Channels) {
+        client.patch(Routes.Guilds.ById.Channels(guildId)) {
             val modifyBuilder = GuildChannelPositionModifyBuilder().apply(builder)
             setBody(modifyBuilder.toRequest())
         }
@@ -211,7 +210,7 @@ public class GuildService(public val client: HttpClient) {
     }
 
     public suspend fun deleteGuildBan(guildId: Snowflake, userId: Snowflake, reason: String? = null): Unit =
-        client.delete(Routes.Guilds.ById.Bans) {
+        client.delete(Routes.Guilds.ById.Bans.ById(guildId, userId)) {
             auditLogReason(reason)
         }.body()
 

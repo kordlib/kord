@@ -4,7 +4,6 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.MessageFlag.Ephemeral
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
-import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.*
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
@@ -12,9 +11,8 @@ import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
 import dev.kord.rest.builder.message.modify.FollowupMessageModifyBuilder
 import dev.kord.rest.builder.message.modify.InteractionResponseModifyBuilder
 import dev.kord.rest.json.request.*
-import dev.kord.rest.route.Route
+import dev.kord.rest.request.setBodyWithFiles
 import dev.kord.rest.route.Routes
-import dev.kord.rest.route.Routes.Applications.ById.Guilds.ById.Commands.ById.Permissions
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.resources.*
@@ -112,11 +110,11 @@ public class InteractionService(public val client: HttpClient) {
     public suspend fun createInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        request: MultipartInteractionResponseCreateRequest,
+        request: InteractionResponseCreateRequest,
+        files: List<NamedFile> = emptyList()
     ) {
         client.post(Routes.Interactions.ById.Token.Callback(interactionId, interactionToken)) {
-            setBody(request.request)
-            request.files.orEmpty().onEach { file(it) }
+            setBodyWithFiles(request, files)
         }
     }
 
@@ -246,11 +244,11 @@ public class InteractionService(public val client: HttpClient) {
     public suspend fun modifyInteractionResponse(
         applicationId: Snowflake,
         interactionToken: String,
-        multipartRequest: MultipartInteractionResponseModifyRequest,
+        request: InteractionResponseModifyRequest,
+        files: List<NamedFile> = emptyList()
     ): DiscordMessage =
         client.patch(Routes.Webhooks.ById.WithToken.Messages.Original(applicationId, interactionToken)) {
-        setBody(multipartRequest.request)
-        multipartRequest.files.orEmpty().forEach { file(it) }
+        setBodyWithFiles(request, files)
     }.body()
 
     public suspend fun modifyInteractionResponse(
@@ -268,10 +266,10 @@ public class InteractionService(public val client: HttpClient) {
     public suspend fun createFollowupMessage(
         applicationId: Snowflake,
         interactionToken: String,
-        multipart: MultipartFollowupMessageCreateRequest,
+        request: FollowupMessageCreateRequest,
+        files: List<NamedFile> = emptyList()
     ): DiscordMessage = client.post(Routes.Webhooks.ById.WithToken.Messages(applicationId, interactionToken)) {
-        setBody(multipart.request)
-        multipart.files.forEach { file(it) }
+        setBodyWithFiles(request, files)
     }.body()
 
     public suspend fun getFollowupMessage(
@@ -293,11 +291,11 @@ public class InteractionService(public val client: HttpClient) {
         applicationId: Snowflake,
         interactionToken: String,
         messageId: Snowflake,
-        request: MultipartFollowupMessageModifyRequest,
+        request: FollowupMessageModifyRequest,
+        files: List<NamedFile> = emptyList()
     ): DiscordMessage =
         client.patch(Routes.Webhooks.ById.WithToken.Messages.ById(applicationId, interactionToken, messageId)) {
-        setBody(request.request)
-        request.files.orEmpty().forEach { file(it) }
+            setBodyWithFiles(request, files)
     }.body()
 
     public suspend fun modifyFollowupMessage(
@@ -544,10 +542,12 @@ public class InteractionService(public val client: HttpClient) {
         builder: InteractionResponseCreateBuilder.() -> Unit,
     ) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val responseBuilder = InteractionResponseCreateBuilder(ephemeral).apply(builder)
         return createInteractionResponse(
             interactionId,
             interactionToken,
-            InteractionResponseCreateBuilder(ephemeral).apply(builder).toRequest()
+            responseBuilder.toRequest(),
+            responseBuilder.files
         )
     }
 
@@ -557,10 +557,12 @@ public class InteractionService(public val client: HttpClient) {
         builder: InteractionResponseModifyBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val modifyBuilder = InteractionResponseModifyBuilder().apply(builder)
         return modifyInteractionResponse(
             applicationId,
             interactionToken,
-            InteractionResponseModifyBuilder().apply(builder).toRequest()
+            modifyBuilder.toRequest(),
+            modifyBuilder.files.orEmpty()
         )
     }
 
@@ -571,10 +573,12 @@ public class InteractionService(public val client: HttpClient) {
         builder: FollowupMessageCreateBuilder.() -> Unit
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val responseModifyBuilder = FollowupMessageCreateBuilder(ephemeral).apply(builder)
         return createFollowupMessage(
             applicationId,
             interactionToken,
-            FollowupMessageCreateBuilder(ephemeral).apply(builder).toRequest()
+            responseModifyBuilder.toRequest(),
+            responseModifyBuilder.files
         )
     }
 
@@ -585,11 +589,13 @@ public class InteractionService(public val client: HttpClient) {
         builder: FollowupMessageModifyBuilder.() -> Unit = {}
     ): DiscordMessage {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val followupMessageModifyBuilder = FollowupMessageModifyBuilder().apply(builder)
         return modifyFollowupMessage(
             applicationId,
             interactionToken,
             messageId,
-            FollowupMessageModifyBuilder().apply(builder).toRequest()
+            followupMessageModifyBuilder.toRequest(),
+            followupMessageModifyBuilder.files.orEmpty()
         )
     }
 

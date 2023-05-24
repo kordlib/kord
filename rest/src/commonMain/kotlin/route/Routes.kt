@@ -361,7 +361,7 @@ public class Routes {
         @Resource("{interactionId}")
         public class ById(public val interactionId: Snowflake, public val parent: Interactions) {
             @Resource("{interactionToken}")
-            public class Token(public val interactionToken: String) {
+            public class Token(public val interactionToken: String, public val parent: Interactions.ById) {
                 @Resource("callback")
                 public class Callback(public val parent: Token)
             }

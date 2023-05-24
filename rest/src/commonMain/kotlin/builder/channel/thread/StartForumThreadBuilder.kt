@@ -7,9 +7,9 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.builder.message.create.ForumMessageCreateBuilder
-import dev.kord.rest.json.request.MultipartStartThreadRequest
 import dev.kord.rest.json.request.StartThreadRequest
 import dev.kord.rest.request.MultiPartRequest
+import io.ktor.client.request.forms.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.time.Duration
@@ -38,18 +38,15 @@ public class StartForumThreadBuilder(public var name: String) : AuditRequestBuil
         message.apply(builder)
     }
 
-    override fun toRequest(): MultipartStartThreadRequest {
+    override fun toRequest(): StartThreadRequest {
         val messageRequest = message.toRequest()
 
-        return MultipartStartThreadRequest(
-            StartThreadRequest(
+        return StartThreadRequest(
                 name = name,
                 autoArchiveDuration = _autoArchiveDuration,
                 rateLimitPerUser = _rateLimitPerUser,
-                message = Optional(messageRequest.request),
+                message = Optional(messageRequest),
                 appliedTags = _appliedTags
-            ),
-            messageRequest.
-        )
+            )
     }
 }

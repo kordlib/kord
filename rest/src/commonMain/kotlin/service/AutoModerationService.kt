@@ -11,7 +11,6 @@ import dev.kord.rest.json.request.AutoModerationRuleCreateRequest
 import dev.kord.rest.json.request.AutoModerationRuleModifyRequest
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Routes
-import dev.kord.rest.route.Route
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.resources.*
