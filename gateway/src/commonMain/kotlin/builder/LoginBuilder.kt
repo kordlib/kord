@@ -7,7 +7,7 @@ import dev.kord.gateway.Intents
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public data class Shards(val totalShards: Int, val indices: Iterable<Int> = 0 until totalShards)
+public data class Shards(val totalShards: Int, val indices: Iterable<Int> = 0..<totalShards)
 
 @KordDsl
 public class LoginBuilder {

@@ -55,6 +55,7 @@ public final class dev/kord/rest/Image$Size : java/lang/Enum {
 	public static final field Size4096 Ldev/kord/rest/Image$Size;
 	public static final field Size512 Ldev/kord/rest/Image$Size;
 	public static final field Size64 Ldev/kord/rest/Image$Size;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getMaxRes ()I
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/rest/Image$Size;
 	public static fun values ()[Ldev/kord/rest/Image$Size;
@@ -2641,6 +2642,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field WebhooksCanOnlyCreateThreadsInForumChannels Ldev/kord/rest/json/JsonErrorCode;
 	public static final field WrongChannelType Ldev/kord/rest/json/JsonErrorCode;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/rest/json/JsonErrorCode;
 	public static fun values ()[Ldev/kord/rest/json/JsonErrorCode;
 }

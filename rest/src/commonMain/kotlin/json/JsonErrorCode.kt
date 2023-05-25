@@ -625,9 +625,10 @@ public enum class JsonErrorCode(public val code: Int) {
     internal object Serializer : KSerializer<JsonErrorCode> {
         override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
 
+        private val entriesByCode = entries.associateBy { it.code }
         override fun deserialize(decoder: Decoder): JsonErrorCode {
             val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
+            return entriesByCode[code] ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, value: JsonErrorCode) {

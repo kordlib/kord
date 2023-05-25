@@ -6,11 +6,11 @@ plugins {
 kotlin {
     js {
         nodejs {
-            testTask {
+            testTask(Action {
                 useMocha {
                     timeout = "10000" // KordEventDropTest is too slow for default 2 seconds timeout
                 }
-            }
+            })
         }
     }
 

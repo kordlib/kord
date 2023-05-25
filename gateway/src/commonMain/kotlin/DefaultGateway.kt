@@ -200,7 +200,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         } ?: return
 
         defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
-        val discordReason = values().firstOrNull { it.code == reason.code.toInt() } ?: return
+        val discordReason = gatewayCloseCodeByCode[reason.code.toInt()] ?: return
 
         data.eventFlow.emit(Close.DiscordClose(discordReason, discordReason.retry))
 
@@ -285,6 +285,8 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
         private const val gatewayDetachedError =
             "The Gateway has been detached and can no longer be used, create a new instance instead."
+
+        private val gatewayCloseCodeByCode = GatewayCloseCode.entries.associateBy { it.code }
     }
 }
 

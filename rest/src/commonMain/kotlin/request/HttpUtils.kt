@@ -34,7 +34,7 @@ public fun HttpResponse.channelResetPoint(clock: Clock): Instant {
 }
 
 public val HttpResponse.isRateLimit: Boolean get() = status.value == 429
-public val HttpResponse.isError: Boolean get() = status.value in 400 until 600
+public val HttpResponse.isError: Boolean get() = status.value in 400..<600
 public val HttpResponse.isErrorWithRateLimit: Boolean get() = status.value == 403 || status.value == 401
 public val HttpResponse.isGlobalRateLimit: Boolean get() = headers[rateLimitGlobalHeader] != null
 public val HttpResponse.rateLimitTotal: Long? get() = headers[rateLimit]?.toLongOrNull()
