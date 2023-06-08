@@ -23,8 +23,8 @@ internal typealias CodeBlockBuilder = (@KotlinPoetDsl CodeBlock.Builder).() -> U
 
 internal inline fun <reified E : Enum<E>> E.asMemberName() = E::class.member(name)
 
-internal inline fun FileSpec(packageName: String, fileName: String, builder: FileSpecBuilder) =
-    FileSpec.builder(packageName, fileName).apply(builder).build()
+internal inline fun FileSpec(className: ClassName, builder: FileSpecBuilder) =
+    FileSpec.builder(className).apply(builder).build()
 
 
 // extensions for `FileSpec.Builder`

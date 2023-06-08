@@ -313,7 +313,7 @@ public final class dev/kord/gateway/DiscordAutoModerationActionExecution {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordAutoModerationActionExecution;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordAutoModerationActionExecution;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/DiscordAutoModerationActionExecution$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -365,7 +365,7 @@ public final class dev/kord/gateway/DiscordCreatedInvite {
 	public final fun getUses ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordCreatedInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordCreatedInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/DiscordCreatedInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -399,7 +399,7 @@ public final class dev/kord/gateway/DiscordDeletedInvite {
 	public final fun getGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordDeletedInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordDeletedInvite;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/DiscordDeletedInvite$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -435,7 +435,7 @@ public final class dev/kord/gateway/DiscordPresence {
 	public final fun getStatus ()Ldev/kord/common/entity/PresenceStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordPresence;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordPresence;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/DiscordPresence$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -470,7 +470,7 @@ public final class dev/kord/gateway/DiscordRemovedEmoji {
 	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordRemovedEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordRemovedEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/DiscordRemovedEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -501,7 +501,7 @@ public final class dev/kord/gateway/DiscordRemovedReactionEmoji {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordRemovedReactionEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordRemovedReactionEmoji;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/DiscordRemovedReactionEmoji$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -537,7 +537,7 @@ public final class dev/kord/gateway/DiscordThreadListSync {
 	public final fun getThreads ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordThreadListSync;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordThreadListSync;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/DiscordThreadListSync$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -575,7 +575,7 @@ public final class dev/kord/gateway/DiscordThreadMembersUpdate {
 	public final fun getRemovedMemberIds ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/DiscordThreadMembersUpdate;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/DiscordThreadMembersUpdate;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/DiscordThreadMembersUpdate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -858,7 +858,7 @@ public final class dev/kord/gateway/GuildMembersChunkData {
 	public final fun getPresences ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/GuildMembersChunkData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/GuildMembersChunkData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/GuildMembersChunkData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -982,7 +982,7 @@ public final class dev/kord/gateway/GuildScheduledEventUserMetadata {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/GuildScheduledEventUserMetadata;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/GuildScheduledEventUserMetadata;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/GuildScheduledEventUserMetadata$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1062,7 +1062,7 @@ public final class dev/kord/gateway/Hello : dev/kord/gateway/Event {
 	public final fun getHeartbeatInterval ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/Hello;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/Hello;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1104,7 +1104,7 @@ public final class dev/kord/gateway/Identify : dev/kord/gateway/Command {
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/Identify;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/Identify;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1137,7 +1137,7 @@ public final class dev/kord/gateway/IdentifyProperties {
 	public final fun getOs ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/IdentifyProperties;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/IdentifyProperties;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/IdentifyProperties$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1586,7 +1586,7 @@ public final class dev/kord/gateway/ReadyData {
 	public final fun getVersion ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/ReadyData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/ReadyData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/ReadyData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1630,7 +1630,7 @@ public final class dev/kord/gateway/RequestGuildMembers : dev/kord/gateway/Comma
 	public final fun getUserIds ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/RequestGuildMembers;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/RequestGuildMembers;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/RequestGuildMembers$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1650,12 +1650,7 @@ public final class dev/kord/gateway/RequestGuildMembers$Companion {
 
 public final class dev/kord/gateway/RequestGuildMembers$Nonce {
 	public static final field INSTANCE Ldev/kord/gateway/RequestGuildMembers$Nonce;
-	public static final field counter$dev$VolatileWrapper Ldev/kord/gateway/RequestGuildMembers$Nonce$Counter$dev$VolatileWrapper;
 	public final fun new ()Ljava/lang/String;
-}
-
-public final class dev/kord/gateway/RequestGuildMembers$Nonce$Counter$dev$VolatileWrapper {
-	public fun <init> ()V
 }
 
 public final class dev/kord/gateway/Resume : dev/kord/gateway/Command {
@@ -1673,7 +1668,7 @@ public final class dev/kord/gateway/Resume : dev/kord/gateway/Command {
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/Resume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/Resume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1702,7 +1697,7 @@ public final class dev/kord/gateway/Resumed : dev/kord/gateway/DispatchEvent {
 	public fun getSequence ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/Resumed;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/Resumed;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/Resumed$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1852,7 +1847,7 @@ public final class dev/kord/gateway/UpdateStatus : dev/kord/gateway/Command {
 	public final fun getStatus ()Ldev/kord/common/entity/PresenceStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/UpdateStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/UpdateStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/UpdateStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1887,7 +1882,7 @@ public final class dev/kord/gateway/UpdateVoiceStatus : dev/kord/gateway/Command
 	public final fun getSelfMute ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/gateway/UpdateVoiceStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/gateway/UpdateVoiceStatus;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/gateway/UpdateVoiceStatus$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

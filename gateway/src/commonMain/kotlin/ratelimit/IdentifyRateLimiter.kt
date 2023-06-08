@@ -9,11 +9,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.selects.onTimeout
 import kotlinx.coroutines.selects.select
 import mu.KotlinLogging
 import kotlin.jvm.JvmField
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.times
 
 /**
  * A rate limiter that follows [Discord's rate limits](https://discord.com/developers/docs/topics/gateway#rate-limiting)
@@ -236,7 +236,7 @@ private class IdentifyRateLimiterImpl(
         // -> for each rate_limit_key: delay after identify
         private val DELAY_AFTER_IDENTIFY = 5.seconds
 
-        private val RECEIVE_TIMEOUT = (2 * DELAY_AFTER_IDENTIFY).inWholeMilliseconds
+        private val RECEIVE_TIMEOUT = DELAY_AFTER_IDENTIFY * 2
         private val IDENTIFY_TIMEOUT = DELAY_AFTER_IDENTIFY / 2
 
         // states

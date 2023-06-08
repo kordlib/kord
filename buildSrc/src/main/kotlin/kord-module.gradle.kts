@@ -29,7 +29,7 @@ kotlin {
     jvmToolchain(Jvm.target)
 
     sourceSets {
-        // allow `ExperimentalCoroutinesApi` for `runTest {}`
+        // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
         test { languageSettings.optIn(OptIns.coroutines) }
     }
 }

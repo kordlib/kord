@@ -202,7 +202,7 @@ public class DefaultVoiceGateway(
         socket.send(Frame.Text(json))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(DelicateCoroutinesApi::class)
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
     override suspend fun detach() {

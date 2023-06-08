@@ -15,7 +15,7 @@ kotlin {
         }
         jsMain {
             dependencies {
-                implementation(libs.kotlinx.nodejs)
+                implementation(libs.kotlin.node)
                 implementation(npm("fast-zlib", libs.versions.fastZlib.get()))
             }
         }

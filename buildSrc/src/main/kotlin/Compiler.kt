@@ -26,13 +26,13 @@ object Jvm {
 }
 
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
-    // TODO: set to true again once https://github.com/Kotlin/kotlinx-atomicfu/issues/289 is fixed
-    allWarningsAsErrors = false
+    allWarningsAsErrors = true
     freeCompilerArgs.add("-progressive")
 }
 
 fun KotlinSourceSet.applyKordOptIns() {
     languageSettings {
+        // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
         if ("Test" in name) optIn(OptIns.coroutines)
         kordOptIns.forEach(::optIn)
     }

@@ -2261,7 +2261,7 @@ public final class dev/kord/core/cache/data/ActivityData {
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ActivityData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ActivityData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ActivityData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2318,7 +2318,7 @@ public final class dev/kord/core/cache/data/ApplicationCommandData {
 	public final fun getVersion ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ApplicationCommandData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2351,7 +2351,7 @@ public final class dev/kord/core/cache/data/ApplicationCommandGroupData {
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getSubCommands ()Ljava/util/List;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandGroupData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandGroupData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ApplicationCommandGroupData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2382,7 +2382,7 @@ public final class dev/kord/core/cache/data/ApplicationCommandOptionChoiceData {
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandOptionChoiceData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandOptionChoiceData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ApplicationCommandOptionChoiceData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2435,7 +2435,7 @@ public final class dev/kord/core/cache/data/ApplicationCommandOptionData {
 	public final fun getType ()Ldev/kord/common/entity/ApplicationCommandOptionType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandOptionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandOptionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ApplicationCommandOptionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2474,7 +2474,7 @@ public final class dev/kord/core/cache/data/ApplicationCommandParameterData {
 	public final fun getRequired ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandParameterData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandParameterData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ApplicationCommandParameterData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2510,7 +2510,7 @@ public final class dev/kord/core/cache/data/ApplicationCommandSubcommandData {
 	public fun hashCode ()I
 	public final fun isDefault ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandSubcommandData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ApplicationCommandSubcommandData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ApplicationCommandSubcommandData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2578,7 +2578,7 @@ public final class dev/kord/core/cache/data/ApplicationData : dev/kord/core/cach
 	public fun getVerifyKey ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ApplicationData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ApplicationData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ApplicationData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2630,7 +2630,7 @@ public final class dev/kord/core/cache/data/ApplicationInteractionData {
 	public final fun getValues ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ApplicationInteractionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ApplicationInteractionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ApplicationInteractionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2683,7 +2683,7 @@ public final class dev/kord/core/cache/data/AttachmentData {
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/AttachmentData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/AttachmentData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/AttachmentData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2716,7 +2716,7 @@ public final class dev/kord/core/cache/data/AutoModerationActionData {
 	public final fun getType ()Ldev/kord/common/entity/AutoModerationActionType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/AutoModerationActionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/AutoModerationActionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/AutoModerationActionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2752,7 +2752,7 @@ public final class dev/kord/core/cache/data/AutoModerationActionMetadataData {
 	public final fun getDurationSeconds ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/AutoModerationActionMetadataData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/AutoModerationActionMetadataData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/AutoModerationActionMetadataData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2802,7 +2802,7 @@ public final class dev/kord/core/cache/data/AutoModerationRuleData {
 	public final fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/AutoModerationRuleData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/AutoModerationRuleData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/AutoModerationRuleData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2843,7 +2843,7 @@ public final class dev/kord/core/cache/data/AutoModerationRuleTriggerMetadataDat
 	public final fun getRegexPatterns ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/AutoModerationRuleTriggerMetadataData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/AutoModerationRuleTriggerMetadataData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/AutoModerationRuleTriggerMetadataData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2878,7 +2878,7 @@ public final class dev/kord/core/cache/data/BanData {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/BanData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/BanData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/BanData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3011,7 +3011,7 @@ public final class dev/kord/core/cache/data/ChannelData {
 	public final fun getVideoQualityMode ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ChannelData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ChannelData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ChannelData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3079,7 +3079,7 @@ public final class dev/kord/core/cache/data/ChatComponentData : dev/kord/core/ca
 	public fun getValue ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ChatComponentData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ChatComponentData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ChatComponentData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3114,7 +3114,7 @@ public final class dev/kord/core/cache/data/ClientStatusData {
 	public final fun getWeb ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ClientStatusData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ClientStatusData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ClientStatusData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3152,7 +3152,7 @@ public abstract class dev/kord/core/cache/data/ComponentData {
 	public abstract fun getType ()Ldev/kord/common/entity/ComponentType;
 	public abstract fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public abstract fun getValue ()Ldev/kord/common/entity/optional/Optional;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ComponentData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ComponentData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ComponentData$Companion {
@@ -3179,7 +3179,7 @@ public final class dev/kord/core/cache/data/EmbedAuthorData {
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmbedAuthorData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmbedAuthorData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmbedAuthorData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3235,7 +3235,7 @@ public final class dev/kord/core/cache/data/EmbedData {
 	public final fun getVideo ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmbedData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmbedData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmbedData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3270,7 +3270,7 @@ public final class dev/kord/core/cache/data/EmbedFieldData {
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmbedFieldData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmbedFieldData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmbedFieldData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3305,7 +3305,7 @@ public final class dev/kord/core/cache/data/EmbedFooterData {
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmbedFooterData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmbedFooterData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmbedFooterData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3343,7 +3343,7 @@ public final class dev/kord/core/cache/data/EmbedImageData {
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmbedImageData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmbedImageData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmbedImageData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3377,7 +3377,7 @@ public final class dev/kord/core/cache/data/EmbedProviderData {
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmbedProviderData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmbedProviderData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmbedProviderData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3415,7 +3415,7 @@ public final class dev/kord/core/cache/data/EmbedThumbnailData {
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmbedThumbnailData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmbedThumbnailData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmbedThumbnailData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3451,7 +3451,7 @@ public final class dev/kord/core/cache/data/EmbedVideoData {
 	public final fun getWidth ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmbedVideoData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmbedVideoData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmbedVideoData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3498,7 +3498,7 @@ public final class dev/kord/core/cache/data/EmojiData {
 	public final fun getUserId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/EmojiData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/EmojiData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/EmojiData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3671,7 +3671,7 @@ public final class dev/kord/core/cache/data/GuildData {
 	public final fun getWidgetEnabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/GuildData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/GuildData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/GuildData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3711,7 +3711,7 @@ public final class dev/kord/core/cache/data/GuildPreviewData {
 	public final fun getName ()Ljava/lang/String;
 	public final fun getSplash ()Ljava/lang/String;
 	public final fun getStickers ()Ljava/util/List;
-	public static final fun write$Self (Ldev/kord/core/cache/data/GuildPreviewData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/GuildPreviewData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/GuildPreviewData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3772,7 +3772,7 @@ public final class dev/kord/core/cache/data/GuildScheduledEventData {
 	public final fun getUserCount ()Ldev/kord/common/entity/optional/OptionalInt;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/GuildScheduledEventData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/GuildScheduledEventData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/GuildScheduledEventData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3804,7 +3804,7 @@ public final class dev/kord/core/cache/data/GuildWidgetData {
 	public final fun getEnabled ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/GuildWidgetData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/GuildWidgetData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/GuildWidgetData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3865,7 +3865,7 @@ public final class dev/kord/core/cache/data/IntegrationData {
 	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/IntegrationData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/IntegrationData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/IntegrationData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3897,7 +3897,7 @@ public final class dev/kord/core/cache/data/IntegrationsAccountData {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/IntegrationsAccountData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/IntegrationsAccountData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/IntegrationsAccountData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -3956,7 +3956,7 @@ public final class dev/kord/core/cache/data/InteractionData {
 	public final fun getVersion ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/InteractionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/InteractionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/InteractionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4009,7 +4009,7 @@ public final class dev/kord/core/cache/data/InviteCreateData {
 	public final fun getUses ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/InviteCreateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/InviteCreateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/InviteCreateData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4060,7 +4060,7 @@ public final class dev/kord/core/cache/data/InviteData : dev/kord/core/cache/dat
 	public fun getTargetUserId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/InviteData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/InviteData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/InviteData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4095,7 +4095,7 @@ public final class dev/kord/core/cache/data/InviteDeleteData {
 	public final fun getGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/InviteDeleteData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/InviteDeleteData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/InviteDeleteData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4156,7 +4156,7 @@ public final class dev/kord/core/cache/data/InviteWithMetadataData : dev/kord/co
 	public final fun getUses ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/InviteWithMetadataData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/InviteWithMetadataData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/InviteWithMetadataData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4203,7 +4203,7 @@ public final class dev/kord/core/cache/data/MemberData {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/MemberData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/MemberData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/MemberData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4257,7 +4257,7 @@ public final class dev/kord/core/cache/data/MembersChunkData {
 	public final fun getUsers ()Ljava/util/Set;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/MembersChunkData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/MembersChunkData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/MembersChunkData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4348,7 +4348,7 @@ public final class dev/kord/core/cache/data/MessageData {
 	public final fun plus (Ldev/kord/common/entity/DiscordPartialMessage;)Ldev/kord/core/cache/data/MessageData;
 	public final fun plus (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MessageReactionAddData;)Ldev/kord/core/cache/data/MessageData;
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/MessageData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/MessageData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/MessageData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4389,7 +4389,7 @@ public final class dev/kord/core/cache/data/MessageInteractionData {
 	public final fun getUser ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/MessageInteractionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/MessageInteractionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/MessageInteractionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4425,7 +4425,7 @@ public final class dev/kord/core/cache/data/MessageReferenceData {
 	public final fun getId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/MessageReferenceData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/MessageReferenceData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/MessageReferenceData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4473,7 +4473,7 @@ public final class dev/kord/core/cache/data/OptionData {
 	public final fun getValues ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/OptionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/OptionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/OptionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4536,7 +4536,7 @@ public final class dev/kord/core/cache/data/PartialApplicationData : dev/kord/co
 	public fun getVerifyKey ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/PartialApplicationData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/PartialApplicationData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/PartialApplicationData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4577,7 +4577,7 @@ public final class dev/kord/core/cache/data/PartialGuildData {
 	public final fun getVanityUrlCode ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getVerificationLevel ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getWelcomeScreen ()Ldev/kord/common/entity/optional/Optional;
-	public static final fun write$Self (Ldev/kord/core/cache/data/PartialGuildData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/PartialGuildData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/PartialGuildData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4613,7 +4613,7 @@ public final class dev/kord/core/cache/data/PermissionOverwriteData {
 	public final fun getType ()Ldev/kord/common/entity/OverwriteType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/PermissionOverwriteData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/PermissionOverwriteData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/PermissionOverwriteData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4651,7 +4651,7 @@ public final class dev/kord/core/cache/data/PresenceData {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/PresenceData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/PresenceData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/PresenceData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4695,7 +4695,7 @@ public final class dev/kord/core/cache/data/ReactionData {
 	public final fun getMe ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ReactionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ReactionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ReactionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4732,7 +4732,7 @@ public final class dev/kord/core/cache/data/ReactionRemoveEmojiData {
 	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ReactionRemoveEmojiData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ReactionRemoveEmojiData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ReactionRemoveEmojiData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4773,7 +4773,7 @@ public final class dev/kord/core/cache/data/RegionData {
 	public final fun getOptimal ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/RegionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/RegionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/RegionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4806,7 +4806,7 @@ public final class dev/kord/core/cache/data/RemovedReactionData {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/RemovedReactionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/RemovedReactionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/RemovedReactionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4848,7 +4848,7 @@ public final class dev/kord/core/cache/data/ResolvedObjectsData {
 	public final fun getUsers ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ResolvedObjectsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ResolvedObjectsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ResolvedObjectsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4901,7 +4901,7 @@ public final class dev/kord/core/cache/data/RoleData {
 	public final fun getUnicodeEmoji ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/RoleData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/RoleData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/RoleData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4948,7 +4948,7 @@ public final class dev/kord/core/cache/data/RoleTagsData {
 	public final fun getSubscriptionListingId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/RoleTagsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/RoleTagsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/RoleTagsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -4987,7 +4987,7 @@ public final class dev/kord/core/cache/data/SelectOptionData {
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/SelectOptionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/SelectOptionData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/SelectOptionData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5027,7 +5027,7 @@ public final class dev/kord/core/cache/data/StageInstanceData {
 	public final fun getTopic ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/StageInstanceData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/StageInstanceData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/StageInstanceData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5080,7 +5080,7 @@ public final class dev/kord/core/cache/data/StickerData {
 	public final fun getUser ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/StickerData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/StickerData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/StickerData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5115,7 +5115,7 @@ public final class dev/kord/core/cache/data/StickerItemData {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/StickerItemData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/StickerItemData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/StickerItemData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5182,7 +5182,7 @@ public final class dev/kord/core/cache/data/TeamData {
 	public final fun getOwnerUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/TeamData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/TeamData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/TeamData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5209,7 +5209,7 @@ public final class dev/kord/core/cache/data/TeamMemberData {
 	public final fun getPermissions ()Ljava/util/List;
 	public final fun getTeamId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
-	public static final fun write$Self (Ldev/kord/core/cache/data/TeamMemberData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/TeamMemberData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/TeamMemberData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5259,7 +5259,7 @@ public final class dev/kord/core/cache/data/TemplateData {
 	public fun hashCode ()I
 	public final fun isDirty ()Ljava/lang/Boolean;
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/TemplateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/TemplateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/TemplateData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5326,7 +5326,7 @@ public final class dev/kord/core/cache/data/TextInputComponentData : dev/kord/co
 	public fun getValue ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/TextInputComponentData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/TextInputComponentData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/TextInputComponentData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5376,7 +5376,7 @@ public final class dev/kord/core/cache/data/ThreadMemberData {
 	public final fun getUserId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ThreadMemberData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ThreadMemberData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ThreadMemberData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5438,7 +5438,7 @@ public final class dev/kord/core/cache/data/ThreadMetadataData {
 	public final fun getLocked ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/ThreadMetadataData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/ThreadMetadataData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/ThreadMetadataData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5485,7 +5485,7 @@ public final class dev/kord/core/cache/data/UserData {
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/UserData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/UserData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/UserData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5546,7 +5546,7 @@ public final class dev/kord/core/cache/data/VoiceStateData {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/VoiceStateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/VoiceStateData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/VoiceStateData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5598,7 +5598,7 @@ public final class dev/kord/core/cache/data/WebhookData {
 	public final fun getUserId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/WebhookData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/WebhookData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/WebhookData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5635,7 +5635,7 @@ public final class dev/kord/core/cache/data/WelcomeScreenChannelData {
 	public final fun getEmojiName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/WelcomeScreenChannelData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/WelcomeScreenChannelData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/WelcomeScreenChannelData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -5667,7 +5667,7 @@ public final class dev/kord/core/cache/data/WelcomeScreenData {
 	public final fun getWelcomeChannels ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/cache/data/WelcomeScreenData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/WelcomeScreenData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/cache/data/WelcomeScreenData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -10875,7 +10875,7 @@ public final class dev/kord/core/event/automoderation/data/AutoModerationActionE
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/event/automoderation/data/AutoModerationActionExecutionEventData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/event/automoderation/data/AutoModerationActionExecutionEventData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/event/automoderation/data/AutoModerationActionExecutionEventData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -11265,7 +11265,7 @@ public final class dev/kord/core/event/channel/data/ChannelPinsUpdateEventData {
 	public final fun getLastPinTimestamp ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/event/channel/data/ChannelPinsUpdateEventData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/event/channel/data/ChannelPinsUpdateEventData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/event/channel/data/ChannelPinsUpdateEventData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -11304,7 +11304,7 @@ public final class dev/kord/core/event/channel/data/TypingStartEventData {
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/core/event/channel/data/TypingStartEventData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/core/event/channel/data/TypingStartEventData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/core/event/channel/data/TypingStartEventData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
