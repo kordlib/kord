@@ -97,7 +97,13 @@ public open class User(
      * The complete user tag.
      */
     @Suppress("DEPRECATION")
-    public val tag: String get() = if (migratedToNewUsernameSystem) "@$username" else "$username#$discriminator"
+    @Deprecated(
+        "Discord's username system is changing and discriminators are being removed, see " +
+            "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
+        ReplaceWith("this.username"),
+        level = WARNING,
+    )
+    public val tag: String get() = if (migratedToNewUsernameSystem) username else "$username#$discriminator"
 
     /**
      * Whether this user is a bot account.
