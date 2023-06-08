@@ -139,7 +139,7 @@ public open class User(
         val defaultUrl: String
             get() = "https://cdn.discordapp.com/embed/avatars/${
                 when (@Suppress("DEPRECATION") val discriminator = data.discriminator.value) {
-                    null, "0" -> (data.id.value shr 22) % 5u
+                    null, "0" -> (data.id.value shr 22) % 6u
                     else -> discriminator.toInt() % 5
                 }
             }.png"
