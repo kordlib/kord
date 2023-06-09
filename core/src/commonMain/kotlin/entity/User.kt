@@ -13,9 +13,22 @@ import dev.kord.rest.Image
 import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.WARNING
 
-// TODO replace with member in the User class when Member.displayName is removed
-/** The user's effective name, prioritizing [globalName][User.globalName] over [username][User.username]. */
-public val User.displayName: String get() = globalName ?: username
+/**
+ * The user's effective name, prioritizing [globalName][User.globalName] over [username][User.username].
+ *
+ * #### API note:
+ *
+ * This is implemented as an extension property to avoid virtual dispatch in cases like the following:
+ * ```kotlin
+ * fun useUser(user: User) = println(user.effectiveName)
+ * fun useMember(member: Member) = println(member.effectiveName)
+ *
+ * val member: Member = TODO()
+ * useUser(member) // prints the global display name
+ * useMember(member) // prints the guild-specific nickname
+ * ```
+ */
+public val User.effectiveName: String get() = globalName ?: username
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).

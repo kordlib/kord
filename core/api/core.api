@@ -7248,7 +7248,7 @@ public final class dev/kord/core/entity/User$Avatar : dev/kord/core/KordObject {
 }
 
 public final class dev/kord/core/entity/UserKt {
-	public static final fun getDisplayName (Ldev/kord/core/entity/User;)Ljava/lang/String;
+	public static final fun getEffectiveName (Ldev/kord/core/entity/User;)Ljava/lang/String;
 }
 
 public final class dev/kord/core/entity/VoiceState : dev/kord/core/KordObject, dev/kord/core/entity/Strategizable {
