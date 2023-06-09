@@ -53,11 +53,11 @@ public open class User(
     /** The avatar of this user as an [Asset]. */
     public val avatar: Asset? get() = avatarHash?.let { Asset.userAvatar(data.id, it, kord) }
 
-    @Suppress("DEPRECATION_ERROR")
+    @Suppress("DEPRECATION", "DEPRECATION_ERROR")
     @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
     public fun getDefaultAvatar(): Icon =
         if (migratedToNewUsernameSystem) Icon.DefaultUserAvatar(userId = id, kord)
-        else @Suppress("DEPRECATION") Icon.DefaultUserAvatar(discriminator.toInt(), kord)
+        else Icon.DefaultUserAvatar(discriminator.toInt(), kord)
 
     public val defaultAvatar: Asset
         get() =
@@ -73,12 +73,12 @@ public open class User(
      * The 4-digit code at the end of the user's discord tag.
      *
      * `"0"` indicates that this user has been migrated to the new username system, see the
-     * [Discord Developer Documentation](https://discord.com/developers/docs/change-log#unique-usernames-on-discord) for
+     * [Discord Developer Platform](https://discord.com/developers/docs/change-log#unique-usernames-on-discord) for
      * details.
      */
     // "0" when data.discriminator is missing: if the field is missing, all users were migrated,
     // see https://discord.com/developers/docs/change-log#identifying-migrated-users:
-    // "After migration of all users is complete, the discriminator field may be removed."
+    // "After migration of all users is complete, the `discriminator` field may be removed."
     @Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
     @Deprecated(
         "Discord's username system is changing and discriminators are being removed, see " +

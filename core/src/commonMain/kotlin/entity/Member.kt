@@ -33,7 +33,8 @@ public class Member(
      * The name as shown in the discord client, prioritizing [nickname] over [globalName] and [username].
      */
     @Deprecated(
-        "This was renamed to 'effectiveName' to avoid confusion with 'User.globalName'.",
+        "This was renamed to 'effectiveName' to avoid confusion with 'User.globalName' which is also called display " +
+            "name.",
         ReplaceWith("this.effectiveName"),
         DeprecationLevel.WARNING,
     )
