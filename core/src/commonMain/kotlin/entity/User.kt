@@ -13,6 +13,10 @@ import dev.kord.rest.Image
 import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.WARNING
 
+// TODO replace with member in the User class when Member.displayName is removed
+/** The user's effective name, prioritizing [globalName][User.globalName] over [username][User.username]. */
+public val User.displayName: String get() = globalName ?: username
+
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
  */
@@ -76,9 +80,6 @@ public open class User(
 
     /** The user's display name, if it is set. For bots, this is the application name. */
     public val globalName: String? get() = data.globalName.value
-
-    /** The name as shown in the discord client, prioritizing [globalName] over [username]. */
-    public open val displayName: String get() = globalName ?: username
 
     override suspend fun asUser(): User {
         return this

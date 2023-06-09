@@ -6597,7 +6597,8 @@ public final class dev/kord/core/entity/Member : dev/kord/core/entity/User, dev/
 	public fun fetchMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getCommunicationDisabledUntil ()Lkotlinx/datetime/Instant;
-	public fun getDisplayName ()Ljava/lang/String;
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getEffectiveName ()Ljava/lang/String;
 	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
 	public fun getGuild (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getGuildId ()Ldev/kord/common/entity/Snowflake;
@@ -7202,7 +7203,6 @@ public class dev/kord/core/entity/User : dev/kord/core/behavior/UserBehavior {
 	public final fun getDefaultAvatar ()Ldev/kord/core/entity/Asset;
 	public final synthetic fun getDefaultAvatar ()Ldev/kord/core/entity/Icon;
 	public final fun getDiscriminator ()Ljava/lang/String;
-	public fun getDisplayName ()Ljava/lang/String;
 	public fun getDmChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getDmChannelOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getGlobalName ()Ljava/lang/String;
@@ -7245,6 +7245,10 @@ public final class dev/kord/core/entity/User$Avatar : dev/kord/core/KordObject {
 	public final fun isAnimated ()Z
 	public final fun isCustom ()Z
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/core/entity/UserKt {
+	public static final fun getDisplayName (Ldev/kord/core/entity/User;)Ljava/lang/String;
 }
 
 public final class dev/kord/core/entity/VoiceState : dev/kord/core/KordObject, dev/kord/core/entity/Strategizable {

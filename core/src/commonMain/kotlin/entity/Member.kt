@@ -32,7 +32,17 @@ public class Member(
     /**
      * The name as shown in the discord client, prioritizing [nickname] over [globalName] and [username].
      */
-    override val displayName: String get() = nickname ?: super.displayName
+    @Deprecated(
+        "This was renamed to 'effectiveName' to avoid confusion with 'User.displayName'.",
+        ReplaceWith("this.effectiveName"),
+        DeprecationLevel.WARNING,
+    )
+    public val displayName: String get() = effectiveName
+
+    /**
+     * The member's effective name, prioritizing [nickname] over [globalName] and [username].
+     */
+    public val effectiveName: String get() = nickname ?: (this as User).displayName
 
     /**
      * The members guild avatar as [Icon] object
