@@ -53,7 +53,7 @@
   <div class="breadcrumbs"><a href="../../index.html">kord-core</a><span class="delimiter">/</span><a href="../index.html">dev.kord.core.entity</a><span class="delimiter">/</span><span class="current">Member</span></div>
   <div class="cover ">
     <h1 class="cover"><span><span>Member</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">Member</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>memberData<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-member-data/index.html">MemberData</a><span class="token punctuation">, </span></span><span class="parameter ">userData<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-user-data/index.html">UserData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="../-user/index.html">User</a>, <a href="../../dev.kord.core.behavior/-member-behavior/index.html">MemberBehavior</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/eaf0b35784aca7651c4e08fe92b4a6e67bbeb6cc/core/src/commonMain/kotlin/entity/Member.kt#L22">source</a>)</span></span></div><p class="paragraph">An instance of a <a href="https://discord.com/developers/docs/resources/guild#guild-member-object">Discord Member</a>.</p></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">Member</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>memberData<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-member-data/index.html">MemberData</a><span class="token punctuation">, </span></span><span class="parameter ">userData<span class="token operator">: </span><a href="../../dev.kord.core.cache.data/-user-data/index.html">UserData</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>kord<span class="token operator">: </span><a href="../../dev.kord.core/-kord/index.html">Kord</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>supplier<span class="token operator">: </span><a href="../../dev.kord.core.supplier/-entity-supplier/index.html">EntitySupplier</a><span class="token operator"> = </span>kord.defaultSupplier</span></span><span class="token punctuation">)</span> : <a href="../-user/index.html">User</a>, <a href="../../dev.kord.core.behavior/-member-behavior/index.html">MemberBehavior</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/fc10ea4f4c7761854fd3891dcca898aa2a36accc/core/src/commonMain/kotlin/entity/Member.kt#L22">source</a>)</span></span></div><p class="paragraph">An instance of a <a href="https://discord.com/developers/docs/resources/guild#guild-member-object">Discord Member</a>.</p></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,FUNCTION,PROPERTY,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
@@ -663,7 +663,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../-user/discriminator.html">discriminator</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The 4-digit code at the end of the user's discord tag.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../-user/discriminator.html"><strike>discriminator</strike></a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The 4-digit code at the end of the user's discord tag.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -678,7 +678,52 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="display-name.html">displayName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name as shown in the discord client, prioritizing the <a href="nickname.html">nickname</a> over the <a href="../../../core/dev.kord.core.entity/-member/username.html">username</a>.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="display-name.html"><strike>displayName</strike></a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The name as shown in the discord client, prioritizing <a href="nickname.html">nickname</a> over <a href="../../../core/dev.kord.core.entity/-member/global-name.html">globalName</a> and <a href="../../../core/dev.kord.core.entity/-member/username.html">username</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1009883772%2FProperties%2F-2011752812" anchor-label="effectiveName" id="-1009883772%2FProperties%2F-2011752812" data-filterable-set=":core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":core:dokkaHtmlPartial/commonMain" data-filterable-set=":core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="effective-name.html"><span>effective</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1009883772%2FProperties%2F-2011752812"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="effective-name.html">effectiveName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The member's effective name, prioritizing <a href="nickname.html">nickname</a> over <a href="../../../core/dev.kord.core.entity/-member/global-name.html">globalName</a> and <a href="../../../core/dev.kord.core.entity/-member/username.html">username</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1751928028%2FProperties%2F-2011752812" anchor-label="effectiveName" id="-1751928028%2FProperties%2F-2011752812" data-filterable-set=":core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-togglable="EXTENSION_PROPERTY" data-filterable-current=":core:dokkaHtmlPartial/commonMain" data-filterable-set=":core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../effective-name.html"><span>effective</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1751928028%2FProperties%2F-2011752812"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../-user/index.html">User</a><span class="token punctuation">.</span><a href="../effective-name.html">effectiveName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The user's effective name, prioritizing <a href="../-user/global-name.html">globalName</a> over <a href="../-user/username.html">username</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1437277529%2FProperties%2F-2011752812" anchor-label="globalName" id="-1437277529%2FProperties%2F-2011752812" data-filterable-set=":core:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":core:dokkaHtmlPartial/commonMain" data-filterable-set=":core:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../-user/global-name.html"><span>global</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1437277529%2FProperties%2F-2011752812"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../-user/global-name.html">globalName</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">The user's display name, if it is set. For bots, this is the application name.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -963,7 +1008,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../-user/tag.html">tag</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The complete user tag.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":core:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../-user/tag.html"><strike>tag</strike></a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">The complete user tag.</p></div></div></div>
                 </div>
               </div>
             </div>
