@@ -25,7 +25,9 @@ class ChannelTest {
             recipients.value!!.size shouldBe 1
             with(recipients.value!!.first()) {
                 username shouldBe "test"
+                @Suppress("DEPRECATION")
                 discriminator shouldBe "9999"
+                globalName shouldBe null
                 id.toString() shouldBe "82198898841029460"
                 avatar shouldBe "33ecab261d4681afa4d85a04691c4a01"
             }
@@ -62,13 +64,17 @@ class ChannelTest {
             recipients.value!!.size shouldBe 2
             with(recipients.value!!.first()) {
                 username shouldBe "test"
+                @Suppress("DEPRECATION")
                 discriminator shouldBe "9999"
+                globalName shouldBe null
                 id.toString() shouldBe "82198898841029460"
                 avatar shouldBe "33ecab261d4681afa4d85a04691c4a01"
             }
             with(recipients.value!![1]) {
                 username shouldBe "test2"
+                @Suppress("DEPRECATION")
                 discriminator shouldBe "9999"
+                globalName shouldBe "amazing name"
                 id.toString() shouldBe "82198810841029460"
                 avatar shouldBe "33ecab261d4681afa4d85a10691c4a01"
             }
