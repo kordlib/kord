@@ -136,6 +136,10 @@
                 "Creating a private thread no longer requires the server to be boosted.", level = HIDDEN,
             ),
         ),
+        Entry(
+            "RaidAlertsDisabled", stringValue = "RAID_ALERTS_DISABLED",
+            kDoc = "Guild has disabled alerts for join raids in the configured safety alerts channel.",
+        ),
         Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
         Entry("RoleSubscriptionsAvailableForPurchase", stringValue = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
             kDoc = "Guild has role subscriptions that can be purchased."
@@ -306,7 +310,9 @@ public data class DiscordGuild(
     @SerialName("guild_scheduled_events")
     val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
     @SerialName("premium_progress_bar_enabled")
-    val premiumProgressBarEnabled: Boolean
+    val premiumProgressBarEnabled: Boolean,
+    @SerialName("safety_alerts_channel_id")
+    val safetyAlertsChannelId: Snowflake?,
 )
 
 /**

@@ -163,6 +163,11 @@ public sealed class GuildFeature(
     public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
     /**
+     * Guild has disabled alerts for join raids in the configured safety alerts channel.
+     */
+    public object RaidAlertsDisabled : GuildFeature("RAID_ALERTS_DISABLED")
+
+    /**
      * Guild is able to set role icons.
      */
     public object RoleIcons : GuildFeature("ROLE_ICONS")
@@ -233,6 +238,7 @@ public sealed class GuildFeature(
             "PARTNERED" -> Partnered
             "PREVIEW_ENABLED" -> PreviewEnabled
             "PRIVATE_THREADS" -> @Suppress("DEPRECATION_ERROR") PrivateThreads
+            "RAID_ALERTS_DISABLED" -> RaidAlertsDisabled
             "ROLE_ICONS" -> RoleIcons
             "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE" -> RoleSubscriptionsAvailableForPurchase
             "ROLE_SUBSCRIPTIONS_ENABLED" -> RoleSubscriptionsEnabled
@@ -271,6 +277,7 @@ public sealed class GuildFeature(
                 Partnered,
                 PreviewEnabled,
                 @Suppress("DEPRECATION_ERROR") PrivateThreads,
+                RaidAlertsDisabled,
                 RoleIcons,
                 RoleSubscriptionsAvailableForPurchase,
                 RoleSubscriptionsEnabled,

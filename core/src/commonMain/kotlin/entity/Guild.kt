@@ -337,6 +337,15 @@ public class Guild(
 
     public val premiumProgressBarEnabled: Boolean get() = data.premiumProgressBarEnabled
 
+    /** The id of the channel where admins and moderators of Community guilds receive safety alerts from Discord. */
+    public val safetyAlertsChannelId: Snowflake? get() = data.safetyAlertsChannelId
+
+    /**
+     * The behavior of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
+     */
+    public val safetyAlertsChannel: TextChannelBehavior?
+        get() = safetyAlertsChannelId?.let { TextChannelBehavior(guildId = id, id = it, kord) }
+
     public val stageInstances: Set<StageInstance>
         get() = data.stageInstances.orEmpty().map { StageInstance(it, kord) }.toSet()
 
