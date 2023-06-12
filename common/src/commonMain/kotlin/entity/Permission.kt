@@ -295,6 +295,9 @@ public sealed class Permission(public val code: DiscordBitSet) {
     /** Allows for using soundboard in a voice channel. */
     public object UseSoundboard : Permission(1L shl 42)
 
+    /** Allows the usage of custom soundboard sounds from other servers. */
+    public object UseExternalSounds : Permission(1L shl 45)
+
     /**
      * Allows sending voice messages.
      */
@@ -354,6 +357,7 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 ModerateMembers,
                 ViewCreatorMonetizationAnalytics,
                 UseSoundboard,
+                UseExternalSounds,
                 SendVoiceMessages
             )
     }
