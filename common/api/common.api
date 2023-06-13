@@ -7639,6 +7639,10 @@ public final class dev/kord/common/entity/Permission$UseExternalEmojis : dev/kor
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$UseExternalEmojis;
 }
 
+public final class dev/kord/common/entity/Permission$UseExternalSounds : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$UseExternalSounds;
+}
+
 public final class dev/kord/common/entity/Permission$UseExternalStickers : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$UseExternalStickers;
 }
