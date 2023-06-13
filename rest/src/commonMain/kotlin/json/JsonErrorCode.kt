@@ -497,6 +497,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** The request body contains invalid JSON. */
     InvalidJsonInRequestBody(50109),
 
+    /** Owner cannot be pending member. */
+    OwnerCannotBePendingMember(50131),
+
     /** Ownership cannot be transferred to a bot user. */
     OwnershipCannotBeTransferredToBot(50132),
 
@@ -529,6 +532,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** You cannot send voice messages in this channel. */
     CannotSendVoiceMessagesInThisChannel(50173),
+
+    /** The user account must first be verified. */
+    UserAccountMustBeVerified(50178),
 
     /** You do not have permission to send this sticker. */
     StickerPermissionLack(50600),

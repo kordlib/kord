@@ -2520,6 +2520,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field OAuth2HasNoBot Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OnlyOwner Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OperationOnArchivedThread Ldev/kord/rest/json/JsonErrorCode;
+	public static final field OwnerCannotBePendingMember Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OwnershipCannotBeTransferredToBot Ldev/kord/rest/json/JsonErrorCode;
 	public static final field PermissionLack Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ProvidedMessageCountInsufficient Ldev/kord/rest/json/JsonErrorCode;
@@ -2590,6 +2591,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field UnknownVoiceState Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownWebhook Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UnknownWebhookService Ldev/kord/rest/json/JsonErrorCode;
+	public static final field UserAccountMustBeVerified Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UserBannedFromGuild Ldev/kord/rest/json/JsonErrorCode;
 	public static final field UserNotInVoice Ldev/kord/rest/json/JsonErrorCode;
 	public static final field VerifyAccount Ldev/kord/rest/json/JsonErrorCode;
