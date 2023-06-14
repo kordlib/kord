@@ -57,11 +57,17 @@ public class KtorRequestHandler(
             }
             response.isError -> {
                 logger.debug { response.logString(body) }
-                if (response.contentType() == ContentType.Application.Json)
-                    throw KtorRequestException(
-                        response, request, DiscordErrorResponse.serializer().optional.deserialize(parser, body)
-                    )
-                else throw KtorRequestException(response, request, null)
+                val discordError =
+                    if (response.contentType() == ContentType.Application.Json)
+                        DiscordErrorResponse.serializer().optional.deserialize(parser, body)
+                    else null
+                throw when(response.status){
+                    HttpStatusCode.BadRequest -> BadRequestKtorRequestException(response, request, discordError)
+                    HttpStatusCode.Forbidden -> ForbiddenKtorRequestException(response, request, discordError)
+                    HttpStatusCode.NotFound -> NotFoundKtorRequestException(response, request, discordError)
+                    HttpStatusCode.InternalServerError -> ServerErrorKtorRequestException(response, request, discordError)
+                    else -> KtorRequestException(response, request, discordError)
+                }
             }
             else -> {
                 logger.debug { response.logString(body) }

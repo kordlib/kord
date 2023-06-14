@@ -3,7 +3,7 @@ package dev.kord.rest.request
 import dev.kord.common.exception.RequestException
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.service.RestService
-import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.HttpResponse as KtorResponse
 
 private fun formatRestRequestExceptionMessage(status: HttpStatus, error: DiscordErrorResponse?): String {
     val statusCode = status.code
@@ -33,8 +33,36 @@ public data class HttpStatus(val code: Int, val message: String)
 /**
  * Implementation of the [RestRequestException] for [RestServices][RestService] using Ktor.
  */
+public open class KtorRequestException(
+    public val httpResponse: KtorResponse,
 public class KtorRequestException(
-    @Suppress("MemberVisibilityCanBePrivate") public val httpResponse: HttpResponse,
+    @Suppress("MemberVisibilityCanBePrivate") public val httpResponse: KtorResponse,
     request: Request<*, *>,
     discordError: DiscordErrorResponse?,
 ) : RestRequestException(request, HttpStatus(httpResponse.status.value, httpResponse.status.description), discordError)
+
+public class BadRequestKtorRequestException(
+    httpResponse: KtorResponse,
+    request: Request<*, *>,
+    discordError: DiscordErrorResponse?,
+) : KtorRequestException(httpResponse, request, discordError)
+
+
+public class ForbiddenKtorRequestException(
+    httpResponse: KtorResponse,
+    request: Request<*, *>,
+    discordError: DiscordErrorResponse?,
+) : KtorRequestException(httpResponse, request, discordError)
+
+public class NotFoundKtorRequestException(
+    httpResponse: KtorResponse,
+    request: Request<*, *>,
+    discordError: DiscordErrorResponse?,
+) : KtorRequestException(httpResponse, request, discordError)
+
+public class ServerErrorKtorRequestException(
+    httpResponse: KtorResponse,
+    request: Request<*, *>,
+    discordError: DiscordErrorResponse?,
+) : KtorRequestException(httpResponse, request, discordError)
+
