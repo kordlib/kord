@@ -5969,6 +5969,14 @@ public final class dev/kord/rest/ratelimit/Total {
 	public final synthetic fun unbox-impl ()J
 }
 
+public final class dev/kord/rest/request/BadRequestKtorRequestException : dev/kord/rest/request/KtorRequestException {
+	public fun <init> (Lio/ktor/client/statement/HttpResponse;Ldev/kord/rest/request/Request;Ldev/kord/rest/json/response/DiscordErrorResponse;)V
+}
+
+public final class dev/kord/rest/request/ForbiddenKtorRequestException : dev/kord/rest/request/KtorRequestException {
+	public fun <init> (Lio/ktor/client/statement/HttpResponse;Ldev/kord/rest/request/Request;Ldev/kord/rest/json/response/DiscordErrorResponse;)V
+}
+
 public final class dev/kord/rest/request/HttpStatus {
 	public fun <init> (ILjava/lang/String;)V
 	public final fun component1 ()I
@@ -6011,7 +6019,7 @@ public final class dev/kord/rest/request/JsonRequest : dev/kord/rest/request/Req
 	public fun getRouteParams ()Ljava/util/Map;
 }
 
-public final class dev/kord/rest/request/KtorRequestException : dev/kord/rest/request/RestRequestException {
+public class dev/kord/rest/request/KtorRequestException : dev/kord/rest/request/RestRequestException {
 	public fun <init> (Lio/ktor/client/statement/HttpResponse;Ldev/kord/rest/request/Request;Ldev/kord/rest/json/response/DiscordErrorResponse;)V
 	public final fun getHttpResponse ()Lio/ktor/client/statement/HttpResponse;
 }
@@ -6040,6 +6048,10 @@ public final class dev/kord/rest/request/MultipartRequest : dev/kord/rest/reques
 	public fun getParameters ()Lio/ktor/util/StringValues;
 	public fun getRoute ()Ldev/kord/rest/route/Route;
 	public fun getRouteParams ()Ljava/util/Map;
+}
+
+public final class dev/kord/rest/request/NotFoundKtorRequestException : dev/kord/rest/request/KtorRequestException {
+	public fun <init> (Lio/ktor/client/statement/HttpResponse;Ldev/kord/rest/request/Request;Ldev/kord/rest/json/response/DiscordErrorResponse;)V
 }
 
 public abstract class dev/kord/rest/request/Request {
@@ -6138,6 +6150,10 @@ public abstract class dev/kord/rest/request/RestRequestException : dev/kord/comm
 	public final fun getError ()Ldev/kord/rest/json/response/DiscordErrorResponse;
 	public final fun getRequest ()Ldev/kord/rest/request/Request;
 	public final fun getStatus ()Ldev/kord/rest/request/HttpStatus;
+}
+
+public final class dev/kord/rest/request/ServerErrorKtorRequestException : dev/kord/rest/request/KtorRequestException {
+	public fun <init> (Lio/ktor/client/statement/HttpResponse;Ldev/kord/rest/request/Request;Ldev/kord/rest/json/response/DiscordErrorResponse;)V
 }
 
 public final class dev/kord/rest/request/StackTraceRecoveringKtorRequestHandler : dev/kord/rest/request/RequestHandler {
