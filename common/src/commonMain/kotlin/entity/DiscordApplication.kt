@@ -32,6 +32,7 @@ public sealed interface BaseDiscordApplication {
     public val tags: Optional<List<String>>
     public val installParams: Optional<InstallParams>
     public val customInstallUrl: Optional<String>
+    public val roleConnectionsVerificationUrl: Optional<String>
 }
 
 /**
@@ -71,6 +72,8 @@ public data class DiscordApplication(
     override val installParams: Optional<InstallParams> = Optional.Missing(),
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
+    @SerialName("role_connections_verification_url")
+    override val roleConnectionsVerificationUrl: Optional<String> = Optional.Missing(),
 ) : BaseDiscordApplication
 
 /**
@@ -106,6 +109,8 @@ public data class DiscordPartialApplication(
     override val installParams: Optional<InstallParams> = Optional.Missing(),
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
+    @SerialName("role_connections_verification_url")
+    override val roleConnectionsVerificationUrl: Optional<String> = Optional.Missing(),
 ) : BaseDiscordApplication
 
 public enum class ApplicationFlag(public val code: Int) {

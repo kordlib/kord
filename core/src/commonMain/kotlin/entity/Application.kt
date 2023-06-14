@@ -69,6 +69,12 @@ public sealed class BaseApplication(
     /** The application's default custom authorization link, if enabled. */
     public val customInstallUrl: String? get() = data.customInstallUrl.value
 
+    /**
+     * The application's role connection verification entry point, which when configured will render the app as a
+     * verification method in the guild role verification configuration.
+     */
+    public val roleConnectionsVerificationUrl: String? get() = data.roleConnectionsVerificationUrl.value
+
 
     public suspend fun getOwnerOrNull(): User? = ownerId?.let { supplier.getUserOrNull(it) }
 

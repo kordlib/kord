@@ -25,6 +25,7 @@ import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
+import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecordsBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
@@ -144,6 +145,30 @@ public class Kord(
     public fun <T : EntitySupplier> with(strategy: EntitySupplyStrategy<T>): T = strategy.supply(this)
 
     public suspend fun getApplicationInfo(): Application = with(EntitySupplyStrategy.rest).getApplicationInfo()
+
+    /**
+     * Requests the [ApplicationRoleConnectionMetadata] objects for this [Application].
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getApplicationRoleConnectionMetadataRecords(): List<ApplicationRoleConnectionMetadata> =
+        rest.applicationRoleConnectionMetadata
+            .getApplicationRoleConnectionMetadataRecords(selfId)
+            .map { ApplicationRoleConnectionMetadata(data = it, kord = this) }
+
+    /**
+     * Requests to update the [ApplicationRoleConnectionMetadata] objects for this [Application].
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend inline fun updateApplicationRoleConnectionMetadataRecords(
+        builder: ApplicationRoleConnectionMetadataRecordsBuilder.() -> Unit,
+    ): List<ApplicationRoleConnectionMetadata> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return rest.applicationRoleConnectionMetadata
+            .updateApplicationRoleConnectionMetadataRecords(selfId, builder)
+            .map { ApplicationRoleConnectionMetadata(data = it, kord = this) }
+    }
 
     /**
      * Requests to create a new Guild configured through the [builder].
