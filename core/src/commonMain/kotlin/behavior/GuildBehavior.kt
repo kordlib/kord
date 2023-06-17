@@ -1068,10 +1068,27 @@ public suspend inline fun GuildBehavior.createKeywordPresetAutoModerationRule(
  *
  * @param name the rule name.
  * @param eventType the rule [event type][AutoModerationRuleEventType].
- * @param mentionLimit total number of unique role and user mentions allowed per message (maximum of 50).
  *
  * @throws RestRequestException if something went wrong during the request.
  */
+public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
+    name: String,
+    eventType: AutoModerationRuleEventType = MessageSend,
+    builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
+): MentionSpamAutoModerationRule {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val rule = kord.rest.autoModeration.createMentionSpamAutoModerationRule(guildId = id, name, eventType, builder)
+    return MentionSpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+}
+
+@Deprecated(
+    "The 'mentionLimit' parameter is optional, only 'mentionLimit' OR 'mentionRaidProtectionEnabled' is required.",
+    ReplaceWith(
+        "this.createMentionSpamAutoModerationRule(name, eventType) { this@createMentionSpamAutoModerationRule" +
+            ".mentionLimit = mentionLimit\nbuilder() }"
+    ),
+    DeprecationLevel.WARNING,
+)
 public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
     name: String,
     eventType: AutoModerationRuleEventType = MessageSend,
@@ -1079,7 +1096,8 @@ public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
     builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
 ): MentionSpamAutoModerationRule {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    val rule = kord.rest.autoModeration
-        .createMentionSpamAutoModerationRule(guildId = id, name, eventType, mentionLimit, builder)
-    return MentionSpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
+    return createMentionSpamAutoModerationRule(name, eventType) {
+        this.mentionLimit = mentionLimit
+        builder()
+    }
 }
