@@ -665,7 +665,7 @@ public data class DiscordEmbed(
     @Serializable
     public data class Author(
         val name: Optional<String> = Optional.Missing(),
-        val url: Optional<String> = Optional.Missing(),
+        val url: Optional<String?> = Optional.Missing(), // see https://github.com/kordlib/kord/issues/838
         @SerialName("icon_url")
         val iconUrl: Optional<String> = Optional.Missing(),
         @SerialName("proxy_icon_url")
