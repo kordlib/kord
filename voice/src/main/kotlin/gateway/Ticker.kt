@@ -5,7 +5,6 @@ import kotlinx.coroutines.*
 /**
  * A reusable fixed rate ticker.
  */
-@ObsoleteCoroutinesApi
 internal class Ticker {
     // we only want one of these
     private var tickerJob: Job? = null

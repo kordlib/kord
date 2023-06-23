@@ -1,22 +1,45 @@
-@Suppress("DSL_SCOPE_VIOLATION") // false positive for `libs` in IntelliJ
 plugins {
-    `kord-module`
-    `kord-sampled-module`
+    `kord-multiplatform-module`
     `kord-publishing`
     alias(libs.plugins.buildconfig)
 }
 
-dependencies {
-    api(libs.kotlinx.coroutines.core)
-    api(libs.kotlinx.serialization.json)
-    api(libs.kotlinx.datetime)
-    api(libs.kotlin.logging)
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(libs.kotlinx.coroutines.core)
+                api(libs.kotlinx.serialization.json)
+                api(libs.kotlinx.datetime)
+                api(libs.kotlin.logging)
 
-    compileOnly(projects.kspAnnotations)
-    ksp(projects.kspProcessors)
+                api(libs.ktor.client.core)
 
-    testImplementation(libs.bundles.test.implementation)
-    testRuntimeOnly(libs.bundles.test.runtime)
+                compileOnly(projects.kspAnnotations)
+            }
+        }
+        jvmMain {
+            dependencies {
+                api(libs.ktor.client.cio)
+            }
+        }
+        nonJvmMain {
+            dependencies {
+                implementation(libs.ktor.utils)
+                implementation(libs.bignum)
+                implementation(libs.stately.collections)
+            }
+        }
+        jsMain {
+            dependencies {
+                api(libs.ktor.client.js)
+
+                // workaround for https://youtrack.jetbrains.com/issue/KT-43500
+                // (intended to be compileOnly in commonMain only)
+                implementation(projects.kspAnnotations)
+            }
+        }
+    }
 }
 
 /*
@@ -37,7 +60,7 @@ buildConfig {
         internalVisibility = true
     }
 
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"${Library.version}\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"${Library.commitHash}\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"${Library.shortCommitHash}\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"$libraryVersion\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"$commitHash\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"$shortCommitHash\"")
 }

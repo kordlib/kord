@@ -101,6 +101,10 @@ public class SpeakingFlags(
     }
 }
 
+/**
+ * See [SpeakingFlag]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#speaking).
+ */
 public sealed class SpeakingFlag(
     /**
      * The raw code used by Discord.

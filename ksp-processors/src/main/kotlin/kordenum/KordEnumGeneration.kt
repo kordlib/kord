@@ -7,9 +7,6 @@ import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.ksp.*
 import dev.kord.ksp.GenerateKordEnum.ValueType
 import dev.kord.ksp.GenerateKordEnum.ValueType.*
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.NONE
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import dev.kord.ksp.kordenum.KordEnum.Entry
 import dev.kord.ksp.kordenum.generator.addCompanionObject
 import dev.kord.ksp.kordenum.generator.enum.addNormalEnum
@@ -18,11 +15,9 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlin.DeprecationLevel.*
 import com.squareup.kotlinpoet.INT as INT_CLASS_NAME
-import com.squareup.kotlinpoet.SET as SET_CLASS_NAME
 import com.squareup.kotlinpoet.STRING as STRING_CLASS_NAME
 
 internal val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
-internal val KORD_EXPERIMENTAL = ClassName("dev.kord.common.annotation", "KordExperimental")
 internal val KORD_UNSAFE = ClassName("dev.kord.common.annotation", "KordUnsafe")
 internal val K_SERIALIZER = KSerializer::class.asClassName()
 internal val DISCORD_BIT_SET = ClassName("dev.kord.common", "DiscordBitSet")
@@ -38,20 +33,13 @@ internal fun ValueType.defaultParameterBlock() = when (this) {
     INT -> "%L" to 0
     STRING -> "%S" to ""
     BITSET -> "%M()" to MemberName("dev.kord.common", "EmptyBitSet")
-    else -> error("Unsupported type for bit flags")
 }
 
-
 internal val Entry.warningSuppressedName
-    get() = when {
-        isDeprecated -> "@Suppress(\"${
-            when (deprecationLevel) {
-                WARNING -> "DEPRECATION"
-                ERROR, HIDDEN -> "DEPRECATION_ERROR"
-            }
-        }\")·$name"
-
-        else -> name
+    get() = when (deprecated?.level) {
+        null -> name
+        WARNING -> """@Suppress("DEPRECATION")·$name"""
+        ERROR, HIDDEN -> """@Suppress("DEPRECATION_ERROR")·$name"""
     }
 
 internal fun ValueType.toClassName() = when (this) {
@@ -72,21 +60,10 @@ internal fun ValueType.toFormat() = when (this) {
     STRING -> "%S"
 }
 
-internal fun ValuesPropertyType.toClassName() = when (this) {
-    NONE -> error("did not expect $this")
-    SET -> SET_CLASS_NAME
-}
-
-internal fun ValuesPropertyType.toFromListConversion() = when (this) {
-    NONE -> error("did not expect $this")
-    SET -> ".toSet()"
-}
-
 internal fun ValueType.toPrimitiveKind() = when (this) {
     INT -> PrimitiveKind.INT::class
     STRING, BITSET -> PrimitiveKind.STRING::class
 }
-
 
 internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 
@@ -96,20 +73,9 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
     val encodingPostfix = valueType.toEncodingPostfix()
     val valueFormat = valueType.toFormat()
 
-    val relevantEntriesForSerializerAndCompanion = run {
-        // don't keep deprecated entries with a non-deprecated replacement
-        val nonDeprecated = entries
-        val nonDeprecatedValues = nonDeprecated.map { it.value }
-        val deprecatedToKeep = deprecatedEntries.filter { it.value !in nonDeprecatedValues }
-
-        // merge nonDeprecated and deprecatedToKeep, preserving their order
-        val (result, taken) = nonDeprecated.fold(emptyList<Entry>() to 0) { (acc, taken), entry ->
-            val smallerDeprecated = deprecatedToKeep.drop(taken).takeWhile { it < entry }
-            (acc + smallerDeprecated + entry) to (taken + smallerDeprecated.size)
-        }
-
-        return@run result + deprecatedToKeep.drop(taken) // add all deprecated that weren't taken yet
-    }
+    val relevantEntriesForSerializerAndCompanion = entries
+        .groupBy { it.value } // one entry per unique value is relevant
+        .map { (_, group) -> group.firstOrNull { it.deprecated == null } ?: group.first() }
 
     val context = ProcessingContext(
         packageName,
@@ -119,8 +85,9 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
         valueFormat,
         relevantEntriesForSerializerAndCompanion
     )
+
     return with(context) {
-        fileSpecGeneratedFrom<KordEnumProcessor>(packageName, fileName = name) {
+        fileSpecGeneratedFrom<KordEnumProcessor>(enumName) {
             addClass(enumName) {
                 // for ksp incremental processing
                 addOriginatingKSFile(originatingFile)
@@ -140,19 +107,16 @@ internal inline fun TypeSpec.Builder.addEnum(
     additionalValuePropertyModifiers: Iterable<KModifier> = emptyList(),
     builder: TypeSpecBuilder = {}
 ) {
-    // KDoc for the kord enum
-    run {
-        val docLink = docUrl?.let { url -> "See [%T]s in the [Discord·Developer·Documentation]($url)." }
-        val combinedKDocFormat = when {
-            kDoc != null && docLink != null -> "$kDoc\n\n$docLink"
-            else -> kDoc ?: docLink
-        }
-        combinedKDocFormat?.let { format -> addKdoc(format, enumName) }
-    }
-
     additionalImports.forEach {
         val import = ClassName.bestGuess(it)
         addImport(import.packageName, import.simpleName)
+    }
+
+    // KDoc for the kord enum
+    run {
+        val docLink = "See [%T]s in the [Discord·Developer·Documentation]($docUrl)."
+        val combinedKDocFormat = if (kDoc != null) "$kDoc\n\n$docLink" else docLink
+        addKdoc(combinedKDocFormat, enumName)
     }
 
     addModifiers(PUBLIC, SEALED)
@@ -163,7 +127,6 @@ internal inline fun TypeSpec.Builder.addEnum(
         addKdoc("The raw $valueName used by Discord.")
         initializer(valueName)
     }
-
 
     addClass("Unknown") {
         addKdoc(
@@ -196,15 +159,13 @@ internal inline fun TypeSpec.Builder.addEnum(
 
     for (entry in entries) {
         addObject(entry.name) {
-            entry(entry)
-        }
-    }
-
-    for (entry in deprecatedEntries) {
-        addObject(entry.name) {
-            entry(entry)
+            entry.kDoc?.let { addKdoc(it) }
+            addAnnotations(entry.additionalOptInMarkerAnnotations.map { AnnotationSpec.builder(ClassName.bestGuess(it)).build() })
             @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
-            addAnnotation(Deprecated(entry.deprecationMessage, entry.replaceWith, entry.deprecationLevel))
+            entry.deprecated?.let { addAnnotation(it) }
+            addModifiers(PUBLIC)
+            superclass(enumName)
+            addSuperclassConstructorParameter(valueFormat, entry.value)
         }
     }
 
@@ -219,16 +180,6 @@ internal inline fun TypeSpec.Builder.addEnum(
 
     builder()
     addCompanionObject()
-}
-
-context (ProcessingContext)
-private fun TypeSpec.Builder.entry(entry: Entry) {
-    entry.kDoc?.let { addKdoc(it) }
-    if (entry.isKordExperimental) addAnnotation(KORD_EXPERIMENTAL)
-    addAnnotations(entry.additionalOptInMarkerAnnotations.map { AnnotationSpec.builder(ClassName.bestGuess(it)).build() })
-    addModifiers(PUBLIC)
-    superclass(enumName)
-    addSuperclassConstructorParameter(valueFormat, entry.value)
 }
 
 context (KordEnum, ProcessingContext)

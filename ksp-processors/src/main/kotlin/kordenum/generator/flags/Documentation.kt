@@ -85,7 +85,7 @@ internal fun TypeSpec.Builder.addFlagsDoc(collectionName: ClassName, builderName
     val unknown = enumName.nestedClass("Unknown")
     val withReplacedVariables = docString
         .replace("%O", flagsDescriptor.objectName)
-        .replace("%F", flagsDescriptor.fieldName)
+        .replace("%F", flagsDescriptor.flagsFieldName)
         .replace("%A", flagsDescriptor.article)
         .replace("%N", flagsDescriptor.name)
     addKdoc(

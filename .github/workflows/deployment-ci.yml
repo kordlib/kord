@@ -21,7 +21,6 @@ jobs:
       && !(github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'kordlib/kord')
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK
@@ -29,8 +28,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
-      - name: Set SHORT_SHA environment variable to short commit hash
-        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -45,13 +42,8 @@ jobs:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       NEXUS_USER: ${{ secrets.NEXUS_USER }}
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-      ORG_GRADLE_PROJECT_signingKey: ${{ secrets.signingKey }}
-      ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
-      GITHUB_EVENT_NAME: ${{ github.event_name }}
-      GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
-      GITHUB_TARGET_COMMITISH: ${{ github.event.release.target_commitish }}
-      GITHUB_BRANCH_NAME: ${{ github.ref }}
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      SIGNING_KEY: ${{ secrets.signingKey }}
+      SIGNING_PASSWORD: ${{ secrets.signingPassword }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -61,8 +53,6 @@ jobs:
         with:
           distribution: temurin
           java-version: 8
-      - name: Set SHORT_SHA environment variable to short commit hash
-        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:

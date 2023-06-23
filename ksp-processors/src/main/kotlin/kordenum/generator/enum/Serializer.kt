@@ -11,17 +11,14 @@ import kotlinx.serialization.encoding.Encoder
 
 context(KordEnum, ProcessingContext, FileSpec.Builder)
 fun TypeSpec.Builder.addEnumSerializer() {
-    // TODO remove eventually (always use "Serializer" then)
-    val internalSerializerName = if (deprecatedSerializerName == "Serializer") "NewSerializer" else "Serializer"
-
     addAnnotation<Serializable> {
-        addMember("with·=·%T.$internalSerializerName::class", enumName)
+        addMember("with·=·%T.Serializer::class", enumName)
     }
     addAnnotation(OPT_IN) {
         addMember("%T::class", KORD_UNSAFE)
     }
 
-    addObject(internalSerializerName) {
+    addObject("Serializer") {
         addModifiers(KModifier.INTERNAL)
         addSuperinterface(K_SERIALIZER.parameterizedBy(enumName))
 
@@ -49,31 +46,6 @@ fun TypeSpec.Builder.addEnumSerializer() {
                     addStatement("$valueFormat·->·${entry.warningSuppressedName}", entry.value)
                 }
                 addStatement("else·->·Unknown($valueName)")
-            }
-        }
-    }
-
-
-    // TODO bump deprecation level and remove eventually
-    @OptIn(DelicateKotlinPoetApi::class)
-    if (deprecatedSerializerName != null) {
-        val deprecatedAnnotation = Deprecated(
-            "Use '$enumName.serializer()' instead.",
-            ReplaceWith("$enumName.serializer()", "${this@ProcessingContext.packageName}.$enumName"),
-            level = DeprecationLevel.ERROR,
-        )
-        val kSerializer = K_SERIALIZER.parameterizedBy(enumName)
-
-        addObject(deprecatedSerializerName) {
-            addAnnotation(deprecatedAnnotation)
-            addModifiers(KModifier.PUBLIC)
-            addSuperinterface(kSerializer, delegate = CodeBlock.of(internalSerializerName))
-
-            addFunction("serializer") {
-                addAnnotation(deprecatedAnnotation)
-                addModifiers(KModifier.PUBLIC)
-                returns(kSerializer)
-                addStatement("return this")
             }
         }
     }

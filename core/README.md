@@ -99,7 +99,7 @@ dependencies {
 
 <dependency>
     <groupId>dev.kord</groupId>
-    <artifactId>kord-core</artifactId>
+    <artifactId>kord-core-jvm</artifactId>
     <version>{version}</version>
 </dependency>
 ```

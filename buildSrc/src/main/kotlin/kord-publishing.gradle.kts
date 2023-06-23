@@ -1,3 +1,4 @@
+import java.lang.System.getenv
 import java.util.Base64
 
 plugins {
@@ -5,71 +6,76 @@ plugins {
     signing
 }
 
+fun MavenPublication.registerDokkaJar() =
+    tasks.register<Jar>("${name}DokkaJar") {
+        archiveClassifier = "javadoc"
+        destinationDirectory = destinationDirectory.get().dir(name)
+        from(tasks.named("dokkaHtml"))
+    }
+
 publishing {
     publications {
-        create<MavenPublication>(Library.name) {
+        withType<MavenPublication>().configureEach {
+            if (project.name != "bom") artifact(registerDokkaJar())
+
             groupId = Library.group
-            artifactId = "kord-${project.name}"
-            version = Library.version
+            artifactId = "kord-$artifactId"
+            version = libraryVersion
 
             pom {
-                name.set(Library.name)
-                description.set(Library.description)
-                url.set(Library.projectUrl)
+                name = Library.name
+                description = Library.description
+                url = Library.projectUrl
 
                 organization {
-                    name.set("Kord")
-                    url.set("https://github.com/kordlib")
+                    name = "Kord"
+                    url = "https://github.com/kordlib"
                 }
 
                 developers {
                     developer {
-                        name.set("The Kord Team")
+                        name = "The Kord Team"
                     }
                 }
 
                 issueManagement {
-                    system.set("GitHub")
-                    url.set("https://github.com/kordlib/kord/issues")
+                    system = "GitHub"
+                    url = "https://github.com/kordlib/kord/issues"
                 }
 
                 licenses {
                     license {
-                        name.set("MIT")
-                        url.set("http://opensource.org/licenses/MIT")
+                        name = "MIT"
+                        url = "https://opensource.org/licenses/MIT"
                     }
                 }
 
                 scm {
-                    connection.set("scm:git:ssh://github.com/kordlib/kord.git")
-                    developerConnection.set("scm:git:ssh://git@github.com:kordlib/kord.git")
-                    url.set(Library.projectUrl)
+                    connection = "scm:git:ssh://github.com/kordlib/kord.git"
+                    developerConnection = "scm:git:ssh://git@github.com:kordlib/kord.git"
+                    url = Library.projectUrl
                 }
             }
+        }
+    }
 
-            if (!isJitPack) {
-                repositories {
-                    maven {
-                        url = uri(if (Library.isSnapshot) Repo.snapshotsUrl else Repo.releasesUrl)
+    repositories {
+        maven {
+            url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
 
-                        credentials {
-                            username = System.getenv("NEXUS_USER")
-                            password = System.getenv("NEXUS_PASSWORD")
-                        }
-                    }
-                }
+            credentials {
+                username = getenv("NEXUS_USER")
+                password = getenv("NEXUS_PASSWORD")
             }
         }
     }
 }
 
-if (!isJitPack && Library.isRelease) {
+if (isRelease) {
     signing {
-        val signingKey = findProperty("signingKey")?.toString()
-        val signingPassword = findProperty("signingPassword")?.toString()
-        if (signingKey != null && signingPassword != null) {
-            useInMemoryPgpKeys(String(Base64.getDecoder().decode(signingKey)), signingPassword)
-        }
-        sign(publishing.publications[Library.name])
+        val secretKey = String(Base64.getDecoder().decode(getenv("SIGNING_KEY")))
+        val password = getenv("SIGNING_PASSWORD")
+        useInMemoryPgpKeys(secretKey, password)
+        sign(publishing.publications)
     }
 }

@@ -1,19 +1,29 @@
 plugins {
-    `kord-module`
-    `kord-sampled-module`
+    `kord-multiplatform-module`
     `kord-publishing`
 }
 
-dependencies {
-    api(projects.common)
+kotlin {
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(projects.common)
 
-    api(libs.bundles.ktor.client.serialization)
-    api(libs.ktor.client.websockets)
-    api(libs.ktor.client.cio)
+                api(libs.bundles.ktor.client.serialization)
+                api(libs.ktor.client.websockets)
 
-    compileOnly(projects.kspAnnotations)
-    ksp(projects.kspProcessors)
+                compileOnly(projects.kspAnnotations)
+            }
+        }
+        jsMain {
+            dependencies {
+                implementation(libs.kotlin.node)
+                implementation(npm("fast-zlib", libs.versions.fastZlib.get()))
 
-    testImplementation(libs.bundles.test.implementation)
-    testRuntimeOnly(libs.bundles.test.runtime)
+                // workaround for https://youtrack.jetbrains.com/issue/KT-43500
+                // (intended to be compileOnly in commonMain only)
+                implementation(projects.kspAnnotations)
+            }
+        }
+    }
 }
