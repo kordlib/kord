@@ -79,7 +79,6 @@ package dev.kord.common.entity
 
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordExperimental
-import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.optional.*
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
