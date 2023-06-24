@@ -59,7 +59,7 @@ class MessageRequests {
             respond(Json.encodeToString(mockMessage))
         }
 
-        val channelService = ChannelService(KtorRequestHandler(client = HttpClient(mockEngine), token = ""))
+        val channelService = ChannelService(HttpClient(mockEngine))
 
         val fileChannel = readFile("images/kord.png")
 

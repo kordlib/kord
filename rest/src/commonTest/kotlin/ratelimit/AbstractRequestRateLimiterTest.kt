@@ -1,8 +1,12 @@
 package dev.kord.rest.ratelimit
 
 import dev.kord.common.entity.DiscordGuild
-import dev.kord.rest.request.JsonRequest
-import dev.kord.rest.route.Route
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.ById
+import dev.kord.rest.route.Routes
+import io.ktor.client.request.*
+import io.ktor.resources.*
+import io.ktor.resources.serialization.*
 import io.ktor.util.*
 import kotlinx.coroutines.test.currentTime
 import kotlinx.coroutines.test.runTest
@@ -29,13 +33,9 @@ abstract class AbstractRequestRateLimiterTest {
         bucketKey: Long = guildId,
         rateLimit: RateLimit
     ) {
-        val request = JsonRequest<Unit, DiscordGuild>(
-            Route.GuildGet,
-            mapOf(Route.GuildId to guildId.toString()),
-            StringValues.Empty,
-            StringValues.Empty,
-            null
-        )
+        val request = HttpRequestBuilder() {
+            href(ResourcesFormat(), Routes.Guilds.ById(Snowflake(guildId.toULong())))
+        }
         val token = await(request)
         when (rateLimit.isExhausted) {
             true -> token.complete(
@@ -56,13 +56,9 @@ abstract class AbstractRequestRateLimiterTest {
     }
 
     private suspend fun RequestRateLimiter.sendRequest(guildId: Long): RequestToken {
-        val request = JsonRequest<Unit, DiscordGuild>(
-            Route.GuildGet,
-            mapOf(Route.GuildId to guildId.toString()),
-            StringValues.Empty,
-            StringValues.Empty,
-            null
-        )
+        val request = HttpRequestBuilder() {
+            href(ResourcesFormat(), Routes.Guilds.ById(Snowflake(guildId.toULong())))
+        }
         return await(request)
     }
 
@@ -148,13 +144,9 @@ abstract class AbstractRequestRateLimiterTest {
         val rateLimiter = newRequestRateLimiter(clock)
 
         rateLimiter.sendRequest(clock, 1, rateLimit = RateLimit(Total(5), Remaining(5)))
-        val request = JsonRequest<Unit, DiscordGuild>(
-            Route.GuildGet,
-            mapOf(Route.GuildId to "1"),
-            StringValues.Empty,
-            StringValues.Empty,
-            null
-        )
+        val request = HttpRequestBuilder() {
+            href(ResourcesFormat(), Routes.Guilds.ById(Snowflake(1)))
+        }
 
         try {
             rateLimiter.consume(request) {

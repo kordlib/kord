@@ -22,7 +22,6 @@ import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.rest.json.response.BotGatewayResponse
 import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
 import dev.kord.rest.request.*
-import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -57,8 +56,6 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
             }
         }
 
-    private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
-        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = token) }
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
 
     /**
@@ -144,18 +141,6 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
     }
 
 
-    /**
-     * Configures the [RequestHandler] for the [RestClient].
-     *
-     * ```
-     * Kord(token) {
-     *     { resources -> KtorRequestHandler(resources.httpClient, ExclusionRequestRateLimiter()) }
-     * }
-     * ```
-     */
-    public fun requestHandler(handlerBuilder: (resources: ClientResources) -> RequestHandler) {
-        this.handlerBuilder = handlerBuilder
-    }
 
     /**
      * Configures the [DataCache] for caching.
@@ -237,17 +222,8 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
             httpClient = client,
             defaultStrategy = defaultStrategy,
         )
-        val rawRequestHandler = handlerBuilder(resources)
-        val requestHandler = if (stackTraceRecovery) {
-            if (rawRequestHandler is KtorRequestHandler) {
-                rawRequestHandler.withStackTraceRecovery()
-            } else {
-                error("stackTraceRecovery only works with KtorRequestHandlers, please set stackTraceRecovery = false or use a different RequestHandler")
-            }
-        } else {
-            rawRequestHandler
-        }
-        val rest = RestClient(requestHandler)
+
+        val rest = RestClient(client)
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
         val gateway = run {

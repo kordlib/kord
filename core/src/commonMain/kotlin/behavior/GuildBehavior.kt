@@ -49,7 +49,6 @@ import dev.kord.rest.builder.role.RolePositionsModifyBuilder
 import dev.kord.rest.json.JsonErrorCode
 import dev.kord.rest.json.request.CurrentUserNicknameModifyRequest
 import dev.kord.rest.json.request.GuildStickerCreateRequest
-import dev.kord.rest.json.request.MultipartGuildStickerCreateRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.*
@@ -612,8 +611,8 @@ public interface GuildBehavior : KordEntity, Strategizable {
         supplier.getGuildStickerOrNull(id, stickerId)
 
     public suspend fun createSticker(name: String, description: String, tags: String, file: NamedFile): GuildSticker {
-        val request = MultipartGuildStickerCreateRequest(GuildStickerCreateRequest(name, description, tags), file)
-        val response = kord.rest.sticker.createGuildSticker(id, request)
+        val request = GuildStickerCreateRequest(name, description, tags)
+        val response = kord.rest.sticker.createGuildSticker(id, request, listOf(file))
         val data = StickerData.from(response)
         return GuildSticker(data, kord)
     }

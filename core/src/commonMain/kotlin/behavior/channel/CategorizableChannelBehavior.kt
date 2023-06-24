@@ -130,7 +130,8 @@ internal fun CategorizableChannelBehavior(
  */
 public suspend inline fun CategorizableChannelBehavior.createInvite(builder: InviteCreateBuilder.() -> Unit = {}): InviteWithMetadata {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val response = kord.rest.channel.createInvite(id, builder)
+    val request = InviteCreateBuilder().apply(builder).toRequest()
+    val response = kord.rest.channel.createInvite(id, request)
     val data = InviteWithMetadataData.from(response)
 
     return InviteWithMetadata(data, kord)

@@ -10,7 +10,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
-import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,8 +18,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 
 public abstract class RestOnlyBuilder {
-    protected var handlerBuilder: (resources: ClientResources) -> RequestHandler =
-        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = it.token) }
 
     protected abstract val token: String
 
@@ -37,18 +34,6 @@ public abstract class RestOnlyBuilder {
 
     public abstract var applicationId: Snowflake
 
-    /**
-     * Configures the [RequestHandler] for the [RestClient].
-     *
-     * ```
-     * Kord(token) {
-     *   requestHandler  { resources -> KtorRequestHandler(resources.httpClient, ExclusionRequestRateLimiter()) }
-     * }
-     * ```
-     */
-    public fun requestHandler(handlerBuilder: (resources: ClientResources) -> RequestHandler) {
-        this.handlerBuilder = handlerBuilder
-    }
 
     public fun build(): Kord {
         val client = httpClient.configure()
@@ -63,7 +48,7 @@ public abstract class RestOnlyBuilder {
             EntitySupplyStrategy.rest,
         )
 
-        val rest = RestClient(handlerBuilder(resources))
+        val rest = RestClient(httpClient)
 
         return Kord(
             resources = resources,
