@@ -40,6 +40,7 @@ internal inline fun <reified P : SymbolProcessor> fileSpecGeneratedFrom(
             "ReplaceArrayOfWithLiteral",
             "SpellCheckingInspection",
             "GrazieInspection",
+            "RedundantUnitReturnType",
         )
     )
     .apply(builder)
@@ -54,6 +55,9 @@ internal fun FileSpec.Builder.addAnnotation(annotation: Annotation, includeDefau
 
 internal inline fun FileSpec.Builder.addClass(className: ClassName, builder: TypeSpecBuilder) =
     addType(TypeSpec.classBuilder(className).apply(builder).build())
+
+internal inline fun FileSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
+    addFunction(FunSpec.builder(name).apply(builder).build())
 
 
 // extensions for `TypeSpec.Builder`

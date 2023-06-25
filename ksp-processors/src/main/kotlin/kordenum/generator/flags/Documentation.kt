@@ -4,8 +4,6 @@ import com.squareup.kotlinpoet.*
 import dev.kord.ksp.kordenum.KordEnum
 import dev.kord.ksp.kordenum.ProcessingContext
 
-private val copyMethod = MemberName("dev.kord.common.entity.flags", "copy")
-
 /**
  * Template doc string with following variables
  * - `%1L` Collection class name as a literal
@@ -14,9 +12,8 @@ private val copyMethod = MemberName("dev.kord.common.entity.flags", "copy")
  * - `%4T` 1 th place-holder enum value
  * - `%5T` 2 th place-holder enum value
  * - `%6T` 3 th place-holder enum value
- * - `%7M` reference to BitFlags.copy() method
- * - `%8T` reference to Unknown class
- * - `%9T` reference to Builder class
+ * - `%7T` reference to Unknown class
+ * - `%8T` reference to Builder class
  * - `%O` typical name of an object having this kind of flags
  * - `%F` name of flags field on `%O`
  * - `%A` article for flags name
@@ -42,7 +39,7 @@ private val docString = """
  ```
  
  ## Modifying existing %Ns
- You can crate a modified copy of a [%3T] instance using the [%7M] method
+ You can crate a modified copy of a [%3T] instance using the [copy] method
  
  ```kotlin
  flags.copy {
@@ -69,13 +66,13 @@ private val docString = """
  
  ## Unknown %N
  
- Whenever a newly added flag has not been added to Kord yet it will get deserialized as [%8T].
+ Whenever a newly added flag has not been added to Kord yet it will get deserialized as [%7T].
  You can also use that to check for an yet unsupported flag
  ```kotlin
- val hasFlags = %8T(1 shl 69) in %O.%F
+ val hasFlags = %7T(1 shl 69) in %O.%F
  ```
  @see %2T
- @see %9T
+ @see %8T
  @property code numeric value of all [%3T]s
 """.trimIndent()
 
@@ -97,9 +94,8 @@ internal fun TypeSpec.Builder.addFlagsDoc(collectionName: ClassName, builderName
             possibleValues.getSafe(0), // %4T
             possibleValues.getSafe(1), // %5T
             possibleValues.getSafe(1), // %6T
-            copyMethod, // %7M
-            unknown, // %8T
-            builderName, // %9T
+            unknown, // %7T
+            builderName, // %8T
         )
     )
 }

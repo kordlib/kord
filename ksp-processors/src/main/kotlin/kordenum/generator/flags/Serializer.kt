@@ -1,38 +1,58 @@
 package dev.kord.ksp.kordenum.generator.flags
 
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.KModifier.*
+import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.addAnnotation
-import dev.kord.ksp.addClass
-import dev.kord.ksp.addFunction
-import dev.kord.ksp.kordenum.KordEnum
-import dev.kord.ksp.kordenum.ProcessingContext
-import dev.kord.ksp.kordenum.toPrimitiveKind
+import com.squareup.kotlinpoet.TypeSpec
+import dev.kord.ksp.*
+import dev.kord.ksp.GenerateKordEnum.ValueType.*
+import dev.kord.ksp.kordenum.*
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
 
 private val SERIALIZER_METHOD = MemberName("kotlinx.serialization.builtins", "serializer")
 
 context(KordEnum, ProcessingContext, FileSpec.Builder)
-internal fun TypeSpec.Builder.addSerializer(serializerName: ClassName, collectionName: ClassName) {
+internal fun TypeSpec.Builder.addSerializer(collectionName: ClassName) {
     addAnnotation<Serializable> {
-        addMember("with·=·%T::class", serializerName)
+        addMember("with·=·%T.Serializer::class", collectionName)
     }
-    addClass(serializerName) {
-        superclass(BIT_FLAGs.nestedClass("Serializer").parameterizedBy(valueTypeName, enumName, collectionName))
-        addSuperclassConstructorParameter("%T", valueType.toPrimitiveKind())
-        addSuperclassConstructorParameter("%S", valueName)
-        if (valueType != GenerateKordEnum.ValueType.BITSET) {
-            addSuperclassConstructorParameter("%T.%M()", valueTypeName, SERIALIZER_METHOD)
-        } else {
-            addSuperclassConstructorParameter("%T.serializer()", valueTypeName)
+    addObject("Serializer") {
+        addModifiers(INTERNAL)
+        addSuperinterface(K_SERIALIZER.parameterizedBy(collectionName))
+
+        addProperty<SerialDescriptor>("descriptor", OVERRIDE) {
+            initializer(
+                "%M(%S, %T)",
+                PRIMITIVE_SERIAL_DESCRIPTOR,
+                collectionName.canonicalName,
+                valueType.toPrimitiveKind(),
+            )
         }
 
-        addFunction("Implementation") {
-            addModifiers(KModifier.OVERRIDE)
-            addParameter("code", valueTypeName)
-            returns(collectionName)
-            addCode("return %T(code)", collectionName)
+        addProperty("delegate", K_SERIALIZER.parameterizedBy(valueTypeName), PRIVATE) {
+            when (valueType) {
+                INT -> initializer("%T.%M()", valueTypeName, SERIALIZER_METHOD)
+                BITSET -> initializer("%T.serializer()", valueTypeName)
+                STRING -> error("didn't expect valueType $valueType")
+            }
+        }
+
+        addFunction("serialize") {
+            addModifiers(OVERRIDE)
+            addParameter<Encoder>("encoder")
+            addParameter("value", collectionName)
+            addStatement("return encoder.encodeSerializableValue(delegate, value.$valueName)")
+        }
+
+        addFunction("deserialize") {
+            addModifiers(OVERRIDE)
+            addParameter<Decoder>("decoder")
+            addStatement("return %T(decoder.decodeSerializableValue(delegate))", collectionName)
         }
     }
 }

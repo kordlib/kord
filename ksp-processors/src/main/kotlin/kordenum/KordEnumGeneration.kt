@@ -103,10 +103,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
 }
 
 context(KordEnum, ProcessingContext, FileSpec.Builder)
-internal inline fun TypeSpec.Builder.addEnum(
-    additionalValuePropertyModifiers: Iterable<KModifier> = emptyList(),
-    builder: TypeSpecBuilder = {}
-) {
+internal inline fun TypeSpec.Builder.addEnum(builder: TypeSpecBuilder) {
     additionalImports.forEach {
         val import = ClassName.bestGuess(it)
         addImport(import.packageName, import.simpleName)
@@ -123,7 +120,7 @@ internal inline fun TypeSpec.Builder.addEnum(
     primaryConstructor {
         addParameter(valueName, valueTypeName)
     }
-    addProperty(valueName, valueTypeName, *(additionalValuePropertyModifiers + PUBLIC).toTypedArray()) {
+    addProperty(valueName, valueTypeName, PUBLIC) {
         addKdoc("The raw $valueName used by Discord.")
         initializer(valueName)
     }

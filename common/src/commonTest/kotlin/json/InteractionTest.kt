@@ -1,5 +1,6 @@
 package dev.kord.common.json
 
+import dev.kord.common.DiscordBitSet
 import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.readFile
@@ -41,7 +42,7 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe Permissions(DiscordBitSet("2147483647"))
         }
     }
 
@@ -67,7 +68,7 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe Permissions(DiscordBitSet("2147483647"))
         }
     }
 
@@ -92,7 +93,7 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe Permissions(DiscordBitSet("2147483647"))
         }
     }
 
@@ -132,7 +133,7 @@ class InteractionTest {
             }
             guildId shouldBe "772904309264089089"
             id shouldBe "847587388497854464"
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe Permissions(DiscordBitSet("2147483647"))
         }
     }
 

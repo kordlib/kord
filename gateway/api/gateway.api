@@ -1194,13 +1194,12 @@ public final class dev/kord/gateway/IntegrationUpdate : dev/kord/gateway/Dispatc
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class dev/kord/gateway/Intent : dev/kord/common/entity/flags/DiscordBitSetFlag {
+public abstract class dev/kord/gateway/Intent {
 	public static final field Companion Ldev/kord/gateway/Intent$Companion;
 	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> ([JLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
-	public fun getCode ()Ldev/kord/common/DiscordBitSet;
-	public synthetic fun getCode ()Ljava/lang/Object;
+	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun hashCode ()I
 	public final fun toString ()Ljava/lang/String;
 }
@@ -1291,43 +1290,52 @@ public final class dev/kord/gateway/Intent$Unknown : dev/kord/gateway/Intent {
 }
 
 public final class dev/kord/gateway/IntentKt {
+	public static final fun Intents (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
+	public static final fun Intents (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
+	public static final fun Intents ([Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
+	public static final fun Intents ([Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
+	public static final fun Intents0 (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
+	public static final fun copy (Ldev/kord/gateway/Intents;Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
+}
+
+public final class dev/kord/gateway/IntentUtil {
 	public static final fun getAll (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 	public static final fun getNonPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 	public static final fun getNone (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 	public static final fun getPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 }
 
-public final class dev/kord/gateway/Intents : dev/kord/common/entity/flags/DiscordBitSetFlags {
+public final class dev/kord/gateway/Intents {
 	public static final field Companion Ldev/kord/gateway/Intents$Companion;
 	public fun <init> ()V
 	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
 	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
-	public synthetic fun buildUpon ()Ldev/kord/common/entity/flags/BitFlags$Builder;
-	public fun buildUpon ()Ldev/kord/gateway/Intents$Builder;
+	public final fun contains (Ldev/kord/gateway/Intent;)Z
+	public final fun contains (Ldev/kord/gateway/Intents;)Z
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
+	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
+	public final fun minus (Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
+	public final fun minus (Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
+	public final fun plus (Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
+	public final fun plus (Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/gateway/Intents$Builder : dev/kord/common/entity/flags/DiscordBitSetFlags$Builder {
+public final class dev/kord/gateway/Intents$Builder {
 	public fun <init> ()V
 	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
 	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun flags ()Ldev/kord/common/entity/flags/BitFlags;
-	public fun flags ()Ldev/kord/gateway/Intents;
+	public final fun flags ()Ldev/kord/gateway/Intents;
+	public final fun unaryMinus (Ldev/kord/gateway/Intent;)V
+	public final fun unaryMinus (Ldev/kord/gateway/Intents;)V
+	public final fun unaryPlus (Ldev/kord/gateway/Intent;)V
+	public final fun unaryPlus (Ldev/kord/gateway/Intents;)V
 }
 
-public final class dev/kord/gateway/Intents$Companion : dev/kord/common/entity/flags/DiscordBitSetFlags$Companion {
-	public synthetic fun Builder ()Ldev/kord/common/entity/flags/BitFlags$Builder;
-	public fun Builder ()Ldev/kord/gateway/Intents$Builder;
-	public synthetic fun Implementation (Ldev/kord/common/DiscordBitSet;)Ldev/kord/common/entity/flags/DiscordBitSetFlags;
+public final class dev/kord/gateway/Intents$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/gateway/Intents$Serializer : dev/kord/common/entity/flags/BitFlags$Serializer {
-	public fun <init> ()V
-	public fun Implementation (Ldev/kord/common/DiscordBitSet;)Ldev/kord/gateway/Intents;
-	public synthetic fun Implementation (Ljava/lang/Object;)Ldev/kord/common/entity/flags/BitFlags;
 }
 
 public final class dev/kord/gateway/InteractionCreate : dev/kord/gateway/DispatchEvent {

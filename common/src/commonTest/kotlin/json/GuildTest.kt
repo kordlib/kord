@@ -1,5 +1,6 @@
 package dev.kord.common.json
 
+import dev.kord.common.DiscordBitSet
 import dev.kord.common.entity.*
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
@@ -101,7 +102,7 @@ class GuildTest {
             name shouldBe "1337 Krew"
             icon shouldBe "8342729096ea3675442027381ff50dfe"
             owner shouldBe true
-            permissions shouldBe Permissions("36953089")
+            permissions shouldBe Permissions(DiscordBitSet("36953089"))
             features shouldBe listOf(GuildFeature.Community, GuildFeature.News)
         }
     }

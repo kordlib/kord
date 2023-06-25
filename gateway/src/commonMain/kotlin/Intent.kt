@@ -1,3 +1,5 @@
+@file:JvmName("IntentUtil")
+
 @file:GenerateKordEnum(
     name = "Intent",
     valueType = GenerateKordEnum.ValueType.BITSET,
@@ -198,6 +200,7 @@ import dev.kord.ksp.GenerateKordEnum.Entry
 import kotlin.RequiresOptIn.Level.ERROR
 import kotlin.annotation.AnnotationRetention.*
 import kotlin.annotation.AnnotationTarget.*
+import kotlin.jvm.JvmName
 
 private const val privilegedIntentAnnotation = "dev.kord.gateway.PrivilegedIntent"
 
