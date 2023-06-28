@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "OnboardingPromptType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "OnboardingPromptType",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-types",
     entries = [
         Entry("MultipleChoice", intValue = 0),
@@ -9,9 +9,9 @@
 
 package dev.kord.common.entity
 
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

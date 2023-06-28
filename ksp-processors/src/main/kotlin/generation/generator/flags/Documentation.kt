@@ -1,17 +1,20 @@
-package dev.kord.ksp.kordenum.generator.flags
+package dev.kord.ksp.generation.generator.flags
 
-import com.squareup.kotlinpoet.*
-import dev.kord.ksp.kordenum.KordEnum
-import dev.kord.ksp.kordenum.ProcessingContext
+import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.CodeBlock
+import com.squareup.kotlinpoet.FileSpec
+import com.squareup.kotlinpoet.TypeSpec
+import dev.kord.ksp.generation.GenerationEntity.BitFlags
+import dev.kord.ksp.generation.ProcessingContext
 
 /**
  * Template doc string with following variables
  * - `%1L` Collection class name as a literal
- * - `%2T` enum type name
+ * - `%2T` entity class name
  * - `%3T` collection class name,
- * - `%4T` 1 th place-holder enum value
- * - `%5T` 2 th place-holder enum value
- * - `%6T` 3 th place-holder enum value
+ * - `%4T` 1st place-holder entry
+ * - `%5T` 2nd place-holder entry
+ * - `%6T` 3rd place-holder entry
  * - `%7T` reference to Unknown class
  * - `%8T` reference to Builder class
  * - `%O` typical name of an object having this kind of flags
@@ -76,10 +79,10 @@ private val docString = """
  @property code numeric value of all [%3T]s
 """.trimIndent()
 
-context(KordEnum, ProcessingContext, FileSpec.Builder)
+context(BitFlags, ProcessingContext, FileSpec.Builder)
 internal fun TypeSpec.Builder.addFlagsDoc(collectionName: ClassName, builderName: ClassName) {
-    val possibleValues = entries.map { enumName.nestedClass(it.name) }
-    val unknown = enumName.nestedClass("Unknown")
+    val possibleValues = entries.map { entityCN.nestedClass(it.name) }
+    val unknown = entityCN.nestedClass("Unknown")
     val withReplacedVariables = docString
         .replace("%O", flagsDescriptor.objectName)
         .replace("%F", flagsDescriptor.flagsFieldName)
@@ -89,7 +92,7 @@ internal fun TypeSpec.Builder.addFlagsDoc(collectionName: ClassName, builderName
         CodeBlock.of(
             withReplacedVariables,
             collectionName.simpleName, // %1L
-            enumName, // %2T
+            entityCN, // %2T
             collectionName, // %3T
             possibleValues.getSafe(0), // %4T
             possibleValues.getSafe(1), // %5T

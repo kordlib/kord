@@ -1,7 +1,5 @@
-@file:GenerateKordEnum(
-    name = "Permission",
-    valueType = ValueType.BITSET,
-    isFlags = true,
+@file:Generate(
+    BIT_SET_FLAGS, name = "Permission",
     docUrl = "https://discord.com/developers/docs/topics/permissions",
     hasCombinerFlag = true,
     bitFlagsDescriptor = BitFlagDescription("member", "permissions", name = "permission"),
@@ -202,5 +200,7 @@
 
 package dev.kord.common.entity
 
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.*
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.BitFlagDescription
+import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
+import dev.kord.ksp.Generate.Entry

@@ -1,7 +1,5 @@
-@file:GenerateKordEnum(
-    name = "SpeakingFlag",
-    valueType = GenerateKordEnum.ValueType.INT,
-    isFlags = true,
+@file:Generate(
+    INT_FLAGS, name = "SpeakingFlag",
     docUrl = "https://discord.com/developers/docs/topics/voice-connections#speaking",
     entries = [
         Entry(name = "Microphone", intValue = 1 shl 0),
@@ -12,5 +10,6 @@
 
 package dev.kord.voice
 
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.Entry

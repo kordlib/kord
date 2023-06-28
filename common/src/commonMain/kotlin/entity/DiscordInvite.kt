@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "InviteTargetType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "InviteTargetType",
     docUrl = "https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types",
     entries = [
         Entry("Stream", intValue = 1),
@@ -12,9 +12,9 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.serialization.DurationInSeconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

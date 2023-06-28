@@ -1,13 +1,11 @@
 @file:JvmName("IntentUtil")
 
-@file:GenerateKordEnum(
-    name = "Intent",
-    valueType = GenerateKordEnum.ValueType.BITSET,
-    isFlags = true,
+@file:Generate(
+    BIT_SET_FLAGS, name = "Intent",
     kDoc = "Values that enable a group of events as [defined by Discord](https://discord.com/developers/docs/topics/gateway#gateway-intents).",
     docUrl = "https://discord.com/developers/docs/topics/gateway#gateway-intents",
     additionalImports = ["dev.kord.common.entity.DiscordMessage"],
-    bitFlagsDescriptor = GenerateKordEnum.BitFlagDescription("gateway", "intents", "an", "intent"),
+    bitFlagsDescriptor = BitFlagDescription("gateway", "intents", "an", "intent"),
     entries = [
         Entry(
             "Guilds", longValue = 1 shl 0, kDoc = """
@@ -195,8 +193,10 @@
 package dev.kord.gateway
 
 import dev.kord.gateway.Intent.*
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.BitFlagDescription
+import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
+import dev.kord.ksp.Generate.Entry
 import kotlin.RequiresOptIn.Level.ERROR
 import kotlin.annotation.AnnotationRetention.*
 import kotlin.annotation.AnnotationTarget.*

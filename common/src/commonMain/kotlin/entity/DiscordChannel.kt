@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "ChannelType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ChannelType",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-channel-types",
     entries = [
         Entry("GuildText", intValue = 0, kDoc = "A text channel within a server."),
@@ -40,8 +40,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "VideoQualityMode", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "VideoQualityMode",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes",
     entries = [
         Entry("Auto", intValue = 1, kDoc = "Discord chooses the quality for optimal performance."),
@@ -49,8 +49,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "SortOrderType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "SortOrderType",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types",
     entries = [
         Entry("LatestActivity", intValue = 0, kDoc = "Sort forum posts by activity."),
@@ -58,8 +58,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ForumLayoutType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ForumLayoutType",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types",
     entries = [
         Entry("NotSet", intValue = 0, kDoc = "No default has been set for forum channel."),
@@ -68,8 +68,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "OverwriteType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "OverwriteType",
     docUrl = "https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure",
     entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
 )
@@ -83,9 +83,9 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInMinutesSerializer
 import dev.kord.common.serialization.DurationInSeconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -276,7 +276,7 @@ public data class DiscordThreadMetadata(
     val createTimestamp: Optional<Instant?> = Optional.Missing(),
 )
 
-// this should actually be generated with @file:GenerateKordEnum,
+// this should actually be generated with @file:Generate,
 // but it's not worth adding support for Duration just for this class
 @Serializable(with = ArchiveDuration.Serializer::class)
 public sealed class ArchiveDuration(

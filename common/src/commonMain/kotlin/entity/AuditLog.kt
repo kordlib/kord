@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "AuditLogEvent", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "AuditLogEvent",
     docUrl = "https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events",
     entries = [
         Entry("GuildUpdate", intValue = 1, kDoc = "Server settings were updated."),
@@ -67,9 +67,9 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.serialization.DurationInDaysSerializer
 import dev.kord.common.serialization.DurationInSecondsSerializer
 import dev.kord.common.serialization.LongOrStringSerializer
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer

@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "DefaultMessageNotificationLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "DefaultMessageNotificationLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level",
     entries = [
         Entry("AllMessages", intValue = 0, kDoc = "Members will receive notifications for all messages by default."),
@@ -10,8 +10,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ExplicitContentFilter", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ExplicitContentFilter",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level",
     entries = [
         Entry("Disabled", intValue = 0, kDoc = "Media content will not be scanned."),
@@ -23,8 +23,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "MFALevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "MFALevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-mfa-level",
     entries = [
         Entry("None", intValue = 0, kDoc = "Guild has no MFA/2FA requirement for moderation actions."),
@@ -32,8 +32,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "VerificationLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "VerificationLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-verification-level",
     entries = [
         Entry("None", intValue = 0, kDoc = "Unrestricted."),
@@ -44,8 +44,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "NsfwLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "NsfwLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level",
     entries = [
         Entry("Default", intValue = 0),
@@ -55,8 +55,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "PremiumTier", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "PremiumTier",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-premium-tier",
     entries = [
         Entry("None", intValue = 0, kDoc = "Guild has not unlocked any Server Boost perks."),
@@ -66,8 +66,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "GuildFeature", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "GuildFeature",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-features",
     entries = [
         Entry(
@@ -160,10 +160,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "SystemChannelFlag",
-    valueType = INT,
-    isFlags = true,
+@file:Generate(
+    INT_FLAGS, name = "SystemChannelFlag",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
     entries = [
         Entry("SuppressJoinNotifications", intValue = 1 shl 0, kDoc = "Suppress member join notifications."),
@@ -190,10 +188,9 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

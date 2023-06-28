@@ -1,23 +1,24 @@
-package dev.kord.ksp.kordenum.generator.flags
+package dev.kord.ksp.generation.generator.flags
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.TypeSpec
-import dev.kord.ksp.GenerateKordEnum.ValueType.*
 import dev.kord.ksp.addClass
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.addProperty
-import dev.kord.ksp.kordenum.KordEnum
-import dev.kord.ksp.kordenum.ProcessingContext
+import dev.kord.ksp.generation.GenerationEntity.BitFlags
+import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
+import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
+import dev.kord.ksp.generation.ProcessingContext
 import dev.kord.ksp.primaryConstructor
 
-context(KordEnum, ProcessingContext)
+context(BitFlags, ProcessingContext)
 internal fun TypeSpec.Builder.addBuilder(builderName: ClassName, collectionName: ClassName) {
     addClass(builderName) {
         primaryConstructor {
             addCodeParameter()
         }
-        addProperty(valueName, valueTypeName, PRIVATE) {
+        addProperty(valueName, valueCN, PRIVATE) {
             mutable()
             initializer(valueName)
         }
@@ -25,13 +26,12 @@ internal fun TypeSpec.Builder.addBuilder(builderName: ClassName, collectionName:
         val builder = builderName.simpleName
         addFunction("unaryPlus") {
             addModifiers(PUBLIC, OPERATOR)
-            receiver(enumName)
+            receiver(entityCN)
 
             addStatement(
                 when (valueType) {
                     INT -> "this@$builder.code = this@$builder.code or this.code"
-                    BITSET -> "this@$builder.code.add(this.code)"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "this@$builder.code.add(this.code)"
                 }
             )
         }
@@ -42,21 +42,19 @@ internal fun TypeSpec.Builder.addBuilder(builderName: ClassName, collectionName:
             addStatement(
                 when (valueType) {
                     INT -> "this@$builder.code = this@$builder.code or this.code"
-                    BITSET -> "this@$builder.code.add(this.code)"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "this@$builder.code.add(this.code)"
                 }
             )
         }
 
         addFunction("unaryMinus") {
             addModifiers(PUBLIC, OPERATOR)
-            receiver(enumName)
+            receiver(entityCN)
 
             addStatement(
                 when (valueType) {
                     INT -> "this@$builder.code = this@$builder.code and this.code.inv()"
-                    BITSET -> "this@$builder.code.remove(this.code)"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "this@$builder.code.remove(this.code)"
                 }
             )
         }
@@ -67,8 +65,7 @@ internal fun TypeSpec.Builder.addBuilder(builderName: ClassName, collectionName:
             addStatement(
                 when (valueType) {
                     INT -> "this@$builder.code = this@$builder.code and this.code.inv()"
-                    BITSET -> "this@$builder.code.remove(this.code)"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "this@$builder.code.remove(this.code)"
                 }
             )
         }

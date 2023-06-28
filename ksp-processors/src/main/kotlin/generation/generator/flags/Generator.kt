@@ -1,17 +1,15 @@
-@file:Suppress("PrivatePropertyName")
-
-package dev.kord.ksp.kordenum.generator.flags
+package dev.kord.ksp.generation.generator.flags
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.jvm.jvmName
 import dev.kord.ksp.*
-import dev.kord.ksp.GenerateKordEnum.ValueType.BITSET
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
 import dev.kord.ksp.addClass
-import dev.kord.ksp.kordenum.*
+import dev.kord.ksp.generation.*
+import dev.kord.ksp.generation.GenerationEntity.BitFlags
+import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
+import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
 
 private typealias FileSpecBuilder = FileSpec.Builder
 
@@ -19,19 +17,19 @@ private fun ClassName.flagsClass() = peerClass(simpleName + 's')
 private val CONTRACT = MemberName("kotlin.contracts", "contract")
 private val EXACTLY_ONCE = MemberName("kotlin.contracts.InvocationKind", "EXACTLY_ONCE")
 
-context(KordEnum, ProcessingContext, FileSpecBuilder)
-internal fun TypeSpec.Builder.addFlagEnum() = addEnum {
+context(BitFlags, ProcessingContext, FileSpecBuilder)
+internal fun TypeSpec.Builder.addBitFlags() = addEntity {
     primaryConstructor {
-        addParameter(valueName, valueTypeName)
+        addParameter(valueName, valueCN)
     }
-    if (valueType == GenerateKordEnum.ValueType.BITSET) {
+    if (valueType == BIT_SET) {
         addConstructor {
             addModifiers(KModifier.PROTECTED)
             addParameter("values", LONG, KModifier.VARARG)
             callThisConstructor(CodeBlock.of("%T(values)", DISCORD_BIT_SET))
         }
     }
-    val collectionName = enumName.flagsClass()
+    val collectionName = entityCN.flagsClass()
     val builderName = collectionName.nestedClass("Builder")
     this@FileSpecBuilder.addClass(collectionName) {
         addFlagsDoc(collectionName, builderName)
@@ -39,26 +37,25 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum {
         primaryConstructor {
             addCodeParameter()
         }
-        addProperty(valueName, valueTypeName, PUBLIC) {
+        addProperty(valueName, valueCN, PUBLIC) {
             initializer(valueName)
         }
 
-        addProperty("values", type = SET.parameterizedBy(enumName), PUBLIC) {
+        addProperty("values", type = SET.parameterizedBy(entityCN), PUBLIC) {
             getter {
-                addStatement("return %T.entries.filter·{·it·in·this·}.toSet()", enumName)
+                addStatement("return %T.entries.filter·{·it·in·this·}.toSet()", entityCN)
             }
         }
 
         addFunction("contains") {
             addModifiers(PUBLIC, OPERATOR)
-            addParameter("flag", enumName)
+            addParameter("flag", entityCN)
             returns<Boolean>()
 
             addStatement(
                 when (valueType) {
                     INT -> "return this.code·and·flag.code·==·flag.code"
-                    BITSET -> "return flag.code·in·this.code"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "return flag.code·in·this.code"
                 }
             )
         }
@@ -70,22 +67,20 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum {
             addStatement(
                 when (valueType) {
                     INT -> "return this.code·and·flags.code·==·flags.code"
-                    BITSET -> "return flags.code·in·this.code"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "return flags.code·in·this.code"
                 }
             )
         }
 
         addFunction("plus") {
             addModifiers(PUBLIC, OPERATOR)
-            addParameter("flag", enumName)
+            addParameter("flag", entityCN)
             returns(collectionName)
 
             addStatement(
                 when (valueType) {
                     INT -> "return %T(this.code·or·flag.code)"
-                    BITSET -> "return %T(this.code·+·flag.code)"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "return %T(this.code·+·flag.code)"
                 },
                 collectionName,
             )
@@ -98,8 +93,7 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum {
             addStatement(
                 when (valueType) {
                     INT -> "return %T(this.code·or·flags.code)"
-                    BITSET -> "return %T(this.code·+·flags.code)"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "return %T(this.code·+·flags.code)"
                 },
                 collectionName,
             )
@@ -107,14 +101,13 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum {
 
         addFunction("minus") {
             addModifiers(PUBLIC, OPERATOR)
-            addParameter("flag", enumName)
+            addParameter("flag", entityCN)
             returns(collectionName)
 
             addStatement(
                 when (valueType) {
                     INT -> "return %T(this.code·and·flag.code.inv())"
-                    BITSET -> "return %T(this.code·-·flag.code)"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "return %T(this.code·-·flag.code)"
                 },
                 collectionName,
             )
@@ -127,8 +120,7 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum {
             addStatement(
                 when (valueType) {
                     INT -> "return %T(this.code·and·flags.code.inv())"
-                    BITSET -> "return %T(this.code·-·flags.code)"
-                    STRING -> throw IllegalStateException()
+                    BIT_SET -> "return %T(this.code·-·flags.code)"
                 },
                 collectionName,
             )
@@ -147,14 +139,14 @@ internal fun TypeSpec.Builder.addFlagEnum() = addEnum {
     this@FileSpecBuilder.addTopLevelFunctions(collectionName, builderName)
 }
 
-context(KordEnum, ProcessingContext)
+context(BitFlags, ProcessingContext)
 fun FunSpec.Builder.addCodeParameter() {
-    addParameter(valueName, valueTypeName) {
+    addParameter(valueName, valueCN) {
         defaultValue(valueType.defaultParameter())
     }
 }
 
-context(KordEnum, ProcessingContext)
+context(BitFlags, ProcessingContext)
 private fun FileSpec.Builder.addTopLevelFunctions(collectionName: ClassName, builderName: ClassName) {
     val factoryFunctionName = collectionName.simpleName
 
@@ -169,7 +161,7 @@ private fun FileSpec.Builder.addTopLevelFunctions(collectionName: ClassName, bui
 
     addFunction(factoryFunctionName) {
         addModifiers(PUBLIC)
-        addParameter("flags", enumName, VARARG)
+        addParameter("flags", entityCN, VARARG)
         returns(collectionName)
 
         addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
@@ -185,7 +177,7 @@ private fun FileSpec.Builder.addTopLevelFunctions(collectionName: ClassName, bui
 
     addFunction(factoryFunctionName) {
         addModifiers(PUBLIC)
-        addParameter("flags", ITERABLE.parameterizedBy(enumName))
+        addParameter("flags", ITERABLE.parameterizedBy(entityCN))
         returns(collectionName)
 
         addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")

@@ -1,15 +1,16 @@
-package dev.kord.ksp.kordenum.generator
+package dev.kord.ksp.generation.generator
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import dev.kord.ksp.*
-import dev.kord.ksp.kordenum.*
+import dev.kord.ksp.generation.*
+import dev.kord.ksp.generation.GenerationEntity.BitFlags
 
-context(KordEnum, ProcessingContext, FileSpec.Builder)
+context(GenerationEntity, ProcessingContext, FileSpec.Builder)
 fun TypeSpec.Builder.addCompanionObject() = addCompanionObject {
     addModifiers(KModifier.PUBLIC)
 
-    val additionalOptIns = entries.flatMap(KordEnum.Entry::additionalOptInMarkerAnnotations)
+    val additionalOptIns = entries.flatMap { it.additionalOptInMarkerAnnotations }
         .toSet()
         .map(ClassName::bestGuess)
 
@@ -24,8 +25,8 @@ fun TypeSpec.Builder.addCompanionObject() = addCompanionObject {
         }
     }
 
-    addProperty("entries", LIST.parameterizedBy(enumName), KModifier.PUBLIC) {
-        addKdoc("A [List] of all known [%T]s.", enumName)
+    addProperty("entries", LIST.parameterizedBy(entityCN), KModifier.PUBLIC) {
+        addKdoc("A [List] of all known [%T]s.", entityCN)
         addOptIns()
         delegate {
             withControlFlow("lazy(mode·=·%M)", LazyThreadSafetyMode.PUBLICATION.asMemberName()) {
@@ -40,13 +41,13 @@ fun TypeSpec.Builder.addCompanionObject() = addCompanionObject {
         }
     }
 
-    if (hasCombinerFlag) {
+    if (this@GenerationEntity is BitFlags && this@GenerationEntity.hasCombinerFlag) {
         addFunction("buildAll") {
             addComment("""We cannot inline this into the "All" object, because that causes a weird compiler bug""")
             addModifiers(KModifier.PRIVATE)
-            returns(valueTypeName)
+            returns(valueCN)
 
-            val (code, parameter) = valueType.defaultParameterBlock()
+            val (code, parameter) = this@GenerationEntity.valueType.defaultParameterBlock()
             addCode("""
                     return entries.fold($code)·{·acc,·value·->
                     ⇥ acc + value.$valueName

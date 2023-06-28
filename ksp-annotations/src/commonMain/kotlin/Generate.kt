@@ -1,49 +1,47 @@
 package dev.kord.ksp
 
-import dev.kord.ksp.GenerateKordEnum.*
-import dev.kord.ksp.GenerateKordEnum.ValueType.*
+import dev.kord.ksp.Generate.*
+import dev.kord.ksp.Generate.EntityType.*
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.FILE
 
-/** Generate a kord enum in the same package as this file. */
+/** Generate an entity in the same package as this file. */
 @Repeatable
 @Retention(SOURCE)
 @Target(FILE)
-annotation class GenerateKordEnum(
-    /** Name of the kord enum. */
+annotation class Generate(
+    /** The type of entity to generate. */
+    val entityType: EntityType,
+    /** Name of the entity. */
     val name: String,
-    /** [ValueType] of the kord enum. */
-    val valueType: ValueType,
-    /** URL to the Discord Developer Documentation for the kord enum. */
+    /** URL to the Discord Developer Documentation for the entity. */
     val docUrl: String,
-    /** [Entries][Entry] of the kord enum. */
+    /** [Entries][Entry] of the entity. */
     val entries: Array<Entry>,
-    /** KDoc for the kord enum (optional). */
+    /** KDoc for the entity (optional). */
     val kDoc: String = "",
-    /** Name of the value of the kord enum. */
+    /** Name of the value of the entity. */
     val valueName: String = "value",
 
-    /** Generate a Discord bit flags builder. */
-    val isFlags: Boolean = false,
-    /** Optional [BitFlagDescription] when [isFlags] is `true`. */
+    /** Optional [BitFlagDescription] when [entityType] is [INT_FLAGS] or [BIT_SET_FLAGS]. */
     val bitFlagsDescriptor: BitFlagDescription = BitFlagDescription(),
     /** Whether to add an "All" flag combining all flags into one. */
     val hasCombinerFlag: Boolean = false,
     /** Additional imports (e.g. for KDoc). */
     val additionalImports: Array<String> = [],
 ) {
-    enum class ValueType { INT, STRING, BITSET }
+    enum class EntityType { INT_KORD_ENUM, STRING_KORD_ENUM, INT_FLAGS, BIT_SET_FLAGS }
 
     @Retention(SOURCE)
-    @Target() // only use as argument for `@GenerateKordEnum(...)`
+    @Target() // only used as argument for `@Generate(...)`
     annotation class Entry(
         /** Name of the entry. */
         val name: String,
-        /** [Int] value of the entry. Only set this if [GenerateKordEnum.valueType] is [INT]. */
+        /** [Int] value of the entry. Only set this if [Generate.entityType] is [INT_KORD_ENUM] or [INT_FLAGS]. */
         val intValue: Int = 0,
-        /** [String] value of the entry. Only set this if [GenerateKordEnum.valueType] is [STRING]. */
+        /** [String] value of the entry. Only set this if [Generate.entityType] is [STRING_KORD_ENUM]. */
         val stringValue: String = "",
-        /** [Long] value of the entry. Only set this if [GenerateKordEnum.valueType] is [BITSET]. */
+        /** [Long] value of the entry. Only set this if [Generate.entityType] is [BIT_SET_FLAGS]. */
         val longValue: Long = 0,
         /** KDoc for the entry (optional). */
         val kDoc: String = "",
@@ -54,15 +52,15 @@ annotation class GenerateKordEnum(
     )
 
     /**
-     * Description of the `flags` field using the generated enum.
+     * Description of the `flags` field using the generated flags.
      *
-     * @property objectName the typical name of the object using this enum
+     * @property objectName the typical name of the object using this flags
      * @property flagsFieldName the name of the  "flags field"
      * @property article the article for [name]
      * @property name the name used in documentation
      */
     @Retention(SOURCE)
-    @Target() // Only used as parameter
+    @Target() // only used as argument for `@Generate(...)`
     annotation class BitFlagDescription(
         val objectName: String = "obj",
         val flagsFieldName: String = "flags",

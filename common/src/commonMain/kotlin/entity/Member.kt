@@ -1,13 +1,11 @@
-@file:GenerateKordEnum(
-    name = "GuildMemberFlag",
-    valueType = GenerateKordEnum.ValueType.INT,
-    isFlags = true,
+@file:Generate(
+    INT_FLAGS, name = "GuildMemberFlag",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags",
     entries = [
-        GenerateKordEnum.Entry(name = "DidRejoin", intValue = 1 shl 0, kDoc = "Member has left and rejoined the guild"),
-        GenerateKordEnum.Entry(name = "CompletedOnboarding", intValue = 1 shl 1, kDoc = "Member has completed onboarding"),
-        GenerateKordEnum.Entry(name = "BypassesVerification", intValue = 1 shl 2, kDoc = "Member is exempt from guild verification requirements"),
-        GenerateKordEnum.Entry(name = "StartedOnboarding", intValue = 1 shl 3, kDoc = "Member has started onboarding")
+        Entry(name = "DidRejoin", intValue = 1 shl 0, kDoc = "Member has left and rejoined the guild"),
+        Entry(name = "CompletedOnboarding", intValue = 1 shl 1, kDoc = "Member has completed onboarding"),
+        Entry(name = "BypassesVerification", intValue = 1 shl 2, kDoc = "Member is exempt from guild verification requirements"),
+        Entry(name = "StartedOnboarding", intValue = 1 shl 3, kDoc = "Member has started onboarding")
     ]
 )
 
@@ -16,7 +14,9 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
-import dev.kord.ksp.GenerateKordEnum
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

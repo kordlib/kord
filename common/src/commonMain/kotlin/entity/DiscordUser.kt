@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "UserPremium", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "UserPremium",
     kDoc = "Premium types denote the level of premium a user has.",
     docUrl = "https://discord.com/developers/docs/resources/user#user-object-premium-types",
     entries = [
@@ -10,9 +10,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "UserFlag", valueType = INT,
-    isFlags = true,
+@file:Generate(
+    INT_FLAGS, name = "UserFlag",
     docUrl = "https://discord.com/developers/docs/resources/user#user-object-user-flags",
     entries = [
         Entry("DiscordEmployee", intValue = 1 shl 0, kDoc = "Discord Employee"),
@@ -42,9 +41,10 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

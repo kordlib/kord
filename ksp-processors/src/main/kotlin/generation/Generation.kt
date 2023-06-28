@@ -1,21 +1,17 @@
-package dev.kord.ksp.kordenum
+package dev.kord.ksp.generation
 
 import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.ksp.*
-import dev.kord.ksp.GenerateKordEnum.ValueType
-import dev.kord.ksp.GenerateKordEnum.ValueType.*
-import dev.kord.ksp.kordenum.KordEnum.Entry
-import dev.kord.ksp.kordenum.generator.addCompanionObject
-import dev.kord.ksp.kordenum.generator.enum.addNormalEnum
-import dev.kord.ksp.kordenum.generator.flags.addFlagEnum
+import dev.kord.ksp.generation.GenerationEntity.*
+import dev.kord.ksp.generation.generator.enum.addKordEnum
+import dev.kord.ksp.generation.generator.flags.addBitFlags
+import dev.kord.ksp.generation.generator.addCompanionObject
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlin.DeprecationLevel.*
-import com.squareup.kotlinpoet.INT as INT_CLASS_NAME
-import com.squareup.kotlinpoet.STRING as STRING_CLASS_NAME
 
 internal val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
 internal val KORD_UNSAFE = ClassName("dev.kord.common.annotation", "KordUnsafe")
@@ -23,16 +19,15 @@ internal val K_SERIALIZER = KSerializer::class.asClassName()
 internal val DISCORD_BIT_SET = ClassName("dev.kord.common", "DiscordBitSet")
 internal val OPT_IN = ClassName("kotlin", "OptIn")
 
-internal fun ValueType.defaultParameter(): CodeBlock {
+internal fun BitFlags.ValueType.defaultParameter(): CodeBlock {
     val (code, value) = defaultParameterBlock()
 
     return CodeBlock.of(code, value)
 }
 
-internal fun ValueType.defaultParameterBlock() = when (this) {
-    INT -> "%L" to 0
-    STRING -> "%S" to ""
-    BITSET -> "%M()" to MemberName("dev.kord.common", "EmptyBitSet")
+internal fun BitFlags.ValueType.defaultParameterBlock() = when (this) {
+    BitFlags.ValueType.INT -> "%L" to 0
+    BitFlags.ValueType.BIT_SET -> "%M()" to MemberName("dev.kord.common", "EmptyBitSet")
 }
 
 internal val Entry.warningSuppressedName
@@ -43,84 +38,75 @@ internal val Entry.warningSuppressedName
     }
 
 internal fun ValueType.toClassName() = when (this) {
-    INT -> INT_CLASS_NAME
-    STRING -> STRING_CLASS_NAME
-    BITSET -> DISCORD_BIT_SET
+    KordEnum.ValueType.INT, BitFlags.ValueType.INT -> INT
+    KordEnum.ValueType.STRING -> STRING
+    BitFlags.ValueType.BIT_SET -> DISCORD_BIT_SET
 }
 
-internal fun ValueType.toEncodingPostfix() = when (this) {
-    INT -> "Int"
-    STRING -> "String"
-    BITSET -> "DiscordBitSet"
+internal fun KordEnum.ValueType.toEncodingPostfix() = when (this) {
+    KordEnum.ValueType.INT -> "Int"
+    KordEnum.ValueType.STRING -> "String"
 }
 
 internal fun ValueType.toFormat() = when (this) {
-    INT -> "%L"
-    BITSET -> "%LL"
-    STRING -> "%S"
+    KordEnum.ValueType.INT, BitFlags.ValueType.INT -> "%L"
+    KordEnum.ValueType.STRING -> "%S"
+    BitFlags.ValueType.BIT_SET -> "%LL"
 }
 
 internal fun ValueType.toPrimitiveKind() = when (this) {
-    INT -> PrimitiveKind.INT::class
-    STRING, BITSET -> PrimitiveKind.STRING::class
+    KordEnum.ValueType.INT, BitFlags.ValueType.INT -> PrimitiveKind.INT::class
+    KordEnum.ValueType.STRING, BitFlags.ValueType.BIT_SET -> PrimitiveKind.STRING::class
 }
 
-internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
+internal fun GenerationEntity.generateFileSpec(originatingFile: KSFile): FileSpec {
 
     val packageName = originatingFile.packageName.asString()
-    val enumName = ClassName(packageName, name)
-    val valueTypeName = valueType.toClassName()
-    val encodingPostfix = valueType.toEncodingPostfix()
+    val entityCN = ClassName(packageName, name)
+    val valueCN = valueType.toClassName()
+
     val valueFormat = valueType.toFormat()
 
     val relevantEntriesForSerializerAndCompanion = entries
         .groupBy { it.value } // one entry per unique value is relevant
         .map { (_, group) -> group.firstOrNull { it.deprecated == null } ?: group.first() }
 
-    val context = ProcessingContext(
-        packageName,
-        enumName,
-        valueTypeName,
-        encodingPostfix,
-        valueFormat,
-        relevantEntriesForSerializerAndCompanion
-    )
+    val context =
+        ProcessingContext(packageName, entityCN, valueCN, valueFormat, relevantEntriesForSerializerAndCompanion)
 
     return with(context) {
-        fileSpecGeneratedFrom<KordEnumProcessor>(enumName) {
-            addClass(enumName) {
+        fileSpecGeneratedFrom<GenerationProcessor>(entityCN) {
+            addClass(entityCN) {
                 // for ksp incremental processing
                 addOriginatingKSFile(originatingFile)
 
-                if (!isFlags) {
-                    addNormalEnum()
-                } else {
-                    addFlagEnum()
+                when (this@generateFileSpec) {
+                    is KordEnum -> addKordEnum()
+                    is BitFlags -> addBitFlags()
                 }
             }
         }
     }
 }
 
-context(KordEnum, ProcessingContext, FileSpec.Builder)
-internal inline fun TypeSpec.Builder.addEnum(builder: TypeSpecBuilder) {
+context(GenerationEntity, ProcessingContext, FileSpec.Builder)
+internal inline fun TypeSpec.Builder.addEntity(builder: TypeSpecBuilder) {
     additionalImports.forEach {
         val import = ClassName.bestGuess(it)
         addImport(import.packageName, import.simpleName)
     }
 
-    // KDoc for the kord enum
     run {
         val docLink = "See [%T]s in the [Discord·Developer·Documentation]($docUrl)."
         val combinedKDocFormat = if (kDoc != null) "$kDoc\n\n$docLink" else docLink
-        addKdoc(combinedKDocFormat, enumName)
+        addKdoc(combinedKDocFormat, entityCN)
     }
 
     addModifiers(PUBLIC, SEALED)
     primaryConstructor {
-        addParameter(valueName, valueTypeName)
+        addParameter(valueName, valueCN)
     }
-    addProperty(valueName, valueTypeName, PUBLIC) {
+    addProperty(valueName, valueCN, PUBLIC) {
         addKdoc("The raw $valueName used by Discord.")
         initializer(valueName)
     }
@@ -128,30 +114,30 @@ internal inline fun TypeSpec.Builder.addEnum(builder: TypeSpecBuilder) {
     addClass("Unknown") {
         addKdoc(
             "An unknown [%1T].\n\nThis is used as a fallback for [%1T]s that haven't been added to Kord yet.",
-            enumName,
+            entityCN,
         )
         addModifiers(PUBLIC)
         primaryConstructor {
             addAnnotation(KORD_UNSAFE)
-            addParameter(valueName, valueTypeName)
+            addParameter(valueName, valueCN)
         }
-        if (valueType == BITSET) {
+        if (valueType == BitFlags.ValueType.BIT_SET) {
             addConstructor {
                 addAnnotation(KORD_UNSAFE)
                 addParameter(valueName, LONG, VARARG)
                 callThisConstructor(CodeBlock.of("%T($valueName)", DISCORD_BIT_SET))
             }
         }
-        superclass(enumName)
+        superclass(entityCN)
         addSuperclassConstructorParameter(valueName)
     }
 
-    addEqualsAndHashCode(enumName, FINAL)
+    addEqualsAndHashCode(entityCN, FINAL)
 
     addFunction("toString") {
         addModifiers(FINAL, OVERRIDE)
         returns<String>()
-        addStatement("return \"%T.\${this::class.simpleName}($valueName=\$$valueName)\"", enumName)
+        addStatement("return \"%T.\${this::class.simpleName}($valueName=\$$valueName)\"", entityCN)
     }
 
     for (entry in entries) {
@@ -161,16 +147,16 @@ internal inline fun TypeSpec.Builder.addEnum(builder: TypeSpecBuilder) {
             @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
             entry.deprecated?.let { addAnnotation(it) }
             addModifiers(PUBLIC)
-            superclass(enumName)
+            superclass(entityCN)
             addSuperclassConstructorParameter(valueFormat, entry.value)
         }
     }
 
-    if (hasCombinerFlag) {
+    if (this@GenerationEntity is BitFlags && this@GenerationEntity.hasCombinerFlag) {
         addObject("All") {
-            addKdoc("A combination of all [%T]s", enumName)
+            addKdoc("A combination of all [%T]s", entityCN)
             addModifiers(PUBLIC)
-            superclass(enumName)
+            superclass(entityCN)
             addSuperclassConstructorParameter("buildAll()")
         }
     }
@@ -179,7 +165,7 @@ internal inline fun TypeSpec.Builder.addEnum(builder: TypeSpecBuilder) {
     addCompanionObject()
 }
 
-context (KordEnum, ProcessingContext)
+context (GenerationEntity, ProcessingContext)
 internal fun TypeSpec.Builder.addEqualsAndHashCode(className: ClassName, vararg additionalParameters: KModifier) {
     addFunction("equals") {
         addModifiers(OVERRIDE, *additionalParameters)

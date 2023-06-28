@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "ActivityType", valueType = INT, valueName = "code",
+@file:Generate(
+    INT_KORD_ENUM, name = "ActivityType", valueName = "code",
     docUrl = "https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types",
     entries = [
         Entry("Game", intValue = 0),
@@ -11,10 +11,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ActivityFlag",
-    valueType = GenerateKordEnum.ValueType.INT,
-    isFlags = true,
+@file:Generate(
+    INT_FLAGS, name = "ActivityFlag",
     docUrl = "https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags",
     entries = [
         Entry(name = "Instance", intValue = 1 shl 0),
@@ -35,9 +33,10 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.InstantInEpochMilliseconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer

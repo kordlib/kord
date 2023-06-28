@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "ApplicationCommandType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ApplicationCommandType",
     docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types",
     entries = [
         Entry("ChatInput", intValue = 1, kDoc = "A text-based command that shows up when a user types `/`."),
@@ -11,8 +11,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ApplicationCommandOptionType", valueType = INT, valueName = "type",
+@file:Generate(
+    INT_KORD_ENUM, name = "ApplicationCommandOptionType", valueName = "type",
     docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type",
     entries = [
         Entry("SubCommand", intValue = 1),
@@ -29,8 +29,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "InteractionType", valueType = INT, valueName = "type",
+@file:Generate(
+    INT_KORD_ENUM, name = "InteractionType", valueName = "type",
     docUrl = "https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type",
     entries = [
         Entry("Ping", intValue = 1),
@@ -41,8 +41,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "InteractionResponseType", valueType = INT, valueName = "type",
+@file:Generate(
+    INT_KORD_ENUM, name = "InteractionResponseType", valueName = "type",
     docUrl = "https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type",
     entries = [
         Entry("Pong", intValue = 1, kDoc = "ACK a [Ping][dev.kord.common.entity.InteractionType.Ping]."),
@@ -65,8 +65,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ApplicationCommandPermissionType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ApplicationCommandPermissionType",
     docUrl = "https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type",
     entries = [
         Entry("Role", intValue = 1),
@@ -80,9 +80,9 @@ package dev.kord.common.entity
 import dev.kord.common.Locale
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.optional.*
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer

@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "MessageType", valueType = INT, valueName = "code",
+@file:Generate(
+    INT_KORD_ENUM, name = "MessageType", valueName = "code",
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-types",
     entries = [
         Entry("Default", intValue = 0),
@@ -36,12 +36,9 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "MessageFlag",
-    valueType = INT,
-    isFlags = true,
-    bitFlagsDescriptor = GenerateKordEnum.BitFlagDescription(objectName = "message"),
-    valueName = "code",
+@file:Generate(
+    INT_FLAGS, name = "MessageFlag",
+    bitFlagsDescriptor = BitFlagDescription(objectName = "message"),
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-flags",
     entries = [
         Entry(
@@ -102,9 +99,8 @@
     ]
 )
 
-
-@file:GenerateKordEnum(
-    name = "MessageActivityType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "MessageActivityType",
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-activity-types",
     entries = [
         Entry("Join", intValue = 1),
@@ -114,8 +110,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "EmbedType", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "EmbedType",
     docUrl = "https://discord.com/developers/docs/resources/channel#embed-object-embed-types",
     entries = [
         Entry("Rich", stringValue = "rich", kDoc = "Generic embed rendered from embed attributes."),
@@ -127,8 +123,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "AllowedMentionType", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "AllowedMentionType",
     docUrl = "https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types",
     entries = [
         Entry("RoleMentions", stringValue = "roles", kDoc = "Controls role mentions."),
@@ -137,8 +133,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "MessageStickerType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "MessageStickerType",
     docUrl = "https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types",
     entries = [
         Entry("PNG", intValue = 1),
@@ -156,13 +152,13 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInDoubleSeconds
 import dev.kord.common.serialization.LongOrStringSerializer
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.*
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.BitFlagDescription
+import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * Represents [a message sent in a channel within Discord](https://discord.com/developers/docs/resources/channel#message-object).
