@@ -24,8 +24,8 @@ internal fun TypeSpec.Builder.addBitFlags() = addEntity {
     }
     if (valueType == BIT_SET) {
         addConstructor {
-            addModifiers(KModifier.PROTECTED)
-            addParameter("values", LONG, KModifier.VARARG)
+            addModifiers(PROTECTED)
+            addParameter("values", LONG, VARARG)
             callThisConstructor(CodeBlock.of("%T(values)", DISCORD_BIT_SET))
         }
     }

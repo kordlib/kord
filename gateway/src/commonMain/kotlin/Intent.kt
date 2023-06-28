@@ -243,7 +243,7 @@ public val Intents.Companion.all: Intents
  */
 @PrivilegedIntent
 public val Intents.Companion.privileged: Intents
-    get() = Intents(Intent.GuildPresences, Intent.GuildMembers, Intent.MessageContent)
+    get() = Intents(GuildPresences, GuildMembers, MessageContent)
 
 /**
  * All non privileged intents.
