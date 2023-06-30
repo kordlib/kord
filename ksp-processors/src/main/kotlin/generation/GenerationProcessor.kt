@@ -5,6 +5,7 @@ import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.kord.ksp.Generate
+import dev.kord.ksp.getAnnotationsByType
 import dev.kord.ksp.getSymbolsWithAnnotation
 import dev.kord.ksp.isOfType
 
@@ -40,10 +41,10 @@ class GenerationProcessor(private val codeGenerator: CodeGenerator, private val 
     }
 
     private fun processFile(file: KSFile) {
-        file.annotations
-            .filter { it.isOfType<Generate>() }
-            .onEach { logger.info("found annotation", symbol = it) }
-            .mapNotNull { it.toGenerationEntityOrNull(logger) }
+        val generates = file.getAnnotationsByType<Generate>()
+        val annotations = file.annotations.filter { it.isOfType<Generate>() }
+        (generates zip annotations)
+            .mapNotNull { (generate, annotation) -> generate.toGenerationEntityOrNull(logger, annotation) }
             .forEach { generateEntity(it, originatingFile = file) }
     }
 

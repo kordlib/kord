@@ -3,14 +3,12 @@ package dev.kord.ksp.generation
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSAnnotation
 import com.squareup.kotlinpoet.ClassName
-import dev.kord.ksp.AnnotationArguments
 import dev.kord.ksp.AnnotationArguments.Companion.arguments
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.*
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.KordEnum
-import kotlin.DeprecationLevel.WARNING
 import kotlin.reflect.KProperty1
 
 /** Mapping of [Generate] that is easier to work with in [GenerationProcessor]. */
@@ -60,28 +58,19 @@ internal class ProcessingContext(
     val relevantEntriesForSerializerAndCompanion: List<GenerationEntity.Entry>,
 )
 
+private fun String.toKDoc() = trimIndent().ifBlank { null }
+
 /**
- * Maps [KSAnnotation] for [Generate] to [GenerationEntity].
+ * Maps [Generate] to [GenerationEntity].
  *
  * Returns `null` if mapping fails.
  */
-internal fun KSAnnotation.toGenerationEntityOrNull(logger: KSPLogger): GenerationEntity? {
-    val args = arguments<Generate>()
-
-    val entityType = args[Generate::entityType]!!
-    val name = args[Generate::name]!!
-    val docUrl = args[Generate::docUrl]!!
-    val entries = args[Generate::entries]!!
-    val kDoc = args[Generate::kDoc]?.toKDoc()
-    val valueName = args[Generate::valueName] ?: "value"
-    val bitFlagsDescriptor = args[Generate::bitFlagsDescriptor]?.toBitFlagDescription()
-        ?: BitFlagDescription()
-    val hasCombinerFlag = args[Generate::hasCombinerFlag] ?: false
-    val additionalImports = args[Generate::additionalImports] ?: emptyList()
+internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KSAnnotation): GenerationEntity? {
+    val args = annotation.arguments<Generate>()
 
     fun areNotSpecified(vararg disallowedParameters: KProperty1<Generate, Any>) = disallowedParameters
         .filterNot { param -> args.isDefault(param) }
-        .onEach { logger.error("${it.name} is not allowed for entityType $entityType", symbol = this) }
+        .onEach { logger.error("${it.name} is not allowed for entityType $entityType", annotation) }
         .isEmpty()
 
     val validParameters = when (entityType) {
@@ -89,91 +78,84 @@ internal fun KSAnnotation.toGenerationEntityOrNull(logger: KSPLogger): Generatio
         INT_FLAGS, BIT_SET_FLAGS -> areNotSpecified(Generate::valueName)
     }
 
-    val mappedEntries = entries
-        .mapNotNull { it.toEntryOrNull(entityType, logger) }
-        .takeIf { it.size == entries.size } ?: return null // there were errors while mapping entries
-
-    return if (!validParameters) null else when (entityType) {
-        INT_KORD_ENUM ->
-            KordEnum(name, kDoc, docUrl, valueName, mappedEntries, additionalImports, KordEnum.ValueType.INT)
-        STRING_KORD_ENUM ->
-            KordEnum(name, kDoc, docUrl, valueName, mappedEntries, additionalImports, KordEnum.ValueType.STRING)
-        INT_FLAGS -> BitFlags(
-            name, kDoc, docUrl, mappedEntries, additionalImports, BitFlags.ValueType.INT, bitFlagsDescriptor,
-            hasCombinerFlag,
-        )
-        BIT_SET_FLAGS -> BitFlags(
-            name, kDoc, docUrl, mappedEntries, additionalImports, BitFlags.ValueType.BIT_SET, bitFlagsDescriptor,
-            hasCombinerFlag,
-        )
+    val entries = entries zip args[Generate::entries]!!
+    val mappedEntries = entries.mapNotNull { (entry, annotation) ->
+        entry.toGenerationEntityEntryOrNull(entityType, logger, annotation)
     }
-}
 
-private fun String.toKDoc() = trimIndent().ifBlank { null }
-
-private fun KSAnnotation.toBitFlagDescription(): BitFlagDescription {
-    val args = arguments<BitFlagDescription>()
-
-    val objectName = args[BitFlagDescription::objectName] ?: "obj"
-    val flagsFieldName = args[BitFlagDescription::flagsFieldName] ?: "flags"
-    val article = args[BitFlagDescription::article] ?: "a"
-    val name = args[BitFlagDescription::name] ?: "flag"
-
-    return BitFlagDescription(objectName, flagsFieldName, article, name)
+    return if (!validParameters || mappedEntries.size != entries.size) {
+        null
+    } else {
+        val kDoc = kDoc.toKDoc()
+        // because of https://github.com/google/ksp/pull/1330#issuecomment-1616066129
+        val additionalImports = if (args.isDefault(Generate::additionalImports)) {
+            emptyList()
+        } else {
+            additionalImports.toList()
+        }
+        when (entityType) {
+            INT_KORD_ENUM ->
+                KordEnum(name, kDoc, docUrl, valueName, mappedEntries, additionalImports, KordEnum.ValueType.INT)
+            STRING_KORD_ENUM ->
+                KordEnum(name, kDoc, docUrl, valueName, mappedEntries, additionalImports, KordEnum.ValueType.STRING)
+            INT_FLAGS -> BitFlags(
+                name, kDoc, docUrl, mappedEntries, additionalImports, BitFlags.ValueType.INT, bitFlagsDescriptor,
+                hasCombinerFlag,
+            )
+            BIT_SET_FLAGS -> BitFlags(
+                name, kDoc, docUrl, mappedEntries, additionalImports, BitFlags.ValueType.BIT_SET, bitFlagsDescriptor,
+                hasCombinerFlag,
+            )
+        }
+    }
 }
 
 private val ENTRY_VALUE_PARAMETERS = setOf(Entry::intValue, Entry::longValue, Entry::stringValue)
 
 /**
- * Maps [KSAnnotation] for [Generate.Entry] to [GenerationEntity.Entry].
+ * Maps [Generate.Entry] to [GenerationEntity.Entry].
  *
  * Returns `null` if mapping fails.
  */
-private fun KSAnnotation.toEntryOrNull(entityType: EntityType, logger: KSPLogger): GenerationEntity.Entry? {
-    val args = arguments<Entry>()
+private fun Entry.toGenerationEntityEntryOrNull(
+    entityType: EntityType,
+    logger: KSPLogger,
+    annotation: KSAnnotation,
+): GenerationEntity.Entry? {
+    val args = annotation.arguments<Entry>()
 
-    val name = args[Entry::name]!!
-    val kDoc = args[Entry::kDoc]?.toKDoc()
-    val deprecated = args[Entry::deprecated]?.toDeprecated()
-        .takeUnless { args.isDefault(Entry::deprecated) }
-    val additionalOptInMarkerAnnotations = args[Entry::additionalOptInMarkerAnnotations] ?: emptyList()
-
-    fun <T : Any, R> KProperty1<Entry, T>.ifValid(getter: AnnotationArguments<Entry>.(KProperty1<Entry, T>) -> R): R? {
+    fun <T : Any, R> KProperty1<Entry, T>.ifValid(getter: () -> R): R? {
         val hasDisallowedParameters = ENTRY_VALUE_PARAMETERS
             .filterNot { param -> param == this || args.isDefault(param) }
-            .onEach { logger.error("${it.name} is not allowed for entityType $entityType", symbol = this@KSAnnotation) }
+            .onEach { logger.error("${it.name} is not allowed for entityType $entityType", annotation) }
             .isNotEmpty()
         val hasRequiredParameter = !args.isDefault(parameter = this)
         if (!hasRequiredParameter) {
-            logger.error("Missing ${this.name} for entityType $entityType", symbol = this@KSAnnotation)
+            logger.error("Missing ${this.name} for entityType $entityType", annotation)
         }
-        return if (hasDisallowedParameters || !hasRequiredParameter) null else args.getter(this)
+        return if (hasDisallowedParameters || !hasRequiredParameter) null else getter()
     }
 
     val value = when (entityType) {
-        INT_KORD_ENUM, INT_FLAGS -> Entry::intValue.ifValid { get(it) }
-        STRING_KORD_ENUM -> Entry::stringValue.ifValid { get(it) }
-        BIT_SET_FLAGS -> Entry::longValue.ifValid { get(it) }
+        INT_KORD_ENUM, INT_FLAGS -> Entry::intValue.ifValid { intValue }
+        STRING_KORD_ENUM -> Entry::stringValue.ifValid { stringValue }
+        BIT_SET_FLAGS -> Entry::longValue.ifValid { longValue }
     } ?: return null
 
-    return GenerationEntity.Entry(name, kDoc, value, deprecated, additionalOptInMarkerAnnotations)
-}
-
-/** Maps [KSAnnotation] to [Deprecated]. */
-private fun KSAnnotation.toDeprecated(): Deprecated {
-    val args = arguments<Deprecated>()
-    return Deprecated(
-        message = args[Deprecated::message]!!,
-        replaceWith = args[Deprecated::replaceWith]?.toReplaceWith() ?: ReplaceWith("", imports = emptyArray()),
-        level = args[Deprecated::level] ?: WARNING,
-    )
-}
-
-/** Maps [KSAnnotation] to [ReplaceWith]. */
-private fun KSAnnotation.toReplaceWith(): ReplaceWith {
-    val args = arguments<ReplaceWith>()
-    return ReplaceWith(
-        expression = args[ReplaceWith::expression]!!,
-        imports = args[ReplaceWith::imports]!!.toTypedArray(),
+    return GenerationEntity.Entry(
+        name,
+        kDoc.toKDoc(),
+        value,
+        // copy annotation, the proxy instance ksp creates does not implement
+        // java.lang.annotation.Annotation.annotationType() which is needed for kotlinpoet
+        deprecated
+            .run { Deprecated(message, replaceWith.run { ReplaceWith(expression, *imports) }, level) }
+            .takeUnless { args.isDefault(Entry::deprecated) },
+        // because of https://github.com/google/ksp/pull/1330#issuecomment-1616066129
+        if (args.isDefault(Entry::additionalOptInMarkerAnnotations)) {
+            emptyList()
+        } else {
+            additionalOptInMarkerAnnotations.toList()
+        },
     )
 }
