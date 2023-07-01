@@ -10,7 +10,6 @@ import dev.kord.core.on
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.*
 import dev.kord.gateway.builder.Shards
-import dev.kord.rest.request.KtorRequestHandler
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
 import kotlinx.atomicfu.atomic
@@ -55,7 +54,7 @@ class KordEventDropTest {
         resources = ClientResources("token", Snowflake(0u), Shards(1), maxConcurrency = 1, HttpClient(), EntitySupplyStrategy.cache),
         cache = DataCache.none(),
         DefaultMasterGateway(mapOf(0 to SpammyGateway)),
-        RestClient(KtorRequestHandler("token", clock = Clock.System)),
+        RestClient(HttpClient()),
         Snowflake("420"),
         MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
         Dispatchers.Default,

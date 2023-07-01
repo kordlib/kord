@@ -2094,7 +2094,6 @@ public abstract class dev/kord/core/builder/kord/BaseKordBuilder {
 	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
 	public final fun getStackTraceRecovery ()Z
 	public final fun getToken ()Ljava/lang/String;
-	public final fun requestHandler (Lkotlin/jvm/functions/Function1;)V
 	public final fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDefaultDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
 	public final fun setDefaultStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)V
@@ -2134,13 +2133,10 @@ public abstract class dev/kord/core/builder/kord/RestOnlyBuilder {
 	public final fun build ()Ldev/kord/core/Kord;
 	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getDefaultDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
-	protected final fun getHandlerBuilder ()Lkotlin/jvm/functions/Function1;
 	public final fun getHttpClient ()Lio/ktor/client/HttpClient;
 	protected abstract fun getToken ()Ljava/lang/String;
-	public final fun requestHandler (Lkotlin/jvm/functions/Function1;)V
 	public abstract fun setApplicationId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setDefaultDispatcher (Lkotlinx/coroutines/CoroutineDispatcher;)V
-	protected final fun setHandlerBuilder (Lkotlin/jvm/functions/Function1;)V
 	public final fun setHttpClient (Lio/ktor/client/HttpClient;)V
 }
 

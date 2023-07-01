@@ -23,6 +23,7 @@ kotlin {
 
                 api(libs.kord.cache.api)
                 api(libs.kord.cache.map)
+                api(libs.ktor.client.mock)
             }
         }
         jvmTest {

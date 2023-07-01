@@ -22,9 +22,12 @@ import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.rest.json.response.BotGatewayResponse
 import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
 import dev.kord.rest.request.*
+import dev.kord.rest.route.Routes
 import dev.kord.rest.service.RestClient
 import io.ktor.client.*
+import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
+import io.ktor.client.request.get
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.HttpHeaders.Authorization
@@ -169,7 +172,7 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
      * Requests the gateway info for the bot, or throws a [KordInitializationException] when something went wrong.
      */
     private suspend fun HttpClient.getGatewayInfo(): BotGatewayResponse {
-        val response = get("${Route.baseUrl}${Route.GatewayBotGet.path}") {
+        val response = get(Routes.Gateway.Bot) {
             header(UserAgent, KordConstants.USER_AGENT)
             header(Authorization, "Bot $token")
         }

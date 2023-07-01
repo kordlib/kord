@@ -4,6 +4,11 @@ import dev.kord.common.entity.Snowflake
 import io.ktor.resources.*
 
 public class Routes {
+    @Resource("/gateway")
+    public class Gateway {
+        @Resource("bot")
+        public class Bot
+    }
     @Resource("/users")
     public class Users {
         @Resource("@me")

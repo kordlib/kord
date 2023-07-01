@@ -48,7 +48,7 @@ public abstract class RestOnlyBuilder {
             EntitySupplyStrategy.rest,
         )
 
-        val rest = RestClient(httpClient)
+        val rest = RestClient(httpClient!!)
 
         return Kord(
             resources = resources,

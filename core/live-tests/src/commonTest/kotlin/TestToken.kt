@@ -6,12 +6,13 @@ import dev.kord.core.builder.kord.getBotIdFromToken
 import dev.kord.core.cache.registerKordData
 import dev.kord.core.gateway.DefaultMasterGateway
 import dev.kord.core.gateway.handler.DefaultGatewayEventInterceptor
-import dev.kord.core.regression.CrashingHandler
 import dev.kord.core.regression.FakeGateway
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.gateway.builder.Shards
 import dev.kord.rest.service.RestClient
 import dev.kord.test.getEnv
+import io.ktor.client.*
+import io.ktor.client.engine.mock.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -31,7 +32,7 @@ suspend inline fun withKord(block: (kord: Kord) -> Unit) {
         resources,
         MapDataCache().also { it.registerKordData() },
         DefaultMasterGateway(mapOf(0 to FakeGateway)),
-        RestClient(CrashingHandler(resources.httpClient, resources.token)),
+        RestClient(HttpClient(MockEngine)),
         getBotIdFromToken(token),
         MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE),
         Dispatchers.Default,
