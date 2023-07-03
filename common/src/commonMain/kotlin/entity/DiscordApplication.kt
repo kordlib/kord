@@ -1,5 +1,5 @@
 @file:Generate(
-    INT_FLAGS, name = "ApplicationFlag",
+    INT_FLAGS, name = "ApplicationFlag", wasEnum = true,
     docUrl = "https://discord.com/developers/docs/resources/application#application-object-application-flags",
     entries = [
         Entry(name = "ApplicationAutoModerationRuleCreateBadge", intValue = 1 shl 6,

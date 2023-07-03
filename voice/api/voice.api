@@ -246,15 +246,25 @@ public final class dev/kord/voice/FrameInterceptorConfiguration {
 
 public abstract class dev/kord/voice/SpeakingFlag {
 	public static final field Companion Ldev/kord/voice/SpeakingFlag$Companion;
+	public static final field Microphone Ldev/kord/voice/SpeakingFlag;
+	public static final field Priority Ldev/kord/voice/SpeakingFlag;
+	public static final field Soundshare Ldev/kord/voice/SpeakingFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
+	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun hashCode ()I
+	public final fun name ()Ljava/lang/String;
+	public final fun ordinal ()I
 	public final fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
+	public static fun values ()[Ldev/kord/voice/SpeakingFlag;
 }
 
 public final class dev/kord/voice/SpeakingFlag$Companion {
 	public final fun getEntries ()Ljava/util/List;
+	public fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
+	public fun values ()[Ldev/kord/voice/SpeakingFlag;
 }
 
 public final class dev/kord/voice/SpeakingFlag$Microphone : dev/kord/voice/SpeakingFlag {

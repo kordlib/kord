@@ -128,6 +128,9 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             }
         }
         addEntityEqualsHashCodeToString()
+        if (wasEnum) {
+            addDeprecatedEntityEnumArtifacts()
+        }
         addClass("Unknown") {
             addSharedUnknownClassContent()
             if (valueType == BIT_SET) {
@@ -158,6 +161,9 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                         addStatement("acc·+·value.$valueName")
                     }
                 }
+            }
+            if (wasEnum) {
+                addDeprecatedEntityCompanionObjectEnumArtifacts()
             }
         }
     }

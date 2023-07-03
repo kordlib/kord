@@ -5,11 +5,15 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.Class
 import dev.kord.common.`annotation`.KordUnsafe
+import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -191,6 +195,40 @@ public sealed class SystemChannelFlag(
             "SystemChannelFlag.${this::class.simpleName}(code=$code)"
 
     /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "SystemChannelFlag is no longer an enum class. Deprecated without replacement.")
+    public fun name(): String = this::class.simpleName!!
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "SystemChannelFlag is no longer an enum class. Deprecated without replacement.")
+    public fun ordinal(): Int = when (this) {
+        SuppressJoinNotifications -> 0
+        SuppressPremiumSubscriptions -> 1
+        SuppressGuildReminderNotifications -> 2
+        SuppressJoinNotificationReplies -> 3
+        SuppressRoleSubscriptionPurchaseNotifications -> 4
+        SuppressRoleSubscriptionPurchaseNotificationReplies -> 5
+        is Unknown -> Int.MAX_VALUE
+    }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "SystemChannelFlag is no longer an enum class.",
+        replaceWith = ReplaceWith(expression = "SystemChannelFlag::class.java", imports =
+                    arrayOf("dev.kord.common.entity.SystemChannelFlag")),
+    )
+    public fun getDeclaringClass(): Class<SystemChannelFlag>? = SystemChannelFlag::class.java
+
+    /**
      * An unknown [SystemChannelFlag].
      *
      * This is used as a fallback for [SystemChannelFlag]s that haven't been added to Kord yet.
@@ -244,5 +282,80 @@ public sealed class SystemChannelFlag(
             )
         }
 
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SuppressJoinNotifications: SystemChannelFlag = SuppressJoinNotifications
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SuppressPremiumSubscriptions: SystemChannelFlag = SuppressPremiumSubscriptions
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SuppressGuildReminderNotifications: SystemChannelFlag =
+                SuppressGuildReminderNotifications
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SuppressJoinNotificationReplies: SystemChannelFlag =
+                SuppressJoinNotificationReplies
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SuppressRoleSubscriptionPurchaseNotifications: SystemChannelFlag =
+                SuppressRoleSubscriptionPurchaseNotifications
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SuppressRoleSubscriptionPurchaseNotificationReplies: SystemChannelFlag =
+                SuppressRoleSubscriptionPurchaseNotificationReplies
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
+        @Deprecated(message =
+                "SystemChannelFlag is no longer an enum class. Deprecated without replacement.")
+        @JvmStatic
+        public open fun valueOf(name: String): SystemChannelFlag = when (name) {
+            "SuppressJoinNotifications" -> SuppressJoinNotifications
+            "SuppressPremiumSubscriptions" -> SuppressPremiumSubscriptions
+            "SuppressGuildReminderNotifications" -> SuppressGuildReminderNotifications
+            "SuppressJoinNotificationReplies" -> SuppressJoinNotificationReplies
+            "SuppressRoleSubscriptionPurchaseNotifications" -> SuppressRoleSubscriptionPurchaseNotifications
+            "SuppressRoleSubscriptionPurchaseNotificationReplies" -> SuppressRoleSubscriptionPurchaseNotificationReplies
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
+        @Deprecated(
+            message = "SystemChannelFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "SystemChannelFlag.entries.toTypedArray()",
+                        imports = arrayOf("dev.kord.common.entity.SystemChannelFlag")),
+        )
+        @JvmStatic
+        public open fun values(): Array<SystemChannelFlag> = entries.toTypedArray()
     }
 }

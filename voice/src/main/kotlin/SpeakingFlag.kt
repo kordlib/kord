@@ -1,5 +1,5 @@
 @file:Generate(
-    INT_FLAGS, name = "SpeakingFlag",
+    INT_FLAGS, name = "SpeakingFlag", wasEnum = true,
     docUrl = "https://discord.com/developers/docs/topics/voice-connections#speaking",
     entries = [
         Entry(name = "Microphone", intValue = 1 shl 0),

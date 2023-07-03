@@ -5,11 +5,15 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.Class
 import dev.kord.common.`annotation`.KordUnsafe
+import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -183,6 +187,43 @@ public sealed class ActivityFlag(
             "ActivityFlag.${this::class.simpleName}(code=$code)"
 
     /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "ActivityFlag is no longer an enum class. Deprecated without replacement.")
+    public fun name(): String = this::class.simpleName!!
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "ActivityFlag is no longer an enum class. Deprecated without replacement.")
+    public fun ordinal(): Int = when (this) {
+        Instance -> 0
+        Join -> 1
+        Spectate -> 2
+        JoinRequest -> 3
+        Sync -> 4
+        Play -> 5
+        PartyPrivacyFriends -> 6
+        PartyPrivacVoiceChannel -> 7
+        Embed -> 8
+        is Unknown -> Int.MAX_VALUE
+    }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "ActivityFlag is no longer an enum class.",
+        replaceWith = ReplaceWith(expression = "ActivityFlag::class.java", imports =
+                    arrayOf("dev.kord.common.entity.ActivityFlag")),
+    )
+    public fun getDeclaringClass(): Class<ActivityFlag>? = ActivityFlag::class.java
+
+    /**
      * An unknown [ActivityFlag].
      *
      * This is used as a fallback for [ActivityFlag]s that haven't been added to Kord yet.
@@ -227,5 +268,100 @@ public sealed class ActivityFlag(
             )
         }
 
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Instance: ActivityFlag = Instance
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Join: ActivityFlag = Join
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Spectate: ActivityFlag = Spectate
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val JoinRequest: ActivityFlag = JoinRequest
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Sync: ActivityFlag = Sync
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Play: ActivityFlag = Play
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val PartyPrivacyFriends: ActivityFlag = PartyPrivacyFriends
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val PartyPrivacVoiceChannel: ActivityFlag = PartyPrivacVoiceChannel
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Embed: ActivityFlag = Embed
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
+        @Deprecated(message =
+                "ActivityFlag is no longer an enum class. Deprecated without replacement.")
+        @JvmStatic
+        public open fun valueOf(name: String): ActivityFlag = when (name) {
+            "Instance" -> Instance
+            "Join" -> Join
+            "Spectate" -> Spectate
+            "JoinRequest" -> JoinRequest
+            "Sync" -> Sync
+            "Play" -> Play
+            "PartyPrivacyFriends" -> PartyPrivacyFriends
+            "PartyPrivacVoiceChannel" -> PartyPrivacVoiceChannel
+            "Embed" -> Embed
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
+        @Deprecated(
+            message = "ActivityFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "ActivityFlag.entries.toTypedArray()", imports =
+                        arrayOf("dev.kord.common.entity.ActivityFlag")),
+        )
+        @JvmStatic
+        public open fun values(): Array<ActivityFlag> = entries.toTypedArray()
     }
 }

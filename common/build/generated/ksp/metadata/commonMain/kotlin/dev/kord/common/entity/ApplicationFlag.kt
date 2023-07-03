@@ -5,11 +5,15 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.Class
 import dev.kord.common.`annotation`.KordUnsafe
+import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -190,6 +194,44 @@ public sealed class ApplicationFlag(
             "ApplicationFlag.${this::class.simpleName}(code=$code)"
 
     /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "ApplicationFlag is no longer an enum class. Deprecated without replacement.")
+    public fun name(): String = this::class.simpleName!!
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "ApplicationFlag is no longer an enum class. Deprecated without replacement.")
+    public fun ordinal(): Int = when (this) {
+        ApplicationAutoModerationRuleCreateBadge -> 0
+        GatewayPresence -> 1
+        GatewayPresenceLimited -> 2
+        GatewayGuildMembers -> 3
+        GatewayGuildMembersLimited -> 4
+        VerificationPendingGuildLimit -> 5
+        Embedded -> 6
+        GatewayMessageContent -> 7
+        GatewayMessageContentLimited -> 8
+        ApplicationCommandBadge -> 9
+        is Unknown -> Int.MAX_VALUE
+    }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "ApplicationFlag is no longer an enum class.",
+        replaceWith = ReplaceWith(expression = "ApplicationFlag::class.java", imports =
+                    arrayOf("dev.kord.common.entity.ApplicationFlag")),
+    )
+    public fun getDeclaringClass(): Class<ApplicationFlag>? = ApplicationFlag::class.java
+
+    /**
      * An unknown [ApplicationFlag].
      *
      * This is used as a fallback for [ApplicationFlag]s that haven't been added to Kord yet.
@@ -279,5 +321,109 @@ public sealed class ApplicationFlag(
             )
         }
 
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val ApplicationAutoModerationRuleCreateBadge: ApplicationFlag =
+                ApplicationAutoModerationRuleCreateBadge
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val GatewayPresence: ApplicationFlag = GatewayPresence
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val GatewayPresenceLimited: ApplicationFlag = GatewayPresenceLimited
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val GatewayGuildMembers: ApplicationFlag = GatewayGuildMembers
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val GatewayGuildMembersLimited: ApplicationFlag = GatewayGuildMembersLimited
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val VerificationPendingGuildLimit: ApplicationFlag = VerificationPendingGuildLimit
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Embedded: ApplicationFlag = Embedded
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val GatewayMessageContent: ApplicationFlag = GatewayMessageContent
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val GatewayMessageContentLimited: ApplicationFlag = GatewayMessageContentLimited
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val ApplicationCommandBadge: ApplicationFlag = ApplicationCommandBadge
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
+        @Deprecated(message =
+                "ApplicationFlag is no longer an enum class. Deprecated without replacement.")
+        @JvmStatic
+        public open fun valueOf(name: String): ApplicationFlag = when (name) {
+            "ApplicationAutoModerationRuleCreateBadge" -> ApplicationAutoModerationRuleCreateBadge
+            "GatewayPresence" -> GatewayPresence
+            "GatewayPresenceLimited" -> GatewayPresenceLimited
+            "GatewayGuildMembers" -> GatewayGuildMembers
+            "GatewayGuildMembersLimited" -> GatewayGuildMembersLimited
+            "VerificationPendingGuildLimit" -> VerificationPendingGuildLimit
+            "Embedded" -> Embedded
+            "GatewayMessageContent" -> GatewayMessageContent
+            "GatewayMessageContentLimited" -> GatewayMessageContentLimited
+            "ApplicationCommandBadge" -> ApplicationCommandBadge
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
+        @Deprecated(
+            message = "ApplicationFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "ApplicationFlag.entries.toTypedArray()", imports
+                        = arrayOf("dev.kord.common.entity.ApplicationFlag")),
+        )
+        @JvmStatic
+        public open fun values(): Array<ApplicationFlag> = entries.toTypedArray()
     }
 }

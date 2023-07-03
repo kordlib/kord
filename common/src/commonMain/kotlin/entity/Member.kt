@@ -1,5 +1,5 @@
 @file:Generate(
-    INT_FLAGS, name = "GuildMemberFlag",
+    INT_FLAGS, name = "GuildMemberFlag", wasEnum = true,
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags",
     entries = [
         Entry(name = "DidRejoin", intValue = 1 shl 0, kDoc = "Member has left and rejoined the guild"),

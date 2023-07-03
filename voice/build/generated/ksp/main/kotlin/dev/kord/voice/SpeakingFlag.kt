@@ -5,11 +5,15 @@
 
 package dev.kord.voice
 
+import dev.kord.common.Class
 import dev.kord.common.`annotation`.KordUnsafe
+import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -183,6 +187,37 @@ public sealed class SpeakingFlag(
             "SpeakingFlag.${this::class.simpleName}(code=$code)"
 
     /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "SpeakingFlag is no longer an enum class. Deprecated without replacement.")
+    public fun name(): String = this::class.simpleName!!
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "SpeakingFlag is no longer an enum class. Deprecated without replacement.")
+    public fun ordinal(): Int = when (this) {
+        Microphone -> 0
+        Soundshare -> 1
+        Priority -> 2
+        is Unknown -> Int.MAX_VALUE
+    }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "SpeakingFlag is no longer an enum class.",
+        replaceWith = ReplaceWith(expression = "SpeakingFlag::class.java", imports =
+                    arrayOf("dev.kord.voice.SpeakingFlag")),
+    )
+    public fun getDeclaringClass(): Class<SpeakingFlag>? = SpeakingFlag::class.java
+
+    /**
      * An unknown [SpeakingFlag].
      *
      * This is used as a fallback for [SpeakingFlag]s that haven't been added to Kord yet.
@@ -209,5 +244,52 @@ public sealed class SpeakingFlag(
             )
         }
 
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Microphone: SpeakingFlag = Microphone
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Soundshare: SpeakingFlag = Soundshare
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Priority: SpeakingFlag = Priority
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
+        @Deprecated(message =
+                "SpeakingFlag is no longer an enum class. Deprecated without replacement.")
+        @JvmStatic
+        public open fun valueOf(name: String): SpeakingFlag = when (name) {
+            "Microphone" -> Microphone
+            "Soundshare" -> Soundshare
+            "Priority" -> Priority
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
+        @Deprecated(
+            message = "SpeakingFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "SpeakingFlag.entries.toTypedArray()", imports =
+                        arrayOf("dev.kord.voice.SpeakingFlag")),
+        )
+        @JvmStatic
+        public open fun values(): Array<SpeakingFlag> = entries.toTypedArray()
     }
 }

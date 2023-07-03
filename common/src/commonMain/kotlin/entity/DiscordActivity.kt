@@ -12,7 +12,7 @@
 )
 
 @file:Generate(
-    INT_FLAGS, name = "ActivityFlag",
+    INT_FLAGS, name = "ActivityFlag", wasEnum = true,
     docUrl = "https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags",
     entries = [
         Entry(name = "Instance", intValue = 1 shl 0),

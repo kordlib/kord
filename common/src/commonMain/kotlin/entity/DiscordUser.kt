@@ -11,7 +11,7 @@
 )
 
 @file:Generate(
-    INT_FLAGS, name = "UserFlag",
+    INT_FLAGS, name = "UserFlag", wasEnum = true,
     docUrl = "https://discord.com/developers/docs/resources/user#user-object-user-flags",
     entries = [
         Entry("DiscordEmployee", intValue = 1 shl 0, kDoc = "Discord Employee"),
