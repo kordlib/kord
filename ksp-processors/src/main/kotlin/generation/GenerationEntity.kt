@@ -2,7 +2,6 @@ package dev.kord.ksp.generation
 
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSAnnotation
-import com.squareup.kotlinpoet.ClassName
 import dev.kord.ksp.AnnotationArguments.Companion.arguments
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.*
@@ -13,12 +12,11 @@ import kotlin.reflect.KProperty1
 
 /** Mapping of [Generate] that is easier to work with in [GenerationProcessor]. */
 internal sealed class GenerationEntity(
-    val name: String,
+    val entityName: String,
     val kDoc: String?,
     val docUrl: String,
     val valueName: String,
     val entries: List<Entry>,
-    val additionalImports: List<String>,
 ) {
     abstract val valueType: ValueType
 
@@ -26,18 +24,17 @@ internal sealed class GenerationEntity(
 
     class KordEnum(
         name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
-        additionalImports: List<String>,
         override val valueType: ValueType,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries, additionalImports) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
         enum class ValueType : GenerationEntity.ValueType { INT, STRING }
     }
 
     class BitFlags(
-        name: String, kDoc: String?, docUrl: String, entries: List<Entry>, additionalImports: List<String>,
+        name: String, kDoc: String?, docUrl: String, entries: List<Entry>,
         override val valueType: ValueType,
         val flagsDescriptor: BitFlagDescription,
         val hasCombinerFlag: Boolean,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName = "code", entries, additionalImports) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName = "code", entries) {
         enum class ValueType : GenerationEntity.ValueType { INT, BIT_SET }
     }
 
@@ -49,14 +46,6 @@ internal sealed class GenerationEntity(
         val additionalOptInMarkerAnnotations: List<String>,
     )
 }
-
-internal class ProcessingContext(
-    val packageName: String,
-    val entityCN: ClassName,
-    val valueCN: ClassName,
-    val valueFormat: String,
-    val relevantEntriesForSerializerAndCompanion: List<GenerationEntity.Entry>,
-)
 
 private fun String.toKDoc() = trimIndent().ifBlank { null }
 
@@ -87,24 +76,13 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
         null
     } else {
         val kDoc = kDoc.toKDoc()
-        // because of https://github.com/google/ksp/pull/1330#issuecomment-1616066129
-        val additionalImports = if (args.isDefault(Generate::additionalImports)) {
-            emptyList()
-        } else {
-            additionalImports.toList()
-        }
         when (entityType) {
-            INT_KORD_ENUM ->
-                KordEnum(name, kDoc, docUrl, valueName, mappedEntries, additionalImports, KordEnum.ValueType.INT)
-            STRING_KORD_ENUM ->
-                KordEnum(name, kDoc, docUrl, valueName, mappedEntries, additionalImports, KordEnum.ValueType.STRING)
-            INT_FLAGS -> BitFlags(
-                name, kDoc, docUrl, mappedEntries, additionalImports, BitFlags.ValueType.INT, bitFlagsDescriptor,
-                hasCombinerFlag,
-            )
+            INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT)
+            STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
+            INT_FLAGS ->
+                BitFlags(name, kDoc, docUrl, mappedEntries, BitFlags.ValueType.INT, bitFlagsDescriptor, hasCombinerFlag)
             BIT_SET_FLAGS -> BitFlags(
-                name, kDoc, docUrl, mappedEntries, additionalImports, BitFlags.ValueType.BIT_SET, bitFlagsDescriptor,
-                hasCombinerFlag,
+                name, kDoc, docUrl, mappedEntries, BitFlags.ValueType.BIT_SET, bitFlagsDescriptor, hasCombinerFlag,
             )
         }
     }

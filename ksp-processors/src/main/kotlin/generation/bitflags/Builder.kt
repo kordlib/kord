@@ -1,29 +1,28 @@
-package dev.kord.ksp.generation.generator.flags
+package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.TypeSpec
-import dev.kord.ksp.addClass
-import dev.kord.ksp.addFunction
-import dev.kord.ksp.addProperty
+import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
-import dev.kord.ksp.generation.ProcessingContext
-import dev.kord.ksp.primaryConstructor
+import dev.kord.ksp.generation.shared.GenerationContext
 
-context(BitFlags, ProcessingContext)
-internal fun TypeSpec.Builder.addBuilder(builderName: ClassName, collectionName: ClassName) {
-    addClass(builderName) {
+context(BitFlags, GenerationContext)
+internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
+    addClass("Builder") {
         primaryConstructor {
-            addCodeParameter()
+            addParameter(valueName, valueCN) {
+                defaultValue(valueType.defaultParameterCode())
+            }
         }
         addProperty(valueName, valueCN, PRIVATE) {
             mutable()
             initializer(valueName)
         }
 
-        val builder = builderName.simpleName
+        val builder = "Builder"
         addFunction("unaryPlus") {
             addModifiers(PUBLIC, OPERATOR)
             receiver(entityCN)
@@ -72,7 +71,7 @@ internal fun TypeSpec.Builder.addBuilder(builderName: ClassName, collectionName:
 
         addFunction("flags") {
             returns(collectionName)
-            addCode("return %T(code)", collectionName)
+            addStatement("return %T(code)", collectionName)
         }
     }
 }

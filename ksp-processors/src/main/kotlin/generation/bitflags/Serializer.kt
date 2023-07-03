@@ -1,31 +1,29 @@
-package dev.kord.ksp.generation.generator.flags
+package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeSpec
-import dev.kord.ksp.*
+import dev.kord.ksp.addFunction
+import dev.kord.ksp.addObject
+import dev.kord.ksp.addParameter
+import dev.kord.ksp.addProperty
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
-import dev.kord.ksp.generation.K_SERIALIZER
-import dev.kord.ksp.generation.PRIMITIVE_SERIAL_DESCRIPTOR
-import dev.kord.ksp.generation.ProcessingContext
-import dev.kord.ksp.generation.toPrimitiveKind
-import kotlinx.serialization.Serializable
+import dev.kord.ksp.generation.shared.GenerationContext
+import dev.kord.ksp.generation.shared.K_SERIALIZER
+import dev.kord.ksp.generation.shared.PRIMITIVE_SERIAL_DESCRIPTOR
+import dev.kord.ksp.generation.shared.toPrimitiveKind
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 private val SERIALIZER_METHOD = MemberName("kotlinx.serialization.builtins", "serializer")
 
-context(BitFlags, ProcessingContext, FileSpec.Builder)
+context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addSerializer(collectionName: ClassName) {
-    addAnnotation<Serializable> {
-        addMember("with·=·%T.Serializer::class", collectionName)
-    }
     addObject("Serializer") {
         addModifiers(INTERNAL)
         addSuperinterface(K_SERIALIZER.parameterizedBy(collectionName))

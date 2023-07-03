@@ -1,57 +1,43 @@
-package dev.kord.ksp.generation.generator.flags
+package dev.kord.ksp.generation.bitflags
 
+import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.jvm.jvmName
+import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.ksp.*
-import dev.kord.ksp.addClass
-import dev.kord.ksp.generation.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
+import dev.kord.ksp.generation.shared.*
+import kotlinx.serialization.Serializable
 
-private typealias FileSpecBuilder = FileSpec.Builder
-
-private fun ClassName.flagsClass() = peerClass(simpleName + 's')
-private val CONTRACT = MemberName("kotlin.contracts", "contract")
-private val EXACTLY_ONCE = MemberName("kotlin.contracts.InvocationKind", "EXACTLY_ONCE")
-
-context(BitFlags, ProcessingContext, FileSpecBuilder)
-internal fun TypeSpec.Builder.addBitFlags() = addEntity {
-    primaryConstructor {
-        addParameter(valueName, valueCN)
-    }
-    if (valueType == BIT_SET) {
-        addConstructor {
-            addModifiers(PROTECTED)
-            addParameter("values", LONG, VARARG)
-            callThisConstructor(CodeBlock.of("%T(values)", DISCORD_BIT_SET))
-        }
-    }
-    val collectionName = entityCN.flagsClass()
+internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGenerationEntity(originatingFile) {
+    val collectionName = ClassName(packageName, entityName + 's')
     val builderName = collectionName.nestedClass("Builder")
-    this@FileSpecBuilder.addClass(collectionName) {
-        addFlagsDoc(collectionName, builderName)
-
+    addClass(collectionName) {
+        addCollectionDoc(collectionName, builderName)
+        addAnnotation<Serializable> {
+            addMember("with·=·%T.Serializer::class", collectionName)
+        }
         primaryConstructor {
-            addCodeParameter()
+            addParameter(valueName, valueCN) {
+                defaultValue(valueType.defaultParameterCode())
+            }
         }
         addProperty(valueName, valueCN, PUBLIC) {
             initializer(valueName)
         }
-
         addProperty("values", type = SET.parameterizedBy(entityCN), PUBLIC) {
             getter {
                 addStatement("return %T.entries.filter·{·it·in·this·}.toSet()", entityCN)
             }
         }
-
         addFunction("contains") {
             addModifiers(PUBLIC, OPERATOR)
             addParameter("flag", entityCN)
             returns<Boolean>()
-
             addStatement(
                 when (valueType) {
                     INT -> "return this.code·and·flag.code·==·flag.code"
@@ -63,7 +49,6 @@ internal fun TypeSpec.Builder.addBitFlags() = addEntity {
             addModifiers(PUBLIC, OPERATOR)
             addParameter("flags", collectionName)
             returns<Boolean>()
-
             addStatement(
                 when (valueType) {
                     INT -> "return this.code·and·flags.code·==·flags.code"
@@ -71,12 +56,10 @@ internal fun TypeSpec.Builder.addBitFlags() = addEntity {
                 }
             )
         }
-
         addFunction("plus") {
             addModifiers(PUBLIC, OPERATOR)
             addParameter("flag", entityCN)
             returns(collectionName)
-
             addStatement(
                 when (valueType) {
                     INT -> "return %T(this.code·or·flag.code)"
@@ -89,7 +72,6 @@ internal fun TypeSpec.Builder.addBitFlags() = addEntity {
             addModifiers(PUBLIC, OPERATOR)
             addParameter("flags", collectionName)
             returns(collectionName)
-
             addStatement(
                 when (valueType) {
                     INT -> "return %T(this.code·or·flags.code)"
@@ -98,12 +80,10 @@ internal fun TypeSpec.Builder.addBitFlags() = addEntity {
                 collectionName,
             )
         }
-
         addFunction("minus") {
             addModifiers(PUBLIC, OPERATOR)
             addParameter("flag", entityCN)
             returns(collectionName)
-
             addStatement(
                 when (valueType) {
                     INT -> "return %T(this.code·and·flag.code.inv())"
@@ -116,7 +96,6 @@ internal fun TypeSpec.Builder.addBitFlags() = addEntity {
             addModifiers(PUBLIC, OPERATOR)
             addParameter("flags", collectionName)
             returns(collectionName)
-
             addStatement(
                 when (valueType) {
                     INT -> "return %T(this.code·and·flags.code.inv())"
@@ -125,29 +104,67 @@ internal fun TypeSpec.Builder.addBitFlags() = addEntity {
                 collectionName,
             )
         }
-
         addEqualsAndHashCode(collectionName)
-
         addFunction("toString") {
             addModifiers(OVERRIDE)
             returns<String>()
             addStatement("return \"${collectionName.simpleName}(values=\$values)\"")
         }
-        addBuilder(builderName, collectionName)
+        addBuilder(collectionName)
         addSerializer(collectionName)
     }
-    this@FileSpecBuilder.addTopLevelFunctions(collectionName, builderName)
-}
-
-context(BitFlags, ProcessingContext)
-fun FunSpec.Builder.addCodeParameter() {
-    addParameter(valueName, valueCN) {
-        defaultValue(valueType.defaultParameter())
+    addFactoryFunctions(collectionName, builderName)
+    addCopyFunction(collectionName, builderName)
+    addClass(entityCN) {
+        // for ksp incremental processing
+        addOriginatingKSFile(originatingFile)
+        addEntityKDoc()
+        addEntityPrimaryConstructor()
+        if (valueType == BIT_SET) {
+            addConstructor {
+                addModifiers(PROTECTED)
+                addParameter("values", LONG, VARARG)
+                callThisConstructor(CodeBlock.of("%T(values)", DISCORD_BIT_SET))
+            }
+        }
+        addEntityEqualsHashCodeToString()
+        addClass("Unknown") {
+            addSharedUnknownClassContent()
+            if (valueType == BIT_SET) {
+                addConstructor {
+                    addAnnotation(KORD_UNSAFE)
+                    addParameter(valueName, LONG, VARARG)
+                    callThisConstructor(CodeBlock.of("%T($valueName)", DISCORD_BIT_SET))
+                }
+            }
+        }
+        addEntityEntries()
+        if (hasCombinerFlag) {
+            addObject("All") {
+                addKdoc("A combination of all [%T]s", entityCN)
+                addModifiers(PUBLIC)
+                superclass(entityCN)
+                addSuperclassConstructorParameter("buildAll()")
+            }
+        }
+        addCompanionObject {
+            addSharedCompanionObjectContent()
+            if (hasCombinerFlag) {
+                addFunction("buildAll") {
+                    addModifiers(PRIVATE)
+                    returns(valueCN)
+                    addComment("""We cannot inline this into the "All" object, because that causes a weird compiler bug""")
+                    withControlFlow("return entries.fold(%L)·{·acc,·value·->", valueType.defaultParameterCode()) {
+                        addStatement("acc·+·value.$valueName")
+                    }
+                }
+            }
+        }
     }
 }
 
-context(BitFlags, ProcessingContext)
-private fun FileSpec.Builder.addTopLevelFunctions(collectionName: ClassName, builderName: ClassName) {
+context(GenerationContext)
+private fun FileSpec.Builder.addFactoryFunctions(collectionName: ClassName, builderName: ClassName) {
     val factoryFunctionName = collectionName.simpleName
 
     addFunction(factoryFunctionName) {
@@ -191,7 +208,10 @@ private fun FileSpec.Builder.addTopLevelFunctions(collectionName: ClassName, bui
 
         addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
     }
+}
 
+context(BitFlags)
+private fun FileSpec.Builder.addCopyFunction(collectionName: ClassName, builderName: ClassName) {
     addFunction("copy") {
         addModifiers(PUBLIC, INLINE)
         receiver(collectionName)

@@ -502,7 +502,7 @@ public sealed class Permission(
         private fun buildAll(): DiscordBitSet {
             // We cannot inline this into the "All" object, because that causes a weird compiler bug
             return entries.fold(EmptyBitSet()) { acc, value ->
-                 acc + value.code
+                acc + value.code
             }
         }
     }

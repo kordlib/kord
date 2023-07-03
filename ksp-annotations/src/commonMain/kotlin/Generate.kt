@@ -27,8 +27,6 @@ annotation class Generate(
     val bitFlagsDescriptor: BitFlagDescription = BitFlagDescription(),
     /** Whether to add an "All" flag combining all flags into one. */
     val hasCombinerFlag: Boolean = false,
-    /** Additional imports (e.g. for KDoc). */
-    val additionalImports: Array<String> = [],
 ) {
     enum class EntityType { INT_KORD_ENUM, STRING_KORD_ENUM, INT_FLAGS, BIT_SET_FLAGS }
 

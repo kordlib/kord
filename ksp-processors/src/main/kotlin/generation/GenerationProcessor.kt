@@ -5,6 +5,8 @@ import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.ksp.writeTo
 import dev.kord.ksp.Generate
+import dev.kord.ksp.generation.bitflags.generateFileSpec
+import dev.kord.ksp.generation.kordenum.generateFileSpec
 import dev.kord.ksp.getAnnotationsByType
 import dev.kord.ksp.getSymbolsWithAnnotation
 import dev.kord.ksp.isOfType
@@ -49,13 +51,16 @@ class GenerationProcessor(private val codeGenerator: CodeGenerator, private val 
     }
 
     private fun generateEntity(entity: GenerationEntity, originatingFile: KSFile) {
-        logger.info("generating ${entity.name}...")
+        logger.info("generating ${entity.entityName}...")
 
-        val fileSpec = entity.generateFileSpec(originatingFile)
+        val fileSpec = when (entity) {
+            is GenerationEntity.BitFlags -> entity.generateFileSpec(originatingFile)
+            is GenerationEntity.KordEnum -> entity.generateFileSpec(originatingFile)
+        }
 
         // this output is isolating, see https://kotlinlang.org/docs/ksp-incremental.html#aggregating-vs-isolating
         fileSpec.writeTo(codeGenerator, aggregating = false)
 
-        logger.info("finished generating ${entity.name}")
+        logger.info("finished generating ${entity.entityName}")
     }
 }

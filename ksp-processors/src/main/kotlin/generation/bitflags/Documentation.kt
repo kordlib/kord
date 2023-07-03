@@ -1,11 +1,10 @@
-package dev.kord.ksp.generation.generator.flags
+package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
-import com.squareup.kotlinpoet.FileSpec
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
-import dev.kord.ksp.generation.ProcessingContext
+import dev.kord.ksp.generation.shared.GenerationContext
 
 /**
  * Template doc string with following variables
@@ -22,7 +21,7 @@ import dev.kord.ksp.generation.ProcessingContext
  * - `%A` article for flags name
  * - `%N` lowercase flags name
  *
- * @see addFlagsDoc
+ * @see addCollectionDoc
  */
 private val docString = """
  Convenience container of multiple [%1L][%2T] which can be combined into one.
@@ -79,8 +78,8 @@ private val docString = """
  @property code numeric value of all [%3T]s
 """.trimIndent()
 
-context(BitFlags, ProcessingContext, FileSpec.Builder)
-internal fun TypeSpec.Builder.addFlagsDoc(collectionName: ClassName, builderName: ClassName) {
+context(BitFlags, GenerationContext)
+internal fun TypeSpec.Builder.addCollectionDoc(collectionName: ClassName, builderName: ClassName) {
     val possibleValues = entries.map { entityCN.nestedClass(it.name) }
     val unknown = entityCN.nestedClass("Unknown")
     val withReplacedVariables = docString

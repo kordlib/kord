@@ -4,7 +4,6 @@
     BIT_SET_FLAGS, name = "Intent",
     kDoc = "Values that enable a group of events as [defined by Discord](https://discord.com/developers/docs/topics/gateway#gateway-intents).",
     docUrl = "https://discord.com/developers/docs/topics/gateway#gateway-intents",
-    additionalImports = ["dev.kord.common.entity.DiscordMessage"],
     bitFlagsDescriptor = BitFlagDescription("gateway", "intents", "an", "intent"),
     entries = [
         Entry(
@@ -151,9 +150,12 @@
          Gateway [event][Event]s. Instead, access to [MessageContent] permits your app to receive message content data
          across the APIs.
          
-         For example, the [content][DiscordMessage.content], [embeds][DiscordMessage.embeds],
-         [attachments][DiscordMessage.attachments], and [components][DiscordMessage.components] fields in
-         [message objects][DiscordMessage] all contain message content and therefore require this intent.
+         For example, the [content][dev.kord.common.entity.DiscordMessage.content],
+         [embeds][dev.kord.common.entity.DiscordMessage.embeds],
+         [attachments][dev.kord.common.entity.DiscordMessage.attachments],
+         and [components][dev.kord.common.entity.DiscordMessage.components] fields in
+         [message objects][dev.kord.common.entity.DiscordMessage] all contain message content and therefore require this
+         intent.
          
          Apps **without** this intent will receive empty values in fields that contain user-inputted content with a few
          exceptions:
