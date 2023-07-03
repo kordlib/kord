@@ -5,11 +5,15 @@
 
 package dev.kord.common.entity
 
+import dev.kord.common.Class
 import dev.kord.common.`annotation`.KordUnsafe
+import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
+import kotlin.jvm.JvmStatic
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -182,6 +186,43 @@ public sealed class MessageFlag(
             "MessageFlag.${this::class.simpleName}(code=$code)"
 
     /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message = "MessageFlag is no longer an enum class. Deprecated without replacement.")
+    public fun name(): String = this::class.simpleName!!
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message = "MessageFlag is no longer an enum class. Deprecated without replacement.")
+    public fun ordinal(): Int = when (this) {
+        CrossPosted -> 0
+        IsCrossPost -> 1
+        SuppressEmbeds -> 2
+        SourceMessageDeleted -> 3
+        Urgent -> 4
+        HasThread -> 5
+        Ephemeral -> 6
+        Loading -> 7
+        FailedToMentionSomeRolesInThread -> 8
+        SuppressNotifications -> 9
+        IsVoiceMessage -> 10
+        is Unknown -> Int.MAX_VALUE
+    }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "MessageFlag is no longer an enum class.",
+        replaceWith = ReplaceWith(expression = "MessageFlag::class.java", imports =
+                    arrayOf("dev.kord.common.entity.MessageFlag")),
+    )
+    public fun getDeclaringClass(): Class<MessageFlag>? = MessageFlag::class.java
+
+    /**
      * An unknown [MessageFlag].
      *
      * This is used as a fallback for [MessageFlag]s that haven't been added to Kord yet.
@@ -265,5 +306,116 @@ public sealed class MessageFlag(
             )
         }
 
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val CrossPosted: MessageFlag = CrossPosted
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val IsCrossPost: MessageFlag = IsCrossPost
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SuppressEmbeds: MessageFlag = SuppressEmbeds
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SourceMessageDeleted: MessageFlag = SourceMessageDeleted
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Urgent: MessageFlag = Urgent
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val HasThread: MessageFlag = HasThread
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Ephemeral: MessageFlag = Ephemeral
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Loading: MessageFlag = Loading
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val FailedToMentionSomeRolesInThread: MessageFlag = FailedToMentionSomeRolesInThread
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val SuppressNotifications: MessageFlag = SuppressNotifications
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val IsVoiceMessage: MessageFlag = IsVoiceMessage
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
+        @Deprecated(message =
+                "MessageFlag is no longer an enum class. Deprecated without replacement.")
+        @JvmStatic
+        public open fun valueOf(name: String): MessageFlag = when (name) {
+            "CrossPosted" -> CrossPosted
+            "IsCrossPost" -> IsCrossPost
+            "SuppressEmbeds" -> SuppressEmbeds
+            "SourceMessageDeleted" -> SourceMessageDeleted
+            "Urgent" -> Urgent
+            "HasThread" -> HasThread
+            "Ephemeral" -> Ephemeral
+            "Loading" -> Loading
+            "FailedToMentionSomeRolesInThread" -> FailedToMentionSomeRolesInThread
+            "SuppressNotifications" -> SuppressNotifications
+            "IsVoiceMessage" -> IsVoiceMessage
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
+        @Deprecated(
+            message = "MessageFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "MessageFlag.entries.toTypedArray()", imports =
+                        arrayOf("dev.kord.common.entity.MessageFlag")),
+        )
+        @JvmStatic
+        public open fun values(): Array<MessageFlag> = entries.toTypedArray()
     }
 }

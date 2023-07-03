@@ -7211,15 +7211,33 @@ public final class dev/kord/common/entity/MessageApplication$Companion {
 
 public abstract class dev/kord/common/entity/MessageFlag {
 	public static final field Companion Ldev/kord/common/entity/MessageFlag$Companion;
+	public static final field CrossPosted Ldev/kord/common/entity/MessageFlag;
+	public static final field Ephemeral Ldev/kord/common/entity/MessageFlag;
+	public static final field FailedToMentionSomeRolesInThread Ldev/kord/common/entity/MessageFlag;
+	public static final field HasThread Ldev/kord/common/entity/MessageFlag;
+	public static final field IsCrossPost Ldev/kord/common/entity/MessageFlag;
+	public static final field IsVoiceMessage Ldev/kord/common/entity/MessageFlag;
+	public static final field Loading Ldev/kord/common/entity/MessageFlag;
+	public static final field SourceMessageDeleted Ldev/kord/common/entity/MessageFlag;
+	public static final field SuppressEmbeds Ldev/kord/common/entity/MessageFlag;
+	public static final field SuppressNotifications Ldev/kord/common/entity/MessageFlag;
+	public static final field Urgent Ldev/kord/common/entity/MessageFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
+	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun hashCode ()I
+	public final fun name ()Ljava/lang/String;
+	public final fun ordinal ()I
 	public final fun toString ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/MessageFlag;
+	public static fun values ()[Ldev/kord/common/entity/MessageFlag;
 }
 
 public final class dev/kord/common/entity/MessageFlag$Companion {
 	public final fun getEntries ()Ljava/util/List;
+	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/MessageFlag;
+	public fun values ()[Ldev/kord/common/entity/MessageFlag;
 }
 
 public final class dev/kord/common/entity/MessageFlag$CrossPosted : dev/kord/common/entity/MessageFlag {
