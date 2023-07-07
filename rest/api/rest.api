@@ -82,6 +82,36 @@ public abstract interface class dev/kord/rest/builder/RequestBuilder {
 	public abstract fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/application/ApplicationRoleConnectionMetadataBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedDescriptionCreateBuilder, dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
+	public fun <init> (Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun getDescription ()Ljava/lang/String;
+	public fun getDescriptionLocalizations ()Ljava/util/Map;
+	public final fun getKey ()Ljava/lang/String;
+	public fun getName ()Ljava/lang/String;
+	public fun getNameLocalizations ()Ljava/util/Map;
+	public final fun getType ()Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;
+	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setDescriptionLocalizations (Ljava/util/Map;)V
+	public final fun setKey (Ljava/lang/String;)V
+	public fun setName (Ljava/lang/String;)V
+	public fun setNameLocalizations (Ljava/util/Map;)V
+	public final fun setType (Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;)V
+	public fun toRequest ()Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadata;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/application/ApplicationRoleConnectionMetadataRecordsBuilder : dev/kord/rest/builder/RequestBuilder {
+	public fun <init> ()V
+	public final fun getRecords ()Ljava/util/List;
+	public final fun record (Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun record$default (Ldev/kord/rest/builder/application/ApplicationRoleConnectionMetadataRecordsBuilder;Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun setRecords (Ljava/util/List;)V
+	public synthetic fun toRequest ()Ljava/lang/Object;
+	public fun toRequest ()Ljava/util/List;
+}
+
 public final class dev/kord/rest/builder/auditlog/AuditLogGetRequestBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
 	public final fun getAction ()Ldev/kord/common/entity/AuditLogEvent;
@@ -6254,6 +6284,14 @@ public final class dev/kord/rest/route/Route$ApplicationId : dev/kord/rest/route
 	public static final field INSTANCE Ldev/kord/rest/route/Route$ApplicationId;
 }
 
+public final class dev/kord/rest/route/Route$ApplicationRoleConnectionMetadataRecordsGet : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$ApplicationRoleConnectionMetadataRecordsGet;
+}
+
+public final class dev/kord/rest/route/Route$ApplicationRoleConnectionMetadataRecordsUpdate : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$ApplicationRoleConnectionMetadataRecordsUpdate;
+}
+
 public final class dev/kord/rest/route/Route$AuditLogGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$AuditLogGet;
 }
@@ -7002,6 +7040,13 @@ public final class dev/kord/rest/route/Route$WebhookToken : dev/kord/rest/route/
 	public static final field INSTANCE Ldev/kord/rest/route/Route$WebhookToken;
 }
 
+public final class dev/kord/rest/service/ApplicationRoleConnectionMetadataService : dev/kord/rest/service/RestService {
+	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun getApplicationRoleConnectionMetadataRecords (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun updateApplicationRoleConnectionMetadataRecords (Ldev/kord/common/entity/Snowflake;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun updateApplicationRoleConnectionMetadataRecords (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class dev/kord/rest/service/ApplicationService : dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun getCurrentApplicationInfo (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7305,6 +7350,7 @@ public final class dev/kord/rest/service/InviteService : dev/kord/rest/service/R
 public final class dev/kord/rest/service/RestClient : dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
 	public final fun getApplication ()Ldev/kord/rest/service/ApplicationService;
+	public final fun getApplicationRoleConnectionMetadata ()Ldev/kord/rest/service/ApplicationRoleConnectionMetadataService;
 	public final fun getAuditLog ()Ldev/kord/rest/service/AuditLogService;
 	public final fun getAutoModeration ()Ldev/kord/rest/service/AutoModerationService;
 	public final fun getChannel ()Ldev/kord/rest/service/ChannelService;

@@ -17,6 +17,8 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     public val interaction: InteractionService = InteractionService(requestHandler)
 
     // resources
+    public val applicationRoleConnectionMetadata: ApplicationRoleConnectionMetadataService =
+        ApplicationRoleConnectionMetadataService(requestHandler)
     public val auditLog: AuditLogService = AuditLogService(requestHandler)
     public val autoModeration: AutoModerationService = AutoModerationService(requestHandler)
     public val channel: ChannelService = ChannelService(requestHandler)
