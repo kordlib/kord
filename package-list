@@ -61,6 +61,7 @@ dev.kord.gateway.retry
 module:kord-rest
 dev.kord.rest
 dev.kord.rest.builder
+dev.kord.rest.builder.application
 dev.kord.rest.builder.auditlog
 dev.kord.rest.builder.automoderation
 dev.kord.rest.builder.ban
