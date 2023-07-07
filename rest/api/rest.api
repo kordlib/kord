@@ -159,7 +159,6 @@ public abstract interface class dev/kord/rest/builder/automoderation/AutoModerat
 public final class dev/kord/rest/builder/automoderation/AutoModerationRuleBuilderKt {
 	public static final fun allowAnywhereKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun allowKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
-	public static final synthetic fun allowKeyword (Ldev/kord/rest/builder/automoderation/KeywordPresetAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun allowPrefixKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun allowSuffixKeyword (Ldev/kord/rest/builder/automoderation/AllowedKeywordsAutoModerationRuleBuilder;Ljava/lang/String;)V
 	public static final fun anywhereKeyword (Ldev/kord/rest/builder/automoderation/KeywordAutoModerationRuleBuilder;Ljava/lang/String;)V
@@ -828,7 +827,6 @@ public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilder 
 }
 
 public final class dev/kord/rest/builder/channel/thread/StartThreadBuilder : dev/kord/rest/builder/AuditRequestBuilder {
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;Ldev/kord/common/entity/ChannelType;)V
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;)V
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getInvitable ()Ljava/lang/Boolean;
@@ -847,7 +845,6 @@ public final class dev/kord/rest/builder/channel/thread/StartThreadBuilder : dev
 
 public final class dev/kord/rest/builder/channel/thread/StartThreadWithMessageBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ArchiveDuration;)V
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
@@ -897,7 +894,6 @@ public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/r
 	public static synthetic fun mentionableSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun roleSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun roleSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public final synthetic fun selectMenu (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun stringSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun textInput (Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun textInput$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ldev/kord/common/entity/TextInputStyle;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
@@ -960,19 +956,16 @@ public final class dev/kord/rest/builder/component/RoleSelectBuilder : dev/kord/
 	public fun <init> (Ljava/lang/String;)V
 }
 
-public class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
-	public fun <init> (Ljava/lang/String;)V
+public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	protected fun buildChannelTypes ()Ldev/kord/common/entity/optional/Optional;
 	protected fun buildOptions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getAllowedValues ()Lkotlin/ranges/ClosedRange;
 	public final fun getCustomId ()Ljava/lang/String;
-	public final fun getOptions ()Ljava/util/List;
 	public final fun getPlaceholder ()Ljava/lang/String;
-	protected fun getType ()Ldev/kord/common/entity/ComponentType;
-	public final synthetic fun option (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun option$default (Ldev/kord/rest/builder/component/SelectMenuBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	protected abstract fun getType ()Ldev/kord/common/entity/ComponentType;
 	public final fun setAllowedValues (Lkotlin/ranges/ClosedRange;)V
 	public final fun setCustomId (Ljava/lang/String;)V
 	public final fun setPlaceholder (Ljava/lang/String;)V
@@ -1003,6 +996,8 @@ public final class dev/kord/rest/builder/component/SelectOptionBuilder {
 
 public final class dev/kord/rest/builder/component/StringSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public final fun getOptions ()Ljava/util/List;
+	public final fun setOptions (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {

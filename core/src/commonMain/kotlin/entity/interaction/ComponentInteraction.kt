@@ -59,7 +59,6 @@ public sealed interface GuildComponentInteraction : ComponentInteraction, GuildI
  *
  * @throws Exception if the interaction is not from a [ButtonComponent] or a [SelectMenuComponent].
  */
-@Suppress("DEPRECATION_ERROR")
 public fun ComponentInteraction(
     data: InteractionData,
     kord: Kord,
@@ -74,7 +73,7 @@ public fun ComponentInteraction(
         }
         ComponentType.StringSelect, ComponentType.UserSelect,
         ComponentType.MentionableSelect, ComponentType.ChannelSelect,
-        ComponentType.RoleSelect, ComponentType.SelectMenu -> when {
+        ComponentType.RoleSelect -> when {
             inGuild -> GuildSelectMenuInteraction(data, kord, supplier)
             else -> GlobalSelectMenuInteraction(data, kord, supplier)
         }

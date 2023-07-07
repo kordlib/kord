@@ -6,7 +6,6 @@ import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.TextInputStyle
 import dev.kord.common.entity.optional.Optional
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -39,23 +38,6 @@ public class ActionRowBuilder : MessageComponentBuilder {
         components.add(
             ButtonBuilder.LinkButtonBuilder(url).apply(builder)
         )
-    }
-
-    /**
-     * Creates and adds a select menu with the [customId] and configured by the [builder].
-     * An ActionRow with a select menu cannot have any other select menus or buttons.
-     */
-    @Deprecated(
-        "Renamed by discord to StringSelect",
-        ReplaceWith("stringSelect(customId) { builder() }"),
-        level = HIDDEN,
-    )
-    public inline fun selectMenu(customId: String, builder: SelectMenuBuilder.() -> Unit) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        components.add(StringSelectBuilder(customId).apply(builder))
     }
 
     /**

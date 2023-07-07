@@ -89,10 +89,6 @@ public final class dev/kord/common/KordConstants {
 	public static final field INSTANCE Ldev/kord/common/KordConstants;
 	public final fun getCOMMIT_HASH ()Ljava/lang/String;
 	public final fun getGITHUB_URL ()Ljava/lang/String;
-	public final synthetic fun getKORD_COMMIT_HASH ()Ljava/lang/String;
-	public final synthetic fun getKORD_GITHUB_URL ()Ljava/lang/String;
-	public final synthetic fun getKORD_SHORT_COMMIT_HASH ()Ljava/lang/String;
-	public final synthetic fun getKORD_VERSION ()Ljava/lang/String;
 	public final fun getSHORT_COMMIT_HASH ()Ljava/lang/String;
 	public final fun getUSER_AGENT ()Ljava/lang/String;
 	public final fun getVERSION ()Ljava/lang/String;
@@ -1569,22 +1565,6 @@ public final class dev/kord/common/entity/Choice$Companion {
 	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/Choice$IntChoice : dev/kord/common/entity/Choice {
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;J)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun component3 ()J
-	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;J)Ldev/kord/common/entity/Choice$IntChoice;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/Choice$IntChoice;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;JILjava/lang/Object;)Ldev/kord/common/entity/Choice$IntChoice;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun getName ()Ljava/lang/String;
-	public fun getNameLocalizations ()Ldev/kord/common/entity/optional/Optional;
-	public fun getValue ()Ljava/lang/Long;
-	public synthetic fun getValue ()Ljava/lang/Object;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class dev/kord/common/entity/Choice$IntegerChoice : dev/kord/common/entity/Choice {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;J)V
 	public final fun component1 ()Ljava/lang/String;
@@ -1870,10 +1850,6 @@ public final class dev/kord/common/entity/ComponentType$MentionableSelect : dev/
 
 public final class dev/kord/common/entity/ComponentType$RoleSelect : dev/kord/common/entity/ComponentType {
 	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$RoleSelect;
-}
-
-public final class dev/kord/common/entity/ComponentType$SelectMenu : dev/kord/common/entity/ComponentType {
-	public static final field INSTANCE Ldev/kord/common/entity/ComponentType$SelectMenu;
 }
 
 public final class dev/kord/common/entity/ComponentType$StringSelect : dev/kord/common/entity/ComponentType {
@@ -4709,14 +4685,6 @@ public final class dev/kord/common/entity/DiscordModal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/DiscordNull {
-	public static final field Companion Ldev/kord/common/entity/DiscordNull$Companion;
-}
-
-public final class dev/kord/common/entity/DiscordNull$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public final class dev/kord/common/entity/DiscordOnboardingPrompt {
 	public static final field Companion Ldev/kord/common/entity/DiscordOnboardingPrompt$Companion;
 	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -6549,10 +6517,6 @@ public final class dev/kord/common/entity/GuildFeature$MemberVerificationGateEna
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$MemberVerificationGateEnabled;
 }
 
-public final class dev/kord/common/entity/GuildFeature$MonetizationEnabled : dev/kord/common/entity/GuildFeature {
-	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$MonetizationEnabled;
-}
-
 public final class dev/kord/common/entity/GuildFeature$MoreStickers : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$MoreStickers;
 }
@@ -6567,10 +6531,6 @@ public final class dev/kord/common/entity/GuildFeature$Partnered : dev/kord/comm
 
 public final class dev/kord/common/entity/GuildFeature$PreviewEnabled : dev/kord/common/entity/GuildFeature {
 	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$PreviewEnabled;
-}
-
-public final class dev/kord/common/entity/GuildFeature$PrivateThreads : dev/kord/common/entity/GuildFeature {
-	public static final field INSTANCE Ldev/kord/common/entity/GuildFeature$PrivateThreads;
 }
 
 public final class dev/kord/common/entity/GuildFeature$RaidAlertsDisabled : dev/kord/common/entity/GuildFeature {
@@ -6960,13 +6920,6 @@ public final class dev/kord/common/entity/InteractionType$Ping : dev/kord/common
 
 public final class dev/kord/common/entity/InteractionType$Unknown : dev/kord/common/entity/InteractionType {
 	public fun <init> (I)V
-}
-
-public final class dev/kord/common/entity/InteractionsKt {
-	public static final synthetic fun boolean (Ldev/kord/common/entity/CommandArgument;)Z
-	public static final synthetic fun int (Ldev/kord/common/entity/CommandArgument;)J
-	public static final synthetic fun snowflake (Ldev/kord/common/entity/CommandArgument;)Ldev/kord/common/entity/Snowflake;
-	public static final synthetic fun string (Ldev/kord/common/entity/CommandArgument;)Ljava/lang/String;
 }
 
 public abstract class dev/kord/common/entity/InviteTargetType {

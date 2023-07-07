@@ -115,26 +115,12 @@
             "MemberVerificationGateEnabled", stringValue = "MEMBER_VERIFICATION_GATE_ENABLED",
             kDoc = "Guild has enabled Membership Screening.",
         ),
-        Entry(
-            "MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization.",
-            deprecated = Deprecated(
-                "Replaced by CreatorMonetizableProvisional.",
-                ReplaceWith("GuildFeature.CreatorMonetizableProvisional", "dev.kord.common.entitiy.GuildFeature"),
-                level = HIDDEN,
-            ),
-        ),
         Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
         Entry("News", stringValue = "NEWS", kDoc = "Guild has access to create announcement channels."),
         Entry("Partnered", stringValue = "PARTNERED", kDoc = "Guild is partnered."),
         Entry(
             "PreviewEnabled", stringValue = "PREVIEW_ENABLED",
             kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
-        ),
-        Entry(
-            "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
-            deprecated = Deprecated(
-                "Creating a private thread no longer requires the server to be boosted.", level = HIDDEN,
-            ),
         ),
         Entry(
             "RaidAlertsDisabled", stringValue = "RAID_ALERTS_DISABLED",
@@ -184,7 +170,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].

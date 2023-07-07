@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION_ERROR")
-
 package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ChannelType
@@ -10,26 +8,11 @@ import dev.kord.core.cache.data.ComponentData
 import dev.kord.core.cache.data.SelectOptionData
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.SelectMenuInteraction
-import kotlin.jvm.JvmName
 
 /**
- * An interactive dropdown menu rendered on a [Message] that consists of multiple [options].
+ * An interactive dropdown menu rendered on a [Message].
  */
-
-public open class SelectMenuComponent
-// actually:
-//@Deprecated(
-//    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
-//            "constructor of one of the subtypes.",
-//    ReplaceWith("StringSelectComponent(data)", "dev.kord.core.entity.component.StringSelectComponent"),
-//    level = DeprecationLevel.HIDDEN,
-//)
-@PublishedApi internal constructor(override val data: ComponentData) : Component {
-
-    @Suppress("INAPPLICABLE_JVM_NAME")
-    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    @get:JvmName("getType")
-    public open val type0: ComponentType.SelectMenu get() = ComponentType.SelectMenu
+public sealed class SelectMenuComponent(override val data: ComponentData) : Component {
 
     /**
      * The custom identifier for any [ComponentInteractions][SelectMenuInteraction]
@@ -41,25 +24,6 @@ public open class SelectMenuComponent
      * The placeholder value if no value has been selected, null if not set.
      */
     public val placeholder: String? get() = data.placeholder.value
-
-    /**
-     * The possible options to choose from.
-     */
-    @Deprecated(
-        "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectComponent' subclass).",
-        ReplaceWith(
-            "(this as? StringSelectComponent)?.options ?: emptyList()",
-            "dev.kord.core.entity.component.StringSelectComponent",
-            "dev.kord.core.entity.component.options",
-        ),
-        level = DeprecationLevel.HIDDEN,
-    )
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
-    @kotlin.internal.LowPriorityInOverloadResolution
-    public val options: List<SelectOption> get() = _options
-
-    @Suppress("PropertyName")
-    internal val _options get() = data.options.orEmpty().map { SelectOption(it) }
 
     /**
      * The minimum amount of options that can be chosen, default `1`.
@@ -91,12 +55,15 @@ public open class SelectMenuComponent
 
 public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.StringSelect get() = ComponentType.StringSelect
+
+    /** The possible options to choose from. */
+    public val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
 }
 
-// TODO replace with member in StringSelectComponent when SelectMenuComponent.options is removed
 /** The possible options to choose from. */
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
-public val StringSelectComponent.options: List<SelectOption> get() = _options
+@Deprecated("Replaced by member in StringSelectComponent.", ReplaceWith("this.options"), DeprecationLevel.WARNING)
+public val StringSelectComponent.options: List<SelectOption> get() = options
 
 public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.UserSelect get() = ComponentType.UserSelect

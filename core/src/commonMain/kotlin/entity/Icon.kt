@@ -11,7 +11,7 @@ import dev.kord.rest.route.DiscordCdn
 @Deprecated(
     "Icon class does not cover all cdn endpoints and has some inconsistencies.",
     ReplaceWith("Asset", "dev.kord.core.entity.Asset"),
-    DeprecationLevel.ERROR
+    DeprecationLevel.HIDDEN
 )
 public sealed class Icon(
     public val format: Image.Format,

@@ -36,7 +36,7 @@ public class Member(
         "This was renamed to 'effectiveName' to avoid confusion with 'User.globalName' which is also called display " +
             "name.",
         ReplaceWith("this.effectiveName"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public val displayName: String get() = effectiveName
 
