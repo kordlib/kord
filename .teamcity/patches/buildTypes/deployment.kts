@@ -13,8 +13,14 @@ changeBuildType(RelativeId("deployment")) {
         remove {
             password("system.org.gradle.project.signingKey", "credentialsJSON:aebe42c4-8827-4b93-afaf-7a1bf4f46a51")
         }
+        remove {
+            password("system.org.gradle.project.signingPassword", "credentialsJSON:7de31dac-638d-43b6-a070-9e9d9ed3db22")
+        }
         add {
             password("env.SIGNING_KEY", "credentialsJSON:aebe42c4-8827-4b93-afaf-7a1bf4f46a51")
+        }
+        add {
+            password("env.SIGNING_PASSWORD", "credentialsJSON:7de31dac-638d-43b6-a070-9e9d9ed3db22")
         }
     }
 }
