@@ -65,7 +65,8 @@ public data class GuildData(
     val stageInstances: Optional<List<StageInstanceData>> = Optional.Missing(),
     val stickers: Optional<List<StickerData>> = Optional.Missing(),
     val guildScheduledEvents: Optional<List<GuildScheduledEventData>> = Optional.Missing(),
-    val premiumProgressBarEnabled: Boolean
+    val premiumProgressBarEnabled: Boolean,
+    val safetyAlertsChannelId: Snowflake?,
 ) {
     public companion object {
 
@@ -133,7 +134,8 @@ public data class GuildData(
                 stageInstances = stageInstances.mapList { StageInstanceData.from(it) },
                 stickers = stickers.mapList { StickerData.from(it) },
                 guildScheduledEvents = guildScheduledEvents.mapList { GuildScheduledEventData.from(it) },
-                premiumProgressBarEnabled = premiumProgressBarEnabled
+                premiumProgressBarEnabled = premiumProgressBarEnabled,
+                safetyAlertsChannelId = safetyAlertsChannelId,
             )
         }
     }
