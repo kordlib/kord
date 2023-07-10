@@ -1,5 +1,6 @@
 plugins {
     `kord-internal-module`
+    `kord-publishing`
 }
 
 dependencies {
