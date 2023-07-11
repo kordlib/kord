@@ -9,7 +9,6 @@ import dev.kord.common.entity.AutoModerationRuleTriggerType.*
 import dev.kord.common.entity.Permission.ModerateMembers
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.AuditBuilder
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.time.Duration
@@ -297,15 +296,6 @@ public fun KeywordPresetAutoModerationRuleBuilder.preset(preset: AutoModerationR
     presets?.add(preset) ?: assignPresets(mutableListOf(preset))
 }
 
-@Deprecated(
-    "Binary compatibility, an extension with the same name and parameter is now available on the " +
-            "'AllowedKeywordsAutoModerationRuleBuilder' supertype of 'KeywordPresetAutoModerationRuleBuilder'.",
-    level = HIDDEN,
-)
-public fun KeywordPresetAutoModerationRuleBuilder.allowKeyword(keyword: String) {
-    allowedKeywords?.add(keyword) ?: run { allowedKeywords = mutableListOf(keyword) }
-}
-
 
 /** An [AutoModerationRuleBuilder] for building rules with trigger type [MentionSpam]. */
 @KordDsl
@@ -323,7 +313,7 @@ public sealed interface MentionSpamAutoModerationRuleBuilder : TimeoutAutoModera
     @Deprecated(
         "This can be replaced with 'mentionLimit', it is now a 'var'.",
         ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public fun assignMentionLimit(mentionLimit: Int)
 

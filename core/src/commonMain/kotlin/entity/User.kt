@@ -10,7 +10,6 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.Image
-import kotlin.DeprecationLevel.ERROR
 import kotlin.DeprecationLevel.WARNING
 
 /**
@@ -126,7 +125,7 @@ public open class User(
 
     public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
-    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = ERROR)
+    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), DeprecationLevel.HIDDEN)
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
@@ -150,7 +149,7 @@ public open class User(
         return "User(data=$data, kord=$kord, supplier=$supplier)"
     }
 
-    @Deprecated("Old class", ReplaceWith("Asset", "dev.kord.core.entity.Asset"), level = ERROR)
+    @Deprecated("Old class", ReplaceWith("Asset", "dev.kord.core.entity.Asset"), level = DeprecationLevel.HIDDEN)
     public data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**

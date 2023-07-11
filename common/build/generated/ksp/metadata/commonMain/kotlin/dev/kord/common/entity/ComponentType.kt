@@ -6,11 +6,8 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
-import kotlin.Deprecated
-import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -89,17 +86,6 @@ public sealed class ComponentType(
      * Select menu for channels.
      */
     public object ChannelSelect : ComponentType(8)
-
-    /**
-     * A select menu for picking from choices.
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed by discord",
-        replaceWith = ReplaceWith(expression = "StringSelect", imports =
-                    arrayOf("dev.kord.common.entity.ComponentType.StringSelect")),
-    )
-    public object SelectMenu : ComponentType(3)
 
     internal object Serializer : KSerializer<ComponentType> {
         public override val descriptor: SerialDescriptor =

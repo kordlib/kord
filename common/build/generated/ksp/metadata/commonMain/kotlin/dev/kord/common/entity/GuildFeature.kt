@@ -6,11 +6,8 @@ package dev.kord.common.entity
 
 import kotlin.Any
 import kotlin.Boolean
-import kotlin.Deprecated
-import kotlin.DeprecationLevel
 import kotlin.Int
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.ReplaceWith
 import kotlin.String
 import kotlin.Suppress
 import kotlin.collections.List
@@ -123,17 +120,6 @@ public sealed class GuildFeature(
     public object MemberVerificationGateEnabled : GuildFeature("MEMBER_VERIFICATION_GATE_ENABLED")
 
     /**
-     * Guild has enabled monetization.
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Replaced by CreatorMonetizableProvisional.",
-        replaceWith = ReplaceWith(expression = "GuildFeature.CreatorMonetizableProvisional", imports
-                    = arrayOf("dev.kord.common.entitiy.GuildFeature")),
-    )
-    public object MonetizationEnabled : GuildFeature("MONETIZATION_ENABLED")
-
-    /**
      * Guild has increased custom sticker slots.
      */
     public object MoreStickers : GuildFeature("MORE_STICKERS")
@@ -152,15 +138,6 @@ public sealed class GuildFeature(
      * Guild can be previewed before joining via Membership Screening or the directory.
      */
     public object PreviewEnabled : GuildFeature("PREVIEW_ENABLED")
-
-    /**
-     * Guild has access to create private threads
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Creating a private thread no longer requires the server to be boosted.",
-    )
-    public object PrivateThreads : GuildFeature("PRIVATE_THREADS")
 
     /**
      * Guild has disabled alerts for join raids in the configured safety alerts channel.
@@ -232,12 +209,10 @@ public sealed class GuildFeature(
             "INVITES_DISABLED" -> InvitesDisabled
             "INVITE_SPLASH" -> InviteSplash
             "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
-            "MONETIZATION_ENABLED" -> @Suppress("DEPRECATION_ERROR") MonetizationEnabled
             "MORE_STICKERS" -> MoreStickers
             "NEWS" -> News
             "PARTNERED" -> Partnered
             "PREVIEW_ENABLED" -> PreviewEnabled
-            "PRIVATE_THREADS" -> @Suppress("DEPRECATION_ERROR") PrivateThreads
             "RAID_ALERTS_DISABLED" -> RaidAlertsDisabled
             "ROLE_ICONS" -> RoleIcons
             "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE" -> RoleSubscriptionsAvailableForPurchase
@@ -271,12 +246,10 @@ public sealed class GuildFeature(
                 InvitesDisabled,
                 InviteSplash,
                 MemberVerificationGateEnabled,
-                @Suppress("DEPRECATION_ERROR") MonetizationEnabled,
                 MoreStickers,
                 News,
                 Partnered,
                 PreviewEnabled,
-                @Suppress("DEPRECATION_ERROR") PrivateThreads,
                 RaidAlertsDisabled,
                 RoleIcons,
                 RoleSubscriptionsAvailableForPurchase,

@@ -35,7 +35,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import mu.KLogger
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.WARNING
+import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -260,7 +260,7 @@ public class Kord(
      * @throws RequestException if something went wrong while retrieving the guild.
      * @throws EntityNotFoundException if the guild is null.
      */
-    @Deprecated("Renamed to getGuild", ReplaceWith("this.getGuild(id, strategy)"), level = WARNING)
+    @Deprecated("Renamed to getGuild", ReplaceWith("this.getGuild(id, strategy)"), level = ERROR)
     public suspend fun getGuildOrThrow(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,

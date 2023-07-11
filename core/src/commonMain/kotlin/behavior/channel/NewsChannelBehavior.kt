@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Permission
 import dev.kord.common.entity.Snowflake
@@ -26,7 +25,6 @@ import dev.kord.rest.service.patchNewsChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -84,44 +82,11 @@ public interface NewsChannelBehavior : TopGuildMessageChannelBehavior, ThreadPar
         kord.rest.channel.followNewsChannel(id, ChannelFollowRequest(webhookChannelId = target))
     }
 
-    @Deprecated(
-        "Replaced by builder overload",
-        ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThread.reason = reason\n}"),
-        level = HIDDEN,
-    )
-    public suspend fun startPublicThread(
-        name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
-    ): NewsChannelThread {
-        return startPublicThread(name) {
-            this.reason = reason
-            this.autoArchiveDuration = archiveDuration
-        }
-    }
-
     public suspend fun startPublicThread(
         name: String,
         builder: StartThreadBuilder.() -> Unit = {},
     ): NewsChannelThread {
         return unsafeStartThread(name, type = ChannelType.PublicNewsThread, builder) as NewsChannelThread
-    }
-
-    @Deprecated(
-        "Replaced by builder overload",
-        ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
-        level = HIDDEN,
-    )
-    public suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
-    ): NewsChannelThread {
-        return startPublicThreadWithMessage(messageId, name) {
-            this.reason = reason
-            this.autoArchiveDuration = archiveDuration
-        }
     }
 
     public suspend fun startPublicThreadWithMessage(

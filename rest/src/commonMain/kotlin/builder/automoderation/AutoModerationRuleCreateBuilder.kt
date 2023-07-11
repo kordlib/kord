@@ -126,7 +126,7 @@ public class MentionSpamAutoModerationRuleCreateBuilder(
             "MentionSpamAutoModerationRuleCreateBuilder(name, eventType).apply { this@apply.mentionLimit = mentionLimit }",
             imports = ["dev.kord.rest.builder.automoderation.MentionSpamAutoModerationRuleCreateBuilder"],
         ),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public constructor(name: String, eventType: AutoModerationRuleEventType, mentionLimit: Int) : this(
         name,
@@ -139,7 +139,7 @@ public class MentionSpamAutoModerationRuleCreateBuilder(
     @Deprecated(
         "This can be replaced with 'mentionLimit', it is now a 'var'.",
         ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     override fun assignMentionLimit(mentionLimit: Int) {
         this.mentionLimit = mentionLimit
@@ -150,7 +150,7 @@ public class MentionSpamAutoModerationRuleCreateBuilder(
     @Deprecated(
         "This can be replaced with 'mentionLimit', it is now a 'var'.",
         ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public open fun setMentionLimit(mentionLimit: Int) {
         this.mentionLimit = mentionLimit
