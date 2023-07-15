@@ -1,5 +1,6 @@
 plugins {
     `kord-internal-module`
+    org.jetbrains.dokka
     `kord-publishing`
 }
 
