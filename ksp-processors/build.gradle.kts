@@ -12,3 +12,10 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json) // use types directly
 }
+
+publishing {
+    publications.register<MavenPublication>(Library.name) {
+        from(components["java"])
+        artifact(tasks.kotlinSourcesJar)
+    }
+}
