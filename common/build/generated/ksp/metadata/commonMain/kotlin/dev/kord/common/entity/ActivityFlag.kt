@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -102,29 +101,29 @@ public class ActivityFlags(
     public operator fun minus(flags: ActivityFlags): ActivityFlags =
             ActivityFlags(this.code and flags.code.inv())
 
-    public override fun equals(other: Any?): Boolean = this === other ||
+    override fun equals(other: Any?): Boolean = this === other ||
             (other is ActivityFlags && this.code == other.code)
 
-    public override fun hashCode(): Int = code.hashCode()
+    override fun hashCode(): Int = code.hashCode()
 
-    public override fun toString(): String = "ActivityFlags(values=$values)"
+    override fun toString(): String = "ActivityFlags(values=$values)"
 
     public class Builder(
         private var code: Int = 0,
     ) {
-        public operator fun ActivityFlag.unaryPlus(): Unit {
+        public operator fun ActivityFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
-        public operator fun ActivityFlags.unaryPlus(): Unit {
+        public operator fun ActivityFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
-        public operator fun ActivityFlag.unaryMinus(): Unit {
+        public operator fun ActivityFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public operator fun ActivityFlags.unaryMinus(): Unit {
+        public operator fun ActivityFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
@@ -132,15 +131,16 @@ public class ActivityFlags(
     }
 
     internal object Serializer : KSerializer<ActivityFlags> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ActivityFlags", PrimitiveKind.INT)
 
         private val `delegate`: KSerializer<Int> = Int.serializer()
 
-        public override fun serialize(encoder: Encoder, `value`: ActivityFlags) =
-                encoder.encodeSerializableValue(delegate, value.code)
+        override fun serialize(encoder: Encoder, `value`: ActivityFlags) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
 
-        public override fun deserialize(decoder: Decoder) =
+        override fun deserialize(decoder: Decoder): ActivityFlags =
                 ActivityFlags(decoder.decodeSerializableValue(delegate))
     }
 }
@@ -178,13 +178,12 @@ public sealed class ActivityFlag(
      */
     public val code: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is ActivityFlag && this.code == other.code)
 
-    public final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = code.hashCode()
 
-    public final override fun toString(): String =
-            "ActivityFlag.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = "ActivityFlag.${this::class.simpleName}(code=$code)"
 
     /**
      * @suppress

@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,13 +26,12 @@ public sealed class MFALevel(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is MFALevel && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
-            "MFALevel.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "MFALevel.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [MFALevel].
@@ -55,13 +53,15 @@ public sealed class MFALevel(
     public object Elevated : MFALevel(1)
 
     internal object Serializer : KSerializer<MFALevel> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MFALevel", PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: MFALevel) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: MFALevel) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): MFALevel =
+                when (val value = decoder.decodeInt()) {
             0 -> None
             1 -> Elevated
             else -> Unknown(value)

@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -106,29 +105,29 @@ public class GuildMemberFlags(
     public operator fun minus(flags: GuildMemberFlags): GuildMemberFlags =
             GuildMemberFlags(this.code and flags.code.inv())
 
-    public override fun equals(other: Any?): Boolean = this === other ||
+    override fun equals(other: Any?): Boolean = this === other ||
             (other is GuildMemberFlags && this.code == other.code)
 
-    public override fun hashCode(): Int = code.hashCode()
+    override fun hashCode(): Int = code.hashCode()
 
-    public override fun toString(): String = "GuildMemberFlags(values=$values)"
+    override fun toString(): String = "GuildMemberFlags(values=$values)"
 
     public class Builder(
         private var code: Int = 0,
     ) {
-        public operator fun GuildMemberFlag.unaryPlus(): Unit {
+        public operator fun GuildMemberFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
-        public operator fun GuildMemberFlags.unaryPlus(): Unit {
+        public operator fun GuildMemberFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
-        public operator fun GuildMemberFlag.unaryMinus(): Unit {
+        public operator fun GuildMemberFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public operator fun GuildMemberFlags.unaryMinus(): Unit {
+        public operator fun GuildMemberFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
@@ -136,16 +135,17 @@ public class GuildMemberFlags(
     }
 
     internal object Serializer : KSerializer<GuildMemberFlags> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.GuildMemberFlags",
                 PrimitiveKind.INT)
 
         private val `delegate`: KSerializer<Int> = Int.serializer()
 
-        public override fun serialize(encoder: Encoder, `value`: GuildMemberFlags) =
-                encoder.encodeSerializableValue(delegate, value.code)
+        override fun serialize(encoder: Encoder, `value`: GuildMemberFlags) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
 
-        public override fun deserialize(decoder: Decoder) =
+        override fun deserialize(decoder: Decoder): GuildMemberFlags =
                 GuildMemberFlags(decoder.decodeSerializableValue(delegate))
     }
 }
@@ -184,13 +184,12 @@ public sealed class GuildMemberFlag(
      */
     public val code: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is GuildMemberFlag && this.code == other.code)
 
-    public final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = code.hashCode()
 
-    public final override fun toString(): String =
-            "GuildMemberFlag.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = "GuildMemberFlag.${this::class.simpleName}(code=$code)"
 
     /**
      * @suppress

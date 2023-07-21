@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,13 +26,12 @@ public sealed class ChannelType(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is ChannelType && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
-            "ChannelType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "ChannelType.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [ChannelType].
@@ -112,13 +110,15 @@ public sealed class ChannelType(
     public object GuildForum : ChannelType(15)
 
     internal object Serializer : KSerializer<ChannelType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelType", PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: ChannelType) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: ChannelType) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): ChannelType =
+                when (val value = decoder.decodeInt()) {
             0 -> GuildText
             1 -> DM
             2 -> GuildVoice

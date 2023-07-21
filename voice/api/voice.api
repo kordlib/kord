@@ -685,6 +685,7 @@ public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static final field Speaking Ldev/kord/voice/gateway/OpCode;
 	public static final field Unknown Ldev/kord/voice/gateway/OpCode;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/gateway/OpCode;
 	public static fun values ()[Ldev/kord/voice/gateway/OpCode;
 }

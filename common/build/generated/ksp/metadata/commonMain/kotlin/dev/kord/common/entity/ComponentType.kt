@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,13 +26,12 @@ public sealed class ComponentType(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is ComponentType && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
-            "ComponentType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "ComponentType.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [ComponentType].
@@ -84,25 +82,16 @@ public sealed class ComponentType(
      */
     public object ChannelSelect : ComponentType(8)
 
-    /**
-     * A select menu for picking from choices.
-     */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed by discord",
-        replaceWith = ReplaceWith(expression = "StringSelect", imports =
-                    arrayOf("dev.kord.common.entity.ComponentType.StringSelect")),
-    )
-    public object SelectMenu : ComponentType(3)
-
     internal object Serializer : KSerializer<ComponentType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ComponentType", PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: ComponentType) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: ComponentType) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): ComponentType =
+                when (val value = decoder.decodeInt()) {
             1 -> ActionRow
             2 -> Button
             3 -> StringSelect

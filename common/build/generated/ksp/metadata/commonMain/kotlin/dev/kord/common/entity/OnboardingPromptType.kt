@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,12 +26,12 @@ public sealed class OnboardingPromptType(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is OnboardingPromptType && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
+    final override fun toString(): String =
             "OnboardingPromptType.${this::class.simpleName}(value=$value)"
 
     /**
@@ -49,14 +48,16 @@ public sealed class OnboardingPromptType(
     public object Dropdown : OnboardingPromptType(1)
 
     internal object Serializer : KSerializer<OnboardingPromptType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.OnboardingPromptType",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: OnboardingPromptType) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: OnboardingPromptType) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): OnboardingPromptType =
+                when (val value = decoder.decodeInt()) {
             0 -> MultipleChoice
             1 -> Dropdown
             else -> Unknown(value)

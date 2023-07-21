@@ -115,14 +115,6 @@
             "MemberVerificationGateEnabled", stringValue = "MEMBER_VERIFICATION_GATE_ENABLED",
             kDoc = "Guild has enabled Membership Screening.",
         ),
-        Entry(
-            "MonetizationEnabled", stringValue = "MONETIZATION_ENABLED", kDoc = "Guild has enabled monetization.",
-            deprecated = Deprecated(
-                "Replaced by CreatorMonetizableProvisional.",
-                ReplaceWith("GuildFeature.CreatorMonetizableProvisional", "dev.kord.common.entitiy.GuildFeature"),
-                level = HIDDEN,
-            ),
-        ),
         Entry("MoreStickers", stringValue = "MORE_STICKERS", kDoc = "Guild has increased custom sticker slots."),
         Entry("News", stringValue = "NEWS", kDoc = "Guild has access to create announcement channels."),
         Entry("Partnered", stringValue = "PARTNERED", kDoc = "Guild is partnered."),
@@ -131,10 +123,8 @@
             kDoc = "Guild can be previewed before joining via Membership Screening or the directory.",
         ),
         Entry(
-            "PrivateThreads", stringValue = "PRIVATE_THREADS", kDoc = "Guild has access to create private threads",
-            deprecated = Deprecated(
-                "Creating a private thread no longer requires the server to be boosted.", level = HIDDEN,
-            ),
+            "RaidAlertsDisabled", stringValue = "RAID_ALERTS_DISABLED",
+            kDoc = "Guild has disabled alerts for join raids in the configured safety alerts channel.",
         ),
         Entry("RoleIcons", stringValue = "ROLE_ICONS", kDoc = "Guild is able to set role icons."),
         Entry("RoleSubscriptionsAvailableForPurchase", stringValue = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
@@ -194,7 +184,6 @@ import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlin.DeprecationLevel.HIDDEN
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -320,7 +309,9 @@ public data class DiscordGuild(
     @SerialName("guild_scheduled_events")
     val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
     @SerialName("premium_progress_bar_enabled")
-    val premiumProgressBarEnabled: Boolean
+    val premiumProgressBarEnabled: Boolean,
+    @SerialName("safety_alerts_channel_id")
+    val safetyAlertsChannelId: Snowflake?,
 )
 
 /**

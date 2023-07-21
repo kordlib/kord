@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,13 +26,12 @@ public sealed class MessageType(
      */
     public val code: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is MessageType && this.code == other.code)
 
-    public final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = code.hashCode()
 
-    public final override fun toString(): String =
-            "MessageType.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = "MessageType.${this::class.simpleName}(code=$code)"
 
     /**
      * An unknown [MessageType].
@@ -107,13 +105,15 @@ public sealed class MessageType(
     public object GuildApplicationPremiumSubscription : MessageType(32)
 
     internal object Serializer : KSerializer<MessageType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.MessageType", PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: MessageType) =
-                encoder.encodeInt(value.code)
+        override fun serialize(encoder: Encoder, `value`: MessageType) {
+            encoder.encodeInt(value.code)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val code = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): MessageType =
+                when (val code = decoder.decodeInt()) {
             0 -> Default
             1 -> RecipientAdd
             2 -> RecipientRemove

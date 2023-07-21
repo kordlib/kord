@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,13 +28,12 @@ public sealed class ButtonStyle(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is ButtonStyle && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
-            "ButtonStyle.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "ButtonStyle.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [ButtonStyle].
@@ -72,13 +70,15 @@ public sealed class ButtonStyle(
     public object Link : ButtonStyle(5)
 
     internal object Serializer : KSerializer<ButtonStyle> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ButtonStyle", PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: ButtonStyle) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: ButtonStyle) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): ButtonStyle =
+                when (val value = decoder.decodeInt()) {
             1 -> Primary
             2 -> Secondary
             3 -> Success

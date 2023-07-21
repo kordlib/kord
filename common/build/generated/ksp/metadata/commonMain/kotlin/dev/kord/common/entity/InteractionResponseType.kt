@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,12 +26,12 @@ public sealed class InteractionResponseType(
      */
     public val type: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is InteractionResponseType && this.type == other.type)
 
-    public final override fun hashCode(): Int = type.hashCode()
+    final override fun hashCode(): Int = type.hashCode()
 
-    public final override fun toString(): String =
+    final override fun toString(): String =
             "InteractionResponseType.${this::class.simpleName}(type=$type)"
 
     /**
@@ -82,14 +81,16 @@ public sealed class InteractionResponseType(
     public object Modal : InteractionResponseType(9)
 
     internal object Serializer : KSerializer<InteractionResponseType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionResponseType",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: InteractionResponseType) =
-                encoder.encodeInt(value.type)
+        override fun serialize(encoder: Encoder, `value`: InteractionResponseType) {
+            encoder.encodeInt(value.type)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val type = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): InteractionResponseType =
+                when (val type = decoder.decodeInt()) {
             1 -> Pong
             4 -> ChannelMessageWithSource
             5 -> DeferredChannelMessageWithSource

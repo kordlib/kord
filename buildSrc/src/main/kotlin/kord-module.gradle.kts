@@ -28,6 +28,11 @@ kotlin {
 
     jvmToolchain(Jvm.target)
 
+    compilerOptions {
+        applyKordCompilerOptions()
+        optIn.addAll(kordOptIns)
+    }
+
     sourceSets {
         // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
         test { languageSettings.optIn(OptIns.coroutines) }
@@ -37,13 +42,6 @@ kotlin {
 configureAtomicFU()
 
 tasks {
-    withType<KotlinCompile>().configureEach {
-        compilerOptions {
-            applyKordCompilerOptions()
-            freeCompilerArgs.addAll(kordOptIns.map { "-opt-in=$it" })
-        }
-    }
-
     withType<Test>().configureEach {
         useJUnitPlatform()
     }

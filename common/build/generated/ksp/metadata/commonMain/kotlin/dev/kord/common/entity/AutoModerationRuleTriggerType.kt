@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,12 +28,12 @@ public sealed class AutoModerationRuleTriggerType(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is AutoModerationRuleTriggerType && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
+    final override fun toString(): String =
             "AutoModerationRuleTriggerType.${this::class.simpleName}(value=$value)"
 
     /**
@@ -68,14 +67,16 @@ public sealed class AutoModerationRuleTriggerType(
     public object MentionSpam : AutoModerationRuleTriggerType(5)
 
     internal object Serializer : KSerializer<AutoModerationRuleTriggerType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleTriggerType",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: AutoModerationRuleTriggerType) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: AutoModerationRuleTriggerType) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): AutoModerationRuleTriggerType =
+                when (val value = decoder.decodeInt()) {
             1 -> Keyword
             3 -> Spam
             4 -> KeywordPreset

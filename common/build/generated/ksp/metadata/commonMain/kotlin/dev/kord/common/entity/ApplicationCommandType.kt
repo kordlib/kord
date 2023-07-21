@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,12 +26,12 @@ public sealed class ApplicationCommandType(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is ApplicationCommandType && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
+    final override fun toString(): String =
             "ApplicationCommandType.${this::class.simpleName}(value=$value)"
 
     /**
@@ -60,14 +59,16 @@ public sealed class ApplicationCommandType(
     public object Message : ApplicationCommandType(3)
 
     internal object Serializer : KSerializer<ApplicationCommandType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationCommandType",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: ApplicationCommandType) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: ApplicationCommandType) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): ApplicationCommandType =
+                when (val value = decoder.decodeInt()) {
             1 -> ChatInput
             2 -> User
             3 -> Message

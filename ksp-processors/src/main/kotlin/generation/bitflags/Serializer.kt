@@ -48,11 +48,12 @@ internal fun TypeSpec.Builder.addSerializer(collectionName: ClassName) {
             addModifiers(OVERRIDE)
             addParameter<Encoder>("encoder")
             addParameter("value", collectionName)
-            addStatement("return encoder.encodeSerializableValue(delegate, value.$valueName)")
+            addStatement("encoder.encodeSerializableValue(delegate, value.$valueName)")
         }
 
         addFunction("deserialize") {
             addModifiers(OVERRIDE)
+            returns(collectionName)
             addParameter<Decoder>("decoder")
             addStatement("return %T(decoder.decodeSerializableValue(delegate))", collectionName)
         }

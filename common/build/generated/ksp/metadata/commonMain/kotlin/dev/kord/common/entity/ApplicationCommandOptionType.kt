@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,12 +26,12 @@ public sealed class ApplicationCommandOptionType(
      */
     public val type: Int,
 ) {
-    public final override fun equals(other: Any?): kotlin.Boolean = this === other ||
+    final override fun equals(other: Any?): kotlin.Boolean = this === other ||
             (other is ApplicationCommandOptionType && this.type == other.type)
 
-    public final override fun hashCode(): Int = type.hashCode()
+    final override fun hashCode(): Int = type.hashCode()
 
-    public final override fun toString(): kotlin.String =
+    final override fun toString(): kotlin.String =
             "ApplicationCommandOptionType.${this::class.simpleName}(type=$type)"
 
     /**
@@ -80,14 +79,16 @@ public sealed class ApplicationCommandOptionType(
     public object Attachment : ApplicationCommandOptionType(11)
 
     internal object Serializer : KSerializer<ApplicationCommandOptionType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationCommandOptionType",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: ApplicationCommandOptionType) =
-                encoder.encodeInt(value.type)
+        override fun serialize(encoder: Encoder, `value`: ApplicationCommandOptionType) {
+            encoder.encodeInt(value.type)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val type = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): ApplicationCommandOptionType =
+                when (val type = decoder.decodeInt()) {
             1 -> SubCommand
             2 -> SubCommandGroup
             3 -> String

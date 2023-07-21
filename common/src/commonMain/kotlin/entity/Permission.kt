@@ -123,7 +123,7 @@
             "ManageEmojisAndStickers",
             longValue = 1L shl 30,
             kDoc = "Allows management and editing of emojis and stickers.",
-            deprecated = Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.ERROR)
+            deprecated = Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.HIDDEN)
         ),
         Entry(
             "ManageGuildExpressions", longValue = 1L shl 30,

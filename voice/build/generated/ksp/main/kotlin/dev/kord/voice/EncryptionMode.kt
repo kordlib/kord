@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.voice
 
@@ -27,13 +26,12 @@ public sealed class EncryptionMode(
      */
     public val `value`: String,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is EncryptionMode && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
-            "EncryptionMode.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "EncryptionMode.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [EncryptionMode].
@@ -51,13 +49,14 @@ public sealed class EncryptionMode(
     public object XSalsa20Poly1305Lite : EncryptionMode("xsalsa20_poly1305_lite")
 
     internal object Serializer : KSerializer<EncryptionMode> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.voice.EncryptionMode", PrimitiveKind.STRING)
 
-        public override fun serialize(encoder: Encoder, `value`: EncryptionMode) =
-                encoder.encodeString(value.value)
+        override fun serialize(encoder: Encoder, `value`: EncryptionMode) {
+            encoder.encodeString(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) =
+        override fun deserialize(decoder: Decoder): EncryptionMode =
                 when (val value = decoder.decodeString()) {
             "xsalsa20_poly1305" -> XSalsa20Poly1305
             "xsalsa20_poly1305_suffix" -> XSalsa20Poly1305Suffix

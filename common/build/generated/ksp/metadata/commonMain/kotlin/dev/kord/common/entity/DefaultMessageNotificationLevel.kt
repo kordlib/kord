@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,12 +26,12 @@ public sealed class DefaultMessageNotificationLevel(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is DefaultMessageNotificationLevel && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
+    final override fun toString(): String =
             "DefaultMessageNotificationLevel.${this::class.simpleName}(value=$value)"
 
     /**
@@ -56,14 +55,16 @@ public sealed class DefaultMessageNotificationLevel(
     public object OnlyMentions : DefaultMessageNotificationLevel(1)
 
     internal object Serializer : KSerializer<DefaultMessageNotificationLevel> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.DefaultMessageNotificationLevel",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: DefaultMessageNotificationLevel) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: DefaultMessageNotificationLevel) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel =
+                when (val value = decoder.decodeInt()) {
             0 -> AllMessages
             1 -> OnlyMentions
             else -> Unknown(value)

@@ -54,10 +54,11 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 addModifiers(OVERRIDE)
                 addParameter<Encoder>("encoder")
                 addParameter("value", entityCN)
-                addStatement("return encoder.encode$encodingPostfix(value.$valueName)")
+                addStatement("encoder.encode$encodingPostfix(value.$valueName)")
             }
             addFunction("deserialize") {
                 addModifiers(OVERRIDE)
+                returns(entityCN)
                 addParameter<Decoder>("decoder")
                 withControlFlow("return when·(val·$valueName·=·decoder.decode$encodingPostfix())") {
                     for (entry in entriesDistinctByValue) {

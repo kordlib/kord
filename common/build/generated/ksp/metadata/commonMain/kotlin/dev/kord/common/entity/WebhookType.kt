@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,13 +26,12 @@ public sealed class WebhookType(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is WebhookType && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
-            "WebhookType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "WebhookType.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [WebhookType].
@@ -61,13 +59,15 @@ public sealed class WebhookType(
     public object Application : WebhookType(3)
 
     internal object Serializer : KSerializer<WebhookType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.WebhookType", PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: WebhookType) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: WebhookType) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): WebhookType =
+                when (val value = decoder.decodeInt()) {
             1 -> Incoming
             2 -> ChannelFollower
             3 -> Application

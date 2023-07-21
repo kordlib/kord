@@ -46,7 +46,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                     preferredLocale = "",
                     systemChannelFlags = SystemChannelFlags(0),
                     nsfwLevel = NsfwLevel.Default,
-                    premiumProgressBarEnabled = false
+                    premiumProgressBarEnabled = false,
+                    safetyAlertsChannelId = null,
                 )
             )
         )
@@ -731,7 +732,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         preferredLocale = "",
                         publicUpdatesChannelId = null,
                         nsfwLevel = NsfwLevel.Default,
-                        premiumProgressBarEnabled = false
+                        premiumProgressBarEnabled = false,
+                        safetyAlertsChannelId = null,
                     ),
                     0
                 )
@@ -776,7 +778,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         preferredLocale = "",
                         publicUpdatesChannelId = null,
                         nsfwLevel = NsfwLevel.Default,
-                        premiumProgressBarEnabled = false
+                        premiumProgressBarEnabled = false,
+                        safetyAlertsChannelId = null,
                     ),
                     0
                 )

@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,13 +28,12 @@ public sealed class UserPremium(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is UserPremium && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
-            "UserPremium.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "UserPremium.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [UserPremium].
@@ -55,13 +53,15 @@ public sealed class UserPremium(
     public object NitroBasic : UserPremium(3)
 
     internal object Serializer : KSerializer<UserPremium> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.UserPremium", PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: UserPremium) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: UserPremium) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): UserPremium =
+                when (val value = decoder.decodeInt()) {
             0 -> None
             1 -> NitroClassic
             2 -> Nitro

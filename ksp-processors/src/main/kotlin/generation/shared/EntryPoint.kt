@@ -42,7 +42,6 @@ internal fun GenerationEntity.fileSpecForGenerationEntity(
                 "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection",
                 "GrazieInspection",
-                "RedundantUnitReturnType",
             )
         )
         block(context, this)

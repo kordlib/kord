@@ -62,6 +62,8 @@ class GuildTest {
             rulesChannelId shouldBe "441688182833020939"
             publicUpdatesChannelId shouldBe "281283303326089216"
             nsfwLevel shouldBe NsfwLevel.Default
+            premiumProgressBarEnabled shouldBe false
+            safetyAlertsChannelId shouldBe "587324906702766226"
         }
     }
 

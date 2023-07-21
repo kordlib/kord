@@ -637,6 +637,7 @@ public final class dev/kord/gateway/GatewayCloseCode : java/lang/Enum {
 	public static final field Unknown Ldev/kord/gateway/GatewayCloseCode;
 	public static final field UnknownOpCode Ldev/kord/gateway/GatewayCloseCode;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/gateway/GatewayCloseCode;
 	public static fun values ()[Ldev/kord/gateway/GatewayCloseCode;
 }
@@ -1512,6 +1513,7 @@ public final class dev/kord/gateway/OpCode : java/lang/Enum {
 	public static final field Unknown Ldev/kord/gateway/OpCode;
 	public static final field VoiceStateUpdate Ldev/kord/gateway/OpCode;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/gateway/OpCode;
 	public static fun values ()[Ldev/kord/gateway/OpCode;
 }

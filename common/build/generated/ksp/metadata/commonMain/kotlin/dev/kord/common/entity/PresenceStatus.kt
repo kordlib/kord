@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,13 +26,12 @@ public sealed class PresenceStatus(
      */
     public val `value`: String,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is PresenceStatus && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
-            "PresenceStatus.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "PresenceStatus.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [PresenceStatus].
@@ -70,14 +68,15 @@ public sealed class PresenceStatus(
     public object Offline : PresenceStatus("offline")
 
     internal object Serializer : KSerializer<PresenceStatus> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.PresenceStatus",
                 PrimitiveKind.STRING)
 
-        public override fun serialize(encoder: Encoder, `value`: PresenceStatus) =
-                encoder.encodeString(value.value)
+        override fun serialize(encoder: Encoder, `value`: PresenceStatus) {
+            encoder.encodeString(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) =
+        override fun deserialize(decoder: Decoder): PresenceStatus =
                 when (val value = decoder.decodeString()) {
             "online" -> Online
             "dnd" -> DoNotDisturb

@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,12 +28,12 @@ public sealed class AutoModerationActionType(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is AutoModerationActionType && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
+    final override fun toString(): String =
             "AutoModerationActionType.${this::class.simpleName}(value=$value)"
 
     /**
@@ -71,14 +70,16 @@ public sealed class AutoModerationActionType(
     public object Timeout : AutoModerationActionType(3)
 
     internal object Serializer : KSerializer<AutoModerationActionType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationActionType",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: AutoModerationActionType) =
-                encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: AutoModerationActionType) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): AutoModerationActionType =
+                when (val value = decoder.decodeInt()) {
             1 -> BlockMessage
             2 -> SendAlertMessage
             3 -> Timeout

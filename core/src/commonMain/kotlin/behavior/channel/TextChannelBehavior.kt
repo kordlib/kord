@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -24,7 +23,6 @@ import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -67,22 +65,6 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
      */
     override suspend fun fetchChannelOrNull(): TextChannel? = super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? TextChannel
 
-    @Deprecated(
-        "Replaced by overload with autoArchiveDuration in builder lambda",
-        ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
-        level = HIDDEN,
-    )
-    public suspend fun startPublicThread(
-        name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        builder: StartThreadBuilder.() -> Unit = {}
-    ): TextChannelThread {
-        return startPublicThread(name) {
-            this.autoArchiveDuration = archiveDuration
-            builder()
-        }
-    }
-
     public suspend fun startPublicThread(
         name: String,
         builder: StartThreadBuilder.() -> Unit = {},
@@ -90,44 +72,11 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
         return unsafeStartThread(name, type = ChannelType.PublicGuildThread, builder) as TextChannelThread
     }
 
-    @Deprecated(
-        "Replaced by overload with autoArchiveDuration in builder lambda",
-        ReplaceWith("this.startPrivateThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
-        level = HIDDEN,
-    )
-    public suspend fun startPrivateThread(
-        name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        builder: StartThreadBuilder.() -> Unit = {}
-    ): TextChannelThread {
-        return startPrivateThread(name) {
-            this.autoArchiveDuration = archiveDuration
-            builder()
-        }
-    }
-
     public suspend fun startPrivateThread(
         name: String,
         builder: StartThreadBuilder.() -> Unit = {},
     ): TextChannelThread {
         return unsafeStartThread(name, type = ChannelType.PrivateThread, builder) as TextChannelThread
-    }
-
-    @Deprecated(
-        "Replaced by builder overload",
-        ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
-        level = HIDDEN,
-    )
-    public suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
-    ): TextChannelThread {
-        return startPublicThreadWithMessage(messageId, name) {
-            this.autoArchiveDuration = archiveDuration
-            this.reason = reason
-        }
     }
 
     public suspend fun startPublicThreadWithMessage(

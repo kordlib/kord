@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.gateway
 
@@ -94,29 +93,29 @@ public class Intents(
 
     public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
 
-    public override fun equals(other: Any?): Boolean = this === other ||
+    override fun equals(other: Any?): Boolean = this === other ||
             (other is Intents && this.code == other.code)
 
-    public override fun hashCode(): Int = code.hashCode()
+    override fun hashCode(): Int = code.hashCode()
 
-    public override fun toString(): String = "Intents(values=$values)"
+    override fun toString(): String = "Intents(values=$values)"
 
     public class Builder(
         private var code: DiscordBitSet = EmptyBitSet(),
     ) {
-        public operator fun Intent.unaryPlus(): Unit {
+        public operator fun Intent.unaryPlus() {
             this@Builder.code.add(this.code)
         }
 
-        public operator fun Intents.unaryPlus(): Unit {
+        public operator fun Intents.unaryPlus() {
             this@Builder.code.add(this.code)
         }
 
-        public operator fun Intent.unaryMinus(): Unit {
+        public operator fun Intent.unaryMinus() {
             this@Builder.code.remove(this.code)
         }
 
-        public operator fun Intents.unaryMinus(): Unit {
+        public operator fun Intents.unaryMinus() {
             this@Builder.code.remove(this.code)
         }
 
@@ -124,15 +123,16 @@ public class Intents(
     }
 
     internal object Serializer : KSerializer<Intents> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.gateway.Intents", PrimitiveKind.STRING)
 
         private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
 
-        public override fun serialize(encoder: Encoder, `value`: Intents) =
-                encoder.encodeSerializableValue(delegate, value.code)
+        override fun serialize(encoder: Encoder, `value`: Intents) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
 
-        public override fun deserialize(decoder: Decoder) =
+        override fun deserialize(decoder: Decoder): Intents =
                 Intents(decoder.decodeSerializableValue(delegate))
     }
 }
@@ -171,12 +171,12 @@ public sealed class Intent(
 ) {
     protected constructor(vararg values: Long) : this(DiscordBitSet(values))
 
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is Intent && this.code == other.code)
 
-    public final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = code.hashCode()
 
-    public final override fun toString(): String = "Intent.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = "Intent.${this::class.simpleName}(code=$code)"
 
     /**
      * An unknown [Intent].

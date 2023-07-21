@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,12 +28,12 @@ public sealed class AutoModerationRuleKeywordPresetType(
      */
     public val `value`: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is AutoModerationRuleKeywordPresetType && this.value == other.value)
 
-    public final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    public final override fun toString(): String =
+    final override fun toString(): String =
             "AutoModerationRuleKeywordPresetType.${this::class.simpleName}(value=$value)"
 
     /**
@@ -63,14 +62,16 @@ public sealed class AutoModerationRuleKeywordPresetType(
     public object Slurs : AutoModerationRuleKeywordPresetType(3)
 
     internal object Serializer : KSerializer<AutoModerationRuleKeywordPresetType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AutoModerationRuleKeywordPresetType",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder,
-                `value`: AutoModerationRuleKeywordPresetType) = encoder.encodeInt(value.value)
+        override fun serialize(encoder: Encoder, `value`: AutoModerationRuleKeywordPresetType) {
+            encoder.encodeInt(value.value)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val value = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): AutoModerationRuleKeywordPresetType =
+                when (val value = decoder.decodeInt()) {
             1 -> Profanity
             2 -> SexualContent
             3 -> Slurs

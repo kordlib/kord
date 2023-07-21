@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -27,13 +26,12 @@ public sealed class InteractionType(
      */
     public val type: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is InteractionType && this.type == other.type)
 
-    public final override fun hashCode(): Int = type.hashCode()
+    final override fun hashCode(): Int = type.hashCode()
 
-    public final override fun toString(): String =
-            "InteractionType.${this::class.simpleName}(type=$type)"
+    final override fun toString(): String = "InteractionType.${this::class.simpleName}(type=$type)"
 
     /**
      * An unknown [InteractionType].
@@ -55,14 +53,16 @@ public sealed class InteractionType(
     public object ModalSubmit : InteractionType(5)
 
     internal object Serializer : KSerializer<InteractionType> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionType",
                 PrimitiveKind.INT)
 
-        public override fun serialize(encoder: Encoder, `value`: InteractionType) =
-                encoder.encodeInt(value.type)
+        override fun serialize(encoder: Encoder, `value`: InteractionType) {
+            encoder.encodeInt(value.type)
+        }
 
-        public override fun deserialize(decoder: Decoder) = when (val type = decoder.decodeInt()) {
+        override fun deserialize(decoder: Decoder): InteractionType =
+                when (val type = decoder.decodeInt()) {
             1 -> Ping
             2 -> ApplicationCommand
             3 -> Component

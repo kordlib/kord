@@ -1,7 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection",
-                "RedundantUnitReturnType"))
+                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.voice
 
@@ -102,29 +101,29 @@ public class SpeakingFlags(
     public operator fun minus(flags: SpeakingFlags): SpeakingFlags =
             SpeakingFlags(this.code and flags.code.inv())
 
-    public override fun equals(other: Any?): Boolean = this === other ||
+    override fun equals(other: Any?): Boolean = this === other ||
             (other is SpeakingFlags && this.code == other.code)
 
-    public override fun hashCode(): Int = code.hashCode()
+    override fun hashCode(): Int = code.hashCode()
 
-    public override fun toString(): String = "SpeakingFlags(values=$values)"
+    override fun toString(): String = "SpeakingFlags(values=$values)"
 
     public class Builder(
         private var code: Int = 0,
     ) {
-        public operator fun SpeakingFlag.unaryPlus(): Unit {
+        public operator fun SpeakingFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
-        public operator fun SpeakingFlags.unaryPlus(): Unit {
+        public operator fun SpeakingFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
-        public operator fun SpeakingFlag.unaryMinus(): Unit {
+        public operator fun SpeakingFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public operator fun SpeakingFlags.unaryMinus(): Unit {
+        public operator fun SpeakingFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
@@ -132,15 +131,16 @@ public class SpeakingFlags(
     }
 
     internal object Serializer : KSerializer<SpeakingFlags> {
-        public override val descriptor: SerialDescriptor =
+        override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.voice.SpeakingFlags", PrimitiveKind.INT)
 
         private val `delegate`: KSerializer<Int> = Int.serializer()
 
-        public override fun serialize(encoder: Encoder, `value`: SpeakingFlags) =
-                encoder.encodeSerializableValue(delegate, value.code)
+        override fun serialize(encoder: Encoder, `value`: SpeakingFlags) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
 
-        public override fun deserialize(decoder: Decoder) =
+        override fun deserialize(decoder: Decoder): SpeakingFlags =
                 SpeakingFlags(decoder.decodeSerializableValue(delegate))
     }
 }
@@ -178,13 +178,12 @@ public sealed class SpeakingFlag(
      */
     public val code: Int,
 ) {
-    public final override fun equals(other: Any?): Boolean = this === other ||
+    final override fun equals(other: Any?): Boolean = this === other ||
             (other is SpeakingFlag && this.code == other.code)
 
-    public final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = code.hashCode()
 
-    public final override fun toString(): String =
-            "SpeakingFlag.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = "SpeakingFlag.${this::class.simpleName}(code=$code)"
 
     /**
      * @suppress
