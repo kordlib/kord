@@ -12,7 +12,6 @@ object OptIns {
 }
 
 val kordOptIns = listOf(
-    "kotlin.time.ExperimentalTime",
     "kotlin.contracts.ExperimentalContracts",
 
     "dev.kord.common.annotation.KordInternal",
@@ -27,7 +26,7 @@ object Jvm {
 
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     allWarningsAsErrors = true
-    freeCompilerArgs.add("-progressive")
+    progressiveMode = true
 }
 
 fun KotlinSourceSet.applyKordOptIns() {

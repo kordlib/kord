@@ -16,6 +16,4 @@ internal suspend fun nodeReadFile(project: String, path: String): ByteReadChanne
     return ByteReadChannel(buffer.toByteArray())
 }
 
-private fun Buffer.toByteArray() = values().toList()
-    .map(Int::toByte)
-    .toByteArray()
+private fun Buffer.toByteArray() = values().toList().toByteArray()

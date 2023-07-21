@@ -18,7 +18,6 @@ class ULongNumber(val value: ULong) : Number(), Comparable<ULongNumber> {
     override fun toLong() = value.toLong()
     override fun toFloat() = value.toFloat()
     override fun toDouble() = value.toDouble()
-    override fun toChar() = value.toInt().toChar()
     override fun compareTo(other: ULongNumber) = this.value.compareTo(other.value)
     override fun equals(other: Any?) = other is ULongNumber && this.value == other.value
     override fun hashCode() = value.hashCode()
