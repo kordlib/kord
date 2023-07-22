@@ -74,5 +74,13 @@ changeBuildType(RelativeId("deployment")) {
                 doesNotEqual("debug", "true")
             }
         }
+        update<GradleBuildStep>(3) {
+            clearConditions()
+
+            conditions {
+                doesNotEqual("debug", "true")
+                doesNotExist("teamcity.pullRequest.number")
+            }
+        }
     }
 }
