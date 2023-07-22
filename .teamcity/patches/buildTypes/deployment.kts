@@ -1,6 +1,8 @@
 package patches.buildTypes
 
 import jetbrains.buildServer.configs.kotlin.*
+import jetbrains.buildServer.configs.kotlin.buildSteps.GradleBuildStep
+import jetbrains.buildServer.configs.kotlin.buildSteps.gradle
 import jetbrains.buildServer.configs.kotlin.ui.*
 
 /*
@@ -21,6 +23,56 @@ changeBuildType(RelativeId("deployment")) {
         }
         add {
             password("env.SIGNING_PASSWORD", "credentialsJSON:7de31dac-638d-43b6-a070-9e9d9ed3db22")
+        }
+    }
+
+    expectSteps {
+        gradle {
+            name = "Run checks (Debug)"
+
+            conditions {
+                equals("debug", "true")
+            }
+            tasks = "check"
+            gradleParams = "-d --gradle-user-home .gradle-home"
+        }
+        gradle {
+            name = "Run checks"
+
+            conditions {
+                equals("debug", "false")
+            }
+            tasks = "check"
+            gradleParams = "--gradle-user-home .gradle-home"
+        }
+        gradle {
+            name = "Publish Artifacts (Debug)"
+
+            conditions {
+                equals("debug", "true")
+                doesNotExist("teamcity.pullRequest.number")
+            }
+            tasks = "publish"
+            gradleParams = "-x test -d --gradle-user-home .gradle-home"
+        }
+        gradle {
+            name = "Publish Artifacts"
+
+            conditions {
+                equals("debug", "false")
+                doesNotExist("teamcity.pullRequest.number")
+            }
+            tasks = "publish"
+            gradleParams = "-x test --gradle-user-home .gradle-home"
+        }
+    }
+    steps {
+        update<GradleBuildStep>(1) {
+            clearConditions()
+
+            conditions {
+                doesNotEqual("debug", "true")
+            }
         }
     }
 }
