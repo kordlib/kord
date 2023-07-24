@@ -173,11 +173,13 @@ public inline fun SpeakingFlags.copy(block: SpeakingFlags.Builder.() -> Unit): S
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#speaking).
  */
 public sealed class SpeakingFlag(
+    shift: Int,
+) {
     /**
      * The raw code used by Discord.
      */
-    public val code: Int,
-) {
+    public val code: Int = 1 shl shift
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is SpeakingFlag && this.code == other.code)
 
@@ -222,14 +224,14 @@ public sealed class SpeakingFlag(
      * This is used as a fallback for [SpeakingFlag]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: Int,
-    ) : SpeakingFlag(code)
+        shift: Int,
+    ) : SpeakingFlag(shift)
 
-    public object Microphone : SpeakingFlag(1)
+    public object Microphone : SpeakingFlag(0)
 
-    public object Soundshare : SpeakingFlag(2)
+    public object Soundshare : SpeakingFlag(1)
 
-    public object Priority : SpeakingFlag(4)
+    public object Priority : SpeakingFlag(2)
 
     public companion object {
         /**

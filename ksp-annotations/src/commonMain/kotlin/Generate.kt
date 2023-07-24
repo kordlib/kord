@@ -38,12 +38,12 @@ annotation class Generate(
     annotation class Entry(
         /** Name of the entry. */
         val name: String,
-        /** [Int] value of the entry. Only set this if [Generate.entityType] is [INT_KORD_ENUM] or [INT_FLAGS]. */
+        /** [Int] value of the entry. Only set this if [Generate.entityType] is [INT_KORD_ENUM]. */
         val intValue: Int = 0,
         /** [String] value of the entry. Only set this if [Generate.entityType] is [STRING_KORD_ENUM]. */
         val stringValue: String = "",
-        /** [Long] value of the entry. Only set this if [Generate.entityType] is [BIT_SET_FLAGS]. */
-        val longValue: Long = 0,
+        /** Shift distance of the entry. Only set this if [Generate.entityType] is [INT_FLAGS] or [BIT_SET_FLAGS]. */
+        val shift: Int = 0,
         /** KDoc for the entry (optional). */
         val kDoc: String = "",
         /** [Deprecated] annotation to mark this entry as deprecated. */

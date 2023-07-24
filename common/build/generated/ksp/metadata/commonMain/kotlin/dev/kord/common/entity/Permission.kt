@@ -165,13 +165,19 @@ public inline fun Permissions.copy(block: Permissions.Builder.() -> Unit): Permi
  * See [Permission]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions).
  */
-public sealed class Permission(
+public sealed class Permission {
     /**
      * The raw code used by Discord.
      */
-    public val code: DiscordBitSet,
-) {
-    protected constructor(vararg values: Long) : this(DiscordBitSet(values))
+    public val code: DiscordBitSet
+
+    private constructor(shift: Int) {
+        this.code = EmptyBitSet().also { it[shift] = true }
+    }
+
+    private constructor(code: DiscordBitSet) {
+        this.code = code
+    }
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is Permission && this.code == other.code)
@@ -186,166 +192,163 @@ public sealed class Permission(
      * This is used as a fallback for [Permission]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: DiscordBitSet,
-    ) : Permission(code) {
-        @KordUnsafe
-        public constructor(vararg code: Long) : this(DiscordBitSet(code))
-    }
+        shift: Int,
+    ) : Permission(shift)
 
     /**
      * Allows creation of instant invites.
      */
-    public object CreateInstantInvite : Permission(1L)
+    public object CreateInstantInvite : Permission(0)
 
     /**
      * Allows kicking members.
      */
-    public object KickMembers : Permission(2L)
+    public object KickMembers : Permission(1)
 
     /**
      * Allows banning members.
      */
-    public object BanMembers : Permission(4L)
+    public object BanMembers : Permission(2)
 
     /**
      * Allows all permissions and bypasses channel permission overwrites.
      */
-    public object Administrator : Permission(8L)
+    public object Administrator : Permission(3)
 
     /**
      * Allows management and editing of channels.
      */
-    public object ManageChannels : Permission(16L)
+    public object ManageChannels : Permission(4)
 
     /**
      * Allows management and editing of the guild.
      */
-    public object ManageGuild : Permission(32L)
+    public object ManageGuild : Permission(5)
 
     /**
      * Allows for the addition of reactions to messages.
      */
-    public object AddReactions : Permission(64L)
+    public object AddReactions : Permission(6)
 
     /**
      * Allows for viewing of audit logs.
      */
-    public object ViewAuditLog : Permission(128L)
+    public object ViewAuditLog : Permission(7)
 
     /**
      * Allows for using priority speaker in a voice channel.
      */
-    public object PrioritySpeaker : Permission(256L)
+    public object PrioritySpeaker : Permission(8)
 
     /**
      * Allows the user to go live.
      */
-    public object Stream : Permission(512L)
+    public object Stream : Permission(9)
 
     /**
      * Allows guild members to view a channel, which includes reading messages in text channels and
      * joining voice
      * channels.
      */
-    public object ViewChannel : Permission(1_024L)
+    public object ViewChannel : Permission(10)
 
     /**
      * Allows for sending messages in a channel and creating threads in a forum (does not allow
      * sending messages in threads).
      */
-    public object SendMessages : Permission(2_048L)
+    public object SendMessages : Permission(11)
 
     /**
      * Allows for sending of `/tts` messages.
      */
-    public object SendTTSMessages : Permission(4_096L)
+    public object SendTTSMessages : Permission(12)
 
     /**
      * Allows for deletion of other users messages.
      */
-    public object ManageMessages : Permission(8_192L)
+    public object ManageMessages : Permission(13)
 
     /**
      * Links sent by users with this permission will be auto-embedded.
      */
-    public object EmbedLinks : Permission(16_384L)
+    public object EmbedLinks : Permission(14)
 
     /**
      * Allows for uploading images and files.
      */
-    public object AttachFiles : Permission(32_768L)
+    public object AttachFiles : Permission(15)
 
     /**
      * Allows for reading of message history.
      */
-    public object ReadMessageHistory : Permission(65_536L)
+    public object ReadMessageHistory : Permission(16)
 
     /**
      * Allows for using the `@everyone` tag to notify all users in a channel, and the `@here` tag to
      * notify all online
      * users in a channel.
      */
-    public object MentionEveryone : Permission(131_072L)
+    public object MentionEveryone : Permission(17)
 
     /**
      * Allows the usage of custom emojis from other servers.
      */
-    public object UseExternalEmojis : Permission(262_144L)
+    public object UseExternalEmojis : Permission(18)
 
     /**
      * Allows for viewing guild insights.
      */
-    public object ViewGuildInsights : Permission(524_288L)
+    public object ViewGuildInsights : Permission(19)
 
     /**
      * Allows for joining of a voice channel.
      */
-    public object Connect : Permission(1_048_576L)
+    public object Connect : Permission(20)
 
     /**
      * Allows for speaking in a voice channel.
      */
-    public object Speak : Permission(2_097_152L)
+    public object Speak : Permission(21)
 
     /**
      * Allows for muting members in a voice channel.
      */
-    public object MuteMembers : Permission(4_194_304L)
+    public object MuteMembers : Permission(22)
 
     /**
      * Allows for deafening of members in a voice channel.
      */
-    public object DeafenMembers : Permission(8_388_608L)
+    public object DeafenMembers : Permission(23)
 
     /**
      * Allows for moving of members between voice channels.
      */
-    public object MoveMembers : Permission(16_777_216L)
+    public object MoveMembers : Permission(24)
 
     /**
      * Allows for using voice-activity-detection in a voice channel.
      */
-    public object UseVAD : Permission(33_554_432L)
+    public object UseVAD : Permission(25)
 
     /**
      * Allows for modification of own nickname.
      */
-    public object ChangeNickname : Permission(67_108_864L)
+    public object ChangeNickname : Permission(26)
 
     /**
      * Allows for modification of other users nicknames.
      */
-    public object ManageNicknames : Permission(134_217_728L)
+    public object ManageNicknames : Permission(27)
 
     /**
      * Allows management and editing of roles.
      */
-    public object ManageRoles : Permission(268_435_456L)
+    public object ManageRoles : Permission(28)
 
     /**
      * Allows management and editing of webhooks.
      */
-    public object ManageWebhooks : Permission(536_870_912L)
+    public object ManageWebhooks : Permission(29)
 
     /**
      * Allows management and editing of emojis and stickers.
@@ -355,88 +358,88 @@ public sealed class Permission(
         message = "Renamed by discord",
         replaceWith = ReplaceWith(expression = "ManageGuildExpressions", imports = arrayOf()),
     )
-    public object ManageEmojisAndStickers : Permission(1_073_741_824L)
+    public object ManageEmojisAndStickers : Permission(30)
 
     /**
      * Allows management and editing of emojis, stickers and soundboard sounds.
      */
-    public object ManageGuildExpressions : Permission(1_073_741_824L)
+    public object ManageGuildExpressions : Permission(30)
 
     /**
      * Allows members to use application commands, including slash commands and context menu
      * commands.
      */
-    public object UseApplicationCommands : Permission(2_147_483_648L)
+    public object UseApplicationCommands : Permission(31)
 
     /**
      * Allows for requesting to speak in stage channels.
      *
      * is permission is under active development and may be changed or removed._
      */
-    public object RequestToSpeak : Permission(4_294_967_296L)
+    public object RequestToSpeak : Permission(32)
 
     /**
      * Allows for creating, editing, and deleting scheduled events.
      */
-    public object ManageEvents : Permission(8_589_934_592L)
+    public object ManageEvents : Permission(33)
 
     /**
      * Allows for deleting and archiving threads, and viewing all private threads.
      */
-    public object ManageThreads : Permission(17_179_869_184L)
+    public object ManageThreads : Permission(34)
 
     /**
      * Allows for creating public and announcement threads.
      */
-    public object CreatePublicThreads : Permission(34_359_738_368L)
+    public object CreatePublicThreads : Permission(35)
 
     /**
      * Allows for creating private threads.
      */
-    public object CreatePrivateThreads : Permission(68_719_476_736L)
+    public object CreatePrivateThreads : Permission(36)
 
     /**
      * Allows the usage of custom stickers from other servers.
      */
-    public object UseExternalStickers : Permission(137_438_953_472L)
+    public object UseExternalStickers : Permission(37)
 
     /**
      * Allows for sending messages in threads.
      */
-    public object SendMessagesInThreads : Permission(274_877_906_944L)
+    public object SendMessagesInThreads : Permission(38)
 
     /**
      * Allows for using Activities (applications with the [Embedded][ApplicationFlag.Embedded] flag)
      * in a voice channel.
      */
-    public object UseEmbeddedActivities : Permission(549_755_813_888L)
+    public object UseEmbeddedActivities : Permission(39)
 
     /**
      * Allows for timing out users to prevent them from sending or reacting to messages in chat and
      * threads, and from
      * speaking in voice and stage channels.
      */
-    public object ModerateMembers : Permission(1_099_511_627_776L)
+    public object ModerateMembers : Permission(40)
 
     /**
      * Allows for viewing role subscription insights.
      */
-    public object ViewCreatorMonetizationAnalytics : Permission(2_199_023_255_552L)
+    public object ViewCreatorMonetizationAnalytics : Permission(41)
 
     /**
      * Allows for using soundboard in a voice channel.
      */
-    public object UseSoundboard : Permission(4_398_046_511_104L)
+    public object UseSoundboard : Permission(42)
 
     /**
      * Allows the usage of custom soundboard sounds from other servers.
      */
-    public object UseExternalSounds : Permission(35_184_372_088_832L)
+    public object UseExternalSounds : Permission(45)
 
     /**
      * Allows sending voice messages.
      */
-    public object SendVoiceMessages : Permission(70_368_744_177_664L)
+    public object SendVoiceMessages : Permission(46)
 
     /**
      * A combination of all [Permission]s

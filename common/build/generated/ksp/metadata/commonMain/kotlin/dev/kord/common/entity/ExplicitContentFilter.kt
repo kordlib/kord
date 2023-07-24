@@ -4,7 +4,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -19,7 +18,6 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level).
  */
 @Serializable(with = ExplicitContentFilter.Serializer::class)
-@OptIn(KordUnsafe::class)
 public sealed class ExplicitContentFilter(
     /**
      * The raw value used by Discord.
@@ -39,7 +37,7 @@ public sealed class ExplicitContentFilter(
      *
      * This is used as a fallback for [ExplicitContentFilter]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown(
         `value`: Int,
     ) : ExplicitContentFilter(value)
 

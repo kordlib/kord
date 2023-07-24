@@ -165,11 +165,13 @@ public inline fun UserFlags.copy(block: UserFlags.Builder.() -> Unit): UserFlags
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-user-flags).
  */
 public sealed class UserFlag(
+    shift: Int,
+) {
     /**
      * The raw code used by Discord.
      */
-    public val code: Int,
-) {
+    public val code: Int = 1 shl shift
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is UserFlag && this.code == other.code)
 
@@ -225,85 +227,85 @@ public sealed class UserFlag(
      * This is used as a fallback for [UserFlag]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: Int,
-    ) : UserFlag(code)
+        shift: Int,
+    ) : UserFlag(shift)
 
     /**
      * Discord Employee
      */
-    public object DiscordEmployee : UserFlag(1)
+    public object DiscordEmployee : UserFlag(0)
 
     /**
      * Partnered Server Owner
      */
-    public object DiscordPartner : UserFlag(2)
+    public object DiscordPartner : UserFlag(1)
 
     /**
      * HypeSquad Events Member
      */
-    public object HypeSquad : UserFlag(4)
+    public object HypeSquad : UserFlag(2)
 
     /**
      * Bug Hunter Level 1
      */
-    public object BugHunterLevel1 : UserFlag(8)
+    public object BugHunterLevel1 : UserFlag(3)
 
     /**
      * House Bravery Member
      */
-    public object HouseBravery : UserFlag(64)
+    public object HouseBravery : UserFlag(6)
 
     /**
      * House Brilliance Member
      */
-    public object HouseBrilliance : UserFlag(128)
+    public object HouseBrilliance : UserFlag(7)
 
     /**
      * House Balance Member
      */
-    public object HouseBalance : UserFlag(256)
+    public object HouseBalance : UserFlag(8)
 
     /**
      * Early Nitro Supporter
      */
-    public object EarlySupporter : UserFlag(512)
+    public object EarlySupporter : UserFlag(9)
 
     /**
      * User is a team
      */
-    public object TeamUser : UserFlag(1_024)
+    public object TeamUser : UserFlag(10)
 
     /**
      * Bug Hunter Level 2
      */
-    public object BugHunterLevel2 : UserFlag(16_384)
+    public object BugHunterLevel2 : UserFlag(14)
 
     /**
      * Verified Bot
      */
-    public object VerifiedBot : UserFlag(65_536)
+    public object VerifiedBot : UserFlag(16)
 
     /**
      * Early Verified Bot Developer
      */
-    public object VerifiedBotDeveloper : UserFlag(131_072)
+    public object VerifiedBotDeveloper : UserFlag(17)
 
     /**
      * Moderator Programs Alumni
      */
-    public object DiscordCertifiedModerator : UserFlag(262_144)
+    public object DiscordCertifiedModerator : UserFlag(18)
 
     /**
      * Bot uses only HTTP interactions and is shown in the online member list
      */
-    public object BotHttpInteractions : UserFlag(524_288)
+    public object BotHttpInteractions : UserFlag(19)
 
     /**
      * User is an Active Developer
      */
-    public object ActiveDeveloper : UserFlag(4_194_304)
+    public object ActiveDeveloper : UserFlag(22)
 
-    public object System : UserFlag(4_096)
+    public object System : UserFlag(12)
 
     public companion object {
         /**

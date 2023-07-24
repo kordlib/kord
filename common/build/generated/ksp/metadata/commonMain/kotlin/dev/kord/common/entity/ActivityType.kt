@@ -4,7 +4,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -19,7 +18,6 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types).
  */
 @Serializable(with = ActivityType.Serializer::class)
-@OptIn(KordUnsafe::class)
 public sealed class ActivityType(
     /**
      * The raw code used by Discord.
@@ -38,7 +36,7 @@ public sealed class ActivityType(
      *
      * This is used as a fallback for [ActivityType]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown(
         code: Int,
     ) : ActivityType(code)
 

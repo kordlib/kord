@@ -4,7 +4,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -19,7 +18,6 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types).
  */
 @Serializable(with = InviteTargetType.Serializer::class)
-@OptIn(KordUnsafe::class)
 public sealed class InviteTargetType(
     /**
      * The raw value used by Discord.
@@ -39,7 +37,7 @@ public sealed class InviteTargetType(
      *
      * This is used as a fallback for [InviteTargetType]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown(
         `value`: Int,
     ) : InviteTargetType(value)
 

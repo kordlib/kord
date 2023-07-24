@@ -1,8 +1,7 @@
 package dev.kord.ksp.generation.kordenum
 
 import com.google.devtools.ksp.symbol.KSFile
-import com.squareup.kotlinpoet.KModifier.INTERNAL
-import com.squareup.kotlinpoet.KModifier.OVERRIDE
+import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.ksp.*
@@ -29,13 +28,21 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addAnnotation<Serializable> {
             addMember("with·=·%T.Serializer::class", entityCN)
         }
-        addAnnotation(OPT_IN) {
-            addMember("%T::class", KORD_UNSAFE)
+        addModifiers(PUBLIC, SEALED)
+        primaryConstructor {
+            addParameter(valueName, valueCN)
         }
-        addEntityPrimaryConstructor()
+        addProperty(valueName, valueCN, PUBLIC) {
+            addKdoc("The raw $valueName used by Discord.")
+            initializer(valueName)
+        }
         addEntityEqualsHashCodeToString()
         addClass("Unknown") {
             addSharedUnknownClassContent()
+            primaryConstructor {
+                addParameter(valueName, valueCN)
+            }
+            addSuperclassConstructorParameter(valueName)
         }
         addEntityEntries()
         addObject("Serializer") {

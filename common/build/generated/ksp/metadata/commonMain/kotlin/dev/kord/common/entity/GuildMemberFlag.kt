@@ -179,11 +179,13 @@ public inline fun GuildMemberFlags.copy(block: GuildMemberFlags.Builder.() -> Un
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags).
  */
 public sealed class GuildMemberFlag(
+    shift: Int,
+) {
     /**
      * The raw code used by Discord.
      */
-    public val code: Int,
-) {
+    public val code: Int = 1 shl shift
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is GuildMemberFlag && this.code == other.code)
 
@@ -229,28 +231,28 @@ public sealed class GuildMemberFlag(
      * This is used as a fallback for [GuildMemberFlag]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: Int,
-    ) : GuildMemberFlag(code)
+        shift: Int,
+    ) : GuildMemberFlag(shift)
 
     /**
      * Member has left and rejoined the guild
      */
-    public object DidRejoin : GuildMemberFlag(1)
+    public object DidRejoin : GuildMemberFlag(0)
 
     /**
      * Member has completed onboarding
      */
-    public object CompletedOnboarding : GuildMemberFlag(2)
+    public object CompletedOnboarding : GuildMemberFlag(1)
 
     /**
      * Member is exempt from guild verification requirements
      */
-    public object BypassesVerification : GuildMemberFlag(4)
+    public object BypassesVerification : GuildMemberFlag(2)
 
     /**
      * Member has started onboarding
      */
-    public object StartedOnboarding : GuildMemberFlag(8)
+    public object StartedOnboarding : GuildMemberFlag(3)
 
     public companion object {
         /**

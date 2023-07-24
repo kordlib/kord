@@ -164,12 +164,12 @@ public inline fun Intents.copy(block: Intents.Builder.() -> Unit): Intents {
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway#gateway-intents).
  */
 public sealed class Intent(
+    shift: Int,
+) {
     /**
      * The raw code used by Discord.
      */
-    public val code: DiscordBitSet,
-) {
-    protected constructor(vararg values: Long) : this(DiscordBitSet(values))
+    public val code: DiscordBitSet = EmptyBitSet().also { it[shift] = true }
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is Intent && this.code == other.code)
@@ -184,11 +184,8 @@ public sealed class Intent(
      * This is used as a fallback for [Intent]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: DiscordBitSet,
-    ) : Intent(code) {
-        @KordUnsafe
-        public constructor(vararg code: Long) : this(DiscordBitSet(code))
-    }
+        shift: Int,
+    ) : Intent(shift)
 
     /**
      * Enables the following events:
@@ -210,7 +207,7 @@ public sealed class Intent(
      * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
      * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
      */
-    public object Guilds : Intent(1L)
+    public object Guilds : Intent(0)
 
     /**
      * Enables the following events:
@@ -221,7 +218,7 @@ public sealed class Intent(
      * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
      */
     @PrivilegedIntent
-    public object GuildMembers : Intent(2L)
+    public object GuildMembers : Intent(1)
 
     /**
      * Enables the following events:
@@ -229,13 +226,13 @@ public sealed class Intent(
      * - [GuildBanAdd]
      * - [GuildBanRemove]
      */
-    public object GuildBans : Intent(4L)
+    public object GuildBans : Intent(2)
 
     /**
      * Enables the following events:
      * - [GuildEmojisUpdate]
      */
-    public object GuildEmojis : Intent(8L)
+    public object GuildEmojis : Intent(3)
 
     /**
      * Enables the following events:
@@ -244,33 +241,33 @@ public sealed class Intent(
      * - [IntegrationUpdate]
      * - [IntegrationDelete]
      */
-    public object GuildIntegrations : Intent(16L)
+    public object GuildIntegrations : Intent(4)
 
     /**
      * Enables the following events:
      * - [WebhooksUpdate]
      */
-    public object GuildWebhooks : Intent(32L)
+    public object GuildWebhooks : Intent(5)
 
     /**
      * Enables the following events:
      * - [InviteCreate]
      * - [InviteDelete]
      */
-    public object GuildInvites : Intent(64L)
+    public object GuildInvites : Intent(6)
 
     /**
      * Enables the following events:
      * - [VoiceStateUpdate]
      */
-    public object GuildVoiceStates : Intent(128L)
+    public object GuildVoiceStates : Intent(7)
 
     /**
      * Enables the following events:
      * - [PresenceUpdate]
      */
     @PrivilegedIntent
-    public object GuildPresences : Intent(256L)
+    public object GuildPresences : Intent(8)
 
     /**
      * Enables the following events:
@@ -279,7 +276,7 @@ public sealed class Intent(
      * - [MessageDelete]
      * - [MessageDeleteBulk]
      */
-    public object GuildMessages : Intent(512L)
+    public object GuildMessages : Intent(9)
 
     /**
      * Enables the following events:
@@ -288,13 +285,13 @@ public sealed class Intent(
      * - [MessageReactionRemoveAll]
      * - [MessageReactionRemoveEmoji]
      */
-    public object GuildMessageReactions : Intent(1_024L)
+    public object GuildMessageReactions : Intent(10)
 
     /**
      * Enables the following events:
      * - [TypingStart]
      */
-    public object GuildMessageTyping : Intent(2_048L)
+    public object GuildMessageTyping : Intent(11)
 
     /**
      * Enables the following events:
@@ -303,7 +300,7 @@ public sealed class Intent(
      * - [MessageDelete]
      * - [ChannelPinsUpdate]
      */
-    public object DirectMessages : Intent(4_096L)
+    public object DirectMessages : Intent(12)
 
     /**
      * Enables the following events:
@@ -312,13 +309,13 @@ public sealed class Intent(
      * - [MessageReactionRemoveAll]
      * - [MessageReactionRemoveEmoji]
      */
-    public object DirectMessagesReactions : Intent(8_192L)
+    public object DirectMessagesReactions : Intent(13)
 
     /**
      * Enables the following events:
      * - [TypingStart]
      */
-    public object DirectMessageTyping : Intent(16_384L)
+    public object DirectMessageTyping : Intent(14)
 
     /**
      * [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly
@@ -344,7 +341,7 @@ public sealed class Intent(
      * - Content of the message a message context menu command is used on
      */
     @PrivilegedIntent
-    public object MessageContent : Intent(32_768L)
+    public object MessageContent : Intent(15)
 
     /**
      * Enables the following events:
@@ -354,7 +351,7 @@ public sealed class Intent(
      * - [GuildScheduledEventUserAdd]
      * - [GuildScheduledEventUserRemove]
      */
-    public object GuildScheduledEvents : Intent(65_536L)
+    public object GuildScheduledEvents : Intent(16)
 
     /**
      * Enables the following events:
@@ -362,13 +359,13 @@ public sealed class Intent(
      * - [AutoModerationRuleUpdate]
      * - [AutoModerationRuleDelete]
      */
-    public object AutoModerationConfiguration : Intent(1_048_576L)
+    public object AutoModerationConfiguration : Intent(20)
 
     /**
      * Enables the following events:
      * - [AutoModerationActionExecution]
      */
-    public object AutoModerationExecution : Intent(2_097_152L)
+    public object AutoModerationExecution : Intent(21)
 
     public companion object {
         /**

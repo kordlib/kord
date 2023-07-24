@@ -14,18 +14,6 @@ internal fun TypeSpec.Builder.addEntityKDoc() {
 }
 
 context(GenerationEntity, GenerationContext)
-internal fun TypeSpec.Builder.addEntityPrimaryConstructor() {
-    addModifiers(PUBLIC, SEALED)
-    primaryConstructor {
-        addParameter(valueName, valueCN)
-    }
-    addProperty(valueName, valueCN, PUBLIC) {
-        addKdoc("The raw $valueName used by Discord.")
-        initializer(valueName)
-    }
-}
-
-context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addEntityEqualsHashCodeToString() {
     addEqualsAndHashCode(entityCN, FINAL)
     addFunction("toString") {
@@ -42,12 +30,7 @@ internal fun TypeSpec.Builder.addSharedUnknownClassContent() {
         entityCN,
     )
     addModifiers(PUBLIC)
-    primaryConstructor {
-        addAnnotation(KORD_UNSAFE)
-        addParameter(valueName, valueCN)
-    }
     superclass(entityCN)
-    addSuperclassConstructorParameter(valueName)
 }
 
 context(GenerationEntity, GenerationContext)

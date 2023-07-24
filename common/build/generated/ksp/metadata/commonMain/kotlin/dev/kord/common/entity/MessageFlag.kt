@@ -172,11 +172,13 @@ public inline fun MessageFlags.copy(block: MessageFlags.Builder.() -> Unit): Mes
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-flags).
  */
 public sealed class MessageFlag(
+    shift: Int,
+) {
     /**
      * The raw code used by Discord.
      */
-    public val code: Int,
-) {
+    public val code: Int = 1 shl shift
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is MessageFlag && this.code == other.code)
 
@@ -227,63 +229,63 @@ public sealed class MessageFlag(
      * This is used as a fallback for [MessageFlag]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: Int,
-    ) : MessageFlag(code)
+        shift: Int,
+    ) : MessageFlag(shift)
 
     /**
      * This message has been published to subscribed channels (via Channel Following).
      */
-    public object CrossPosted : MessageFlag(1)
+    public object CrossPosted : MessageFlag(0)
 
     /**
      * This message originated from a message in another channel (via Channel Following).
      */
-    public object IsCrossPost : MessageFlag(2)
+    public object IsCrossPost : MessageFlag(1)
 
     /**
      * Do not include any embeds when serializing this message.
      */
-    public object SuppressEmbeds : MessageFlag(4)
+    public object SuppressEmbeds : MessageFlag(2)
 
     /**
      * The source message for this crosspost has been deleted (via Channel Following).
      */
-    public object SourceMessageDeleted : MessageFlag(8)
+    public object SourceMessageDeleted : MessageFlag(3)
 
     /**
      * This message came from the urgent message system.
      */
-    public object Urgent : MessageFlag(16)
+    public object Urgent : MessageFlag(4)
 
     /**
      * This message has an associated thread, with the same id as the message.
      */
-    public object HasThread : MessageFlag(32)
+    public object HasThread : MessageFlag(5)
 
     /**
      * This message is only visible to the user who invoked the Interaction.
      */
-    public object Ephemeral : MessageFlag(64)
+    public object Ephemeral : MessageFlag(6)
 
     /**
      * This message is an Interaction Response and the bot is "thinking".
      */
-    public object Loading : MessageFlag(128)
+    public object Loading : MessageFlag(7)
 
     /**
      * This message failed to mention some roles and add their members to the thread.
      */
-    public object FailedToMentionSomeRolesInThread : MessageFlag(256)
+    public object FailedToMentionSomeRolesInThread : MessageFlag(8)
 
     /**
      * This message will not trigger push and desktop notifications.
      */
-    public object SuppressNotifications : MessageFlag(4_096)
+    public object SuppressNotifications : MessageFlag(12)
 
     /**
      * This message is a voice message.
      */
-    public object IsVoiceMessage : MessageFlag(8_192)
+    public object IsVoiceMessage : MessageFlag(13)
 
     public companion object {
         /**

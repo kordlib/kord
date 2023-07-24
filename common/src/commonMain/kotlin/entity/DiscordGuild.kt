@@ -154,18 +154,18 @@
     INT_FLAGS, name = "SystemChannelFlag", wasEnum = true,
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
     entries = [
-        Entry("SuppressJoinNotifications", intValue = 1 shl 0, kDoc = "Suppress member join notifications."),
-        Entry("SuppressPremiumSubscriptions", intValue = 1 shl 1, kDoc = "Suppress server boost notifications."),
-        Entry("SuppressGuildReminderNotifications", intValue = 1 shl 2, kDoc = "Hide server setup tips."),
-        Entry("SuppressJoinNotificationReplies", intValue = 1 shl 3, kDoc = "Hide member join sticker reply buttons."),
+        Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),
+        Entry("SuppressPremiumSubscriptions", shift = 1, kDoc = "Suppress server boost notifications."),
+        Entry("SuppressGuildReminderNotifications", shift = 2, kDoc = "Hide server setup tips."),
+        Entry("SuppressJoinNotificationReplies", shift = 3, kDoc = "Hide member join sticker reply buttons."),
         Entry(
             "SuppressRoleSubscriptionPurchaseNotifications",
-            intValue = 1 shl 4,
+            shift = 4,
             kDoc = "Suppress role subscription purchase and renewal notifications."
         ),
         Entry(
             "SuppressRoleSubscriptionPurchaseNotificationReplies",
-            intValue = 1 shl 5,
+            shift = 5,
             kDoc = "Hide role subscription sticker reply buttons."
         ),
     ]

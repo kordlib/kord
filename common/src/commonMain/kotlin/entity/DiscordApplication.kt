@@ -2,33 +2,33 @@
     INT_FLAGS, name = "ApplicationFlag", wasEnum = true,
     docUrl = "https://discord.com/developers/docs/resources/application#application-object-application-flags",
     entries = [
-        Entry(name = "ApplicationAutoModerationRuleCreateBadge", intValue = 1 shl 6,
+        Entry(name = "ApplicationAutoModerationRuleCreateBadge", shift = 6,
             kDoc = "Indicates if an app uses the Auto Moderation API."),
-        Entry(name = "GatewayPresence", intValue = 1 shl 12,
+        Entry(name = "GatewayPresence", shift = 12,
             kDoc = "Intent required for bots in **100 or more servers** to receive `PresenceUpdate` events."),
-        Entry(name = "GatewayPresenceLimited", intValue = 1 shl 13,
+        Entry(name = "GatewayPresenceLimited", shift = 13,
             kDoc = "Intent required for bots in under 100 servers to receive `PresenceUpdate` events, found on the " +
                     "**Bot** page in your app's settings."),
-        Entry(name = "GatewayGuildMembers", intValue = 1 shl 14,
+        Entry(name = "GatewayGuildMembers", shift = 14,
             kDoc = "Intent required for bots in **100 or more servers** to receive member-related events like " +
                     "`GuildMemberAdd`.\n\nSee the list of member-related events " +
                     "[under `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents)."),
-        Entry(name = "GatewayGuildMembersLimited", intValue = 1 shl 15,
+        Entry(name = "GatewayGuildMembersLimited", shift = 15,
             kDoc = "Intent required for bots in under 100 servers to receive member-related events like " +
                     "`GuildMemberAdd`, found on the **Bot** page in your app's settings.\n\nSee the list of " +
                     "member-related events " +
                     "[under `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents)."),
-        Entry(name = "VerificationPendingGuildLimit", intValue = 1 shl 16, kDoc = "Indicates unusual growth of an app that prevents verification."),
-        Entry(name = "Embedded", intValue = 1 shl 17, kDoc = "Indicates if an app is embedded within the Discord client (currently unavailable publicly)."),
-        Entry(name = "GatewayMessageContent", intValue = 1 shl 18, kDoc = """
+        Entry(name = "VerificationPendingGuildLimit", shift = 16, kDoc = "Indicates unusual growth of an app that prevents verification."),
+        Entry(name = "Embedded", shift = 17, kDoc = "Indicates if an app is embedded within the Discord client (currently unavailable publicly)."),
+        Entry(name = "GatewayMessageContent", shift = 18, kDoc = """
          Intent required for bots in **100 or more servers*to receive
          [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055)."""),
 
-        Entry(name = "GatewayMessageContentLimited", intValue = 1 shl 19,
+        Entry(name = "GatewayMessageContentLimited", shift = 19,
             kDoc = "Intent required for bots in under 100 servers to receive " +
                     "[message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found on the" +
                     " **Bot** page in your app's settings."),
-        Entry(name = "ApplicationCommandBadge", intValue = 1 shl 23, kDoc = "Indicates if an app has registered global application commands.")
+        Entry(name = "ApplicationCommandBadge", shift = 23, kDoc = "Indicates if an app has registered global application commands.")
     ]
 )
 

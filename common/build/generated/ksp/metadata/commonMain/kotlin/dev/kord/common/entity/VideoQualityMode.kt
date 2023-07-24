@@ -4,7 +4,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -19,7 +18,6 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes).
  */
 @Serializable(with = VideoQualityMode.Serializer::class)
-@OptIn(KordUnsafe::class)
 public sealed class VideoQualityMode(
     /**
      * The raw value used by Discord.
@@ -39,7 +37,7 @@ public sealed class VideoQualityMode(
      *
      * This is used as a fallback for [VideoQualityMode]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown(
         `value`: Int,
     ) : VideoQualityMode(value)
 

@@ -119,12 +119,31 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         // for ksp incremental processing
         addOriginatingKSFile(originatingFile)
         addEntityKDoc()
-        addEntityPrimaryConstructor()
-        if (valueType == BIT_SET) {
+        addModifiers(PUBLIC, SEALED)
+        if (hasCombinerFlag) {
+            addProperty(valueName, valueCN, PUBLIC) {
+                addKdoc("The raw $valueName used by Discord.")
+            }
             addConstructor {
-                addModifiers(PROTECTED)
-                addParameter("values", LONG, VARARG)
-                callThisConstructor(CodeBlock.of("%T(values)", DISCORD_BIT_SET))
+                addModifiers(PRIVATE)
+                addParameter<Int>("shift")
+                addStatement("this.$valueName = %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
+            }
+            addConstructor {
+                addModifiers(PRIVATE)
+                addParameter(valueName, valueCN)
+                addStatement("this.$valueName = $valueName")
+            }
+        } else {
+            primaryConstructor {
+                addParameter<Int>("shift")
+            }
+            addProperty(valueName, valueCN, PUBLIC) {
+                addKdoc("The raw $valueName used by Discord.")
+                when (valueType) {
+                    INT -> initializer("1 shl shift")
+                    BIT_SET -> initializer("%M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
+                }
             }
         }
         addEntityEqualsHashCodeToString()
@@ -133,13 +152,11 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         }
         addClass("Unknown") {
             addSharedUnknownClassContent()
-            if (valueType == BIT_SET) {
-                addConstructor {
-                    addAnnotation(KORD_UNSAFE)
-                    addParameter(valueName, LONG, VARARG)
-                    callThisConstructor(CodeBlock.of("%T($valueName)", DISCORD_BIT_SET))
-                }
+            primaryConstructor {
+                addAnnotation(KORD_UNSAFE)
+                addParameter<Int>("shift")
             }
+            addSuperclassConstructorParameter("shift")
         }
         addEntityEntries()
         if (hasCombinerFlag) {

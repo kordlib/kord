@@ -173,11 +173,13 @@ public inline fun ActivityFlags.copy(block: ActivityFlags.Builder.() -> Unit): A
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags).
  */
 public sealed class ActivityFlag(
+    shift: Int,
+) {
     /**
      * The raw code used by Discord.
      */
-    public val code: Int,
-) {
+    public val code: Int = 1 shl shift
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is ActivityFlag && this.code == other.code)
 
@@ -228,26 +230,26 @@ public sealed class ActivityFlag(
      * This is used as a fallback for [ActivityFlag]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: Int,
-    ) : ActivityFlag(code)
+        shift: Int,
+    ) : ActivityFlag(shift)
 
-    public object Instance : ActivityFlag(1)
+    public object Instance : ActivityFlag(0)
 
-    public object Join : ActivityFlag(2)
+    public object Join : ActivityFlag(1)
 
-    public object Spectate : ActivityFlag(4)
+    public object Spectate : ActivityFlag(2)
 
-    public object JoinRequest : ActivityFlag(8)
+    public object JoinRequest : ActivityFlag(3)
 
-    public object Sync : ActivityFlag(16)
+    public object Sync : ActivityFlag(4)
 
-    public object Play : ActivityFlag(32)
+    public object Play : ActivityFlag(5)
 
-    public object PartyPrivacyFriends : ActivityFlag(64)
+    public object PartyPrivacyFriends : ActivityFlag(6)
 
-    public object PartyPrivacVoiceChannel : ActivityFlag(128)
+    public object PartyPrivacVoiceChannel : ActivityFlag(7)
 
-    public object Embed : ActivityFlag(256)
+    public object Embed : ActivityFlag(8)
 
     public companion object {
         /**

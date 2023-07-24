@@ -14,9 +14,8 @@ internal fun GenerationEntity.ValueType.toClassName() = when (this) {
 }
 
 internal fun GenerationEntity.ValueType.toFormat() = when (this) {
-    KordEnum.ValueType.INT, BitFlags.ValueType.INT -> "%L"
+    KordEnum.ValueType.INT, BitFlags.ValueType.INT, BitFlags.ValueType.BIT_SET -> "%L"
     KordEnum.ValueType.STRING -> "%S"
-    BitFlags.ValueType.BIT_SET -> "%LL"
 }
 
 internal fun GenerationEntity.ValueType.toPrimitiveKind() = when (this) {

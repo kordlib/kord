@@ -43,59 +43,59 @@
     entries = [
         Entry(
             name = "CrossPosted",
-            intValue = 1 shl 0,
+            shift = 0,
             kDoc = "This message has been published to subscribed channels (via Channel Following)."
         ),
 
         Entry(
             name = "IsCrossPost",
-            intValue = 1 shl 1,
+            shift = 1,
             kDoc = "This message originated from a message in another channel (via Channel Following)."
         ),
 
         Entry(
             name = "SuppressEmbeds",
-            intValue = 1 shl 2,
+            shift = 2,
             kDoc = "Do not include any embeds when serializing this message."
         ),
 
         Entry(
             name = "SourceMessageDeleted",
-            intValue = 1 shl 3,
+            shift = 3,
             kDoc = "The source message for this crosspost has been deleted (via Channel Following)."
         ),
 
-        Entry(name = "Urgent", intValue = 1 shl 4, kDoc = "This message came from the urgent message system."),
+        Entry(name = "Urgent", shift = 4, kDoc = "This message came from the urgent message system."),
 
         Entry(
             name = "HasThread",
-            intValue = 1 shl 5,
+            shift = 5,
             kDoc = "This message has an associated thread, with the same id as the message."
         ),
 
         Entry(
             name = "Ephemeral",
-            intValue = 1 shl 6,
+            shift = 6,
             kDoc = "This message is only visible to the user who invoked the Interaction."
         ),
 
         Entry(
             name = "Loading",
-            intValue = 1 shl 7,
+            shift = 7,
             kDoc = """This message is an Interaction Response and the bot is "thinking"."""
         ),
 
         Entry(
             name = "FailedToMentionSomeRolesInThread",
-            intValue = 1 shl 8,
+            shift = 8,
             kDoc = "This message failed to mention some roles and add their members to the thread."
         ),
 
         Entry(
-            "SuppressNotifications", intValue = 1 shl 12,
+            "SuppressNotifications", shift = 12,
             kDoc = "This message will not trigger push and desktop notifications."
         ),
-        Entry("IsVoiceMessage", intValue = 1 shl 13, kDoc = "This message is a voice message.")
+        Entry("IsVoiceMessage", shift = 13, kDoc = "This message is a voice message.")
     ]
 )
 

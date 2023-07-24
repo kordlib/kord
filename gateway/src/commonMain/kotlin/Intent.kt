@@ -7,7 +7,7 @@
     bitFlagsDescriptor = BitFlagDescription("gateway", "intents", "an", "intent"),
     entries = [
         Entry(
-            "Guilds", longValue = 1 shl 0, kDoc = """
+            "Guilds", shift = 0, kDoc = """
          Enables the following events:
          - [GuildCreate]
          - [GuildUpdate]
@@ -30,7 +30,7 @@
         ),
         Entry(
             "GuildMembers",
-            longValue = 1 shl 1,
+            shift = 1,
             additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
             kDoc = """
          Enables the following events:
@@ -42,7 +42,7 @@
          """
         ),
         Entry(
-            "GuildBans", longValue = 1 shl 2, kDoc = """
+            "GuildBans", shift = 2, kDoc = """
          Enables the following events:
          - [GuildAuditLogEntryCreate]
          - [GuildBanAdd]
@@ -50,13 +50,13 @@
          """
         ),
         Entry(
-            "GuildEmojis", longValue = 1 shl 3, kDoc = """
+            "GuildEmojis", shift = 3, kDoc = """
          Enables the following events:
          - [GuildEmojisUpdate]
          """
         ),
         Entry(
-            "GuildIntegrations", longValue = 1 shl 4, kDoc = """
+            "GuildIntegrations", shift = 4, kDoc = """
          Enables the following events:
          - [GuildIntegrationsUpdate]
          - [IntegrationCreate]
@@ -65,13 +65,13 @@
          """
         ),
         Entry(
-            "GuildWebhooks", longValue = 1 shl 5, kDoc = """
+            "GuildWebhooks", shift = 5, kDoc = """
          Enables the following events:
          - [WebhooksUpdate]
          """
         ),
         Entry(
-            "GuildInvites", longValue = 1 shl 6, kDoc = """
+            "GuildInvites", shift = 6, kDoc = """
          Enables the following events:
          - [InviteCreate]
          - [InviteDelete]
@@ -79,14 +79,14 @@
         ),
 
         Entry(
-            "GuildVoiceStates", longValue = 1 shl 7, kDoc = """
+            "GuildVoiceStates", shift = 7, kDoc = """
             Enables the following events:
             - [VoiceStateUpdate]
             """
         ),
         Entry(
             "GuildPresences",
-            longValue = 1 shl 8,
+            shift = 8,
             additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
             kDoc = """
          Enables the following events:
@@ -94,7 +94,7 @@
          """
         ),
         Entry(
-            "GuildMessages", longValue = 1 shl 9, kDoc = """
+            "GuildMessages", shift = 9, kDoc = """
          Enables the following events:
          - [MessageCreate]
          - [MessageUpdate]
@@ -103,7 +103,7 @@
          """
         ),
         Entry(
-            "GuildMessageReactions", longValue = 1 shl 10, kDoc = """
+            "GuildMessageReactions", shift = 10, kDoc = """
          Enables the following events:
          - [MessageReactionAdd]
          - [MessageReactionRemove]
@@ -112,13 +112,13 @@
          """
         ),
         Entry(
-            "GuildMessageTyping", longValue = 1 shl 11, kDoc = """
+            "GuildMessageTyping", shift = 11, kDoc = """
          Enables the following events:
          - [TypingStart]
          """
         ),
         Entry(
-            "DirectMessages", longValue = 1 shl 12, kDoc = """
+            "DirectMessages", shift = 12, kDoc = """
          Enables the following events:
          - [MessageCreate]
          - [MessageUpdate]
@@ -127,7 +127,7 @@
          """
         ),
         Entry(
-            "DirectMessagesReactions", longValue = 1 shl 13, kDoc = """
+            "DirectMessagesReactions", shift = 13, kDoc = """
          Enables the following events:
          - [MessageReactionAdd]
          - [MessageReactionRemove]
@@ -136,14 +136,14 @@
          """
         ),
         Entry(
-            "DirectMessageTyping", longValue = 1 shl 14, kDoc = """
+            "DirectMessageTyping", shift = 14, kDoc = """
          Enables the following events:
          - [TypingStart]
          """
         ),
         Entry(
             "MessageContent",
-            longValue = 1 shl 15,
+            shift = 15,
             additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
             kDoc = """
          [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly associated with any
@@ -166,7 +166,7 @@
          """
         ),
         Entry(
-            "GuildScheduledEvents", longValue = 1 shl 16, kDoc = """
+            "GuildScheduledEvents", shift = 16, kDoc = """
          Enables the following events:
          - [GuildScheduledEventCreate]
          - [GuildScheduledEventUpdate]
@@ -176,7 +176,7 @@
          """
         ),
         Entry(
-            "AutoModerationConfiguration", longValue = 1 shl 20, kDoc = """
+            "AutoModerationConfiguration", shift = 20, kDoc = """
          Enables the following events:
          - [AutoModerationRuleCreate]
          - [AutoModerationRuleUpdate]
@@ -184,7 +184,7 @@
          """
         ),
         Entry(
-            "AutoModerationExecution", longValue = 1 shl 21, kDoc = """
+            "AutoModerationExecution", shift = 21, kDoc = """
          Enables the following events:
          - [AutoModerationActionExecution]
          """

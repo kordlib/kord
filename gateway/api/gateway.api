@@ -1197,8 +1197,7 @@ public final class dev/kord/gateway/IntegrationUpdate : dev/kord/gateway/Dispatc
 
 public abstract class dev/kord/gateway/Intent {
 	public static final field Companion Ldev/kord/gateway/Intent$Companion;
-	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> ([JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun hashCode ()I
@@ -1286,8 +1285,7 @@ public final class dev/kord/gateway/Intent$MessageContent : dev/kord/gateway/Int
 }
 
 public final class dev/kord/gateway/Intent$Unknown : dev/kord/gateway/Intent {
-	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
-	public fun <init> ([J)V
+	public fun <init> (I)V
 }
 
 public final class dev/kord/gateway/IntentKt {

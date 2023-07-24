@@ -92,7 +92,7 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
     }
 }
 
-private val ENTRY_VALUE_PARAMETERS = setOf(Entry::intValue, Entry::longValue, Entry::stringValue)
+private val ENTRY_VALUE_PARAMETERS = setOf(Entry::intValue, Entry::stringValue, Entry::shift)
 
 /**
  * Maps [Generate.Entry] to [GenerationEntity.Entry].
@@ -119,9 +119,24 @@ private fun Entry.toGenerationEntityEntryOrNull(
     }
 
     val value = when (entityType) {
-        INT_KORD_ENUM, INT_FLAGS -> Entry::intValue.ifValid { intValue }
+        INT_KORD_ENUM -> Entry::intValue.ifValid { intValue }
         STRING_KORD_ENUM -> Entry::stringValue.ifValid { stringValue }
-        BIT_SET_FLAGS -> Entry::longValue.ifValid { longValue }
+        INT_FLAGS, BIT_SET_FLAGS -> {
+            val shift = Entry::shift.ifValid { shift } ?: return null
+
+            @Suppress("KotlinConstantConditions")
+            val validShift = when (entityType) {
+                INT_FLAGS -> shift in 0..30 // Int actually supports shifting by 31, but that would result in <0
+                BIT_SET_FLAGS -> shift >= 0
+                INT_KORD_ENUM, STRING_KORD_ENUM -> throw AssertionError()
+            }
+            if (validShift) {
+                shift
+            } else {
+                logger.error("shift $shift is out of bounds for entityType $entityType", annotation)
+                null
+            }
+        }
     } ?: return null
 
     return GenerationEntity.Entry(

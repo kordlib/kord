@@ -180,11 +180,13 @@ public inline fun ApplicationFlags.copy(block: ApplicationFlags.Builder.() -> Un
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/application#application-object-application-flags).
  */
 public sealed class ApplicationFlag(
+    shift: Int,
+) {
     /**
      * The raw code used by Discord.
      */
-    public val code: Int,
-) {
+    public val code: Int = 1 shl shift
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is ApplicationFlag && this.code == other.code)
 
@@ -236,24 +238,24 @@ public sealed class ApplicationFlag(
      * This is used as a fallback for [ApplicationFlag]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: Int,
-    ) : ApplicationFlag(code)
+        shift: Int,
+    ) : ApplicationFlag(shift)
 
     /**
      * Indicates if an app uses the Auto Moderation API.
      */
-    public object ApplicationAutoModerationRuleCreateBadge : ApplicationFlag(64)
+    public object ApplicationAutoModerationRuleCreateBadge : ApplicationFlag(6)
 
     /**
      * Intent required for bots in **100 or more servers** to receive `PresenceUpdate` events.
      */
-    public object GatewayPresence : ApplicationFlag(4_096)
+    public object GatewayPresence : ApplicationFlag(12)
 
     /**
      * Intent required for bots in under 100 servers to receive `PresenceUpdate` events, found on
      * the **Bot** page in your app's settings.
      */
-    public object GatewayPresenceLimited : ApplicationFlag(8_192)
+    public object GatewayPresenceLimited : ApplicationFlag(13)
 
     /**
      * Intent required for bots in **100 or more servers** to receive member-related events like
@@ -262,7 +264,7 @@ public sealed class ApplicationFlag(
      * See the list of member-related events [under
      * `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
      */
-    public object GatewayGuildMembers : ApplicationFlag(16_384)
+    public object GatewayGuildMembers : ApplicationFlag(14)
 
     /**
      * Intent required for bots in under 100 servers to receive member-related events like
@@ -271,35 +273,35 @@ public sealed class ApplicationFlag(
      * See the list of member-related events [under
      * `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
      */
-    public object GatewayGuildMembersLimited : ApplicationFlag(32_768)
+    public object GatewayGuildMembersLimited : ApplicationFlag(15)
 
     /**
      * Indicates unusual growth of an app that prevents verification.
      */
-    public object VerificationPendingGuildLimit : ApplicationFlag(65_536)
+    public object VerificationPendingGuildLimit : ApplicationFlag(16)
 
     /**
      * Indicates if an app is embedded within the Discord client (currently unavailable publicly).
      */
-    public object Embedded : ApplicationFlag(131_072)
+    public object Embedded : ApplicationFlag(17)
 
     /**
      * Intent required for bots in **100 or more servers*to receive
      * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
      */
-    public object GatewayMessageContent : ApplicationFlag(262_144)
+    public object GatewayMessageContent : ApplicationFlag(18)
 
     /**
      * Intent required for bots in under 100 servers to receive [message
      * content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found on the **Bot**
      * page in your app's settings.
      */
-    public object GatewayMessageContentLimited : ApplicationFlag(524_288)
+    public object GatewayMessageContentLimited : ApplicationFlag(19)
 
     /**
      * Indicates if an app has registered global application commands.
      */
-    public object ApplicationCommandBadge : ApplicationFlag(8_388_608)
+    public object ApplicationCommandBadge : ApplicationFlag(23)
 
     public companion object {
         /**

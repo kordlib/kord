@@ -4,7 +4,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -24,7 +23,6 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type).
  */
 @Serializable(with = ApplicationRoleConnectionMetadataType.Serializer::class)
-@OptIn(KordUnsafe::class)
 public sealed class ApplicationRoleConnectionMetadataType(
     /**
      * The raw value used by Discord.
@@ -45,7 +43,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
      * This is used as a fallback for [ApplicationRoleConnectionMetadataType]s that haven't been
      * added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown(
         `value`: Int,
     ) : ApplicationRoleConnectionMetadataType(value)
 

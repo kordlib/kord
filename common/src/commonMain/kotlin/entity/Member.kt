@@ -2,10 +2,10 @@
     INT_FLAGS, name = "GuildMemberFlag", wasEnum = true,
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags",
     entries = [
-        Entry(name = "DidRejoin", intValue = 1 shl 0, kDoc = "Member has left and rejoined the guild"),
-        Entry(name = "CompletedOnboarding", intValue = 1 shl 1, kDoc = "Member has completed onboarding"),
-        Entry(name = "BypassesVerification", intValue = 1 shl 2, kDoc = "Member is exempt from guild verification requirements"),
-        Entry(name = "StartedOnboarding", intValue = 1 shl 3, kDoc = "Member has started onboarding")
+        Entry(name = "DidRejoin", shift = 0, kDoc = "Member has left and rejoined the guild"),
+        Entry(name = "CompletedOnboarding", shift = 1, kDoc = "Member has completed onboarding"),
+        Entry(name = "BypassesVerification", shift = 2, kDoc = "Member is exempt from guild verification requirements"),
+        Entry(name = "StartedOnboarding", shift = 3, kDoc = "Member has started onboarding")
     ]
 )
 

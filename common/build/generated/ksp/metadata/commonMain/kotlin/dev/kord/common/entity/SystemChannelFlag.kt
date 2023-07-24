@@ -181,11 +181,13 @@ public inline fun SystemChannelFlags.copy(block: SystemChannelFlags.Builder.() -
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags).
  */
 public sealed class SystemChannelFlag(
+    shift: Int,
+) {
     /**
      * The raw code used by Discord.
      */
-    public val code: Int,
-) {
+    public val code: Int = 1 shl shift
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is SystemChannelFlag && this.code == other.code)
 
@@ -234,38 +236,38 @@ public sealed class SystemChannelFlag(
      * This is used as a fallback for [SystemChannelFlag]s that haven't been added to Kord yet.
      */
     public class Unknown @KordUnsafe constructor(
-        code: Int,
-    ) : SystemChannelFlag(code)
+        shift: Int,
+    ) : SystemChannelFlag(shift)
 
     /**
      * Suppress member join notifications.
      */
-    public object SuppressJoinNotifications : SystemChannelFlag(1)
+    public object SuppressJoinNotifications : SystemChannelFlag(0)
 
     /**
      * Suppress server boost notifications.
      */
-    public object SuppressPremiumSubscriptions : SystemChannelFlag(2)
+    public object SuppressPremiumSubscriptions : SystemChannelFlag(1)
 
     /**
      * Hide server setup tips.
      */
-    public object SuppressGuildReminderNotifications : SystemChannelFlag(4)
+    public object SuppressGuildReminderNotifications : SystemChannelFlag(2)
 
     /**
      * Hide member join sticker reply buttons.
      */
-    public object SuppressJoinNotificationReplies : SystemChannelFlag(8)
+    public object SuppressJoinNotificationReplies : SystemChannelFlag(3)
 
     /**
      * Suppress role subscription purchase and renewal notifications.
      */
-    public object SuppressRoleSubscriptionPurchaseNotifications : SystemChannelFlag(16)
+    public object SuppressRoleSubscriptionPurchaseNotifications : SystemChannelFlag(4)
 
     /**
      * Hide role subscription sticker reply buttons.
      */
-    public object SuppressRoleSubscriptionPurchaseNotificationReplies : SystemChannelFlag(32)
+    public object SuppressRoleSubscriptionPurchaseNotificationReplies : SystemChannelFlag(5)
 
     public companion object {
         /**

@@ -4,7 +4,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -21,7 +20,6 @@ import kotlinx.serialization.encoding.Encoder
  * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles).
  */
 @Serializable(with = TextInputStyle.Serializer::class)
-@OptIn(KordUnsafe::class)
 public sealed class TextInputStyle(
     /**
      * The raw value used by Discord.
@@ -40,7 +38,7 @@ public sealed class TextInputStyle(
      *
      * This is used as a fallback for [TextInputStyle]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown(
         `value`: Int,
     ) : TextInputStyle(value)
 
