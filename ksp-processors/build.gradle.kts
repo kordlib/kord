@@ -1,7 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `kord-internal-module`
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-receivers")
+    }
 }
 
 dependencies {
@@ -12,12 +16,4 @@ dependencies {
     implementation(libs.kotlinpoet.ksp)
 
     implementation(libs.kotlinx.serialization.json) // use types directly
-}
-
-tasks {
-    withType<KotlinCompile>().configureEach {
-        compilerOptions {
-            freeCompilerArgs.add("-Xcontext-receivers")
-        }
-    }
 }
