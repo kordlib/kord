@@ -10,6 +10,7 @@ import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.enums.EnumEntries
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
@@ -418,5 +419,28 @@ public sealed class MessageFlag(
         )
         @JvmStatic
         public open fun values(): Array<MessageFlag> = entries.toTypedArray()
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "MessageFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "MessageFlag.entries", imports =
+                        arrayOf("dev.kord.common.entity.MessageFlag")),
+        )
+        @JvmStatic
+        public open fun getEntries(): EnumEntries<MessageFlag> = EnumEntriesList
+
+        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
+                        "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
+        private object EnumEntriesList : EnumEntries<MessageFlag>, List<MessageFlag> by entries {
+            override fun equals(other: Any?): Boolean = entries == other
+
+            override fun hashCode(): Int = entries.hashCode()
+
+            override fun toString(): String = entries.toString()
+        }
     }
 }
