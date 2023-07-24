@@ -4,8 +4,10 @@ import dev.kord.common.annotation.KordInternal
 import kotlin.reflect.KClass
 
 // just use some nonsensical type, we always return null
+/** @suppress */
 public actual typealias Class<T> = ArrayList<T>
 
+/** @suppress */
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 @kotlin.internal.InlineOnly
 @KordInternal
