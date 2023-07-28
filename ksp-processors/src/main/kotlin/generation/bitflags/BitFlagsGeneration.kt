@@ -110,6 +110,9 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns<String>()
             addStatement("return \"${collectionName.simpleName}(values=\$values)\"")
         }
+        if (collectionWasDataClass) {
+            addDeprecatedDataClassArtifacts(collectionName)
+        }
         addBuilder(collectionName)
         addSerializer(collectionName)
     }

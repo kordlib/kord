@@ -113,6 +113,23 @@ public class GuildMemberFlags(
 
     override fun toString(): String = "GuildMemberFlags(values=$values)"
 
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "GuildMemberFlags is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): Int = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "GuildMemberFlags is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: Int = this.code): GuildMemberFlags = GuildMemberFlags(code)
+
     public class Builder(
         private var code: Int = 0,
     ) {
@@ -199,7 +216,7 @@ public sealed class GuildMemberFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "GuildMemberFlag is no longer an enum class. Deprecated without replacement.")
+            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
     public fun name(): String = this::class.simpleName!!
 
     /**
@@ -207,7 +224,7 @@ public sealed class GuildMemberFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "GuildMemberFlag is no longer an enum class. Deprecated without replacement.")
+            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
     public fun ordinal(): Int = when (this) {
         DidRejoin -> 0
         CompletedOnboarding -> 1
@@ -302,7 +319,7 @@ public sealed class GuildMemberFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "GuildMemberFlag is no longer an enum class. Deprecated without replacement.")
+                "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
         @JvmStatic
         public open fun valueOf(name: String): GuildMemberFlag = when (name) {
             "DidRejoin" -> DidRejoin

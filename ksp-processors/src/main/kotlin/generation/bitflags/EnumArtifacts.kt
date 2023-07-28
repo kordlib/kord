@@ -21,7 +21,7 @@ context(BitFlags, GenerationContext)
 @OptIn(DelicateKotlinPoetApi::class)
 internal fun TypeSpec.Builder.addDeprecatedEntityEnumArtifacts() {
     val deprecatedWithoutReplacement =
-        Deprecated("$entityName is no longer an enum class. Deprecated without replacement.", level = LEVEL)
+        Deprecated("$entityName is no longer an enum class. Deprecated without a replacement.", level = LEVEL)
     val suppress = Suppress("DeprecatedCallableAddReplaceWith")
     addFunction("name") {
         addKdoc("@suppress")
@@ -70,7 +70,7 @@ internal fun TypeSpec.Builder.addDeprecatedEntityCompanionObjectEnumArtifacts() 
         addKdoc("@suppress")
         addAnnotation(Suppress("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         addAnnotation(
-            Deprecated("$entityName is no longer an enum class. Deprecated without replacement.", level = LEVEL)
+            Deprecated("$entityName is no longer an enum class. Deprecated without a replacement.", level = LEVEL)
         )
         jvmStatic()
         addModifiers(OPEN)

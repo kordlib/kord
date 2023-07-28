@@ -35,6 +35,7 @@ internal sealed class GenerationEntity(
         val flagsDescriptor: BitFlagDescription,
         val hasCombinerFlag: Boolean,
         val wasEnum: Boolean,
+        val collectionWasDataClass: Boolean,
     ) : GenerationEntity(name, kDoc, docUrl, valueName = "code", entries) {
         enum class ValueType : GenerationEntity.ValueType { INT, BIT_SET }
     }
@@ -64,8 +65,9 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
         .isEmpty()
 
     val validParameters = when (entityType) {
-        INT_KORD_ENUM, STRING_KORD_ENUM ->
-            areNotSpecified(Generate::bitFlagsDescriptor, Generate::hasCombinerFlag, Generate::wasEnum)
+        INT_KORD_ENUM, STRING_KORD_ENUM -> areNotSpecified(
+            Generate::bitFlagsDescriptor, Generate::hasCombinerFlag, Generate::wasEnum, Generate::collectionWasDataClass
+        )
         INT_FLAGS, BIT_SET_FLAGS -> areNotSpecified(Generate::valueName)
     }
 
@@ -83,10 +85,11 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
             STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
             INT_FLAGS -> BitFlags(
                 name, kDoc, docUrl, mappedEntries, BitFlags.ValueType.INT, bitFlagsDescriptor, hasCombinerFlag, wasEnum,
+                collectionWasDataClass,
             )
             BIT_SET_FLAGS -> BitFlags(
                 name, kDoc, docUrl, mappedEntries, BitFlags.ValueType.BIT_SET, bitFlagsDescriptor, hasCombinerFlag,
-                wasEnum,
+                wasEnum, collectionWasDataClass,
             )
         }
     }

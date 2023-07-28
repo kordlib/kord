@@ -108,6 +108,23 @@ public class MessageFlags(
 
     override fun toString(): String = "MessageFlags(values=$values)"
 
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "MessageFlags is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): Int = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "MessageFlags is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: Int = this.code): MessageFlags = MessageFlags(code)
+
     public class Builder(
         private var code: Int = 0,
     ) {
@@ -191,14 +208,16 @@ public sealed class MessageFlag(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "MessageFlag is no longer an enum class. Deprecated without replacement.")
+    @Deprecated(message =
+            "MessageFlag is no longer an enum class. Deprecated without a replacement.")
     public fun name(): String = this::class.simpleName!!
 
     /**
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "MessageFlag is no longer an enum class. Deprecated without replacement.")
+    @Deprecated(message =
+            "MessageFlag is no longer an enum class. Deprecated without a replacement.")
     public fun ordinal(): Int = when (this) {
         CrossPosted -> 0
         IsCrossPost -> 1
@@ -391,7 +410,7 @@ public sealed class MessageFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "MessageFlag is no longer an enum class. Deprecated without replacement.")
+                "MessageFlag is no longer an enum class. Deprecated without a replacement.")
         @JvmStatic
         public open fun valueOf(name: String): MessageFlag = when (name) {
             "CrossPosted" -> CrossPosted

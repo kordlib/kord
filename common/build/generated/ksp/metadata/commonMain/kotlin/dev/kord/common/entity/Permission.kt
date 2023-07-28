@@ -100,6 +100,23 @@ public class Permissions(
 
     override fun toString(): String = "Permissions(values=$values)"
 
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "Permissions is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): DiscordBitSet = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "Permissions is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: DiscordBitSet = this.code): Permissions = Permissions(code)
+
     public class Builder(
         private var code: DiscordBitSet = EmptyBitSet(),
     ) {

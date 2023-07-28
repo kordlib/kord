@@ -105,6 +105,22 @@ public class UserFlags(
 
     override fun toString(): String = "UserFlags(values=$values)"
 
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "UserFlags is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): Int = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: Int = this.code): UserFlags = UserFlags(code)
+
     public class Builder(
         private var code: Int = 0,
     ) {
@@ -184,14 +200,14 @@ public sealed class UserFlag(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without replacement.")
+    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.")
     public fun name(): String = this::class.simpleName!!
 
     /**
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without replacement.")
+    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.")
     public fun ordinal(): Int = when (this) {
         DiscordEmployee -> 0
         DiscordPartner -> 1
@@ -451,7 +467,7 @@ public sealed class UserFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "UserFlag is no longer an enum class. Deprecated without replacement.")
+                "UserFlag is no longer an enum class. Deprecated without a replacement.")
         @JvmStatic
         public open fun valueOf(name: String): UserFlag = when (name) {
             "DiscordEmployee" -> DiscordEmployee

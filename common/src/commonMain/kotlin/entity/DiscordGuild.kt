@@ -151,7 +151,7 @@
 )
 
 @file:Generate(
-    INT_FLAGS, name = "SystemChannelFlag", wasEnum = true,
+    INT_FLAGS, name = "SystemChannelFlag", wasEnum = true, collectionWasDataClass = true,
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
     entries = [
         Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),

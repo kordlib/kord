@@ -100,6 +100,22 @@ public class Intents(
 
     override fun toString(): String = "Intents(values=$values)"
 
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "Intents is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): DiscordBitSet = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message = "Intents is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: DiscordBitSet = this.code): Intents = Intents(code)
+
     public class Builder(
         private var code: DiscordBitSet = EmptyBitSet(),
     ) {

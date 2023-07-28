@@ -114,6 +114,23 @@ public class SystemChannelFlags(
 
     override fun toString(): String = "SystemChannelFlags(values=$values)"
 
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "SystemChannelFlags is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): Int = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "SystemChannelFlags is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: Int = this.code): SystemChannelFlags = SystemChannelFlags(code)
+
     public class Builder(
         private var code: Int = 0,
     ) {
@@ -202,7 +219,7 @@ public sealed class SystemChannelFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "SystemChannelFlag is no longer an enum class. Deprecated without replacement.")
+            "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.")
     public fun name(): String = this::class.simpleName!!
 
     /**
@@ -210,7 +227,7 @@ public sealed class SystemChannelFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "SystemChannelFlag is no longer an enum class. Deprecated without replacement.")
+            "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.")
     public fun ordinal(): Int = when (this) {
         SuppressJoinNotifications -> 0
         SuppressPremiumSubscriptions -> 1
@@ -337,7 +354,7 @@ public sealed class SystemChannelFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "SystemChannelFlag is no longer an enum class. Deprecated without replacement.")
+                "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.")
         @JvmStatic
         public open fun valueOf(name: String): SystemChannelFlag = when (name) {
             "SuppressJoinNotifications" -> SuppressJoinNotifications

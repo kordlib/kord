@@ -193,7 +193,7 @@ public sealed class ActivityFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "ActivityFlag is no longer an enum class. Deprecated without replacement.")
+            "ActivityFlag is no longer an enum class. Deprecated without a replacement.")
     public fun name(): String = this::class.simpleName!!
 
     /**
@@ -201,7 +201,7 @@ public sealed class ActivityFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "ActivityFlag is no longer an enum class. Deprecated without replacement.")
+            "ActivityFlag is no longer an enum class. Deprecated without a replacement.")
     public fun ordinal(): Int = when (this) {
         Instance -> 0
         Join -> 1
@@ -339,7 +339,7 @@ public sealed class ActivityFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "ActivityFlag is no longer an enum class. Deprecated without replacement.")
+                "ActivityFlag is no longer an enum class. Deprecated without a replacement.")
         @JvmStatic
         public open fun valueOf(name: String): ActivityFlag = when (name) {
             "Instance" -> Instance

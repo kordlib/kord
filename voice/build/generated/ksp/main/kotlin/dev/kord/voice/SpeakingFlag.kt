@@ -193,7 +193,7 @@ public sealed class SpeakingFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "SpeakingFlag is no longer an enum class. Deprecated without replacement.")
+            "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
     public fun name(): String = this::class.simpleName!!
 
     /**
@@ -201,7 +201,7 @@ public sealed class SpeakingFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "SpeakingFlag is no longer an enum class. Deprecated without replacement.")
+            "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
     public fun ordinal(): Int = when (this) {
         Microphone -> 0
         Soundshare -> 1
@@ -273,7 +273,7 @@ public sealed class SpeakingFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "SpeakingFlag is no longer an enum class. Deprecated without replacement.")
+                "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
         @JvmStatic
         public open fun valueOf(name: String): SpeakingFlag = when (name) {
             "Microphone" -> Microphone
