@@ -263,3 +263,9 @@ public val Intents.Companion.nonPrivileged: Intents
  * No intents.
  */
 public val Intents.Companion.none: Intents get() = Intents()
+
+@Suppress("FunctionName")
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+public fun IntentsWithIterable(intents: Iterable<Intent>): Intents = Intents {
+    intents.forEach { +it }
+}

@@ -41,6 +41,9 @@ import dev.kord.ksp.Generate.EntityType.INT_FLAGS
 import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+import kotlin.jvm.JvmName
 
 public sealed interface BaseDiscordApplication {
     public val id: Snowflake
@@ -140,6 +143,37 @@ public data class DiscordPartialApplication(
     @SerialName("role_connections_verification_url")
     override val roleConnectionsVerificationUrl: Optional<String> = Optional.Missing(),
 ) : BaseDiscordApplication
+
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ApplicationFlags")
+public inline fun applicationFlags(builder: ApplicationFlags.Builder.() -> Unit): ApplicationFlags {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return ApplicationFlags.Builder().apply(builder).flags()
+}
+
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ApplicationFlags")
+public fun applicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
+    flags.forEach { +it }
+}
+
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ApplicationFlags")
+public fun applicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
+    flags.forEach { +it }
+}
+
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ApplicationFlags")
+public fun applicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags = ApplicationFlags {
+    flags.forEach { +it }
+}
+
+@Suppress("FunctionName")
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+public fun ApplicationFlagsWithIterable(flags: Iterable<ApplicationFlags>): ApplicationFlags = ApplicationFlags {
+    flags.forEach { +it }
+}
 
 @Serializable
 public data class InstallParams(

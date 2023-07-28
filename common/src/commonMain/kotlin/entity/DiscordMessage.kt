@@ -159,6 +159,9 @@ import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
+import kotlin.jvm.JvmName
 
 /**
  * Represents [a message sent in a channel within Discord](https://discord.com/developers/docs/resources/channel#message-object).
@@ -426,6 +429,37 @@ public data class DiscordMentionedChannel(
     val type: ChannelType,
     val name: String,
 )
+
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("MessageFlags")
+public inline fun messageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    return MessageFlags.Builder().apply(builder).flags()
+}
+
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("MessageFlags")
+public fun messageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {
+    flags.forEach { +it }
+}
+
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("MessageFlags")
+public fun messageFlags(vararg flags: MessageFlags): MessageFlags = MessageFlags {
+    flags.forEach { +it }
+}
+
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("MessageFlags")
+public fun messageFlags(flags: Iterable<MessageFlag>): MessageFlags = MessageFlags {
+    flags.forEach { +it }
+}
+
+@Suppress("FunctionName")
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+public fun MessageFlagsWithIterable(flags: Iterable<MessageFlags>): MessageFlags = MessageFlags {
+    flags.forEach { +it }
+}
 
 /**
  * A representation of a [Discord Attachment structure](https://discord.com/developers/docs/resources/channel#attachment-object).

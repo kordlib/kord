@@ -2547,6 +2547,14 @@ public final class dev/kord/common/entity/DiscordApplicationCommand$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/DiscordApplicationKt {
+	public static final synthetic fun ApplicationFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/ApplicationFlags;
+	public static final synthetic fun ApplicationFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
+	public static final synthetic fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
+	public static final synthetic fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
+	public static final synthetic fun ApplicationFlagsWithIterable (Ljava/lang/Iterable;)Ldev/kord/common/entity/ApplicationFlags;
+}
+
 public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetadata {
 	public static final field Companion Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadata$Companion;
 	public synthetic fun <init> (ILdev/kord/common/entity/ApplicationRoleConnectionMetadataType;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -4713,6 +4721,14 @@ public final class dev/kord/common/entity/DiscordMessageInteraction$$serializer 
 
 public final class dev/kord/common/entity/DiscordMessageInteraction$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/DiscordMessageKt {
+	public static final synthetic fun MessageFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/MessageFlags;
+	public static final synthetic fun MessageFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/MessageFlags;
+	public static final synthetic fun MessageFlags ([Ldev/kord/common/entity/MessageFlag;)Ldev/kord/common/entity/MessageFlags;
+	public static final synthetic fun MessageFlags ([Ldev/kord/common/entity/MessageFlags;)Ldev/kord/common/entity/MessageFlags;
+	public static final synthetic fun MessageFlagsWithIterable (Ljava/lang/Iterable;)Ldev/kord/common/entity/MessageFlags;
 }
 
 public final class dev/kord/common/entity/DiscordMessageReference {

@@ -1299,6 +1299,7 @@ public final class dev/kord/gateway/IntentKt {
 }
 
 public final class dev/kord/gateway/IntentUtil {
+	public static final synthetic fun IntentsWithIterable (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
 	public static final fun getAll (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 	public static final fun getNonPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 	public static final fun getNone (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
