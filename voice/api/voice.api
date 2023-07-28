@@ -257,6 +257,8 @@ public abstract class dev/kord/voice/SpeakingFlag {
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
+	public final fun plus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
+	public final fun plus (Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/SpeakingFlags;
 	public final fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
 	public static fun values ()[Ldev/kord/voice/SpeakingFlag;

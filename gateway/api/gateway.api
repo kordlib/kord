@@ -1201,6 +1201,8 @@ public abstract class dev/kord/gateway/Intent {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun hashCode ()I
+	public final fun plus (Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
+	public final fun plus (Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
 	public final fun toString ()Ljava/lang/String;
 }
 

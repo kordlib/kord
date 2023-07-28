@@ -155,6 +155,30 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 }
             }
         }
+        addFunction("plus") {
+            addModifiers(PUBLIC, OPERATOR)
+            addParameter("flag", entityCN)
+            returns(collectionName)
+            addStatement(
+                when (valueType) {
+                    INT -> "return %T(this.code·or·flag.code)"
+                    BIT_SET -> "return %T(this.code·+·flag.code)"
+                },
+                collectionName,
+            )
+        }
+        addFunction("plus") {
+            addModifiers(PUBLIC, OPERATOR)
+            addParameter("flags", collectionName)
+            returns(collectionName)
+            addStatement(
+                when (valueType) {
+                    INT -> "return %T(this.code·or·flags.code)"
+                    BIT_SET -> "return %T(this.code·+·flags.code)"
+                },
+                collectionName,
+            )
+        }
         addEntityEqualsHashCodeToString()
         if (wasEnum) {
             addDeprecatedEntityEnumArtifacts()

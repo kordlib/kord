@@ -204,6 +204,12 @@ public sealed class ApplicationFlag(
      */
     public val code: Int = 1 shl shift
 
+    public operator fun plus(flag: ApplicationFlag): ApplicationFlags =
+            ApplicationFlags(this.code or flag.code)
+
+    public operator fun plus(flags: ApplicationFlags): ApplicationFlags =
+            ApplicationFlags(this.code or flags.code)
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is ApplicationFlag && this.code == other.code)
 

@@ -203,6 +203,12 @@ public sealed class GuildMemberFlag(
      */
     public val code: Int = 1 shl shift
 
+    public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
+            GuildMemberFlags(this.code or flag.code)
+
+    public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
+            GuildMemberFlags(this.code or flags.code)
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is GuildMemberFlag && this.code == other.code)
 

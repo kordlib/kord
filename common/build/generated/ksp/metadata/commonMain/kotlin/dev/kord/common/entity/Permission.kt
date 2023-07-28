@@ -196,6 +196,10 @@ public sealed class Permission {
         this.code = code
     }
 
+    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
+
+    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is Permission && this.code == other.code)
 

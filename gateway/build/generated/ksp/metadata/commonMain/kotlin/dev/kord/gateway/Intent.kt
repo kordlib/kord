@@ -187,6 +187,10 @@ public sealed class Intent(
      */
     public val code: DiscordBitSet = EmptyBitSet().also { it[shift] = true }
 
+    public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
+
+    public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is Intent && this.code == other.code)
 

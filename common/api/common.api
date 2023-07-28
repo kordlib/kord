@@ -202,6 +202,8 @@ public abstract class dev/kord/common/entity/ActivityFlag {
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
+	public final fun plus (Ldev/kord/common/entity/ActivityFlag;)Ldev/kord/common/entity/ActivityFlags;
+	public final fun plus (Ldev/kord/common/entity/ActivityFlags;)Ldev/kord/common/entity/ActivityFlags;
 	public final fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ActivityFlag;
 	public static fun values ()[Ldev/kord/common/entity/ActivityFlag;
@@ -638,6 +640,8 @@ public abstract class dev/kord/common/entity/ApplicationFlag {
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
+	public final fun plus (Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
+	public final fun plus (Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
 	public final fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ApplicationFlag;
 	public static fun values ()[Ldev/kord/common/entity/ApplicationFlag;
@@ -6727,6 +6731,8 @@ public abstract class dev/kord/common/entity/GuildMemberFlag {
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
+	public final fun plus (Ldev/kord/common/entity/GuildMemberFlag;)Ldev/kord/common/entity/GuildMemberFlags;
+	public final fun plus (Ldev/kord/common/entity/GuildMemberFlags;)Ldev/kord/common/entity/GuildMemberFlags;
 	public final fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlag;
 	public static fun values ()[Ldev/kord/common/entity/GuildMemberFlag;
@@ -7298,6 +7304,8 @@ public abstract class dev/kord/common/entity/MessageFlag {
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
+	public final fun plus (Ldev/kord/common/entity/MessageFlag;)Ldev/kord/common/entity/MessageFlags;
+	public final fun plus (Ldev/kord/common/entity/MessageFlags;)Ldev/kord/common/entity/MessageFlags;
 	public final fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/MessageFlag;
 	public static fun values ()[Ldev/kord/common/entity/MessageFlag;
@@ -7804,6 +7812,8 @@ public abstract class dev/kord/common/entity/Permission {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun hashCode ()I
+	public final fun plus (Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
+	public final fun plus (Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
 	public final fun toString ()Ljava/lang/String;
 }
 
@@ -8396,6 +8406,8 @@ public abstract class dev/kord/common/entity/SystemChannelFlag {
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
+	public final fun plus (Ldev/kord/common/entity/SystemChannelFlag;)Ldev/kord/common/entity/SystemChannelFlags;
+	public final fun plus (Ldev/kord/common/entity/SystemChannelFlags;)Ldev/kord/common/entity/SystemChannelFlags;
 	public final fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/SystemChannelFlag;
 	public static fun values ()[Ldev/kord/common/entity/SystemChannelFlag;
@@ -8559,6 +8571,8 @@ public abstract class dev/kord/common/entity/UserFlag {
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
+	public final fun plus (Ldev/kord/common/entity/UserFlag;)Ldev/kord/common/entity/UserFlags;
+	public final fun plus (Ldev/kord/common/entity/UserFlags;)Ldev/kord/common/entity/UserFlags;
 	public final fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/UserFlag;
 	public static fun values ()[Ldev/kord/common/entity/UserFlag;

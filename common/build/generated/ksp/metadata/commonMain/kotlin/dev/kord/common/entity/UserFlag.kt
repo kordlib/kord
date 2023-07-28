@@ -189,6 +189,10 @@ public sealed class UserFlag(
      */
     public val code: Int = 1 shl shift
 
+    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
+
+    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is UserFlag && this.code == other.code)
 

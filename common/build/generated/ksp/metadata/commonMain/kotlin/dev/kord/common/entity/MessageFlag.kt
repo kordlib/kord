@@ -197,6 +197,11 @@ public sealed class MessageFlag(
      */
     public val code: Int = 1 shl shift
 
+    public operator fun plus(flag: MessageFlag): MessageFlags = MessageFlags(this.code or flag.code)
+
+    public operator fun plus(flags: MessageFlags): MessageFlags =
+            MessageFlags(this.code or flags.code)
+
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is MessageFlag && this.code == other.code)
 
