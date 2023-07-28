@@ -106,6 +106,11 @@ public class GuildMemberFlags(
     public operator fun minus(flags: GuildMemberFlags): GuildMemberFlags =
             GuildMemberFlags(this.code and flags.code.inv())
 
+    public inline fun copy(block: Builder.() -> Unit): GuildMemberFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).flags()
+    }
+
     override fun equals(other: Any?): Boolean = this === other ||
             (other is GuildMemberFlags && this.code == other.code)
 
@@ -185,12 +190,6 @@ public fun GuildMemberFlags(flags: Iterable<GuildMemberFlag>): GuildMemberFlags 
 @JvmName("GuildMemberFlags0")
 public fun GuildMemberFlags(flags: Iterable<GuildMemberFlags>): GuildMemberFlags =
         GuildMemberFlags { flags.forEach { +it } }
-
-public inline fun GuildMemberFlags.copy(block: GuildMemberFlags.Builder.() -> Unit):
-        GuildMemberFlags {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return GuildMemberFlags.Builder(code).apply(block).flags()
-}
 
 /**
  * See [GuildMemberFlag]s in the

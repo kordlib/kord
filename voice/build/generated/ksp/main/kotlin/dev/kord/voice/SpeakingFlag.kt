@@ -102,6 +102,11 @@ public class SpeakingFlags(
     public operator fun minus(flags: SpeakingFlags): SpeakingFlags =
             SpeakingFlags(this.code and flags.code.inv())
 
+    public inline fun copy(block: Builder.() -> Unit): SpeakingFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).flags()
+    }
+
     override fun equals(other: Any?): Boolean = this === other ||
             (other is SpeakingFlags && this.code == other.code)
 
@@ -163,11 +168,6 @@ public fun SpeakingFlags(flags: Iterable<SpeakingFlag>): SpeakingFlags = Speakin
 @JvmName("SpeakingFlags0")
 public fun SpeakingFlags(flags: Iterable<SpeakingFlags>): SpeakingFlags = SpeakingFlags {
         flags.forEach { +it } }
-
-public inline fun SpeakingFlags.copy(block: SpeakingFlags.Builder.() -> Unit): SpeakingFlags {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return SpeakingFlags.Builder(code).apply(block).flags()
-}
 
 /**
  * See [SpeakingFlag]s in the

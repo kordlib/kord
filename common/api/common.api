@@ -260,7 +260,6 @@ public final class dev/kord/common/entity/ActivityFlagKt {
 	public static final fun ActivityFlags ([Ldev/kord/common/entity/ActivityFlag;)Ldev/kord/common/entity/ActivityFlags;
 	public static final fun ActivityFlags ([Ldev/kord/common/entity/ActivityFlags;)Ldev/kord/common/entity/ActivityFlags;
 	public static final fun ActivityFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ActivityFlags;
-	public static final fun copy (Ldev/kord/common/entity/ActivityFlags;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ActivityFlags;
 }
 
 public final class dev/kord/common/entity/ActivityFlags {
@@ -270,6 +269,7 @@ public final class dev/kord/common/entity/ActivityFlags {
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun contains (Ldev/kord/common/entity/ActivityFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ActivityFlags;)Z
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ActivityFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;
@@ -700,7 +700,6 @@ public final class dev/kord/common/entity/ApplicationFlagKt {
 	public static final fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
 	public static final fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
 	public static final fun ApplicationFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final fun copy (Ldev/kord/common/entity/ApplicationFlags;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
 }
 
 public final class dev/kord/common/entity/ApplicationFlags {
@@ -712,6 +711,7 @@ public final class dev/kord/common/entity/ApplicationFlags {
 	public final fun contains (Ldev/kord/common/entity/ApplicationFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ApplicationFlags;)Z
 	public final fun copy (I)Ldev/kord/common/entity/ApplicationFlags;
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/ApplicationFlags;IILjava/lang/Object;)Ldev/kord/common/entity/ApplicationFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
@@ -6765,7 +6765,6 @@ public final class dev/kord/common/entity/GuildMemberFlagKt {
 	public static final fun GuildMemberFlags ([Ldev/kord/common/entity/GuildMemberFlag;)Ldev/kord/common/entity/GuildMemberFlags;
 	public static final fun GuildMemberFlags ([Ldev/kord/common/entity/GuildMemberFlags;)Ldev/kord/common/entity/GuildMemberFlags;
 	public static final fun GuildMemberFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/GuildMemberFlags;
-	public static final fun copy (Ldev/kord/common/entity/GuildMemberFlags;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/GuildMemberFlags;
 }
 
 public final class dev/kord/common/entity/GuildMemberFlags {
@@ -6777,6 +6776,7 @@ public final class dev/kord/common/entity/GuildMemberFlags {
 	public final fun contains (Ldev/kord/common/entity/GuildMemberFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/GuildMemberFlags;)Z
 	public final fun copy (I)Ldev/kord/common/entity/GuildMemberFlags;
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/GuildMemberFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/GuildMemberFlags;IILjava/lang/Object;)Ldev/kord/common/entity/GuildMemberFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
@@ -7364,7 +7364,6 @@ public final class dev/kord/common/entity/MessageFlagKt {
 	public static final fun MessageFlags ([Ldev/kord/common/entity/MessageFlag;)Ldev/kord/common/entity/MessageFlags;
 	public static final fun MessageFlags ([Ldev/kord/common/entity/MessageFlags;)Ldev/kord/common/entity/MessageFlags;
 	public static final fun MessageFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/MessageFlags;
-	public static final fun copy (Ldev/kord/common/entity/MessageFlags;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/MessageFlags;
 }
 
 public final class dev/kord/common/entity/MessageFlags {
@@ -7376,6 +7375,7 @@ public final class dev/kord/common/entity/MessageFlags {
 	public final fun contains (Ldev/kord/common/entity/MessageFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/MessageFlags;)Z
 	public final fun copy (I)Ldev/kord/common/entity/MessageFlags;
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/MessageFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/MessageFlags;IILjava/lang/Object;)Ldev/kord/common/entity/MessageFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
@@ -8009,7 +8009,6 @@ public final class dev/kord/common/entity/PermissionKt {
 	public static final fun Permissions ([Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions ([Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/Permissions;
-	public static final fun copy (Ldev/kord/common/entity/Permissions;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
 }
 
 public final class dev/kord/common/entity/Permissions {
@@ -8021,6 +8020,7 @@ public final class dev/kord/common/entity/Permissions {
 	public final fun contains (Ldev/kord/common/entity/Permission;)Z
 	public final fun contains (Ldev/kord/common/entity/Permissions;)Z
 	public final fun copy (Ldev/kord/common/DiscordBitSet;)Ldev/kord/common/entity/Permissions;
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/Permissions;Ldev/kord/common/DiscordBitSet;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
@@ -8442,7 +8442,6 @@ public final class dev/kord/common/entity/SystemChannelFlagKt {
 	public static final fun SystemChannelFlags ([Ldev/kord/common/entity/SystemChannelFlag;)Ldev/kord/common/entity/SystemChannelFlags;
 	public static final fun SystemChannelFlags ([Ldev/kord/common/entity/SystemChannelFlags;)Ldev/kord/common/entity/SystemChannelFlags;
 	public static final fun SystemChannelFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/SystemChannelFlags;
-	public static final fun copy (Ldev/kord/common/entity/SystemChannelFlags;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/SystemChannelFlags;
 }
 
 public final class dev/kord/common/entity/SystemChannelFlags {
@@ -8454,6 +8453,7 @@ public final class dev/kord/common/entity/SystemChannelFlags {
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlags;)Z
 	public final fun copy (I)Ldev/kord/common/entity/SystemChannelFlags;
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/SystemChannelFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/SystemChannelFlags;IILjava/lang/Object;)Ldev/kord/common/entity/SystemChannelFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
@@ -8645,7 +8645,6 @@ public final class dev/kord/common/entity/UserFlagKt {
 	public static final fun UserFlags ([Ldev/kord/common/entity/UserFlag;)Ldev/kord/common/entity/UserFlags;
 	public static final fun UserFlags ([Ldev/kord/common/entity/UserFlags;)Ldev/kord/common/entity/UserFlags;
 	public static final fun UserFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/UserFlags;
-	public static final fun copy (Ldev/kord/common/entity/UserFlags;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
 }
 
 public final class dev/kord/common/entity/UserFlags {
@@ -8657,6 +8656,7 @@ public final class dev/kord/common/entity/UserFlags {
 	public final fun contains (Ldev/kord/common/entity/UserFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/UserFlags;)Z
 	public final fun copy (I)Ldev/kord/common/entity/UserFlags;
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/UserFlags;IILjava/lang/Object;)Ldev/kord/common/entity/UserFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I

@@ -101,6 +101,11 @@ public class MessageFlags(
     public operator fun minus(flags: MessageFlags): MessageFlags =
             MessageFlags(this.code and flags.code.inv())
 
+    public inline fun copy(block: Builder.() -> Unit): MessageFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).flags()
+    }
+
     override fun equals(other: Any?): Boolean = this === other ||
             (other is MessageFlags && this.code == other.code)
 
@@ -179,11 +184,6 @@ public fun MessageFlags(flags: Iterable<MessageFlag>): MessageFlags = MessageFla
 @JvmName("MessageFlags0")
 public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFlags {
         flags.forEach { +it } }
-
-public inline fun MessageFlags.copy(block: MessageFlags.Builder.() -> Unit): MessageFlags {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return MessageFlags.Builder(code).apply(block).flags()
-}
 
 /**
  * See [MessageFlag]s in the

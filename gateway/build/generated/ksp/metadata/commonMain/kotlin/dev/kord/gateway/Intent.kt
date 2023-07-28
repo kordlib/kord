@@ -93,6 +93,11 @@ public class Intents(
 
     public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
 
+    public inline fun copy(block: Builder.() -> Unit): Intents {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).flags()
+    }
+
     override fun equals(other: Any?): Boolean = this === other ||
             (other is Intents && this.code == other.code)
 
@@ -166,11 +171,6 @@ public fun Intents(flags: Iterable<Intent>): Intents = Intents { flags.forEach {
 
 @JvmName("Intents0")
 public fun Intents(flags: Iterable<Intents>): Intents = Intents { flags.forEach { +it } }
-
-public inline fun Intents.copy(block: Intents.Builder.() -> Unit): Intents {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return Intents.Builder(code).apply(block).flags()
-}
 
 /**
  * Values that enable a group of events as [defined by

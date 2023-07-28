@@ -93,6 +93,11 @@ public class Permissions(
 
     public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code)
 
+    public inline fun copy(block: Builder.() -> Unit): Permissions {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).flags()
+    }
+
     override fun equals(other: Any?): Boolean = this === other ||
             (other is Permissions && this.code == other.code)
 
@@ -172,11 +177,6 @@ public fun Permissions(flags: Iterable<Permission>): Permissions = Permissions {
 @JvmName("Permissions0")
 public fun Permissions(flags: Iterable<Permissions>): Permissions = Permissions {
         flags.forEach { +it } }
-
-public inline fun Permissions.copy(block: Permissions.Builder.() -> Unit): Permissions {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return Permissions.Builder(code).apply(block).flags()
-}
 
 /**
  * See [Permission]s in the

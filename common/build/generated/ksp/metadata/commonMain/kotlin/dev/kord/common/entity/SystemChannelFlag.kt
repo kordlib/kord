@@ -107,6 +107,11 @@ public class SystemChannelFlags(
     public operator fun minus(flags: SystemChannelFlags): SystemChannelFlags =
             SystemChannelFlags(this.code and flags.code.inv())
 
+    public inline fun copy(block: Builder.() -> Unit): SystemChannelFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).flags()
+    }
+
     override fun equals(other: Any?): Boolean = this === other ||
             (other is SystemChannelFlags && this.code == other.code)
 
@@ -187,12 +192,6 @@ public fun SystemChannelFlags(flags: Iterable<SystemChannelFlag>): SystemChannel
 @JvmName("SystemChannelFlags0")
 public fun SystemChannelFlags(flags: Iterable<SystemChannelFlags>): SystemChannelFlags =
         SystemChannelFlags { flags.forEach { +it } }
-
-public inline fun SystemChannelFlags.copy(block: SystemChannelFlags.Builder.() -> Unit):
-        SystemChannelFlags {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return SystemChannelFlags.Builder(code).apply(block).flags()
-}
 
 /**
  * See [SystemChannelFlag]s in the

@@ -107,6 +107,11 @@ public class ApplicationFlags(
     public operator fun minus(flags: ApplicationFlags): ApplicationFlags =
             ApplicationFlags(this.code and flags.code.inv())
 
+    public inline fun copy(block: Builder.() -> Unit): ApplicationFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).flags()
+    }
+
     override fun equals(other: Any?): Boolean = this === other ||
             (other is ApplicationFlags && this.code == other.code)
 
@@ -186,12 +191,6 @@ public fun ApplicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags 
 @JvmName("ApplicationFlags0")
 public fun ApplicationFlags(flags: Iterable<ApplicationFlags>): ApplicationFlags =
         ApplicationFlags { flags.forEach { +it } }
-
-public inline fun ApplicationFlags.copy(block: ApplicationFlags.Builder.() -> Unit):
-        ApplicationFlags {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return ApplicationFlags.Builder(code).apply(block).flags()
-}
 
 /**
  * See [ApplicationFlag]s in the

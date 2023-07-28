@@ -104,6 +104,13 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 collectionName,
             )
         }
+        addFunction("copy") {
+            addModifiers(PUBLIC, INLINE)
+            addParameter("block", type = LambdaTypeName.get(receiver = builderName, returnType = UNIT))
+            returns(collectionName)
+            addStatement("%M { callsInPlace(block, %M) }", CONTRACT, EXACTLY_ONCE)
+            addStatement("return %T($valueName).apply(block).flags()", builderName)
+        }
         addEqualsAndHashCode(collectionName)
         addFunction("toString") {
             addModifiers(OVERRIDE)
@@ -117,7 +124,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addSerializer(collectionName)
     }
     addFactoryFunctions(collectionName, builderName)
-    addCopyFunction(collectionName, builderName)
     addClass(entityCN) {
         // for ksp incremental processing
         addOriginatingKSFile(originatingFile)
@@ -233,18 +239,5 @@ private fun FileSpec.Builder.addFactoryFunctions(collectionName: ClassName, buil
         returns(collectionName)
 
         addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
-    }
-}
-
-context(BitFlags)
-private fun FileSpec.Builder.addCopyFunction(collectionName: ClassName, builderName: ClassName) {
-    addFunction("copy") {
-        addModifiers(PUBLIC, INLINE)
-        receiver(collectionName)
-        addParameter("block", type = LambdaTypeName.get(receiver = builderName, returnType = UNIT))
-        returns(collectionName)
-
-        addStatement("%M { callsInPlace(block, %M) }", CONTRACT, EXACTLY_ONCE)
-        addStatement("return %T($valueName).apply(block).flags()", builderName)
     }
 }

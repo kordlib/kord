@@ -98,6 +98,11 @@ public class UserFlags(
     public operator fun minus(flags: UserFlags): UserFlags =
             UserFlags(this.code and flags.code.inv())
 
+    public inline fun copy(block: Builder.() -> Unit): UserFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).flags()
+    }
+
     override fun equals(other: Any?): Boolean = this === other ||
             (other is UserFlags && this.code == other.code)
 
@@ -171,11 +176,6 @@ public fun UserFlags(flags: Iterable<UserFlag>): UserFlags = UserFlags { flags.f
 
 @JvmName("UserFlags0")
 public fun UserFlags(flags: Iterable<UserFlags>): UserFlags = UserFlags { flags.forEach { +it } }
-
-public inline fun UserFlags.copy(block: UserFlags.Builder.() -> Unit): UserFlags {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return UserFlags.Builder(code).apply(block).flags()
-}
 
 /**
  * See [UserFlag]s in the
