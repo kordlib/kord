@@ -1,7 +1,6 @@
 package dev.kord.core.entity.interaction
 
 import dev.kord.common.Locale
-import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -31,11 +30,6 @@ public sealed interface Interaction : InteractionBehavior {
     override val channel: MessageChannelBehavior get() = MessageChannelBehavior(channelId, kord)
 
     override val token: String get() = data.token
-
-    /**
-     * The type of channel for the interaction, if there is one
-     */
-    public val channelType: ChannelType? get() = data.channel.value?.type
 
     /**
      * The type of the interaction.
