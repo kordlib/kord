@@ -195,12 +195,14 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun handleClose() {
+        inflater.close()
+
         val reason = withTimeoutOrNull(1500) {
             socket.closeReason.await()
         } ?: return
 
         defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
-        val discordReason = values().firstOrNull { it.code == reason.code.toInt() } ?: return
+        val discordReason = gatewayCloseCodeByCode[reason.code.toInt()] ?: return
 
         data.eventFlow.emit(Close.DiscordClose(discordReason, discordReason.retry))
 
@@ -278,13 +280,15 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         socket.send(Frame.Text(json))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(DelicateCoroutinesApi::class)
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
     public companion object {
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
         private const val gatewayDetachedError =
             "The Gateway has been detached and can no longer be used, create a new instance instead."
+
+        private val gatewayCloseCodeByCode = GatewayCloseCode.entries.associateBy { it.code }
     }
 }
 

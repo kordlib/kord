@@ -94,18 +94,18 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     public val members: Flow<Member>
         get() = cache.query<MemberData>().asFlow().mapNotNull {
             val userData =
-                cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull() ?: return@mapNotNull null
+                cache.query { idEq(UserData::id, it.userId) }.singleOrNull() ?: return@mapNotNull null
             Member(it, userData, kord)
         }
 
     public suspend fun getRole(id: Snowflake): Role? {
-        val data = cache.query<RoleData> { idEq(RoleData::id, id) }.singleOrNull() ?: return null
+        val data = cache.query { idEq(RoleData::id, id) }.singleOrNull() ?: return null
 
         return Role(data, kord)
     }
 
     override suspend fun getGuildPreviewOrNull(guildId: Snowflake): GuildPreview? {
-        val data = cache.query<GuildPreviewData> { idEq(GuildPreviewData::id, guildId) }.singleOrNull() ?: return null
+        val data = cache.query { idEq(GuildPreviewData::id, guildId) }.singleOrNull() ?: return null
 
         return GuildPreview(data, kord)
     }
@@ -113,28 +113,28 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override suspend fun getGuildWidgetOrNull(guildId: Snowflake): GuildWidget? = null
 
     override suspend fun getChannelOrNull(id: Snowflake): Channel? {
-        val data = cache.query<ChannelData> { idEq(ChannelData::id, id) }.singleOrNull() ?: return null
+        val data = cache.query { idEq(ChannelData::id, id) }.singleOrNull() ?: return null
         return Channel.from(data, kord)
     }
 
-    override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> = cache.query<ChannelData> {
+    override fun getGuildChannels(guildId: Snowflake): Flow<TopGuildChannel> = cache.query {
         idEq(ChannelData::guildId, guildId)
     }.asFlow().map { Channel.from(it, kord) }.filterIsInstance()
 
-    override fun getChannelPins(channelId: Snowflake): Flow<Message> = cache.query<MessageData> {
+    override fun getChannelPins(channelId: Snowflake): Flow<Message> = cache.query {
         idEq(MessageData::channelId, channelId)
         idEq(MessageData::pinned, true)
     }.asFlow().map { Message(it, kord) }
 
     override suspend fun getGuildOrNull(id: Snowflake): Guild? {
-        val data = cache.query<GuildData> { idEq(GuildData::id, id) }.singleOrNull() ?: return null
+        val data = cache.query { idEq(GuildData::id, id) }.singleOrNull() ?: return null
         return Guild(data, kord)
     }
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? {
-        val userData = cache.query<UserData> { idEq(UserData::id, userId) }.singleOrNull() ?: return null
+        val userData = cache.query { idEq(UserData::id, userId) }.singleOrNull() ?: return null
 
-        val memberData = cache.query<MemberData> {
+        val memberData = cache.query {
             idEq(MemberData::userId, userId)
             idEq(MemberData::guildId, guildId)
         }.singleOrNull() ?: return null
@@ -143,7 +143,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
-        val data = cache.query<MessageData> { idEq(MessageData::id, messageId) }.singleOrNull()
+        val data = cache.query { idEq(MessageData::id, messageId) }.singleOrNull()
             ?: return null
 
         return Message(data, kord)
@@ -151,7 +151,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getMessagesAfter(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> {
         checkLimit(limit)
-        return cache.query<MessageData> {
+        return cache.query {
             idEq(MessageData::channelId, channelId)
             idGt(MessageData::id, messageId)
         }.asFlow().map { Message(it, kord) }.limit(limit)
@@ -159,7 +159,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getMessagesBefore(messageId: Snowflake, channelId: Snowflake, limit: Int?): Flow<Message> {
         checkLimit(limit)
-        return cache.query<MessageData> {
+        return cache.query {
             idEq(MessageData::channelId, channelId)
             idLt(MessageData::id, messageId)
         }.asFlow().map { Message(it, kord) }.limit(limit)
@@ -178,7 +178,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override suspend fun getSelfOrNull(): User? = getUserOrNull(kord.selfId)
 
     override suspend fun getRoleOrNull(guildId: Snowflake, roleId: Snowflake): Role? {
-        val data = cache.query<RoleData> {
+        val data = cache.query {
             idEq(RoleData::id, roleId)
             idEq(RoleData::guildId, guildId)
         }.singleOrNull() ?: return null
@@ -186,12 +186,12 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return Role(data, kord)
     }
 
-    override fun getGuildRoles(guildId: Snowflake): Flow<Role> = cache.query<RoleData> {
+    override fun getGuildRoles(guildId: Snowflake): Flow<Role> = cache.query {
         idEq(RoleData::guildId, guildId)
     }.asFlow().map { Role(it, kord) }
 
     override suspend fun getGuildBanOrNull(guildId: Snowflake, userId: Snowflake): Ban? {
-        val data = cache.query<BanData> {
+        val data = cache.query {
             idEq(BanData::userId, userId)
             idEq(BanData::guildId, guildId)
         }.singleOrNull() ?: return null
@@ -200,7 +200,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getGuildBans(guildId: Snowflake, limit: Int?): Flow<Ban> {
         checkLimit(limit)
-        return cache.query<BanData> { idEq(BanData::guildId, guildId) }
+        return cache.query { idEq(BanData::guildId, guildId) }
             .asFlow()
             .map { Ban(it, kord) }
             .limit(limit)
@@ -208,21 +208,21 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
         checkLimit(limit)
-        return cache.query<MemberData> { idEq(MemberData::guildId, guildId) }
+        return cache.query { idEq(MemberData::guildId, guildId) }
             .asFlow()
             .mapNotNull { memberData ->
-                val userData = cache.query<UserData> { idEq(UserData::id, memberData.userId) }.singleOrNull()
+                val userData = cache.query { idEq(UserData::id, memberData.userId) }.singleOrNull()
                 userData?.let { Member(memberData, userData = it, kord) }
             }
             .limit(limit)
     }
 
-    override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = cache.query<RegionData> {
+    override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> = cache.query {
         idEq(RegionData::guildId, guildId)
     }.asFlow().map { Region(it, kord) }
 
     override suspend fun getEmojiOrNull(guildId: Snowflake, emojiId: Snowflake): GuildEmoji? {
-        val data = cache.query<EmojiData> {
+        val data = cache.query {
             idEq(EmojiData::guildId, guildId)
             idEq(EmojiData::id, emojiId)
         }.singleOrNull() ?: return null
@@ -230,7 +230,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GuildEmoji(data, kord)
     }
 
-    override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = cache.query<EmojiData> {
+    override fun getEmojis(guildId: Snowflake): Flow<GuildEmoji> = cache.query {
         idEq(EmojiData::guildId, guildId)
     }.asFlow().map { GuildEmoji(it, kord) }
 
@@ -241,16 +241,16 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         }.limit(limit)
     }
 
-    override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = cache.query<WebhookData> {
+    override fun getChannelWebhooks(channelId: Snowflake): Flow<Webhook> = cache.query {
         idEq(WebhookData::channelId, channelId)
     }.asFlow().map { Webhook(it, kord) }
 
-    override fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> = cache.query<WebhookData> {
+    override fun getGuildWebhooks(guildId: Snowflake): Flow<Webhook> = cache.query {
         idEq(WebhookData::guildId, guildId)
     }.asFlow().map { Webhook(it, kord) }
 
     override suspend fun getWebhookOrNull(id: Snowflake): Webhook? {
-        val data = cache.query<WebhookData> {
+        val data = cache.query {
             idEq(WebhookData::id, id)
         }.singleOrNull() ?: return null
 
@@ -258,7 +258,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getWebhookWithTokenOrNull(id: Snowflake, token: String): Webhook? {
-        val data = cache.query<WebhookData> {
+        val data = cache.query {
             idEq(WebhookData::id, id)
             idEq(WebhookData::token, token)
         }.singleOrNull() ?: return null
@@ -272,7 +272,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         messageId: Snowflake,
         threadId: Snowflake?,
     ): Message? {
-        val data = cache.query<MessageData> {
+        val data = cache.query {
             idEq(MessageData::webhookId, webhookId)
             idEq(MessageData::id, messageId)
             if (threadId != null) idEq(MessageData::channelId, threadId)
@@ -282,13 +282,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getUserOrNull(id: Snowflake): User? {
-        val data = cache.query<UserData> { idEq(UserData::id, id) }.singleOrNull() ?: return null
+        val data = cache.query { idEq(UserData::id, id) }.singleOrNull() ?: return null
 
         return User(data, kord)
     }
 
     override suspend fun getTemplateOrNull(code: String): Template? {
-        val data = cache.query<TemplateData> {
+        val data = cache.query {
             idEq(TemplateData::code, code)
         }.singleOrNull() ?: return null
 
@@ -296,7 +296,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getTemplates(guildId: Snowflake): Flow<Template> {
-        return cache.query<TemplateData> {
+        return cache.query {
             idEq(TemplateData::sourceGuildId, guildId)
         }.asFlow().map { Template(it, kord) }
     }
@@ -304,13 +304,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override suspend fun getStageInstanceOrNull(channelId: Snowflake): StageInstance? = null
 
     override fun getThreadMembers(channelId: Snowflake): Flow<ThreadMember> {
-        return cache.query<ThreadMemberData> {
+        return cache.query {
             idEq(ThreadMemberData::id, channelId)
         }.asFlow().map { ThreadMember(it, kord) }
     }
 
     override fun getActiveThreads(guildId: Snowflake): Flow<ThreadChannel> = flow {
-        val result = cache.query<ChannelData> {
+        val result = cache.query {
             idEq(ChannelData::guildId, guildId)
         }.toCollection()
             .sortedByDescending { it.id }
@@ -327,7 +327,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getPublicArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
         checkLimit(limit)
         return flow {
-            val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
+            val result = cache.query { idEq(ChannelData::parentId, channelId) }
                 .toCollection()
                 .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
                 .asFlow()
@@ -348,7 +348,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getPrivateArchivedThreads(channelId: Snowflake, before: Instant?, limit: Int?): Flow<ThreadChannel> {
         checkLimit(limit)
         return flow {
-            val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
+            val result = cache.query { idEq(ChannelData::parentId, channelId) }
                 .toCollection()
                 .sortedByDescending { it.threadMetadata.value?.archiveTimestamp }
                 .asFlow()
@@ -373,7 +373,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     ): Flow<ThreadChannel> {
         checkLimit(limit)
         return flow {
-            val result = cache.query<ChannelData> { idEq(ChannelData::parentId, channelId) }
+            val result = cache.query { idEq(ChannelData::parentId, channelId) }
                 .toCollection()
                 .sortedByDescending { it.id }
                 .asFlow()
@@ -394,7 +394,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         guildId: Snowflake,
         withLocalizations: Boolean?
-    ): Flow<GuildApplicationCommand> = cache.query<ApplicationCommandData> {
+    ): Flow<GuildApplicationCommand> = cache.query {
         idEq(ApplicationCommandData::guildId, guildId)
         idEq(ApplicationCommandData::applicationId, applicationId)
     }.asFlow()
@@ -415,7 +415,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         guildId: Snowflake,
         commandId: Snowflake
     ): GuildApplicationCommand? {
-        val data = cache.query<ApplicationCommandData> {
+        val data = cache.query {
             idEq(ApplicationCommandData::id, commandId)
             idEq(ApplicationCommandData::guildId, guildId)
             idEq(ApplicationCommandData::applicationId, applicationId)
@@ -428,7 +428,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         applicationId: Snowflake,
         commandId: Snowflake
     ): GlobalApplicationCommand? {
-        val data = cache.query<ApplicationCommandData> {
+        val data = cache.query {
             idEq(ApplicationCommandData::id, commandId)
             idEq(ApplicationCommandData::guildId, null)
             idEq(ApplicationCommandData::applicationId, applicationId)
@@ -438,7 +438,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
-        cache.query<ApplicationCommandData> {
+        cache.query {
             idEq(ApplicationCommandData::guildId, null)
             idEq(ApplicationCommandData::applicationId, applicationId)
         }.asFlow()
@@ -456,7 +456,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     override fun getGuildApplicationCommandPermissions(
         applicationId: Snowflake,
         guildId: Snowflake
-    ): Flow<ApplicationCommandPermissions> = cache.query<GuildApplicationCommandPermissionsData> {
+    ): Flow<ApplicationCommandPermissions> = cache.query {
         idEq(GuildApplicationCommandPermissionsData::guildId, guildId)
         idEq(GuildApplicationCommandPermissionsData::applicationId, applicationId)
     }.asFlow().map { ApplicationCommandPermissions(it) }
@@ -467,7 +467,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         guildId: Snowflake,
         commandId: Snowflake
     ): ApplicationCommandPermissions? {
-        val data = cache.query<GuildApplicationCommandPermissionsData> {
+        val data = cache.query {
             idEq(GuildApplicationCommandPermissionsData::id, commandId)
             idEq(GuildApplicationCommandPermissionsData::guildId, guildId)
             idEq(GuildApplicationCommandPermissionsData::applicationId, applicationId)
@@ -481,7 +481,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         interactionToken: String,
         messageId: Snowflake,
     ): FollowupMessage? {
-        val data = cache.query<MessageData> {
+        val data = cache.query {
             idEq(MessageData::applicationId, applicationId)
             idEq(MessageData::id, messageId)
         }.singleOrNull() ?: return null
@@ -490,7 +490,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override suspend fun getGuildScheduledEventOrNull(guildId: Snowflake, eventId: Snowflake): GuildScheduledEvent? {
-        val data = cache.query<GuildScheduledEventData> {
+        val data = cache.query {
             idEq(GuildScheduledEventData::guildId, guildId)
             idEq(GuildScheduledEventData::id, eventId)
         }.singleOrNull() ?: return null
@@ -506,13 +506,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     ): Flow<Member> {
         checkLimit(limit)
         return cache
-            .query<MemberData> {
+            .query {
                 idLt(MemberData::userId, before)
                 idEq(MemberData::guildId, guildId)
             }
             .asFlow()
             .mapNotNull {
-                val userData = cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull()
+                val userData = cache.query { idEq(UserData::id, it.userId) }.singleOrNull()
                     ?: return@mapNotNull null
                 Member(it, userData, kord)
             }
@@ -534,13 +534,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     ): Flow<Member> {
         checkLimit(limit)
         return cache
-            .query<MemberData> {
+            .query {
                 idGt(MemberData::userId, after)
                 idEq(MemberData::guildId, guildId)
             }
             .asFlow()
             .mapNotNull {
-                val userData = cache.query<UserData> { idEq(UserData::id, it.userId) }.singleOrNull()
+                val userData = cache.query { idEq(UserData::id, it.userId) }.singleOrNull()
                     ?: return@mapNotNull null
                 Member(it, userData, kord)
             }
@@ -555,12 +555,12 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     ): Flow<User> = getGuildScheduledEventMembersAfter(guildId, eventId, after, limit).map { it.asUser() }
 
     override suspend fun getStickerOrNull(id: Snowflake): Sticker? {
-        val data = cache.query<StickerData> { idEq(StickerData::id, id) }.singleOrNull() ?: return null
+        val data = cache.query { idEq(StickerData::id, id) }.singleOrNull() ?: return null
         return Sticker(data, kord)
     }
 
     override suspend fun getGuildStickerOrNull(guildId: Snowflake, id: Snowflake): GuildSticker? {
-        val data = cache.query<StickerData> {
+        val data = cache.query {
             idEq(StickerData::id, id)
             idEq(StickerData::guildId, guildId)
         }.singleOrNull() ?: return null
@@ -575,13 +575,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
     }
 
     override fun getGuildStickers(guildId: Snowflake): Flow<GuildSticker> {
-        return cache.query<StickerData> { idEq(StickerData::guildId, guildId) }
+        return cache.query { idEq(StickerData::guildId, guildId) }
             .asFlow()
             .map { GuildSticker(it, kord) }
     }
 
     override fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent> =
-        cache.query<GuildScheduledEventData> {
+        cache.query {
             idEq(GuildScheduledEventData::guildId, guildId)
         }.asFlow().map { GuildScheduledEvent(it, kord) }
 

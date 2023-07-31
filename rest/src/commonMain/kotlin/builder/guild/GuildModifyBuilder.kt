@@ -79,6 +79,11 @@ public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
     /** The enabled [GuildFeature]s. */
     public var features: Set<GuildFeature>? by ::_features.delegate()
 
+    private var _safetyAlertsChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
+
+    /** The id of the channel where admins and moderators of Community guilds receive safety alerts from Discord. */
+    public var safetyAlertsChannelId: Snowflake? by ::_safetyAlertsChannelId.delegate()
+
     override fun toRequest(): GuildModifyRequest = GuildModifyRequest(
         _name,
         _region,
@@ -96,5 +101,6 @@ public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
         _publicUpdatesChannelId,
         _preferredLocale.map { locale -> "${locale.language}${locale.country?.let { "-$it" } ?: ""}" },
         features = _features,
+        safetyAlertsChannelId = _safetyAlertsChannelId,
     )
 }

@@ -44,7 +44,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                 userData = UserData(
                     id = userId,
                     username = "",
-                    discriminator = ""
                 )
             )
         )
@@ -67,7 +66,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                         user = DiscordUser(
                             id = it,
                             username = "",
-                            discriminator = "",
                             avatar = null
                         ),
                         joinedAt = Instant.fromEpochMilliseconds(0),
@@ -98,7 +96,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                         user = DiscordUser(
                             id = it,
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),
@@ -128,7 +125,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                         user = DiscordUser(
                             id = it,
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),

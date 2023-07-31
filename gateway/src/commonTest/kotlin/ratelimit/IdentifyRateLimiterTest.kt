@@ -3,6 +3,7 @@ package dev.kord.gateway.ratelimit
 import dev.kord.common.KordConfiguration
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
 import dev.kord.gateway.Close.DiscordClose
 import dev.kord.gateway.GatewayCloseCode.Unknown
 import dev.kord.gateway.InvalidSession
@@ -34,7 +35,7 @@ private val READY = Ready(
         user = DiscordUser(
             id = Snowflake(42),
             username = "username",
-            discriminator = "1337",
+            discriminator = Optional("1337"),
             avatar = null,
         ),
         privateChannels = emptyList(),

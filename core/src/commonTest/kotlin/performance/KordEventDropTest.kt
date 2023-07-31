@@ -94,7 +94,8 @@ class KordEventDropTest {
                 banner = null,
                 publicUpdatesChannelId = null,
                 nsfwLevel = NsfwLevel.Default,
-                premiumProgressBarEnabled = false
+                premiumProgressBarEnabled = false,
+                safetyAlertsChannelId = null,
             ), 0
         )
 

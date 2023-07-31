@@ -112,7 +112,7 @@ public data class EmbedProviderData(
 @Serializable
 public data class EmbedAuthorData(
     val name: Optional<String> = Optional.Missing(),
-    val url: Optional<String> = Optional.Missing(),
+    val url: Optional<String?> = Optional.Missing(),
     val iconUrl: Optional<String> = Optional.Missing(),
     val proxyIconUrl: Optional<String> = Optional.Missing(),
 ) {

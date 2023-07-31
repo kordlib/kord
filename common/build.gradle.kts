@@ -1,4 +1,3 @@
-@Suppress("DSL_SCOPE_VIOLATION") // false positive for `libs` in IntelliJ
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
@@ -61,7 +60,7 @@ buildConfig {
         internalVisibility = true
     }
 
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"${Library.version}\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"${Library.commitHash}\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"${Library.shortCommitHash}\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"$libraryVersion\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"$commitHash\"")
+    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"$shortCommitHash\"")
 }

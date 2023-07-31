@@ -27,6 +27,7 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonNames
+import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -51,7 +52,14 @@ import kotlin.contracts.contract
 public data class DiscordUser(
     val id: Snowflake,
     val username: String,
-    val discriminator: String,
+    @Deprecated(
+        "Discord's username system is changing and discriminators are being removed, see " +
+            "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
+        level = WARNING,
+    )
+    val discriminator: Optional<String> = Optional.Missing(),
+    @SerialName("global_name")
+    val globalName: Optional<String?> = Optional.Missing(),
     val avatar: String?,
     val bot: OptionalBoolean = OptionalBoolean.Missing,
     val system: OptionalBoolean = OptionalBoolean.Missing,
@@ -92,7 +100,14 @@ public data class DiscordUser(
 public data class DiscordOptionallyMemberUser(
     val id: Snowflake,
     val username: String,
-    val discriminator: String,
+    @Deprecated(
+        "Discord's username system is changing and discriminators are being removed, see " +
+            "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
+        level = WARNING,
+    )
+    val discriminator: Optional<String> = Optional.Missing(),
+    @SerialName("global_name")
+    val globalName: Optional<String?> = Optional.Missing(),
     val avatar: String?,
     val bot: OptionalBoolean = OptionalBoolean.Missing,
     val system: OptionalBoolean = OptionalBoolean.Missing,
@@ -138,15 +153,11 @@ public data class UserFlags(val code: Int) {
 
     public operator fun contains(flag: UserFlag): Boolean = flag in flags
 
-    public operator fun plus(flags: UserFlags): UserFlags = when {
-        code and flags.code == flags.code -> this
-        else -> UserFlags(this.code or flags.code)
-    }
+    public operator fun plus(flags: UserFlags): UserFlags =
+        if (code and flags.code == flags.code) this else UserFlags(this.code or flags.code)
 
-    public operator fun minus(flag: UserFlag): UserFlags = when {
-        code and flag.code == flag.code -> UserFlags(code xor flag.code)
-        else -> this
-    }
+    public operator fun minus(flag: UserFlag): UserFlags =
+        if (code and flag.code == flag.code) UserFlags(code xor flag.code) else this
 
     public inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
         contract {

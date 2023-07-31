@@ -1,6 +1,7 @@
 import kotlinx.atomicfu.plugin.gradle.AtomicFUPluginExtension
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.kotlin.dsl.assign
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
@@ -11,7 +12,6 @@ object OptIns {
 }
 
 val kordOptIns = listOf(
-    "kotlin.time.ExperimentalTime",
     "kotlin.contracts.ExperimentalContracts",
 
     "dev.kord.common.annotation.KordInternal",
@@ -25,13 +25,13 @@ object Jvm {
 }
 
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
-    // TODO: set to true again once https://github.com/Kotlin/kotlinx-atomicfu/issues/289 is fixed
-    allWarningsAsErrors.set(false)
-    freeCompilerArgs.add("-progressive")
+    allWarningsAsErrors = true
+    progressiveMode = true
 }
 
 fun KotlinSourceSet.applyKordOptIns() {
     languageSettings {
+        // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
         if ("Test" in name) optIn(OptIns.coroutines)
         kordOptIns.forEach(::optIn)
     }

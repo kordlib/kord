@@ -6,6 +6,7 @@
     {
       "username": "test",
       "discriminator": "9999",
+      "global_name": null,
       "id": "82198898841029460",
       "avatar": "33ecab261d4681afa4d85a04691c4a01"
     }

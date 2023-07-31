@@ -5,6 +5,7 @@ import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.MessageType.Default
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
 import dev.kord.rest.json.readFile
 import dev.kord.rest.service.ChannelService
 import dev.kord.test.Platform
@@ -26,7 +27,7 @@ private const val fileName = "linus.png"
 private val mockMessage = DiscordMessage(
     id = mockId,
     channelId = mockId,
-    author = DiscordUser(id = mockId, username = "user", discriminator = "1337", avatar = null),
+    author = DiscordUser(id = mockId, username = "user", discriminator = Optional("1337"), avatar = null),
     content = "",
     timestamp = Clock.System.now(),
     editedTimestamp = null,

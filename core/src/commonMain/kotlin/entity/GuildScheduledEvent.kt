@@ -117,6 +117,8 @@ public class GuildScheduledEvent(
     /** The cover image hash of this event. */
     public val imageHash: String? get() = data.image.value
 
+    public val image: Asset? get() = imageHash?.let { Asset.guildScheduledEventCover(id, it, kord) }
+
     /**
      * Requests the [Guild] this event belongs to.
      *

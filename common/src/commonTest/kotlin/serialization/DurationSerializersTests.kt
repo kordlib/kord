@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit.MILLISECONDS
 
-abstract class DurationSerializerTest(
+abstract class DurationAsLongSerializerTest(
     private val json: String,
     private val duration: Duration,
     private val durationToRound: Duration,
@@ -132,7 +132,7 @@ abstract class DurationSerializerTest(
 }
 
 
-class DurationInNanosecondsSerializerTest : DurationSerializerTest(
+class DurationInNanosecondsSerializerTest : DurationAsLongSerializerTest(
     json = "84169",
     duration = 84169.nanoseconds,
     durationToRound = 84169.48.nanoseconds,
@@ -142,7 +142,7 @@ class DurationInNanosecondsSerializerTest : DurationSerializerTest(
     serializer = DurationInNanosecondsSerializer,
 )
 
-class DurationInMicrosecondsSerializerTest : DurationSerializerTest(
+class DurationInMicrosecondsSerializerTest : DurationAsLongSerializerTest(
     json = "25622456",
     duration = 25622456.microseconds,
     durationToRound = 25622456.4.microseconds,
@@ -152,7 +152,7 @@ class DurationInMicrosecondsSerializerTest : DurationSerializerTest(
     serializer = DurationInMicrosecondsSerializer,
 )
 
-class DurationInMillisecondsSerializerTest : DurationSerializerTest(
+class DurationInMillisecondsSerializerTest : DurationAsLongSerializerTest(
     json = "3495189",
     duration = 3495189.milliseconds,
     durationToRound = 3495189.24.milliseconds,
@@ -160,7 +160,7 @@ class DurationInMillisecondsSerializerTest : DurationSerializerTest(
     serializer = DurationInMillisecondsSerializer,
 )
 
-class DurationInSecondsSerializerTest : DurationSerializerTest(
+class DurationInSecondsSerializerTest : DurationAsLongSerializerTest(
     json = "987465",
     duration = 987465.seconds,
     durationToRound = 987465.489.seconds,
@@ -168,7 +168,7 @@ class DurationInSecondsSerializerTest : DurationSerializerTest(
     serializer = DurationInSecondsSerializer,
 )
 
-class DurationInMinutesSerializerTest : DurationSerializerTest(
+class DurationInMinutesSerializerTest : DurationAsLongSerializerTest(
     json = "24905",
     duration = 24905.minutes,
     durationToRound = 24905.164.minutes,
@@ -176,7 +176,7 @@ class DurationInMinutesSerializerTest : DurationSerializerTest(
     serializer = DurationInMinutesSerializer,
 )
 
-class DurationInHoursSerializerTest : DurationSerializerTest(
+class DurationInHoursSerializerTest : DurationAsLongSerializerTest(
     json = "7245",
     duration = 7245.hours,
     durationToRound = 7245.24.hours,
@@ -184,7 +184,7 @@ class DurationInHoursSerializerTest : DurationSerializerTest(
     serializer = DurationInHoursSerializer,
 )
 
-class DurationInDaysSerializerTest : DurationSerializerTest(
+class DurationInDaysSerializerTest : DurationAsLongSerializerTest(
     json = "92",
     duration = 92.days,
     durationToRound = 92.12.days,

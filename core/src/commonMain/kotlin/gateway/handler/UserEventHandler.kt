@@ -23,7 +23,7 @@ internal class UserEventHandler : BaseGatewayEventHandler() {
     private suspend fun handle(event: UserUpdate, shard: Int, kord: Kord, context: LazyContext?): UserUpdateEvent {
         val data = UserData.from(event.user)
 
-        val old = kord.cache.query<UserData> { idEq(UserData::id, data.id) }
+        val old = kord.cache.query { idEq(UserData::id, data.id) }
             .asFlow().map { User(it, kord) }.singleOrNull()
 
         kord.cache.put(data)

@@ -6,6 +6,6 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.milliseconds
 
-class TestClock(val instant: Instant, val scope: TestScope) : Clock {
+class TestClock(private val instant: Instant, private val scope: TestScope) : Clock {
     override fun now(): Instant = instant + scope.currentTime.milliseconds
 }

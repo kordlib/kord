@@ -20,7 +20,9 @@ class UserTest {
         with(user) {
             id.toString() shouldBe "80351110224678912"
             username shouldBe "Nelly"
+            @Suppress("DEPRECATION")
             discriminator shouldBe "1337"
+            globalName shouldBe "Nelly"
             avatar shouldBe "8342729096ea3675442027381ff50dfe"
             verified.asNullable!! shouldBe true
             email.value shouldBe "nelly@discordapp.com"

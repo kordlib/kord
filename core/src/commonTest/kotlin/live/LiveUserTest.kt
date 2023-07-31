@@ -26,7 +26,6 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
                 data = UserData(
                     id = userId,
                     username = "",
-                    discriminator = ""
                 )
             )
         )
@@ -46,7 +45,6 @@ class LiveUserTest : AbstractLiveEntityTest<LiveUser>() {
                     DiscordUser(
                         id = it,
                         username = "",
-                        discriminator = "",
                         avatar = null
                     ),
                     0

@@ -249,6 +249,7 @@ public final class dev/kord/voice/SpeakingFlag : java/lang/Enum {
 	public static final field Priority Ldev/kord/voice/SpeakingFlag;
 	public static final field Soundshare Ldev/kord/voice/SpeakingFlag;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
 	public static fun values ()[Ldev/kord/voice/SpeakingFlag;
 }
@@ -523,7 +524,7 @@ public final class dev/kord/voice/gateway/Heartbeat : dev/kord/voice/gateway/Com
 	public final fun getNonce ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/Heartbeat;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Heartbeat;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/Heartbeat$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -552,7 +553,7 @@ public final class dev/kord/voice/gateway/HeartbeatAck : dev/kord/voice/gateway/
 	public final fun getNonce ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/HeartbeatAck;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/HeartbeatAck;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/HeartbeatAck$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -583,7 +584,7 @@ public final class dev/kord/voice/gateway/Hello : dev/kord/voice/gateway/VoiceEv
 	public final fun getVersion ()S
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/Hello;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Hello;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -618,7 +619,7 @@ public final class dev/kord/voice/gateway/Identify : dev/kord/voice/gateway/Comm
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/Identify;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Identify;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -650,6 +651,7 @@ public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static final field Speaking Ldev/kord/voice/gateway/OpCode;
 	public static final field Unknown Ldev/kord/voice/gateway/OpCode;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/gateway/OpCode;
 	public static fun values ()[Ldev/kord/voice/gateway/OpCode;
 }
@@ -671,7 +673,7 @@ public final class dev/kord/voice/gateway/Ready : dev/kord/voice/gateway/VoiceEv
 	public final fun getSsrc-pVg5ArA ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/Ready;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Ready;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/Ready$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -704,7 +706,7 @@ public final class dev/kord/voice/gateway/Resume : dev/kord/voice/gateway/Comman
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/Resume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Resume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -740,7 +742,7 @@ public final class dev/kord/voice/gateway/SelectProtocol : dev/kord/voice/gatewa
 	public final fun getProtocol ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/SelectProtocol;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/SelectProtocol;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/SelectProtocol$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -773,7 +775,7 @@ public final class dev/kord/voice/gateway/SelectProtocol$Data {
 	public final fun getPort ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/SelectProtocol$Data;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/SelectProtocol$Data;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/SelectProtocol$Data$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -806,7 +808,7 @@ public final class dev/kord/voice/gateway/SendSpeaking : dev/kord/voice/gateway/
 	public final fun getSsrc-pVg5ArA ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/SendSpeaking;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/SendSpeaking;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/SendSpeaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -837,7 +839,7 @@ public final class dev/kord/voice/gateway/SessionDescription : dev/kord/voice/ga
 	public final fun getSecretKey ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/SessionDescription;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/SessionDescription;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/SessionDescription$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -870,7 +872,7 @@ public final class dev/kord/voice/gateway/Speaking : dev/kord/voice/gateway/Voic
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Ldev/kord/voice/gateway/Speaking;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Speaking;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/voice/gateway/Speaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

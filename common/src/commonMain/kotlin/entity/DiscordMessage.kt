@@ -1,7 +1,5 @@
 @file:GenerateKordEnum(
     name = "MessageType", valueType = INT, valueName = "code",
-    // had `public val values: Set<MessageType>` in companion before -> replace with `entries`
-    valuesPropertyName = "values", valuesPropertyType = SET,
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-types",
     entries = [
         Entry("Default", intValue = 0),
@@ -74,8 +72,6 @@
 
 @file:GenerateKordEnum(
     name = "MessageStickerType", valueType = INT,
-    // had `public val values: Set<MessageStickerType>` in companion before -> replace with `entries`
-    valuesPropertyName = "values", valuesPropertyType = SET,
     docUrl = "https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types",
     entries = [
         Entry("PNG", intValue = 1),
@@ -91,12 +87,12 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.serialization.DurationInDoubleSeconds
 import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.GenerateKordEnum
 import dev.kord.ksp.GenerateKordEnum.Entry
 import dev.kord.ksp.GenerateKordEnum.ValueType.INT
 import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
-import dev.kord.ksp.GenerateKordEnum.ValuesPropertyType.SET
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
@@ -406,7 +402,12 @@ public enum class MessageFlag(public val code: Int) {
     FailedToMentionSomeRolesInThread(1 shl 8),
 
     /** This message will not trigger push and desktop notifications. */
-    SuppressNotifications(1 shl 12)
+    SuppressNotifications(1 shl 12),
+
+    /**
+     * This message is a voice message.
+     */
+    IsVoiceMessage(1 shl 13)
 }
 
 @Serializable(with = MessageFlags.Serializer::class)
@@ -502,15 +503,18 @@ public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFl
 /**
  * A representation of a [Discord Attachment structure](https://discord.com/developers/docs/resources/channel#attachment-object).
  *
- * @param id The attachment id.
- * @param filename The name of the attached file.
- * @param description The description for the file.
- * @param contentType The attachment's [media type](https://en.wikipedia.org/wiki/Media_type).
- * @param size The size of the file in bytes.
- * @param url The source url of the file.
- * @param proxyUrl A proxied url of the field.
- * @param height The height of the file (if it is an image).
- * @param width The width of the file (if it is an image).
+ * @property id The attachment id.
+ * @property filename The name of the attached file.
+ * @property description The description for the file.
+ * @property contentType The attachment's [media type](https://en.wikipedia.org/wiki/Media_type).
+ * @property size The size of the file in bytes.
+ * @property url The source url of the file.
+ * @property proxyUrl A proxied url of the field.
+ * @property height The height of the file (if it is an image).
+ * @property width The width of the file (if it is an image).
+ * @property ephemeral Whether this attachment is ephemeral
+ * @property durationSecs The duration of the audio file (currently for voice messages)
+ * @property waveform Base64 encoded bytearray representing a sampled waveform (currently for voice messages)
  */
 @Serializable
 public data class DiscordAttachment(
@@ -534,7 +538,10 @@ public data class DiscordAttachment(
     */
     val width: OptionalInt? = OptionalInt.Missing,
 
-    val ephemeral: OptionalBoolean = OptionalBoolean.Missing
+    val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
+    @SerialName("duration_secs")
+    val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing(),
+    val waveform: Optional<String> = Optional.Missing()
 )
 
 /**
@@ -658,7 +665,7 @@ public data class DiscordEmbed(
     @Serializable
     public data class Author(
         val name: Optional<String> = Optional.Missing(),
-        val url: Optional<String> = Optional.Missing(),
+        val url: Optional<String?> = Optional.Missing(), // see https://github.com/kordlib/kord/issues/838
         @SerialName("icon_url")
         val iconUrl: Optional<String> = Optional.Missing(),
         @SerialName("proxy_icon_url")

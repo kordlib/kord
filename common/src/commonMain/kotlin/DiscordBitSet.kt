@@ -40,7 +40,7 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
     override fun equals(other: Any?): Boolean {
         if (other !is DiscordBitSet) return false
         // trailing zeros are ignored -> getOrZero
-        for (i in 0 until max(this.data.size, other.data.size)) {
+        for (i in 0..<max(this.data.size, other.data.size)) {
             if (this.getOrZero(i) != other.getOrZero(i)) return false
         }
         return true
@@ -102,7 +102,7 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
 
 
     public fun remove(another: DiscordBitSet) {
-        for (i in 0 until min(data.size, another.data.size)) {
+        for (i in 0..<min(data.size, another.data.size)) {
             data[i] = data[i] xor (data[i] and another.data[i])
         }
     }

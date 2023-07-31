@@ -1,6 +1,5 @@
 package dev.kord.core.behavior.channel
 
-import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -13,6 +12,7 @@ import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TextChannel
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.TextChannelModifyBuilder
@@ -23,8 +23,6 @@ import dev.kord.rest.service.patchTextChannel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
-import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -67,73 +65,24 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
      */
     override suspend fun fetchChannelOrNull(): TextChannel? = super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? TextChannel
 
-    @Deprecated(
-        "Replaced by overload with autoArchiveDuration in builder lambda",
-        ReplaceWith("this.startPublicThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
-        level = ERROR,
-    )
     public suspend fun startPublicThread(
         name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        builder: StartThreadBuilder.() -> Unit = {}
-    ): TextChannelThread {
-        return startPublicThread(name) {
-            this.autoArchiveDuration = archiveDuration
-            builder()
-        }
-    }
-
-    public suspend fun startPublicThread(
-        name: String,
-        builder: StartThreadBuilder.() -> Unit,
+        builder: StartThreadBuilder.() -> Unit = {},
     ): TextChannelThread {
         return unsafeStartThread(name, type = ChannelType.PublicGuildThread, builder) as TextChannelThread
     }
 
-    @Deprecated(
-        "Replaced by overload with autoArchiveDuration in builder lambda",
-        ReplaceWith("this.startPrivateThread(name) {\nautoArchiveDuration = archiveDuration\nbuilder()\n}"),
-        level = ERROR,
-    )
     public suspend fun startPrivateThread(
         name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        builder: StartThreadBuilder.() -> Unit = {}
-    ): TextChannelThread {
-        return startPrivateThread(name) {
-            this.autoArchiveDuration = archiveDuration
-            builder()
-        }
-    }
-
-    public suspend fun startPrivateThread(
-        name: String,
-        builder: StartThreadBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
+        builder: StartThreadBuilder.() -> Unit = {},
     ): TextChannelThread {
         return unsafeStartThread(name, type = ChannelType.PrivateThread, builder) as TextChannelThread
     }
 
-    @Deprecated(
-        "Replaced by builder overload",
-        ReplaceWith("this.startPublicThreadWithMessage(messageId, name) {\nautoArchiveDuration = archiveDuration\nthis@startPublicThreadWithMessage.reason = reason\n}"),
-        level = ERROR,
-    )
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,
-        archiveDuration: ArchiveDuration = ArchiveDuration.Day,
-        reason: String? = null
-    ): TextChannelThread {
-        return startPublicThreadWithMessage(messageId, name) {
-            this.autoArchiveDuration = archiveDuration
-            this.reason = reason
-        }
-    }
-
-    public suspend fun startPublicThreadWithMessage(
-        messageId: Snowflake,
-        name: String,
-        builder: StartThreadWithMessageBuilder.() -> Unit, // TODO add empty default when overload is deprecated HIDDEN
+        builder: StartThreadWithMessageBuilder.() -> Unit = {},
     ): TextChannelThread {
         return unsafeStartPublicThreadWithMessage(messageId, name, builder) as TextChannelThread
     }

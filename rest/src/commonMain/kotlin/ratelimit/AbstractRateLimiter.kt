@@ -17,13 +17,13 @@ import kotlin.time.Duration.Companion.minutes
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
-    internal val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
+    private val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
     private val globalSuspensionPoint = atomic(Reset(clock.now()))
     internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
-    internal val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
+    private val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
 
     internal val BucketKey.bucket get() = buckets.getOrPut(this) { Bucket(this) }
-    internal val Request<*, *>.buckets get() = routeBuckets[identifier].orEmpty().map { it.bucket }
+    private val Request<*, *>.buckets get() = routeBuckets[identifier].orEmpty().map { it.bucket }
     internal fun RequestIdentifier.addBucket(id: BucketKey) = routeBuckets.getOrPut(this) { mutableSetOf() }.add(id)
 
     internal suspend fun Reset.await() {
@@ -44,9 +44,9 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     internal abstract fun newToken(request: Request<*, *>, buckets: List<Bucket>): RequestToken
 
     internal abstract class AbstractRequestToken(
-        val rateLimiter: AbstractRateLimiter,
-        val identity: RequestIdentifier,
-        val requestBuckets: List<Bucket>
+        private val rateLimiter: AbstractRateLimiter,
+        private val identity: RequestIdentifier,
+        private val requestBuckets: List<Bucket>
     ) : RequestToken {
         private val completableDeferred = CompletableDeferred<Unit>()
 
@@ -83,8 +83,8 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     }
 
     internal inner class Bucket(val id: BucketKey) {
-        val reset = atomic(Reset(clock.now()))
-        val mutex = Mutex()
+        private val reset = atomic(Reset(clock.now()))
+        private val mutex = Mutex()
 
         suspend fun awaitAndLock() {
             mutex.lock()

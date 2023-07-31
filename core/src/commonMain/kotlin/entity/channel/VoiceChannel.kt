@@ -10,13 +10,11 @@ import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Region
 import dev.kord.core.exception.EntityNotFoundException
-import dev.kord.core.supplier.getChannelOf
-import dev.kord.core.supplier.getChannelOfOrNull
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import dev.kord.core.hash
 
 /**
  * An instance of a Discord Voice Channel associated to a guild.

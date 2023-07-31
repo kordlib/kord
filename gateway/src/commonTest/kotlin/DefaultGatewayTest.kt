@@ -4,13 +4,8 @@ import dev.kord.common.entity.ActivityType
 import dev.kord.common.entity.DiscordBotActivity
 import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.ratelimit.IntervalRateLimiter
-import dev.kord.gateway.*
 import dev.kord.gateway.retry.LinearRetry
 import dev.kord.test.getEnv
-import io.ktor.client.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.websocket.*
-import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

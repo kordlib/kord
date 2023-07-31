@@ -4,7 +4,6 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.InteractionData
-import dev.kord.core.cache.data.ResolvedObjectsData
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.component.SelectMenuComponent
 import dev.kord.core.supplier.EntitySupplier

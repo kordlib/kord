@@ -18,12 +18,14 @@ import io.ktor.client.request.forms.*
 import io.ktor.util.cio.*
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import kotlin.io.path.toPath
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 fun imageBinary(path: String): Image {
@@ -86,7 +88,7 @@ class RestServiceTest {
 
         guildId = guild.id
 
-        this@RestServiceTest.guild = kord.getGuildOrThrow(guildId)
+        this@RestServiceTest.guild = kord.getGuild(guildId)
 
         guild.edit {
             name = "Edited Guild Test"
@@ -555,7 +557,7 @@ class RestServiceTest {
     fun `create role with image icon`(): Unit = runBlocking {
         if (!boostEnabled)
             return@runBlocking
-        val guild = kord.getGuildOrThrow(publicGuildId)
+        val guild = kord.getGuild(publicGuildId)
         guild.createRole {
             name = "Test Image Icon"
             hoist = true
@@ -567,11 +569,17 @@ class RestServiceTest {
     fun `create role with unicode icon`(): Unit = runBlocking {
         if (!boostEnabled)
             return@runBlocking
-        val guild = kord.getGuildOrThrow(publicGuildId)
+        val guild = kord.getGuild(publicGuildId)
         guild.createRole {
             name = "Test Unicode Icon"
             hoist = true
             unicodeEmoji = "\uD83D\uDE04"
         }
+    }
+
+    @Test
+    fun `list Nitro Sticker Packs`(): Unit = runBlocking {
+        val pack = kord.nitroStickerPacks.firstOrNull()
+        assertNotNull(pack, "Could not list Nitro Sticker Packs")
     }
 }

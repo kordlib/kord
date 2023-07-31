@@ -6,6 +6,7 @@
     {
       "username":"Kordoino",
       "discriminator":"7540",
+      "global_name": "Kordoino Bot",
       "bot":true,
       "id":"587166353111252992",
       "avatar":"e51fba91466108ab0e3aa90a108bffa1"

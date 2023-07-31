@@ -28,7 +28,7 @@ internal class OptionalSnowflakeTest {
 
 
     @Serializable
-    class NullOptionalEntity(@Suppress("unused") val value: OptionalSnowflake = OptionalSnowflake.Missing)
+    class NullOptionalEntity(val value: OptionalSnowflake = OptionalSnowflake.Missing)
 
     @Test
     @JsName("test2")
@@ -43,7 +43,7 @@ internal class OptionalSnowflakeTest {
 
 
     @Serializable
-    class ValueOptionalEntity(@Suppress("unused") val value: OptionalSnowflake = OptionalSnowflake.Missing)
+    class ValueOptionalEntity(val value: OptionalSnowflake = OptionalSnowflake.Missing)
 
     @Test
     @JsName("test3")

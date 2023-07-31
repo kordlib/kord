@@ -3,9 +3,6 @@
 
 package dev.kord.common
 
-import dev.kord.common.annotation.KordExperimental
-import kotlin.DeprecationLevel.ERROR
-
 public object KordConstants {
 
     /** Kord's version. */
@@ -22,20 +19,4 @@ public object KordConstants {
 
     /** Kord's value for the [User Agent header](https://discord.com/developers/docs/reference#user-agent). */
     public val USER_AGENT: String = "DiscordBot ($GITHUB_URL, $VERSION)"
-
-    @Deprecated("Renamed to 'VERSION'.", ReplaceWith("KordConstants.VERSION"), level = ERROR)
-    @KordExperimental
-    public val KORD_VERSION: String get() = VERSION
-
-    @Deprecated("Renamed to 'COMMIT_HASH'.", ReplaceWith("KordConstants.COMMIT_HASH"), level = ERROR)
-    @KordExperimental
-    public val KORD_COMMIT_HASH: String get() = COMMIT_HASH
-
-    @Deprecated("Renamed to 'SHORT_COMMIT_HASH'.", ReplaceWith("KordConstants.SHORT_COMMIT_HASH"), level = ERROR)
-    @KordExperimental
-    public val KORD_SHORT_COMMIT_HASH: String get() = SHORT_COMMIT_HASH
-
-    @Deprecated("Renamed to 'GITHUB_URL'.", ReplaceWith("KordConstants.GITHUB_URL"), level = ERROR)
-    @KordExperimental
-    public val KORD_GITHUB_URL: String get() = GITHUB_URL
 }

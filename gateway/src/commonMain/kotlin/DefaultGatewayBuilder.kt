@@ -10,8 +10,6 @@ import dev.kord.gateway.retry.Retry
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
-import io.ktor.client.request.*
-import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -38,19 +36,6 @@ public class DefaultGatewayBuilder {
         val retry = reconnectRetry ?: LinearRetry(2.seconds, 20.seconds, 10)
         val sendRateLimiter = sendRateLimiter ?: IntervalRateLimiter(limit = 120, interval = 60.seconds)
         val identifyRateLimiter = identifyRateLimiter ?: IdentifyRateLimiter(maxConcurrency = 1, dispatcher)
-
-        client.requestPipeline.intercept(HttpRequestPipeline.Render) {
-            // CIO adds this header even if no extensions are used, which causes it to be empty
-            // This immediately kills the gateway connection
-            if (context.url.protocol.isWebsocket()) {
-                val header = context.headers[HttpHeaders.SecWebSocketExtensions]
-                // If it's blank Discord ragequits
-                if (header?.isBlank() == true) {
-                    context.headers.remove(HttpHeaders.SecWebSocketExtensions)
-                }
-            }
-            proceed()
-        }
 
         val data = DefaultGatewayData(
             url,

@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION_ERROR")
-
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
@@ -7,11 +5,10 @@ import dev.kord.common.entity.ChannelType
 import dev.kord.common.entity.ComponentType
 import dev.kord.common.entity.DiscordChatComponent
 import dev.kord.common.entity.DiscordSelectOption
-import dev.kord.common.entity.optional.mapCopy
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
-import kotlin.DeprecationLevel.ERROR
+import dev.kord.common.entity.optional.mapCopy
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -22,33 +19,7 @@ import kotlin.contracts.contract
  * @param customId The identifier for the menu, max 100 characters.
  */
 @KordDsl
-public open class SelectMenuBuilder
-@Deprecated(
-    "This will be made a sealed class in the future, please stop using this constructor. You can instead use the " +
-            "constructor of one of the subtypes.",
-    ReplaceWith("StringSelectBuilder(customId)", "dev.kord.rest.builder.component.StringSelectBuilder"),
-    level = DeprecationLevel.ERROR,
-)
-public constructor(public var customId: String) : ActionRowComponentBuilder() {
-
-    /**
-     * The choices in the select, max 25.
-     */
-    @Deprecated(
-        "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
-        ReplaceWith(
-            "(this as? StringSelectBuilder)?.options ?: mutableListOf()",
-            "dev.kord.rest.builder.component.StringSelectBuilder",
-            "dev.kord.rest.builder.component.options",
-        ),
-        level = DeprecationLevel.ERROR,
-    )
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
-    @kotlin.internal.LowPriorityInOverloadResolution
-    public val options: MutableList<SelectOptionBuilder> get() = _options
-
-    @Suppress("PropertyName")
-    internal var _options = mutableListOf<SelectOptionBuilder>()
+public sealed class SelectMenuBuilder(public var customId: String) : ActionRowComponentBuilder() {
 
     /**
      * The range of values that can be accepted. Accepts any range between [0,25].
@@ -67,38 +38,8 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
      */
     public var placeholder: String? by ::_placeholder.delegate()
 
-    /**
-     * Adds a new option to the select menu with the given [label] and [value] and configured by the [builder].
-     *
-     * @param label The user-facing name of the option, max 100 characters.
-     * @param value The dev-defined value of the option, max 100 characters.
-     */
-    @Deprecated(
-        "This is only available for 'ComponentType.StringSelect' (in the 'StringSelectBuilder' subclass).",
-        ReplaceWith(
-            "(this as? StringSelectBuilder)?.option(label, value, builder)",
-            "dev.kord.rest.builder.component.StringSelectBuilder",
-            "dev.kord.rest.builder.component.option",
-        ),
-        level = ERROR,
-    )
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
-    @kotlin.internal.LowPriorityInOverloadResolution
-    public inline fun option(label: String, value: String, builder: SelectOptionBuilder.() -> Unit = {}) {
-        contract {
-            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-        }
-
-        options.add(SelectOptionBuilder(label = label, value = value).apply(builder))
-    }
-
-    // TODO make abstract when this is turned into a sealed class
-    protected open val type: ComponentType get() = ComponentType.StringSelect
-
-    // TODO return Optional.Missing() here when options is exclusively moved to StringSelectBuilder
-    protected open fun buildOptions(): Optional<List<DiscordSelectOption>> =
-        if (type == ComponentType.StringSelect) Optional(options.map { it.build() }) else Optional.Missing()
-
+    protected abstract val type: ComponentType
+    protected open fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional.Missing()
     protected open fun buildChannelTypes(): Optional<List<ChannelType>> = Optional.Missing()
     final override fun build(): DiscordChatComponent = DiscordChatComponent(
         type = type,
@@ -116,16 +57,19 @@ public constructor(public var customId: String) : ActionRowComponentBuilder() {
 public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.StringSelect
 
+    /** The choices in the select, max 25. */
+    public var options: MutableList<SelectOptionBuilder> = mutableListOf()
+
     override fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional(options.map { it.build() })
 }
 
-// TODO replace with member in StringSelectBuilder when SelectMenuBuilder.options is removed
 /** The choices in the select, max 25. */
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
+@Deprecated("Replaced by member in StringSelectBuilder.", ReplaceWith("this.options"), DeprecationLevel.WARNING)
 public var StringSelectBuilder.options: MutableList<SelectOptionBuilder>
-    get() = _options
+    get() = options
     set(value) {
-        _options = value
+        options = value
     }
 
 /**
@@ -134,7 +78,6 @@ public var StringSelectBuilder.options: MutableList<SelectOptionBuilder>
  * @param label The user-facing name of the option, max 100 characters.
  * @param value The dev-defined value of the option, max 100 characters.
  */
-@Suppress("EXTENSION_SHADOWED_BY_MEMBER") // can be removed when member in SelectMenuBuilder is removed
 public inline fun StringSelectBuilder.option(
     label: String,
     value: String,

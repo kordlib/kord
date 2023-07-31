@@ -1,12 +1,12 @@
 package dev.kord.rest.service
 
 import dev.kord.common.entity.DiscordMessageSticker
-import dev.kord.common.entity.DiscordStickerPack
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.builder.guild.StickerModifyBuilder
 import dev.kord.rest.json.request.GuildStickerCreateRequest
 import dev.kord.rest.json.request.GuildStickerModifyRequest
 import dev.kord.rest.json.request.MultipartGuildStickerCreateRequest
+import dev.kord.rest.json.response.NitroStickerPacksResponse
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
 import kotlin.contracts.InvocationKind
@@ -14,7 +14,7 @@ import kotlin.contracts.contract
 
 public class StickerService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    public suspend fun getNitroStickerPacks(): List<DiscordStickerPack> = call(Route.NitroStickerPacks)
+    public suspend fun getNitroStickerPacks(): NitroStickerPacksResponse = call(Route.NitroStickerPacks)
 
     public suspend fun getGuildStickers(guildId: Snowflake): List<DiscordMessageSticker> =
         call(Route.GuildStickersGet) {

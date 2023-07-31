@@ -6,22 +6,10 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.StartThreadRequest
-import kotlin.DeprecationLevel.ERROR
 import kotlin.time.Duration
 
 @KordDsl
 public class StartThreadWithMessageBuilder(public var name: String) : AuditRequestBuilder<StartThreadRequest> {
-    @Deprecated(
-        "'autoArchiveDuration' is no longer required, use other constructor instead.",
-        ReplaceWith(
-            "StartThreadWithMessageBuilder(name).apply { this@apply.autoArchiveDuration = autoArchiveDuration }",
-            imports = ["dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder"]
-        ),
-        level = ERROR,
-    )
-    public constructor(name: String, autoArchiveDuration: ArchiveDuration) : this(name) {
-        this.autoArchiveDuration = autoArchiveDuration
-    }
 
     override var reason: String? = null
 

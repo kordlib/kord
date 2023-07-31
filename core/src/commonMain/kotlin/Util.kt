@@ -1,7 +1,6 @@
 package dev.kord.core
 
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
@@ -28,7 +27,6 @@ import kotlinx.datetime.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
-import kotlinx.coroutines.flow.firstOrNull as coroutinesFirstOrNull
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
@@ -67,7 +65,7 @@ internal fun <T : Comparable<T>> Flow<T>.sorted(): Flow<T> = flow {
  * The flow's collection is cancelled when a match is found.
  */
 internal suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
-    coroutinesFirstOrNull { predicate(it) } != null
+    firstOrNull { predicate(it) } != null
 
 /**
  * The non-terminal operator that returns a new flow that will emit values of the second [flow] only after the first
@@ -174,22 +172,6 @@ internal fun <T : Any> paginateForwards(
 )
 
 /**
- *  Selects the [Position.After] the youngest item in the batch.
- */
-internal fun <T : KordEntity> paginateForwards(
-    batchSize: Int,
-    start: Snowflake = Snowflake.min,
-    request: suspend (after: Position.After) -> Collection<T>,
-): Flow<T> = paginate(
-    start,
-    batchSize,
-    itemSelector = youngestItem { it.id },
-    idSelector = { it.id },
-    directionSelector = Position::After,
-    request,
-)
-
-/**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
 internal fun <T : Any> paginateBackwards(
@@ -202,22 +184,6 @@ internal fun <T : Any> paginateBackwards(
     batchSize,
     itemSelector = oldestItem(idSelector),
     idSelector,
-    directionSelector = Position::Before,
-    request,
-)
-
-/**
- *  Selects the [Position.Before] the oldest item in the batch.
- */
-internal fun <T : KordEntity> paginateBackwards(
-    batchSize: Int,
-    start: Snowflake = Snowflake.max,
-    request: suspend (before: Position.Before) -> Collection<T>,
-): Flow<T> = paginate(
-    start,
-    batchSize,
-    itemSelector = oldestItem { it.id },
-    idSelector = { it.id },
     directionSelector = Position::Before,
     request,
 )

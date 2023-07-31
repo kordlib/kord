@@ -96,7 +96,7 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
         context: LazyContext?,
     ): ApplicationCommandDeleteEvent {
         val data = ApplicationCommandData.from(event.application)
-        kord.cache.remove<ApplicationCommandData> { idEq(ApplicationCommandData::id, data.id) }
+        kord.cache.remove { idEq(ApplicationCommandData::id, data.id) }
         val coreEvent = when (val application = GuildApplicationCommand(data, kord.rest.interaction)) {
             is GuildChatInputCommand -> ChatInputCommandDeleteEvent(application, kord, shard, context?.get())
             is GuildMessageCommand -> MessageCommandDeleteEvent(application, kord, shard, context?.get())
