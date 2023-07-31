@@ -634,9 +634,9 @@ public abstract class dev/kord/common/entity/ApplicationFlag {
 	public static final field VerificationPendingGuildLimit Ldev/kord/common/entity/ApplicationFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public final fun getValue ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
@@ -718,7 +718,7 @@ public final class dev/kord/common/entity/ApplicationFlags {
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/ApplicationFlags;IILjava/lang/Object;)Ldev/kord/common/entity/ApplicationFlags;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()I
+	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
@@ -6741,9 +6741,9 @@ public abstract class dev/kord/common/entity/GuildMemberFlag {
 	public static final field StartedOnboarding Ldev/kord/common/entity/GuildMemberFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public final fun getValue ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
@@ -6801,7 +6801,7 @@ public final class dev/kord/common/entity/GuildMemberFlags {
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/GuildMemberFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/GuildMemberFlags;IILjava/lang/Object;)Ldev/kord/common/entity/GuildMemberFlags;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()I
+	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/GuildMemberFlag;)Ldev/kord/common/entity/GuildMemberFlags;
@@ -7314,9 +7314,9 @@ public abstract class dev/kord/common/entity/MessageFlag {
 	public static final field Urgent Ldev/kord/common/entity/MessageFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public final fun getValue ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
@@ -7402,7 +7402,7 @@ public final class dev/kord/common/entity/MessageFlags {
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/MessageFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/MessageFlags;IILjava/lang/Object;)Ldev/kord/common/entity/MessageFlags;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()I
+	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/MessageFlag;)Ldev/kord/common/entity/MessageFlags;
@@ -7826,7 +7826,7 @@ public abstract class dev/kord/common/entity/Permission {
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Ldev/kord/common/DiscordBitSet;
+	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun hashCode ()I
 	public final fun plus (Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
 	public final fun plus (Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
@@ -8049,7 +8049,7 @@ public final class dev/kord/common/entity/Permissions {
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/Permissions;Ldev/kord/common/DiscordBitSet;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()Ldev/kord/common/DiscordBitSet;
+	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
@@ -8416,9 +8416,9 @@ public abstract class dev/kord/common/entity/SystemChannelFlag {
 	public static final field SuppressRoleSubscriptionPurchaseNotifications Ldev/kord/common/entity/SystemChannelFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public final fun getValue ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
@@ -8484,7 +8484,7 @@ public final class dev/kord/common/entity/SystemChannelFlags {
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/SystemChannelFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/SystemChannelFlags;IILjava/lang/Object;)Ldev/kord/common/entity/SystemChannelFlags;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()I
+	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/SystemChannelFlag;)Ldev/kord/common/entity/SystemChannelFlags;
@@ -8581,9 +8581,9 @@ public abstract class dev/kord/common/entity/UserFlag {
 	public static final field VerifiedBotDeveloper Ldev/kord/common/entity/UserFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public final fun getValue ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
@@ -8689,7 +8689,7 @@ public final class dev/kord/common/entity/UserFlags {
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
 	public static synthetic fun copy$default (Ldev/kord/common/entity/UserFlags;IILjava/lang/Object;)Ldev/kord/common/entity/UserFlags;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getValue ()I
+	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/UserFlag;)Ldev/kord/common/entity/UserFlags;

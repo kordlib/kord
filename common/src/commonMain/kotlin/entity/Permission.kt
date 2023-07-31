@@ -1,5 +1,5 @@
 @file:Generate(
-    BIT_SET_FLAGS, name = "Permission", collectionWasDataClass = true,
+    BIT_SET_FLAGS, name = "Permission", valueName = "code", collectionWasDataClass = true,
     docUrl = "https://discord.com/developers/docs/topics/permissions",
     hasCombinerFlag = true,
     bitFlagsDescriptor = BitFlagDescription("member", "permissions", name = "permission"),

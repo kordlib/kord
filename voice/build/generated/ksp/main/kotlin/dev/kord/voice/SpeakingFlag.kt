@@ -80,61 +80,60 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = SpeakingFlags.Serializer::class)
 public class SpeakingFlags(
-    public val `value`: Int = 0,
+    public val code: Int = 0,
 ) {
     public val values: Set<SpeakingFlag>
         get() = SpeakingFlag.entries.filter { it in this }.toSet()
 
-    public operator fun contains(flag: SpeakingFlag): Boolean =
-            this.value and flag.value == flag.value
+    public operator fun contains(flag: SpeakingFlag): Boolean = this.code and flag.code == flag.code
 
     public operator fun contains(flags: SpeakingFlags): Boolean =
-            this.value and flags.value == flags.value
+            this.code and flags.code == flags.code
 
     public operator fun plus(flag: SpeakingFlag): SpeakingFlags =
-            SpeakingFlags(this.value or flag.value)
+            SpeakingFlags(this.code or flag.code)
 
     public operator fun plus(flags: SpeakingFlags): SpeakingFlags =
-            SpeakingFlags(this.value or flags.value)
+            SpeakingFlags(this.code or flags.code)
 
     public operator fun minus(flag: SpeakingFlag): SpeakingFlags =
-            SpeakingFlags(this.value and flag.value.inv())
+            SpeakingFlags(this.code and flag.code.inv())
 
     public operator fun minus(flags: SpeakingFlags): SpeakingFlags =
-            SpeakingFlags(this.value and flags.value.inv())
+            SpeakingFlags(this.code and flags.code.inv())
 
     public inline fun copy(block: Builder.() -> Unit): SpeakingFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(value).apply(block).flags()
+        return Builder(code).apply(block).flags()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
-            (other is SpeakingFlags && this.value == other.value)
+            (other is SpeakingFlags && this.code == other.code)
 
-    override fun hashCode(): Int = value.hashCode()
+    override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "SpeakingFlags(values=$values)"
 
     public class Builder(
-        private var `value`: Int = 0,
+        private var code: Int = 0,
     ) {
         public operator fun SpeakingFlag.unaryPlus() {
-            this@Builder.value = this@Builder.value or this.value
+            this@Builder.code = this@Builder.code or this.code
         }
 
         public operator fun SpeakingFlags.unaryPlus() {
-            this@Builder.value = this@Builder.value or this.value
+            this@Builder.code = this@Builder.code or this.code
         }
 
         public operator fun SpeakingFlag.unaryMinus() {
-            this@Builder.value = this@Builder.value and this.value.inv()
+            this@Builder.code = this@Builder.code and this.code.inv()
         }
 
         public operator fun SpeakingFlags.unaryMinus() {
-            this@Builder.value = this@Builder.value and this.value.inv()
+            this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public fun flags(): SpeakingFlags = SpeakingFlags(value)
+        public fun flags(): SpeakingFlags = SpeakingFlags(code)
     }
 
     internal object Serializer : KSerializer<SpeakingFlags> {
@@ -144,7 +143,7 @@ public class SpeakingFlags(
         private val `delegate`: KSerializer<Int> = Int.serializer()
 
         override fun serialize(encoder: Encoder, `value`: SpeakingFlags) {
-            encoder.encodeSerializableValue(delegate, value.value)
+            encoder.encodeSerializableValue(delegate, value.code)
         }
 
         override fun deserialize(decoder: Decoder): SpeakingFlags =
@@ -178,22 +177,22 @@ public sealed class SpeakingFlag(
     shift: Int,
 ) {
     /**
-     * The raw value used by Discord.
+     * The raw code used by Discord.
      */
-    public val `value`: Int = 1 shl shift
+    public val code: Int = 1 shl shift
 
     public operator fun plus(flag: SpeakingFlag): SpeakingFlags =
-            SpeakingFlags(this.value or flag.value)
+            SpeakingFlags(this.code or flag.code)
 
     public operator fun plus(flags: SpeakingFlags): SpeakingFlags =
-            SpeakingFlags(this.value or flags.value)
+            SpeakingFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SpeakingFlag && this.value == other.value)
+            (other is SpeakingFlag && this.code == other.code)
 
-    final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = code.hashCode()
 
-    final override fun toString(): String = "SpeakingFlag.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "SpeakingFlag.${this::class.simpleName}(code=$code)"
 
     /**
      * @suppress

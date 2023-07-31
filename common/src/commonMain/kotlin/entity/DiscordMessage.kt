@@ -37,7 +37,7 @@
 )
 
 @file:Generate(
-    INT_FLAGS, name = "MessageFlag", wasEnum = true, collectionWasDataClass = true,
+    INT_FLAGS, name = "MessageFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
     bitFlagsDescriptor = BitFlagDescription(objectName = "message"),
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-flags",
     entries = [

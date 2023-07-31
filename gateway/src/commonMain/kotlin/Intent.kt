@@ -1,7 +1,7 @@
 @file:JvmName("IntentUtil")
 
 @file:Generate(
-    BIT_SET_FLAGS, name = "Intent", collectionWasDataClass = true,
+    BIT_SET_FLAGS, name = "Intent", valueName = "code", collectionWasDataClass = true,
     kDoc = "Values that enable a group of events as [defined by Discord](https://discord.com/developers/docs/topics/gateway#gateway-intents).",
     docUrl = "https://discord.com/developers/docs/topics/gateway#gateway-intents",
     bitFlagsDescriptor = BitFlagDescription("gateway", "intents", "an", "intent"),

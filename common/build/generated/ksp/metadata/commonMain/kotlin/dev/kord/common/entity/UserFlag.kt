@@ -80,35 +80,33 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = UserFlags.Serializer::class)
 public class UserFlags(
-    public val `value`: Int = 0,
+    public val code: Int = 0,
 ) {
     public val values: Set<UserFlag>
         get() = UserFlag.entries.filter { it in this }.toSet()
 
-    public operator fun contains(flag: UserFlag): Boolean = this.value and flag.value == flag.value
+    public operator fun contains(flag: UserFlag): Boolean = this.code and flag.code == flag.code
 
-    public operator fun contains(flags: UserFlags): Boolean =
-            this.value and flags.value == flags.value
+    public operator fun contains(flags: UserFlags): Boolean = this.code and flags.code == flags.code
 
-    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.value or flag.value)
+    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
 
-    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.value or flags.value)
+    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
 
-    public operator fun minus(flag: UserFlag): UserFlags =
-            UserFlags(this.value and flag.value.inv())
+    public operator fun minus(flag: UserFlag): UserFlags = UserFlags(this.code and flag.code.inv())
 
     public operator fun minus(flags: UserFlags): UserFlags =
-            UserFlags(this.value and flags.value.inv())
+            UserFlags(this.code and flags.code.inv())
 
     public inline fun copy(block: Builder.() -> Unit): UserFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(value).apply(block).flags()
+        return Builder(code).apply(block).flags()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
-            (other is UserFlags && this.value == other.value)
+            (other is UserFlags && this.code == other.code)
 
-    override fun hashCode(): Int = value.hashCode()
+    override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "UserFlags(values=$values)"
 
@@ -117,37 +115,37 @@ public class UserFlags(
      */
     @Deprecated(
         message = "UserFlags is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.value", imports = arrayOf()),
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
     )
-    public operator fun component1(): Int = value
+    public operator fun component1(): Int = code
 
     /**
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.")
-    public fun copy(`value`: Int = this.value): UserFlags = UserFlags(value)
+    public fun copy(code: Int = this.code): UserFlags = UserFlags(code)
 
     public class Builder(
-        private var `value`: Int = 0,
+        private var code: Int = 0,
     ) {
         public operator fun UserFlag.unaryPlus() {
-            this@Builder.value = this@Builder.value or this.value
+            this@Builder.code = this@Builder.code or this.code
         }
 
         public operator fun UserFlags.unaryPlus() {
-            this@Builder.value = this@Builder.value or this.value
+            this@Builder.code = this@Builder.code or this.code
         }
 
         public operator fun UserFlag.unaryMinus() {
-            this@Builder.value = this@Builder.value and this.value.inv()
+            this@Builder.code = this@Builder.code and this.code.inv()
         }
 
         public operator fun UserFlags.unaryMinus() {
-            this@Builder.value = this@Builder.value and this.value.inv()
+            this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public fun flags(): UserFlags = UserFlags(value)
+        public fun flags(): UserFlags = UserFlags(code)
     }
 
     internal object Serializer : KSerializer<UserFlags> {
@@ -157,7 +155,7 @@ public class UserFlags(
         private val `delegate`: KSerializer<Int> = Int.serializer()
 
         override fun serialize(encoder: Encoder, `value`: UserFlags) {
-            encoder.encodeSerializableValue(delegate, value.value)
+            encoder.encodeSerializableValue(delegate, value.code)
         }
 
         override fun deserialize(decoder: Decoder): UserFlags =
@@ -187,20 +185,20 @@ public sealed class UserFlag(
     shift: Int,
 ) {
     /**
-     * The raw value used by Discord.
+     * The raw code used by Discord.
      */
-    public val `value`: Int = 1 shl shift
+    public val code: Int = 1 shl shift
 
-    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.value or flag.value)
+    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
 
-    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.value or flags.value)
+    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is UserFlag && this.value == other.value)
+            (other is UserFlag && this.code == other.code)
 
-    final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = code.hashCode()
 
-    final override fun toString(): String = "UserFlag.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = "UserFlag.${this::class.simpleName}(code=$code)"
 
     /**
      * @suppress
