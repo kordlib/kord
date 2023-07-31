@@ -76,32 +76,32 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = Intents.Serializer::class)
 public class Intents(
-    public val code: DiscordBitSet = EmptyBitSet(),
+    public val `value`: DiscordBitSet = EmptyBitSet(),
 ) {
     public val values: Set<Intent>
         get() = Intent.entries.filter { it in this }.toSet()
 
-    public operator fun contains(flag: Intent): Boolean = flag.code in this.code
+    public operator fun contains(flag: Intent): Boolean = flag.value in this.value
 
-    public operator fun contains(flags: Intents): Boolean = flags.code in this.code
+    public operator fun contains(flags: Intents): Boolean = flags.value in this.value
 
-    public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
+    public operator fun plus(flag: Intent): Intents = Intents(this.value + flag.value)
 
-    public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
+    public operator fun plus(flags: Intents): Intents = Intents(this.value + flags.value)
 
-    public operator fun minus(flag: Intent): Intents = Intents(this.code - flag.code)
+    public operator fun minus(flag: Intent): Intents = Intents(this.value - flag.value)
 
-    public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
+    public operator fun minus(flags: Intents): Intents = Intents(this.value - flags.value)
 
     public inline fun copy(block: Builder.() -> Unit): Intents {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(value).apply(block).flags()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
-            (other is Intents && this.code == other.code)
+            (other is Intents && this.value == other.value)
 
-    override fun hashCode(): Int = code.hashCode()
+    override fun hashCode(): Int = value.hashCode()
 
     override fun toString(): String = "Intents(values=$values)"
 
@@ -110,37 +110,37 @@ public class Intents(
      */
     @Deprecated(
         message = "Intents is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        replaceWith = ReplaceWith(expression = "this.value", imports = arrayOf()),
     )
-    public operator fun component1(): DiscordBitSet = code
+    public operator fun component1(): DiscordBitSet = value
 
     /**
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message = "Intents is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: DiscordBitSet = this.code): Intents = Intents(code)
+    public fun copy(`value`: DiscordBitSet = this.value): Intents = Intents(value)
 
     public class Builder(
-        private var code: DiscordBitSet = EmptyBitSet(),
+        private var `value`: DiscordBitSet = EmptyBitSet(),
     ) {
         public operator fun Intent.unaryPlus() {
-            this@Builder.code.add(this.code)
+            this@Builder.value.add(this.value)
         }
 
         public operator fun Intents.unaryPlus() {
-            this@Builder.code.add(this.code)
+            this@Builder.value.add(this.value)
         }
 
         public operator fun Intent.unaryMinus() {
-            this@Builder.code.remove(this.code)
+            this@Builder.value.remove(this.value)
         }
 
         public operator fun Intents.unaryMinus() {
-            this@Builder.code.remove(this.code)
+            this@Builder.value.remove(this.value)
         }
 
-        public fun flags(): Intents = Intents(code)
+        public fun flags(): Intents = Intents(value)
     }
 
     internal object Serializer : KSerializer<Intents> {
@@ -150,7 +150,7 @@ public class Intents(
         private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
 
         override fun serialize(encoder: Encoder, `value`: Intents) {
-            encoder.encodeSerializableValue(delegate, value.code)
+            encoder.encodeSerializableValue(delegate, value.value)
         }
 
         override fun deserialize(decoder: Decoder): Intents =
@@ -183,20 +183,20 @@ public sealed class Intent(
     shift: Int,
 ) {
     /**
-     * The raw code used by Discord.
+     * The raw value used by Discord.
      */
-    public val code: DiscordBitSet = EmptyBitSet().also { it[shift] = true }
+    public val `value`: DiscordBitSet = EmptyBitSet().also { it[shift] = true }
 
-    public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
+    public operator fun plus(flag: Intent): Intents = Intents(this.value + flag.value)
 
-    public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
+    public operator fun plus(flags: Intents): Intents = Intents(this.value + flags.value)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is Intent && this.code == other.code)
+            (other is Intent && this.value == other.value)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "Intent.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = "Intent.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [Intent].

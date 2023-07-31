@@ -29,8 +29,8 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
 
             addStatement(
                 when (valueType) {
-                    INT -> "this@$builder.code = this@$builder.code or this.code"
-                    BIT_SET -> "this@$builder.code.add(this.code)"
+                    INT -> "this@$builder.$valueName = this@$builder.$valueName or this.$valueName"
+                    BIT_SET -> "this@$builder.$valueName.add(this.$valueName)"
                 }
             )
         }
@@ -40,8 +40,8 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
 
             addStatement(
                 when (valueType) {
-                    INT -> "this@$builder.code = this@$builder.code or this.code"
-                    BIT_SET -> "this@$builder.code.add(this.code)"
+                    INT -> "this@$builder.$valueName = this@$builder.$valueName or this.$valueName"
+                    BIT_SET -> "this@$builder.$valueName.add(this.$valueName)"
                 }
             )
         }
@@ -52,8 +52,8 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
 
             addStatement(
                 when (valueType) {
-                    INT -> "this@$builder.code = this@$builder.code and this.code.inv()"
-                    BIT_SET -> "this@$builder.code.remove(this.code)"
+                    INT -> "this@$builder.$valueName = this@$builder.$valueName and this.$valueName.inv()"
+                    BIT_SET -> "this@$builder.$valueName.remove(this.$valueName)"
                 }
             )
         }
@@ -63,15 +63,15 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
 
             addStatement(
                 when (valueType) {
-                    INT -> "this@$builder.code = this@$builder.code and this.code.inv()"
-                    BIT_SET -> "this@$builder.code.remove(this.code)"
+                    INT -> "this@$builder.$valueName = this@$builder.$valueName and this.$valueName.inv()"
+                    BIT_SET -> "this@$builder.$valueName.remove(this.$valueName)"
                 }
             )
         }
 
         addFunction("flags") {
             returns(collectionName)
-            addStatement("return %T(code)", collectionName)
+            addStatement("return %T($valueName)", collectionName)
         }
     }
 }

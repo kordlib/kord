@@ -40,8 +40,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns<Boolean>()
             addStatement(
                 when (valueType) {
-                    INT -> "return this.code·and·flag.code·==·flag.code"
-                    BIT_SET -> "return flag.code·in·this.code"
+                    INT -> "return this.$valueName·and·flag.$valueName·==·flag.$valueName"
+                    BIT_SET -> "return flag.$valueName·in·this.$valueName"
                 }
             )
         }
@@ -51,8 +51,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns<Boolean>()
             addStatement(
                 when (valueType) {
-                    INT -> "return this.code·and·flags.code·==·flags.code"
-                    BIT_SET -> "return flags.code·in·this.code"
+                    INT -> "return this.$valueName·and·flags.$valueName·==·flags.$valueName"
+                    BIT_SET -> "return flags.$valueName·in·this.$valueName"
                 }
             )
         }
@@ -62,8 +62,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns(collectionName)
             addStatement(
                 when (valueType) {
-                    INT -> "return %T(this.code·or·flag.code)"
-                    BIT_SET -> "return %T(this.code·+·flag.code)"
+                    INT -> "return %T(this.$valueName·or·flag.$valueName)"
+                    BIT_SET -> "return %T(this.$valueName·+·flag.$valueName)"
                 },
                 collectionName,
             )
@@ -74,8 +74,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns(collectionName)
             addStatement(
                 when (valueType) {
-                    INT -> "return %T(this.code·or·flags.code)"
-                    BIT_SET -> "return %T(this.code·+·flags.code)"
+                    INT -> "return %T(this.$valueName·or·flags.$valueName)"
+                    BIT_SET -> "return %T(this.$valueName·+·flags.$valueName)"
                 },
                 collectionName,
             )
@@ -86,8 +86,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns(collectionName)
             addStatement(
                 when (valueType) {
-                    INT -> "return %T(this.code·and·flag.code.inv())"
-                    BIT_SET -> "return %T(this.code·-·flag.code)"
+                    INT -> "return %T(this.$valueName·and·flag.$valueName.inv())"
+                    BIT_SET -> "return %T(this.$valueName·-·flag.$valueName)"
                 },
                 collectionName,
             )
@@ -98,8 +98,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns(collectionName)
             addStatement(
                 when (valueType) {
-                    INT -> "return %T(this.code·and·flags.code.inv())"
-                    BIT_SET -> "return %T(this.code·-·flags.code)"
+                    INT -> "return %T(this.$valueName·and·flags.$valueName.inv())"
+                    BIT_SET -> "return %T(this.$valueName·-·flags.$valueName)"
                 },
                 collectionName,
             )
@@ -161,8 +161,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns(collectionName)
             addStatement(
                 when (valueType) {
-                    INT -> "return %T(this.code·or·flag.code)"
-                    BIT_SET -> "return %T(this.code·+·flag.code)"
+                    INT -> "return %T(this.$valueName·or·flag.$valueName)"
+                    BIT_SET -> "return %T(this.$valueName·+·flag.$valueName)"
                 },
                 collectionName,
             )
@@ -173,8 +173,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             returns(collectionName)
             addStatement(
                 when (valueType) {
-                    INT -> "return %T(this.code·or·flags.code)"
-                    BIT_SET -> "return %T(this.code·+·flags.code)"
+                    INT -> "return %T(this.$valueName·or·flags.$valueName)"
+                    BIT_SET -> "return %T(this.$valueName·+·flags.$valueName)"
                 },
                 collectionName,
             )

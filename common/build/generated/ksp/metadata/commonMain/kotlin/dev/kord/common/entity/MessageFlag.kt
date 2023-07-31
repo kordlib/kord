@@ -80,36 +80,38 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = MessageFlags.Serializer::class)
 public class MessageFlags(
-    public val code: Int = 0,
+    public val `value`: Int = 0,
 ) {
     public val values: Set<MessageFlag>
         get() = MessageFlag.entries.filter { it in this }.toSet()
 
-    public operator fun contains(flag: MessageFlag): Boolean = this.code and flag.code == flag.code
+    public operator fun contains(flag: MessageFlag): Boolean =
+            this.value and flag.value == flag.value
 
     public operator fun contains(flags: MessageFlags): Boolean =
-            this.code and flags.code == flags.code
+            this.value and flags.value == flags.value
 
-    public operator fun plus(flag: MessageFlag): MessageFlags = MessageFlags(this.code or flag.code)
+    public operator fun plus(flag: MessageFlag): MessageFlags =
+            MessageFlags(this.value or flag.value)
 
     public operator fun plus(flags: MessageFlags): MessageFlags =
-            MessageFlags(this.code or flags.code)
+            MessageFlags(this.value or flags.value)
 
     public operator fun minus(flag: MessageFlag): MessageFlags =
-            MessageFlags(this.code and flag.code.inv())
+            MessageFlags(this.value and flag.value.inv())
 
     public operator fun minus(flags: MessageFlags): MessageFlags =
-            MessageFlags(this.code and flags.code.inv())
+            MessageFlags(this.value and flags.value.inv())
 
     public inline fun copy(block: Builder.() -> Unit): MessageFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(value).apply(block).flags()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageFlags && this.code == other.code)
+            (other is MessageFlags && this.value == other.value)
 
-    override fun hashCode(): Int = code.hashCode()
+    override fun hashCode(): Int = value.hashCode()
 
     override fun toString(): String = "MessageFlags(values=$values)"
 
@@ -118,9 +120,9 @@ public class MessageFlags(
      */
     @Deprecated(
         message = "MessageFlags is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        replaceWith = ReplaceWith(expression = "this.value", imports = arrayOf()),
     )
-    public operator fun component1(): Int = code
+    public operator fun component1(): Int = value
 
     /**
      * @suppress
@@ -128,28 +130,28 @@ public class MessageFlags(
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
             "MessageFlags is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: Int = this.code): MessageFlags = MessageFlags(code)
+    public fun copy(`value`: Int = this.value): MessageFlags = MessageFlags(value)
 
     public class Builder(
-        private var code: Int = 0,
+        private var `value`: Int = 0,
     ) {
         public operator fun MessageFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
+            this@Builder.value = this@Builder.value or this.value
         }
 
         public operator fun MessageFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
+            this@Builder.value = this@Builder.value or this.value
         }
 
         public operator fun MessageFlag.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
+            this@Builder.value = this@Builder.value and this.value.inv()
         }
 
         public operator fun MessageFlags.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
+            this@Builder.value = this@Builder.value and this.value.inv()
         }
 
-        public fun flags(): MessageFlags = MessageFlags(code)
+        public fun flags(): MessageFlags = MessageFlags(value)
     }
 
     internal object Serializer : KSerializer<MessageFlags> {
@@ -159,7 +161,7 @@ public class MessageFlags(
         private val `delegate`: KSerializer<Int> = Int.serializer()
 
         override fun serialize(encoder: Encoder, `value`: MessageFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
+            encoder.encodeSerializableValue(delegate, value.value)
         }
 
         override fun deserialize(decoder: Decoder): MessageFlags =
@@ -193,21 +195,22 @@ public sealed class MessageFlag(
     shift: Int,
 ) {
     /**
-     * The raw code used by Discord.
+     * The raw value used by Discord.
      */
-    public val code: Int = 1 shl shift
+    public val `value`: Int = 1 shl shift
 
-    public operator fun plus(flag: MessageFlag): MessageFlags = MessageFlags(this.code or flag.code)
+    public operator fun plus(flag: MessageFlag): MessageFlags =
+            MessageFlags(this.value or flag.value)
 
     public operator fun plus(flags: MessageFlags): MessageFlags =
-            MessageFlags(this.code or flags.code)
+            MessageFlags(this.value or flags.value)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageFlag && this.code == other.code)
+            (other is MessageFlag && this.value == other.value)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "MessageFlag.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = "MessageFlag.${this::class.simpleName}(value=$value)"
 
     /**
      * @suppress

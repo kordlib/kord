@@ -30,13 +30,13 @@ internal sealed class GenerationEntity(
     }
 
     class BitFlags(
-        name: String, kDoc: String?, docUrl: String, entries: List<Entry>,
+        name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
         override val valueType: ValueType,
         val flagsDescriptor: BitFlagDescription,
         val hasCombinerFlag: Boolean,
         val wasEnum: Boolean,
         val collectionWasDataClass: Boolean,
-    ) : GenerationEntity(name, kDoc, docUrl, valueName = "code", entries) {
+    ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
         enum class ValueType : GenerationEntity.ValueType { INT, BIT_SET }
     }
 
@@ -68,7 +68,7 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
         INT_KORD_ENUM, STRING_KORD_ENUM -> areNotSpecified(
             Generate::bitFlagsDescriptor, Generate::hasCombinerFlag, Generate::wasEnum, Generate::collectionWasDataClass
         )
-        INT_FLAGS, BIT_SET_FLAGS -> areNotSpecified(Generate::valueName)
+        INT_FLAGS, BIT_SET_FLAGS -> true
     }
 
     val entries = entries zip args[Generate::entries]!!
@@ -84,12 +84,12 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
             INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT)
             STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
             INT_FLAGS -> BitFlags(
-                name, kDoc, docUrl, mappedEntries, BitFlags.ValueType.INT, bitFlagsDescriptor, hasCombinerFlag, wasEnum,
-                collectionWasDataClass,
+                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, bitFlagsDescriptor,
+                hasCombinerFlag, wasEnum, collectionWasDataClass,
             )
             BIT_SET_FLAGS -> BitFlags(
-                name, kDoc, docUrl, mappedEntries, BitFlags.ValueType.BIT_SET, bitFlagsDescriptor, hasCombinerFlag,
-                wasEnum, collectionWasDataClass,
+                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.BIT_SET, bitFlagsDescriptor,
+                hasCombinerFlag, wasEnum, collectionWasDataClass,
             )
         }
     }

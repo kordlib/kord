@@ -76,32 +76,34 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = Permissions.Serializer::class)
 public class Permissions(
-    public val code: DiscordBitSet = EmptyBitSet(),
+    public val `value`: DiscordBitSet = EmptyBitSet(),
 ) {
     public val values: Set<Permission>
         get() = Permission.entries.filter { it in this }.toSet()
 
-    public operator fun contains(flag: Permission): Boolean = flag.code in this.code
+    public operator fun contains(flag: Permission): Boolean = flag.value in this.value
 
-    public operator fun contains(flags: Permissions): Boolean = flags.code in this.code
+    public operator fun contains(flags: Permissions): Boolean = flags.value in this.value
 
-    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
+    public operator fun plus(flag: Permission): Permissions = Permissions(this.value + flag.value)
 
-    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
+    public operator fun plus(flags: Permissions): Permissions =
+            Permissions(this.value + flags.value)
 
-    public operator fun minus(flag: Permission): Permissions = Permissions(this.code - flag.code)
+    public operator fun minus(flag: Permission): Permissions = Permissions(this.value - flag.value)
 
-    public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code)
+    public operator fun minus(flags: Permissions): Permissions =
+            Permissions(this.value - flags.value)
 
     public inline fun copy(block: Builder.() -> Unit): Permissions {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(value).apply(block).flags()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
-            (other is Permissions && this.code == other.code)
+            (other is Permissions && this.value == other.value)
 
-    override fun hashCode(): Int = code.hashCode()
+    override fun hashCode(): Int = value.hashCode()
 
     override fun toString(): String = "Permissions(values=$values)"
 
@@ -110,9 +112,9 @@ public class Permissions(
      */
     @Deprecated(
         message = "Permissions is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        replaceWith = ReplaceWith(expression = "this.value", imports = arrayOf()),
     )
-    public operator fun component1(): DiscordBitSet = code
+    public operator fun component1(): DiscordBitSet = value
 
     /**
      * @suppress
@@ -120,28 +122,28 @@ public class Permissions(
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
             "Permissions is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: DiscordBitSet = this.code): Permissions = Permissions(code)
+    public fun copy(`value`: DiscordBitSet = this.value): Permissions = Permissions(value)
 
     public class Builder(
-        private var code: DiscordBitSet = EmptyBitSet(),
+        private var `value`: DiscordBitSet = EmptyBitSet(),
     ) {
         public operator fun Permission.unaryPlus() {
-            this@Builder.code.add(this.code)
+            this@Builder.value.add(this.value)
         }
 
         public operator fun Permissions.unaryPlus() {
-            this@Builder.code.add(this.code)
+            this@Builder.value.add(this.value)
         }
 
         public operator fun Permission.unaryMinus() {
-            this@Builder.code.remove(this.code)
+            this@Builder.value.remove(this.value)
         }
 
         public operator fun Permissions.unaryMinus() {
-            this@Builder.code.remove(this.code)
+            this@Builder.value.remove(this.value)
         }
 
-        public fun flags(): Permissions = Permissions(code)
+        public fun flags(): Permissions = Permissions(value)
     }
 
     internal object Serializer : KSerializer<Permissions> {
@@ -152,7 +154,7 @@ public class Permissions(
         private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
 
         override fun serialize(encoder: Encoder, `value`: Permissions) {
-            encoder.encodeSerializableValue(delegate, value.code)
+            encoder.encodeSerializableValue(delegate, value.value)
         }
 
         override fun deserialize(decoder: Decoder): Permissions =
@@ -184,28 +186,29 @@ public fun Permissions(flags: Iterable<Permissions>): Permissions = Permissions 
  */
 public sealed class Permission {
     /**
-     * The raw code used by Discord.
+     * The raw value used by Discord.
      */
-    public val code: DiscordBitSet
+    public val `value`: DiscordBitSet
 
     private constructor(shift: Int) {
-        this.code = EmptyBitSet().also { it[shift] = true }
+        this.value = EmptyBitSet().also { it[shift] = true }
     }
 
-    private constructor(code: DiscordBitSet) {
-        this.code = code
+    private constructor(`value`: DiscordBitSet) {
+        this.value = value
     }
 
-    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
+    public operator fun plus(flag: Permission): Permissions = Permissions(this.value + flag.value)
 
-    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
+    public operator fun plus(flags: Permissions): Permissions =
+            Permissions(this.value + flags.value)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is Permission && this.code == other.code)
+            (other is Permission && this.value == other.value)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "Permission.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = "Permission.${this::class.simpleName}(value=$value)"
 
     /**
      * An unknown [Permission].
@@ -525,7 +528,7 @@ public sealed class Permission {
         private fun buildAll(): DiscordBitSet {
             // We cannot inline this into the "All" object, because that causes a weird compiler bug
             return entries.fold(EmptyBitSet()) { acc, value ->
-                acc + value.code
+                acc + value.value
             }
         }
     }
