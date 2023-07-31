@@ -13,7 +13,7 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 
 /** The behavior of a [GuildInteraction]. */
-public interface GuildInteractionBehavior : ChannelInteractionBehavior {
+public interface GuildInteractionBehavior : InteractionBehavior {
 
     /** The id of the guild the interaction was sent from. */
     public val guildId: Snowflake
@@ -35,7 +35,7 @@ public interface GuildInteractionBehavior : ChannelInteractionBehavior {
     )
     override suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId)
 
-    override suspend fun getChannelOrNull(): GuildMessageChannel? =  supplier.getChannelOfOrNull(channelId)
+    override suspend fun getChannelOrNull(): GuildMessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildInteractionBehavior =
         GuildInteractionBehavior(guildId, id, channelId, applicationId, token, kord, supplier)
