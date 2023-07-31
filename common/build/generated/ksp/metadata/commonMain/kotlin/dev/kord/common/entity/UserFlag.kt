@@ -85,6 +85,13 @@ public class UserFlags(
     public val values: Set<UserFlag>
         get() = UserFlag.entries.filter { it in this }.toSet()
 
+    @Deprecated(
+        message = "Renamed to 'values'.",
+        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+    )
+    public val flags: List<UserFlag>
+        get() = values.toList()
+
     public operator fun contains(flag: UserFlag): Boolean = this.code and flag.code == flag.code
 
     public operator fun contains(flags: UserFlags): Boolean = this.code and flags.code == flags.code

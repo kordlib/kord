@@ -85,6 +85,13 @@ public class MessageFlags(
     public val values: Set<MessageFlag>
         get() = MessageFlag.entries.filter { it in this }.toSet()
 
+    @Deprecated(
+        message = "Renamed to 'values'.",
+        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+    )
+    public val flags: List<MessageFlag>
+        get() = values.toList()
+
     public operator fun contains(flag: MessageFlag): Boolean = this.code and flag.code == flag.code
 
     public operator fun contains(flags: MessageFlags): Boolean =

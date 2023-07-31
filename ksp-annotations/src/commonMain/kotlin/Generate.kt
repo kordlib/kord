@@ -31,6 +31,8 @@ annotation class Generate(
     // for migration only, will be removed eventually
     val wasEnum: Boolean = false,
     val collectionWasDataClass: Boolean = false,
+    val hadFlagsProperty: Boolean = false,
+    val flagsPropertyWasSet: Boolean = false,
 ) {
     enum class EntityType { INT_KORD_ENUM, STRING_KORD_ENUM, INT_FLAGS, BIT_SET_FLAGS }
 

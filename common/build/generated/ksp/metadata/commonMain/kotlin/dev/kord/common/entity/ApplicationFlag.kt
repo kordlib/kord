@@ -89,6 +89,13 @@ public class ApplicationFlags(
     public val values: Set<ApplicationFlag>
         get() = ApplicationFlag.entries.filter { it in this }.toSet()
 
+    @Deprecated(
+        message = "Renamed to 'values'.",
+        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+    )
+    public val flags: List<ApplicationFlag>
+        get() = values.toList()
+
     public operator fun contains(flag: ApplicationFlag): Boolean =
             this.code and flag.code == flag.code
 

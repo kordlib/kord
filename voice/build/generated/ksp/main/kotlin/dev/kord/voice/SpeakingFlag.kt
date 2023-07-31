@@ -85,6 +85,13 @@ public class SpeakingFlags(
     public val values: Set<SpeakingFlag>
         get() = SpeakingFlag.entries.filter { it in this }.toSet()
 
+    @Deprecated(
+        message = "Renamed to 'values'.",
+        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+    )
+    public val flags: List<SpeakingFlag>
+        get() = values.toList()
+
     public operator fun contains(flag: SpeakingFlag): Boolean = this.code and flag.code == flag.code
 
     public operator fun contains(flags: SpeakingFlags): Boolean =

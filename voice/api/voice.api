@@ -305,6 +305,7 @@ public final class dev/kord/voice/SpeakingFlags {
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/voice/SpeakingFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
+	public final fun getFlags ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;

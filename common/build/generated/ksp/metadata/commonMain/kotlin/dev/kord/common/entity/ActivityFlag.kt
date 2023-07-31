@@ -85,6 +85,13 @@ public class ActivityFlags(
     public val values: Set<ActivityFlag>
         get() = ActivityFlag.entries.filter { it in this }.toSet()
 
+    @Deprecated(
+        message = "Renamed to 'values'.",
+        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+    )
+    public val flags: Set<ActivityFlag>
+        get() = values
+
     public operator fun contains(flag: ActivityFlag): Boolean =
             this.value and flag.value == flag.value
 

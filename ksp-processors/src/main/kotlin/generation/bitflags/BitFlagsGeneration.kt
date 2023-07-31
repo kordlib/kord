@@ -34,6 +34,22 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 addStatement("return %T.entries.filter·{·it·in·this·}.toSet()", entityCN)
             }
         }
+        if (hadFlagsProperty) {
+            val type = (if (flagsPropertyWasSet) SET else LIST).parameterizedBy(entityCN)
+            addProperty("flags", type, PUBLIC) {
+                @OptIn(DelicateKotlinPoetApi::class)
+                addAnnotation(
+                    Deprecated(
+                        "Renamed to 'values'.",
+                        ReplaceWith("this.values", imports = emptyArray()),
+                        DeprecationLevel.WARNING,
+                    )
+                )
+                getter {
+                    addStatement(if (flagsPropertyWasSet) "return values" else "return values.toList()")
+                }
+            }
+        }
         addFunction("contains") {
             addModifiers(PUBLIC, OPERATOR)
             addParameter("flag", entityCN)
