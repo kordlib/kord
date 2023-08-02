@@ -1,10 +1,10 @@
 .fleet/
 .gradle/
 .idea/*
+!.idea/icon.svg
 out/
 
 **/build/*
 !**/build/generated/
 # re-exclude BuildConfigGenerated.kt
 common/build/generated/sources/buildConfig/main/dev/kord/common/BuildConfigGenerated.kt
-!.idea/icon.svg
