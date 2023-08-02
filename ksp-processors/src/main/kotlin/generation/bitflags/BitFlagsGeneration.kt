@@ -50,76 +50,12 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 }
             }
         }
-        addFunction("contains") {
-            addModifiers(PUBLIC, OPERATOR)
-            addParameter("flag", entityCN)
-            returns<Boolean>()
-            addStatement(
-                when (valueType) {
-                    INT -> "return this.$valueName·and·flag.$valueName·==·flag.$valueName"
-                    BIT_SET -> "return flag.$valueName·in·this.$valueName"
-                }
-            )
-        }
-        addFunction("contains") {
-            addModifiers(PUBLIC, OPERATOR)
-            addParameter("flags", collectionName)
-            returns<Boolean>()
-            addStatement(
-                when (valueType) {
-                    INT -> "return this.$valueName·and·flags.$valueName·==·flags.$valueName"
-                    BIT_SET -> "return flags.$valueName·in·this.$valueName"
-                }
-            )
-        }
-        addFunction("plus") {
-            addModifiers(PUBLIC, OPERATOR)
-            addParameter("flag", entityCN)
-            returns(collectionName)
-            addStatement(
-                when (valueType) {
-                    INT -> "return %T(this.$valueName·or·flag.$valueName)"
-                    BIT_SET -> "return %T(this.$valueName·+·flag.$valueName)"
-                },
-                collectionName,
-            )
-        }
-        addFunction("plus") {
-            addModifiers(PUBLIC, OPERATOR)
-            addParameter("flags", collectionName)
-            returns(collectionName)
-            addStatement(
-                when (valueType) {
-                    INT -> "return %T(this.$valueName·or·flags.$valueName)"
-                    BIT_SET -> "return %T(this.$valueName·+·flags.$valueName)"
-                },
-                collectionName,
-            )
-        }
-        addFunction("minus") {
-            addModifiers(PUBLIC, OPERATOR)
-            addParameter("flag", entityCN)
-            returns(collectionName)
-            addStatement(
-                when (valueType) {
-                    INT -> "return %T(this.$valueName·and·flag.$valueName.inv())"
-                    BIT_SET -> "return %T(this.$valueName·-·flag.$valueName)"
-                },
-                collectionName,
-            )
-        }
-        addFunction("minus") {
-            addModifiers(PUBLIC, OPERATOR)
-            addParameter("flags", collectionName)
-            returns(collectionName)
-            addStatement(
-                when (valueType) {
-                    INT -> "return %T(this.$valueName·and·flags.$valueName.inv())"
-                    BIT_SET -> "return %T(this.$valueName·-·flags.$valueName)"
-                },
-                collectionName,
-            )
-        }
+        addContains(parameterName = "flag", parameterType = entityCN)
+        addContains(parameterName = "flags", parameterType = collectionName)
+        addPlus(parameterName = "flag", parameterType = entityCN, collectionName)
+        addPlus(parameterName = "flags", parameterType = collectionName, collectionName)
+        addMinus(parameterName = "flag", parameterType = entityCN, collectionName)
+        addMinus(parameterName = "flags", parameterType = collectionName, collectionName)
         addFunction("copy") {
             addModifiers(PUBLIC, INLINE)
             addParameter("block", type = LambdaTypeName.get(receiver = builderName, returnType = UNIT))
@@ -171,30 +107,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 }
             }
         }
-        addFunction("plus") {
-            addModifiers(PUBLIC, OPERATOR)
-            addParameter("flag", entityCN)
-            returns(collectionName)
-            addStatement(
-                when (valueType) {
-                    INT -> "return %T(this.$valueName·or·flag.$valueName)"
-                    BIT_SET -> "return %T(this.$valueName·+·flag.$valueName)"
-                },
-                collectionName,
-            )
-        }
-        addFunction("plus") {
-            addModifiers(PUBLIC, OPERATOR)
-            addParameter("flags", collectionName)
-            returns(collectionName)
-            addStatement(
-                when (valueType) {
-                    INT -> "return %T(this.$valueName·or·flags.$valueName)"
-                    BIT_SET -> "return %T(this.$valueName·+·flags.$valueName)"
-                },
-                collectionName,
-            )
-        }
+        addPlus(parameterName = "flag", parameterType = entityCN, collectionName)
+        addPlus(parameterName = "flags", parameterType = collectionName, collectionName)
         addEntityEqualsHashCodeToString()
         if (wasEnum) {
             addDeprecatedEntityEnumArtifacts()
