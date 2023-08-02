@@ -72,19 +72,6 @@ public class ReactionRemoveAllEvent(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    @Deprecated(
-        "Deprecated in favour of getGuildOrNull() as it provides more clarity over the functionality",
-        ReplaceWith("getGuildOrNull()"),
-        DeprecationLevel.ERROR
-    )
-    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
-
-    /**
-     * Requests to get the guild triggering the event as a [Guild].
-     * Returns `null` if the [Guild] wasn't present.
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     */
     public suspend fun getGuildOrNull(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
 
     /**

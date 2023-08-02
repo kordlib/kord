@@ -30,6 +30,7 @@
     "user":{
       "avatar": "a_d5efa99b3eeaa7dd43acca82f5692432",
       "discriminator": "1337",
+      "global_name": null,
       "id": "53908232506183680",
       "public_flags": 131141,
       "username": "Mason"
@@ -42,6 +43,7 @@
       "avatar": null,
       "bot": true,
       "discriminator": "5284",
+      "global_name": null,
       "id": "845027738276462632",
       "public_flags": 0,
       "username": "Interactions Test"
@@ -102,6 +104,7 @@
       "user": {
         "avatar": "a_d5efa99b3eeaa7dd43acca82f5692432",
         "discriminator": "1337",
+        "global_name": null,
         "id": "53908232506183680",
         "public_flags": 131141,
         "username": "Mason"

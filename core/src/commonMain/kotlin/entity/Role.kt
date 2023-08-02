@@ -34,8 +34,14 @@ public data class Role(
     /** If this role is pinned in the user listing. */
     public val hoisted: Boolean get() = data.hoisted
 
-    /** The icon of the role as an [Icon] object. */
-    val icon: Icon? get() = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun getIcon(): Icon? = data.icon.value?.let { Icon.RoleIcon(data.id, it, kord) }
+
+    val iconHash: String? get() = data.icon.value
+
+    /** The icon of the role as an [Asset] object. */
+    val icon: Asset? get() = iconHash?.let { Asset.roleIcon(id, it, kord) }
 
     /** The unicode of the role emoji. */
     val unicodeEmoji: String? = data.unicodeEmoji.value

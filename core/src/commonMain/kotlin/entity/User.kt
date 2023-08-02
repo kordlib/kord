@@ -10,6 +10,24 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.Image
+import kotlin.DeprecationLevel.WARNING
+
+/**
+ * The user's effective name, prioritizing [globalName][User.globalName] over [username][User.username].
+ *
+ * #### API note:
+ *
+ * This is implemented as an extension property to avoid virtual dispatch in cases like the following:
+ * ```kotlin
+ * fun useUser(user: User) = println(user.effectiveName)
+ * fun useMember(member: Member) = println(member.effectiveName)
+ *
+ * val member: Member = TODO()
+ * useUser(member) // prints the global display name
+ * useMember(member) // prints the guild-specific nickname
+ * ```
+ */
+public val User.effectiveName: String get() = globalName ?: username
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
@@ -28,13 +46,28 @@ public open class User(
     /**
      * The users avatar as [Icon] object
      */
-    public val avatar: Icon?
-        get() = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun getAvatar(): Icon? = data.avatar?.let { Icon.UserAvatar(data.id, it, kord) }
+
+    public val avatarHash: String? get() = data.avatar
+
+    /** The avatar of this user as an [Asset]. */
+    public val avatar: Asset? get() = avatarHash?.let { Asset.userAvatar(data.id, it, kord) }
+
+    @Suppress("DEPRECATION", "DEPRECATION_ERROR")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun getDefaultAvatar(): Icon =
+        if (migratedToNewUsernameSystem) Icon.DefaultUserAvatar(userId = id, kord)
+        else Icon.DefaultUserAvatar(discriminator.toInt(), kord)
 
     /**
-     * The default avatar for the user as [Icon] object.
+     * The default avatar for the user as [Asset] object.
      */
-    public val defaultAvatar: Icon get() = Icon.DefaultUserAvatar(data.discriminator.toInt(), kord)
+    public val defaultAvatar: Asset
+        get() =
+            if (migratedToNewUsernameSystem) Asset.defaultUserAvatar(userId = id, kord)
+            else @Suppress("DEPRECATION") Asset.defaultUserAvatar(discriminator.toInt(), kord)
 
     /**
      * The username of this user.
@@ -43,8 +76,28 @@ public open class User(
 
     /**
      * The 4-digit code at the end of the user's discord tag.
+     *
+     * `"0"` indicates that this user has been migrated to the new username system, see the
+     * [Discord Developer Platform](https://discord.com/developers/docs/change-log#unique-usernames-on-discord) for
+     * details.
      */
-    public val discriminator: String get() = data.discriminator
+    // "0" when data.discriminator is missing: if the field is missing, all users were migrated,
+    // see https://discord.com/developers/docs/change-log#identifying-migrated-users:
+    // "After migration of all users is complete, the `discriminator` field may be removed."
+    @Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
+    @Deprecated(
+        "Discord's username system is changing and discriminators are being removed, see " +
+            "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
+        level = WARNING,
+    )
+    public val discriminator: String get() = data.discriminator.value ?: "0"
+
+    // see https://discord.com/developers/docs/change-log#identifying-migrated-users
+    @Suppress("DEPRECATION")
+    private val migratedToNewUsernameSystem get() = discriminator == "0"
+
+    /** The user's display name, if it is set. For bots, this is the application name. */
+    public val globalName: String? get() = data.globalName.value
 
     override suspend fun asUser(): User {
         return this
@@ -62,7 +115,14 @@ public open class User(
     /**
      * The complete user tag.
      */
-    public val tag: String get() = "$username#$discriminator"
+    @Suppress("DEPRECATION")
+    @Deprecated(
+        "Discord's username system is changing and discriminators are being removed, see " +
+            "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
+        ReplaceWith("this.username"),
+        level = WARNING,
+    )
+    public val tag: String get() = if (migratedToNewUsernameSystem) username else "$username#$discriminator"
 
     /**
      * Whether this user is a bot account.
@@ -80,9 +140,13 @@ public open class User(
      * @param format The [Image.Format] to return the banner in
      * @return The URL of the users banner
      */
+    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), DeprecationLevel.HIDDEN)
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
 
+    public val bannerHash: String? get() = data.banner
+
+    public val banner: Asset? get() = bannerHash?.let { Asset.userBanner(id, it, kord) }
 
     override fun hashCode(): Int = id.hashCode()
 
@@ -105,12 +169,19 @@ public open class User(
      *
      * @param data The [UserData] to build the avatar for
      */
+    @Deprecated("Old class", ReplaceWith("Asset", "dev.kord.core.entity.Asset"), level = DeprecationLevel.HIDDEN)
     public data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 
         /**
          * The default avatar url for this user. Discord uses this for users who don't have a custom avatar set.
          */
-        val defaultUrl: String get() = "https://cdn.discordapp.com/embed/avatars/${data.discriminator.toInt() % 5}.png"
+        val defaultUrl: String
+            get() = "https://cdn.discordapp.com/embed/avatars/${
+                when (@Suppress("DEPRECATION") val discriminator = data.discriminator.value) {
+                    null, "0" -> (data.id.value shr 22) % 6u
+                    else -> discriminator.toInt() % 5
+                }
+            }.png"
 
         /**
          * Whether the user has set their avatar.

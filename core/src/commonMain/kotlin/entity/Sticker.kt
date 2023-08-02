@@ -57,6 +57,8 @@ public open class Sticker(public val data: StickerData, override val kord: Kord)
     public val formatType: MessageStickerType
         get() = data.formatType
 
+    public val asset: Asset get() = Asset.sticker(id, formatType, kord)
+
     /**
      * Whether this guild sticker can be used. May be false due to a loss of boosts.
      */
@@ -122,6 +124,8 @@ public class StickerItem(
     public val formatType: MessageStickerType
         get() = data.formatType
 
+    public val asset: Asset get() = Asset.sticker(id, formatType, kord)
+
     /**
      * Gets a [Sticker] from a given [id].
      * returns `null` if the sticker cannot be found
@@ -172,5 +176,7 @@ public class StickerPack(public val data: StickerPackData, override val kord: Ko
     /** A [List] of the [Sticker]s in the pack. */
     public val stickers: List<Sticker> get() = data.stickers.map { Sticker(it, kord) }
 
+    public val bannerId: Snowflake get() = data.bannerAssetId
 
+    public val banner: Asset get() = Asset.stickerPackBanner(bannerId, kord)
 }

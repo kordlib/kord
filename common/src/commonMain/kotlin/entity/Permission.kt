@@ -244,7 +244,7 @@ public sealed class Permission(public val code: DiscordBitSet) {
     public object ManageWebhooks : Permission(1L shl 29)
 
     /** Allows management and editing of emojis and stickers. */
-    @Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.WARNING)
+    @Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.HIDDEN)
     public object ManageEmojisAndStickers : Permission(1L shl 30)
 
     /** Allows management and editing of emojis, stickers and soundboard sounds. */
@@ -295,6 +295,13 @@ public sealed class Permission(public val code: DiscordBitSet) {
     /** Allows for using soundboard in a voice channel. */
     public object UseSoundboard : Permission(1L shl 42)
 
+    /** Allows the usage of custom soundboard sounds from other servers. */
+    public object UseExternalSounds : Permission(1L shl 45)
+
+    /**
+     * Allows sending voice messages.
+     */
+    public object SendVoiceMessages : Permission(1L shl 46)
 
     /** All [Permission]s combined into one. */
     public object All : Permission(buildAll())
@@ -349,7 +356,9 @@ public sealed class Permission(public val code: DiscordBitSet) {
                 UseEmbeddedActivities,
                 ModerateMembers,
                 ViewCreatorMonetizationAnalytics,
-                UseSoundboard
+                UseSoundboard,
+                UseExternalSounds,
+                SendVoiceMessages
             )
     }
 }

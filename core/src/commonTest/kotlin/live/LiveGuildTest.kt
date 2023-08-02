@@ -46,7 +46,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                     preferredLocale = "",
                     systemChannelFlags = SystemChannelFlags(0),
                     nsfwLevel = NsfwLevel.Default,
-                    premiumProgressBarEnabled = false
+                    premiumProgressBarEnabled = false,
+                    safetyAlertsChannelId = null,
                 )
             )
         )
@@ -109,7 +110,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),
@@ -135,7 +135,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),
@@ -347,7 +346,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             DiscordUser(
                                 id = randomId(),
                                 username = "",
-                                discriminator = "",
                                 avatar = null
                             )
                         ),
@@ -379,7 +377,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         ),
                         joinedAt = Instant.fromEpochMilliseconds(0),
@@ -406,7 +403,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         user = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),
@@ -569,7 +565,6 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         author = DiscordUser(
                             id = randomId(),
                             username = "",
-                            discriminator = "",
                             avatar = null
                         ),
                         content = "",
@@ -737,7 +732,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         preferredLocale = "",
                         publicUpdatesChannelId = null,
                         nsfwLevel = NsfwLevel.Default,
-                        premiumProgressBarEnabled = false
+                        premiumProgressBarEnabled = false,
+                        safetyAlertsChannelId = null,
                     ),
                     0
                 )
@@ -782,7 +778,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         preferredLocale = "",
                         publicUpdatesChannelId = null,
                         nsfwLevel = NsfwLevel.Default,
-                        premiumProgressBarEnabled = false
+                        premiumProgressBarEnabled = false,
+                        safetyAlertsChannelId = null,
                     ),
                     0
                 )

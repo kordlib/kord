@@ -3,7 +3,6 @@ package dev.kord.core.builder.kord
 import dev.kord.cache.api.DataCache
 import dev.kord.common.KordConstants
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.core.ClientResources
 import dev.kord.core.Kord
 import dev.kord.core.cache.CachingGateway
@@ -20,8 +19,6 @@ import dev.kord.gateway.DefaultGateway
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
 import dev.kord.gateway.ratelimit.IdentifyRateLimiter
-import dev.kord.gateway.retry.LinearRetry
-import dev.kord.gateway.retry.Retry
 import dev.kord.rest.json.response.BotGatewayResponse
 import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
 import dev.kord.rest.request.*
@@ -38,26 +35,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.time.Duration.Companion.seconds
-
-@Deprecated(
-    "Use DefaultGateway {} instead.",
-    ReplaceWith("DefaultGateway {\nclient = resources.httpClient\nthis@DefaultGateway.retry = retry\n}"),
-    level = HIDDEN,
-)
-public operator fun DefaultGateway.Companion.invoke(
-    resources: ClientResources,
-    retry: Retry = LinearRetry(2.seconds, 60.seconds, 10)
-): DefaultGateway {
-    return DefaultGateway {
-        client = resources.httpClient
-        reconnectRetry = retry
-        sendRateLimiter = IntervalRateLimiter(limit = 120, interval = 60.seconds)
-    }
-}
 
 private val logger = KotlinLogging.logger { }
 private val gatewayInfoJson = Json { ignoreUnknownKeys = true }

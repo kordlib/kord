@@ -1,34 +1,34 @@
 [versions]
 
 # api dependencies
-kotlin = "1.8.10" # https://github.com/JetBrains/kotlin
-ktor = "2.2.4" # https://github.com/ktorio/ktor
-kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
-kotlinx-serialization = "1.5.0" # https://github.com/Kotlin/kotlinx.serialization
+kotlin = "1.9.0" # https://github.com/JetBrains/kotlin
+ktor = "2.3.2" # https://github.com/ktorio/ktor
+kotlinx-coroutines = "1.7.2" # https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-serialization = "1.5.1" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "3.0.5" # https://github.com/oshai/kotlin-logging
 kord-cache = "0.4.0" # https://github.com/kordlib/cache
 
 # implementation dependencies
-kotlinx-nodejs = "18.14.0-pre.502" # https://github.com/JetBrains/kotlin-wrappers
+kotlin-node = "18.16.12-pre.591-compat" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.8" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.0.0-rc1" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
-ksp = "1.8.10-1.0.9" # https://github.com/google/ksp
-kotlinpoet = "1.12.0" # https://github.com/square/kotlinpoet
+ksp = "1.9.0-1.0.12" # https://github.com/google/ksp
+kotlinpoet = "1.14.2" # https://github.com/square/kotlinpoet
 
 # tests
-junit5 = "5.9.2" # https://github.com/junit-team/junit5
-mockk = "1.13.4" # https://github.com/mockk/mockk
+junit5 = "5.9.3" # https://github.com/junit-team/junit5
+mockk = "1.13.5" # https://github.com/mockk/mockk
 slf4j = "2.0.7" # https://www.slf4j.org
 
 # plugins
-dokka = "1.8.10" # https://github.com/Kotlin/dokka
-kotlinx-atomicfu = "0.20.0" # https://github.com/Kotlin/kotlinx-atomicfu
-binary-compatibility-validator = "0.13.0" # https://github.com/Kotlin/binary-compatibility-validator
-buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
+dokka = "1.8.20" # https://github.com/Kotlin/dokka
+kotlinx-atomicfu = "0.21.0" # https://github.com/Kotlin/kotlinx-atomicfu
+binary-compatibility-validator = "0.13.2" # https://github.com/Kotlin/binary-compatibility-validator
+buildconfig = "4.1.2" # https://github.com/gmazzo/gradle-buildconfig-plugin
 
 
 [libraries]
@@ -53,10 +53,10 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
-kotlinx-nodejs = { module = "org.jetbrains.kotlin-wrappers:kotlin-node", version.ref = "kotlinx-nodejs" }
 
 # other
 kotlin-logging = { module = "io.github.microutils:kotlin-logging", version.ref = "kotlin-logging" }
+kotlin-node = { module = "org.jetbrains.kotlin-wrappers:kotlin-node", version.ref = "kotlin-node" }
 
 # JDK replacements
 bignum = { module = "com.ionspin.kotlin:bignum", version.ref = "bignum" }
@@ -91,7 +91,7 @@ ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin
 ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
 
 test-common = ["kotlin-test-annotations-common", "kotlin-test", "kotlinx-coroutines-test"]
-test-js = ["kotlin-test-js", "kotlinx-nodejs"]
+test-js = ["kotlin-test-js", "kotlin-node"]
 test-jvm = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
 
 pluginsForBuildSrc = [

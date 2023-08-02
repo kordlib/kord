@@ -182,7 +182,7 @@ public data class AuditLogChange<T>(
     val key: AuditLogChangeKey<T>,
 ) {
 
-    internal class Serializer<T>(val ser: KSerializer<T>) : KSerializer<AuditLogChange<T>> {
+    internal class Serializer<T>(private val ser: KSerializer<T>) : KSerializer<AuditLogChange<T>> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Kord.AuditLogChange", ser.descriptor) {
             element<JsonElement>("new_value")
             element<JsonElement>("old_value")

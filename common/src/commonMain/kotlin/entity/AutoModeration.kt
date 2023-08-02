@@ -58,6 +58,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
@@ -100,6 +101,8 @@ public data class DiscordAutoModerationRuleTriggerMetadata(
     val allowList: Optional<List<String>> = Optional.Missing(),
     @SerialName("mention_total_limit")
     val mentionTotalLimit: OptionalInt = OptionalInt.Missing,
+    @SerialName("mention_raid_protection_enabled")
+    val mentionRaidProtectionEnabled: OptionalBoolean = OptionalBoolean.Missing,
 )
 
 @Serializable

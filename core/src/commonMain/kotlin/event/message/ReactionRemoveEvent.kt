@@ -82,19 +82,6 @@ public class ReactionRemoveEvent(
     public suspend fun getChannelOrNull(): MessageChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
-     * Requests to get the guild triggering the event as a [Guild]
-     *
-     * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the [Guild] wasn't present.
-     */
-    @Deprecated(
-        "Deprecated in favour of getGuildOrNull() as it provides more clarity over the functionality",
-        ReplaceWith("getGuildOrNull()"),
-        DeprecationLevel.ERROR
-    )
-    public suspend fun getGuild(): Guild? = guildId?.let { supplier.getGuildOrNull(it) }
-
-    /**
      * Requests to get the guild triggering the event as a [Guild].
      * Returns `null` if the [Guild] wasn't present.
      *

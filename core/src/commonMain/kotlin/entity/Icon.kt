@@ -14,6 +14,12 @@ import dev.kord.rest.route.DiscordCdn
  * @param animated Whether the Icon is animated orn ot
  * @param cdnUrl The [URL][CdnUrl] for the icon
  */
+@Suppress("DEPRECATION_ERROR")
+@Deprecated(
+    "Icon class does not cover all cdn endpoints and has some inconsistencies.",
+    ReplaceWith("Asset", "dev.kord.core.entity.Asset"),
+    DeprecationLevel.HIDDEN
+)
 public sealed class Icon(
     public val format: Image.Format,
     public val animated: Boolean,
@@ -75,14 +81,12 @@ public sealed class Icon(
     public class EmojiIcon(animated: Boolean, emojiId: Snowflake, kord: Kord) :
         Icon(if (animated) Image.Format.GIF else Image.Format.WEBP, animated, DiscordCdn.emoji(emojiId), kord)
 
-    /**
-     * Represents an [Icon] as a Default user avatar
-     *
-     * @param discriminator The 4 digit discriminator that follows a discord username. (e.g. User#1234's discriminator is 1234)
-     * @param kord The Kord instance that created this object
-     */
-    public class DefaultUserAvatar(discriminator: Int, kord: Kord) :
-        Icon(Image.Format.PNG /* Discord Default Avatars only support PNG */, false, DiscordCdn.defaultAvatar(discriminator), kord)
+    public class DefaultUserAvatar private constructor(cdnUrl: CdnUrl, kord: Kord) :
+        Icon(Image.Format.PNG /* Discord Default Avatars only support PNG */, false, cdnUrl, kord) {
+        @Suppress("DEPRECATION")
+        public constructor(discriminator: Int, kord: Kord) : this(DiscordCdn.defaultAvatar(discriminator), kord)
+        internal constructor(userId: Snowflake, kord: Kord) : this(DiscordCdn.defaultUserAvatar(userId), kord)
+    }
 
     /**
      * Represents an [Icon] as a User Avatar

@@ -2,7 +2,7 @@
 
 [![Discord](https://img.shields.io/discord/556525343595298817.svg?color=&label=Kord&logo=discord&style=for-the-badge)](https://discord.gg/6jcx5ev)
 [![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
-[![Github CI status (branch)](https://img.shields.io/github/actions/workflow/status/kordlib/kord/deployment-ci.yml?branch=0.9.x&label=CI&style=for-the-badge)]()
+[![Github CI status (branch)](https://img.shields.io/github/actions/workflow/status/kordlib/kord/deployment-ci.yml?branch=main&label=CI&style=for-the-badge)]()
 
 __Kord is still in an experimental stage, as such we can't guarantee API stability between releases. While we'd love for
 you to try out our library, we don't recommend you use this in production just yet.__
@@ -61,7 +61,10 @@ Replace `{version}` with the latest version number on maven central.
 
 For Snapshots replace `{version}` with `{branch}-SNAPSHOT`
 
-e.g: `0.9.x-SNAPSHOT` for the branch `0.9.x` or `feature-mpp-SNAPSHOT` for the branch `feature/mpp`
+e.g: `feature-mpp-SNAPSHOT` for the branch `feature/mpp`
+
+For Snapshots for the branch `main` replace `{version}` with `{nextPlannedVersion}-SNAPSHOT` (see `nextPlannedVersion`
+in [`gradle.properties`](gradle.properties))
 
 [![Download](https://img.shields.io/maven-central/v/dev.kord/kord-core.svg?label=Maven%20Central&style=for-the-badge)](https://search.maven.org/search?q=g:%22dev.kord%22%20AND%20a:%22kord-core%22)
 

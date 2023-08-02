@@ -35,15 +35,33 @@ public class Member(
         get() = memberData.guildId
 
     /**
-     * The name as shown in the discord client, prioritizing the [nickname] over the [use].
+     * The name as shown in the discord client, prioritizing [nickname] over [globalName] and [username].
      */
-    public val displayName: String get() = nickname ?: username
+    @Deprecated(
+        "This was renamed to 'effectiveName' to avoid confusion with 'User.globalName' which is also called display " +
+            "name.",
+        ReplaceWith("this.effectiveName"),
+        DeprecationLevel.ERROR,
+    )
+    public val displayName: String get() = effectiveName
+
+    /**
+     * The member's effective name, prioritizing [nickname] over [globalName] and [username].
+     */
+    public val effectiveName: String get() = nickname ?: (this as User).effectiveName
 
     /**
      * The members guild avatar as [Icon] object
      */
-    public val memberAvatar: Icon?
-        get() = memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, data.id, it, kord) }
+    @Suppress("DEPRECATION_ERROR")
+    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
+    public fun getMemberAvatar(): Icon? =
+        memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }
+
+    public val memberAvatarHash: String? get() = memberData.avatar.value
+
+    /** The guild avatar of this member as an [Asset]. */
+    public val memberAvatar: Asset? get() = memberAvatarHash?.let { Asset.memberAvatar(guildId, id, it, kord) }
 
     /**
      * When the user joined this [guild].

@@ -21,7 +21,7 @@ public class NewsChannelThread(
 
     override suspend fun asChannel(): NewsChannelThread = this
 
-    override suspend fun asChannelOrNull(): NewsChannelThread? = this
+    override suspend fun asChannelOrNull(): NewsChannelThread = this
 
 
     override suspend fun getParent(): NewsChannel {

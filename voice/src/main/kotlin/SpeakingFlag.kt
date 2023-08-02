@@ -56,7 +56,7 @@ public class SpeakingFlags internal constructor(public val code: Int) {
         }
     }
 
-    public class Builder(internal var code: Int = 0) {
+    public class Builder(private var code: Int = 0) {
         public operator fun SpeakingFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or code
         }

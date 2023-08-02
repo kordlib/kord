@@ -10,20 +10,9 @@ import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.json.request.CurrentVoiceStateModifyRequest
 import dev.kord.rest.json.request.VoiceStateModifyRequest
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 
 @KordDsl
-public class CurrentVoiceStateModifyBuilder() : RequestBuilder<CurrentVoiceStateModifyRequest> {
-
-    /** @suppress */
-    @Deprecated(
-        "'channelId' is no longer required, use other constructor instead.",
-        ReplaceWith("CurrentVoiceStateModifyBuilder().apply { this@apply.channelId = channelId }"),
-        level = HIDDEN,
-    )
-    public constructor(channelId: Snowflake) : this() {
-        this.channelId = channelId
-    }
+public class CurrentVoiceStateModifyBuilder : RequestBuilder<CurrentVoiceStateModifyRequest> {
 
     private var _channelId: OptionalSnowflake = OptionalSnowflake.Missing
 

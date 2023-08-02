@@ -2,7 +2,6 @@ package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.CommandArgument
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.interaction.GlobalInteractionBehavior
 import dev.kord.core.entity.*
 import dev.kord.core.entity.channel.ResolvedChannel
 
@@ -97,4 +96,3 @@ public fun OptionValue(value: CommandArgument<*>, resolvedObjects: ResolvedObjec
         }
     }
 }
-

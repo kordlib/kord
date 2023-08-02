@@ -9,5 +9,7 @@ plugins {
 }
 
 tasks.withType<AbstractDokkaLeafTask>().configureEach {
-    enabled = false
+    dokkaSourceSets.configureEach {
+        suppress = true
+    }
 }

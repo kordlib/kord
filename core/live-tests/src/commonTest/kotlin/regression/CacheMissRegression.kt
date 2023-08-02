@@ -46,9 +46,9 @@ private val parser = Json {
 
 object FakeGateway : Gateway {
 
-    val deferred = CompletableDeferred<Unit>()
+    private val deferred = CompletableDeferred<Unit>()
 
-    override val events: SharedFlow<Event> = MutableSharedFlow<Event>()
+    override val events: SharedFlow<Event> = MutableSharedFlow()
 
     override val ping: StateFlow<Duration?> = MutableStateFlow(null)
 
@@ -66,7 +66,7 @@ object FakeGateway : Gateway {
     override val coroutineContext: CoroutineContext = SupervisorJob() + EmptyCoroutineContext
 }
 
-class CrashingHandler(val client: HttpClient, override val token: String) : RequestHandler {
+class CrashingHandler(private val client: HttpClient, override val token: String) : RequestHandler {
     override suspend fun <B : Any, R> handle(request: Request<B, R>): R {
         if (request.route != Route.CurrentUserGet) throw IllegalStateException("shouldn't do a request")
         val response = client.request {

@@ -18,7 +18,6 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.listSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
 
 @Serializable
 public data class GuildCreateRequest(
@@ -78,10 +77,10 @@ public data class ChannelPositionSwapRequest(
     val position: OptionalInt? = OptionalInt.Missing,
     @KordExperimental
     @SerialName("lock_permissions")
-    val lockPermissions: Boolean?,
+    val lockPermissions: OptionalBoolean? = OptionalBoolean.Missing,
     @KordExperimental
     @SerialName("parent_id")
-    val parentId: Snowflake?
+    val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
 )
 
 @Serializable(with = GuildChannelPositionModifyRequest.Serializer::class)
@@ -132,33 +131,10 @@ public data class GuildMemberModifyRequest(
 
 
 @Serializable
-public data class GuildBanCreateRequest
-// actually:
-//@Deprecated(
-//    "'reason' and 'deleteMessageDays' are deprecated, use other constructor instead.",
-//    ReplaceWith("GuildBanCreateRequest(deleteMessageSeconds)"),
-//    level = HIDDEN,
-//)
-//public constructor(
-// but hidden constructor can not be called from other one
-@PublishedApi internal constructor(
-    /** @suppress*/
-    @Deprecated("Use 'X-Audit-Log-Reason' header instead.", level = HIDDEN)
-    val reason: Optional<String> = Optional.Missing(),
-    /** @suppress*/
-    @Deprecated("Use 'deleteMessageSeconds' instead.", ReplaceWith("this.deleteMessageSeconds"), level = HIDDEN)
-    @SerialName("delete_message_days")
-    val deleteMessagesDays: OptionalInt = OptionalInt.Missing,
+public data class GuildBanCreateRequest(
     @SerialName("delete_message_seconds")
     val deleteMessageSeconds: Optional<DurationInSeconds> = Optional.Missing(),
-) {
-    // use this as primary constructor when other constructor is removed
-    public constructor(deleteMessageSeconds: Optional<DurationInSeconds> = Optional.Missing()) : this(
-        reason = Optional.Missing(),
-        deleteMessagesDays = OptionalInt.Missing,
-        deleteMessageSeconds = deleteMessageSeconds,
-    )
-}
+)
 
 @Serializable
 public data class GuildRoleCreateRequest(
@@ -268,6 +244,8 @@ public data class GuildModifyRequest(
     @SerialName("preferred_locale")
     val preferredLocale: Optional<String?> = Optional.Missing(),
     val features: Optional<Set<GuildFeature>> = Optional.Missing(),
+    @SerialName("safety_alerts_channel_id")
+    val safetyAlertsChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
 )
 
 @Serializable

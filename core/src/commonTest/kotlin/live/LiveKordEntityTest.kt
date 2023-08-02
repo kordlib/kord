@@ -142,7 +142,6 @@ class LiveKordEntityTest : AbstractLiveEntityTest<LiveKordEntityTest.LiveEntityM
                     user = DiscordUser(
                         id = randomId(),
                         username = "",
-                        discriminator = "",
                         avatar = null
                     )
                 ),

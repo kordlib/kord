@@ -1,6 +1,5 @@
 @file:GenerateKordEnum(
     name = "ComponentType", valueType = INT,
-    deprecatedSerializerName = "Serializer",
     docUrl = "https://discord.com/developers/docs/interactions/message-components#component-object-component-types",
     entries = [
         Entry("ActionRow", intValue = 1, kDoc = "A container for other components."),
@@ -12,17 +11,10 @@
         Entry("MentionableSelect", intValue = 7, kDoc = "Select menu for mentionables (users and roles)."),
         Entry("ChannelSelect", intValue = 8, kDoc = "Select menu for channels."),
     ],
-    deprecatedEntries = [
-        Entry("SelectMenu", intValue = 3, kDoc = "A select menu for picking from choices.",
-            deprecationMessage = "Renamed by discord", replaceWith = ReplaceWith("StringSelect", "dev.kord.common.entity.ComponentType.StringSelect"),
-            deprecationLevel = DeprecationLevel.ERROR
-        ),
-    ],
 )
 
 @file:GenerateKordEnum(
     name = "ButtonStyle", valueType = INT,
-    deprecatedSerializerName = "Serializer",
     kDoc = "Style of a [button][dev.kord.common.entity.ComponentType.Button].",
     docUrl = "https://discord.com/developers/docs/interactions/message-components#button-object-button-styles",
     entries = [
@@ -61,7 +53,6 @@ import kotlinx.serialization.json.*
  * Represent a [interactable component within a message sent in Discord](https://discord.com/developers/docs/interactions/message-components#what-are-components).
  *
  * @property type the [ComponentType] of the component
- * @property style the [ButtonStyle] of the component (if it is a button)
  * @property emoji an [DiscordPartialEmoji] that appears on the button (if the component is a button)
  * @property customId a developer-defined identifier for the button, max 100 characters
  * @property url a url for link-style buttons
@@ -106,9 +97,10 @@ public sealed class DiscordComponent {
         override fun selectDeserializer(element: JsonElement): KSerializer<out DiscordComponent> {
             val componentType = element.jsonObject["type"]?.jsonPrimitive?.intOrNull ?: error("Missing component type ID!")
 
-            return when (componentType) {
-                ComponentType.TextInput.value -> DiscordTextInputComponent.serializer()
-                else -> DiscordChatComponent.serializer()
+            return if (componentType == ComponentType.TextInput.value) {
+                DiscordTextInputComponent.serializer()
+            } else {
+                DiscordChatComponent.serializer()
             }
         }
     }

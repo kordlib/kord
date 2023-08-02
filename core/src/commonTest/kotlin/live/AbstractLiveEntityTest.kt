@@ -51,7 +51,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
         override suspend fun stop() {}
     }
 
-    class CounterAtomicLatch() {
+    class CounterAtomicLatch {
         private val channel = Channel<Unit>()
 
         private val received = atomic(0)

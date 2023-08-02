@@ -4,13 +4,14 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
-import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
+import dev.kord.rest.builder.channel.thread.StartThreadWithMessageBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.UserMessageModifyBuilder
 import dev.kord.rest.json.request.*
 import dev.kord.rest.json.response.FollowedChannelResponse
 import dev.kord.rest.json.response.ListThreadsResponse
+import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
@@ -398,34 +399,28 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         channelId: Snowflake,
         request: ListThreadsByTimestampRequest,
     ): ListThreadsResponse = call(Route.PublicArchivedThreadsGet) {
-        keys[Route.ChannelId] = channelId
-        val before = request.before
-        val limit = request.limit
-        if (before != null) parameter("before", before)
-        if (limit != null) parameter("limit", limit)
+        listThreadsConfig(channelId, request.before, request.limit)
     }
 
     public suspend fun listPrivateArchivedThreads(
         channelId: Snowflake,
         request: ListThreadsByTimestampRequest,
     ): ListThreadsResponse = call(Route.PrivateArchivedThreadsGet) {
-        keys[Route.ChannelId] = channelId
-        val before = request.before
-        val limit = request.limit
-        if (before != null) parameter("before", before)
-        if (limit != null) parameter("limit", limit)
+        listThreadsConfig(channelId, request.before, request.limit)
     }
 
     public suspend fun listJoinedPrivateArchivedThreads(
         channelId: Snowflake,
         request: ListThreadsBySnowflakeRequest,
     ): ListThreadsResponse = call(Route.JoinedPrivateArchivedThreadsGet) {
-        keys[Route.ChannelId] = channelId
-        val before = request.before
-        val limit = request.limit
-        if (before != null) parameter("before", before)
-        if (limit != null) parameter("limit", limit)
+        listThreadsConfig(channelId, request.before, request.limit)
     }
+}
+
+private fun RequestBuilder<ListThreadsResponse>.listThreadsConfig(channelId: Snowflake, before: Any?, limit: Int?) {
+    keys[Route.ChannelId] = channelId
+    if (before != null) parameter("before", before)
+    if (limit != null) parameter("limit", limit)
 }
 
 public suspend inline fun ChannelService.patchTextChannel(

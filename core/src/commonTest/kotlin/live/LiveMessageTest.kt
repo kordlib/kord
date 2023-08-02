@@ -38,7 +38,6 @@ class LiveMessageTest : AbstractLiveEntityTest<LiveMessage>() {
                     author = UserData(
                         id = randomId(),
                         username = "",
-                        discriminator = ""
                     ),
                     content = "",
                     timestamp = Instant.fromEpochMilliseconds(0),

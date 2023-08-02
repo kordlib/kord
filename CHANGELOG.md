@@ -1,3 +1,77 @@
+# 0.10.0
+
+## Additions
+
+* Support new username system (by @lukellmann in #825)
+* Add `Permission.UseExternalSounds` (by @lukellmann in #833)
+* Add new error codes (by @lukellmann in #834)
+* Add mention raid protection to Auto Moderation (by @lukellmann in #830)
+* Add support for Application Role Connection Metadata (by @lukellmann in #836)
+* Add support for join raid protection (by @lukellmann in #832)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @lukellmann in #821)
+* Remove no longer needed pipeline interception (by @lukellmann in #824)
+* Change `parentId` and `lockPermissionsToParent` to Optionals (by @Tmpod in #828)
+
+## Fixes
+
+* Fix deserializing embeds with `null` author url (by @lukellmann in #839)
+
+## Dependencies
+
+Updated in #826
+
+* Kotlin 1.8.10 -> 1.8.21
+* Ktor 2.2.4 -> 2.3.0
+* kotlinx.coroutines 1.6.4 -> 1.7.1
+* kotlinx.serialization 1.5.0 -> 1.5.1
+* kotlin-node 18.14.0-pre.502 -> 18.16.3-pre.546
+* KSP 1.8.10-1.0.9 -> 1.8.21-1.0.11
+* KotlinPoet 1.12.0 -> 1.13.2
+* JUnit 5 5.9.2 -> 5.9.3
+* MockK 1.13.4 -> 1.13.5
+* AtomicFU 0.20.0 -> 0.20.2
+* Binary compatibility validator 0.13.0 -> 0.13.1
+* gradle-buildconfig-plugin 3.1.0 -> 4.0.4
+
+## House-keeping
+
+* Simplify CI (by @lukellmann in #823)
+* Use main as the permanent default branch (by @lukellmann in #831)
+
+# 0.9.0
+
+## Additions
+
+* Support Kotlin/JS (by @DRSchlaubi and @Lukellmann in #775)
+* Add support for voice messages (by @DRSchlaubi and @Lukellmann in #814)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @Lukellmann in #794)
+* Replace `Icon` with `Asset` (by @oluiss and @Lukellmann in #703)
+
+## Fixes
+
+* Fix some `EntitySupplyStrategy` `toString`s being incorrect (by @GreemDev in #811)
+* Fix List Nitro Sticker Packs endpoint (by @Lukellmann in #816)
+* Fix `InstantInEpochMillisecondsSerializerTest` on JS (by @Lukellmann in #818)
+
+## Dependencies
+
+Updated in #783
+
+* Gradle 8.0.2 -> 8.1
+
+## House-keeping
+
+* Add inspection for missing `@KordDsl` (by @DRSchlaubi in #800)
+* Fix Qodana findings (by @Lukellmann and @DRSchlaubi in #812)
+* Clean up (by @Lukellmann in #813)
+* Improve `GenerateKordEnum` and `AnnotationArguments` (by @Lukellmann in #817)
+
 # 0.8.3
 
 ## Additions

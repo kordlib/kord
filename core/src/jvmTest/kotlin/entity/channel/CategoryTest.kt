@@ -10,6 +10,4 @@ import dev.kord.core.mockKord
 internal class CategoryTest : GuildChannelEqualityTest<Category> by GuildChannelEqualityTest ({ id, guildId ->
     val kord = mockKord()
     Category(ChannelData(id, guildId = guildId.optionalSnowflake(), type = ChannelType.GuildCategory), kord)
-}) {
-
-}
+})
