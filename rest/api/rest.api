@@ -6219,6 +6219,7 @@ public final class dev/kord/rest/route/DiscordCdn {
 	public final fun stickerPackBanner (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
 	public final fun teamIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun userAvatar (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
+	public final fun userAvatarDecoration (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun userBanner (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 }
 

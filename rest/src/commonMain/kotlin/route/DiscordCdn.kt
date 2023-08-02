@@ -36,6 +36,9 @@ public object DiscordCdn {
     public fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/guilds/$guildId/users/$userId/avatars/$hash")
 
+    public fun userAvatarDecoration(userId: Snowflake, hash: String): CdnUrl =
+        CdnUrl("$BASE_URL/avatar-decorations/$userId/$hash")
+
     public fun applicationIcon(applicationId: Snowflake, hash: String): CdnUrl =
         CdnUrl("$BASE_URL/app-icons/$applicationId/$hash")
 

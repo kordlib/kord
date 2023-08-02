@@ -28,7 +28,8 @@ public data class UserData(
     val bot: OptionalBoolean = OptionalBoolean.Missing,
     val publicFlags: Optional<UserFlags> = Optional.Missing(),
     val banner: String? = null,
-    val accentColor: Int? = null
+    val accentColor: Int? = null,
+    val avatarDecoration: String? = null
 ) {
     public companion object {
 

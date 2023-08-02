@@ -67,6 +67,9 @@ public class Asset private constructor(
         public fun userAvatar(userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.userAvatar(userId, hash), kord)
 
+        public fun userAvatarDecoration(userId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(hash.isAnimated, DiscordCdn.userAvatarDecoration(userId, hash), kord)
+
         public fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.memberAvatar(guildId, userId, hash), kord)
 
