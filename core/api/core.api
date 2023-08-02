@@ -9990,8 +9990,6 @@ public final class dev/kord/core/entity/interaction/GuildComponentInteraction$De
 
 public abstract interface class dev/kord/core/entity/interaction/GuildInteraction : dev/kord/core/behavior/interaction/GuildInteractionBehavior, dev/kord/core/entity/interaction/Interaction {
 	public abstract fun getAppPermissions ()Ldev/kord/common/entity/Permissions;
-	public abstract fun getChannel ()Ldev/kord/core/behavior/channel/GuildMessageChannelBehavior;
-	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getPermissions ()Ldev/kord/common/entity/Permissions;
 	public abstract fun getUser ()Ldev/kord/core/entity/Member;
@@ -10268,7 +10266,6 @@ public final class dev/kord/core/entity/interaction/IntegerOptionValue : dev/kor
 public abstract interface class dev/kord/core/entity/interaction/Interaction : dev/kord/core/behavior/interaction/InteractionBehavior {
 	public static final field Companion Ldev/kord/core/entity/interaction/Interaction$Companion;
 	public abstract fun getApplicationId ()Ldev/kord/common/entity/Snowflake;
-	public abstract fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public abstract fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public abstract fun getData ()Ldev/kord/core/cache/data/InteractionData;
 	public abstract fun getGuildLocale ()Ldev/kord/common/Locale;

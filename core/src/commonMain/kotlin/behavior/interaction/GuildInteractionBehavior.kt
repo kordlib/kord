@@ -28,11 +28,6 @@ public interface GuildInteractionBehavior : InteractionBehavior {
 
     public suspend fun getGuild(): Guild = supplier.getGuild(guildId)
 
-    @Deprecated(
-        "Discord no longer provides a non-null variant channel",
-        replaceWith = ReplaceWith("getChannelOrNull()"),
-        level = DeprecationLevel.WARNING
-    )
     override suspend fun getChannel(): GuildMessageChannel = supplier.getChannelOf(channelId)
 
     override suspend fun getChannelOrNull(): GuildMessageChannel? = supplier.getChannelOfOrNull(channelId)

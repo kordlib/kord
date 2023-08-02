@@ -4,7 +4,6 @@ import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.channel.MessageChannelBehavior
 import dev.kord.core.behavior.interaction.response.*
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.interaction.ActionInteraction
@@ -148,7 +147,6 @@ public fun ActionInteractionBehavior(
 ): ActionInteractionBehavior = object : ActionInteractionBehavior {
     override val id: Snowflake = id
     override val channelId: Snowflake = channelId
-    override val channel: MessageChannelBehavior = MessageChannelBehavior(channelId, kord)
     override val token: String = token
     override val applicationId: Snowflake = applicationId
     override val kord: Kord = kord

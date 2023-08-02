@@ -2,7 +2,6 @@ package dev.kord.core.entity.interaction
 
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.behavior.channel.GuildMessageChannelBehavior
 import dev.kord.core.behavior.interaction.GuildInteractionBehavior
 import dev.kord.core.entity.Guild
 import dev.kord.core.entity.Member
@@ -12,10 +11,6 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public sealed interface GuildInteraction : Interaction, GuildInteractionBehavior {
 
     override val guildId: Snowflake get() = data.guildId.value!!
-
-    override val channelId: Snowflake get() = data.channel.value?.id ?: data.channelId.value!!
-
-    override val channel: GuildMessageChannelBehavior get() = GuildMessageChannelBehavior(channelId, guildId, kord)
 
     /**
      * [Permissions] the [interaction invoker][user] has within the [channel][GuildInteractionBehavior.channel] the
