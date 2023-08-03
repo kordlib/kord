@@ -151,6 +151,87 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
 }
 
 @KordDsl
+public class MediaChannelModifyBuilder : PermissionOverwritesModifyBuilder,
+    AuditRequestBuilder<ChannelModifyPatchRequest> {
+    override var reason: String? = null
+
+    private var _name: Optional<String> = Optional.Missing()
+    public var name: String? by ::_name.delegate()
+
+    private var _position: OptionalInt? = OptionalInt.Missing
+    public var position: Int? by ::_position.delegate()
+
+    private var _topic: Optional<String?> = Optional.Missing()
+    public var topic: String? by ::_topic.delegate()
+
+    private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
+    public var nsfw: Boolean? by ::_nsfw.delegate()
+
+    private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
+    public var parentId: Snowflake? by ::_parentId.delegate()
+
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
+
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
+
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+
+    /**
+     * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
+     * channel, to automatically archive the thread after recent activity.
+     */
+    public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
+
+    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    public var flags: ChannelFlags? by ::_flags.delegate()
+
+    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing()
+    public var defaultReactionEmoji: DefaultReaction? by ::_defaultReactionEmoji.delegate()
+    public var defaultReactionEmojiId: Snowflake? = null
+    public var defaultReactionEmojiName: String? = null
+
+    private var _availableTags: Optional<MutableList<ForumTagRequest>> = Optional.Missing()
+    public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
+
+    public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val tag = ForumTagBuilder(name).apply(builder).toRequest()
+        availableTags?.add(tag) ?: run { availableTags = mutableListOf(tag) }
+    }
+
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
+
+    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
+    public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
+
+    override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
+        name = _name,
+        position = _position,
+        topic = _topic,
+        nsfw = _nsfw,
+        rateLimitPerUser = _rateLimitPerUser,
+        permissionOverwrites = _permissionOverwrites,
+        parentId = _parentId,
+        defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
+        defaultReactionEmoji = when {
+            defaultReactionEmojiId != null || defaultReactionEmojiName != null ->
+                DefaultReaction(
+                    emojiId = defaultReactionEmojiId,
+                    emojiName = defaultReactionEmojiName,
+                ).optional()
+            else -> _defaultReactionEmoji
+        },
+        defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
+        availableTags = _availableTags,
+        defaultSortOrder = _defaultSortOrder,
+        flags = _flags
+    )
+}
+
+@KordDsl
 public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null

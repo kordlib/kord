@@ -48,6 +48,7 @@ internal sealed class GenerationEntity(
         val value: Comparable<*>,
         val deprecated: Deprecated?,
         val requiresOptInAnnotations: List<String>,
+        val noStaticFieldIfEntityWasEnum: Boolean,
     )
 }
 
@@ -159,5 +160,6 @@ private fun Entry.toGenerationEntityEntryOrNull(
         } else {
             requiresOptInAnnotations.toList()
         },
+        noStaticFieldIfEntityWasEnum,
     )
 }

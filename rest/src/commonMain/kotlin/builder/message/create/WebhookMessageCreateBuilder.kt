@@ -2,6 +2,7 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ChannelType.GuildForum
+import dev.kord.common.entity.ChannelType.GuildMedia
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.*
 import dev.kord.common.entity.optional.delegate.delegate
@@ -44,7 +45,7 @@ public class WebhookMessageCreateBuilder :
 
     private var _threadName: Optional<String> = Optional.Missing()
 
-    /** Name of the thread to create (requires the webhook channel to be a [GuildForum] channel). */
+    /** Name of the thread to create (requires the webhook channel to be a [GuildForum] or [GuildMedia] channel). */
     public var threadName: String? by ::_threadName.delegate()
 
     override fun toRequest(): MultiPartWebhookExecuteRequest {

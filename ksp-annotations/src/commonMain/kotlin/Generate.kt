@@ -49,5 +49,8 @@ annotation class Generate(
         val deprecated: Deprecated = Deprecated(""),
         /** [RequiresOptIn] annotations to add to this entry. */
         val requiresOptInAnnotations: Array<String> = [],
+
+        // for migration only, will be removed eventually
+        val noStaticFieldIfEntityWasEnum: Boolean = false,
     )
 }

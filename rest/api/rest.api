@@ -592,6 +592,88 @@ public final class dev/kord/rest/builder/channel/InviteCreateBuilder : dev/kord/
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/channel/MediaChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public final fun getAvailableTags ()Ljava/util/List;
+	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
+	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DefaultReaction;
+	public final fun getDefaultReactionEmojiId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getDefaultReactionEmojiName ()Ljava/lang/String;
+	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
+	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
+	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getNsfw ()Ljava/lang/Boolean;
+	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
+	public fun getPermissionOverwrites ()Ljava/util/Set;
+	public final fun getPosition ()Ljava/lang/Integer;
+	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
+	public fun getReason ()Ljava/lang/String;
+	public final fun getTopic ()Ljava/lang/String;
+	public final fun setAvailableTags (Ljava/util/List;)V
+	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
+	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DefaultReaction;)V
+	public final fun setDefaultReactionEmojiId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setDefaultReactionEmojiName (Ljava/lang/String;)V
+	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
+	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
+	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
+	public final fun setName (Ljava/lang/String;)V
+	public final fun setNsfw (Ljava/lang/Boolean;)V
+	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
+	public fun setPermissionOverwrites (Ljava/util/Set;)V
+	public final fun setPosition (Ljava/lang/Integer;)V
+	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
+	public fun setReason (Ljava/lang/String;)V
+	public final fun setTopic (Ljava/lang/String;)V
+	public final fun tag (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun tag$default (Ldev/kord/rest/builder/channel/MediaChannelCreateBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/GuildChannelCreateRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/channel/MediaChannelModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesModifyBuilder {
+	public fun <init> ()V
+	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
+	public final fun getAvailableTags ()Ljava/util/List;
+	public final fun getDefaultAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
+	public final fun getDefaultReactionEmoji ()Ldev/kord/common/entity/DefaultReaction;
+	public final fun getDefaultReactionEmojiId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getDefaultReactionEmojiName ()Ljava/lang/String;
+	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
+	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
+	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getNsfw ()Ljava/lang/Boolean;
+	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
+	public fun getPermissionOverwrites ()Ljava/util/Set;
+	public final fun getPosition ()Ljava/lang/Integer;
+	public final fun getRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
+	public fun getReason ()Ljava/lang/String;
+	public final fun getTopic ()Ljava/lang/String;
+	public final fun setAvailableTags (Ljava/util/List;)V
+	public final fun setDefaultAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
+	public final fun setDefaultReactionEmoji (Ldev/kord/common/entity/DefaultReaction;)V
+	public final fun setDefaultReactionEmojiId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setDefaultReactionEmojiName (Ljava/lang/String;)V
+	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
+	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
+	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
+	public final fun setName (Ljava/lang/String;)V
+	public final fun setNsfw (Ljava/lang/Boolean;)V
+	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
+	public fun setPermissionOverwrites (Ljava/util/Set;)V
+	public final fun setPosition (Ljava/lang/Integer;)V
+	public final fun setRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
+	public fun setReason (Ljava/lang/String;)V
+	public final fun setTopic (Ljava/lang/String;)V
+	public final fun tag (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun tag$default (Ldev/kord/rest/builder/channel/MediaChannelModifyBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
 public final class dev/kord/rest/builder/channel/NewsChannelCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder, dev/kord/rest/builder/channel/PermissionOverwritesCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun addOverwrite (Ldev/kord/common/entity/Overwrite;)V
@@ -1108,6 +1190,8 @@ public final class dev/kord/rest/builder/guild/GuildCreateBuilder : dev/kord/res
 	public final fun getSnowflakeGenerator ()Ljava/util/Iterator;
 	public final fun getSystemChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getVerificationLevel ()Ldev/kord/common/entity/VerificationLevel;
+	public final fun mediaChannel (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Snowflake;
+	public static synthetic fun mediaChannel$default (Ldev/kord/rest/builder/guild/GuildCreateBuilder;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Snowflake;
 	public final fun newUniqueSnowflake ()Ldev/kord/common/entity/Snowflake;
 	public final fun newsChannel (Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Snowflake;
 	public static synthetic fun newsChannel$default (Ldev/kord/rest/builder/guild/GuildCreateBuilder;Ljava/lang/String;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Snowflake;
@@ -7185,6 +7269,7 @@ public final class dev/kord/rest/service/ChannelServiceKt {
 	public static final fun editRolePermission (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun patchCategory (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun patchForumChannel (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun patchMediaChannel (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun patchNewsChannel (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun patchStageVoiceChannel (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun patchTextChannel (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7289,6 +7374,7 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 public final class dev/kord/rest/service/GuildServiceKt {
 	public static final fun createCategory (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createForumChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun createMediaChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createNewsChannel (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createScheduledEvent (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/ScheduledEntityType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createScheduledEvent$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;Lkotlinx/datetime/Instant;Ldev/kord/common/entity/ScheduledEntityType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
