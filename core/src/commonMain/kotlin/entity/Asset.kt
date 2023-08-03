@@ -70,6 +70,10 @@ public class Asset private constructor(
         public fun memberAvatar(guildId: Snowflake, userId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(hash.isAnimated, DiscordCdn.memberAvatar(guildId, userId, hash), kord)
 
+        // https://github.com/discord/discord-api-docs/pull/5723#issuecomment-1342674515
+        public fun userAvatarDecoration(userId: Snowflake, hash: String, kord: Kord): Asset =
+            Asset(hash.isAnimated, DiscordCdn.userAvatarDecoration(userId, hash), kord, recommendedFormat = PNG)
+
         public fun applicationIcon(applicationId: Snowflake, hash: String, kord: Kord): Asset =
             Asset(isAnimated = false, DiscordCdn.applicationIcon(applicationId, hash), kord)
 
