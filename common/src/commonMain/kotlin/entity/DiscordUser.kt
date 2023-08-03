@@ -49,7 +49,7 @@ import kotlin.contracts.contract
  * @param publicFlags The public flags on a user's account. Unlike [flags], these **are** visible ot other users.
  * @param banner The user's banner hash.
  * @param accentColor The user's banner color encoded as an integer representation of hexadecimal color code
- * @param avatarDecoration The user;s avatar decoration hash.
+ * @param avatarDecoration The user's avatar decoration hash.
  */
 @Serializable
 public data class DiscordUser(
@@ -80,7 +80,7 @@ public data class DiscordUser(
     @SerialName("accent_color")
     val accentColor: Int? = null,
     @SerialName("avatar_decoration")
-    val avatarDecoration: String? = null
+    val avatarDecoration: Optional<String?> = Optional.Missing(),
 )
 
 /**
