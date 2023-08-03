@@ -63,7 +63,7 @@ public open class User(
             if (migratedToNewUsernameSystem) Asset.defaultUserAvatar(userId = id, kord)
             else @Suppress("DEPRECATION") Asset.defaultUserAvatar(discriminator.toInt(), kord)
 
-    public val avatarDecorationHash: String? get() = data.avatarDecoration
+    public val avatarDecorationHash: String? get() = data.avatarDecoration.value
 
     public val avatarDecoration: Asset? get() = avatarDecorationHash?.let { Asset.userAvatarDecoration(data.id, it, kord) }
 
