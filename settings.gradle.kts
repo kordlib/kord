@@ -14,6 +14,7 @@ include(
     "gateway",
     "ksp-annotations",
     "ksp-processors",
+    "openapi-spec",
     "rest",
     "samples",
     "test-kit",
