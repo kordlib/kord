@@ -1,4 +1,7 @@
+import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
 plugins {
@@ -8,7 +11,6 @@ plugins {
     `kotlinx-atomicfu`
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
-    com.goncalossilva.resources
 }
 
 repositories {
@@ -24,7 +26,7 @@ apiValidation {
 }
 
 kotlin {
-    applyDefaultHierarchyTemplate {
+    targetHierarchy.default {
         common {
             group("nonJvm") {
                 withNative()
@@ -80,7 +82,15 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
+    val compilationTasks = kotlin.targets.flatMap {
+        buildList {
+            add("compileKotlin${it.name.capitalized()}")
+            if (it !is KotlinNativeTarget) {
+                add("${it.name}SourcesJar")
+            }
+        }
+    }
+    for (task in compilationTasks) {
         named(task) {
             dependsOn("kspCommonMainKotlinMetadata")
         }

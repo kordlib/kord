@@ -25,6 +25,7 @@ kotlinpoet = "1.15.3" # https://github.com/square/kotlinpoet
 junit5 = "5.10.1" # https://github.com/junit-team/junit5
 mockk = "1.13.8" # https://github.com/mockk/mockk
 slf4j = "2.0.9" # https://www.slf4j.org
+okio = "3.5.0"
 
 # plugins
 dokka = "1.9.10" # https://github.com/Kotlin/dokka
@@ -83,6 +84,7 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
 kotlinx-resources = { module = "com.goncalossilva:resources", version.ref = "kotlinx-resources" }
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 # actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
 # https://docs.gradle.org/current/userguide/custom_plugins.html#applying_external_plugins_in_precompiled_script_plugins

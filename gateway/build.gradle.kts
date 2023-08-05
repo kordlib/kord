@@ -1,6 +1,6 @@
 plugins {
-    `kord-multiplatform-module`
     `kord-native-module`
+    `kord-multiplatform-module`
     `kord-publishing`
 }
 

@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
 
 plugins {
-    `kord-multiplatform-module`
     `kord-native-module`
+    `kord-multiplatform-module`
     `kord-publishing`
 }
 

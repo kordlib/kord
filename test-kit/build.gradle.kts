@@ -1,6 +1,6 @@
 plugins {
-    `kord-internal-multiplatform-module`
     `kord-native-module`
+    `kord-internal-multiplatform-module`
 }
 
 kotlin {
@@ -19,6 +19,11 @@ kotlin {
         jvmMain {
             dependencies {
                 api(libs.bundles.test.jvm)
+            }
+        }
+        nativeMain {
+            dependencies {
+                api(libs.okio)
             }
         }
     }

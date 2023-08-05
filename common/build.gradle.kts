@@ -1,6 +1,6 @@
 plugins {
-    `kord-multiplatform-module`
     `kord-native-module`
+    `kord-multiplatform-module`
     `kord-publishing`
     alias(libs.plugins.buildconfig)
 }
@@ -58,7 +58,7 @@ kotlin {
             }
         }
 
-        linuxMain {
+        findByName("linuxMain")?.apply {
             dependencies {
                 api(libs.ktor.client.curl)
             }

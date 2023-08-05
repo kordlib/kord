@@ -1,8 +1,8 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 
 plugins {
-    `kord-internal-multiplatform-module`
     `kord-native-module`
+    `kord-internal-multiplatform-module`
 
     // workaround for https://youtrack.jetbrains.com/issue/KT-43500 (not intended to be published)
     org.jetbrains.dokka

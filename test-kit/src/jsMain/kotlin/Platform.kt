@@ -1,5 +1,6 @@
 package dev.kord.test
 
+import io.ktor.utils.io.*
 import node.process.process
 
 actual object Platform {
@@ -18,3 +19,9 @@ actual object Platform {
 }
 
 actual fun getEnv(name: String) = process.env[name]
+
+actual suspend fun file(project: String, path: String): String =
+    if (Platform.IS_NODE) nodeFile(project, path) else TODO("Browser JS is not supported yet")
+
+actual suspend fun readFile(project: String, path: String): ByteReadChannel =
+    if (Platform.IS_NODE) nodeReadFile(project, path) else TODO("Browser JS is not supported yet")
