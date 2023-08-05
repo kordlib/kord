@@ -32,6 +32,11 @@ kotlin {
                 withNative()
                 withJs()
             }
+
+            group("nonNative") {
+                    withJs()
+                withJvm()
+            }
         }
     }
 
