@@ -14,3 +14,8 @@ expect annotation class IgnoreOnJs()
 @Target(CLASS, FUNCTION)
 @OptionalExpectation
 expect annotation class IgnoreOnJvm()
+
+/** Ignores this test on Native platforms. */
+@Target(CLASS, FUNCTION)
+@OptionalExpectation
+expect annotation class IgnoreOnNative()

@@ -8,6 +8,7 @@ plugins {
     `kotlinx-atomicfu`
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
+    com.goncalossilva.resources
 }
 
 repositories {

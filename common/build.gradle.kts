@@ -1,5 +1,6 @@
 plugins {
     `kord-multiplatform-module`
+    `kord-native-module`
     `kord-publishing`
     alias(libs.plugins.buildconfig)
 }
@@ -35,6 +36,31 @@ kotlin {
                 // workaround for https://youtrack.jetbrains.com/issue/KT-43500
                 // (intended to be compileOnly in commonMain only)
                 implementation(projects.kspAnnotations)
+            }
+        }
+
+        nativeMain {
+            dependencies {
+                // Native does not have compileOnly
+                implementation(projects.kspAnnotations)
+            }
+        }
+
+        mingwMain {
+            dependencies {
+                api(libs.ktor.client.winhttp)
+            }
+        }
+
+        appleMain {
+            dependencies {
+                api(libs.ktor.client.darwin)
+            }
+        }
+
+        linuxMain {
+            dependencies {
+                api(libs.ktor.client.curl)
             }
         }
     }
