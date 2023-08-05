@@ -1,6 +1,8 @@
+import com.vanniktech.maven.publish.JavaPlatform
+
 plugins {
     `java-platform`
-    `maven-publish`
+    id("com.vanniktech.maven.publish.base")
 }
 
 val me = project
@@ -26,10 +28,8 @@ dependencies {
     }
 }
 
-publishing {
-    publications.register<MavenPublication>(Library.name) {
-        from(components["javaPlatform"])
-    }
+mavenPublishing {
+    configure(JavaPlatform())
 }
 
 apply(plugin = "kord-publishing")
