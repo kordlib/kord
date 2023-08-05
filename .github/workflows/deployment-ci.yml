@@ -8,6 +8,9 @@ on:
       - '**' # We want to run this on all branch pushes
     tags-ignore:
       - '**' # We don't want this to run on tags pushes
+    branches-ignore:
+      # CI is not setup for Native
+      - 'feature/native'
   pull_request:
   release:
     types: [ published ]
