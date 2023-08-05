@@ -1,4 +1,5 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
 plugins {
@@ -23,7 +24,17 @@ apiValidation {
     applyKordBCVOptions()
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    targetHierarchy.default {
+        common {
+            group("nonJvm") {
+                withNative()
+                withJs()
+            }
+        }
+    }
+
     explicitApi()
 
     jvm()
@@ -51,17 +62,6 @@ kotlin {
                 implementation(project(":test-kit"))
             }
         }
-        val nonJvmMain by creating {
-            dependsOn(commonMain.get())
-        }
-        targets
-            .map { it.name }
-            .filter { it != "jvm" && it != "metadata" }
-            .forEach { target ->
-                sourceSets.getByName("${target}Main") {
-                    dependsOn(nonJvmMain)
-                }
-            }
     }
 }
 
