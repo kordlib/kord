@@ -42,8 +42,8 @@ jobs:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.NEXUS_USER }}
       ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.NEXUS_PASSWORD }}
-      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.signingKey }}
-      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.signingPassword }}
+      SIGNING_KEY: ${{ secrets.signingKey }}
+      SIGNING_PASSWORD: ${{ secrets.signingPassword }}
     steps:
       - uses: actions/checkout@v3
         with:

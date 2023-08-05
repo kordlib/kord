@@ -1,10 +1,20 @@
+import java.util.Base64
+
 plugins {
     // For some reason, Gradle does not generate an accessor for this
     id("com.vanniktech.maven.publish.base")
+    signing
 }
 
 group = Library.group
 version = libraryVersion
+
+signing {
+    val secretKey = System.getenv("SIGNING_KEY")?.let { String(Base64.getDecoder().decode(it)) }
+    val password = System.getenv("SIGNING_PASSWORD")
+    useInMemoryPgpKeys(secretKey, password)
+    sign(publishing.publications)
+}
 
 mavenPublishing {
     coordinates(Library.group, "kord-${project.name}", libraryVersion)
