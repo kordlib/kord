@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -8,7 +10,7 @@ plugins {
     `kotlinx-atomicfu`
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
-    `maven-publish`
+    id("com.vanniktech.maven.publish.base")
 }
 
 repositories {
@@ -51,9 +53,6 @@ tasks {
     }
 }
 
-publishing {
-    publications.register<MavenPublication>(Library.name) {
-        from(components["java"])
-        artifact(tasks.kotlinSourcesJar)
-    }
+mavenPublishing {
+    configure(KotlinJvm(javadocJar = JavadocJar.Dokka("dokkaHtml")))
 }

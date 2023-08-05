@@ -29,6 +29,7 @@ dokka = "1.8.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.21.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.13.2" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "4.1.2" # https://github.com/gmazzo/gradle-buildconfig-plugin
+maven-publish-plugin = "0.25.3"
 
 
 [libraries]
@@ -84,7 +85,7 @@ dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref
 atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", version.ref = "kotlinx-atomicfu" }
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
-
+maven-publish-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "maven-publish-plugin" }
 
 [bundles]
 
@@ -101,6 +102,7 @@ pluginsForBuildSrc = [
     "atomicfu-plugin",
     "binary-compatibility-validator-plugin",
     "ksp-plugin",
+    "maven-publish-plugin"
 ]
 
 

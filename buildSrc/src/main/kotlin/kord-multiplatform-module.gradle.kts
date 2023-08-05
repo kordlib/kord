@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
@@ -8,6 +10,7 @@ plugins {
     `kotlinx-atomicfu`
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
+    id("com.vanniktech.maven.publish.base")
 }
 
 repositories {
@@ -91,4 +94,8 @@ tasks {
         applyKordDokkaOptions()
         dependsOn("kspCommonMainKotlinMetadata")
     }
+}
+
+mavenPublishing {
+    configure(KotlinMultiplatform(javadocJar = JavadocJar.Dokka("dokkaHtml")))
 }

@@ -40,10 +40,10 @@ jobs:
       !contains(github.event.head_commit.message, '[publish skip]') && github.event_name != 'pull_request' &&  github.ref != 'refs/heads/master'
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
-      NEXUS_USER: ${{ secrets.NEXUS_USER }}
-      NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-      SIGNING_KEY: ${{ secrets.signingKey }}
-      SIGNING_PASSWORD: ${{ secrets.signingPassword }}
+      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.NEXUS_USER }}
+      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.NEXUS_PASSWORD }}
+      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.signingKey }}
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.signingPassword }}
     steps:
       - uses: actions/checkout@v3
         with:
