@@ -75,5 +75,5 @@ signing {
     val secretKey = getenv("SIGNING_KEY")?.let { String(Base64.getDecoder().decode(it)) }
     val password = getenv("SIGNING_PASSWORD")
     useInMemoryPgpKeys(secretKey, password)
-    sign(publishing.publications)
+    //sign(publishing.publications)
 }
