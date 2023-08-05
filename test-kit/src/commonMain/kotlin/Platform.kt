@@ -13,7 +13,5 @@ expect object Platform {
 }
 
 expect fun getEnv(name: String): String?
-fun file(path: String): String = resource(path).readText()
-fun readFile(path: String): ByteReadChannel = ByteReadChannel(resource(path).readBytes())
-
-private fun resource(path: String) = Resource("src/commonTest/resources/$path")
+expect suspend fun file(project: String, path: String): String
+expect suspend fun readFile(project: String, path: String): ByteReadChannel
