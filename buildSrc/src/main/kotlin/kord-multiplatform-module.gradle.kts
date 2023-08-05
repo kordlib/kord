@@ -24,6 +24,15 @@ apiValidation {
 }
 
 kotlin {
+    applyDefaultHierarchyTemplate {
+        common {
+            group("nonJvm") {
+                withNative()
+                withJs()
+            }
+        }
+    }
+
     explicitApi()
 
     jvm()
@@ -37,8 +46,6 @@ kotlin {
             compilerOptions.options.applyKordCompilerOptions()
         }
     }
-
-    applyDefaultHierarchyTemplate()
 
     sourceSets {
         all {

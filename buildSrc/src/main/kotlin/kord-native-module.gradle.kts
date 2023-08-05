@@ -3,8 +3,6 @@ plugins {
 }
 
 kotlin {
-    targetHierarchy.default()
-
     linuxX64()
     // Waiting for Ktor
     // https://youtrack.jetbrains.com/issue/KTOR-872
