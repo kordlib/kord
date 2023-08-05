@@ -81,20 +81,21 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    val compilationTasks = kotlin.targets.flatMap {
-        buildList {
-            add("compileKotlin${it.name.capitalized()}")
-            val sourcesJarName = "${it.name}SourcesJar"
-            if (tasks.findByName(sourcesJarName) != null) {
+    afterEvaluate {
+        val compilationTasks = kotlin.targets.flatMap {
+            buildList {
+                add("compileKotlin${it.name.capitalized()}")
+                val sourcesJarName = "${it.name}SourcesJar"
                 add(sourcesJarName)
             }
         }
-    }
-    for (task in compilationTasks) {
-        named(task) {
-            dependsOn("kspCommonMainKotlinMetadata")
+        for (task in compilationTasks) {
+            named(task) {
+                dependsOn("kspCommonMainKotlinMetadata")
+            }
         }
     }
+
 
     register("publishNonNative") {
         dependsOn(
