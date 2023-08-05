@@ -1,7 +1,6 @@
 import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
 plugins {
@@ -85,8 +84,9 @@ tasks {
     val compilationTasks = kotlin.targets.flatMap {
         buildList {
             add("compileKotlin${it.name.capitalized()}")
-            if (it !is KotlinNativeTarget) {
-                add("${it.name}SourcesJar")
+            val sourcesJarName = "${it.name}SourcesJar"
+            if (tasks.findByName(sourcesJarName) != null) {
+                add(sourcesJarName)
             }
         }
     }
