@@ -14,6 +14,8 @@ import kotlinx.datetime.Clock
 import mu.KLogger
 import kotlin.time.Duration.Companion.minutes
 
+internal expect val useUpdate: Boolean
+
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
@@ -67,7 +69,11 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                 when (response) {
                     is RequestResponse.GlobalRateLimit -> {
                         logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
-                        globalSuspensionPoint.update { response.reset }
+                        if (useUpdate) {
+                            globalSuspensionPoint.update { response.reset }
+                        } else {
+                            globalSuspensionPoint.value = response.reset
+                        }
                     }
                     is RequestResponse.BucketRateLimit -> {
                         logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
@@ -93,7 +99,11 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
         }
 
         fun updateReset(newValue: Reset) {
-            reset.update { newValue }
+            if (useUpdate) {
+                reset.update { newValue }
+            } else {
+                reset.value = newValue
+            }
         }
 
         fun unlock() = mutex.unlock()
