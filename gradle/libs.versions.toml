@@ -9,7 +9,7 @@ kotlinx-datetime = "0.5.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "6.0.1" # https://github.com/oshai/kotlin-logging
 kotlin-logging-old = "3.0.5" # TODO remove after dependency is removed in rest, gateway, voice and core
 # This is the specific release supporting native, until we setup CI
-kord-cache = "0.5.x-20230411.160140-1" # https://github.com/kordlib/cache
+kord-cache = "0.5.x-20230806.144015-3" # https://github.com/kordlib/cache
 
 # implementation dependencies
 kotlin-node = "18.16.12-pre.619" # https://github.com/JetBrains/kotlin-wrappers
