@@ -1,5 +1,4 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     org.jetbrains.kotlin.jvm
