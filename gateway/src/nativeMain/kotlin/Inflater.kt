@@ -38,7 +38,7 @@ internal actual class Inflater : Closeable {
                 if (resultCode != Z_OK && resultCode != Z_STREAM_END) {
                     throw IllegalStateException("An error occurred during decompression of frame: $resultCode")
                 }
-                out += uncompressedData.readBytes(uncompressedDataSize - zStream.avail_out.toInt())
+                out += uncompressedData.readBytes(uncompressedDataSize - zStream.avail_out.convert<Int>())
             } while (zStream.avail_out == 0u)
         }
 
