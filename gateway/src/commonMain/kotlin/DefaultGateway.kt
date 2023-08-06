@@ -195,6 +195,8 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     }
 
     private suspend fun handleClose() {
+        inflater.close()
+
         val reason = withTimeoutOrNull(1500) {
             socket.closeReason.await()
         } ?: return
