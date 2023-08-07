@@ -9,6 +9,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.behavior.channel.CategoryBehavior
 import dev.kord.core.cache.data.*
 import dev.kord.core.cache.idEq
 import dev.kord.core.catchDiscordError
@@ -822,6 +823,29 @@ public suspend inline fun GuildBehavior.createNewsChannel(
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
+}
+
+/**
+ * Requests to create a new stage channel.
+ *
+ * @return The created [StageChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+public suspend inline fun CategoryBehavior.createStageChannel(
+    name: String,
+    builder: StageChannelCreateBuilder.() -> Unit = {}
+): StageChannel {
+    contract {
+        callsInPlace(builder, EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createStageChannel(guildId, name) {
+        builder()
+        parentId = id
+    }
+    val data = ChannelData.from(response)
+
+    return Channel.from(data, kord) as StageChannel
 }
 
 

@@ -6,23 +6,17 @@ import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.*
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
-import dev.kord.rest.builder.channel.CategoryModifyBuilder
-import dev.kord.rest.builder.channel.NewsChannelCreateBuilder
-import dev.kord.rest.builder.channel.TextChannelCreateBuilder
-import dev.kord.rest.builder.channel.VoiceChannelCreateBuilder
+import dev.kord.rest.builder.channel.*
 import dev.kord.rest.request.RestRequestException
-import dev.kord.rest.service.createNewsChannel
-import dev.kord.rest.service.createTextChannel
-import dev.kord.rest.service.createVoiceChannel
-import dev.kord.rest.service.patchCategory
+import dev.kord.rest.service.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
-import dev.kord.core.hash
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -197,4 +191,26 @@ public suspend inline fun CategoryBehavior.createNewsChannel(
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
+}
+/**
+ * Requests to create a new stage channel with this category as parent.
+ *
+ * @return The created [StageChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+public suspend inline fun CategoryBehavior.createStageChannel(
+    name: String,
+    builder: StageChannelCreateBuilder.() -> Unit = {}
+): StageChannel {
+    contract {
+        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createStageChannel(guildId, name) {
+        builder()
+        parentId = id
+    }
+    val data = ChannelData.from(response)
+
+    return Channel.from(data, kord) as StageChannel
 }
