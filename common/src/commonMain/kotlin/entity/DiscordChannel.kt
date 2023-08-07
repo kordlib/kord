@@ -41,6 +41,23 @@
 )
 
 @file:Generate(
+    INT_FLAGS, name = "ChannelFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
+    hadFlagsProperty = true,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-channel-flags",
+    entries = [
+        Entry(
+            "Pinned", shift = 1,
+            kDoc = "This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] channel.",
+        ),
+        Entry(
+            "RequireTag", shift = 4,
+            kDoc = "Whether a tag is required to be specified when creating a thread in a " +
+                "[GuildForum][ChannelType.GuildForum] channel.",
+        ),
+    ],
+)
+
+@file:Generate(
     INT_KORD_ENUM, name = "VideoQualityMode",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes",
     entries = [
@@ -76,7 +93,6 @@
 
 package dev.kord.common.entity
 
-import dev.kord.common.entity.ChannelType.GuildForum
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
@@ -84,15 +100,13 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInMinutesSerializer
 import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.LazyThreadSafetyMode.PUBLICATION
@@ -165,95 +179,28 @@ public data class DiscordChannel(
     val message: Optional<DiscordMessage> = Optional.Missing(),
 )
 
-public enum class ChannelFlag(public val code: Int) {
-
-    /** This thread is pinned to the top of its parent [GuildForum] channel. */
-    Pinned(1 shl 1),
-
-    /** Whether a tag is required to be specified when creating a thread in a [GuildForum] channel. */
-    RequireTag(1 shl 4);
-
-
-    public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
-
-    public operator fun plus(flags: ChannelFlags): ChannelFlags = flags + this
-}
-
-@Serializable(with = ChannelFlags.Serializer::class)
-public data class ChannelFlags internal constructor(public val code: Int) {
-
-    public val flags: List<ChannelFlag> get() = ChannelFlag.values().filter { it in this }
-
-    public operator fun contains(flag: ChannelFlag): Boolean = this.code and flag.code == flag.code
-
-    public operator fun contains(flags: ChannelFlags): Boolean = this.code and flags.code == flags.code
-
-    public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
-
-    public operator fun plus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code or flags.code)
-
-    public operator fun minus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code and flag.code.inv())
-
-    public operator fun minus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code and flags.code.inv())
-
-
-    public inline fun copy(builder: Builder.() -> Unit): ChannelFlags {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return Builder(code).apply(builder).build()
-    }
-
-
-    internal object Serializer : KSerializer<ChannelFlags> {
-
-        override val descriptor: SerialDescriptor =
-            PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelFlags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ChannelFlags {
-            val code = decoder.decodeInt()
-            return ChannelFlags(code)
-        }
-
-        override fun serialize(encoder: Encoder, value: ChannelFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-
-    public class Builder(private var code: Int = 0) {
-
-        public operator fun ChannelFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ChannelFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ChannelFlag.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public operator fun ChannelFlags.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public fun build(): ChannelFlags = ChannelFlags(code)
-    }
-}
-
-public inline fun ChannelFlags(builder: ChannelFlags.Builder.() -> Unit): ChannelFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ChannelFlags")
+public inline fun channelFlags(builder: ChannelFlags.Builder.() -> Unit): ChannelFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return ChannelFlags.Builder().apply(builder).build()
+    return ChannelFlags.Builder().apply(builder).flags()
 }
 
-public fun ChannelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ChannelFlags")
+public fun channelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
-public fun ChannelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ChannelFlags")
+public fun channelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
-public fun ChannelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ChannelFlags")
+public fun channelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
-@JvmName("ChannelFlags0")
-public fun ChannelFlags(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+@Suppress("FunctionName")
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+public fun ChannelFlags0(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
 @Serializable
 public data class Overwrite(

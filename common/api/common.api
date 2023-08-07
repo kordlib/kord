@@ -1609,19 +1609,57 @@ public final class dev/kord/common/entity/ButtonStyle$Unknown : dev/kord/common/
 	public fun <init> (I)V
 }
 
-public final class dev/kord/common/entity/ChannelFlag : java/lang/Enum {
+public abstract class dev/kord/common/entity/ChannelFlag {
+	public static final field Companion Ldev/kord/common/entity/ChannelFlag$Companion;
 	public static final field Pinned Ldev/kord/common/entity/ChannelFlag;
 	public static final field RequireTag Ldev/kord/common/entity/ChannelFlag;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
+	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun hashCode ()I
+	public final fun name ()Ljava/lang/String;
+	public final fun ordinal ()I
 	public final fun plus (Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
 	public final fun plus (Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;
+	public final fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ChannelFlag;
 	public static fun values ()[Ldev/kord/common/entity/ChannelFlag;
 }
 
+public final class dev/kord/common/entity/ChannelFlag$Companion {
+	public final fun getEntries ()Ljava/util/List;
+	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ChannelFlag;
+	public fun values ()[Ldev/kord/common/entity/ChannelFlag;
+}
+
+public final class dev/kord/common/entity/ChannelFlag$Pinned : dev/kord/common/entity/ChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelFlag$Pinned;
+}
+
+public final class dev/kord/common/entity/ChannelFlag$RequireTag : dev/kord/common/entity/ChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelFlag$RequireTag;
+}
+
+public final class dev/kord/common/entity/ChannelFlag$Unknown : dev/kord/common/entity/ChannelFlag {
+	public fun <init> (I)V
+}
+
+public final class dev/kord/common/entity/ChannelFlagKt {
+	public static final fun ChannelFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
+	public static final fun ChannelFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ChannelFlags;
+	public static final fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
+	public static final fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;
+	public static final fun ChannelFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
+}
+
 public final class dev/kord/common/entity/ChannelFlags {
 	public static final field Companion Ldev/kord/common/entity/ChannelFlags$Companion;
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/ChannelFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ChannelFlags;)Z
@@ -1631,6 +1669,7 @@ public final class dev/kord/common/entity/ChannelFlags {
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getFlags ()Ljava/util/List;
+	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
 	public final fun minus (Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;
@@ -1643,7 +1682,7 @@ public final class dev/kord/common/entity/ChannelFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun build ()Ldev/kord/common/entity/ChannelFlags;
+	public final fun flags ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/ChannelFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/ChannelFlag;)V
@@ -3096,11 +3135,11 @@ public final class dev/kord/common/entity/DiscordChannel$Companion {
 }
 
 public final class dev/kord/common/entity/DiscordChannelKt {
-	public static final fun ChannelFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
-	public static final fun ChannelFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ChannelFlags;
-	public static final fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
-	public static final fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;
-	public static final fun ChannelFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
+	public static final synthetic fun ChannelFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
+	public static final synthetic fun ChannelFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ChannelFlags;
+	public static final synthetic fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
+	public static final synthetic fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;
+	public static final synthetic fun ChannelFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
 }
 
 public final class dev/kord/common/entity/DiscordChatComponent : dev/kord/common/entity/DiscordComponent {
