@@ -838,10 +838,7 @@ public suspend inline fun GuildBehavior.createStageChannel(
     contract {
         callsInPlace(builder, EXACTLY_ONCE)
     }
-    val response = kord.rest.guild.createStageChannel(id, name) {
-        builder()
-        parentId = id
-    }
+    val response = kord.rest.guild.createStageChannel(id, name, builder)
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as StageChannel
