@@ -1332,6 +1332,7 @@ public final class dev/kord/gateway/Intents$Builder {
 	public fun <init> ()V
 	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
 	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/gateway/Intents;
 	public final fun flags ()Ldev/kord/gateway/Intents;
 	public final fun unaryMinus (Ldev/kord/gateway/Intent;)V
 	public final fun unaryMinus (Ldev/kord/gateway/Intents;)V

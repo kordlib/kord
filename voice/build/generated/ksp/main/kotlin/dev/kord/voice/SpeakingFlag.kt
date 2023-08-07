@@ -111,7 +111,7 @@ public class SpeakingFlags(
 
     public inline fun copy(block: Builder.() -> Unit): SpeakingFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(code).apply(block).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -140,7 +140,16 @@ public class SpeakingFlags(
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public fun flags(): SpeakingFlags = SpeakingFlags(code)
+        public fun build(): SpeakingFlags = SpeakingFlags(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): SpeakingFlags = build()
     }
 
     internal object Serializer : KSerializer<SpeakingFlags> {
@@ -160,7 +169,7 @@ public class SpeakingFlags(
 
 public inline fun SpeakingFlags(builder: SpeakingFlags.Builder.() -> Unit): SpeakingFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return SpeakingFlags.Builder().apply(builder).flags()
+    return SpeakingFlags.Builder().apply(builder).build()
 }
 
 public fun SpeakingFlags(vararg flags: SpeakingFlag): SpeakingFlags = SpeakingFlags {

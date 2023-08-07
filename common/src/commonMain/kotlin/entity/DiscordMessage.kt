@@ -435,7 +435,7 @@ public data class DiscordMentionedChannel(
 @JvmName("MessageFlags")
 public inline fun messageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return MessageFlags.Builder().apply(builder).flags()
+    return MessageFlags.Builder().apply(builder).build()
 }
 
 @Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)

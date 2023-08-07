@@ -112,7 +112,7 @@ public class ActivityFlags(
 
     public inline fun copy(block: Builder.() -> Unit): ActivityFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(value).apply(block).flags()
+        return Builder(value).apply(block).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -141,7 +141,16 @@ public class ActivityFlags(
             this@Builder.value = this@Builder.value and this.value.inv()
         }
 
-        public fun flags(): ActivityFlags = ActivityFlags(value)
+        public fun build(): ActivityFlags = ActivityFlags(value)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): ActivityFlags = build()
     }
 
     internal object Serializer : KSerializer<ActivityFlags> {
@@ -161,7 +170,7 @@ public class ActivityFlags(
 
 public inline fun ActivityFlags(builder: ActivityFlags.Builder.() -> Unit): ActivityFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return ActivityFlags.Builder().apply(builder).flags()
+    return ActivityFlags.Builder().apply(builder).build()
 }
 
 public fun ActivityFlags(vararg flags: ActivityFlag): ActivityFlags = ActivityFlags {

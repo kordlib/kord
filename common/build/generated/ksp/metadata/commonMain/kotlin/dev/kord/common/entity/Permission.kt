@@ -95,7 +95,7 @@ public class Permissions(
 
     public inline fun copy(block: Builder.() -> Unit): Permissions {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(code).apply(block).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -141,7 +141,16 @@ public class Permissions(
             this@Builder.code.remove(this.code)
         }
 
-        public fun flags(): Permissions = Permissions(code)
+        public fun build(): Permissions = Permissions(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): Permissions = build()
     }
 
     internal object Serializer : KSerializer<Permissions> {
@@ -162,7 +171,7 @@ public class Permissions(
 
 public inline fun Permissions(builder: Permissions.Builder.() -> Unit): Permissions {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return Permissions.Builder().apply(builder).flags()
+    return Permissions.Builder().apply(builder).build()
 }
 
 public fun Permissions(vararg flags: Permission): Permissions = Permissions { flags.forEach { +it }

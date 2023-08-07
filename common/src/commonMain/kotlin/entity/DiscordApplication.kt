@@ -149,7 +149,7 @@ public data class DiscordPartialApplication(
 @JvmName("ApplicationFlags")
 public inline fun applicationFlags(builder: ApplicationFlags.Builder.() -> Unit): ApplicationFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return ApplicationFlags.Builder().apply(builder).flags()
+    return ApplicationFlags.Builder().apply(builder).build()
 }
 
 @Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)

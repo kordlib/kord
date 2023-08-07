@@ -95,7 +95,7 @@ public class Intents(
 
     public inline fun copy(block: Builder.() -> Unit): Intents {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(code).apply(block).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -140,7 +140,16 @@ public class Intents(
             this@Builder.code.remove(this.code)
         }
 
-        public fun flags(): Intents = Intents(code)
+        public fun build(): Intents = Intents(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): Intents = build()
     }
 
     internal object Serializer : KSerializer<Intents> {
@@ -160,7 +169,7 @@ public class Intents(
 
 public inline fun Intents(builder: Intents.Builder.() -> Unit): Intents {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return Intents.Builder().apply(builder).flags()
+    return Intents.Builder().apply(builder).build()
 }
 
 public fun Intents(vararg flags: Intent): Intents = Intents { flags.forEach { +it } }

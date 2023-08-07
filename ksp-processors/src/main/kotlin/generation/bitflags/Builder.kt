@@ -1,6 +1,7 @@
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.DelicateKotlinPoetApi
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.*
@@ -69,9 +70,23 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
             )
         }
 
-        addFunction("flags") {
+        addFunction("build") {
             returns(collectionName)
             addStatement("return %T($valueName)", collectionName)
+        }
+
+        addFunction("flags") {
+            addKdoc("@suppress")
+            @OptIn(DelicateKotlinPoetApi::class)
+            addAnnotation(
+                Deprecated(
+                    "Renamed to 'build'",
+                    ReplaceWith("this.build()", imports = emptyArray()),
+                    DeprecationLevel.WARNING,
+                )
+            )
+            returns(collectionName)
+            addStatement("return build()")
         }
     }
 }

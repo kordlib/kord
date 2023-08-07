@@ -288,6 +288,7 @@ public final class dev/kord/common/entity/ActivityFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/ActivityFlags;
 	public final fun flags ()Ldev/kord/common/entity/ActivityFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/ActivityFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/ActivityFlags;)V
@@ -734,6 +735,7 @@ public final class dev/kord/common/entity/ApplicationFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/ApplicationFlags;
 	public final fun flags ()Ldev/kord/common/entity/ApplicationFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/ApplicationFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/ApplicationFlags;)V
@@ -1682,6 +1684,7 @@ public final class dev/kord/common/entity/ChannelFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun flags ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/ChannelFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/ChannelFlags;)V
@@ -6860,6 +6863,7 @@ public final class dev/kord/common/entity/GuildMemberFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/GuildMemberFlags;
 	public final fun flags ()Ldev/kord/common/entity/GuildMemberFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/GuildMemberFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/GuildMemberFlags;)V
@@ -7462,6 +7466,7 @@ public final class dev/kord/common/entity/MessageFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/MessageFlags;
 	public final fun flags ()Ldev/kord/common/entity/MessageFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/MessageFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/MessageFlags;)V
@@ -8109,6 +8114,7 @@ public final class dev/kord/common/entity/Permissions$Builder {
 	public fun <init> ()V
 	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
 	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/Permissions;
 	public final fun flags ()Ldev/kord/common/entity/Permissions;
 	public final fun unaryMinus (Ldev/kord/common/entity/Permission;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/Permissions;)V
@@ -8544,6 +8550,7 @@ public final class dev/kord/common/entity/SystemChannelFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/SystemChannelFlags;
 	public final fun flags ()Ldev/kord/common/entity/SystemChannelFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/SystemChannelFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/SystemChannelFlags;)V
@@ -8750,6 +8757,7 @@ public final class dev/kord/common/entity/UserFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/UserFlags;
 	public final fun flags ()Ldev/kord/common/entity/UserFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/UserFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/UserFlags;)V

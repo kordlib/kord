@@ -116,7 +116,7 @@ public class ApplicationFlags(
 
     public inline fun copy(block: Builder.() -> Unit): ApplicationFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(code).apply(block).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -162,7 +162,16 @@ public class ApplicationFlags(
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public fun flags(): ApplicationFlags = ApplicationFlags(code)
+        public fun build(): ApplicationFlags = ApplicationFlags(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): ApplicationFlags = build()
     }
 
     internal object Serializer : KSerializer<ApplicationFlags> {
@@ -183,7 +192,7 @@ public class ApplicationFlags(
 
 public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit): ApplicationFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return ApplicationFlags.Builder().apply(builder).flags()
+    return ApplicationFlags.Builder().apply(builder).build()
 }
 
 public fun ApplicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {

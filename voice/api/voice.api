@@ -319,6 +319,7 @@ public final class dev/kord/voice/SpeakingFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/voice/SpeakingFlags;
 	public final fun flags ()Ldev/kord/voice/SpeakingFlags;
 	public final fun unaryMinus (Ldev/kord/voice/SpeakingFlag;)V
 	public final fun unaryMinus (Ldev/kord/voice/SpeakingFlags;)V

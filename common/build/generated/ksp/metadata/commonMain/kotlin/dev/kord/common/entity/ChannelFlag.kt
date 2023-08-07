@@ -110,7 +110,7 @@ public class ChannelFlags(
 
     public inline fun copy(block: Builder.() -> Unit): ChannelFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(code).apply(block).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -156,7 +156,16 @@ public class ChannelFlags(
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public fun flags(): ChannelFlags = ChannelFlags(code)
+        public fun build(): ChannelFlags = ChannelFlags(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): ChannelFlags = build()
     }
 
     internal object Serializer : KSerializer<ChannelFlags> {
@@ -176,7 +185,7 @@ public class ChannelFlags(
 
 public inline fun ChannelFlags(builder: ChannelFlags.Builder.() -> Unit): ChannelFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return ChannelFlags.Builder().apply(builder).flags()
+    return ChannelFlags.Builder().apply(builder).build()
 }
 
 public fun ChannelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags {

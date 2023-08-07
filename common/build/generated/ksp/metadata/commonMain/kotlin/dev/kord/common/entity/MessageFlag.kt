@@ -110,7 +110,7 @@ public class MessageFlags(
 
     public inline fun copy(block: Builder.() -> Unit): MessageFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(code).apply(block).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -156,7 +156,16 @@ public class MessageFlags(
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public fun flags(): MessageFlags = MessageFlags(code)
+        public fun build(): MessageFlags = MessageFlags(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): MessageFlags = build()
     }
 
     internal object Serializer : KSerializer<MessageFlags> {
@@ -176,7 +185,7 @@ public class MessageFlags(
 
 public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return MessageFlags.Builder().apply(builder).flags()
+    return MessageFlags.Builder().apply(builder).build()
 }
 
 public fun MessageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {

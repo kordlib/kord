@@ -108,7 +108,7 @@ public class GuildMemberFlags(
 
     public inline fun copy(block: Builder.() -> Unit): GuildMemberFlags {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).flags()
+        return Builder(code).apply(block).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -154,7 +154,16 @@ public class GuildMemberFlags(
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
-        public fun flags(): GuildMemberFlags = GuildMemberFlags(code)
+        public fun build(): GuildMemberFlags = GuildMemberFlags(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): GuildMemberFlags = build()
     }
 
     internal object Serializer : KSerializer<GuildMemberFlags> {
@@ -175,7 +184,7 @@ public class GuildMemberFlags(
 
 public inline fun GuildMemberFlags(builder: GuildMemberFlags.Builder.() -> Unit): GuildMemberFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return GuildMemberFlags.Builder().apply(builder).flags()
+    return GuildMemberFlags.Builder().apply(builder).build()
 }
 
 public fun GuildMemberFlags(vararg flags: GuildMemberFlag): GuildMemberFlags = GuildMemberFlags {

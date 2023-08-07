@@ -61,7 +61,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addParameter("block", type = LambdaTypeName.get(receiver = builderName, returnType = UNIT))
             returns(collectionName)
             addStatement("%M { callsInPlace(block, %M) }", CONTRACT, EXACTLY_ONCE)
-            addStatement("return %T($valueName).apply(block).flags()", builderName)
+            addStatement("return %T($valueName).apply(block).build()", builderName)
         }
         addEqualsAndHashCode(collectionName)
         addFunction("toString") {
@@ -159,7 +159,7 @@ private fun FileSpec.Builder.addFactoryFunctions(collectionName: ClassName, buil
         returns(collectionName)
 
         addStatement("%M { callsInPlace(builder, %M) }", CONTRACT, EXACTLY_ONCE)
-        addStatement("return %T().apply(builder).flags()", builderName)
+        addStatement("return %T().apply(builder).build()", builderName)
     }
 
     addFunction(factoryFunctionName) {
