@@ -824,6 +824,26 @@ public suspend inline fun GuildBehavior.createNewsChannel(
     return Channel.from(data, kord) as NewsChannel
 }
 
+/**
+ * Requests to create a new stage channel.
+ *
+ * @return The created [StageChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.createStageChannel(
+    name: String,
+    builder: StageChannelCreateBuilder.() -> Unit = {}
+): StageChannel {
+    contract {
+        callsInPlace(builder, EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createStageChannel(id, name, builder)
+    val data = ChannelData.from(response)
+
+    return Channel.from(data, kord) as StageChannel
+}
+
 
 /**
  * Requests to create a new category.

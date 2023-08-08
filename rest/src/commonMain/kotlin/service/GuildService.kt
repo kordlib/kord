@@ -574,6 +574,16 @@ public suspend inline fun GuildService.createVoiceChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+public suspend inline fun GuildService.createStageChannel(
+    guildId: Snowflake,
+    name: String,
+    builder: StageChannelCreateBuilder.() -> Unit
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val createBuilder = StageChannelCreateBuilder(name).apply(builder)
+    return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
 public suspend inline fun GuildService.createCategory(
     guildId: Snowflake,
     name: String,
