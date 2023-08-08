@@ -192,6 +192,7 @@ public suspend inline fun CategoryBehavior.createNewsChannel(
 
     return Channel.from(data, kord) as NewsChannel
 }
+
 /**
  * Requests to create a new stage channel with this category as parent.
  *

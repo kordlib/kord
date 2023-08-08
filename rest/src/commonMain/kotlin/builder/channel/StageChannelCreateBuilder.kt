@@ -9,14 +9,14 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.serialization.DurationInSeconds
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.GuildChannelCreateRequest
+import kotlin.time.Duration
 
 @KordDsl
 public class StageChannelCreateBuilder(public var name: String) :
-PermissionOverwritesCreateBuilder,
-AuditRequestBuilder<GuildChannelCreateRequest> {
+    PermissionOverwritesCreateBuilder,
+    AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
     private var _bitrate: OptionalInt = OptionalInt.Missing
@@ -25,8 +25,8 @@ AuditRequestBuilder<GuildChannelCreateRequest> {
     private var _userLimit: OptionalInt = OptionalInt.Missing
     public var userLimit: Int? by ::_userLimit.delegate()
 
-    private var _rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing()
-    public var rateLimitPerUser: DurationInSeconds? by ::_rateLimitPerUser.delegate()
+    private var _rateLimitPerUser: Optional<Duration> = Optional.Missing()
+    public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _position: OptionalInt = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
