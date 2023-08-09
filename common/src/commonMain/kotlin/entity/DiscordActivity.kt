@@ -31,6 +31,7 @@ import kotlinx.serialization.encoding.Encoder
 public data class DiscordBotActivity(
     val name: String,
     val type: ActivityType,
+    val state: Optional<String?> = Optional.Missing(),
     val url: Optional<String?> = Optional.Missing()
 )
 
@@ -68,7 +69,7 @@ public enum class ActivityFlag(public val value: Int) {
 public class ActivityFlags(public val value: Int) {
 
     public val flags: Set<ActivityFlag>
-        get() = ActivityFlag.values().filter { (it.value and value) == it.value }.toSet()
+        get() = ActivityFlag.entries.filter { (it.value and value) == it.value }.toSet()
 
     public operator fun contains(flag: ActivityFlag): Boolean = (flag.value and value) == flag.value
 
