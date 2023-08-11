@@ -36,8 +36,9 @@ public class PresenceBuilder {
         game = DiscordBotActivity(name, ActivityType.Competing)
     }
 
-    public fun custom(name: String, state: String) {
-        game = DiscordBotActivity(name, state = Optional(state), type = ActivityType.Custom)
+    public fun custom(state: String) {
+        game = DiscordBotActivity(name = "Custom Status", state = Optional(state), type = ActivityType.Custom)
+    }
     }
 
     public fun toUpdateStatus(): UpdateStatus = UpdateStatus(since, listOfNotNull(game), status, afk)
