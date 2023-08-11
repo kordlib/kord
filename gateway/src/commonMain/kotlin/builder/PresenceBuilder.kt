@@ -5,6 +5,8 @@ import dev.kord.common.entity.ActivityType
 import dev.kord.common.entity.DiscordBotActivity
 import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.delegate.delegate
+import dev.kord.common.entity.optional.orElse
 import dev.kord.gateway.DiscordPresence
 import dev.kord.gateway.UpdateStatus
 import kotlinx.datetime.Instant
@@ -15,6 +17,8 @@ public class PresenceBuilder {
     public var status: PresenceStatus = PresenceStatus.Online
     public var afk: Boolean = false
     public var since: Instant? = null
+    private var _state: Optional<String?> = Optional.Missing()
+    public var state: String? by ::_state.delegate()
 
     public fun playing(name: String) {
         game = DiscordBotActivity(name, ActivityType.Game)
@@ -39,9 +43,11 @@ public class PresenceBuilder {
     public fun custom(state: String) {
         game = DiscordBotActivity(name = "Custom Status", state = Optional(state), type = ActivityType.Custom)
     }
-    }
 
-    public fun toUpdateStatus(): UpdateStatus = UpdateStatus(since, listOfNotNull(game), status, afk)
+    public fun toUpdateStatus(): UpdateStatus = UpdateStatus(since, listOfNotNull(game?.withState(_state)), status, afk)
 
-    public fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since, game)
+    public fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since, game?.withState(_state))
 }
+
+private fun DiscordBotActivity.withState(state: Optional<String?>): DiscordBotActivity =
+    copy(state = this.state.orElse(state))
