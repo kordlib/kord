@@ -254,6 +254,7 @@ public abstract class dev/kord/voice/SpeakingFlag {
 	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getShift ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
 	public final fun ordinal ()I
@@ -265,6 +266,7 @@ public abstract class dev/kord/voice/SpeakingFlag {
 }
 
 public final class dev/kord/voice/SpeakingFlag$Companion {
+	public final fun fromShift (I)Ldev/kord/voice/SpeakingFlag;
 	public final fun getEntries ()Ljava/util/List;
 	public fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
@@ -284,7 +286,6 @@ public final class dev/kord/voice/SpeakingFlag$Soundshare : dev/kord/voice/Speak
 }
 
 public final class dev/kord/voice/SpeakingFlag$Unknown : dev/kord/voice/SpeakingFlag {
-	public fun <init> (I)V
 }
 
 public final class dev/kord/voice/SpeakingFlagKt {

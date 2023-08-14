@@ -6,7 +6,6 @@ package dev.kord.common.entity
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
-import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
@@ -79,7 +78,11 @@ public class Permissions(
     public val code: DiscordBitSet = EmptyBitSet(),
 ) {
     public val values: Set<Permission>
-        get() = Permission.entries.filter { it in this }.toSet()
+        get() = buildSet {
+            for (shift in 0..<code.size) {
+                if (code[shift]) add(Permission.fromShift(shift))
+            }
+        }
 
     public operator fun contains(flag: Permission): Boolean = flag.code in this.code
 
@@ -197,11 +200,22 @@ public sealed class Permission {
      */
     public val code: DiscordBitSet
 
+    private val _shift: Int?
+
+    /**
+     * The position of the bit that is set in this [Permission]. This is always >= 0.
+     */
+    public val shift: Int
+        get() = _shift ?: throw IllegalArgumentException("""shift is not available for $this""")
+
     private constructor(shift: Int) {
+        require(shift >= 0) { """shift has to be >= 0 but was $shift""" }
+        _shift = shift
         this.code = EmptyBitSet().also { it[shift] = true }
     }
 
     private constructor(code: DiscordBitSet) {
+        _shift = null
         this.code = code
     }
 
@@ -210,18 +224,19 @@ public sealed class Permission {
     public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is Permission && this.code == other.code)
+            (other is Permission && this.shift == other.shift)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = "Permission.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = if (this is Unknown) "Permission.Unknown(shift=$shift)"
+            else "Permission.${this::class.simpleName}"
 
     /**
      * An unknown [Permission].
      *
      * This is used as a fallback for [Permission]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown internal constructor(
         shift: Int,
     ) : Permission(shift)
 
@@ -530,6 +545,61 @@ public sealed class Permission {
             )
         }
 
+
+        /**
+         * Returns an instance of [Permission] with [Permission.shift] equal to the specified
+         * [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not >= 0.
+         */
+        public fun fromShift(shift: Int): Permission = when (shift) {
+            0 -> CreateInstantInvite
+            1 -> KickMembers
+            2 -> BanMembers
+            3 -> Administrator
+            4 -> ManageChannels
+            5 -> ManageGuild
+            6 -> AddReactions
+            7 -> ViewAuditLog
+            8 -> PrioritySpeaker
+            9 -> Stream
+            10 -> ViewChannel
+            11 -> SendMessages
+            12 -> SendTTSMessages
+            13 -> ManageMessages
+            14 -> EmbedLinks
+            15 -> AttachFiles
+            16 -> ReadMessageHistory
+            17 -> MentionEveryone
+            18 -> UseExternalEmojis
+            19 -> ViewGuildInsights
+            20 -> Connect
+            21 -> Speak
+            22 -> MuteMembers
+            23 -> DeafenMembers
+            24 -> MoveMembers
+            25 -> UseVAD
+            26 -> ChangeNickname
+            27 -> ManageNicknames
+            28 -> ManageRoles
+            29 -> ManageWebhooks
+            30 -> ManageGuildExpressions
+            31 -> UseApplicationCommands
+            32 -> RequestToSpeak
+            33 -> ManageEvents
+            34 -> ManageThreads
+            35 -> CreatePublicThreads
+            36 -> CreatePrivateThreads
+            37 -> UseExternalStickers
+            38 -> SendMessagesInThreads
+            39 -> UseEmbeddedActivities
+            40 -> ModerateMembers
+            41 -> ViewCreatorMonetizationAnalytics
+            42 -> UseSoundboard
+            45 -> UseExternalSounds
+            46 -> SendVoiceMessages
+            else -> Unknown(shift)
+        }
 
         private fun buildAll(): DiscordBitSet {
             // We cannot inline this into the "All" object, because that causes a weird compiler bug

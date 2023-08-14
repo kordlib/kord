@@ -14,16 +14,6 @@ internal fun TypeSpec.Builder.addEntityKDoc() {
 }
 
 context(GenerationEntity, GenerationContext)
-internal fun TypeSpec.Builder.addEntityEqualsHashCodeToString() {
-    addEqualsAndHashCode(entityCN, FINAL)
-    addFunction("toString") {
-        addModifiers(FINAL, OVERRIDE)
-        returns<String>()
-        addStatement("return \"$entityName.\${this::class.simpleName}($valueName=\$$valueName)\"")
-    }
-}
-
-context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addSharedUnknownClassContent() {
     addKdoc(
         "An unknown [%1T].\n\nThis is used as a fallback for [%1T]s that haven't been added to Kord yet.",
@@ -55,16 +45,7 @@ internal fun TypeSpec.Builder.addSharedCompanionObjectContent() {
     addModifiers(PUBLIC)
     addProperty("entries", LIST.parameterizedBy(entityCN), PUBLIC) {
         addKdoc("A [List] of all known [%T]s.", entityCN)
-        val optIns = entriesDistinctByValue
-            .flatMap { it.additionalOptInMarkerAnnotations }
-            .distinct()
-            .map { name -> CodeBlock.of("%T::class", ClassName.bestGuess(name)) }
-            .joinToCode()
-        if (optIns.isNotEmpty()) {
-            addAnnotation(OPT_IN) {
-                addMember(optIns)
-            }
-        }
+        addEntryOptIns()
         delegate {
             withControlFlow("lazy(mode·=·%M)", LazyThreadSafetyMode.PUBLICATION.asMemberName()) {
                 addStatement("listOf(")

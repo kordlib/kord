@@ -6,20 +6,22 @@ import com.squareup.kotlinpoet.KModifier.OVERRIDE
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.addParameter
-import dev.kord.ksp.generation.GenerationEntity
 import dev.kord.ksp.returns
 
-context(GenerationEntity)
-internal fun TypeSpec.Builder.addEqualsAndHashCode(className: ClassName, vararg additionalModifiers: KModifier) {
+internal fun TypeSpec.Builder.addEqualsAndHashCodeBasedOnClassAndSingleProperty(
+    className: ClassName,
+    property: String,
+    vararg modifiers: KModifier,
+) {
     addFunction("equals") {
-        addModifiers(OVERRIDE, *additionalModifiers)
+        addModifiers(OVERRIDE, *modifiers)
         returns<Boolean>()
         addParameter<Any?>("other")
-        addStatement("return this·===·other || (other·is·%T·&&·this.$valueName·==·other.$valueName)", className)
+        addStatement("return this·===·other || (other·is·%T·&&·this.$property·==·other.$property)", className)
     }
     addFunction("hashCode") {
-        addModifiers(OVERRIDE, *additionalModifiers)
+        addModifiers(OVERRIDE, *modifiers)
         returns<Int>()
-        addStatement("return $valueName.hashCode()")
+        addStatement("return $property.hashCode()")
     }
 }

@@ -5,7 +5,6 @@
 package dev.kord.voice
 
 import dev.kord.common.Class
-import dev.kord.common.`annotation`.KordUnsafe
 import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
@@ -83,7 +82,15 @@ public class SpeakingFlags(
     public val code: Int = 0,
 ) {
     public val values: Set<SpeakingFlag>
-        get() = SpeakingFlag.entries.filter { it in this }.toSet()
+        get() = buildSet {
+            var remaining = code
+            var shift = 0
+            while (remaining != 0) {
+                if ((remaining and 1) != 0) add(SpeakingFlag.fromShift(shift))
+                remaining = remaining ushr 1
+                shift++
+            }
+        }
 
     @Deprecated(
         message = "Renamed to 'values'.",
@@ -190,12 +197,20 @@ public fun SpeakingFlags(flags: Iterable<SpeakingFlags>): SpeakingFlags = Speaki
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#speaking).
  */
 public sealed class SpeakingFlag(
-    shift: Int,
+    /**
+     * The position of the bit that is set in this [SpeakingFlag]. This is always in 0..30.
+     */
+    public val shift: Int,
 ) {
+    init {
+        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
+    }
+
     /**
      * The raw code used by Discord.
      */
-    public val code: Int = 1 shl shift
+    public val code: Int
+        get() = 1 shl shift
 
     public operator fun plus(flag: SpeakingFlag): SpeakingFlags =
             SpeakingFlags(this.code or flag.code)
@@ -204,11 +219,12 @@ public sealed class SpeakingFlag(
             SpeakingFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SpeakingFlag && this.code == other.code)
+            (other is SpeakingFlag && this.shift == other.shift)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = "SpeakingFlag.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = if (this is Unknown)
+            "SpeakingFlag.Unknown(shift=$shift)" else "SpeakingFlag.${this::class.simpleName}"
 
     /**
      * @suppress
@@ -246,7 +262,7 @@ public sealed class SpeakingFlag(
      *
      * This is used as a fallback for [SpeakingFlag]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown internal constructor(
         shift: Int,
     ) : SpeakingFlag(shift)
 
@@ -289,6 +305,19 @@ public sealed class SpeakingFlag(
         )
         @JvmField
         public val Priority: SpeakingFlag = Priority
+
+        /**
+         * Returns an instance of [SpeakingFlag] with [SpeakingFlag.shift] equal to the specified
+         * [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not in 0..30.
+         */
+        public fun fromShift(shift: Int): SpeakingFlag = when (shift) {
+            0 -> Microphone
+            1 -> Soundshare
+            2 -> Priority
+            else -> Unknown(shift)
+        }
 
         /**
          * @suppress

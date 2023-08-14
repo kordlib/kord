@@ -134,7 +134,7 @@ private fun Entry.toGenerationEntityEntryOrNull(
             val validShift = when (entityType) {
                 INT_FLAGS -> shift in 0..30 // Int actually supports shifting by 31, but that would result in <0
                 BIT_SET_FLAGS -> shift >= 0
-                INT_KORD_ENUM, STRING_KORD_ENUM -> throw AssertionError()
+                INT_KORD_ENUM, STRING_KORD_ENUM -> throw AssertionError("unreachable")
             }
             if (validShift) {
                 shift

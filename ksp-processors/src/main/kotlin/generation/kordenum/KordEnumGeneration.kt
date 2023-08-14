@@ -36,7 +36,12 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addKdoc("The raw $valueName used by Discord.")
             initializer(valueName)
         }
-        addEntityEqualsHashCodeToString()
+        addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = valueName, FINAL)
+        addFunction("toString") {
+            addModifiers(FINAL, OVERRIDE)
+            returns<String>()
+            addStatement("return \"$entityName.\${this::class.simpleName}($valueName=$$valueName)\"")
+        }
         addClass("Unknown") {
             addSharedUnknownClassContent()
             primaryConstructor {

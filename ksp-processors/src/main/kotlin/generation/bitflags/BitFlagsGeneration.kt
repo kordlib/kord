@@ -31,7 +31,22 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         }
         addProperty("values", type = SET.parameterizedBy(entityCN), PUBLIC) {
             getter {
-                addStatement("return %T.entries.filter·{·it·in·this·}.toSet()", entityCN)
+                withControlFlow("return buildSet") {
+                    when (valueType) {
+                        INT -> {
+                            addStatement("var·remaining·=·$valueName")
+                            addStatement("var·shift·=·0")
+                            withControlFlow("while·(remaining·!=·0)") {
+                                addStatement("if·((remaining·and·1)·!=·0)·add(%T.fromShift(shift))", entityCN)
+                                addStatement("remaining·=·remaining·ushr·1")
+                                addStatement("shift++")
+                            }
+                        }
+                        BIT_SET -> withControlFlow("for·(shift·in·0..<$valueName.size)") {
+                            addStatement("if·($valueName[shift])·add(%T.fromShift(shift))", entityCN)
+                        }
+                    }
+                }
             }
         }
         if (hadFlagsProperty) {
@@ -63,7 +78,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addStatement("%M { callsInPlace(block, %M) }", CONTRACT, EXACTLY_ONCE)
             addStatement("return %T($valueName).apply(block).build()", builderName)
         }
-        addEqualsAndHashCode(collectionName)
+        addEqualsAndHashCodeBasedOnClassAndSingleProperty(collectionName, property = valueName)
         addFunction("toString") {
             addModifiers(OVERRIDE)
             returns<String>()
@@ -81,42 +96,77 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addOriginatingKSFile(originatingFile)
         addEntityKDoc()
         addModifiers(PUBLIC, SEALED)
+        val shiftTest = when (valueType) {
+            INT -> "in 0..30" // Int actually supports shifting by 31, but that would result in <0
+            BIT_SET -> ">= 0"
+        }
+        val shiftKDoc = "The position of the bit that is set in this [%T]. This is always $shiftTest."
         if (hasCombinerFlag) {
             addProperty(valueName, valueCN, PUBLIC) {
                 addKdoc("The raw $valueName used by Discord.")
             }
+            addProperty<Int?>("_shift", PRIVATE) {}
+            addProperty<Int>("shift", PUBLIC) {
+                addKdoc(shiftKDoc, entityCN)
+                getter {
+                    addStatement(
+                        "return _shift ?: throw IllegalArgumentException(%P)",
+                        "shift is not available for \$this",
+                    )
+                }
+            }
             addConstructor {
                 addModifiers(PRIVATE)
                 addParameter<Int>("shift")
+                addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
+                addStatement("_shift = shift")
                 addStatement("this.$valueName = %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
             }
             addConstructor {
                 addModifiers(PRIVATE)
                 addParameter(valueName, valueCN)
+                addStatement("_shift = null")
                 addStatement("this.$valueName = $valueName")
             }
         } else {
             primaryConstructor {
                 addParameter<Int>("shift")
             }
+            addProperty<Int>("shift", PUBLIC) {
+                addKdoc(shiftKDoc, entityCN)
+                initializer("shift")
+            }
+            addInitializerBlock {
+                addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
+            }
             addProperty(valueName, valueCN, PUBLIC) {
                 addKdoc("The raw $valueName used by Discord.")
-                when (valueType) {
-                    INT -> initializer("1 shl shift")
-                    BIT_SET -> initializer("%M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
+                getter {
+                    when (valueType) {
+                        INT -> addStatement("return 1 shl shift")
+                        BIT_SET -> addStatement("return %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
+                    }
                 }
             }
         }
         addPlus(parameterName = "flag", parameterType = entityCN, collectionName)
         addPlus(parameterName = "flags", parameterType = collectionName, collectionName)
-        addEntityEqualsHashCodeToString()
+        addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", FINAL)
+        addFunction("toString") {
+            addModifiers(FINAL, OVERRIDE)
+            returns<String>()
+            addStatement(
+                "return if·(this·is·Unknown) \"$entityName.Unknown(shift=\$shift)\" else " +
+                    "\"$entityName.\${this::class.simpleName}\""
+            )
+        }
         if (wasEnum) {
             addDeprecatedEntityEnumArtifacts()
         }
         addClass("Unknown") {
             addSharedUnknownClassContent()
             primaryConstructor {
-                addAnnotation(KORD_UNSAFE)
+                addModifiers(INTERNAL)
                 addParameter<Int>("shift")
             }
             addSuperclassConstructorParameter("shift")
@@ -132,6 +182,22 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         }
         addCompanionObject {
             addSharedCompanionObjectContent()
+            addFunction("fromShift") {
+                addKdoc(
+                    "Returns an instance of [%1T] with [%1T.shift] equal to the specified [shift].\n\n" +
+                        "@throws IllegalArgumentException if [shift] is not $shiftTest.",
+                    entityCN,
+                )
+                addEntryOptIns()
+                addParameter<Int>("shift")
+                returns(entityCN)
+                withControlFlow("return when·(shift)") {
+                    for (entry in entriesDistinctByValue) {
+                        addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
+                    }
+                    addStatement("else·->·Unknown(shift)")
+                }
+            }
             if (hasCombinerFlag) {
                 addFunction("buildAll") {
                     addModifiers(PRIVATE)

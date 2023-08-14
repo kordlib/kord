@@ -1200,6 +1200,7 @@ public abstract class dev/kord/gateway/Intent {
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
+	public final fun getShift ()I
 	public final fun hashCode ()I
 	public final fun plus (Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
 	public final fun plus (Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
@@ -1215,6 +1216,7 @@ public final class dev/kord/gateway/Intent$AutoModerationExecution : dev/kord/ga
 }
 
 public final class dev/kord/gateway/Intent$Companion {
+	public final fun fromShift (I)Ldev/kord/gateway/Intent;
 	public final fun getEntries ()Ljava/util/List;
 }
 
@@ -1287,7 +1289,6 @@ public final class dev/kord/gateway/Intent$MessageContent : dev/kord/gateway/Int
 }
 
 public final class dev/kord/gateway/Intent$Unknown : dev/kord/gateway/Intent {
-	public fun <init> (I)V
 }
 
 public final class dev/kord/gateway/IntentKt {

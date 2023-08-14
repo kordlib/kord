@@ -5,7 +5,6 @@
 package dev.kord.common.entity
 
 import dev.kord.common.Class
-import dev.kord.common.`annotation`.KordUnsafe
 import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
@@ -83,7 +82,15 @@ public class MessageFlags(
     public val code: Int = 0,
 ) {
     public val values: Set<MessageFlag>
-        get() = MessageFlag.entries.filter { it in this }.toSet()
+        get() = buildSet {
+            var remaining = code
+            var shift = 0
+            while (remaining != 0) {
+                if ((remaining and 1) != 0) add(MessageFlag.fromShift(shift))
+                remaining = remaining ushr 1
+                shift++
+            }
+        }
 
     @Deprecated(
         message = "Renamed to 'values'.",
@@ -206,12 +213,20 @@ public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFl
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-flags).
  */
 public sealed class MessageFlag(
-    shift: Int,
+    /**
+     * The position of the bit that is set in this [MessageFlag]. This is always in 0..30.
+     */
+    public val shift: Int,
 ) {
+    init {
+        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
+    }
+
     /**
      * The raw code used by Discord.
      */
-    public val code: Int = 1 shl shift
+    public val code: Int
+        get() = 1 shl shift
 
     public operator fun plus(flag: MessageFlag): MessageFlags = MessageFlags(this.code or flag.code)
 
@@ -219,11 +234,12 @@ public sealed class MessageFlag(
             MessageFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageFlag && this.code == other.code)
+            (other is MessageFlag && this.shift == other.shift)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = "MessageFlag.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = if (this is Unknown) "MessageFlag.Unknown(shift=$shift)"
+            else "MessageFlag.${this::class.simpleName}"
 
     /**
      * @suppress
@@ -269,7 +285,7 @@ public sealed class MessageFlag(
      *
      * This is used as a fallback for [MessageFlag]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown internal constructor(
         shift: Int,
     ) : MessageFlag(shift)
 
@@ -425,6 +441,27 @@ public sealed class MessageFlag(
         )
         @JvmField
         public val IsVoiceMessage: MessageFlag = IsVoiceMessage
+
+        /**
+         * Returns an instance of [MessageFlag] with [MessageFlag.shift] equal to the specified
+         * [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not in 0..30.
+         */
+        public fun fromShift(shift: Int): MessageFlag = when (shift) {
+            0 -> CrossPosted
+            1 -> IsCrossPost
+            2 -> SuppressEmbeds
+            3 -> SourceMessageDeleted
+            4 -> Urgent
+            5 -> HasThread
+            6 -> Ephemeral
+            7 -> Loading
+            8 -> FailedToMentionSomeRolesInThread
+            12 -> SuppressNotifications
+            13 -> IsVoiceMessage
+            else -> Unknown(shift)
+        }
 
         /**
          * @suppress

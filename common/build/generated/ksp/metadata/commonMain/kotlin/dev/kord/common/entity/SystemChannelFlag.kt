@@ -5,7 +5,6 @@
 package dev.kord.common.entity
 
 import dev.kord.common.Class
-import dev.kord.common.`annotation`.KordUnsafe
 import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
@@ -87,7 +86,15 @@ public class SystemChannelFlags(
     public val code: Int = 0,
 ) {
     public val values: Set<SystemChannelFlag>
-        get() = SystemChannelFlag.entries.filter { it in this }.toSet()
+        get() = buildSet {
+            var remaining = code
+            var shift = 0
+            while (remaining != 0) {
+                if ((remaining and 1) != 0) add(SystemChannelFlag.fromShift(shift))
+                remaining = remaining ushr 1
+                shift++
+            }
+        }
 
     public operator fun contains(flag: SystemChannelFlag): Boolean =
             this.code and flag.code == flag.code
@@ -207,12 +214,20 @@ public fun SystemChannelFlags(flags: Iterable<SystemChannelFlags>): SystemChanne
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags).
  */
 public sealed class SystemChannelFlag(
-    shift: Int,
+    /**
+     * The position of the bit that is set in this [SystemChannelFlag]. This is always in 0..30.
+     */
+    public val shift: Int,
 ) {
+    init {
+        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
+    }
+
     /**
      * The raw code used by Discord.
      */
-    public val code: Int = 1 shl shift
+    public val code: Int
+        get() = 1 shl shift
 
     public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
             SystemChannelFlags(this.code or flag.code)
@@ -221,12 +236,13 @@ public sealed class SystemChannelFlag(
             SystemChannelFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SystemChannelFlag && this.code == other.code)
+            (other is SystemChannelFlag && this.shift == other.shift)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String =
-            "SystemChannelFlag.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = if (this is Unknown)
+            "SystemChannelFlag.Unknown(shift=$shift)" else
+            "SystemChannelFlag.${this::class.simpleName}"
 
     /**
      * @suppress
@@ -267,7 +283,7 @@ public sealed class SystemChannelFlag(
      *
      * This is used as a fallback for [SystemChannelFlag]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown internal constructor(
         shift: Int,
     ) : SystemChannelFlag(shift)
 
@@ -362,6 +378,22 @@ public sealed class SystemChannelFlag(
         @JvmField
         public val SuppressRoleSubscriptionPurchaseNotificationReplies: SystemChannelFlag =
                 SuppressRoleSubscriptionPurchaseNotificationReplies
+
+        /**
+         * Returns an instance of [SystemChannelFlag] with [SystemChannelFlag.shift] equal to the
+         * specified [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not in 0..30.
+         */
+        public fun fromShift(shift: Int): SystemChannelFlag = when (shift) {
+            0 -> SuppressJoinNotifications
+            1 -> SuppressPremiumSubscriptions
+            2 -> SuppressGuildReminderNotifications
+            3 -> SuppressJoinNotificationReplies
+            4 -> SuppressRoleSubscriptionPurchaseNotifications
+            5 -> SuppressRoleSubscriptionPurchaseNotificationReplies
+            else -> Unknown(shift)
+        }
 
         /**
          * @suppress

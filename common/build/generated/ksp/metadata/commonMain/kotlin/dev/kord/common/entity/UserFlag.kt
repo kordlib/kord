@@ -5,7 +5,6 @@
 package dev.kord.common.entity
 
 import dev.kord.common.Class
-import dev.kord.common.`annotation`.KordUnsafe
 import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
@@ -83,7 +82,15 @@ public class UserFlags(
     public val code: Int = 0,
 ) {
     public val values: Set<UserFlag>
-        get() = UserFlag.entries.filter { it in this }.toSet()
+        get() = buildSet {
+            var remaining = code
+            var shift = 0
+            while (remaining != 0) {
+                if ((remaining and 1) != 0) add(UserFlag.fromShift(shift))
+                remaining = remaining ushr 1
+                shift++
+            }
+        }
 
     @Deprecated(
         message = "Renamed to 'values'.",
@@ -198,23 +205,32 @@ public fun UserFlags(flags: Iterable<UserFlags>): UserFlags = UserFlags { flags.
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-user-flags).
  */
 public sealed class UserFlag(
-    shift: Int,
+    /**
+     * The position of the bit that is set in this [UserFlag]. This is always in 0..30.
+     */
+    public val shift: Int,
 ) {
+    init {
+        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
+    }
+
     /**
      * The raw code used by Discord.
      */
-    public val code: Int = 1 shl shift
+    public val code: Int
+        get() = 1 shl shift
 
     public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
 
     public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is UserFlag && this.code == other.code)
+            (other is UserFlag && this.shift == other.shift)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = "UserFlag.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = if (this is Unknown) "UserFlag.Unknown(shift=$shift)"
+            else "UserFlag.${this::class.simpleName}"
 
     /**
      * @suppress
@@ -263,7 +279,7 @@ public sealed class UserFlag(
      *
      * This is used as a fallback for [UserFlag]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown internal constructor(
         shift: Int,
     ) : UserFlag(shift)
 
@@ -481,6 +497,31 @@ public sealed class UserFlag(
         )
         @JvmField
         public val System: UserFlag = System
+
+        /**
+         * Returns an instance of [UserFlag] with [UserFlag.shift] equal to the specified [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not in 0..30.
+         */
+        public fun fromShift(shift: Int): UserFlag = when (shift) {
+            0 -> DiscordEmployee
+            1 -> DiscordPartner
+            2 -> HypeSquad
+            3 -> BugHunterLevel1
+            6 -> HouseBravery
+            7 -> HouseBrilliance
+            8 -> HouseBalance
+            9 -> EarlySupporter
+            10 -> TeamUser
+            14 -> BugHunterLevel2
+            16 -> VerifiedBot
+            17 -> VerifiedBotDeveloper
+            18 -> DiscordCertifiedModerator
+            19 -> BotHttpInteractions
+            22 -> ActiveDeveloper
+            12 -> System
+            else -> Unknown(shift)
+        }
 
         /**
          * @suppress

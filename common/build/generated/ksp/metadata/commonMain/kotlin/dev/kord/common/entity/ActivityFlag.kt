@@ -5,7 +5,6 @@
 package dev.kord.common.entity
 
 import dev.kord.common.Class
-import dev.kord.common.`annotation`.KordUnsafe
 import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
@@ -83,7 +82,15 @@ public class ActivityFlags(
     public val `value`: Int = 0,
 ) {
     public val values: Set<ActivityFlag>
-        get() = ActivityFlag.entries.filter { it in this }.toSet()
+        get() = buildSet {
+            var remaining = value
+            var shift = 0
+            while (remaining != 0) {
+                if ((remaining and 1) != 0) add(ActivityFlag.fromShift(shift))
+                remaining = remaining ushr 1
+                shift++
+            }
+        }
 
     @Deprecated(
         message = "Renamed to 'values'.",
@@ -191,12 +198,20 @@ public fun ActivityFlags(flags: Iterable<ActivityFlags>): ActivityFlags = Activi
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags).
  */
 public sealed class ActivityFlag(
-    shift: Int,
+    /**
+     * The position of the bit that is set in this [ActivityFlag]. This is always in 0..30.
+     */
+    public val shift: Int,
 ) {
+    init {
+        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
+    }
+
     /**
      * The raw value used by Discord.
      */
-    public val `value`: Int = 1 shl shift
+    public val `value`: Int
+        get() = 1 shl shift
 
     public operator fun plus(flag: ActivityFlag): ActivityFlags =
             ActivityFlags(this.value or flag.value)
@@ -205,11 +220,12 @@ public sealed class ActivityFlag(
             ActivityFlags(this.value or flags.value)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ActivityFlag && this.value == other.value)
+            (other is ActivityFlag && this.shift == other.shift)
 
-    final override fun hashCode(): Int = value.hashCode()
+    final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = "ActivityFlag.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown)
+            "ActivityFlag.Unknown(shift=$shift)" else "ActivityFlag.${this::class.simpleName}"
 
     /**
      * @suppress
@@ -253,7 +269,7 @@ public sealed class ActivityFlag(
      *
      * This is used as a fallback for [ActivityFlag]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown internal constructor(
         shift: Int,
     ) : ActivityFlag(shift)
 
@@ -356,6 +372,25 @@ public sealed class ActivityFlag(
         )
         @JvmField
         public val Embed: ActivityFlag = Embed
+
+        /**
+         * Returns an instance of [ActivityFlag] with [ActivityFlag.shift] equal to the specified
+         * [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not in 0..30.
+         */
+        public fun fromShift(shift: Int): ActivityFlag = when (shift) {
+            0 -> Instance
+            1 -> Join
+            2 -> Spectate
+            3 -> JoinRequest
+            4 -> Sync
+            5 -> Play
+            6 -> PartyPrivacyFriends
+            7 -> PartyPrivacVoiceChannel
+            8 -> Embed
+            else -> Unknown(shift)
+        }
 
         /**
          * @suppress

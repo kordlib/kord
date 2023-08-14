@@ -12,6 +12,5 @@ internal val EXACTLY_ONCE = MemberName("kotlin.contracts.InvocationKind", "EXACT
 internal val PRIMITIVE_SERIAL_DESCRIPTOR = MemberName("kotlinx.serialization.descriptors", "PrimitiveSerialDescriptor")
 internal val K_SERIALIZER = KSerializer::class.asClassName()
 
-internal val KORD_UNSAFE = ClassName("dev.kord.common.annotation", "KordUnsafe")
 internal val DISCORD_BIT_SET = ClassName("dev.kord.common", "DiscordBitSet")
 internal val EMPTY_BIT_SET = MemberName("dev.kord.common", "EmptyBitSet")

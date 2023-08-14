@@ -6,7 +6,6 @@ package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
-import dev.kord.common.`annotation`.KordUnsafe
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
@@ -79,7 +78,11 @@ public class Intents(
     public val code: DiscordBitSet = EmptyBitSet(),
 ) {
     public val values: Set<Intent>
-        get() = Intent.entries.filter { it in this }.toSet()
+        get() = buildSet {
+            for (shift in 0..<code.size) {
+                if (code[shift]) add(Intent.fromShift(shift))
+            }
+        }
 
     public operator fun contains(flag: Intent): Boolean = flag.code in this.code
 
@@ -189,30 +192,39 @@ public fun Intents(flags: Iterable<Intents>): Intents = Intents { flags.forEach 
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway#gateway-intents).
  */
 public sealed class Intent(
-    shift: Int,
+    /**
+     * The position of the bit that is set in this [Intent]. This is always >= 0.
+     */
+    public val shift: Int,
 ) {
+    init {
+        require(shift >= 0) { """shift has to be >= 0 but was $shift""" }
+    }
+
     /**
      * The raw code used by Discord.
      */
-    public val code: DiscordBitSet = EmptyBitSet().also { it[shift] = true }
+    public val code: DiscordBitSet
+        get() = EmptyBitSet().also { it[shift] = true }
 
     public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
 
     public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is Intent && this.code == other.code)
+            (other is Intent && this.shift == other.shift)
 
-    final override fun hashCode(): Int = code.hashCode()
+    final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = "Intent.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = if (this is Unknown) "Intent.Unknown(shift=$shift)" else
+            "Intent.${this::class.simpleName}"
 
     /**
      * An unknown [Intent].
      *
      * This is used as a fallback for [Intent]s that haven't been added to Kord yet.
      */
-    public class Unknown @KordUnsafe constructor(
+    public class Unknown internal constructor(
         shift: Int,
     ) : Intent(shift)
 
@@ -425,5 +437,34 @@ public sealed class Intent(
             )
         }
 
+
+        /**
+         * Returns an instance of [Intent] with [Intent.shift] equal to the specified [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not >= 0.
+         */
+        @OptIn(PrivilegedIntent::class)
+        public fun fromShift(shift: Int): Intent = when (shift) {
+            0 -> Guilds
+            1 -> GuildMembers
+            2 -> GuildBans
+            3 -> GuildEmojis
+            4 -> GuildIntegrations
+            5 -> GuildWebhooks
+            6 -> GuildInvites
+            7 -> GuildVoiceStates
+            8 -> GuildPresences
+            9 -> GuildMessages
+            10 -> GuildMessageReactions
+            11 -> GuildMessageTyping
+            12 -> DirectMessages
+            13 -> DirectMessagesReactions
+            14 -> DirectMessageTyping
+            15 -> MessageContent
+            16 -> GuildScheduledEvents
+            20 -> AutoModerationConfiguration
+            21 -> AutoModerationExecution
+            else -> Unknown(shift)
+        }
     }
 }
