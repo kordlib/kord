@@ -7880,7 +7880,6 @@ public final class dev/kord/common/entity/OverwriteType$Unknown : dev/kord/commo
 public abstract class dev/kord/common/entity/Permission {
 	public static final field Companion Ldev/kord/common/entity/Permission$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun getShift ()I
@@ -7896,10 +7895,6 @@ public final class dev/kord/common/entity/Permission$AddReactions : dev/kord/com
 
 public final class dev/kord/common/entity/Permission$Administrator : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$Administrator;
-}
-
-public final class dev/kord/common/entity/Permission$All : dev/kord/common/entity/Permission {
-	public static final field INSTANCE Ldev/kord/common/entity/Permission$All;
 }
 
 public final class dev/kord/common/entity/Permission$AttachFiles : dev/kord/common/entity/Permission {
@@ -8130,6 +8125,10 @@ public final class dev/kord/common/entity/Permissions$Builder {
 
 public final class dev/kord/common/entity/Permissions$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/PermissionsKt {
+	public static final fun getALL_KNOWN (Ldev/kord/common/entity/Permissions$Companion;)Ldev/kord/common/entity/Permissions;
 }
 
 public abstract class dev/kord/common/entity/PremiumTier {

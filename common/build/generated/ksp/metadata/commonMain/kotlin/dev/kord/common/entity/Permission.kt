@@ -194,30 +194,21 @@ public fun Permissions(flags: Iterable<Permissions>): Permissions = Permissions 
  * See [Permission]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions).
  */
-public sealed class Permission {
+public sealed class Permission(
+    /**
+     * The position of the bit that is set in this [Permission]. This is always >= 0.
+     */
+    public val shift: Int,
+) {
+    init {
+        require(shift >= 0) { """shift has to be >= 0 but was $shift""" }
+    }
+
     /**
      * The raw code used by Discord.
      */
     public val code: DiscordBitSet
-
-    private val _shift: Int?
-
-    /**
-     * The position of the bit that is set in this [Permission]. This is always >= 0.
-     */
-    public val shift: Int
-        get() = _shift ?: throw IllegalArgumentException("""shift is not available for $this""")
-
-    private constructor(shift: Int) {
-        require(shift >= 0) { """shift has to be >= 0 but was $shift""" }
-        _shift = shift
-        this.code = EmptyBitSet().also { it[shift] = true }
-    }
-
-    private constructor(code: DiscordBitSet) {
-        _shift = null
-        this.code = code
-    }
+        get() = EmptyBitSet().also { it[shift] = true }
 
     public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
 
@@ -486,11 +477,6 @@ public sealed class Permission {
      */
     public object SendVoiceMessages : Permission(46)
 
-    /**
-     * A combination of all [Permission]s
-     */
-    public object All : Permission(buildAll())
-
     public companion object {
         /**
          * A [List] of all known [Permission]s.
@@ -599,13 +585,6 @@ public sealed class Permission {
             45 -> UseExternalSounds
             46 -> SendVoiceMessages
             else -> Unknown(shift)
-        }
-
-        private fun buildAll(): DiscordBitSet {
-            // We cannot inline this into the "All" object, because that causes a weird compiler bug
-            return entries.fold(EmptyBitSet()) { acc, value ->
-                acc + value.code
-            }
         }
     }
 }

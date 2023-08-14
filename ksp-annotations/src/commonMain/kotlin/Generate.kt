@@ -25,8 +25,6 @@ annotation class Generate(
 
     /** Optional [BitFlagDescription] when [entityType] is [INT_FLAGS] or [BIT_SET_FLAGS]. */
     val bitFlagsDescriptor: BitFlagDescription = BitFlagDescription(),
-    /** Whether to add an "All" flag combining all flags into one. */
-    val hasCombinerFlag: Boolean = false,
 
     // for migration only, will be removed eventually
     val wasEnum: Boolean = false,

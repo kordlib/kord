@@ -1,9 +1,6 @@
 package dev.kord.core.entity.channel
 
-import dev.kord.common.entity.OverwriteType
-import dev.kord.common.entity.Permission
-import dev.kord.common.entity.Permissions
-import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
@@ -49,7 +46,7 @@ public interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
 
         val base = member.getPermissions()
 
-        if (Permission.Administrator in base) return Permissions { +Permission.All }
+        if (Permission.Administrator in base) return Permissions.ALL_KNOWN
 
         val everyoneOverwrite = getPermissionOverwritesForRole(guildId)
         val roleOverwrites = member.roleIds.mapNotNull { getPermissionOverwritesForRole(it) }

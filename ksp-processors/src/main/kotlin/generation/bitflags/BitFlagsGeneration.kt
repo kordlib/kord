@@ -100,55 +100,26 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             INT -> "in 0..30" // Int actually supports shifting by 31, but that would result in <0
             BIT_SET -> ">= 0"
         }
-        val shiftKDoc = "The position of the bit that is set in this [%T]. This is always $shiftTest."
-        if (hasCombinerFlag) {
-            addProperty(valueName, valueCN, PUBLIC) {
-                addKdoc("The raw $valueName used by Discord.")
-            }
-            addProperty<Int?>("_shift", PRIVATE) {}
-            addProperty<Int>("shift", PUBLIC) {
-                addKdoc(shiftKDoc, entityCN)
-                getter {
-                    addStatement(
-                        "return _shift ?: throw IllegalArgumentException(%P)",
-                        "shift is not available for \$this",
-                    )
-                }
-            }
-            addConstructor {
-                addModifiers(PRIVATE)
-                addParameter<Int>("shift")
-                addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
-                addStatement("_shift = shift")
-                addStatement("this.$valueName = %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
-            }
-            addConstructor {
-                addModifiers(PRIVATE)
-                addParameter(valueName, valueCN)
-                addStatement("_shift = null")
-                addStatement("this.$valueName = $valueName")
-            }
-        } else {
-            primaryConstructor {
-                addParameter<Int>("shift")
-            }
-            addProperty<Int>("shift", PUBLIC) {
-                addKdoc(shiftKDoc, entityCN)
-                initializer("shift")
-            }
-            addInitializerBlock {
-                addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
-            }
-            addProperty(valueName, valueCN, PUBLIC) {
-                addKdoc("The raw $valueName used by Discord.")
-                getter {
-                    when (valueType) {
-                        INT -> addStatement("return 1 shl shift")
-                        BIT_SET -> addStatement("return %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
-                    }
+        primaryConstructor {
+            addParameter<Int>("shift")
+        }
+        addProperty<Int>("shift", PUBLIC) {
+            addKdoc("The position of the bit that is set in this [%T]. This is always $shiftTest.", entityCN)
+            initializer("shift")
+        }
+        addInitializerBlock {
+            addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
+        }
+        addProperty(valueName, valueCN, PUBLIC) {
+            addKdoc("The raw $valueName used by Discord.")
+            getter {
+                when (valueType) {
+                    INT -> addStatement("return 1 shl shift")
+                    BIT_SET -> addStatement("return %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
                 }
             }
         }
+
         addPlus(parameterName = "flag", parameterType = entityCN, collectionName)
         addPlus(parameterName = "flags", parameterType = collectionName, collectionName)
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", FINAL)
@@ -172,14 +143,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addSuperclassConstructorParameter("shift")
         }
         addEntityEntries()
-        if (hasCombinerFlag) {
-            addObject("All") {
-                addKdoc("A combination of all [%T]s", entityCN)
-                addModifiers(PUBLIC)
-                superclass(entityCN)
-                addSuperclassConstructorParameter("buildAll()")
-            }
-        }
         addCompanionObject {
             addSharedCompanionObjectContent()
             addFunction("fromShift") {
@@ -196,16 +159,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                         addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
                     }
                     addStatement("else·->·Unknown(shift)")
-                }
-            }
-            if (hasCombinerFlag) {
-                addFunction("buildAll") {
-                    addModifiers(PRIVATE)
-                    returns(valueCN)
-                    addComment("""We cannot inline this into the "All" object, because that causes a weird compiler bug""")
-                    withControlFlow("return entries.fold(%L)·{·acc,·value·->", valueType.defaultParameterCode()) {
-                        addStatement("acc·+·value.$valueName")
-                    }
                 }
             }
             if (wasEnum) {
