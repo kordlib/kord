@@ -285,7 +285,7 @@ public sealed class ApplicationFlag(
         replaceWith = ReplaceWith(expression = "ApplicationFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.ApplicationFlag")),
     )
-    public fun getDeclaringClass(): Class<ApplicationFlag>? = ApplicationFlag::class.java
+    public fun getDeclaringClass(): Class<ApplicationFlag> = ApplicationFlag::class.java
 
     /**
      * An unknown [ApplicationFlag].

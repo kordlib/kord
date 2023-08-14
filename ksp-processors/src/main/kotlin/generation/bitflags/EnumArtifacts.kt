@@ -51,7 +51,7 @@ internal fun TypeSpec.Builder.addDeprecatedEntityEnumArtifacts() {
                 LEVEL,
             )
         )
-        returns(CLASS.parameterizedBy(entityCN).copy(nullable = true))
+        returns(CLASS.parameterizedBy(entityCN))
         addStatement("return $entityName::class.%M", JAVA)
     }
 }

@@ -255,7 +255,7 @@ public sealed class SpeakingFlag(
         replaceWith = ReplaceWith(expression = "SpeakingFlag::class.java", imports =
                     arrayOf("dev.kord.voice.SpeakingFlag")),
     )
-    public fun getDeclaringClass(): Class<SpeakingFlag>? = SpeakingFlag::class.java
+    public fun getDeclaringClass(): Class<SpeakingFlag> = SpeakingFlag::class.java
 
     /**
      * An unknown [SpeakingFlag].

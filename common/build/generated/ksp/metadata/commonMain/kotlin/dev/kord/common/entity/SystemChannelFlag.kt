@@ -276,7 +276,7 @@ public sealed class SystemChannelFlag(
         replaceWith = ReplaceWith(expression = "SystemChannelFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.SystemChannelFlag")),
     )
-    public fun getDeclaringClass(): Class<SystemChannelFlag>? = SystemChannelFlag::class.java
+    public fun getDeclaringClass(): Class<SystemChannelFlag> = SystemChannelFlag::class.java
 
     /**
      * An unknown [SystemChannelFlag].

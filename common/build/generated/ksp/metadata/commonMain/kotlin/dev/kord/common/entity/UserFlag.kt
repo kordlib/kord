@@ -272,7 +272,7 @@ public sealed class UserFlag(
         replaceWith = ReplaceWith(expression = "UserFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.UserFlag")),
     )
-    public fun getDeclaringClass(): Class<UserFlag>? = UserFlag::class.java
+    public fun getDeclaringClass(): Class<UserFlag> = UserFlag::class.java
 
     /**
      * An unknown [UserFlag].

@@ -271,7 +271,7 @@ public sealed class GuildMemberFlag(
         replaceWith = ReplaceWith(expression = "GuildMemberFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.GuildMemberFlag")),
     )
-    public fun getDeclaringClass(): Class<GuildMemberFlag>? = GuildMemberFlag::class.java
+    public fun getDeclaringClass(): Class<GuildMemberFlag> = GuildMemberFlag::class.java
 
     /**
      * An unknown [GuildMemberFlag].

@@ -11,4 +11,4 @@ public expect class Class<T>
 
 /** @suppress */
 @KordInternal
-public expect val <T : Any> KClass<T>.java: Class<T>?
+public expect val <T : Any> KClass<T>.java: Class<T>

@@ -278,7 +278,7 @@ public sealed class MessageFlag(
         replaceWith = ReplaceWith(expression = "MessageFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.MessageFlag")),
     )
-    public fun getDeclaringClass(): Class<MessageFlag>? = MessageFlag::class.java
+    public fun getDeclaringClass(): Class<MessageFlag> = MessageFlag::class.java
 
     /**
      * An unknown [MessageFlag].

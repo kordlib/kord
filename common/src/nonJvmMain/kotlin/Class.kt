@@ -3,12 +3,12 @@ package dev.kord.common
 import dev.kord.common.annotation.KordInternal
 import kotlin.reflect.KClass
 
-// just use some nonsensical type, we always return null
 /** @suppress */
-public actual typealias Class<T> = ArrayList<T>
+@Suppress("ACTUAL_WITHOUT_EXPECT")
+public actual typealias Class<T> = KClass<T>
 
 /** @suppress */
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 @kotlin.internal.InlineOnly
 @KordInternal
-public actual inline val <T : Any> KClass<T>.java: Class<T>? inline get() = null
+public actual inline val <T : Any> KClass<T>.java: Class<T> inline get() = this

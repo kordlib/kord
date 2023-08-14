@@ -11,4 +11,4 @@ public actual typealias Class<T> = java.lang.Class<T>
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
 @kotlin.internal.InlineOnly
 @KordInternal
-public actual inline val <T : Any> KClass<T>.java: Class<T>? inline get() = getJavaClass
+public actual inline val <T : Any> KClass<T>.java: Class<T> inline get() = getJavaClass

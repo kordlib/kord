@@ -262,7 +262,7 @@ public sealed class ActivityFlag(
         replaceWith = ReplaceWith(expression = "ActivityFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.ActivityFlag")),
     )
-    public fun getDeclaringClass(): Class<ActivityFlag>? = ActivityFlag::class.java
+    public fun getDeclaringClass(): Class<ActivityFlag> = ActivityFlag::class.java
 
     /**
      * An unknown [ActivityFlag].
