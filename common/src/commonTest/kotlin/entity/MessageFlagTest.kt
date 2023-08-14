@@ -1,6 +1,6 @@
 package dev.kord.common.entity
 
-import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
 import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.test.Test
@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertSame
 
-/** Test representative for generated [BIT_SET_FLAGS]. */
+/** Test representative for generated [INT_FLAGS]. */
 class MessageFlagTest {
     @Test
     fun values_returns_expected_flags() {
