@@ -68,7 +68,7 @@ public annotation class KordVoice
 @MustBeDocumented
 @RequiresOptIn("This API is potentially unsafe.", level = WARNING)
 @Retention(BINARY)
-@Target(CLASS, PROPERTY, FUNCTION, PROPERTY_SETTER, TYPEALIAS, CONSTRUCTOR)
+@Target(CLASS, PROPERTY, FUNCTION, PROPERTY_SETTER, TYPEALIAS)
 public annotation class KordUnsafe
 
 /**
