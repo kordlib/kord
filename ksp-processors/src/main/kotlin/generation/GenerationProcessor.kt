@@ -13,31 +13,21 @@ import dev.kord.ksp.isOfType
 
 /** [SymbolProcessorProvider] for [GenerationProcessor]. */
 class GenerationProcessorProvider : SymbolProcessorProvider {
-    override fun create(environment: SymbolProcessorEnvironment) =
+    override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor =
         GenerationProcessor(environment.codeGenerator, environment.logger)
 }
 
-/** [SymbolProcessor] for [Generate] annotation. */
-class GenerationProcessor(private val codeGenerator: CodeGenerator, private val logger: KSPLogger) : SymbolProcessor {
-
-    override fun finish() {
-        logger.info("GenerationProcessor received finish signal")
-    }
-
-    override fun onError() {
-        logger.info("GenerationProcessor received error signal")
-    }
-
+/** [SymbolProcessor] that generates files for [Generate] annotations. */
+private class GenerationProcessor(
+    private val codeGenerator: CodeGenerator,
+    private val logger: KSPLogger,
+) : SymbolProcessor {
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        logger.info("GenerationProcessor got called, resolving annotations...")
-
         resolver
             .getSymbolsWithAnnotation<Generate>()
             .onEach { if (it !is KSFile) logger.warn("found annotation on wrong symbol", symbol = it) }
             .filterIsInstance<KSFile>()
             .forEach(::processFile)
-
-        logger.info("GenerationProcessor finished processing annotations")
 
         return emptyList() // we never have to defer any symbols
     }
@@ -51,8 +41,6 @@ class GenerationProcessor(private val codeGenerator: CodeGenerator, private val 
     }
 
     private fun generateEntity(entity: GenerationEntity, originatingFile: KSFile) {
-        logger.info("generating ${entity.entityName}...")
-
         val fileSpec = when (entity) {
             is GenerationEntity.BitFlags -> entity.generateFileSpec(originatingFile)
             is GenerationEntity.KordEnum -> entity.generateFileSpec(originatingFile)
@@ -60,7 +48,5 @@ class GenerationProcessor(private val codeGenerator: CodeGenerator, private val 
 
         // this output is isolating, see https://kotlinlang.org/docs/ksp-incremental.html#aggregating-vs-isolating
         fileSpec.writeTo(codeGenerator, aggregating = false)
-
-        logger.info("finished generating ${entity.entityName}")
     }
 }
