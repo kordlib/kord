@@ -2,9 +2,9 @@
     INT_FLAGS, name = "SpeakingFlag", valueName = "code", wasEnum = true, hadFlagsProperty = true,
     docUrl = "https://discord.com/developers/docs/topics/voice-connections#speaking",
     entries = [
-        Entry(name = "Microphone", shift = 0),
-        Entry(name = "Soundshare", shift = 1),
-        Entry(name = "Priority", shift = 2),
+        Entry("Microphone", shift = 0, kDoc = "Normal transmission of voice audio."),
+        Entry("Soundshare", shift = 1, kDoc = "Transmission of context audio for video, no speaking indicator."),
+        Entry("Priority", shift = 2, kDoc = "Priority speaker, lowering audio of other speakers."),
     ]
 )
 

@@ -22,8 +22,8 @@
         Entry(name = "Sync", shift = 4),
         Entry(name = "Play", shift = 5),
         Entry(name = "PartyPrivacyFriends", shift = 6),
-        Entry(name = "PartyPrivacVoiceChannel", shift = 7),
-        Entry(name = "Embed", shift = 8),
+        Entry(name = "PartyPrivacyVoiceChannel", shift = 7),
+        Entry(name = "Embedded", shift = 8),
     ],
 )
 

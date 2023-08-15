@@ -242,7 +242,7 @@ public sealed class UserFlag(
     /**
      * @suppress
      */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith", "DEPRECATION"))
     @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.")
     public fun ordinal(): Int = when (this) {
         DiscordEmployee -> 0
@@ -254,13 +254,13 @@ public sealed class UserFlag(
         HouseBalance -> 6
         EarlySupporter -> 7
         TeamUser -> 8
-        BugHunterLevel2 -> 9
-        VerifiedBot -> 10
-        VerifiedBotDeveloper -> 11
-        DiscordCertifiedModerator -> 12
-        BotHttpInteractions -> 13
-        ActiveDeveloper -> 14
-        System -> 15
+        System -> 9
+        BugHunterLevel2 -> 10
+        VerifiedBot -> 11
+        VerifiedBotDeveloper -> 12
+        DiscordCertifiedModerator -> 13
+        BotHttpInteractions -> 14
+        ActiveDeveloper -> 15
         is Unknown -> Int.MAX_VALUE
     }
 
@@ -328,6 +328,14 @@ public sealed class UserFlag(
      */
     public object TeamUser : UserFlag(10)
 
+    @Deprecated(
+        message =
+                "'UserFlag.System' is no longer documented. You can still use it with 'UserFlag.fromShift(12)'.",
+        replaceWith = ReplaceWith(expression = "UserFlag.fromShift(12)", imports =
+                    arrayOf("dev.kord.common.entity.UserFlag")),
+    )
+    public object System : UserFlag(12)
+
     /**
      * Bug Hunter Level 2
      */
@@ -349,16 +357,14 @@ public sealed class UserFlag(
     public object DiscordCertifiedModerator : UserFlag(18)
 
     /**
-     * Bot uses only HTTP interactions and is shown in the online member list
+     * Bot uses only HTTP interactions and is shown in the online member list.
      */
     public object BotHttpInteractions : UserFlag(19)
 
     /**
-     * User is an Active Developer
+     * User is an [Active Developer](https://support-dev.discord.com/hc/articles/10113997751447).
      */
     public object ActiveDeveloper : UserFlag(22)
-
-    public object System : UserFlag(12)
 
     public companion object {
         /**
@@ -375,13 +381,13 @@ public sealed class UserFlag(
                 HouseBalance,
                 EarlySupporter,
                 TeamUser,
+                @Suppress("DEPRECATION") System,
                 BugHunterLevel2,
                 VerifiedBot,
                 VerifiedBotDeveloper,
                 DiscordCertifiedModerator,
                 BotHttpInteractions,
                 ActiveDeveloper,
-                System,
             )
         }
 
@@ -449,6 +455,14 @@ public sealed class UserFlag(
         @JvmField
         public val TeamUser: UserFlag = TeamUser
 
+        @Suppress(names = arrayOf("DEPRECATION"))
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val System: UserFlag = System
+
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Binary compatibility",
@@ -491,13 +505,6 @@ public sealed class UserFlag(
         @JvmField
         public val ActiveDeveloper: UserFlag = ActiveDeveloper
 
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val System: UserFlag = System
-
         /**
          * Returns an instance of [UserFlag] with [UserFlag.shift] equal to the specified [shift].
          *
@@ -513,13 +520,13 @@ public sealed class UserFlag(
             8 -> HouseBalance
             9 -> EarlySupporter
             10 -> TeamUser
+            12 -> @Suppress("DEPRECATION") System
             14 -> BugHunterLevel2
             16 -> VerifiedBot
             17 -> VerifiedBotDeveloper
             18 -> DiscordCertifiedModerator
             19 -> BotHttpInteractions
             22 -> ActiveDeveloper
-            12 -> System
             else -> Unknown(shift)
         }
 
@@ -540,13 +547,13 @@ public sealed class UserFlag(
             "HouseBalance" -> HouseBalance
             "EarlySupporter" -> EarlySupporter
             "TeamUser" -> TeamUser
+            "System" -> @Suppress("DEPRECATION") System
             "BugHunterLevel2" -> BugHunterLevel2
             "VerifiedBot" -> VerifiedBot
             "VerifiedBotDeveloper" -> VerifiedBotDeveloper
             "DiscordCertifiedModerator" -> DiscordCertifiedModerator
             "BotHttpInteractions" -> BotHttpInteractions
             "ActiveDeveloper" -> ActiveDeveloper
-            "System" -> System
             else -> throw IllegalArgumentException(name)
         }
 

@@ -2,11 +2,11 @@
     INT_FLAGS, name = "GuildMemberFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags",
     entries = [
-        Entry(name = "DidRejoin", shift = 0, kDoc = "Member has left and rejoined the guild"),
-        Entry(name = "CompletedOnboarding", shift = 1, kDoc = "Member has completed onboarding"),
-        Entry(name = "BypassesVerification", shift = 2, kDoc = "Member is exempt from guild verification requirements"),
-        Entry(name = "StartedOnboarding", shift = 3, kDoc = "Member has started onboarding")
-    ]
+        Entry("DidRejoin", shift = 0, kDoc = "Member has left and rejoined the guild."),
+        Entry("CompletedOnboarding", shift = 1, kDoc = "Member has completed onboarding."),
+        Entry("BypassesVerification", shift = 2, kDoc = "Member is exempt from guild verification requirements."),
+        Entry("StartedOnboarding", shift = 3, kDoc = "Member has started onboarding."),
+    ],
 )
 
 package dev.kord.common.entity

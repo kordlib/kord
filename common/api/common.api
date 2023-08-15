@@ -185,12 +185,12 @@ public abstract interface annotation class dev/kord/common/annotation/KordVoice 
 
 public abstract class dev/kord/common/entity/ActivityFlag {
 	public static final field Companion Ldev/kord/common/entity/ActivityFlag$Companion;
-	public static final field Embed Ldev/kord/common/entity/ActivityFlag;
+	public static final field Embedded Ldev/kord/common/entity/ActivityFlag;
 	public static final field Instance Ldev/kord/common/entity/ActivityFlag;
 	public static final field Join Ldev/kord/common/entity/ActivityFlag;
 	public static final field JoinRequest Ldev/kord/common/entity/ActivityFlag;
-	public static final field PartyPrivacVoiceChannel Ldev/kord/common/entity/ActivityFlag;
 	public static final field PartyPrivacyFriends Ldev/kord/common/entity/ActivityFlag;
+	public static final field PartyPrivacyVoiceChannel Ldev/kord/common/entity/ActivityFlag;
 	public static final field Play Ldev/kord/common/entity/ActivityFlag;
 	public static final field Spectate Ldev/kord/common/entity/ActivityFlag;
 	public static final field Sync Ldev/kord/common/entity/ActivityFlag;
@@ -218,8 +218,8 @@ public final class dev/kord/common/entity/ActivityFlag$Companion {
 	public fun values ()[Ldev/kord/common/entity/ActivityFlag;
 }
 
-public final class dev/kord/common/entity/ActivityFlag$Embed : dev/kord/common/entity/ActivityFlag {
-	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$Embed;
+public final class dev/kord/common/entity/ActivityFlag$Embedded : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$Embedded;
 }
 
 public final class dev/kord/common/entity/ActivityFlag$Instance : dev/kord/common/entity/ActivityFlag {
@@ -234,12 +234,12 @@ public final class dev/kord/common/entity/ActivityFlag$JoinRequest : dev/kord/co
 	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$JoinRequest;
 }
 
-public final class dev/kord/common/entity/ActivityFlag$PartyPrivacVoiceChannel : dev/kord/common/entity/ActivityFlag {
-	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$PartyPrivacVoiceChannel;
-}
-
 public final class dev/kord/common/entity/ActivityFlag$PartyPrivacyFriends : dev/kord/common/entity/ActivityFlag {
 	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$PartyPrivacyFriends;
+}
+
+public final class dev/kord/common/entity/ActivityFlag$PartyPrivacyVoiceChannel : dev/kord/common/entity/ActivityFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ActivityFlag$PartyPrivacyVoiceChannel;
 }
 
 public final class dev/kord/common/entity/ActivityFlag$Play : dev/kord/common/entity/ActivityFlag {

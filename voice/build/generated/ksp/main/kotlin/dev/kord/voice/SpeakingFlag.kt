@@ -266,10 +266,19 @@ public sealed class SpeakingFlag(
         shift: Int,
     ) : SpeakingFlag(shift)
 
+    /**
+     * Normal transmission of voice audio.
+     */
     public object Microphone : SpeakingFlag(0)
 
+    /**
+     * Transmission of context audio for video, no speaking indicator.
+     */
     public object Soundshare : SpeakingFlag(1)
 
+    /**
+     * Priority speaker, lowering audio of other speakers.
+     */
     public object Priority : SpeakingFlag(2)
 
     public companion object {

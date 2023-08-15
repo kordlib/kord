@@ -185,8 +185,7 @@ public fun Intents(flags: Iterable<Intent>): Intents = Intents { flags.forEach {
 public fun Intents(flags: Iterable<Intents>): Intents = Intents { flags.forEach { +it } }
 
 /**
- * Values that enable a group of events as [defined by
- * Discord](https://discord.com/developers/docs/topics/gateway#gateway-intents).
+ * Values that enable a group of events as defined by Discord.
  *
  * See [Intent]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway#gateway-intents).
@@ -261,13 +260,20 @@ public sealed class Intent(
     @PrivilegedIntent
     public object GuildMembers : Intent(1)
 
+    @Deprecated(
+        message = "Renamed to 'GuildModeration'",
+        replaceWith = ReplaceWith(expression = "Intent.GuildModeration", imports =
+                    arrayOf("dev.kord.gateway.Intent")),
+    )
+    public object GuildBans : Intent(2)
+
     /**
      * Enables the following events:
      * - [GuildAuditLogEntryCreate]
      * - [GuildBanAdd]
      * - [GuildBanRemove]
      */
-    public object GuildBans : Intent(2)
+    public object GuildModeration : Intent(2)
 
     /**
      * Enables the following events:
@@ -360,22 +366,18 @@ public sealed class Intent(
 
     /**
      * [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly
-     * associated with any
-     * Gateway [event][Event]s. Instead, access to [MessageContent] permits your app to receive
-     * message content data
-     * across the APIs.
+     * associated with any Gateway [event][Event]s. Instead, access to [MessageContent] permits your
+     * app to receive message content data across the APIs.
      *
      * For example, the [content][dev.kord.common.entity.DiscordMessage.content],
      * [embeds][dev.kord.common.entity.DiscordMessage.embeds],
-     * [attachments][dev.kord.common.entity.DiscordMessage.attachments],
-     * and [components][dev.kord.common.entity.DiscordMessage.components] fields in
-     * [message objects][dev.kord.common.entity.DiscordMessage] all contain message content and
-     * therefore require this
-     * intent.
+     * [attachments][dev.kord.common.entity.DiscordMessage.attachments], and
+     * [components][dev.kord.common.entity.DiscordMessage.components] fields in [message
+     * objects][dev.kord.common.entity.DiscordMessage] all contain message content and therefore
+     * require this intent.
      *
      * Apps **without** this intent will receive empty values in fields that contain user-inputted
-     * content with a few
-     * exceptions:
+     * content with a few exceptions:
      * - Content in messages that an app sends
      * - Content in DMs with the app
      * - Content in which the app is mentioned
@@ -417,7 +419,7 @@ public sealed class Intent(
             listOf(
                 Guilds,
                 GuildMembers,
-                GuildBans,
+                GuildModeration,
                 GuildEmojis,
                 GuildIntegrations,
                 GuildWebhooks,
@@ -447,7 +449,7 @@ public sealed class Intent(
         public fun fromShift(shift: Int): Intent = when (shift) {
             0 -> Guilds
             1 -> GuildMembers
-            2 -> GuildBans
+            2 -> GuildModeration
             3 -> GuildEmojis
             4 -> GuildIntegrations
             5 -> GuildWebhooks

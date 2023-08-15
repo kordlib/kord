@@ -43,61 +43,31 @@
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-flags",
     entries = [
         Entry(
-            name = "CrossPosted",
-            shift = 0,
-            kDoc = "This message has been published to subscribed channels (via Channel Following)."
+            "CrossPosted", shift = 0,
+            kDoc = "This message has been published to subscribed channels (via Channel Following).",
         ),
-
         Entry(
-            name = "IsCrossPost",
-            shift = 1,
-            kDoc = "This message originated from a message in another channel (via Channel Following)."
+            "IsCrossPost", shift = 1,
+            kDoc = "This message originated from a message in another channel (via Channel Following).",
         ),
-
+        Entry("SuppressEmbeds", shift = 2, kDoc = "Do not include any embeds when serializing this message."),
         Entry(
-            name = "SuppressEmbeds",
-            shift = 2,
-            kDoc = "Do not include any embeds when serializing this message."
+            "SourceMessageDeleted", shift = 3,
+            kDoc = "The source message for this crosspost has been deleted (via Channel Following).",
         ),
-
+        Entry("Urgent", shift = 4, kDoc = "This message came from the urgent message system."),
+        Entry("HasThread", shift = 5, kDoc = "This message has an associated thread, with the same id as the message."),
+        Entry("Ephemeral", shift = 6, kDoc = "This message is only visible to the user who invoked the Interaction."),
+        Entry("Loading", shift = 7, kDoc = """This message is an Interaction Response and the bot is "thinking"."""),
         Entry(
-            name = "SourceMessageDeleted",
-            shift = 3,
-            kDoc = "The source message for this crosspost has been deleted (via Channel Following)."
+            "FailedToMentionSomeRolesInThread", shift = 8,
+            kDoc = "This message failed to mention some roles and add their members to the thread.",
         ),
-
-        Entry(name = "Urgent", shift = 4, kDoc = "This message came from the urgent message system."),
-
         Entry(
-            name = "HasThread",
-            shift = 5,
-            kDoc = "This message has an associated thread, with the same id as the message."
+            "SuppressNotifications", shift = 12, kDoc = "This message will not trigger push and desktop notifications.",
         ),
-
-        Entry(
-            name = "Ephemeral",
-            shift = 6,
-            kDoc = "This message is only visible to the user who invoked the Interaction."
-        ),
-
-        Entry(
-            name = "Loading",
-            shift = 7,
-            kDoc = """This message is an Interaction Response and the bot is "thinking"."""
-        ),
-
-        Entry(
-            name = "FailedToMentionSomeRolesInThread",
-            shift = 8,
-            kDoc = "This message failed to mention some roles and add their members to the thread."
-        ),
-
-        Entry(
-            "SuppressNotifications", shift = 12,
-            kDoc = "This message will not trigger push and desktop notifications."
-        ),
-        Entry("IsVoiceMessage", shift = 13, kDoc = "This message is a voice message.")
-    ]
+        Entry("IsVoiceMessage", shift = 13, kDoc = "This message is a voice message."),
+    ],
 )
 
 @file:Generate(

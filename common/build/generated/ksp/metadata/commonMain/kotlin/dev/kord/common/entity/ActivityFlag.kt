@@ -249,8 +249,8 @@ public sealed class ActivityFlag(
         Sync -> 4
         Play -> 5
         PartyPrivacyFriends -> 6
-        PartyPrivacVoiceChannel -> 7
-        Embed -> 8
+        PartyPrivacyVoiceChannel -> 7
+        Embedded -> 8
         is Unknown -> Int.MAX_VALUE
     }
 
@@ -287,9 +287,9 @@ public sealed class ActivityFlag(
 
     public object PartyPrivacyFriends : ActivityFlag(6)
 
-    public object PartyPrivacVoiceChannel : ActivityFlag(7)
+    public object PartyPrivacyVoiceChannel : ActivityFlag(7)
 
-    public object Embed : ActivityFlag(8)
+    public object Embedded : ActivityFlag(8)
 
     public companion object {
         /**
@@ -304,8 +304,8 @@ public sealed class ActivityFlag(
                 Sync,
                 Play,
                 PartyPrivacyFriends,
-                PartyPrivacVoiceChannel,
-                Embed,
+                PartyPrivacyVoiceChannel,
+                Embedded,
             )
         }
 
@@ -364,14 +364,14 @@ public sealed class ActivityFlag(
             message = "Binary compatibility",
         )
         @JvmField
-        public val PartyPrivacVoiceChannel: ActivityFlag = PartyPrivacVoiceChannel
+        public val PartyPrivacyVoiceChannel: ActivityFlag = PartyPrivacyVoiceChannel
 
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Binary compatibility",
         )
         @JvmField
-        public val Embed: ActivityFlag = Embed
+        public val Embedded: ActivityFlag = Embedded
 
         /**
          * Returns an instance of [ActivityFlag] with [ActivityFlag.shift] equal to the specified
@@ -387,8 +387,8 @@ public sealed class ActivityFlag(
             4 -> Sync
             5 -> Play
             6 -> PartyPrivacyFriends
-            7 -> PartyPrivacVoiceChannel
-            8 -> Embed
+            7 -> PartyPrivacyVoiceChannel
+            8 -> Embedded
             else -> Unknown(shift)
         }
 
@@ -407,8 +407,8 @@ public sealed class ActivityFlag(
             "Sync" -> Sync
             "Play" -> Play
             "PartyPrivacyFriends" -> PartyPrivacyFriends
-            "PartyPrivacVoiceChannel" -> PartyPrivacVoiceChannel
-            "Embed" -> Embed
+            "PartyPrivacyVoiceChannel" -> PartyPrivacyVoiceChannel
+            "Embedded" -> Embedded
             else -> throw IllegalArgumentException(name)
         }
 

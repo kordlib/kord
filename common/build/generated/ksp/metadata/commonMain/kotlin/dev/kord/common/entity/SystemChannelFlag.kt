@@ -298,7 +298,7 @@ public sealed class SystemChannelFlag(
     public object SuppressPremiumSubscriptions : SystemChannelFlag(1)
 
     /**
-     * Hide server setup tips.
+     * Suppress server setup tips.
      */
     public object SuppressGuildReminderNotifications : SystemChannelFlag(2)
 

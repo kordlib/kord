@@ -283,22 +283,22 @@ public sealed class GuildMemberFlag(
     ) : GuildMemberFlag(shift)
 
     /**
-     * Member has left and rejoined the guild
+     * Member has left and rejoined the guild.
      */
     public object DidRejoin : GuildMemberFlag(0)
 
     /**
-     * Member has completed onboarding
+     * Member has completed onboarding.
      */
     public object CompletedOnboarding : GuildMemberFlag(1)
 
     /**
-     * Member is exempt from guild verification requirements
+     * Member is exempt from guild verification requirements.
      */
     public object BypassesVerification : GuildMemberFlag(2)
 
     /**
-     * Member has started onboarding
+     * Member has started onboarding.
      */
     public object StartedOnboarding : GuildMemberFlag(3)
 

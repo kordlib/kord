@@ -1264,6 +1264,10 @@ public final class dev/kord/gateway/Intent$GuildMessages : dev/kord/gateway/Inte
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildMessages;
 }
 
+public final class dev/kord/gateway/Intent$GuildModeration : dev/kord/gateway/Intent {
+	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildModeration;
+}
+
 public final class dev/kord/gateway/Intent$GuildPresences : dev/kord/gateway/Intent {
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildPresences;
 }
@@ -1297,14 +1301,6 @@ public final class dev/kord/gateway/IntentKt {
 	public static final fun Intents ([Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
 	public static final fun Intents ([Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
 	public static final fun Intents0 (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
-}
-
-public final class dev/kord/gateway/IntentUtil {
-	public static final synthetic fun IntentsWithIterable (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
-	public static final fun getAll (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
-	public static final fun getNonPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
-	public static final fun getNone (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
-	public static final fun getPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 }
 
 public final class dev/kord/gateway/Intents {
@@ -1343,6 +1339,14 @@ public final class dev/kord/gateway/Intents$Builder {
 
 public final class dev/kord/gateway/Intents$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/IntentsKt {
+	public static final synthetic fun IntentsWithIterable (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
+	public static final fun getAll (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getNonPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getNone (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 }
 
 public final class dev/kord/gateway/InteractionCreate : dev/kord/gateway/DispatchEvent {

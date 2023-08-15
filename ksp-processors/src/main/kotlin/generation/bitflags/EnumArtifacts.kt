@@ -8,6 +8,7 @@ import com.squareup.kotlinpoet.jvm.jvmStatic
 import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.shared.GenerationContext
+import dev.kord.ksp.generation.shared.nameWithSuppressedDeprecation
 import kotlin.DeprecationLevel.HIDDEN
 import kotlin.enums.EnumEntries
 
@@ -22,17 +23,23 @@ context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addDeprecatedEntityEnumArtifacts() {
     val deprecatedWithoutReplacement =
         Deprecated("$entityName is no longer an enum class. Deprecated without a replacement.", level = LEVEL)
-    val suppress = Suppress("DeprecatedCallableAddReplaceWith")
     addFunction("name") {
         addKdoc("@suppress")
-        addAnnotation(suppress)
+        addAnnotation(Suppress("DeprecatedCallableAddReplaceWith"))
         addAnnotation(deprecatedWithoutReplacement)
         returns<String>()
         addStatement("return this::class.simpleName!!")
     }
     addFunction("ordinal") {
         addKdoc("@suppress")
-        addAnnotation(suppress)
+        val deprecation = entries.mapNotNull {
+            when (it.deprecated?.level) {
+                null -> null
+                DeprecationLevel.WARNING -> "DEPRECATION"
+                DeprecationLevel.ERROR, HIDDEN -> "DEPRECATION_ERROR"
+            }
+        }.distinct().toTypedArray()
+        addAnnotation(Suppress("DeprecatedCallableAddReplaceWith", *deprecation))
         addAnnotation(deprecatedWithoutReplacement)
         returns<Int>()
         withControlFlow("return when·(this)") {
@@ -61,6 +68,11 @@ context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addDeprecatedEntityCompanionObjectEnumArtifacts() {
     entries.forEach { entry ->
         addProperty(entry.name, entityCN) {
+            when (entry.deprecated?.level) {
+                null -> {}
+                DeprecationLevel.WARNING -> addAnnotation(Suppress("DEPRECATION"))
+                DeprecationLevel.ERROR, HIDDEN -> addAnnotation(Suppress("DEPRECATION_ERROR"))
+            }
             addAnnotation(Deprecated("Binary compatibility", level = HIDDEN))
             jvmField()
             initializer(entry.name)
@@ -78,7 +90,7 @@ internal fun TypeSpec.Builder.addDeprecatedEntityCompanionObjectEnumArtifacts() 
         returns(entityCN)
         withControlFlow("return when·(name)") {
             entries.forEach { entry ->
-                addStatement("%S·->·${entry.name}", entry.name)
+                addStatement("%S·->·${entry.nameWithSuppressedDeprecation}", entry.name)
             }
             addStatement("else·->·throw·IllegalArgumentException(name)")
         }

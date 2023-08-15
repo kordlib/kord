@@ -24,18 +24,27 @@
         Entry("HouseBalance", shift = 8, kDoc = "House Balance Member"),
         Entry("EarlySupporter", shift = 9, kDoc = "Early Nitro Supporter"),
         Entry("TeamUser", shift = 10, kDoc = "User is a team"),
+        Entry(
+            "System", shift = 12,
+            deprecated = Deprecated(
+                "'UserFlag.System' is no longer documented. You can still use it with 'UserFlag.fromShift(12)'.",
+                ReplaceWith("UserFlag.fromShift(12)", "dev.kord.common.entity.UserFlag"),
+                level = WARNING,
+            ),
+        ),
         Entry("BugHunterLevel2", shift = 14, kDoc = "Bug Hunter Level 2"),
         Entry("VerifiedBot", shift = 16, kDoc = "Verified Bot"),
         Entry("VerifiedBotDeveloper", shift = 17, kDoc = "Early Verified Bot Developer"),
         Entry("DiscordCertifiedModerator", shift = 18, kDoc = "Moderator Programs Alumni"),
         Entry(
-            "BotHttpInteractions",
-            shift = 19,
-            kDoc = "Bot uses only HTTP interactions and is shown in the online member list"
+            "BotHttpInteractions", shift = 19,
+            kDoc = "Bot uses only HTTP interactions and is shown in the online member list."
         ),
-        Entry("ActiveDeveloper", shift = 22, kDoc = "User is an Active Developer"),
-        Entry("System", shift = 12)
-    ]
+        Entry(
+            "ActiveDeveloper", shift = 22,
+            kDoc = "User is an [Active·Developer](https://support-dev.discord.com/hc/articles/10113997751447).",
+        ),
+    ],
 )
 
 package dev.kord.common.entity

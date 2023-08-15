@@ -283,8 +283,7 @@ public sealed class Permission(
 
     /**
      * Allows guild members to view a channel, which includes reading messages in text channels and
-     * joining voice
-     * channels.
+     * joining voice channels.
      */
     public object ViewChannel : Permission(10)
 
@@ -300,7 +299,7 @@ public sealed class Permission(
     public object SendTTSMessages : Permission(12)
 
     /**
-     * Allows for deletion of other users messages.
+     * Allows for deletion of other users' messages.
      */
     public object ManageMessages : Permission(13)
 
@@ -321,8 +320,7 @@ public sealed class Permission(
 
     /**
      * Allows for using the `@everyone` tag to notify all users in a channel, and the `@here` tag to
-     * notify all online
-     * users in a channel.
+     * notify all online users in a channel.
      */
     public object MentionEveryone : Permission(17)
 
@@ -372,7 +370,7 @@ public sealed class Permission(
     public object ChangeNickname : Permission(26)
 
     /**
-     * Allows for modification of other users nicknames.
+     * Allows for modification of other users' nicknames.
      */
     public object ManageNicknames : Permission(27)
 
@@ -397,7 +395,7 @@ public sealed class Permission(
     public object ManageEmojisAndStickers : Permission(30)
 
     /**
-     * Allows management and editing of emojis, stickers and soundboard sounds.
+     * Allows management and editing of emojis, stickers, and soundboard sounds.
      */
     public object ManageGuildExpressions : Permission(30)
 
@@ -410,7 +408,7 @@ public sealed class Permission(
     /**
      * Allows for requesting to speak in stage channels.
      *
-     * is permission is under active development and may be changed or removed._
+     * _This permission is under active development and may be changed or removed._
      */
     public object RequestToSpeak : Permission(32)
 
@@ -452,8 +450,7 @@ public sealed class Permission(
 
     /**
      * Allows for timing out users to prevent them from sending or reacting to messages in chat and
-     * threads, and from
-     * speaking in voice and stage channels.
+     * threads, and from speaking in voice and stage channels.
      */
     public object ModerateMembers : Permission(40)
 

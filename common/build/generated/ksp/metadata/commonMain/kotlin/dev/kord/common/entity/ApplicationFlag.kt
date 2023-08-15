@@ -316,8 +316,8 @@ public sealed class ApplicationFlag(
      * Intent required for bots in **100 or more servers** to receive member-related events like
      * `GuildMemberAdd`.
      *
-     * See the list of member-related events [under
-     * `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
+     * See the list of member-related events
+     * [under `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
      */
     public object GatewayGuildMembers : ApplicationFlag(14)
 
@@ -325,8 +325,8 @@ public sealed class ApplicationFlag(
      * Intent required for bots in under 100 servers to receive member-related events like
      * `GuildMemberAdd`, found on the **Bot** page in your app's settings.
      *
-     * See the list of member-related events [under
-     * `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
+     * See the list of member-related events
+     * [under `GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
      */
     public object GatewayGuildMembersLimited : ApplicationFlag(15)
 
@@ -341,15 +341,15 @@ public sealed class ApplicationFlag(
     public object Embedded : ApplicationFlag(17)
 
     /**
-     * Intent required for bots in **100 or more servers*to receive
+     * Intent required for bots in **100 or more servers** to receive
      * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
      */
     public object GatewayMessageContent : ApplicationFlag(18)
 
     /**
-     * Intent required for bots in under 100 servers to receive [message
-     * content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found on the **Bot**
-     * page in your app's settings.
+     * Intent required for bots in under 100 servers to receive
+     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found on the
+     * **Bot** page in your app's settings.
      */
     public object GatewayMessageContentLimited : ApplicationFlag(19)
 

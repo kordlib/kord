@@ -156,19 +156,17 @@
     entries = [
         Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),
         Entry("SuppressPremiumSubscriptions", shift = 1, kDoc = "Suppress server boost notifications."),
-        Entry("SuppressGuildReminderNotifications", shift = 2, kDoc = "Hide server setup tips."),
+        Entry("SuppressGuildReminderNotifications", shift = 2, kDoc = "Suppress server setup tips."),
         Entry("SuppressJoinNotificationReplies", shift = 3, kDoc = "Hide member join sticker reply buttons."),
         Entry(
-            "SuppressRoleSubscriptionPurchaseNotifications",
-            shift = 4,
-            kDoc = "Suppress role subscription purchase and renewal notifications."
+            "SuppressRoleSubscriptionPurchaseNotifications", shift = 4,
+            kDoc = "Suppress role subscription purchase and renewal notifications.",
         ),
         Entry(
-            "SuppressRoleSubscriptionPurchaseNotificationReplies",
-            shift = 5,
-            kDoc = "Hide role subscription sticker reply buttons."
+            "SuppressRoleSubscriptionPurchaseNotificationReplies", shift = 5,
+            kDoc = "Hide role subscription sticker reply buttons.",
         ),
-    ]
+    ],
 )
 
 package dev.kord.common.entity
