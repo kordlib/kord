@@ -125,7 +125,7 @@ public class Intents internal constructor(
     public fun copy(code: DiscordBitSet = this.code): Intents = Intents(code)
 
     public class Builder(
-        private var code: DiscordBitSet = EmptyBitSet(),
+        private val code: DiscordBitSet = EmptyBitSet(),
     ) {
         public operator fun Intent.unaryPlus() {
             this@Builder.code.add(this.code)

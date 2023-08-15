@@ -126,7 +126,7 @@ public class Permissions internal constructor(
     public fun copy(code: DiscordBitSet = this.code): Permissions = Permissions(code)
 
     public class Builder(
-        private var code: DiscordBitSet = EmptyBitSet(),
+        private val code: DiscordBitSet = EmptyBitSet(),
     ) {
         public operator fun Permission.unaryPlus() {
             this@Builder.code.add(this.code)

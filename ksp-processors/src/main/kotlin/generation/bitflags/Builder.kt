@@ -22,7 +22,12 @@ internal fun TypeSpec.Builder.addBuilder() {
             }
         }
         addProperty(valueName, valueCN, PRIVATE) {
-            mutable()
+            mutable(
+                when (valueType) {
+                    INT -> true
+                    BIT_SET -> false
+                }
+            )
             initializer(valueName)
         }
 
