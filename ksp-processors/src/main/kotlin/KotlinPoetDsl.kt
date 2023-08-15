@@ -56,6 +56,9 @@ internal inline fun FileSpec.Builder.addFunction(name: String, builder: FunSpecB
 internal inline fun TypeSpec.Builder.addClass(name: String, builder: TypeSpecBuilder) =
     addType(TypeSpec.classBuilder(name).apply(builder).build())
 
+internal inline fun TypeSpec.Builder.addClass(className: ClassName, builder: TypeSpecBuilder) =
+    addType(TypeSpec.classBuilder(className).apply(builder).build())
+
 internal inline fun TypeSpec.Builder.addCompanionObject(name: String? = null, builder: TypeSpecBuilder) =
     addType(TypeSpec.companionObjectBuilder(name).apply(builder).build())
 
@@ -80,9 +83,6 @@ internal inline fun TypeSpec.Builder.addProperty(
 
 internal inline fun TypeSpec.Builder.primaryConstructor(builder: FunSpecBuilder) =
     primaryConstructor(FunSpec.constructorBuilder().apply(builder).build())
-
-internal inline fun TypeSpec.Builder.addConstructor(builder: FunSpecBuilder) =
-    addFunction(FunSpec.constructorBuilder().apply(builder).build())
 
 internal inline fun TypeSpec.Builder.addInitializerBlock(builder: CodeBlockBuilder) =
     addInitializerBlock(CodeBlock.builder().apply(builder).build())

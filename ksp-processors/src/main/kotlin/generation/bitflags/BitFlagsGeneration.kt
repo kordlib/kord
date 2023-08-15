@@ -13,13 +13,19 @@ import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
 import dev.kord.ksp.generation.shared.*
 import kotlinx.serialization.Serializable
 
+context(GenerationContext)
+internal val BitFlags.collectionCN
+    get() = ClassName(entityCN.packageName, entityName + 's')
+
+context(GenerationContext)
+internal val BitFlags.builderCN
+    get() = collectionCN.nestedClass("Builder")
+
 internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGenerationEntity(originatingFile) {
-    val collectionName = ClassName(packageName, entityName + 's')
-    val builderName = collectionName.nestedClass("Builder")
-    addClass(collectionName) {
-        addCollectionDoc(collectionName, builderName)
+    addClass(collectionCN) {
+        addCollectionDoc()
         addAnnotation<Serializable> {
-            addMember("with·=·%T.Serializer::class", collectionName)
+            addMember("with·=·%T.Serializer::class", collectionCN)
         }
         primaryConstructor {
             addModifiers(INTERNAL)
@@ -65,31 +71,31 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             }
         }
         addContains(parameterName = "flag", parameterType = entityCN)
-        addContains(parameterName = "flags", parameterType = collectionName)
-        addPlus(parameterName = "flag", parameterType = entityCN, collectionName)
-        addPlus(parameterName = "flags", parameterType = collectionName, collectionName)
-        addMinus(parameterName = "flag", parameterType = entityCN, collectionName)
-        addMinus(parameterName = "flags", parameterType = collectionName, collectionName)
+        addContains(parameterName = "flags", parameterType = collectionCN)
+        addPlus(parameterName = "flag", parameterType = entityCN)
+        addPlus(parameterName = "flags", parameterType = collectionCN)
+        addMinus(parameterName = "flag", parameterType = entityCN)
+        addMinus(parameterName = "flags", parameterType = collectionCN)
         addFunction("copy") {
             addModifiers(PUBLIC, INLINE)
-            addParameter("block", type = LambdaTypeName.get(receiver = builderName, returnType = UNIT))
-            returns(collectionName)
+            addParameter("block", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT))
+            returns(collectionCN)
             addStatement("%M { callsInPlace(block, %M) }", CONTRACT, EXACTLY_ONCE)
-            addStatement("return %T($valueName).apply(block).build()", builderName)
+            addStatement("return %T($valueName).apply(block).build()", builderCN)
         }
-        addEqualsAndHashCodeBasedOnClassAndSingleProperty(collectionName, property = valueName)
+        addEqualsAndHashCodeBasedOnClassAndSingleProperty(collectionCN, property = valueName)
         addFunction("toString") {
             addModifiers(OVERRIDE)
             returns<String>()
-            addStatement("return \"${collectionName.simpleName}(values=\$values)\"")
+            addStatement("return \"${collectionCN.simpleName}(values=\$values)\"")
         }
         if (collectionWasDataClass) {
-            addDeprecatedDataClassArtifacts(collectionName)
+            addDeprecatedDataClassArtifacts()
         }
-        addBuilder(collectionName)
-        addSerializer(collectionName)
+        addBuilder()
+        addSerializer()
     }
-    addFactoryFunctions(collectionName, builderName)
+    addFactoryFunctions()
     addClass(entityCN) {
         // for ksp incremental processing
         addOriginatingKSFile(originatingFile)
@@ -119,8 +125,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             }
         }
 
-        addPlus(parameterName = "flag", parameterType = entityCN, collectionName)
-        addPlus(parameterName = "flags", parameterType = collectionName, collectionName)
+        addPlus(parameterName = "flag", parameterType = entityCN)
+        addPlus(parameterName = "flags", parameterType = collectionCN)
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", FINAL)
         addFunction("toString") {
             addModifiers(FINAL, OVERRIDE)
@@ -167,33 +173,33 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
     }
 }
 
-context(GenerationContext)
-private fun FileSpec.Builder.addFactoryFunctions(collectionName: ClassName, builderName: ClassName) {
-    val factoryFunctionName = collectionName.simpleName
+context(BitFlags, GenerationContext)
+private fun FileSpec.Builder.addFactoryFunctions() {
+    val factoryFunctionName = collectionCN.simpleName
 
     addFunction(factoryFunctionName) {
         addModifiers(PUBLIC, INLINE)
-        addParameter("builder", type = LambdaTypeName.get(receiver = builderName, returnType = UNIT)) {
+        addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT)) {
             defaultValue("{}")
         }
-        returns(collectionName)
+        returns(collectionCN)
 
         addStatement("%M { callsInPlace(builder, %M) }", CONTRACT, EXACTLY_ONCE)
-        addStatement("return %T().apply(builder).build()", builderName)
+        addStatement("return %T().apply(builder).build()", builderCN)
     }
 
     addFunction(factoryFunctionName) {
         addModifiers(PUBLIC)
         addParameter("flags", entityCN, VARARG)
-        returns(collectionName)
+        returns(collectionCN)
 
         addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
     }
 
     addFunction(factoryFunctionName) {
         addModifiers(PUBLIC)
-        addParameter("flags", collectionName, VARARG)
-        returns(collectionName)
+        addParameter("flags", collectionCN, VARARG)
+        returns(collectionCN)
 
         addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
     }
@@ -201,7 +207,7 @@ private fun FileSpec.Builder.addFactoryFunctions(collectionName: ClassName, buil
     addFunction(factoryFunctionName) {
         addModifiers(PUBLIC)
         addParameter("flags", ITERABLE.parameterizedBy(entityCN))
-        returns(collectionName)
+        returns(collectionCN)
 
         addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
     }
@@ -209,8 +215,8 @@ private fun FileSpec.Builder.addFactoryFunctions(collectionName: ClassName, buil
     addFunction(factoryFunctionName) {
         jvmName("${factoryFunctionName}0")
         addModifiers(PUBLIC)
-        addParameter("flags", ITERABLE.parameterizedBy(collectionName))
-        returns(collectionName)
+        addParameter("flags", ITERABLE.parameterizedBy(collectionCN))
+        returns(collectionCN)
 
         addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
     }

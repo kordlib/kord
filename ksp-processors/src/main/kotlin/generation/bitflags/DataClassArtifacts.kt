@@ -1,6 +1,5 @@
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.DelicateKotlinPoetApi
 import com.squareup.kotlinpoet.KModifier.OPERATOR
 import com.squareup.kotlinpoet.KModifier.PUBLIC
@@ -16,12 +15,12 @@ private val LEVEL = DeprecationLevel.WARNING
 
 context(BitFlags, GenerationContext)
 @OptIn(DelicateKotlinPoetApi::class)
-internal fun TypeSpec.Builder.addDeprecatedDataClassArtifacts(collectionName: ClassName) {
+internal fun TypeSpec.Builder.addDeprecatedDataClassArtifacts() {
     addFunction("component1") {
         addKdoc("@suppress")
         addAnnotation(
             Deprecated(
-                "${collectionName.simpleName} is no longer a data class.",
+                "${collectionCN.simpleName} is no longer a data class.",
                 ReplaceWith("this.$valueName", imports = emptyArray()),
                 LEVEL,
             )
@@ -35,14 +34,14 @@ internal fun TypeSpec.Builder.addDeprecatedDataClassArtifacts(collectionName: Cl
         addAnnotation(Suppress("DeprecatedCallableAddReplaceWith"))
         addAnnotation(
             Deprecated(
-                "${collectionName.simpleName} is no longer a data class. Deprecated without a replacement.",
+                "${collectionCN.simpleName} is no longer a data class. Deprecated without a replacement.",
                 level = LEVEL,
             )
         )
         addParameter(valueName, valueCN) {
             defaultValue("this.$valueName")
         }
-        returns(collectionName)
-        addStatement("return %T($valueName)", collectionName)
+        returns(collectionCN)
+        addStatement("return %T($valueName)", collectionCN)
     }
 }

@@ -1,6 +1,5 @@
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.DelicateKotlinPoetApi
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.TypeSpec
@@ -12,8 +11,8 @@ import dev.kord.ksp.generation.shared.EMPTY_BIT_SET
 import dev.kord.ksp.generation.shared.GenerationContext
 
 context(BitFlags, GenerationContext)
-internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
-    addClass("Builder") {
+internal fun TypeSpec.Builder.addBuilder() {
+    addClass(builderCN) {
         primaryConstructor {
             addParameter(valueName, valueCN) {
                 when (valueType) {
@@ -27,7 +26,7 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
             initializer(valueName)
         }
 
-        val builder = "Builder"
+        val builder = builderCN.simpleName
         addFunction("unaryPlus") {
             addModifiers(PUBLIC, OPERATOR)
             receiver(entityCN)
@@ -41,7 +40,7 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
         }
         addFunction("unaryPlus") {
             addModifiers(PUBLIC, OPERATOR)
-            receiver(collectionName)
+            receiver(collectionCN)
 
             addStatement(
                 when (valueType) {
@@ -64,7 +63,7 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
         }
         addFunction("unaryMinus") {
             addModifiers(PUBLIC, OPERATOR)
-            receiver(collectionName)
+            receiver(collectionCN)
 
             addStatement(
                 when (valueType) {
@@ -75,8 +74,8 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
         }
 
         addFunction("build") {
-            returns(collectionName)
-            addStatement("return %T($valueName)", collectionName)
+            returns(collectionCN)
+            addStatement("return %T($valueName)", collectionCN)
         }
 
         addFunction("flags") {
@@ -89,7 +88,7 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
                     DeprecationLevel.WARNING,
                 )
             )
-            returns(collectionName)
+            returns(collectionCN)
             addStatement("return build()")
         }
     }

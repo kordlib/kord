@@ -1,6 +1,5 @@
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
@@ -79,7 +78,7 @@ private val docString = """
 """.trimIndent()
 
 context(BitFlags, GenerationContext)
-internal fun TypeSpec.Builder.addCollectionDoc(collectionName: ClassName, builderName: ClassName) {
+internal fun TypeSpec.Builder.addCollectionDoc() {
     val possibleValues = entries.map { entityCN.nestedClass(it.name) }
     val unknown = entityCN.nestedClass("Unknown")
     val withReplacedVariables = docString
@@ -90,14 +89,14 @@ internal fun TypeSpec.Builder.addCollectionDoc(collectionName: ClassName, builde
     addKdoc(
         CodeBlock.of(
             withReplacedVariables,
-            collectionName.simpleName, // %1L
+            collectionCN.simpleName, // %1L
             entityCN, // %2T
-            collectionName, // %3T
+            collectionCN, // %3T
             possibleValues.getSafe(0), // %4T
             possibleValues.getSafe(1), // %5T
             possibleValues.getSafe(1), // %6T
             unknown, // %7T
-            builderName, // %8T
+            builderCN, // %8T
         )
     )
 }

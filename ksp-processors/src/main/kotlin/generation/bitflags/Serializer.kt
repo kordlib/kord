@@ -1,6 +1,5 @@
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
@@ -23,16 +22,16 @@ import kotlinx.serialization.encoding.Encoder
 private val SERIALIZER_METHOD = MemberName("kotlinx.serialization.builtins", "serializer")
 
 context(BitFlags, GenerationContext)
-internal fun TypeSpec.Builder.addSerializer(collectionName: ClassName) {
+internal fun TypeSpec.Builder.addSerializer() {
     addObject("Serializer") {
         addModifiers(INTERNAL)
-        addSuperinterface(K_SERIALIZER.parameterizedBy(collectionName))
+        addSuperinterface(K_SERIALIZER.parameterizedBy(collectionCN))
 
         addProperty<SerialDescriptor>("descriptor", OVERRIDE) {
             initializer(
                 "%M(%S, %T)",
                 PRIMITIVE_SERIAL_DESCRIPTOR,
-                collectionName.canonicalName,
+                collectionCN.canonicalName,
                 valueType.toPrimitiveKind(),
             )
         }
@@ -47,15 +46,15 @@ internal fun TypeSpec.Builder.addSerializer(collectionName: ClassName) {
         addFunction("serialize") {
             addModifiers(OVERRIDE)
             addParameter<Encoder>("encoder")
-            addParameter("value", collectionName)
+            addParameter("value", collectionCN)
             addStatement("encoder.encodeSerializableValue(delegate, value.$valueName)")
         }
 
         addFunction("deserialize") {
             addModifiers(OVERRIDE)
-            returns(collectionName)
+            returns(collectionCN)
             addParameter<Decoder>("decoder")
-            addStatement("return %T(decoder.decodeSerializableValue(delegate))", collectionName)
+            addStatement("return %T(decoder.decodeSerializableValue(delegate))", collectionCN)
         }
     }
 }
