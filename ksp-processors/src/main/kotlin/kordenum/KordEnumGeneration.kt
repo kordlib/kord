@@ -70,7 +70,6 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile): FileSpec {
         @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Suppress`
         addAnnotation(
             Suppress(
-                "RedundantVisibilityModifier",
                 "IncorrectFormatting",
                 "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection",
