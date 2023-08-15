@@ -46,7 +46,7 @@ public interface TopGuildChannel : GuildChannel, TopGuildChannelBehavior {
 
         val base = member.getPermissions()
 
-        if (Permission.Administrator in base) return Permissions.ALL_KNOWN
+        if (Permission.Administrator in base) return Permissions.ALL
 
         val everyoneOverwrite = getPermissionOverwritesForRole(guildId)
         val roleOverwrites = member.roleIds.mapNotNull { getPermissionOverwritesForRole(it) }

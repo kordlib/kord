@@ -104,5 +104,5 @@ import dev.kord.ksp.Generate.Entry
 
 private val ALL_PERMISSIONS = Permissions(flags = Permission.entries)
 
-/** All known [Permission]s (as contained in [Permission.entries]) combined into a single [Permissions] object. */
-public val Permissions.Companion.ALL_KNOWN: Permissions get() = ALL_PERMISSIONS
+/** All known [Permission]s (as contained in [Permission.entries]) combined into a single [Permissions] instance. */
+public val Permissions.Companion.ALL: Permissions get() = ALL_PERMISSIONS

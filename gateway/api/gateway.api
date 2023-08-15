@@ -1343,10 +1343,10 @@ public final class dev/kord/gateway/Intents$Companion {
 
 public final class dev/kord/gateway/IntentsKt {
 	public static final synthetic fun IntentsWithIterable (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
-	public static final fun getAll (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
-	public static final fun getNonPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
-	public static final fun getNone (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
-	public static final fun getPrivileged (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getALL (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getNONE (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getNON_PRIVILEGED (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getPRIVILEGED (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 }
 
 public final class dev/kord/gateway/InteractionCreate : dev/kord/gateway/DispatchEvent {

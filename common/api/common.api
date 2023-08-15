@@ -8128,7 +8128,7 @@ public final class dev/kord/common/entity/Permissions$Companion {
 }
 
 public final class dev/kord/common/entity/PermissionsKt {
-	public static final fun getALL_KNOWN (Ldev/kord/common/entity/Permissions$Companion;)Ldev/kord/common/entity/Permissions;
+	public static final fun getALL (Ldev/kord/common/entity/Permissions$Companion;)Ldev/kord/common/entity/Permissions;
 }
 
 public abstract class dev/kord/common/entity/PremiumTier {

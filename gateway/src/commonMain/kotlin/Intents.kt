@@ -237,40 +237,45 @@ private const val privilegedIntentAnnotation = "dev.kord.gateway.PrivilegedInten
 @Target(CLASS, PROPERTY, FUNCTION)
 public annotation class PrivilegedIntent
 
-/**
- * All non intents.
- *
- * @see PrivilegedIntent
- */
-@PrivilegedIntent
-public val Intents.Companion.all: Intents
-    get() = Intents(Intent.entries)
 
-/**
- * All privileged intents.
- *
- * @see PrivilegedIntent
- */
 @PrivilegedIntent
-public val Intents.Companion.privileged: Intents
-    get() = Intents(GuildPresences, GuildMembers, MessageContent)
+private val ALL_INTENTS = Intents(flags = Intent.entries)
 
-/**
- * All non privileged intents.
- *
- * @see PrivilegedIntent
- */
+@PrivilegedIntent
+private val PRIVILEGED_INTENTS = Intents(GuildMembers, GuildPresences, MessageContent)
+
 @OptIn(PrivilegedIntent::class)
-public val Intents.Companion.nonPrivileged: Intents
-    get() = Intents {
-        +all
-        -privileged
-    }
+private val NON_PRIVILEGED_INTENTS = Intents.ALL - Intents.PRIVILEGED
+
+private val NO_INTENTS = Intents()
+
 
 /**
- * No intents.
+ * All known [Intent]s (as contained in [Intent.entries]) combined into a single [Intents] instance.
+ *
+ * This is marked with [PrivilegedIntent] because it also contains all [privileged][PrivilegedIntent] [Intent]s.
  */
-public val Intents.Companion.none: Intents get() = Intents()
+@PrivilegedIntent
+public val Intents.Companion.ALL: Intents get() = ALL_INTENTS
+
+/**
+ * All known [privileged][PrivilegedIntent] [Intent]s combined into a single [Intents] instance.
+ *
+ * @see PrivilegedIntent
+ */
+@PrivilegedIntent
+public val Intents.Companion.PRIVILEGED: Intents get() = PRIVILEGED_INTENTS
+
+/**
+ * All known non-[privileged][PrivilegedIntent] [Intent]s combined into a single [Intents] instance.
+ *
+ * @see PrivilegedIntent
+ */
+public val Intents.Companion.NON_PRIVILEGED: Intents get() = NON_PRIVILEGED_INTENTS
+
+/** An [Intents] instance that contains no [Intent]s. */
+public val Intents.Companion.NONE: Intents get() = NO_INTENTS
+
 
 @Suppress("FunctionName")
 @Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
