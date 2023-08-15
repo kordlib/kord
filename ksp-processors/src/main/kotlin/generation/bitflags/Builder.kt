@@ -8,6 +8,7 @@ import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
+import dev.kord.ksp.generation.shared.EMPTY_BIT_SET
 import dev.kord.ksp.generation.shared.GenerationContext
 
 context(BitFlags, GenerationContext)
@@ -15,7 +16,10 @@ internal fun TypeSpec.Builder.addBuilder(collectionName: ClassName) {
     addClass("Builder") {
         primaryConstructor {
             addParameter(valueName, valueCN) {
-                defaultValue(valueType.defaultParameterCode())
+                when (valueType) {
+                    INT -> defaultValue("0")
+                    BIT_SET -> defaultValue("%M()", EMPTY_BIT_SET)
+                }
             }
         }
         addProperty(valueName, valueCN, PRIVATE) {

@@ -82,8 +82,8 @@ import kotlinx.serialization.encoding.Encoder
  * @property code numeric value of all [ApplicationFlags]s
  */
 @Serializable(with = ApplicationFlags.Serializer::class)
-public class ApplicationFlags(
-    public val code: Int = 0,
+public class ApplicationFlags internal constructor(
+    public val code: Int,
 ) {
     public val values: Set<ApplicationFlag>
         get() = buildSet {
@@ -197,7 +197,8 @@ public class ApplicationFlags(
     }
 }
 
-public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit): ApplicationFlags {
+public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit = {}):
+        ApplicationFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return ApplicationFlags.Builder().apply(builder).build()
 }

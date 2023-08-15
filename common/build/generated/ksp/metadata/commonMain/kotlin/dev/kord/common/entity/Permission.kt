@@ -74,8 +74,8 @@ import kotlinx.serialization.encoding.Encoder
  * @property code numeric value of all [Permissions]s
  */
 @Serializable(with = Permissions.Serializer::class)
-public class Permissions(
-    public val code: DiscordBitSet = EmptyBitSet(),
+public class Permissions internal constructor(
+    public val code: DiscordBitSet,
 ) {
     public val values: Set<Permission>
         get() = buildSet {
@@ -172,7 +172,7 @@ public class Permissions(
     }
 }
 
-public inline fun Permissions(builder: Permissions.Builder.() -> Unit): Permissions {
+public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Permissions {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Permissions.Builder().apply(builder).build()
 }

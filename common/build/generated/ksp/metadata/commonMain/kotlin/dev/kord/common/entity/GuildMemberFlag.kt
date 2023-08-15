@@ -81,8 +81,8 @@ import kotlinx.serialization.encoding.Encoder
  * @property code numeric value of all [GuildMemberFlags]s
  */
 @Serializable(with = GuildMemberFlags.Serializer::class)
-public class GuildMemberFlags(
-    public val code: Int = 0,
+public class GuildMemberFlags internal constructor(
+    public val code: Int,
 ) {
     public val values: Set<GuildMemberFlag>
         get() = buildSet {
@@ -189,7 +189,8 @@ public class GuildMemberFlags(
     }
 }
 
-public inline fun GuildMemberFlags(builder: GuildMemberFlags.Builder.() -> Unit): GuildMemberFlags {
+public inline fun GuildMemberFlags(builder: GuildMemberFlags.Builder.() -> Unit = {}):
+        GuildMemberFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return GuildMemberFlags.Builder().apply(builder).build()
 }

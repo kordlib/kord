@@ -82,8 +82,8 @@ import kotlinx.serialization.encoding.Encoder
  * @property code numeric value of all [SystemChannelFlags]s
  */
 @Serializable(with = SystemChannelFlags.Serializer::class)
-public class SystemChannelFlags(
-    public val code: Int = 0,
+public class SystemChannelFlags internal constructor(
+    public val code: Int,
 ) {
     public val values: Set<SystemChannelFlag>
         get() = buildSet {
@@ -190,7 +190,7 @@ public class SystemChannelFlags(
     }
 }
 
-public inline fun SystemChannelFlags(builder: SystemChannelFlags.Builder.() -> Unit):
+public inline fun SystemChannelFlags(builder: SystemChannelFlags.Builder.() -> Unit = {}):
         SystemChannelFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return SystemChannelFlags.Builder().apply(builder).build()

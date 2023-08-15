@@ -78,8 +78,8 @@ import kotlinx.serialization.encoding.Encoder
  * @property code numeric value of all [MessageFlags]s
  */
 @Serializable(with = MessageFlags.Serializer::class)
-public class MessageFlags(
-    public val code: Int = 0,
+public class MessageFlags internal constructor(
+    public val code: Int,
 ) {
     public val values: Set<MessageFlag>
         get() = buildSet {
@@ -190,7 +190,7 @@ public class MessageFlags(
     }
 }
 
-public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
+public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit = {}): MessageFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return MessageFlags.Builder().apply(builder).build()
 }

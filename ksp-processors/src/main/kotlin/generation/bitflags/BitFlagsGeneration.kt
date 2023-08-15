@@ -22,9 +22,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addMember("with·=·%T.Serializer::class", collectionName)
         }
         primaryConstructor {
-            addParameter(valueName, valueCN) {
-                defaultValue(valueType.defaultParameterCode())
-            }
+            addModifiers(INTERNAL)
+            addParameter(valueName, valueCN)
         }
         addProperty(valueName, valueCN, PUBLIC) {
             initializer(valueName)
@@ -174,7 +173,9 @@ private fun FileSpec.Builder.addFactoryFunctions(collectionName: ClassName, buil
 
     addFunction(factoryFunctionName) {
         addModifiers(PUBLIC, INLINE)
-        addParameter("builder", type = LambdaTypeName.get(receiver = builderName, returnType = UNIT))
+        addParameter("builder", type = LambdaTypeName.get(receiver = builderName, returnType = UNIT)) {
+            defaultValue("{}")
+        }
         returns(collectionName)
 
         addStatement("%M { callsInPlace(builder, %M) }", CONTRACT, EXACTLY_ONCE)

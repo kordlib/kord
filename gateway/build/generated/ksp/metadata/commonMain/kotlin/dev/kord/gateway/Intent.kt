@@ -74,8 +74,8 @@ import kotlinx.serialization.encoding.Encoder
  * @property code numeric value of all [Intents]s
  */
 @Serializable(with = Intents.Serializer::class)
-public class Intents(
-    public val code: DiscordBitSet = EmptyBitSet(),
+public class Intents internal constructor(
+    public val code: DiscordBitSet,
 ) {
     public val values: Set<Intent>
         get() = buildSet {
@@ -170,7 +170,7 @@ public class Intents(
     }
 }
 
-public inline fun Intents(builder: Intents.Builder.() -> Unit): Intents {
+public inline fun Intents(builder: Intents.Builder.() -> Unit = {}): Intents {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Intents.Builder().apply(builder).build()
 }

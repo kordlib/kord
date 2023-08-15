@@ -262,14 +262,12 @@ public final class dev/kord/common/entity/ActivityFlagKt {
 	public static final fun ActivityFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ActivityFlags;
 	public static final fun ActivityFlags ([Ldev/kord/common/entity/ActivityFlag;)Ldev/kord/common/entity/ActivityFlags;
 	public static final fun ActivityFlags ([Ldev/kord/common/entity/ActivityFlags;)Ldev/kord/common/entity/ActivityFlags;
+	public static synthetic fun ActivityFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/ActivityFlags;
 	public static final fun ActivityFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ActivityFlags;
 }
 
 public final class dev/kord/common/entity/ActivityFlags {
 	public static final field Companion Ldev/kord/common/entity/ActivityFlags$Companion;
-	public fun <init> ()V
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun contains (Ldev/kord/common/entity/ActivityFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ActivityFlags;)Z
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ActivityFlags;
@@ -707,14 +705,12 @@ public final class dev/kord/common/entity/ApplicationFlagKt {
 	public static final fun ApplicationFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
 	public static final fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
 	public static final fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
+	public static synthetic fun ApplicationFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/ApplicationFlags;
 	public static final fun ApplicationFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ApplicationFlags;
 }
 
 public final class dev/kord/common/entity/ApplicationFlags {
 	public static final field Companion Ldev/kord/common/entity/ApplicationFlags$Companion;
-	public fun <init> ()V
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/ApplicationFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ApplicationFlags;)Z
@@ -1657,14 +1653,12 @@ public final class dev/kord/common/entity/ChannelFlagKt {
 	public static final fun ChannelFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ChannelFlags;
 	public static final fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
 	public static final fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;
+	public static synthetic fun ChannelFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/ChannelFlags;
 	public static final fun ChannelFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
 }
 
 public final class dev/kord/common/entity/ChannelFlags {
 	public static final field Companion Ldev/kord/common/entity/ChannelFlags$Companion;
-	public fun <init> ()V
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/ChannelFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ChannelFlags;)Z
@@ -6838,14 +6832,12 @@ public final class dev/kord/common/entity/GuildMemberFlagKt {
 	public static final fun GuildMemberFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/GuildMemberFlags;
 	public static final fun GuildMemberFlags ([Ldev/kord/common/entity/GuildMemberFlag;)Ldev/kord/common/entity/GuildMemberFlags;
 	public static final fun GuildMemberFlags ([Ldev/kord/common/entity/GuildMemberFlags;)Ldev/kord/common/entity/GuildMemberFlags;
+	public static synthetic fun GuildMemberFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/GuildMemberFlags;
 	public static final fun GuildMemberFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/GuildMemberFlags;
 }
 
 public final class dev/kord/common/entity/GuildMemberFlags {
 	public static final field Companion Ldev/kord/common/entity/GuildMemberFlags$Companion;
-	public fun <init> ()V
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/GuildMemberFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/GuildMemberFlags;)Z
@@ -7441,14 +7433,12 @@ public final class dev/kord/common/entity/MessageFlagKt {
 	public static final fun MessageFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/MessageFlags;
 	public static final fun MessageFlags ([Ldev/kord/common/entity/MessageFlag;)Ldev/kord/common/entity/MessageFlags;
 	public static final fun MessageFlags ([Ldev/kord/common/entity/MessageFlags;)Ldev/kord/common/entity/MessageFlags;
+	public static synthetic fun MessageFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/MessageFlags;
 	public static final fun MessageFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/MessageFlags;
 }
 
 public final class dev/kord/common/entity/MessageFlags {
 	public static final field Companion Ldev/kord/common/entity/MessageFlags$Companion;
-	public fun <init> ()V
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/MessageFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/MessageFlags;)Z
@@ -8086,14 +8076,12 @@ public final class dev/kord/common/entity/PermissionKt {
 	public static final fun Permissions (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions ([Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions ([Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
+	public static synthetic fun Permissions$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/Permissions;
 }
 
 public final class dev/kord/common/entity/Permissions {
 	public static final field Companion Ldev/kord/common/entity/Permissions$Companion;
-	public fun <init> ()V
-	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
-	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/DiscordBitSet;
 	public final fun contains (Ldev/kord/common/entity/Permission;)Z
 	public final fun contains (Ldev/kord/common/entity/Permissions;)Z
@@ -8527,14 +8515,12 @@ public final class dev/kord/common/entity/SystemChannelFlagKt {
 	public static final fun SystemChannelFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/SystemChannelFlags;
 	public static final fun SystemChannelFlags ([Ldev/kord/common/entity/SystemChannelFlag;)Ldev/kord/common/entity/SystemChannelFlags;
 	public static final fun SystemChannelFlags ([Ldev/kord/common/entity/SystemChannelFlags;)Ldev/kord/common/entity/SystemChannelFlags;
+	public static synthetic fun SystemChannelFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/SystemChannelFlags;
 	public static final fun SystemChannelFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/SystemChannelFlags;
 }
 
 public final class dev/kord/common/entity/SystemChannelFlags {
 	public static final field Companion Ldev/kord/common/entity/SystemChannelFlags$Companion;
-	public fun <init> ()V
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlags;)Z
@@ -8734,14 +8720,12 @@ public final class dev/kord/common/entity/UserFlagKt {
 	public static final fun UserFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
 	public static final fun UserFlags ([Ldev/kord/common/entity/UserFlag;)Ldev/kord/common/entity/UserFlags;
 	public static final fun UserFlags ([Ldev/kord/common/entity/UserFlags;)Ldev/kord/common/entity/UserFlags;
+	public static synthetic fun UserFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/UserFlags;
 	public static final fun UserFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/UserFlags;
 }
 
 public final class dev/kord/common/entity/UserFlags {
 	public static final field Companion Ldev/kord/common/entity/UserFlags$Companion;
-	public fun <init> ()V
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/UserFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/UserFlags;)Z
