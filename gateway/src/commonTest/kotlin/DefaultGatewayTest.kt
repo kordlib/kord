@@ -67,7 +67,7 @@ class DefaultGatewayTest {
 
         gateway.start(token) {
             @OptIn(PrivilegedIntent::class)
-            intents = Intents.all
+            intents = Intents.ALL
         }
     }
 }

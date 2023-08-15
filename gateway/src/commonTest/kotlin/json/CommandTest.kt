@@ -156,7 +156,7 @@ class CommandTest {
                 largeThreshold.optionalInt(),
                 shard.optional(),
                 presence.optional().coerceToMissing(),
-                Intents.all
+                Intents.ALL
             )
         )
 
@@ -175,7 +175,7 @@ class CommandTest {
                     add(JsonPrimitive(0))
                     add(JsonPrimitive(1))
                 })
-                put("intents", Intents.all.code.value)
+                put("intents", Intents.ALL.code.value)
             })
         })
 
