@@ -36,13 +36,7 @@ internal fun GenerationEntity.fileSpecForGenerationEntity(
         addKotlinDefaultImports(includeJvm = false, includeJs = false)
         @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Suppress`
         addAnnotation(
-            Suppress(
-                "RedundantVisibilityModifier",
-                "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection",
-                "GrazieInspection",
-            )
+            Suppress("IncorrectFormatting", "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection")
         )
         block(context, this)
     }
