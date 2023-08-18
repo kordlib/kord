@@ -1,7 +1,7 @@
 package dev.kord.test
 
 import io.ktor.utils.io.*
-import js.core.toList
+import js.iterable.toList
 import node.buffer.Buffer
 import node.buffer.BufferEncoding
 import node.process.process
