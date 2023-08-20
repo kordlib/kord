@@ -23,236 +23,6 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Convenience container of multiple [UserFlags][UserFlag] which can be combined into one.
- *
- * ## Creating a collection of message flags
- * You can create an [UserFlags] object using the following methods
- * ```kotlin
- * // From flags
- * val flags1 = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner)
- * // From an iterable
- * val flags2 = UserFlags(listOf(UserFlag.DiscordEmployee, UserFlag.DiscordPartner))
- * // Using a builder
- * val flags3 = UserFlags {
- *  +UserFlag.DiscordEmployee
- *  -UserFlag.DiscordPartner
- * }
- * ```
- *
- * ## Modifying existing flags
- * You can crate a modified copy of a [UserFlags] instance using the [copy] method
- *
- * ```kotlin
- * flags.copy {
- *  +UserFlag.DiscordEmployee
- * }
- * ```
- *
- * ## Mathematical operators
- * All [UserFlags] objects can use +/- operators
- *
- * ```kotlin
- * val flags = UserFlags(UserFlag.DiscordEmployee)
- * val flags2 = flags + UserFlag.DiscordPartner
- * val otherFlags = flags - UserFlag.DiscordPartner
- * val flags3 = flags + otherFlags
- * ```
- *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
- * ```kotlin
- * val hasFlag = UserFlag.DiscordEmployee in obj.flags
- * val hasFlags = UserFlag(UserFlag.DiscordPartner, UserFlag.DiscordPartner) in obj.flags
- * ```
- *
- * ## Unknown flag
- *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [UserFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
- * ```kotlin
- * val hasFlags = UserFlag.Unknown(1 shl 69) in obj.flags
- * ```
- * @see UserFlag
- * @see UserFlags.Builder
- * @property code numeric value of all [UserFlags]s
- */
-@Serializable(with = UserFlags.Serializer::class)
-public class UserFlags internal constructor(
-    /**
-     * The raw code used by Discord.
-     */
-    public val code: Int,
-) {
-    /**
-     * A [Set] of all [UserFlag]s contained in this instance of [UserFlags].
-     */
-    public val values: Set<UserFlag>
-        get() = buildSet {
-            var remaining = code
-            var shift = 0
-            while (remaining != 0) {
-                if ((remaining and 1) != 0) add(UserFlag.fromShift(shift))
-                remaining = remaining ushr 1
-                shift++
-            }
-        }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "Renamed to 'values'.",
-        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
-    )
-    public val flags: List<UserFlag>
-        get() = values.toList()
-
-    /**
-     * Checks if this instance of [UserFlags] has all bits set that are set in [flag].
-     */
-    public operator fun contains(flag: UserFlag): Boolean = this.code and flag.code == flag.code
-
-    /**
-     * Checks if this instance of [UserFlags] has all bits set that are set in [flags].
-     */
-    public operator fun contains(flags: UserFlags): Boolean = this.code and flags.code == flags.code
-
-    /**
-     * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flag].
-     */
-    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
-
-    /**
-     * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flags].
-     */
-    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
-
-    /**
-     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flag].
-     */
-    public operator fun minus(flag: UserFlag): UserFlags = UserFlags(this.code and flag.code.inv())
-
-    /**
-     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flags].
-     */
-    public operator fun minus(flags: UserFlags): UserFlags =
-            UserFlags(this.code and flags.code.inv())
-
-    public inline fun copy(block: Builder.() -> Unit): UserFlags {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
-    }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is UserFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
-    override fun toString(): String = "UserFlags(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "UserFlags is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-    )
-    public operator fun component1(): Int = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: Int = this.code): UserFlags = UserFlags(code)
-
-    public class Builder(
-        private var code: Int = 0,
-    ) {
-        public operator fun UserFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun UserFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun UserFlag.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public operator fun UserFlags.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public fun build(): UserFlags = UserFlags(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): UserFlags = build()
-    }
-
-    internal object Serializer : KSerializer<UserFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.UserFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: UserFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): UserFlags =
-                UserFlags(decoder.decodeSerializableValue(delegate))
-    }
-}
-
-/**
- * Returns an instance of [UserFlags] built with [UserFlags.Builder].
- */
-public inline fun UserFlags(builder: UserFlags.Builder.() -> Unit = {}): UserFlags {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return UserFlags.Builder().apply(builder).build()
-}
-
-/**
- * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
- */
-public fun UserFlags(vararg flags: UserFlag): UserFlags = UserFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
- */
-public fun UserFlags(vararg flags: UserFlags): UserFlags = UserFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
- */
-public fun UserFlags(flags: Iterable<UserFlag>): UserFlags = UserFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
- */
-@JvmName("UserFlags0")
-public fun UserFlags(flags: Iterable<UserFlags>): UserFlags = UserFlags {
-    flags.forEach { +it }
-}
-
-/**
  * See [UserFlag]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/user#user-object-user-flags).
  */
@@ -650,4 +420,234 @@ public sealed class UserFlag(
             override fun toString(): String = entries.toString()
         }
     }
+}
+
+/**
+ * Convenience container of multiple [UserFlags][UserFlag] which can be combined into one.
+ *
+ * ## Creating a collection of message flags
+ * You can create an [UserFlags] object using the following methods
+ * ```kotlin
+ * // From flags
+ * val flags1 = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner)
+ * // From an iterable
+ * val flags2 = UserFlags(listOf(UserFlag.DiscordEmployee, UserFlag.DiscordPartner))
+ * // Using a builder
+ * val flags3 = UserFlags {
+ *  +UserFlag.DiscordEmployee
+ *  -UserFlag.DiscordPartner
+ * }
+ * ```
+ *
+ * ## Modifying existing flags
+ * You can crate a modified copy of a [UserFlags] instance using the [copy] method
+ *
+ * ```kotlin
+ * flags.copy {
+ *  +UserFlag.DiscordEmployee
+ * }
+ * ```
+ *
+ * ## Mathematical operators
+ * All [UserFlags] objects can use +/- operators
+ *
+ * ```kotlin
+ * val flags = UserFlags(UserFlag.DiscordEmployee)
+ * val flags2 = flags + UserFlag.DiscordPartner
+ * val otherFlags = flags - UserFlag.DiscordPartner
+ * val flags3 = flags + otherFlags
+ * ```
+ *
+ * ## Checking for a flag
+ * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ```kotlin
+ * val hasFlag = UserFlag.DiscordEmployee in obj.flags
+ * val hasFlags = UserFlag(UserFlag.DiscordPartner, UserFlag.DiscordPartner) in obj.flags
+ * ```
+ *
+ * ## Unknown flag
+ *
+ * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * [UserFlag.Unknown].
+ * You can also use that to check for an yet unsupported flag
+ * ```kotlin
+ * val hasFlags = UserFlag.Unknown(1 shl 69) in obj.flags
+ * ```
+ * @see UserFlag
+ * @see UserFlags.Builder
+ * @property code numeric value of all [UserFlags]s
+ */
+@Serializable(with = UserFlags.Serializer::class)
+public class UserFlags internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: Int,
+) {
+    /**
+     * A [Set] of all [UserFlag]s contained in this instance of [UserFlags].
+     */
+    public val values: Set<UserFlag>
+        get() = buildSet {
+            var remaining = code
+            var shift = 0
+            while (remaining != 0) {
+                if ((remaining and 1) != 0) add(UserFlag.fromShift(shift))
+                remaining = remaining ushr 1
+                shift++
+            }
+        }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "Renamed to 'values'.",
+        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+    )
+    public val flags: List<UserFlag>
+        get() = values.toList()
+
+    /**
+     * Checks if this instance of [UserFlags] has all bits set that are set in [flag].
+     */
+    public operator fun contains(flag: UserFlag): Boolean = this.code and flag.code == flag.code
+
+    /**
+     * Checks if this instance of [UserFlags] has all bits set that are set in [flags].
+     */
+    public operator fun contains(flags: UserFlags): Boolean = this.code and flags.code == flags.code
+
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flag].
+     */
+    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
+
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flags].
+     */
+    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
+
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flag].
+     */
+    public operator fun minus(flag: UserFlag): UserFlags = UserFlags(this.code and flag.code.inv())
+
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flags].
+     */
+    public operator fun minus(flags: UserFlags): UserFlags =
+            UserFlags(this.code and flags.code.inv())
+
+    public inline fun copy(block: Builder.() -> Unit): UserFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).build()
+    }
+
+    override fun equals(other: Any?): Boolean = this === other ||
+            (other is UserFlags && this.code == other.code)
+
+    override fun hashCode(): Int = code.hashCode()
+
+    override fun toString(): String = "UserFlags(values=$values)"
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "UserFlags is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): Int = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: Int = this.code): UserFlags = UserFlags(code)
+
+    public class Builder(
+        private var code: Int = 0,
+    ) {
+        public operator fun UserFlag.unaryPlus() {
+            this@Builder.code = this@Builder.code or this.code
+        }
+
+        public operator fun UserFlags.unaryPlus() {
+            this@Builder.code = this@Builder.code or this.code
+        }
+
+        public operator fun UserFlag.unaryMinus() {
+            this@Builder.code = this@Builder.code and this.code.inv()
+        }
+
+        public operator fun UserFlags.unaryMinus() {
+            this@Builder.code = this@Builder.code and this.code.inv()
+        }
+
+        public fun build(): UserFlags = UserFlags(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): UserFlags = build()
+    }
+
+    internal object Serializer : KSerializer<UserFlags> {
+        override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.UserFlags", PrimitiveKind.INT)
+
+        private val `delegate`: KSerializer<Int> = Int.serializer()
+
+        override fun serialize(encoder: Encoder, `value`: UserFlags) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
+
+        override fun deserialize(decoder: Decoder): UserFlags =
+                UserFlags(decoder.decodeSerializableValue(delegate))
+    }
+}
+
+/**
+ * Returns an instance of [UserFlags] built with [UserFlags.Builder].
+ */
+public inline fun UserFlags(builder: UserFlags.Builder.() -> Unit = {}): UserFlags {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    return UserFlags.Builder().apply(builder).build()
+}
+
+/**
+ * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
+ */
+public fun UserFlags(vararg flags: UserFlag): UserFlags = UserFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
+ */
+public fun UserFlags(vararg flags: UserFlags): UserFlags = UserFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
+ */
+public fun UserFlags(flags: Iterable<UserFlag>): UserFlags = UserFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
+ */
+@JvmName("UserFlags0")
+public fun UserFlags(flags: Iterable<UserFlags>): UserFlags = UserFlags {
+    flags.forEach { +it }
 }

@@ -23,255 +23,6 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Convenience container of multiple [ApplicationFlags][ApplicationFlag] which can be combined into
- * one.
- *
- * ## Creating a collection of message flags
- * You can create an [ApplicationFlags] object using the following methods
- * ```kotlin
- * // From flags
- * val flags1 = ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
- * ApplicationFlag.GatewayPresence)
- * // From an iterable
- * val flags2 = ApplicationFlags(listOf(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
- * ApplicationFlag.GatewayPresence))
- * // Using a builder
- * val flags3 = ApplicationFlags {
- *  +ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
- *  -ApplicationFlag.GatewayPresence
- * }
- * ```
- *
- * ## Modifying existing flags
- * You can crate a modified copy of a [ApplicationFlags] instance using the [copy] method
- *
- * ```kotlin
- * flags.copy {
- *  +ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
- * }
- * ```
- *
- * ## Mathematical operators
- * All [ApplicationFlags] objects can use +/- operators
- *
- * ```kotlin
- * val flags = ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge)
- * val flags2 = flags + ApplicationFlag.GatewayPresence
- * val otherFlags = flags - ApplicationFlag.GatewayPresence
- * val flags3 = flags + otherFlags
- * ```
- *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
- * ```kotlin
- * val hasFlag = ApplicationFlag.ApplicationAutoModerationRuleCreateBadge in obj.flags
- * val hasFlags = ApplicationFlag(ApplicationFlag.GatewayPresence,
- * ApplicationFlag.GatewayPresence) in obj.flags
- * ```
- *
- * ## Unknown flag
- *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [ApplicationFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
- * ```kotlin
- * val hasFlags = ApplicationFlag.Unknown(1 shl 69) in obj.flags
- * ```
- * @see ApplicationFlag
- * @see ApplicationFlags.Builder
- * @property code numeric value of all [ApplicationFlags]s
- */
-@Serializable(with = ApplicationFlags.Serializer::class)
-public class ApplicationFlags internal constructor(
-    /**
-     * The raw code used by Discord.
-     */
-    public val code: Int,
-) {
-    /**
-     * A [Set] of all [ApplicationFlag]s contained in this instance of [ApplicationFlags].
-     */
-    public val values: Set<ApplicationFlag>
-        get() = buildSet {
-            var remaining = code
-            var shift = 0
-            while (remaining != 0) {
-                if ((remaining and 1) != 0) add(ApplicationFlag.fromShift(shift))
-                remaining = remaining ushr 1
-                shift++
-            }
-        }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "Renamed to 'values'.",
-        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
-    )
-    public val flags: List<ApplicationFlag>
-        get() = values.toList()
-
-    /**
-     * Checks if this instance of [ApplicationFlags] has all bits set that are set in [flag].
-     */
-    public operator fun contains(flag: ApplicationFlag): Boolean =
-            this.code and flag.code == flag.code
-
-    /**
-     * Checks if this instance of [ApplicationFlags] has all bits set that are set in [flags].
-     */
-    public operator fun contains(flags: ApplicationFlags): Boolean =
-            this.code and flags.code == flags.code
-
-    /**
-     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` and
-     * [flag].
-     */
-    public operator fun plus(flag: ApplicationFlag): ApplicationFlags =
-            ApplicationFlags(this.code or flag.code)
-
-    /**
-     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` and
-     * [flags].
-     */
-    public operator fun plus(flags: ApplicationFlags): ApplicationFlags =
-            ApplicationFlags(this.code or flags.code)
-
-    /**
-     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` except
-     * the bits that are set in [flag].
-     */
-    public operator fun minus(flag: ApplicationFlag): ApplicationFlags =
-            ApplicationFlags(this.code and flag.code.inv())
-
-    /**
-     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` except
-     * the bits that are set in [flags].
-     */
-    public operator fun minus(flags: ApplicationFlags): ApplicationFlags =
-            ApplicationFlags(this.code and flags.code.inv())
-
-    public inline fun copy(block: Builder.() -> Unit): ApplicationFlags {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
-    }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is ApplicationFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
-    override fun toString(): String = "ApplicationFlags(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "ApplicationFlags is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-    )
-    public operator fun component1(): Int = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ApplicationFlags is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: Int = this.code): ApplicationFlags = ApplicationFlags(code)
-
-    public class Builder(
-        private var code: Int = 0,
-    ) {
-        public operator fun ApplicationFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ApplicationFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ApplicationFlag.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public operator fun ApplicationFlags.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public fun build(): ApplicationFlags = ApplicationFlags(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): ApplicationFlags = build()
-    }
-
-    internal object Serializer : KSerializer<ApplicationFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationFlags",
-                PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: ApplicationFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): ApplicationFlags =
-                ApplicationFlags(decoder.decodeSerializableValue(delegate))
-    }
-}
-
-/**
- * Returns an instance of [ApplicationFlags] built with [ApplicationFlags.Builder].
- */
-public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit = {}):
-        ApplicationFlags {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return ApplicationFlags.Builder().apply(builder).build()
-}
-
-/**
- * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ApplicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ApplicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ApplicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
- * [flags].
- */
-@JvmName("ApplicationFlags0")
-public fun ApplicationFlags(flags: Iterable<ApplicationFlags>): ApplicationFlags =
-        ApplicationFlags {
-    flags.forEach { +it }
-}
-
-/**
  * See [ApplicationFlag]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/application#application-object-application-flags).
  */
@@ -590,4 +341,253 @@ public sealed class ApplicationFlag(
             override fun toString(): String = entries.toString()
         }
     }
+}
+
+/**
+ * Convenience container of multiple [ApplicationFlags][ApplicationFlag] which can be combined into
+ * one.
+ *
+ * ## Creating a collection of message flags
+ * You can create an [ApplicationFlags] object using the following methods
+ * ```kotlin
+ * // From flags
+ * val flags1 = ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
+ * ApplicationFlag.GatewayPresence)
+ * // From an iterable
+ * val flags2 = ApplicationFlags(listOf(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
+ * ApplicationFlag.GatewayPresence))
+ * // Using a builder
+ * val flags3 = ApplicationFlags {
+ *  +ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
+ *  -ApplicationFlag.GatewayPresence
+ * }
+ * ```
+ *
+ * ## Modifying existing flags
+ * You can crate a modified copy of a [ApplicationFlags] instance using the [copy] method
+ *
+ * ```kotlin
+ * flags.copy {
+ *  +ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
+ * }
+ * ```
+ *
+ * ## Mathematical operators
+ * All [ApplicationFlags] objects can use +/- operators
+ *
+ * ```kotlin
+ * val flags = ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge)
+ * val flags2 = flags + ApplicationFlag.GatewayPresence
+ * val otherFlags = flags - ApplicationFlag.GatewayPresence
+ * val flags3 = flags + otherFlags
+ * ```
+ *
+ * ## Checking for a flag
+ * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ```kotlin
+ * val hasFlag = ApplicationFlag.ApplicationAutoModerationRuleCreateBadge in obj.flags
+ * val hasFlags = ApplicationFlag(ApplicationFlag.GatewayPresence,
+ * ApplicationFlag.GatewayPresence) in obj.flags
+ * ```
+ *
+ * ## Unknown flag
+ *
+ * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * [ApplicationFlag.Unknown].
+ * You can also use that to check for an yet unsupported flag
+ * ```kotlin
+ * val hasFlags = ApplicationFlag.Unknown(1 shl 69) in obj.flags
+ * ```
+ * @see ApplicationFlag
+ * @see ApplicationFlags.Builder
+ * @property code numeric value of all [ApplicationFlags]s
+ */
+@Serializable(with = ApplicationFlags.Serializer::class)
+public class ApplicationFlags internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: Int,
+) {
+    /**
+     * A [Set] of all [ApplicationFlag]s contained in this instance of [ApplicationFlags].
+     */
+    public val values: Set<ApplicationFlag>
+        get() = buildSet {
+            var remaining = code
+            var shift = 0
+            while (remaining != 0) {
+                if ((remaining and 1) != 0) add(ApplicationFlag.fromShift(shift))
+                remaining = remaining ushr 1
+                shift++
+            }
+        }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "Renamed to 'values'.",
+        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+    )
+    public val flags: List<ApplicationFlag>
+        get() = values.toList()
+
+    /**
+     * Checks if this instance of [ApplicationFlags] has all bits set that are set in [flag].
+     */
+    public operator fun contains(flag: ApplicationFlag): Boolean =
+            this.code and flag.code == flag.code
+
+    /**
+     * Checks if this instance of [ApplicationFlags] has all bits set that are set in [flags].
+     */
+    public operator fun contains(flags: ApplicationFlags): Boolean =
+            this.code and flags.code == flags.code
+
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
+    public operator fun plus(flag: ApplicationFlag): ApplicationFlags =
+            ApplicationFlags(this.code or flag.code)
+
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
+    public operator fun plus(flags: ApplicationFlags): ApplicationFlags =
+            ApplicationFlags(this.code or flags.code)
+
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` except
+     * the bits that are set in [flag].
+     */
+    public operator fun minus(flag: ApplicationFlag): ApplicationFlags =
+            ApplicationFlags(this.code and flag.code.inv())
+
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` except
+     * the bits that are set in [flags].
+     */
+    public operator fun minus(flags: ApplicationFlags): ApplicationFlags =
+            ApplicationFlags(this.code and flags.code.inv())
+
+    public inline fun copy(block: Builder.() -> Unit): ApplicationFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).build()
+    }
+
+    override fun equals(other: Any?): Boolean = this === other ||
+            (other is ApplicationFlags && this.code == other.code)
+
+    override fun hashCode(): Int = code.hashCode()
+
+    override fun toString(): String = "ApplicationFlags(values=$values)"
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "ApplicationFlags is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): Int = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "ApplicationFlags is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: Int = this.code): ApplicationFlags = ApplicationFlags(code)
+
+    public class Builder(
+        private var code: Int = 0,
+    ) {
+        public operator fun ApplicationFlag.unaryPlus() {
+            this@Builder.code = this@Builder.code or this.code
+        }
+
+        public operator fun ApplicationFlags.unaryPlus() {
+            this@Builder.code = this@Builder.code or this.code
+        }
+
+        public operator fun ApplicationFlag.unaryMinus() {
+            this@Builder.code = this@Builder.code and this.code.inv()
+        }
+
+        public operator fun ApplicationFlags.unaryMinus() {
+            this@Builder.code = this@Builder.code and this.code.inv()
+        }
+
+        public fun build(): ApplicationFlags = ApplicationFlags(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): ApplicationFlags = build()
+    }
+
+    internal object Serializer : KSerializer<ApplicationFlags> {
+        override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationFlags",
+                PrimitiveKind.INT)
+
+        private val `delegate`: KSerializer<Int> = Int.serializer()
+
+        override fun serialize(encoder: Encoder, `value`: ApplicationFlags) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
+
+        override fun deserialize(decoder: Decoder): ApplicationFlags =
+                ApplicationFlags(decoder.decodeSerializableValue(delegate))
+    }
+}
+
+/**
+ * Returns an instance of [ApplicationFlags] built with [ApplicationFlags.Builder].
+ */
+public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit = {}):
+        ApplicationFlags {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    return ApplicationFlags.Builder().apply(builder).build()
+}
+
+/**
+ * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun ApplicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun ApplicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun ApplicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags = ApplicationFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
+@JvmName("ApplicationFlags0")
+public fun ApplicationFlags(flags: Iterable<ApplicationFlags>): ApplicationFlags =
+        ApplicationFlags {
+    flags.forEach { +it }
 }

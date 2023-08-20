@@ -23,6 +23,201 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ * See [SpeakingFlag]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#speaking).
+ */
+public sealed class SpeakingFlag(
+    /**
+     * The position of the bit that is set in this [SpeakingFlag]. This is always in 0..30.
+     */
+    public val shift: Int,
+) {
+    init {
+        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
+    }
+
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: Int
+        get() = 1 shl shift
+
+    /**
+     * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
+    public operator fun plus(flag: SpeakingFlag): SpeakingFlags =
+            SpeakingFlags(this.code or flag.code)
+
+    /**
+     * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
+    public operator fun plus(flags: SpeakingFlags): SpeakingFlags =
+            SpeakingFlags(this.code or flags.code)
+
+    final override fun equals(other: Any?): Boolean = this === other ||
+            (other is SpeakingFlag && this.shift == other.shift)
+
+    final override fun hashCode(): Int = shift.hashCode()
+
+    final override fun toString(): String = if (this is Unknown)
+            "SpeakingFlag.Unknown(shift=$shift)" else "SpeakingFlag.${this::class.simpleName}"
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
+    public fun name(): String = this::class.simpleName!!
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
+    public fun ordinal(): Int = when (this) {
+        Microphone -> 0
+        Soundshare -> 1
+        Priority -> 2
+        is Unknown -> Int.MAX_VALUE
+    }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "SpeakingFlag is no longer an enum class.",
+        replaceWith = ReplaceWith(expression = "SpeakingFlag::class.java", imports =
+                    arrayOf("dev.kord.voice.SpeakingFlag")),
+    )
+    public fun getDeclaringClass(): Class<SpeakingFlag> = SpeakingFlag::class.java
+
+    /**
+     * An unknown [SpeakingFlag].
+     *
+     * This is used as a fallback for [SpeakingFlag]s that haven't been added to Kord yet.
+     */
+    public class Unknown internal constructor(
+        shift: Int,
+    ) : SpeakingFlag(shift)
+
+    /**
+     * Normal transmission of voice audio.
+     */
+    public object Microphone : SpeakingFlag(0)
+
+    /**
+     * Transmission of context audio for video, no speaking indicator.
+     */
+    public object Soundshare : SpeakingFlag(1)
+
+    /**
+     * Priority speaker, lowering audio of other speakers.
+     */
+    public object Priority : SpeakingFlag(2)
+
+    public companion object {
+        /**
+         * A [List] of all known [SpeakingFlag]s.
+         */
+        public val entries: List<SpeakingFlag> by lazy(mode = PUBLICATION) {
+            listOf(
+                Microphone,
+                Soundshare,
+                Priority,
+            )
+        }
+
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Microphone: SpeakingFlag = Microphone
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Soundshare: SpeakingFlag = Soundshare
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Priority: SpeakingFlag = Priority
+
+        /**
+         * Returns an instance of [SpeakingFlag] with [SpeakingFlag.shift] equal to the specified
+         * [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not in 0..30.
+         */
+        public fun fromShift(shift: Int): SpeakingFlag = when (shift) {
+            0 -> Microphone
+            1 -> Soundshare
+            2 -> Priority
+            else -> Unknown(shift)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
+        @Deprecated(message =
+                "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
+        @JvmStatic
+        public open fun valueOf(name: String): SpeakingFlag = when (name) {
+            "Microphone" -> Microphone
+            "Soundshare" -> Soundshare
+            "Priority" -> Priority
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
+        @Deprecated(
+            message = "SpeakingFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "SpeakingFlag.entries.toTypedArray()", imports =
+                        arrayOf("dev.kord.voice.SpeakingFlag")),
+        )
+        @JvmStatic
+        public open fun values(): Array<SpeakingFlag> = entries.toTypedArray()
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "SpeakingFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "SpeakingFlag.entries", imports =
+                        arrayOf("dev.kord.voice.SpeakingFlag")),
+        )
+        @JvmStatic
+        public open fun getEntries(): EnumEntries<SpeakingFlag> = EnumEntriesList
+
+        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
+                        "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
+        private object EnumEntriesList : EnumEntries<SpeakingFlag>, List<SpeakingFlag> by entries {
+            override fun equals(other: Any?): Boolean = entries == other
+
+            override fun hashCode(): Int = entries.hashCode()
+
+            override fun toString(): String = entries.toString()
+        }
+    }
+}
+
+/**
  * Convenience container of multiple [SpeakingFlags][SpeakingFlag] which can be combined into one.
  *
  * ## Creating a collection of message flags
@@ -244,199 +439,4 @@ public fun SpeakingFlags(flags: Iterable<SpeakingFlag>): SpeakingFlags = Speakin
 @JvmName("SpeakingFlags0")
 public fun SpeakingFlags(flags: Iterable<SpeakingFlags>): SpeakingFlags = SpeakingFlags {
     flags.forEach { +it }
-}
-
-/**
- * See [SpeakingFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/topics/voice-connections#speaking).
- */
-public sealed class SpeakingFlag(
-    /**
-     * The position of the bit that is set in this [SpeakingFlag]. This is always in 0..30.
-     */
-    public val shift: Int,
-) {
-    init {
-        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
-    }
-
-    /**
-     * The raw code used by Discord.
-     */
-    public val code: Int
-        get() = 1 shl shift
-
-    /**
-     * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` and
-     * [flag].
-     */
-    public operator fun plus(flag: SpeakingFlag): SpeakingFlags =
-            SpeakingFlags(this.code or flag.code)
-
-    /**
-     * Returns an instance of [SpeakingFlags] that has all bits set that are set in `this` and
-     * [flags].
-     */
-    public operator fun plus(flags: SpeakingFlags): SpeakingFlags =
-            SpeakingFlags(this.code or flags.code)
-
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is SpeakingFlag && this.shift == other.shift)
-
-    final override fun hashCode(): Int = shift.hashCode()
-
-    final override fun toString(): String = if (this is Unknown)
-            "SpeakingFlag.Unknown(shift=$shift)" else "SpeakingFlag.${this::class.simpleName}"
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
-    public fun name(): String = this::class.simpleName!!
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
-    public fun ordinal(): Int = when (this) {
-        Microphone -> 0
-        Soundshare -> 1
-        Priority -> 2
-        is Unknown -> Int.MAX_VALUE
-    }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "SpeakingFlag is no longer an enum class.",
-        replaceWith = ReplaceWith(expression = "SpeakingFlag::class.java", imports =
-                    arrayOf("dev.kord.voice.SpeakingFlag")),
-    )
-    public fun getDeclaringClass(): Class<SpeakingFlag> = SpeakingFlag::class.java
-
-    /**
-     * An unknown [SpeakingFlag].
-     *
-     * This is used as a fallback for [SpeakingFlag]s that haven't been added to Kord yet.
-     */
-    public class Unknown internal constructor(
-        shift: Int,
-    ) : SpeakingFlag(shift)
-
-    /**
-     * Normal transmission of voice audio.
-     */
-    public object Microphone : SpeakingFlag(0)
-
-    /**
-     * Transmission of context audio for video, no speaking indicator.
-     */
-    public object Soundshare : SpeakingFlag(1)
-
-    /**
-     * Priority speaker, lowering audio of other speakers.
-     */
-    public object Priority : SpeakingFlag(2)
-
-    public companion object {
-        /**
-         * A [List] of all known [SpeakingFlag]s.
-         */
-        public val entries: List<SpeakingFlag> by lazy(mode = PUBLICATION) {
-            listOf(
-                Microphone,
-                Soundshare,
-                Priority,
-            )
-        }
-
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Microphone: SpeakingFlag = Microphone
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Soundshare: SpeakingFlag = Soundshare
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Priority: SpeakingFlag = Priority
-
-        /**
-         * Returns an instance of [SpeakingFlag] with [SpeakingFlag.shift] equal to the specified
-         * [shift].
-         *
-         * @throws IllegalArgumentException if [shift] is not in 0..30.
-         */
-        public fun fromShift(shift: Int): SpeakingFlag = when (shift) {
-            0 -> Microphone
-            1 -> Soundshare
-            2 -> Priority
-            else -> Unknown(shift)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "SpeakingFlag is no longer an enum class. Deprecated without a replacement.")
-        @JvmStatic
-        public open fun valueOf(name: String): SpeakingFlag = when (name) {
-            "Microphone" -> Microphone
-            "Soundshare" -> Soundshare
-            "Priority" -> Priority
-            else -> throw IllegalArgumentException(name)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
-        @Deprecated(
-            message = "SpeakingFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "SpeakingFlag.entries.toTypedArray()", imports =
-                        arrayOf("dev.kord.voice.SpeakingFlag")),
-        )
-        @JvmStatic
-        public open fun values(): Array<SpeakingFlag> = entries.toTypedArray()
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "SpeakingFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "SpeakingFlag.entries", imports =
-                        arrayOf("dev.kord.voice.SpeakingFlag")),
-        )
-        @JvmStatic
-        public open fun getEntries(): EnumEntries<SpeakingFlag> = EnumEntriesList
-
-        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
-                        "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
-        private object EnumEntriesList : EnumEntries<SpeakingFlag>, List<SpeakingFlag> by entries {
-            override fun equals(other: Any?): Boolean = entries == other
-
-            override fun hashCode(): Int = entries.hashCode()
-
-            override fun toString(): String = entries.toString()
-        }
-    }
 }

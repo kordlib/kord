@@ -23,246 +23,6 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Convenience container of multiple [MessageFlags][MessageFlag] which can be combined into one.
- *
- * ## Creating a collection of message flags
- * You can create an [MessageFlags] object using the following methods
- * ```kotlin
- * // From flags
- * val flags1 = MessageFlags(MessageFlag.CrossPosted, MessageFlag.IsCrossPost)
- * // From an iterable
- * val flags2 = MessageFlags(listOf(MessageFlag.CrossPosted, MessageFlag.IsCrossPost))
- * // Using a builder
- * val flags3 = MessageFlags {
- *  +MessageFlag.CrossPosted
- *  -MessageFlag.IsCrossPost
- * }
- * ```
- *
- * ## Modifying existing flags
- * You can crate a modified copy of a [MessageFlags] instance using the [copy] method
- *
- * ```kotlin
- * flags.copy {
- *  +MessageFlag.CrossPosted
- * }
- * ```
- *
- * ## Mathematical operators
- * All [MessageFlags] objects can use +/- operators
- *
- * ```kotlin
- * val flags = MessageFlags(MessageFlag.CrossPosted)
- * val flags2 = flags + MessageFlag.IsCrossPost
- * val otherFlags = flags - MessageFlag.IsCrossPost
- * val flags3 = flags + otherFlags
- * ```
- *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
- * ```kotlin
- * val hasFlag = MessageFlag.CrossPosted in message.flags
- * val hasFlags = MessageFlag(MessageFlag.IsCrossPost, MessageFlag.IsCrossPost) in message.flags
- * ```
- *
- * ## Unknown flag
- *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [MessageFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
- * ```kotlin
- * val hasFlags = MessageFlag.Unknown(1 shl 69) in message.flags
- * ```
- * @see MessageFlag
- * @see MessageFlags.Builder
- * @property code numeric value of all [MessageFlags]s
- */
-@Serializable(with = MessageFlags.Serializer::class)
-public class MessageFlags internal constructor(
-    /**
-     * The raw code used by Discord.
-     */
-    public val code: Int,
-) {
-    /**
-     * A [Set] of all [MessageFlag]s contained in this instance of [MessageFlags].
-     */
-    public val values: Set<MessageFlag>
-        get() = buildSet {
-            var remaining = code
-            var shift = 0
-            while (remaining != 0) {
-                if ((remaining and 1) != 0) add(MessageFlag.fromShift(shift))
-                remaining = remaining ushr 1
-                shift++
-            }
-        }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "Renamed to 'values'.",
-        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
-    )
-    public val flags: List<MessageFlag>
-        get() = values.toList()
-
-    /**
-     * Checks if this instance of [MessageFlags] has all bits set that are set in [flag].
-     */
-    public operator fun contains(flag: MessageFlag): Boolean = this.code and flag.code == flag.code
-
-    /**
-     * Checks if this instance of [MessageFlags] has all bits set that are set in [flags].
-     */
-    public operator fun contains(flags: MessageFlags): Boolean =
-            this.code and flags.code == flags.code
-
-    /**
-     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
-     * [flag].
-     */
-    public operator fun plus(flag: MessageFlag): MessageFlags = MessageFlags(this.code or flag.code)
-
-    /**
-     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
-     * [flags].
-     */
-    public operator fun plus(flags: MessageFlags): MessageFlags =
-            MessageFlags(this.code or flags.code)
-
-    /**
-     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flag].
-     */
-    public operator fun minus(flag: MessageFlag): MessageFlags =
-            MessageFlags(this.code and flag.code.inv())
-
-    /**
-     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` except the
-     * bits that are set in [flags].
-     */
-    public operator fun minus(flags: MessageFlags): MessageFlags =
-            MessageFlags(this.code and flags.code.inv())
-
-    public inline fun copy(block: Builder.() -> Unit): MessageFlags {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
-    }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
-    override fun toString(): String = "MessageFlags(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "MessageFlags is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-    )
-    public operator fun component1(): Int = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "MessageFlags is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: Int = this.code): MessageFlags = MessageFlags(code)
-
-    public class Builder(
-        private var code: Int = 0,
-    ) {
-        public operator fun MessageFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun MessageFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun MessageFlag.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public operator fun MessageFlags.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public fun build(): MessageFlags = MessageFlags(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): MessageFlags = build()
-    }
-
-    internal object Serializer : KSerializer<MessageFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: MessageFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): MessageFlags =
-                MessageFlags(decoder.decodeSerializableValue(delegate))
-    }
-}
-
-/**
- * Returns an instance of [MessageFlags] built with [MessageFlags.Builder].
- */
-public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit = {}): MessageFlags {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return MessageFlags.Builder().apply(builder).build()
-}
-
-/**
- * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun MessageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun MessageFlags(vararg flags: MessageFlags): MessageFlags = MessageFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun MessageFlags(flags: Iterable<MessageFlag>): MessageFlags = MessageFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
- * [flags].
- */
-@JvmName("MessageFlags0")
-public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFlags {
-    flags.forEach { +it }
-}
-
-/**
  * See [MessageFlag]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#message-object-message-flags).
  */
@@ -582,4 +342,244 @@ public sealed class MessageFlag(
             override fun toString(): String = entries.toString()
         }
     }
+}
+
+/**
+ * Convenience container of multiple [MessageFlags][MessageFlag] which can be combined into one.
+ *
+ * ## Creating a collection of message flags
+ * You can create an [MessageFlags] object using the following methods
+ * ```kotlin
+ * // From flags
+ * val flags1 = MessageFlags(MessageFlag.CrossPosted, MessageFlag.IsCrossPost)
+ * // From an iterable
+ * val flags2 = MessageFlags(listOf(MessageFlag.CrossPosted, MessageFlag.IsCrossPost))
+ * // Using a builder
+ * val flags3 = MessageFlags {
+ *  +MessageFlag.CrossPosted
+ *  -MessageFlag.IsCrossPost
+ * }
+ * ```
+ *
+ * ## Modifying existing flags
+ * You can crate a modified copy of a [MessageFlags] instance using the [copy] method
+ *
+ * ```kotlin
+ * flags.copy {
+ *  +MessageFlag.CrossPosted
+ * }
+ * ```
+ *
+ * ## Mathematical operators
+ * All [MessageFlags] objects can use +/- operators
+ *
+ * ```kotlin
+ * val flags = MessageFlags(MessageFlag.CrossPosted)
+ * val flags2 = flags + MessageFlag.IsCrossPost
+ * val otherFlags = flags - MessageFlag.IsCrossPost
+ * val flags3 = flags + otherFlags
+ * ```
+ *
+ * ## Checking for a flag
+ * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ```kotlin
+ * val hasFlag = MessageFlag.CrossPosted in message.flags
+ * val hasFlags = MessageFlag(MessageFlag.IsCrossPost, MessageFlag.IsCrossPost) in message.flags
+ * ```
+ *
+ * ## Unknown flag
+ *
+ * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * [MessageFlag.Unknown].
+ * You can also use that to check for an yet unsupported flag
+ * ```kotlin
+ * val hasFlags = MessageFlag.Unknown(1 shl 69) in message.flags
+ * ```
+ * @see MessageFlag
+ * @see MessageFlags.Builder
+ * @property code numeric value of all [MessageFlags]s
+ */
+@Serializable(with = MessageFlags.Serializer::class)
+public class MessageFlags internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: Int,
+) {
+    /**
+     * A [Set] of all [MessageFlag]s contained in this instance of [MessageFlags].
+     */
+    public val values: Set<MessageFlag>
+        get() = buildSet {
+            var remaining = code
+            var shift = 0
+            while (remaining != 0) {
+                if ((remaining and 1) != 0) add(MessageFlag.fromShift(shift))
+                remaining = remaining ushr 1
+                shift++
+            }
+        }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "Renamed to 'values'.",
+        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+    )
+    public val flags: List<MessageFlag>
+        get() = values.toList()
+
+    /**
+     * Checks if this instance of [MessageFlags] has all bits set that are set in [flag].
+     */
+    public operator fun contains(flag: MessageFlag): Boolean = this.code and flag.code == flag.code
+
+    /**
+     * Checks if this instance of [MessageFlags] has all bits set that are set in [flags].
+     */
+    public operator fun contains(flags: MessageFlags): Boolean =
+            this.code and flags.code == flags.code
+
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
+    public operator fun plus(flag: MessageFlag): MessageFlags = MessageFlags(this.code or flag.code)
+
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
+    public operator fun plus(flags: MessageFlags): MessageFlags =
+            MessageFlags(this.code or flags.code)
+
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flag].
+     */
+    public operator fun minus(flag: MessageFlag): MessageFlags =
+            MessageFlags(this.code and flag.code.inv())
+
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flags].
+     */
+    public operator fun minus(flags: MessageFlags): MessageFlags =
+            MessageFlags(this.code and flags.code.inv())
+
+    public inline fun copy(block: Builder.() -> Unit): MessageFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).build()
+    }
+
+    override fun equals(other: Any?): Boolean = this === other ||
+            (other is MessageFlags && this.code == other.code)
+
+    override fun hashCode(): Int = code.hashCode()
+
+    override fun toString(): String = "MessageFlags(values=$values)"
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "MessageFlags is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): Int = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "MessageFlags is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: Int = this.code): MessageFlags = MessageFlags(code)
+
+    public class Builder(
+        private var code: Int = 0,
+    ) {
+        public operator fun MessageFlag.unaryPlus() {
+            this@Builder.code = this@Builder.code or this.code
+        }
+
+        public operator fun MessageFlags.unaryPlus() {
+            this@Builder.code = this@Builder.code or this.code
+        }
+
+        public operator fun MessageFlag.unaryMinus() {
+            this@Builder.code = this@Builder.code and this.code.inv()
+        }
+
+        public operator fun MessageFlags.unaryMinus() {
+            this@Builder.code = this@Builder.code and this.code.inv()
+        }
+
+        public fun build(): MessageFlags = MessageFlags(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): MessageFlags = build()
+    }
+
+    internal object Serializer : KSerializer<MessageFlags> {
+        override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.MessageFlags", PrimitiveKind.INT)
+
+        private val `delegate`: KSerializer<Int> = Int.serializer()
+
+        override fun serialize(encoder: Encoder, `value`: MessageFlags) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
+
+        override fun deserialize(decoder: Decoder): MessageFlags =
+                MessageFlags(decoder.decodeSerializableValue(delegate))
+    }
+}
+
+/**
+ * Returns an instance of [MessageFlags] built with [MessageFlags.Builder].
+ */
+public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit = {}): MessageFlags {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    return MessageFlags.Builder().apply(builder).build()
+}
+
+/**
+ * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun MessageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun MessageFlags(vararg flags: MessageFlags): MessageFlags = MessageFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun MessageFlags(flags: Iterable<MessageFlag>): MessageFlags = MessageFlags {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
+@JvmName("MessageFlags0")
+public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFlags {
+    flags.forEach { +it }
 }

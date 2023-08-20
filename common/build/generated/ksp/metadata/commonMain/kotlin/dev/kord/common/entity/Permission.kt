@@ -19,228 +19,6 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Convenience container of multiple [Permissions][Permission] which can be combined into one.
- *
- * ## Creating a collection of message flags
- * You can create an [Permissions] object using the following methods
- * ```kotlin
- * // From flags
- * val flags1 = Permissions(Permission.CreateInstantInvite, Permission.KickMembers)
- * // From an iterable
- * val flags2 = Permissions(listOf(Permission.CreateInstantInvite, Permission.KickMembers))
- * // Using a builder
- * val flags3 = Permissions {
- *  +Permission.CreateInstantInvite
- *  -Permission.KickMembers
- * }
- * ```
- *
- * ## Modifying existing permissions
- * You can crate a modified copy of a [Permissions] instance using the [copy] method
- *
- * ```kotlin
- * flags.copy {
- *  +Permission.CreateInstantInvite
- * }
- * ```
- *
- * ## Mathematical operators
- * All [Permissions] objects can use +/- operators
- *
- * ```kotlin
- * val flags = Permissions(Permission.CreateInstantInvite)
- * val flags2 = flags + Permission.KickMembers
- * val otherFlags = flags - Permission.KickMembers
- * val flags3 = flags + otherFlags
- * ```
- *
- * ## Checking for a permission
- * You can use the [contains] operator to check whether a collection contains a specific flag
- * ```kotlin
- * val hasFlag = Permission.CreateInstantInvite in member.permissions
- * val hasFlags = Permission(Permission.KickMembers, Permission.KickMembers) in member.permissions
- * ```
- *
- * ## Unknown permission
- *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [Permission.Unknown].
- * You can also use that to check for an yet unsupported flag
- * ```kotlin
- * val hasFlags = Permission.Unknown(1 shl 69) in member.permissions
- * ```
- * @see Permission
- * @see Permissions.Builder
- * @property code numeric value of all [Permissions]s
- */
-@Serializable(with = Permissions.Serializer::class)
-public class Permissions internal constructor(
-    /**
-     * The raw code used by Discord.
-     */
-    public val code: DiscordBitSet,
-) {
-    /**
-     * A [Set] of all [Permission]s contained in this instance of [Permissions].
-     */
-    public val values: Set<Permission>
-        get() = buildSet {
-            for (shift in 0..<code.size) {
-                if (code[shift]) add(Permission.fromShift(shift))
-            }
-        }
-
-    /**
-     * Checks if this instance of [Permissions] has all bits set that are set in [flag].
-     */
-    public operator fun contains(flag: Permission): Boolean = flag.code in this.code
-
-    /**
-     * Checks if this instance of [Permissions] has all bits set that are set in [flags].
-     */
-    public operator fun contains(flags: Permissions): Boolean = flags.code in this.code
-
-    /**
-     * Returns an instance of [Permissions] that has all bits set that are set in `this` and [flag].
-     */
-    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
-
-    /**
-     * Returns an instance of [Permissions] that has all bits set that are set in `this` and
-     * [flags].
-     */
-    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
-
-    /**
-     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
-     * bits that are set in [flag].
-     */
-    public operator fun minus(flag: Permission): Permissions = Permissions(this.code - flag.code)
-
-    /**
-     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
-     * bits that are set in [flags].
-     */
-    public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code)
-
-    public inline fun copy(block: Builder.() -> Unit): Permissions {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
-    }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is Permissions && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
-    override fun toString(): String = "Permissions(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "Permissions is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-    )
-    public operator fun component1(): DiscordBitSet = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "Permissions is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: DiscordBitSet = this.code): Permissions = Permissions(code)
-
-    public class Builder(
-        private val code: DiscordBitSet = EmptyBitSet(),
-    ) {
-        public operator fun Permission.unaryPlus() {
-            this@Builder.code.add(this.code)
-        }
-
-        public operator fun Permissions.unaryPlus() {
-            this@Builder.code.add(this.code)
-        }
-
-        public operator fun Permission.unaryMinus() {
-            this@Builder.code.remove(this.code)
-        }
-
-        public operator fun Permissions.unaryMinus() {
-            this@Builder.code.remove(this.code)
-        }
-
-        public fun build(): Permissions = Permissions(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): Permissions = build()
-    }
-
-    internal object Serializer : KSerializer<Permissions> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.Permissions",
-                PrimitiveKind.STRING)
-
-        private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: Permissions) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): Permissions =
-                Permissions(decoder.decodeSerializableValue(delegate))
-    }
-}
-
-/**
- * Returns an instance of [Permissions] built with [Permissions.Builder].
- */
-public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Permissions {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return Permissions.Builder().apply(builder).build()
-}
-
-/**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
- */
-public fun Permissions(vararg flags: Permission): Permissions = Permissions {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
- */
-public fun Permissions(vararg flags: Permissions): Permissions = Permissions {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
- */
-public fun Permissions(flags: Iterable<Permission>): Permissions = Permissions {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
- */
-@JvmName("Permissions0")
-public fun Permissions(flags: Iterable<Permissions>): Permissions = Permissions {
-    flags.forEach { +it }
-}
-
-/**
  * See [Permission]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions).
  */
@@ -641,4 +419,226 @@ public sealed class Permission(
             else -> Unknown(shift)
         }
     }
+}
+
+/**
+ * Convenience container of multiple [Permissions][Permission] which can be combined into one.
+ *
+ * ## Creating a collection of message flags
+ * You can create an [Permissions] object using the following methods
+ * ```kotlin
+ * // From flags
+ * val flags1 = Permissions(Permission.CreateInstantInvite, Permission.KickMembers)
+ * // From an iterable
+ * val flags2 = Permissions(listOf(Permission.CreateInstantInvite, Permission.KickMembers))
+ * // Using a builder
+ * val flags3 = Permissions {
+ *  +Permission.CreateInstantInvite
+ *  -Permission.KickMembers
+ * }
+ * ```
+ *
+ * ## Modifying existing permissions
+ * You can crate a modified copy of a [Permissions] instance using the [copy] method
+ *
+ * ```kotlin
+ * flags.copy {
+ *  +Permission.CreateInstantInvite
+ * }
+ * ```
+ *
+ * ## Mathematical operators
+ * All [Permissions] objects can use +/- operators
+ *
+ * ```kotlin
+ * val flags = Permissions(Permission.CreateInstantInvite)
+ * val flags2 = flags + Permission.KickMembers
+ * val otherFlags = flags - Permission.KickMembers
+ * val flags3 = flags + otherFlags
+ * ```
+ *
+ * ## Checking for a permission
+ * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ```kotlin
+ * val hasFlag = Permission.CreateInstantInvite in member.permissions
+ * val hasFlags = Permission(Permission.KickMembers, Permission.KickMembers) in member.permissions
+ * ```
+ *
+ * ## Unknown permission
+ *
+ * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * [Permission.Unknown].
+ * You can also use that to check for an yet unsupported flag
+ * ```kotlin
+ * val hasFlags = Permission.Unknown(1 shl 69) in member.permissions
+ * ```
+ * @see Permission
+ * @see Permissions.Builder
+ * @property code numeric value of all [Permissions]s
+ */
+@Serializable(with = Permissions.Serializer::class)
+public class Permissions internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: DiscordBitSet,
+) {
+    /**
+     * A [Set] of all [Permission]s contained in this instance of [Permissions].
+     */
+    public val values: Set<Permission>
+        get() = buildSet {
+            for (shift in 0..<code.size) {
+                if (code[shift]) add(Permission.fromShift(shift))
+            }
+        }
+
+    /**
+     * Checks if this instance of [Permissions] has all bits set that are set in [flag].
+     */
+    public operator fun contains(flag: Permission): Boolean = flag.code in this.code
+
+    /**
+     * Checks if this instance of [Permissions] has all bits set that are set in [flags].
+     */
+    public operator fun contains(flags: Permissions): Boolean = flags.code in this.code
+
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` and [flag].
+     */
+    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
+
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` and
+     * [flags].
+     */
+    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
+
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
+     * bits that are set in [flag].
+     */
+    public operator fun minus(flag: Permission): Permissions = Permissions(this.code - flag.code)
+
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
+     * bits that are set in [flags].
+     */
+    public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code)
+
+    public inline fun copy(block: Builder.() -> Unit): Permissions {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).build()
+    }
+
+    override fun equals(other: Any?): Boolean = this === other ||
+            (other is Permissions && this.code == other.code)
+
+    override fun hashCode(): Int = code.hashCode()
+
+    override fun toString(): String = "Permissions(values=$values)"
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "Permissions is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): DiscordBitSet = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "Permissions is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: DiscordBitSet = this.code): Permissions = Permissions(code)
+
+    public class Builder(
+        private val code: DiscordBitSet = EmptyBitSet(),
+    ) {
+        public operator fun Permission.unaryPlus() {
+            this@Builder.code.add(this.code)
+        }
+
+        public operator fun Permissions.unaryPlus() {
+            this@Builder.code.add(this.code)
+        }
+
+        public operator fun Permission.unaryMinus() {
+            this@Builder.code.remove(this.code)
+        }
+
+        public operator fun Permissions.unaryMinus() {
+            this@Builder.code.remove(this.code)
+        }
+
+        public fun build(): Permissions = Permissions(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): Permissions = build()
+    }
+
+    internal object Serializer : KSerializer<Permissions> {
+        override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.Permissions",
+                PrimitiveKind.STRING)
+
+        private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
+
+        override fun serialize(encoder: Encoder, `value`: Permissions) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
+
+        override fun deserialize(decoder: Decoder): Permissions =
+                Permissions(decoder.decodeSerializableValue(delegate))
+    }
+}
+
+/**
+ * Returns an instance of [Permissions] built with [Permissions.Builder].
+ */
+public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Permissions {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    return Permissions.Builder().apply(builder).build()
+}
+
+/**
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun Permissions(vararg flags: Permission): Permissions = Permissions {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun Permissions(vararg flags: Permissions): Permissions = Permissions {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun Permissions(flags: Iterable<Permission>): Permissions = Permissions {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of
+ * [flags].
+ */
+@JvmName("Permissions0")
+public fun Permissions(flags: Iterable<Permissions>): Permissions = Permissions {
+    flags.forEach { +it }
 }

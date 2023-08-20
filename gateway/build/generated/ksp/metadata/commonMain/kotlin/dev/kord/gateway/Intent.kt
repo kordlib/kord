@@ -19,221 +19,6 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
- * Convenience container of multiple [Intents][Intent] which can be combined into one.
- *
- * ## Creating a collection of message flags
- * You can create an [Intents] object using the following methods
- * ```kotlin
- * // From flags
- * val flags1 = Intents(Intent.Guilds, Intent.GuildMembers)
- * // From an iterable
- * val flags2 = Intents(listOf(Intent.Guilds, Intent.GuildMembers))
- * // Using a builder
- * val flags3 = Intents {
- *  +Intent.Guilds
- *  -Intent.GuildMembers
- * }
- * ```
- *
- * ## Modifying existing intents
- * You can crate a modified copy of a [Intents] instance using the [copy] method
- *
- * ```kotlin
- * flags.copy {
- *  +Intent.Guilds
- * }
- * ```
- *
- * ## Mathematical operators
- * All [Intents] objects can use +/- operators
- *
- * ```kotlin
- * val flags = Intents(Intent.Guilds)
- * val flags2 = flags + Intent.GuildMembers
- * val otherFlags = flags - Intent.GuildMembers
- * val flags3 = flags + otherFlags
- * ```
- *
- * ## Checking for an intent
- * You can use the [contains] operator to check whether a collection contains a specific flag
- * ```kotlin
- * val hasFlag = Intent.Guilds in gateway.intents
- * val hasFlags = Intent(Intent.GuildMembers, Intent.GuildMembers) in gateway.intents
- * ```
- *
- * ## Unknown intent
- *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [Intent.Unknown].
- * You can also use that to check for an yet unsupported flag
- * ```kotlin
- * val hasFlags = Intent.Unknown(1 shl 69) in gateway.intents
- * ```
- * @see Intent
- * @see Intents.Builder
- * @property code numeric value of all [Intents]s
- */
-@Serializable(with = Intents.Serializer::class)
-public class Intents internal constructor(
-    /**
-     * The raw code used by Discord.
-     */
-    public val code: DiscordBitSet,
-) {
-    /**
-     * A [Set] of all [Intent]s contained in this instance of [Intents].
-     */
-    public val values: Set<Intent>
-        get() = buildSet {
-            for (shift in 0..<code.size) {
-                if (code[shift]) add(Intent.fromShift(shift))
-            }
-        }
-
-    /**
-     * Checks if this instance of [Intents] has all bits set that are set in [flag].
-     */
-    public operator fun contains(flag: Intent): Boolean = flag.code in this.code
-
-    /**
-     * Checks if this instance of [Intents] has all bits set that are set in [flags].
-     */
-    public operator fun contains(flags: Intents): Boolean = flags.code in this.code
-
-    /**
-     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flag].
-     */
-    public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
-
-    /**
-     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flags].
-     */
-    public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
-
-    /**
-     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
-     * that are set in [flag].
-     */
-    public operator fun minus(flag: Intent): Intents = Intents(this.code - flag.code)
-
-    /**
-     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
-     * that are set in [flags].
-     */
-    public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
-
-    public inline fun copy(block: Builder.() -> Unit): Intents {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
-    }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is Intents && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
-    override fun toString(): String = "Intents(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "Intents is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-    )
-    public operator fun component1(): DiscordBitSet = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "Intents is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: DiscordBitSet = this.code): Intents = Intents(code)
-
-    public class Builder(
-        private val code: DiscordBitSet = EmptyBitSet(),
-    ) {
-        public operator fun Intent.unaryPlus() {
-            this@Builder.code.add(this.code)
-        }
-
-        public operator fun Intents.unaryPlus() {
-            this@Builder.code.add(this.code)
-        }
-
-        public operator fun Intent.unaryMinus() {
-            this@Builder.code.remove(this.code)
-        }
-
-        public operator fun Intents.unaryMinus() {
-            this@Builder.code.remove(this.code)
-        }
-
-        public fun build(): Intents = Intents(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): Intents = build()
-    }
-
-    internal object Serializer : KSerializer<Intents> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.gateway.Intents", PrimitiveKind.STRING)
-
-        private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: Intents) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): Intents =
-                Intents(decoder.decodeSerializableValue(delegate))
-    }
-}
-
-/**
- * Returns an instance of [Intents] built with [Intents.Builder].
- */
-public inline fun Intents(builder: Intents.Builder.() -> Unit = {}): Intents {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return Intents.Builder().apply(builder).build()
-}
-
-/**
- * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
- */
-public fun Intents(vararg flags: Intent): Intents = Intents {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
- */
-public fun Intents(vararg flags: Intents): Intents = Intents {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
- */
-public fun Intents(flags: Iterable<Intent>): Intents = Intents {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
- */
-@JvmName("Intents0")
-public fun Intents(flags: Iterable<Intents>): Intents = Intents {
-    flags.forEach { +it }
-}
-
-/**
  * Values that enable a group of events as defined by Discord.
  *
  * See [Intent]s in the
@@ -524,4 +309,219 @@ public sealed class Intent(
             else -> Unknown(shift)
         }
     }
+}
+
+/**
+ * Convenience container of multiple [Intents][Intent] which can be combined into one.
+ *
+ * ## Creating a collection of message flags
+ * You can create an [Intents] object using the following methods
+ * ```kotlin
+ * // From flags
+ * val flags1 = Intents(Intent.Guilds, Intent.GuildMembers)
+ * // From an iterable
+ * val flags2 = Intents(listOf(Intent.Guilds, Intent.GuildMembers))
+ * // Using a builder
+ * val flags3 = Intents {
+ *  +Intent.Guilds
+ *  -Intent.GuildMembers
+ * }
+ * ```
+ *
+ * ## Modifying existing intents
+ * You can crate a modified copy of a [Intents] instance using the [copy] method
+ *
+ * ```kotlin
+ * flags.copy {
+ *  +Intent.Guilds
+ * }
+ * ```
+ *
+ * ## Mathematical operators
+ * All [Intents] objects can use +/- operators
+ *
+ * ```kotlin
+ * val flags = Intents(Intent.Guilds)
+ * val flags2 = flags + Intent.GuildMembers
+ * val otherFlags = flags - Intent.GuildMembers
+ * val flags3 = flags + otherFlags
+ * ```
+ *
+ * ## Checking for an intent
+ * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ```kotlin
+ * val hasFlag = Intent.Guilds in gateway.intents
+ * val hasFlags = Intent(Intent.GuildMembers, Intent.GuildMembers) in gateway.intents
+ * ```
+ *
+ * ## Unknown intent
+ *
+ * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * [Intent.Unknown].
+ * You can also use that to check for an yet unsupported flag
+ * ```kotlin
+ * val hasFlags = Intent.Unknown(1 shl 69) in gateway.intents
+ * ```
+ * @see Intent
+ * @see Intents.Builder
+ * @property code numeric value of all [Intents]s
+ */
+@Serializable(with = Intents.Serializer::class)
+public class Intents internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: DiscordBitSet,
+) {
+    /**
+     * A [Set] of all [Intent]s contained in this instance of [Intents].
+     */
+    public val values: Set<Intent>
+        get() = buildSet {
+            for (shift in 0..<code.size) {
+                if (code[shift]) add(Intent.fromShift(shift))
+            }
+        }
+
+    /**
+     * Checks if this instance of [Intents] has all bits set that are set in [flag].
+     */
+    public operator fun contains(flag: Intent): Boolean = flag.code in this.code
+
+    /**
+     * Checks if this instance of [Intents] has all bits set that are set in [flags].
+     */
+    public operator fun contains(flags: Intents): Boolean = flags.code in this.code
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flag].
+     */
+    public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flags].
+     */
+    public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
+     * that are set in [flag].
+     */
+    public operator fun minus(flag: Intent): Intents = Intents(this.code - flag.code)
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
+     * that are set in [flags].
+     */
+    public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
+
+    public inline fun copy(block: Builder.() -> Unit): Intents {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return Builder(code).apply(block).build()
+    }
+
+    override fun equals(other: Any?): Boolean = this === other ||
+            (other is Intents && this.code == other.code)
+
+    override fun hashCode(): Int = code.hashCode()
+
+    override fun toString(): String = "Intents(values=$values)"
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "Intents is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+    )
+    public operator fun component1(): DiscordBitSet = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message = "Intents is no longer a data class. Deprecated without a replacement.")
+    public fun copy(code: DiscordBitSet = this.code): Intents = Intents(code)
+
+    public class Builder(
+        private val code: DiscordBitSet = EmptyBitSet(),
+    ) {
+        public operator fun Intent.unaryPlus() {
+            this@Builder.code.add(this.code)
+        }
+
+        public operator fun Intents.unaryPlus() {
+            this@Builder.code.add(this.code)
+        }
+
+        public operator fun Intent.unaryMinus() {
+            this@Builder.code.remove(this.code)
+        }
+
+        public operator fun Intents.unaryMinus() {
+            this@Builder.code.remove(this.code)
+        }
+
+        public fun build(): Intents = Intents(code)
+
+        /**
+         * @suppress
+         */
+        @Deprecated(
+            message = "Renamed to 'build'",
+            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
+        )
+        public fun flags(): Intents = build()
+    }
+
+    internal object Serializer : KSerializer<Intents> {
+        override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.gateway.Intents", PrimitiveKind.STRING)
+
+        private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
+
+        override fun serialize(encoder: Encoder, `value`: Intents) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
+
+        override fun deserialize(decoder: Decoder): Intents =
+                Intents(decoder.decodeSerializableValue(delegate))
+    }
+}
+
+/**
+ * Returns an instance of [Intents] built with [Intents.Builder].
+ */
+public inline fun Intents(builder: Intents.Builder.() -> Unit = {}): Intents {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    return Intents.Builder().apply(builder).build()
+}
+
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(vararg flags: Intent): Intents = Intents {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(vararg flags: Intents): Intents = Intents {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(flags: Iterable<Intent>): Intents = Intents {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+@JvmName("Intents0")
+public fun Intents(flags: Iterable<Intents>): Intents = Intents {
+    flags.forEach { +it }
 }

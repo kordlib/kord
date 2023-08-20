@@ -23,6 +23,218 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ * See [GuildMemberFlag]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags).
+ */
+public sealed class GuildMemberFlag(
+    /**
+     * The position of the bit that is set in this [GuildMemberFlag]. This is always in 0..30.
+     */
+    public val shift: Int,
+) {
+    init {
+        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
+    }
+
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: Int
+        get() = 1 shl shift
+
+    /**
+     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
+    public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
+            GuildMemberFlags(this.code or flag.code)
+
+    /**
+     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
+    public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
+            GuildMemberFlags(this.code or flags.code)
+
+    final override fun equals(other: Any?): Boolean = this === other ||
+            (other is GuildMemberFlag && this.shift == other.shift)
+
+    final override fun hashCode(): Int = shift.hashCode()
+
+    final override fun toString(): String = if (this is Unknown)
+            "GuildMemberFlag.Unknown(shift=$shift)" else "GuildMemberFlag.${this::class.simpleName}"
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
+    public fun name(): String = this::class.simpleName!!
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
+    public fun ordinal(): Int = when (this) {
+        DidRejoin -> 0
+        CompletedOnboarding -> 1
+        BypassesVerification -> 2
+        StartedOnboarding -> 3
+        is Unknown -> Int.MAX_VALUE
+    }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "GuildMemberFlag is no longer an enum class.",
+        replaceWith = ReplaceWith(expression = "GuildMemberFlag::class.java", imports =
+                    arrayOf("dev.kord.common.entity.GuildMemberFlag")),
+    )
+    public fun getDeclaringClass(): Class<GuildMemberFlag> = GuildMemberFlag::class.java
+
+    /**
+     * An unknown [GuildMemberFlag].
+     *
+     * This is used as a fallback for [GuildMemberFlag]s that haven't been added to Kord yet.
+     */
+    public class Unknown internal constructor(
+        shift: Int,
+    ) : GuildMemberFlag(shift)
+
+    /**
+     * Member has left and rejoined the guild.
+     */
+    public object DidRejoin : GuildMemberFlag(0)
+
+    /**
+     * Member has completed onboarding.
+     */
+    public object CompletedOnboarding : GuildMemberFlag(1)
+
+    /**
+     * Member is exempt from guild verification requirements.
+     */
+    public object BypassesVerification : GuildMemberFlag(2)
+
+    /**
+     * Member has started onboarding.
+     */
+    public object StartedOnboarding : GuildMemberFlag(3)
+
+    public companion object {
+        /**
+         * A [List] of all known [GuildMemberFlag]s.
+         */
+        public val entries: List<GuildMemberFlag> by lazy(mode = PUBLICATION) {
+            listOf(
+                DidRejoin,
+                CompletedOnboarding,
+                BypassesVerification,
+                StartedOnboarding,
+            )
+        }
+
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val DidRejoin: GuildMemberFlag = DidRejoin
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val CompletedOnboarding: GuildMemberFlag = CompletedOnboarding
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val BypassesVerification: GuildMemberFlag = BypassesVerification
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val StartedOnboarding: GuildMemberFlag = StartedOnboarding
+
+        /**
+         * Returns an instance of [GuildMemberFlag] with [GuildMemberFlag.shift] equal to the
+         * specified [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not in 0..30.
+         */
+        public fun fromShift(shift: Int): GuildMemberFlag = when (shift) {
+            0 -> DidRejoin
+            1 -> CompletedOnboarding
+            2 -> BypassesVerification
+            3 -> StartedOnboarding
+            else -> Unknown(shift)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
+        @Deprecated(message =
+                "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
+        @JvmStatic
+        public open fun valueOf(name: String): GuildMemberFlag = when (name) {
+            "DidRejoin" -> DidRejoin
+            "CompletedOnboarding" -> CompletedOnboarding
+            "BypassesVerification" -> BypassesVerification
+            "StartedOnboarding" -> StartedOnboarding
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
+        @Deprecated(
+            message = "GuildMemberFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "GuildMemberFlag.entries.toTypedArray()", imports
+                        = arrayOf("dev.kord.common.entity.GuildMemberFlag")),
+        )
+        @JvmStatic
+        public open fun values(): Array<GuildMemberFlag> = entries.toTypedArray()
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "GuildMemberFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "GuildMemberFlag.entries", imports =
+                        arrayOf("dev.kord.common.entity.GuildMemberFlag")),
+        )
+        @JvmStatic
+        public open fun getEntries(): EnumEntries<GuildMemberFlag> = EnumEntriesList
+
+        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
+                        "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
+        private object EnumEntriesList : EnumEntries<GuildMemberFlag>, List<GuildMemberFlag> by
+                entries {
+            override fun equals(other: Any?): Boolean = entries == other
+
+            override fun hashCode(): Int = entries.hashCode()
+
+            override fun toString(): String = entries.toString()
+        }
+    }
+}
+
+/**
  * Convenience container of multiple [GuildMemberFlags][GuildMemberFlag] which can be combined into
  * one.
  *
@@ -258,216 +470,4 @@ public fun GuildMemberFlags(flags: Iterable<GuildMemberFlag>): GuildMemberFlags 
 public fun GuildMemberFlags(flags: Iterable<GuildMemberFlags>): GuildMemberFlags =
         GuildMemberFlags {
     flags.forEach { +it }
-}
-
-/**
- * See [GuildMemberFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags).
- */
-public sealed class GuildMemberFlag(
-    /**
-     * The position of the bit that is set in this [GuildMemberFlag]. This is always in 0..30.
-     */
-    public val shift: Int,
-) {
-    init {
-        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
-    }
-
-    /**
-     * The raw code used by Discord.
-     */
-    public val code: Int
-        get() = 1 shl shift
-
-    /**
-     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
-     * [flag].
-     */
-    public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code or flag.code)
-
-    /**
-     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
-     * [flags].
-     */
-    public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code or flags.code)
-
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is GuildMemberFlag && this.shift == other.shift)
-
-    final override fun hashCode(): Int = shift.hashCode()
-
-    final override fun toString(): String = if (this is Unknown)
-            "GuildMemberFlag.Unknown(shift=$shift)" else "GuildMemberFlag.${this::class.simpleName}"
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
-    public fun name(): String = this::class.simpleName!!
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
-    public fun ordinal(): Int = when (this) {
-        DidRejoin -> 0
-        CompletedOnboarding -> 1
-        BypassesVerification -> 2
-        StartedOnboarding -> 3
-        is Unknown -> Int.MAX_VALUE
-    }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "GuildMemberFlag is no longer an enum class.",
-        replaceWith = ReplaceWith(expression = "GuildMemberFlag::class.java", imports =
-                    arrayOf("dev.kord.common.entity.GuildMemberFlag")),
-    )
-    public fun getDeclaringClass(): Class<GuildMemberFlag> = GuildMemberFlag::class.java
-
-    /**
-     * An unknown [GuildMemberFlag].
-     *
-     * This is used as a fallback for [GuildMemberFlag]s that haven't been added to Kord yet.
-     */
-    public class Unknown internal constructor(
-        shift: Int,
-    ) : GuildMemberFlag(shift)
-
-    /**
-     * Member has left and rejoined the guild.
-     */
-    public object DidRejoin : GuildMemberFlag(0)
-
-    /**
-     * Member has completed onboarding.
-     */
-    public object CompletedOnboarding : GuildMemberFlag(1)
-
-    /**
-     * Member is exempt from guild verification requirements.
-     */
-    public object BypassesVerification : GuildMemberFlag(2)
-
-    /**
-     * Member has started onboarding.
-     */
-    public object StartedOnboarding : GuildMemberFlag(3)
-
-    public companion object {
-        /**
-         * A [List] of all known [GuildMemberFlag]s.
-         */
-        public val entries: List<GuildMemberFlag> by lazy(mode = PUBLICATION) {
-            listOf(
-                DidRejoin,
-                CompletedOnboarding,
-                BypassesVerification,
-                StartedOnboarding,
-            )
-        }
-
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val DidRejoin: GuildMemberFlag = DidRejoin
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val CompletedOnboarding: GuildMemberFlag = CompletedOnboarding
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val BypassesVerification: GuildMemberFlag = BypassesVerification
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val StartedOnboarding: GuildMemberFlag = StartedOnboarding
-
-        /**
-         * Returns an instance of [GuildMemberFlag] with [GuildMemberFlag.shift] equal to the
-         * specified [shift].
-         *
-         * @throws IllegalArgumentException if [shift] is not in 0..30.
-         */
-        public fun fromShift(shift: Int): GuildMemberFlag = when (shift) {
-            0 -> DidRejoin
-            1 -> CompletedOnboarding
-            2 -> BypassesVerification
-            3 -> StartedOnboarding
-            else -> Unknown(shift)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
-        @JvmStatic
-        public open fun valueOf(name: String): GuildMemberFlag = when (name) {
-            "DidRejoin" -> DidRejoin
-            "CompletedOnboarding" -> CompletedOnboarding
-            "BypassesVerification" -> BypassesVerification
-            "StartedOnboarding" -> StartedOnboarding
-            else -> throw IllegalArgumentException(name)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
-        @Deprecated(
-            message = "GuildMemberFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "GuildMemberFlag.entries.toTypedArray()", imports
-                        = arrayOf("dev.kord.common.entity.GuildMemberFlag")),
-        )
-        @JvmStatic
-        public open fun values(): Array<GuildMemberFlag> = entries.toTypedArray()
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "GuildMemberFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "GuildMemberFlag.entries", imports =
-                        arrayOf("dev.kord.common.entity.GuildMemberFlag")),
-        )
-        @JvmStatic
-        public open fun getEntries(): EnumEntries<GuildMemberFlag> = EnumEntriesList
-
-        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
-                        "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
-        private object EnumEntriesList : EnumEntries<GuildMemberFlag>, List<GuildMemberFlag> by
-                entries {
-            override fun equals(other: Any?): Boolean = entries == other
-
-            override fun hashCode(): Int = entries.hashCode()
-
-            override fun toString(): String = entries.toString()
-        }
-    }
 }

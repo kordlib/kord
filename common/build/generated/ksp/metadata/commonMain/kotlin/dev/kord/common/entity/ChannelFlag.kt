@@ -23,6 +23,185 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 /**
+ * See [ChannelFlag]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-channel-flags).
+ */
+public sealed class ChannelFlag(
+    /**
+     * The position of the bit that is set in this [ChannelFlag]. This is always in 0..30.
+     */
+    public val shift: Int,
+) {
+    init {
+        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
+    }
+
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: Int
+        get() = 1 shl shift
+
+    /**
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
+    public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
+
+    /**
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
+    public operator fun plus(flags: ChannelFlags): ChannelFlags =
+            ChannelFlags(this.code or flags.code)
+
+    final override fun equals(other: Any?): Boolean = this === other ||
+            (other is ChannelFlag && this.shift == other.shift)
+
+    final override fun hashCode(): Int = shift.hashCode()
+
+    final override fun toString(): String = if (this is Unknown) "ChannelFlag.Unknown(shift=$shift)"
+            else "ChannelFlag.${this::class.simpleName}"
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
+    public fun name(): String = this::class.simpleName!!
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message =
+            "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
+    public fun ordinal(): Int = when (this) {
+        Pinned -> 0
+        RequireTag -> 1
+        is Unknown -> Int.MAX_VALUE
+    }
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "ChannelFlag is no longer an enum class.",
+        replaceWith = ReplaceWith(expression = "ChannelFlag::class.java", imports =
+                    arrayOf("dev.kord.common.entity.ChannelFlag")),
+    )
+    public fun getDeclaringClass(): Class<ChannelFlag> = ChannelFlag::class.java
+
+    /**
+     * An unknown [ChannelFlag].
+     *
+     * This is used as a fallback for [ChannelFlag]s that haven't been added to Kord yet.
+     */
+    public class Unknown internal constructor(
+        shift: Int,
+    ) : ChannelFlag(shift)
+
+    /**
+     * This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] channel.
+     */
+    public object Pinned : ChannelFlag(1)
+
+    /**
+     * Whether a tag is required to be specified when creating a thread in a
+     * [GuildForum][ChannelType.GuildForum] channel.
+     */
+    public object RequireTag : ChannelFlag(4)
+
+    public companion object {
+        /**
+         * A [List] of all known [ChannelFlag]s.
+         */
+        public val entries: List<ChannelFlag> by lazy(mode = PUBLICATION) {
+            listOf(
+                Pinned,
+                RequireTag,
+            )
+        }
+
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val Pinned: ChannelFlag = Pinned
+
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Binary compatibility",
+        )
+        @JvmField
+        public val RequireTag: ChannelFlag = RequireTag
+
+        /**
+         * Returns an instance of [ChannelFlag] with [ChannelFlag.shift] equal to the specified
+         * [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not in 0..30.
+         */
+        public fun fromShift(shift: Int): ChannelFlag = when (shift) {
+            1 -> Pinned
+            4 -> RequireTag
+            else -> Unknown(shift)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
+        @Deprecated(message =
+                "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
+        @JvmStatic
+        public open fun valueOf(name: String): ChannelFlag = when (name) {
+            "Pinned" -> Pinned
+            "RequireTag" -> RequireTag
+            else -> throw IllegalArgumentException(name)
+        }
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
+        @Deprecated(
+            message = "ChannelFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "ChannelFlag.entries.toTypedArray()", imports =
+                        arrayOf("dev.kord.common.entity.ChannelFlag")),
+        )
+        @JvmStatic
+        public open fun values(): Array<ChannelFlag> = entries.toTypedArray()
+
+        /**
+         * @suppress
+         */
+        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "ChannelFlag is no longer an enum class.",
+            replaceWith = ReplaceWith(expression = "ChannelFlag.entries", imports =
+                        arrayOf("dev.kord.common.entity.ChannelFlag")),
+        )
+        @JvmStatic
+        public open fun getEntries(): EnumEntries<ChannelFlag> = EnumEntriesList
+
+        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
+                        "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
+        private object EnumEntriesList : EnumEntries<ChannelFlag>, List<ChannelFlag> by entries {
+            override fun equals(other: Any?): Boolean = entries == other
+
+            override fun hashCode(): Int = entries.hashCode()
+
+            override fun toString(): String = entries.toString()
+        }
+    }
+}
+
+/**
  * Convenience container of multiple [ChannelFlags][ChannelFlag] which can be combined into one.
  *
  * ## Creating a collection of message flags
@@ -260,183 +439,4 @@ public fun ChannelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFla
 @JvmName("ChannelFlags0")
 public fun ChannelFlags(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags {
     flags.forEach { +it }
-}
-
-/**
- * See [ChannelFlag]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/resources/channel#channel-object-channel-flags).
- */
-public sealed class ChannelFlag(
-    /**
-     * The position of the bit that is set in this [ChannelFlag]. This is always in 0..30.
-     */
-    public val shift: Int,
-) {
-    init {
-        require(shift in 0..30) { """shift has to be in 0..30 but was $shift""" }
-    }
-
-    /**
-     * The raw code used by Discord.
-     */
-    public val code: Int
-        get() = 1 shl shift
-
-    /**
-     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
-     * [flag].
-     */
-    public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
-
-    /**
-     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
-     * [flags].
-     */
-    public operator fun plus(flags: ChannelFlags): ChannelFlags =
-            ChannelFlags(this.code or flags.code)
-
-    final override fun equals(other: Any?): Boolean = this === other ||
-            (other is ChannelFlag && this.shift == other.shift)
-
-    final override fun hashCode(): Int = shift.hashCode()
-
-    final override fun toString(): String = if (this is Unknown) "ChannelFlag.Unknown(shift=$shift)"
-            else "ChannelFlag.${this::class.simpleName}"
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
-    public fun name(): String = this::class.simpleName!!
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
-    public fun ordinal(): Int = when (this) {
-        Pinned -> 0
-        RequireTag -> 1
-        is Unknown -> Int.MAX_VALUE
-    }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "ChannelFlag is no longer an enum class.",
-        replaceWith = ReplaceWith(expression = "ChannelFlag::class.java", imports =
-                    arrayOf("dev.kord.common.entity.ChannelFlag")),
-    )
-    public fun getDeclaringClass(): Class<ChannelFlag> = ChannelFlag::class.java
-
-    /**
-     * An unknown [ChannelFlag].
-     *
-     * This is used as a fallback for [ChannelFlag]s that haven't been added to Kord yet.
-     */
-    public class Unknown internal constructor(
-        shift: Int,
-    ) : ChannelFlag(shift)
-
-    /**
-     * This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] channel.
-     */
-    public object Pinned : ChannelFlag(1)
-
-    /**
-     * Whether a tag is required to be specified when creating a thread in a
-     * [GuildForum][ChannelType.GuildForum] channel.
-     */
-    public object RequireTag : ChannelFlag(4)
-
-    public companion object {
-        /**
-         * A [List] of all known [ChannelFlag]s.
-         */
-        public val entries: List<ChannelFlag> by lazy(mode = PUBLICATION) {
-            listOf(
-                Pinned,
-                RequireTag,
-            )
-        }
-
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Pinned: ChannelFlag = Pinned
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val RequireTag: ChannelFlag = RequireTag
-
-        /**
-         * Returns an instance of [ChannelFlag] with [ChannelFlag.shift] equal to the specified
-         * [shift].
-         *
-         * @throws IllegalArgumentException if [shift] is not in 0..30.
-         */
-        public fun fromShift(shift: Int): ChannelFlag = when (shift) {
-            1 -> Pinned
-            4 -> RequireTag
-            else -> Unknown(shift)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
-        @JvmStatic
-        public open fun valueOf(name: String): ChannelFlag = when (name) {
-            "Pinned" -> Pinned
-            "RequireTag" -> RequireTag
-            else -> throw IllegalArgumentException(name)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
-        @Deprecated(
-            message = "ChannelFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "ChannelFlag.entries.toTypedArray()", imports =
-                        arrayOf("dev.kord.common.entity.ChannelFlag")),
-        )
-        @JvmStatic
-        public open fun values(): Array<ChannelFlag> = entries.toTypedArray()
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
-        @Deprecated(
-            level = DeprecationLevel.ERROR,
-            message = "ChannelFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "ChannelFlag.entries", imports =
-                        arrayOf("dev.kord.common.entity.ChannelFlag")),
-        )
-        @JvmStatic
-        public open fun getEntries(): EnumEntries<ChannelFlag> = EnumEntriesList
-
-        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
-                        "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
-        private object EnumEntriesList : EnumEntries<ChannelFlag>, List<ChannelFlag> by entries {
-            override fun equals(other: Any?): Boolean = entries == other
-
-            override fun hashCode(): Int = entries.hashCode()
-
-            override fun toString(): String = entries.toString()
-        }
-    }
 }

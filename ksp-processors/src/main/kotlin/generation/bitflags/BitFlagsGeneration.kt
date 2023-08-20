@@ -21,6 +21,80 @@ internal val BitFlags.builderCN
     get() = collectionCN.nestedClass("Builder")
 
 internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGenerationEntity(originatingFile) {
+    addClass(entityCN) {
+        // for ksp incremental processing
+        addOriginatingKSFile(originatingFile)
+        addEntityKDoc()
+        addModifiers(PUBLIC, SEALED)
+        val shiftTest = when (valueType) {
+            INT -> "in 0..30" // Int actually supports shifting by 31, but that would result in <0
+            BIT_SET -> ">= 0"
+        }
+        primaryConstructor {
+            addParameter<Int>("shift")
+        }
+        addProperty<Int>("shift", PUBLIC) {
+            addKdoc("The position of the bit that is set in this [%T]. This is always $shiftTest.", entityCN)
+            initializer("shift")
+        }
+        addInitializerBlock {
+            addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
+        }
+        addProperty(valueName, valueCN, PUBLIC) {
+            addKdoc("The raw $valueName used by Discord.")
+            getter {
+                when (valueType) {
+                    INT -> addStatement("return 1 shl shift")
+                    BIT_SET -> addStatement("return %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
+                }
+            }
+        }
+        addPlus(parameterName = "flag", parameterType = entityCN)
+        addPlus(parameterName = "flags", parameterType = collectionCN)
+        addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", FINAL)
+        addFunction("toString") {
+            addModifiers(FINAL, OVERRIDE)
+            returns<String>()
+            addStatement(
+                "return if·(this·is·Unknown) \"$entityName.Unknown(shift=\$shift)\" else " +
+                    "\"$entityName.\${this::class.simpleName}\""
+            )
+        }
+        if (wasEnum) {
+            addDeprecatedEntityEnumArtifacts()
+        }
+        addClass("Unknown") {
+            addSharedUnknownClassContent()
+            primaryConstructor {
+                addModifiers(INTERNAL)
+                addParameter<Int>("shift")
+            }
+            addSuperclassConstructorParameter("shift")
+        }
+        addEntityEntries()
+        addCompanionObject {
+            addSharedCompanionObjectContent()
+            addFunction("fromShift") {
+                addKdoc(
+                    "Returns an instance of [%1T] with [%1T.shift] equal to the specified [shift].\n\n" +
+                        "@throws IllegalArgumentException if [shift] is not $shiftTest.",
+                    entityCN,
+                )
+                addEntryOptIns()
+                addParameter<Int>("shift")
+                returns(entityCN)
+                withControlFlow("return when·(shift)") {
+                    for (entry in entriesDistinctByValue) {
+                        addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
+                    }
+                    addStatement("else·->·Unknown(shift)")
+                }
+            }
+            if (wasEnum) {
+                addDeprecatedEntityCompanionObjectEnumArtifacts()
+            }
+        }
+    }
     addClass(collectionCN) {
         addCollectionDoc()
         addAnnotation<Serializable> {
@@ -98,78 +172,4 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addSerializer()
     }
     addFactoryFunctions()
-    addClass(entityCN) {
-        // for ksp incremental processing
-        addOriginatingKSFile(originatingFile)
-        addEntityKDoc()
-        addModifiers(PUBLIC, SEALED)
-        val shiftTest = when (valueType) {
-            INT -> "in 0..30" // Int actually supports shifting by 31, but that would result in <0
-            BIT_SET -> ">= 0"
-        }
-        primaryConstructor {
-            addParameter<Int>("shift")
-        }
-        addProperty<Int>("shift", PUBLIC) {
-            addKdoc("The position of the bit that is set in this [%T]. This is always $shiftTest.", entityCN)
-            initializer("shift")
-        }
-        addInitializerBlock {
-            addStatement("require(shift·$shiftTest)·{ %P }", "shift has to be $shiftTest but was \$shift")
-        }
-        addProperty(valueName, valueCN, PUBLIC) {
-            addKdoc("The raw $valueName used by Discord.")
-            getter {
-                when (valueType) {
-                    INT -> addStatement("return 1 shl shift")
-                    BIT_SET -> addStatement("return %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
-                }
-            }
-        }
-        addPlus(parameterName = "flag", parameterType = entityCN)
-        addPlus(parameterName = "flags", parameterType = collectionCN)
-        addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", FINAL)
-        addFunction("toString") {
-            addModifiers(FINAL, OVERRIDE)
-            returns<String>()
-            addStatement(
-                "return if·(this·is·Unknown) \"$entityName.Unknown(shift=\$shift)\" else " +
-                    "\"$entityName.\${this::class.simpleName}\""
-            )
-        }
-        if (wasEnum) {
-            addDeprecatedEntityEnumArtifacts()
-        }
-        addClass("Unknown") {
-            addSharedUnknownClassContent()
-            primaryConstructor {
-                addModifiers(INTERNAL)
-                addParameter<Int>("shift")
-            }
-            addSuperclassConstructorParameter("shift")
-        }
-        addEntityEntries()
-        addCompanionObject {
-            addSharedCompanionObjectContent()
-            addFunction("fromShift") {
-                addKdoc(
-                    "Returns an instance of [%1T] with [%1T.shift] equal to the specified [shift].\n\n" +
-                        "@throws IllegalArgumentException if [shift] is not $shiftTest.",
-                    entityCN,
-                )
-                addEntryOptIns()
-                addParameter<Int>("shift")
-                returns(entityCN)
-                withControlFlow("return when·(shift)") {
-                    for (entry in entriesDistinctByValue) {
-                        addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
-                    }
-                    addStatement("else·->·Unknown(shift)")
-                }
-            }
-            if (wasEnum) {
-                addDeprecatedEntityCompanionObjectEnumArtifacts()
-            }
-        }
-    }
 }
