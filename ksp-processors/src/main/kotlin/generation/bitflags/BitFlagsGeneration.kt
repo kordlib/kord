@@ -32,9 +32,11 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addParameter(valueName, valueCN)
         }
         addProperty(valueName, valueCN, PUBLIC) {
+            addKdoc("The raw $valueName used by Discord.")
             initializer(valueName)
         }
         addProperty("values", type = SET.parameterizedBy(entityCN), PUBLIC) {
+            addKdoc("A [Set] of all [%T]s contained in this instance of [%T].", entityCN, collectionCN)
             getter {
                 withControlFlow("return buildSet") {
                     when (valueType) {
@@ -57,6 +59,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         if (hadFlagsProperty) {
             val type = (if (flagsPropertyWasSet) SET else LIST).parameterizedBy(entityCN)
             addProperty("flags", type, PUBLIC) {
+                addKdoc("@suppress")
                 @OptIn(DelicateKotlinPoetApi::class)
                 addAnnotation(
                     Deprecated(

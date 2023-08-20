@@ -83,8 +83,14 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = SystemChannelFlags.Serializer::class)
 public class SystemChannelFlags internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
     public val code: Int,
 ) {
+    /**
+     * A [Set] of all [SystemChannelFlag]s contained in this instance of [SystemChannelFlags].
+     */
     public val values: Set<SystemChannelFlag>
         get() = buildSet {
             var remaining = code

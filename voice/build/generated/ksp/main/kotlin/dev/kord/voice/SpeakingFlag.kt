@@ -79,8 +79,14 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = SpeakingFlags.Serializer::class)
 public class SpeakingFlags internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
     public val code: Int,
 ) {
+    /**
+     * A [Set] of all [SpeakingFlag]s contained in this instance of [SpeakingFlags].
+     */
     public val values: Set<SpeakingFlag>
         get() = buildSet {
             var remaining = code
@@ -92,6 +98,9 @@ public class SpeakingFlags internal constructor(
             }
         }
 
+    /**
+     * @suppress
+     */
     @Deprecated(
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),

@@ -75,8 +75,14 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = Permissions.Serializer::class)
 public class Permissions internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
     public val code: DiscordBitSet,
 ) {
+    /**
+     * A [Set] of all [Permission]s contained in this instance of [Permissions].
+     */
     public val values: Set<Permission>
         get() = buildSet {
             for (shift in 0..<code.size) {

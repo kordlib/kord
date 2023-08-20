@@ -79,8 +79,14 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = ActivityFlags.Serializer::class)
 public class ActivityFlags internal constructor(
+    /**
+     * The raw value used by Discord.
+     */
     public val `value`: Int,
 ) {
+    /**
+     * A [Set] of all [ActivityFlag]s contained in this instance of [ActivityFlags].
+     */
     public val values: Set<ActivityFlag>
         get() = buildSet {
             var remaining = value
@@ -92,6 +98,9 @@ public class ActivityFlags internal constructor(
             }
         }
 
+    /**
+     * @suppress
+     */
     @Deprecated(
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),

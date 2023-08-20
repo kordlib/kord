@@ -75,8 +75,14 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = Intents.Serializer::class)
 public class Intents internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
     public val code: DiscordBitSet,
 ) {
+    /**
+     * A [Set] of all [Intent]s contained in this instance of [Intents].
+     */
     public val values: Set<Intent>
         get() = buildSet {
             for (shift in 0..<code.size) {

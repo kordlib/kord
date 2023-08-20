@@ -82,8 +82,14 @@ import kotlinx.serialization.encoding.Encoder
  */
 @Serializable(with = GuildMemberFlags.Serializer::class)
 public class GuildMemberFlags internal constructor(
+    /**
+     * The raw code used by Discord.
+     */
     public val code: Int,
 ) {
+    /**
+     * A [Set] of all [GuildMemberFlag]s contained in this instance of [GuildMemberFlags].
+     */
     public val values: Set<GuildMemberFlag>
         get() = buildSet {
             var remaining = code
