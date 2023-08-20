@@ -84,16 +84,37 @@ public class Permissions internal constructor(
             }
         }
 
+    /**
+     * Checks if this instance of [Permissions] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: Permission): Boolean = flag.code in this.code
 
+    /**
+     * Checks if this instance of [Permissions] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: Permissions): Boolean = flags.code in this.code
 
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` and [flag].
+     */
     public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
 
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
 
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
+     * bits that are set in [flag].
+     */
     public operator fun minus(flag: Permission): Permissions = Permissions(this.code - flag.code)
 
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
+     * bits that are set in [flags].
+     */
     public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code)
 
     public inline fun copy(block: Builder.() -> Unit): Permissions {
@@ -210,8 +231,15 @@ public sealed class Permission(
     public val code: DiscordBitSet
         get() = EmptyBitSet().also { it[shift] = true }
 
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` and [flag].
+     */
     public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
 
+    /**
+     * Returns an instance of [Permissions] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||

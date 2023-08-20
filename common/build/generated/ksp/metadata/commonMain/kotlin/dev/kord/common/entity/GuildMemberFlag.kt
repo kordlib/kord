@@ -95,21 +95,43 @@ public class GuildMemberFlags internal constructor(
             }
         }
 
+    /**
+     * Checks if this instance of [GuildMemberFlags] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: GuildMemberFlag): Boolean =
             this.code and flag.code == flag.code
 
+    /**
+     * Checks if this instance of [GuildMemberFlags] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: GuildMemberFlags): Boolean =
             this.code and flags.code == flags.code
 
+    /**
+     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
             GuildMemberFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
             GuildMemberFlags(this.code or flags.code)
 
+    /**
+     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` except
+     * the bits that are set in [flag].
+     */
     public operator fun minus(flag: GuildMemberFlag): GuildMemberFlags =
             GuildMemberFlags(this.code and flag.code.inv())
 
+    /**
+     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` except
+     * the bits that are set in [flags].
+     */
     public operator fun minus(flags: GuildMemberFlags): GuildMemberFlags =
             GuildMemberFlags(this.code and flags.code.inv())
 
@@ -228,9 +250,17 @@ public sealed class GuildMemberFlag(
     public val code: Int
         get() = 1 shl shift
 
+    /**
+     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
             GuildMemberFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
             GuildMemberFlags(this.code or flags.code)
 

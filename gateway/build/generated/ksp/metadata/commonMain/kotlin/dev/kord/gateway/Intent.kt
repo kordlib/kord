@@ -84,16 +84,36 @@ public class Intents internal constructor(
             }
         }
 
+    /**
+     * Checks if this instance of [Intents] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: Intent): Boolean = flag.code in this.code
 
+    /**
+     * Checks if this instance of [Intents] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: Intents): Boolean = flags.code in this.code
 
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flag].
+     */
     public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
 
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flags].
+     */
     public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
 
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
+     * that are set in [flag].
+     */
     public operator fun minus(flag: Intent): Intents = Intents(this.code - flag.code)
 
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
+     * that are set in [flags].
+     */
     public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
 
     public inline fun copy(block: Builder.() -> Unit): Intents {
@@ -206,8 +226,14 @@ public sealed class Intent(
     public val code: DiscordBitSet
         get() = EmptyBitSet().also { it[shift] = true }
 
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flag].
+     */
     public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
 
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flags].
+     */
     public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||

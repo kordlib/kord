@@ -11,8 +11,9 @@ import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
 import dev.kord.ksp.generation.shared.GenerationContext
 import dev.kord.ksp.returns
 
-context(BitFlags)
+context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addContains(parameterName: String, parameterType: TypeName) = addFunction("contains") {
+    addKdoc("Checks if this instance of [%T] has all bits set that are set in [$parameterName].", collectionCN)
     addModifiers(PUBLIC, OPERATOR)
     addParameter(parameterName, parameterType)
     returns<Boolean>()
@@ -26,6 +27,10 @@ internal fun TypeSpec.Builder.addContains(parameterName: String, parameterType: 
 
 context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addPlus(parameterName: String, parameterType: TypeName) = addFunction("plus") {
+    addKdoc(
+        "Returns an instance of [%T] that has all bits set that are set in `this` and [$parameterName].",
+        collectionCN,
+    )
     addModifiers(PUBLIC, OPERATOR)
     addParameter(parameterName, parameterType)
     returns(collectionCN)
@@ -40,6 +45,11 @@ internal fun TypeSpec.Builder.addPlus(parameterName: String, parameterType: Type
 
 context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addMinus(parameterName: String, parameterType: TypeName) = addFunction("minus") {
+    addKdoc(
+        "Returns an instance of [%T] that has all bits set that are set in `this` except the bits that are set in " +
+            "[$parameterName].",
+        collectionCN,
+    )
     addModifiers(PUBLIC, OPERATOR)
     addParameter(parameterName, parameterType)
     returns(collectionCN)

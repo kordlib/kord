@@ -124,7 +124,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 }
             }
         }
-
         addPlus(parameterName = "flag", parameterType = entityCN)
         addPlus(parameterName = "flags", parameterType = collectionCN)
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", FINAL)

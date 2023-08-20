@@ -99,21 +99,43 @@ public class ActivityFlags internal constructor(
     public val flags: Set<ActivityFlag>
         get() = values
 
+    /**
+     * Checks if this instance of [ActivityFlags] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: ActivityFlag): Boolean =
             this.value and flag.value == flag.value
 
+    /**
+     * Checks if this instance of [ActivityFlags] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: ActivityFlags): Boolean =
             this.value and flags.value == flags.value
 
+    /**
+     * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: ActivityFlag): ActivityFlags =
             ActivityFlags(this.value or flag.value)
 
+    /**
+     * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: ActivityFlags): ActivityFlags =
             ActivityFlags(this.value or flags.value)
 
+    /**
+     * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` except
+     * the bits that are set in [flag].
+     */
     public operator fun minus(flag: ActivityFlag): ActivityFlags =
             ActivityFlags(this.value and flag.value.inv())
 
+    /**
+     * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` except
+     * the bits that are set in [flags].
+     */
     public operator fun minus(flags: ActivityFlags): ActivityFlags =
             ActivityFlags(this.value and flags.value.inv())
 
@@ -213,9 +235,17 @@ public sealed class ActivityFlag(
     public val `value`: Int
         get() = 1 shl shift
 
+    /**
+     * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: ActivityFlag): ActivityFlags =
             ActivityFlags(this.value or flag.value)
 
+    /**
+     * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: ActivityFlags): ActivityFlags =
             ActivityFlags(this.value or flags.value)
 

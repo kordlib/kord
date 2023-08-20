@@ -99,16 +99,36 @@ public class UserFlags internal constructor(
     public val flags: List<UserFlag>
         get() = values.toList()
 
+    /**
+     * Checks if this instance of [UserFlags] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: UserFlag): Boolean = this.code and flag.code == flag.code
 
+    /**
+     * Checks if this instance of [UserFlags] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: UserFlags): Boolean = this.code and flags.code == flags.code
 
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flag].
+     */
     public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flags].
+     */
     public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
 
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flag].
+     */
     public operator fun minus(flag: UserFlag): UserFlags = UserFlags(this.code and flag.code.inv())
 
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flags].
+     */
     public operator fun minus(flags: UserFlags): UserFlags =
             UserFlags(this.code and flags.code.inv())
 
@@ -220,8 +240,14 @@ public sealed class UserFlag(
     public val code: Int
         get() = 1 shl shift
 
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flag].
+     */
     public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flags].
+     */
     public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||

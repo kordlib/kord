@@ -99,19 +99,41 @@ public class ChannelFlags internal constructor(
     public val flags: List<ChannelFlag>
         get() = values.toList()
 
+    /**
+     * Checks if this instance of [ChannelFlags] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: ChannelFlag): Boolean = this.code and flag.code == flag.code
 
+    /**
+     * Checks if this instance of [ChannelFlags] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: ChannelFlags): Boolean =
             this.code and flags.code == flags.code
 
+    /**
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: ChannelFlags): ChannelFlags =
             ChannelFlags(this.code or flags.code)
 
+    /**
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flag].
+     */
     public operator fun minus(flag: ChannelFlag): ChannelFlags =
             ChannelFlags(this.code and flag.code.inv())
 
+    /**
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flags].
+     */
     public operator fun minus(flags: ChannelFlags): ChannelFlags =
             ChannelFlags(this.code and flags.code.inv())
 
@@ -228,8 +250,16 @@ public sealed class ChannelFlag(
     public val code: Int
         get() = 1 shl shift
 
+    /**
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [ChannelFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: ChannelFlags): ChannelFlags =
             ChannelFlags(this.code or flags.code)
 

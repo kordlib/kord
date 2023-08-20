@@ -96,21 +96,43 @@ public class SystemChannelFlags internal constructor(
             }
         }
 
+    /**
+     * Checks if this instance of [SystemChannelFlags] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: SystemChannelFlag): Boolean =
             this.code and flag.code == flag.code
 
+    /**
+     * Checks if this instance of [SystemChannelFlags] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: SystemChannelFlags): Boolean =
             this.code and flags.code == flags.code
 
+    /**
+     * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
             SystemChannelFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags =
             SystemChannelFlags(this.code or flags.code)
 
+    /**
+     * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this`
+     * except the bits that are set in [flag].
+     */
     public operator fun minus(flag: SystemChannelFlag): SystemChannelFlags =
             SystemChannelFlags(this.code and flag.code.inv())
 
+    /**
+     * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this`
+     * except the bits that are set in [flags].
+     */
     public operator fun minus(flags: SystemChannelFlags): SystemChannelFlags =
             SystemChannelFlags(this.code and flags.code.inv())
 
@@ -229,9 +251,17 @@ public sealed class SystemChannelFlag(
     public val code: Int
         get() = 1 shl shift
 
+    /**
+     * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
             SystemChannelFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags =
             SystemChannelFlags(this.code or flags.code)
 

@@ -99,19 +99,41 @@ public class MessageFlags internal constructor(
     public val flags: List<MessageFlag>
         get() = values.toList()
 
+    /**
+     * Checks if this instance of [MessageFlags] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: MessageFlag): Boolean = this.code and flag.code == flag.code
 
+    /**
+     * Checks if this instance of [MessageFlags] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: MessageFlags): Boolean =
             this.code and flags.code == flags.code
 
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: MessageFlag): MessageFlags = MessageFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: MessageFlags): MessageFlags =
             MessageFlags(this.code or flags.code)
 
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flag].
+     */
     public operator fun minus(flag: MessageFlag): MessageFlags =
             MessageFlags(this.code and flag.code.inv())
 
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` except the
+     * bits that are set in [flags].
+     */
     public operator fun minus(flags: MessageFlags): MessageFlags =
             MessageFlags(this.code and flags.code.inv())
 
@@ -228,8 +250,16 @@ public sealed class MessageFlag(
     public val code: Int
         get() = 1 shl shift
 
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: MessageFlag): MessageFlags = MessageFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [MessageFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: MessageFlags): MessageFlags =
             MessageFlags(this.code or flags.code)
 

@@ -103,21 +103,43 @@ public class ApplicationFlags internal constructor(
     public val flags: List<ApplicationFlag>
         get() = values.toList()
 
+    /**
+     * Checks if this instance of [ApplicationFlags] has all bits set that are set in [flag].
+     */
     public operator fun contains(flag: ApplicationFlag): Boolean =
             this.code and flag.code == flag.code
 
+    /**
+     * Checks if this instance of [ApplicationFlags] has all bits set that are set in [flags].
+     */
     public operator fun contains(flags: ApplicationFlags): Boolean =
             this.code and flags.code == flags.code
 
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: ApplicationFlag): ApplicationFlags =
             ApplicationFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: ApplicationFlags): ApplicationFlags =
             ApplicationFlags(this.code or flags.code)
 
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` except
+     * the bits that are set in [flag].
+     */
     public operator fun minus(flag: ApplicationFlag): ApplicationFlags =
             ApplicationFlags(this.code and flag.code.inv())
 
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` except
+     * the bits that are set in [flags].
+     */
     public operator fun minus(flags: ApplicationFlags): ApplicationFlags =
             ApplicationFlags(this.code and flags.code.inv())
 
@@ -236,9 +258,17 @@ public sealed class ApplicationFlag(
     public val code: Int
         get() = 1 shl shift
 
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` and
+     * [flag].
+     */
     public operator fun plus(flag: ApplicationFlag): ApplicationFlags =
             ApplicationFlags(this.code or flag.code)
 
+    /**
+     * Returns an instance of [ApplicationFlags] that has all bits set that are set in `this` and
+     * [flags].
+     */
     public operator fun plus(flags: ApplicationFlags): ApplicationFlags =
             ApplicationFlags(this.code or flags.code)
 
