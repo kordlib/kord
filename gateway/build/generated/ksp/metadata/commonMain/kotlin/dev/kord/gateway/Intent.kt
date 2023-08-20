@@ -196,19 +196,42 @@ public class Intents internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [Intents] built with [Intents.Builder].
+ */
 public inline fun Intents(builder: Intents.Builder.() -> Unit = {}): Intents {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Intents.Builder().apply(builder).build()
 }
 
-public fun Intents(vararg flags: Intent): Intents = Intents { flags.forEach { +it } }
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(vararg flags: Intent): Intents = Intents {
+    flags.forEach { +it }
+}
 
-public fun Intents(vararg flags: Intents): Intents = Intents { flags.forEach { +it } }
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(vararg flags: Intents): Intents = Intents {
+    flags.forEach { +it }
+}
 
-public fun Intents(flags: Iterable<Intent>): Intents = Intents { flags.forEach { +it } }
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(flags: Iterable<Intent>): Intents = Intents {
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
 @JvmName("Intents0")
-public fun Intents(flags: Iterable<Intents>): Intents = Intents { flags.forEach { +it } }
+public fun Intents(flags: Iterable<Intents>): Intents = Intents {
+    flags.forEach { +it }
+}
 
 /**
  * Values that enable a group of events as defined by Discord.

@@ -221,23 +221,46 @@ public class MessageFlags internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [MessageFlags] built with [MessageFlags.Builder].
+ */
 public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit = {}): MessageFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return MessageFlags.Builder().apply(builder).build()
 }
 
+/**
+ * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun MessageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun MessageFlags(vararg flags: MessageFlags): MessageFlags = MessageFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun MessageFlags(flags: Iterable<MessageFlag>): MessageFlags = MessageFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 @JvmName("MessageFlags0")
 public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
 /**
  * See [MessageFlag]s in the

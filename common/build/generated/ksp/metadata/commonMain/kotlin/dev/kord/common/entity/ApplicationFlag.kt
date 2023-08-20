@@ -228,24 +228,48 @@ public class ApplicationFlags internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [ApplicationFlags] built with [ApplicationFlags.Builder].
+ */
 public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit = {}):
         ApplicationFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return ApplicationFlags.Builder().apply(builder).build()
 }
 
+/**
+ * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ApplicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ApplicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ApplicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags = ApplicationFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 @JvmName("ApplicationFlags0")
 public fun ApplicationFlags(flags: Iterable<ApplicationFlags>): ApplicationFlags =
-        ApplicationFlags { flags.forEach { +it } }
+        ApplicationFlags {
+    flags.forEach { +it }
+}
 
 /**
  * See [ApplicationFlag]s in the

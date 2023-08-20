@@ -218,24 +218,51 @@ public class SystemChannelFlags internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [SystemChannelFlags] built with [SystemChannelFlags.Builder].
+ */
 public inline fun SystemChannelFlags(builder: SystemChannelFlags.Builder.() -> Unit = {}):
         SystemChannelFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return SystemChannelFlags.Builder().apply(builder).build()
 }
 
+/**
+ * Returns an instance of [SystemChannelFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun SystemChannelFlags(vararg flags: SystemChannelFlag): SystemChannelFlags =
-        SystemChannelFlags { flags.forEach { +it } }
+        SystemChannelFlags {
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [SystemChannelFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun SystemChannelFlags(vararg flags: SystemChannelFlags): SystemChannelFlags =
-        SystemChannelFlags { flags.forEach { +it } }
+        SystemChannelFlags {
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [SystemChannelFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun SystemChannelFlags(flags: Iterable<SystemChannelFlag>): SystemChannelFlags =
-        SystemChannelFlags { flags.forEach { +it } }
+        SystemChannelFlags {
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [SystemChannelFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 @JvmName("SystemChannelFlags0")
 public fun SystemChannelFlags(flags: Iterable<SystemChannelFlags>): SystemChannelFlags =
-        SystemChannelFlags { flags.forEach { +it } }
+        SystemChannelFlags {
+    flags.forEach { +it }
+}
 
 /**
  * See [SystemChannelFlag]s in the

@@ -4,7 +4,6 @@ import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import com.squareup.kotlinpoet.jvm.jvmName
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
@@ -172,54 +171,5 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 addDeprecatedEntityCompanionObjectEnumArtifacts()
             }
         }
-    }
-}
-
-context(BitFlags, GenerationContext)
-private fun FileSpec.Builder.addFactoryFunctions() {
-    val factoryFunctionName = collectionCN.simpleName
-
-    addFunction(factoryFunctionName) {
-        addModifiers(PUBLIC, INLINE)
-        addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT)) {
-            defaultValue("{}")
-        }
-        returns(collectionCN)
-
-        addStatement("%M { callsInPlace(builder, %M) }", CONTRACT, EXACTLY_ONCE)
-        addStatement("return %T().apply(builder).build()", builderCN)
-    }
-
-    addFunction(factoryFunctionName) {
-        addModifiers(PUBLIC)
-        addParameter("flags", entityCN, VARARG)
-        returns(collectionCN)
-
-        addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
-    }
-
-    addFunction(factoryFunctionName) {
-        addModifiers(PUBLIC)
-        addParameter("flags", collectionCN, VARARG)
-        returns(collectionCN)
-
-        addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
-    }
-
-    addFunction(factoryFunctionName) {
-        addModifiers(PUBLIC)
-        addParameter("flags", ITERABLE.parameterizedBy(entityCN))
-        returns(collectionCN)
-
-        addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
-    }
-
-    addFunction(factoryFunctionName) {
-        jvmName("${factoryFunctionName}0")
-        addModifiers(PUBLIC)
-        addParameter("flags", ITERABLE.parameterizedBy(collectionCN))
-        returns(collectionCN)
-
-        addStatement("return $factoryFunctionName·{ flags.forEach·{ +it } }")
     }
 }

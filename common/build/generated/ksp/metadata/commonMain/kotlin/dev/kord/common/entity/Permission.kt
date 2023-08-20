@@ -199,23 +199,46 @@ public class Permissions internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [Permissions] built with [Permissions.Builder].
+ */
 public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Permissions {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Permissions.Builder().apply(builder).build()
 }
 
-public fun Permissions(vararg flags: Permission): Permissions = Permissions { flags.forEach { +it }
-        }
+/**
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun Permissions(vararg flags: Permission): Permissions = Permissions {
+    flags.forEach { +it }
+}
 
-public fun Permissions(vararg flags: Permissions): Permissions = Permissions { flags.forEach { +it }
-        }
+/**
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun Permissions(vararg flags: Permissions): Permissions = Permissions {
+    flags.forEach { +it }
+}
 
-public fun Permissions(flags: Iterable<Permission>): Permissions = Permissions { flags.forEach { +it
-        } }
+/**
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of
+ * [flags].
+ */
+public fun Permissions(flags: Iterable<Permission>): Permissions = Permissions {
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [Permissions] that has all bits set that are set in any element of
+ * [flags].
+ */
 @JvmName("Permissions0")
 public fun Permissions(flags: Iterable<Permissions>): Permissions = Permissions {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
 /**
  * See [Permission]s in the

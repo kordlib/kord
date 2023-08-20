@@ -221,23 +221,46 @@ public class ChannelFlags internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [ChannelFlags] built with [ChannelFlags.Builder].
+ */
 public inline fun ChannelFlags(builder: ChannelFlags.Builder.() -> Unit = {}): ChannelFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return ChannelFlags.Builder().apply(builder).build()
 }
 
+/**
+ * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ChannelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ChannelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ChannelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 @JvmName("ChannelFlags0")
 public fun ChannelFlags(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
 /**
  * See [ChannelFlag]s in the

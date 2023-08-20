@@ -217,24 +217,48 @@ public class GuildMemberFlags internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [GuildMemberFlags] built with [GuildMemberFlags.Builder].
+ */
 public inline fun GuildMemberFlags(builder: GuildMemberFlags.Builder.() -> Unit = {}):
         GuildMemberFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return GuildMemberFlags.Builder().apply(builder).build()
 }
 
+/**
+ * Returns an instance of [GuildMemberFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun GuildMemberFlags(vararg flags: GuildMemberFlag): GuildMemberFlags = GuildMemberFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [GuildMemberFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun GuildMemberFlags(vararg flags: GuildMemberFlags): GuildMemberFlags = GuildMemberFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [GuildMemberFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun GuildMemberFlags(flags: Iterable<GuildMemberFlag>): GuildMemberFlags = GuildMemberFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [GuildMemberFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 @JvmName("GuildMemberFlags0")
 public fun GuildMemberFlags(flags: Iterable<GuildMemberFlags>): GuildMemberFlags =
-        GuildMemberFlags { flags.forEach { +it } }
+        GuildMemberFlags {
+    flags.forEach { +it }
+}
 
 /**
  * See [GuildMemberFlag]s in the

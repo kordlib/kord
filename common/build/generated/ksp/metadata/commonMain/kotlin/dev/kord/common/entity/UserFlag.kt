@@ -215,19 +215,42 @@ public class UserFlags internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [UserFlags] built with [UserFlags.Builder].
+ */
 public inline fun UserFlags(builder: UserFlags.Builder.() -> Unit = {}): UserFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return UserFlags.Builder().apply(builder).build()
 }
 
-public fun UserFlags(vararg flags: UserFlag): UserFlags = UserFlags { flags.forEach { +it } }
+/**
+ * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
+ */
+public fun UserFlags(vararg flags: UserFlag): UserFlags = UserFlags {
+    flags.forEach { +it }
+}
 
-public fun UserFlags(vararg flags: UserFlags): UserFlags = UserFlags { flags.forEach { +it } }
+/**
+ * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
+ */
+public fun UserFlags(vararg flags: UserFlags): UserFlags = UserFlags {
+    flags.forEach { +it }
+}
 
-public fun UserFlags(flags: Iterable<UserFlag>): UserFlags = UserFlags { flags.forEach { +it } }
+/**
+ * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
+ */
+public fun UserFlags(flags: Iterable<UserFlag>): UserFlags = UserFlags {
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
+ */
 @JvmName("UserFlags0")
-public fun UserFlags(flags: Iterable<UserFlags>): UserFlags = UserFlags { flags.forEach { +it } }
+public fun UserFlags(flags: Iterable<UserFlags>): UserFlags = UserFlags {
+    flags.forEach { +it }
+}
 
 /**
  * See [UserFlag]s in the

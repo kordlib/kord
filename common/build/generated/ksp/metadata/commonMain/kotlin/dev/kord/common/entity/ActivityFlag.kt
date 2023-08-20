@@ -206,23 +206,46 @@ public class ActivityFlags internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [ActivityFlags] built with [ActivityFlags.Builder].
+ */
 public inline fun ActivityFlags(builder: ActivityFlags.Builder.() -> Unit = {}): ActivityFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return ActivityFlags.Builder().apply(builder).build()
 }
 
+/**
+ * Returns an instance of [ActivityFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ActivityFlags(vararg flags: ActivityFlag): ActivityFlags = ActivityFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ActivityFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ActivityFlags(vararg flags: ActivityFlags): ActivityFlags = ActivityFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ActivityFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun ActivityFlags(flags: Iterable<ActivityFlag>): ActivityFlags = ActivityFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [ActivityFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 @JvmName("ActivityFlags0")
 public fun ActivityFlags(flags: Iterable<ActivityFlags>): ActivityFlags = ActivityFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
 /**
  * See [ActivityFlag]s in the

@@ -205,23 +205,46 @@ public class SpeakingFlags internal constructor(
     }
 }
 
+/**
+ * Returns an instance of [SpeakingFlags] built with [SpeakingFlags.Builder].
+ */
 public inline fun SpeakingFlags(builder: SpeakingFlags.Builder.() -> Unit = {}): SpeakingFlags {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return SpeakingFlags.Builder().apply(builder).build()
 }
 
+/**
+ * Returns an instance of [SpeakingFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun SpeakingFlags(vararg flags: SpeakingFlag): SpeakingFlags = SpeakingFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [SpeakingFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun SpeakingFlags(vararg flags: SpeakingFlags): SpeakingFlags = SpeakingFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [SpeakingFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 public fun SpeakingFlags(flags: Iterable<SpeakingFlag>): SpeakingFlags = SpeakingFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
+/**
+ * Returns an instance of [SpeakingFlags] that has all bits set that are set in any element of
+ * [flags].
+ */
 @JvmName("SpeakingFlags0")
 public fun SpeakingFlags(flags: Iterable<SpeakingFlags>): SpeakingFlags = SpeakingFlags {
-        flags.forEach { +it } }
+    flags.forEach { +it }
+}
 
 /**
  * See [SpeakingFlag]s in the
