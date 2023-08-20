@@ -420,7 +420,7 @@ public class Intents internal constructor(
      */
     public inline fun copy(builder: Builder.() -> Unit): Intents {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
-        return Builder(code).apply(builder).build()
+        return Builder(code.copy()).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

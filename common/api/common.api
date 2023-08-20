@@ -24,6 +24,7 @@ public final class dev/kord/common/DiscordBitSet {
 	public fun <init> ([J)V
 	public final fun add (Ldev/kord/common/DiscordBitSet;)V
 	public final fun contains (Ldev/kord/common/DiscordBitSet;)Z
+	public final fun copy ()Ldev/kord/common/DiscordBitSet;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun get (I)Z
 	public final fun getBinary ()Ljava/lang/String;

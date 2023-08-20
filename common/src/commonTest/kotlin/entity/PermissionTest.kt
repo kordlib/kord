@@ -3,10 +3,7 @@ package dev.kord.common.entity
 import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
 import kotlin.random.Random
 import kotlin.random.nextInt
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertSame
+import kotlin.test.*
 
 /** Test representative for generated [BIT_SET_FLAGS]. */
 class PermissionTest {
@@ -29,5 +26,15 @@ class PermissionTest {
         for (shift in (-100..-1) + Int.MIN_VALUE) {
             assertFailsWith<IllegalArgumentException> { Permission.fromShift(shift) }
         }
+    }
+
+    @Test
+    fun copy_does_not_modify_original() {
+        val a = Permissions()
+        val b = a.copy { /* no modification */ }
+        val c = a.copy { +Permission.Administrator }
+        assertEquals(a, b)
+        assertNotEquals(a, c)
+        assertNotEquals(b, c)
     }
 }

@@ -72,5 +72,9 @@ internal fun TypeSpec.Builder.addCopy() = addFunction("copy") {
     addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT))
     returns(collectionCN)
     addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
-    addStatement("return·%T($valueName).apply(builder).build()", builderCN)
+    val valueCopy = when (valueType) {
+        INT -> ""
+        BIT_SET -> ".copy()"
+    }
+    addStatement("return·%T($valueName$valueCopy).apply(builder).build()", builderCN)
 }

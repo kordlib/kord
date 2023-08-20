@@ -112,6 +112,7 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
         return "DiscordBitSet($binary)"
     }
 
+    public fun copy(): DiscordBitSet = DiscordBitSet(data = data.copyOf())
 }
 
 public fun DiscordBitSet(vararg widths: Long): DiscordBitSet {
