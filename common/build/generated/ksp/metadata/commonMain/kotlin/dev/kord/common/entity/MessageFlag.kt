@@ -468,9 +468,12 @@ public class MessageFlags internal constructor(
     public operator fun minus(flags: MessageFlags): MessageFlags =
             MessageFlags(this.code and flags.code.inv())
 
-    public inline fun copy(block: Builder.() -> Unit): MessageFlags {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
+    /**
+     * Returns a copy of this instance of [MessageFlags] modified with [builder].
+     */
+    public inline fun copy(builder: Builder.() -> Unit): MessageFlags {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return Builder(code).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

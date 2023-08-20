@@ -415,9 +415,12 @@ public class Intents internal constructor(
      */
     public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
 
-    public inline fun copy(block: Builder.() -> Unit): Intents {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
+    /**
+     * Returns a copy of this instance of [Intents] modified with [builder].
+     */
+    public inline fun copy(builder: Builder.() -> Unit): Intents {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return Builder(code).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

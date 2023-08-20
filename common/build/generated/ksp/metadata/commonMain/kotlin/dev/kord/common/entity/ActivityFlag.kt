@@ -412,9 +412,12 @@ public class ActivityFlags internal constructor(
     public operator fun minus(flags: ActivityFlags): ActivityFlags =
             ActivityFlags(this.value and flags.value.inv())
 
-    public inline fun copy(block: Builder.() -> Unit): ActivityFlags {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(value).apply(block).build()
+    /**
+     * Returns a copy of this instance of [ActivityFlags] modified with [builder].
+     */
+    public inline fun copy(builder: Builder.() -> Unit): ActivityFlags {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return Builder(value).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

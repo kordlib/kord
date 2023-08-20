@@ -526,9 +526,12 @@ public class Permissions internal constructor(
      */
     public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code)
 
-    public inline fun copy(block: Builder.() -> Unit): Permissions {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
+    /**
+     * Returns a copy of this instance of [Permissions] modified with [builder].
+     */
+    public inline fun copy(builder: Builder.() -> Unit): Permissions {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return Builder(code).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

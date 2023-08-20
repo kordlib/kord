@@ -325,9 +325,12 @@ public class ChannelFlags internal constructor(
     public operator fun minus(flags: ChannelFlags): ChannelFlags =
             ChannelFlags(this.code and flags.code.inv())
 
-    public inline fun copy(block: Builder.() -> Unit): ChannelFlags {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
+    /**
+     * Returns a copy of this instance of [ChannelFlags] modified with [builder].
+     */
+    public inline fun copy(builder: Builder.() -> Unit): ChannelFlags {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return Builder(code).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

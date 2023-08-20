@@ -152,13 +152,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addPlus(parameterName = "flags", parameterType = collectionCN)
         addMinus(parameterName = "flag", parameterType = entityCN)
         addMinus(parameterName = "flags", parameterType = collectionCN)
-        addFunction("copy") {
-            addModifiers(PUBLIC, INLINE)
-            addParameter("block", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT))
-            returns(collectionCN)
-            addStatement("%M { callsInPlace(block, %M) }", CONTRACT, EXACTLY_ONCE)
-            addStatement("return %T($valueName).apply(block).build()", builderCN)
-        }
+        addCopy()
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(collectionCN, property = valueName)
         addFunction("toString") {
             addModifiers(OVERRIDE)

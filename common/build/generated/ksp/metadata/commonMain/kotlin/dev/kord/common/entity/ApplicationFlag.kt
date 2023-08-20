@@ -473,9 +473,12 @@ public class ApplicationFlags internal constructor(
     public operator fun minus(flags: ApplicationFlags): ApplicationFlags =
             ApplicationFlags(this.code and flags.code.inv())
 
-    public inline fun copy(block: Builder.() -> Unit): ApplicationFlags {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
+    /**
+     * Returns a copy of this instance of [ApplicationFlags] modified with [builder].
+     */
+    public inline fun copy(builder: Builder.() -> Unit): ApplicationFlags {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return Builder(code).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

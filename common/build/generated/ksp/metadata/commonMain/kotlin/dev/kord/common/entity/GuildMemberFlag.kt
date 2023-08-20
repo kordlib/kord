@@ -353,9 +353,12 @@ public class GuildMemberFlags internal constructor(
     public operator fun minus(flags: GuildMemberFlags): GuildMemberFlags =
             GuildMemberFlags(this.code and flags.code.inv())
 
-    public inline fun copy(block: Builder.() -> Unit): GuildMemberFlags {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return Builder(code).apply(block).build()
+    /**
+     * Returns a copy of this instance of [GuildMemberFlags] modified with [builder].
+     */
+    public inline fun copy(builder: Builder.() -> Unit): GuildMemberFlags {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return Builder(code).apply(builder).build()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

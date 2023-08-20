@@ -1,13 +1,16 @@
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.KModifier.OPERATOR
-import com.squareup.kotlinpoet.KModifier.PUBLIC
+import com.squareup.kotlinpoet.KModifier.*
+import com.squareup.kotlinpoet.LambdaTypeName
 import com.squareup.kotlinpoet.TypeName
 import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.UNIT
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
+import dev.kord.ksp.generation.shared.CONTRACT
+import dev.kord.ksp.generation.shared.EXACTLY_ONCE
 import dev.kord.ksp.generation.shared.GenerationContext
 import dev.kord.ksp.returns
 
@@ -60,4 +63,14 @@ internal fun TypeSpec.Builder.addMinus(parameterName: String, parameterType: Typ
         },
         collectionCN,
     )
+}
+
+context(BitFlags, GenerationContext)
+internal fun TypeSpec.Builder.addCopy() = addFunction("copy") {
+    addKdoc("Returns a copy of this instance of [%T] modified with [builder].", collectionCN)
+    addModifiers(PUBLIC, INLINE)
+    addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT))
+    returns(collectionCN)
+    addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
+    addStatement("return·%T($valueName).apply(builder).build()", builderCN)
 }
