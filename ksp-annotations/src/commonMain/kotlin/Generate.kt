@@ -1,7 +1,7 @@
 package dev.kord.ksp
 
-import dev.kord.ksp.Generate.*
 import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.Entry
 import kotlin.annotation.AnnotationRetention.SOURCE
 import kotlin.annotation.AnnotationTarget.FILE
 
@@ -46,7 +46,7 @@ annotation class Generate(
         val kDoc: String = "",
         /** [Deprecated] annotation to mark this entry as deprecated. */
         val deprecated: Deprecated = Deprecated(""),
-        /** Additional annotations to add to this entry. */
-        val additionalOptInMarkerAnnotations: Array<String> = [],
+        /** [RequiresOptIn] annotations to add to this entry. */
+        val requiresOptInAnnotations: Array<String> = [],
     )
 }

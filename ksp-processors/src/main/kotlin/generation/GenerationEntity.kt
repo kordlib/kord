@@ -4,8 +4,9 @@ import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSAnnotation
 import dev.kord.ksp.AnnotationArguments.Companion.arguments
 import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.*
+import dev.kord.ksp.Generate.EntityType
 import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.Entry
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.KordEnum
 import kotlin.reflect.KProperty1
@@ -45,7 +46,7 @@ internal sealed class GenerationEntity(
         val kDoc: String?,
         val value: Comparable<*>,
         val deprecated: Deprecated?,
-        val additionalOptInMarkerAnnotations: List<String>,
+        val requiresOptInAnnotations: List<String>,
     )
 }
 
@@ -72,8 +73,7 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
         INT_FLAGS, BIT_SET_FLAGS -> true
     }
 
-    val entries = entries zip args[Generate::entries]!!
-    val mappedEntries = entries.mapNotNull { (entry, annotation) ->
+    val mappedEntries = (entries zip args[Generate::entries]!!).mapNotNull { (entry, annotation) ->
         entry.toGenerationEntityEntryOrNull(entityType, logger, annotation)
     }
 
@@ -153,10 +153,10 @@ private fun Entry.toGenerationEntityEntryOrNull(
             .run { Deprecated(message, replaceWith.run { ReplaceWith(expression, *imports) }, level) }
             .takeUnless { args.isDefault(Entry::deprecated) },
         // because of https://github.com/google/ksp/pull/1330#issuecomment-1616066129
-        if (args.isDefault(Entry::additionalOptInMarkerAnnotations)) {
+        if (args.isDefault(Entry::requiresOptInAnnotations)) {
             emptyList()
         } else {
-            additionalOptInMarkerAnnotations.toList()
+            requiresOptInAnnotations.toList()
         },
     )
 }

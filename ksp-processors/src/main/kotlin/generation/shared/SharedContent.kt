@@ -30,7 +30,7 @@ internal fun TypeSpec.Builder.addEntityEntries() {
             entry.kDoc?.let { addKdoc(it) }
             @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`
             entry.deprecated?.let { addAnnotation(it) }
-            entry.additionalOptInMarkerAnnotations.forEach { annotation ->
+            entry.requiresOptInAnnotations.forEach { annotation ->
                 addAnnotation(ClassName.bestGuess(annotation))
             }
             addModifiers(PUBLIC)

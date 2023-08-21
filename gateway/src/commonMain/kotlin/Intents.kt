@@ -28,7 +28,7 @@
             """,
         ),
         Entry(
-            "GuildMembers", shift = 1, additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
+            "GuildMembers", shift = 1, requiresOptInAnnotations = [privilegedIntentAnnotation],
             kDoc = """
                 Enables the following events:
                 - [GuildMemberAdd]
@@ -87,7 +87,7 @@
             """,
         ),
         Entry(
-            "GuildPresences", shift = 8, additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
+            "GuildPresences", shift = 8, requiresOptInAnnotations = [privilegedIntentAnnotation],
             kDoc = """
                 Enables the following events:
                 - [PresenceUpdate]
@@ -148,7 +148,7 @@
             """,
         ),
         Entry(
-            "MessageContent", shift = 15, additionalOptInMarkerAnnotations = [privilegedIntentAnnotation],
+            "MessageContent", shift = 15, requiresOptInAnnotations = [privilegedIntentAnnotation],
             kDoc = "[MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly " +
                 "associated with any Gateway [event][Event]s. Instead, access to [MessageContent] permits your app " +
                 "to receive message content data across the APIs.\n\nFor example, the [content][dev.kord.common." +

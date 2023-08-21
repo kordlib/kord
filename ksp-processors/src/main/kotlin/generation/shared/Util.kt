@@ -18,7 +18,7 @@ internal val GenerationEntity.Entry.nameWithSuppressedDeprecation
 context(GenerationContext)
 internal fun Annotatable.Builder<*>.addEntryOptIns() {
     val optIns = entriesDistinctByValue
-        .flatMap { it.additionalOptInMarkerAnnotations }
+        .flatMap { it.requiresOptInAnnotations }
         .distinct()
         .map { name -> CodeBlock.of("%T::class", ClassName.bestGuess(name)) }
         .joinToCode()
