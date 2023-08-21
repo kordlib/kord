@@ -428,7 +428,7 @@ public sealed class Permission(
  *
  * You can create an instance of [Permissions] using the following methods:
  * ```kotlin
- * // from individual Permissions 
+ * // from individual Permissions
  * val permissions1 = Permissions(Permission.CreateInstantInvite, Permission.KickMembers)
  *
  * // from an Iterable

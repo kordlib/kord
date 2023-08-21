@@ -278,7 +278,7 @@ public sealed class SystemChannelFlag(
  *
  * You can create an instance of [SystemChannelFlags] using the following methods:
  * ```kotlin
- * // from individual SystemChannelFlags 
+ * // from individual SystemChannelFlags
  * val systemChannelFlags1 = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications,
  * SystemChannelFlag.SuppressPremiumSubscriptions)
  *

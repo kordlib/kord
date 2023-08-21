@@ -429,7 +429,7 @@ public sealed class UserFlag(
  *
  * You can create an instance of [UserFlags] using the following methods:
  * ```kotlin
- * // from individual UserFlags 
+ * // from individual UserFlags
  * val userFlags1 = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner)
  *
  * // from an Iterable

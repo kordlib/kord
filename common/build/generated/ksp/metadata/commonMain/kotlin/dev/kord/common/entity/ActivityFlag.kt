@@ -293,7 +293,7 @@ public sealed class ActivityFlag(
  *
  * You can create an instance of [ActivityFlags] using the following methods:
  * ```kotlin
- * // from individual ActivityFlags 
+ * // from individual ActivityFlags
  * val activityFlags1 = ActivityFlags(ActivityFlag.Instance, ActivityFlag.Join)
  *
  * // from an Iterable

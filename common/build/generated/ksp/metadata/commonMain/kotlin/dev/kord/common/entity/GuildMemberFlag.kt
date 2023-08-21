@@ -241,7 +241,7 @@ public sealed class GuildMemberFlag(
  *
  * You can create an instance of [GuildMemberFlags] using the following methods:
  * ```kotlin
- * // from individual GuildMemberFlags 
+ * // from individual GuildMemberFlags
  * val guildMemberFlags1 = GuildMemberFlags(GuildMemberFlag.DidRejoin,
  * GuildMemberFlag.CompletedOnboarding)
  *

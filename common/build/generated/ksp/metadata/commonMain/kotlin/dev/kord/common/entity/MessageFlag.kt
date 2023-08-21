@@ -351,7 +351,7 @@ public sealed class MessageFlag(
  *
  * You can create an instance of [MessageFlags] using the following methods:
  * ```kotlin
- * // from individual MessageFlags 
+ * // from individual MessageFlags
  * val messageFlags1 = MessageFlags(MessageFlag.CrossPosted, MessageFlag.IsCrossPost)
  *
  * // from an Iterable

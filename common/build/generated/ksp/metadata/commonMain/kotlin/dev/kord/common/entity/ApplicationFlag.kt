@@ -350,7 +350,7 @@ public sealed class ApplicationFlag(
  *
  * You can create an instance of [ApplicationFlags] using the following methods:
  * ```kotlin
- * // from individual ApplicationFlags 
+ * // from individual ApplicationFlags
  * val applicationFlags1 =
  * ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
  * ApplicationFlag.GatewayPresence)

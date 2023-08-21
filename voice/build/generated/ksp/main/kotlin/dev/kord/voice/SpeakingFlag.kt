@@ -224,7 +224,7 @@ public sealed class SpeakingFlag(
  *
  * You can create an instance of [SpeakingFlags] using the following methods:
  * ```kotlin
- * // from individual SpeakingFlags 
+ * // from individual SpeakingFlags
  * val speakingFlags1 = SpeakingFlags(SpeakingFlag.Microphone, SpeakingFlag.Soundshare)
  *
  * // from an Iterable

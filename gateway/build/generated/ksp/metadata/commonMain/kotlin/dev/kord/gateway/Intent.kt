@@ -318,7 +318,7 @@ public sealed class Intent(
  *
  * You can create an instance of [Intents] using the following methods:
  * ```kotlin
- * // from individual Intents 
+ * // from individual Intents
  * val intents1 = Intents(Intent.Guilds, Intent.GuildMembers)
  *
  * // from an Iterable

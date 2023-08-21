@@ -208,7 +208,7 @@ public sealed class ChannelFlag(
  *
  * You can create an instance of [ChannelFlags] using the following methods:
  * ```kotlin
- * // from individual ChannelFlags 
+ * // from individual ChannelFlags
  * val channelFlags1 = ChannelFlags(ChannelFlag.Pinned, ChannelFlag.RequireTag)
  *
  * // from an Iterable

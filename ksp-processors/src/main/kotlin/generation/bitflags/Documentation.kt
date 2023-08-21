@@ -26,7 +26,7 @@ private val BitFlags.docStringFormat: String
             
             You can create an instance of [%2T] using the following methods:
             ```kotlin
-            // from individual %1Ts 
+            // from individual %1Ts
             val ${collection}1 = %2T(%3T, %4T)
             
             // from an Iterable
