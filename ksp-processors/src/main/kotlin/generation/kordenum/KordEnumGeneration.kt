@@ -36,7 +36,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addKdoc("The raw $valueName used by Discord.")
             initializer(valueName)
         }
-        addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = valueName, FINAL)
+        addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = valueName, isFinal = true)
         addFunction("toString") {
             addModifiers(FINAL, OVERRIDE)
             returns<String>()
