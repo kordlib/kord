@@ -432,13 +432,13 @@ public class Intents internal constructor(
     /**
      * Returns a copy of this instance of [Intents] modified with [builder].
      */
-    @JvmName("copy0") // todo other name when deprecated overload is removed
+    @JvmName("copy0") // TODO other name when deprecated overload is removed
     public inline fun copy(builder: Builder.() -> Unit): Intents {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code.copy()).apply(builder).build()
     }
 
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE","DEPRECATION")
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
     @Deprecated(
         "'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.",
         level = DeprecationLevel.WARNING,

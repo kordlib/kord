@@ -60,7 +60,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.DeprecationLevel.WARNING
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -165,8 +164,12 @@ public data class DiscordOptionallyMemberUser(
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )
 
-@Suppress("DEPRECATION")
-@Deprecated("Binary compatibility, keep for some releases.", level = HIDDEN)
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+@Deprecated(
+    "'UserFlags.UserFlagsBuilder' is deprecated, use 'UserFlags.Builder' instead.",
+    level = WARNING,
+)
+@kotlin.internal.LowPriorityInOverloadResolution
 public inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return UserFlags.UserFlagsBuilder().apply(builder).flags()

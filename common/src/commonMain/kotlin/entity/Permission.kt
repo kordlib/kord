@@ -619,9 +619,21 @@ public class Permissions internal constructor(
     /**
      * Returns a copy of this instance of [Permissions] modified with [builder].
      */
+    @JvmName("copy0") // TODO other name when deprecated overload is removed
     public inline fun copy(builder: Builder.() -> Unit): Permissions {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code.copy()).apply(builder).build()
+    }
+
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+    @Deprecated(
+        "'Permissions.PermissionsBuilder' is deprecated, use 'Permissions.Builder' instead.",
+        level = DeprecationLevel.WARNING,
+    )
+    @kotlin.internal.LowPriorityInOverloadResolution
+    public inline fun copy(block: PermissionsBuilder.() -> Unit): Permissions {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return PermissionsBuilder(code).apply(block).permissions()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -740,9 +752,21 @@ public class Permissions internal constructor(
 /**
  * Returns an instance of [Permissions] built with [Permissions.Builder].
  */
+@JvmName("Permissions0") // TODO other name when deprecated overload is removed
 public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Permissions {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Permissions.Builder().apply(builder).build()
+}
+
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+@Deprecated(
+    "'Permissions.PermissionsBuilder' is deprecated, use 'Permissions.Builder' instead.",
+    level = DeprecationLevel.WARNING,
+)
+@kotlin.internal.LowPriorityInOverloadResolution
+public inline fun Permissions(block: Permissions.PermissionsBuilder.() -> Unit = {}): Permissions {
+    contract { callsInPlace(block, EXACTLY_ONCE) }
+    return Permissions.PermissionsBuilder(DiscordBitSet(0)).apply(block).permissions()
 }
 
 /**

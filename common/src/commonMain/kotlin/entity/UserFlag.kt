@@ -560,9 +560,21 @@ public class UserFlags internal constructor(
     /**
      * Returns a copy of this instance of [UserFlags] modified with [builder].
      */
+    @JvmName("copy0") // TODO other name when deprecated overload is removed
     public inline fun copy(builder: Builder.() -> Unit): UserFlags {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code).apply(builder).build()
+    }
+
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+    @Deprecated(
+        "'UserFlags.UserFlagsBuilder' is deprecated, use 'UserFlags.Builder' instead.",
+        level = DeprecationLevel.WARNING,
+    )
+    @kotlin.internal.LowPriorityInOverloadResolution
+    public inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return UserFlagsBuilder(code).apply(block).flags()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
