@@ -1,5 +1,6 @@
+/*
 @file:Generate(
-    BIT_SET_FLAGS, name = "Permission", valueName = "code", collectionWasDataClass = true,
+    BIT_SET_FLAGS, name = "Permission", valueName = "code",
     docUrl = "https://discord.com/developers/docs/topics/permissions",
     entries = [
         Entry("CreateInstantInvite", shift = 0, kDoc = "Allows creation of instant invites."),
@@ -93,14 +94,11 @@
         Entry("SendVoiceMessages", shift = 46, kDoc = "Allows sending voice messages."),
     ],
 )
+*/
 
 package dev.kord.common.entity
-
-import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
-import dev.kord.ksp.Generate.Entry
 
 private val ALL_PERMISSIONS = Permissions(flags = Permission.entries)
 
 /** All known [Permission]s (as contained in [Permission.entries]) combined into a single [Permissions] instance. */
-public val Permissions.Companion.ALL: Permissions get() = ALL_PERMISSIONS
+public val Permissions.NewCompanion.ALL: Permissions get() = ALL_PERMISSIONS

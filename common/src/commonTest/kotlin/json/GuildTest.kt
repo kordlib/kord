@@ -1,14 +1,14 @@
 package dev.kord.common.json
 
-import dev.kord.common.DiscordBitSet
 import dev.kord.common.entity.*
+import dev.kord.common.entity.Permission.*
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
-import kotlin.time.Duration.Companion.seconds
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
 private suspend fun file(name: String): String = readFile("guild", name)
 
@@ -104,7 +104,10 @@ class GuildTest {
             name shouldBe "1337 Krew"
             icon shouldBe "8342729096ea3675442027381ff50dfe"
             owner shouldBe true
-            permissions shouldBe Permissions(DiscordBitSet("36953089"))
+            permissions shouldBe Permissions(
+                CreateInstantInvite, ViewChannel, SendMessages, SendTTSMessages, EmbedLinks, AttachFiles,
+                ReadMessageHistory, MentionEveryone, Connect, Speak, UseVAD,
+            )
             features shouldBe listOf(GuildFeature.Community, GuildFeature.News)
         }
     }
