@@ -344,63 +344,74 @@ public sealed class ApplicationFlag(
 }
 
 /**
- * Convenience container of multiple [ApplicationFlags][ApplicationFlag] which can be combined into
- * one.
+ * A collection of multiple [ApplicationFlag]s.
  *
- * ## Creating a collection of message flags
- * You can create an [ApplicationFlags] object using the following methods
+ * ## Creating an instance of [ApplicationFlags]
+ *
+ * You can create an instance of [ApplicationFlags] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
+ * // from individual ApplicationFlags 
+ * val applicationFlags1 =
+ * ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
  * ApplicationFlag.GatewayPresence)
- * // From an iterable
- * val flags2 = ApplicationFlags(listOf(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
- * ApplicationFlag.GatewayPresence))
- * // Using a builder
- * val flags3 = ApplicationFlags {
- *  +ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
- *  -ApplicationFlag.GatewayPresence
+ *
+ * // from an Iterable
+ * val iterable: Iterable<ApplicationFlag> = TODO()
+ * val applicationFlags2 = ApplicationFlags(iterable)
+ *
+ * // using a builder
+ * val applicationFlags3 = ApplicationFlags {
+ *     +applicationFlags2
+ *     +ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
+ *     -ApplicationFlag.GatewayPresence
  * }
  * ```
  *
- * ## Modifying existing flags
- * You can crate a modified copy of a [ApplicationFlags] instance using the [copy] method
+ * ## Modifying an existing instance of [ApplicationFlags]
  *
+ * You can create a modified copy of an existing instance of [ApplicationFlags] using the [copy]
+ * method:
  * ```kotlin
- * flags.copy {
- *  +ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
+ * applicationFlags.copy {
+ *     +ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
  * }
  * ```
  *
  * ## Mathematical operators
- * All [ApplicationFlags] objects can use +/- operators
  *
+ * All [ApplicationFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge)
- * val flags2 = flags + ApplicationFlag.GatewayPresence
- * val otherFlags = flags - ApplicationFlag.GatewayPresence
- * val flags3 = flags + otherFlags
+ * val applicationFlags1 = applicationFlags +
+ * ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
+ * val applicationFlags2 = applicationFlags - ApplicationFlag.GatewayPresence
+ * val applicationFlags3 = applicationFlags1 + applicationFlags2
  * ```
  *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [ApplicationFlag]s
+ *
+ * You can use the [contains] operator to check whether an instance of [ApplicationFlags] contains
+ * specific [ApplicationFlag]s:
  * ```kotlin
- * val hasFlag = ApplicationFlag.ApplicationAutoModerationRuleCreateBadge in obj.flags
- * val hasFlags = ApplicationFlag(ApplicationFlag.GatewayPresence,
- * ApplicationFlag.GatewayPresence) in obj.flags
+ * val hasApplicationFlag = ApplicationFlag.ApplicationAutoModerationRuleCreateBadge in
+ * applicationFlags
+ * val hasApplicationFlags =
+ * ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
+ * ApplicationFlag.GatewayPresence) in applicationFlags
  * ```
  *
- * ## Unknown flag
+ * ## Unknown [ApplicationFlag]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [ApplicationFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
+ * Whenever [ApplicationFlag]s haven't been added to Kord yet, they will be deserialized as
+ * instances of [ApplicationFlag.Unknown].
+ *
+ * You can also use [ApplicationFlag.fromShift] to check for [unknown][ApplicationFlag.Unknown]
+ * [ApplicationFlag]s.
  * ```kotlin
- * val hasFlags = ApplicationFlag.Unknown(1 shl 69) in obj.flags
+ * val hasUnknownApplicationFlag = ApplicationFlag.fromShift(23) in applicationFlags
  * ```
+ *
  * @see ApplicationFlag
  * @see ApplicationFlags.Builder
- * @property code numeric value of all [ApplicationFlags]s
  */
 @Serializable(with = ApplicationFlags.Serializer::class)
 public class ApplicationFlags internal constructor(

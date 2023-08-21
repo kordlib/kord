@@ -2,7 +2,6 @@
     BIT_SET_FLAGS, name = "Intent", valueName = "code", collectionWasDataClass = true,
     kDoc = "Values that enable a group of events as defined by Discord.",
     docUrl = "https://discord.com/developers/docs/topics/gateway#gateway-intents",
-    bitFlagsDescriptor = BitFlagDescription("gateway", "intents", "an", "intent"),
     entries = [
         Entry(
             "Guilds", shift = 0,
@@ -205,7 +204,6 @@ package dev.kord.gateway
 
 import dev.kord.gateway.Intent.*
 import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.BitFlagDescription
 import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
 import dev.kord.ksp.Generate.Entry
 import kotlin.RequiresOptIn.Level.ERROR

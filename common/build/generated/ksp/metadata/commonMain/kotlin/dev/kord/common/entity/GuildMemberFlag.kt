@@ -235,62 +235,70 @@ public sealed class GuildMemberFlag(
 }
 
 /**
- * Convenience container of multiple [GuildMemberFlags][GuildMemberFlag] which can be combined into
- * one.
+ * A collection of multiple [GuildMemberFlag]s.
  *
- * ## Creating a collection of message flags
- * You can create an [GuildMemberFlags] object using the following methods
+ * ## Creating an instance of [GuildMemberFlags]
+ *
+ * You can create an instance of [GuildMemberFlags] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = GuildMemberFlags(GuildMemberFlag.DidRejoin, GuildMemberFlag.CompletedOnboarding)
- * // From an iterable
- * val flags2 = GuildMemberFlags(listOf(GuildMemberFlag.DidRejoin,
- * GuildMemberFlag.CompletedOnboarding))
- * // Using a builder
- * val flags3 = GuildMemberFlags {
- *  +GuildMemberFlag.DidRejoin
- *  -GuildMemberFlag.CompletedOnboarding
+ * // from individual GuildMemberFlags 
+ * val guildMemberFlags1 = GuildMemberFlags(GuildMemberFlag.DidRejoin,
+ * GuildMemberFlag.CompletedOnboarding)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<GuildMemberFlag> = TODO()
+ * val guildMemberFlags2 = GuildMemberFlags(iterable)
+ *
+ * // using a builder
+ * val guildMemberFlags3 = GuildMemberFlags {
+ *     +guildMemberFlags2
+ *     +GuildMemberFlag.DidRejoin
+ *     -GuildMemberFlag.CompletedOnboarding
  * }
  * ```
  *
- * ## Modifying existing flags
- * You can crate a modified copy of a [GuildMemberFlags] instance using the [copy] method
+ * ## Modifying an existing instance of [GuildMemberFlags]
  *
+ * You can create a modified copy of an existing instance of [GuildMemberFlags] using the [copy]
+ * method:
  * ```kotlin
- * flags.copy {
- *  +GuildMemberFlag.DidRejoin
+ * guildMemberFlags.copy {
+ *     +GuildMemberFlag.DidRejoin
  * }
  * ```
  *
  * ## Mathematical operators
- * All [GuildMemberFlags] objects can use +/- operators
  *
+ * All [GuildMemberFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = GuildMemberFlags(GuildMemberFlag.DidRejoin)
- * val flags2 = flags + GuildMemberFlag.CompletedOnboarding
- * val otherFlags = flags - GuildMemberFlag.CompletedOnboarding
- * val flags3 = flags + otherFlags
+ * val guildMemberFlags1 = guildMemberFlags + GuildMemberFlag.DidRejoin
+ * val guildMemberFlags2 = guildMemberFlags - GuildMemberFlag.CompletedOnboarding
+ * val guildMemberFlags3 = guildMemberFlags1 + guildMemberFlags2
  * ```
  *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [GuildMemberFlag]s
+ *
+ * You can use the [contains] operator to check whether an instance of [GuildMemberFlags] contains
+ * specific [GuildMemberFlag]s:
  * ```kotlin
- * val hasFlag = GuildMemberFlag.DidRejoin in obj.flags
- * val hasFlags = GuildMemberFlag(GuildMemberFlag.CompletedOnboarding,
- * GuildMemberFlag.CompletedOnboarding) in obj.flags
+ * val hasGuildMemberFlag = GuildMemberFlag.DidRejoin in guildMemberFlags
+ * val hasGuildMemberFlags = GuildMemberFlags(GuildMemberFlag.DidRejoin,
+ * GuildMemberFlag.CompletedOnboarding) in guildMemberFlags
  * ```
  *
- * ## Unknown flag
+ * ## Unknown [GuildMemberFlag]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [GuildMemberFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
+ * Whenever [GuildMemberFlag]s haven't been added to Kord yet, they will be deserialized as
+ * instances of [GuildMemberFlag.Unknown].
+ *
+ * You can also use [GuildMemberFlag.fromShift] to check for [unknown][GuildMemberFlag.Unknown]
+ * [GuildMemberFlag]s.
  * ```kotlin
- * val hasFlags = GuildMemberFlag.Unknown(1 shl 69) in obj.flags
+ * val hasUnknownGuildMemberFlag = GuildMemberFlag.fromShift(23) in guildMemberFlags
  * ```
+ *
  * @see GuildMemberFlag
  * @see GuildMemberFlags.Builder
- * @property code numeric value of all [GuildMemberFlags]s
  */
 @Serializable(with = GuildMemberFlags.Serializer::class)
 public class GuildMemberFlags internal constructor(

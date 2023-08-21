@@ -1,104 +1,82 @@
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.shared.GenerationContext
 
-/**
- * Template doc string with following variables
- * - `%1L` Collection class name as a literal
- * - `%2T` entity class name
- * - `%3T` collection class name,
- * - `%4T` 1st place-holder entry
- * - `%5T` 2nd place-holder entry
- * - `%6T` 3rd place-holder entry
- * - `%7T` reference to Unknown class
- * - `%8T` reference to Builder class
- * - `%O` typical name of an object having this kind of flags
- * - `%F` name of flags field on `%O`
- * - `%A` article for flags name
- * - `%N` lowercase flags name
- *
- * @see addCollectionDoc
- */
-private val docString = """
- Convenience container of multiple [%1L][%2T] which can be combined into one.
- 
- ## Creating a collection of message flags
- You can create an [%3T] object using the following methods
- ```kotlin
- // From flags
- val flags1 = %3T(%4T, %5T)
- // From an iterable
- val flags2 = %3T(listOf(%4T, %5T))
- // Using a builder
- val flags3 = %3T {
-  +%4T
-  -%5T
- }
- ```
- 
- ## Modifying existing %Ns
- You can crate a modified copy of a [%3T] instance using the [copy] method
- 
- ```kotlin
- flags.copy {
-  +%4T
- }
- ```
- 
- ## Mathematical operators
- All [%3T] objects can use +/- operators
- 
- ```kotlin
- val flags = %3T(%4T)
- val flags2 = flags + %5T
- val otherFlags = flags - %6T
- val flags3 = flags + otherFlags
- ```
- 
- ## Checking for %A %N
- You can use the [contains] operator to check whether a collection contains a specific flag
- ```kotlin
- val hasFlag = %4T in %O.%F
- val hasFlags = %2T(%5T, %6T)·in·%O.%F
- ```
- 
- ## Unknown %N
- 
- Whenever a newly added flag has not been added to Kord yet it will get deserialized as [%7T].
- You can also use that to check for an yet unsupported flag
- ```kotlin
- val hasFlags = %7T(1 shl 69) in %O.%F
- ```
- @see %2T
- @see %8T
- @property code numeric value of all [%3T]s
-""".trimIndent()
-
 context(BitFlags, GenerationContext)
-internal fun TypeSpec.Builder.addCollectionDoc() {
-    val possibleValues = entries.map { entityCN.nestedClass(it.name) }
-    val unknown = entityCN.nestedClass("Unknown")
-    val withReplacedVariables = docString
-        .replace("%O", flagsDescriptor.objectName)
-        .replace("%F", flagsDescriptor.flagsFieldName)
-        .replace("%A", flagsDescriptor.article)
-        .replace("%N", flagsDescriptor.name)
-    addKdoc(
-        CodeBlock.of(
-            withReplacedVariables,
-            collectionCN.simpleName, // %1L
-            entityCN, // %2T
-            collectionCN, // %3T
-            possibleValues.getSafe(0), // %4T
-            possibleValues.getSafe(1), // %5T
-            possibleValues.getSafe(1), // %6T
-            unknown, // %7T
-            builderCN, // %8T
-        )
-    )
-}
+internal fun TypeSpec.Builder.addCollectionKDoc() = addKdoc(
+    docStringFormat,
+    entityCN, // %1T: flag ClassName
+    collectionCN, // %2T: collection ClassName
+    entityCN.nestedClass(entriesDistinctByValue[0].name), // %3T: entry 0 ClassName
+    entityCN.nestedClass(entriesDistinctByValue[1].name), // %4T: entry 1 ClassName
+    entityCN.nestedClass("Unknown"), // %5T: Unknown ClassName
+    builderCN, // %6T: Builder ClassName
+)
 
-private fun <T> List<T>.getSafe(index: Int) = get(index.coerceAtMost(lastIndex))
+context(GenerationContext)
+private val BitFlags.docStringFormat: String
+    get() {
+        val collection = collectionCN.simpleName.replaceFirstChar(Char::lowercase)
+        return """
+            A collection of multiple [%1T]s.
+            
+            ## Creating an instance of [%2T]
+            
+            You can create an instance of [%2T] using the following methods:
+            ```kotlin
+            // from individual %1Ts 
+            val ${collection}1 = %2T(%3T, %4T)
+            
+            // from an Iterable
+            val iterable: Iterable<%1T> = TODO()
+            val ${collection}2 = %2T(iterable)
+            
+            // using a builder
+            val ${collection}3 = %2T {
+                +${collection}2
+                +%3T
+                -%4T
+            }
+            ```
+            
+            ## Modifying an existing instance of [%2T]
+            
+            You can create a modified copy of an existing instance of [%2T] using the [copy] method:
+            ```kotlin
+            $collection.copy {
+                +%3T
+            }
+            ```
+            
+            ## Mathematical operators
+            
+            All [%2T] objects can use `+`/`-` operators:
+            ```kotlin
+            val ${collection}1 = $collection + %3T
+            val ${collection}2 = $collection - %4T
+            val ${collection}3 = ${collection}1 + ${collection}2
+            ```
+            
+            ## Checking for [%1T]s
+            
+            You can use the [contains] operator to check whether an instance of [%2T] contains specific [%1T]s:
+            ```kotlin
+            val has%1T = %3T in $collection
+            val has%2T = %2T(%3T, %4T)·in·$collection
+            ```
+            
+            ## Unknown [%1T]s
+            
+            Whenever [%1T]s haven't been added to Kord yet, they will be deserialized as instances of [%5T].
+            
+            You can also use [%1T.fromShift] to check for [unknown][%5T] [%1T]s.
+            ```kotlin
+            val hasUnknown%1T = %1T.fromShift(23) in $collection
+            ```
+            
+            @see %1T
+            @see %6T
+        """.trimIndent()
+    }

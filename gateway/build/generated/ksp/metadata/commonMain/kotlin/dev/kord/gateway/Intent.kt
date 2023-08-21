@@ -312,59 +312,66 @@ public sealed class Intent(
 }
 
 /**
- * Convenience container of multiple [Intents][Intent] which can be combined into one.
+ * A collection of multiple [Intent]s.
  *
- * ## Creating a collection of message flags
- * You can create an [Intents] object using the following methods
+ * ## Creating an instance of [Intents]
+ *
+ * You can create an instance of [Intents] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = Intents(Intent.Guilds, Intent.GuildMembers)
- * // From an iterable
- * val flags2 = Intents(listOf(Intent.Guilds, Intent.GuildMembers))
- * // Using a builder
- * val flags3 = Intents {
- *  +Intent.Guilds
- *  -Intent.GuildMembers
+ * // from individual Intents 
+ * val intents1 = Intents(Intent.Guilds, Intent.GuildMembers)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<Intent> = TODO()
+ * val intents2 = Intents(iterable)
+ *
+ * // using a builder
+ * val intents3 = Intents {
+ *     +intents2
+ *     +Intent.Guilds
+ *     -Intent.GuildMembers
  * }
  * ```
  *
- * ## Modifying existing intents
- * You can crate a modified copy of a [Intents] instance using the [copy] method
+ * ## Modifying an existing instance of [Intents]
  *
+ * You can create a modified copy of an existing instance of [Intents] using the [copy] method:
  * ```kotlin
- * flags.copy {
- *  +Intent.Guilds
+ * intents.copy {
+ *     +Intent.Guilds
  * }
  * ```
  *
  * ## Mathematical operators
- * All [Intents] objects can use +/- operators
  *
+ * All [Intents] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = Intents(Intent.Guilds)
- * val flags2 = flags + Intent.GuildMembers
- * val otherFlags = flags - Intent.GuildMembers
- * val flags3 = flags + otherFlags
+ * val intents1 = intents + Intent.Guilds
+ * val intents2 = intents - Intent.GuildMembers
+ * val intents3 = intents1 + intents2
  * ```
  *
- * ## Checking for an intent
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [Intent]s
+ *
+ * You can use the [contains] operator to check whether an instance of [Intents] contains specific
+ * [Intent]s:
  * ```kotlin
- * val hasFlag = Intent.Guilds in gateway.intents
- * val hasFlags = Intent(Intent.GuildMembers, Intent.GuildMembers) in gateway.intents
+ * val hasIntent = Intent.Guilds in intents
+ * val hasIntents = Intents(Intent.Guilds, Intent.GuildMembers) in intents
  * ```
  *
- * ## Unknown intent
+ * ## Unknown [Intent]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * Whenever [Intent]s haven't been added to Kord yet, they will be deserialized as instances of
  * [Intent.Unknown].
- * You can also use that to check for an yet unsupported flag
+ *
+ * You can also use [Intent.fromShift] to check for [unknown][Intent.Unknown] [Intent]s.
  * ```kotlin
- * val hasFlags = Intent.Unknown(1 shl 69) in gateway.intents
+ * val hasUnknownIntent = Intent.fromShift(23) in intents
  * ```
+ *
  * @see Intent
  * @see Intents.Builder
- * @property code numeric value of all [Intents]s
  */
 @Serializable(with = Intents.Serializer::class)
 public class Intents internal constructor(

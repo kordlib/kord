@@ -23,9 +23,6 @@ annotation class Generate(
     /** Name of the value of the entity. */
     val valueName: String = "value",
 
-    /** Optional [BitFlagDescription] when [entityType] is [INT_FLAGS] or [BIT_SET_FLAGS]. */
-    val bitFlagsDescriptor: BitFlagDescription = BitFlagDescription(),
-
     // for migration only, will be removed eventually
     val wasEnum: Boolean = false,
     val collectionWasDataClass: Boolean = false,
@@ -51,22 +48,5 @@ annotation class Generate(
         val deprecated: Deprecated = Deprecated(""),
         /** Additional annotations to add to this entry. */
         val additionalOptInMarkerAnnotations: Array<String> = [],
-    )
-
-    /**
-     * Description of the `flags` field using the generated flags.
-     *
-     * @property objectName the typical name of the object using this flags
-     * @property flagsFieldName the name of the  "flags field"
-     * @property article the article for [name]
-     * @property name the name used in documentation
-     */
-    @Retention(SOURCE)
-    @Target() // only used as argument for `@Generate(...)`
-    annotation class BitFlagDescription(
-        val objectName: String = "obj",
-        val flagsFieldName: String = "flags",
-        val article: String = "a",
-        val name: String = "flag",
     )
 }

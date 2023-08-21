@@ -287,59 +287,68 @@ public sealed class ActivityFlag(
 }
 
 /**
- * Convenience container of multiple [ActivityFlags][ActivityFlag] which can be combined into one.
+ * A collection of multiple [ActivityFlag]s.
  *
- * ## Creating a collection of message flags
- * You can create an [ActivityFlags] object using the following methods
+ * ## Creating an instance of [ActivityFlags]
+ *
+ * You can create an instance of [ActivityFlags] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = ActivityFlags(ActivityFlag.Instance, ActivityFlag.Join)
- * // From an iterable
- * val flags2 = ActivityFlags(listOf(ActivityFlag.Instance, ActivityFlag.Join))
- * // Using a builder
- * val flags3 = ActivityFlags {
- *  +ActivityFlag.Instance
- *  -ActivityFlag.Join
+ * // from individual ActivityFlags 
+ * val activityFlags1 = ActivityFlags(ActivityFlag.Instance, ActivityFlag.Join)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<ActivityFlag> = TODO()
+ * val activityFlags2 = ActivityFlags(iterable)
+ *
+ * // using a builder
+ * val activityFlags3 = ActivityFlags {
+ *     +activityFlags2
+ *     +ActivityFlag.Instance
+ *     -ActivityFlag.Join
  * }
  * ```
  *
- * ## Modifying existing flags
- * You can crate a modified copy of a [ActivityFlags] instance using the [copy] method
+ * ## Modifying an existing instance of [ActivityFlags]
  *
+ * You can create a modified copy of an existing instance of [ActivityFlags] using the [copy]
+ * method:
  * ```kotlin
- * flags.copy {
- *  +ActivityFlag.Instance
+ * activityFlags.copy {
+ *     +ActivityFlag.Instance
  * }
  * ```
  *
  * ## Mathematical operators
- * All [ActivityFlags] objects can use +/- operators
  *
+ * All [ActivityFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = ActivityFlags(ActivityFlag.Instance)
- * val flags2 = flags + ActivityFlag.Join
- * val otherFlags = flags - ActivityFlag.Join
- * val flags3 = flags + otherFlags
+ * val activityFlags1 = activityFlags + ActivityFlag.Instance
+ * val activityFlags2 = activityFlags - ActivityFlag.Join
+ * val activityFlags3 = activityFlags1 + activityFlags2
  * ```
  *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [ActivityFlag]s
+ *
+ * You can use the [contains] operator to check whether an instance of [ActivityFlags] contains
+ * specific [ActivityFlag]s:
  * ```kotlin
- * val hasFlag = ActivityFlag.Instance in obj.flags
- * val hasFlags = ActivityFlag(ActivityFlag.Join, ActivityFlag.Join) in obj.flags
+ * val hasActivityFlag = ActivityFlag.Instance in activityFlags
+ * val hasActivityFlags = ActivityFlags(ActivityFlag.Instance, ActivityFlag.Join) in activityFlags
  * ```
  *
- * ## Unknown flag
+ * ## Unknown [ActivityFlag]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [ActivityFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
+ * Whenever [ActivityFlag]s haven't been added to Kord yet, they will be deserialized as instances
+ * of [ActivityFlag.Unknown].
+ *
+ * You can also use [ActivityFlag.fromShift] to check for [unknown][ActivityFlag.Unknown]
+ * [ActivityFlag]s.
  * ```kotlin
- * val hasFlags = ActivityFlag.Unknown(1 shl 69) in obj.flags
+ * val hasUnknownActivityFlag = ActivityFlag.fromShift(23) in activityFlags
  * ```
+ *
  * @see ActivityFlag
  * @see ActivityFlags.Builder
- * @property code numeric value of all [ActivityFlags]s
  */
 @Serializable(with = ActivityFlags.Serializer::class)
 public class ActivityFlags internal constructor(

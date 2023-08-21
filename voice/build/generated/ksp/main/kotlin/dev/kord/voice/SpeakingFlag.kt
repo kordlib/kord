@@ -218,59 +218,69 @@ public sealed class SpeakingFlag(
 }
 
 /**
- * Convenience container of multiple [SpeakingFlags][SpeakingFlag] which can be combined into one.
+ * A collection of multiple [SpeakingFlag]s.
  *
- * ## Creating a collection of message flags
- * You can create an [SpeakingFlags] object using the following methods
+ * ## Creating an instance of [SpeakingFlags]
+ *
+ * You can create an instance of [SpeakingFlags] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = SpeakingFlags(SpeakingFlag.Microphone, SpeakingFlag.Soundshare)
- * // From an iterable
- * val flags2 = SpeakingFlags(listOf(SpeakingFlag.Microphone, SpeakingFlag.Soundshare))
- * // Using a builder
- * val flags3 = SpeakingFlags {
- *  +SpeakingFlag.Microphone
- *  -SpeakingFlag.Soundshare
+ * // from individual SpeakingFlags 
+ * val speakingFlags1 = SpeakingFlags(SpeakingFlag.Microphone, SpeakingFlag.Soundshare)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<SpeakingFlag> = TODO()
+ * val speakingFlags2 = SpeakingFlags(iterable)
+ *
+ * // using a builder
+ * val speakingFlags3 = SpeakingFlags {
+ *     +speakingFlags2
+ *     +SpeakingFlag.Microphone
+ *     -SpeakingFlag.Soundshare
  * }
  * ```
  *
- * ## Modifying existing flags
- * You can crate a modified copy of a [SpeakingFlags] instance using the [copy] method
+ * ## Modifying an existing instance of [SpeakingFlags]
  *
+ * You can create a modified copy of an existing instance of [SpeakingFlags] using the [copy]
+ * method:
  * ```kotlin
- * flags.copy {
- *  +SpeakingFlag.Microphone
+ * speakingFlags.copy {
+ *     +SpeakingFlag.Microphone
  * }
  * ```
  *
  * ## Mathematical operators
- * All [SpeakingFlags] objects can use +/- operators
  *
+ * All [SpeakingFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = SpeakingFlags(SpeakingFlag.Microphone)
- * val flags2 = flags + SpeakingFlag.Soundshare
- * val otherFlags = flags - SpeakingFlag.Soundshare
- * val flags3 = flags + otherFlags
+ * val speakingFlags1 = speakingFlags + SpeakingFlag.Microphone
+ * val speakingFlags2 = speakingFlags - SpeakingFlag.Soundshare
+ * val speakingFlags3 = speakingFlags1 + speakingFlags2
  * ```
  *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [SpeakingFlag]s
+ *
+ * You can use the [contains] operator to check whether an instance of [SpeakingFlags] contains
+ * specific [SpeakingFlag]s:
  * ```kotlin
- * val hasFlag = SpeakingFlag.Microphone in obj.flags
- * val hasFlags = SpeakingFlag(SpeakingFlag.Soundshare, SpeakingFlag.Soundshare) in obj.flags
+ * val hasSpeakingFlag = SpeakingFlag.Microphone in speakingFlags
+ * val hasSpeakingFlags = SpeakingFlags(SpeakingFlag.Microphone,
+ * SpeakingFlag.Soundshare) in speakingFlags
  * ```
  *
- * ## Unknown flag
+ * ## Unknown [SpeakingFlag]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [SpeakingFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
+ * Whenever [SpeakingFlag]s haven't been added to Kord yet, they will be deserialized as instances
+ * of [SpeakingFlag.Unknown].
+ *
+ * You can also use [SpeakingFlag.fromShift] to check for [unknown][SpeakingFlag.Unknown]
+ * [SpeakingFlag]s.
  * ```kotlin
- * val hasFlags = SpeakingFlag.Unknown(1 shl 69) in obj.flags
+ * val hasUnknownSpeakingFlag = SpeakingFlag.fromShift(23) in speakingFlags
  * ```
+ *
  * @see SpeakingFlag
  * @see SpeakingFlags.Builder
- * @property code numeric value of all [SpeakingFlags]s
  */
 @Serializable(with = SpeakingFlags.Serializer::class)
 public class SpeakingFlags internal constructor(

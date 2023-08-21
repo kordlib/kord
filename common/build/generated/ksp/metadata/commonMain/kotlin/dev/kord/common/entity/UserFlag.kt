@@ -423,59 +423,66 @@ public sealed class UserFlag(
 }
 
 /**
- * Convenience container of multiple [UserFlags][UserFlag] which can be combined into one.
+ * A collection of multiple [UserFlag]s.
  *
- * ## Creating a collection of message flags
- * You can create an [UserFlags] object using the following methods
+ * ## Creating an instance of [UserFlags]
+ *
+ * You can create an instance of [UserFlags] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner)
- * // From an iterable
- * val flags2 = UserFlags(listOf(UserFlag.DiscordEmployee, UserFlag.DiscordPartner))
- * // Using a builder
- * val flags3 = UserFlags {
- *  +UserFlag.DiscordEmployee
- *  -UserFlag.DiscordPartner
+ * // from individual UserFlags 
+ * val userFlags1 = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<UserFlag> = TODO()
+ * val userFlags2 = UserFlags(iterable)
+ *
+ * // using a builder
+ * val userFlags3 = UserFlags {
+ *     +userFlags2
+ *     +UserFlag.DiscordEmployee
+ *     -UserFlag.DiscordPartner
  * }
  * ```
  *
- * ## Modifying existing flags
- * You can crate a modified copy of a [UserFlags] instance using the [copy] method
+ * ## Modifying an existing instance of [UserFlags]
  *
+ * You can create a modified copy of an existing instance of [UserFlags] using the [copy] method:
  * ```kotlin
- * flags.copy {
- *  +UserFlag.DiscordEmployee
+ * userFlags.copy {
+ *     +UserFlag.DiscordEmployee
  * }
  * ```
  *
  * ## Mathematical operators
- * All [UserFlags] objects can use +/- operators
  *
+ * All [UserFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = UserFlags(UserFlag.DiscordEmployee)
- * val flags2 = flags + UserFlag.DiscordPartner
- * val otherFlags = flags - UserFlag.DiscordPartner
- * val flags3 = flags + otherFlags
+ * val userFlags1 = userFlags + UserFlag.DiscordEmployee
+ * val userFlags2 = userFlags - UserFlag.DiscordPartner
+ * val userFlags3 = userFlags1 + userFlags2
  * ```
  *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [UserFlag]s
+ *
+ * You can use the [contains] operator to check whether an instance of [UserFlags] contains specific
+ * [UserFlag]s:
  * ```kotlin
- * val hasFlag = UserFlag.DiscordEmployee in obj.flags
- * val hasFlags = UserFlag(UserFlag.DiscordPartner, UserFlag.DiscordPartner) in obj.flags
+ * val hasUserFlag = UserFlag.DiscordEmployee in userFlags
+ * val hasUserFlags = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner) in userFlags
  * ```
  *
- * ## Unknown flag
+ * ## Unknown [UserFlag]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * Whenever [UserFlag]s haven't been added to Kord yet, they will be deserialized as instances of
  * [UserFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
+ *
+ * You can also use [UserFlag.fromShift] to check for [unknown][UserFlag.Unknown] [UserFlag]s.
  * ```kotlin
- * val hasFlags = UserFlag.Unknown(1 shl 69) in obj.flags
+ * val hasUnknownUserFlag = UserFlag.fromShift(23) in userFlags
  * ```
+ *
  * @see UserFlag
  * @see UserFlags.Builder
- * @property code numeric value of all [UserFlags]s
  */
 @Serializable(with = UserFlags.Serializer::class)
 public class UserFlags internal constructor(

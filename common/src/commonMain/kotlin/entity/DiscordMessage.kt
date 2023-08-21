@@ -39,7 +39,6 @@
 @file:Generate(
     INT_FLAGS, name = "MessageFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
     hadFlagsProperty = true,
-    bitFlagsDescriptor = BitFlagDescription(objectName = "message"),
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-flags",
     entries = [
         Entry(
@@ -124,7 +123,6 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInDoubleSeconds
 import dev.kord.common.serialization.LongOrStringSerializer
 import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.BitFlagDescription
 import dev.kord.ksp.Generate.EntityType.*
 import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant

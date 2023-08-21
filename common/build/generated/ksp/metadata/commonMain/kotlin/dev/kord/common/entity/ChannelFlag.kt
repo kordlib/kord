@@ -202,59 +202,67 @@ public sealed class ChannelFlag(
 }
 
 /**
- * Convenience container of multiple [ChannelFlags][ChannelFlag] which can be combined into one.
+ * A collection of multiple [ChannelFlag]s.
  *
- * ## Creating a collection of message flags
- * You can create an [ChannelFlags] object using the following methods
+ * ## Creating an instance of [ChannelFlags]
+ *
+ * You can create an instance of [ChannelFlags] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = ChannelFlags(ChannelFlag.Pinned, ChannelFlag.RequireTag)
- * // From an iterable
- * val flags2 = ChannelFlags(listOf(ChannelFlag.Pinned, ChannelFlag.RequireTag))
- * // Using a builder
- * val flags3 = ChannelFlags {
- *  +ChannelFlag.Pinned
- *  -ChannelFlag.RequireTag
+ * // from individual ChannelFlags 
+ * val channelFlags1 = ChannelFlags(ChannelFlag.Pinned, ChannelFlag.RequireTag)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<ChannelFlag> = TODO()
+ * val channelFlags2 = ChannelFlags(iterable)
+ *
+ * // using a builder
+ * val channelFlags3 = ChannelFlags {
+ *     +channelFlags2
+ *     +ChannelFlag.Pinned
+ *     -ChannelFlag.RequireTag
  * }
  * ```
  *
- * ## Modifying existing flags
- * You can crate a modified copy of a [ChannelFlags] instance using the [copy] method
+ * ## Modifying an existing instance of [ChannelFlags]
  *
+ * You can create a modified copy of an existing instance of [ChannelFlags] using the [copy] method:
  * ```kotlin
- * flags.copy {
- *  +ChannelFlag.Pinned
+ * channelFlags.copy {
+ *     +ChannelFlag.Pinned
  * }
  * ```
  *
  * ## Mathematical operators
- * All [ChannelFlags] objects can use +/- operators
  *
+ * All [ChannelFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = ChannelFlags(ChannelFlag.Pinned)
- * val flags2 = flags + ChannelFlag.RequireTag
- * val otherFlags = flags - ChannelFlag.RequireTag
- * val flags3 = flags + otherFlags
+ * val channelFlags1 = channelFlags + ChannelFlag.Pinned
+ * val channelFlags2 = channelFlags - ChannelFlag.RequireTag
+ * val channelFlags3 = channelFlags1 + channelFlags2
  * ```
  *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [ChannelFlag]s
+ *
+ * You can use the [contains] operator to check whether an instance of [ChannelFlags] contains
+ * specific [ChannelFlag]s:
  * ```kotlin
- * val hasFlag = ChannelFlag.Pinned in obj.flags
- * val hasFlags = ChannelFlag(ChannelFlag.RequireTag, ChannelFlag.RequireTag) in obj.flags
+ * val hasChannelFlag = ChannelFlag.Pinned in channelFlags
+ * val hasChannelFlags = ChannelFlags(ChannelFlag.Pinned, ChannelFlag.RequireTag) in channelFlags
  * ```
  *
- * ## Unknown flag
+ * ## Unknown [ChannelFlag]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * Whenever [ChannelFlag]s haven't been added to Kord yet, they will be deserialized as instances of
  * [ChannelFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
+ *
+ * You can also use [ChannelFlag.fromShift] to check for [unknown][ChannelFlag.Unknown]
+ * [ChannelFlag]s.
  * ```kotlin
- * val hasFlags = ChannelFlag.Unknown(1 shl 69) in obj.flags
+ * val hasUnknownChannelFlag = ChannelFlag.fromShift(23) in channelFlags
  * ```
+ *
  * @see ChannelFlag
  * @see ChannelFlags.Builder
- * @property code numeric value of all [ChannelFlags]s
  */
 @Serializable(with = ChannelFlags.Serializer::class)
 public class ChannelFlags internal constructor(

@@ -422,59 +422,67 @@ public sealed class Permission(
 }
 
 /**
- * Convenience container of multiple [Permissions][Permission] which can be combined into one.
+ * A collection of multiple [Permission]s.
  *
- * ## Creating a collection of message flags
- * You can create an [Permissions] object using the following methods
+ * ## Creating an instance of [Permissions]
+ *
+ * You can create an instance of [Permissions] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = Permissions(Permission.CreateInstantInvite, Permission.KickMembers)
- * // From an iterable
- * val flags2 = Permissions(listOf(Permission.CreateInstantInvite, Permission.KickMembers))
- * // Using a builder
- * val flags3 = Permissions {
- *  +Permission.CreateInstantInvite
- *  -Permission.KickMembers
+ * // from individual Permissions 
+ * val permissions1 = Permissions(Permission.CreateInstantInvite, Permission.KickMembers)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<Permission> = TODO()
+ * val permissions2 = Permissions(iterable)
+ *
+ * // using a builder
+ * val permissions3 = Permissions {
+ *     +permissions2
+ *     +Permission.CreateInstantInvite
+ *     -Permission.KickMembers
  * }
  * ```
  *
- * ## Modifying existing permissions
- * You can crate a modified copy of a [Permissions] instance using the [copy] method
+ * ## Modifying an existing instance of [Permissions]
  *
+ * You can create a modified copy of an existing instance of [Permissions] using the [copy] method:
  * ```kotlin
- * flags.copy {
- *  +Permission.CreateInstantInvite
+ * permissions.copy {
+ *     +Permission.CreateInstantInvite
  * }
  * ```
  *
  * ## Mathematical operators
- * All [Permissions] objects can use +/- operators
  *
+ * All [Permissions] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = Permissions(Permission.CreateInstantInvite)
- * val flags2 = flags + Permission.KickMembers
- * val otherFlags = flags - Permission.KickMembers
- * val flags3 = flags + otherFlags
+ * val permissions1 = permissions + Permission.CreateInstantInvite
+ * val permissions2 = permissions - Permission.KickMembers
+ * val permissions3 = permissions1 + permissions2
  * ```
  *
- * ## Checking for a permission
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [Permission]s
+ *
+ * You can use the [contains] operator to check whether an instance of [Permissions] contains
+ * specific [Permission]s:
  * ```kotlin
- * val hasFlag = Permission.CreateInstantInvite in member.permissions
- * val hasFlags = Permission(Permission.KickMembers, Permission.KickMembers) in member.permissions
+ * val hasPermission = Permission.CreateInstantInvite in permissions
+ * val hasPermissions = Permissions(Permission.CreateInstantInvite,
+ * Permission.KickMembers) in permissions
  * ```
  *
- * ## Unknown permission
+ * ## Unknown [Permission]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * Whenever [Permission]s haven't been added to Kord yet, they will be deserialized as instances of
  * [Permission.Unknown].
- * You can also use that to check for an yet unsupported flag
+ *
+ * You can also use [Permission.fromShift] to check for [unknown][Permission.Unknown] [Permission]s.
  * ```kotlin
- * val hasFlags = Permission.Unknown(1 shl 69) in member.permissions
+ * val hasUnknownPermission = Permission.fromShift(23) in permissions
  * ```
+ *
  * @see Permission
  * @see Permissions.Builder
- * @property code numeric value of all [Permissions]s
  */
 @Serializable(with = Permissions.Serializer::class)
 public class Permissions internal constructor(

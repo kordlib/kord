@@ -96,7 +96,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         }
     }
     addClass(collectionCN) {
-        addCollectionDoc()
+        addCollectionKDoc()
         addAnnotation<Serializable> {
             addMember("with·=·%T.Serializer::class", collectionCN)
         }

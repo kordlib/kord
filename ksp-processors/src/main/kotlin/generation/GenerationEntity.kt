@@ -32,7 +32,6 @@ internal sealed class GenerationEntity(
     class BitFlags(
         name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
         override val valueType: ValueType,
-        val flagsDescriptor: BitFlagDescription,
         val wasEnum: Boolean,
         val collectionWasDataClass: Boolean,
         val hadFlagsProperty: Boolean,
@@ -67,8 +66,8 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
 
     val validParameters = when (entityType) {
         INT_KORD_ENUM, STRING_KORD_ENUM -> areNotSpecified(
-            Generate::bitFlagsDescriptor, Generate::wasEnum,
-            Generate::collectionWasDataClass, Generate::hadFlagsProperty, Generate::flagsPropertyWasSet,
+            Generate::wasEnum, Generate::collectionWasDataClass, Generate::hadFlagsProperty,
+            Generate::flagsPropertyWasSet,
         )
         INT_FLAGS, BIT_SET_FLAGS -> true
     }
@@ -86,11 +85,11 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
             INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT)
             STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
             INT_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, bitFlagsDescriptor, wasEnum,
-                collectionWasDataClass, hadFlagsProperty, flagsPropertyWasSet,
+                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, wasEnum, collectionWasDataClass,
+                hadFlagsProperty, flagsPropertyWasSet,
             )
             BIT_SET_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.BIT_SET, bitFlagsDescriptor, wasEnum,
+                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.BIT_SET, wasEnum,
                 collectionWasDataClass, hadFlagsProperty, flagsPropertyWasSet,
             )
         }

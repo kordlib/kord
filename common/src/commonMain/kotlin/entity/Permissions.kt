@@ -1,7 +1,6 @@
 @file:Generate(
     BIT_SET_FLAGS, name = "Permission", valueName = "code", collectionWasDataClass = true,
     docUrl = "https://discord.com/developers/docs/topics/permissions",
-    bitFlagsDescriptor = BitFlagDescription("member", "permissions", name = "permission"),
     entries = [
         Entry("CreateInstantInvite", shift = 0, kDoc = "Allows creation of instant invites."),
         Entry("KickMembers", shift = 1, kDoc = "Allows kicking members."),
@@ -98,7 +97,6 @@
 package dev.kord.common.entity
 
 import dev.kord.ksp.Generate
-import dev.kord.ksp.Generate.BitFlagDescription
 import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
 import dev.kord.ksp.Generate.Entry
 

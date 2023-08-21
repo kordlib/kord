@@ -272,63 +272,70 @@ public sealed class SystemChannelFlag(
 }
 
 /**
- * Convenience container of multiple [SystemChannelFlags][SystemChannelFlag] which can be combined
- * into one.
+ * A collection of multiple [SystemChannelFlag]s.
  *
- * ## Creating a collection of message flags
- * You can create an [SystemChannelFlags] object using the following methods
+ * ## Creating an instance of [SystemChannelFlags]
+ *
+ * You can create an instance of [SystemChannelFlags] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications,
+ * // from individual SystemChannelFlags 
+ * val systemChannelFlags1 = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications,
  * SystemChannelFlag.SuppressPremiumSubscriptions)
- * // From an iterable
- * val flags2 = SystemChannelFlags(listOf(SystemChannelFlag.SuppressJoinNotifications,
- * SystemChannelFlag.SuppressPremiumSubscriptions))
- * // Using a builder
- * val flags3 = SystemChannelFlags {
- *  +SystemChannelFlag.SuppressJoinNotifications
- *  -SystemChannelFlag.SuppressPremiumSubscriptions
+ *
+ * // from an Iterable
+ * val iterable: Iterable<SystemChannelFlag> = TODO()
+ * val systemChannelFlags2 = SystemChannelFlags(iterable)
+ *
+ * // using a builder
+ * val systemChannelFlags3 = SystemChannelFlags {
+ *     +systemChannelFlags2
+ *     +SystemChannelFlag.SuppressJoinNotifications
+ *     -SystemChannelFlag.SuppressPremiumSubscriptions
  * }
  * ```
  *
- * ## Modifying existing flags
- * You can crate a modified copy of a [SystemChannelFlags] instance using the [copy] method
+ * ## Modifying an existing instance of [SystemChannelFlags]
  *
+ * You can create a modified copy of an existing instance of [SystemChannelFlags] using the [copy]
+ * method:
  * ```kotlin
- * flags.copy {
- *  +SystemChannelFlag.SuppressJoinNotifications
+ * systemChannelFlags.copy {
+ *     +SystemChannelFlag.SuppressJoinNotifications
  * }
  * ```
  *
  * ## Mathematical operators
- * All [SystemChannelFlags] objects can use +/- operators
  *
+ * All [SystemChannelFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications)
- * val flags2 = flags + SystemChannelFlag.SuppressPremiumSubscriptions
- * val otherFlags = flags - SystemChannelFlag.SuppressPremiumSubscriptions
- * val flags3 = flags + otherFlags
+ * val systemChannelFlags1 = systemChannelFlags + SystemChannelFlag.SuppressJoinNotifications
+ * val systemChannelFlags2 = systemChannelFlags - SystemChannelFlag.SuppressPremiumSubscriptions
+ * val systemChannelFlags3 = systemChannelFlags1 + systemChannelFlags2
  * ```
  *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [SystemChannelFlag]s
+ *
+ * You can use the [contains] operator to check whether an instance of [SystemChannelFlags] contains
+ * specific [SystemChannelFlag]s:
  * ```kotlin
- * val hasFlag = SystemChannelFlag.SuppressJoinNotifications in obj.flags
- * val hasFlags = SystemChannelFlag(SystemChannelFlag.SuppressPremiumSubscriptions,
- * SystemChannelFlag.SuppressPremiumSubscriptions) in obj.flags
+ * val hasSystemChannelFlag = SystemChannelFlag.SuppressJoinNotifications in systemChannelFlags
+ * val hasSystemChannelFlags = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications,
+ * SystemChannelFlag.SuppressPremiumSubscriptions) in systemChannelFlags
  * ```
  *
- * ## Unknown flag
+ * ## Unknown [SystemChannelFlag]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
- * [SystemChannelFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
+ * Whenever [SystemChannelFlag]s haven't been added to Kord yet, they will be deserialized as
+ * instances of [SystemChannelFlag.Unknown].
+ *
+ * You can also use [SystemChannelFlag.fromShift] to check for [unknown][SystemChannelFlag.Unknown]
+ * [SystemChannelFlag]s.
  * ```kotlin
- * val hasFlags = SystemChannelFlag.Unknown(1 shl 69) in obj.flags
+ * val hasUnknownSystemChannelFlag = SystemChannelFlag.fromShift(23) in systemChannelFlags
  * ```
+ *
  * @see SystemChannelFlag
  * @see SystemChannelFlags.Builder
- * @property code numeric value of all [SystemChannelFlags]s
  */
 @Serializable(with = SystemChannelFlags.Serializer::class)
 public class SystemChannelFlags internal constructor(

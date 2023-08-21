@@ -345,59 +345,68 @@ public sealed class MessageFlag(
 }
 
 /**
- * Convenience container of multiple [MessageFlags][MessageFlag] which can be combined into one.
+ * A collection of multiple [MessageFlag]s.
  *
- * ## Creating a collection of message flags
- * You can create an [MessageFlags] object using the following methods
+ * ## Creating an instance of [MessageFlags]
+ *
+ * You can create an instance of [MessageFlags] using the following methods:
  * ```kotlin
- * // From flags
- * val flags1 = MessageFlags(MessageFlag.CrossPosted, MessageFlag.IsCrossPost)
- * // From an iterable
- * val flags2 = MessageFlags(listOf(MessageFlag.CrossPosted, MessageFlag.IsCrossPost))
- * // Using a builder
- * val flags3 = MessageFlags {
- *  +MessageFlag.CrossPosted
- *  -MessageFlag.IsCrossPost
+ * // from individual MessageFlags 
+ * val messageFlags1 = MessageFlags(MessageFlag.CrossPosted, MessageFlag.IsCrossPost)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<MessageFlag> = TODO()
+ * val messageFlags2 = MessageFlags(iterable)
+ *
+ * // using a builder
+ * val messageFlags3 = MessageFlags {
+ *     +messageFlags2
+ *     +MessageFlag.CrossPosted
+ *     -MessageFlag.IsCrossPost
  * }
  * ```
  *
- * ## Modifying existing flags
- * You can crate a modified copy of a [MessageFlags] instance using the [copy] method
+ * ## Modifying an existing instance of [MessageFlags]
  *
+ * You can create a modified copy of an existing instance of [MessageFlags] using the [copy] method:
  * ```kotlin
- * flags.copy {
- *  +MessageFlag.CrossPosted
+ * messageFlags.copy {
+ *     +MessageFlag.CrossPosted
  * }
  * ```
  *
  * ## Mathematical operators
- * All [MessageFlags] objects can use +/- operators
  *
+ * All [MessageFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val flags = MessageFlags(MessageFlag.CrossPosted)
- * val flags2 = flags + MessageFlag.IsCrossPost
- * val otherFlags = flags - MessageFlag.IsCrossPost
- * val flags3 = flags + otherFlags
+ * val messageFlags1 = messageFlags + MessageFlag.CrossPosted
+ * val messageFlags2 = messageFlags - MessageFlag.IsCrossPost
+ * val messageFlags3 = messageFlags1 + messageFlags2
  * ```
  *
- * ## Checking for a flag
- * You can use the [contains] operator to check whether a collection contains a specific flag
+ * ## Checking for [MessageFlag]s
+ *
+ * You can use the [contains] operator to check whether an instance of [MessageFlags] contains
+ * specific [MessageFlag]s:
  * ```kotlin
- * val hasFlag = MessageFlag.CrossPosted in message.flags
- * val hasFlags = MessageFlag(MessageFlag.IsCrossPost, MessageFlag.IsCrossPost) in message.flags
+ * val hasMessageFlag = MessageFlag.CrossPosted in messageFlags
+ * val hasMessageFlags = MessageFlags(MessageFlag.CrossPosted,
+ * MessageFlag.IsCrossPost) in messageFlags
  * ```
  *
- * ## Unknown flag
+ * ## Unknown [MessageFlag]s
  *
- * Whenever a newly added flag has not been added to Kord yet it will get deserialized as
+ * Whenever [MessageFlag]s haven't been added to Kord yet, they will be deserialized as instances of
  * [MessageFlag.Unknown].
- * You can also use that to check for an yet unsupported flag
+ *
+ * You can also use [MessageFlag.fromShift] to check for [unknown][MessageFlag.Unknown]
+ * [MessageFlag]s.
  * ```kotlin
- * val hasFlags = MessageFlag.Unknown(1 shl 69) in message.flags
+ * val hasUnknownMessageFlag = MessageFlag.fromShift(23) in messageFlags
  * ```
+ *
  * @see MessageFlag
  * @see MessageFlags.Builder
- * @property code numeric value of all [MessageFlags]s
  */
 @Serializable(with = MessageFlags.Serializer::class)
 public class MessageFlags internal constructor(
