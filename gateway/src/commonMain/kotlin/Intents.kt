@@ -1,5 +1,6 @@
+/*
 @file:Generate(
-    BIT_SET_FLAGS, name = "Intent", valueName = "code", collectionWasDataClass = true,
+    BIT_SET_FLAGS, name = "Intent", valueName = "code",
     kDoc = "Values that enable a group of events as defined by Discord.",
     docUrl = "https://discord.com/developers/docs/topics/gateway#gateway-intents",
     entries = [
@@ -36,14 +37,6 @@
                 - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
                 [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
             """,
-        ),
-        Entry(
-            "GuildBans", shift = 2,
-            deprecated = Deprecated(
-                "Renamed to 'GuildModeration'",
-                ReplaceWith("Intent.GuildModeration", "dev.kord.gateway.Intent"),
-                DeprecationLevel.WARNING,
-            ),
         ),
         Entry(
             "GuildModeration", shift = 2,
@@ -207,10 +200,18 @@ import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.BIT_SET_FLAGS
 import dev.kord.ksp.Generate.Entry
 import kotlin.RequiresOptIn.Level.ERROR
-import kotlin.annotation.AnnotationRetention.*
+import kotlin.annotation.AnnotationRetention.BINARY
 import kotlin.annotation.AnnotationTarget.*
 
 private const val privilegedIntentAnnotation = "dev.kord.gateway.PrivilegedIntent"
+*/
+
+package dev.kord.gateway
+
+import dev.kord.gateway.Intent.*
+import kotlin.RequiresOptIn.Level.ERROR
+import kotlin.annotation.AnnotationRetention.BINARY
+import kotlin.annotation.AnnotationTarget.*
 
 /**
  * Some [Intent]s are defined as "privileged" due to the sensitive nature of the data and cannot be used by Kord without
@@ -273,10 +274,3 @@ public val Intents.Companion.NON_PRIVILEGED: Intents get() = NON_PRIVILEGED_INTE
 
 /** An [Intents] instance that contains no [Intent]s. */
 public val Intents.Companion.NONE: Intents get() = NO_INTENTS
-
-
-@Suppress("FunctionName")
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-public fun IntentsWithIterable(intents: Iterable<Intent>): Intents = Intents {
-    intents.forEach { +it }
-}

@@ -1,5 +1,6 @@
 package dev.kord.core
 
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
@@ -243,6 +244,10 @@ internal fun paginateThreads(
  */
 public inline fun <reified T : Event> Intents.Builder.enableEvent(): Unit = enableEvent(T::class)
 
+@Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent0(T::class)
+
 /**
  * Adds the necessary [Intent]s to receive the specified types of [events] in all variations and with all data
  * available.
@@ -256,6 +261,11 @@ public inline fun <reified T : Event> Intents.Builder.enableEvent(): Unit = enab
 public fun Intents.Builder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
     events.forEach { enableEvent(it) }
 
+@Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
+    events.forEach { enableEvent0(it) }
+
 /**
  * Adds the necessary [Intent]s to receive the specified types of [events] in all variations and with all data
  * available.
@@ -268,6 +278,11 @@ public fun Intents.Builder.enableEvents(events: Iterable<KClass<out Event>>): Un
  */
 public fun Intents.Builder.enableEvents(vararg events: KClass<out Event>): Unit =
     events.forEach { enableEvent(it) }
+
+@Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
+    events.forEach { enableEvent0(it) }
 
 /**
  * Adds the necessary [Intent]s to receive the specified type of [event] in all variations and with all data available.
@@ -441,6 +456,19 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
 
 
     else -> Unit
+}
+
+@Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>) {
+    enableEvent0(event)
+}
+
+@Suppress("DEPRECATION")
+@PublishedApi
+@KordInternal
+internal fun Intents.IntentsBuilder.enableEvent0(event: KClass<out Event>) {
+    +(Intents.Builder(flags().code).apply { enableEvent(event) }.build())
 }
 
 // Replacement of Objects.hash
