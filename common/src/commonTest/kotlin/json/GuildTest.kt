@@ -57,7 +57,7 @@ class GuildTest {
             vanityUrlCode shouldBe "discord-testers"
             premiumTier shouldBe PremiumTier.Three
             premiumSubscriptionCount shouldBe 33
-            systemChannelFlags shouldBe SystemChannelFlags(0)
+            systemChannelFlags shouldBe SystemChannelFlags()
             preferredLocale shouldBe "en-US"
             rulesChannelId shouldBe "441688182833020939"
             publicUpdatesChannelId shouldBe "281283303326089216"

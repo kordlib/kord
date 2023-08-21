@@ -150,8 +150,9 @@
     ],
 )
 
+/*
 @file:Generate(
-    INT_FLAGS, name = "SystemChannelFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
+    INT_FLAGS, name = "SystemChannelFlag", valueName = "code",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
     entries = [
         Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),
@@ -168,6 +169,7 @@
         ),
     ],
 )
+*/
 
 package dev.kord.common.entity
 

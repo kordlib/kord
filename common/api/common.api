@@ -8549,6 +8549,8 @@ public final class dev/kord/common/entity/SystemChannelFlagKt {
 
 public final class dev/kord/common/entity/SystemChannelFlags {
 	public static final field Companion Ldev/kord/common/entity/SystemChannelFlags$Companion;
+	public static final field NewCompanion Ldev/kord/common/entity/SystemChannelFlags$NewCompanion;
+	public fun <init> (I)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlags;)Z
@@ -8571,14 +8573,22 @@ public final class dev/kord/common/entity/SystemChannelFlags$Builder {
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/common/entity/SystemChannelFlags;
-	public final fun flags ()Ldev/kord/common/entity/SystemChannelFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/SystemChannelFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/SystemChannelFlags;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/SystemChannelFlag;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/SystemChannelFlags;)V
 }
 
-public final class dev/kord/common/entity/SystemChannelFlags$Companion {
+public final class dev/kord/common/entity/SystemChannelFlags$Companion : kotlinx/serialization/KSerializer {
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/SystemChannelFlags;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/SystemChannelFlags;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/SystemChannelFlags$NewCompanion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

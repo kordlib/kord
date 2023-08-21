@@ -1,4 +1,3 @@
-// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
@@ -47,14 +46,14 @@ public sealed class SystemChannelFlag(
      * [flag].
      */
     public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code or flag.code)
+            SystemChannelFlags(this.code or flag.code, null)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code or flags.code)
+            SystemChannelFlags(this.code or flags.code, null)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is SystemChannelFlag && this.shift == other.shift)
@@ -343,7 +342,18 @@ public class SystemChannelFlags internal constructor(
      * The raw code used by Discord.
      */
     public val code: Int,
+    @Suppress("UNUSED_PARAMETER") unused: Nothing?,
 ) {
+    // TODO uncomment annotation in DiscordGuild.kt and delete this file when this constructor is removed after
+    //  deprecation cycle
+    @Deprecated(
+        "Don't construct an instance of 'SystemChannelFlags' from a raw code. Use the factory functions described in " +
+            "the documentation instead.",
+        ReplaceWith("SystemChannelFlags.Builder(code).build()", "dev.kord.common.entity.SystemChannelFlags"),
+        DeprecationLevel.WARNING,
+    )
+    public constructor(code: Int) : this(code, null)
+
     /**
      * A [Set] of all [SystemChannelFlag]s contained in this instance of [SystemChannelFlags].
      */
@@ -375,28 +385,28 @@ public class SystemChannelFlags internal constructor(
      * [flag].
      */
     public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code or flag.code)
+            SystemChannelFlags(this.code or flag.code, null)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code or flags.code)
+            SystemChannelFlags(this.code or flags.code, null)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this`
      * except the bits that are set in [flag].
      */
     public operator fun minus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code and flag.code.inv())
+            SystemChannelFlags(this.code and flag.code.inv(), null)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this`
      * except the bits that are set in [flags].
      */
     public operator fun minus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code and flags.code.inv())
+            SystemChannelFlags(this.code and flags.code.inv(), null)
 
     /**
      * Returns a copy of this instance of [SystemChannelFlags] modified with [builder].
@@ -428,7 +438,7 @@ public class SystemChannelFlags internal constructor(
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
             "SystemChannelFlags is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: Int = this.code): SystemChannelFlags = SystemChannelFlags(code)
+    public fun copy(code: Int = this.code): SystemChannelFlags = SystemChannelFlags(code, null)
 
     public class Builder(
         private var code: Int = 0,
@@ -465,16 +475,7 @@ public class SystemChannelFlags internal constructor(
          * Returns an instance of [SystemChannelFlags] that has all bits set that are currently set
          * in this [Builder].
          */
-        public fun build(): SystemChannelFlags = SystemChannelFlags(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): SystemChannelFlags = build()
+        public fun build(): SystemChannelFlags = SystemChannelFlags(code, null)
     }
 
     internal object Serializer : KSerializer<SystemChannelFlags> {
@@ -489,7 +490,27 @@ public class SystemChannelFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): SystemChannelFlags =
-                SystemChannelFlags(decoder.decodeSerializableValue(delegate))
+                SystemChannelFlags(decoder.decodeSerializableValue(delegate), null)
+    }
+
+    public companion object NewCompanion {
+        @Suppress("DEPRECATION")
+        @Deprecated(
+            "Renamed to 'NewCompanion', which no longer implements 'KSerializer<SystemChannelFlags>'.",
+            ReplaceWith("SystemChannelFlags.serializer()", imports = ["dev.kord.common.entity.SystemChannelFlags"]),
+            DeprecationLevel.WARNING,
+        )
+        @JvmField
+        public val Companion: Companion = Companion()
+    }
+
+    @Deprecated(
+        "Renamed to 'NewCompanion', which no longer implements 'KSerializer<SystemChannelFlags>'.",
+        ReplaceWith("SystemChannelFlags.serializer()", imports = ["dev.kord.common.entity.SystemChannelFlags"]),
+        DeprecationLevel.WARNING,
+    )
+    public class Companion internal constructor() : KSerializer<SystemChannelFlags> by Serializer {
+        public fun serializer(): KSerializer<SystemChannelFlags> = this
     }
 }
 
