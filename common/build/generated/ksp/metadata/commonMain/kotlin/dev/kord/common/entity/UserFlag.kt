@@ -575,22 +575,38 @@ public class UserFlags internal constructor(
     public class Builder(
         private var code: Int = 0,
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [UserFlag].
+         */
         public operator fun UserFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [UserFlags].
+         */
         public operator fun UserFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [UserFlag].
+         */
         public operator fun UserFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [UserFlags].
+         */
         public operator fun UserFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Returns an instance of [UserFlags] that has all bits set that are currently set in this
+         * [Builder].
+         */
         public fun build(): UserFlags = UserFlags(code)
 
         /**

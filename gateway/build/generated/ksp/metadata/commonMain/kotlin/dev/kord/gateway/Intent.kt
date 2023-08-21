@@ -449,23 +449,39 @@ public class Intents internal constructor(
     public class Builder(
         private val code: DiscordBitSet = EmptyBitSet(),
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [Intent].
+         */
         public operator fun Intent.unaryPlus() {
             this@Builder.code.add(this.code)
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [Intents].
+         */
         public operator fun Intents.unaryPlus() {
             this@Builder.code.add(this.code)
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [Intent].
+         */
         public operator fun Intent.unaryMinus() {
             this@Builder.code.remove(this.code)
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [Intents].
+         */
         public operator fun Intents.unaryMinus() {
             this@Builder.code.remove(this.code)
         }
 
-        public fun build(): Intents = Intents(code)
+        /**
+         * Returns an instance of [Intents] that has all bits set that are currently set in this
+         * [Builder].
+         */
+        public fun build(): Intents = Intents(code.copy())
 
         /**
          * @suppress

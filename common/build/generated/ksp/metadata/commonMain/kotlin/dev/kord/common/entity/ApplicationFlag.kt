@@ -508,22 +508,38 @@ public class ApplicationFlags internal constructor(
     public class Builder(
         private var code: Int = 0,
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [ApplicationFlag].
+         */
         public operator fun ApplicationFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [ApplicationFlags].
+         */
         public operator fun ApplicationFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [ApplicationFlag].
+         */
         public operator fun ApplicationFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [ApplicationFlags].
+         */
         public operator fun ApplicationFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Returns an instance of [ApplicationFlags] that has all bits set that are currently set in
+         * this [Builder].
+         */
         public fun build(): ApplicationFlags = ApplicationFlags(code)
 
         /**

@@ -360,22 +360,38 @@ public class ChannelFlags internal constructor(
     public class Builder(
         private var code: Int = 0,
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [ChannelFlag].
+         */
         public operator fun ChannelFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [ChannelFlags].
+         */
         public operator fun ChannelFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [ChannelFlag].
+         */
         public operator fun ChannelFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [ChannelFlags].
+         */
         public operator fun ChannelFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Returns an instance of [ChannelFlags] that has all bits set that are currently set in
+         * this [Builder].
+         */
         public fun build(): ChannelFlags = ChannelFlags(code)
 
         /**

@@ -503,22 +503,38 @@ public class MessageFlags internal constructor(
     public class Builder(
         private var code: Int = 0,
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [MessageFlag].
+         */
         public operator fun MessageFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [MessageFlags].
+         */
         public operator fun MessageFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [MessageFlag].
+         */
         public operator fun MessageFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [MessageFlags].
+         */
         public operator fun MessageFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Returns an instance of [MessageFlags] that has all bits set that are currently set in
+         * this [Builder].
+         */
         public fun build(): MessageFlags = MessageFlags(code)
 
         /**

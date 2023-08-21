@@ -430,22 +430,38 @@ public class ActivityFlags internal constructor(
     public class Builder(
         private var `value`: Int = 0,
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [ActivityFlag].
+         */
         public operator fun ActivityFlag.unaryPlus() {
             this@Builder.value = this@Builder.value or this.value
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [ActivityFlags].
+         */
         public operator fun ActivityFlags.unaryPlus() {
             this@Builder.value = this@Builder.value or this.value
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [ActivityFlag].
+         */
         public operator fun ActivityFlag.unaryMinus() {
             this@Builder.value = this@Builder.value and this.value.inv()
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [ActivityFlags].
+         */
         public operator fun ActivityFlags.unaryMinus() {
             this@Builder.value = this@Builder.value and this.value.inv()
         }
 
+        /**
+         * Returns an instance of [ActivityFlags] that has all bits set that are currently set in
+         * this [Builder].
+         */
         public fun build(): ActivityFlags = ActivityFlags(value)
 
         /**

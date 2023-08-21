@@ -360,22 +360,38 @@ public class SpeakingFlags internal constructor(
     public class Builder(
         private var code: Int = 0,
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [SpeakingFlag].
+         */
         public operator fun SpeakingFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [SpeakingFlags].
+         */
         public operator fun SpeakingFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [SpeakingFlag].
+         */
         public operator fun SpeakingFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [SpeakingFlags].
+         */
         public operator fun SpeakingFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Returns an instance of [SpeakingFlags] that has all bits set that are currently set in
+         * this [Builder].
+         */
         public fun build(): SpeakingFlags = SpeakingFlags(code)
 
         /**

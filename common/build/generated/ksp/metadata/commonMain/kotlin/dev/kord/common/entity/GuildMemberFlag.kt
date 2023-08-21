@@ -388,22 +388,38 @@ public class GuildMemberFlags internal constructor(
     public class Builder(
         private var code: Int = 0,
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [GuildMemberFlag].
+         */
         public operator fun GuildMemberFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [GuildMemberFlags].
+         */
         public operator fun GuildMemberFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [GuildMemberFlag].
+         */
         public operator fun GuildMemberFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [GuildMemberFlags].
+         */
         public operator fun GuildMemberFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Returns an instance of [GuildMemberFlags] that has all bits set that are currently set in
+         * this [Builder].
+         */
         public fun build(): GuildMemberFlags = GuildMemberFlags(code)
 
         /**

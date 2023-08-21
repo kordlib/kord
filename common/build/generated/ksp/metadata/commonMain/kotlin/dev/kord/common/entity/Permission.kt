@@ -561,23 +561,39 @@ public class Permissions internal constructor(
     public class Builder(
         private val code: DiscordBitSet = EmptyBitSet(),
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [Permission].
+         */
         public operator fun Permission.unaryPlus() {
             this@Builder.code.add(this.code)
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [Permissions].
+         */
         public operator fun Permissions.unaryPlus() {
             this@Builder.code.add(this.code)
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [Permission].
+         */
         public operator fun Permission.unaryMinus() {
             this@Builder.code.remove(this.code)
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [Permissions].
+         */
         public operator fun Permissions.unaryMinus() {
             this@Builder.code.remove(this.code)
         }
 
-        public fun build(): Permissions = Permissions(code)
+        /**
+         * Returns an instance of [Permissions] that has all bits set that are currently set in this
+         * [Builder].
+         */
+        public fun build(): Permissions = Permissions(code.copy())
 
         /**
          * @suppress

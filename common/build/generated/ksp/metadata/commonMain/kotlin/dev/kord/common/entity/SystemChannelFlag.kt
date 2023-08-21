@@ -426,22 +426,38 @@ public class SystemChannelFlags internal constructor(
     public class Builder(
         private var code: Int = 0,
     ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [SystemChannelFlag].
+         */
         public operator fun SystemChannelFlag.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Sets all bits in the [Builder] that are set in this [SystemChannelFlags].
+         */
         public operator fun SystemChannelFlags.unaryPlus() {
             this@Builder.code = this@Builder.code or this.code
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [SystemChannelFlag].
+         */
         public operator fun SystemChannelFlag.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Unsets all bits in the [Builder] that are set in this [SystemChannelFlags].
+         */
         public operator fun SystemChannelFlags.unaryMinus() {
             this@Builder.code = this@Builder.code and this.code.inv()
         }
 
+        /**
+         * Returns an instance of [SystemChannelFlags] that has all bits set that are currently set
+         * in this [Builder].
+         */
         public fun build(): SystemChannelFlags = SystemChannelFlags(code)
 
         /**

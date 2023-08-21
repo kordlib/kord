@@ -37,4 +37,16 @@ class PermissionTest {
         assertNotEquals(a, c)
         assertNotEquals(b, c)
     }
+
+    @Test
+    fun modifying_Builder_after_build_does_not_affect_built_instances() {
+        val builder = Permissions.Builder()
+        val a = builder.build()
+        builder.apply { +Permission.Administrator }
+        val b = builder.build()
+        val c = builder.build()
+        assertNotEquals(a, b)
+        assertNotEquals(a, c)
+        assertEquals(b, c)
+    }
 }
