@@ -186,12 +186,9 @@ public abstract interface annotation class dev/kord/common/annotation/KordVoice 
 
 public abstract class dev/kord/common/entity/ActivityFlag {
 	public static final field Companion Ldev/kord/common/entity/ActivityFlag$Companion;
-	public static final field Embedded Ldev/kord/common/entity/ActivityFlag;
 	public static final field Instance Ldev/kord/common/entity/ActivityFlag;
 	public static final field Join Ldev/kord/common/entity/ActivityFlag;
 	public static final field JoinRequest Ldev/kord/common/entity/ActivityFlag;
-	public static final field PartyPrivacyFriends Ldev/kord/common/entity/ActivityFlag;
-	public static final field PartyPrivacyVoiceChannel Ldev/kord/common/entity/ActivityFlag;
 	public static final field Play Ldev/kord/common/entity/ActivityFlag;
 	public static final field Spectate Ldev/kord/common/entity/ActivityFlag;
 	public static final field Sync Ldev/kord/common/entity/ActivityFlag;
@@ -269,6 +266,7 @@ public final class dev/kord/common/entity/ActivityFlagKt {
 
 public final class dev/kord/common/entity/ActivityFlags {
 	public static final field Companion Ldev/kord/common/entity/ActivityFlags$Companion;
+	public fun <init> (I)V
 	public final fun contains (Ldev/kord/common/entity/ActivityFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ActivityFlags;)Z
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ActivityFlags;
@@ -289,7 +287,6 @@ public final class dev/kord/common/entity/ActivityFlags$Builder {
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/common/entity/ActivityFlags;
-	public final fun flags ()Ldev/kord/common/entity/ActivityFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/ActivityFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/ActivityFlags;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/ActivityFlag;)V

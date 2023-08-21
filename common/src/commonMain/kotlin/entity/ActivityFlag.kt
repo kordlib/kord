@@ -1,4 +1,3 @@
-// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
@@ -47,14 +46,14 @@ public sealed class ActivityFlag(
      * [flag].
      */
     public operator fun plus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value or flag.value)
+            ActivityFlags(this.value or flag.value, null)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value or flags.value)
+            ActivityFlags(this.value or flags.value, null)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is ActivityFlag && this.shift == other.shift)
@@ -188,27 +187,6 @@ public sealed class ActivityFlag(
         )
         @JvmField
         public val Play: ActivityFlag = Play
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val PartyPrivacyFriends: ActivityFlag = PartyPrivacyFriends
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val PartyPrivacyVoiceChannel: ActivityFlag = PartyPrivacyVoiceChannel
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Embedded: ActivityFlag = Embedded
 
         /**
          * Returns an instance of [ActivityFlag] with [ActivityFlag.shift] equal to the specified
@@ -356,7 +334,18 @@ public class ActivityFlags internal constructor(
      * The raw value used by Discord.
      */
     public val `value`: Int,
+    @Suppress("UNUSED_PARAMETER") unused: Nothing?,
 ) {
+    // TODO uncomment annotation in DiscordActivity.kt and delete this file when this constructor is removed after
+    //  deprecation cycle
+    @Deprecated(
+        "Don't construct an instance of 'ActivityFlags' from a raw value. Use the factory functions described in the " +
+            "documentation instead.",
+        ReplaceWith("ActivityFlags.Builder(value).build()", "dev.kord.common.entity.ActivityFlags"),
+        DeprecationLevel.WARNING,
+    )
+    public constructor(value: Int) : this(value, null)
+
     /**
      * A [Set] of all [ActivityFlag]s contained in this instance of [ActivityFlags].
      */
@@ -398,28 +387,28 @@ public class ActivityFlags internal constructor(
      * [flag].
      */
     public operator fun plus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value or flag.value)
+            ActivityFlags(this.value or flag.value, null)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value or flags.value)
+            ActivityFlags(this.value or flags.value, null)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flag].
      */
     public operator fun minus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value and flag.value.inv())
+            ActivityFlags(this.value and flag.value.inv(), null)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flags].
      */
     public operator fun minus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value and flags.value.inv())
+            ActivityFlags(this.value and flags.value.inv(), null)
 
     /**
      * Returns a copy of this instance of [ActivityFlags] modified with [builder].
@@ -471,16 +460,7 @@ public class ActivityFlags internal constructor(
          * Returns an instance of [ActivityFlags] that has all bits set that are currently set in
          * this [Builder].
          */
-        public fun build(): ActivityFlags = ActivityFlags(value)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): ActivityFlags = build()
+        public fun build(): ActivityFlags = ActivityFlags(value, null)
     }
 
     internal object Serializer : KSerializer<ActivityFlags> {
@@ -494,7 +474,7 @@ public class ActivityFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): ActivityFlags =
-                ActivityFlags(decoder.decodeSerializableValue(delegate))
+                ActivityFlags(decoder.decodeSerializableValue(delegate), null)
     }
 }
 
