@@ -1,6 +1,7 @@
 package dev.kord.common.json
 
 import dev.kord.common.entity.DiscordUser
+import dev.kord.common.entity.UserFlag.HouseBravery
 import dev.kord.common.entity.UserFlags
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
@@ -14,7 +15,7 @@ class UserTest {
 
     @Test
     @JsName("test1")
-    fun `User serialization`() = runTest{
+    fun `User serialization`() = runTest {
         val user = Json.decodeFromString(DiscordUser.serializer(), file("user"))
 
         with(user) {
@@ -26,7 +27,7 @@ class UserTest {
             avatar shouldBe "8342729096ea3675442027381ff50dfe"
             verified.asNullable!! shouldBe true
             email.value shouldBe "nelly@discordapp.com"
-            flags.value shouldBe UserFlags(64)
+            flags.value shouldBe UserFlags(HouseBravery)
             premiumType.value!!.value shouldBe 1
         }
 

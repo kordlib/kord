@@ -6244,6 +6244,10 @@ public final class dev/kord/common/entity/DiscordUser$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/DiscordUserKt {
+	public static final synthetic fun UserFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
+}
+
 public final class dev/kord/common/entity/DiscordVoiceRegion {
 	public static final field Companion Ldev/kord/common/entity/DiscordVoiceRegion$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -8764,6 +8768,8 @@ public final class dev/kord/common/entity/UserFlagKt {
 
 public final class dev/kord/common/entity/UserFlags {
 	public static final field Companion Ldev/kord/common/entity/UserFlags$Companion;
+	public static final field UserFlagsSerializer Ldev/kord/common/entity/UserFlags$UserFlagsSerializer;
+	public fun <init> (I)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/UserFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/UserFlags;)Z
@@ -8787,7 +8793,6 @@ public final class dev/kord/common/entity/UserFlags$Builder {
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/common/entity/UserFlags;
-	public final fun flags ()Ldev/kord/common/entity/UserFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/UserFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/UserFlags;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/UserFlag;)V
@@ -8795,6 +8800,24 @@ public final class dev/kord/common/entity/UserFlags$Builder {
 }
 
 public final class dev/kord/common/entity/UserFlags$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/common/entity/UserFlags$UserFlagsBuilder {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun flags ()Ldev/kord/common/entity/UserFlags;
+	public final fun unaryMinus (Ldev/kord/common/entity/UserFlag;)V
+	public final fun unaryPlus (Ldev/kord/common/entity/UserFlag;)V
+}
+
+public final class dev/kord/common/entity/UserFlags$UserFlagsSerializer : kotlinx/serialization/KSerializer {
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/UserFlags;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/UserFlags;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

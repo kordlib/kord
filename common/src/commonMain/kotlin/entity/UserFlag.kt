@@ -1,4 +1,3 @@
-// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
@@ -45,12 +44,12 @@ public sealed class UserFlag(
     /**
      * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flag].
      */
-    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
+    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code, null)
 
     /**
      * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flags].
      */
-    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
+    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code, null)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is UserFlag && this.shift == other.shift)
@@ -490,7 +489,17 @@ public class UserFlags internal constructor(
      * The raw code used by Discord.
      */
     public val code: Int,
+    @Suppress("UNUSED_PARAMETER") unused: Nothing?,
 ) {
+    // TODO uncomment annotation in DiscordUser.kt and delete this file when this constructor is removed after
+    //  deprecation cycle
+    @Deprecated(
+        "Don't construct an instance of 'UserFlags' from a raw code. Use the factory functions described in the " +
+            "documentation instead.",
+        ReplaceWith("UserFlags.Builder(code).build()", "dev.kord.common.entity.UserFlags"),
+        DeprecationLevel.WARNING,
+    )
+    public constructor(code: Int) : this(code, null)
     /**
      * A [Set] of all [UserFlag]s contained in this instance of [UserFlags].
      */
@@ -528,25 +537,25 @@ public class UserFlags internal constructor(
     /**
      * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flag].
      */
-    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code)
+    public operator fun plus(flag: UserFlag): UserFlags = UserFlags(this.code or flag.code, null)
 
     /**
      * Returns an instance of [UserFlags] that has all bits set that are set in `this` and [flags].
      */
-    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code)
+    public operator fun plus(flags: UserFlags): UserFlags = UserFlags(this.code or flags.code, null)
 
     /**
      * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flag].
      */
-    public operator fun minus(flag: UserFlag): UserFlags = UserFlags(this.code and flag.code.inv())
+    public operator fun minus(flag: UserFlag): UserFlags = UserFlags(this.code and flag.code.inv(), null)
 
     /**
      * Returns an instance of [UserFlags] that has all bits set that are set in `this` except the
      * bits that are set in [flags].
      */
     public operator fun minus(flags: UserFlags): UserFlags =
-            UserFlags(this.code and flags.code.inv())
+            UserFlags(this.code and flags.code.inv(), null)
 
     /**
      * Returns a copy of this instance of [UserFlags] modified with [builder].
@@ -577,7 +586,19 @@ public class UserFlags internal constructor(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: Int = this.code): UserFlags = UserFlags(code)
+    public fun copy(code: Int = this.code): UserFlags = UserFlags(code, null)
+
+    @Deprecated(
+        "Renamed to 'Builder'.",
+        ReplaceWith("UserFlags.Builder", imports = ["dev.kord.common.entity.UserFlags"]),
+        DeprecationLevel.WARNING,
+    )
+    public class UserFlagsBuilder(code: Int = 0) {
+        private val delegate = Builder(code)
+        public operator fun UserFlag.unaryPlus(): Unit = with(delegate) { unaryPlus() }
+        public operator fun UserFlag.unaryMinus(): Unit = with(delegate) { unaryMinus() }
+        public fun flags(): UserFlags = delegate.build()
+    }
 
     public class Builder(
         private var code: Int = 0,
@@ -614,16 +635,7 @@ public class UserFlags internal constructor(
          * Returns an instance of [UserFlags] that has all bits set that are currently set in this
          * [Builder].
          */
-        public fun build(): UserFlags = UserFlags(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): UserFlags = build()
+        public fun build(): UserFlags = UserFlags(code, null)
     }
 
     internal object Serializer : KSerializer<UserFlags> {
@@ -637,7 +649,27 @@ public class UserFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): UserFlags =
-                UserFlags(decoder.decodeSerializableValue(delegate))
+                UserFlags(decoder.decodeSerializableValue(delegate), null)
+    }
+
+    public companion object {
+        @Suppress("DEPRECATION")
+        @Deprecated(
+            "Renamed to 'Companion', which no longer implements 'KSerializer<UserFlags>'.",
+            ReplaceWith("UserFlags.serializer()", imports = ["dev.kord.common.entity.UserFlags"]),
+            DeprecationLevel.WARNING,
+        )
+        @JvmField
+        public val UserFlagsSerializer: UserFlagsSerializer = UserFlagsSerializer()
+    }
+
+    @Deprecated(
+        "Renamed to 'Companion', which no longer implements 'KSerializer<UserFlags>'.",
+        ReplaceWith("UserFlags.serializer()", imports = ["dev.kord.common.entity.UserFlags"]),
+        DeprecationLevel.WARNING,
+    )
+    public class UserFlagsSerializer internal constructor() : KSerializer<UserFlags> by Serializer {
+        public fun serializer(): KSerializer<UserFlags> = this
     }
 }
 
