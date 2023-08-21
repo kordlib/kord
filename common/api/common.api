@@ -6806,6 +6806,7 @@ public final class dev/kord/common/entity/GuildMemberFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/GuildMemberFlag;
 	public final fun getEntries ()Ljava/util/List;
 	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlag;
 	public fun values ()[Ldev/kord/common/entity/GuildMemberFlag;
 }
@@ -6836,6 +6837,7 @@ public final class dev/kord/common/entity/GuildMemberFlagKt {
 
 public final class dev/kord/common/entity/GuildMemberFlags {
 	public static final field Companion Ldev/kord/common/entity/GuildMemberFlags$Companion;
+	public fun <init> (I)V
 	public final fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/GuildMemberFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/GuildMemberFlags;)Z
@@ -6858,7 +6860,6 @@ public final class dev/kord/common/entity/GuildMemberFlags$Builder {
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/common/entity/GuildMemberFlags;
-	public final fun flags ()Ldev/kord/common/entity/GuildMemberFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/GuildMemberFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/GuildMemberFlags;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/GuildMemberFlag;)V

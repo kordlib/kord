@@ -1,4 +1,3 @@
-// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
@@ -47,14 +46,14 @@ public sealed class GuildMemberFlag(
      * [flag].
      */
     public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code or flag.code)
+            GuildMemberFlags(this.code or flag.code, null)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code or flags.code)
+            GuildMemberFlags(this.code or flags.code, null)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is GuildMemberFlag && this.shift == other.shift)
@@ -70,7 +69,8 @@ public sealed class GuildMemberFlag(
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
             "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
-    public fun name(): String = this::class.simpleName!!
+    public fun name(): String = name
+    private val name get() = this::class.simpleName!!
 
     /**
      * @suppress
@@ -138,6 +138,22 @@ public sealed class GuildMemberFlag(
             )
         }
 
+        // TODO uncomment annotation in Member.kt and delete this file when this function is removed after deprecation
+        //  cycle
+        @Deprecated(
+            "'GuildMemberFlag' is no longer serializable, serialize 'GuildMemberFlags' instead. Deprecated without a " +
+                "replacement.",
+            level = DeprecationLevel.WARNING,
+        )
+        public fun serializer(): KSerializer<GuildMemberFlag> = Serializer
+
+        private object Serializer : KSerializer<GuildMemberFlag> {
+            override val descriptor =
+                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildMemberFlag", PrimitiveKind.STRING)
+
+            override fun serialize(encoder: Encoder, value: GuildMemberFlag) = encoder.encodeString(value.name)
+            override fun deserialize(decoder: Decoder) = valueOf0(decoder.decodeString())
+        }
 
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
@@ -188,7 +204,8 @@ public sealed class GuildMemberFlag(
         @Deprecated(message =
                 "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
         @JvmStatic
-        public open fun valueOf(name: String): GuildMemberFlag = when (name) {
+        public open fun valueOf(name: String): GuildMemberFlag = valueOf0(name)
+        private fun valueOf0(name: String) = when (name) {
             "DidRejoin" -> DidRejoin
             "CompletedOnboarding" -> CompletedOnboarding
             "BypassesVerification" -> BypassesVerification
@@ -306,7 +323,18 @@ public class GuildMemberFlags internal constructor(
      * The raw code used by Discord.
      */
     public val code: Int,
+    @Suppress("UNUSED_PARAMETER") unused: Nothing?,
 ) {
+    // TODO uncomment annotation in Member.kt and delete this file when this constructor is removed after deprecation
+    //  cycle
+    @Deprecated(
+        "Don't construct an instance of 'GuildMemberFlags' from a raw code. Use the factory functions described in " +
+            "the documentation instead.",
+        ReplaceWith("GuildMemberFlags.Builder(code).build()", "dev.kord.common.entity.GuildMemberFlags"),
+        DeprecationLevel.WARNING,
+    )
+    public constructor(code: Int) : this(code, null)
+
     /**
      * A [Set] of all [GuildMemberFlag]s contained in this instance of [GuildMemberFlags].
      */
@@ -338,28 +366,28 @@ public class GuildMemberFlags internal constructor(
      * [flag].
      */
     public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code or flag.code)
+            GuildMemberFlags(this.code or flag.code, null)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code or flags.code)
+            GuildMemberFlags(this.code or flags.code, null)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flag].
      */
     public operator fun minus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code and flag.code.inv())
+            GuildMemberFlags(this.code and flag.code.inv(), null)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flags].
      */
     public operator fun minus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code and flags.code.inv())
+            GuildMemberFlags(this.code and flags.code.inv(), null)
 
     /**
      * Returns a copy of this instance of [GuildMemberFlags] modified with [builder].
@@ -391,7 +419,7 @@ public class GuildMemberFlags internal constructor(
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
             "GuildMemberFlags is no longer a data class. Deprecated without a replacement.")
-    public fun copy(code: Int = this.code): GuildMemberFlags = GuildMemberFlags(code)
+    public fun copy(code: Int = this.code): GuildMemberFlags = GuildMemberFlags(code, null)
 
     public class Builder(
         private var code: Int = 0,
@@ -428,16 +456,7 @@ public class GuildMemberFlags internal constructor(
          * Returns an instance of [GuildMemberFlags] that has all bits set that are currently set in
          * this [Builder].
          */
-        public fun build(): GuildMemberFlags = GuildMemberFlags(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): GuildMemberFlags = build()
+        public fun build(): GuildMemberFlags = GuildMemberFlags(code, null)
     }
 
     internal object Serializer : KSerializer<GuildMemberFlags> {
@@ -452,7 +471,7 @@ public class GuildMemberFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): GuildMemberFlags =
-                GuildMemberFlags(decoder.decodeSerializableValue(delegate))
+                GuildMemberFlags(decoder.decodeSerializableValue(delegate), null)
     }
 }
 
