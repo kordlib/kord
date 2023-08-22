@@ -22,61 +22,61 @@ private val BitFlags.docStringFormat: String
         return """
             A collection of multiple [%1T]s.
             
-            ## Creating an instance of [%2T]
+            ##·Creating·an·instance·of·[%2T]
             
             You can create an instance of [%2T] using the following methods:
             ```kotlin
-            // from individual %1Ts
-            val ${collection}1 = %2T(%3T, %4T)
+            //·from·individual·%1Ts
+            val·${collection}1·=·%2T(%3T,·%4T)
             
-            // from an Iterable
-            val iterable: Iterable<%1T> = TODO()
-            val ${collection}2 = %2T(iterable)
+            //·from·an·Iterable
+            val·iterable:·Iterable<%1T>·=·TODO()
+            val·${collection}2·=·%2T(iterable)
             
-            // using a builder
-            val ${collection}3 = %2T {
+            //·using·a·builder
+            val·${collection}3·=·%2T·{
                 +${collection}2
                 +%3T
                 -%4T
             }
             ```
             
-            ## Modifying an existing instance of [%2T]
+            ##·Modifying·an·existing·instance·of·[%2T]
             
             You can create a modified copy of an existing instance of [%2T] using the [copy] method:
             ```kotlin
-            $collection.copy {
+            $collection.copy·{
                 +%3T
             }
             ```
             
-            ## Mathematical operators
+            ##·Mathematical·operators
             
             All [%2T] objects can use `+`/`-` operators:
             ```kotlin
-            val ${collection}1 = $collection + %3T
-            val ${collection}2 = $collection - %4T
-            val ${collection}3 = ${collection}1 + ${collection}2
+            val·${collection}1·=·$collection·+·%3T
+            val·${collection}2·=·$collection·-·%4T
+            val·${collection}3·=·${collection}1·+·${collection}2
             ```
             
-            ## Checking for [%1T]s
+            ##·Checking·for·[%1T]s
             
             You can use the [contains] operator to check whether an instance of [%2T] contains specific [%1T]s:
             ```kotlin
-            val has%1T = %3T in $collection
-            val has%2T = %2T(%3T, %4T)·in·$collection
+            val·has%1T·=·%3T·in·$collection
+            val·has%2T·=·%2T(%3T,·%4T)·in·$collection
             ```
             
-            ## Unknown [%1T]s
+            ##·Unknown·[%1T]s
             
             Whenever [%1T]s haven't been added to Kord yet, they will be deserialized as instances of [%5T].
             
             You can also use [%1T.fromShift] to check for [unknown][%5T] [%1T]s.
             ```kotlin
-            val hasUnknown%1T = %1T.fromShift(23) in $collection
+            val·hasUnknown%1T·=·%1T.fromShift(23)·in·$collection
             ```
             
-            @see %1T
-            @see %6T
+            @see·%1T
+            @see·%6T
         """.trimIndent()
     }

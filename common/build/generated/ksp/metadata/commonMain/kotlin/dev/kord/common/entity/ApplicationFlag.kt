@@ -351,9 +351,7 @@ public sealed class ApplicationFlag(
  * You can create an instance of [ApplicationFlags] using the following methods:
  * ```kotlin
  * // from individual ApplicationFlags
- * val applicationFlags1 =
- * ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
- * ApplicationFlag.GatewayPresence)
+ * val applicationFlags1 = ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge, ApplicationFlag.GatewayPresence)
  *
  * // from an Iterable
  * val iterable: Iterable<ApplicationFlag> = TODO()
@@ -381,8 +379,7 @@ public sealed class ApplicationFlag(
  *
  * All [ApplicationFlags] objects can use `+`/`-` operators:
  * ```kotlin
- * val applicationFlags1 = applicationFlags +
- * ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
+ * val applicationFlags1 = applicationFlags + ApplicationFlag.ApplicationAutoModerationRuleCreateBadge
  * val applicationFlags2 = applicationFlags - ApplicationFlag.GatewayPresence
  * val applicationFlags3 = applicationFlags1 + applicationFlags2
  * ```
@@ -392,11 +389,8 @@ public sealed class ApplicationFlag(
  * You can use the [contains] operator to check whether an instance of [ApplicationFlags] contains
  * specific [ApplicationFlag]s:
  * ```kotlin
- * val hasApplicationFlag = ApplicationFlag.ApplicationAutoModerationRuleCreateBadge in
- * applicationFlags
- * val hasApplicationFlags =
- * ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge,
- * ApplicationFlag.GatewayPresence) in applicationFlags
+ * val hasApplicationFlag = ApplicationFlag.ApplicationAutoModerationRuleCreateBadge in applicationFlags
+ * val hasApplicationFlags = ApplicationFlags(ApplicationFlag.ApplicationAutoModerationRuleCreateBadge, ApplicationFlag.GatewayPresence) in applicationFlags
  * ```
  *
  * ## Unknown [ApplicationFlag]s

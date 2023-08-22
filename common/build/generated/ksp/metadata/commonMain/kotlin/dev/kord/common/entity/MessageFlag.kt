@@ -390,8 +390,7 @@ public sealed class MessageFlag(
  * specific [MessageFlag]s:
  * ```kotlin
  * val hasMessageFlag = MessageFlag.CrossPosted in messageFlags
- * val hasMessageFlags = MessageFlags(MessageFlag.CrossPosted,
- * MessageFlag.IsCrossPost) in messageFlags
+ * val hasMessageFlags = MessageFlags(MessageFlag.CrossPosted, MessageFlag.IsCrossPost) in messageFlags
  * ```
  *
  * ## Unknown [MessageFlag]s
