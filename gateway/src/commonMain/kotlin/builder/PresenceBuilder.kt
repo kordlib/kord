@@ -40,14 +40,11 @@ public class PresenceBuilder {
         game = DiscordBotActivity(name, ActivityType.Competing)
     }
 
-    public fun custom(state: String) {
-        game = DiscordBotActivity(name = "Custom Status", state = Optional(state), type = ActivityType.Custom)
-    }
+    public fun toUpdateStatus(): UpdateStatus = UpdateStatus(since, listOfNotNull(game.withState(_state)), status, afk)
 
-    public fun toUpdateStatus(): UpdateStatus = UpdateStatus(since, listOfNotNull(game?.withState(_state)), status, afk)
-
-    public fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since, game?.withState(_state))
+    public fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since, game.withState(_state))
 }
 
-private fun DiscordBotActivity.withState(state: Optional<String?>): DiscordBotActivity =
-    copy(state = this.state.orElse(state))
+private fun DiscordBotActivity?.withState(state: Optional<String?>): DiscordBotActivity =
+    this?.copy(state = this.state.orElse(state))
+        ?: DiscordBotActivity(name = "Custom Status", state = state, type = ActivityType.Custom)
