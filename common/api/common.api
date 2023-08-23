@@ -2803,16 +2803,18 @@ public final class dev/kord/common/entity/DiscordAutoModerationRuleTriggerMetada
 
 public final class dev/kord/common/entity/DiscordBotActivity {
 	public static final field Companion Ldev/kord/common/entity/DiscordBotActivity$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/ActivityType;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordBotActivity;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordBotActivity;Ljava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordBotActivity;
+	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ljava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordBotActivity;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordBotActivity;Ljava/lang/String;Ldev/kord/common/entity/ActivityType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordBotActivity;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getName ()Ljava/lang/String;
+	public final fun getState ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getType ()Ldev/kord/common/entity/ActivityType;
 	public final fun getUrl ()Ldev/kord/common/entity/optional/Optional;
 	public fun hashCode ()I

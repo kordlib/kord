@@ -1975,11 +1975,13 @@ public final class dev/kord/gateway/builder/PresenceBuilder {
 	public final fun competing (Ljava/lang/String;)V
 	public final fun getAfk ()Z
 	public final fun getSince ()Lkotlinx/datetime/Instant;
+	public final fun getState ()Ljava/lang/String;
 	public final fun getStatus ()Ldev/kord/common/entity/PresenceStatus;
 	public final fun listening (Ljava/lang/String;)V
 	public final fun playing (Ljava/lang/String;)V
 	public final fun setAfk (Z)V
 	public final fun setSince (Lkotlinx/datetime/Instant;)V
+	public final fun setState (Ljava/lang/String;)V
 	public final fun setStatus (Ldev/kord/common/entity/PresenceStatus;)V
 	public final fun streaming (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun toPresence ()Ldev/kord/gateway/DiscordPresence;
