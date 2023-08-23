@@ -1973,7 +1973,6 @@ public final class dev/kord/gateway/builder/LoginBuilder {
 public final class dev/kord/gateway/builder/PresenceBuilder {
 	public fun <init> ()V
 	public final fun competing (Ljava/lang/String;)V
-	public final fun custom (Ljava/lang/String;)V
 	public final fun getAfk ()Z
 	public final fun getSince ()Lkotlinx/datetime/Instant;
 	public final fun getState ()Ljava/lang/String;
