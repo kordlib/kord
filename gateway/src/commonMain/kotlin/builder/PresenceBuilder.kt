@@ -6,7 +6,6 @@ import dev.kord.common.entity.DiscordBotActivity
 import dev.kord.common.entity.PresenceStatus
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
-import dev.kord.common.entity.optional.orElse
 import dev.kord.gateway.DiscordPresence
 import dev.kord.gateway.UpdateStatus
 import kotlinx.datetime.Instant
@@ -40,11 +39,21 @@ public class PresenceBuilder {
         game = DiscordBotActivity(name, ActivityType.Competing)
     }
 
-    public fun toUpdateStatus(): UpdateStatus = UpdateStatus(since, listOfNotNull(game.withState(_state)), status, afk)
+    private fun buildGame(): DiscordBotActivity? {
+        val game = game
+        val state = _state
+        return when {
+            game != null -> game.copy(state = state)
+            state !is Optional.Missing -> DiscordBotActivity(
+                name = "Custom Status", // https://github.com/discord/discord-api-docs/pull/6345#issuecomment-1672271748
+                ActivityType.Custom,
+                state,
+            )
+            else -> null
+        }
+    }
 
-    public fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since, game.withState(_state))
+    public fun toUpdateStatus(): UpdateStatus = UpdateStatus(since, listOfNotNull(buildGame()), status, afk)
+
+    public fun toPresence(): DiscordPresence = DiscordPresence(status, afk, since, buildGame())
 }
-
-private fun DiscordBotActivity?.withState(state: Optional<String?>): DiscordBotActivity =
-    this?.copy(state = this.state.orElse(state))
-        ?: DiscordBotActivity(name = "Custom Status", state = state, type = ActivityType.Custom)

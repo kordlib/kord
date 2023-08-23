@@ -8524,7 +8524,6 @@ public final class dev/kord/common/entity/optional/OptionalKt {
 	public static final fun mapValues (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/Optional;
 	public static final fun optional (Ljava/lang/Object;)Ldev/kord/common/entity/optional/Optional$Value;
 	public static final fun optional (Ljava/lang/Object;)Ldev/kord/common/entity/optional/Optional;
-	public static final fun orElse (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/optional/Optional;
 	public static final fun orEmpty (Ldev/kord/common/entity/optional/Optional;)Ljava/util/List;
 	public static final fun orEmpty (Ldev/kord/common/entity/optional/Optional;)Ljava/util/Set;
 	public static final fun switchOnMissing (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/optional/Optional;
