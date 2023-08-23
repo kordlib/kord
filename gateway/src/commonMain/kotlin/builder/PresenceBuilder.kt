@@ -47,7 +47,7 @@ public class PresenceBuilder {
             state !is Optional.Missing -> DiscordBotActivity(
                 name = "Custom Status", // https://github.com/discord/discord-api-docs/pull/6345#issuecomment-1672271748
                 ActivityType.Custom,
-                state,
+                state = state,
             )
             else -> null
         }

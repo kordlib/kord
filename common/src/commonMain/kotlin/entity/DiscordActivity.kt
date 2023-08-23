@@ -31,8 +31,8 @@ import kotlinx.serialization.encoding.Encoder
 public data class DiscordBotActivity(
     val name: String,
     val type: ActivityType,
+    val url: Optional<String?> = Optional.Missing(),
     val state: Optional<String?> = Optional.Missing(),
-    val url: Optional<String?> = Optional.Missing()
 )
 
 @Serializable
