@@ -5,6 +5,7 @@ import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity
+import kotlinx.serialization.descriptors.SerialDescriptor
 
 context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addEntityKDoc() {
@@ -37,6 +38,20 @@ internal fun TypeSpec.Builder.addEntityEntries() {
             superclass(entityCN)
             addSuperclassConstructorParameter(valueFormat, entry.value)
         }
+    }
+}
+
+context(GenerationEntity, GenerationContext)
+internal fun TypeSpec.Builder.addSharedSerializerContent(serializedClass: ClassName) {
+    addModifiers(INTERNAL)
+    addSuperinterface(K_SERIALIZER.parameterizedBy(serializedClass))
+    addProperty<SerialDescriptor>("descriptor", OVERRIDE) {
+        initializer(
+            "%M(%S, %T)",
+            PRIMITIVE_SERIAL_DESCRIPTOR,
+            serializedClass.canonicalName,
+            valueType.toPrimitiveKind(),
+        )
     }
 }
 

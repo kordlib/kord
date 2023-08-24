@@ -44,7 +44,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addKdoc("The raw $valueName used by Discord.")
             getter {
                 when (valueType) {
-                    INT -> addStatement("return 1 shl shift")
+                    INT -> addStatement("return 1·shl·shift")
                     BIT_SET -> addStatement("return %M().also·{·it[shift]·=·true·}", EMPTY_BIT_SET)
                 }
             }
