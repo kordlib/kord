@@ -1,6 +1,6 @@
 @file:Generate(
     INT_FLAGS, name = "ApplicationFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
-    hadFlagsProperty = true,
+    hadFlagsProperty = true, builderHadFlagsFunction = true,
     docUrl = "https://discord.com/developers/docs/resources/application#application-object-application-flags",
     entries = [
         Entry(

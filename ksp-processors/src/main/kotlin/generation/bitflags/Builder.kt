@@ -47,18 +47,20 @@ internal fun TypeSpec.Builder.addBuilder() = addClass(builderCN) {
         }
         addStatement("return %T($valueName$valueCopy)", collectionCN)
     }
-    addFunction("flags") {
-        addKdoc("@suppress")
-        @OptIn(DelicateKotlinPoetApi::class)
-        addAnnotation(
-            Deprecated(
-                "Renamed to 'build'",
-                ReplaceWith("this.build()", imports = emptyArray()),
-                DeprecationLevel.WARNING,
+    if (builderHadFlagsFunction) {
+        addFunction("flags") {
+            addKdoc("@suppress")
+            @OptIn(DelicateKotlinPoetApi::class)
+            addAnnotation(
+                Deprecated(
+                    "Renamed to 'build'",
+                    ReplaceWith("this.build()", imports = emptyArray()),
+                    DeprecationLevel.WARNING,
+                )
             )
-        )
-        returns(collectionCN)
-        addStatement("return build()")
+            returns(collectionCN)
+            addStatement("return build()")
+        }
     }
 }
 

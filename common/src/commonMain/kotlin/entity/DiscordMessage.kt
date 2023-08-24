@@ -38,7 +38,7 @@
 
 @file:Generate(
     INT_FLAGS, name = "MessageFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
-    hadFlagsProperty = true,
+    hadFlagsProperty = true, builderHadFlagsFunction = true,
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-flags",
     entries = [
         Entry(

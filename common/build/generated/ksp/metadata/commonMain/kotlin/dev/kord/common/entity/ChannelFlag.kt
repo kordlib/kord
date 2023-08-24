@@ -401,15 +401,6 @@ public class ChannelFlags internal constructor(
          * this [Builder].
          */
         public fun build(): ChannelFlags = ChannelFlags(code)
-
-        /**
-         * @suppress
-         */
-        @Deprecated(
-            message = "Renamed to 'build'",
-            replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-        )
-        public fun flags(): ChannelFlags = build()
     }
 
     internal object Serializer : KSerializer<ChannelFlags> {
