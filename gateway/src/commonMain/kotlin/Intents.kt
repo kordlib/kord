@@ -228,8 +228,8 @@ import kotlin.annotation.AnnotationTarget.*
 @MustBeDocumented
 @RequiresOptIn(
     "Some intents are defined as \"privileged\" due to the sensitive nature of the data and cannot be used by Kord " +
-            "without enabling them. See https://discord.com/developers/docs/topics/gateway#privileged-intents for " +
-            "more info on how to enable these.",
+        "without enabling them. See https://discord.com/developers/docs/topics/gateway#privileged-intents for more " +
+        "info on how to enable these.",
     level = ERROR,
 )
 @Retention(BINARY)
