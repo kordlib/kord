@@ -100,9 +100,9 @@ public sealed class Intent(
     public object GuildMembers : Intent(1)
 
     @Deprecated(
-        message = "Renamed to 'GuildModeration'",
-        replaceWith = ReplaceWith(expression = "Intent.GuildModeration", imports =
-                    arrayOf("dev.kord.gateway.Intent")),
+        "Renamed to 'GuildModeration'.",
+        ReplaceWith("Intent.GuildModeration", imports = ["dev.kord.gateway.Intent"]),
+        DeprecationLevel.WARNING,
     )
     public object GuildBans : Intent(2)
 
