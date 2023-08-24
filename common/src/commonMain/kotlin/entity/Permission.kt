@@ -276,11 +276,7 @@ public sealed class Permission {
     /**
      * Allows management and editing of emojis and stickers.
      */
-    @Deprecated(
-        level = DeprecationLevel.HIDDEN,
-        message = "Renamed by discord",
-        replaceWith = ReplaceWith(expression = "ManageGuildExpressions", imports = arrayOf()),
-    )
+    @Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.HIDDEN)
     public object ManageEmojisAndStickers : Permission(30)
 
     /**

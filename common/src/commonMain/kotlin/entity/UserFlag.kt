@@ -156,10 +156,9 @@ public sealed class UserFlag(
     public object TeamUser : UserFlag(10)
 
     @Deprecated(
-        message =
-                "'UserFlag.System' is no longer documented. You can still use it with 'UserFlag.fromShift(12)'.",
-        replaceWith = ReplaceWith(expression = "UserFlag.fromShift(12)", imports =
-                    arrayOf("dev.kord.common.entity.UserFlag")),
+        "'UserFlag.System' is no longer documented. You can still use it with 'UserFlag.fromShift(12)'.",
+        ReplaceWith("UserFlag.fromShift(12)", imports = ["dev.kord.common.entity.UserFlag"]),
+        DeprecationLevel.WARNING,
     )
     public object System : UserFlag(12)
 

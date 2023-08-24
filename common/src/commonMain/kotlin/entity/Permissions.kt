@@ -46,14 +46,6 @@
         Entry("ManageRoles", shift = 28, kDoc = "Allows management and editing of roles."),
         Entry("ManageWebhooks", shift = 29, kDoc = "Allows management and editing of webhooks."),
         Entry(
-            "ManageEmojisAndStickers", shift = 30, kDoc = "Allows management and editing of emojis and stickers.",
-            deprecated = Deprecated(
-                "Renamed by discord",
-                ReplaceWith("ManageGuildExpressions"),
-                DeprecationLevel.HIDDEN,
-            ),
-        ),
-        Entry(
             "ManageGuildExpressions", shift = 30,
             kDoc = "Allows management and editing of emojis, stickers, and soundboard sounds.",
         ),

@@ -25,14 +25,6 @@
         Entry("HouseBalance", shift = 8, kDoc = "House Balance Member"),
         Entry("EarlySupporter", shift = 9, kDoc = "Early Nitro Supporter"),
         Entry("TeamUser", shift = 10, kDoc = "User is a team"),
-        Entry(
-            "System", shift = 12,
-            deprecated = Deprecated(
-                "'UserFlag.System' is no longer documented. You can still use it with 'UserFlag.fromShift(12)'.",
-                ReplaceWith("UserFlag.fromShift(12)", "dev.kord.common.entity.UserFlag"),
-                level = WARNING,
-            ),
-        ),
         Entry("BugHunterLevel2", shift = 14, kDoc = "Bug Hunter Level 2"),
         Entry("VerifiedBot", shift = 16, kDoc = "Verified Bot"),
         Entry("VerifiedBotDeveloper", shift = 17, kDoc = "Early Verified Bot Developer"),
