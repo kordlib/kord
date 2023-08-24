@@ -446,7 +446,7 @@ public class Intents internal constructor(
     @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return IntentsBuilder(code).apply(block).flags()
+        return IntentsBuilder(code.copy()).apply(block).flags()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||

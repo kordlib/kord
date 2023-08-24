@@ -629,7 +629,7 @@ public class Permissions internal constructor(
     @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun copy(block: PermissionsBuilder.() -> Unit): Permissions {
         contract { callsInPlace(block, EXACTLY_ONCE) }
-        return PermissionsBuilder(code).apply(block).permissions()
+        return PermissionsBuilder(code.copy()).apply(block).permissions()
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
