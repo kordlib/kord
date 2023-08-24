@@ -24,7 +24,7 @@
                 - [ThreadListSync]
                 - [ThreadMemberUpdate]
                 - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
-                [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
+                [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
             """,
         ),
         Entry(
@@ -35,7 +35,7 @@
                 - [GuildMemberUpdate]
                 - [GuildMemberRemove]
                 - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
-                [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
+                [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
             """,
         ),
         Entry(

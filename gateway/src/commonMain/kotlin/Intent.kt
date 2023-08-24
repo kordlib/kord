@@ -84,7 +84,7 @@ public sealed class Intent(
      * - [ThreadListSync]
      * - [ThreadMemberUpdate]
      * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
-     * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
+     * [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
      */
     public object Guilds : Intent(0)
 
@@ -94,7 +94,7 @@ public sealed class Intent(
      * - [GuildMemberUpdate]
      * - [GuildMemberRemove]
      * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
-     * [here](https://discord.com/developers/docs/topics/gateway#thread-members-update))
+     * [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
      */
     @PrivilegedIntent
     public object GuildMembers : Intent(1)
