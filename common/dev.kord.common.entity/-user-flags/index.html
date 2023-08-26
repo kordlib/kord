@@ -53,7 +53,7 @@
   <div class="breadcrumbs"><a href="../../index.html">kord-common</a><span class="delimiter">/</span><a href="../index.html">dev.kord.common.entity</a><span class="delimiter">/</span><span class="current">UserFlags</span></div>
   <div class="cover ">
     <h1 class="cover"><span>User</span><wbr><span><span>Flags</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a><span class="token punctuation">(</span><span>with<span class="token operator"> = </span><a href="-user-flags-serializer/index.html">UserFlags.UserFlagsSerializer::class</a></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">UserFlags</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>code<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/9eee5e4c5b0e49ae44e945b1b6e0d80ff2566c61/common/src/commonMain/kotlin/entity/DiscordUser.kt#L155">source</a>)</span></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-serializable/index.html"><span class="token annotation builtin">Serializable</span></a><span class="token punctuation">(</span><span>with<span class="token operator"> = </span><a href="../../../common/dev.kord.common.entity/-user-flags/-serializer/index.html">UserFlags.Serializer::class</a></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">class </span><a href="index.html">UserFlags</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/fc1d70fa44d10b1073fdb3974998f8679eb0f2d2/common/src/commonMain/kotlin/entity/UserFlag.kt#L486">source</a>)</span></span></div><p class="paragraph">A collection of multiple <a href="../-user-flag/index.html">UserFlag</a>s.</p><h2 class=""> Creating an instance of <a href="index.html">UserFlags</a></h2><p class="paragraph">You can create an instance of <a href="index.html">UserFlags</a> using the following methods:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">// from individual UserFlags<br>val userFlags1 = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner)<br><br>// from an Iterable<br>val iterable: Iterable&lt;UserFlag&gt; = TODO()<br>val userFlags2 = UserFlags(iterable)<br><br>// using a builder<br>val userFlags3 = UserFlags {<br>    +userFlags2<br>    +UserFlag.DiscordEmployee<br>    -UserFlag.DiscordPartner<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><h2 class=""> Modifying an existing instance of <a href="index.html">UserFlags</a></h2><p class="paragraph">You can create a modified copy of an existing instance of <a href="index.html">UserFlags</a> using the <a href="copy.html">copy</a> method:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">userFlags.copy {<br>    +UserFlag.DiscordEmployee<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><h2 class=""> Mathematical operators</h2><p class="paragraph">All <a href="index.html">UserFlags</a> objects can use <code class="lang-kotlin">+</code>/<code class="lang-kotlin">-</code> operators:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">val userFlags1 = userFlags + UserFlag.DiscordEmployee<br>val userFlags2 = userFlags - UserFlag.DiscordPartner<br>val userFlags3 = userFlags1 + userFlags2</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><h2 class=""> Checking for <a href="../-user-flag/index.html">UserFlag</a>s</h2><p class="paragraph">You can use the <a href="contains.html">contains</a> operator to check whether an instance of <a href="index.html">UserFlags</a> contains specific <a href="../-user-flag/index.html">UserFlag</a>s:</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">val hasUserFlag = UserFlag.DiscordEmployee in userFlags<br>val hasUserFlags = UserFlags(UserFlag.DiscordEmployee, UserFlag.DiscordPartner) in userFlags</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><h2 class=""> Unknown <a href="../-user-flag/index.html">UserFlag</a>s</h2><p class="paragraph">Whenever <a href="../-user-flag/index.html">UserFlag</a>s haven't been added to Kord yet, they will be deserialized as instances of <a href="../-user-flag/-unknown/index.html">UserFlag.Unknown</a>.</p><p class="paragraph">You can also use <a href="../-user-flag/-companion/from-shift.html">UserFlag.fromShift</a> to check for <a href="../-user-flag/-unknown/index.html">unknown</a> <a href="../-user-flag/index.html">UserFlag</a>s.</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">val hasUnknownUserFlag = UserFlag.fromShift(23) in userFlags</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><h4 class="">See also</h4><div class="table"><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="../-user-flag/index.html"><span>User</span><wbr><span><span>Flag</span></span></a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-builder/index.html"><span>UserFlags.</span><wbr><span>Builder</span></a></div></span></div><div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
@@ -79,7 +79,37 @@
       </div>
       <div data-togglable="TYPE">
         <h2 class="">Types</h2>
-        <div class="table"><a data-name="1627627192%2FClasslikes%2F-1137157624" anchor-label="UserFlagsBuilder" id="1627627192%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+        <div class="table"><a data-name="440844816%2FClasslikes%2F-1137157624" anchor-label="Builder" id="440844816%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-builder/index.html"><span><span>Builder</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="440844816%2FClasslikes%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-builder/index.html">Builder</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">code<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-750223041%2FClasslikes%2F-1137157624" anchor-label="Companion" id="-750223041%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-750223041%2FClasslikes%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1627627192%2FClasslikes%2F-1137157624" anchor-label="UserFlagsBuilder" id="1627627192%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
@@ -89,7 +119,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-user-flags-builder/index.html">UserFlagsBuilder</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">code<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></span></span><span class="token punctuation">)</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-user-flags-builder/index.html"><strike>UserFlagsBuilder</strike></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">code<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span></span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
             </div>
@@ -104,7 +134,7 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-user-flags-serializer/index.html">UserFlagsSerializer</a> : <a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-k-serializer/index.html">KSerializer</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">UserFlags</a><span class="token operator">&gt; </span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-user-flags-serializer/index.html"><strike>UserFlagsSerializer</strike></a> : <a href="https://kotlinlang.org/api/kotlinx.serialization/kotlinx-serialization-core/kotlinx.serialization/-k-serializer/index.html">KSerializer</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">UserFlags</a><span class="token operator">&gt; </span></div></div></div>
                 </div>
               </div>
             </div>
@@ -123,22 +153,22 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="code.html">code</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="code.html">code</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The raw code used by Discord.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-938758959%2FProperties%2F-1137157624" anchor-label="flags" id="-938758959%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+<a data-name="-1386969472%2FProperties%2F-1137157624" anchor-label="values" id="-1386969472%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="flags.html"><span><span>flags</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-938758959%2FProperties%2F-1137157624"></span>
+                  <div><a href="values.html"><span><span>values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1386969472%2FProperties%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="flags.html">flags</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-user-flag/index.html">UserFlag</a><span class="token operator">&gt;</span></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="values.html">values</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-set/index.html">Set</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-user-flag/index.html">UserFlag</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">A <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-set/index.html">Set</a> of all <a href="../-user-flag/index.html">UserFlag</a>s contained in this instance of <a href="index.html">UserFlags</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -147,62 +177,107 @@
       </div>
       <div data-togglable="FUNCTION">
         <h2 class="">Functions</h2>
-        <div class="table"><a data-name="-505287775%2FFunctions%2F-1137157624" anchor-label="contains" id="-505287775%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+        <div class="table"><a data-name="1937282115%2FFunctions%2F-1137157624" anchor-label="contains" id="1937282115%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="contains.html"><span><span>contains</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-505287775%2FFunctions%2F-1137157624"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1937282115%2FFunctions%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="contains.html"><span class="token function">contains</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flag<span class="token operator">: </span><a href="../-user-flag/index.html">UserFlag</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="contains.html"><span class="token function">contains</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flag<span class="token operator">: </span><a href="../-user-flag/index.html">UserFlag</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Checks if this instance of <a href="index.html">UserFlags</a> has all bits set that are set in <a href="contains.html">flag</a>.</p></div><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="contains.html"><span class="token function">contains</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flags<span class="token operator">: </span><a href="index.html">UserFlags</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Checks if this instance of <a href="index.html">UserFlags</a> has all bits set that are set in <a href="contains.html">flags</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1156447110%2FFunctions%2F-1137157624" anchor-label="copy" id="1156447110%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+<a data-name="134042188%2FFunctions%2F-1137157624" anchor-label="copy" id="134042188%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="copy.html"><span><span>copy</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1156447110%2FFunctions%2F-1137157624"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="134042188%2FFunctions%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="copy.html"><span class="token function">copy</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword"></span><a href="-user-flags-builder/index.html">UserFlags.UserFlagsBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-name/index.html"><span class="token annotation builtin">JvmName</span></a><span class="token punctuation">(</span><span>name<span class="token operator"> = </span><span class="breakable-word"><span class="token string">"copy0"</span></span></span><wbr><span class="token punctuation">)</span></div></div><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="copy.html"><span class="token function">copy</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">builder<span class="token operator">: </span><span class="token keyword"></span><a href="-builder/index.html">UserFlags.Builder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div><div class="brief "><p class="paragraph">Returns a copy of this instance of <a href="index.html">UserFlags</a> modified with <a href="copy.html">builder</a>.</p></div><div class="symbol monospace"><span class="token keyword">inline </span><span class="token keyword">fun </span><a href="copy.html"><span class="token function"><strike>copy</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">block<span class="token operator">: </span><span class="token keyword"></span><a href="-user-flags-builder/index.html">UserFlags.UserFlagsBuilder</a><span class="token punctuation">.</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator"> -&gt; </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-481121572%2FFunctions%2F-1137157624" anchor-label="minus" id="-481121572%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+<a data-name="-895464033%2FFunctions%2F-1137157624" anchor-label="equals" id="-895464033%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="equals.html"><span><span>equals</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-895464033%2FFunctions%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="equals.html"><span class="token function">equals</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1207647335%2FFunctions%2F-1137157624" anchor-label="hashCode" id="1207647335%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1207647335%2FFunctions%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="hash-code.html"><span class="token function">hashCode</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1397573245%2FFunctions%2F-1137157624" anchor-label="minus" id="-1397573245%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="minus.html"><span><span>minus</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-481121572%2FFunctions%2F-1137157624"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1397573245%2FFunctions%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="minus.html"><span class="token function">minus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flag<span class="token operator">: </span><a href="../-user-flag/index.html">UserFlag</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="minus.html"><span class="token function">minus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flag<span class="token operator">: </span><a href="../-user-flag/index.html">UserFlag</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div><div class="brief "><p class="paragraph">Returns an instance of <a href="index.html">UserFlags</a> that has all bits set that are set in <code class="lang-kotlin">this</code> except the bits that are set in <a href="minus.html">flag</a>.</p></div><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="minus.html"><span class="token function">minus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flags<span class="token operator">: </span><a href="index.html">UserFlags</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div><div class="brief "><p class="paragraph">Returns an instance of <a href="index.html">UserFlags</a> that has all bits set that are set in <code class="lang-kotlin">this</code> except the bits that are set in <a href="minus.html">flags</a>.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1467253779%2FFunctions%2F-1137157624" anchor-label="plus" id="1467253779%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+<a data-name="1420927523%2FFunctions%2F-1137157624" anchor-label="plus" id="1420927523%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
                   <div><a href="plus.html"><span><span>plus</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1467253779%2FFunctions%2F-1137157624"></span>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1420927523%2FFunctions%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="plus.html"><span class="token function">plus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flags<span class="token operator">: </span><a href="index.html">UserFlags</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="plus.html"><span class="token function">plus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flag<span class="token operator">: </span><a href="../-user-flag/index.html">UserFlag</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div><div class="brief "><p class="paragraph">Returns an instance of <a href="index.html">UserFlags</a> that has all bits set that are set in <code class="lang-kotlin">this</code> and <a href="plus.html">flag</a>.</p></div><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="plus.html"><span class="token function">plus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flags<span class="token operator">: </span><a href="index.html">UserFlags</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">UserFlags</a></div><div class="brief "><p class="paragraph">Returns an instance of <a href="index.html">UserFlags</a> that has all bits set that are set in <code class="lang-kotlin">this</code> and <a href="plus.html">flags</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1029481270%2FFunctions%2F-1137157624" anchor-label="toString" id="1029481270%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1029481270%2FFunctions%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="to-string.html"><span class="token function">toString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
                 </div>
               </div>
             </div>

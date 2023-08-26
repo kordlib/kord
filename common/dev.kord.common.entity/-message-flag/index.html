@@ -53,174 +53,204 @@
   <div class="breadcrumbs"><a href="../../index.html">kord-common</a><span class="delimiter">/</span><a href="../index.html">dev.kord.common.entity</a><span class="delimiter">/</span><span class="current">MessageFlag</span></div>
   <div class="cover ">
     <h1 class="cover"><span>Message</span><wbr><span><span>Flag</span></span></h1>
-    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">enum </span><a href="index.html">MessageFlag</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">MessageFlag</a><span class="token operator">&gt; </span><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/9eee5e4c5b0e49ae44e945b1b6e0d80ff2566c61/common/src/commonMain/kotlin/entity/DiscordMessage.kt#L376">source</a>)</span></span></div></div></div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">sealed </span><span class="token keyword">class </span><a href="index.html">MessageFlag</a><span class="clearfix"><span class="floating-right">(<a href="https://github.com/kordlib/kord/blob/fc1d70fa44d10b1073fdb3974998f8679eb0f2d2/common/build/generated/ksp/metadata/commonMain/kotlin/dev/kord/common/entity/MessageFlag.kt#L29">source</a>)</span></span></div><p class="paragraph">See <a href="index.html">MessageFlag</a>s in the <a href="https://discord.com/developers/docs/resources/channel#message-object-message-flags">Discord Developer Documentation</a>.</p><h4 class="">Inheritors</h4><div class="table"><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-unknown/index.html">Unknown</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-cross-posted/index.html">CrossPosted</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-is-cross-post/index.html">IsCrossPost</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-suppress-embeds/index.html">SuppressEmbeds</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-source-message-deleted/index.html">SourceMessageDeleted</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-urgent/index.html">Urgent</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-has-thread/index.html">HasThread</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-ephemeral/index.html">Ephemeral</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-loading/index.html">Loading</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-failed-to-mention-some-roles-in-thread/index.html">FailedToMentionSomeRolesInThread</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-suppress-notifications/index.html">SuppressNotifications</a></div></span></div><div></div></div></div><div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain"><div class="main-subrow keyValue "><div class=""><span class="inline-flex"><div><a href="-is-voice-message/index.html">IsVoiceMessage</a></div></span></div><div></div></div></div></div></div></div>
   </div>
   <div class="tabbedcontent">
-    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="ENTRY">Entries</button></div>
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
     <div class="tabs-section-body">
-      <div data-togglable="ENTRY">
-        <h2 class="">Entries</h2>
-        <div class="table"><a data-name="-939844880%2FClasslikes%2F-1137157624" anchor-label="CrossPosted" id="-939844880%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="79827272%2FClasslikes%2F-1137157624" anchor-label="Companion" id="79827272%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-cross-posted/index.html">CrossPosted</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-939844880%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="79827272%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-cross-posted/index.html">CrossPosted</a></div></div><div class="brief "><p class="paragraph">This message has been published to subscribed channels (via Channel Following).</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="829983239%2FClasslikes%2F-1137157624" anchor-label="IsCrossPost" id="829983239%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="-1707114155%2FClasslikes%2F-1137157624" anchor-label="CrossPosted" id="-1707114155%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-is-cross-post/index.html">IsCrossPost</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="829983239%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-cross-posted/index.html"><span>Cross</span><wbr><span><span>Posted</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1707114155%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-is-cross-post/index.html">IsCrossPost</a></div></div><div class="brief "><p class="paragraph">This message originated from a message in another channel (via Channel Following).</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-cross-posted/index.html">CrossPosted</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message has been published to subscribed channels (via Channel Following).</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="1352581126%2FClasslikes%2F-1137157624" anchor-label="SuppressEmbeds" id="1352581126%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="1399336919%2FClasslikes%2F-1137157624" anchor-label="Ephemeral" id="1399336919%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-suppress-embeds/index.html">SuppressEmbeds</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1352581126%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-ephemeral/index.html"><span><span>Ephemeral</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1399336919%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-suppress-embeds/index.html">SuppressEmbeds</a></div></div><div class="brief "><p class="paragraph">Do not include any embeds when serializing this message.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-ephemeral/index.html">Ephemeral</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message is only visible to the user who invoked the Interaction.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1884551036%2FClasslikes%2F-1137157624" anchor-label="SourceMessageDeleted" id="-1884551036%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="-692934360%2FClasslikes%2F-1137157624" anchor-label="FailedToMentionSomeRolesInThread" id="-692934360%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-source-message-deleted/index.html">SourceMessageDeleted</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1884551036%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-failed-to-mention-some-roles-in-thread/index.html"><span>Failed</span><wbr><span>To</span><wbr><span>Mention</span><wbr><span>Some</span><wbr><span>Roles</span><wbr><span>In</span><wbr><span><span>Thread</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-692934360%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-source-message-deleted/index.html">SourceMessageDeleted</a></div></div><div class="brief "><p class="paragraph">The source message for this crosspost has been deleted (via Channel Following).</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-failed-to-mention-some-roles-in-thread/index.html">FailedToMentionSomeRolesInThread</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message failed to mention some roles and add their members to the thread.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1313425672%2FClasslikes%2F-1137157624" anchor-label="Urgent" id="-1313425672%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="-301452784%2FClasslikes%2F-1137157624" anchor-label="HasThread" id="-301452784%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-urgent/index.html">Urgent</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1313425672%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-has-thread/index.html"><span>Has</span><wbr><span><span>Thread</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-301452784%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-urgent/index.html">Urgent</a></div></div><div class="brief "><p class="paragraph">This message came from the urgent message system.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-has-thread/index.html">HasThread</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message has an associated thread, with the same id as the message.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="119876373%2FClasslikes%2F-1137157624" anchor-label="HasThread" id="119876373%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="1594747870%2FClasslikes%2F-1137157624" anchor-label="IsCrossPost" id="1594747870%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-has-thread/index.html">HasThread</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="119876373%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-is-cross-post/index.html"><span>Is</span><wbr><span>Cross</span><wbr><span><span>Post</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1594747870%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-has-thread/index.html">HasThread</a></div></div><div class="brief "><p class="paragraph">This message has an associated thread, with the same id as the message.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-is-cross-post/index.html">IsCrossPost</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message originated from a message in another channel (via Channel Following).</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="612746670%2FClasslikes%2F-1137157624" anchor-label="Ephemeral" id="612746670%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="-2073943153%2FClasslikes%2F-1137157624" anchor-label="IsVoiceMessage" id="-2073943153%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-ephemeral/index.html">Ephemeral</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="612746670%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-is-voice-message/index.html"><span>Is</span><wbr><span>Voice</span><wbr><span><span>Message</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2073943153%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-ephemeral/index.html">Ephemeral</a></div></div><div class="brief "><p class="paragraph">This message is only visible to the user who invoked the Interaction.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-is-voice-message/index.html">IsVoiceMessage</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message is a voice message.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-247487411%2FClasslikes%2F-1137157624" anchor-label="Loading" id="-247487411%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="-739756584%2FClasslikes%2F-1137157624" anchor-label="Loading" id="-739756584%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-loading/index.html">Loading</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-247487411%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-loading/index.html"><span><span>Loading</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-739756584%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-loading/index.html">Loading</a></div></div><div class="brief "><p class="paragraph">This message is an Interaction Response and the bot is "thinking".</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-loading/index.html">Loading</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message is an Interaction Response and the bot is "thinking".</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-57376003%2FClasslikes%2F-1137157624" anchor-label="FailedToMentionSomeRolesInThread" id="-57376003%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="-511346879%2FClasslikes%2F-1137157624" anchor-label="SourceMessageDeleted" id="-511346879%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-failed-to-mention-some-roles-in-thread/index.html">FailedToMentionSomeRolesInThread</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-57376003%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-source-message-deleted/index.html"><span>Source</span><wbr><span>Message</span><wbr><span><span>Deleted</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-511346879%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-failed-to-mention-some-roles-in-thread/index.html">FailedToMentionSomeRolesInThread</a></div></div><div class="brief "><p class="paragraph">This message failed to mention some roles and add their members to the thread.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-source-message-deleted/index.html">SourceMessageDeleted</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">The source message for this crosspost has been deleted (via Channel Following).</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-1557597628%2FClasslikes%2F-1137157624" anchor-label="SuppressNotifications" id="-1557597628%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="-1762656641%2FClasslikes%2F-1137157624" anchor-label="SuppressEmbeds" id="-1762656641%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-suppress-notifications/index.html">SuppressNotifications</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1557597628%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-suppress-embeds/index.html"><span>Suppress</span><wbr><span><span>Embeds</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1762656641%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-suppress-notifications/index.html">SuppressNotifications</a></div></div><div class="brief "><p class="paragraph">This message will not trigger push and desktop notifications.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-suppress-embeds/index.html">SuppressEmbeds</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">Do not include any embeds when serializing this message.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-208009994%2FClasslikes%2F-1137157624" anchor-label="IsVoiceMessage" id="-208009994%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+<a data-name="455636353%2FClasslikes%2F-1137157624" anchor-label="SuppressNotifications" id="455636353%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="-is-voice-message/index.html">IsVoiceMessage</a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-208009994%2FClasslikes%2F-1137157624"></span>
+                  <div><a href="-suppress-notifications/index.html"><span>Suppress</span><wbr><span><span>Notifications</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="455636353%2FClasslikes%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><div class="block"><a href="-is-voice-message/index.html">IsVoiceMessage</a></div></div><div class="brief "><p class="paragraph">This message is a voice message.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-suppress-notifications/index.html">SuppressNotifications</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message will not trigger push and desktop notifications.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-499100022%2FClasslikes%2F-1137157624" anchor-label="Unknown" id="-499100022%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-unknown/index.html"><span><span>Unknown</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-499100022%2FClasslikes%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">class </span><a href="-unknown/index.html">Unknown</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">An unknown <a href="index.html">MessageFlag</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="26353741%2FClasslikes%2F-1137157624" anchor-label="Urgent" id="26353741%2FClasslikes%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-urgent/index.html"><span><span>Urgent</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="26353741%2FClasslikes%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">object </span><a href="-urgent/index.html">Urgent</a> : <a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">This message came from the urgent message system.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -239,37 +269,22 @@
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="code.html">code</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="code.html">code</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The raw code used by Discord.</p></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="-372974862%2FProperties%2F-1137157624" anchor-label="name" id="-372974862%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+<a data-name="191777727%2FProperties%2F-1137157624" anchor-label="shift" id="191777727%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="../../dev.kord.common/-discord-timestamp-style/-relative-time/index.html#-372974862%2FProperties%2F-1137157624"><span><span>name</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-372974862%2FProperties%2F-1137157624"></span>
+                  <div><a href="shift.html"><span><span>shift</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="191777727%2FProperties%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../../dev.kord.common/-discord-timestamp-style/-relative-time/index.html#-372974862%2FProperties%2F-1137157624">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-<a data-name="-739389684%2FProperties%2F-1137157624" anchor-label="ordinal" id="-739389684%2FProperties%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
-          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
-            <div class="main-subrow keyValue ">
-              <div class=""><span class="inline-flex">
-                  <div><a href="../../dev.kord.common/-discord-timestamp-style/-relative-time/index.html#-739389684%2FProperties%2F-1137157624"><span><span>ordinal</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-739389684%2FProperties%2F-1137157624"></span>
-                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
-                  </span></span></div>
-              <div>
-                <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="../../dev.kord.common/-discord-timestamp-style/-relative-time/index.html#-739389684%2FProperties%2F-1137157624">ordinal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">val </span><a href="shift.html">shift</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The position of the bit that is set in this <a href="index.html">MessageFlag</a>. This is always in 0..30.</p></div></div></div>
                 </div>
               </div>
             </div>
@@ -278,32 +293,62 @@
       </div>
       <div data-togglable="FUNCTION">
         <h2 class="">Functions</h2>
-        <div class="table"><a data-name="747003595%2FFunctions%2F-1137157624" anchor-label="valueOf" id="747003595%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+        <div class="table"><a data-name="670155944%2FFunctions%2F-1137157624" anchor-label="equals" id="670155944%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="value-of.html"><span>value</span><wbr><span><span>Of</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="747003595%2FFunctions%2F-1137157624"></span>
+                  <div><a href="equals.html"><span><span>equals</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="670155944%2FFunctions%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="value-of.html"><span class="token function">valueOf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">MessageFlag</a></div><div class="brief "><p class="paragraph">Returns the enum constant of this type with the specified name. The string must match exactly an identifier used to declare an enum constant in this type. (Extraneous whitespace characters are not permitted.)</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="equals.html"><span class="token function">equals</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div></div></div>
                 </div>
               </div>
             </div>
           </div>
-<a data-name="908532503%2FFunctions%2F-1137157624" anchor-label="values" id="908532503%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+<a data-name="-428144834%2FFunctions%2F-1137157624" anchor-label="hashCode" id="-428144834%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
           <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
             <div class="main-subrow keyValue ">
               <div class=""><span class="inline-flex">
-                  <div><a href="values.html"><span><span>values</span></span></a></div>
-<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="908532503%2FFunctions%2F-1137157624"></span>
+                  <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-428144834%2FFunctions%2F-1137157624"></span>
                     <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
                   </span></span></div>
               <div>
                 <div class="title">
-                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="values.html"><span class="token function">values</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html">MessageFlag</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns an array containing the constants of this enum type, in the order they're declared.</p></div></div></div>
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">override </span><span class="token keyword">fun </span><a href="hash-code.html"><span class="token function">hashCode</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1461197589%2FFunctions%2F-1137157624" anchor-label="plus" id="1461197589%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="plus.html"><span><span>plus</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1461197589%2FFunctions%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="plus.html"><span class="token function">plus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flag<span class="token operator">: </span><a href="index.html">MessageFlag</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-message-flags/index.html">MessageFlags</a></div><div class="brief "><p class="paragraph">Returns an instance of <a href="../-message-flags/index.html">MessageFlags</a> that has all bits set that are set in <code class="lang-kotlin">this</code> and <a href="plus.html">flag</a>.</p></div><div class="symbol monospace"><span class="token keyword">operator </span><span class="token keyword">fun </span><a href="plus.html"><span class="token function">plus</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">flags<span class="token operator">: </span><a href="../-message-flags/index.html">MessageFlags</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-message-flags/index.html">MessageFlags</a></div><div class="brief "><p class="paragraph">Returns an instance of <a href="../-message-flags/index.html">MessageFlags</a> that has all bits set that are set in <code class="lang-kotlin">this</code> and <a href="plus.html">flags</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-606310899%2FFunctions%2F-1137157624" anchor-label="toString" id="-606310899%2FFunctions%2F-1137157624" data-filterable-set=":common:dokkaHtmlPartial/commonMain"></a>
+          <div class="table-row" data-filterable-current=":common:dokkaHtmlPartial/commonMain" data-filterable-set=":common:dokkaHtmlPartial/commonMain">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-606310899%2FFunctions%2F-1137157624"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":common:dokkaHtmlPartial/commonMain"><div class="symbol monospace"><span class="token keyword">override </span><span class="token keyword">fun </span><a href="to-string.html"><span class="token function">toString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
                 </div>
               </div>
             </div>
