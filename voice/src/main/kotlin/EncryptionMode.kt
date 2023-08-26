@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "EncryptionMode", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "EncryptionMode",
     docUrl = "https://discord.com/developers/docs/topics/voice-connections#establishing-a-voice-udp-connection-encryption-modes",
     entries = [
         Entry("XSalsa20Poly1305", stringValue = "xsalsa20_poly1305"),
@@ -10,6 +10,6 @@
 
 package dev.kord.voice
 
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
+import dev.kord.ksp.Generate.Entry

@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "TeamMembershipState", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "TeamMembershipState",
     docUrl = "https://discord.com/developers/docs/topics/teams#data-models-membership-state-enum",
     entries = [
         Entry("Invited", intValue = 1),
@@ -9,9 +9,9 @@
 
 package dev.kord.common.entity
 
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.*
 
 /**

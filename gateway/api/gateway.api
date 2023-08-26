@@ -1197,9 +1197,14 @@ public final class dev/kord/gateway/IntegrationUpdate : dev/kord/gateway/Dispatc
 
 public abstract class dev/kord/gateway/Intent {
 	public static final field Companion Ldev/kord/gateway/Intent$Companion;
-	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> ([JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
+	public final fun getShift ()I
+	public final fun hashCode ()I
+	public final fun plus (Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
+	public final fun plus (Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
+	public final fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/gateway/Intent$AutoModerationConfiguration : dev/kord/gateway/Intent {
@@ -1211,6 +1216,8 @@ public final class dev/kord/gateway/Intent$AutoModerationExecution : dev/kord/ga
 }
 
 public final class dev/kord/gateway/Intent$Companion {
+	public final fun fromShift (I)Ldev/kord/gateway/Intent;
+	public final fun getEntries ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 }
 
@@ -1258,6 +1265,10 @@ public final class dev/kord/gateway/Intent$GuildMessages : dev/kord/gateway/Inte
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildMessages;
 }
 
+public final class dev/kord/gateway/Intent$GuildModeration : dev/kord/gateway/Intent {
+	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildModeration;
+}
+
 public final class dev/kord/gateway/Intent$GuildPresences : dev/kord/gateway/Intent {
 	public static final field INSTANCE Ldev/kord/gateway/Intent$GuildPresences;
 }
@@ -1282,6 +1293,9 @@ public final class dev/kord/gateway/Intent$MessageContent : dev/kord/gateway/Int
 	public static final field INSTANCE Ldev/kord/gateway/Intent$MessageContent;
 }
 
+public final class dev/kord/gateway/Intent$Unknown : dev/kord/gateway/Intent {
+}
+
 public final class dev/kord/gateway/IntentKt {
 	public static final fun Intents (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
 	public static final fun Intents (Ljava/lang/String;)Ldev/kord/gateway/Intents;
@@ -1289,7 +1303,10 @@ public final class dev/kord/gateway/IntentKt {
 	public static final fun Intents ([Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
 	public static final fun Intents ([Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
 	public static synthetic fun Intents$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/gateway/Intents;
-	public static final fun IntentsWithIterable (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
+	public static final fun Intents0 (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
+	public static final fun Intents0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
+	public static synthetic fun Intents0$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/gateway/Intents;
+	public static final synthetic fun IntentsWithIterable (Ljava/lang/Iterable;)Ldev/kord/gateway/Intents;
 }
 
 public final class dev/kord/gateway/Intents {
@@ -1300,6 +1317,7 @@ public final class dev/kord/gateway/Intents {
 	public final fun copy (Ldev/kord/common/DiscordBitSet;)Ldev/kord/gateway/Intents;
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
 	public static synthetic fun copy$default (Ldev/kord/gateway/Intents;Ldev/kord/common/DiscordBitSet;ILjava/lang/Object;)Ldev/kord/gateway/Intents;
+	public final fun copy0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/gateway/Intents;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun getValues ()Ljava/util/Set;
@@ -1309,6 +1327,17 @@ public final class dev/kord/gateway/Intents {
 	public final fun plus (Ldev/kord/gateway/Intent;)Ldev/kord/gateway/Intents;
 	public final fun plus (Ldev/kord/gateway/Intents;)Ldev/kord/gateway/Intents;
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/Intents$Builder {
+	public fun <init> ()V
+	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
+	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/gateway/Intents;
+	public final fun unaryMinus (Ldev/kord/gateway/Intent;)V
+	public final fun unaryMinus (Ldev/kord/gateway/Intents;)V
+	public final fun unaryPlus (Ldev/kord/gateway/Intent;)V
+	public final fun unaryPlus (Ldev/kord/gateway/Intents;)V
 }
 
 public final class dev/kord/gateway/Intents$Companion {
@@ -1328,6 +1357,13 @@ public final class dev/kord/gateway/Intents$IntentsBuilder {
 	public final fun unaryMinus (Ldev/kord/gateway/Intents;)V
 	public final fun unaryPlus (Ldev/kord/gateway/Intent;)V
 	public final fun unaryPlus (Ldev/kord/gateway/Intents;)V
+}
+
+public final class dev/kord/gateway/IntentsKt {
+	public static final fun getALL (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getNONE (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getNON_PRIVILEGED (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
+	public static final fun getPRIVILEGED (Ldev/kord/gateway/Intents$Companion;)Ldev/kord/gateway/Intents;
 }
 
 public final class dev/kord/gateway/IntentsSerializer : kotlinx/serialization/KSerializer {
@@ -1964,6 +2000,7 @@ public final class dev/kord/gateway/builder/LoginBuilder {
 	public final fun getName ()Ljava/lang/String;
 	public final fun getPresence ()Ldev/kord/gateway/DiscordPresence;
 	public final fun intents (Lkotlin/jvm/functions/Function1;)V
+	public final fun intents0 (Lkotlin/jvm/functions/Function1;)V
 	public final fun presence (Lkotlin/jvm/functions/Function1;)V
 	public final fun setIntents (Ldev/kord/gateway/Intents;)V
 	public final fun setName (Ljava/lang/String;)V

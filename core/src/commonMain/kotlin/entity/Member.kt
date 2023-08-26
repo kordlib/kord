@@ -1,6 +1,6 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.Permission
+import dev.kord.common.entity.ALL
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -122,7 +122,7 @@ public class Member(
     public suspend fun getPermissions(): Permissions {
         val guild = getGuild()
         val owner = guild.ownerId == this.id
-        if (owner) return Permissions(Permission.All)
+        if (owner) return Permissions.ALL
 
         val everyone = guild.getEveryoneRole().permissions
         val roles = roles.map { it.permissions }.toList()
