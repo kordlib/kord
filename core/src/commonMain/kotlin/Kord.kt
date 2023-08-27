@@ -9,6 +9,7 @@ import dev.kord.common.exception.RequestException
 import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
+import dev.kord.core.builder.kord.WebhookClientBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
@@ -48,7 +49,7 @@ public val kordLogger: KLogger = KotlinLogging.logger { }
  * The central adapter between other Kord modules and source of core [events].
  */
 public class Kord(
-    public val resources: ClientResources,
+    public override val resources: ClientResources,
     public val cache: DataCache,
     public val gateway: MasterGateway,
     public val rest: RestClient,
@@ -56,7 +57,7 @@ public class Kord(
     private val eventFlow: MutableSharedFlow<Event>,
     dispatcher: CoroutineDispatcher,
     private val interceptor: GatewayEventInterceptor,
-) : CoroutineScope {
+) : CoroutineScope, WebhookClient {
 
     public val nitroStickerPacks: Flow<StickerPack>
         get() = defaultSupplier.getNitroStickerPacks()
@@ -74,7 +75,7 @@ public class Kord(
      * A reference to all exposed [unsafe][KordUnsafe] entity constructors for this instance.
      */
     @OptIn(KordUnsafe::class)
-    public val unsafe: Unsafe = Unsafe(this)
+    public override val unsafe: Unsafe = Unsafe(this)
 
     /**
      * The events emitted from the [gateway]. Call [Kord.login] to start receiving events.
@@ -272,9 +273,9 @@ public class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the webhook was not present.
      */
-    public suspend fun getWebhook(
+    override suspend fun getWebhook(
         id: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        strategy: EntitySupplyStrategy<*>
     ): Webhook = strategy.supply(this).getWebhook(id)
 
     /**
@@ -284,9 +285,9 @@ public class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      */
 
-    public suspend fun getWebhookOrNull(
+    override suspend fun getWebhookOrNull(
         id: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        strategy: EntitySupplyStrategy<*>
     ): Webhook? = strategy.supply(this).getWebhookOrNull(id)
 
     /**
@@ -295,10 +296,10 @@ public class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      * @throws [EntityNotFoundException] if the webhook was not present.
      */
-    public suspend fun getWebhookWithToken(
+    override suspend fun getWebhookWithToken(
         id: Snowflake,
         token: String,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        strategy: EntitySupplyStrategy<*>
     ): Webhook = strategy.supply(this).getWebhookWithToken(id, token)
 
     /**
@@ -308,10 +309,10 @@ public class Kord(
      * @throws [RestRequestException] if something went wrong during the request.
      */
 
-    public suspend fun getWebhookWithTokenOrNull(
+    override suspend fun getWebhookWithTokenOrNull(
         id: Snowflake,
         token: String,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy
+        strategy: EntitySupplyStrategy<*>
     ): Webhook? =
         strategy.supply(this).getWebhookWithTokenOrNull(id, token)
 
@@ -414,6 +415,31 @@ public class Kord(
                 callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
             }
             return KordRestOnlyBuilder(token).apply(builder).build()
+        }
+
+        /**
+         * Builds a [WebhookClient] instance configured by the [builder].
+         *
+         * This returns a [WebhookClient] instead of a normal [Kord] instance, the
+         * underlying [Kord] instance returned by [Webhook] objects will only work for
+         * webhook requests
+         *
+         * ```kotlin
+         * val client = Kord.webhookClient()
+         * val webhook = client.unsafe.webhook(Snowflake(1234))
+         *
+         * webhook.execute(webhookToken) {
+         *   content = "Cool message"
+         * }
+         * ```
+         */
+        @KordExperimental
+        public inline fun webhookClient(builder: WebhookClientBuilder.() -> Unit): WebhookClient {
+            contract {
+                callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+            }
+
+            return WebhookClientBuilder().apply(builder).build()
         }
 
         /**

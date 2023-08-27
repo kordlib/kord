@@ -20,7 +20,6 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.Shards
 import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.rest.json.response.BotGatewayResponse
-import dev.kord.rest.ratelimit.ExclusionRequestRateLimiter
 import dev.kord.rest.request.*
 import dev.kord.rest.route.Route
 import dev.kord.rest.service.RestClient
@@ -30,8 +29,6 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.http.HttpHeaders.Authorization
 import io.ktor.http.HttpHeaders.UserAgent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.serialization.json.Json
 import mu.KotlinLogging
@@ -43,7 +40,7 @@ private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
 
 public expect class KordBuilder(token: String) : BaseKordBuilder
 
-public abstract class BaseKordBuilder internal constructor(public val token: String) {
+public abstract class BaseKordBuilder internal constructor(override val token: String) : AbstractKordBuilder(), HasApplication {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =
         { resources, shards ->
@@ -57,19 +54,8 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
             }
         }
 
-    private var handlerBuilder: (resources: ClientResources) -> RequestHandler =
-        { KtorRequestHandler(it.httpClient, ExclusionRequestRateLimiter(), token = token) }
+    override var applicationId: Snowflake? = null
     private var cacheBuilder: KordCacheBuilder.(resources: ClientResources) -> Unit = {}
-
-    /**
-     * Enables stack trace recovery on the currently defined [RequestHandler].
-     *
-     * @throws IllegalStateException if the [RequestHandler] is not a [KtorRequestHandler]
-     *
-     * @see StackTraceRecoveringKtorRequestHandler
-     * @see withStackTraceRecovery
-     */
-    public var stackTraceRecovery: Boolean = false
 
     /**
      * The event flow used by [Kord.eventFlow] to publish [events][Kord.events].
@@ -82,22 +68,10 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
     )
 
     /**
-     * The [CoroutineDispatcher] kord uses to launch suspending tasks. [Dispatchers.Default] by default.
-     */
-    public var defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
-
-    /**
      * The default strategy used by entities to retrieve entities. [EntitySupplyStrategy.cacheWithRestFallback] by default.
      */
     public var defaultStrategy: EntitySupplyStrategy<*> = EntitySupplyStrategy.cacheWithRestFallback
 
-    /**
-     * The client used for building [Gateways][Gateway] and [RequestHandlers][RequestHandler]. A default implementation
-     * will be used when not set.
-     */
-    public var httpClient: HttpClient? = null
-
-    public var applicationId: Snowflake? = null
 
     /**
      * The [GatewayEventInterceptor] used for converting [gateway events][dev.kord.gateway.Event] to
@@ -143,19 +117,6 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
         this.gatewayBuilder = gatewayBuilder
     }
 
-
-    /**
-     * Configures the [RequestHandler] for the [RestClient].
-     *
-     * ```
-     * Kord(token) {
-     *     { resources -> KtorRequestHandler(resources.httpClient, ExclusionRequestRateLimiter()) }
-     * }
-     * ```
-     */
-    public fun requestHandler(handlerBuilder: (resources: ClientResources) -> RequestHandler) {
-        this.handlerBuilder = handlerBuilder
-    }
 
     /**
      * Configures the [DataCache] for caching.
@@ -231,22 +192,14 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
 
         val resources = ClientResources(
             token = token,
-            applicationId = applicationId ?: getBotIdFromToken(token),
+            applicationId = actualApplicationId,
             shards = shardsInfo,
             maxConcurrency = gatewayInfo.sessionStartLimit.maxConcurrency,
             httpClient = client,
             defaultStrategy = defaultStrategy,
         )
-        val rawRequestHandler = handlerBuilder(resources)
-        val requestHandler = if (stackTraceRecovery) {
-            if (rawRequestHandler is KtorRequestHandler) {
-                rawRequestHandler.withStackTraceRecovery()
-            } else {
-                error("stackTraceRecovery only works with KtorRequestHandlers, please set stackTraceRecovery = false or use a different RequestHandler")
-            }
-        } else {
-            rawRequestHandler
-        }
+        val requestHandler = buildRequestHandler(resources)
+
         val rest = RestClient(requestHandler)
         val cache = KordCacheBuilder().apply { cacheBuilder(resources) }.build()
         cache.registerKordData()
