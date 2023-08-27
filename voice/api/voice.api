@@ -205,6 +205,7 @@ public abstract class dev/kord/voice/EncryptionMode {
 }
 
 public final class dev/kord/voice/EncryptionMode$Companion {
+	public final fun from (Ljava/lang/String;)Ldev/kord/voice/EncryptionMode;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }

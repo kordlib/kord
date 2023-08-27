@@ -30,7 +30,8 @@ public sealed class IntegrationExpireBehavior(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "IntegrationExpireBehavior.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "IntegrationExpireBehavior.Unknown(value=$value)"
+            else "IntegrationExpireBehavior.${this::class.simpleName}"
 
     /**
      * An unknown [IntegrationExpireBehavior].
@@ -38,9 +39,18 @@ public sealed class IntegrationExpireBehavior(
      * This is used as a fallback for [IntegrationExpireBehavior]s that haven't been added to Kord
      * yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : IntegrationExpireBehavior(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : IntegrationExpireBehavior(value) {
+        @Deprecated(
+            message = "Replaced by 'IntegrationExpireBehavior.from()'.",
+            replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.from(value)", imports
+                        = arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object RemoveRole : IntegrationExpireBehavior(0)
 
@@ -56,11 +66,7 @@ public sealed class IntegrationExpireBehavior(
         }
 
         override fun deserialize(decoder: Decoder): IntegrationExpireBehavior =
-                when (val value = decoder.decodeInt()) {
-            0 -> RemoveRole
-            1 -> Kick
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -74,5 +80,15 @@ public sealed class IntegrationExpireBehavior(
             )
         }
 
+
+        /**
+         * Returns an instance of [IntegrationExpireBehavior] with [IntegrationExpireBehavior.value]
+         * equal to the specified [value].
+         */
+        public fun from(`value`: Int): IntegrationExpireBehavior = when (value) {
+            0 -> RemoveRole
+            1 -> Kick
+            else -> Unknown(value, null)
+        }
     }
 }

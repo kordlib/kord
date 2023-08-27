@@ -29,16 +29,26 @@ public sealed class PremiumTier(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "PremiumTier.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "PremiumTier.Unknown(value=$value)"
+            else "PremiumTier.${this::class.simpleName}"
 
     /**
      * An unknown [PremiumTier].
      *
      * This is used as a fallback for [PremiumTier]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : PremiumTier(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : PremiumTier(value) {
+        @Deprecated(
+            message = "Replaced by 'PremiumTier.from()'.",
+            replaceWith = ReplaceWith(expression = "PremiumTier.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.PremiumTier")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Guild has not unlocked any Server Boost perks.
@@ -68,14 +78,7 @@ public sealed class PremiumTier(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): PremiumTier =
-                when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> One
-            2 -> Two
-            3 -> Three
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): PremiumTier = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -91,5 +94,17 @@ public sealed class PremiumTier(
             )
         }
 
+
+        /**
+         * Returns an instance of [PremiumTier] with [PremiumTier.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): PremiumTier = when (value) {
+            0 -> None
+            1 -> One
+            2 -> Two
+            3 -> Three
+            else -> Unknown(value, null)
+        }
     }
 }

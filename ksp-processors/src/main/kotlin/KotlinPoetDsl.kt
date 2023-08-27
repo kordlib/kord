@@ -87,6 +87,9 @@ internal inline fun TypeSpec.Builder.primaryConstructor(builder: FunSpecBuilder)
 internal inline fun TypeSpec.Builder.addInitializerBlock(builder: CodeBlockBuilder) =
     addInitializerBlock(CodeBlock.builder().apply(builder).build())
 
+internal inline fun TypeSpec.Builder.addConstructor(builder: FunSpecBuilder) =
+    addFunction(FunSpec.constructorBuilder().apply(builder).build())
+
 
 // extensions for `FunSpec.Builder`
 

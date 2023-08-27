@@ -29,16 +29,26 @@ public sealed class NsfwLevel(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "NsfwLevel.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "NsfwLevel.Unknown(value=$value)"
+            else "NsfwLevel.${this::class.simpleName}"
 
     /**
      * An unknown [NsfwLevel].
      *
      * This is used as a fallback for [NsfwLevel]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : NsfwLevel(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : NsfwLevel(value) {
+        @Deprecated(
+            message = "Replaced by 'NsfwLevel.from()'.",
+            replaceWith = ReplaceWith(expression = "NsfwLevel.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.NsfwLevel")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object Default : NsfwLevel(0)
 
@@ -56,14 +66,7 @@ public sealed class NsfwLevel(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): NsfwLevel =
-                when (val value = decoder.decodeInt()) {
-            0 -> Default
-            1 -> Explicit
-            2 -> Safe
-            3 -> AgeRestricted
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): NsfwLevel = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -79,5 +82,16 @@ public sealed class NsfwLevel(
             )
         }
 
+
+        /**
+         * Returns an instance of [NsfwLevel] with [NsfwLevel.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): NsfwLevel = when (value) {
+            0 -> Default
+            1 -> Explicit
+            2 -> Safe
+            3 -> AgeRestricted
+            else -> Unknown(value, null)
+        }
     }
 }

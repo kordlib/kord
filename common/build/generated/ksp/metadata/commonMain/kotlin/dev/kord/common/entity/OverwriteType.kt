@@ -29,16 +29,27 @@ public sealed class OverwriteType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "OverwriteType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "OverwriteType.Unknown(value=$value)"
+            else "OverwriteType.${this::class.simpleName}"
 
     /**
      * An unknown [OverwriteType].
      *
      * This is used as a fallback for [OverwriteType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : OverwriteType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : OverwriteType(value) {
+        @Deprecated(
+            message = "Replaced by 'OverwriteType.from()'.",
+            replaceWith = ReplaceWith(expression = "OverwriteType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.OverwriteType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object Role : OverwriteType(0)
 
@@ -52,12 +63,7 @@ public sealed class OverwriteType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): OverwriteType =
-                when (val value = decoder.decodeInt()) {
-            0 -> Role
-            1 -> Member
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): OverwriteType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -71,5 +77,15 @@ public sealed class OverwriteType(
             )
         }
 
+
+        /**
+         * Returns an instance of [OverwriteType] with [OverwriteType.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): OverwriteType = when (value) {
+            0 -> Role
+            1 -> Member
+            else -> Unknown(value, null)
+        }
     }
 }

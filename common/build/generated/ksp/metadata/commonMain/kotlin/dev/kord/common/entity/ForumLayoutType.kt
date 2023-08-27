@@ -30,16 +30,26 @@ public sealed class ForumLayoutType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "ForumLayoutType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "ForumLayoutType.Unknown(value=$value)"
+            else "ForumLayoutType.${this::class.simpleName}"
 
     /**
      * An unknown [ForumLayoutType].
      *
      * This is used as a fallback for [ForumLayoutType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : ForumLayoutType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ForumLayoutType(value) {
+        @Deprecated(
+            message = "Replaced by 'ForumLayoutType.from()'.",
+            replaceWith = ReplaceWith(expression = "ForumLayoutType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.ForumLayoutType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * No default has been set for forum channel.
@@ -65,13 +75,7 @@ public sealed class ForumLayoutType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ForumLayoutType =
-                when (val value = decoder.decodeInt()) {
-            0 -> NotSet
-            1 -> ListView
-            2 -> GalleryView
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): ForumLayoutType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -86,5 +90,16 @@ public sealed class ForumLayoutType(
             )
         }
 
+
+        /**
+         * Returns an instance of [ForumLayoutType] with [ForumLayoutType.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: Int): ForumLayoutType = when (value) {
+            0 -> NotSet
+            1 -> ListView
+            2 -> GalleryView
+            else -> Unknown(value, null)
+        }
     }
 }

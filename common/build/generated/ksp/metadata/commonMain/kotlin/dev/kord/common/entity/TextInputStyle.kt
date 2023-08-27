@@ -31,16 +31,27 @@ public sealed class TextInputStyle(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "TextInputStyle.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "TextInputStyle.Unknown(value=$value)"
+            else "TextInputStyle.${this::class.simpleName}"
 
     /**
      * An unknown [TextInputStyle].
      *
      * This is used as a fallback for [TextInputStyle]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : TextInputStyle(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : TextInputStyle(value) {
+        @Deprecated(
+            message = "Replaced by 'TextInputStyle.from()'.",
+            replaceWith = ReplaceWith(expression = "TextInputStyle.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.TextInputStyle")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * A single-line input.
@@ -61,12 +72,7 @@ public sealed class TextInputStyle(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): TextInputStyle =
-                when (val value = decoder.decodeInt()) {
-            1 -> Short
-            2 -> Paragraph
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): TextInputStyle = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -80,5 +86,15 @@ public sealed class TextInputStyle(
             )
         }
 
+
+        /**
+         * Returns an instance of [TextInputStyle] with [TextInputStyle.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: Int): TextInputStyle = when (value) {
+            1 -> Short
+            2 -> Paragraph
+            else -> Unknown(value, null)
+        }
     }
 }

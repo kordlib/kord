@@ -30,16 +30,26 @@ public sealed class AllowedMentionType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "AllowedMentionType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "AllowedMentionType.Unknown(value=$value)"
+            else "AllowedMentionType.${this::class.simpleName}"
 
     /**
      * An unknown [AllowedMentionType].
      *
      * This is used as a fallback for [AllowedMentionType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: String,
-    ) : AllowedMentionType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : AllowedMentionType(value) {
+        @Deprecated(
+            message = "Replaced by 'AllowedMentionType.from()'.",
+            replaceWith = ReplaceWith(expression = "AllowedMentionType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.AllowedMentionType")),
+        )
+        public constructor(`value`: String) : this(value, null)
+    }
 
     /**
      * Controls role mentions.
@@ -66,12 +76,7 @@ public sealed class AllowedMentionType(
         }
 
         override fun deserialize(decoder: Decoder): AllowedMentionType =
-                when (val value = decoder.decodeString()) {
-            "roles" -> RoleMentions
-            "users" -> UserMentions
-            "everyone" -> EveryoneMentions
-            else -> Unknown(value)
-        }
+                from(decoder.decodeString())
     }
 
     public companion object {
@@ -86,5 +91,16 @@ public sealed class AllowedMentionType(
             )
         }
 
+
+        /**
+         * Returns an instance of [AllowedMentionType] with [AllowedMentionType.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: String): AllowedMentionType = when (value) {
+            "roles" -> RoleMentions
+            "users" -> UserMentions
+            "everyone" -> EveryoneMentions
+            else -> Unknown(value, null)
+        }
     }
 }

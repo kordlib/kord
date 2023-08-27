@@ -31,16 +31,26 @@ public sealed class UserPremium(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "UserPremium.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "UserPremium.Unknown(value=$value)"
+            else "UserPremium.${this::class.simpleName}"
 
     /**
      * An unknown [UserPremium].
      *
      * This is used as a fallback for [UserPremium]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : UserPremium(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : UserPremium(value) {
+        @Deprecated(
+            message = "Replaced by 'UserPremium.from()'.",
+            replaceWith = ReplaceWith(expression = "UserPremium.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.UserPremium")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object None : UserPremium(0)
 
@@ -58,14 +68,7 @@ public sealed class UserPremium(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): UserPremium =
-                when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> NitroClassic
-            2 -> Nitro
-            3 -> NitroBasic
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): UserPremium = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -81,5 +84,17 @@ public sealed class UserPremium(
             )
         }
 
+
+        /**
+         * Returns an instance of [UserPremium] with [UserPremium.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): UserPremium = when (value) {
+            0 -> None
+            1 -> NitroClassic
+            2 -> Nitro
+            3 -> NitroBasic
+            else -> Unknown(value, null)
+        }
     }
 }

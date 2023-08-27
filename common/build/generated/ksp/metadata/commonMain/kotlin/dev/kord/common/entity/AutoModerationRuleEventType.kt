@@ -32,7 +32,8 @@ public sealed class AutoModerationRuleEventType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "AutoModerationRuleEventType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "AutoModerationRuleEventType.Unknown(value=$value)"
+            else "AutoModerationRuleEventType.${this::class.simpleName}"
 
     /**
      * An unknown [AutoModerationRuleEventType].
@@ -40,9 +41,18 @@ public sealed class AutoModerationRuleEventType(
      * This is used as a fallback for [AutoModerationRuleEventType]s that haven't been added to Kord
      * yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : AutoModerationRuleEventType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : AutoModerationRuleEventType(value) {
+        @Deprecated(
+            message = "Replaced by 'AutoModerationRuleEventType.from()'.",
+            replaceWith = ReplaceWith(expression = "AutoModerationRuleEventType.from(value)",
+                        imports = arrayOf("dev.kord.common.entity.AutoModerationRuleEventType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * When a member sends or edits a message in the guild.
@@ -59,10 +69,7 @@ public sealed class AutoModerationRuleEventType(
         }
 
         override fun deserialize(decoder: Decoder): AutoModerationRuleEventType =
-                when (val value = decoder.decodeInt()) {
-            1 -> MessageSend
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -75,5 +82,14 @@ public sealed class AutoModerationRuleEventType(
             )
         }
 
+
+        /**
+         * Returns an instance of [AutoModerationRuleEventType] with
+         * [AutoModerationRuleEventType.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): AutoModerationRuleEventType = when (value) {
+            1 -> MessageSend
+            else -> Unknown(value, null)
+        }
     }
 }

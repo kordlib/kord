@@ -11,8 +11,6 @@ import dev.kord.ksp.generation.GenerationEntity.KordEnum.ValueType.INT
 import dev.kord.ksp.generation.GenerationEntity.KordEnum.ValueType.STRING
 import dev.kord.ksp.generation.shared.GenerationContext
 import dev.kord.ksp.generation.shared.addSharedSerializerContent
-import dev.kord.ksp.generation.shared.nameWithSuppressedDeprecation
-import dev.kord.ksp.withControlFlow
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
@@ -35,11 +33,6 @@ internal fun TypeSpec.Builder.addSerializer() = addObject("Serializer") {
         addModifiers(OVERRIDE)
         returns(entityCN)
         addParameter<Decoder>("decoder")
-        withControlFlow("return when·(val·$valueName·=·decoder.decode$encodingPostfix())") {
-            for (entry in entriesDistinctByValue) {
-                addStatement("$valueFormat·->·${entry.nameWithSuppressedDeprecation}", entry.value)
-            }
-            addStatement("else·->·Unknown($valueName)")
-        }
+        addStatement("return from(decoder.decode$encodingPostfix())")
     }
 }

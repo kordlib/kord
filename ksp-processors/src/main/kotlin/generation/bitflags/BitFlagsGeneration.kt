@@ -52,14 +52,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addPlus(parameterName = "flag", parameterType = entityCN)
         addPlus(parameterName = "flags", parameterType = collectionCN)
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", isFinal = true)
-        addFunction("toString") {
-            addModifiers(FINAL, OVERRIDE)
-            returns<String>()
-            addStatement(
-                "return if·(this·is·Unknown) \"$entityName.Unknown(shift=\$shift)\" else " +
-                    "\"$entityName.\${this::class.simpleName}\""
-            )
-        }
+        addEntityToString(property = "shift")
         if (wasEnum) {
             addDeprecatedEntityEnumArtifacts()
         }

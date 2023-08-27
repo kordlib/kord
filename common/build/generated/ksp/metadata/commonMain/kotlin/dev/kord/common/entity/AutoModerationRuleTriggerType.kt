@@ -32,7 +32,8 @@ public sealed class AutoModerationRuleTriggerType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "AutoModerationRuleTriggerType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "AutoModerationRuleTriggerType.Unknown(value=$value)"
+            else "AutoModerationRuleTriggerType.${this::class.simpleName}"
 
     /**
      * An unknown [AutoModerationRuleTriggerType].
@@ -40,9 +41,18 @@ public sealed class AutoModerationRuleTriggerType(
      * This is used as a fallback for [AutoModerationRuleTriggerType]s that haven't been added to
      * Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : AutoModerationRuleTriggerType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : AutoModerationRuleTriggerType(value) {
+        @Deprecated(
+            message = "Replaced by 'AutoModerationRuleTriggerType.from()'.",
+            replaceWith = ReplaceWith(expression = "AutoModerationRuleTriggerType.from(value)",
+                        imports = arrayOf("dev.kord.common.entity.AutoModerationRuleTriggerType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Check if content contains words from a user defined list of keywords.
@@ -74,13 +84,7 @@ public sealed class AutoModerationRuleTriggerType(
         }
 
         override fun deserialize(decoder: Decoder): AutoModerationRuleTriggerType =
-                when (val value = decoder.decodeInt()) {
-            1 -> Keyword
-            3 -> Spam
-            4 -> KeywordPreset
-            5 -> MentionSpam
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -96,5 +100,17 @@ public sealed class AutoModerationRuleTriggerType(
             )
         }
 
+
+        /**
+         * Returns an instance of [AutoModerationRuleTriggerType] with
+         * [AutoModerationRuleTriggerType.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): AutoModerationRuleTriggerType = when (value) {
+            1 -> Keyword
+            3 -> Spam
+            4 -> KeywordPreset
+            5 -> MentionSpam
+            else -> Unknown(value, null)
+        }
     }
 }

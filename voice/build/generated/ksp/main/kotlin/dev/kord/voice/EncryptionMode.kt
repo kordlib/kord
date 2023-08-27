@@ -29,16 +29,27 @@ public sealed class EncryptionMode(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "EncryptionMode.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "EncryptionMode.Unknown(value=$value)"
+            else "EncryptionMode.${this::class.simpleName}"
 
     /**
      * An unknown [EncryptionMode].
      *
      * This is used as a fallback for [EncryptionMode]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: String,
-    ) : EncryptionMode(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : EncryptionMode(value) {
+        @Deprecated(
+            message = "Replaced by 'EncryptionMode.from()'.",
+            replaceWith = ReplaceWith(expression = "EncryptionMode.from(value)", imports =
+                        arrayOf("dev.kord.voice.EncryptionMode")),
+        )
+        public constructor(`value`: String) : this(value, null)
+    }
 
     public object XSalsa20Poly1305 : EncryptionMode("xsalsa20_poly1305")
 
@@ -54,13 +65,7 @@ public sealed class EncryptionMode(
             encoder.encodeString(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): EncryptionMode =
-                when (val value = decoder.decodeString()) {
-            "xsalsa20_poly1305" -> XSalsa20Poly1305
-            "xsalsa20_poly1305_suffix" -> XSalsa20Poly1305Suffix
-            "xsalsa20_poly1305_lite" -> XSalsa20Poly1305Lite
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): EncryptionMode = from(decoder.decodeString())
     }
 
     public companion object {
@@ -75,5 +80,16 @@ public sealed class EncryptionMode(
             )
         }
 
+
+        /**
+         * Returns an instance of [EncryptionMode] with [EncryptionMode.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: String): EncryptionMode = when (value) {
+            "xsalsa20_poly1305" -> XSalsa20Poly1305
+            "xsalsa20_poly1305_suffix" -> XSalsa20Poly1305Suffix
+            "xsalsa20_poly1305_lite" -> XSalsa20Poly1305Lite
+            else -> Unknown(value, null)
+        }
     }
 }

@@ -61,8 +61,9 @@ public sealed class ApplicationFlag(
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown)
-            "ApplicationFlag.Unknown(shift=$shift)" else "ApplicationFlag.${this::class.simpleName}"
+    final override fun toString(): String =
+            if (this is Unknown) "ApplicationFlag.Unknown(shift=$shift)"
+            else "ApplicationFlag.${this::class.simpleName}"
 
     /**
      * @suppress
