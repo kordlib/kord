@@ -67,8 +67,7 @@ public value class BucketKey(public val value: String)
 /**
  * The [instant][value] when the current bucket gets reset.
  */
-@JvmInline
-public value class Reset(public val value: Instant)
+public data class Reset(public val value: Instant)
 
 public sealed class RequestResponse {
     public abstract val bucketKey: BucketKey?
