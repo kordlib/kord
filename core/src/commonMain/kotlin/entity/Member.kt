@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.ALL
+import dev.kord.common.entity.GuildMemberFlags
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -96,6 +97,9 @@ public class Member(
     public val roles: Flow<Role>
         get() = if (roleIds.isEmpty()) emptyFlow()
         else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
+
+    /** The [GuildMemberFlags] of this member. */
+    public val flags: GuildMemberFlags get() = memberData.flags
 
     /**
      * Whether the user has not yet passed the guild's Membership Screening requirements.

@@ -16,6 +16,7 @@
     ],
     "premium_since": null,
     "permissions": "2147483647",
+    "flags": 3,
     "pending": false,
     "nick": null,
     "mute": false,
