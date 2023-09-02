@@ -21,6 +21,7 @@
     "joined_at": "2020-11-02T19:25:47.248000+00:00",
     "mute": false,
     "nick": "Bot Man",
+    "flags": 3,
     "pending": false,
     "permissions": "17179869183",
     "premium_since": null,

@@ -353,6 +353,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         deaf = false,
                         mute = false,
                         joinedAt = Instant.fromEpochMilliseconds(0),
+                        flags = GuildMemberFlags(),
                     ),
                     0
                 )
@@ -380,6 +381,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             avatar = null
                         ),
                         joinedAt = Instant.fromEpochMilliseconds(0),
+                        flags = GuildMemberFlags(),
                     ),
                     0
                 )

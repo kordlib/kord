@@ -17,6 +17,7 @@
     "premium_since": null,
     "permissions": "2147483647",
     "pending": false,
+    "flags": 3,
     "nick": null,
     "mute": false,
     "joined_at": "2020-04-03T09:35:54.879000+00:00",
