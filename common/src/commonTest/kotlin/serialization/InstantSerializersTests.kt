@@ -8,9 +8,7 @@ import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.nanoseconds
-import kotlin.time.Duration.Companion.seconds
 
 private val EPOCH = Instant.fromEpochSeconds(0)
 
@@ -74,11 +72,6 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     instant = Instant.fromEpochMilliseconds(796514689159),
     serializer = InstantInEpochMillisecondsSerializer,
 ) {
-    // workaround for https://github.com/Kotlin/kotlinx-datetime/issues/263, use normal operators when fix is released
-    private infix fun Instant.plus(duration: Duration) = (this + 1.seconds) - (1.seconds - duration)
-    private infix fun Instant.minus(duration: Duration) = (this - 1.seconds) + (1.seconds - duration)
-
-
     private val past = Instant.fromEpochMilliseconds(Long.MIN_VALUE)
     private val future = Instant.fromEpochMilliseconds(Long.MAX_VALUE)
 
@@ -94,7 +87,7 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     fun `future Instant under limit can be serialized`() {
         assertEquals(
             expected = (if (futureClamped) clampedMax else Long.MAX_VALUE - 1).toString(),
-            actual = serialize(future minus 1.nanoseconds),
+            actual = serialize(future - 1.nanoseconds),
         )
     }
 
@@ -103,7 +96,7 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     fun `past Instant under limit can be serialized`() {
         assertEquals(
             expected = (if (pastClamped) clampedMin else Long.MIN_VALUE).toString(),
-            actual = serialize(past plus 1.nanoseconds),
+            actual = serialize(past + 1.nanoseconds),
         )
     }
 
@@ -130,13 +123,13 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     @Test
     @JsName("test11")
     fun `future Instant over limit cannot be serialized`() {
-        if (!futureClamped) assertFailsWith<SerializationException> { serialize(future plus 1.nanoseconds) }
+        if (!futureClamped) assertFailsWith<SerializationException> { serialize(future + 1.nanoseconds) }
     }
 
     @Test
     @JsName("test12")
     fun `past Instant over limit cannot be serialized`() {
-        if (!pastClamped) assertFailsWith<SerializationException> { serialize(past minus 1.nanoseconds) }
+        if (!pastClamped) assertFailsWith<SerializationException> { serialize(past - 1.nanoseconds) }
     }
 }
 
