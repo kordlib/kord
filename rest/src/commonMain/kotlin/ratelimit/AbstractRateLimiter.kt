@@ -11,6 +11,7 @@ import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import mu.KLogger
 import kotlin.time.Duration.Companion.minutes
 
@@ -18,7 +19,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     internal abstract val logger: KLogger
 
     private val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
-    private val globalSuspensionPoint = atomic(Reset(clock.now()))
+    private val globalSuspensionPoint = atomic(clock.now())
     internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
     private val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
 
@@ -26,8 +27,8 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     private val Request<*, *>.buckets get() = routeBuckets[identifier].orEmpty().map { it.bucket }
     internal fun RequestIdentifier.addBucket(id: BucketKey) = routeBuckets.getOrPut(this) { mutableSetOf() }.add(id)
 
-    internal suspend fun Reset.await() {
-        val duration = value - clock.now()
+    private suspend fun Instant.await() {
+        val duration = this - clock.now()
         if (duration.isNegative()) return
         delay(duration)
     }
@@ -66,11 +67,11 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
 
                 when (response) {
                     is RequestResponse.GlobalRateLimit -> {
-                        logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
+                        logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset}" }
                         globalSuspensionPoint.update { response.reset }
                     }
                     is RequestResponse.BucketRateLimit -> {
-                        logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
+                        logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset}" }
                         response.bucketKey.bucket.updateReset(response.reset)
                     }
                     is RequestResponse.Accepted, RequestResponse.Error -> {}
@@ -83,7 +84,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     }
 
     internal inner class Bucket(val id: BucketKey) {
-        private val reset = atomic(Reset(clock.now()))
+        private val reset = atomic(clock.now())
         private val mutex = Mutex()
 
         suspend fun awaitAndLock() {
@@ -92,7 +93,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
             reset.value.await()
         }
 
-        fun updateReset(newValue: Reset) {
+        fun updateReset(newValue: Instant) {
             reset.update { newValue }
         }
 
