@@ -80,6 +80,7 @@ public sealed class ChannelFlag(
     public fun ordinal(): Int = when (this) {
         Pinned -> 0
         RequireTag -> 1
+        HideMediaDownloadOptions -> 2
         is Unknown -> Int.MAX_VALUE
     }
 
@@ -103,15 +104,22 @@ public sealed class ChannelFlag(
     ) : ChannelFlag(shift)
 
     /**
-     * This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] channel.
+     * This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] or
+     * [GuildMedia][ChannelType.GuildMedia] channel.
      */
     public object Pinned : ChannelFlag(1)
 
     /**
      * Whether a tag is required to be specified when creating a thread in a
-     * [GuildForum][ChannelType.GuildForum] channel.
+     * [GuildForum][ChannelType.GuildForum] or [GuildMedia][ChannelType.GuildMedia] channel.
      */
     public object RequireTag : ChannelFlag(4)
+
+    /**
+     * When set hides the embedded media download options. Available only for
+     * [GuildMedia][ChannelType.GuildMedia] channels.
+     */
+    public object HideMediaDownloadOptions : ChannelFlag(15)
 
     public companion object {
         /**
@@ -121,6 +129,7 @@ public sealed class ChannelFlag(
             listOf(
                 Pinned,
                 RequireTag,
+                HideMediaDownloadOptions,
             )
         }
 
@@ -148,6 +157,7 @@ public sealed class ChannelFlag(
         public fun fromShift(shift: Int): ChannelFlag = when (shift) {
             1 -> Pinned
             4 -> RequireTag
+            15 -> HideMediaDownloadOptions
             else -> Unknown(shift)
         }
 
@@ -161,6 +171,7 @@ public sealed class ChannelFlag(
         public open fun valueOf(name: String): ChannelFlag = when (name) {
             "Pinned" -> Pinned
             "RequireTag" -> RequireTag
+            "HideMediaDownloadOptions" -> HideMediaDownloadOptions
             else -> throw IllegalArgumentException(name)
         }
 

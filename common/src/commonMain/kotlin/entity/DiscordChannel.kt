@@ -37,6 +37,10 @@
                     "Student-Hubs-FAQ) containing the listed servers.",
         ),
         Entry("GuildForum", intValue = 15, kDoc = "A channel that can only contain threads."),
+        Entry(
+            "GuildMedia", intValue = 16,
+            kDoc = "A channel that can only contain threads, similar to [GuildForum] channels.",
+        ),
     ],
 )
 
@@ -47,12 +51,18 @@
     entries = [
         Entry(
             "Pinned", shift = 1,
-            kDoc = "This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] channel.",
+            kDoc = "This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] or " +
+                "[GuildMedia][ChannelType.GuildMedia] channel.",
         ),
         Entry(
             "RequireTag", shift = 4,
             kDoc = "Whether a tag is required to be specified when creating a thread in a " +
-                "[GuildForum][ChannelType.GuildForum] channel.",
+                "[GuildForum][ChannelType.GuildForum] or [GuildMedia][ChannelType.GuildMedia] channel.",
+        ),
+        Entry(
+            "HideMediaDownloadOptions", shift = 15, noStaticFieldIfEntityWasEnum = true,
+            kDoc = "When set hides the embedded media download options. Available only for " +
+                "[GuildMedia][ChannelType.GuildMedia] channels.",
         ),
     ],
 )

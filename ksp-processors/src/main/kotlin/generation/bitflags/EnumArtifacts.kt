@@ -67,6 +67,7 @@ context(BitFlags, GenerationContext)
 @OptIn(DelicateKotlinPoetApi::class)
 internal fun TypeSpec.Builder.addDeprecatedEntityCompanionObjectEnumArtifacts() {
     entries.forEach { entry ->
+        if (entry.noStaticFieldIfEntityWasEnum) return@forEach
         addProperty(entry.name, entityCN) {
             when (entry.deprecated?.level) {
                 null -> {}

@@ -554,6 +554,17 @@ public suspend inline fun GuildService.createForumChannel(
     val createBuilder = ForumChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
+
+public suspend inline fun GuildService.createMediaChannel(
+    guildId: Snowflake,
+    name: String,
+    builder: MediaChannelCreateBuilder.() -> Unit,
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val createBuilder = MediaChannelCreateBuilder(name).apply(builder)
+    return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
 public suspend inline fun GuildService.createNewsChannel(
     guildId: Snowflake,
     name: String,

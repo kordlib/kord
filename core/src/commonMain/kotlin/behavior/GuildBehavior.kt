@@ -777,11 +777,21 @@ public suspend inline fun GuildBehavior.createTextChannel(
 public suspend inline fun GuildBehavior.createForumChannel(
     name: String,
     builder: ForumChannelCreateBuilder.() -> Unit = {}
-): ForumChannel  {
+): ForumChannel {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val response = kord.rest.guild.createForumChannel(id, name, builder)
     val data = ChannelData.from(response)
     return Channel.from(data, kord) as ForumChannel
+}
+
+public suspend inline fun GuildBehavior.createMediaChannel(
+    name: String,
+    builder: MediaChannelCreateBuilder.() -> Unit = {},
+): MediaChannel {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val response = kord.rest.guild.createMediaChannel(id, name, builder)
+    val data = ChannelData.from(response)
+    return Channel.from(data, kord) as MediaChannel
 }
 
 /**

@@ -117,6 +117,11 @@ public sealed class ChannelType(
      */
     public object GuildForum : ChannelType(15)
 
+    /**
+     * A channel that can only contain threads, similar to [GuildForum] channels.
+     */
+    public object GuildMedia : ChannelType(16)
+
     internal object Serializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelType", PrimitiveKind.INT)
@@ -146,6 +151,7 @@ public sealed class ChannelType(
                 GuildStageVoice,
                 GuildDirectory,
                 GuildForum,
+                GuildMedia,
             )
         }
 
@@ -167,6 +173,7 @@ public sealed class ChannelType(
             13 -> GuildStageVoice
             14 -> GuildDirectory
             15 -> GuildForum
+            16 -> GuildMedia
             else -> Unknown(value, null)
         }
     }

@@ -316,6 +316,7 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     StageChannelCreateEvent::class,
     TextChannelCreateEvent::class,
     ForumChannelCreateEvent::class,
+    MediaChannelCreateEvent::class,
     UnknownChannelCreateEvent::class,
     VoiceChannelCreateEvent::class,
 
@@ -326,6 +327,7 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     StageChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
     ForumChannelUpdateEvent::class,
+    MediaChannelUpdateEvent::class,
     UnknownChannelUpdateEvent::class,
     VoiceChannelUpdateEvent::class,
 
@@ -336,6 +338,7 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     StageChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
     ForumChannelDeleteEvent::class,
+    MediaChannelDeleteEvent::class,
     UnknownChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,
 

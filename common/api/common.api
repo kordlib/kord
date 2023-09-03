@@ -1711,6 +1711,10 @@ public final class dev/kord/common/entity/ChannelFlag$Companion {
 	public fun values ()[Ldev/kord/common/entity/ChannelFlag;
 }
 
+public final class dev/kord/common/entity/ChannelFlag$HideMediaDownloadOptions : dev/kord/common/entity/ChannelFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelFlag$HideMediaDownloadOptions;
+}
+
 public final class dev/kord/common/entity/ChannelFlag$Pinned : dev/kord/common/entity/ChannelFlag {
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelFlag$Pinned;
 }
@@ -1799,6 +1803,10 @@ public final class dev/kord/common/entity/ChannelType$GuildDirectory : dev/kord/
 
 public final class dev/kord/common/entity/ChannelType$GuildForum : dev/kord/common/entity/ChannelType {
 	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildForum;
+}
+
+public final class dev/kord/common/entity/ChannelType$GuildMedia : dev/kord/common/entity/ChannelType {
+	public static final field INSTANCE Ldev/kord/common/entity/ChannelType$GuildMedia;
 }
 
 public final class dev/kord/common/entity/ChannelType$GuildNews : dev/kord/common/entity/ChannelType {

@@ -12,7 +12,9 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.behavior.channel.threads.ThreadChannelBehavior
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.Message
+import dev.kord.core.entity.channel.ForumChannel
 import dev.kord.core.entity.channel.GuildMessageChannel
+import dev.kord.core.entity.channel.MediaChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
@@ -113,12 +115,12 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
 
 
     /**
-     * Only available when creating a thread in a forum channel
+     * Only available when creating a thread in a [ForumChannel] or [MediaChannel].
      */
     public val message: Message? get() = data.message.unwrap { Message(it, kord) }
 
     /**
-     * Only available when creating a thread in a forum channel
+     * Only available when creating a thread in a [ForumChannel] or [MediaChannel].
      */
     public val appliedTags: List<Snowflake> get() = data.appliedTags.value ?: emptyList()
 
