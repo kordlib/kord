@@ -5934,36 +5934,38 @@ public abstract class dev/kord/rest/ratelimit/RequestResponse {
 	public static final field Companion Ldev/kord/rest/ratelimit/RequestResponse$Companion;
 	public abstract fun getBucketKey-JBzVXgM ()Ljava/lang/String;
 	public abstract fun getRateLimit ()Ldev/kord/rest/ratelimit/RateLimit;
-	public abstract fun getReset ()Ldev/kord/rest/ratelimit/Reset;
+	public abstract fun getReset-8536Nbg ()Lkotlinx/datetime/Instant;
 }
 
 public final class dev/kord/rest/ratelimit/RequestResponse$Accepted : dev/kord/rest/ratelimit/RequestResponse {
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-JBzVXgM ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/rest/ratelimit/RateLimit;
-	public final fun component3 ()Ldev/kord/rest/ratelimit/Reset;
-	public final fun copy-Rgdz8z0 (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;)Ldev/kord/rest/ratelimit/RequestResponse$Accepted;
-	public static synthetic fun copy-Rgdz8z0$default (Ldev/kord/rest/ratelimit/RequestResponse$Accepted;Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;ILjava/lang/Object;)Ldev/kord/rest/ratelimit/RequestResponse$Accepted;
+	public final fun component3-Ad4v_Ag ()Lkotlinx/datetime/Instant;
+	public final fun copy-ociLOyk (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;)Ldev/kord/rest/ratelimit/RequestResponse$Accepted;
+	public static synthetic fun copy-ociLOyk$default (Ldev/kord/rest/ratelimit/RequestResponse$Accepted;Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;ILjava/lang/Object;)Ldev/kord/rest/ratelimit/RequestResponse$Accepted;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getBucketKey-JBzVXgM ()Ljava/lang/String;
 	public fun getRateLimit ()Ldev/kord/rest/ratelimit/RateLimit;
-	public fun getReset ()Ldev/kord/rest/ratelimit/Reset;
+	public synthetic fun getReset-8536Nbg ()Lkotlinx/datetime/Instant;
+	public fun getReset-Ad4v_Ag ()Lkotlinx/datetime/Instant;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/rest/ratelimit/RequestResponse$BucketRateLimit : dev/kord/rest/ratelimit/RequestResponse {
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-M0WuMHw ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/rest/ratelimit/RateLimit;
-	public final fun component3 ()Ldev/kord/rest/ratelimit/Reset;
-	public final fun copy-Ec6c71U (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;)Ldev/kord/rest/ratelimit/RequestResponse$BucketRateLimit;
-	public static synthetic fun copy-Ec6c71U$default (Ldev/kord/rest/ratelimit/RequestResponse$BucketRateLimit;Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;ILjava/lang/Object;)Ldev/kord/rest/ratelimit/RequestResponse$BucketRateLimit;
+	public final fun component3-Ad4v_Ag ()Lkotlinx/datetime/Instant;
+	public final fun copy-L_klSFE (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;)Ldev/kord/rest/ratelimit/RequestResponse$BucketRateLimit;
+	public static synthetic fun copy-L_klSFE$default (Ldev/kord/rest/ratelimit/RequestResponse$BucketRateLimit;Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;ILjava/lang/Object;)Ldev/kord/rest/ratelimit/RequestResponse$BucketRateLimit;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getBucketKey-JBzVXgM ()Ljava/lang/String;
 	public fun getBucketKey-M0WuMHw ()Ljava/lang/String;
 	public fun getRateLimit ()Ldev/kord/rest/ratelimit/RateLimit;
-	public fun getReset ()Ldev/kord/rest/ratelimit/Reset;
+	public synthetic fun getReset-8536Nbg ()Lkotlinx/datetime/Instant;
+	public fun getReset-Ad4v_Ag ()Lkotlinx/datetime/Instant;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -5975,20 +5977,21 @@ public final class dev/kord/rest/ratelimit/RequestResponse$Error : dev/kord/rest
 	public static final field INSTANCE Ldev/kord/rest/ratelimit/RequestResponse$Error;
 	public fun getBucketKey-JBzVXgM ()Ljava/lang/String;
 	public fun getRateLimit ()Ldev/kord/rest/ratelimit/RateLimit;
-	public fun getReset ()Ldev/kord/rest/ratelimit/Reset;
+	public fun getReset-8536Nbg ()Lkotlinx/datetime/Instant;
 }
 
 public final class dev/kord/rest/ratelimit/RequestResponse$GlobalRateLimit : dev/kord/rest/ratelimit/RequestResponse {
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-JBzVXgM ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/rest/ratelimit/RateLimit;
-	public final fun component3 ()Ldev/kord/rest/ratelimit/Reset;
-	public final fun copy-Rgdz8z0 (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;)Ldev/kord/rest/ratelimit/RequestResponse$GlobalRateLimit;
-	public static synthetic fun copy-Rgdz8z0$default (Ldev/kord/rest/ratelimit/RequestResponse$GlobalRateLimit;Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Ldev/kord/rest/ratelimit/Reset;ILjava/lang/Object;)Ldev/kord/rest/ratelimit/RequestResponse$GlobalRateLimit;
+	public final fun component3-Ad4v_Ag ()Lkotlinx/datetime/Instant;
+	public final fun copy-ociLOyk (Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;)Ldev/kord/rest/ratelimit/RequestResponse$GlobalRateLimit;
+	public static synthetic fun copy-ociLOyk$default (Ldev/kord/rest/ratelimit/RequestResponse$GlobalRateLimit;Ljava/lang/String;Ldev/kord/rest/ratelimit/RateLimit;Lkotlinx/datetime/Instant;ILjava/lang/Object;)Ldev/kord/rest/ratelimit/RequestResponse$GlobalRateLimit;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getBucketKey-JBzVXgM ()Ljava/lang/String;
 	public fun getRateLimit ()Ldev/kord/rest/ratelimit/RateLimit;
-	public fun getReset ()Ldev/kord/rest/ratelimit/Reset;
+	public synthetic fun getReset-8536Nbg ()Lkotlinx/datetime/Instant;
+	public fun getReset-Ad4v_Ag ()Lkotlinx/datetime/Instant;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -5999,14 +6002,17 @@ public abstract interface class dev/kord/rest/ratelimit/RequestToken {
 }
 
 public final class dev/kord/rest/ratelimit/Reset {
-	public fun <init> (Lkotlinx/datetime/Instant;)V
-	public final fun component1 ()Lkotlinx/datetime/Instant;
-	public final fun copy (Lkotlinx/datetime/Instant;)Ldev/kord/rest/ratelimit/Reset;
-	public static synthetic fun copy$default (Ldev/kord/rest/ratelimit/Reset;Lkotlinx/datetime/Instant;ILjava/lang/Object;)Ldev/kord/rest/ratelimit/Reset;
+	public static final synthetic fun box-impl (Lkotlinx/datetime/Instant;)Ldev/kord/rest/ratelimit/Reset;
+	public static fun constructor-impl (Lkotlinx/datetime/Instant;)Lkotlinx/datetime/Instant;
 	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Lkotlinx/datetime/Instant;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Lkotlinx/datetime/Instant;Lkotlinx/datetime/Instant;)Z
 	public final fun getValue ()Lkotlinx/datetime/Instant;
 	public fun hashCode ()I
+	public static fun hashCode-impl (Lkotlinx/datetime/Instant;)I
 	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Lkotlinx/datetime/Instant;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Lkotlinx/datetime/Instant;
 }
 
 public final class dev/kord/rest/ratelimit/Total {
