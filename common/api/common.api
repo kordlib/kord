@@ -827,6 +827,70 @@ public final class dev/kord/common/entity/ArchiveDuration$Week : dev/kord/common
 	public static final field INSTANCE Ldev/kord/common/entity/ArchiveDuration$Week;
 }
 
+public abstract class dev/kord/common/entity/AttachmentFlag {
+	public static final field Companion Ldev/kord/common/entity/AttachmentFlag$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
+	public final fun getShift ()I
+	public final fun getValue ()I
+	public final fun hashCode ()I
+	public final fun plus (Ldev/kord/common/entity/AttachmentFlag;)Ldev/kord/common/entity/AttachmentFlags;
+	public final fun plus (Ldev/kord/common/entity/AttachmentFlags;)Ldev/kord/common/entity/AttachmentFlags;
+	public final fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/AttachmentFlag$Companion {
+	public final fun fromShift (I)Ldev/kord/common/entity/AttachmentFlag;
+	public final fun getEntries ()Ljava/util/List;
+}
+
+public final class dev/kord/common/entity/AttachmentFlag$IsRemix : dev/kord/common/entity/AttachmentFlag {
+	public static final field INSTANCE Ldev/kord/common/entity/AttachmentFlag$IsRemix;
+}
+
+public final class dev/kord/common/entity/AttachmentFlag$Unknown : dev/kord/common/entity/AttachmentFlag {
+}
+
+public final class dev/kord/common/entity/AttachmentFlagKt {
+	public static final fun AttachmentFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/AttachmentFlags;
+	public static final fun AttachmentFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/AttachmentFlags;
+	public static final fun AttachmentFlags ([Ldev/kord/common/entity/AttachmentFlag;)Ldev/kord/common/entity/AttachmentFlags;
+	public static final fun AttachmentFlags ([Ldev/kord/common/entity/AttachmentFlags;)Ldev/kord/common/entity/AttachmentFlags;
+	public static synthetic fun AttachmentFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/AttachmentFlags;
+	public static final fun AttachmentFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/AttachmentFlags;
+}
+
+public final class dev/kord/common/entity/AttachmentFlags {
+	public static final field Companion Ldev/kord/common/entity/AttachmentFlags$Companion;
+	public final fun contains (Ldev/kord/common/entity/AttachmentFlag;)Z
+	public final fun contains (Ldev/kord/common/entity/AttachmentFlags;)Z
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/AttachmentFlags;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()I
+	public final fun getValues ()Ljava/util/Set;
+	public fun hashCode ()I
+	public final fun minus (Ldev/kord/common/entity/AttachmentFlag;)Ldev/kord/common/entity/AttachmentFlags;
+	public final fun minus (Ldev/kord/common/entity/AttachmentFlags;)Ldev/kord/common/entity/AttachmentFlags;
+	public final fun plus (Ldev/kord/common/entity/AttachmentFlag;)Ldev/kord/common/entity/AttachmentFlags;
+	public final fun plus (Ldev/kord/common/entity/AttachmentFlags;)Ldev/kord/common/entity/AttachmentFlags;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/common/entity/AttachmentFlags$Builder {
+	public fun <init> ()V
+	public fun <init> (I)V
+	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Ldev/kord/common/entity/AttachmentFlags;
+	public final fun unaryMinus (Ldev/kord/common/entity/AttachmentFlag;)V
+	public final fun unaryMinus (Ldev/kord/common/entity/AttachmentFlags;)V
+	public final fun unaryPlus (Ldev/kord/common/entity/AttachmentFlag;)V
+	public final fun unaryPlus (Ldev/kord/common/entity/AttachmentFlags;)V
+}
+
+public final class dev/kord/common/entity/AttachmentFlags$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/common/entity/AuditLogChange {
 	public static final field Companion Ldev/kord/common/entity/AuditLogChange$Companion;
 	public fun <init> (Ljava/lang/Object;Ljava/lang/Object;Ldev/kord/common/entity/AuditLogChangeKey;)V
@@ -2637,13 +2701,14 @@ public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetada
 
 public final class dev/kord/common/entity/DiscordAttachment {
 	public static final field Companion Ldev/kord/common/entity/DiscordAttachment$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component10 ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun component11 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component12 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component13 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
@@ -2652,14 +2717,15 @@ public final class dev/kord/common/entity/DiscordAttachment {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun component9 ()Ldev/kord/common/entity/optional/OptionalInt;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordAttachment;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAttachment;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAttachment;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/common/entity/DiscordAttachment;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/DiscordAttachment;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/common/entity/DiscordAttachment;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getContentType ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getDescription ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getDurationSecs ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getEphemeral ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getFilename ()Ljava/lang/String;
+	public final fun getFlags ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getHeight ()Ldev/kord/common/entity/optional/OptionalInt;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getProxyUrl ()Ljava/lang/String;
