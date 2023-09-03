@@ -42,14 +42,14 @@ abstract class AbstractRequestRateLimiterTest {
                 RequestResponse.BucketRateLimit(
                     BucketKey(bucketKey.toString()),
                     rateLimit,
-                    clock.now().plus(timeout)
+                    Reset(clock.now().plus(timeout))
                 )
             )
             else -> token.complete(
                 RequestResponse.Accepted(
                     BucketKey(bucketKey.toString()),
                     rateLimit,
-                    clock.now().plus(timeout)
+                    Reset(clock.now().plus(timeout))
                 )
             )
         }
@@ -72,14 +72,14 @@ abstract class AbstractRequestRateLimiterTest {
                 RequestResponse.BucketRateLimit(
                     BucketKey(bucketKey.toString()),
                     rateLimit,
-                    clock.now().plus(timeout)
+                    Reset(clock.now().plus(timeout))
                 )
             )
             else -> complete(
                 RequestResponse.Accepted(
                     BucketKey(bucketKey.toString()),
                     rateLimit,
-                    clock.now().plus(timeout)
+                    Reset(clock.now().plus(timeout))
                 )
             )
         }

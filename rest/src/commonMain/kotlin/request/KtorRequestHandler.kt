@@ -122,7 +122,7 @@ public fun RequestResponse.Companion.from(response: HttpResponse, clock: Clock):
         RateLimit(total, remaining)
     }
 
-    val reset = response.channelResetPoint(clock)
+    val reset = Reset(response.channelResetPoint(clock))
 
     return when {
         response.isGlobalRateLimit -> RequestResponse.GlobalRateLimit(bucket, rateLimit, reset)
