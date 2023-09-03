@@ -114,6 +114,14 @@
     ],
 )
 
+@file:Generate(
+    INT_FLAGS, name = "AttachmentFlag",
+    docUrl = "https://discord.com/developers/docs/resources/channel#attachment-object-attachment-flags",
+    entries = [
+        Entry("IsRemix", shift = 2, kDoc = "This attachment has been edited using the remix feature on mobile."),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -457,21 +465,13 @@ public data class DiscordAttachment(
     val url: String,
     @SerialName("proxy_url")
     val proxyUrl: String,
-    /*
-    Do not trust the docs:
-    2020-11-06 This field is marked as nullable but can be missing instead.
-    */
     val height: OptionalInt? = OptionalInt.Missing,
-    /*
-    Do not trust the docs:
-    2020-11-06 This field is marked as nullable but can be missing instead.
-    */
     val width: OptionalInt? = OptionalInt.Missing,
-
     val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("duration_secs")
     val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing(),
-    val waveform: Optional<String> = Optional.Missing()
+    val waveform: Optional<String> = Optional.Missing(),
+    val flags: Optional<AttachmentFlags> = Optional.Missing(),
 )
 
 /**
