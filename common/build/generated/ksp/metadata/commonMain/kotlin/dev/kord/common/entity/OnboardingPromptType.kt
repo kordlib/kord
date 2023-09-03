@@ -30,16 +30,26 @@ public sealed class OnboardingPromptType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "OnboardingPromptType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "OnboardingPromptType.Unknown(value=$value)"
+            else "OnboardingPromptType.${this::class.simpleName}"
 
     /**
      * An unknown [OnboardingPromptType].
      *
      * This is used as a fallback for [OnboardingPromptType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : OnboardingPromptType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : OnboardingPromptType(value) {
+        @Deprecated(
+            message = "Replaced by 'OnboardingPromptType.from()'.",
+            replaceWith = ReplaceWith(expression = "OnboardingPromptType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.OnboardingPromptType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object MultipleChoice : OnboardingPromptType(0)
 
@@ -54,12 +64,7 @@ public sealed class OnboardingPromptType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): OnboardingPromptType =
-                when (val value = decoder.decodeInt()) {
-            0 -> MultipleChoice
-            1 -> Dropdown
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): OnboardingPromptType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -73,5 +78,15 @@ public sealed class OnboardingPromptType(
             )
         }
 
+
+        /**
+         * Returns an instance of [OnboardingPromptType] with [OnboardingPromptType.value] equal to
+         * the specified [value].
+         */
+        public fun from(`value`: Int): OnboardingPromptType = when (value) {
+            0 -> MultipleChoice
+            1 -> Dropdown
+            else -> Unknown(value, null)
+        }
     }
 }

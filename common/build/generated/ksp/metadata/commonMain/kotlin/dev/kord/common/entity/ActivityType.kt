@@ -29,16 +29,26 @@ public sealed class ActivityType(
 
     final override fun hashCode(): Int = code.hashCode()
 
-    final override fun toString(): String = "ActivityType.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = if (this is Unknown) "ActivityType.Unknown(code=$code)"
+            else "ActivityType.${this::class.simpleName}"
 
     /**
      * An unknown [ActivityType].
      *
      * This is used as a fallback for [ActivityType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         code: Int,
-    ) : ActivityType(code)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ActivityType(code) {
+        @Deprecated(
+            message = "Replaced by 'ActivityType.from()'.",
+            replaceWith = ReplaceWith(expression = "ActivityType.from(code)", imports =
+                        arrayOf("dev.kord.common.entity.ActivityType")),
+        )
+        public constructor(code: Int) : this(code, null)
+    }
 
     public object Game : ActivityType(0)
 
@@ -60,16 +70,7 @@ public sealed class ActivityType(
             encoder.encodeInt(value.code)
         }
 
-        override fun deserialize(decoder: Decoder): ActivityType =
-                when (val code = decoder.decodeInt()) {
-            0 -> Game
-            1 -> Streaming
-            2 -> Listening
-            3 -> Watching
-            4 -> Custom
-            5 -> Competing
-            else -> Unknown(code)
-        }
+        override fun deserialize(decoder: Decoder): ActivityType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -87,5 +88,19 @@ public sealed class ActivityType(
             )
         }
 
+
+        /**
+         * Returns an instance of [ActivityType] with [ActivityType.code] equal to the specified
+         * [code].
+         */
+        public fun from(code: Int): ActivityType = when (code) {
+            0 -> Game
+            1 -> Streaming
+            2 -> Listening
+            3 -> Watching
+            4 -> Custom
+            5 -> Competing
+            else -> Unknown(code, null)
+        }
     }
 }

@@ -30,7 +30,8 @@ public sealed class DiscordConnectionVisibility(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "DiscordConnectionVisibility.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "DiscordConnectionVisibility.Unknown(value=$value)"
+            else "DiscordConnectionVisibility.${this::class.simpleName}"
 
     /**
      * An unknown [DiscordConnectionVisibility].
@@ -38,9 +39,18 @@ public sealed class DiscordConnectionVisibility(
      * This is used as a fallback for [DiscordConnectionVisibility]s that haven't been added to Kord
      * yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : DiscordConnectionVisibility(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : DiscordConnectionVisibility(value) {
+        @Deprecated(
+            message = "Replaced by 'DiscordConnectionVisibility.from()'.",
+            replaceWith = ReplaceWith(expression = "DiscordConnectionVisibility.from(value)",
+                        imports = arrayOf("dev.kord.common.entity.DiscordConnectionVisibility")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Invisible to everyone except the user themselves.
@@ -62,11 +72,7 @@ public sealed class DiscordConnectionVisibility(
         }
 
         override fun deserialize(decoder: Decoder): DiscordConnectionVisibility =
-                when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Everyone
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -80,5 +86,15 @@ public sealed class DiscordConnectionVisibility(
             )
         }
 
+
+        /**
+         * Returns an instance of [DiscordConnectionVisibility] with
+         * [DiscordConnectionVisibility.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): DiscordConnectionVisibility = when (value) {
+            0 -> None
+            1 -> Everyone
+            else -> Unknown(value, null)
+        }
     }
 }

@@ -29,16 +29,27 @@ public sealed class AuditLogEvent(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "AuditLogEvent.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "AuditLogEvent.Unknown(value=$value)"
+            else "AuditLogEvent.${this::class.simpleName}"
 
     /**
      * An unknown [AuditLogEvent].
      *
      * This is used as a fallback for [AuditLogEvent]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : AuditLogEvent(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : AuditLogEvent(value) {
+        @Deprecated(
+            message = "Replaced by 'AuditLogEvent.from()'.",
+            replaceWith = ReplaceWith(expression = "AuditLogEvent.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.AuditLogEvent")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Server settings were updated.
@@ -318,64 +329,7 @@ public sealed class AuditLogEvent(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): AuditLogEvent =
-                when (val value = decoder.decodeInt()) {
-            1 -> GuildUpdate
-            10 -> ChannelCreate
-            11 -> ChannelUpdate
-            12 -> ChannelDelete
-            13 -> ChannelOverwriteCreate
-            14 -> ChannelOverwriteUpdate
-            15 -> ChannelOverwriteDelete
-            20 -> MemberKick
-            21 -> MemberPrune
-            22 -> MemberBanAdd
-            23 -> MemberBanRemove
-            24 -> MemberUpdate
-            25 -> MemberRoleUpdate
-            26 -> MemberMove
-            27 -> MemberDisconnect
-            28 -> BotAdd
-            30 -> RoleCreate
-            31 -> RoleUpdate
-            32 -> RoleDelete
-            40 -> InviteCreate
-            41 -> InviteUpdate
-            42 -> InviteDelete
-            50 -> WebhookCreate
-            51 -> WebhookUpdate
-            52 -> WebhookDelete
-            60 -> EmojiCreate
-            61 -> EmojiUpdate
-            62 -> EmojiDelete
-            72 -> MessageDelete
-            73 -> MessageBulkDelete
-            74 -> MessagePin
-            75 -> MessageUnpin
-            80 -> IntegrationCreate
-            81 -> IntegrationUpdate
-            82 -> IntegrationDelete
-            83 -> StageInstanceCreate
-            84 -> StageInstanceUpdate
-            85 -> StageInstanceDelete
-            90 -> StickerCreate
-            91 -> StickerUpdate
-            92 -> StickerDelete
-            100 -> GuildScheduledEventCreate
-            101 -> GuildScheduledEventUpdate
-            102 -> GuildScheduledEventDelete
-            110 -> ThreadCreate
-            111 -> ThreadUpdate
-            112 -> ThreadDelete
-            121 -> ApplicationCommandPermissionUpdate
-            140 -> AutoModerationRuleCreate
-            141 -> AutoModerationRuleUpdate
-            142 -> AutoModerationRuleDelete
-            143 -> AutoModerationBlockMessage
-            144 -> AutoModerationFlagToChannel
-            145 -> AutoModerationUserCommunicationDisabled
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): AuditLogEvent = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -441,5 +395,67 @@ public sealed class AuditLogEvent(
             )
         }
 
+
+        /**
+         * Returns an instance of [AuditLogEvent] with [AuditLogEvent.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): AuditLogEvent = when (value) {
+            1 -> GuildUpdate
+            10 -> ChannelCreate
+            11 -> ChannelUpdate
+            12 -> ChannelDelete
+            13 -> ChannelOverwriteCreate
+            14 -> ChannelOverwriteUpdate
+            15 -> ChannelOverwriteDelete
+            20 -> MemberKick
+            21 -> MemberPrune
+            22 -> MemberBanAdd
+            23 -> MemberBanRemove
+            24 -> MemberUpdate
+            25 -> MemberRoleUpdate
+            26 -> MemberMove
+            27 -> MemberDisconnect
+            28 -> BotAdd
+            30 -> RoleCreate
+            31 -> RoleUpdate
+            32 -> RoleDelete
+            40 -> InviteCreate
+            41 -> InviteUpdate
+            42 -> InviteDelete
+            50 -> WebhookCreate
+            51 -> WebhookUpdate
+            52 -> WebhookDelete
+            60 -> EmojiCreate
+            61 -> EmojiUpdate
+            62 -> EmojiDelete
+            72 -> MessageDelete
+            73 -> MessageBulkDelete
+            74 -> MessagePin
+            75 -> MessageUnpin
+            80 -> IntegrationCreate
+            81 -> IntegrationUpdate
+            82 -> IntegrationDelete
+            83 -> StageInstanceCreate
+            84 -> StageInstanceUpdate
+            85 -> StageInstanceDelete
+            90 -> StickerCreate
+            91 -> StickerUpdate
+            92 -> StickerDelete
+            100 -> GuildScheduledEventCreate
+            101 -> GuildScheduledEventUpdate
+            102 -> GuildScheduledEventDelete
+            110 -> ThreadCreate
+            111 -> ThreadUpdate
+            112 -> ThreadDelete
+            121 -> ApplicationCommandPermissionUpdate
+            140 -> AutoModerationRuleCreate
+            141 -> AutoModerationRuleUpdate
+            142 -> AutoModerationRuleDelete
+            143 -> AutoModerationBlockMessage
+            144 -> AutoModerationFlagToChannel
+            145 -> AutoModerationUserCommunicationDisabled
+            else -> Unknown(value, null)
+        }
     }
 }

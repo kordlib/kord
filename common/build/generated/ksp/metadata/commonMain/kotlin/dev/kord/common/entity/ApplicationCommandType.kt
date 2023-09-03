@@ -30,16 +30,26 @@ public sealed class ApplicationCommandType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "ApplicationCommandType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "ApplicationCommandType.Unknown(value=$value)"
+            else "ApplicationCommandType.${this::class.simpleName}"
 
     /**
      * An unknown [ApplicationCommandType].
      *
      * This is used as a fallback for [ApplicationCommandType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : ApplicationCommandType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ApplicationCommandType(value) {
+        @Deprecated(
+            message = "Replaced by 'ApplicationCommandType.from()'.",
+            replaceWith = ReplaceWith(expression = "ApplicationCommandType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.ApplicationCommandType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * A text-based command that shows up when a user types `/`.
@@ -66,12 +76,7 @@ public sealed class ApplicationCommandType(
         }
 
         override fun deserialize(decoder: Decoder): ApplicationCommandType =
-                when (val value = decoder.decodeInt()) {
-            1 -> ChatInput
-            2 -> User
-            3 -> Message
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -86,5 +91,16 @@ public sealed class ApplicationCommandType(
             )
         }
 
+
+        /**
+         * Returns an instance of [ApplicationCommandType] with [ApplicationCommandType.value] equal
+         * to the specified [value].
+         */
+        public fun from(`value`: Int): ApplicationCommandType = when (value) {
+            1 -> ChatInput
+            2 -> User
+            3 -> Message
+            else -> Unknown(value, null)
+        }
     }
 }

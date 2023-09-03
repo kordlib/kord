@@ -307,6 +307,7 @@ public abstract class dev/kord/common/entity/ActivityType {
 }
 
 public final class dev/kord/common/entity/ActivityType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ActivityType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -383,6 +384,7 @@ public abstract class dev/kord/common/entity/AllowedMentionType {
 }
 
 public final class dev/kord/common/entity/AllowedMentionType$Companion {
+	public final fun from (Ljava/lang/String;)Ldev/kord/common/entity/AllowedMentionType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -519,6 +521,7 @@ public final class dev/kord/common/entity/ApplicationCommandOptionType$Channel :
 }
 
 public final class dev/kord/common/entity/ApplicationCommandOptionType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ApplicationCommandOptionType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -573,6 +576,7 @@ public final class dev/kord/common/entity/ApplicationCommandPermissionType$Chann
 }
 
 public final class dev/kord/common/entity/ApplicationCommandPermissionType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ApplicationCommandPermissionType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -603,6 +607,7 @@ public final class dev/kord/common/entity/ApplicationCommandType$ChatInput : dev
 }
 
 public final class dev/kord/common/entity/ApplicationCommandType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ApplicationCommandType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -761,6 +766,7 @@ public final class dev/kord/common/entity/ApplicationRoleConnectionMetadataType$
 }
 
 public final class dev/kord/common/entity/ApplicationRoleConnectionMetadataType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -1280,6 +1286,7 @@ public final class dev/kord/common/entity/AuditLogEvent$ChannelUpdate : dev/kord
 }
 
 public final class dev/kord/common/entity/AuditLogEvent$Companion {
+	public final fun from (I)Ldev/kord/common/entity/AuditLogEvent;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -1462,6 +1469,7 @@ public final class dev/kord/common/entity/AutoModerationActionType$BlockMessage 
 }
 
 public final class dev/kord/common/entity/AutoModerationActionType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/AutoModerationActionType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -1488,6 +1496,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleEventType {
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleEventType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/AutoModerationRuleEventType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -1510,6 +1519,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleKeywordPresetType
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/AutoModerationRuleKeywordPresetType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -1540,6 +1550,7 @@ public abstract class dev/kord/common/entity/AutoModerationRuleTriggerType {
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/AutoModerationRuleTriggerType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -1643,6 +1654,7 @@ public abstract class dev/kord/common/entity/ButtonStyle {
 }
 
 public final class dev/kord/common/entity/ButtonStyle$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ButtonStyle;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -1764,6 +1776,7 @@ public abstract class dev/kord/common/entity/ChannelType {
 }
 
 public final class dev/kord/common/entity/ChannelType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ChannelType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -2106,6 +2119,7 @@ public final class dev/kord/common/entity/ComponentType$ChannelSelect : dev/kord
 }
 
 public final class dev/kord/common/entity/ComponentType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ComponentType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -2148,6 +2162,7 @@ public final class dev/kord/common/entity/DefaultMessageNotificationLevel$AllMes
 }
 
 public final class dev/kord/common/entity/DefaultMessageNotificationLevel$Companion {
+	public final fun from (I)Ldev/kord/common/entity/DefaultMessageNotificationLevel;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -3386,6 +3401,7 @@ public abstract class dev/kord/common/entity/DiscordConnectionVisibility {
 }
 
 public final class dev/kord/common/entity/DiscordConnectionVisibility$Companion {
+	public final fun from (I)Ldev/kord/common/entity/DiscordConnectionVisibility;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -6604,6 +6620,7 @@ public final class dev/kord/common/entity/EmbedType$Article : dev/kord/common/en
 }
 
 public final class dev/kord/common/entity/EmbedType$Companion {
+	public final fun from (Ljava/lang/String;)Ldev/kord/common/entity/EmbedType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -6646,6 +6663,7 @@ public final class dev/kord/common/entity/ExplicitContentFilter$AllMembers : dev
 }
 
 public final class dev/kord/common/entity/ExplicitContentFilter$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ExplicitContentFilter;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -6672,6 +6690,7 @@ public abstract class dev/kord/common/entity/ForumLayoutType {
 }
 
 public final class dev/kord/common/entity/ForumLayoutType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ForumLayoutType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -6763,6 +6782,7 @@ public final class dev/kord/common/entity/GuildFeature$Community : dev/kord/comm
 }
 
 public final class dev/kord/common/entity/GuildFeature$Companion {
+	public final fun from (Ljava/lang/String;)Ldev/kord/common/entity/GuildFeature;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -6990,6 +7010,7 @@ public abstract class dev/kord/common/entity/GuildScheduledEventPrivacyLevel {
 }
 
 public final class dev/kord/common/entity/GuildScheduledEventPrivacyLevel$Companion {
+	public final fun from (I)Ldev/kord/common/entity/GuildScheduledEventPrivacyLevel;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7020,6 +7041,7 @@ public final class dev/kord/common/entity/GuildScheduledEventStatus$Cancelled : 
 }
 
 public final class dev/kord/common/entity/GuildScheduledEventStatus$Companion {
+	public final fun from (I)Ldev/kord/common/entity/GuildScheduledEventStatus;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7115,6 +7137,7 @@ public abstract class dev/kord/common/entity/IntegrationExpireBehavior {
 }
 
 public final class dev/kord/common/entity/IntegrationExpireBehavior$Companion {
+	public final fun from (I)Ldev/kord/common/entity/IntegrationExpireBehavior;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7200,6 +7223,7 @@ public final class dev/kord/common/entity/InteractionResponseType$ChannelMessage
 }
 
 public final class dev/kord/common/entity/InteractionResponseType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/InteractionResponseType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7246,6 +7270,7 @@ public final class dev/kord/common/entity/InteractionType$AutoComplete : dev/kor
 }
 
 public final class dev/kord/common/entity/InteractionType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/InteractionType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7276,6 +7301,7 @@ public abstract class dev/kord/common/entity/InviteTargetType {
 }
 
 public final class dev/kord/common/entity/InviteTargetType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/InviteTargetType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7302,6 +7328,7 @@ public abstract class dev/kord/common/entity/MFALevel {
 }
 
 public final class dev/kord/common/entity/MFALevel$Companion {
+	public final fun from (I)Ldev/kord/common/entity/MFALevel;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7360,6 +7387,7 @@ public abstract class dev/kord/common/entity/MessageActivityType {
 }
 
 public final class dev/kord/common/entity/MessageActivityType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/MessageActivityType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7643,6 +7671,7 @@ public final class dev/kord/common/entity/MessageStickerType$APNG : dev/kord/com
 }
 
 public final class dev/kord/common/entity/MessageStickerType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/MessageStickerType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7701,6 +7730,7 @@ public final class dev/kord/common/entity/MessageType$ChatInputCommand : dev/kor
 }
 
 public final class dev/kord/common/entity/MessageType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/MessageType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7828,6 +7858,7 @@ public final class dev/kord/common/entity/NsfwLevel$AgeRestricted : dev/kord/com
 }
 
 public final class dev/kord/common/entity/NsfwLevel$Companion {
+	public final fun from (I)Ldev/kord/common/entity/NsfwLevel;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7858,6 +7889,7 @@ public abstract class dev/kord/common/entity/OnboardingPromptType {
 }
 
 public final class dev/kord/common/entity/OnboardingPromptType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/OnboardingPromptType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -7929,6 +7961,7 @@ public abstract class dev/kord/common/entity/OverwriteType {
 }
 
 public final class dev/kord/common/entity/OverwriteType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/OverwriteType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -8239,6 +8272,7 @@ public abstract class dev/kord/common/entity/PremiumTier {
 }
 
 public final class dev/kord/common/entity/PremiumTier$Companion {
+	public final fun from (I)Ldev/kord/common/entity/PremiumTier;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -8273,6 +8307,7 @@ public abstract class dev/kord/common/entity/PresenceStatus {
 }
 
 public final class dev/kord/common/entity/PresenceStatus$Companion {
+	public final fun from (Ljava/lang/String;)Ldev/kord/common/entity/PresenceStatus;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -8484,6 +8519,7 @@ public abstract class dev/kord/common/entity/ScheduledEntityType {
 }
 
 public final class dev/kord/common/entity/ScheduledEntityType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/ScheduledEntityType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -8550,6 +8586,7 @@ public abstract class dev/kord/common/entity/SortOrderType {
 }
 
 public final class dev/kord/common/entity/SortOrderType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/SortOrderType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -8576,6 +8613,7 @@ public abstract class dev/kord/common/entity/StageInstancePrivacyLevel {
 }
 
 public final class dev/kord/common/entity/StageInstancePrivacyLevel$Companion {
+	public final fun from (I)Ldev/kord/common/entity/StageInstancePrivacyLevel;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -8752,6 +8790,7 @@ public final class dev/kord/common/entity/TeamMembershipState$Accepted : dev/kor
 }
 
 public final class dev/kord/common/entity/TeamMembershipState$Companion {
+	public final fun from (I)Ldev/kord/common/entity/TeamMembershipState;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -8774,6 +8813,7 @@ public abstract class dev/kord/common/entity/TextInputStyle {
 }
 
 public final class dev/kord/common/entity/TextInputStyle$Companion {
+	public final fun from (I)Ldev/kord/common/entity/TextInputStyle;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -8974,6 +9014,7 @@ public abstract class dev/kord/common/entity/UserPremium {
 }
 
 public final class dev/kord/common/entity/UserPremium$Companion {
+	public final fun from (I)Ldev/kord/common/entity/UserPremium;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -9008,6 +9049,7 @@ public abstract class dev/kord/common/entity/VerificationLevel {
 }
 
 public final class dev/kord/common/entity/VerificationLevel$Companion {
+	public final fun from (I)Ldev/kord/common/entity/VerificationLevel;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -9050,6 +9092,7 @@ public final class dev/kord/common/entity/VideoQualityMode$Auto : dev/kord/commo
 }
 
 public final class dev/kord/common/entity/VideoQualityMode$Companion {
+	public final fun from (I)Ldev/kord/common/entity/VideoQualityMode;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -9080,6 +9123,7 @@ public final class dev/kord/common/entity/WebhookType$ChannelFollower : dev/kord
 }
 
 public final class dev/kord/common/entity/WebhookType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/WebhookType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }

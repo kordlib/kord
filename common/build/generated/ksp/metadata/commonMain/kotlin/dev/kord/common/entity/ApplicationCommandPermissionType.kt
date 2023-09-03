@@ -30,7 +30,8 @@ public sealed class ApplicationCommandPermissionType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "ApplicationCommandPermissionType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "ApplicationCommandPermissionType.Unknown(value=$value)"
+            else "ApplicationCommandPermissionType.${this::class.simpleName}"
 
     /**
      * An unknown [ApplicationCommandPermissionType].
@@ -38,9 +39,19 @@ public sealed class ApplicationCommandPermissionType(
      * This is used as a fallback for [ApplicationCommandPermissionType]s that haven't been added to
      * Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : ApplicationCommandPermissionType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ApplicationCommandPermissionType(value) {
+        @Deprecated(
+            message = "Replaced by 'ApplicationCommandPermissionType.from()'.",
+            replaceWith = ReplaceWith(expression = "ApplicationCommandPermissionType.from(value)",
+                        imports =
+                        arrayOf("dev.kord.common.entity.ApplicationCommandPermissionType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object Role : ApplicationCommandPermissionType(1)
 
@@ -58,12 +69,7 @@ public sealed class ApplicationCommandPermissionType(
         }
 
         override fun deserialize(decoder: Decoder): ApplicationCommandPermissionType =
-                when (val value = decoder.decodeInt()) {
-            1 -> Role
-            2 -> User
-            3 -> Channel
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -78,5 +84,16 @@ public sealed class ApplicationCommandPermissionType(
             )
         }
 
+
+        /**
+         * Returns an instance of [ApplicationCommandPermissionType] with
+         * [ApplicationCommandPermissionType.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): ApplicationCommandPermissionType = when (value) {
+            1 -> Role
+            2 -> User
+            3 -> Channel
+            else -> Unknown(value, null)
+        }
     }
 }

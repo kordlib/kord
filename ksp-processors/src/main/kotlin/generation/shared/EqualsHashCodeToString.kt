@@ -6,6 +6,7 @@ import com.squareup.kotlinpoet.KModifier.OVERRIDE
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.addParameter
+import dev.kord.ksp.generation.GenerationEntity
 import dev.kord.ksp.returns
 
 internal fun TypeSpec.Builder.addEqualsAndHashCodeBasedOnClassAndSingleProperty(
@@ -25,4 +26,14 @@ internal fun TypeSpec.Builder.addEqualsAndHashCodeBasedOnClassAndSingleProperty(
         returns<Int>()
         addStatement("return $property.hashCode()")
     }
+}
+
+context(GenerationEntity)
+internal fun TypeSpec.Builder.addEntityToString(property: String) = addFunction("toString") {
+    addModifiers(FINAL, OVERRIDE)
+    returns<String>()
+    addStatement(
+        "return if·(this·is·Unknown)·\"$entityName.Unknown($property=$$property)\" " +
+            "else·\"$entityName.\${this::class.simpleName}\""
+    )
 }

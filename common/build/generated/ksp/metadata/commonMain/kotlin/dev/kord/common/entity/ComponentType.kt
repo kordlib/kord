@@ -29,16 +29,27 @@ public sealed class ComponentType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "ComponentType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "ComponentType.Unknown(value=$value)"
+            else "ComponentType.${this::class.simpleName}"
 
     /**
      * An unknown [ComponentType].
      *
      * This is used as a fallback for [ComponentType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : ComponentType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ComponentType(value) {
+        @Deprecated(
+            message = "Replaced by 'ComponentType.from()'.",
+            replaceWith = ReplaceWith(expression = "ComponentType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.ComponentType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * A container for other components.
@@ -88,18 +99,7 @@ public sealed class ComponentType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ComponentType =
-                when (val value = decoder.decodeInt()) {
-            1 -> ActionRow
-            2 -> Button
-            3 -> StringSelect
-            4 -> TextInput
-            5 -> UserSelect
-            6 -> RoleSelect
-            7 -> MentionableSelect
-            8 -> ChannelSelect
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): ComponentType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -119,5 +119,21 @@ public sealed class ComponentType(
             )
         }
 
+
+        /**
+         * Returns an instance of [ComponentType] with [ComponentType.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): ComponentType = when (value) {
+            1 -> ActionRow
+            2 -> Button
+            3 -> StringSelect
+            4 -> TextInput
+            5 -> UserSelect
+            6 -> RoleSelect
+            7 -> MentionableSelect
+            8 -> ChannelSelect
+            else -> Unknown(value, null)
+        }
     }
 }

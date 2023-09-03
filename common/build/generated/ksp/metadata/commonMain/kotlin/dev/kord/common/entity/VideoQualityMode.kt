@@ -30,16 +30,26 @@ public sealed class VideoQualityMode(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "VideoQualityMode.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "VideoQualityMode.Unknown(value=$value)"
+            else "VideoQualityMode.${this::class.simpleName}"
 
     /**
      * An unknown [VideoQualityMode].
      *
      * This is used as a fallback for [VideoQualityMode]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : VideoQualityMode(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : VideoQualityMode(value) {
+        @Deprecated(
+            message = "Replaced by 'VideoQualityMode.from()'.",
+            replaceWith = ReplaceWith(expression = "VideoQualityMode.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.VideoQualityMode")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Discord chooses the quality for optimal performance.
@@ -60,12 +70,7 @@ public sealed class VideoQualityMode(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): VideoQualityMode =
-                when (val value = decoder.decodeInt()) {
-            1 -> Auto
-            2 -> Full
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): VideoQualityMode = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -79,5 +84,15 @@ public sealed class VideoQualityMode(
             )
         }
 
+
+        /**
+         * Returns an instance of [VideoQualityMode] with [VideoQualityMode.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: Int): VideoQualityMode = when (value) {
+            1 -> Auto
+            2 -> Full
+            else -> Unknown(value, null)
+        }
     }
 }

@@ -29,16 +29,26 @@ public sealed class ChannelType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "ChannelType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "ChannelType.Unknown(value=$value)"
+            else "ChannelType.${this::class.simpleName}"
 
     /**
      * An unknown [ChannelType].
      *
      * This is used as a fallback for [ChannelType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : ChannelType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ChannelType(value) {
+        @Deprecated(
+            message = "Replaced by 'ChannelType.from()'.",
+            replaceWith = ReplaceWith(expression = "ChannelType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.ChannelType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * A text channel within a server.
@@ -115,22 +125,7 @@ public sealed class ChannelType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ChannelType =
-                when (val value = decoder.decodeInt()) {
-            0 -> GuildText
-            1 -> DM
-            2 -> GuildVoice
-            3 -> GroupDM
-            4 -> GuildCategory
-            5 -> GuildNews
-            10 -> PublicNewsThread
-            11 -> PublicGuildThread
-            12 -> PrivateThread
-            13 -> GuildStageVoice
-            14 -> GuildDirectory
-            15 -> GuildForum
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): ChannelType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -154,5 +149,25 @@ public sealed class ChannelType(
             )
         }
 
+
+        /**
+         * Returns an instance of [ChannelType] with [ChannelType.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): ChannelType = when (value) {
+            0 -> GuildText
+            1 -> DM
+            2 -> GuildVoice
+            3 -> GroupDM
+            4 -> GuildCategory
+            5 -> GuildNews
+            10 -> PublicNewsThread
+            11 -> PublicGuildThread
+            12 -> PrivateThread
+            13 -> GuildStageVoice
+            14 -> GuildDirectory
+            15 -> GuildForum
+            else -> Unknown(value, null)
+        }
     }
 }
