@@ -40,7 +40,7 @@ public class GatewayConfigurationBuilder(
      */
     public var threshold: Int = 250,
 
-    public var intents: Intents = Intents.nonPrivileged,
+    public var intents: Intents = Intents.NON_PRIVILEGED,
 ) {
 
     /**

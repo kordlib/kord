@@ -1,6 +1,7 @@
 package dev.kord.rest.builder.member
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.GuildMemberFlags
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
@@ -32,12 +33,16 @@ public class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest>
     private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing()
     public var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
+    private var _flags: Optional<GuildMemberFlags?> = Optional.Missing()
+    public var flags: GuildMemberFlags? by ::_flags.delegate()
+
     override fun toRequest(): GuildMemberModifyRequest = GuildMemberModifyRequest(
         nick = _nickname,
         channelId = _voiceChannelId,
         mute = _muted,
         deaf = _deafened,
         roles = _roles,
-        communicationDisabledUntil = _communicationDisabledUntil
+        communicationDisabledUntil = _communicationDisabledUntil,
+        flags = _flags,
     )
 }

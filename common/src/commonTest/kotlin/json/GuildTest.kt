@@ -1,13 +1,14 @@
 package dev.kord.common.json
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.Permission.*
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
-import kotlin.time.Duration.Companion.seconds
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
 private suspend fun file(name: String): String = readFile("guild", name)
 
@@ -56,7 +57,7 @@ class GuildTest {
             vanityUrlCode shouldBe "discord-testers"
             premiumTier shouldBe PremiumTier.Three
             premiumSubscriptionCount shouldBe 33
-            systemChannelFlags shouldBe SystemChannelFlags(0)
+            systemChannelFlags shouldBe SystemChannelFlags()
             preferredLocale shouldBe "en-US"
             rulesChannelId shouldBe "441688182833020939"
             publicUpdatesChannelId shouldBe "281283303326089216"
@@ -89,7 +90,7 @@ class GuildTest {
             joinedAt shouldBe Instant.parse("2015-04-26T06:26:56.936000+00:00")
             deaf shouldBe false
             mute shouldBe false
-            flags shouldBe GuildMemberFlags(0)
+            flags shouldBe GuildMemberFlags()
         }
     }
 
@@ -103,7 +104,10 @@ class GuildTest {
             name shouldBe "1337 Krew"
             icon shouldBe "8342729096ea3675442027381ff50dfe"
             owner shouldBe true
-            permissions shouldBe Permissions("36953089")
+            permissions shouldBe Permissions(
+                CreateInstantInvite, ViewChannel, SendMessages, SendTTSMessages, EmbedLinks, AttachFiles,
+                ReadMessageHistory, MentionEveryone, Connect, Speak, UseVAD,
+            )
             features shouldBe listOf(GuildFeature.Community, GuildFeature.News)
         }
     }

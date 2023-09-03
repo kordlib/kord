@@ -1,25 +1,28 @@
+/*
+@file:Generate(
+    INT_FLAGS, name = "GuildMemberFlag", valueName = "code",
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags",
+    entries = [
+        Entry("DidRejoin", shift = 0, kDoc = "Member has left and rejoined the guild."),
+        Entry("CompletedOnboarding", shift = 1, kDoc = "Member has completed onboarding."),
+        Entry("BypassesVerification", shift = 2, kDoc = "Member is exempt from guild verification requirements."),
+        Entry("StartedOnboarding", shift = 3, kDoc = "Member has started onboarding."),
+    ],
+)
+*/
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 @Serializable
 public data class DiscordGuildMember(
     val user: Optional<DiscordUser> = Optional.Missing(),
-    /*
-    Don't trust the docs:
-    2020-11-05 nick is only documented as nullable but can be missing through Gateway
-    */
     val nick: Optional<String?> = Optional.Missing(),
     val roles: List<Snowflake>,
     @SerialName("joined_at")
@@ -39,10 +42,6 @@ public data class DiscordGuildMember(
 @Serializable
 public data class DiscordInteractionGuildMember(
     val user: Optional<DiscordUser> = Optional.Missing(),
-    /*
-    Don't trust the docs:
-    2020-11-05 nick is only documented as nullable but can be missing through Gateway
-    */
     val nick: Optional<String?> = Optional.Missing(),
     val roles: List<Snowflake>,
     @SerialName("joined_at")
@@ -50,6 +49,7 @@ public data class DiscordInteractionGuildMember(
     @SerialName("premium_since")
     val premiumSince: Optional<Instant?> = Optional.Missing(),
     val permissions: Permissions,
+    val flags: GuildMemberFlags,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
     @SerialName("communication_disabled_until")
@@ -60,10 +60,6 @@ public data class DiscordInteractionGuildMember(
 @Serializable
 public data class DiscordAddedGuildMember(
     val user: Optional<DiscordUser> = Optional.Missing(),
-    /*
-    Don't trust the docs:
-    2020-11-05 nick is only documented as nullable but can be missing through Gateway
-    */
     val nick: Optional<String?> = Optional.Missing(),
     val roles: List<Snowflake>,
     @SerialName("joined_at")
@@ -72,6 +68,7 @@ public data class DiscordAddedGuildMember(
     val premiumSince: Optional<Instant?> = Optional.Missing(),
     val deaf: Boolean,
     val mute: Boolean,
+    val flags: GuildMemberFlags,
     @SerialName("guild_id")
     val guildId: Snowflake,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
@@ -98,6 +95,7 @@ public data class DiscordUpdatedGuildMember(
     val joinedAt: Instant,
     @SerialName("premium_since")
     val premiumSince: Optional<Instant?> = Optional.Missing(),
+    val flags: GuildMemberFlags,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
     @SerialName("communication_disabled_until")
@@ -113,34 +111,3 @@ public data class DiscordThreadMember(
     val joinTimestamp: Instant,
     val flags: Int
 )
-
-@Serializable(with = GuildMemberFlags.Serializer::class)
-public data class GuildMemberFlags(val code: Int) {
-
-    public operator fun contains(flag: GuildMemberFlags): Boolean {
-        return this.code and flag.code == flag.code
-    }
-
-    internal object Serializer : KSerializer<GuildMemberFlags> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("flags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): GuildMemberFlags {
-            return GuildMemberFlags(decoder.decodeInt())
-        }
-
-        override fun serialize(encoder: Encoder, value: GuildMemberFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-}
-
-@Serializable
-public enum class GuildMemberFlag(public val code: Int) {
-    DidRejoin(1.shl(0)),
-    CompletedOnboarding(1.shl(1)),
-    BypassesVerification(1.shl(2)),
-    StartedOnboarding(1.shl(3)),
-}

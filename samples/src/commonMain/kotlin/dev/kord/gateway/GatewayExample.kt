@@ -39,6 +39,6 @@ suspend fun main(args: Array<String>) {
 
     gateway.start(token) {
         @OptIn(PrivilegedIntent::class)
-        intents = Intents.all
+        intents = Intents.ALL
     }
 }
