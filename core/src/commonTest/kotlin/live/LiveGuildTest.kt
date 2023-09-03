@@ -267,7 +267,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             position = 0,
                             permissions = Permissions(Permission.BanMembers),
                             managed = false,
-                            mentionable = false
+                            mentionable = false,
+                            flags = RoleFlags(),
                         )
                     ),
                     0
@@ -299,7 +300,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             position = 0,
                             permissions = Permissions(Permission.BanMembers),
                             managed = false,
-                            mentionable = false
+                            mentionable = false,
+                            flags = RoleFlags(),
                         )
                     ),
                     0

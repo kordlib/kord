@@ -41,7 +41,8 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                     position = 0,
                     permissions = Permissions(Permission.CreateInstantInvite),
                     managed = false,
-                    mentionable = false
+                    mentionable = false,
+                    flags = RoleFlags(),
                 )
             )
         )
@@ -70,7 +71,8 @@ class LiveRoleTest : AbstractLiveEntityTest<LiveRole>() {
                             position = 0,
                             permissions = Permissions(Permission.BanMembers),
                             managed = false,
-                            mentionable = false
+                            mentionable = false,
+                            flags = RoleFlags(),
                         )
                     ),
                     0

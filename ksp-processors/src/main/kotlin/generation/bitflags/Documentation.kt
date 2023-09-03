@@ -1,5 +1,6 @@
 package dev.kord.ksp.generation.bitflags
 
+import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.shared.GenerationContext
@@ -10,7 +11,9 @@ internal fun TypeSpec.Builder.addCollectionKDoc() = addKdoc(
     entityCN, // %1T: flag ClassName
     collectionCN, // %2T: collection ClassName
     entityCN.nestedClass(entriesDistinctByValue[0].name), // %3T: entry 0 ClassName
-    entityCN.nestedClass(entriesDistinctByValue[1].name), // %4T: entry 1 ClassName
+    // %4L: CodeBlock with entry 1 ClassName or `Flag.fromShift(22)`
+    entriesDistinctByValue.getOrNull(1)?.let { CodeBlock.of("%T", entityCN.nestedClass(it.name)) }
+        ?: CodeBlock.of("%T.fromShift(22)", entityCN),
     entityCN.nestedClass("Unknown"), // %5T: Unknown ClassName
     builderCN, // %6T: Builder ClassName
 )
@@ -27,7 +30,7 @@ private val BitFlags.docStringFormat: String
             You can create an instance of [%2T] using the following methods:
             ```kotlin
             //·from·individual·%1Ts
-            val·${collection}1·=·%2T(%3T,·%4T)
+            val·${collection}1·=·%2T(%3T,·%4L)
             
             //·from·an·Iterable
             val·iterable:·Iterable<%1T>·=·TODO()
@@ -37,7 +40,7 @@ private val BitFlags.docStringFormat: String
             val·${collection}3·=·%2T·{
                 +${collection}2
                 +%3T
-                -%4T
+                -%4L
             }
             ```
             
@@ -55,7 +58,7 @@ private val BitFlags.docStringFormat: String
             All [%2T] objects can use `+`/`-` operators:
             ```kotlin
             val·${collection}1·=·$collection·+·%3T
-            val·${collection}2·=·$collection·-·%4T
+            val·${collection}2·=·$collection·-·%4L
             val·${collection}3·=·${collection}1·+·${collection}2
             ```
             
@@ -64,7 +67,7 @@ private val BitFlags.docStringFormat: String
             You can use the [contains] operator to check whether an instance of [%2T] contains specific [%1T]s:
             ```kotlin
             val·has%1T·=·%3T·in·$collection
-            val·has%2T·=·%2T(%3T,·%4T)·in·$collection
+            val·has%2T·=·%2T(%3T,·%4L)·in·$collection
             ```
             
             ##·Unknown·[%1T]s

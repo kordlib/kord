@@ -1,9 +1,20 @@
+@file:Generate(
+    INT_FLAGS, name = "RoleFlag",
+    docUrl = "https://discord.com/developers/docs/topics/permissions#role-object-role-flags",
+    entries = [
+        Entry("InPrompt", shift = 0, kDoc = "Role can be selected by members in an onboarding prompt."),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,6 +32,7 @@ public data class DiscordRole(
     val managed: Boolean,
     val mentionable: Boolean,
     val tags: Optional<DiscordRoleTags> = Optional.Missing(),
+    val flags: RoleFlags,
 )
 
 @Serializable

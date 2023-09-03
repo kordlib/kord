@@ -39,6 +39,7 @@ class PermissionsTest {
             put("permissions", "123456789876543000000000000")
             put("managed", false)
             put("mentionable", false)
+            put("flags", 0)
         }
         val actual = Json.decodeFromJsonElement(DiscordRole.serializer(), expected)
         assertEquals(
