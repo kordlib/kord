@@ -56,8 +56,9 @@ public sealed class AttachmentFlag(
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown)
-            "AttachmentFlag.Unknown(shift=$shift)" else "AttachmentFlag.${this::class.simpleName}"
+    final override fun toString(): String =
+            if (this is Unknown) "AttachmentFlag.Unknown(shift=$shift)"
+            else "AttachmentFlag.${this::class.simpleName}"
 
     /**
      * An unknown [AttachmentFlag].
