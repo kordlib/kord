@@ -25,6 +25,8 @@ import dev.kord.gateway.Intent.MessageContent
  * executed (e.g. when a message is [blocked][BlockMessageAutoModerationAction]).
  *
  * This event is only sent to bot users which have the [ManageGuild] permission.
+ *
+ * See [Auto moderation action execution event](https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution)
  */
 public class AutoModerationActionExecutionEvent(
     public val data: AutoModerationActionExecutionEventData,

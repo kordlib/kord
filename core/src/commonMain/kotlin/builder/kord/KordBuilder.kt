@@ -41,6 +41,11 @@ import kotlin.contracts.contract
 private val logger = KotlinLogging.logger { }
 private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
 
+/**
+ * The builder for the [Kord] instance.
+ *
+ * @property token The bots token
+ */
 public expect class KordBuilder(token: String) : BaseKordBuilder
 
 public abstract class BaseKordBuilder internal constructor(public val token: String) {
@@ -97,6 +102,9 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
      */
     public var httpClient: HttpClient? = null
 
+    /**
+     * The [Snowflake] ID for the application.
+     */
     public var applicationId: Snowflake? = null
 
     /**
@@ -208,6 +216,8 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
     }
 
     /**
+     * Builds the [Kord] instance
+     *
      * @throws KordInitializationException if something went wrong while getting the bot's gateway information.
      */
     public open suspend fun build(): Kord = buildBase()

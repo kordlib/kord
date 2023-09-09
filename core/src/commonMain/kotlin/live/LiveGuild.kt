@@ -20,21 +20,46 @@ import dev.kord.core.event.user.VoiceStateUpdateEvent
 import dev.kord.core.live.exception.LiveCancellationException
 import kotlinx.coroutines.*
 
+/**
+ * Returns a [LiveGuild] for a given [Guild].
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveGuild] with
+ * @return the created [LiveGuild]
+ */
 @KordPreview
 public fun Guild.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ): LiveGuild = LiveGuild(this, coroutineScope)
 
+/**
+ * Returns a [LiveGuild] for a given [Guild] with configuration.
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveGuild] with
+ * @param block The [LiveGuild] configuration
+ * @return the created [LiveGuild]
+ */
 @KordPreview
 public inline fun Guild.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveGuild.() -> Unit
 ): LiveGuild = this.live(coroutineScope).apply(block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onEmojisUpdate(scope: CoroutineScope = this, block: suspend (EmojisUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onIntegrationsUpdate(
     scope: CoroutineScope = this,
@@ -42,18 +67,42 @@ public fun LiveGuild.onIntegrationsUpdate(
 ): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onBanAdd(scope: CoroutineScope = this, block: suspend (BanAddEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onBanRemove(scope: CoroutineScope = this, block: suspend (BanRemoveEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onPresenceUpdate(scope: CoroutineScope = this, block: suspend (PresenceUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onVoiceServerUpdate(
     scope: CoroutineScope = this,
@@ -61,6 +110,12 @@ public fun LiveGuild.onVoiceServerUpdate(
 ): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onVoiceStateUpdate(
     scope: CoroutineScope = this,
@@ -68,38 +123,93 @@ public fun LiveGuild.onVoiceStateUpdate(
 ): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onWebhookUpdate(scope: CoroutineScope = this, block: suspend (WebhookUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onRoleCreate(scope: CoroutineScope = this, block: suspend (RoleCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onRoleUpdate(scope: CoroutineScope = this, block: suspend (RoleUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onRoleDelete(scope: CoroutineScope = this, block: suspend (RoleDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onMemberJoin(scope: CoroutineScope = this, block: suspend (MemberJoinEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onMemberUpdate(scope: CoroutineScope = this, block: suspend (MemberUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onMemberLeave(scope: CoroutineScope = this, block: suspend (MemberLeaveEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param reaction The [ReactionEmoji] that was added
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public inline fun LiveGuild.onReactionAdd(
     reaction: ReactionEmoji,
@@ -110,10 +220,23 @@ public inline fun LiveGuild.onReactionAdd(
     }
 }
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onReactionRemove(scope: CoroutineScope = this, block: suspend (ReactionRemoveEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param reaction The [ReactionEmoji] that was removed
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public inline fun LiveGuild.onReactionRemove(
     reaction: ReactionEmoji,
@@ -124,6 +247,12 @@ public inline fun LiveGuild.onReactionRemove(
     }
 }
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onReactionRemoveAll(
     scope: CoroutineScope = this,
@@ -131,38 +260,92 @@ public fun LiveGuild.onReactionRemoveAll(
 ): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onMessageCreate(scope: CoroutineScope = this, block: suspend (MessageCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onMessageUpdate(scope: CoroutineScope = this, block: suspend (MessageUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onMessageDelete(scope: CoroutineScope = this, block: suspend (MessageDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onChannelCreate(scope: CoroutineScope = this, block: suspend (ChannelCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onChannelUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onChannelDelete(scope: CoroutineScope = this, block: suspend (ChannelDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onGuildCreate(scope: CoroutineScope = this, block: suspend (GuildCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveGuild.onGuildUpdate(scope: CoroutineScope = this, block: suspend (GuildUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * A [AbstractLiveKordEntity] for a [Guild]
+ *
+ * @property guild The [Guild] to get the live entity for
+ * @property coroutineContext The [CoroutineScope] to create the live object with
+ */
 @KordPreview
 public class LiveGuild(
     guild: Guild,
@@ -172,6 +355,9 @@ public class LiveGuild(
     override val id: Snowflake
         get() = guild.id
 
+    /**
+     * The [Guild] to create the live entity for
+     */
     public var guild: Guild = guild
         private set
 

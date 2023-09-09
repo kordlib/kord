@@ -15,6 +15,13 @@ import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.rest.request.RestRequestException
 
+/**
+ * Represents a permission overwrite as an entity.
+ *
+ * @param guildId The ID of the guild this overwrite is for
+ * @param channelId The ID of the channel this overwrite is for.
+ * @param data The data for this overwrite
+ */
 public class PermissionOverwriteEntity(
     public val guildId: Snowflake,
     public val channelId: Snowflake,
@@ -23,8 +30,10 @@ public class PermissionOverwriteEntity(
     override val supplier: EntitySupplier = kord.defaultSupplier
 ) : PermissionOverwrite(data), KordObject, Strategizable {
 
+    /** The [GuildBehavior] for the entity. */
     public val guild: GuildBehavior get() = GuildBehavior(guildId, kord)
 
+    /** The [TopGuildChannelBehavior] for the overwrite entity. */
     public val channel: TopGuildChannelBehavior get() = TopGuildChannelBehavior(guildId, channelId, kord)
 
     /**
@@ -44,7 +53,7 @@ public class PermissionOverwriteEntity(
     public suspend fun getChannelOrNull(): TopGuildChannel? = supplier.getChannelOfOrNull(channelId)
 
     /**
-     * Requests to get the the guild of this overwrite.
+     * Requests to get the guild of this overwrite.
      *
      * @throws [RequestException] if anything went wrong during the request.
      * @throws [EntityNotFoundException] if the [Guild] wasn't present.

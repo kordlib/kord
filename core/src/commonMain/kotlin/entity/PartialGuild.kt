@@ -18,6 +18,11 @@ import dev.kord.rest.Image
 import dev.kord.rest.service.RestClient
 import kotlin.DeprecationLevel.HIDDEN
 
+/**
+ * Represents a [Partial guild object](https://discord.com/developers/docs/resources/guild#unavailable-guild-object).
+ *
+ * @param data The [PartialGuildData] for the guild
+ */
 public class PartialGuild(
     public val data: PartialGuildData,
     override val kord: Kord,
@@ -40,7 +45,7 @@ public class PartialGuild(
     public val icon: Asset? get() = iconHash?.let { Asset.guildIcon(id, it, kord) }
 
     /**
-     * wither who created the invite is the owner or not.
+     * Whether who created the invite is the owner or not.
      */
 
     public val owner: Boolean? get() = data.owner.value
@@ -86,6 +91,9 @@ public class PartialGuild(
      */
     public val verificationLevel: VerificationLevel? get() = data.verificationLevel.value
 
+    /**
+     * The hash for the discovery splash.
+     */
     public val splashHash: String? get() = data.splash.value
 
     public val splash: Asset? get() = splashHash?.let { Asset.guildSplash(id, it, kord) }

@@ -19,6 +19,8 @@ import kotlin.time.Duration
 
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite).
+ *
+ * @param data The data for the invite
  */
 public open class Invite(
     public open val data: BaseInviteData,
@@ -140,6 +142,9 @@ public open class Invite(
 /**
  * An instance of a [Discord Invite](https://discord.com/developers/docs/resources/invite) with
  * [extra information](https://discord.com/developers/docs/resources/invite#invite-metadata-object).
+ *
+ * @param kord The Kord instance that created this object
+ * @param supplier THe supplier used to request entities
  */
 public class InviteWithMetadata(
     override val data: InviteWithMetadataData,

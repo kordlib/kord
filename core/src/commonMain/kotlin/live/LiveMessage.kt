@@ -18,22 +18,48 @@ import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.*
 
+/**
+ * Returns a [LiveMessage] for a given [Message].
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveMessage] with
+ * @return the created [LiveMessage]
+ */
 @KordPreview
 public suspend fun Message.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ): LiveMessage =
     LiveMessage(this, withStrategy(EntitySupplyStrategy.cacheWithRestFallback).getGuildOrNull()?.id, coroutineScope)
 
+/**
+ * Returns a [LiveMessage] for a given [Message] with configuration.
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveMessage] with
+ * @param block The [LiveMessage] configuration
+ * @return the created [LiveMessage]
+ */
 @KordPreview
 public suspend fun Message.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveMessage.() -> Unit
 ): LiveMessage = this.live(coroutineScope).apply(block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveMessage.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param reaction The [ReactionEmoji] that was added
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public inline fun LiveMessage.onReactionAdd(
     reaction: ReactionEmoji,
@@ -44,6 +70,12 @@ public inline fun LiveMessage.onReactionAdd(
     }
 }
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveMessage.onReactionRemove(
     scope: CoroutineScope = this,
@@ -51,6 +83,13 @@ public fun LiveMessage.onReactionRemove(
 ): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param reaction The [ReactionEmoji] that was removed
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public inline fun LiveMessage.onReactionRemove(
     reaction: ReactionEmoji,
@@ -61,6 +100,12 @@ public inline fun LiveMessage.onReactionRemove(
     }
 }
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveMessage.onReactionRemoveAll(
     scope: CoroutineScope = this,
@@ -68,10 +113,22 @@ public fun LiveMessage.onReactionRemoveAll(
 ): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveMessage.onUpdate(scope: CoroutineScope = this, block: suspend (MessageUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * A [AbstractLiveKordEntity] for a [Message]
+ *
+ * @property message The [Message] to get the live entity for
+ * @property coroutineContext The [CoroutineScope] to create the live object with
+ */
 @KordPreview
 public class LiveMessage(
     message: Message,
@@ -82,6 +139,9 @@ public class LiveMessage(
     override val id: Snowflake
         get() = message.id
 
+    /**
+     * The [Message] to get the live entity for
+     */
     public var message: Message = message
         private set
 

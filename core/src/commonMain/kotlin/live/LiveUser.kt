@@ -8,21 +8,46 @@ import dev.kord.core.event.Event
 import dev.kord.core.event.user.UserUpdateEvent
 import kotlinx.coroutines.*
 
+/**
+ * Returns a [LiveUser] for a given [User].
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveUser] with
+ * @return the created [LiveUser]
+ */
 @KordPreview
 public fun User.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ): LiveUser = LiveUser(this, coroutineScope)
 
+/**
+ * Returns a [LiveUser] for a given [User] with configuration.
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveUser] with
+ * @param block The [LiveUser] configuration
+ * @return the created [LiveUser]
+ */
 @KordPreview
 public inline fun User.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveUser.() -> Unit
 ): LiveUser = this.live(coroutineScope).apply(block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveUser.onUpdate(scope: CoroutineScope = this, block: suspend (UserUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * A [AbstractLiveKordEntity] for a [User]
+ *
+ * @property user The [User] to get the live entity for
+ * @property coroutineContext The [CoroutineScope] to create the live object with
+ */
 @KordPreview
 public class LiveUser(
     user: User,

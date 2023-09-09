@@ -9,6 +9,11 @@ import dev.kord.core.entity.channel.StageChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 
+/**
+ * Holds information about a live stage
+ *
+ * @param data The [StageInstanceData] for the live stage
+ */
 public class StageInstance(
     public val data: StageInstanceData,
     override val kord: Kord,

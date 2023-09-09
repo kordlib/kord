@@ -17,6 +17,12 @@ import dev.kord.core.live.AbstractLiveKordEntity
 import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
+/**
+ * Returns a [LiveChannel] for a given [Channel].
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveChannel] with
+ * @return the created [LiveChannel]
+ */
 @KordPreview
 public fun Channel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
@@ -28,20 +34,46 @@ public fun Channel.live(
     else -> error("unsupported channel type")
 }
 
+/**
+ * Returns a [LiveChannel] for a given [Channel] with configuration.
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveChannel] with
+ * @param block The [LiveChannel] configuration
+ * @return the created [LiveChannel]
+ */
 @KordPreview
 public inline fun Channel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveChannel.() -> Unit
 ): LiveChannel = this.live(coroutineScope).apply(block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onVoiceStateUpdate(scope: CoroutineScope = this, block: suspend (VoiceStateUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onReactionAdd(scope: CoroutineScope = this, block: suspend (ReactionAddEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param reaction The [ReactionEmoji] that was added
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public inline fun LiveChannel.onReactionAdd(
     reaction: ReactionEmoji,
@@ -53,10 +85,23 @@ public inline fun LiveChannel.onReactionAdd(
     }
 }
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onReactionRemove(scope: CoroutineScope = this, block: suspend (ReactionRemoveEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param reaction The [ReactionEmoji] that was removed
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public inline fun LiveChannel.onReactionRemove(
     reaction: ReactionEmoji,
@@ -68,36 +113,81 @@ public inline fun LiveChannel.onReactionRemove(
     }
 }
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onReactionRemoveAll(scope: CoroutineScope = this, block: suspend (ReactionRemoveAllEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onMessageCreate(scope: CoroutineScope = this, block: suspend (MessageCreateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onMessageUpdate(scope: CoroutineScope = this, block: suspend (MessageUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onMessageDelete(scope: CoroutineScope = this, block: suspend (MessageDeleteEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onChannelUpdate(scope: CoroutineScope = this, block: suspend (ChannelUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveChannel.onGuildUpdate(scope: CoroutineScope = this, block: suspend (GuildUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * A [AbstractLiveKordEntity] for a [Channel]
+ *
+ * @property kord The [Kord] instance for the channel
+ * @property coroutineContext The [CoroutineScope] to create the live object with
+ */
 @KordPreview
 public abstract class LiveChannel(
     kord: Kord,
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ) : AbstractLiveKordEntity(kord, coroutineScope) {
 
+    /**
+     * The [Channel] to get a live object for.
+     */
     public abstract val channel: Channel
 
     override fun filter(event: Event): Boolean = when (event) {

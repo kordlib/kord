@@ -20,7 +20,9 @@ import kotlinx.datetime.Instant
 import kotlin.time.Duration
 
 /**
- * Sent when a new invite to a channel is created.
+ * The event dispatched when a new invite to a channel is created.
+ *
+ * See [Invite Create](https://discord.com/developers/docs/topics/gateway-events#invite-create)
  */
 public class InviteCreateEvent(
     public val data: InviteCreateData,
@@ -131,13 +133,13 @@ public class InviteCreateEvent(
      * Requests to get the [Channel] this invite is for.
      *
      * @throws [RequestException] if anything went wrong during the request.
-     * @throws [EntityNotFoundException] if the  wasn't present.
+     * @throws [EntityNotFoundException] if the wasn't present.
      */
     public suspend fun getChannel(): Channel = supplier.getChannel(channelId)
 
     /**
      * Requests to get the [Channel] this invite is for,
-     * returns null if the channel isn't present.
+     * returns `null` if the channel isn't present.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -145,7 +147,7 @@ public class InviteCreateEvent(
 
     /**
      * Requests to get the [Guild] of the invite.
-     * returns null if the guild isn't present, or if invite does not target a guild.
+     * returns `null` if the guild isn't present, or if invite does not target a guild.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -153,7 +155,7 @@ public class InviteCreateEvent(
 
     /**
      * Requests to get the [User] that created the invite,
-     * returns null if the user isn't present or no inviter created this invite.
+     * returns `null` if the user isn't present or no inviter created this invite.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -161,7 +163,7 @@ public class InviteCreateEvent(
 
     /**
      * Requests to get the [User] that created the invite as a [Member] of the [Guild][getGuildOrNull],
-     * returns null if the user isn't present, the invite did not target a guild, or no inviter created the event.
+     * returns `null` if the user isn't present, the invite did not target a guild, or no inviter created the event.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -171,7 +173,7 @@ public class InviteCreateEvent(
 
     /**
      * Requests to get the target [User] of this invite,
-     * returns null if the user isn't present or the invite did not target a user.
+     * returns `null` if the user isn't present or the invite did not target a user.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -179,7 +181,7 @@ public class InviteCreateEvent(
 
     /**
      * Requests to get the target [User] of this invite as a [Member] of the [Guild][getGuildOrNull],
-     * returns null if the user isn't present, the invite did not target a guild, or the invite did not target a user.
+     * returns `null` if the user isn't present, the invite did not target a guild, or the invite did not target a user.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */

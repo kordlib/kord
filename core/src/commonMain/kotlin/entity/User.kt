@@ -31,10 +31,13 @@ public val User.effectiveName: String get() = globalName ?: username
 
 /**
  * An instance of a [Discord User](https://discord.com/developers/docs/resources/user#user-object).
+ *
+ * @param data The [UserData] for the discord user
  */
 public open class User(
     public val data: UserData,
-    override val kord: Kord, override val supplier: EntitySupplier = kord.defaultSupplier,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : UserBehavior {
 
     override val id: Snowflake
@@ -58,6 +61,9 @@ public open class User(
         if (migratedToNewUsernameSystem) Icon.DefaultUserAvatar(userId = id, kord)
         else Icon.DefaultUserAvatar(discriminator.toInt(), kord)
 
+    /**
+     * The default avatar for the user as [Asset] object.
+     */
     public val defaultAvatar: Asset
         get() =
             if (migratedToNewUsernameSystem) Asset.defaultUserAvatar(userId = id, kord)
@@ -127,8 +133,17 @@ public open class User(
      */
     public val isBot: Boolean get() = data.bot.discordBoolean
 
+    /**
+     * The user's banner color as a [Color] object
+     */
     public val accentColor: Color? get() = data.accentColor?.let { Color(it) }
 
+    /**
+     * Requests to get the URL of the users banner in the requested [format]
+     *
+     * @param format The [Image.Format] to return the banner in
+     * @return The URL of the users banner
+     */
     @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), DeprecationLevel.HIDDEN)
     public fun getBannerUrl(format: Image.Format): String? =
         data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
@@ -153,6 +168,11 @@ public open class User(
         return "User(data=$data, kord=$kord, supplier=$supplier)"
     }
 
+    /**
+     * A class to easily build an avatar for a [User] based off of the provided [UserData]
+     *
+     * @param data The [UserData] to build the avatar for
+     */
     @Deprecated("Old class", ReplaceWith("Asset", "dev.kord.core.entity.Asset"), level = DeprecationLevel.HIDDEN)
     public data class Avatar(val data: UserData, override val kord: Kord) : KordObject {
 

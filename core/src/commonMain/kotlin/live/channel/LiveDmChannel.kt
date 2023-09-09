@@ -13,21 +13,46 @@ import dev.kord.core.live.exception.LiveCancellationException
 import dev.kord.core.live.on
 import kotlinx.coroutines.*
 
+/**
+ * Returns a [LiveDmChannel] for a given [DmChannel].
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveDmChannel] with
+ * @return the created [LiveDmChannel]
+ */
 @KordPreview
 public fun DmChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
 ): LiveDmChannel = LiveDmChannel(this, coroutineScope)
 
+/**
+ * Returns a [LiveDmChannel] for a given [DmChannel] with configuration.
+ *
+ * @param coroutineScope The [CoroutineScope] to create the [LiveDmChannel] with
+ * @param block The [LiveDmChannel] configuration
+ * @return the created [LiveDmChannel]
+ */
 @KordPreview
 public inline fun DmChannel.live(
     coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job),
     block: LiveDmChannel.() -> Unit
 ): LiveDmChannel = this.live(coroutineScope).apply(block)
 
+/**
+ * Invokes the consumer for this entity with [block] for the given [CoroutineScope]
+ *
+ * @param scope The [CoroutineScope] to invoke the consumer with
+ * @param block The configuration for the consumer
+ */
 @KordPreview
 public fun LiveDmChannel.onUpdate(scope: CoroutineScope = this, block: suspend (DMChannelUpdateEvent) -> Unit): Job =
     on(scope = scope, consumer = block)
 
+/**
+ * A live entity for a [DmChannel]
+ *
+ * @property channel The [DmChannel] to get a live object for
+ * @property coroutineScope The [CoroutineScope] to create the [LiveChannel] with
+ */
 @KordPreview
 public class LiveDmChannel(
     channel: DmChannel,
