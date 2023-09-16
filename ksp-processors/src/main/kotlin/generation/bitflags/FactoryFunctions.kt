@@ -6,7 +6,6 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.jvm.jvmName
-import dev.kord.ksp.addAnnotation
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.addParameter
 import dev.kord.ksp.generation.GenerationEntity.BitFlags

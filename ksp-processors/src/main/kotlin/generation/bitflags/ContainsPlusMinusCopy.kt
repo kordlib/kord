@@ -2,9 +2,11 @@
 
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
-import dev.kord.ksp.addAnnotation
+import com.squareup.kotlinpoet.LambdaTypeName
+import com.squareup.kotlinpoet.TypeName
+import com.squareup.kotlinpoet.TypeSpec
+import com.squareup.kotlinpoet.UNIT
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET

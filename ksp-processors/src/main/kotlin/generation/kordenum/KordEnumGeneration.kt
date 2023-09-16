@@ -4,7 +4,7 @@ import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.KModifier.PUBLIC
 import com.squareup.kotlinpoet.KModifier.SEALED
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
-import dev.kord.ksp.*
+import dev.kord.codegen.kotlinpoet.*
 import dev.kord.ksp.generation.GenerationEntity.KordEnum
 import dev.kord.ksp.generation.shared.*
 import kotlinx.serialization.Serializable

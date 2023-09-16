@@ -3,10 +3,9 @@
 package dev.kord.ksp.generation.bitflags
 
 import com.google.devtools.ksp.symbol.KSFile
-import com.squareup.kotlinpoet.ClassName
+import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import com.squareup.kotlinpoet.SET
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
@@ -14,7 +13,6 @@ import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
 import dev.kord.ksp.generation.shared.*
 import kotlinx.serialization.Serializable
-import com.squareup.kotlinpoet.INT as INT_CN
 
 context(GenerationContext)
 internal val BitFlags.collectionCN
