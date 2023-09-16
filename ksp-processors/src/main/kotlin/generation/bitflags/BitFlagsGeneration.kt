@@ -7,12 +7,23 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
-import dev.kord.ksp.*
+import dev.kord.codegen.kotlinpoet.addAnnotation
+import dev.kord.codegen.kotlinpoet.addClass
+import dev.kord.codegen.kotlinpoet.addCompanionObject
+import dev.kord.codegen.kotlinpoet.addFunction
+import dev.kord.codegen.kotlinpoet.addInitializerBlock
+import dev.kord.codegen.kotlinpoet.addParameter
+import dev.kord.codegen.kotlinpoet.addProperty
+import dev.kord.codegen.kotlinpoet.getter
+import dev.kord.codegen.kotlinpoet.primaryConstructor
+import dev.kord.codegen.kotlinpoet.returns
+import dev.kord.codegen.kotlinpoet.withControlFlow
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
 import dev.kord.ksp.generation.shared.*
 import kotlinx.serialization.Serializable
+import com.squareup.kotlinpoet.INT as INT_CN
 
 context(GenerationContext)
 internal val BitFlags.collectionCN
@@ -104,6 +115,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                                 addStatement("shift++")
                             }
                         }
+
                         BIT_SET -> withControlFlow("for·(shift·in·0..<$valueName.size)") {
                             addStatement("if·($valueName[shift])·add(%T.fromShift(shift))", entityCN)
                         }

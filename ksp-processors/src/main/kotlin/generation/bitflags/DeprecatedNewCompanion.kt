@@ -7,7 +7,12 @@ import com.squareup.kotlinpoet.KModifier
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeSpec
 import com.squareup.kotlinpoet.jvm.jvmField
-import dev.kord.ksp.*
+import dev.kord.codegen.kotlinpoet.addAnnotation
+import dev.kord.codegen.kotlinpoet.addClass
+import dev.kord.codegen.kotlinpoet.addCompanionObject
+import dev.kord.codegen.kotlinpoet.addFunction
+import dev.kord.codegen.kotlinpoet.addProperty
+import dev.kord.codegen.kotlinpoet.primaryConstructor
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.shared.GenerationContext
 import dev.kord.ksp.generation.shared.K_SERIALIZER
