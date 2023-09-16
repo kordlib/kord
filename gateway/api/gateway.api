@@ -1029,6 +1029,7 @@ public final class dev/kord/gateway/GuildUpdate : dev/kord/gateway/DispatchEvent
 
 public final class dev/kord/gateway/Heartbeat : dev/kord/gateway/Event {
 	public static final field Companion Ldev/kord/gateway/Heartbeat$Companion;
+	public static final field NewCompanion Ldev/kord/gateway/Heartbeat$NewCompanion;
 	public fun <init> (J)V
 	public final fun component1 ()J
 	public final fun copy (J)Ldev/kord/gateway/Heartbeat;
@@ -1045,6 +1046,10 @@ public final class dev/kord/gateway/Heartbeat$Companion : kotlinx/serialization/
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/Heartbeat;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/Heartbeat$NewCompanion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
