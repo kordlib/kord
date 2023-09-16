@@ -1540,6 +1540,7 @@ public final class dev/kord/gateway/MessageUpdate : dev/kord/gateway/DispatchEve
 }
 
 public final class dev/kord/gateway/OpCode : java/lang/Enum {
+	public static final field Companion Ldev/kord/gateway/OpCode$Companion;
 	public static final field Dispatch Ldev/kord/gateway/OpCode;
 	public static final field Heartbeat Ldev/kord/gateway/OpCode;
 	public static final field HeartbeatACK Ldev/kord/gateway/OpCode;
@@ -1557,6 +1558,10 @@ public final class dev/kord/gateway/OpCode : java/lang/Enum {
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/gateway/OpCode;
 	public static fun values ()[Ldev/kord/gateway/OpCode;
+}
+
+public final class dev/kord/gateway/OpCode$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/gateway/OpCode$OpCodeSerializer : kotlinx/serialization/KSerializer {
