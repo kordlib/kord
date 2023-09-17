@@ -155,7 +155,7 @@ public data class ApplicationCommandOptionChoiceData(
     val value: String
 ) {
     public companion object {
-        public fun from(choice: Choice<*>): ApplicationCommandOptionChoiceData {
+        public fun from(choice: Choice): ApplicationCommandOptionChoiceData {
             return with(choice) {
                 ApplicationCommandOptionChoiceData(name, value.toString())
             }

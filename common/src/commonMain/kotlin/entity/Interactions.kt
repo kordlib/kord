@@ -88,7 +88,8 @@ import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.*
 
@@ -132,7 +133,7 @@ public data class ApplicationCommandOption(
     val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    val choices: Optional<List<Choice<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
+    val choices: Optional<List<Choice>> = Optional.Missing(),
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
     val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
     @SerialName("channel_types")
@@ -154,6 +155,7 @@ public data class ApplicationCommandOption(
  * e.g: `Choice<@Serializable(NotSerializable::class) Any?>`
  * The serialization is handled by [Choice] serializer instead where we don't care about the generic type.
  */
+@Deprecated("This is no longer used, deprecated without a replacement.", level = DeprecationLevel.WARNING)
 @KordExperimental
 public object NotSerializable : KSerializer<Any?> {
     override fun deserialize(decoder: Decoder): Nothing = error("This operation is not supported.")
@@ -162,80 +164,88 @@ public object NotSerializable : KSerializer<Any?> {
 }
 
 
-private val LocalizationSerializer =
-    Optional.serializer(MapSerializer(Locale.serializer(), String.serializer()).nullable)
-
 @Serializable(Choice.Serializer::class)
-public sealed class Choice<out T> {
+public sealed class Choice {
     public abstract val name: String
     public abstract val nameLocalizations: Optional<Map<Locale, String>?>
-    public abstract val value: T
+    public abstract val value: Any
 
     public data class IntegerChoice(
         override val name: String,
         override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: Long,
-    ) : Choice<Long>()
+    ) : Choice()
 
     public data class NumberChoice(
         override val name: String,
         override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: Double
-    ) : Choice<Double>()
+    ) : Choice()
 
     public data class StringChoice(
         override val name: String,
         override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: String
-    ) : Choice<String>()
+    ) : Choice()
 
-    internal object Serializer : KSerializer<Choice<*>> {
+    internal object Serializer : KSerializer<Choice> {
+        private val localizationsSerializer = MapSerializer(Locale.serializer(), String.serializer()).nullable
 
-        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Choice") {
-            element<String>("name")
-            element<JsonPrimitive>("value")
-            element<Map<Locale, String>?>("name_localizations", isOptional = true)
+        override val descriptor = buildClassSerialDescriptor("dev.kord.common.entity.Choice") {
+            element("name", String.serializer().descriptor)
+            element("value", JsonPrimitive.serializer().descriptor)
+            element("name_localizations", localizationsSerializer.descriptor, isOptional = true)
+        }
+
+        override fun serialize(encoder: Encoder, value: Choice) = encoder.encodeStructure(descriptor) {
+            encodeStringElement(descriptor, index = 0, value.name)
+            when (value) {
+                is IntegerChoice -> encodeLongElement(descriptor, index = 1, value.value)
+                is NumberChoice -> encodeDoubleElement(descriptor, index = 1, value.value)
+                is StringChoice -> encodeStringElement(descriptor, index = 1, value.value)
+            }
+            if (value.nameLocalizations !is Optional.Missing) {
+                encodeSerializableElement(descriptor, index = 2, localizationsSerializer, value.nameLocalizations.value)
+            }
         }
 
         override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
-
-            lateinit var name: String
+            var name: String? = null
             var nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing()
-            lateinit var value: JsonPrimitive
+            var value: JsonPrimitive? = null
 
             while (true) {
                 when (val index = decodeElementIndex(descriptor)) {
                     0 -> name = decodeStringElement(descriptor, index)
                     1 -> value = decodeSerializableElement(descriptor, index, JsonPrimitive.serializer())
-                    2 -> nameLocalizations = decodeSerializableElement(descriptor, index, LocalizationSerializer)
+                    2 -> nameLocalizations =
+                        Optional(decodeSerializableElement(descriptor, index, localizationsSerializer))
 
                     CompositeDecoder.DECODE_DONE -> break
-                    else -> throw SerializationException("unknown index: $index")
+                    else -> throw SerializationException("Unexpected index: $index")
                 }
             }
 
-            when {
-                value.isString -> StringChoice(name, nameLocalizations, value.content)
-                else -> value.longOrNull?.let { IntegerChoice(name, nameLocalizations, it) }
+            @OptIn(ExperimentalSerializationApi::class)
+            if (name == null || value == null) throw MissingFieldException(
+                missingFields = listOfNotNull("name".takeIf { name == null }, "value".takeIf { value == null }),
+                serialName = descriptor.serialName,
+            )
+
+            if (value.isString) {
+                StringChoice(name, nameLocalizations, value.content)
+            } else {
+                value.longOrNull?.let { IntegerChoice(name, nameLocalizations, it) }
                     ?: value.doubleOrNull?.let { NumberChoice(name, nameLocalizations, it) }
                     ?: throw SerializationException("Illegal choice value: $value")
             }
         }
+    }
 
-        override fun serialize(encoder: Encoder, value: Choice<*>) = encoder.encodeStructure(descriptor) {
-
-            encodeStringElement(descriptor, 0, value.name)
-
-            when (value) {
-                is IntegerChoice -> encodeLongElement(descriptor, 1, value.value)
-                is NumberChoice -> encodeDoubleElement(descriptor, 1, value.value)
-                is StringChoice -> encodeStringElement(descriptor, 1, value.value)
-            }
-
-            if (value.nameLocalizations !is Optional.Missing) {
-                encodeSerializableElement(descriptor, 2, LocalizationSerializer, value.nameLocalizations)
-            }
-        }
+    public companion object {
+        @Suppress("UNUSED_PARAMETER")
+        @Deprecated("Choice is no longer generic", ReplaceWith("this.serializer()"), DeprecationLevel.WARNING)
+        public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<Choice> = serializer()
     }
 }
 
@@ -700,9 +710,19 @@ public data class DiscordGuildApplicationCommandPermission(
 )
 
 @Serializable
-public data class DiscordAutoComplete<T>(
-    val choices: List<Choice<T>>
-)
+public data class DiscordAutoComplete(
+    val choices: List<Choice>,
+) {
+    public companion object {
+        @Suppress("UNUSED_PARAMETER")
+        @Deprecated(
+            "DiscordAutoComplete is no longer generic",
+            ReplaceWith("this.serializer()"),
+            DeprecationLevel.WARNING,
+        )
+        public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<DiscordAutoComplete> = serializer()
+    }
+}
 
 @Serializable
 public data class DiscordModal(
