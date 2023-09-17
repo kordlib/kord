@@ -29,6 +29,7 @@ annotation class Generate(
     val hadFlagsProperty: Boolean = false,
     val flagsPropertyWasSet: Boolean = false,
     val builderHadFlagsFunction: Boolean = false,
+    val unknownConstructorWasPublic: Boolean = true,
 ) {
     enum class EntityType { INT_KORD_ENUM, STRING_KORD_ENUM, INT_FLAGS, BIT_SET_FLAGS }
 

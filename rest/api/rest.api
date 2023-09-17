@@ -1255,6 +1255,28 @@ public final class dev/kord/rest/builder/guild/GuildModifyBuilder : dev/kord/res
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/guild/GuildOnboardingModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
+	public fun <init> ()V
+	public final fun getDefaultChannelIds ()Ljava/util/List;
+	public final fun getEnabled ()Ljava/lang/Boolean;
+	public final fun getMode ()Ldev/kord/common/entity/OnboardingMode;
+	public final fun getPrompts ()Ljava/util/List;
+	public fun getReason ()Ljava/lang/String;
+	public final fun setDefaultChannelIds (Ljava/util/List;)V
+	public final fun setEnabled (Ljava/lang/Boolean;)V
+	public final fun setMode (Ldev/kord/common/entity/OnboardingMode;)V
+	public final fun setPrompts (Ljava/util/List;)V
+	public fun setReason (Ljava/lang/String;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/guild/GuildOnboardingModifyBuilderKt {
+	public static final fun defaultChannelId (Ldev/kord/rest/builder/guild/GuildOnboardingModifyBuilder;Ldev/kord/common/entity/Snowflake;)V
+	public static final fun option (Ldev/kord/rest/builder/guild/OnboardingPromptBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static final fun prompt (Ldev/kord/rest/builder/guild/GuildOnboardingModifyBuilder;Ldev/kord/common/entity/OnboardingPromptType;Ljava/lang/String;ZZZLkotlin/jvm/functions/Function1;)V
+}
+
 public final class dev/kord/rest/builder/guild/GuildWidgetModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
@@ -1264,6 +1286,37 @@ public final class dev/kord/rest/builder/guild/GuildWidgetModifyBuilder : dev/ko
 	public final fun setEnabled (Ljava/lang/Boolean;)V
 	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildWidgetModifyRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/guild/OnboardingPromptBuilder : dev/kord/rest/builder/RequestBuilder {
+	public fun <init> (Ldev/kord/common/entity/OnboardingPromptType;Ljava/lang/String;ZZZ)V
+	public final fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getInOnboarding ()Z
+	public final fun getOptions ()Ljava/util/List;
+	public final fun getRequired ()Z
+	public final fun getSingleSelect ()Z
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ldev/kord/common/entity/OnboardingPromptType;
+	public final fun setId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setInOnboarding (Z)V
+	public final fun setRequired (Z)V
+	public final fun setSingleSelect (Z)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public final fun setType (Ldev/kord/common/entity/OnboardingPromptType;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/OnboardingPromptRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/guild/OnboardingPromptOptionBuilder : dev/kord/rest/builder/RequestBuilder {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun getChannelIds ()Ljava/util/List;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getRoleIds ()Ljava/util/List;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
@@ -2566,6 +2619,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field CannotDeleteRequiredCommunityChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotEditMessageByAnotherUser Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotEditStickersWithinMessage Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotEnableOnboarding Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotExecuteOnDM Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotExecuteOnSystemMessage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotMixSubscriptionAndNonSubscriptionRoles Ldev/kord/rest/json/JsonErrorCode;
@@ -2580,6 +2634,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field CannotSendMessagesToUser Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotSendVoiceMessagesInThisChannel Ldev/kord/rest/json/JsonErrorCode;
 	public static final field CannotUpdateFinishedEvent Ldev/kord/rest/json/JsonErrorCode;
+	public static final field CannotUpdateOnboarding Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelVerificationTooHigh Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelWriteRateLimit Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ChannelsTooLarge Ldev/kord/rest/json/JsonErrorCode;
@@ -4277,6 +4332,43 @@ public final class dev/kord/rest/json/request/GuildModifyRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/rest/json/request/GuildOnboardingModifyRequest {
+	public static final field Companion Ldev/kord/rest/json/request/GuildOnboardingModifyRequest$Companion;
+	public fun <init> ()V
+	public synthetic fun <init> (ILdev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component3 ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun component4 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefaultChannelIds ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getEnabled ()Ldev/kord/common/entity/optional/OptionalBoolean;
+	public final fun getMode ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getPrompts ()Ldev/kord/common/entity/optional/Optional;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/request/GuildOnboardingModifyRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/GuildOnboardingModifyRequest$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/GuildOnboardingModifyRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/rest/json/request/GuildRoleCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/GuildRoleCreateRequest$Companion;
 	public fun <init> ()V
@@ -5117,6 +5209,82 @@ public final class dev/kord/rest/json/request/MultipartWebhookEditMessageRequest
 	public final fun getRequest ()Ldev/kord/rest/json/request/WebhookEditMessageRequest;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/rest/json/request/OnboardingPromptOptionRequest {
+	public static final field Companion Ldev/kord/rest/json/request/OnboardingPromptOptionRequest$Companion;
+	public synthetic fun <init> (ILjava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChannelIds ()Ljava/util/List;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getRoleIds ()Ljava/util/List;
+	public final fun getTitle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/request/OnboardingPromptOptionRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/OnboardingPromptOptionRequest$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/OnboardingPromptOptionRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/OnboardingPromptOptionRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/OnboardingPromptRequest {
+	public static final field Companion Ldev/kord/rest/json/request/OnboardingPromptRequest$Companion;
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZ)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component2 ()Ldev/kord/common/entity/OnboardingPromptType;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()Z
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZ)Ldev/kord/rest/json/request/OnboardingPromptRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/OnboardingPromptRequest;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/OnboardingPromptType;Ljava/util/List;Ljava/lang/String;ZZZILjava/lang/Object;)Ldev/kord/rest/json/request/OnboardingPromptRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getInOnboarding ()Z
+	public final fun getOptions ()Ljava/util/List;
+	public final fun getRequired ()Z
+	public final fun getSingleSelect ()Z
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ldev/kord/common/entity/OnboardingPromptType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final synthetic fun write$Self (Ldev/kord/rest/json/request/OnboardingPromptRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class dev/kord/rest/json/request/OnboardingPromptRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/rest/json/request/OnboardingPromptRequest$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/rest/json/request/OnboardingPromptRequest;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/rest/json/request/OnboardingPromptRequest;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/rest/json/request/OnboardingPromptRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/ScheduledEventModifyRequest {
@@ -6760,6 +6928,10 @@ public final class dev/kord/rest/route/Route$GuildOnboardingGet : dev/kord/rest/
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildOnboardingGet;
 }
 
+public final class dev/kord/rest/route/Route$GuildOnboardingModify : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildOnboardingModify;
+}
+
 public final class dev/kord/rest/route/Route$GuildPatch : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GuildPatch;
 }
@@ -7359,6 +7531,9 @@ public final class dev/kord/rest/service/GuildService : dev/kord/rest/service/Re
 	public final fun modifyGuildMFALevel (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun modifyGuildMFALevel$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/MFALevel;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyGuildMember (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyGuildOnboarding (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun modifyGuildOnboarding (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun modifyGuildOnboarding$default (Ldev/kord/rest/service/GuildService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildOnboardingModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun modifyGuildRole (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildRolePosition (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun modifyGuildWelcomeScreen (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/GuildWelcomeScreenModifyRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

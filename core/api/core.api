@@ -421,6 +421,7 @@ public final class dev/kord/core/behavior/GuildBehaviorKt {
 	public static final fun createVoiceChannel (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createVoiceChannel$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun edit (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static final fun editOnboarding (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun editWidget (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun getAuditLogEntries (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun getAuditLogEntries$default (Ldev/kord/core/behavior/GuildBehavior;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
@@ -6388,6 +6389,7 @@ public final class dev/kord/core/entity/GuildOnboarding : dev/kord/core/KordObje
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getGuildOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getKord ()Ldev/kord/core/Kord;
+	public final fun getMode ()Ldev/kord/common/entity/OnboardingMode;
 	public final fun getPrompts ()Ljava/util/List;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun isEnabled ()Z
