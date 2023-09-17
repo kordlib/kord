@@ -86,7 +86,7 @@ public sealed interface BaseDiscordApplication {
     public val tags: Optional<List<String>>
     public val installParams: Optional<InstallParams>
     public val customInstallUrl: Optional<String>
-    public val roleConnectionsVerificationUrl: Optional<String>
+    public val roleConnectionsVerificationUrl: Optional<String?>
 }
 
 /**
@@ -127,7 +127,7 @@ public data class DiscordApplication(
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
     @SerialName("role_connections_verification_url")
-    override val roleConnectionsVerificationUrl: Optional<String> = Optional.Missing(),
+    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
 ) : BaseDiscordApplication
 
 /**
@@ -164,7 +164,7 @@ public data class DiscordPartialApplication(
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
     @SerialName("role_connections_verification_url")
-    override val roleConnectionsVerificationUrl: Optional<String> = Optional.Missing(),
+    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
 ) : BaseDiscordApplication
 
 @Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
