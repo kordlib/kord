@@ -29,7 +29,7 @@
 @file:Generate(
     INT_KORD_ENUM, name = "TextInputStyle",
     kDoc = "Style of a [text·input][dev.kord.common.entity.ComponentType.TextInput].",
-    docUrl = "https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles",
+    docUrl = "https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles",
     entries = [
         Entry("Short", intValue = 1, kDoc = "A single-line input."),
         Entry("Paragraph", intValue = 2, kDoc = "A multi-line input."),
