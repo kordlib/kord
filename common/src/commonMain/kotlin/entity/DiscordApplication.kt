@@ -133,7 +133,7 @@ public data class DiscordApplication(
 /**
  * A representation of the partial
  * [Application Structure](https://discord.com/developers/docs/resources/application#application-object-application-structure)
- * sent in [invite create events](https://discord.com/developers/docs/topics/gateway#invite-create).
+ * sent in [invite create events](https://discord.com/developers/docs/topics/gateway-events#invite-create).
  */
 @Serializable
 public data class DiscordPartialApplication(

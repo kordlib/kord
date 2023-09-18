@@ -112,7 +112,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 defaultGatewayLogger.trace { "opening gateway connection to $gatewayUrl" }
                 socket = data.client.webSocketSession { url(gatewayUrl) }
 
-                /**
+                /*
                  * https://discord.com/developers/docs/topics/gateway#transport-compression
                  *
                  * > Every connection to the gateway should use its own unique zlib context.
