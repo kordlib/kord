@@ -1291,6 +1291,14 @@ public final class dev/kord/common/entity/AuditLogEvent$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/common/entity/AuditLogEvent$CreatorMonetizationRequestCreated : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$CreatorMonetizationRequestCreated;
+}
+
+public final class dev/kord/common/entity/AuditLogEvent$CreatorMonetizationTermsAccepted : dev/kord/common/entity/AuditLogEvent {
+	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$CreatorMonetizationTermsAccepted;
+}
+
 public final class dev/kord/common/entity/AuditLogEvent$EmojiCreate : dev/kord/common/entity/AuditLogEvent {
 	public static final field INSTANCE Ldev/kord/common/entity/AuditLogEvent$EmojiCreate;
 }

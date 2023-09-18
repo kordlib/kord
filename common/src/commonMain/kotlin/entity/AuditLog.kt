@@ -56,6 +56,8 @@
         Entry("AutoModerationBlockMessage", intValue = 143, kDoc = "Message was blocked by Auto Moderation."),
         Entry("AutoModerationFlagToChannel", intValue = 144, kDoc = "Message was flagged by Auto Moderation."),
         Entry("AutoModerationUserCommunicationDisabled", intValue = 145, kDoc = "Member was timed out by Auto Moderation."),
+        Entry("CreatorMonetizationRequestCreated", intValue = 150, kDoc = "Creator monetization request was created."),
+        Entry("CreatorMonetizationTermsAccepted", intValue = 151, kDoc = "Creator monetization terms were accepted."),
     ],
 )
 
