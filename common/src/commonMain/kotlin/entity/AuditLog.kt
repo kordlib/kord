@@ -174,7 +174,9 @@ public data class AuditLogEntryOptionalInfo(
     2020-11-12 field is described as present but is in fact optional
      */
     @SerialName("role_name")
-    val roleName: Optional<String> = Optional.Missing()
+    val roleName: Optional<String> = Optional.Missing(),
+    @SerialName("integration_type")
+    val integrationType: Optional<String> = Optional.Missing(),
 )
 
 @Serializable(with = AuditLogChange.Serializer::class)
