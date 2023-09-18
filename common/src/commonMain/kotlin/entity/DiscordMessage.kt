@@ -671,6 +671,8 @@ public data class MessageReactionAddData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
     val emoji: DiscordPartialEmoji,
+    @SerialName("message_author_id")
+    val messageAuthorId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
 
 @Serializable
