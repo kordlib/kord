@@ -1,3 +1,65 @@
+# 0.11.0
+
+## Additions
+
+* Add interaction channel field (by @NoComment1105 in #810)
+* Add `avatar_decoration` to user (by @NoComment1105 in #852)
+* Add stage channel create functions (by @NoComment1105 in #856)
+* Implement custom status (by @DRSchlaubi and @lukellmann in #857)
+* Allow modifying `GuildMemberFlags` (by @lukellmann in #865)
+* Add `RoleFlags` (by @lukellmann in #866)
+* Add `AttachmentFlags` (by @lukellmann in #867)
+* Add `MediaChannel`s (by @lukellmann in #853)
+* Allow modifying `GuildOnboarding` (by @lukellmann in #819)
+* Add `ReactionAddEvent.messageAuthorId` (by @lukellmann in #873)
+* Add new `AuditLogEvent`s (by @lukellmann in #874)
+* Add `with_counts` param for `GET` `/users/@me/guilds` (by @lukellmann in #875)
+* Add `TeamMemberRole` (by @lukellmann in #876)
+* Add `AuditLogEntryOptionalInfo.integrationType` (by @lukellmann in #877)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @lukellmann in #844)
+* Generate bit flags (by @DRSchlaubi and @lukellmann in #766)
+* Bring kord enum API closer to bit flags API (by @lukellmann in #861)
+* Replace companion object serializers (by @lukellmann in #869)
+* Remove type parameter from `Choice` (by @lukellmann in #868)
+
+## Fixes
+
+* Correctly close zlib stream when gateway disconnects (by @DRSchlaubi in #849)
+* Fix usage of `BigInteger` in `DiscordBitSet.value` (by @lukellmann in #864)
+* Fix deserialization of `DiscordApplication` (by @lukellmann in #871)
+
+## Dependencies
+
+Updated in #842, #859 and #872
+
+* Gradle 8.1 -> 8.3
+* Kotlin 1.8.21 -> 1.9.10
+* Ktor 2.3.0 -> 2.3.4
+* kotlinx.coroutines 1.7.1 -> 1.7.3
+* kotlinx.serialization 1.5.1 -> 1.6.0
+* kotlinx-datetime 0.4.0 -> 0.4.1
+* kotlin-node 18.16.3-pre.546 -> 18.16.12-pre.619
+* Stately 2.0.0-rc1 -> 2.0.2
+* KSP 1.8.21-1.0.11 -> 1.9.10-1.0.13
+* KotlinPoet 1.13.2 -> 1.14.2
+* JUnit 5 5.9.3 -> 5.10.0
+* MockK 1.13.5 -> 1.13.7
+* SLF4J 2.0.7 -> 2.0.9
+* Dokka 1.8.10 -> 1.9.0
+* AtomicFU 0.20.2 -> 0.22.0
+* Binary compatibility validator 0.13.1 -> 0.13.2
+* gradle-buildconfig-plugin 4.0.4 -> 4.1.2
+* Foojay Toolchains Plugin 0.4.0 -> 0.7.0
+* actions/checkout v3 -> v4
+
+## House-keeping
+
+* Remove unnecessary `RedundantVisibilityModifier` suppression (by @lukellmann in #858)
+* Don't use value class `Reset` with `AtomicRef` (by @DRSchlaubi and @lukellmann in #863)
+
 # 0.10.0
 
 ## Additions
