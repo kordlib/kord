@@ -195,6 +195,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
                 messageId,
                 guildId.value,
                 reaction,
+                messageAuthorId.value,
                 kord,
                 shard,
                 context?.get(),
