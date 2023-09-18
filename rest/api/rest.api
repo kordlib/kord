@@ -7719,7 +7719,9 @@ public final class dev/kord/rest/service/UserService : dev/kord/rest/service/Res
 	public final fun createDM (Ldev/kord/rest/json/request/DMCreateRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createGroupDM (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getCurrentUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getCurrentUserGuilds (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getCurrentUserGuilds (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun getCurrentUserGuilds (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getCurrentUserGuilds$default (Ldev/kord/rest/service/UserService;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun getCurrentUserGuilds$default (Ldev/kord/rest/service/UserService;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getUser (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getUserConnections (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
