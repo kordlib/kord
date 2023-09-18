@@ -5244,19 +5244,21 @@ public final class dev/kord/core/cache/data/StickerPackData$Companion {
 
 public final class dev/kord/core/cache/data/TeamData {
 	public static final field Companion Ldev/kord/core/cache/data/TeamData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/util/List;
 	public final fun component4 ()Ldev/kord/common/entity/Snowflake;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;)Ldev/kord/core/cache/data/TeamData;
-	public static synthetic fun copy$default (Ldev/kord/core/cache/data/TeamData;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;ILjava/lang/Object;)Ldev/kord/core/cache/data/TeamData;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/core/cache/data/TeamData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/TeamData;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/util/List;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;ILjava/lang/Object;)Ldev/kord/core/cache/data/TeamData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getIcon ()Ljava/lang/String;
 	public final fun getId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getMembers ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
 	public final fun getOwnerUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -5281,12 +5283,21 @@ public final class dev/kord/core/cache/data/TeamData$Companion {
 
 public final class dev/kord/core/cache/data/TeamMemberData {
 	public static final field Companion Ldev/kord/core/cache/data/TeamMemberData$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/TeamMembershipState;Ljava/util/List;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ldev/kord/common/entity/TeamMembershipState;Ljava/util/List;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;)V
+	public synthetic fun <init> (ILdev/kord/common/entity/TeamMembershipState;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/TeamMemberRole;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/TeamMembershipState;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/TeamMemberRole;)V
+	public final fun component1 ()Ldev/kord/common/entity/TeamMembershipState;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component4 ()Ldev/kord/common/entity/TeamMemberRole;
+	public final fun copy (Ldev/kord/common/entity/TeamMembershipState;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/TeamMemberRole;)Ldev/kord/core/cache/data/TeamMemberData;
+	public static synthetic fun copy$default (Ldev/kord/core/cache/data/TeamMemberData;Ldev/kord/common/entity/TeamMembershipState;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/TeamMemberRole;ILjava/lang/Object;)Ldev/kord/core/cache/data/TeamMemberData;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getMembershipState ()Ldev/kord/common/entity/TeamMembershipState;
-	public final fun getPermissions ()Ljava/util/List;
+	public final fun getRole ()Ldev/kord/common/entity/TeamMemberRole;
 	public final fun getTeamId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 	public static final synthetic fun write$Self (Ldev/kord/core/cache/data/TeamMemberData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
@@ -7228,6 +7239,7 @@ public final class dev/kord/core/entity/Team : dev/kord/core/entity/KordEntity, 
 	public fun getId ()Ldev/kord/common/entity/Snowflake;
 	public fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMembers ()Ljava/util/List;
+	public final fun getName ()Ljava/lang/String;
 	public final fun getOwnerUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7243,6 +7255,7 @@ public final class dev/kord/core/entity/TeamMember {
 	public final fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMembershipState ()Ldev/kord/common/entity/TeamMembershipState;
 	public final fun getPermissions ()Ljava/util/List;
+	public final fun getRole ()Ldev/kord/common/entity/TeamMemberRole;
 	public final fun getTeamId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;

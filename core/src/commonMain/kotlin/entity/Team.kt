@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.TeamMemberRole
 import dev.kord.common.entity.TeamMembershipState
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
@@ -18,11 +19,7 @@ public class Team(
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordEntity, Strategizable {
-    /**
-     * The unique ID of this team.
-     */
-    override val id: Snowflake
-        get() = data.id
+    override val id: Snowflake get() = data.id
 
     /**
      * The hash of this team's icon.
@@ -33,6 +30,7 @@ public class Team(
     /** The hash of this team's icon. */
     public val iconHash: String? get() = data.icon
 
+    /** This team's icon. */
     public val icon: Asset? get() = iconHash?.let { Asset.teamIcon(id, it, kord) }
 
     /**
@@ -40,6 +38,9 @@ public class Team(
      */
     public val members: List<TeamMember>
         get() = data.members.map { TeamMember(it, kord) }
+
+    /** Name of the team. */
+    public val name: String get() = data.name
 
     /**
      * The ID of the user that owns the team.
@@ -86,7 +87,12 @@ public class TeamMember(public val data: TeamMemberData, public val kord: Kord) 
      * At the moment, this collection will only have one element: `*`, meaning the member has all permissions.
      * This is because right now there are no other permissions. Read mode [here](https://discord.com/developers/docs/topics/teams#data-models-team-members-object)
      */
-    public val permissions: List<String> get() = data.permissions
+    @Deprecated(
+        "'permissions' was never different from `[\"*\"]`. It is now replaced by 'role'.",
+        ReplaceWith("this.role"),
+        DeprecationLevel.WARNING,
+    )
+    public val permissions: List<String> get() = listOf("*")
 
     /**
      * The unique ID that this member belongs to.
@@ -102,6 +108,9 @@ public class TeamMember(public val data: TeamMemberData, public val kord: Kord) 
      * Utility method that gets the user from Kord.
      */
     public suspend fun getUser(): User? = kord.getUser(userId)
+
+    /** [Role][TeamMemberRole] of the team member. */
+    public val role: TeamMemberRole get() = data.role
 
     override fun toString(): String {
         return "TeamMember(data=$data, kord=$kord)"
