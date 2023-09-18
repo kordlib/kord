@@ -321,6 +321,16 @@ public sealed class AuditLogEvent(
      */
     public object AutoModerationUserCommunicationDisabled : AuditLogEvent(145)
 
+    /**
+     * Creator monetization request was created.
+     */
+    public object CreatorMonetizationRequestCreated : AuditLogEvent(150)
+
+    /**
+     * Creator monetization terms were accepted.
+     */
+    public object CreatorMonetizationTermsAccepted : AuditLogEvent(151)
+
     internal object Serializer : KSerializer<AuditLogEvent> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.AuditLogEvent", PrimitiveKind.INT)
@@ -392,6 +402,8 @@ public sealed class AuditLogEvent(
                 AutoModerationBlockMessage,
                 AutoModerationFlagToChannel,
                 AutoModerationUserCommunicationDisabled,
+                CreatorMonetizationRequestCreated,
+                CreatorMonetizationTermsAccepted,
             )
         }
 
@@ -455,6 +467,8 @@ public sealed class AuditLogEvent(
             143 -> AutoModerationBlockMessage
             144 -> AutoModerationFlagToChannel
             145 -> AutoModerationUserCommunicationDisabled
+            150 -> CreatorMonetizationRequestCreated
+            151 -> CreatorMonetizationTermsAccepted
             else -> Unknown(value, null)
         }
     }
