@@ -24,12 +24,20 @@ public class UserService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.UserId] = userId
     }
 
+    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
     public suspend fun getCurrentUserGuilds(
         position: Position.BeforeOrAfter? = null,
         limit: Int? = null,
+    ): List<DiscordPartialGuild> = getCurrentUserGuilds(position, limit, withCounts = null)
+
+    public suspend fun getCurrentUserGuilds(
+        position: Position.BeforeOrAfter? = null,
+        limit: Int? = null,
+        withCounts: Boolean? = null,
     ): List<DiscordPartialGuild> = call(Route.CurrentUsersGuildsGet) {
         position?.let { parameter(it.key, it.value) }
         limit?.let { parameter("limit", it) }
+        withCounts?.let { parameter("with_counts", it) }
     }
 
     public suspend fun leaveGuild(guildId: Snowflake): Unit = call(Route.GuildLeave) {

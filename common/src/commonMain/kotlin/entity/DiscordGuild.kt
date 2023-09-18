@@ -346,6 +346,10 @@ public data class DiscordPartialGuild(
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
     @SerialName("guild_scheduled_events")
     val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
+    @SerialName("approximate_member_count")
+    val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_presence_count")
+    val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("premium_progress_bar_enabled")
     val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
 )

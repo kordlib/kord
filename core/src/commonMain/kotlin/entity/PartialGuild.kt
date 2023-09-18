@@ -95,6 +95,20 @@ public class PartialGuild(
     public val banner: Asset? get() = bannerHash?.let { Asset.guildBanner(id, it, kord) }
 
     /**
+     * The approximate number of members in this guild.
+     *
+     * Present if this guild was requested through [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.
+     */
+    public val approximateMemberCount: Int? get() = data.approximateMemberCount.value
+
+    /**
+     * The approximate number of online members in this guild.
+     *
+     * Present if this guild was requested through [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.
+     */
+    public val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
+
+    /**
      * Gets the discovery splash url in the specified [format], if present.
      */
     @Deprecated(

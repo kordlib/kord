@@ -1,10 +1,7 @@
 package dev.kord.core.cache.data
 
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.Optional
-import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.common.entity.optional.map
-import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.*
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -27,8 +24,9 @@ public class PartialGuildData(
     public val stageInstances: Optional<List<StageInstanceData>> = Optional.Missing(),
     public val stickers: Optional<List<StickerData>> = Optional.Missing(),
     public val guildScheduledEvents: Optional<List<GuildScheduledEventData>> = Optional.Missing(),
+    public val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+    public val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     public val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing
-
 ) {
     public companion object {
         public fun from(partialGuild: DiscordPartialGuild): PartialGuildData = with(partialGuild) {
@@ -49,6 +47,8 @@ public class PartialGuildData(
                 stageInstances = stageInstances.mapList { StageInstanceData.from(it) },
                 stickers = stickers.mapList { StickerData.from(it) },
                 guildScheduledEvents = guildScheduledEvents.mapList { GuildScheduledEventData.from(it) },
+                approximateMemberCount = approximateMemberCount,
+                approximatePresenceCount = approximatePresenceCount,
                 premiumProgressBarEnabled = premiumProgressBarEnabled
             )
         }
