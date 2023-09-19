@@ -46,7 +46,7 @@ internal fun KordEnum.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                     Deprecated(
                         "Replaced by '$entityName.from()'.",
                         ReplaceWith("$entityName.from($valueName)", entityCN.canonicalName),
-                        DeprecationLevel.WARNING,
+                        DeprecationLevel.ERROR,
                     )
                 )
                 addModifiers(PUBLIC)

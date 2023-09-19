@@ -44,6 +44,7 @@ public sealed class MessageStickerType(
         unused: Nothing?,
     ) : MessageStickerType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'MessageStickerType.from()'.",
             replaceWith = ReplaceWith(expression = "MessageStickerType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.MessageStickerType")),

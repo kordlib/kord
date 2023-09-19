@@ -44,6 +44,7 @@ public sealed class GuildFeature(
         unused: Nothing?,
     ) : GuildFeature(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'GuildFeature.from()'.",
             replaceWith = ReplaceWith(expression = "GuildFeature.from(value)", imports =
                         arrayOf("dev.kord.common.entity.GuildFeature")),

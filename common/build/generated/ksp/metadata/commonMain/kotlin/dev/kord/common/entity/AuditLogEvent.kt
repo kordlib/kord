@@ -44,6 +44,7 @@ public sealed class AuditLogEvent(
         unused: Nothing?,
     ) : AuditLogEvent(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'AuditLogEvent.from()'.",
             replaceWith = ReplaceWith(expression = "AuditLogEvent.from(value)", imports =
                         arrayOf("dev.kord.common.entity.AuditLogEvent")),

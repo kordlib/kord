@@ -23,7 +23,7 @@ class PermissionsTest {
     @Test
     @JsName("test2")
     fun `Permission All does not swallow the universe`() {
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         Permission.All //oh yeah, this is worthy of a test
     }
 

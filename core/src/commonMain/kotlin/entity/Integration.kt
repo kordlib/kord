@@ -16,11 +16,8 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.integration.IntegrationModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
-import kotlin.js.JsName
-import kotlin.jvm.JvmName
 import kotlin.time.Duration
 
 /**
@@ -52,10 +49,6 @@ public class Integration(
      */
     public val isEnabled: Boolean
         get() = data.enabled
-
-    @Deprecated("Binary compatibility, was non-nullable before. Keep for some releases.", level = HIDDEN)
-    @JsName("_isSyncing") // binary compatibility with js doesn't matter as this is the first JS release
-    public fun isSyncing(): Boolean = isSyncing!!
 
     /**
      * Whether this integrations is syncing.
@@ -99,10 +92,6 @@ public class Integration(
      */
     public val expireBehavior: IntegrationExpireBehavior?
         get() = data.expireBehavior.value
-
-    @Deprecated("Binary compatibility, was non-nullable before. Keep for some releases.", level = HIDDEN)
-    @JvmName("getExpireGracePeriod-UwyO8pc")
-    public fun expireGracePeriod0(): Duration = expireGracePeriod!!
 
     /**
      * The grace period before expiring subscribers.

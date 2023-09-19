@@ -131,7 +131,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                     Deprecated(
                         "Renamed to 'values'.",
                         ReplaceWith("this.values", imports = emptyArray()),
-                        DeprecationLevel.WARNING,
+                        DeprecationLevel.ERROR,
                     )
                 )
                 getter {

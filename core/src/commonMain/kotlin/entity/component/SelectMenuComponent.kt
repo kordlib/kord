@@ -62,7 +62,7 @@ public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(da
 
 /** The possible options to choose from. */
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
-@Deprecated("Replaced by member in StringSelectComponent.", ReplaceWith("this.options"), DeprecationLevel.WARNING)
+@Deprecated("Replaced by member in StringSelectComponent.", ReplaceWith("this.options"), DeprecationLevel.ERROR)
 public val StringSelectComponent.options: List<SelectOption> get() = options
 
 public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data) {

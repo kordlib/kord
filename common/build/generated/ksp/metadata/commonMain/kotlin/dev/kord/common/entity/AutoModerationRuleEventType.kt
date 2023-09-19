@@ -47,6 +47,7 @@ public sealed class AutoModerationRuleEventType(
         unused: Nothing?,
     ) : AutoModerationRuleEventType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'AutoModerationRuleEventType.from()'.",
             replaceWith = ReplaceWith(expression = "AutoModerationRuleEventType.from(value)",
                         imports = arrayOf("dev.kord.common.entity.AutoModerationRuleEventType")),

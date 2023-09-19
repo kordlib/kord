@@ -43,6 +43,7 @@ public sealed class EmbedType(
         unused: Nothing?,
     ) : EmbedType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'EmbedType.from()'.",
             replaceWith = ReplaceWith(expression = "EmbedType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.EmbedType")),

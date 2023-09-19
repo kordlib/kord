@@ -43,6 +43,7 @@ public sealed class PremiumTier(
         unused: Nothing?,
     ) : PremiumTier(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'PremiumTier.from()'.",
             replaceWith = ReplaceWith(expression = "PremiumTier.from(value)", imports =
                         arrayOf("dev.kord.common.entity.PremiumTier")),

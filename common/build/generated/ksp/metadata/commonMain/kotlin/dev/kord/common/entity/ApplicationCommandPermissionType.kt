@@ -45,6 +45,7 @@ public sealed class ApplicationCommandPermissionType(
         unused: Nothing?,
     ) : ApplicationCommandPermissionType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'ApplicationCommandPermissionType.from()'.",
             replaceWith = ReplaceWith(expression = "ApplicationCommandPermissionType.from(value)",
                         imports =

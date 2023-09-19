@@ -44,6 +44,7 @@ public sealed class VerificationLevel(
         unused: Nothing?,
     ) : VerificationLevel(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'VerificationLevel.from()'.",
             replaceWith = ReplaceWith(expression = "VerificationLevel.from(value)", imports =
                         arrayOf("dev.kord.common.entity.VerificationLevel")),

@@ -102,7 +102,7 @@ public sealed class Intent(
     @Deprecated(
         "Renamed to 'GuildModeration'.",
         ReplaceWith("Intent.GuildModeration", imports = ["dev.kord.gateway.Intent"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public object GuildBans : Intent(2)
 
@@ -283,7 +283,7 @@ public sealed class Intent(
         @Deprecated(
             "Renamed to 'entries'.",
             ReplaceWith("Intent.entries", imports = ["dev.kord.gateway.Intent"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         public val values: Set<Intent> get() = entries.toSet()
 
@@ -438,10 +438,10 @@ public class Intents internal constructor(
         return Builder(code.copy()).apply(builder).build()
     }
 
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
     @Deprecated(
         "'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
@@ -462,6 +462,7 @@ public class Intents internal constructor(
     @Deprecated(
         message = "Intents is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        DeprecationLevel.ERROR,
     )
     public operator fun component1(): DiscordBitSet = code
 
@@ -469,13 +470,13 @@ public class Intents internal constructor(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "Intents is no longer a data class. Deprecated without a replacement.")
+    @Deprecated(message = "Intents is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun copy(code: DiscordBitSet = this.code): Intents = Intents(code)
 
     @Deprecated(
         "Renamed to 'Builder'.",
         ReplaceWith("Intents.Builder", imports = ["dev.kord.gateway.Intents"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class IntentsBuilder(code: DiscordBitSet = EmptyBitSet()) {
         private val delegate = Builder(code)
@@ -542,7 +543,7 @@ public class Intents internal constructor(
         @Deprecated(
             "Renamed to 'ALL'",
             ReplaceWith("Intents.ALL", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.ALL"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         @PrivilegedIntent
         public val all: Intents get() = ALL
@@ -550,7 +551,7 @@ public class Intents internal constructor(
         @Deprecated(
             "Renamed to 'PRIVILEGED'",
             ReplaceWith("Intents.PRIVILEGED", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.PRIVILEGED"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         @PrivilegedIntent
         public val privileged: Intents get() = PRIVILEGED
@@ -561,14 +562,14 @@ public class Intents internal constructor(
                 "Intents.NON_PRIVILEGED",
                 imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.NON_PRIVILEGED"],
             ),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         public val nonPrivileged: Intents get() = NON_PRIVILEGED
 
         @Deprecated(
             "Renamed to 'NONE'",
             ReplaceWith("Intents.NONE", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.NONE"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         public val none: Intents get() = NONE
     }
@@ -577,7 +578,7 @@ public class Intents internal constructor(
 @Deprecated(
     "Replaced by 'Intents.serializer()'.",
     ReplaceWith("Intents.serializer()", imports = ["dev.kord.gateway.Intents"]),
-    DeprecationLevel.WARNING,
+    DeprecationLevel.ERROR,
 )
 public object IntentsSerializer : KSerializer<Intents> by Intents.Serializer
 
@@ -590,8 +591,8 @@ public inline fun Intents(builder: Intents.Builder.() -> Unit = {}): Intents {
     return Intents.Builder().apply(builder).build()
 }
 
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
-@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.ERROR)
 @kotlin.internal.LowPriorityInOverloadResolution
 public inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
@@ -639,6 +640,6 @@ public fun IntentsWithIterable(flags: Iterable<Intents>): Intents = Intents(flag
         "Intents.Builder(DiscordBitSet(value)).build()",
         imports = ["dev.kord.gateway.Intents", "dev.kord.common.DiscordBitSet"],
     ),
-    DeprecationLevel.WARNING,
+    DeprecationLevel.ERROR,
 )
 public fun Intents(value: String): Intents = Intents(DiscordBitSet(value))

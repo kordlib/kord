@@ -45,6 +45,7 @@ public sealed class UserPremium(
         unused: Nothing?,
     ) : UserPremium(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'UserPremium.from()'.",
             replaceWith = ReplaceWith(expression = "UserPremium.from(value)", imports =
                         arrayOf("dev.kord.common.entity.UserPremium")),

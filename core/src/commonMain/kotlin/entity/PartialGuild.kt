@@ -14,9 +14,6 @@ import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.Image
-import dev.kord.rest.service.RestClient
-import kotlin.DeprecationLevel.HIDDEN
 
 public class PartialGuild(
     public val data: PartialGuildData,
@@ -107,82 +104,6 @@ public class PartialGuild(
      * Present if this guild was requested through [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.
      */
     public val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
-
-    /**
-     * Gets the discovery splash url in the specified [format], if present.
-     */
-    @Deprecated(
-        "This method uses the wrong hash.",
-        ReplaceWith("this.splash?.cdnUrl?.toUrl { this@toUrl.format = format }"),
-        level = HIDDEN,
-    )
-    public fun getDiscoverySplashUrl(format: Image.Format): String? =
-        getDiscoverySplashUrl0(format)
-
-    private fun getDiscoverySplashUrl0(format: Image.Format) =
-        splashHash?.let { "discovery-splashes/$id/${it}.${format.extension}" }
-
-    /**
-     * Requests to get the splash image in the specified [format], if present.
-     *
-     * This property is not resolvable through cache and will always use the [RestClient] instead.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated(
-        "This method uses the wrong hash.",
-        ReplaceWith("this.splash?.getImage(format)"),
-        level = HIDDEN,
-    )
-    public suspend fun getDiscoverySplash(format: Image.Format): Image? {
-        val url = getDiscoverySplashUrl0(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-
-    /**
-     * Gets the icon url, if present.
-     */
-    @Deprecated("Old method", ReplaceWith("this.icon?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = HIDDEN)
-    public fun getIconUrl(format: Image.Format): String? =
-        getIconUrl0(format)
-
-    private fun getIconUrl0(format: Image.Format): String? =
-        iconHash?.let { "https://cdn.discordapp.com/icons/$id/$it.${format.extension}" }
-
-
-    /**
-     * Requests to get the icon image in the specified [format], if present.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Old method", ReplaceWith("this.icon?.getImage(format)"), level = HIDDEN)
-    public suspend fun getIcon(format: Image.Format): Image? {
-        val url = getIconUrl0(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-
-    /**
-     * Gets the banner url in the specified format.
-     */
-    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = HIDDEN)
-    public fun getBannerUrl(format: Image.Format): String? =
-        getBannerUrl0(format)
-
-    private fun getBannerUrl0(format: Image.Format) =
-        data.banner.value?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
-
-    /**
-     * Requests to get the banner image in the specified [format], if present.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Old method", ReplaceWith("this.banner?.getImage(format)"), level = HIDDEN)
-    public suspend fun getBanner(format: Image.Format): Image? {
-        val url = getBannerUrl0(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
 
 
     /**

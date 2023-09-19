@@ -46,6 +46,7 @@ public sealed class TextInputStyle(
         unused: Nothing?,
     ) : TextInputStyle(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'TextInputStyle.from()'.",
             replaceWith = ReplaceWith(expression = "TextInputStyle.from(value)", imports =
                         arrayOf("dev.kord.common.entity.TextInputStyle")),

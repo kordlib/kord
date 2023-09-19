@@ -305,7 +305,7 @@ public class Message(
      */
     override suspend fun asMessage(): Message = this
 
-    @Deprecated("Renamed to 'getAuthorAsMember'.", ReplaceWith("this.getAuthorAsMember()"), DeprecationLevel.WARNING)
+    @Deprecated("Renamed to 'getAuthorAsMember'.", ReplaceWith("this.getAuthorAsMember()"), DeprecationLevel.ERROR)
     public suspend fun getAuthorAsMemberOrThrow(): Member = getAuthorAsMember()
 
     /**

@@ -67,16 +67,20 @@ public sealed class MessageFlag(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "MessageFlag is no longer an enum class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "MessageFlag is no longer an enum class. Deprecated without a replacement.",
+    )
     public fun name(): String = this::class.simpleName!!
 
     /**
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "MessageFlag is no longer an enum class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "MessageFlag is no longer an enum class. Deprecated without a replacement.",
+    )
     public fun ordinal(): Int = when (this) {
         CrossPosted -> 0
         IsCrossPost -> 1
@@ -96,6 +100,7 @@ public sealed class MessageFlag(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "MessageFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "MessageFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.MessageFlag")),
@@ -289,8 +294,10 @@ public sealed class MessageFlag(
          * @suppress
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "MessageFlag is no longer an enum class. Deprecated without a replacement.")
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "MessageFlag is no longer an enum class. Deprecated without a replacement.",
+        )
         @JvmStatic
         public open fun valueOf(name: String): MessageFlag = when (name) {
             "CrossPosted" -> CrossPosted
@@ -312,6 +319,7 @@ public sealed class MessageFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "MessageFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "MessageFlag.entries.toTypedArray()", imports =
                         arrayOf("dev.kord.common.entity.MessageFlag")),
@@ -324,7 +332,7 @@ public sealed class MessageFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "MessageFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "MessageFlag.entries", imports =
                         arrayOf("dev.kord.common.entity.MessageFlag")),
@@ -432,6 +440,7 @@ public class MessageFlags internal constructor(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
     )
@@ -495,6 +504,7 @@ public class MessageFlags internal constructor(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "MessageFlags is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
     )
@@ -504,8 +514,10 @@ public class MessageFlags internal constructor(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "MessageFlags is no longer a data class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "MessageFlags is no longer a data class. Deprecated without a replacement.",
+    )
     public fun copy(code: Int = this.code): MessageFlags = MessageFlags(code)
 
     public class Builder(
@@ -549,6 +561,7 @@ public class MessageFlags internal constructor(
          * @suppress
          */
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Renamed to 'build'",
             replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
         )

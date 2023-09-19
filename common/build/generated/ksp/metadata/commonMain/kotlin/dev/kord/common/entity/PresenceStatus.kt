@@ -44,6 +44,7 @@ public sealed class PresenceStatus(
         unused: Nothing?,
     ) : PresenceStatus(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'PresenceStatus.from()'.",
             replaceWith = ReplaceWith(expression = "PresenceStatus.from(value)", imports =
                         arrayOf("dev.kord.common.entity.PresenceStatus")),

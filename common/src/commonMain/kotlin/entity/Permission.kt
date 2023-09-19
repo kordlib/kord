@@ -108,14 +108,14 @@ public sealed class Permission {
         @Deprecated(
             "Construct an unknown 'Permission' with 'Permission.fromShift()' instead.",
             ReplaceWith("Permission.fromShift(TODO())", imports = ["dev.kord.common.entity.Permission"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         public constructor(code: DiscordBitSet) : super(code)
 
         @Deprecated(
             "Construct an unknown 'Permission' with 'Permission.fromShift()' instead.",
             ReplaceWith("Permission.fromShift(TODO())", imports = ["dev.kord.common.entity.Permission"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         public constructor(vararg values: Long) : super(DiscordBitSet(values))
     }
@@ -274,12 +274,6 @@ public sealed class Permission {
     public object ManageWebhooks : Permission(29)
 
     /**
-     * Allows management and editing of emojis and stickers.
-     */
-    @Deprecated("Renamed by discord", ReplaceWith("ManageGuildExpressions"), DeprecationLevel.HIDDEN)
-    public object ManageEmojisAndStickers : Permission(30)
-
-    /**
      * Allows management and editing of emojis, stickers, and soundboard sounds.
      */
     public object ManageGuildExpressions : Permission(30)
@@ -364,7 +358,7 @@ public sealed class Permission {
     @Deprecated(
         "'Permission.All' is not a proper 'Permission' instance. Replace with 'Permissions.ALL'.",
         ReplaceWith("Permissions.ALL", imports = ["dev.kord.common.entity.Permissions", "dev.kord.common.entity.ALL"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public object All : Permission(Permissions.ALL.code)
 
@@ -427,7 +421,7 @@ public sealed class Permission {
         @Deprecated(
             "Renamed to 'entries'.",
             ReplaceWith("Permission.entries", imports = ["dev.kord.common.entity.Permission"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         public val values: Set<Permission> get() = entries.toSet()
 
@@ -565,7 +559,7 @@ public class Permissions internal constructor(
         "Don't construct an instance of 'Permissions' from a raw code. Use the factory functions described in the " +
             "documentation instead.",
         ReplaceWith("Permissions.Builder(code).build()", "dev.kord.common.entity.Permissions"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public constructor(code: DiscordBitSet) : this(code, null)
 
@@ -621,10 +615,10 @@ public class Permissions internal constructor(
         return Builder(code.copy()).apply(builder).build()
     }
 
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
     @Deprecated(
         "'Permissions.PermissionsBuilder' is deprecated, use 'Permissions.Builder' instead.",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun copy(block: PermissionsBuilder.() -> Unit): Permissions {
@@ -645,6 +639,7 @@ public class Permissions internal constructor(
     @Deprecated(
         message = "Permissions is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        DeprecationLevel.ERROR,
     )
     public operator fun component1(): DiscordBitSet = code
 
@@ -653,13 +648,13 @@ public class Permissions internal constructor(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "Permissions is no longer a data class. Deprecated without a replacement.")
+            "Permissions is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun copy(code: DiscordBitSet = this.code): Permissions = Permissions(code, null)
 
     @Deprecated(
         "Renamed to 'Builder'.",
         ReplaceWith("Permissions.Builder", imports = ["dev.kord.common.entity.Permissions"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class PermissionsBuilder(code: DiscordBitSet) {
         private val delegate = Builder(code)
@@ -725,11 +720,11 @@ public class Permissions internal constructor(
 
     public companion object NewCompanion {
 
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         @Deprecated(
             "Renamed to 'NewCompanion', which no longer implements 'KSerializer<Permissions>'.",
             ReplaceWith("Permissions.serializer()", imports = ["dev.kord.common.entity.Permissions"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         @JvmField
         public val Companion: Companion = Companion()
@@ -738,7 +733,7 @@ public class Permissions internal constructor(
     @Deprecated(
         "Renamed to 'NewCompanion', which no longer implements 'KSerializer<Permissions>'.",
         ReplaceWith("Permissions.serializer()", imports = ["dev.kord.common.entity.Permissions"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class Companion internal constructor() : KSerializer<Permissions> by Serializer {
         public fun serializer(): KSerializer<Permissions> = this
@@ -754,10 +749,10 @@ public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Per
     return Permissions.Builder().apply(builder).build()
 }
 
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
 @Deprecated(
     "'Permissions.PermissionsBuilder' is deprecated, use 'Permissions.Builder' instead.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 @kotlin.internal.LowPriorityInOverloadResolution
 public inline fun Permissions(block: Permissions.PermissionsBuilder.() -> Unit = {}): Permissions {
@@ -811,6 +806,6 @@ public fun PermissionWithIterable(flags: Iterable<Permissions>): Permissions = P
         "Permissions.Builder(DiscordBitSet(value)).build()",
         imports = ["dev.kord.common.entity.Permissions", "dev.kord.common.DiscordBitSet"],
     ),
-    DeprecationLevel.WARNING,
+    DeprecationLevel.ERROR,
 )
 public fun Permissions(value: String): Permissions = Permissions(DiscordBitSet(value), null)

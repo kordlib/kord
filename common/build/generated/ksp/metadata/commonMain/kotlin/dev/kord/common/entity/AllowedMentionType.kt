@@ -44,6 +44,7 @@ public sealed class AllowedMentionType(
         unused: Nothing?,
     ) : AllowedMentionType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'AllowedMentionType.from()'.",
             replaceWith = ReplaceWith(expression = "AllowedMentionType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.AllowedMentionType")),

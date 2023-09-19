@@ -43,6 +43,7 @@ public sealed class WebhookType(
         unused: Nothing?,
     ) : WebhookType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'WebhookType.from()'.",
             replaceWith = ReplaceWith(expression = "WebhookType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.WebhookType")),

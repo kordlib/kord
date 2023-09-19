@@ -1133,7 +1133,7 @@ public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
         "this.createMentionSpamAutoModerationRule(name, eventType) { this@createMentionSpamAutoModerationRule" +
             ".mentionLimit = mentionLimit\nbuilder() }"
     ),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
     name: String,

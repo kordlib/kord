@@ -67,16 +67,20 @@ public sealed class ChannelFlag(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "ChannelFlag is no longer an enum class. Deprecated without a replacement.",
+    )
     public fun name(): String = this::class.simpleName!!
 
     /**
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "ChannelFlag is no longer an enum class. Deprecated without a replacement.",
+    )
     public fun ordinal(): Int = when (this) {
         Pinned -> 0
         RequireTag -> 1
@@ -88,6 +92,7 @@ public sealed class ChannelFlag(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "ChannelFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "ChannelFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.ChannelFlag")),
@@ -165,8 +170,10 @@ public sealed class ChannelFlag(
          * @suppress
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "ChannelFlag is no longer an enum class. Deprecated without a replacement.")
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message = "ChannelFlag is no longer an enum class. Deprecated without a replacement.",
+        )
         @JvmStatic
         public open fun valueOf(name: String): ChannelFlag = when (name) {
             "Pinned" -> Pinned
@@ -180,6 +187,7 @@ public sealed class ChannelFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "ChannelFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "ChannelFlag.entries.toTypedArray()", imports =
                         arrayOf("dev.kord.common.entity.ChannelFlag")),
@@ -192,7 +200,7 @@ public sealed class ChannelFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "ChannelFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "ChannelFlag.entries", imports =
                         arrayOf("dev.kord.common.entity.ChannelFlag")),
@@ -300,6 +308,7 @@ public class ChannelFlags internal constructor(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
     )
@@ -363,6 +372,7 @@ public class ChannelFlags internal constructor(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "ChannelFlags is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
     )
@@ -372,8 +382,10 @@ public class ChannelFlags internal constructor(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ChannelFlags is no longer a data class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "ChannelFlags is no longer a data class. Deprecated without a replacement.",
+    )
     public fun copy(code: Int = this.code): ChannelFlags = ChannelFlags(code)
 
     public class Builder(

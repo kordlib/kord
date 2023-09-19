@@ -85,7 +85,7 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
             "this.createMentionSpamAutoModerationRule(guildId, name, eventType) { " +
                 "this@createMentionSpamAutoModerationRule.mentionLimit = mentionLimit\nbuilder() }"
         ),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public suspend inline fun createMentionSpamAutoModerationRule(
         guildId: Snowflake,

@@ -4,7 +4,6 @@ import dev.kord.common.entity.ArchiveDuration
 import dev.kord.common.entity.Permission.ManageChannels
 import dev.kord.common.entity.Permission.ManageMessages
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
@@ -18,7 +17,6 @@ import dev.kord.core.entity.channel.MediaChannel
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
@@ -81,14 +79,8 @@ public interface ThreadChannel : GuildMessageChannel, ThreadChannelBehavior {
      */
     public val rateLimitPerUser: Duration? get() = data.rateLimitPerUser.value
 
-    @Deprecated("Binary compatibility, had different return type before. Keep for some releases.", level = HIDDEN)
-    public fun getMemberCount(): OptionalInt = data.memberCount
-
     /** An approximate count of users in this thread, stops counting at 50. */
     public val memberCount: Int? get() = data.memberCount.value
-
-    @Deprecated("Binary compatibility, had different return type before. Keep for some releases.", level = HIDDEN)
-    public fun getMessageCount(): OptionalInt = data.messageCount
 
     /**
      * Number of messages (not including the initial message or deleted messages) in this thread.

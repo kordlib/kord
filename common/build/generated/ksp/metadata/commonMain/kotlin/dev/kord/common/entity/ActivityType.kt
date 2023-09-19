@@ -43,6 +43,7 @@ public sealed class ActivityType(
         unused: Nothing?,
     ) : ActivityType(code) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'ActivityType.from()'.",
             replaceWith = ReplaceWith(expression = "ActivityType.from(code)", imports =
                         arrayOf("dev.kord.common.entity.ActivityType")),

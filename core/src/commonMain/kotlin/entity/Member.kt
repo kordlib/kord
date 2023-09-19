@@ -37,7 +37,7 @@ public class Member(
         "This was renamed to 'effectiveName' to avoid confusion with 'User.globalName' which is also called display " +
             "name.",
         ReplaceWith("this.effectiveName"),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public val displayName: String get() = effectiveName
 
@@ -45,14 +45,6 @@ public class Member(
      * The member's effective name, prioritizing [nickname] over [globalName] and [username].
      */
     public val effectiveName: String get() = nickname ?: (this as User).effectiveName
-
-    /**
-     * The members guild avatar as [Icon] object
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    public fun getMemberAvatar(): Icon? =
-        memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }
 
     public val memberAvatarHash: String? get() = memberData.avatar.value
 

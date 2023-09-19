@@ -44,6 +44,7 @@ public sealed class EncryptionMode(
         unused: Nothing?,
     ) : EncryptionMode(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'EncryptionMode.from()'.",
             replaceWith = ReplaceWith(expression = "EncryptionMode.from(value)", imports =
                         arrayOf("dev.kord.voice.EncryptionMode")),
