@@ -60,4 +60,4 @@ jobs:
       - name: Publish with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: -x test publish
+          arguments: --no-parallel -x test publish
