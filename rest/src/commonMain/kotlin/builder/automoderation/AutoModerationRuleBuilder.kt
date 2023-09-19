@@ -313,7 +313,7 @@ public sealed interface MentionSpamAutoModerationRuleBuilder : TimeoutAutoModera
     @Deprecated(
         "This can be replaced with 'mentionLimit', it is now a 'var'.",
         ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public fun assignMentionLimit(mentionLimit: Int)
 

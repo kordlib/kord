@@ -68,7 +68,7 @@ public sealed class GuildMemberFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
+            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun name(): String = name
     private val name get() = this::class.simpleName!!
 
@@ -77,7 +77,7 @@ public sealed class GuildMemberFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
+            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun ordinal(): Int = when (this) {
         DidRejoin -> 0
         CompletedOnboarding -> 1
@@ -93,6 +93,7 @@ public sealed class GuildMemberFlag(
         message = "GuildMemberFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "GuildMemberFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.GuildMemberFlag")),
+        DeprecationLevel.ERROR,
     )
     public fun getDeclaringClass(): Class<GuildMemberFlag> = GuildMemberFlag::class.java
 
@@ -143,7 +144,7 @@ public sealed class GuildMemberFlag(
         @Deprecated(
             "'GuildMemberFlag' is no longer serializable, serialize 'GuildMemberFlags' instead. Deprecated without a " +
                 "replacement.",
-            level = DeprecationLevel.WARNING,
+            level = DeprecationLevel.ERROR,
         )
         public fun serializer(): KSerializer<GuildMemberFlag> = Serializer
 
@@ -202,7 +203,7 @@ public sealed class GuildMemberFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.")
+                "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
         @JvmStatic
         public open fun valueOf(name: String): GuildMemberFlag = valueOf0(name)
         private fun valueOf0(name: String) = when (name) {
@@ -221,6 +222,7 @@ public sealed class GuildMemberFlag(
             message = "GuildMemberFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "GuildMemberFlag.entries.toTypedArray()", imports
                         = arrayOf("dev.kord.common.entity.GuildMemberFlag")),
+            DeprecationLevel.ERROR,
         )
         @JvmStatic
         public open fun values(): Array<GuildMemberFlag> = entries.toTypedArray()
@@ -230,7 +232,7 @@ public sealed class GuildMemberFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "GuildMemberFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "GuildMemberFlag.entries", imports =
                         arrayOf("dev.kord.common.entity.GuildMemberFlag")),
@@ -331,7 +333,7 @@ public class GuildMemberFlags internal constructor(
         "Don't construct an instance of 'GuildMemberFlags' from a raw code. Use the factory functions described in " +
             "the documentation instead.",
         ReplaceWith("GuildMemberFlags.Builder(code).build()", "dev.kord.common.entity.GuildMemberFlags"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public constructor(code: Int) : this(code, null)
 
@@ -410,6 +412,7 @@ public class GuildMemberFlags internal constructor(
     @Deprecated(
         message = "GuildMemberFlags is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        DeprecationLevel.ERROR,
     )
     public operator fun component1(): Int = code
 
@@ -418,7 +421,7 @@ public class GuildMemberFlags internal constructor(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "GuildMemberFlags is no longer a data class. Deprecated without a replacement.")
+            "GuildMemberFlags is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun copy(code: Int = this.code): GuildMemberFlags = GuildMemberFlags(code, null)
 
     public class Builder(

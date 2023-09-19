@@ -45,6 +45,7 @@ public sealed class DefaultMessageNotificationLevel(
         unused: Nothing?,
     ) : DefaultMessageNotificationLevel(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'DefaultMessageNotificationLevel.from()'.",
             replaceWith = ReplaceWith(expression = "DefaultMessageNotificationLevel.from(value)",
                         imports =

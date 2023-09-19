@@ -44,6 +44,7 @@ public sealed class SortOrderType(
         unused: Nothing?,
     ) : SortOrderType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'SortOrderType.from()'.",
             replaceWith = ReplaceWith(expression = "SortOrderType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.SortOrderType")),

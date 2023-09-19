@@ -304,7 +304,7 @@ public final class dev/kord/rest/builder/automoderation/KeywordPresetAutoModerat
 }
 
 public abstract interface class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder : dev/kord/rest/builder/automoderation/TimeoutAutoModerationRuleBuilder {
-	public abstract fun assignMentionLimit (I)V
+	public abstract synthetic fun assignMentionLimit (I)V
 	public abstract fun getMentionLimit ()Ljava/lang/Integer;
 	public abstract fun getMentionRaidProtectionEnabled ()Ljava/lang/Boolean;
 	public abstract fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
@@ -318,21 +318,21 @@ public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModeratio
 
 public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleCreateBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleCreateBuilder, dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;)V
-	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;I)V
-	public fun assignMentionLimit (I)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;I)V
+	public synthetic fun assignMentionLimit (I)V
 	public synthetic fun buildTriggerMetadata ()Ldev/kord/common/entity/optional/Optional;
 	public fun getMentionLimit ()Ljava/lang/Integer;
 	public fun getMentionRaidProtectionEnabled ()Ljava/lang/Boolean;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
 	public synthetic fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType;
-	public fun setMentionLimit (I)V
+	public synthetic fun setMentionLimit (I)V
 	public fun setMentionLimit (Ljava/lang/Integer;)V
 	public fun setMentionRaidProtectionEnabled (Ljava/lang/Boolean;)V
 }
 
 public final class dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleModifyBuilder : dev/kord/rest/builder/automoderation/AutoModerationRuleModifyBuilder, dev/kord/rest/builder/automoderation/MentionSpamAutoModerationRuleBuilder {
 	public fun <init> ()V
-	public fun assignMentionLimit (I)V
+	public synthetic fun assignMentionLimit (I)V
 	public fun getMentionLimit ()Ljava/lang/Integer;
 	public fun getMentionRaidProtectionEnabled ()Ljava/lang/Boolean;
 	public fun getTriggerType ()Ldev/kord/common/entity/AutoModerationRuleTriggerType$MentionSpam;
@@ -1662,8 +1662,6 @@ public final class dev/kord/rest/builder/interaction/InputChatBuildersKt {
 	public static synthetic fun channel$default (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun group (Ldev/kord/rest/builder/interaction/RootInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun group$default (Ldev/kord/rest/builder/interaction/RootInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final synthetic fun int (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun int$default (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun integer (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun integer$default (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public static final fun mentionable (Ldev/kord/rest/builder/interaction/BaseInputChatBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
@@ -7352,7 +7350,7 @@ public final class dev/kord/rest/service/AutoModerationService : dev/kord/rest/s
 	public static synthetic fun createAutoModerationRule$default (Ldev/kord/rest/service/AutoModerationService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/AutoModerationRuleCreateRequest;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun createKeywordAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createKeywordPresetAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun createMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun createMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createMentionSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createSpamAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun deleteAutoModerationRule (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

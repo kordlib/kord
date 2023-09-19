@@ -63,14 +63,14 @@ public sealed class UserFlag(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.")
+    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun name(): String = this::class.simpleName!!
 
     /**
      * @suppress
      */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith", "DEPRECATION"))
-    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.")
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith", "DEPRECATION_ERROR"))
+    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun ordinal(): Int = when (this) {
         DiscordEmployee -> 0
         DiscordPartner -> 1
@@ -98,6 +98,7 @@ public sealed class UserFlag(
         message = "UserFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "UserFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.UserFlag")),
+        DeprecationLevel.ERROR,
     )
     public fun getDeclaringClass(): Class<UserFlag> = UserFlag::class.java
 
@@ -158,7 +159,7 @@ public sealed class UserFlag(
     @Deprecated(
         "'UserFlag.System' is no longer documented. You can still use it with 'UserFlag.fromShift(12)'.",
         ReplaceWith("UserFlag.fromShift(12)", imports = ["dev.kord.common.entity.UserFlag"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public object System : UserFlag(12)
 
@@ -207,7 +208,7 @@ public sealed class UserFlag(
                 HouseBalance,
                 EarlySupporter,
                 TeamUser,
-                @Suppress("DEPRECATION") System,
+                @Suppress("DEPRECATION_ERROR") System,
                 BugHunterLevel2,
                 VerifiedBot,
                 VerifiedBotDeveloper,
@@ -281,7 +282,7 @@ public sealed class UserFlag(
         @JvmField
         public val TeamUser: UserFlag = TeamUser
 
-        @Suppress(names = arrayOf("DEPRECATION"))
+        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
             level = DeprecationLevel.HIDDEN,
             message = "Binary compatibility",
@@ -346,7 +347,7 @@ public sealed class UserFlag(
             8 -> HouseBalance
             9 -> EarlySupporter
             10 -> TeamUser
-            12 -> @Suppress("DEPRECATION") System
+            12 -> @Suppress("DEPRECATION_ERROR") System
             14 -> BugHunterLevel2
             16 -> VerifiedBot
             17 -> VerifiedBotDeveloper
@@ -361,7 +362,7 @@ public sealed class UserFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "UserFlag is no longer an enum class. Deprecated without a replacement.")
+                "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
         @JvmStatic
         public open fun valueOf(name: String): UserFlag = when (name) {
             "DiscordEmployee" -> DiscordEmployee
@@ -373,7 +374,7 @@ public sealed class UserFlag(
             "HouseBalance" -> HouseBalance
             "EarlySupporter" -> EarlySupporter
             "TeamUser" -> TeamUser
-            "System" -> @Suppress("DEPRECATION") System
+            "System" -> @Suppress("DEPRECATION_ERROR") System
             "BugHunterLevel2" -> BugHunterLevel2
             "VerifiedBot" -> VerifiedBot
             "VerifiedBotDeveloper" -> VerifiedBotDeveloper
@@ -391,6 +392,7 @@ public sealed class UserFlag(
             message = "UserFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "UserFlag.entries.toTypedArray()", imports =
                         arrayOf("dev.kord.common.entity.UserFlag")),
+            DeprecationLevel.ERROR,
         )
         @JvmStatic
         public open fun values(): Array<UserFlag> = entries.toTypedArray()
@@ -400,7 +402,7 @@ public sealed class UserFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "UserFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "UserFlag.entries", imports =
                         arrayOf("dev.kord.common.entity.UserFlag")),
@@ -496,7 +498,7 @@ public class UserFlags internal constructor(
         "Don't construct an instance of 'UserFlags' from a raw code. Use the factory functions described in the " +
             "documentation instead.",
         ReplaceWith("UserFlags.Builder(code).build()", "dev.kord.common.entity.UserFlags"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public constructor(code: Int) : this(code, null)
     /**
@@ -519,6 +521,7 @@ public class UserFlags internal constructor(
     @Deprecated(
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+        DeprecationLevel.ERROR,
     )
     public val flags: List<UserFlag>
         get() = values.toList()
@@ -565,10 +568,10 @@ public class UserFlags internal constructor(
         return Builder(code).apply(builder).build()
     }
 
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
     @Deprecated(
         "'UserFlags.UserFlagsBuilder' is deprecated, use 'UserFlags.Builder' instead.",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
@@ -589,6 +592,7 @@ public class UserFlags internal constructor(
     @Deprecated(
         message = "UserFlags is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        DeprecationLevel.ERROR,
     )
     public operator fun component1(): Int = code
 
@@ -596,13 +600,13 @@ public class UserFlags internal constructor(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.")
+    @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun copy(code: Int = this.code): UserFlags = UserFlags(code, null)
 
     @Deprecated(
         "Renamed to 'Builder'.",
         ReplaceWith("UserFlags.Builder", imports = ["dev.kord.common.entity.UserFlags"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class UserFlagsBuilder(code: Int = 0) {
         private val delegate = Builder(code)
@@ -664,11 +668,11 @@ public class UserFlags internal constructor(
     }
 
     public companion object {
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         @Deprecated(
             "Renamed to 'Companion', which no longer implements 'KSerializer<UserFlags>'.",
             ReplaceWith("UserFlags.serializer()", imports = ["dev.kord.common.entity.UserFlags"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         @JvmField
         public val UserFlagsSerializer: UserFlagsSerializer = UserFlagsSerializer()
@@ -677,7 +681,7 @@ public class UserFlags internal constructor(
     @Deprecated(
         "Renamed to 'Companion', which no longer implements 'KSerializer<UserFlags>'.",
         ReplaceWith("UserFlags.serializer()", imports = ["dev.kord.common.entity.UserFlags"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class UserFlagsSerializer internal constructor() : KSerializer<UserFlags> by Serializer {
         public fun serializer(): KSerializer<UserFlags> = this

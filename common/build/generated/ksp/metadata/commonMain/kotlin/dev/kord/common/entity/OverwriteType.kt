@@ -44,6 +44,7 @@ public sealed class OverwriteType(
         unused: Nothing?,
     ) : OverwriteType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'OverwriteType.from()'.",
             replaceWith = ReplaceWith(expression = "OverwriteType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.OverwriteType")),

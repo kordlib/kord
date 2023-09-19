@@ -45,6 +45,7 @@ public sealed class GuildScheduledEventStatus(
         unused: Nothing?,
     ) : GuildScheduledEventStatus(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'GuildScheduledEventStatus.from()'.",
             replaceWith = ReplaceWith(expression = "GuildScheduledEventStatus.from(value)", imports
                         = arrayOf("dev.kord.common.entity.GuildScheduledEventStatus")),

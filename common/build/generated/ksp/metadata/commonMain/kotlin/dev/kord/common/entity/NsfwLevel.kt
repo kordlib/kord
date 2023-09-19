@@ -43,6 +43,7 @@ public sealed class NsfwLevel(
         unused: Nothing?,
     ) : NsfwLevel(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'NsfwLevel.from()'.",
             replaceWith = ReplaceWith(expression = "NsfwLevel.from(value)", imports =
                         arrayOf("dev.kord.common.entity.NsfwLevel")),

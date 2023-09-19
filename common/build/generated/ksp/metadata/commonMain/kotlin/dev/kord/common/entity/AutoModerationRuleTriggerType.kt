@@ -47,6 +47,7 @@ public sealed class AutoModerationRuleTriggerType(
         unused: Nothing?,
     ) : AutoModerationRuleTriggerType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'AutoModerationRuleTriggerType.from()'.",
             replaceWith = ReplaceWith(expression = "AutoModerationRuleTriggerType.from(value)",
                         imports = arrayOf("dev.kord.common.entity.AutoModerationRuleTriggerType")),

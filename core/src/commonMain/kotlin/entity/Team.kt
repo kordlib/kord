@@ -21,12 +21,6 @@ public class Team(
 ) : KordEntity, Strategizable {
     override val id: Snowflake get() = data.id
 
-    /**
-     * The hash of this team's icon.
-     */
-    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    public fun getIcon(): String? = data.icon
-
     /** The hash of this team's icon. */
     public val iconHash: String? get() = data.icon
 
@@ -90,7 +84,7 @@ public class TeamMember(public val data: TeamMemberData, public val kord: Kord) 
     @Deprecated(
         "'permissions' was never different from `[\"*\"]`. It is now replaced by 'role'.",
         ReplaceWith("this.role"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public val permissions: List<String> get() = listOf("*")
 

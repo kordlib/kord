@@ -195,7 +195,7 @@ public abstract class dev/kord/common/entity/ActivityFlag {
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getDeclaringClass ()Ljava/lang/Class;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getShift ()I
 	public final fun getValue ()I
 	public final fun hashCode ()I
@@ -211,7 +211,7 @@ public abstract class dev/kord/common/entity/ActivityFlag {
 public final class dev/kord/common/entity/ActivityFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/ActivityFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ActivityFlag;
 	public fun values ()[Ldev/kord/common/entity/ActivityFlag;
 }
@@ -640,7 +640,7 @@ public abstract class dev/kord/common/entity/ApplicationFlag {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getShift ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
@@ -663,7 +663,7 @@ public final class dev/kord/common/entity/ApplicationFlag$ApplicationCommandBadg
 public final class dev/kord/common/entity/ApplicationFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/ApplicationFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ApplicationFlag;
 	public fun values ()[Ldev/kord/common/entity/ApplicationFlag;
 }
@@ -1701,7 +1701,7 @@ public abstract class dev/kord/common/entity/ChannelFlag {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getShift ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
@@ -1716,7 +1716,7 @@ public abstract class dev/kord/common/entity/ChannelFlag {
 public final class dev/kord/common/entity/ChannelFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/ChannelFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ChannelFlag;
 	public fun values ()[Ldev/kord/common/entity/ChannelFlag;
 }
@@ -6918,7 +6918,7 @@ public abstract class dev/kord/common/entity/GuildMemberFlag {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getShift ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
@@ -6937,7 +6937,7 @@ public final class dev/kord/common/entity/GuildMemberFlag$BypassesVerification :
 public final class dev/kord/common/entity/GuildMemberFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/GuildMemberFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlag;
 	public fun values ()[Ldev/kord/common/entity/GuildMemberFlag;
@@ -7500,7 +7500,7 @@ public abstract class dev/kord/common/entity/MessageFlag {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getShift ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
@@ -7515,7 +7515,7 @@ public abstract class dev/kord/common/entity/MessageFlag {
 public final class dev/kord/common/entity/MessageFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/MessageFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/MessageFlag;
 	public fun values ()[Ldev/kord/common/entity/MessageFlag;
 }
@@ -8112,10 +8112,6 @@ public final class dev/kord/common/entity/Permission$KickMembers : dev/kord/comm
 
 public final class dev/kord/common/entity/Permission$ManageChannels : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$ManageChannels;
-}
-
-public final class dev/kord/common/entity/Permission$ManageEmojisAndStickers : dev/kord/common/entity/Permission {
-	public static final field INSTANCE Ldev/kord/common/entity/Permission$ManageEmojisAndStickers;
 }
 
 public final class dev/kord/common/entity/Permission$ManageEvents : dev/kord/common/entity/Permission {
@@ -8736,7 +8732,7 @@ public abstract class dev/kord/common/entity/SystemChannelFlag {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getShift ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
@@ -8751,7 +8747,7 @@ public abstract class dev/kord/common/entity/SystemChannelFlag {
 public final class dev/kord/common/entity/SystemChannelFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/SystemChannelFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/SystemChannelFlag;
 	public fun values ()[Ldev/kord/common/entity/SystemChannelFlag;
 }
@@ -8943,7 +8939,7 @@ public abstract class dev/kord/common/entity/UserFlag {
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getDeclaringClass ()Ljava/lang/Class;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getShift ()I
 	public final fun hashCode ()I
 	public final fun name ()Ljava/lang/String;
@@ -8974,7 +8970,7 @@ public final class dev/kord/common/entity/UserFlag$BugHunterLevel2 : dev/kord/co
 public final class dev/kord/common/entity/UserFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/UserFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public fun getEntries ()Lkotlin/enums/EnumEntries;
+	public synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/UserFlag;
 	public fun values ()[Ldev/kord/common/entity/UserFlag;
 }

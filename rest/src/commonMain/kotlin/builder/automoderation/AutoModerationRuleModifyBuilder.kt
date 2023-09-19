@@ -151,7 +151,7 @@ public class MentionSpamAutoModerationRuleModifyBuilder :
     @Deprecated(
         "This can be replaced with 'mentionLimit', it is now a 'var'.",
         ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     override fun assignMentionLimit(mentionLimit: Int) {
         this.mentionLimit = mentionLimit

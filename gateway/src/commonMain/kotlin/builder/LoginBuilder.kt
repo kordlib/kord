@@ -22,10 +22,10 @@ public class LoginBuilder {
         this.presence = PresenceBuilder().apply(builder).toPresence()
     }
 
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION")
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
     @Deprecated(
         "'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
     @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {

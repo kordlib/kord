@@ -69,16 +69,20 @@ public sealed class ApplicationFlag(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ApplicationFlag is no longer an enum class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "ApplicationFlag is no longer an enum class. Deprecated without a replacement.",
+    )
     public fun name(): String = this::class.simpleName!!
 
     /**
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ApplicationFlag is no longer an enum class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "ApplicationFlag is no longer an enum class. Deprecated without a replacement.",
+    )
     public fun ordinal(): Int = when (this) {
         ApplicationAutoModerationRuleCreateBadge -> 0
         GatewayPresence -> 1
@@ -97,6 +101,7 @@ public sealed class ApplicationFlag(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "ApplicationFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "ApplicationFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.ApplicationFlag")),
@@ -289,8 +294,11 @@ public sealed class ApplicationFlag(
          * @suppress
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "ApplicationFlag is no longer an enum class. Deprecated without a replacement.")
+        @Deprecated(
+            level = DeprecationLevel.ERROR,
+            message =
+                    "ApplicationFlag is no longer an enum class. Deprecated without a replacement.",
+        )
         @JvmStatic
         public open fun valueOf(name: String): ApplicationFlag = when (name) {
             "ApplicationAutoModerationRuleCreateBadge" -> ApplicationAutoModerationRuleCreateBadge
@@ -311,6 +319,7 @@ public sealed class ApplicationFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "ApplicationFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "ApplicationFlag.entries.toTypedArray()", imports
                         = arrayOf("dev.kord.common.entity.ApplicationFlag")),
@@ -323,7 +332,7 @@ public sealed class ApplicationFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "ApplicationFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "ApplicationFlag.entries", imports =
                         arrayOf("dev.kord.common.entity.ApplicationFlag")),
@@ -433,6 +442,7 @@ public class ApplicationFlags internal constructor(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
     )
@@ -498,6 +508,7 @@ public class ApplicationFlags internal constructor(
      * @suppress
      */
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "ApplicationFlags is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
     )
@@ -507,8 +518,10 @@ public class ApplicationFlags internal constructor(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ApplicationFlags is no longer a data class. Deprecated without a replacement.")
+    @Deprecated(
+        level = DeprecationLevel.ERROR,
+        message = "ApplicationFlags is no longer a data class. Deprecated without a replacement.",
+    )
     public fun copy(code: Int = this.code): ApplicationFlags = ApplicationFlags(code)
 
     public class Builder(
@@ -552,6 +565,7 @@ public class ApplicationFlags internal constructor(
          * @suppress
          */
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Renamed to 'build'",
             replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
         )

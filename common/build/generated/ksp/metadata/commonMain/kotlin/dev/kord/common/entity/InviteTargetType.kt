@@ -44,6 +44,7 @@ public sealed class InviteTargetType(
         unused: Nothing?,
     ) : InviteTargetType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'InviteTargetType.from()'.",
             replaceWith = ReplaceWith(expression = "InviteTargetType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.InviteTargetType")),

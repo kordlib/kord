@@ -47,6 +47,7 @@ public sealed class AutoModerationRuleKeywordPresetType(
         unused: Nothing?,
     ) : AutoModerationRuleKeywordPresetType(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'AutoModerationRuleKeywordPresetType.from()'.",
             replaceWith = ReplaceWith(expression =
                         "AutoModerationRuleKeywordPresetType.from(value)", imports =

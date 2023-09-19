@@ -44,6 +44,7 @@ public sealed class TeamMembershipState(
         unused: Nothing?,
     ) : TeamMembershipState(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'TeamMembershipState.from()'.",
             replaceWith = ReplaceWith(expression = "TeamMembershipState.from(value)", imports =
                         arrayOf("dev.kord.common.entity.TeamMembershipState")),

@@ -244,8 +244,8 @@ internal fun paginateThreads(
  */
 public inline fun <reified T : Event> Intents.Builder.enableEvent(): Unit = enableEvent(T::class)
 
-@Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
-@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+@Suppress("DEPRECATION_ERROR", "DeprecatedCallableAddReplaceWith")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.ERROR)
 public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent0(T::class)
 
 /**
@@ -261,8 +261,8 @@ public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit
 public fun Intents.Builder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
     events.forEach { enableEvent(it) }
 
-@Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
-@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+@Suppress("DEPRECATION_ERROR", "DeprecatedCallableAddReplaceWith")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.ERROR)
 public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
     events.forEach { enableEvent0(it) }
 
@@ -279,8 +279,8 @@ public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event
 public fun Intents.Builder.enableEvents(vararg events: KClass<out Event>): Unit =
     events.forEach { enableEvent(it) }
 
-@Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
-@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+@Suppress("DEPRECATION_ERROR", "DeprecatedCallableAddReplaceWith")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.ERROR)
 public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
     events.forEach { enableEvent0(it) }
 
@@ -461,13 +461,13 @@ public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (e
     else -> Unit
 }
 
-@Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
-@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.WARNING)
+@Suppress("DEPRECATION_ERROR", "DeprecatedCallableAddReplaceWith")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.ERROR)
 public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>) {
     enableEvent0(event)
 }
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 @PublishedApi
 @KordInternal
 internal fun Intents.IntentsBuilder.enableEvent0(event: KClass<out Event>) {

@@ -2,7 +2,10 @@ package dev.kord.core.entity
 
 import dev.kord.common.Locale
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.optional.orElse
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.unwrap
+import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
@@ -13,19 +16,19 @@ import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.GuildData
-import dev.kord.core.entity.channel.*
+import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.TopGuildChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
+import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.switchIfEmpty
-import dev.kord.rest.Image
-import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.time.Duration
 
 /**
@@ -365,27 +368,6 @@ public class Guild(
     public suspend fun getAfkChannel(): VoiceChannel? = afkChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
-     * Gets the banner url in the specified format.
-     */
-    @Deprecated("Old method", ReplaceWith("this.banner?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = HIDDEN)
-    public fun getBannerUrl(format: Image.Format): String? =
-        getBannerUrl0(format)
-
-    private fun getBannerUrl0(format: Image.Format) =
-        data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
-
-    /**
-     * Requests to get the banner image in the specified [format], if present.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Old method", ReplaceWith("this.banner?.getImage(format)"), level = HIDDEN)
-    public suspend fun getBanner(format: Image.Format): Image? {
-        val url = getBannerUrl0(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-    /**
      * Requests to get the [TopGuildChannel] represented by the [widgetChannelId],
      * returns null if the [TopGuildChannel] isn't present or [widgetChannelId] is null.
      *
@@ -429,54 +411,6 @@ public class Guild(
     public suspend fun getEveryoneRoleOrNull(): Role? = supplier.getRoleOrNull(id, id)
 
     /**
-     * Gets the discovery splash url in the specified [format], if present.
-     */
-    @Deprecated(
-        "Old method",
-        ReplaceWith("this.discoverySplash?.cdnUrl?.toUrl { this@toUrl.format = format }"),
-        level = HIDDEN,
-    )
-    public fun getDiscoverySplashUrl(format: Image.Format): String? =
-        getDiscoverySplashUrl0(format)
-
-    private fun getDiscoverySplashUrl0(format: Image.Format) =
-        splashHash?.let { "discovery-splashes/$id/${it}.${format.extension}" }
-
-    /**
-     * Requests to get the splash image in the specified [format], if present.
-     *
-     * This property is not resolvable through cache and will always use the [RestClient] instead.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Old method", ReplaceWith("this.discoverySplash?.getImage(format)"), level = HIDDEN)
-    public suspend fun getDiscoverySplash(format: Image.Format): Image? {
-        val url = getDiscoverySplashUrl0(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-    /**
-     * Gets the icon url, if present.
-     */
-    @Deprecated("Old method", ReplaceWith("this.icon?.cdnUrl?.toUrl { this@toUrl.format = format }"), level = HIDDEN)
-    public fun getIconUrl(format: Image.Format): String? =
-        getIconUrl0(format)
-
-    private fun getIconUrl0(format: Image.Format) =
-        data.icon?.let { "https://cdn.discordapp.com/icons/$id/$it.${format.extension}" }
-
-    /**
-     * Requests to get the icon image in the specified [format], if present.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Old method", ReplaceWith("this.icon?.getImage(format)"), level = HIDDEN)
-    public suspend fun getIcon(format: Image.Format): Image? {
-        val url = getIconUrl0(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-    /**
      * Requests to get the owner of this guild as a [Member].
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -504,27 +438,6 @@ public class Guild(
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getRulesChannel(): TopGuildMessageChannel? = rulesChannel?.asChannel()
-
-    /**
-     * Gets the splash url in the specified [format], if present.
-     */
-    @Deprecated("Old method", ReplaceWith("this.splash?.cdnUrl?.toUrl { this@toUrl.format = format }"), HIDDEN)
-    public fun getSplashUrl(format: Image.Format): String? =
-        getSplashUrl0(format)
-
-    private fun getSplashUrl0(format: Image.Format) =
-        data.splash.value?.let { "https://cdn.discordapp.com/splashes/$id/$it.${format.extension}" }
-
-    /**
-     * Requests to get the splash image in the specified [format], if present.
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Old method", ReplaceWith("this.splash?.getImage(format)"), HIDDEN)
-    public suspend fun getSplash(format: Image.Format): Image? {
-        val url = getSplashUrl0(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
 
     /**
      * Requests to get the channel where system messages (member joins, server boosts, etc.) are sent,

@@ -13,8 +13,8 @@ import kotlin.DeprecationLevel.HIDDEN
 import kotlin.enums.EnumEntries
 
 // TODO bump LEVEL and ENUM_ENTRIES_LEVEL and remove this file eventually
-private val LEVEL = DeprecationLevel.WARNING
-private val ENUM_ENTRIES_LEVEL = DeprecationLevel.ERROR // deprecated before released, only present in snapshots
+private val LEVEL = DeprecationLevel.ERROR
+private val ENUM_ENTRIES_LEVEL = HIDDEN // deprecated before released, only present in snapshots
 private val CLASS = ClassName("dev.kord.common", "Class")
 private val JAVA = MemberName("dev.kord.common", "java")
 

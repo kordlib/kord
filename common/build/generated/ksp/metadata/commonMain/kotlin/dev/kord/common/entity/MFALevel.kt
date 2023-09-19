@@ -43,6 +43,7 @@ public sealed class MFALevel(
         unused: Nothing?,
     ) : MFALevel(value) {
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Replaced by 'MFALevel.from()'.",
             replaceWith = ReplaceWith(expression = "MFALevel.from(value)", imports =
                         arrayOf("dev.kord.common.entity.MFALevel")),

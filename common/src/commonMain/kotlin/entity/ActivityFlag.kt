@@ -68,7 +68,7 @@ public sealed class ActivityFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "ActivityFlag is no longer an enum class. Deprecated without a replacement.")
+            "ActivityFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun name(): String = this::class.simpleName!!
 
     /**
@@ -76,7 +76,7 @@ public sealed class ActivityFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "ActivityFlag is no longer an enum class. Deprecated without a replacement.")
+            "ActivityFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun ordinal(): Int = when (this) {
         Instance -> 0
         Join -> 1
@@ -97,6 +97,7 @@ public sealed class ActivityFlag(
         message = "ActivityFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "ActivityFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.ActivityFlag")),
+        DeprecationLevel.ERROR,
     )
     public fun getDeclaringClass(): Class<ActivityFlag> = ActivityFlag::class.java
 
@@ -212,7 +213,7 @@ public sealed class ActivityFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "ActivityFlag is no longer an enum class. Deprecated without a replacement.")
+                "ActivityFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
         @JvmStatic
         public open fun valueOf(name: String): ActivityFlag = when (name) {
             "Instance" -> Instance
@@ -235,6 +236,7 @@ public sealed class ActivityFlag(
             message = "ActivityFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "ActivityFlag.entries.toTypedArray()", imports =
                         arrayOf("dev.kord.common.entity.ActivityFlag")),
+            DeprecationLevel.ERROR,
         )
         @JvmStatic
         public open fun values(): Array<ActivityFlag> = entries.toTypedArray()
@@ -244,7 +246,7 @@ public sealed class ActivityFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "ActivityFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "ActivityFlag.entries", imports =
                         arrayOf("dev.kord.common.entity.ActivityFlag")),
@@ -342,7 +344,7 @@ public class ActivityFlags internal constructor(
         "Don't construct an instance of 'ActivityFlags' from a raw value. Use the factory functions described in the " +
             "documentation instead.",
         ReplaceWith("ActivityFlags.Builder(value).build()", "dev.kord.common.entity.ActivityFlags"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public constructor(value: Int) : this(value, null)
 
@@ -366,6 +368,7 @@ public class ActivityFlags internal constructor(
     @Deprecated(
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
+        DeprecationLevel.ERROR,
     )
     public val flags: Set<ActivityFlag>
         get() = values

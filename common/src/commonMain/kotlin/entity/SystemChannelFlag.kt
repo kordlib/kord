@@ -69,7 +69,7 @@ public sealed class SystemChannelFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.")
+            "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun name(): String = this::class.simpleName!!
 
     /**
@@ -77,7 +77,7 @@ public sealed class SystemChannelFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.")
+            "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun ordinal(): Int = when (this) {
         SuppressJoinNotifications -> 0
         SuppressPremiumSubscriptions -> 1
@@ -95,6 +95,7 @@ public sealed class SystemChannelFlag(
         message = "SystemChannelFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "SystemChannelFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.SystemChannelFlag")),
+        DeprecationLevel.ERROR,
     )
     public fun getDeclaringClass(): Class<SystemChannelFlag> = SystemChannelFlag::class.java
 
@@ -220,7 +221,7 @@ public sealed class SystemChannelFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.")
+                "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
         @JvmStatic
         public open fun valueOf(name: String): SystemChannelFlag = when (name) {
             "SuppressJoinNotifications" -> SuppressJoinNotifications
@@ -240,6 +241,7 @@ public sealed class SystemChannelFlag(
             message = "SystemChannelFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "SystemChannelFlag.entries.toTypedArray()",
                         imports = arrayOf("dev.kord.common.entity.SystemChannelFlag")),
+            DeprecationLevel.ERROR,
         )
         @JvmStatic
         public open fun values(): Array<SystemChannelFlag> = entries.toTypedArray()
@@ -249,7 +251,7 @@ public sealed class SystemChannelFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "SystemChannelFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "SystemChannelFlag.entries", imports =
                         arrayOf("dev.kord.common.entity.SystemChannelFlag")),
@@ -350,7 +352,7 @@ public class SystemChannelFlags internal constructor(
         "Don't construct an instance of 'SystemChannelFlags' from a raw code. Use the factory functions described in " +
             "the documentation instead.",
         ReplaceWith("SystemChannelFlags.Builder(code).build()", "dev.kord.common.entity.SystemChannelFlags"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public constructor(code: Int) : this(code, null)
 
@@ -429,6 +431,7 @@ public class SystemChannelFlags internal constructor(
     @Deprecated(
         message = "SystemChannelFlags is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        DeprecationLevel.ERROR,
     )
     public operator fun component1(): Int = code
 
@@ -437,7 +440,7 @@ public class SystemChannelFlags internal constructor(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-            "SystemChannelFlags is no longer a data class. Deprecated without a replacement.")
+            "SystemChannelFlags is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
     public fun copy(code: Int = this.code): SystemChannelFlags = SystemChannelFlags(code, null)
 
     public class Builder(
@@ -494,11 +497,11 @@ public class SystemChannelFlags internal constructor(
     }
 
     public companion object NewCompanion {
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         @Deprecated(
             "Renamed to 'NewCompanion', which no longer implements 'KSerializer<SystemChannelFlags>'.",
             ReplaceWith("SystemChannelFlags.serializer()", imports = ["dev.kord.common.entity.SystemChannelFlags"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         @JvmField
         public val Companion: Companion = Companion()
@@ -507,7 +510,7 @@ public class SystemChannelFlags internal constructor(
     @Deprecated(
         "Renamed to 'NewCompanion', which no longer implements 'KSerializer<SystemChannelFlags>'.",
         ReplaceWith("SystemChannelFlags.serializer()", imports = ["dev.kord.common.entity.SystemChannelFlags"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class Companion internal constructor() : KSerializer<SystemChannelFlags> by Serializer {
         public fun serializer(): KSerializer<SystemChannelFlags> = this

@@ -592,11 +592,11 @@ public data class Heartbeat(val data: Long) : Event() {
     }
 
     public companion object NewCompanion {
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         @Deprecated(
             "Renamed to 'NewCompanion', which no longer implements 'KSerializer<Heartbeat>'.",
             ReplaceWith("Heartbeat.serializer()", imports = ["dev.kord.gateway.Heartbeat"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         @JvmField
         public val Companion: Companion = Companion()
@@ -605,7 +605,7 @@ public data class Heartbeat(val data: Long) : Event() {
     @Deprecated(
         "Renamed to 'NewCompanion', which no longer implements 'KSerializer<Heartbeat>'.",
         ReplaceWith("Heartbeat.serializer()", imports = ["dev.kord.gateway.Heartbeat"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class Companion internal constructor() : KSerializer<Heartbeat> by Serializer {
         public fun serializer(): KSerializer<Heartbeat> = this
