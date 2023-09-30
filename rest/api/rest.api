@@ -1046,6 +1046,7 @@ public final class dev/kord/rest/builder/component/ButtonBuilder$LinkButtonBuild
 public final class dev/kord/rest/builder/component/ChannelSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun getChannelTypes ()Ljava/util/List;
+	public final fun getDefaultChannels ()Ljava/util/List;
 	public final fun setChannelTypes (Ljava/util/List;)V
 }
 
@@ -1055,6 +1056,8 @@ public abstract interface class dev/kord/rest/builder/component/ComponentBuilder
 
 public final class dev/kord/rest/builder/component/MentionableSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public final fun getDefaultRoles ()Ljava/util/List;
+	public final fun getDefaultUsers ()Ljava/util/List;
 }
 
 public abstract interface class dev/kord/rest/builder/component/MessageComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
@@ -1062,6 +1065,7 @@ public abstract interface class dev/kord/rest/builder/component/MessageComponent
 
 public final class dev/kord/rest/builder/component/RoleSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public final fun getDefaultRoles ()Ljava/util/List;
 }
 
 public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
@@ -1069,6 +1073,7 @@ public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/ko
 	public final fun build ()Ldev/kord/common/entity/DiscordChatComponent;
 	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
 	protected fun buildChannelTypes ()Ldev/kord/common/entity/optional/Optional;
+	protected fun buildDefaultValues ()Ldev/kord/common/entity/optional/Optional;
 	protected fun buildOptions ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getAllowedValues ()Lkotlin/ranges/ClosedRange;
 	public final fun getCustomId ()Ljava/lang/String;
@@ -1130,6 +1135,7 @@ public final class dev/kord/rest/builder/component/TextInputBuilder : dev/kord/r
 
 public final class dev/kord/rest/builder/component/UserSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
 	public fun <init> (Ljava/lang/String;)V
+	public final fun getDefaultUsers ()Ljava/util/List;
 }
 
 public final class dev/kord/rest/builder/guild/CurrentVoiceStateModifyBuilder : dev/kord/rest/builder/RequestBuilder {

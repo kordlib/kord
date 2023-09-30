@@ -80,6 +80,8 @@ public sealed class DiscordComponent {
     public abstract val components: Optional<List<DiscordComponent>>
     public abstract val options: Optional<List<DiscordSelectOption>>
     public abstract val placeholder: Optional<String>
+    @SerialName("default_values")
+    public abstract val defaultValues: Optional<List<DiscordSelectDefaultValue>>
     @SerialName("min_values")
     public abstract val minValues: OptionalInt
     @SerialName("max_values")
@@ -119,6 +121,8 @@ public data class DiscordChatComponent(
      override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
      override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
      override val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("default_values")
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
     @SerialName("min_values")
      override val minValues: OptionalInt = OptionalInt.Missing,
     @SerialName("max_values")
@@ -146,6 +150,8 @@ public data class DiscordTextInputComponent(
      override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
      override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
      override val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("default_values")
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
     @SerialName("min_values")
      override val minValues: OptionalInt = OptionalInt.Missing,
     @SerialName("max_values")

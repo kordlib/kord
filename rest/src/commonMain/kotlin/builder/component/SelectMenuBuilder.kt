@@ -1,10 +1,8 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ChannelType
-import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordChatComponent
-import dev.kord.common.entity.DiscordSelectOption
+import dev.kord.common.entity.*
+import dev.kord.common.entity.SelectDefaultValueType.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.delegate.delegate
@@ -41,12 +39,14 @@ public sealed class SelectMenuBuilder(public var customId: String) : ActionRowCo
     protected abstract val type: ComponentType
     protected open fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional.Missing()
     protected open fun buildChannelTypes(): Optional<List<ChannelType>> = Optional.Missing()
+    protected open fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> = Optional.Missing()
     final override fun build(): DiscordChatComponent = DiscordChatComponent(
         type = type,
         customId = Optional(customId),
         options = buildOptions(),
         channelTypes = buildChannelTypes(),
         placeholder = _placeholder,
+        defaultValues = buildDefaultValues(),
         minValues = OptionalInt.Value(allowedValues.start),
         maxValues = OptionalInt.Value(allowedValues.endInclusive),
         disabled = _disabled,
@@ -91,16 +91,55 @@ public inline fun StringSelectBuilder.option(
 @KordDsl
 public class UserSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.UserSelect
+
+    /**
+     * The list of default user IDs for this [user select menu][ComponentType.UserSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultUsers: MutableList<Snowflake> = mutableListOf()
+
+    override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
+        Optional.missingOnEmpty(defaultUsers.map { id -> DiscordSelectDefaultValue(id, type = User) })
 }
 
 @KordDsl
 public class RoleSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.RoleSelect
+
+    /**
+     * The list of default role IDs for this [role select menu][ComponentType.RoleSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultRoles: MutableList<Snowflake> = mutableListOf()
+
+    override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
+        Optional.missingOnEmpty(defaultRoles.map { id -> DiscordSelectDefaultValue(id, type = Role) })
 }
 
 @KordDsl
 public class MentionableSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.MentionableSelect
+
+    /**
+     * The list of default user IDs for this [mentionable select menu][ComponentType.MentionableSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultUsers: MutableList<Snowflake> = mutableListOf()
+
+    /**
+     * The list of default role IDs for this [mentionable select menu][ComponentType.MentionableSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultRoles: MutableList<Snowflake> = mutableListOf()
+
+    override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> = Optional.missingOnEmpty(
+        defaultUsers.map { id -> DiscordSelectDefaultValue(id, type = User) } +
+            defaultRoles.map { id -> DiscordSelectDefaultValue(id, type = Role) }
+    )
 }
 
 @KordDsl
@@ -110,7 +149,16 @@ public class ChannelSelectBuilder(customId: String) : SelectMenuBuilder(customId
     private var _channelTypes: Optional<MutableList<ChannelType>> = Optional.Missing()
     public var channelTypes: MutableList<ChannelType>? by ::_channelTypes.delegate()
 
+    /**
+     * The list of default channel IDs for this [channel select menu][ComponentType.ChannelSelect].
+     *
+     * The number of default values must be in the range defined by [allowedValues].
+     */
+    public val defaultChannels: MutableList<Snowflake> = mutableListOf()
+
     override fun buildChannelTypes(): Optional<List<ChannelType>> = _channelTypes.mapCopy()
+    override fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> =
+        Optional.missingOnEmpty(defaultChannels.map { id -> DiscordSelectDefaultValue(id, type = Channel) })
 }
 
 public fun ChannelSelectBuilder.channelType(type: ChannelType) {
