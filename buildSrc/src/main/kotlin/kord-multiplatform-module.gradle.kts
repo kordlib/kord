@@ -43,8 +43,10 @@ kotlin {
     explicitApi()
 
     jvm()
-    js(IR) {
-        nodejs()
+    if("voice" !in name) {
+        js(IR) {
+            nodejs()
+        }
     }
     jvmToolchain(Jvm.target)
 

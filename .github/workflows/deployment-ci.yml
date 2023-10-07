@@ -11,6 +11,7 @@ on:
     branches-ignore:
       # CI is not setup for Native
       - 'feature/native'
+      - 'feature/native-voice'
   pull_request:
   release:
     types: [ published ]

@@ -1,9 +1,19 @@
 plugins {
-    `kord-module`
+    `kord-multiplatform-module`
     `kord-publishing`
 }
 
-dependencies {
-    api(projects.core)
-    api(projects.voice)
+kotlin {
+    jvm()
+    macosArm64()
+    macosX64()
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                api(projects.core)
+                api(projects.voice)
+            }
+        }
+    }
 }
