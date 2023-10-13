@@ -19,6 +19,7 @@ public data class MemberData(
     val joinedAt: Instant,
     val premiumSince: Optional<Instant?> = Optional.Missing(),
     val flags: GuildMemberFlags,
+    val permissions: Optional<Permissions> = Optional.Missing(),
     val pending: OptionalBoolean = OptionalBoolean.Missing,
     val avatar: Optional<String?> = Optional.Missing(),
     val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
@@ -53,6 +54,7 @@ public data class MemberData(
                     joinedAt = joinedAt,
                     premiumSince = premiumSince,
                     flags = flags,
+                    permissions = Optional.Value(permissions),
                     pending = pending,
                     avatar = avatar,
                     communicationDisabledUntil = communicationDisabledUntil,
