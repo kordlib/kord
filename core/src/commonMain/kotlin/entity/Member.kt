@@ -11,6 +11,7 @@ import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
+import dev.kord.core.entity.interaction.GuildInteraction
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
@@ -92,6 +93,13 @@ public class Member(
 
     /** The [GuildMemberFlags] of this member. */
     public val flags: GuildMemberFlags get() = memberData.flags
+
+    /**
+     * The total [Permissions] of this member in the channel an interaction was sent from.
+     *
+     * This is only non-null when obtained from a [GuildInteraction].
+     */
+    public val permissions: Permissions? get() = memberData.permissions.value
 
     /**
      * Whether the user has not yet passed the guild's Membership Screening requirements.
