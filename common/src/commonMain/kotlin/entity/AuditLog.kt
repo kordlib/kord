@@ -108,7 +108,7 @@ public data class DiscordAuditLogEntry(
     val targetId: Snowflake?,
     val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing(),
     @SerialName("user_id")
-    val userId: Snowflake,
+    val userId: Snowflake?,
     val id: Snowflake,
     @SerialName("action_type")
     val actionType: AuditLogEvent,

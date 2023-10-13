@@ -53,7 +53,7 @@ public class AuditLogEntry(public val data: DiscordAuditLogEntry, override val k
 
     public val changes: List<AuditLogChange<*>> get() = data.changes.orEmpty()
 
-    public val userId: Snowflake get() = data.userId
+    public val userId: Snowflake? get() = data.userId
 
     public val id: Snowflake get() = data.id
 
