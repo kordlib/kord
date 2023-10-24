@@ -3,7 +3,6 @@ package dev.kord.common.entity.optional
 import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -91,14 +90,15 @@ public sealed class OptionalSnowflake {
     }
 
     internal object Serializer : KSerializer<OptionalSnowflake> {
-        override val descriptor: SerialDescriptor = ULong.serializer().descriptor
+        private val delegate = Snowflake.serializer()
 
-        override fun deserialize(decoder: Decoder): OptionalSnowflake =
-            Value(Snowflake(decoder.decodeInline(descriptor).decodeLong().toULong()))
+        override val descriptor: SerialDescriptor = delegate.descriptor
+
+        override fun deserialize(decoder: Decoder): OptionalSnowflake = Value(delegate.deserialize(decoder))
 
         override fun serialize(encoder: Encoder, value: OptionalSnowflake) = when (value) {
             Missing -> Unit // ignore value
-            is Value -> encoder.encodeInline(descriptor).encodeLong(value.value.value.toLong())
+            is Value -> delegate.serialize(encoder, value.value)
         }
     }
 }
