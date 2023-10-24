@@ -18,20 +18,24 @@ import kotlin.time.TimeMark
  *
  * Snowflakes are IDs with a [timestamp], which makes them [comparable][compareTo] based on their timestamp.
  *
- * @constructor Values are [coerced in][coerceIn] [validValues].
+ * @param value The raw value of this Snowflake as specified by the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/reference#snowflakes).
+ * @throws IllegalStateException if provided value isn't in [validValues]
  */
 @JvmInline
 @Serializable(with = Snowflake.Serializer::class)
 public value class Snowflake(public val value: ULong) : Comparable<Snowflake> {
 
     init {
-        value.coerceIn(validValues)
+        check(value in validValues) {
+            "Value must be in $validValues, but gave $value"
+        }
     }
 
     /**
      * Creates a Snowflake from a given String [value], parsing it as a [ULong] value.
      *
-     * Values are [coerced in][coerceIn] [validValues].
+     * @throws IllegalStateException if provided value isn't in [validValues]
      */
     public constructor(value: String) : this(value.toULong())
 
