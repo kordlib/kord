@@ -182,7 +182,7 @@ public value class Snowflake(public val value: ULong) : Comparable<Snowflake> {
          *
          * Note that this range might change in the future.
          */
-        public val validValues: ULongRange = ULong.MIN_VALUE..ULong.MAX_VALUE // 0..9223372036854775807
+        public val validValues: ULongRange = ULong.MIN_VALUE..Long.MAX_VALUE.toULong() // 0..9223372036854775807
 
         /**
          * The minimum value a Snowflake can hold.
