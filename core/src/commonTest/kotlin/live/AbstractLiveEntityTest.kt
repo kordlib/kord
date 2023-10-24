@@ -70,7 +70,7 @@ abstract class AbstractLiveEntityTest<LIVE : AbstractLiveKordEntity> {
 
     protected lateinit var kord: Kord
 
-    protected lateinit var guildId: Snowflake
+    protected var guildId: Snowflake = Snowflake.min
 
     lateinit var live: LIVE
 

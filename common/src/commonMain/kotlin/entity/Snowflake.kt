@@ -1,6 +1,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.Snowflake.Companion.validValues
+import kotlin.jvm.JvmInline
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
@@ -16,23 +17,15 @@ import kotlin.time.TimeMark
  * A unique identifier for entities [used by Discord](https://discord.com/developers/docs/reference#snowflakes).
  *
  * Snowflakes are IDs with a [timestamp], which makes them [comparable][compareTo] based on their timestamp.
+ *
+ * @constructor Values are [coerced in][coerceIn] [validValues].
  */
+@JvmInline
 @Serializable(with = Snowflake.Serializer::class)
-public class Snowflake : Comparable<Snowflake> {
+public value class Snowflake(public val value: ULong) : Comparable<Snowflake> {
 
-    /**
-     * The raw value of this Snowflake as specified by the
-     * [Discord Developer Documentation](https://discord.com/developers/docs/reference#snowflakes).
-     */
-    public val value: ULong
-
-    /**
-     * Creates a Snowflake from a given ULong [value].
-     *
-     * Values are [coerced in][coerceIn] [validValues].
-     */
-    public constructor(value: ULong) {
-        this.value = value.coerceIn(validValues)
+    init {
+        value.coerceIn(validValues)
     }
 
     /**
@@ -146,10 +139,7 @@ public class Snowflake : Comparable<Snowflake> {
         return this.value.compareTo(other.value)
     }
 
-    override fun equals(other: Any?): Boolean = other is Snowflake && this.value == other.value
-    override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = value.toString()
-
 
     public companion object {
         // see https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
@@ -192,7 +182,7 @@ public class Snowflake : Comparable<Snowflake> {
          *
          * Note that this range might change in the future.
          */
-        public val validValues: ULongRange = ULong.MIN_VALUE..Long.MAX_VALUE.toULong() // 0..9223372036854775807
+        public val validValues: ULongRange = ULong.MIN_VALUE..ULong.MAX_VALUE // 0..9223372036854775807
 
         /**
          * The minimum value a Snowflake can hold.
