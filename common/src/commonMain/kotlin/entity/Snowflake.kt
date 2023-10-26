@@ -242,3 +242,17 @@ private class SnowflakeTimeMark(private val timestamp: Instant) : TimeMark {
  * Values are [coerced in][coerceIn] [validValues].
  */
 public fun Snowflake(value: Long): Snowflake = Snowflake(value.coerceAtLeast(0).toULong())
+
+/**
+ * Creates a [Snowflake] from this [Long] number.
+ *
+ * Values are [coerced in][coerceIn] [validValues].
+ */
+public fun Long.snowflake(): Snowflake = Snowflake(this)
+
+/**
+ * Creates a [Snowflake] from this [ULong] number.
+ *
+ * Values are [coerced in][coerceIn] [validValues].
+ */
+public fun ULong.snowflake(): Snowflake = Snowflake(this)
