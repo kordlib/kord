@@ -1,6 +1,6 @@
 package dev.kord.rest.ratelimit
 
-import dev.kord.common.ConcurrentHashMap
+import dev.kord.common.concurrentHashMap
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
@@ -19,8 +19,8 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
 
     private val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
     private val globalSuspensionPoint = atomic(clock.now())
-    internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
-    private val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
+    internal val buckets = concurrentHashMap<BucketKey, Bucket>()
+    private val routeBuckets = concurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
 
     internal val BucketKey.bucket get() = buckets.getOrPut(this) { Bucket(this) }
     private val Request<*, *>.buckets get() = routeBuckets[identifier].orEmpty().map { it.bucket }
