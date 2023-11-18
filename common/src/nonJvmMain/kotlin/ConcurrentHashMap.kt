@@ -5,6 +5,4 @@ import dev.kord.common.annotation.KordInternal
 
 /** @suppress */
 @KordInternal
-// using an actual typealias seems to be broken in Kotlin/JS 1.9.0
-// public actual typealias ConcurrentHashMap<K, V> = ConcurrentMutableMap<K, V>
-public actual class ConcurrentHashMap<K, V> : MutableMap<K, V> by ConcurrentMutableMap()
+public actual fun <K, V> concurrentHashMap(): MutableMap<K, V> = ConcurrentMutableMap()

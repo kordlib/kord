@@ -1,6 +1,6 @@
 package dev.kord.rest.request
 
-import dev.kord.common.http.HttpEngine
+import dev.kord.common.http.httpEngine
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.ratelimit.*
 import dev.kord.rest.route.optional
@@ -108,7 +108,7 @@ public fun KtorRequestHandler(
     clock: Clock = Clock.System,
     parser: Json = jsonDefault,
 ): KtorRequestHandler {
-    val client = HttpClient(HttpEngine) {
+    val client = HttpClient(httpEngine()) {
         expectSuccess = false
     }
     return KtorRequestHandler(client, requestRateLimiter, clock, parser, token)

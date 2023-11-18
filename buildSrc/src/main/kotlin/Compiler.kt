@@ -27,6 +27,7 @@ object Jvm {
 fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     allWarningsAsErrors = true
     progressiveMode = true
+    freeCompilerArgs.add("-Xexpect-actual-classes")
 }
 
 fun KotlinSourceSet.applyKordOptIns() {

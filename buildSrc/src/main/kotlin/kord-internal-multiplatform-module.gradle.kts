@@ -8,16 +8,14 @@ repositories {
 
 kotlin {
     jvm()
-    js(IR) {
+    js {
         nodejs()
     }
     jvmToolchain(Jvm.target)
 
-    targets {
-        all {
-            compilations.all {
-                compilerOptions.options.applyKordCompilerOptions()
-            }
+    targets.all {
+        compilations.all {
+            compilerOptions.options.applyKordCompilerOptions()
         }
     }
 }
