@@ -491,7 +491,7 @@ public sealed class Event {
 
 
                 else -> {
-                    jsonLogger.warn { "unknown gateway event name $name" }
+                    jsonLogger.debug { "unknown gateway event name $name" }
                     // consume json elements that are unknown to us
                     val data = decoder.decodeSerializableElement(descriptor, index, JsonElement.serializer().nullable)
                     UnknownDispatchEvent(name, data, sequence)
