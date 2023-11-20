@@ -87,13 +87,17 @@ public class MultipartRequest<B : Any, R>(
 
     public val data: List<PartData> = formData {
         body?.let {
-            append("payload_json", Json.encodeToString(it.strategy, it.body))
-        }
-        files.forEachIndexed { index, (fileName, contentProvider) ->
             append(
-                "file$index",
-                contentProvider,
-                headersOf(HttpHeaders.ContentDisposition, "filename=$fileName")
+                key = "payload_json",
+                value = Json.encodeToString(it.strategy, it.body),
+                headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
+            )
+        }
+        files.forEachIndexed { index, (filename, contentProvider) ->
+            append(
+                key = "files[$index]",
+                value = contentProvider,
+                headersOf(HttpHeaders.ContentDisposition, "filename=${filename.escapeIfNeeded()}"),
             )
         }
     }

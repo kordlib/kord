@@ -2,14 +2,14 @@ package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.DiscordMessageReference
-import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.Permission.ReadMessageHistory
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.*
-import dev.kord.rest.NamedFile
+import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.RequestBuilder
-import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.AllowedMentionsBuilder
-import dev.kord.rest.builder.message.EmbedBuilder
+import dev.kord.rest.builder.message.allowedMentions
+import dev.kord.rest.builder.message.buildMessageFlags
 import dev.kord.rest.json.request.MessageCreateRequest
 import dev.kord.rest.json.request.MultipartMessageCreateRequest
 
@@ -17,68 +17,63 @@ import dev.kord.rest.json.request.MultipartMessageCreateRequest
  * Message builder for creating messages as a bot user.
  */
 @KordDsl
-public class UserMessageCreateBuilder
-    : MessageCreateBuilder,
-    RequestBuilder<MultipartMessageCreateRequest> {
+public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestBuilder<MultipartMessageCreateRequest> {
+    // see https://discord.com/developers/docs/resources/channel#create-message
 
-    override var content: String? = null
+    private var _nonce: Optional<String> = Optional.Missing()
 
-    /**
-     * An identifier that can be used to validate the message was sent.
-     */
-    public var nonce: String? = null
+    /** A value that can be used to verify a message was sent (up to 25 characters). */
+    public var nonce: String? by ::_nonce.delegate()
 
-    override var tts: Boolean? = null
-
-    override val embeds: MutableList<EmbedBuilder> = mutableListOf()
-
-    override var allowedMentions: AllowedMentionsBuilder? = null
-
-
-    override val components: MutableList<MessageComponentBuilder> = mutableListOf()
+    private var _messageReference: OptionalSnowflake = OptionalSnowflake.Missing
 
     /**
      * The id of the message being replied to.
-     * Requires the [ReadMessageHistory][dev.kord.common.entity.Permission.ReadMessageHistory] permission.
      *
-     * Replying will not mention the author by default,
-     * set [AllowedMentionsBuilder.repliedUser] to `true` via [allowedMentions]  to mention the author.
+     * Requires the [ReadMessageHistory] permission.
+     *
+     * Replying will not mention the author by default, set [AllowedMentionsBuilder.repliedUser] to `true` via
+     * [allowedMentions] to mention the author.
      */
-    public var messageReference: Snowflake? = null
+    public var messageReference: Snowflake? by ::_messageReference.delegate()
+
+    private var _failIfNotExists: OptionalBoolean = OptionalBoolean.Missing
 
     /**
-     * whether to error if the referenced message doesn't exist instead of sending as a normal (non-reply) message,
-     * defaults to true.
+     * Whether to error if the referenced message doesn't exist instead of sending as a normal (non-reply) message,
+     * defaults to `true`.
+     *
+     * This is only useful if combined with [messageReference].
      */
-    public var failIfNotExists: Boolean? = null
+    public var failIfNotExists: Boolean? by ::_failIfNotExists.delegate()
 
-    override val files: MutableList<NamedFile> = mutableListOf()
+    private var _stickerIds: Optional<MutableList<Snowflake>> = Optional.Missing()
 
-    override var flags: MessageFlags? = null
-    override var suppressEmbeds: Boolean? = null
-    override var suppressNotifications: Boolean? = null
+    /** The IDs of up to three stickers to send in the message. */
+    public var stickerIds: MutableList<Snowflake>? by ::_stickerIds.delegate()
 
-    override fun toRequest(): MultipartMessageCreateRequest {
-        return MultipartMessageCreateRequest(
-            MessageCreateRequest(
-                content = Optional(content).coerceToMissing(),
-                nonce = Optional(nonce).coerceToMissing(),
-                tts = Optional(tts).coerceToMissing().toPrimitive(),
-                embeds = Optional(embeds).mapList { it.toRequest() },
-                allowedMentions = Optional(allowedMentions).coerceToMissing().map { it.build() },
-                messageReference = messageReference?.let {
-                    Optional(
-                        DiscordMessageReference(
-                            OptionalSnowflake.Value(it),
-                            failIfNotExists = Optional(failIfNotExists).coerceToMissing().toPrimitive()
-                        )
-                    )
-                } ?: Optional.Missing(),
-                components = Optional(components).coerceToMissing().mapList { it.build() },
-                flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications)
-            ),
-            files
-        )
-    }
+    override fun toRequest(): MultipartMessageCreateRequest = MultipartMessageCreateRequest(
+        request = MessageCreateRequest(
+            content = _content,
+            nonce = _nonce,
+            tts = _tts,
+            embeds = _embeds.mapList { it.toRequest() },
+            allowedMentions = _allowedMentions.map { it.build() },
+            messageReference = when (val id = _messageReference) {
+                is OptionalSnowflake.Value ->
+                    Optional.Value(DiscordMessageReference(id = id, failIfNotExists = _failIfNotExists))
+                is OptionalSnowflake.Missing -> Optional.Missing()
+            },
+            components = _components.mapList { it.build() },
+            stickerIds = _stickerIds.mapCopy(),
+            attachments = _attachments.mapList { it.toRequest() },
+            flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
+        ),
+        files = files.toList(),
+    )
+}
 
+/** Add a [stickerId] to [stickerIds][UserMessageCreateBuilder.stickerIds]. */
+public fun UserMessageCreateBuilder.stickerId(stickerId: Snowflake) {
+    stickerIds?.add(stickerId) ?: run { stickerIds = mutableListOf(stickerId) }
 }

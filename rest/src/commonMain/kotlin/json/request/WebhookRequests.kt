@@ -1,7 +1,6 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.entity.AllowedMentions
-import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
@@ -33,6 +32,7 @@ public data class WebhookExecuteRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
     @SerialName("thread_name")
     val threadName: Optional<String> = Optional.Missing(),
@@ -46,15 +46,15 @@ public data class MultiPartWebhookExecuteRequest(
 @Serializable
 public data class WebhookEditMessageRequest(
     val content: Optional<String?> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val attachments: Optional<MutableList<DiscordAttachment>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
+    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing(),
+    val flags: Optional<MessageFlags?> = Optional.Missing(),
 )
 
 public data class MultipartWebhookEditMessageRequest(
     val request: WebhookEditMessageRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing()
+    val files: List<NamedFile> = emptyList(),
 )

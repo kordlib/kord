@@ -9182,6 +9182,7 @@ public final class dev/kord/common/entity/optional/OptionalKt {
 	public static final fun mapList (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/Optional;
 	public static final fun mapNotNull (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/Optional;
 	public static final fun mapNullable (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/Optional;
+	public static final fun mapNullableList (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/Optional;
 	public static final fun mapNullableOptional (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/Optional;
 	public static final fun mapNullableSnowflake (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public static final fun mapSnowflake (Ldev/kord/common/entity/optional/Optional;Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/optional/OptionalSnowflake;

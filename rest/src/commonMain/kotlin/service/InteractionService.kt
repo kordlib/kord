@@ -4,7 +4,6 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.MessageFlag.Ephemeral
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
-import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
@@ -111,7 +110,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     ): Unit = call(Route.InteractionResponseCreate) {
         interactionIdInteractionToken(interactionId, interactionToken)
         body(InteractionResponseCreateRequest.serializer(), request.request)
-        request.files.orEmpty().onEach { file(it) }
+        request.files.onEach { file(it) }
     }
 
     public suspend fun createInteractionResponse(
@@ -259,7 +258,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     ): DiscordMessage = call(Route.OriginalInteractionResponseModify) {
         applicationIdInteractionToken(applicationId, interactionToken)
         body(InteractionResponseModifyRequest.serializer(), multipartRequest.request)
-        multipartRequest.files.orEmpty().forEach { file(it) }
+        multipartRequest.files.forEach { file(it) }
     }
 
     public suspend fun modifyInteractionResponse(
@@ -310,7 +309,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     ): DiscordMessage = call(Route.FollowupMessageModify) {
         applicationIdInteractionTokenMessageId(applicationId, interactionToken, messageId)
         body(FollowupMessageModifyRequest.serializer(), request.request)
-        request.files.orEmpty().forEach { file(it) }
+        request.files.forEach { file(it) }
     }
 
     public suspend fun modifyFollowupMessage(
