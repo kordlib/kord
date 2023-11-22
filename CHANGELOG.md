@@ -1,3 +1,39 @@
+# 0.12.0
+
+## Additions
+
+* Add interaction permissions to `MemberData` and `Member` (by @Tmpod in #884)
+* Add `SelectDefaultValue`s (by @lukellmann in #881)
+* Add `Permission.CreateGuildExpressions` and `Permission.CreateEvents` (by @lukellmann in #892)
+* Add `StageInstanceCreateRequest.guildScheduledEventId` (by @lukellmann in #893)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @lukellmann in #879)
+* Use debug log level for unknown gateway event names (by @viztea in #890)
+* Add common `MessageBuilder` supertype (by @lukellmann in #891)
+
+## Fixes
+
+* Fix `DiscordAuditLogEntry.userId` nullability (by @lukellmann in #885)
+
+## Dependencies
+
+Updated in #883, #888 and #894
+
+* Gradle 8.3 -> 8.4
+* Kotlin 1.9.10 -> 1.9.20
+* Ktor 2.3.4 -> 2.3.6
+* kotlinx.serialization 1.6.0 -> 1.6.1
+* Stately 2.0.2 -> 2.0.5
+* KSP 1.9.10-1.0.13 -> 1.9.20-1.0.14
+* KotlinPoet 1.14.2 -> 1.15.1
+* JUnit 5 5.10.0 -> 5.10.1
+* MockK 1.13.7 -> 1.13.8
+* Dokka 1.9.0 -> 1.9.10
+* AtomicFU 0.22.0 -> 0.23.0
+* gradle-buildconfig-plugin 4.1.2 -> 4.2.0
+
 # 0.11.0
 
 ## Additions
