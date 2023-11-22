@@ -7897,6 +7897,14 @@ public final class dev/kord/common/entity/Permission$Connect : dev/kord/common/e
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$Connect;
 }
 
+public final class dev/kord/common/entity/Permission$CreateEvents : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$CreateEvents;
+}
+
+public final class dev/kord/common/entity/Permission$CreateGuildExpressions : dev/kord/common/entity/Permission {
+	public static final field INSTANCE Ldev/kord/common/entity/Permission$CreateGuildExpressions;
+}
+
 public final class dev/kord/common/entity/Permission$CreateInstantInvite : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$CreateInstantInvite;
 }
