@@ -27,7 +27,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 8
+          java-version: 11
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -52,7 +52,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: temurin
-          java-version: 8
+          java-version: 11
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:

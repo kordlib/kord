@@ -43,30 +43,31 @@ internal inline fun <reified A : Annotation> Annotatable.Builder<*>.addAnnotatio
     addAnnotation(AnnotationSpec.builder(A::class).apply(builder).build())
 
 
-// extensions for `FileSpec.Builder`
+// extensions for `TypeSpecHolder.Builder`
 
-internal inline fun FileSpec.Builder.addClass(className: ClassName, builder: TypeSpecBuilder) =
+internal inline fun <T : TypeSpecHolder.Builder<T>> T.addClass(name: String, builder: TypeSpecBuilder) =
+    addType(TypeSpec.classBuilder(name).apply(builder).build())
+
+internal inline fun <T : TypeSpecHolder.Builder<T>> T.addClass(className: ClassName, builder: TypeSpecBuilder) =
     addType(TypeSpec.classBuilder(className).apply(builder).build())
+
+internal inline fun <T : TypeSpecHolder.Builder<T>> T.addObject(name: String, builder: TypeSpecBuilder) =
+    addType(TypeSpec.objectBuilder(name).apply(builder).build())
+
+
+// extensions for `FileSpec.Builder`
 
 internal inline fun FileSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
     addFunction(FunSpec.builder(name).apply(builder).build())
 
 
 // extensions for `TypeSpec.Builder`
-internal inline fun TypeSpec.Builder.addClass(name: String, builder: TypeSpecBuilder) =
-    addType(TypeSpec.classBuilder(name).apply(builder).build())
-
-internal inline fun TypeSpec.Builder.addClass(className: ClassName, builder: TypeSpecBuilder) =
-    addType(TypeSpec.classBuilder(className).apply(builder).build())
 
 internal inline fun TypeSpec.Builder.addCompanionObject(name: String? = null, builder: TypeSpecBuilder) =
     addType(TypeSpec.companionObjectBuilder(name).apply(builder).build())
 
 internal inline fun TypeSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
     addFunction(FunSpec.builder(name).apply(builder).build())
-
-internal inline fun TypeSpec.Builder.addObject(name: String, builder: TypeSpecBuilder) =
-    addType(TypeSpec.objectBuilder(name).apply(builder).build())
 
 internal inline fun <reified T> TypeSpec.Builder.addProperty(
     name: String,
