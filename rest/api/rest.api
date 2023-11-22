@@ -2422,11 +2422,13 @@ public final class dev/kord/rest/builder/scheduled_events/ScheduledEventModifyBu
 public final class dev/kord/rest/builder/stage/StageInstanceCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)V
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildScheduledEventId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getPrivacyLevel ()Ldev/kord/common/entity/StageInstancePrivacyLevel;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getSendStartNotification ()Ljava/lang/Boolean;
 	public final fun getTopic ()Ljava/lang/String;
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setGuildScheduledEventId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setPrivacyLevel (Ldev/kord/common/entity/StageInstancePrivacyLevel;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setSendStartNotification (Ljava/lang/Boolean;)V
@@ -5177,16 +5179,18 @@ public final class dev/kord/rest/json/request/ScheduledEventModifyRequest$Compan
 
 public final class dev/kord/rest/json/request/StageInstanceCreateRequest {
 	public static final field Companion Ldev/kord/rest/json/request/StageInstanceCreateRequest$Companion;
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/StageInstanceCreateRequest;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;ILjava/lang/Object;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
+	public final fun component5 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/StageInstanceCreateRequest;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/OptionalSnowflake;ILjava/lang/Object;)Ldev/kord/rest/json/request/StageInstanceCreateRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildScheduledEventId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
 	public final fun getPrivacyLevel ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getSendStartNotification ()Ldev/kord/common/entity/optional/OptionalBoolean;
 	public final fun getTopic ()Ljava/lang/String;
