@@ -47,7 +47,7 @@
         Entry("ManageWebhooks", shift = 29, kDoc = "Allows management and editing of webhooks."),
         Entry(
             "ManageGuildExpressions", shift = 30,
-            kDoc = "Allows management and editing of emojis, stickers, and soundboard sounds.",
+            kDoc = "Allows for editing and deleting emojis, stickers, and soundboard sounds created by all users.",
         ),
         Entry(
             "UseApplicationCommands", shift = 31,
@@ -58,7 +58,10 @@
             kDoc = "Allows for requesting to speak in stage channels.\n\n" +
                 "_This permission is under active development and may be changed or removed._",
         ),
-        Entry("ManageEvents", shift = 33, kDoc = "Allows for creating, editing, and deleting scheduled events."),
+        Entry(
+            "ManageEvents", shift = 33,
+            kDoc = "Allows for editing and deleting scheduled events created by all users.",
+        ),
         Entry(
             "ManageThreads", shift = 34,
             kDoc = "Allows for deleting and archiving threads, and viewing all private threads.",
@@ -79,6 +82,15 @@
         ),
         Entry("ViewCreatorMonetizationAnalytics", shift = 41, kDoc = "Allows for viewing role subscription insights."),
         Entry("UseSoundboard", shift = 42, kDoc = "Allows for using soundboard in a voice channel."),
+        Entry(
+            "CreateGuildExpressions", shift = 43,
+            kDoc = "Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those " +
+                "created by the current user."
+        ),
+        Entry(
+            "CreateEvents", shift = 44,
+            kDoc = "Allows for creating scheduled events, and editing and deleting those created by the current user.",
+        ),
         Entry(
             "UseExternalSounds", shift = 45,
             kDoc = "Allows the usage of custom soundboard sounds from other servers."

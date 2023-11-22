@@ -274,7 +274,7 @@ public sealed class Permission {
     public object ManageWebhooks : Permission(29)
 
     /**
-     * Allows management and editing of emojis, stickers, and soundboard sounds.
+     * Allows for editing and deleting emojis, stickers, and soundboard sounds created by all users.
      */
     public object ManageGuildExpressions : Permission(30)
 
@@ -292,7 +292,7 @@ public sealed class Permission {
     public object RequestToSpeak : Permission(32)
 
     /**
-     * Allows for creating, editing, and deleting scheduled events.
+     * Allows for editing and deleting scheduled events created by all users.
      */
     public object ManageEvents : Permission(33)
 
@@ -342,6 +342,18 @@ public sealed class Permission {
      * Allows for using soundboard in a voice channel.
      */
     public object UseSoundboard : Permission(42)
+
+    /**
+     * Allows for creating emojis, stickers, and soundboard sounds, and editing and deleting those
+     * created by the current user.
+     */
+    public object CreateGuildExpressions : Permission(43)
+
+    /**
+     * Allows for creating scheduled events, and editing and deleting those created by the current
+     * user.
+     */
+    public object CreateEvents : Permission(44)
 
     /**
      * Allows the usage of custom soundboard sounds from other servers.
@@ -411,6 +423,8 @@ public sealed class Permission {
                 ModerateMembers,
                 ViewCreatorMonetizationAnalytics,
                 UseSoundboard,
+                CreateGuildExpressions,
+                CreateEvents,
                 UseExternalSounds,
                 SendVoiceMessages,
             )
@@ -475,6 +489,8 @@ public sealed class Permission {
             40 -> ModerateMembers
             41 -> ViewCreatorMonetizationAnalytics
             42 -> UseSoundboard
+            43 -> CreateGuildExpressions
+            44 -> CreateEvents
             45 -> UseExternalSounds
             46 -> SendVoiceMessages
             else -> Unknown(shift)
@@ -528,8 +544,7 @@ public sealed class Permission {
  * specific [Permission]s:
  * ```kotlin
  * val hasPermission = Permission.CreateInstantInvite in permissions
- * val hasPermissions = Permissions(Permission.CreateInstantInvite,
- * Permission.KickMembers) in permissions
+ * val hasPermissions = Permissions(Permission.CreateInstantInvite, Permission.KickMembers) in permissions
  * ```
  *
  * ## Unknown [Permission]s
