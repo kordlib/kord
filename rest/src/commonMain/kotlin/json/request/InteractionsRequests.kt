@@ -80,7 +80,7 @@ public data class AutoCompleteResponseCreateRequest(
         @Deprecated(
             "AutoCompleteResponseCreateRequest is no longer generic",
             ReplaceWith("this.serializer()"),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<AutoCompleteResponseCreateRequest> =
             serializer()

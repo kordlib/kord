@@ -44,7 +44,7 @@ public sealed class VideoQualityMode(
         unused: Nothing?,
     ) : VideoQualityMode(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'VideoQualityMode.from()'.",
             replaceWith = ReplaceWith(expression = "VideoQualityMode.from(value)", imports =
                         arrayOf("dev.kord.common.entity.VideoQualityMode")),

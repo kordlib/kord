@@ -80,7 +80,7 @@ public enum class OpCode(public val code: Int) {
         @Deprecated(
             "Renamed to 'Companion', which no longer implements 'KSerializer<OpCode>'.",
             ReplaceWith("OpCode.serializer()", imports = ["dev.kord.gateway.OpCode"]),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         @JvmField
         public val OpCodeSerializer: OpCodeSerializer = OpCodeSerializer()
@@ -89,7 +89,7 @@ public enum class OpCode(public val code: Int) {
     @Deprecated(
         "Renamed to 'Companion', which no longer implements 'KSerializer<OpCode>'.",
         ReplaceWith("OpCode.serializer()", imports = ["dev.kord.gateway.OpCode"]),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public class OpCodeSerializer internal constructor() : KSerializer<OpCode> by Serializer {
         public fun serializer(): KSerializer<OpCode> = this

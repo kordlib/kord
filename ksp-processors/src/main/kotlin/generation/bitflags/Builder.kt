@@ -55,7 +55,7 @@ internal fun TypeSpec.Builder.addBuilder() = addClass(builderCN) {
                 Deprecated(
                     "Renamed to 'build'",
                     ReplaceWith("this.build()", imports = emptyArray()),
-                    DeprecationLevel.ERROR,
+                    DeprecationLevel.HIDDEN,
                 )
             )
             returns(collectionCN)

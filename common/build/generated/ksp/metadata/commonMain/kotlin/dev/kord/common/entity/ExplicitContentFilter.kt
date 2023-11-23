@@ -44,7 +44,7 @@ public sealed class ExplicitContentFilter(
         unused: Nothing?,
     ) : ExplicitContentFilter(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'ExplicitContentFilter.from()'.",
             replaceWith = ReplaceWith(expression = "ExplicitContentFilter.from(value)", imports =
                         arrayOf("dev.kord.common.entity.ExplicitContentFilter")),

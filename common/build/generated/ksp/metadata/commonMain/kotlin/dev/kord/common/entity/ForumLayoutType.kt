@@ -44,7 +44,7 @@ public sealed class ForumLayoutType(
         unused: Nothing?,
     ) : ForumLayoutType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'ForumLayoutType.from()'.",
             replaceWith = ReplaceWith(expression = "ForumLayoutType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.ForumLayoutType")),

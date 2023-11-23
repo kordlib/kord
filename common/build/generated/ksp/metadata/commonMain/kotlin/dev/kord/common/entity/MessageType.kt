@@ -43,7 +43,7 @@ public sealed class MessageType(
         unused: Nothing?,
     ) : MessageType(code) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'MessageType.from()'.",
             replaceWith = ReplaceWith(expression = "MessageType.from(code)", imports =
                         arrayOf("dev.kord.common.entity.MessageType")),

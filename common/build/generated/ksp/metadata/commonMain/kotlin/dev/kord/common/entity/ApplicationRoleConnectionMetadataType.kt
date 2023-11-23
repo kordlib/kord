@@ -50,7 +50,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
         unused: Nothing?,
     ) : ApplicationRoleConnectionMetadataType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'ApplicationRoleConnectionMetadataType.from()'.",
             replaceWith = ReplaceWith(expression =
                         "ApplicationRoleConnectionMetadataType.from(value)", imports =

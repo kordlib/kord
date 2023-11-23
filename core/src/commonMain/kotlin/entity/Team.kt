@@ -84,7 +84,7 @@ public class TeamMember(public val data: TeamMemberData, public val kord: Kord) 
     @Deprecated(
         "'permissions' was never different from `[\"*\"]`. It is now replaced by 'role'.",
         ReplaceWith("this.role"),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public val permissions: List<String> get() = listOf("*")
 

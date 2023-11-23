@@ -44,7 +44,7 @@ public sealed class MessageActivityType(
         unused: Nothing?,
     ) : MessageActivityType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'MessageActivityType.from()'.",
             replaceWith = ReplaceWith(expression = "MessageActivityType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.MessageActivityType")),

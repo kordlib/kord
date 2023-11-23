@@ -25,12 +25,12 @@ public class LoginBuilder {
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
     @Deprecated(
         "'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.",
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
     )
     @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun intents(builder: Intents.IntentsBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        this.intents = Intents(builder)
+        this.intents = Intents.IntentsBuilder().apply(builder).flags()
     }
 
     @JvmName("intents0") // TODO other name when deprecated overload is removed

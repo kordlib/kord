@@ -211,7 +211,7 @@ public final class dev/kord/voice/EncryptionMode$Companion {
 }
 
 public final class dev/kord/voice/EncryptionMode$Unknown : dev/kord/voice/EncryptionMode {
-	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;)V
 }
 
 public final class dev/kord/voice/EncryptionMode$XSalsa20Poly1305 : dev/kord/voice/EncryptionMode {
@@ -253,25 +253,23 @@ public abstract class dev/kord/voice/SpeakingFlag {
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final fun getDeclaringClass ()Ljava/lang/Class;
-	public static synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final synthetic fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun getShift ()I
 	public final fun hashCode ()I
-	public final fun name ()Ljava/lang/String;
-	public final fun ordinal ()I
+	public final synthetic fun name ()Ljava/lang/String;
+	public final synthetic fun ordinal ()I
 	public final fun plus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
 	public final fun plus (Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/SpeakingFlags;
 	public final fun toString ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
-	public static fun values ()[Ldev/kord/voice/SpeakingFlag;
+	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
+	public static synthetic fun values ()[Ldev/kord/voice/SpeakingFlag;
 }
 
 public final class dev/kord/voice/SpeakingFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/voice/SpeakingFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public synthetic fun getEntries ()Lkotlin/enums/EnumEntries;
-	public fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
-	public fun values ()[Ldev/kord/voice/SpeakingFlag;
+	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
+	public synthetic fun values ()[Ldev/kord/voice/SpeakingFlag;
 }
 
 public final class dev/kord/voice/SpeakingFlag$Microphone : dev/kord/voice/SpeakingFlag {
@@ -306,7 +304,7 @@ public final class dev/kord/voice/SpeakingFlags {
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/voice/SpeakingFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final fun getFlags ()Ljava/util/List;
+	public final synthetic fun getFlags ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
@@ -321,7 +319,7 @@ public final class dev/kord/voice/SpeakingFlags$Builder {
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/voice/SpeakingFlags;
-	public final fun flags ()Ldev/kord/voice/SpeakingFlags;
+	public final synthetic fun flags ()Ldev/kord/voice/SpeakingFlags;
 	public final fun unaryMinus (Ldev/kord/voice/SpeakingFlag;)V
 	public final fun unaryMinus (Ldev/kord/voice/SpeakingFlags;)V
 	public final fun unaryPlus (Ldev/kord/voice/SpeakingFlag;)V

@@ -159,7 +159,7 @@ public data class DiscordOptionallyMemberUser(
 @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
 @Deprecated(
     "'UserFlags.UserFlagsBuilder' is deprecated, use 'UserFlags.Builder' instead.",
-    level = DeprecationLevel.ERROR,
+    level = DeprecationLevel.HIDDEN,
 )
 @kotlin.internal.LowPriorityInOverloadResolution
 public inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {

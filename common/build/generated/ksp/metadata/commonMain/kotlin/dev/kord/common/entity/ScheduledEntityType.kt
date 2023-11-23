@@ -44,7 +44,7 @@ public sealed class ScheduledEntityType(
         unused: Nothing?,
     ) : ScheduledEntityType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'ScheduledEntityType.from()'.",
             replaceWith = ReplaceWith(expression = "ScheduledEntityType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.ScheduledEntityType")),

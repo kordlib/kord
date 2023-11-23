@@ -126,7 +126,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     @Deprecated(
         "DiscordAutoComplete is no longer generic and the typeSerializer argument is no longer needed.",
         ReplaceWith("this.createAutoCompleteInteractionResponse(interactionId, interactionToken, autoComplete)"),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public suspend inline fun <reified T> createAutoCompleteInteractionResponse(
         interactionId: Snowflake,

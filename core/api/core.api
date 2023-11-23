@@ -53,8 +53,6 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public static synthetic fun getGuildApplicationCommands$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ljava/lang/Boolean;ILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public final fun getGuildOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuildOrNull$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final synthetic fun getGuildOrThrow (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getGuildOrThrow$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildPreview (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getGuildPreview$default (Ldev/kord/core/Kord;Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getGuildPreviewOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/core/supplier/EntitySupplyStrategy;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -154,11 +152,11 @@ public final class dev/kord/core/Unsafe {
 
 public final class dev/kord/core/UtilKt {
 	public static final fun enableEvent (Ldev/kord/gateway/Intents$Builder;Lkotlin/reflect/KClass;)V
-	public static final fun enableEvent (Ldev/kord/gateway/Intents$IntentsBuilder;Lkotlin/reflect/KClass;)V
+	public static final synthetic fun enableEvent (Ldev/kord/gateway/Intents$IntentsBuilder;Lkotlin/reflect/KClass;)V
 	public static final fun enableEvents (Ldev/kord/gateway/Intents$Builder;Ljava/lang/Iterable;)V
 	public static final fun enableEvents (Ldev/kord/gateway/Intents$Builder;[Lkotlin/reflect/KClass;)V
-	public static final fun enableEvents (Ldev/kord/gateway/Intents$IntentsBuilder;Ljava/lang/Iterable;)V
-	public static final fun enableEvents (Ldev/kord/gateway/Intents$IntentsBuilder;[Lkotlin/reflect/KClass;)V
+	public static final synthetic fun enableEvents (Ldev/kord/gateway/Intents$IntentsBuilder;Ljava/lang/Iterable;)V
+	public static final synthetic fun enableEvents (Ldev/kord/gateway/Intents$IntentsBuilder;[Lkotlin/reflect/KClass;)V
 }
 
 public abstract interface class dev/kord/core/behavior/ApplicationCommandBehavior : dev/kord/core/entity/Entity {
@@ -399,9 +397,7 @@ public final class dev/kord/core/behavior/GuildBehaviorKt {
 	public static synthetic fun createKeywordPresetAutoModerationRule$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createMediaChannel (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createMediaChannel$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static final synthetic fun createMentionSpamAutoModerationRule (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun createMentionSpamAutoModerationRule (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun createMentionSpamAutoModerationRule$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;ILkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun createMentionSpamAutoModerationRule$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Ldev/kord/common/entity/AutoModerationRuleEventType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun createMessageCommand (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun createMessageCommand$default (Ldev/kord/core/behavior/GuildBehavior;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
@@ -6510,7 +6506,6 @@ public final class dev/kord/core/entity/Member : dev/kord/core/entity/User, dev/
 	public fun fetchMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun fetchMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getCommunicationDisabledUntil ()Lkotlinx/datetime/Instant;
-	public final synthetic fun getDisplayName ()Ljava/lang/String;
 	public final fun getEffectiveName ()Ljava/lang/String;
 	public final fun getFlags ()Ldev/kord/common/entity/GuildMemberFlags;
 	public fun getGuild ()Ldev/kord/core/behavior/GuildBehavior;
@@ -6569,7 +6564,7 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public final fun getAuthor ()Ldev/kord/core/entity/User;
 	public final fun getAuthorAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAuthorAsMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getAuthorAsMemberOrThrow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final synthetic fun getAuthorAsMemberOrThrow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
@@ -7062,7 +7057,7 @@ public final class dev/kord/core/entity/TeamMember {
 	public final fun getData ()Ldev/kord/core/cache/data/TeamMemberData;
 	public final fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMembershipState ()Ldev/kord/common/entity/TeamMembershipState;
-	public final fun getPermissions ()Ljava/util/List;
+	public final synthetic fun getPermissions ()Ljava/util/List;
 	public final fun getRole ()Ldev/kord/common/entity/TeamMemberRole;
 	public final fun getTeamId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -9055,7 +9050,7 @@ public abstract class dev/kord/core/entity/component/SelectMenuComponent : dev/k
 }
 
 public final class dev/kord/core/entity/component/SelectMenuComponentKt {
-	public static final fun getOptions (Ldev/kord/core/entity/component/StringSelectComponent;)Ljava/util/List;
+	public static final synthetic fun getOptions (Ldev/kord/core/entity/component/StringSelectComponent;)Ljava/util/List;
 }
 
 public final class dev/kord/core/entity/component/SelectOption {

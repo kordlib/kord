@@ -155,7 +155,7 @@ public data class ApplicationCommandOption(
  * e.g: `Choice<@Serializable(NotSerializable::class) Any?>`
  * The serialization is handled by [Choice] serializer instead where we don't care about the generic type.
  */
-@Deprecated("This is no longer used, deprecated without a replacement.", level = DeprecationLevel.ERROR)
+@Deprecated("This is no longer used, deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
 @KordExperimental
 public object NotSerializable : KSerializer<Any?> {
     override fun deserialize(decoder: Decoder): Nothing = error("This operation is not supported.")
@@ -244,7 +244,7 @@ public sealed class Choice {
 
     public companion object {
         @Suppress("UNUSED_PARAMETER")
-        @Deprecated("Choice is no longer generic", ReplaceWith("this.serializer()"), DeprecationLevel.ERROR)
+        @Deprecated("Choice is no longer generic", ReplaceWith("this.serializer()"), DeprecationLevel.HIDDEN)
         public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<Choice> = serializer()
     }
 }
@@ -718,7 +718,7 @@ public data class DiscordAutoComplete(
         @Deprecated(
             "DiscordAutoComplete is no longer generic",
             ReplaceWith("this.serializer()"),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<DiscordAutoComplete> = serializer()
     }

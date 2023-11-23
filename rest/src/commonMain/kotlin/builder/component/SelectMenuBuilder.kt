@@ -65,7 +65,7 @@ public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId)
 
 /** The choices in the select, max 25. */
 @Suppress("EXTENSION_SHADOWED_BY_MEMBER")
-@Deprecated("Replaced by member in StringSelectBuilder.", ReplaceWith("this.options"), DeprecationLevel.ERROR)
+@Deprecated("Replaced by member in StringSelectBuilder.", ReplaceWith("this.options"), DeprecationLevel.HIDDEN)
 public var StringSelectBuilder.options: MutableList<SelectOptionBuilder>
     get() = options
     set(value) {

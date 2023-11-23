@@ -22,7 +22,7 @@ public class UpdateMessageInteractionResponseCreateBuilder :
     @set:Deprecated(
         "This setter will be removed in the future, replace with files.clear() followed by files.addAll(...).",
         ReplaceWith("this.files.clear()\nthis.files.addAll(value)"),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     override var files: MutableList<NamedFile> = mutableListOf()
 

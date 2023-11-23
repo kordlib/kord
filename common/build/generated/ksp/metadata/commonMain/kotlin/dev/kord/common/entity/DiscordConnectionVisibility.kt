@@ -45,7 +45,7 @@ public sealed class DiscordConnectionVisibility(
         unused: Nothing?,
     ) : DiscordConnectionVisibility(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'DiscordConnectionVisibility.from()'.",
             replaceWith = ReplaceWith(expression = "DiscordConnectionVisibility.from(value)",
                         imports = arrayOf("dev.kord.common.entity.DiscordConnectionVisibility")),

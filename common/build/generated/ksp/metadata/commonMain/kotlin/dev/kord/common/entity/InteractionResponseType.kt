@@ -45,7 +45,7 @@ public sealed class InteractionResponseType(
         unused: Nothing?,
     ) : InteractionResponseType(type) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'InteractionResponseType.from()'.",
             replaceWith = ReplaceWith(expression = "InteractionResponseType.from(type)", imports =
                         arrayOf("dev.kord.common.entity.InteractionResponseType")),
