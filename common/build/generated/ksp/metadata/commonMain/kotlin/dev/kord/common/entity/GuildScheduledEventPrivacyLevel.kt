@@ -45,7 +45,7 @@ public sealed class GuildScheduledEventPrivacyLevel(
         unused: Nothing?,
     ) : GuildScheduledEventPrivacyLevel(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'GuildScheduledEventPrivacyLevel.from()'.",
             replaceWith = ReplaceWith(expression = "GuildScheduledEventPrivacyLevel.from(value)",
                         imports =

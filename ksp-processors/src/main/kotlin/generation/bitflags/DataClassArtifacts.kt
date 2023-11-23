@@ -11,7 +11,7 @@ import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.shared.GenerationContext
 
 // TODO bump LEVEL and remove this file eventually
-private val LEVEL = DeprecationLevel.ERROR
+private val LEVEL = DeprecationLevel.HIDDEN
 
 context(BitFlags, GenerationContext)
 @OptIn(DelicateKotlinPoetApi::class)

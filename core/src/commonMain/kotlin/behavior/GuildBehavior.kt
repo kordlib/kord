@@ -1126,24 +1126,3 @@ public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
     val rule = kord.rest.autoModeration.createMentionSpamAutoModerationRule(guildId = id, name, eventType, builder)
     return MentionSpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
 }
-
-@Deprecated(
-    "The 'mentionLimit' parameter is optional, only 'mentionLimit' OR 'mentionRaidProtectionEnabled' is required.",
-    ReplaceWith(
-        "this.createMentionSpamAutoModerationRule(name, eventType) { this@createMentionSpamAutoModerationRule" +
-            ".mentionLimit = mentionLimit\nbuilder() }"
-    ),
-    DeprecationLevel.HIDDEN,
-)
-public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
-    name: String,
-    eventType: AutoModerationRuleEventType = MessageSend,
-    mentionLimit: Int,
-    builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
-): MentionSpamAutoModerationRule {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return createMentionSpamAutoModerationRule(name, eventType) {
-        this.mentionLimit = mentionLimit
-        builder()
-    }
-}

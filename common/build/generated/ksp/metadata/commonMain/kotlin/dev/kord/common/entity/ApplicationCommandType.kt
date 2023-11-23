@@ -44,7 +44,7 @@ public sealed class ApplicationCommandType(
         unused: Nothing?,
     ) : ApplicationCommandType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'ApplicationCommandType.from()'.",
             replaceWith = ReplaceWith(expression = "ApplicationCommandType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.ApplicationCommandType")),

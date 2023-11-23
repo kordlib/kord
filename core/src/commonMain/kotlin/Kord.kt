@@ -254,18 +254,6 @@ public class Kord(
     ): Guild = strategy.supply(this).getGuild(id)
 
     /**
-     * Requests the [Guild] with the given [id].
-     *
-     * @throws RequestException if something went wrong while retrieving the guild.
-     * @throws EntityNotFoundException if the guild is null.
-     */
-    @Deprecated("Renamed to getGuild", ReplaceWith("this.getGuild(id, strategy)"), level = DeprecationLevel.HIDDEN)
-    public suspend fun getGuildOrThrow(
-        id: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
-    ): Guild = strategy.supply(this).getGuild(id)
-
-    /**
      * Requests to get the [Webhook] in this guild.
      *
      * @throws [RestRequestException] if something went wrong during the request.

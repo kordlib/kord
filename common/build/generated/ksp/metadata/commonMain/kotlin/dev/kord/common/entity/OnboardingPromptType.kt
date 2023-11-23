@@ -44,7 +44,7 @@ public sealed class OnboardingPromptType(
         unused: Nothing?,
     ) : OnboardingPromptType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'OnboardingPromptType.from()'.",
             replaceWith = ReplaceWith(expression = "OnboardingPromptType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.OnboardingPromptType")),

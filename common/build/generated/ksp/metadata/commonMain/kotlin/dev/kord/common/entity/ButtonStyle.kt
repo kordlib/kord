@@ -45,7 +45,7 @@ public sealed class ButtonStyle(
         unused: Nothing?,
     ) : ButtonStyle(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'ButtonStyle.from()'.",
             replaceWith = ReplaceWith(expression = "ButtonStyle.from(value)", imports =
                         arrayOf("dev.kord.common.entity.ButtonStyle")),

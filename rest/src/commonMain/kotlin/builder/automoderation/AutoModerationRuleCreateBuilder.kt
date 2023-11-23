@@ -120,41 +120,6 @@ public class MentionSpamAutoModerationRuleCreateBuilder(
     name: String,
     eventType: AutoModerationRuleEventType,
 ) : AutoModerationRuleCreateBuilder(name, eventType), MentionSpamAutoModerationRuleBuilder {
-    @Deprecated(
-        "The 'mentionLimit' parameter is optional, only 'mentionLimit' OR 'mentionRaidProtectionEnabled' is required.",
-        ReplaceWith(
-            "MentionSpamAutoModerationRuleCreateBuilder(name, eventType).apply { this@apply.mentionLimit = mentionLimit }",
-            imports = ["dev.kord.rest.builder.automoderation.MentionSpamAutoModerationRuleCreateBuilder"],
-        ),
-        DeprecationLevel.HIDDEN,
-    )
-    public constructor(name: String, eventType: AutoModerationRuleEventType, mentionLimit: Int) : this(
-        name,
-        eventType,
-    ) {
-        this.mentionLimit = mentionLimit
-    }
-
-    /** @suppress Use `this.mentionLimit = mentionLimit` instead. */
-    @Deprecated(
-        "This can be replaced with 'mentionLimit', it is now a 'var'.",
-        ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.HIDDEN,
-    )
-    override fun assignMentionLimit(mentionLimit: Int) {
-        this.mentionLimit = mentionLimit
-    }
-
-    /** @suppress This declaration only exists to preserve binary compatibility. */
-    @Suppress("NON_FINAL_MEMBER_IN_FINAL_CLASS")
-    @Deprecated(
-        "This can be replaced with 'mentionLimit', it is now a 'var'.",
-        ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.HIDDEN,
-    )
-    public open fun setMentionLimit(mentionLimit: Int) {
-        this.mentionLimit = mentionLimit
-    }
 
     private var _mentionLimit: OptionalInt = OptionalInt.Missing
     override var mentionLimit: Int? by ::_mentionLimit.delegate()

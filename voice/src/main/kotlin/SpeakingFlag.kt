@@ -26,7 +26,6 @@ package dev.kord.voice
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
-import kotlin.enums.EnumEntries
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -83,7 +82,7 @@ public sealed class SpeakingFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-    "SpeakingFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
+    "SpeakingFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
     public fun name(): String = this::class.simpleName!!
 
     /**
@@ -91,7 +90,7 @@ public sealed class SpeakingFlag(
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
     @Deprecated(message =
-    "SpeakingFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
+    "SpeakingFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
     public fun ordinal(): Int = when (this) {
         Microphone -> 0
         Soundshare -> 1
@@ -106,7 +105,7 @@ public sealed class SpeakingFlag(
         message = "SpeakingFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "SpeakingFlag::class.java", imports =
         arrayOf("dev.kord.voice.SpeakingFlag")),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public fun getDeclaringClass(): Class<SpeakingFlag> = SpeakingFlag::class.java
 
@@ -186,7 +185,7 @@ public sealed class SpeakingFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-        "SpeakingFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
+        "SpeakingFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
         @JvmStatic
         public open fun valueOf(name: String): SpeakingFlag = when (name) {
             "Microphone" -> Microphone
@@ -203,33 +202,10 @@ public sealed class SpeakingFlag(
             message = "SpeakingFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "SpeakingFlag.entries.toTypedArray()", imports =
             arrayOf("dev.kord.voice.SpeakingFlag")),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         @JvmStatic
         public open fun values(): Array<SpeakingFlag> = entries.toTypedArray()
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "SpeakingFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "SpeakingFlag.entries", imports =
-            arrayOf("dev.kord.voice.SpeakingFlag")),
-        )
-        @JvmStatic
-        public open fun getEntries(): EnumEntries<SpeakingFlag> = EnumEntriesList
-
-        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
-            "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
-        private object EnumEntriesList : EnumEntries<SpeakingFlag>, List<SpeakingFlag> by entries {
-            override fun equals(other: Any?): Boolean = entries == other
-
-            override fun hashCode(): Int = entries.hashCode()
-
-            override fun toString(): String = entries.toString()
-        }
     }
 }
 
@@ -325,7 +301,7 @@ public class SpeakingFlags internal constructor(
     @Deprecated(
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public val flags: List<SpeakingFlag>
         get() = values.toList()
@@ -427,7 +403,7 @@ public class SpeakingFlags internal constructor(
         @Deprecated(
             message = "Renamed to 'build'",
             replaceWith = ReplaceWith(expression = "this.build()", imports = arrayOf()),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         public fun flags(): SpeakingFlags = build()
     }

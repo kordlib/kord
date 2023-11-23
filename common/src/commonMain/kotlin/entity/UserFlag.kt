@@ -8,7 +8,6 @@ import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
-import kotlin.enums.EnumEntries
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
 import kotlin.jvm.JvmStatic
@@ -63,14 +62,14 @@ public sealed class UserFlag(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
+    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
     public fun name(): String = this::class.simpleName!!
 
     /**
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith", "DEPRECATION_ERROR"))
-    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
+    @Deprecated(message = "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
     public fun ordinal(): Int = when (this) {
         DiscordEmployee -> 0
         DiscordPartner -> 1
@@ -98,7 +97,7 @@ public sealed class UserFlag(
         message = "UserFlag is no longer an enum class.",
         replaceWith = ReplaceWith(expression = "UserFlag::class.java", imports =
                     arrayOf("dev.kord.common.entity.UserFlag")),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public fun getDeclaringClass(): Class<UserFlag> = UserFlag::class.java
 
@@ -159,7 +158,7 @@ public sealed class UserFlag(
     @Deprecated(
         "'UserFlag.System' is no longer documented. You can still use it with 'UserFlag.fromShift(12)'.",
         ReplaceWith("UserFlag.fromShift(12)", imports = ["dev.kord.common.entity.UserFlag"]),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public object System : UserFlag(12)
 
@@ -362,7 +361,7 @@ public sealed class UserFlag(
          */
         @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
         @Deprecated(message =
-                "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
+                "UserFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
         @JvmStatic
         public open fun valueOf(name: String): UserFlag = when (name) {
             "DiscordEmployee" -> DiscordEmployee
@@ -392,33 +391,10 @@ public sealed class UserFlag(
             message = "UserFlag is no longer an enum class.",
             replaceWith = ReplaceWith(expression = "UserFlag.entries.toTypedArray()", imports =
                         arrayOf("dev.kord.common.entity.UserFlag")),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         @JvmStatic
         public open fun values(): Array<UserFlag> = entries.toTypedArray()
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "UserFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "UserFlag.entries", imports =
-                        arrayOf("dev.kord.common.entity.UserFlag")),
-        )
-        @JvmStatic
-        public open fun getEntries(): EnumEntries<UserFlag> = EnumEntriesList
-
-        @Suppress(names = arrayOf("SEALED_INHERITOR_IN_DIFFERENT_MODULE",
-                        "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE", "UPPER_BOUND_VIOLATED"))
-        private object EnumEntriesList : EnumEntries<UserFlag>, List<UserFlag> by entries {
-            override fun equals(other: Any?): Boolean = entries == other
-
-            override fun hashCode(): Int = entries.hashCode()
-
-            override fun toString(): String = entries.toString()
-        }
     }
 }
 
@@ -498,7 +474,7 @@ public class UserFlags internal constructor(
         "Don't construct an instance of 'UserFlags' from a raw code. Use the factory functions described in the " +
             "documentation instead.",
         ReplaceWith("UserFlags.Builder(code).build()", "dev.kord.common.entity.UserFlags"),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public constructor(code: Int) : this(code, null)
     /**
@@ -521,7 +497,7 @@ public class UserFlags internal constructor(
     @Deprecated(
         message = "Renamed to 'values'.",
         replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public val flags: List<UserFlag>
         get() = values.toList()
@@ -571,7 +547,7 @@ public class UserFlags internal constructor(
     @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
     @Deprecated(
         "'UserFlags.UserFlagsBuilder' is deprecated, use 'UserFlags.Builder' instead.",
-        level = DeprecationLevel.ERROR,
+        level = DeprecationLevel.HIDDEN,
     )
     @kotlin.internal.LowPriorityInOverloadResolution
     public inline fun copy(block: UserFlagsBuilder.() -> Unit): UserFlags {
@@ -592,7 +568,7 @@ public class UserFlags internal constructor(
     @Deprecated(
         message = "UserFlags is no longer a data class.",
         replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public operator fun component1(): Int = code
 
@@ -600,13 +576,13 @@ public class UserFlags internal constructor(
      * @suppress
      */
     @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.ERROR)
+    @Deprecated(message = "UserFlags is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
     public fun copy(code: Int = this.code): UserFlags = UserFlags(code, null)
 
     @Deprecated(
         "Renamed to 'Builder'.",
         ReplaceWith("UserFlags.Builder", imports = ["dev.kord.common.entity.UserFlags"]),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public class UserFlagsBuilder(code: Int = 0) {
         private val delegate = Builder(code)
@@ -672,7 +648,7 @@ public class UserFlags internal constructor(
         @Deprecated(
             "Renamed to 'Companion', which no longer implements 'KSerializer<UserFlags>'.",
             ReplaceWith("UserFlags.serializer()", imports = ["dev.kord.common.entity.UserFlags"]),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         @JvmField
         public val UserFlagsSerializer: UserFlagsSerializer = UserFlagsSerializer()
@@ -681,7 +657,7 @@ public class UserFlags internal constructor(
     @Deprecated(
         "Renamed to 'Companion', which no longer implements 'KSerializer<UserFlags>'.",
         ReplaceWith("UserFlags.serializer()", imports = ["dev.kord.common.entity.UserFlags"]),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public class UserFlagsSerializer internal constructor() : KSerializer<UserFlags> by Serializer {
         public fun serializer(): KSerializer<UserFlags> = this

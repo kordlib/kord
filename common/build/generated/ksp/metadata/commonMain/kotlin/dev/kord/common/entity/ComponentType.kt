@@ -44,7 +44,7 @@ public sealed class ComponentType(
         unused: Nothing?,
     ) : ComponentType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'ComponentType.from()'.",
             replaceWith = ReplaceWith(expression = "ComponentType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.ComponentType")),

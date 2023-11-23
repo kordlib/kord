@@ -45,7 +45,7 @@ public sealed class StageInstancePrivacyLevel(
         unused: Nothing?,
     ) : StageInstancePrivacyLevel(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'StageInstancePrivacyLevel.from()'.",
             replaceWith = ReplaceWith(expression = "StageInstancePrivacyLevel.from(value)", imports
                         = arrayOf("dev.kord.common.entity.StageInstancePrivacyLevel")),

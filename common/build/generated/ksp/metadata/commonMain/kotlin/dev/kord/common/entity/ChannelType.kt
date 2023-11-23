@@ -43,7 +43,7 @@ public sealed class ChannelType(
         unused: Nothing?,
     ) : ChannelType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'ChannelType.from()'.",
             replaceWith = ReplaceWith(expression = "ChannelType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.ChannelType")),

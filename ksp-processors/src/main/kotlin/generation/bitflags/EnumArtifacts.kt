@@ -1,7 +1,7 @@
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.KModifier.*
+import com.squareup.kotlinpoet.KModifier.OPEN
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.jvm.jvmField
 import com.squareup.kotlinpoet.jvm.jvmStatic
@@ -10,11 +10,9 @@ import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.shared.GenerationContext
 import dev.kord.ksp.generation.shared.nameWithSuppressedDeprecation
 import kotlin.DeprecationLevel.HIDDEN
-import kotlin.enums.EnumEntries
 
-// TODO bump LEVEL and ENUM_ENTRIES_LEVEL and remove this file eventually
-private val LEVEL = DeprecationLevel.ERROR
-private val ENUM_ENTRIES_LEVEL = HIDDEN // deprecated before released, only present in snapshots
+// TODO bump LEVEL and remove this file eventually
+private val LEVEL = HIDDEN
 private val CLASS = ClassName("dev.kord.common", "Class")
 private val JAVA = MemberName("dev.kord.common", "java")
 
@@ -110,49 +108,5 @@ internal fun TypeSpec.Builder.addDeprecatedEntityCompanionObjectEnumArtifacts() 
         addModifiers(OPEN)
         returns(ARRAY.parameterizedBy(entityCN))
         addStatement("return entries.toTypedArray()")
-    }
-    val enumEntries = EnumEntries::class.asClassName().parameterizedBy(entityCN)
-    addObject("EnumEntriesList") {
-        addAnnotation(
-            Suppress(
-                "SEALED_INHERITOR_IN_DIFFERENT_MODULE",
-                "SEALED_INHERITOR_IN_DIFFERENT_PACKAGE",
-                "UPPER_BOUND_VIOLATED",
-            )
-        )
-        addModifiers(PRIVATE)
-        addSuperinterface(enumEntries)
-        addSuperinterface(LIST.parameterizedBy(entityCN), delegate = CodeBlock.of("entries"))
-        addFunction("equals") {
-            addModifiers(OVERRIDE)
-            addParameter<Any?>("other")
-            returns<Boolean>()
-            addStatement("return entries == other")
-        }
-        addFunction("hashCode") {
-            addModifiers(OVERRIDE)
-            returns<Int>()
-            addStatement("return entries.hashCode()")
-        }
-        addFunction("toString") {
-            addModifiers(OVERRIDE)
-            returns<String>()
-            addStatement("return entries.toString()")
-        }
-    }
-    addFunction("getEntries") {
-        addKdoc("@suppress")
-        addAnnotation(Suppress("NON_FINAL_MEMBER_IN_OBJECT", "UPPER_BOUND_VIOLATED"))
-        addAnnotation(
-            Deprecated(
-                "$entityName is no longer an enum class.",
-                ReplaceWith("$entityName.entries", entityCN.canonicalName),
-                ENUM_ENTRIES_LEVEL,
-            )
-        )
-        jvmStatic()
-        addModifiers(OPEN)
-        returns(enumEntries)
-        addStatement("return EnumEntriesList")
     }
 }

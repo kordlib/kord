@@ -47,7 +47,7 @@ public sealed class AutoModerationActionType(
         unused: Nothing?,
     ) : AutoModerationActionType(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'AutoModerationActionType.from()'.",
             replaceWith = ReplaceWith(expression = "AutoModerationActionType.from(value)", imports =
                         arrayOf("dev.kord.common.entity.AutoModerationActionType")),

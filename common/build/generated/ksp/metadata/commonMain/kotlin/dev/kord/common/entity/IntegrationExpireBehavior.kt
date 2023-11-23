@@ -45,7 +45,7 @@ public sealed class IntegrationExpireBehavior(
         unused: Nothing?,
     ) : IntegrationExpireBehavior(value) {
         @Deprecated(
-            level = DeprecationLevel.ERROR,
+            level = DeprecationLevel.HIDDEN,
             message = "Replaced by 'IntegrationExpireBehavior.from()'.",
             replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.from(value)", imports
                         = arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),

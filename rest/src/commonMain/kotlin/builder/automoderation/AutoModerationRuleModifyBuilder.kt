@@ -147,16 +147,6 @@ public class MentionSpamAutoModerationRuleModifyBuilder :
     private var _mentionLimit: OptionalInt = OptionalInt.Missing
     override var mentionLimit: Int? by ::_mentionLimit.delegate()
 
-    /** @suppress Use `this.mentionLimit = mentionLimit` instead. */
-    @Deprecated(
-        "This can be replaced with 'mentionLimit', it is now a 'var'.",
-        ReplaceWith("this.run { this@run.mentionLimit = mentionLimit }"),
-        DeprecationLevel.HIDDEN,
-    )
-    override fun assignMentionLimit(mentionLimit: Int) {
-        this.mentionLimit = mentionLimit
-    }
-
     private var _mentionRaidProtectionEnabled: OptionalBoolean = OptionalBoolean.Missing
     override var mentionRaidProtectionEnabled: Boolean? by ::_mentionRaidProtectionEnabled.delegate()
 
