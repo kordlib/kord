@@ -526,21 +526,24 @@ public final class dev/kord/voice/gateway/DefaultVoiceGatewayBuilder {
 	public final fun getReconnectRetry ()Ldev/kord/gateway/retry/Retry;
 	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getSessionId ()Ljava/lang/String;
+	public final fun isDeaf ()Z
 	public final fun setClient (Lio/ktor/client/HttpClient;)V
+	public final fun setDeaf (Z)V
 	public final fun setEventFlow (Lkotlinx/coroutines/flow/MutableSharedFlow;)V
 	public final fun setReconnectRetry (Ldev/kord/gateway/retry/Retry;)V
 }
 
 public final class dev/kord/voice/gateway/DefaultVoiceGatewayData {
-	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;)V
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;ZLkotlinx/coroutines/flow/MutableSharedFlow;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Lio/ktor/client/HttpClient;
 	public final fun component5 ()Ldev/kord/gateway/retry/Retry;
-	public final fun component6 ()Lkotlinx/coroutines/flow/MutableSharedFlow;
-	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;)Ldev/kord/voice/gateway/DefaultVoiceGatewayData;
-	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DefaultVoiceGatewayData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;Lkotlinx/coroutines/flow/MutableSharedFlow;ILjava/lang/Object;)Ldev/kord/voice/gateway/DefaultVoiceGatewayData;
+	public final fun component6 ()Z
+	public final fun component7 ()Lkotlinx/coroutines/flow/MutableSharedFlow;
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;ZLkotlinx/coroutines/flow/MutableSharedFlow;)Ldev/kord/voice/gateway/DefaultVoiceGatewayData;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/DefaultVoiceGatewayData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Lio/ktor/client/HttpClient;Ldev/kord/gateway/retry/Retry;ZLkotlinx/coroutines/flow/MutableSharedFlow;ILjava/lang/Object;)Ldev/kord/voice/gateway/DefaultVoiceGatewayData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClient ()Lio/ktor/client/HttpClient;
 	public final fun getEventFlow ()Lkotlinx/coroutines/flow/MutableSharedFlow;
@@ -549,6 +552,7 @@ public final class dev/kord/voice/gateway/DefaultVoiceGatewayData {
 	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getSessionId ()Ljava/lang/String;
 	public fun hashCode ()I
+	public final fun isDeaf ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -668,12 +672,40 @@ public final class dev/kord/voice/gateway/Identify$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class dev/kord/voice/gateway/MediaSinkWants : dev/kord/voice/gateway/Command {
+	public static final field Companion Ldev/kord/voice/gateway/MediaSinkWants$Companion;
+	public fun <init> (I)V
+	public final fun component1 ()I
+	public final fun copy (I)Ldev/kord/voice/gateway/MediaSinkWants;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/MediaSinkWants;IILjava/lang/Object;)Ldev/kord/voice/gateway/MediaSinkWants;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAny ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/voice/gateway/MediaSinkWants$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/voice/gateway/MediaSinkWants$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/MediaSinkWants;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/MediaSinkWants;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/voice/gateway/MediaSinkWants$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static final field ClientDisconnect Ldev/kord/voice/gateway/OpCode;
 	public static final field Heartbeat Ldev/kord/voice/gateway/OpCode;
 	public static final field HeartbeatAck Ldev/kord/voice/gateway/OpCode;
 	public static final field Hello Ldev/kord/voice/gateway/OpCode;
 	public static final field Identify Ldev/kord/voice/gateway/OpCode;
+	public static final field MediaSinkWants Ldev/kord/voice/gateway/OpCode;
 	public static final field Ready Ldev/kord/voice/gateway/OpCode;
 	public static final field Resume Ldev/kord/voice/gateway/OpCode;
 	public static final field Resumed Ldev/kord/voice/gateway/OpCode;
