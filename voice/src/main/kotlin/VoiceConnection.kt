@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
+import dev.kord.voice.encryption.VoiceEncryption
 import dev.kord.voice.encryption.strategies.NonceStrategy
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.gateway.VoiceGatewayConfiguration
@@ -54,7 +55,7 @@ public class VoiceConnection(
     public val audioProvider: AudioProvider,
     public val frameInterceptor: FrameInterceptor,
     public val frameSender: AudioFrameSender,
-    public val nonceStrategy: NonceStrategy,
+    public val encryption: VoiceEncryption,
     connectionDetachDuration: Duration
 ) {
     public val scope: CoroutineScope =

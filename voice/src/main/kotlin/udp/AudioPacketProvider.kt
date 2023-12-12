@@ -1,23 +1,20 @@
 package dev.kord.voice.udp
 
-import com.iwebpp.crypto.TweetNaclFast
-import dev.kord.voice.encryption.XSalsa20Poly1305Codec
-import dev.kord.voice.encryption.strategies.NonceStrategy
+import dev.kord.voice.encryption.VoiceEncryption
 import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
 
-public abstract class AudioPacketProvider(public val key: ByteArray, public val nonceStrategy: NonceStrategy) {
+public abstract class AudioPacketProvider(public val key: ByteArray, public val encryption: VoiceEncryption) {
     public abstract fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView
 }
 
 private class CouldNotEncryptDataException(data: ByteArray) :
     RuntimeException("Couldn't encrypt the following data: [${data.joinToString(", ")}]")
 
-public class DefaultAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStrategy) :
-    AudioPacketProvider(key, nonceStrategy) {
-    private val codec = XSalsa20Poly1305Codec(key)
+public class DefaultAudioPacketProvider(key: ByteArray, encryption: VoiceEncryption) : AudioPacketProvider(key, encryption) {
+    private val box = encryption.createBox(key)
 
     private val packetBuffer = ByteArray(2048)
     private val packetBufferCursor: MutableByteArrayCursor = packetBuffer.mutableCursor()
@@ -25,7 +22,7 @@ public class DefaultAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStra
 
     private val rtpHeaderView: ByteArrayView = packetBuffer.view(0, RTP_HEADER_LENGTH)!!
 
-    private val nonceBuffer: MutableByteArrayCursor = ByteArray(TweetNaclFast.SecretBox.nonceLength).mutableCursor()
+    private val nonceBuffer: MutableByteArrayCursor = ByteArray(encryption.nonceLength).mutableCursor()
 
     private val lock: Any = Any()
 
@@ -44,20 +41,20 @@ public class DefaultAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStra
                 nonceBuffer.reset()
 
                 // make sure we enough room in this buffer
-                resize(RTP_HEADER_LENGTH + (data.size + TweetNaclFast.SecretBox.boxzerobytesLength) + nonceStrategy.nonceLength)
+                resize(RTP_HEADER_LENGTH + data.size + box.overhead)
 
                 // write header and generate nonce
                 writeHeader(sequence.toShort(), timestamp.toInt(), ssrc.toInt())
 
-                val rawNonce = nonceStrategy.generate { rtpHeaderView }
+                val rawNonce = box.generateNonce { rtpHeaderView }
                 nonceBuffer.writeByteView(rawNonce)
 
                 // encrypt data and write into our buffer
-                val encrypted = codec.encrypt(data, nonce = nonceBuffer.data, output = this)
+                val encrypted = box.encrypt(data, nonceBuffer.data, this)
 
                 if (!encrypted) throw CouldNotEncryptDataException(data)
 
-                nonceStrategy.append(rawNonce, this)
+                box.appendNonce(rawNonce, this)
 
                 // let's make sure we have the correct view of the packet
                 if (!packetBufferView.resize(0, cursor)) error("couldn't resize packet buffer view?!")
