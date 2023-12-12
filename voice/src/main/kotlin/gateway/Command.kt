@@ -31,6 +31,10 @@ public sealed class Command {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.Heartbeat)
                     composite.encodeLongElement(descriptor, 1, value.nonce)
                 }
+                is MediaSinkWants -> {
+                    composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.MediaSinkWants)
+                    composite.encodeSerializableElement(descriptor, 1, MediaSinkWants.serializer(), value)
+                }
                 is SendSpeaking -> {
                     composite.encodeSerializableElement(descriptor, 0, OpCode.Serializer, OpCode.Speaking)
                     composite.encodeSerializableElement(descriptor, 1, SendSpeaking.serializer(), value)
@@ -70,6 +74,12 @@ public data class SendSpeaking(
     val speaking: SpeakingFlags,
     val delay: Int,
     val ssrc: UInt
+) : Command()
+
+@KordVoice
+@Serializable
+public data class MediaSinkWants(
+    val any: Int
 ) : Command()
 
 @KordVoice

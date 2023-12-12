@@ -21,6 +21,7 @@ public class DefaultVoiceGatewayBuilder(
     public var client: HttpClient? = null
     public var reconnectRetry: Retry? = null
     public var eventFlow: MutableSharedFlow<VoiceEvent> = MutableSharedFlow(extraBufferCapacity = Int.MAX_VALUE)
+    public var isDeaf: Boolean = false
 
     public fun build(): DefaultVoiceGateway {
         val client = client ?: HttpClient(CIO) {
@@ -37,6 +38,7 @@ public class DefaultVoiceGatewayBuilder(
             sessionId,
             client,
             retry,
+            isDeaf,
             eventFlow
         )
 

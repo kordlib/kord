@@ -37,6 +37,7 @@ public data class DefaultVoiceGatewayData(
     val sessionId: String,
     val client: HttpClient,
     val reconnectRetry: Retry,
+    val isDeaf: Boolean,
     val eventFlow: MutableSharedFlow<VoiceEvent>
 )
 
@@ -196,7 +197,7 @@ public class DefaultVoiceGateway(
                     val copy = command.copy(data = command.data.copy(address = "ip"))
                     "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
                 }
-                is Heartbeat, is Resume, is SendSpeaking -> "Voice Gateway >>> $json"
+                else -> "Voice Gateway >>> $json"
             }
         }
         socket.send(Frame.Text(json))

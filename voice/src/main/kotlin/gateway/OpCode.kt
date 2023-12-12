@@ -19,7 +19,8 @@ public enum class OpCode(public val code: Int) {
     Resume(7),
     Hello(8),
     Resumed(9),
-    ClientDisconnect(13);
+    ClientDisconnect(13),
+    MediaSinkWants(15);
 
     internal object Serializer : KSerializer<OpCode> {
         override val descriptor: SerialDescriptor
