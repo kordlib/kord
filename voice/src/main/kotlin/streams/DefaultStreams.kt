@@ -99,7 +99,6 @@ private fun Flow<RTPPacket>.decrypt(encryption: VoiceEncryption, key: ByteArray)
 
         nonceBuffer.writeByteView(unbox.getNonce(packet))
 
-        println(packet.payload.data.contentToString())
         val decrypted = with(packet.payload) {
             unbox.decrypt(data, dataStart, viewSize, nonceBuffer.data, decryptedCursor)
         }
