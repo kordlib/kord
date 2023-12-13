@@ -204,12 +204,12 @@ public abstract class dev/kord/voice/EncryptionMode {
 	public final fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/voice/EncryptionMode$AeadAes128GcmRtpSize : dev/kord/voice/EncryptionMode {
-	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$AeadAes128GcmRtpSize;
-}
-
 public final class dev/kord/voice/EncryptionMode$AeadAes256Gcm : dev/kord/voice/EncryptionMode {
 	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$AeadAes256Gcm;
+}
+
+public final class dev/kord/voice/EncryptionMode$AeadAes256GcmRtpSize : dev/kord/voice/EncryptionMode {
+	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$AeadAes256GcmRtpSize;
 }
 
 public final class dev/kord/voice/EncryptionMode$Companion {
