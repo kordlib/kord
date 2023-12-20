@@ -1,12 +1,10 @@
 package dev.kord.voice.gateway
 
 import dev.kord.common.annotation.KordVoice
-import io.ktor.util.logging.*
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import mu.KLogger
-import mu.KotlinLogging
 import kotlin.coroutines.EmptyCoroutineContext
 import kotlin.time.Duration
 
@@ -88,11 +86,18 @@ public interface VoiceGateway {
 }
 
 
-/**
- * Logger used to report throwables caught in [VoiceGateway.on].
- */
+@Suppress("unused")
+@Deprecated("Binary compatibility, remove after deprecation cycle.", level = DeprecationLevel.WARNING)
 @PublishedApi
-internal val voiceGatewayOnLogger: KLogger = KotlinLogging.logger("Gateway.on")
+internal val voiceGatewayOnLogger: mu.KLogger = mu.KotlinLogging.logger("Gateway.on")
+
+/**
+ * Logger used to report [Throwable]s caught in [VoiceGateway.on].
+ */
+private val logger = KotlinLogging.logger("Gateway.on")
+
+@PublishedApi
+internal fun logCaughtThrowable(throwable: Throwable): Unit = logger.catching(throwable)
 
 /**
  * Convenience method that will invoke the [consumer] on every event [T] created by [VoiceGateway.events].
@@ -111,7 +116,7 @@ public inline fun <reified T : VoiceEvent> VoiceGateway.on(
     crossinline consumer: suspend T.() -> Unit
 ): Job {
     return this.events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
-        scope.launch { it.runCatching { it.consumer() }.onFailure(voiceGatewayOnLogger::error) }
+        scope.launch { it.runCatching { it.consumer() }.onFailure(::logCaughtThrowable) }
     }.launchIn(scope)
 }
 

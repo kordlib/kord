@@ -12,7 +12,17 @@ kotlin {
                 api(libs.bundles.ktor.client.serialization)
                 api(libs.ktor.client.websockets)
 
+                implementation(libs.kotlin.logging)
+
+                // TODO remove when gatewayOnLogger and mu.KLogger.error() are removed
+                implementation(libs.kotlin.logging.old)
+
                 compileOnly(projects.kspAnnotations)
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.slf4j.api)
             }
         }
         jsMain {

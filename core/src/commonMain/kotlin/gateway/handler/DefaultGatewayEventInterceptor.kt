@@ -3,7 +3,7 @@ package dev.kord.core.gateway.handler
 import dev.kord.common.annotation.KordPreview
 import dev.kord.core.Kord
 import dev.kord.core.gateway.ShardEvent
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import dev.kord.core.event.Event as CoreEvent
 
 private val logger = KotlinLogging.logger { }

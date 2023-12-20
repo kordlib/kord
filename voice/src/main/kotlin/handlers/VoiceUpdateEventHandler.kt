@@ -5,13 +5,13 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
 import dev.kord.voice.VoiceConnection
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import mu.KotlinLogging
 import kotlin.time.Duration
 import dev.kord.gateway.Event as GatewayEvent
 
