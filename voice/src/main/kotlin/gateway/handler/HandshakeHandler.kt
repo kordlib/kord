@@ -23,7 +23,7 @@ internal class HandshakeHandler(
         on<Hello> {
             data.reconnectRetry.reset()
             send(identify)
-            send(MediaSinkWants(if (data.isDeaf) 0 else 100))
+            send(MediaSinkWants(!data.isDeaf))
         }
     }
 }
