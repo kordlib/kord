@@ -184,8 +184,8 @@ public data class DiscordChannel(
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     @SerialName("default_forum_layout")
     val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
-    // Forum thread original message
-    // see in: https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
+    // original message when starting thread in forum or media channel, see
+    // https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel
     val message: Optional<DiscordMessage> = Optional.Missing(),
 )
 
