@@ -197,7 +197,8 @@ public class DefaultVoiceGateway(
                     val copy = command.copy(data = command.data.copy(address = "ip"))
                     "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
                 }
-                else -> "Voice Gateway >>> $json"
+
+                is SendSpeaking, is Resume, is MediaSinkWants, is Heartbeat -> "Voice Gateway >>> $json"
             }
         }
         socket.send(Frame.Text(json))
