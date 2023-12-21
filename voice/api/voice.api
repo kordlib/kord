@@ -673,13 +673,16 @@ public final class dev/kord/voice/gateway/Identify$Companion {
 }
 
 public final class dev/kord/voice/gateway/MediaSinkWants : dev/kord/voice/gateway/Command {
-	public static final field Companion Ldev/kord/voice/gateway/MediaSinkWants$Companion;
-	public fun <init> (I)V
-	public final fun component1 ()I
-	public final fun copy (I)Ldev/kord/voice/gateway/MediaSinkWants;
-	public static synthetic fun copy$default (Ldev/kord/voice/gateway/MediaSinkWants;IILjava/lang/Object;)Ldev/kord/voice/gateway/MediaSinkWants;
+	public static final field Serializer Ldev/kord/voice/gateway/MediaSinkWants$Serializer;
+	public fun <init> (ZLjava/util/Map;)V
+	public synthetic fun <init> (ZLjava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun component2 ()Ljava/util/Map;
+	public final fun copy (ZLjava/util/Map;)Ldev/kord/voice/gateway/MediaSinkWants;
+	public static synthetic fun copy$default (Ldev/kord/voice/gateway/MediaSinkWants;ZLjava/util/Map;ILjava/lang/Object;)Ldev/kord/voice/gateway/MediaSinkWants;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAny ()I
+	public final fun getSsrcs ()Ljava/util/Map;
+	public final fun getWants ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -695,7 +698,10 @@ public final class dev/kord/voice/gateway/MediaSinkWants$$serializer : kotlinx/s
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/voice/gateway/MediaSinkWants$Companion {
+public final class dev/kord/voice/gateway/MediaSinkWants$Serializer : kotlinx/serialization/SerializationStrategy {
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/MediaSinkWants;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
