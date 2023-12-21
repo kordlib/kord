@@ -3,9 +3,11 @@ package dev.kord.rest.builder.message.create
 import dev.kord.common.annotation.KordDsl
 import dev.kord.common.entity.ChannelType.GuildForum
 import dev.kord.common.entity.ChannelType.GuildMedia
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.common.entity.optional.map
+import dev.kord.common.entity.optional.mapCopy
 import dev.kord.common.entity.optional.mapList
 import dev.kord.rest.builder.RequestBuilder
 import dev.kord.rest.builder.message.buildMessageFlags
@@ -36,6 +38,14 @@ public class WebhookMessageCreateBuilder :
     /** Name of the thread to create (requires the webhook channel to be a [GuildForum] or [GuildMedia] channel). */
     public var threadName: String? by ::_threadName.delegate()
 
+    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
+
+    /**
+     * List of tag ids to apply to the thread (requires the webhook channel to be a [GuildForum] or [GuildMedia]
+     * channel).
+     */
+    public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
+
     override fun toRequest(): MultiPartWebhookExecuteRequest = MultiPartWebhookExecuteRequest(
         request = WebhookExecuteRequest(
             content = _content,
@@ -48,7 +58,13 @@ public class WebhookMessageCreateBuilder :
             attachments = _attachments.mapList { it.toRequest() },
             flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
             threadName = _threadName,
+            appliedTags = _appliedTags.mapCopy(),
         ),
         files = files.toList(),
     )
+}
+
+/** Add a [tagId] to [appliedTags][WebhookMessageCreateBuilder.appliedTags]. */
+public fun WebhookMessageCreateBuilder.applyTag(tagId: Snowflake) {
+    appliedTags?.add(tagId) ?: run { appliedTags = mutableListOf(tagId) }
 }
