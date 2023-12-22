@@ -3,6 +3,7 @@ package dev.kord.rest.json.request
 import dev.kord.common.entity.AllowedMentions
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
@@ -36,6 +37,8 @@ public data class WebhookExecuteRequest(
     val flags: Optional<MessageFlags> = Optional.Missing(),
     @SerialName("thread_name")
     val threadName: Optional<String> = Optional.Missing(),
+    @SerialName("applied_tags")
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
 )
 
 public data class MultiPartWebhookExecuteRequest(
