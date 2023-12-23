@@ -5,13 +5,13 @@ import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
+import io.github.oshai.kotlinlogging.KLogger
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
-import mu.KLogger
 import kotlin.time.Duration.Companion.minutes
 
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {

@@ -1,6 +1,7 @@
 package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.core.*
@@ -9,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
-import mu.KotlinLogging
 import kotlin.text.String
 
 private val globalVoiceSocketLogger = KotlinLogging.logger { }
