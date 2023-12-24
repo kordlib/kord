@@ -21,12 +21,13 @@ public object DiscordCdn {
     public fun userBanner(userId: Snowflake, hash: String): CdnUrl = CdnUrl("$BASE_URL/banners/$userId/$hash")
 
     @Deprecated(
-        "Discord's username system is changing and discriminators are being removed, see " +
-            "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
-        ReplaceWith("DiscordCdn.defaultUserAvatar(userId)", imports = ["dev.kord.rest.route.DiscordCdn"]),
+        "Renamed to 'defaultUserAvatar' to align name with documentation and overload taking Snowflake.",
+        ReplaceWith("DiscordCdn.defaultUserAvatar(discriminator)", imports = ["dev.kord.rest.route.DiscordCdn"]),
         DeprecationLevel.WARNING,
     )
-    public fun defaultAvatar(discriminator: Int): CdnUrl = CdnUrl("$BASE_URL/embed/avatars/${discriminator % 5}")
+    public fun defaultAvatar(discriminator: Int): CdnUrl = defaultUserAvatar(discriminator)
+
+    public fun defaultUserAvatar(discriminator: Int): CdnUrl = CdnUrl("$BASE_URL/embed/avatars/${discriminator % 5}")
 
     public fun defaultUserAvatar(userId: Snowflake): CdnUrl =
         CdnUrl("$BASE_URL/embed/avatars/${(userId.value shr 22) % 6u}")
