@@ -802,6 +802,7 @@ public abstract class dev/kord/common/entity/ArchiveDuration {
 }
 
 public final class dev/kord/common/entity/ArchiveDuration$Companion {
+	public final fun from-LRDsOJo (J)Ldev/kord/common/entity/ArchiveDuration;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
