@@ -4,7 +4,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
@@ -14,7 +13,7 @@ import kotlinx.serialization.encoding.Encoder
  * @property language A language code representing the language.
  * @property country A country code representing the country.
  */
-@Serializable(with = Locale.Serializer::class)
+@Serializable(with = Locale.NewSerializer::class)
 public data class Locale(val language: String, val country: String? = null) {
     public companion object {
 
@@ -231,13 +230,20 @@ public data class Locale(val language: String, val country: String? = null) {
         }
     }
 
-    public object Serializer : KSerializer<Locale> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Locale", PrimitiveKind.STRING)
+    @Deprecated(
+        "Replaced by 'Locale.serializer()'.",
+        ReplaceWith("Locale.serializer()", imports = ["dev.kord.common.Locale"]),
+        DeprecationLevel.WARNING,
+    )
+    public object Serializer : KSerializer<Locale> by NewSerializer
 
-        override fun serialize(encoder: Encoder, value: Locale) {
+    // TODO rename to 'Serializer' once deprecated public serializer is removed
+    internal object NewSerializer : KSerializer<Locale> {
+        override val descriptor = PrimitiveSerialDescriptor("dev.kord.common.Locale", PrimitiveKind.STRING)
+
+        override fun serialize(encoder: Encoder, value: Locale) =
             encoder.encodeString("${value.language}${value.country?.let { "-$it" } ?: ""}")
-        }
 
-        override fun deserialize(decoder: Decoder): Locale = fromString(decoder.decodeString())
+        override fun deserialize(decoder: Decoder) = fromString(decoder.decodeString())
     }
 }
