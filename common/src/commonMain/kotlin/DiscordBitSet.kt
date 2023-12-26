@@ -4,7 +4,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.math.max
@@ -19,7 +18,7 @@ public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet()
 internal expect fun formatIntegerFromLittleEndianLongArray(data: LongArray): String
 internal expect fun parseIntegerToBigEndianByteArray(value: String): ByteArray
 
-@Serializable(with = DiscordBitSetSerializer::class)
+@Serializable(with = DiscordBitSet.Serializer::class)
 public class DiscordBitSet(internal var data: LongArray) { // data is in little-endian order
 
     public val isEmpty: Boolean
@@ -113,6 +112,12 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
     }
 
     public fun copy(): DiscordBitSet = DiscordBitSet(data = data.copyOf())
+
+    internal object Serializer : KSerializer<DiscordBitSet> {
+        override val descriptor = PrimitiveSerialDescriptor("dev.kord.common.DiscordBitSet", PrimitiveKind.STRING)
+        override fun serialize(encoder: Encoder, value: DiscordBitSet) = encoder.encodeString(value.value)
+        override fun deserialize(decoder: Decoder) = DiscordBitSet(decoder.decodeString())
+    }
 }
 
 public fun DiscordBitSet(vararg widths: Long): DiscordBitSet {
@@ -144,15 +149,9 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
 }
 
 
-public object DiscordBitSetSerializer : KSerializer<DiscordBitSet> {
-    override val descriptor: SerialDescriptor
-        get() = PrimitiveSerialDescriptor("DiscordBitSet", PrimitiveKind.STRING)
-
-    override fun deserialize(decoder: Decoder): DiscordBitSet {
-        return DiscordBitSet(decoder.decodeString())
-    }
-
-    override fun serialize(encoder: Encoder, value: DiscordBitSet) {
-        encoder.encodeString(value.value)
-    }
-}
+@Deprecated(
+    "Replaced by 'DiscordBitSet.serializer()'.",
+    ReplaceWith("DiscordBitSet.serializer()", imports = ["dev.kord.common.DiscordBitSet"]),
+    DeprecationLevel.WARNING,
+)
+public object DiscordBitSetSerializer : KSerializer<DiscordBitSet> by DiscordBitSet.Serializer
