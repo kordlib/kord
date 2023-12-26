@@ -117,6 +117,8 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.LazyThreadSafetyMode.PUBLICATION
@@ -244,36 +246,53 @@ public sealed class ArchiveDuration(
         this === other || (other is ArchiveDuration && this.duration == other.duration)
 
     final override fun hashCode(): Int = duration.hashCode()
-    final override fun toString(): String = "ArchiveDuration.${this::class.simpleName}(duration=$duration)"
+    final override fun toString(): String =
+        if (this is Unknown) "ArchiveDuration.Unknown(duration=$duration)"
+        else "ArchiveDuration.${this::class.simpleName}"
 
     /**
      * An unknown [ArchiveDuration].
      *
      * This is used as a fallback for [ArchiveDuration]s that haven't been added to Kord yet.
      */
-    public class Unknown(duration: Duration) : ArchiveDuration(duration)
+    public class Unknown internal constructor(
+        duration: Duration,
+        @Suppress("UNUSED_PARAMETER") unused: Nothing?,
+    ) : ArchiveDuration(duration) {
+        @Deprecated(
+            "Replaced by 'ArchiveDuration.from()'.",
+            ReplaceWith("ArchiveDuration.from(duration)", imports = ["dev.kord.common.entity.ArchiveDuration"]),
+            DeprecationLevel.WARNING,
+        )
+        public constructor(duration: Duration) : this(duration, unused = null)
+    }
+
     public object Hour : ArchiveDuration(60.minutes)
     public object Day : ArchiveDuration(1440.minutes)
     public object ThreeDays : ArchiveDuration(4320.minutes)
     public object Week : ArchiveDuration(10080.minutes)
 
     internal object Serializer : KSerializer<ArchiveDuration> {
-        override val descriptor get() = DurationInMinutesSerializer.descriptor
+        override val descriptor =
+            PrimitiveSerialDescriptor("dev.kord.common.entity.ArchiveDuration", PrimitiveKind.LONG)
 
         override fun serialize(encoder: Encoder, value: ArchiveDuration) =
             encoder.encodeSerializableValue(DurationInMinutesSerializer, value.duration)
 
-        override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val duration = decoder.decodeSerializableValue(DurationInMinutesSerializer)
-            return entries.firstOrNull { it.duration == duration } ?: Unknown(duration)
-        }
+        override fun deserialize(decoder: Decoder) = from(decoder.decodeSerializableValue(DurationInMinutesSerializer))
     }
 
     public companion object {
         /** A [List] of all known [ArchiveDuration]s. */
-        public val entries: List<ArchiveDuration> by lazy(mode = PUBLICATION) {
-            listOf(Hour, Day, ThreeDays, Week)
-        }
+        public val entries: List<ArchiveDuration> by lazy(mode = PUBLICATION) { listOf(Hour, Day, ThreeDays, Week) }
+
+        private val entriesByDuration by lazy(mode = PUBLICATION) { entries.associateBy(ArchiveDuration::duration) }
+
+        /**
+         * Returns an instance of [ArchiveDuration] with [ArchiveDuration.duration] equal to the specified [duration].
+         */
+        public fun from(duration: Duration): ArchiveDuration =
+            entriesByDuration[duration] ?: Unknown(duration, unused = null)
     }
 }
 
