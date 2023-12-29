@@ -1,7 +1,7 @@
 .fleet/
 .gradle/
 .idea/*
-!.idea/icon.svg
+!.idea/icon.png
 out/
 
 **/build/*
