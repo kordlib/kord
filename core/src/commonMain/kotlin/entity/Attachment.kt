@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.AttachmentFlags
 import dev.kord.common.entity.DiscordAttachment
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
@@ -61,6 +62,14 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
     val width: Int? get() = data.width.value
 
     /**
+     * Whether this attachment is ephemeral.
+     *
+     * Ephemeral attachments will automatically be removed after a set period of time. Ephemeral attachments on messages
+     * are guaranteed to be available as long as the message itself exists.
+     */
+    val isEphemeral: Boolean get() = data.ephemeral.orElse(false)
+
+    /**
      * The duration of the audio file (currently for voice messages).
      */
     val duration: Duration? get() = data.durationSecs.value
@@ -70,12 +79,13 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
      */
     val waveform: ByteArray? get() = data.waveform.value?.decodeBase64Bytes()
 
+    /** The [AttachmentFlags] of this attachment. */
+    val flags: AttachmentFlags? get() = data.flags.value
+
     /**
      * If this file is displayed as a spoiler. Denoted by the `SPOILER_` prefix in the name.
      */
     val isSpoiler: Boolean get() = filename.startsWith("SPOILER_")
-
-    val isEphemeral: Boolean get() = data.ephemeral.discordBoolean
 
     /**
      * If this file is an image. Denoted by the presence of a [width] and [height].
@@ -94,8 +104,20 @@ public data class Attachment(val data: AttachmentData, override val kord: Kord) 
     }
 }
 
-public fun Attachment.toRawType(): DiscordAttachment {
-    with(data) {
-        return DiscordAttachment(id, filename, description, contentType, size, url, proxyUrl, height, width)
-    }
+public fun Attachment.toRawType(): DiscordAttachment = with(data) {
+    DiscordAttachment(
+        id,
+        filename,
+        description,
+        contentType,
+        size,
+        url,
+        proxyUrl,
+        height,
+        width,
+        ephemeral,
+        durationSecs,
+        waveform,
+        flags,
+    )
 }

@@ -79,28 +79,6 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         return createAutoModerationRule(guildId, request.toRequest(), request.reason)
     }
 
-    @Deprecated(
-        "The 'mentionLimit' parameter is optional, only 'mentionLimit' OR 'mentionRaidProtectionEnabled' is required.",
-        ReplaceWith(
-            "this.createMentionSpamAutoModerationRule(guildId, name, eventType) { " +
-                "this@createMentionSpamAutoModerationRule.mentionLimit = mentionLimit\nbuilder() }"
-        ),
-        DeprecationLevel.ERROR,
-    )
-    public suspend inline fun createMentionSpamAutoModerationRule(
-        guildId: Snowflake,
-        name: String,
-        eventType: AutoModerationRuleEventType,
-        mentionLimit: Int,
-        builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
-    ): DiscordAutoModerationRule {
-        contract { callsInPlace(builder, EXACTLY_ONCE) }
-        return createMentionSpamAutoModerationRule(guildId, name, eventType) {
-            this.mentionLimit = mentionLimit
-            builder()
-        }
-    }
-
     public suspend fun modifyAutoModerationRule(
         guildId: Snowflake,
         ruleId: Snowflake,

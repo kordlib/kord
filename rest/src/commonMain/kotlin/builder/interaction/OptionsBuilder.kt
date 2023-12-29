@@ -59,12 +59,12 @@ public sealed class BaseChoiceBuilder<T>(
     description: String,
     type: ApplicationCommandOptionType
 ) : OptionsBuilder(name, description, type) {
-    // TODO We can change these types to Optional<MutableList<Choice<T>>> and MutableList<Choice<T>> once
-    //  https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
-    //  The bug from that issue prevents you from setting BaseChoiceBuilder<*>.choices to `null`.
+    // TODO We can add another generic C : Choice and change these types to Optional<MutableList<C>> and MutableList<C>?
+    //  once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
+    //  The bug from that issue prevents you from setting BaseChoiceBuilder<*, *>.choices to `null`.
     @Suppress("PropertyName")
-    internal var _choices: Optional<MutableList<Choice<*>>> = Optional.Missing()
-    public var choices: MutableList<Choice<*>>? by ::_choices.delegate()
+    internal var _choices: Optional<MutableList<Choice>> = Optional.Missing()
+    public var choices: MutableList<Choice>? by ::_choices.delegate()
 
     public abstract fun choice(name: String, value: T, nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing())
 

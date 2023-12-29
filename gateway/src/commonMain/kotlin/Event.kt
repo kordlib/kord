@@ -4,6 +4,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
@@ -21,7 +22,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
-import mu.KotlinLogging
+import kotlin.jvm.JvmField
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -490,7 +491,7 @@ public sealed class Event {
 
 
                 else -> {
-                    jsonLogger.warn { "unknown gateway event name $name" }
+                    jsonLogger.debug { "unknown gateway event name $name" }
                     // consume json elements that are unknown to us
                     val data = decoder.decodeSerializableElement(descriptor, index, JsonElement.serializer().nullable)
                     UnknownDispatchEvent(name, data, sequence)
@@ -582,17 +583,32 @@ public data class ReadyData(
     val shard: Optional<DiscordShard> = Optional.Missing(),
 )
 
-@Serializable(with = Heartbeat.Companion::class)
+@Serializable(with = Heartbeat.Serializer::class)
 public data class Heartbeat(val data: Long) : Event() {
-    public companion object : KSerializer<Heartbeat> {
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("HeartbeatEvent", PrimitiveKind.LONG)
+    internal object Serializer : KSerializer<Heartbeat> {
+        override val descriptor = PrimitiveSerialDescriptor("dev.kord.gateway.Heartbeat", PrimitiveKind.LONG)
+        override fun serialize(encoder: Encoder, value: Heartbeat) = encoder.encodeLong(value.data)
+        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
+    }
 
-        override fun deserialize(decoder: Decoder): Heartbeat = Heartbeat(decoder.decodeLong())
+    public companion object NewCompanion {
+        @Suppress("DEPRECATION_ERROR")
+        @Deprecated(
+            "Renamed to 'NewCompanion', which no longer implements 'KSerializer<Heartbeat>'.",
+            ReplaceWith("Heartbeat.serializer()", imports = ["dev.kord.gateway.Heartbeat"]),
+            DeprecationLevel.HIDDEN,
+        )
+        @JvmField
+        public val Companion: Companion = Companion()
+    }
 
-        override fun serialize(encoder: Encoder, value: Heartbeat) {
-            encoder.encodeLong(value.data)
-        }
+    @Deprecated(
+        "Renamed to 'NewCompanion', which no longer implements 'KSerializer<Heartbeat>'.",
+        ReplaceWith("Heartbeat.serializer()", imports = ["dev.kord.gateway.Heartbeat"]),
+        DeprecationLevel.HIDDEN,
+    )
+    public class Companion internal constructor() : KSerializer<Heartbeat> by Serializer {
+        public fun serializer(): KSerializer<Heartbeat> = this
     }
 }
 

@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -31,16 +31,27 @@ public sealed class ButtonStyle(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "ButtonStyle.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "ButtonStyle.Unknown(value=$value)"
+            else "ButtonStyle.${this::class.simpleName}"
 
     /**
      * An unknown [ButtonStyle].
      *
      * This is used as a fallback for [ButtonStyle]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : ButtonStyle(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ButtonStyle(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'ButtonStyle.from()'.",
+            replaceWith = ReplaceWith(expression = "ButtonStyle.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.ButtonStyle")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Blurple.
@@ -75,15 +86,7 @@ public sealed class ButtonStyle(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ButtonStyle =
-                when (val value = decoder.decodeInt()) {
-            1 -> Primary
-            2 -> Secondary
-            3 -> Success
-            4 -> Danger
-            5 -> Link
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): ButtonStyle = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -100,5 +103,18 @@ public sealed class ButtonStyle(
             )
         }
 
+
+        /**
+         * Returns an instance of [ButtonStyle] with [ButtonStyle.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): ButtonStyle = when (value) {
+            1 -> Primary
+            2 -> Secondary
+            3 -> Success
+            4 -> Danger
+            5 -> Link
+            else -> Unknown(value, null)
+        }
     }
 }

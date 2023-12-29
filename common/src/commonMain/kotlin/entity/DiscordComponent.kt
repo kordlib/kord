@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "ComponentType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ComponentType",
     docUrl = "https://discord.com/developers/docs/interactions/message-components#component-object-component-types",
     entries = [
         Entry("ActionRow", intValue = 1, kDoc = "A container for other components."),
@@ -13,8 +13,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ButtonStyle", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ButtonStyle",
     kDoc = "Style of a [button][dev.kord.common.entity.ComponentType.Button].",
     docUrl = "https://discord.com/developers/docs/interactions/message-components#button-object-button-styles",
     entries = [
@@ -26,10 +26,10 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "TextInputStyle", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "TextInputStyle",
     kDoc = "Style of a [text·input][dev.kord.common.entity.ComponentType.TextInput].",
-    docUrl = "https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles",
+    docUrl = "https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles",
     entries = [
         Entry("Short", intValue = 1, kDoc = "A single-line input."),
         Entry("Paragraph", intValue = 2, kDoc = "A multi-line input."),
@@ -41,9 +41,9 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -80,6 +80,8 @@ public sealed class DiscordComponent {
     public abstract val components: Optional<List<DiscordComponent>>
     public abstract val options: Optional<List<DiscordSelectOption>>
     public abstract val placeholder: Optional<String>
+    @SerialName("default_values")
+    public abstract val defaultValues: Optional<List<DiscordSelectDefaultValue>>
     @SerialName("min_values")
     public abstract val minValues: OptionalInt
     @SerialName("max_values")
@@ -119,6 +121,8 @@ public data class DiscordChatComponent(
      override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
      override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
      override val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("default_values")
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
     @SerialName("min_values")
      override val minValues: OptionalInt = OptionalInt.Missing,
     @SerialName("max_values")
@@ -146,6 +150,8 @@ public data class DiscordTextInputComponent(
      override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
      override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
      override val placeholder: Optional<String> = Optional.Missing(),
+    @SerialName("default_values")
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
     @SerialName("min_values")
      override val minValues: OptionalInt = OptionalInt.Missing,
     @SerialName("max_values")

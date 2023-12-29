@@ -1,9 +1,14 @@
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
+
 package dev.kord.gateway
 
 import dev.kord.common.DiscordBitSet
 import dev.kord.common.EmptyBitSet
-import dev.kord.common.entity.DiscordMessage
-import dev.kord.gateway.Intent.*
+import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.contracts.InvocationKind.EXACTLY_ONCE
+import kotlin.contracts.contract
+import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -11,43 +16,55 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.RequiresOptIn.Level.ERROR
-import kotlin.annotation.AnnotationRetention.BINARY
-import kotlin.annotation.AnnotationTarget.*
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-import kotlin.jvm.JvmName
 
 /**
- * Some [Intent]s are defined as "privileged" due to the sensitive nature of the data and cannot be used by Kord without
- * enabling them.
+ * Values that enable a group of events as defined by Discord.
  *
- * Currently, those intents include:
- * - [GuildMembers]
- * - [GuildPresences]
- * - [MessageContent]
- *
- * See [the official documentation](https://discord.com/developers/docs/topics/gateway#privileged-intents) for more info
- * on how to enable these.
+ * See [Intent]s in the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/topics/gateway#gateway-intents).
  */
-@MustBeDocumented
-@RequiresOptIn(
-    "Some intents are defined as \"privileged\" due to the sensitive nature of the data and cannot be used by Kord " +
-            "without enabling them. See https://discord.com/developers/docs/topics/gateway#privileged-intents for " +
-            "more info on how to enable these.",
-    level = ERROR,
-)
-@Retention(BINARY)
-@Target(CLASS, PROPERTY, FUNCTION)
-public annotation class PrivilegedIntent
+public sealed class Intent(
+    /**
+     * The position of the bit that is set in this [Intent]. This is always >= 0.
+     */
+    public val shift: Int,
+) {
+    init {
+        require(shift >= 0) { """shift has to be >= 0 but was $shift""" }
+    }
 
-/**
- * Values that enable a group of events as
- * [defined by Discord](https://discord.com/developers/docs/topics/gateway#gateway-intents).
- */
-public sealed class Intent(public val code: DiscordBitSet) {
-    protected constructor(vararg code: Long) : this(DiscordBitSet(code))
+    /**
+     * The raw code used by Discord.
+     */
+    public val code: DiscordBitSet
+        get() = EmptyBitSet().also { it[shift] = true }
 
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flag].
+     */
+    public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flags].
+     */
+    public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
+
+    final override fun equals(other: Any?): Boolean = this === other ||
+            (other is Intent && this.shift == other.shift)
+
+    final override fun hashCode(): Int = shift.hashCode()
+
+    final override fun toString(): String = if (this is Unknown) "Intent.Unknown(shift=$shift)" else
+            "Intent.${this::class.simpleName}"
+
+    /**
+     * An unknown [Intent].
+     *
+     * This is used as a fallback for [Intent]s that haven't been added to Kord yet.
+     */
+    public class Unknown internal constructor(
+        shift: Int,
+    ) : Intent(shift)
 
     /**
      * Enables the following events:
@@ -69,7 +86,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [ThreadMembersUpdate] (contains different data depending on which intents are used, see
      * [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
      */
-    public object Guilds : Intent(1 shl 0)
+    public object Guilds : Intent(0)
 
     /**
      * Enables the following events:
@@ -80,7 +97,14 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * [here](https://discord.com/developers/docs/topics/gateway-events#thread-members-update))
      */
     @PrivilegedIntent
-    public object GuildMembers : Intent(1 shl 1)
+    public object GuildMembers : Intent(1)
+
+    @Deprecated(
+        "Renamed to 'GuildModeration'.",
+        ReplaceWith("Intent.GuildModeration", imports = ["dev.kord.gateway.Intent"]),
+        DeprecationLevel.HIDDEN,
+    )
+    public object GuildBans : Intent(2)
 
     /**
      * Enables the following events:
@@ -88,13 +112,13 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [GuildBanAdd]
      * - [GuildBanRemove]
      */
-    public object GuildBans : Intent(1 shl 2)
+    public object GuildModeration : Intent(2)
 
     /**
      * Enables the following events:
      * - [GuildEmojisUpdate]
      */
-    public object GuildEmojis : Intent(1 shl 3)
+    public object GuildEmojis : Intent(3)
 
     /**
      * Enables the following events:
@@ -103,33 +127,33 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [IntegrationUpdate]
      * - [IntegrationDelete]
      */
-    public object GuildIntegrations : Intent(1 shl 4)
+    public object GuildIntegrations : Intent(4)
 
     /**
      * Enables the following events:
      * - [WebhooksUpdate]
      */
-    public object GuildWebhooks : Intent(1 shl 5)
+    public object GuildWebhooks : Intent(5)
 
     /**
      * Enables the following events:
      * - [InviteCreate]
      * - [InviteDelete]
      */
-    public object GuildInvites : Intent(1 shl 6)
+    public object GuildInvites : Intent(6)
 
     /**
      * Enables the following events:
      * - [VoiceStateUpdate]
      */
-    public object GuildVoiceStates : Intent(1 shl 7)
+    public object GuildVoiceStates : Intent(7)
 
     /**
      * Enables the following events:
      * - [PresenceUpdate]
      */
     @PrivilegedIntent
-    public object GuildPresences : Intent(1 shl 8)
+    public object GuildPresences : Intent(8)
 
     /**
      * Enables the following events:
@@ -138,7 +162,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [MessageDelete]
      * - [MessageDeleteBulk]
      */
-    public object GuildMessages : Intent(1 shl 9)
+    public object GuildMessages : Intent(9)
 
     /**
      * Enables the following events:
@@ -147,13 +171,13 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [MessageReactionRemoveAll]
      * - [MessageReactionRemoveEmoji]
      */
-    public object GuildMessageReactions : Intent(1 shl 10)
+    public object GuildMessageReactions : Intent(10)
 
     /**
      * Enables the following events:
      * - [TypingStart]
      */
-    public object GuildMessageTyping : Intent(1 shl 11)
+    public object GuildMessageTyping : Intent(11)
 
     /**
      * Enables the following events:
@@ -162,7 +186,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [MessageDelete]
      * - [ChannelPinsUpdate]
      */
-    public object DirectMessages : Intent(1 shl 12)
+    public object DirectMessages : Intent(12)
 
     /**
      * Enables the following events:
@@ -171,32 +195,35 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [MessageReactionRemoveAll]
      * - [MessageReactionRemoveEmoji]
      */
-    public object DirectMessagesReactions : Intent(1 shl 13)
+    public object DirectMessagesReactions : Intent(13)
 
     /**
      * Enables the following events:
      * - [TypingStart]
      */
-    public object DirectMessageTyping : Intent(1 shl 14)
+    public object DirectMessageTyping : Intent(14)
 
     /**
-     * [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly associated with any
-     * Gateway [event][Event]s. Instead, access to [MessageContent] permits your app to receive message content data
-     * across the APIs.
+     * [MessageContent] is a unique [privileged intent][PrivilegedIntent] that isn't directly
+     * associated with any Gateway [event][Event]s. Instead, access to [MessageContent] permits your
+     * app to receive message content data across the APIs.
      *
-     * For example, the [content][DiscordMessage.content], [embeds][DiscordMessage.embeds],
-     * [attachments][DiscordMessage.attachments], and [components][DiscordMessage.components] fields in
-     * [message objects][DiscordMessage] all contain message content and therefore require this intent.
+     * For example, the [content][dev.kord.common.entity.DiscordMessage.content],
+     * [embeds][dev.kord.common.entity.DiscordMessage.embeds],
+     * [attachments][dev.kord.common.entity.DiscordMessage.attachments], and
+     * [components][dev.kord.common.entity.DiscordMessage.components] fields in [message
+     * objects][dev.kord.common.entity.DiscordMessage] all contain message content and therefore
+     * require this intent.
      *
-     * Apps **without** this intent will receive empty values in fields that contain user-inputted content with a few
-     * exceptions:
+     * Apps **without** this intent will receive empty values in fields that contain user-inputted
+     * content with a few exceptions:
      * - Content in messages that an app sends
      * - Content in DMs with the app
      * - Content in which the app is mentioned
      * - Content of the message a message context menu command is used on
      */
     @PrivilegedIntent
-    public object MessageContent : Intent(1 shl 15)
+    public object MessageContent : Intent(15)
 
     /**
      * Enables the following events:
@@ -206,7 +233,7 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [GuildScheduledEventUserAdd]
      * - [GuildScheduledEventUserRemove]
      */
-    public object GuildScheduledEvents : Intent(1 shl 16)
+    public object GuildScheduledEvents : Intent(16)
 
     /**
      * Enables the following events:
@@ -214,22 +241,24 @@ public sealed class Intent(public val code: DiscordBitSet) {
      * - [AutoModerationRuleUpdate]
      * - [AutoModerationRuleDelete]
      */
-    public object AutoModerationConfiguration : Intent(1 shl 20)
+    public object AutoModerationConfiguration : Intent(20)
 
     /**
      * Enables the following events:
      * - [AutoModerationActionExecution]
      */
-    public object AutoModerationExecution : Intent(1 shl 21)
-
+    public object AutoModerationExecution : Intent(21)
 
     public companion object {
+        /**
+         * A [List] of all known [Intent]s.
+         */
         @OptIn(PrivilegedIntent::class)
-        public val values: Set<Intent>
-            get() = setOf(
+        public val entries: List<Intent> by lazy(mode = PUBLICATION) {
+            listOf(
                 Guilds,
                 GuildMembers,
-                GuildBans,
+                GuildModeration,
                 GuildEmojis,
                 GuildIntegrations,
                 GuildWebhooks,
@@ -247,137 +276,370 @@ public sealed class Intent(public val code: DiscordBitSet) {
                 AutoModerationConfiguration,
                 AutoModerationExecution,
             )
+        }
+
+        // TODO uncomment annotation in Intents.kt and delete this file when this property is removed after deprecation
+        //  cycle
+        @Deprecated(
+            "Renamed to 'entries'.",
+            ReplaceWith("Intent.entries", imports = ["dev.kord.gateway.Intent"]),
+            DeprecationLevel.HIDDEN,
+        )
+        public val values: Set<Intent> get() = entries.toSet()
+
+        /**
+         * Returns an instance of [Intent] with [Intent.shift] equal to the specified [shift].
+         *
+         * @throws IllegalArgumentException if [shift] is not >= 0.
+         */
+        @OptIn(PrivilegedIntent::class)
+        public fun fromShift(shift: Int): Intent = when (shift) {
+            0 -> Guilds
+            1 -> GuildMembers
+            2 -> GuildModeration
+            3 -> GuildEmojis
+            4 -> GuildIntegrations
+            5 -> GuildWebhooks
+            6 -> GuildInvites
+            7 -> GuildVoiceStates
+            8 -> GuildPresences
+            9 -> GuildMessages
+            10 -> GuildMessageReactions
+            11 -> GuildMessageTyping
+            12 -> DirectMessages
+            13 -> DirectMessagesReactions
+            14 -> DirectMessageTyping
+            15 -> MessageContent
+            16 -> GuildScheduledEvents
+            20 -> AutoModerationConfiguration
+            21 -> AutoModerationExecution
+            else -> Unknown(shift)
+        }
     }
-}
-
-public inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return Intents.IntentsBuilder().apply(builder).flags()
-}
-
-public fun Intents(vararg intents: Intents): Intents = Intents {
-    intents.forEach { +it }
-}
-
-public fun Intents(vararg intents: Intent): Intents = Intents {
-    intents.forEach { +it }
-}
-
-public fun Intents(intents: Iterable<Intents>): Intents = Intents {
-    intents.forEach { +it }
-}
-
-public fun Intents(value: String): Intents = Intents(DiscordBitSet(value))
-
-@JvmName("IntentsWithIterable")
-public fun Intents(intents: Iterable<Intent>): Intents = Intents {
-    intents.forEach { +it }
 }
 
 /**
- * A set of [intents][Intent] to be used while [identifying][Identify] a [Gateway] connection to communicate the events the client wishes to receive.
+ * A collection of multiple [Intent]s.
+ *
+ * ## Creating an instance of [Intents]
+ *
+ * You can create an instance of [Intents] using the following methods:
+ * ```kotlin
+ * // from individual Intents
+ * val intents1 = Intents(Intent.Guilds, Intent.GuildMembers)
+ *
+ * // from an Iterable
+ * val iterable: Iterable<Intent> = TODO()
+ * val intents2 = Intents(iterable)
+ *
+ * // using a builder
+ * val intents3 = Intents {
+ *     +intents2
+ *     +Intent.Guilds
+ *     -Intent.GuildMembers
+ * }
+ * ```
+ *
+ * ## Modifying an existing instance of [Intents]
+ *
+ * You can create a modified copy of an existing instance of [Intents] using the [copy] method:
+ * ```kotlin
+ * intents.copy {
+ *     +Intent.Guilds
+ * }
+ * ```
+ *
+ * ## Mathematical operators
+ *
+ * All [Intents] objects can use `+`/`-` operators:
+ * ```kotlin
+ * val intents1 = intents + Intent.Guilds
+ * val intents2 = intents - Intent.GuildMembers
+ * val intents3 = intents1 + intents2
+ * ```
+ *
+ * ## Checking for [Intent]s
+ *
+ * You can use the [contains] operator to check whether an instance of [Intents] contains specific
+ * [Intent]s:
+ * ```kotlin
+ * val hasIntent = Intent.Guilds in intents
+ * val hasIntents = Intents(Intent.Guilds, Intent.GuildMembers) in intents
+ * ```
+ *
+ * ## Unknown [Intent]s
+ *
+ * Whenever [Intent]s haven't been added to Kord yet, they will be deserialized as instances of
+ * [Intent.Unknown].
+ *
+ * You can also use [Intent.fromShift] to check for [unknown][Intent.Unknown] [Intent]s.
+ * ```kotlin
+ * val hasUnknownIntent = Intent.fromShift(23) in intents
+ * ```
+ *
+ * @see Intent
+ * @see Intents.Builder
  */
-@Serializable(with = IntentsSerializer::class)
-public data class Intents internal constructor(val code: DiscordBitSet) {
+@Serializable(with = Intents.Serializer::class)
+public class Intents internal constructor(
     /**
-     *  Returns this [Intents] as a [Set] of [Intent]
+     * The raw code used by Discord.
      */
-    val values: Set<Intent> = Intent.values.filter { it.code in code }.toSet()
-
-    public operator fun contains(intent: Intent): Boolean = intent.code in code
-
+    public val code: DiscordBitSet,
+) {
     /**
-     * Returns an [Intents] that added the [intent] to this [code].
+     * A [Set] of all [Intent]s contained in this instance of [Intents].
      */
-    public operator fun plus(intent: Intent): Intents = Intents(code + intent.code)
-
-    /**
-     * Returns an [Intents] that removed the [intent] from this [code].
-     */
-    public operator fun minus(intent: Intent): Intents = Intents(code - intent.code)
-
-
-    public operator fun contains(intent: Intents): Boolean = intent.code in code
-
-    /**
-     * Returns an [Intents] that added the [intent] to this [code].
-     */
-    public operator fun plus(intent: Intents): Intents = Intents(code + intent.code)
-
-    /**
-     * Returns an [Intents] that removed the [intent] from this [code].
-     */
-    public operator fun minus(intent: Intents): Intents = Intents(code - intent.code)
-
-
-    /**
-     * copy this [Intents] and apply the [block] to it.
-     */
-    public inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
-        contract {
-            callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    public val values: Set<Intent>
+        get() = buildSet {
+            for (shift in 0..<code.size) {
+                if (code[shift]) add(Intent.fromShift(shift))
+            }
         }
-        val builder = IntentsBuilder(code)
-        builder.apply(block)
-        return builder.flags()
+
+    /**
+     * Checks if this instance of [Intents] has all bits set that are set in [flag].
+     */
+    public operator fun contains(flag: Intent): Boolean = flag.code in this.code
+
+    /**
+     * Checks if this instance of [Intents] has all bits set that are set in [flags].
+     */
+    public operator fun contains(flags: Intents): Boolean = flags.code in this.code
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flag].
+     */
+    public operator fun plus(flag: Intent): Intents = Intents(this.code + flag.code)
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` and [flags].
+     */
+    public operator fun plus(flags: Intents): Intents = Intents(this.code + flags.code)
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
+     * that are set in [flag].
+     */
+    public operator fun minus(flag: Intent): Intents = Intents(this.code - flag.code)
+
+    /**
+     * Returns an instance of [Intents] that has all bits set that are set in `this` except the bits
+     * that are set in [flags].
+     */
+    public operator fun minus(flags: Intents): Intents = Intents(this.code - flags.code)
+
+    /**
+     * Returns a copy of this instance of [Intents] modified with [builder].
+     */
+    @JvmName("copy0") // TODO other name when deprecated overload is removed
+    public inline fun copy(builder: Builder.() -> Unit): Intents {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return Builder(code.copy()).apply(builder).build()
+    }
+
+    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
+    @Deprecated(
+        "'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.",
+        level = DeprecationLevel.HIDDEN,
+    )
+    @kotlin.internal.LowPriorityInOverloadResolution
+    public inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
+        contract { callsInPlace(block, EXACTLY_ONCE) }
+        return IntentsBuilder(code.copy()).apply(block).flags()
+    }
+
+    override fun equals(other: Any?): Boolean = this === other ||
+            (other is Intents && this.code == other.code)
+
+    override fun hashCode(): Int = code.hashCode()
+
+    override fun toString(): String = "Intents(values=$values)"
+
+    /**
+     * @suppress
+     */
+    @Deprecated(
+        message = "Intents is no longer a data class.",
+        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
+        DeprecationLevel.HIDDEN,
+    )
+    public operator fun component1(): DiscordBitSet = code
+
+    /**
+     * @suppress
+     */
+    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
+    @Deprecated(message = "Intents is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
+    public fun copy(code: DiscordBitSet = this.code): Intents = Intents(code)
+
+    @Deprecated(
+        "Renamed to 'Builder'.",
+        ReplaceWith("Intents.Builder", imports = ["dev.kord.gateway.Intents"]),
+        DeprecationLevel.HIDDEN,
+    )
+    public class IntentsBuilder(code: DiscordBitSet = EmptyBitSet()) {
+        private val delegate = Builder(code)
+        public operator fun Intents.unaryPlus(): Unit = with(delegate) { unaryPlus() }
+        public operator fun Intent.unaryPlus(): Unit = with(delegate) { unaryPlus() }
+        public operator fun Intent.unaryMinus(): Unit = with(delegate) { unaryMinus() }
+        public operator fun Intents.unaryMinus(): Unit = with(delegate) { unaryMinus() }
+        public fun flags(): Intents = delegate.build()
+    }
+
+    public class Builder(
+        private val code: DiscordBitSet = EmptyBitSet(),
+    ) {
+        /**
+         * Sets all bits in the [Builder] that are set in this [Intent].
+         */
+        public operator fun Intent.unaryPlus() {
+            this@Builder.code.add(this.code)
+        }
+
+        /**
+         * Sets all bits in the [Builder] that are set in this [Intents].
+         */
+        public operator fun Intents.unaryPlus() {
+            this@Builder.code.add(this.code)
+        }
+
+        /**
+         * Unsets all bits in the [Builder] that are set in this [Intent].
+         */
+        public operator fun Intent.unaryMinus() {
+            this@Builder.code.remove(this.code)
+        }
+
+        /**
+         * Unsets all bits in the [Builder] that are set in this [Intents].
+         */
+        public operator fun Intents.unaryMinus() {
+            this@Builder.code.remove(this.code)
+        }
+
+        /**
+         * Returns an instance of [Intents] that has all bits set that are currently set in this
+         * [Builder].
+         */
+        public fun build(): Intents = Intents(code.copy())
+    }
+
+    internal object Serializer : KSerializer<Intents> {
+        override val descriptor: SerialDescriptor =
+                PrimitiveSerialDescriptor("dev.kord.gateway.Intents", PrimitiveKind.STRING)
+
+        private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
+
+        override fun serialize(encoder: Encoder, `value`: Intents) {
+            encoder.encodeSerializableValue(delegate, value.code)
+        }
+
+        override fun deserialize(decoder: Decoder): Intents =
+                Intents(decoder.decodeSerializableValue(delegate))
     }
 
     public companion object {
-
+        @Deprecated(
+            "Renamed to 'ALL'",
+            ReplaceWith("Intents.ALL", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.ALL"]),
+            DeprecationLevel.HIDDEN,
+        )
         @PrivilegedIntent
-        public val all: Intents
-            get() = Intents(Intent.values)
+        public val all: Intents get() = ALL
 
+        @Deprecated(
+            "Renamed to 'PRIVILEGED'",
+            ReplaceWith("Intents.PRIVILEGED", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.PRIVILEGED"]),
+            DeprecationLevel.HIDDEN,
+        )
         @PrivilegedIntent
-        public val privileged: Intents
-            get() = Intents(GuildPresences, GuildMembers, MessageContent)
+        public val privileged: Intents get() = PRIVILEGED
 
-        @OptIn(PrivilegedIntent::class)
-        public val nonPrivileged: Intents
-            get() = Intents {
-                +all
-                -privileged
-            }
+        @Deprecated(
+            "Renamed to 'NON_PRIVILEGED'",
+            ReplaceWith(
+                "Intents.NON_PRIVILEGED",
+                imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.NON_PRIVILEGED"],
+            ),
+            DeprecationLevel.HIDDEN,
+        )
+        public val nonPrivileged: Intents get() = NON_PRIVILEGED
 
-        public val none: Intents = Intents()
-
+        @Deprecated(
+            "Renamed to 'NONE'",
+            ReplaceWith("Intents.NONE", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.NONE"]),
+            DeprecationLevel.HIDDEN,
+        )
+        public val none: Intents get() = NONE
     }
-
-
-    public class IntentsBuilder(internal var code: DiscordBitSet = EmptyBitSet()) {
-        public operator fun Intents.unaryPlus() {
-            this@IntentsBuilder.code.add(code)
-        }
-
-        public operator fun Intent.unaryPlus() {
-            this@IntentsBuilder.code.add(code)
-        }
-
-        public operator fun Intent.unaryMinus() {
-            this@IntentsBuilder.code.remove(code)
-        }
-
-        public operator fun Intents.unaryMinus() {
-            this@IntentsBuilder.code.remove(code)
-        }
-
-        public fun flags(): Intents = Intents(code)
-    }
-
 }
 
-public object IntentsSerializer : KSerializer<Intents> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("intents", PrimitiveKind.STRING)
+@Deprecated(
+    "Replaced by 'Intents.serializer()'.",
+    ReplaceWith("Intents.serializer()", imports = ["dev.kord.gateway.Intents"]),
+    DeprecationLevel.HIDDEN,
+)
+public object IntentsSerializer : KSerializer<Intents> by Intents.Serializer
 
-    override fun deserialize(decoder: Decoder): Intents {
-        val intents = decoder.decodeString()
-        return Intents(intents)
-    }
-
-
-    override fun serialize(encoder: Encoder, value: Intents) {
-        val intents = value.code
-        encoder.encodeString(intents.value)
-
-    }
+/**
+ * Returns an instance of [Intents] built with [Intents.Builder].
+ */
+@JvmName("Intents0") // TODO other name when deprecated overload is removed
+public inline fun Intents(builder: Intents.Builder.() -> Unit = {}): Intents {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    return Intents.Builder().apply(builder).build()
 }
+
+@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.HIDDEN)
+@kotlin.internal.LowPriorityInOverloadResolution
+public inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    return Intents.IntentsBuilder().apply(builder).flags()
+}
+
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(vararg flags: Intent): Intents = Intents {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(vararg flags: Intents): Intents = Intents {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+public fun Intents(flags: Iterable<Intent>): Intents = Intents {
+    flags.forEach { +it }
+}
+
+/**
+ * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
+ */
+@JvmName("Intents0")
+public fun Intents(flags: Iterable<Intents>): Intents = Intents {
+    flags.forEach { +it }
+}
+
+// TODO uncomment annotation in Intents.kt and delete this file when these functions are removed after deprecation cycle
+@Suppress("FunctionName")
+@Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+public fun IntentsWithIterable(flags: Iterable<Intents>): Intents = Intents(flags)
+
+@Deprecated(
+    "Don't construct an instance of 'Intents' from a raw value. Use the factory functions described in the " +
+        "documentation instead.",
+    ReplaceWith(
+        "Intents.Builder(DiscordBitSet(value)).build()",
+        imports = ["dev.kord.gateway.Intents", "dev.kord.common.DiscordBitSet"],
+    ),
+    DeprecationLevel.HIDDEN,
+)
+public fun Intents(value: String): Intents = Intents(DiscordBitSet(value))

@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "DefaultMessageNotificationLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "DefaultMessageNotificationLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level",
     entries = [
         Entry("AllMessages", intValue = 0, kDoc = "Members will receive notifications for all messages by default."),
@@ -10,8 +10,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ExplicitContentFilter", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ExplicitContentFilter",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level",
     entries = [
         Entry("Disabled", intValue = 0, kDoc = "Media content will not be scanned."),
@@ -23,8 +23,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "MFALevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "MFALevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-mfa-level",
     entries = [
         Entry("None", intValue = 0, kDoc = "Guild has no MFA/2FA requirement for moderation actions."),
@@ -32,8 +32,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "VerificationLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "VerificationLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-verification-level",
     entries = [
         Entry("None", intValue = 0, kDoc = "Unrestricted."),
@@ -44,8 +44,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "NsfwLevel", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "NsfwLevel",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level",
     entries = [
         Entry("Default", intValue = 0),
@@ -55,8 +55,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "PremiumTier", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "PremiumTier",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-premium-tier",
     entries = [
         Entry("None", intValue = 0, kDoc = "Guild has not unlocked any Server Boost perks."),
@@ -66,8 +66,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "GuildFeature", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "GuildFeature",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-guild-features",
     entries = [
         Entry(
@@ -150,6 +150,27 @@
     ],
 )
 
+/*
+@file:Generate(
+    INT_FLAGS, name = "SystemChannelFlag", valueName = "code",
+    docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
+    entries = [
+        Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),
+        Entry("SuppressPremiumSubscriptions", shift = 1, kDoc = "Suppress server boost notifications."),
+        Entry("SuppressGuildReminderNotifications", shift = 2, kDoc = "Suppress server setup tips."),
+        Entry("SuppressJoinNotificationReplies", shift = 3, kDoc = "Hide member join sticker reply buttons."),
+        Entry(
+            "SuppressRoleSubscriptionPurchaseNotifications", shift = 4,
+            kDoc = "Suppress role subscription purchase and renewal notifications.",
+        ),
+        Entry(
+            "SuppressRoleSubscriptionPurchaseNotificationReplies", shift = 5,
+            kDoc = "Hide role subscription sticker reply buttons.",
+        ),
+    ],
+)
+*/
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -157,19 +178,12 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * A partial representation of a [DiscordGuild] that may be [unavailable].
@@ -332,55 +346,13 @@ public data class DiscordPartialGuild(
     val stickers: Optional<List<DiscordMessageSticker>> = Optional.Missing(),
     @SerialName("guild_scheduled_events")
     val guildScheduledEvents: Optional<List<DiscordGuildScheduledEvent>> = Optional.Missing(),
+    @SerialName("approximate_member_count")
+    val approximateMemberCount: OptionalInt = OptionalInt.Missing,
+    @SerialName("approximate_presence_count")
+    val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("premium_progress_bar_enabled")
     val premiumProgressBarEnabled: OptionalBoolean = OptionalBoolean.Missing,
 )
-
-@Serializable(with = SystemChannelFlags.Companion::class)
-public data class SystemChannelFlags(val code: Int) {
-
-    public operator fun contains(flag: SystemChannelFlags): Boolean {
-        return this.code and flag.code == flag.code
-    }
-
-    public companion object : KSerializer<SystemChannelFlags> {
-
-        override val descriptor: SerialDescriptor
-            get() = PrimitiveSerialDescriptor("system_channel_flags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): SystemChannelFlags {
-            return SystemChannelFlags(decoder.decodeInt())
-        }
-
-        override fun serialize(encoder: Encoder, value: SystemChannelFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-}
-
-/**
- * A representation of a [Discord Channels Flag](https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags).
- */
-public enum class SystemChannelFlag(public val code: Int) {
-    /** Suppress member join notifications. **/
-    SuppressJoinNotifications(1.shl(0)),
-
-    /** Suppress server boost notifications. **/
-    SuppressPremiumSubscriptions(1.shl(1)),
-
-    /** Hide server setup tips. **/
-    SuppressGuildReminderNotifications(1.shl(2)),
-
-    /** Hide member join sticker reply buttons. **/
-    SuppressJoinNotificationReplies(1.shl(3)),
-
-    /** Suppress role subscription purchase and renewal notifications. **/
-    SuppressRoleSubscriptionPurchaseNotifications(1.shl(4)),
-
-    /** Hide role subscription sticker reply buttons. **/
-    SuppressRoleSubscriptionPurchaseNotificationReplies(1.shl(5)),
-}
 
 @Serializable
 public data class DiscordGuildBan(

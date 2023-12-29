@@ -1,6 +1,7 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.Permission
+import dev.kord.common.entity.ALL
+import dev.kord.common.entity.GuildMemberFlags
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
@@ -10,6 +11,7 @@ import dev.kord.core.behavior.RoleBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.MemberData
 import dev.kord.core.cache.data.UserData
+import dev.kord.core.entity.interaction.GuildInteraction
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.*
@@ -30,28 +32,9 @@ public class Member(
         get() = memberData.guildId
 
     /**
-     * The name as shown in the discord client, prioritizing [nickname] over [globalName] and [username].
-     */
-    @Deprecated(
-        "This was renamed to 'effectiveName' to avoid confusion with 'User.globalName' which is also called display " +
-            "name.",
-        ReplaceWith("this.effectiveName"),
-        DeprecationLevel.ERROR,
-    )
-    public val displayName: String get() = effectiveName
-
-    /**
      * The member's effective name, prioritizing [nickname] over [globalName] and [username].
      */
     public val effectiveName: String get() = nickname ?: (this as User).effectiveName
-
-    /**
-     * The members guild avatar as [Icon] object
-     */
-    @Suppress("DEPRECATION_ERROR")
-    @Deprecated("Binary compatibility", level = DeprecationLevel.HIDDEN)
-    public fun getMemberAvatar(): Icon? =
-        memberData.avatar.value?.let { Icon.MemberAvatar(memberData.guildId, id, it, kord) }
 
     public val memberAvatarHash: String? get() = memberData.avatar.value
 
@@ -97,6 +80,16 @@ public class Member(
         get() = if (roleIds.isEmpty()) emptyFlow()
         else supplier.getGuildRoles(guildId).filter { it.id in roleIds }
 
+    /** The [GuildMemberFlags] of this member. */
+    public val flags: GuildMemberFlags get() = memberData.flags
+
+    /**
+     * The total [Permissions] of this member in the channel an interaction was sent from.
+     *
+     * This is only non-null when obtained from a [GuildInteraction].
+     */
+    public val permissions: Permissions? get() = memberData.permissions.value
+
     /**
      * Whether the user has not yet passed the guild's Membership Screening requirements.
      */
@@ -122,7 +115,7 @@ public class Member(
     public suspend fun getPermissions(): Permissions {
         val guild = getGuild()
         val owner = guild.ownerId == this.id
-        if (owner) return Permissions(Permission.All)
+        if (owner) return Permissions.ALL
 
         val everyone = guild.getEveryoneRole().permissions
         val roles = roles.map { it.permissions }.toList()

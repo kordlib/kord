@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,7 +30,8 @@ public sealed class GuildScheduledEventStatus(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "GuildScheduledEventStatus.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "GuildScheduledEventStatus.Unknown(value=$value)"
+            else "GuildScheduledEventStatus.${this::class.simpleName}"
 
     /**
      * An unknown [GuildScheduledEventStatus].
@@ -38,9 +39,19 @@ public sealed class GuildScheduledEventStatus(
      * This is used as a fallback for [GuildScheduledEventStatus]s that haven't been added to Kord
      * yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : GuildScheduledEventStatus(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : GuildScheduledEventStatus(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'GuildScheduledEventStatus.from()'.",
+            replaceWith = ReplaceWith(expression = "GuildScheduledEventStatus.from(value)", imports
+                        = arrayOf("dev.kord.common.entity.GuildScheduledEventStatus")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object Scheduled : GuildScheduledEventStatus(1)
 
@@ -60,13 +71,7 @@ public sealed class GuildScheduledEventStatus(
         }
 
         override fun deserialize(decoder: Decoder): GuildScheduledEventStatus =
-                when (val value = decoder.decodeInt()) {
-            1 -> Scheduled
-            2 -> Active
-            3 -> Completed
-            4 -> Cancelled
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -82,5 +87,17 @@ public sealed class GuildScheduledEventStatus(
             )
         }
 
+
+        /**
+         * Returns an instance of [GuildScheduledEventStatus] with [GuildScheduledEventStatus.value]
+         * equal to the specified [value].
+         */
+        public fun from(`value`: Int): GuildScheduledEventStatus = when (value) {
+            1 -> Scheduled
+            2 -> Active
+            3 -> Completed
+            4 -> Cancelled
+            else -> Unknown(value, null)
+        }
     }
 }

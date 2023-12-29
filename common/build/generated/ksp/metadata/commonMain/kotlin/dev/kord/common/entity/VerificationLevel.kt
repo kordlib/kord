@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,16 +30,27 @@ public sealed class VerificationLevel(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "VerificationLevel.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "VerificationLevel.Unknown(value=$value)"
+            else "VerificationLevel.${this::class.simpleName}"
 
     /**
      * An unknown [VerificationLevel].
      *
      * This is used as a fallback for [VerificationLevel]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : VerificationLevel(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : VerificationLevel(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'VerificationLevel.from()'.",
+            replaceWith = ReplaceWith(expression = "VerificationLevel.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.VerificationLevel")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Unrestricted.
@@ -75,15 +86,7 @@ public sealed class VerificationLevel(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): VerificationLevel =
-                when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Low
-            2 -> Medium
-            3 -> High
-            4 -> VeryHigh
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): VerificationLevel = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -100,5 +103,18 @@ public sealed class VerificationLevel(
             )
         }
 
+
+        /**
+         * Returns an instance of [VerificationLevel] with [VerificationLevel.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: Int): VerificationLevel = when (value) {
+            0 -> None
+            1 -> Low
+            2 -> Medium
+            3 -> High
+            4 -> VeryHigh
+            else -> Unknown(value, null)
+        }
     }
 }

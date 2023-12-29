@@ -18,12 +18,12 @@ jobs:
       group: pages
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 8
+          java-version: 11
       - name: Build docs with Gradle
         uses: gradle/gradle-build-action@v2
         with:

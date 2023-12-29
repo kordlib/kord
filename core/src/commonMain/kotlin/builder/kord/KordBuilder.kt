@@ -34,11 +34,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.serialization.json.Json
-import mu.KotlinLogging
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-private val logger = KotlinLogging.logger { }
 private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
 
 public expect class KordBuilder(token: String) : BaseKordBuilder
@@ -219,15 +217,6 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
         val recommendedShards = gatewayInfo.shards
         val shardsInfo = shardsBuilder(recommendedShards)
         val shards = shardsInfo.indices.toList()
-
-        if (client.engine.config.threadsCount < shards.size + 1) {
-            logger.warn {
-                """
-                kord's http client is currently using ${client.engine.config.threadsCount} threads, 
-                which is less than the advised thread count of ${shards.size + 1} (number of shards + 1)
-                """.trimIndent()
-            }
-        }
 
         val resources = ClientResources(
             token = token,

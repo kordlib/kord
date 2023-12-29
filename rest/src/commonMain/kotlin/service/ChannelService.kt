@@ -1,7 +1,6 @@
 package dev.kord.rest.service
 
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.channel.*
 import dev.kord.rest.builder.channel.thread.StartForumThreadBuilder
 import dev.kord.rest.builder.channel.thread.StartThreadBuilder
@@ -236,7 +235,7 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         keys[Route.MessageId] = messageId
         body(MessageEditPatchRequest.serializer(), request.requests)
 
-        request.files.orEmpty().forEach { file(it) }
+        request.files.forEach { file(it) }
     }
 
     public suspend fun editMessage(
@@ -248,7 +247,7 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
         keys[Route.MessageId] = messageId
         body(WebhookEditMessageRequest.serializer(), request.request)
 
-        request.files.orEmpty().forEach { file(it) }
+        request.files.forEach { file(it) }
     }
 
     public suspend fun putChannel(
@@ -441,6 +440,15 @@ public suspend inline fun ChannelService.patchForumChannel(
 ): DiscordChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val modifyBuilder = ForumChannelModifyBuilder().apply(builder)
+    return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
+}
+
+public suspend inline fun ChannelService.patchMediaChannel(
+    channelId: Snowflake,
+    builder: MediaChannelModifyBuilder.() -> Unit,
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val modifyBuilder = MediaChannelModifyBuilder().apply(builder)
     return patchChannel(channelId, modifyBuilder.toRequest(), modifyBuilder.reason)
 }
 

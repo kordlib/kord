@@ -592,7 +592,18 @@ public sealed class Route<T>(
         Route<DiscordGuildPreview>(HttpMethod.Get, "/guilds/$GuildId/preview", DiscordGuildPreview.serializer())
 
     public object GuildOnboardingGet :
-        Route<DiscordGuildOnboarding>(HttpMethod.Get, "/guilds/$GuildId/onboarding", DiscordGuildOnboarding.serializer())
+        Route<DiscordGuildOnboarding>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/onboarding",
+            DiscordGuildOnboarding.serializer(),
+        )
+
+    public object GuildOnboardingModify :
+        Route<DiscordGuildOnboarding>(
+            HttpMethod.Put,
+            "/guilds/$GuildId/onboarding",
+            DiscordGuildOnboarding.serializer(),
+        )
 
     public object SelfVoiceStatePatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/voice-states/@me", NoStrategy)

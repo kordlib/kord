@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,16 +29,28 @@ public sealed class SortOrderType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "SortOrderType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "SortOrderType.Unknown(value=$value)"
+            else "SortOrderType.${this::class.simpleName}"
 
     /**
      * An unknown [SortOrderType].
      *
      * This is used as a fallback for [SortOrderType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : SortOrderType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : SortOrderType(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'SortOrderType.from()'.",
+            replaceWith = ReplaceWith(expression = "SortOrderType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.SortOrderType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Sort forum posts by activity.
@@ -58,12 +70,7 @@ public sealed class SortOrderType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): SortOrderType =
-                when (val value = decoder.decodeInt()) {
-            0 -> LatestActivity
-            1 -> CreationDate
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): SortOrderType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -77,5 +84,15 @@ public sealed class SortOrderType(
             )
         }
 
+
+        /**
+         * Returns an instance of [SortOrderType] with [SortOrderType.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): SortOrderType = when (value) {
+            0 -> LatestActivity
+            1 -> CreationDate
+            else -> Unknown(value, null)
+        }
     }
 }

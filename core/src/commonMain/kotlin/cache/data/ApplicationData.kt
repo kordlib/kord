@@ -24,7 +24,7 @@ public sealed interface BaseApplicationData {
     public val tags: Optional<List<String>>
     public val installParams: Optional<InstallParams>
     public val customInstallUrl: Optional<String>
-    public val roleConnectionsVerificationUrl: Optional<String>
+    public val roleConnectionsVerificationUrl: Optional<String?>
 }
 
 @Serializable
@@ -49,7 +49,7 @@ public data class ApplicationData(
     override val tags: Optional<List<String>> = Optional.Missing(),
     override val installParams: Optional<InstallParams> = Optional.Missing(),
     override val customInstallUrl: Optional<String> = Optional.Missing(),
-    override val roleConnectionsVerificationUrl: Optional<String> = Optional.Missing(),
+    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
 ) : BaseApplicationData {
     public companion object {
 
@@ -101,7 +101,7 @@ public data class PartialApplicationData(
     override val tags: Optional<List<String>> = Optional.Missing(),
     override val installParams: Optional<InstallParams> = Optional.Missing(),
     override val customInstallUrl: Optional<String> = Optional.Missing(),
-    override val roleConnectionsVerificationUrl: Optional<String> = Optional.Missing(),
+    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
 ) : BaseApplicationData {
     public companion object {
 

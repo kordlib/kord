@@ -1,5 +1,5 @@
-@file: GenerateKordEnum(
-    name = "ApplicationRoleConnectionMetadataType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ApplicationRoleConnectionMetadataType",
     kDoc = "Each [ApplicationRoleConnectionMetadataType] offers a comparison operation that allows guilds to " +
         "configure role requirements based on metadata values stored by the bot. Bots specify a 'metadata value' for " +
         "each user and guilds specify the required 'guild's configured value' within the guild role settings.",
@@ -47,9 +47,9 @@ package dev.kord.common.entity
 
 import dev.kord.common.Locale
 import dev.kord.common.entity.optional.Optional
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

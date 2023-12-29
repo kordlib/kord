@@ -5,6 +5,7 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.rest.NamedFile
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -55,12 +56,12 @@ public data class InteractionResponseModifyRequest(
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
     val flags: Optional<MessageFlags?> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
-    val attachments: Optional<MutableList<DiscordAttachment>?> = Optional.Missing()
+    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing(),
 )
 
 public data class MultipartInteractionResponseModifyRequest(
     val request: InteractionResponseModifyRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing(),
+    val files: List<NamedFile> = emptyList(),
 )
 
 @Serializable
@@ -70,10 +71,21 @@ public data class InteractionResponseCreateRequest(
 )
 
 @Serializable
-public data class AutoCompleteResponseCreateRequest<T>(
+public data class AutoCompleteResponseCreateRequest(
     val type: InteractionResponseType,
-    val data: DiscordAutoComplete<T>
-)
+    val data: DiscordAutoComplete,
+) {
+    public companion object {
+        @Suppress("UNUSED_PARAMETER")
+        @Deprecated(
+            "AutoCompleteResponseCreateRequest is no longer generic",
+            ReplaceWith("this.serializer()"),
+            DeprecationLevel.HIDDEN,
+        )
+        public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<AutoCompleteResponseCreateRequest> =
+            serializer()
+    }
+}
 
 @Serializable
 public data class ModalResponseCreateRequest(
@@ -83,18 +95,19 @@ public data class ModalResponseCreateRequest(
 
 public data class MultipartInteractionResponseCreateRequest(
     val request: InteractionResponseCreateRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing()
+    val files: List<NamedFile> = emptyList(),
 )
 
 @Serializable
 public data class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
-    val content: Optional<String?> = Optional.Missing(),
+    val content: Optional<String> = Optional.Missing(),
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
 )
 
 public data class MultipartFollowupMessageCreateRequest(
@@ -105,14 +118,12 @@ public data class MultipartFollowupMessageCreateRequest(
 @Serializable
 public data class FollowupMessageCreateRequest(
     val content: Optional<String> = Optional.Missing(),
-    val username: Optional<String> = Optional.Missing(),
-    @SerialName("avatar_url")
-    val avatar: Optional<String> = Optional.Missing(),
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
 )
 
@@ -123,11 +134,11 @@ public data class FollowupMessageModifyRequest(
     @SerialName("allowed_mentions")
     val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
-    val attachments: Optional<List<DiscordAttachment>?> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing(),
+    val flags: Optional<MessageFlags?> = Optional.Missing(),
 )
 
 public data class MultipartFollowupMessageModifyRequest(
     val request: FollowupMessageModifyRequest,
-    val files: Optional<List<NamedFile>> = Optional.Missing()
+    val files: List<NamedFile> = emptyList(),
 )

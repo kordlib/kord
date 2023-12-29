@@ -54,6 +54,25 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
         keys[Route.GuildId] = guildId
     }
 
+    public suspend fun modifyGuildOnboarding(
+        guildId: Snowflake,
+        request: GuildOnboardingModifyRequest,
+        reason: String? = null,
+    ): DiscordGuildOnboarding = call(Route.GuildOnboardingModify) {
+        keys[Route.GuildId] = guildId
+        body(GuildOnboardingModifyRequest.serializer(), request)
+        auditLogReason(reason)
+    }
+
+    public suspend inline fun modifyGuildOnboarding(
+        guildId: Snowflake,
+        builder: GuildOnboardingModifyBuilder.() -> Unit,
+    ): DiscordGuildOnboarding {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = GuildOnboardingModifyBuilder().apply(builder)
+        return modifyGuildOnboarding(guildId, request.toRequest(), request.reason)
+    }
+
     public suspend inline fun modifyGuild(guildId: Snowflake, builder: GuildModifyBuilder.() -> Unit): DiscordGuild {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
@@ -554,6 +573,17 @@ public suspend inline fun GuildService.createForumChannel(
     val createBuilder = ForumChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
+
+public suspend inline fun GuildService.createMediaChannel(
+    guildId: Snowflake,
+    name: String,
+    builder: MediaChannelCreateBuilder.() -> Unit,
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val createBuilder = MediaChannelCreateBuilder(name).apply(builder)
+    return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
 public suspend inline fun GuildService.createNewsChannel(
     guildId: Snowflake,
     name: String,
@@ -571,6 +601,16 @@ public suspend inline fun GuildService.createVoiceChannel(
 ): DiscordChannel {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val createBuilder = VoiceChannelCreateBuilder(name).apply(builder)
+    return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
+public suspend inline fun GuildService.createStageChannel(
+    guildId: Snowflake,
+    name: String,
+    builder: StageChannelCreateBuilder.() -> Unit
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val createBuilder = StageChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 

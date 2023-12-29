@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,7 +30,8 @@ public sealed class DefaultMessageNotificationLevel(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "DefaultMessageNotificationLevel.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "DefaultMessageNotificationLevel.Unknown(value=$value)"
+            else "DefaultMessageNotificationLevel.${this::class.simpleName}"
 
     /**
      * An unknown [DefaultMessageNotificationLevel].
@@ -38,9 +39,20 @@ public sealed class DefaultMessageNotificationLevel(
      * This is used as a fallback for [DefaultMessageNotificationLevel]s that haven't been added to
      * Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : DefaultMessageNotificationLevel(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : DefaultMessageNotificationLevel(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'DefaultMessageNotificationLevel.from()'.",
+            replaceWith = ReplaceWith(expression = "DefaultMessageNotificationLevel.from(value)",
+                        imports =
+                        arrayOf("dev.kord.common.entity.DefaultMessageNotificationLevel")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Members will receive notifications for all messages by default.
@@ -62,11 +74,7 @@ public sealed class DefaultMessageNotificationLevel(
         }
 
         override fun deserialize(decoder: Decoder): DefaultMessageNotificationLevel =
-                when (val value = decoder.decodeInt()) {
-            0 -> AllMessages
-            1 -> OnlyMentions
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -80,5 +88,15 @@ public sealed class DefaultMessageNotificationLevel(
             )
         }
 
+
+        /**
+         * Returns an instance of [DefaultMessageNotificationLevel] with
+         * [DefaultMessageNotificationLevel.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): DefaultMessageNotificationLevel = when (value) {
+            0 -> AllMessages
+            1 -> OnlyMentions
+            else -> Unknown(value, null)
+        }
     }
 }

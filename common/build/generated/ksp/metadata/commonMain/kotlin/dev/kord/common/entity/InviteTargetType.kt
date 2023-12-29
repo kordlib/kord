@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,16 +30,27 @@ public sealed class InviteTargetType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "InviteTargetType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "InviteTargetType.Unknown(value=$value)"
+            else "InviteTargetType.${this::class.simpleName}"
 
     /**
      * An unknown [InviteTargetType].
      *
      * This is used as a fallback for [InviteTargetType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : InviteTargetType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : InviteTargetType(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'InviteTargetType.from()'.",
+            replaceWith = ReplaceWith(expression = "InviteTargetType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.InviteTargetType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object Stream : InviteTargetType(1)
 
@@ -54,12 +65,7 @@ public sealed class InviteTargetType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): InviteTargetType =
-                when (val value = decoder.decodeInt()) {
-            1 -> Stream
-            2 -> EmbeddedApplication
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): InviteTargetType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -73,5 +79,15 @@ public sealed class InviteTargetType(
             )
         }
 
+
+        /**
+         * Returns an instance of [InviteTargetType] with [InviteTargetType.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: Int): InviteTargetType = when (value) {
+            1 -> Stream
+            2 -> EmbeddedApplication
+            else -> Unknown(value, null)
+        }
     }
 }

@@ -53,3 +53,8 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
 
     override var reason: String? = null
 }
+
+/** Add a [tagId] to [appliedTags][ThreadModifyBuilder.appliedTags]. */
+public fun ThreadModifyBuilder.applyTag(tagId: Snowflake) {
+    appliedTags?.add(tagId) ?: run { appliedTags = mutableListOf(tagId) }
+}

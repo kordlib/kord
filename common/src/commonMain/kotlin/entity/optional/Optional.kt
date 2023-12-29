@@ -216,6 +216,13 @@ public inline fun <E, T> Optional<List<E>>.mapList(mapper: (E) -> T): Optional<L
     is Value -> Value(value.map(mapper))
 }
 
+@JvmName("mapNullableList")
+public inline fun <E, T> Optional<List<E>?>.mapList(mapper: (E) -> T): Optional<List<T>?> = when (this) {
+    is Missing -> Missing()
+    is Null -> Null()
+    is Value -> Value(value!!.map(mapper))
+}
+
 public fun <T> Optional<MutableList<T>>.mapCopy(): Optional<List<T>> = map { mutable -> mutable.toList() }
 
 @JvmName("mapCopyOfMap")

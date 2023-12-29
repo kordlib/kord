@@ -125,7 +125,7 @@ public data class Resume(
 
 /**
  * A representation of the
- * [Discord Request Guild Members command](https://discord.com/developers/docs/topics/gateway#request-guild-members).
+ * [Discord Request Guild Members command](https://discord.com/developers/docs/topics/gateway-events#request-guild-members).
  *
  * When connecting to a [Gateway] Discord will send members up to [Identify.largeThreshold], any additional
  * members can be requested via this command. Sending this command will result in a variable amount of

@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,16 +30,27 @@ public sealed class MessageActivityType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "MessageActivityType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "MessageActivityType.Unknown(value=$value)"
+            else "MessageActivityType.${this::class.simpleName}"
 
     /**
      * An unknown [MessageActivityType].
      *
      * This is used as a fallback for [MessageActivityType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : MessageActivityType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : MessageActivityType(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'MessageActivityType.from()'.",
+            replaceWith = ReplaceWith(expression = "MessageActivityType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.MessageActivityType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object Join : MessageActivityType(1)
 
@@ -58,14 +69,7 @@ public sealed class MessageActivityType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): MessageActivityType =
-                when (val value = decoder.decodeInt()) {
-            1 -> Join
-            2 -> Spectate
-            3 -> Listen
-            5 -> JoinRequest
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): MessageActivityType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -81,5 +85,17 @@ public sealed class MessageActivityType(
             )
         }
 
+
+        /**
+         * Returns an instance of [MessageActivityType] with [MessageActivityType.value] equal to
+         * the specified [value].
+         */
+        public fun from(`value`: Int): MessageActivityType = when (value) {
+            1 -> Join
+            2 -> Spectate
+            3 -> Listen
+            5 -> JoinRequest
+            else -> Unknown(value, null)
+        }
     }
 }

@@ -37,7 +37,6 @@ class MessageTest {
             editedTimestamp shouldBe null
             with(author) {
                 username shouldBe "Mason"
-                @Suppress("DEPRECATION")
                 discriminator shouldBe "9999"
                 globalName shouldBe null
                 id shouldBe "53908099506183680"
@@ -77,7 +76,6 @@ class MessageTest {
             editedTimestamp shouldBe null
             with(author) {
                 username shouldBe "Mason"
-                @Suppress("DEPRECATION")
                 discriminator shouldBe "9999"
                 globalName shouldBe "Mason!"
                 id.toString() shouldBe "53908099506183680"

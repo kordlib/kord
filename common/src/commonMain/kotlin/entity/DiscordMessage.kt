@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "MessageType", valueType = INT, valueName = "code",
+@file:Generate(
+    INT_KORD_ENUM, name = "MessageType", valueName = "code",
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-types",
     entries = [
         Entry("Default", intValue = 0),
@@ -36,8 +36,41 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "MessageActivityType", valueType = INT,
+@file:Generate(
+    INT_FLAGS, name = "MessageFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
+    hadFlagsProperty = true, builderHadFlagsFunction = true,
+    docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-flags",
+    entries = [
+        Entry(
+            "CrossPosted", shift = 0,
+            kDoc = "This message has been published to subscribed channels (via Channel Following).",
+        ),
+        Entry(
+            "IsCrossPost", shift = 1,
+            kDoc = "This message originated from a message in another channel (via Channel Following).",
+        ),
+        Entry("SuppressEmbeds", shift = 2, kDoc = "Do not include any embeds when serializing this message."),
+        Entry(
+            "SourceMessageDeleted", shift = 3,
+            kDoc = "The source message for this crosspost has been deleted (via Channel Following).",
+        ),
+        Entry("Urgent", shift = 4, kDoc = "This message came from the urgent message system."),
+        Entry("HasThread", shift = 5, kDoc = "This message has an associated thread, with the same id as the message."),
+        Entry("Ephemeral", shift = 6, kDoc = "This message is only visible to the user who invoked the Interaction."),
+        Entry("Loading", shift = 7, kDoc = """This message is an Interaction Response and the bot is "thinking"."""),
+        Entry(
+            "FailedToMentionSomeRolesInThread", shift = 8,
+            kDoc = "This message failed to mention some roles and add their members to the thread.",
+        ),
+        Entry(
+            "SuppressNotifications", shift = 12, kDoc = "This message will not trigger push and desktop notifications.",
+        ),
+        Entry("IsVoiceMessage", shift = 13, kDoc = "This message is a voice message."),
+    ],
+)
+
+@file:Generate(
+    INT_KORD_ENUM, name = "MessageActivityType",
     docUrl = "https://discord.com/developers/docs/resources/channel#message-object-message-activity-types",
     entries = [
         Entry("Join", intValue = 1),
@@ -47,8 +80,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "EmbedType", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "EmbedType",
     docUrl = "https://discord.com/developers/docs/resources/channel#embed-object-embed-types",
     entries = [
         Entry("Rich", stringValue = "rich", kDoc = "Generic embed rendered from embed attributes."),
@@ -60,8 +93,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "AllowedMentionType", valueType = STRING,
+@file:Generate(
+    STRING_KORD_ENUM, name = "AllowedMentionType",
     docUrl = "https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types",
     entries = [
         Entry("RoleMentions", stringValue = "roles", kDoc = "Controls role mentions."),
@@ -70,14 +103,22 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "MessageStickerType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "MessageStickerType",
     docUrl = "https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types",
     entries = [
         Entry("PNG", intValue = 1),
         Entry("APNG", intValue = 2),
         Entry("LOTTIE", intValue = 3),
         Entry("GIF", intValue = 4)
+    ],
+)
+
+@file:Generate(
+    INT_FLAGS, name = "AttachmentFlag",
+    docUrl = "https://discord.com/developers/docs/resources/channel#attachment-object-attachment-flags",
+    entries = [
+        Entry("IsRemix", shift = 2, kDoc = "This attachment has been edited using the remix feature on mobile."),
     ],
 )
 
@@ -89,19 +130,12 @@ import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInDoubleSeconds
 import dev.kord.common.serialization.LongOrStringSerializer
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
-import dev.kord.ksp.GenerateKordEnum.ValueType.STRING
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.*
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.jvm.JvmName
@@ -373,132 +407,36 @@ public data class DiscordMentionedChannel(
     val name: String,
 )
 
-public enum class MessageFlag(public val code: Int) {
-    /** This message has been published to subscribed channels (via Channel Following). */
-    CrossPosted(1 shl 0),
-
-    /** This message originated from a message in another channel (via Channel Following). */
-    IsCrossPost(1 shl 1),
-
-    /** Do not include any embeds when serializing this message. */
-    SuppressEmbeds(1 shl 2),
-
-    /** The source message for this crosspost has been deleted (via Channel Following). */
-    SourceMessageDeleted(1 shl 3),
-
-    /** This message came from the urgent message system. */
-    Urgent(1 shl 4),
-
-    /** This message has an associated thread, with the same id as the message. */
-    HasThread(1 shl 5),
-
-    /** This message is only visible to the user who invoked the Interaction. */
-    Ephemeral(1 shl 6),
-
-    /** This message is an Interaction Response and the bot is "thinking". */
-    Loading(1 shl 7),
-
-    /** This message failed to mention some roles and add their members to the thread. */
-    FailedToMentionSomeRolesInThread(1 shl 8),
-
-    /** This message will not trigger push and desktop notifications. */
-    SuppressNotifications(1 shl 12),
-
-    /**
-     * This message is a voice message.
-     */
-    IsVoiceMessage(1 shl 13)
-}
-
-@Serializable(with = MessageFlags.Serializer::class)
-public data class MessageFlags internal constructor(val code: Int) {
-
-    val flags: List<MessageFlag> = MessageFlag.values().filter { code and it.code != 0 }
-
-    public operator fun contains(flag: MessageFlag): Boolean = flag.code and this.code == flag.code
-
-    public operator fun contains(flags: MessageFlags): Boolean = flags.code and this.code == flags.code
-
-    public operator fun plus(flags: MessageFlags): MessageFlags = MessageFlags(this.code or flags.code)
-
-    public operator fun plus(flags: MessageFlag): MessageFlags = MessageFlags(this.code or flags.code)
-
-    public operator fun minus(flags: MessageFlags): MessageFlags = MessageFlags(this.code xor flags.code)
-
-    public operator fun minus(flags: MessageFlag): MessageFlags = MessageFlags(this.code xor flags.code)
-
-
-    public inline fun copy(block: Builder.() -> Unit): MessageFlags {
-        val builder = Builder(code)
-        builder.apply(block)
-        return builder.flags()
-    }
-
-    override fun toString(): String = "MessageFlags(flags=$flags)"
-
-    internal object Serializer : KSerializer<MessageFlags> {
-
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("flags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): MessageFlags {
-            val flags = decoder.decodeInt()
-            return MessageFlags(flags)
-        }
-
-        override fun serialize(encoder: Encoder, value: MessageFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-    public class Builder(internal var code: Int = 0) {
-        public operator fun MessageFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or code
-        }
-
-        public operator fun MessageFlag.unaryMinus() {
-            if (this@Builder.code and code == code) {
-                this@Builder.code = this@Builder.code xor code
-            }
-        }
-
-        public operator fun MessageFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or code
-        }
-
-        public operator fun MessageFlags.unaryMinus() {
-            if (this@Builder.code and code == code) {
-                this@Builder.code = this@Builder.code xor code
-            }
-        }
-
-        public fun flags(): MessageFlags = MessageFlags(code)
-    }
-
-}
-
-public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("MessageFlags")
+public inline fun messageFlags(builder: MessageFlags.Builder.() -> Unit): MessageFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return MessageFlags.Builder().apply(builder).flags()
+    return MessageFlags.Builder().apply(builder).build()
 }
 
-public fun MessageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("MessageFlags")
+public fun messageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
 
-public fun MessageFlags(vararg flags: MessageFlags): MessageFlags = MessageFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("MessageFlags")
+public fun messageFlags(vararg flags: MessageFlags): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
 
-public fun MessageFlags(flags: Iterable<MessageFlag>): MessageFlags = MessageFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("MessageFlags")
+public fun messageFlags(flags: Iterable<MessageFlag>): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
 
-
-@JvmName("MessageFlagsWithIterable")
-public fun MessageFlags(flags: Iterable<MessageFlags>): MessageFlags = MessageFlags {
+@Suppress("FunctionName")
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+public fun MessageFlagsWithIterable(flags: Iterable<MessageFlags>): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
-
 
 /**
  * A representation of a [Discord Attachment structure](https://discord.com/developers/docs/resources/channel#attachment-object).
@@ -527,21 +465,13 @@ public data class DiscordAttachment(
     val url: String,
     @SerialName("proxy_url")
     val proxyUrl: String,
-    /*
-    Do not trust the docs:
-    2020-11-06 This field is marked as nullable but can be missing instead.
-    */
     val height: OptionalInt? = OptionalInt.Missing,
-    /*
-    Do not trust the docs:
-    2020-11-06 This field is marked as nullable but can be missing instead.
-    */
     val width: OptionalInt? = OptionalInt.Missing,
-
     val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("duration_secs")
     val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing(),
-    val waveform: Optional<String> = Optional.Missing()
+    val waveform: Optional<String> = Optional.Missing(),
+    val flags: Optional<AttachmentFlags> = Optional.Missing(),
 )
 
 /**
@@ -741,6 +671,8 @@ public data class MessageReactionAddData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
     val emoji: DiscordPartialEmoji,
+    @SerialName("message_author_id")
+    val messageAuthorId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
 
 @Serializable

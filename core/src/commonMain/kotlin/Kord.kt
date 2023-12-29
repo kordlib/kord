@@ -31,17 +31,21 @@ import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import mu.KLogger
-import mu.KotlinLogging
-import kotlin.DeprecationLevel.ERROR
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
-public val kordLogger: KLogger = KotlinLogging.logger { }
+@Deprecated("Use your own logger instead, this will be removed in the future.", level = DeprecationLevel.WARNING)
+public val kordLogger: mu.KLogger = mu.KotlinLogging.logger { }
+
+private val logger = KotlinLogging.logger { }
+
+@PublishedApi
+internal fun logCaughtThrowable(throwable: Throwable): Unit = logger.catching(throwable)
 
 
 /**
@@ -250,18 +254,6 @@ public class Kord(
      * @throws EntityNotFoundException if the guild is null.
      */
     public suspend fun getGuild(
-        id: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
-    ): Guild = strategy.supply(this).getGuild(id)
-
-    /**
-     * Requests the [Guild] with the given [id].
-     *
-     * @throws RequestException if something went wrong while retrieving the guild.
-     * @throws EntityNotFoundException if the guild is null.
-     */
-    @Deprecated("Renamed to getGuild", ReplaceWith("this.getGuild(id, strategy)"), level = ERROR)
-    public suspend fun getGuildOrThrow(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Guild = strategy.supply(this).getGuild(id)
@@ -647,6 +639,6 @@ public inline fun <reified T : Event> Kord.on(
 ): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach { event ->
-            scope.launch { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
+            scope.launch { runCatching { consumer(event) }.onFailure(::logCaughtThrowable) }
         }
         .launchIn(scope)

@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,16 +29,27 @@ public sealed class MessageType(
 
     final override fun hashCode(): Int = code.hashCode()
 
-    final override fun toString(): String = "MessageType.${this::class.simpleName}(code=$code)"
+    final override fun toString(): String = if (this is Unknown) "MessageType.Unknown(code=$code)"
+            else "MessageType.${this::class.simpleName}"
 
     /**
      * An unknown [MessageType].
      *
      * This is used as a fallback for [MessageType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         code: Int,
-    ) : MessageType(code)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : MessageType(code) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'MessageType.from()'.",
+            replaceWith = ReplaceWith(expression = "MessageType.from(code)", imports =
+                        arrayOf("dev.kord.common.entity.MessageType")),
+        )
+        public constructor(code: Int) : this(code, null)
+    }
 
     public object Default : MessageType(0)
 
@@ -110,41 +121,7 @@ public sealed class MessageType(
             encoder.encodeInt(value.code)
         }
 
-        override fun deserialize(decoder: Decoder): MessageType =
-                when (val code = decoder.decodeInt()) {
-            0 -> Default
-            1 -> RecipientAdd
-            2 -> RecipientRemove
-            3 -> Call
-            4 -> ChannelNameChange
-            5 -> ChannelIconChange
-            6 -> ChannelPinnedMessage
-            7 -> UserJoin
-            8 -> GuildBoost
-            9 -> GuildBoostTier1
-            10 -> GuildBoostTier2
-            11 -> GuildBoostTier3
-            12 -> ChannelFollowAdd
-            14 -> GuildDiscoveryDisqualified
-            15 -> GuildDiscoveryRequalified
-            16 -> GuildDiscoveryGracePeriodInitialWarning
-            17 -> GuildDiscoveryGracePeriodFinalWarning
-            18 -> ThreadCreated
-            19 -> Reply
-            20 -> ChatInputCommand
-            21 -> ThreadStarterMessage
-            22 -> GuildInviteReminder
-            23 -> ContextMenuCommand
-            24 -> AutoModerationAction
-            25 -> RoleSubscriptionPurchase
-            26 -> InteractionPremiumUpsell
-            27 -> StageStart
-            28 -> StageEnd
-            29 -> StageSpeaker
-            31 -> StageTopic
-            32 -> GuildApplicationPremiumSubscription
-            else -> Unknown(code)
-        }
+        override fun deserialize(decoder: Decoder): MessageType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -187,5 +164,44 @@ public sealed class MessageType(
             )
         }
 
+
+        /**
+         * Returns an instance of [MessageType] with [MessageType.code] equal to the specified
+         * [code].
+         */
+        public fun from(code: Int): MessageType = when (code) {
+            0 -> Default
+            1 -> RecipientAdd
+            2 -> RecipientRemove
+            3 -> Call
+            4 -> ChannelNameChange
+            5 -> ChannelIconChange
+            6 -> ChannelPinnedMessage
+            7 -> UserJoin
+            8 -> GuildBoost
+            9 -> GuildBoostTier1
+            10 -> GuildBoostTier2
+            11 -> GuildBoostTier3
+            12 -> ChannelFollowAdd
+            14 -> GuildDiscoveryDisqualified
+            15 -> GuildDiscoveryRequalified
+            16 -> GuildDiscoveryGracePeriodInitialWarning
+            17 -> GuildDiscoveryGracePeriodFinalWarning
+            18 -> ThreadCreated
+            19 -> Reply
+            20 -> ChatInputCommand
+            21 -> ThreadStarterMessage
+            22 -> GuildInviteReminder
+            23 -> ContextMenuCommand
+            24 -> AutoModerationAction
+            25 -> RoleSubscriptionPurchase
+            26 -> InteractionPremiumUpsell
+            27 -> StageStart
+            28 -> StageEnd
+            29 -> StageSpeaker
+            31 -> StageTopic
+            32 -> GuildApplicationPremiumSubscription
+            else -> Unknown(code, null)
+        }
     }
 }

@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,16 +29,27 @@ public sealed class MFALevel(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "MFALevel.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "MFALevel.Unknown(value=$value)"
+            else "MFALevel.${this::class.simpleName}"
 
     /**
      * An unknown [MFALevel].
      *
      * This is used as a fallback for [MFALevel]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : MFALevel(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : MFALevel(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'MFALevel.from()'.",
+            replaceWith = ReplaceWith(expression = "MFALevel.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.MFALevel")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Guild has no MFA/2FA requirement for moderation actions.
@@ -58,12 +69,7 @@ public sealed class MFALevel(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): MFALevel =
-                when (val value = decoder.decodeInt()) {
-            0 -> None
-            1 -> Elevated
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): MFALevel = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -77,5 +83,14 @@ public sealed class MFALevel(
             )
         }
 
+
+        /**
+         * Returns an instance of [MFALevel] with [MFALevel.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): MFALevel = when (value) {
+            0 -> None
+            1 -> Elevated
+            else -> Unknown(value, null)
+        }
     }
 }

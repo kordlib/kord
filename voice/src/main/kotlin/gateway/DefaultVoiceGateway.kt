@@ -5,10 +5,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.retry.Retry
 import dev.kord.voice.gateway.handler.HandshakeHandler
 import dev.kord.voice.gateway.handler.HeartbeatHandler
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
-import io.ktor.util.logging.*
 import io.ktor.websocket.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
@@ -20,7 +20,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
-import mu.KotlinLogging
 import kotlin.time.Duration
 
 private val defaultVoiceGatewayLogger = KotlinLogging.logger { }
@@ -88,7 +87,7 @@ public class DefaultVoiceGateway(
             } catch (exception: Exception) {
                 if (exception is CancellationException) break
 
-                defaultVoiceGatewayLogger.error(exception)
+                defaultVoiceGatewayLogger.error(exception) { "" }
                 if (exception is java.nio.channels.UnresolvedAddressException) {
                     data.eventFlow.emit(Close.Timeout)
                 }
@@ -114,7 +113,7 @@ public class DefaultVoiceGateway(
             } catch (exception: CancellationException) {
                 defaultVoiceGatewayLogger.trace(exception) { "" }
             } catch (exception: Exception) {
-                defaultVoiceGatewayLogger.error(exception)
+                defaultVoiceGatewayLogger.error(exception) { "" }
             }
 
             defaultVoiceGatewayLogger.trace { "handled voice gateway connection closed" }
@@ -154,7 +153,7 @@ public class DefaultVoiceGateway(
 
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
-            defaultVoiceGatewayLogger.error(exception)
+            defaultVoiceGatewayLogger.error(exception) { "" }
         }
     }
 

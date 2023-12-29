@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,16 +29,28 @@ public sealed class GuildFeature(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "GuildFeature.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "GuildFeature.Unknown(value=$value)"
+            else "GuildFeature.${this::class.simpleName}"
 
     /**
      * An unknown [GuildFeature].
      *
      * This is used as a fallback for [GuildFeature]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: String,
-    ) : GuildFeature(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : GuildFeature(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'GuildFeature.from()'.",
+            replaceWith = ReplaceWith(expression = "GuildFeature.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.GuildFeature")),
+        )
+        public constructor(`value`: String) : this(value, null)
+    }
 
     /**
      * Guild has access to set an animated guild banner image.
@@ -187,37 +199,7 @@ public sealed class GuildFeature(
             encoder.encodeString(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): GuildFeature =
-                when (val value = decoder.decodeString()) {
-            "ANIMATED_BANNER" -> AnimatedBanner
-            "ANIMATED_ICON" -> AnimatedIcon
-            "APPLICATION_COMMAND_PERMISSIONS_V2" -> ApplicationCommandPermissionsV2
-            "AUTO_MODERATION" -> AutoModeration
-            "BANNER" -> Banner
-            "COMMUNITY" -> Community
-            "CREATOR_MONETIZABLE_PROVISIONAL" -> CreatorMonetizableProvisional
-            "CREATOR_STORE_PAGE" -> CreatorStorePage
-            "DEVELOPER_SUPPORT_SERVER" -> DeveloperSupportServer
-            "DISCOVERABLE" -> Discoverable
-            "FEATURABLE" -> Featurable
-            "INVITES_DISABLED" -> InvitesDisabled
-            "INVITE_SPLASH" -> InviteSplash
-            "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
-            "MORE_STICKERS" -> MoreStickers
-            "NEWS" -> News
-            "PARTNERED" -> Partnered
-            "PREVIEW_ENABLED" -> PreviewEnabled
-            "RAID_ALERTS_DISABLED" -> RaidAlertsDisabled
-            "ROLE_ICONS" -> RoleIcons
-            "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE" -> RoleSubscriptionsAvailableForPurchase
-            "ROLE_SUBSCRIPTIONS_ENABLED" -> RoleSubscriptionsEnabled
-            "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
-            "VANITY_URL" -> VanityUrl
-            "VERIFIED" -> Verified
-            "VIP_REGIONS" -> VIPRegions
-            "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): GuildFeature = from(decoder.decodeString())
     }
 
     public companion object {
@@ -256,5 +238,40 @@ public sealed class GuildFeature(
             )
         }
 
+
+        /**
+         * Returns an instance of [GuildFeature] with [GuildFeature.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: String): GuildFeature = when (value) {
+            "ANIMATED_BANNER" -> AnimatedBanner
+            "ANIMATED_ICON" -> AnimatedIcon
+            "APPLICATION_COMMAND_PERMISSIONS_V2" -> ApplicationCommandPermissionsV2
+            "AUTO_MODERATION" -> AutoModeration
+            "BANNER" -> Banner
+            "COMMUNITY" -> Community
+            "CREATOR_MONETIZABLE_PROVISIONAL" -> CreatorMonetizableProvisional
+            "CREATOR_STORE_PAGE" -> CreatorStorePage
+            "DEVELOPER_SUPPORT_SERVER" -> DeveloperSupportServer
+            "DISCOVERABLE" -> Discoverable
+            "FEATURABLE" -> Featurable
+            "INVITES_DISABLED" -> InvitesDisabled
+            "INVITE_SPLASH" -> InviteSplash
+            "MEMBER_VERIFICATION_GATE_ENABLED" -> MemberVerificationGateEnabled
+            "MORE_STICKERS" -> MoreStickers
+            "NEWS" -> News
+            "PARTNERED" -> Partnered
+            "PREVIEW_ENABLED" -> PreviewEnabled
+            "RAID_ALERTS_DISABLED" -> RaidAlertsDisabled
+            "ROLE_ICONS" -> RoleIcons
+            "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE" -> RoleSubscriptionsAvailableForPurchase
+            "ROLE_SUBSCRIPTIONS_ENABLED" -> RoleSubscriptionsEnabled
+            "TICKETED_EVENTS_ENABLED" -> TicketedEventsEnabled
+            "VANITY_URL" -> VanityUrl
+            "VERIFIED" -> Verified
+            "VIP_REGIONS" -> VIPRegions
+            "WELCOME_SCREEN_ENABLED" -> WelcomeScreenEnabled
+            else -> Unknown(value, null)
+        }
     }
 }

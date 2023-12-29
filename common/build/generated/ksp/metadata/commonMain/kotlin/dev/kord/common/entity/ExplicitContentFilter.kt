@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,16 +30,27 @@ public sealed class ExplicitContentFilter(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "ExplicitContentFilter.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "ExplicitContentFilter.Unknown(value=$value)"
+            else "ExplicitContentFilter.${this::class.simpleName}"
 
     /**
      * An unknown [ExplicitContentFilter].
      *
      * This is used as a fallback for [ExplicitContentFilter]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : ExplicitContentFilter(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ExplicitContentFilter(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'ExplicitContentFilter.from()'.",
+            replaceWith = ReplaceWith(expression = "ExplicitContentFilter.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.ExplicitContentFilter")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     /**
      * Media content will not be scanned.
@@ -66,12 +77,7 @@ public sealed class ExplicitContentFilter(
         }
 
         override fun deserialize(decoder: Decoder): ExplicitContentFilter =
-                when (val value = decoder.decodeInt()) {
-            0 -> Disabled
-            1 -> MembersWithoutRoles
-            2 -> AllMembers
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -86,5 +92,16 @@ public sealed class ExplicitContentFilter(
             )
         }
 
+
+        /**
+         * Returns an instance of [ExplicitContentFilter] with [ExplicitContentFilter.value] equal
+         * to the specified [value].
+         */
+        public fun from(`value`: Int): ExplicitContentFilter = when (value) {
+            0 -> Disabled
+            1 -> MembersWithoutRoles
+            2 -> AllMembers
+            else -> Unknown(value, null)
+        }
     }
 }

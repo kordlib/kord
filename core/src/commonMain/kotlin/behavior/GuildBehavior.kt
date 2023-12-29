@@ -5,6 +5,7 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.*
 import dev.kord.common.entity.AutoModerationRuleEventType.MessageSend
 import dev.kord.common.entity.Permission.ManageGuild
+import dev.kord.common.entity.Permission.ManageRoles
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.unwrap
 import dev.kord.common.exception.RequestException
@@ -777,11 +778,21 @@ public suspend inline fun GuildBehavior.createTextChannel(
 public suspend inline fun GuildBehavior.createForumChannel(
     name: String,
     builder: ForumChannelCreateBuilder.() -> Unit = {}
-): ForumChannel  {
+): ForumChannel {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val response = kord.rest.guild.createForumChannel(id, name, builder)
     val data = ChannelData.from(response)
     return Channel.from(data, kord) as ForumChannel
+}
+
+public suspend inline fun GuildBehavior.createMediaChannel(
+    name: String,
+    builder: MediaChannelCreateBuilder.() -> Unit = {},
+): MediaChannel {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val response = kord.rest.guild.createMediaChannel(id, name, builder)
+    val data = ChannelData.from(response)
+    return Channel.from(data, kord) as MediaChannel
 }
 
 /**
@@ -822,6 +833,26 @@ public suspend inline fun GuildBehavior.createNewsChannel(
     val data = ChannelData.from(response)
 
     return Channel.from(data, kord) as NewsChannel
+}
+
+/**
+ * Requests to create a new stage channel.
+ *
+ * @return The created [StageChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.createStageChannel(
+    name: String,
+    builder: StageChannelCreateBuilder.() -> Unit = {}
+): StageChannel {
+    contract {
+        callsInPlace(builder, EXACTLY_ONCE)
+    }
+    val response = kord.rest.guild.createStageChannel(id, name, builder)
+    val data = ChannelData.from(response)
+
+    return Channel.from(data, kord) as StageChannel
 }
 
 
@@ -936,6 +967,21 @@ public suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfO
 public suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)
+}
+
+/**
+ * Requests to edit the [GuildOnboarding] object of the guild and returns the edited onboarding object.
+ *
+ * This requires the [ManageGuild] and [ManageRoles] permissions.
+ *
+ * @throws RestRequestException if something went wrong during the request.
+ */
+public suspend inline fun GuildBehavior.editOnboarding(
+    builder: GuildOnboardingModifyBuilder.() -> Unit,
+): GuildOnboarding {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val onboarding = kord.rest.guild.modifyGuildOnboarding(guildId = id, builder)
+    return GuildOnboarding(onboarding, kord)
 }
 
 /**
@@ -1079,25 +1125,4 @@ public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     val rule = kord.rest.autoModeration.createMentionSpamAutoModerationRule(guildId = id, name, eventType, builder)
     return MentionSpamAutoModerationRule(AutoModerationRuleData.from(rule), kord, supplier)
-}
-
-@Deprecated(
-    "The 'mentionLimit' parameter is optional, only 'mentionLimit' OR 'mentionRaidProtectionEnabled' is required.",
-    ReplaceWith(
-        "this.createMentionSpamAutoModerationRule(name, eventType) { this@createMentionSpamAutoModerationRule" +
-            ".mentionLimit = mentionLimit\nbuilder() }"
-    ),
-    DeprecationLevel.ERROR,
-)
-public suspend inline fun GuildBehavior.createMentionSpamAutoModerationRule(
-    name: String,
-    eventType: AutoModerationRuleEventType = MessageSend,
-    mentionLimit: Int,
-    builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
-): MentionSpamAutoModerationRule {
-    contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return createMentionSpamAutoModerationRule(name, eventType) {
-        this.mentionLimit = mentionLimit
-        builder()
-    }
 }

@@ -4,10 +4,10 @@ import io.ktor.websocket.*
 import java.io.ByteArrayOutputStream
 import java.util.zip.InflaterOutputStream
 
-internal actual class Inflater {
+internal actual fun Inflater() = object : Inflater {
     private val delegate = java.util.zip.Inflater()
 
-    actual fun Frame.inflateData(): String {
+    override fun Frame.inflateData(): String {
         val outputStream = ByteArrayOutputStream()
         InflaterOutputStream(outputStream, delegate).use {
             it.write(data)
@@ -15,4 +15,6 @@ internal actual class Inflater {
 
         return outputStream.use { it.toByteArray().decodeToString() }
     }
+
+    override fun close() = delegate.end()
 }

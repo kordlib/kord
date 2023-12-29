@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "AuditLogEvent", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "AuditLogEvent",
     docUrl = "https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events",
     entries = [
         Entry("GuildUpdate", intValue = 1, kDoc = "Server settings were updated."),
@@ -56,6 +56,8 @@
         Entry("AutoModerationBlockMessage", intValue = 143, kDoc = "Message was blocked by Auto Moderation."),
         Entry("AutoModerationFlagToChannel", intValue = 144, kDoc = "Message was flagged by Auto Moderation."),
         Entry("AutoModerationUserCommunicationDisabled", intValue = 145, kDoc = "Member was timed out by Auto Moderation."),
+        Entry("CreatorMonetizationRequestCreated", intValue = 150, kDoc = "Creator monetization request was created."),
+        Entry("CreatorMonetizationTermsAccepted", intValue = 151, kDoc = "Creator monetization terms were accepted."),
     ],
 )
 
@@ -67,9 +69,9 @@ import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.serialization.DurationInDaysSerializer
 import dev.kord.common.serialization.DurationInSecondsSerializer
 import dev.kord.common.serialization.LongOrStringSerializer
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.ListSerializer
@@ -106,7 +108,7 @@ public data class DiscordAuditLogEntry(
     val targetId: Snowflake?,
     val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing(),
     @SerialName("user_id")
-    val userId: Snowflake,
+    val userId: Snowflake?,
     val id: Snowflake,
     @SerialName("action_type")
     val actionType: AuditLogEvent,
@@ -172,7 +174,9 @@ public data class AuditLogEntryOptionalInfo(
     2020-11-12 field is described as present but is in fact optional
      */
     @SerialName("role_name")
-    val roleName: Optional<String> = Optional.Missing()
+    val roleName: Optional<String> = Optional.Missing(),
+    @SerialName("integration_type")
+    val integrationType: Optional<String> = Optional.Missing(),
 )
 
 @Serializable(with = AuditLogChange.Serializer::class)

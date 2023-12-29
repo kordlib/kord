@@ -6,6 +6,7 @@ import dev.kord.common.entity.StageInstancePrivacyLevel
 import dev.kord.common.entity.StageInstancePrivacyLevel.GuildOnly
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.builder.AuditRequestBuilder
 import dev.kord.rest.json.request.StageInstanceCreateRequest
@@ -30,10 +31,16 @@ public class StageInstanceCreateBuilder(
     /** Notify @everyone that a Stage instance has started. */
     public var sendStartNotification: Boolean? by ::_sendStartNotification.delegate()
 
+    private var _guildScheduledEventId: OptionalSnowflake = OptionalSnowflake.Missing
+
+    /** The guild scheduled event associated with this Stage instance. */
+    public var guildScheduledEventId: Snowflake? by ::_guildScheduledEventId.delegate()
+
     override fun toRequest(): StageInstanceCreateRequest = StageInstanceCreateRequest(
         channelId,
         topic,
         _privacyLevel,
         _sendStartNotification,
+        _guildScheduledEventId,
     )
 }

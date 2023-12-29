@@ -126,7 +126,8 @@ public data class GuildMemberModifyRequest(
     @SerialName("channel_id")
     val channelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("communication_disabled_until")
-    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing(),
+    val flags: Optional<GuildMemberFlags?> = Optional.Missing(),
 )
 
 

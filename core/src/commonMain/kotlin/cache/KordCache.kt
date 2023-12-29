@@ -7,7 +7,7 @@ import dev.kord.cache.api.delegate.DelegatingDataCache
 import dev.kord.cache.api.delegate.EntrySupplier
 import dev.kord.cache.map.MapLikeCollection
 import dev.kord.cache.map.internal.MapEntryCache
-import dev.kord.common.ConcurrentHashMap
+import dev.kord.common.concurrentHashMap
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.cache.data.*
 
@@ -16,7 +16,7 @@ public typealias Generator<I, T> = (cache: DataCache, description: DataDescripti
 public class KordCacheBuilder {
 
     /**
-     * The default behavior for all types not explicitly configured, by default a [ConcurrentHashMap] is supplied.
+     * The default behavior for all types not explicitly configured, by default a [concurrentHashMap] is supplied.
      */
     public var defaultGenerator: Generator<Any, Any> = { cache, description ->
        MapEntryCache(cache, description, MapLikeCollection.concurrentHashMap())

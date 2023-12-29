@@ -4,7 +4,6 @@ import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.DiscordMessage
 import dev.kord.common.entity.DiscordWebhook
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.message.create.WebhookMessageCreateBuilder
 import dev.kord.rest.builder.message.modify.WebhookMessageModifyBuilder
 import dev.kord.rest.builder.webhook.WebhookCreateBuilder
@@ -168,7 +167,7 @@ public class WebhookService(requestHandler: RequestHandler) : RestService(reques
             webhookIdTokenMessageIdThreadId(webhookId, token, messageId, threadId)
             val body = WebhookMessageModifyBuilder().apply(builder).toRequest()
             body(WebhookEditMessageRequest.serializer(), body.request)
-            body.files.orEmpty().onEach { file(it) }
+            body.files.onEach { file(it) }
         }
     }
 

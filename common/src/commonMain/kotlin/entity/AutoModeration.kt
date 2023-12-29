@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "AutoModerationRuleTriggerType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "AutoModerationRuleTriggerType",
     kDoc = "Characterizes the type of content which can trigger the rule.",
     docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types",
     entries = [
@@ -13,8 +13,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "AutoModerationRuleKeywordPresetType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "AutoModerationRuleKeywordPresetType",
     kDoc = "An internally pre-defined wordset which will be searched for in content.",
     docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-preset-types",
     entries = [
@@ -24,8 +24,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "AutoModerationRuleEventType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "AutoModerationRuleEventType",
     kDoc = "Indicates in what event context a rule should be checked.",
     docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types",
     entries = [
@@ -33,8 +33,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "AutoModerationActionType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "AutoModerationActionType",
     kDoc = "The type of action.",
     docUrl = "https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-types",
     entries = [
@@ -62,9 +62,9 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

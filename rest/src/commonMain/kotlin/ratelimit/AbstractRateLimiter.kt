@@ -1,33 +1,33 @@
 package dev.kord.rest.ratelimit
 
-import dev.kord.common.ConcurrentHashMap
+import dev.kord.common.concurrentHashMap
 import dev.kord.common.ratelimit.IntervalRateLimiter
 import dev.kord.rest.request.Request
 import dev.kord.rest.request.RequestIdentifier
 import dev.kord.rest.request.identifier
+import io.github.oshai.kotlinlogging.KLogger
 import kotlinx.atomicfu.atomic
-import kotlinx.atomicfu.update
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.datetime.Clock
-import mu.KLogger
+import kotlinx.datetime.Instant
 import kotlin.time.Duration.Companion.minutes
 
 public abstract class AbstractRateLimiter internal constructor(public val clock: Clock) : RequestRateLimiter {
     internal abstract val logger: KLogger
 
     private val autoBanRateLimiter = IntervalRateLimiter(limit = 25000, interval = 10.minutes)
-    private val globalSuspensionPoint = atomic(Reset(clock.now()))
-    internal val buckets = ConcurrentHashMap<BucketKey, Bucket>()
-    private val routeBuckets = ConcurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
+    private val globalSuspensionPoint = atomic(clock.now())
+    internal val buckets = concurrentHashMap<BucketKey, Bucket>()
+    private val routeBuckets = concurrentHashMap<RequestIdentifier, MutableSet<BucketKey>>()
 
     internal val BucketKey.bucket get() = buckets.getOrPut(this) { Bucket(this) }
     private val Request<*, *>.buckets get() = routeBuckets[identifier].orEmpty().map { it.bucket }
     internal fun RequestIdentifier.addBucket(id: BucketKey) = routeBuckets.getOrPut(this) { mutableSetOf() }.add(id)
 
-    internal suspend fun Reset.await() {
-        val duration = value - clock.now()
+    private suspend fun Instant.await() {
+        val duration = this - clock.now()
         if (duration.isNegative()) return
         delay(duration)
     }
@@ -67,7 +67,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
                 when (response) {
                     is RequestResponse.GlobalRateLimit -> {
                         logger.trace { "[RATE LIMIT]:[GLOBAL]:exhausted until ${response.reset.value}" }
-                        globalSuspensionPoint.update { response.reset }
+                        globalSuspensionPoint.value = response.reset.value
                     }
                     is RequestResponse.BucketRateLimit -> {
                         logger.trace { "[RATE LIMIT]:[BUCKET]:Bucket ${response.bucketKey.value} was exhausted until ${response.reset.value}" }
@@ -83,7 +83,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
     }
 
     internal inner class Bucket(val id: BucketKey) {
-        private val reset = atomic(Reset(clock.now()))
+        private val reset = atomic(clock.now())
         private val mutex = Mutex()
 
         suspend fun awaitAndLock() {
@@ -93,7 +93,7 @@ public abstract class AbstractRateLimiter internal constructor(public val clock:
         }
 
         fun updateReset(newValue: Reset) {
-            reset.update { newValue }
+            reset.value = newValue.value
         }
 
         fun unlock() = mutex.unlock()

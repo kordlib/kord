@@ -1,5 +1,6 @@
 package dev.kord.gateway.json
 
+import dev.kord.common.entity.UserFlag.HouseBravery
 import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.UserPremium
 import dev.kord.common.entity.optional.Optional
@@ -55,13 +56,12 @@ class SerializationTest {
                 with(user) {
                     id.toString() shouldBe "80351110224678912"
                     username shouldBe "Nelly"
-                    @Suppress("DEPRECATION")
                     discriminator shouldBe Optional("1337")
                     globalName shouldBe Optional(null)
                     avatar shouldBe "8342729096ea3675442027381ff50dfe"
                     verified.value shouldBe true
                     email.value shouldBe "nelly@discordapp.com"
-                    flags.value shouldBe UserFlags(64)
+                    flags.value shouldBe UserFlags(HouseBravery)
                     premiumType.value shouldBe UserPremium.NitroClassic
                 }
                 privateChannels shouldBe listOf()

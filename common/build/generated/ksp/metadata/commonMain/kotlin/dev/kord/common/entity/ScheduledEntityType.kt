@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,16 +30,27 @@ public sealed class ScheduledEntityType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "ScheduledEntityType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "ScheduledEntityType.Unknown(value=$value)"
+            else "ScheduledEntityType.${this::class.simpleName}"
 
     /**
      * An unknown [ScheduledEntityType].
      *
      * This is used as a fallback for [ScheduledEntityType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
-    ) : ScheduledEntityType(value)
+        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
+        unused: Nothing?,
+    ) : ScheduledEntityType(value) {
+        @Deprecated(
+            level = DeprecationLevel.HIDDEN,
+            message = "Replaced by 'ScheduledEntityType.from()'.",
+            replaceWith = ReplaceWith(expression = "ScheduledEntityType.from(value)", imports =
+                        arrayOf("dev.kord.common.entity.ScheduledEntityType")),
+        )
+        public constructor(`value`: Int) : this(value, null)
+    }
 
     public object StageInstance : ScheduledEntityType(1)
 
@@ -56,13 +67,7 @@ public sealed class ScheduledEntityType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ScheduledEntityType =
-                when (val value = decoder.decodeInt()) {
-            1 -> StageInstance
-            2 -> Voice
-            3 -> External
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): ScheduledEntityType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -77,5 +82,16 @@ public sealed class ScheduledEntityType(
             )
         }
 
+
+        /**
+         * Returns an instance of [ScheduledEntityType] with [ScheduledEntityType.value] equal to
+         * the specified [value].
+         */
+        public fun from(`value`: Int): ScheduledEntityType = when (value) {
+            1 -> StageInstance
+            2 -> Voice
+            3 -> External
+            else -> Unknown(value, null)
+        }
     }
 }
