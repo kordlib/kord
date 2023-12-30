@@ -35,11 +35,11 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
         val channelData = event.channel.toData()
         kord.cache.put(channelData)
 
-        // update lastMessageId for forum channels when thread is created
+        // update lastMessageId for forum and media channels when thread is created
         // (same for other channels when message is created)
         val parentId = channelData.parentId?.value!!
-        kord.cache.query<ChannelData> {
-            ChannelData::type eq ChannelType.GuildForum
+        kord.cache.query {
+            ChannelData::type predicate { it == ChannelType.GuildForum || it == ChannelType.GuildMedia }
             idEq(ChannelData::id, parentId)
         }.update {
             it.copy(lastMessageId = channelData.id.optionalSnowflake())
@@ -56,7 +56,7 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
 
     private suspend fun handle(event: ThreadUpdate, shard: Int, kord: Kord, context: LazyContext?): ThreadUpdateEvent? {
         val channelData = event.channel.toData()
-        val oldData = kord.cache.query<ChannelData> {
+        val oldData = kord.cache.query {
             idEq(ChannelData::id, event.channel.id)
             idEq(ChannelData::guildId, event.channel.guildId.value)
         }.singleOrNull()
@@ -78,7 +78,7 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
     private suspend fun handle(event: ThreadDelete, shard: Int, kord: Kord, context: LazyContext?): ThreadChannelDeleteEvent {
 
         val channelData = event.channel.toData()
-        val cachedData = kord.cache.query<ChannelData> { idEq(ChannelData::id, channelData.id) }.singleOrNull()
+        val cachedData = kord.cache.query { idEq(ChannelData::id, channelData.id) }.singleOrNull()
 
         val channel = DeletedThreadChannel(channelData, kord)
         val old = cachedData?.let { Channel.from(cachedData, kord) }
@@ -94,7 +94,7 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
             else -> UnknownChannelThreadDeleteEvent(channel, old as? ThreadChannel, shard, context?.get())
         }
 
-        kord.cache.remove<ChannelData> { idEq(ChannelData::id, channel.id) }
+        kord.cache.remove { idEq(ChannelData::id, channel.id) }
         return coreEvent
     }
 
@@ -120,7 +120,7 @@ internal class ThreadEventHandler : BaseGatewayEventHandler() {
     private suspend fun handle(event: ThreadMembersUpdate, shard: Int, kord: Kord, context: LazyContext?): ThreadMembersUpdateEvent {
         val data = ThreadMembersUpdateEventData.from(event)
         for (removedMemberId in data.removedMemberIds.orEmpty()) {
-            kord.cache.remove<ThreadMemberData> {
+            kord.cache.remove {
                 idEq(ThreadMemberData::userId, removedMemberId)
                 idEq(ThreadMemberData::id, data.id)
             }

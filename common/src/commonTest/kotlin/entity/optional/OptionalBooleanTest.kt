@@ -41,7 +41,7 @@ internal class OptionalBooleanTest {
     }
 
     @Serializable
-    private class ValueOptionalEntity(@Suppress("unused") val value: OptionalBoolean = OptionalBoolean.Missing)
+    private class ValueOptionalEntity(val value: OptionalBoolean = OptionalBoolean.Missing)
 
     @Test
     @JsName("test3")

@@ -2,7 +2,10 @@ package dev.kord.core.entity
 
 import dev.kord.common.Locale
 import dev.kord.common.entity.*
-import dev.kord.common.entity.optional.*
+import dev.kord.common.entity.optional.orElse
+import dev.kord.common.entity.optional.orEmpty
+import dev.kord.common.entity.optional.unwrap
+import dev.kord.common.entity.optional.value
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
@@ -13,18 +16,19 @@ import dev.kord.core.behavior.channel.TopGuildChannelBehavior
 import dev.kord.core.behavior.channel.TopGuildMessageChannelBehavior
 import dev.kord.core.behavior.channel.VoiceChannelBehavior
 import dev.kord.core.cache.data.GuildData
-import dev.kord.core.entity.channel.*
+import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.TopGuildChannel
+import dev.kord.core.entity.channel.TopGuildMessageChannel
+import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOfOrNull
 import dev.kord.core.switchIfEmpty
-import dev.kord.rest.Image
-import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
 import kotlin.time.Duration
 
 /**
@@ -105,6 +109,8 @@ public class Guild(
      */
     public val bannerHash: String? get() = data.banner
 
+    public val banner: Asset? get() = bannerHash?.let { Asset.guildBanner(id, it, kord) }
+
     /**
      * The ids of all [channels][TopGuildChannel].
      */
@@ -155,6 +161,8 @@ public class Guild(
      * The icon hash, if present.
      */
     public val iconHash: String? get() = data.icon
+
+    public val icon: Asset? get() = iconHash?.let { Asset.guildIcon(id, it, kord) }
 
     /**
      * The time at which this guild was joined, if present.
@@ -259,10 +267,14 @@ public class Guild(
      */
     public val splashHash: String? get() = data.splash.value
 
+    public val splash: Asset? get() = splashHash?.let { Asset.guildSplash(id, it, kord) }
+
     /**
      * The hash of the discovery splash, if present.
      */
     public val discoverySplashHash: String? get() = data.discoverySplash.value
+
+    public val discoverySplash: Asset? get() = discoverySplashHash?.let { Asset.guildDiscoverySplash(id, it, kord) }
 
     /**
      * The id of the channel to which system messages are sent.
@@ -328,6 +340,15 @@ public class Guild(
 
     public val premiumProgressBarEnabled: Boolean get() = data.premiumProgressBarEnabled
 
+    /** The id of the channel where admins and moderators of Community guilds receive safety alerts from Discord. */
+    public val safetyAlertsChannelId: Snowflake? get() = data.safetyAlertsChannelId
+
+    /**
+     * The behavior of the channel where admins and moderators of Community guilds receive safety alerts from Discord.
+     */
+    public val safetyAlertsChannel: TextChannelBehavior?
+        get() = safetyAlertsChannelId?.let { TextChannelBehavior(guildId = id, id = it, kord) }
+
     public val stageInstances: Set<StageInstance>
         get() = data.stageInstances.orEmpty().map { StageInstance(it, kord) }.toSet()
 
@@ -347,23 +368,8 @@ public class Guild(
     public suspend fun getAfkChannel(): VoiceChannel? = afkChannelId?.let { supplier.getChannelOfOrNull(it) }
 
     /**
-     * Gets the banner url in the specified format.
-     */
-    public fun getBannerUrl(format: Image.Format): String? =
-        data.banner?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
-
-    /**
-     * Requests to get the banner image in the specified [format], if present.
-     */
-    public suspend fun getBanner(format: Image.Format): Image? {
-        val url = getBannerUrl(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-    /**
-     * Requests to get the [TopGuildChannel] represented by the [embedChannel],
-     * returns null if the [TopGuildChannel] isn't present or [embedChannel] is null.
+     * Requests to get the [TopGuildChannel] represented by the [widgetChannelId],
+     * returns null if the [TopGuildChannel] isn't present or [widgetChannelId] is null.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
@@ -405,38 +411,6 @@ public class Guild(
     public suspend fun getEveryoneRoleOrNull(): Role? = supplier.getRoleOrNull(id, id)
 
     /**
-     * Gets the discovery splash url in the specified [format], if present.
-     */
-    public fun getDiscoverySplashUrl(format: Image.Format): String? =
-        splashHash?.let { "discovery-splashes/$id/${it}.${format.extension}" }
-
-    /**
-     * Requests to get the splash image in the specified [format], if present.
-     *
-     * This property is not resolvable through cache and will always use the [RestClient] instead.
-     */
-    public suspend fun getDiscoverySplash(format: Image.Format): Image? {
-        val url = getDiscoverySplashUrl(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-    /**
-     * Gets the icon url, if present.
-     */
-    public fun getIconUrl(format: Image.Format): String? =
-        data.icon?.let { "https://cdn.discordapp.com/icons/$id/$it.${format.extension}" }
-
-    /**
-     * Requests to get the icon image in the specified [format], if present.
-     */
-    public suspend fun getIcon(format: Image.Format): Image? {
-        val url = getIconUrl(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-    /**
      * Requests to get the owner of this guild as a [Member].
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -464,21 +438,6 @@ public class Guild(
      * @throws [RequestException] if anything went wrong during the request.
      */
     public suspend fun getRulesChannel(): TopGuildMessageChannel? = rulesChannel?.asChannel()
-
-    /**
-     * Gets the splash url in the specified [format], if present.
-     */
-    public fun getSplashUrl(format: Image.Format): String? =
-        data.splash.value?.let { "https://cdn.discordapp.com/splashes/$id/$it.${format.extension}" }
-
-    /**
-     * Requests to get the splash image in the specified [format], if present.
-     */
-    public suspend fun getSplash(format: Image.Format): Image? {
-        val url = getSplashUrl(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
 
     /**
      * Requests to get the channel where system messages (member joins, server boosts, etc.) are sent,

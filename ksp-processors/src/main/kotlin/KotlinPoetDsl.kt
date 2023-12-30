@@ -16,6 +16,7 @@ internal typealias TypeSpecBuilder = (@KotlinPoetDsl TypeSpec.Builder).() -> Uni
 internal typealias AnnotationSpecBuilder = (@KotlinPoetDsl AnnotationSpec.Builder).() -> Unit
 internal typealias FunSpecBuilder = (@KotlinPoetDsl FunSpec.Builder).() -> Unit
 internal typealias PropertySpecBuilder = (@KotlinPoetDsl PropertySpec.Builder).() -> Unit
+internal typealias ParameterSpecBuilder = (@KotlinPoetDsl ParameterSpec.Builder).() -> Unit
 internal typealias CodeBlockBuilder = (@KotlinPoetDsl CodeBlock.Builder).() -> Unit
 
 
@@ -27,36 +28,46 @@ internal inline fun FileSpec(packageName: String, fileName: String, builder: Fil
     FileSpec.builder(packageName, fileName).apply(builder).build()
 
 
-// extensions for `FileSpec.Builder`
+// extensions for `Annotatable.Builder`
 
 @DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
-internal fun FileSpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =
-    addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
+internal fun <T : Annotatable.Builder<T>> T.addAnnotation(
+    annotation: Annotation,
+    includeDefaultValues: Boolean = false,
+) = addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
 
-internal inline fun FileSpec.Builder.addClass(className: ClassName, builder: TypeSpecBuilder) =
+internal inline fun <T : Annotatable.Builder<T>> T.addAnnotation(type: ClassName, builder: AnnotationSpecBuilder) =
+    addAnnotation(AnnotationSpec.builder(type).apply(builder).build())
+
+internal inline fun <reified A : Annotation> Annotatable.Builder<*>.addAnnotation(builder: AnnotationSpecBuilder) =
+    addAnnotation(AnnotationSpec.builder(A::class).apply(builder).build())
+
+
+// extensions for `TypeSpecHolder.Builder`
+
+internal inline fun <T : TypeSpecHolder.Builder<T>> T.addClass(name: String, builder: TypeSpecBuilder) =
+    addType(TypeSpec.classBuilder(name).apply(builder).build())
+
+internal inline fun <T : TypeSpecHolder.Builder<T>> T.addClass(className: ClassName, builder: TypeSpecBuilder) =
     addType(TypeSpec.classBuilder(className).apply(builder).build())
+
+internal inline fun <T : TypeSpecHolder.Builder<T>> T.addObject(name: String, builder: TypeSpecBuilder) =
+    addType(TypeSpec.objectBuilder(name).apply(builder).build())
+
+
+// extensions for `FileSpec.Builder`
+
+internal inline fun FileSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
+    addFunction(FunSpec.builder(name).apply(builder).build())
 
 
 // extensions for `TypeSpec.Builder`
-
-internal inline fun <reified A : Annotation> TypeSpec.Builder.addAnnotation(builder: AnnotationSpecBuilder) =
-    addAnnotation(AnnotationSpec.builder(A::class).apply(builder).build())
-
-@DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
-internal fun TypeSpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =
-    addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
-
-internal inline fun TypeSpec.Builder.addClass(name: String, builder: TypeSpecBuilder) =
-    addType(TypeSpec.classBuilder(name).apply(builder).build())
 
 internal inline fun TypeSpec.Builder.addCompanionObject(name: String? = null, builder: TypeSpecBuilder) =
     addType(TypeSpec.companionObjectBuilder(name).apply(builder).build())
 
 internal inline fun TypeSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
     addFunction(FunSpec.builder(name).apply(builder).build())
-
-internal inline fun TypeSpec.Builder.addObject(name: String, builder: TypeSpecBuilder) =
-    addType(TypeSpec.objectBuilder(name).apply(builder).build())
 
 internal inline fun <reified T> TypeSpec.Builder.addProperty(
     name: String,
@@ -74,12 +85,21 @@ internal inline fun TypeSpec.Builder.addProperty(
 internal inline fun TypeSpec.Builder.primaryConstructor(builder: FunSpecBuilder) =
     primaryConstructor(FunSpec.constructorBuilder().apply(builder).build())
 
+internal inline fun TypeSpec.Builder.addInitializerBlock(builder: CodeBlockBuilder) =
+    addInitializerBlock(CodeBlock.builder().apply(builder).build())
+
+internal inline fun TypeSpec.Builder.addConstructor(builder: FunSpecBuilder) =
+    addFunction(FunSpec.constructorBuilder().apply(builder).build())
+
 
 // extensions for `FunSpec.Builder`
 
-@DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
-internal fun FunSpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =
-    addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
+internal inline fun FunSpec.Builder.addParameter(
+    name: String,
+    type: TypeName,
+    vararg modifiers: KModifier,
+    builder: ParameterSpecBuilder,
+) = addParameter(ParameterSpec.builder(name, type, *modifiers).apply(builder).build())
 
 internal inline fun <reified T> FunSpec.Builder.addParameter(name: String, vararg modifiers: KModifier) =
     addParameter(name, typeNameOf<T>(), *modifiers)
@@ -91,10 +111,6 @@ internal inline fun FunSpec.Builder.withControlFlow(controlFlow: String, vararg 
 
 
 // extensions for `PropertySpec.Builder`
-
-@DelicateKotlinPoetApi("See 'AnnotationSpec.get'")
-internal fun PropertySpec.Builder.addAnnotation(annotation: Annotation, includeDefaultValues: Boolean = false) =
-    addAnnotation(AnnotationSpec.get(annotation, includeDefaultValues))
 
 internal inline fun PropertySpec.Builder.delegate(builder: CodeBlockBuilder) =
     delegate(CodeBlock.builder().apply(builder).build())

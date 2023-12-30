@@ -6,4 +6,4 @@ import io.ktor.client.engine.cio.*
 
 /** @suppress */
 @KordInternal
-public actual object HttpEngine : HttpClientEngineFactory<HttpClientEngineConfig> by CIO
+public actual fun httpEngine(): HttpClientEngineFactory<HttpClientEngineConfig> = CIO

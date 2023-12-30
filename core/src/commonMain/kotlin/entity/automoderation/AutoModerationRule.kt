@@ -200,6 +200,10 @@ public class MentionSpamAutoModerationRule(data: AutoModerationRuleData, kord: K
     /** Total number of unique role and user mentions allowed per message. */
     public val mentionLimit: Int get() = data.triggerMetadata.mentionTotalLimit.value!!
 
+    /** Whether to automatically detect mention raids. */
+    public val isMentionRaidProtectionEnabled: Boolean
+        get() = data.triggerMetadata.mentionRaidProtectionEnabled.orElse(false)
+
     override suspend fun asAutoModerationRuleOrNull(): MentionSpamAutoModerationRule = this
     override suspend fun asAutoModerationRule(): MentionSpamAutoModerationRule = this
 

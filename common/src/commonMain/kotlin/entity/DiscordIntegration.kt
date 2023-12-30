@@ -1,6 +1,5 @@
-@file:GenerateKordEnum(
-    name = "IntegrationExpireBehavior", valueType = INT,
-    deprecatedSerializerName = "Serializer",
+@file:Generate(
+    INT_KORD_ENUM, name = "IntegrationExpireBehavior",
     docUrl = "https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors",
     entries = [
         Entry("RemoveRole", intValue = 0),
@@ -15,9 +14,9 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInDays
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

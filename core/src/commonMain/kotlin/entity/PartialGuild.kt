@@ -11,11 +11,9 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.cache.data.PartialGuildData
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import dev.kord.rest.Image
-import dev.kord.rest.service.RestClient
-import dev.kord.core.hash
 
 public class PartialGuild(
     public val data: PartialGuildData,
@@ -35,6 +33,8 @@ public class PartialGuild(
      * The icon hash, if present.
      */
     public val iconHash: String? get() = data.icon
+
+    public val icon: Asset? get() = iconHash?.let { Asset.guildIcon(id, it, kord) }
 
     /**
      * wither who created the invite is the owner or not.
@@ -85,56 +85,25 @@ public class PartialGuild(
 
     public val splashHash: String? get() = data.splash.value
 
+    public val splash: Asset? get() = splashHash?.let { Asset.guildSplash(id, it, kord) }
+
+    public val bannerHash: String? get() = data.banner.value
+
+    public val banner: Asset? get() = bannerHash?.let { Asset.guildBanner(id, it, kord) }
 
     /**
-     * Gets the discovery splash url in the specified [format], if present.
-     */
-    public fun getDiscoverySplashUrl(format: Image.Format): String? =
-        splashHash?.let { "discovery-splashes/$id/${it}.${format.extension}" }
-
-    /**
-     * Requests to get the splash image in the specified [format], if present.
+     * The approximate number of members in this guild.
      *
-     * This property is not resolvable through cache and will always use the [RestClient] instead.
+     * Present if this guild was requested through [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.
      */
-    public suspend fun getDiscoverySplash(format: Image.Format): Image? {
-        val url = getDiscoverySplashUrl(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
+    public val approximateMemberCount: Int? get() = data.approximateMemberCount.value
 
     /**
-     * Gets the icon url, if present.
+     * The approximate number of online members in this guild.
+     *
+     * Present if this guild was requested through [rest][dev.kord.rest.service.RestClient] with the flag `with_counts`.
      */
-    public fun getIconUrl(format: Image.Format): String? =
-        iconHash?.let { "https://cdn.discordapp.com/icons/$id/$it.${format.extension}" }
-
-
-    /**
-     * Requests to get the icon image in the specified [format], if present.
-     */
-    public suspend fun getIcon(format: Image.Format): Image? {
-        val url = getIconUrl(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
-
-
-    /**
-     * Gets the banner url in the specified format.
-     */
-    public fun getBannerUrl(format: Image.Format): String? =
-        data.banner.value?.let { "https://cdn.discordapp.com/banners/$id/$it.${format.extension}" }
-
-    /**
-     * Requests to get the banner image in the specified [format], if present.
-     */
-    public suspend fun getBanner(format: Image.Format): Image? {
-        val url = getBannerUrl(format) ?: return null
-
-        return Image.fromUrl(kord.resources.httpClient, url)
-    }
+    public val approximatePresenceCount: Int? get() = data.approximatePresenceCount.value
 
 
     /**

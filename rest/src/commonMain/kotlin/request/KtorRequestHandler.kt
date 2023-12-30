@@ -1,9 +1,10 @@
 package dev.kord.rest.request
 
-import dev.kord.common.http.HttpEngine
+import dev.kord.common.http.httpEngine
 import dev.kord.rest.json.response.DiscordErrorResponse
 import dev.kord.rest.ratelimit.*
 import dev.kord.rest.route.optional
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
@@ -13,7 +14,6 @@ import io.ktor.http.*
 import io.ktor.http.content.*
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.Json
-import mu.KotlinLogging
 
 internal val jsonDefault = Json {
     encodeDefaults = false
@@ -108,7 +108,7 @@ public fun KtorRequestHandler(
     clock: Clock = Clock.System,
     parser: Json = jsonDefault,
 ): KtorRequestHandler {
-    val client = HttpClient(HttpEngine) {
+    val client = HttpClient(httpEngine()) {
         expectSuccess = false
     }
     return KtorRequestHandler(client, requestRateLimiter, clock, parser, token)

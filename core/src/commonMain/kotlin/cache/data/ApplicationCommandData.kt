@@ -98,7 +98,6 @@ public class ApplicationCommandGroupData(
     public val subCommands: List<ApplicationCommandSubcommandData>
 )
 
-@Suppress("FunctionName")
 public fun ApplicationCommandGroupData(data: ApplicationCommandOptionData): ApplicationCommandGroupData {
     return ApplicationCommandGroupData(
         data.name,
@@ -139,7 +138,6 @@ public data class ApplicationCommandParameterData(
 )
 
 
-@Suppress("FunctionName")
 public fun ApplicationCommandParameterData(data: ApplicationCommandOptionData): ApplicationCommandParameterData {
     return ApplicationCommandParameterData(
         data.name,
@@ -157,7 +155,7 @@ public data class ApplicationCommandOptionChoiceData(
     val value: String
 ) {
     public companion object {
-        public fun from(choice: Choice<*>): ApplicationCommandOptionChoiceData {
+        public fun from(choice: Choice): ApplicationCommandOptionChoiceData {
             return with(choice) {
                 ApplicationCommandOptionChoiceData(name, value.toString())
             }

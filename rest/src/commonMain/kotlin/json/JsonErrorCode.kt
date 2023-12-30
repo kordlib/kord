@@ -199,7 +199,7 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of guild roles reached (250). */
     MaxGuildRoles(30005),
 
-    /** Maximum number of webhooks reached (10). */
+    /** Maximum number of webhooks reached (15). */
     MaxWebhooks(30007),
 
     /** Maximum number of emojis reached. */
@@ -235,10 +235,10 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of application commands reached. */
     MaxApplicationCommands(30032),
 
-    /** Max number of thread participants has been reached (1000). */
+    /** Maximum number of thread participants has been reached (1000). */
     MaxThreadParticipants(30033),
 
-    /** Max number of daily application command creates has been reached (200). */
+    /** Maximum number of daily application command creates has been reached (200). */
     MaxDailyApplicationCommandCreates(30034),
 
     /** Maximum number of bans for non-guild members have been exceeded. */
@@ -497,6 +497,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** The request body contains invalid JSON. */
     InvalidJsonInRequestBody(50109),
 
+    /** Owner cannot be pending member. */
+    OwnerCannotBePendingMember(50131),
+
     /** Ownership cannot be transferred to a bot user. */
     OwnershipCannotBeTransferredToBot(50132),
 
@@ -512,8 +515,26 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Uploaded file not found. */
     UnknownUpload(50146),
 
+    /** Voice messages do not support additional content. */
+    VoiceMessagesDoNotSupportAdditionalContent(50159),
+
+    /** Voice messages must have a single audio attachment. */
+    VoiceMessagesMustHaveASingleAudioAttachment(50160),
+
+    /** Voice messages must have supporting metadata. */
+    VoiceMessagesMustHaveSupportingMetadata(50161),
+
+    /** Voice messages cannot be edited. */
+    VoiceMessagesCannotBeEdited(50162),
+
     /** Cannot delete guild subscription integration. */
     CannotDeleteGuildSubscriptionIntegration(50163),
+
+    /** You cannot send voice messages in this channel. */
+    CannotSendVoiceMessagesInThisChannel(50173),
+
+    /** The user account must first be verified. */
+    UserAccountMustBeVerified(50178),
 
     /** You do not have permission to send this sticker. */
     StickerPermissionLack(50600),
@@ -599,14 +620,21 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Message blocked by harmful links filter. */
     MessageBlockedByHarmfulLinksFilter(240000),
 
+    /** Cannot enable onboarding, requirements are not met. */
+    CannotEnableOnboarding(350000),
+
+    /** Cannot update onboarding while below requirements. */
+    CannotUpdateOnboarding(350001),
+
     ;
 
     internal object Serializer : KSerializer<JsonErrorCode> {
         override val descriptor = PrimitiveSerialDescriptor("JsonErrorCodeSerializer", PrimitiveKind.INT)
 
+        private val entriesByCode = entries.associateBy { it.code }
         override fun deserialize(decoder: Decoder): JsonErrorCode {
             val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
+            return entriesByCode[code] ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, value: JsonErrorCode) {

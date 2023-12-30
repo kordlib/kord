@@ -14,7 +14,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.builder.message.create.MessageCreateBuilder
 import dev.kord.rest.builder.message.create.UserMessageCreateBuilder
-import dev.kord.rest.builder.message.create.embed
+import dev.kord.rest.builder.message.embed
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import kotlinx.coroutines.coroutineScope

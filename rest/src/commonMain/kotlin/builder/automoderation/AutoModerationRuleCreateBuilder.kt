@@ -119,14 +119,19 @@ public class KeywordPresetAutoModerationRuleCreateBuilder(
 public class MentionSpamAutoModerationRuleCreateBuilder(
     name: String,
     eventType: AutoModerationRuleEventType,
-    override var mentionLimit: Int,
 ) : AutoModerationRuleCreateBuilder(name, eventType), MentionSpamAutoModerationRuleBuilder {
 
-    /** @suppress Use `this.mentionLimit = mentionLimit` instead. */
-    override fun assignMentionLimit(mentionLimit: Int) {
-        this.mentionLimit = mentionLimit
-    }
+    private var _mentionLimit: OptionalInt = OptionalInt.Missing
+    override var mentionLimit: Int? by ::_mentionLimit.delegate()
 
+    private var _mentionRaidProtectionEnabled: OptionalBoolean = OptionalBoolean.Missing
+    override var mentionRaidProtectionEnabled: Boolean? by ::_mentionRaidProtectionEnabled.delegate()
+
+    // one of mentionTotalLimit or mentionRaidProtectionEnabled is required, don't bother to send missing trigger
+    // metadata if both are missing
     override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =
-        DiscordAutoModerationRuleTriggerMetadata(mentionTotalLimit = mentionLimit.optionalInt()).optional()
+        DiscordAutoModerationRuleTriggerMetadata(
+            mentionTotalLimit = _mentionLimit,
+            mentionRaidProtectionEnabled = _mentionRaidProtectionEnabled,
+        ).optional()
 }

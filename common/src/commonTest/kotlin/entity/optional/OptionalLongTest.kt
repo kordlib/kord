@@ -26,7 +26,7 @@ internal class OptionalLongTest {
 
 
     @Serializable
-    class NullOptionalEntity(@Suppress("unused") val value: OptionalLong = OptionalLong.Missing)
+    class NullOptionalEntity(val value: OptionalLong = OptionalLong.Missing)
 
     @Test
     @JsName("test2")
@@ -42,7 +42,7 @@ internal class OptionalLongTest {
 
 
     @Serializable
-    class ValueOptionalEntity(@Suppress("unused") val value: OptionalLong = OptionalLong.Missing)
+    class ValueOptionalEntity(val value: OptionalLong = OptionalLong.Missing)
 
     @Test
     @JsName("test3")

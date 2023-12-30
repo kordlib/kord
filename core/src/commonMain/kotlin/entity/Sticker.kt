@@ -53,6 +53,8 @@ public open class Sticker(public val data: StickerData, override val kord: Kord)
     public val formatType: MessageStickerType
         get() = data.formatType
 
+    public val asset: Asset get() = Asset.sticker(id, formatType, kord)
+
     public val available: Boolean
         get() = data.available.discordBoolean
 
@@ -96,6 +98,8 @@ public class StickerItem(
     public val formatType: MessageStickerType
         get() = data.formatType
 
+    public val asset: Asset get() = Asset.sticker(id, formatType, kord)
+
     public suspend fun getStickerOrNull(): Sticker? =
         supplier.getStickerOrNull(id)
 
@@ -123,5 +127,7 @@ public class StickerPack(public val data: StickerPackData, override val kord: Ko
 
     public val stickers: List<Sticker> get() = data.stickers.map { Sticker(it, kord) }
 
+    public val bannerId: Snowflake get() = data.bannerAssetId
 
+    public val banner: Asset get() = Asset.stickerPackBanner(bannerId, kord)
 }

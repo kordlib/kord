@@ -151,7 +151,7 @@ public class ReadyEvent(
 
     public val guilds: Set<GuildBehavior> get() = guildIds.map { GuildBehavior(it, kord) }.toSet()
 
-    public suspend fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
+    public fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
         ReadyEvent(gatewayVersion, guildIds, self, sessionId, resumeGatewayUrl, kord, shard, customContext, strategy.supply(kord))

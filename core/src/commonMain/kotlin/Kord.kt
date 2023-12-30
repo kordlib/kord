@@ -25,22 +25,27 @@ import dev.kord.core.supplier.*
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
+import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecordsBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import mu.KLogger
-import mu.KotlinLogging
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
-public val kordLogger: KLogger = KotlinLogging.logger { }
+@Deprecated("Use your own logger instead, this will be removed in the future.", level = DeprecationLevel.WARNING)
+public val kordLogger: mu.KLogger = mu.KotlinLogging.logger { }
+
+private val logger = KotlinLogging.logger { }
+
+@PublishedApi
+internal fun logCaughtThrowable(throwable: Throwable): Unit = logger.catching(throwable)
 
 
 /**
@@ -146,6 +151,30 @@ public class Kord(
     public suspend fun getApplicationInfo(): Application = with(EntitySupplyStrategy.rest).getApplicationInfo()
 
     /**
+     * Requests the [ApplicationRoleConnectionMetadata] objects for this [Application].
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun getApplicationRoleConnectionMetadataRecords(): List<ApplicationRoleConnectionMetadata> =
+        rest.applicationRoleConnectionMetadata
+            .getApplicationRoleConnectionMetadataRecords(selfId)
+            .map { ApplicationRoleConnectionMetadata(data = it, kord = this) }
+
+    /**
+     * Requests to update the [ApplicationRoleConnectionMetadata] objects for this [Application].
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend inline fun updateApplicationRoleConnectionMetadataRecords(
+        builder: ApplicationRoleConnectionMetadataRecordsBuilder.() -> Unit,
+    ): List<ApplicationRoleConnectionMetadata> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        return rest.applicationRoleConnectionMetadata
+            .updateApplicationRoleConnectionMetadataRecords(selfId, builder)
+            .map { ApplicationRoleConnectionMetadata(data = it, kord = this) }
+    }
+
+    /**
      * Requests to create a new Guild configured through the [builder].
      *
      * @throws [RequestException] if anything went wrong during the request.
@@ -219,30 +248,12 @@ public class Kord(
     ): Guild? = strategy.supply(this).getGuildOrNull(id)
 
     /**
-     * Requests the [Guild] with the given [id], returns `null` when the guild isn't present.
-     *
-     * @throws RequestException if something went wrong while retrieving the guild.
-     */
-    @Deprecated(
-        "This function has an inconsistent name for its nullable return type and has been deprecated in favour of " +
-                "'getGuildOrNull()'.",
-        ReplaceWith("this.getGuildOrNull(id, strategy)"),
-        level = HIDDEN,
-    )
-    public suspend fun getGuild(
-        id: Snowflake,
-        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
-    ): Guild? = strategy.supply(this).getGuildOrNull(id)
-
-    /**
      * Requests the [Guild] with the given [id].
-     *
-     * This will be renamed to `getGuild` once the [deprecated function][getGuild] is removed.
      *
      * @throws RequestException if something went wrong while retrieving the guild.
      * @throws EntityNotFoundException if the guild is null.
      */
-    public suspend fun getGuildOrThrow(
+    public suspend fun getGuild(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Guild = strategy.supply(this).getGuild(id)
@@ -373,15 +384,10 @@ public class Kord(
         gateway.sendAll(status)
     }
 
-    override fun equals(other: Any?): Boolean {
-        val kord = other as? Kord ?: return false
-
-        return resources.token == kord.resources.token
-    }
-
-    override fun toString(): String {
-        return "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId)"
-    }
+    override fun equals(other: Any?): Boolean = other is Kord && this.resources.token == other.resources.token
+    override fun hashCode(): Int = resources.token.hashCode()
+    override fun toString(): String =
+        "Kord(resources=$resources, cache=$cache, gateway=$gateway, rest=$rest, selfId=$selfId)"
 
     public companion object {
 
@@ -633,6 +639,6 @@ public inline fun <reified T : Event> Kord.on(
 ): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach { event ->
-            scope.launch { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
+            scope.launch { runCatching { consumer(event) }.onFailure(::logCaughtThrowable) }
         }
         .launchIn(scope)

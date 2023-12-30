@@ -1,8 +1,7 @@
 package dev.kord.test
 
 import io.ktor.utils.io.*
-import js.core.get
-import js.core.toList
+import js.iterable.toList
 import node.buffer.Buffer
 import node.buffer.BufferEncoding
 import node.process.process
@@ -17,6 +16,4 @@ internal suspend fun nodeReadFile(project: String, path: String): ByteReadChanne
     return ByteReadChannel(buffer.toByteArray())
 }
 
-private fun Buffer.toByteArray() = values().toList()
-    .map(Int::toByte)
-    .toByteArray()
+private fun Buffer.toByteArray() = values().toList().toByteArray()

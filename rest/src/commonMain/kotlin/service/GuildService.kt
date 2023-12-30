@@ -19,7 +19,6 @@ import dev.kord.rest.request.auditLogReason
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 import kotlinx.datetime.Instant
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
@@ -53,6 +52,25 @@ public class GuildService(requestHandler: RequestHandler) : RestService(requestH
     /** Returns the [onboarding][DiscordGuildOnboarding] object for the [guildId]. */
     public suspend fun getGuildOnboarding(guildId: Snowflake): DiscordGuildOnboarding = call(Route.GuildOnboardingGet) {
         keys[Route.GuildId] = guildId
+    }
+
+    public suspend fun modifyGuildOnboarding(
+        guildId: Snowflake,
+        request: GuildOnboardingModifyRequest,
+        reason: String? = null,
+    ): DiscordGuildOnboarding = call(Route.GuildOnboardingModify) {
+        keys[Route.GuildId] = guildId
+        body(GuildOnboardingModifyRequest.serializer(), request)
+        auditLogReason(reason)
+    }
+
+    public suspend inline fun modifyGuildOnboarding(
+        guildId: Snowflake,
+        builder: GuildOnboardingModifyBuilder.() -> Unit,
+    ): DiscordGuildOnboarding {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+        val request = GuildOnboardingModifyBuilder().apply(builder)
+        return modifyGuildOnboarding(guildId, request.toRequest(), request.reason)
     }
 
     public suspend inline fun modifyGuild(guildId: Snowflake, builder: GuildModifyBuilder.() -> Unit): DiscordGuild {
@@ -555,6 +573,17 @@ public suspend inline fun GuildService.createForumChannel(
     val createBuilder = ForumChannelCreateBuilder(name).apply(builder)
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
+
+public suspend inline fun GuildService.createMediaChannel(
+    guildId: Snowflake,
+    name: String,
+    builder: MediaChannelCreateBuilder.() -> Unit,
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val createBuilder = MediaChannelCreateBuilder(name).apply(builder)
+    return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
 public suspend inline fun GuildService.createNewsChannel(
     guildId: Snowflake,
     name: String,
@@ -575,6 +604,16 @@ public suspend inline fun GuildService.createVoiceChannel(
     return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
 }
 
+public suspend inline fun GuildService.createStageChannel(
+    guildId: Snowflake,
+    name: String,
+    builder: StageChannelCreateBuilder.() -> Unit
+): DiscordChannel {
+    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+    val createBuilder = StageChannelCreateBuilder(name).apply(builder)
+    return createGuildChannel(guildId, createBuilder.toRequest(), createBuilder.reason)
+}
+
 public suspend inline fun GuildService.createCategory(
     guildId: Snowflake,
     name: String,
@@ -591,26 +630,6 @@ public suspend inline fun GuildService.modifyCurrentVoiceState(
 ) {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     val request = CurrentVoiceStateModifyBuilder().apply(builder).toRequest()
-    modifyCurrentVoiceState(guildId, request)
-}
-
-@Deprecated(
-    "'channelId' is no longer required, use other overload instead.",
-    ReplaceWith(
-        "this.modifyCurrentVoiceState(guildId) {\nthis@modifyCurrentVoiceState.channelId = channelId\nbuilder()\n}"
-    ),
-    level = HIDDEN,
-)
-public suspend inline fun GuildService.modifyCurrentVoiceState(
-    guildId: Snowflake,
-    channelId: Snowflake,
-    builder: CurrentVoiceStateModifyBuilder.() -> Unit
-) {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    val request = CurrentVoiceStateModifyBuilder()
-        .apply { this@apply.channelId = channelId }
-        .apply(builder)
-        .toRequest()
     modifyCurrentVoiceState(guildId, request)
 }
 

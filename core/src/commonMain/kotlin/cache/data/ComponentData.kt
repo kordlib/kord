@@ -21,6 +21,7 @@ public sealed class ComponentData {
     public abstract val url: Optional<String>
     public abstract val disabled: OptionalBoolean
     public abstract val components: Optional<List<ComponentData>>
+    public abstract val defaultValues: Optional<List<DiscordSelectDefaultValue>>
     public abstract val placeholder: Optional<String>
     public abstract val minValues: OptionalInt
     public abstract val maxValues: OptionalInt
@@ -44,6 +45,7 @@ public sealed class ComponentData {
                         url,
                         disabled,
                         components.mapList { from(it) },
+                        defaultValues = defaultValues,
                         placeholder = placeholder,
                         minValues = minValues,
                         maxValues = maxValues,
@@ -65,6 +67,7 @@ public sealed class ComponentData {
                         url,
                         disabled,
                         components.mapList { from(it) },
+                        defaultValues = defaultValues,
                         placeholder = placeholder,
                         minValues = minValues,
                         maxValues =  maxValues,
@@ -92,6 +95,7 @@ public data class ChatComponentData(
     override val url: Optional<String> = Optional.Missing(),
     override val disabled: OptionalBoolean = OptionalBoolean.Missing,
     override val components: Optional<List<ComponentData>> = Optional.Missing(),
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
     override val placeholder: Optional<String> = Optional.Missing(),
     override val minValues: OptionalInt = OptionalInt.Missing,
     override val maxValues: OptionalInt = OptionalInt.Missing,
@@ -114,6 +118,7 @@ public data class TextInputComponentData(
     override val url: Optional<String> = Optional.Missing(),
     override val disabled: OptionalBoolean = OptionalBoolean.Missing,
     override val components: Optional<List<ComponentData>> = Optional.Missing(),
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
     override val placeholder: Optional<String> = Optional.Missing(),
     override val minValues: OptionalInt = OptionalInt.Missing,
     override val maxValues: OptionalInt = OptionalInt.Missing,

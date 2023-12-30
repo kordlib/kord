@@ -26,7 +26,7 @@ kotlin {
     explicitApi()
 
     jvm()
-    js(IR) {
+    js {
         nodejs()
     }
     jvmToolchain(Jvm.target)
@@ -36,6 +36,8 @@ kotlin {
             compilerOptions.options.applyKordCompilerOptions()
         }
     }
+
+    applyDefaultHierarchyTemplate()
 
     sourceSets {
         all {
@@ -53,14 +55,9 @@ kotlin {
         val nonJvmMain by creating {
             dependsOn(commonMain.get())
         }
-        targets
-            .map { it.name }
-            .filter { it != "jvm" && it != "metadata" }
-            .forEach { target ->
-                sourceSets.getByName("${target}Main") {
-                    dependsOn(nonJvmMain)
-                }
-            }
+        jsMain {
+            dependsOn(nonJvmMain)
+        }
     }
 }
 
@@ -77,6 +74,12 @@ tasks {
 
     for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
         named(task) {
+            dependsOn("kspCommonMainKotlinMetadata")
+        }
+    }
+
+    afterEvaluate {
+        named("sourcesJar") {
             dependsOn("kspCommonMainKotlinMetadata")
         }
     }

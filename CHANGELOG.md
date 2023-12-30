@@ -1,3 +1,175 @@
+# 0.12.0
+
+## Additions
+
+* Add interaction permissions to `MemberData` and `Member` (by @Tmpod in #884)
+* Add `SelectDefaultValue`s (by @lukellmann in #881)
+* Add `Permission.CreateGuildExpressions` and `Permission.CreateEvents` (by @lukellmann in #892)
+* Add `StageInstanceCreateRequest.guildScheduledEventId` (by @lukellmann in #893)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @lukellmann in #879)
+* Use debug log level for unknown gateway event names (by @viztea in #890)
+* Add common `MessageBuilder` supertype (by @lukellmann in #891)
+
+## Fixes
+
+* Fix `DiscordAuditLogEntry.userId` nullability (by @lukellmann in #885)
+
+## Dependencies
+
+Updated in #883, #888 and #894
+
+* Gradle 8.3 -> 8.4
+* Kotlin 1.9.10 -> 1.9.20
+* Ktor 2.3.4 -> 2.3.6
+* kotlinx.serialization 1.6.0 -> 1.6.1
+* Stately 2.0.2 -> 2.0.5
+* KSP 1.9.10-1.0.13 -> 1.9.20-1.0.14
+* KotlinPoet 1.14.2 -> 1.15.1
+* JUnit 5 5.10.0 -> 5.10.1
+* MockK 1.13.7 -> 1.13.8
+* Dokka 1.9.0 -> 1.9.10
+* AtomicFU 0.22.0 -> 0.23.0
+* gradle-buildconfig-plugin 4.1.2 -> 4.2.0
+
+# 0.11.0
+
+## Additions
+
+* Add interaction channel field (by @NoComment1105 in #810)
+* Add `avatar_decoration` to user (by @NoComment1105 in #852)
+* Add stage channel create functions (by @NoComment1105 in #856)
+* Implement custom status (by @DRSchlaubi and @lukellmann in #857)
+* Allow modifying `GuildMemberFlags` (by @lukellmann in #865)
+* Add `RoleFlags` (by @lukellmann in #866)
+* Add `AttachmentFlags` (by @lukellmann in #867)
+* Add `MediaChannel`s (by @lukellmann in #853)
+* Allow modifying `GuildOnboarding` (by @lukellmann in #819)
+* Add `ReactionAddEvent.messageAuthorId` (by @lukellmann in #873)
+* Add new `AuditLogEvent`s (by @lukellmann in #874)
+* Add `with_counts` param for `GET` `/users/@me/guilds` (by @lukellmann in #875)
+* Add `TeamMemberRole` (by @lukellmann in #876)
+* Add `AuditLogEntryOptionalInfo.integrationType` (by @lukellmann in #877)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @lukellmann in #844)
+* Generate bit flags (by @DRSchlaubi and @lukellmann in #766)
+* Bring kord enum API closer to bit flags API (by @lukellmann in #861)
+* Replace companion object serializers (by @lukellmann in #869)
+* Remove type parameter from `Choice` (by @lukellmann in #868)
+
+## Fixes
+
+* Correctly close zlib stream when gateway disconnects (by @DRSchlaubi in #849)
+* Fix usage of `BigInteger` in `DiscordBitSet.value` (by @lukellmann in #864)
+* Fix deserialization of `DiscordApplication` (by @lukellmann in #871)
+
+## Dependencies
+
+Updated in #842, #859 and #872
+
+* Gradle 8.1 -> 8.3
+* Kotlin 1.8.21 -> 1.9.10
+* Ktor 2.3.0 -> 2.3.4
+* kotlinx.coroutines 1.7.1 -> 1.7.3
+* kotlinx.serialization 1.5.1 -> 1.6.0
+* kotlinx-datetime 0.4.0 -> 0.4.1
+* kotlin-node 18.16.3-pre.546 -> 18.16.12-pre.619
+* Stately 2.0.0-rc1 -> 2.0.2
+* KSP 1.8.21-1.0.11 -> 1.9.10-1.0.13
+* KotlinPoet 1.13.2 -> 1.14.2
+* JUnit 5 5.9.3 -> 5.10.0
+* MockK 1.13.5 -> 1.13.7
+* SLF4J 2.0.7 -> 2.0.9
+* Dokka 1.8.10 -> 1.9.0
+* AtomicFU 0.20.2 -> 0.22.0
+* Binary compatibility validator 0.13.1 -> 0.13.2
+* gradle-buildconfig-plugin 4.0.4 -> 4.1.2
+* Foojay Toolchains Plugin 0.4.0 -> 0.7.0
+* actions/checkout v3 -> v4
+
+## House-keeping
+
+* Remove unnecessary `RedundantVisibilityModifier` suppression (by @lukellmann in #858)
+* Don't use value class `Reset` with `AtomicRef` (by @DRSchlaubi and @lukellmann in #863)
+
+# 0.10.0
+
+## Additions
+
+* Support new username system (by @lukellmann in #825)
+* Add `Permission.UseExternalSounds` (by @lukellmann in #833)
+* Add new error codes (by @lukellmann in #834)
+* Add mention raid protection to Auto Moderation (by @lukellmann in #830)
+* Add support for Application Role Connection Metadata (by @lukellmann in #836)
+* Add support for join raid protection (by @lukellmann in #832)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @lukellmann in #821)
+* Remove no longer needed pipeline interception (by @lukellmann in #824)
+* Change `parentId` and `lockPermissionsToParent` to Optionals (by @Tmpod in #828)
+
+## Fixes
+
+* Fix deserializing embeds with `null` author url (by @lukellmann in #839)
+
+## Dependencies
+
+Updated in #826
+
+* Kotlin 1.8.10 -> 1.8.21
+* Ktor 2.2.4 -> 2.3.0
+* kotlinx.coroutines 1.6.4 -> 1.7.1
+* kotlinx.serialization 1.5.0 -> 1.5.1
+* kotlin-node 18.14.0-pre.502 -> 18.16.3-pre.546
+* KSP 1.8.10-1.0.9 -> 1.8.21-1.0.11
+* KotlinPoet 1.12.0 -> 1.13.2
+* JUnit 5 5.9.2 -> 5.9.3
+* MockK 1.13.4 -> 1.13.5
+* AtomicFU 0.20.0 -> 0.20.2
+* Binary compatibility validator 0.13.0 -> 0.13.1
+* gradle-buildconfig-plugin 3.1.0 -> 4.0.4
+
+## House-keeping
+
+* Simplify CI (by @lukellmann in #823)
+* Use main as the permanent default branch (by @lukellmann in #831)
+
+# 0.9.0
+
+## Additions
+
+* Support Kotlin/JS (by @DRSchlaubi and @Lukellmann in #775)
+* Add support for voice messages (by @DRSchlaubi and @Lukellmann in #814)
+
+## Changes
+
+* Bump `DeprecationLevel`s (by @Lukellmann in #794)
+* Replace `Icon` with `Asset` (by @oluiss and @Lukellmann in #703)
+
+## Fixes
+
+* Fix some `EntitySupplyStrategy` `toString`s being incorrect (by @GreemDev in #811)
+* Fix List Nitro Sticker Packs endpoint (by @Lukellmann in #816)
+* Fix `InstantInEpochMillisecondsSerializerTest` on JS (by @Lukellmann in #818)
+
+## Dependencies
+
+Updated in #783
+
+* Gradle 8.0.2 -> 8.1
+
+## House-keeping
+
+* Add inspection for missing `@KordDsl` (by @DRSchlaubi in #800)
+* Fix Qodana findings (by @Lukellmann and @DRSchlaubi in #812)
+* Clean up (by @Lukellmann in #813)
+* Improve `GenerateKordEnum` and `AnnotationArguments` (by @Lukellmann in #817)
+
 # 0.8.3
 
 ## Additions

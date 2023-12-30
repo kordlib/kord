@@ -13,6 +13,7 @@ import kotlin.time.DurationUnit
 import kotlin.time.DurationUnit.*
 import kotlin.time.toDuration
 
+// -------- as Long --------
 
 /** Serializer that encodes and decodes [Duration]s as a [Long] number of the specified [unit]. */
 public sealed class DurationAsLongSerializer(
@@ -107,3 +108,22 @@ public object DurationInDaysSerializer : DurationAsLongSerializer(DAYS, "Duratio
 
 /** A [Duration] that is [serializable][Serializable] with [DurationInDaysSerializer]. */
 public typealias DurationInDays = @Serializable(with = DurationInDaysSerializer::class) Duration
+
+
+// -------- as Double --------
+
+/** Serializer that encodes and decodes [Duration]s as a [Double] number of seconds. */
+public object DurationInDoubleSecondsSerializer : KSerializer<Duration> {
+    override val descriptor: SerialDescriptor =
+        PrimitiveSerialDescriptor("dev.kord.common.serialization.DurationInDoubleSeconds", PrimitiveKind.DOUBLE)
+
+    override fun serialize(encoder: Encoder, value: Duration) {
+        if (value.isInfinite()) throw SerializationException("Infinite Durations cannot be serialized, got $value")
+        encoder.encodeDouble(value.toDouble(unit = SECONDS))
+    }
+
+    override fun deserialize(decoder: Decoder): Duration = decoder.decodeDouble().toDuration(unit = SECONDS)
+}
+
+/** A [Duration] that is [serializable][Serializable] with [DurationInDoubleSecondsSerializer]. */
+public typealias DurationInDoubleSeconds = @Serializable(with = DurationInDoubleSecondsSerializer::class) Duration

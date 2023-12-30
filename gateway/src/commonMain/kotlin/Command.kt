@@ -4,9 +4,8 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
-import dev.kord.common.serialization.InstantInEpochMillisecondsSerializer
+import dev.kord.common.serialization.InstantInEpochMilliseconds
 import kotlinx.atomicfu.atomic
-import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -109,8 +108,7 @@ public data class GuildMembersChunkData(
 public data class DiscordPresence(
     val status: PresenceStatus,
     val afk: Boolean,
-    @Serializable(with = InstantInEpochMillisecondsSerializer::class)
-    val since: Instant? = null,
+    val since: InstantInEpochMilliseconds? = null,
     val game: DiscordBotActivity? = null,
 )
 
@@ -127,7 +125,7 @@ public data class Resume(
 
 /**
  * A representation of the
- * [Discord Request Guild Members command](https://discord.com/developers/docs/topics/gateway#request-guild-members).
+ * [Discord Request Guild Members command](https://discord.com/developers/docs/topics/gateway-events#request-guild-members).
  *
  * When connecting to a [Gateway] Discord will send members up to [Identify.largeThreshold], any additional
  * members can be requested via this command. Sending this command will result in a variable amount of
@@ -185,8 +183,7 @@ public data class UpdateVoiceStatus(
 
 @Serializable
 public data class UpdateStatus(
-    @Serializable(with = InstantInEpochMillisecondsSerializer::class)
-    val since: Instant?,
+    val since: InstantInEpochMilliseconds?,
     val activities: List<DiscordBotActivity>,
     val status: PresenceStatus,
     val afk: Boolean,

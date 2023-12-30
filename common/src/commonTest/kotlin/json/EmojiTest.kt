@@ -46,6 +46,7 @@ class EmojiTest {
             with(user.value!!) {
                 username shouldBe "Luigi"
                 discriminator shouldBe "0002"
+                globalName shouldBe null
                 id shouldBe "96008815106887111"
                 avatar shouldBe "5500909a3274e1812beb4e8de6631111"
             }

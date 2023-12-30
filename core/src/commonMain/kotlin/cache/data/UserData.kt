@@ -16,12 +16,14 @@ private val WebhookData.nullableUserId get() = userId.value
 public data class UserData(
     val id: Snowflake,
     val username: String,
-    val discriminator: String,
+    val discriminator: Optional<String> = Optional.Missing(),
+    val globalName: Optional<String?> = Optional.Missing(),
     val avatar: String? = null,
     val bot: OptionalBoolean = OptionalBoolean.Missing,
     val publicFlags: Optional<UserFlags> = Optional.Missing(),
     val banner: String? = null,
-    val accentColor: Int? = null
+    val accentColor: Int? = null,
+    val avatarDecoration: Optional<String?> = Optional.Missing()
 ) {
     public companion object {
 
@@ -33,11 +35,11 @@ public data class UserData(
         }
 
         public fun from(entity: DiscordUser): UserData = with(entity) {
-            UserData(id, username, discriminator, avatar, bot, publicFlags, banner, accentColor)
+            UserData(id, username, discriminator, globalName, avatar, bot, publicFlags, banner, accentColor, avatarDecoration)
         }
 
         public fun from(entity: DiscordOptionallyMemberUser): UserData = with(entity) {
-            UserData(id, username, discriminator, avatar, bot, publicFlags)
+            UserData(id, username, discriminator, globalName, avatar, bot, publicFlags)
         }
 
     }

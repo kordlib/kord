@@ -42,6 +42,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
             is VoiceChannel -> VoiceChannelCreateEvent(channel, shard, context?.get())
             is Category -> CategoryCreateEvent(channel, shard, context?.get())
             is ForumChannel -> ForumChannelCreateEvent(channel, shard, context?.get())
+            is MediaChannel -> MediaChannelCreateEvent(channel, shard, context?.get())
             is ThreadChannel -> return null
             else -> UnknownChannelCreateEvent(channel, shard, context?.get())
 
@@ -52,7 +53,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
 
     private suspend fun handle(event: ChannelUpdate, shard: Int, kord: Kord, context: LazyContext?): ChannelUpdateEvent? {
         val data = ChannelData.from(event.channel)
-        val oldData = kord.cache.query<ChannelData> { idEq(ChannelData::id, data.id) }.singleOrNull()
+        val oldData = kord.cache.query { idEq(ChannelData::id, data.id) }.singleOrNull()
         kord.cache.put(data)
         val old = oldData?.let { Channel.from(it, kord) }
         val coreEvent = when (val channel = Channel.from(data, kord)) {
@@ -63,6 +64,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
             is VoiceChannel -> VoiceChannelUpdateEvent(channel, old as? VoiceChannel, shard, context?.get())
             is Category -> CategoryUpdateEvent(channel, old as? Category, shard, context?.get())
             is ForumChannel -> ForumChannelUpdateEvent(channel, old as? ForumChannel, shard, context?.get())
+            is MediaChannel -> MediaChannelUpdateEvent(channel, old as? MediaChannel, shard, context?.get())
             is ThreadChannel -> return null
             else -> UnknownChannelUpdateEvent(channel, old, shard, context?.get())
 
@@ -72,7 +74,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
     }
 
     private suspend fun handle(event: ChannelDelete, shard: Int, kord: Kord, context: LazyContext?): ChannelDeleteEvent? {
-        kord.cache.remove<ChannelData> { idEq(ChannelData::id, event.channel.id) }
+        kord.cache.remove { idEq(ChannelData::id, event.channel.id) }
         val data = ChannelData.from(event.channel)
 
         val coreEvent = when (val channel = Channel.from(data, kord)) {
@@ -83,6 +85,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
             is VoiceChannel -> VoiceChannelDeleteEvent(channel, shard, context?.get())
             is Category -> CategoryDeleteEvent(channel, shard, context?.get())
             is ForumChannel -> ForumChannelDeleteEvent(channel, shard, context?.get())
+            is MediaChannel -> MediaChannelDeleteEvent(channel, shard, context?.get())
             is ThreadChannel -> return null
             else -> UnknownChannelDeleteEvent(channel, shard, context?.get())
         }
@@ -104,7 +107,7 @@ internal class ChannelEventHandler : BaseGatewayEventHandler() {
                 context?.get(),
             )
 
-            kord.cache.query<ChannelData> { idEq(ChannelData::id, channelId) }.update {
+            kord.cache.query { idEq(ChannelData::id, channelId) }.update {
                 it.copy(lastPinTimestamp = lastPinTimestamp)
             }
 

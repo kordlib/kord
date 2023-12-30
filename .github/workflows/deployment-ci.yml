@@ -22,14 +22,12 @@ jobs:
     env:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 8
-      - name: Set SHORT_SHA environment variable to short commit hash
-        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
+          java-version: 11
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -44,21 +42,17 @@ jobs:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       NEXUS_USER: ${{ secrets.NEXUS_USER }}
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-      ORG_GRADLE_PROJECT_signingKey: ${{ secrets.signingKey }}
-      ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.signingPassword }}
-      GITHUB_TAG_NAME: ${{ github.event.release.tag_name }}
-      GITHUB_BRANCH_NAME: ${{ github.ref }}
+      SIGNING_KEY: ${{ secrets.signingKey }}
+      SIGNING_PASSWORD: ${{ secrets.signingPassword }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Set up JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: 8
-      - name: Set SHORT_SHA environment variable to short commit hash
-        run: echo "SHORT_SHA=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
+          java-version: 11
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2
         with:
@@ -66,4 +60,4 @@ jobs:
       - name: Publish with Gradle
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: -x test publish
+          arguments: --no-parallel -x test publish

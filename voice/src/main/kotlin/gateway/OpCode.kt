@@ -25,9 +25,10 @@ public enum class OpCode(public val code: Int) {
         override val descriptor: SerialDescriptor
             get() = PrimitiveSerialDescriptor("op", PrimitiveKind.INT)
 
+        private val entriesByCode = entries.associateBy { it.code }
         override fun deserialize(decoder: Decoder): OpCode {
             val code = decoder.decodeInt()
-            return values().firstOrNull { it.code == code } ?: Unknown
+            return entriesByCode[code] ?: Unknown
         }
 
         override fun serialize(encoder: Encoder, value: OpCode) {

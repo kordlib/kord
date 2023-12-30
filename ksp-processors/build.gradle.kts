@@ -2,6 +2,12 @@ plugins {
     `kord-internal-module`
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-receivers")
+    }
+}
+
 dependencies {
     implementation(projects.kspAnnotations)
 

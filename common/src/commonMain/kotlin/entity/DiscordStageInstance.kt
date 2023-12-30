@@ -1,23 +1,20 @@
-@file:GenerateKordEnum(
-    name = "StageInstancePrivacyLevel", valueType = INT,
-    deprecatedSerializerName = "Serializer",
+@file:Generate(
+    INT_KORD_ENUM, name = "StageInstancePrivacyLevel",
     docUrl = "https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level",
     entries = [
-        Entry("GuildOnly", intValue = 2, kDoc = "The Stage instance is visible to only guild members."),
-    ],
-    deprecatedEntries = [
         Entry(
             "Public", intValue = 1, kDoc = "The Stage instance is visible publicly.",
-            deprecationMessage = "Stages are no longer discoverable", deprecationLevel = WARNING,
+            deprecated = Deprecated("Stages are no longer discoverable", level = WARNING),
         ),
+        Entry("GuildOnly", intValue = 2, kDoc = "The Stage instance is visible to only guild members."),
     ],
 )
 
 package dev.kord.common.entity
 
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.DeprecationLevel.WARNING

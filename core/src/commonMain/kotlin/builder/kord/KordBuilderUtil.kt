@@ -2,7 +2,7 @@ package dev.kord.core.builder.kord
 
 import dev.kord.common.annotation.KordInternal
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.http.HttpEngine
+import dev.kord.common.http.httpEngine
 import io.ktor.client.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.websocket.*
@@ -33,7 +33,7 @@ public fun HttpClient?.configure(): HttpClient {
         isLenient = true
     }
 
-    return HttpClient(HttpEngine) {
+    return HttpClient(httpEngine()) {
         defaultConfig()
         install(ContentNegotiation) {
             json(json)

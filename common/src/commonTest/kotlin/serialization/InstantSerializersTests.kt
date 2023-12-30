@@ -1,6 +1,5 @@
 package dev.kord.common.serialization
 
-import dev.kord.test.IgnoreOnJs
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException
@@ -68,21 +67,27 @@ abstract class InstantSerializerTest(
 }
 
 
-@IgnoreOnJs // currently can't pass
 class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     json = "796514689159",
     instant = Instant.fromEpochMilliseconds(796514689159),
     serializer = InstantInEpochMillisecondsSerializer,
 ) {
-    private val futureInstantExactlyAtLimit = Instant.fromEpochMilliseconds(Long.MAX_VALUE)
-    private val pastInstantExactlyAtLimit = Instant.fromEpochMilliseconds(Long.MIN_VALUE)
+    private val past = Instant.fromEpochMilliseconds(Long.MIN_VALUE)
+    private val future = Instant.fromEpochMilliseconds(Long.MAX_VALUE)
+
+    // platform-dependent
+    private val pastClamped = past.toEpochMilliseconds() != Long.MIN_VALUE
+    private val futureClamped = future.toEpochMilliseconds() != Long.MAX_VALUE
+
+    private val clampedMin = Instant.fromEpochSeconds(Long.MIN_VALUE, Long.MIN_VALUE).toEpochMilliseconds()
+    private val clampedMax = Instant.fromEpochSeconds(Long.MAX_VALUE, Long.MAX_VALUE).toEpochMilliseconds()
 
     @Test
     @JsName("test7")
     fun `future Instant under limit can be serialized`() {
         assertEquals(
-            expected = (Long.MAX_VALUE - 1).toString(),
-            actual = serialize(futureInstantExactlyAtLimit - 1.nanoseconds),
+            expected = (if (futureClamped) clampedMax else Long.MAX_VALUE - 1).toString(),
+            actual = serialize(future - 1.nanoseconds),
         )
     }
 
@@ -90,8 +95,8 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     @JsName("test8")
     fun `past Instant under limit can be serialized`() {
         assertEquals(
-            expected = Long.MIN_VALUE.toString(),
-            actual = serialize(pastInstantExactlyAtLimit + 1.nanoseconds),
+            expected = (if (pastClamped) clampedMin else Long.MIN_VALUE).toString(),
+            actual = serialize(past + 1.nanoseconds),
         )
     }
 
@@ -99,26 +104,32 @@ class InstantInEpochMillisecondsSerializerTest : InstantSerializerTest(
     @Test
     @JsName("test9")
     fun `future Instant exactly at limit can be serialized`() {
-        assertEquals(expected = Long.MAX_VALUE.toString(), actual = serialize(futureInstantExactlyAtLimit))
+        assertEquals(
+            expected = (if (futureClamped) clampedMax else Long.MAX_VALUE).toString(),
+            actual = serialize(future),
+        )
     }
 
     @Test
     @JsName("test10")
     fun `past Instant exactly at limit can be serialized`() {
-        assertEquals(expected = Long.MIN_VALUE.toString(), actual = serialize(pastInstantExactlyAtLimit))
+        assertEquals(
+            expected = (if (pastClamped) clampedMin else Long.MIN_VALUE).toString(),
+            actual = serialize(past),
+        )
     }
 
 
     @Test
     @JsName("test11")
     fun `future Instant over limit cannot be serialized`() {
-        assertFailsWith<SerializationException> { serialize(futureInstantExactlyAtLimit + 1.nanoseconds) }
+        if (!futureClamped) assertFailsWith<SerializationException> { serialize(future + 1.nanoseconds) }
     }
 
     @Test
     @JsName("test12")
     fun `past Instant over limit cannot be serialized`() {
-        assertFailsWith<SerializationException> { serialize(pastInstantExactlyAtLimit - 1.nanoseconds) }
+        if (!pastClamped) assertFailsWith<SerializationException> { serialize(past - 1.nanoseconds) }
     }
 }
 

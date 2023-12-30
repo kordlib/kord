@@ -38,6 +38,7 @@ class MessageTest {
             with(author) {
                 username shouldBe "Mason"
                 discriminator shouldBe "9999"
+                globalName shouldBe null
                 id shouldBe "53908099506183680"
                 avatar shouldBe "a_bab14f271d565501444b2ca3be944b25"
             }
@@ -76,6 +77,7 @@ class MessageTest {
             with(author) {
                 username shouldBe "Mason"
                 discriminator shouldBe "9999"
+                globalName shouldBe "Mason!"
                 id.toString() shouldBe "53908099506183680"
                 avatar shouldBe "a_bab14f271d565501444b2ca3be944b25"
             }

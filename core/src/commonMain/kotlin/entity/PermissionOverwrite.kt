@@ -1,6 +1,5 @@
 package dev.kord.core.entity
 
-import dev.kord.common.entity.Overwrite
 import dev.kord.common.entity.OverwriteType
 import dev.kord.common.entity.Permissions
 import dev.kord.common.entity.Snowflake
@@ -16,8 +15,6 @@ public open class PermissionOverwrite(
     public val type: OverwriteType get() = data.type
 
     internal fun asRequest() = ChannelPermissionEditRequest(allowed, denied, type)
-
-    internal fun toOverwrite() = Overwrite(id = target, type = type, allow = allowed, deny = denied)
 
     override fun hashCode(): Int = target.hashCode()
     override fun equals(other: Any?): Boolean {

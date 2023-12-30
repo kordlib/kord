@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "DiscordConnectionVisibility", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "DiscordConnectionVisibility",
     docUrl = "https://discord.com/developers/docs/resources/user#connection-object-visibility-types",
     entries = [
         Entry("None", intValue = 0, kDoc = "Invisible to everyone except the user themselves."),
@@ -11,9 +11,9 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -49,7 +49,7 @@ public interface EntitySupplyStrategy<T : EntitySupplier> {
                 return StoreEntitySupplier(rest.supply(kord), kord.cache)
             }
 
-            override fun toString(): String = "EntitySupplyStrategy.cacheAwareRest"
+            override fun toString(): String = "EntitySupplyStrategy.cachingRest"
 
         }
 
@@ -78,7 +78,7 @@ public interface EntitySupplyStrategy<T : EntitySupplier> {
                 override fun supply(kord: Kord): EntitySupplier =
                     cache.supply(kord).withFallback(cachingRest.supply(kord))
 
-                override fun toString(): String = "EntitySupplyStrategy.cacheWithCacheAwareRestFallback"
+                override fun toString(): String = "EntitySupplyStrategy.cacheWithCachingRestFallback"
             }
 
         /**

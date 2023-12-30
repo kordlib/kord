@@ -147,16 +147,21 @@ public class MentionSpamAutoModerationRuleModifyBuilder :
     private var _mentionLimit: OptionalInt = OptionalInt.Missing
     override var mentionLimit: Int? by ::_mentionLimit.delegate()
 
-    /** @suppress Use `this.mentionLimit = mentionLimit` instead. */
-    override fun assignMentionLimit(mentionLimit: Int) {
-        this.mentionLimit = mentionLimit
-    }
+    private var _mentionRaidProtectionEnabled: OptionalBoolean = OptionalBoolean.Missing
+    override var mentionRaidProtectionEnabled: Boolean? by ::_mentionRaidProtectionEnabled.delegate()
 
-    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> =
-        when (val limit = _mentionLimit) {
-            OptionalInt.Missing -> Optional.Missing()
-            is OptionalInt.Value -> DiscordAutoModerationRuleTriggerMetadata(mentionTotalLimit = limit).optional()
+    override fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> {
+        val mentionLimit = _mentionLimit
+        val mentionRaidProtectionEnabled = _mentionRaidProtectionEnabled
+        return if (mentionLimit is OptionalInt.Value || mentionRaidProtectionEnabled is OptionalBoolean.Value) {
+            DiscordAutoModerationRuleTriggerMetadata(
+                mentionTotalLimit = mentionLimit,
+                mentionRaidProtectionEnabled = mentionRaidProtectionEnabled,
+            ).optional()
+        } else {
+            Optional.Missing()
         }
+    }
 }
 
 private inline fun <T : Any> ifAnyPresent(vararg optionals: Optional<*>, block: () -> T): Optional<T> {

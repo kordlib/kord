@@ -65,9 +65,7 @@ public class ThreadListSyncEvent(
         return supplier.getGuildOrNull(guildId)
     }
 
-    public suspend fun getChannels(): Flow<TopGuildChannel> {
-        return supplier.getGuildChannels(guildId).filter { it.id in channelIds }
-    }
+    public val channels: Flow<TopGuildChannel> get() = supplier.getGuildChannels(guildId).filter { it.id in channelIds }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ThreadListSyncEvent =
         ThreadListSyncEvent(data, kord, shard, customContext, strategy.supply(kord))

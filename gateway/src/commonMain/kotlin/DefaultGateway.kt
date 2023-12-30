@@ -7,6 +7,7 @@ import dev.kord.gateway.GatewayCloseCode.*
 import dev.kord.gateway.handler.*
 import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.gateway.retry.Retry
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
@@ -22,7 +23,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.*
-import mu.KotlinLogging
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -107,14 +107,14 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                 defaultGatewayLogger.trace { "opening gateway connection to $gatewayUrl" }
                 socket = data.client.webSocketSession { url(gatewayUrl) }
 
-                /**
+                /*
                  * https://discord.com/developers/docs/topics/gateway#transport-compression
                  *
                  * > Every connection to the gateway should use its own unique zlib context.
                  */
                 inflater = Inflater()
             } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
+                defaultGatewayLogger.error(exception) { "" }
                 if (exception.isTimeout()) {
                     data.eventFlow.emit(Close.Timeout)
                 }
@@ -126,7 +126,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             try {
                 readSocket()
             } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
+                defaultGatewayLogger.error(exception) { "" }
             }
 
             defaultGatewayLogger.trace { "gateway connection closing" }
@@ -134,7 +134,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             try {
                 handleClose()
             } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
+                defaultGatewayLogger.error(exception) { "" }
             }
 
             defaultGatewayLogger.trace { "handled gateway connection closed" }
@@ -213,18 +213,20 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
-            defaultGatewayLogger.error(exception)
+            defaultGatewayLogger.error(exception) { "" }
         }
 
     }
 
     private suspend fun handleClose() {
+        inflater.close()
+
         val reason = withTimeoutOrNull(1500) {
             socket.closeReason.await()
         } ?: return
 
         defaultGatewayLogger.trace { "Gateway closed: ${reason.code} ${reason.message}" }
-        val discordReason = values().firstOrNull { it.code == reason.code.toInt() } ?: return
+        val discordReason = gatewayCloseCodeByCode[reason.code.toInt()] ?: return
 
         data.eventFlow.emit(Close.DiscordClose(discordReason, discordReason.retry))
 
@@ -310,7 +312,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         socket.send(Frame.Text(json))
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(DelicateCoroutinesApi::class)
     private val socketOpen get() = ::socket.isInitialized && !socket.outgoing.isClosedForSend && !socket.incoming.isClosedForReceive
 
     public companion object {
@@ -322,6 +324,8 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             ignoreUnknownKeys = true
             isLenient = true
         }
+
+        private val gatewayCloseCodeByCode = GatewayCloseCode.entries.associateBy { it.code }
     }
 }
 

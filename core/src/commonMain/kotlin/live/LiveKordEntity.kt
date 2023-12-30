@@ -6,10 +6,11 @@ import dev.kord.core.entity.KordEntity
 import dev.kord.core.event.Event
 import dev.kord.core.event.message.MessageUpdateEvent
 import dev.kord.core.event.message.ReactionAddEvent
-import dev.kord.core.kordLogger
+import dev.kord.core.logCaughtThrowable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
+import kotlin.coroutines.CoroutineContext
 
 /**
  * A Discord entity that only emits events *related* to this entity.
@@ -27,9 +28,12 @@ public interface LiveKordEntity : KordEntity, CoroutineScope {
 @KordPreview
 public abstract class AbstractLiveKordEntity(
     final override val kord: Kord,
-    coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
-) : LiveKordEntity, CoroutineScope by coroutineScope {
+    private val coroutineScope: CoroutineScope = kord + SupervisorJob(kord.coroutineContext.job)
+) : LiveKordEntity, CoroutineScope {
+    final override val coroutineContext: CoroutineContext
+        get() = coroutineScope.coroutineContext
 
+    @Suppress("LeakingThis") // only used as CoroutineScope; coroutineContext can not be overridden in subclasses
     final override val events: SharedFlow<Event> =
         kord.events.filter { filter(it) }.onEach { update(it) }.shareIn(this, SharingStarted.Eagerly)
 
@@ -49,5 +53,5 @@ public inline fun <reified T : Event> LiveKordEntity.on(
     noinline consumer: suspend (T) -> Unit
 ): Job =
     events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
-        runCatching { consumer(it) }.onFailure { kordLogger.catching(it) }
-    }.catch { kordLogger.catching(it) }.launchIn(scope)
+        runCatching { consumer(it) }.onFailure(::logCaughtThrowable)
+    }.catch { logCaughtThrowable(it) }.launchIn(scope)

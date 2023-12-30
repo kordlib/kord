@@ -1,7 +1,7 @@
 package dev.kord.core
 
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.entity.Snowflake
-import dev.kord.core.entity.KordEntity
 import dev.kord.core.entity.Message
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.event.Event
@@ -28,7 +28,6 @@ import kotlinx.datetime.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
-import kotlinx.coroutines.flow.firstOrNull as coroutinesFirstOrNull
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
     contract {
@@ -67,7 +66,7 @@ internal fun <T : Comparable<T>> Flow<T>.sorted(): Flow<T> = flow {
  * The flow's collection is cancelled when a match is found.
  */
 internal suspend inline fun <T : Any> Flow<T>.any(crossinline predicate: suspend (T) -> Boolean): Boolean =
-    coroutinesFirstOrNull { predicate(it) } != null
+    firstOrNull { predicate(it) } != null
 
 /**
  * The non-terminal operator that returns a new flow that will emit values of the second [flow] only after the first
@@ -174,22 +173,6 @@ internal fun <T : Any> paginateForwards(
 )
 
 /**
- *  Selects the [Position.After] the youngest item in the batch.
- */
-internal fun <T : KordEntity> paginateForwards(
-    batchSize: Int,
-    start: Snowflake = Snowflake.min,
-    request: suspend (after: Position.After) -> Collection<T>,
-): Flow<T> = paginate(
-    start,
-    batchSize,
-    itemSelector = youngestItem { it.id },
-    idSelector = { it.id },
-    directionSelector = Position::After,
-    request,
-)
-
-/**
  *  Selects the [Position.Before] the oldest item in the batch.
  */
 internal fun <T : Any> paginateBackwards(
@@ -202,22 +185,6 @@ internal fun <T : Any> paginateBackwards(
     batchSize,
     itemSelector = oldestItem(idSelector),
     idSelector,
-    directionSelector = Position::Before,
-    request,
-)
-
-/**
- *  Selects the [Position.Before] the oldest item in the batch.
- */
-internal fun <T : KordEntity> paginateBackwards(
-    batchSize: Int,
-    start: Snowflake = Snowflake.max,
-    request: suspend (before: Position.Before) -> Collection<T>,
-): Flow<T> = paginate(
-    start,
-    batchSize,
-    itemSelector = oldestItem { it.id },
-    idSelector = { it.id },
     directionSelector = Position::Before,
     request,
 )
@@ -275,7 +242,11 @@ internal fun paginateThreads(
  * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
  * than one event.
  */
-public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent(T::class)
+public inline fun <reified T : Event> Intents.Builder.enableEvent(): Unit = enableEvent(T::class)
+
+@Suppress("DEPRECATION_ERROR")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.HIDDEN)
+public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit = enableEvent0(T::class)
 
 /**
  * Adds the necessary [Intent]s to receive the specified types of [events] in all variations and with all data
@@ -287,8 +258,13 @@ public inline fun <reified T : Event> Intents.IntentsBuilder.enableEvent(): Unit
  * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
  * than one event.
  */
+public fun Intents.Builder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
+    events.forEach { enableEvent(it) }
+
+@Suppress("DEPRECATION_ERROR")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.HIDDEN)
 public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event>>): Unit =
-    events.forEach { enableEvent(it) }
+    events.forEach { enableEvent0(it) }
 
 /**
  * Adds the necessary [Intent]s to receive the specified types of [events] in all variations and with all data
@@ -300,8 +276,13 @@ public fun Intents.IntentsBuilder.enableEvents(events: Iterable<KClass<out Event
  * Note that enabling one type of event might also enable several other types of events since most [Intent]s enable more
  * than one event.
  */
-public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
+public fun Intents.Builder.enableEvents(vararg events: KClass<out Event>): Unit =
     events.forEach { enableEvent(it) }
+
+@Suppress("DEPRECATION_ERROR")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.HIDDEN)
+public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>): Unit =
+    events.forEach { enableEvent0(it) }
 
 /**
  * Adds the necessary [Intent]s to receive the specified type of [event] in all variations and with all data available.
@@ -313,7 +294,7 @@ public fun Intents.IntentsBuilder.enableEvents(vararg events: KClass<out Event>)
  * than one event.
  */
 @OptIn(PrivilegedIntent::class)
-public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = when (event) {
+public fun Intents.Builder.enableEvent(event: KClass<out Event>): Unit = when (event) {
 // see https://discord.com/developers/docs/topics/gateway#list-of-intents
 
     /*
@@ -335,6 +316,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     StageChannelCreateEvent::class,
     TextChannelCreateEvent::class,
     ForumChannelCreateEvent::class,
+    MediaChannelCreateEvent::class,
     UnknownChannelCreateEvent::class,
     VoiceChannelCreateEvent::class,
 
@@ -345,6 +327,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     StageChannelUpdateEvent::class,
     TextChannelUpdateEvent::class,
     ForumChannelUpdateEvent::class,
+    MediaChannelUpdateEvent::class,
     UnknownChannelUpdateEvent::class,
     VoiceChannelUpdateEvent::class,
 
@@ -355,6 +338,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     StageChannelDeleteEvent::class,
     TextChannelDeleteEvent::class,
     ForumChannelDeleteEvent::class,
+    MediaChannelDeleteEvent::class,
     UnknownChannelDeleteEvent::class,
     VoiceChannelDeleteEvent::class,
 
@@ -382,7 +366,7 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
     MemberJoinEvent::class, MemberUpdateEvent::class, MemberLeaveEvent::class -> +GuildMembers
 
 
-    GuildAuditLogEntryCreateEvent::class, BanAddEvent::class, BanRemoveEvent::class -> +GuildBans
+    GuildAuditLogEntryCreateEvent::class, BanAddEvent::class, BanRemoveEvent::class -> +GuildModeration
 
 
     EmojisUpdateEvent::class -> +GuildEmojis
@@ -475,6 +459,19 @@ public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>): Unit = 
 
 
     else -> Unit
+}
+
+@Suppress("DEPRECATION_ERROR")
+@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.HIDDEN)
+public fun Intents.IntentsBuilder.enableEvent(event: KClass<out Event>) {
+    enableEvent0(event)
+}
+
+@Suppress("DEPRECATION_ERROR")
+@PublishedApi
+@KordInternal
+internal fun Intents.IntentsBuilder.enableEvent0(event: KClass<out Event>) {
+    +(Intents.Builder(flags().code).apply { enableEvent(event) }.build())
 }
 
 // Replacement of Objects.hash

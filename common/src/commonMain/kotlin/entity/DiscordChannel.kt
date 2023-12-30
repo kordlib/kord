@@ -1,5 +1,5 @@
-@file:GenerateKordEnum(
-    name = "ChannelType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ChannelType",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-channel-types",
     entries = [
         Entry("GuildText", intValue = 0, kDoc = "A text channel within a server."),
@@ -37,11 +37,38 @@
                     "Student-Hubs-FAQ) containing the listed servers.",
         ),
         Entry("GuildForum", intValue = 15, kDoc = "A channel that can only contain threads."),
+        Entry(
+            "GuildMedia", intValue = 16,
+            kDoc = "A channel that can only contain threads, similar to [GuildForum] channels.",
+        ),
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "VideoQualityMode", valueType = INT,
+@file:Generate(
+    INT_FLAGS, name = "ChannelFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
+    hadFlagsProperty = true,
+    docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-channel-flags",
+    entries = [
+        Entry(
+            "Pinned", shift = 1,
+            kDoc = "This thread is pinned to the top of its parent [GuildForum][ChannelType.GuildForum] or " +
+                "[GuildMedia][ChannelType.GuildMedia] channel.",
+        ),
+        Entry(
+            "RequireTag", shift = 4,
+            kDoc = "Whether a tag is required to be specified when creating a thread in a " +
+                "[GuildForum][ChannelType.GuildForum] or [GuildMedia][ChannelType.GuildMedia] channel.",
+        ),
+        Entry(
+            "HideMediaDownloadOptions", shift = 15, noStaticFieldIfEntityWasEnum = true,
+            kDoc = "When set hides the embedded media download options. Available only for " +
+                "[GuildMedia][ChannelType.GuildMedia] channels.",
+        ),
+    ],
+)
+
+@file:Generate(
+    INT_KORD_ENUM, name = "VideoQualityMode",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes",
     entries = [
         Entry("Auto", intValue = 1, kDoc = "Discord chooses the quality for optimal performance."),
@@ -49,8 +76,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "SortOrderType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "SortOrderType",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types",
     entries = [
         Entry("LatestActivity", intValue = 0, kDoc = "Sort forum posts by activity."),
@@ -58,8 +85,8 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "ForumLayoutType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "ForumLayoutType",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types",
     entries = [
         Entry("NotSet", intValue = 0, kDoc = "No default has been set for forum channel."),
@@ -68,34 +95,32 @@
     ],
 )
 
-@file:GenerateKordEnum(
-    name = "OverwriteType", valueType = INT,
+@file:Generate(
+    INT_KORD_ENUM, name = "OverwriteType",
     docUrl = "https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure",
     entries = [Entry("Role", intValue = 0), Entry("Member", intValue = 1)],
 )
 
 package dev.kord.common.entity
 
-import dev.kord.common.entity.ChannelType.GuildForum
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInMinutesSerializer
 import dev.kord.common.serialization.DurationInSeconds
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.DeprecationLevel.HIDDEN
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -161,100 +186,33 @@ public data class DiscordChannel(
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     @SerialName("default_forum_layout")
     val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
-    // Forum thread original message
-    // see in: https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
+    // original message when starting thread in forum or media channel, see
+    // https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel
     val message: Optional<DiscordMessage> = Optional.Missing(),
 )
 
-public enum class ChannelFlag(public val code: Int) {
-
-    /** This thread is pinned to the top of its parent [GuildForum] channel. */
-    Pinned(1 shl 1),
-
-    /** Whether a tag is required to be specified when creating a thread in a [GuildForum] channel. */
-    RequireTag(1 shl 4);
-
-
-    public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
-
-    public operator fun plus(flags: ChannelFlags): ChannelFlags = flags + this
-}
-
-@Serializable(with = ChannelFlags.Serializer::class)
-public data class ChannelFlags internal constructor(public val code: Int) {
-
-    public val flags: List<ChannelFlag> get() = ChannelFlag.values().filter { it in this }
-
-    public operator fun contains(flag: ChannelFlag): Boolean = this.code and flag.code == flag.code
-
-    public operator fun contains(flags: ChannelFlags): Boolean = this.code and flags.code == flags.code
-
-    public operator fun plus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code or flag.code)
-
-    public operator fun plus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code or flags.code)
-
-    public operator fun minus(flag: ChannelFlag): ChannelFlags = ChannelFlags(this.code and flag.code.inv())
-
-    public operator fun minus(flags: ChannelFlags): ChannelFlags = ChannelFlags(this.code and flags.code.inv())
-
-
-    public inline fun copy(builder: Builder.() -> Unit): ChannelFlags {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return Builder(code).apply(builder).build()
-    }
-
-
-    internal object Serializer : KSerializer<ChannelFlags> {
-
-        override val descriptor: SerialDescriptor =
-            PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelFlags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ChannelFlags {
-            val code = decoder.decodeInt()
-            return ChannelFlags(code)
-        }
-
-        override fun serialize(encoder: Encoder, value: ChannelFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-
-    public class Builder(private var code: Int = 0) {
-
-        public operator fun ChannelFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ChannelFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ChannelFlag.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public operator fun ChannelFlags.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public fun build(): ChannelFlags = ChannelFlags(code)
-    }
-}
-
-public inline fun ChannelFlags(builder: ChannelFlags.Builder.() -> Unit): ChannelFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ChannelFlags")
+public inline fun channelFlags(builder: ChannelFlags.Builder.() -> Unit): ChannelFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return ChannelFlags.Builder().apply(builder).build()
 }
 
-public fun ChannelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ChannelFlags")
+public fun channelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
-public fun ChannelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ChannelFlags")
+public fun channelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
-public fun ChannelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ChannelFlags")
+public fun channelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
-@JvmName("ChannelFlags0")
-public fun ChannelFlags(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
+@Suppress("FunctionName")
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+public fun ChannelFlags0(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
 @Serializable
 public data class Overwrite(
@@ -277,9 +235,9 @@ public data class DiscordThreadMetadata(
     val createTimestamp: Optional<Instant?> = Optional.Missing(),
 )
 
-// this should actually be generated with @file:GenerateKordEnum,
+// this should actually be generated with @file:Generate,
 // but it's not worth adding support for Duration just for this class
-@Serializable(with = ArchiveDuration.NewSerializer::class)
+@Serializable(with = ArchiveDuration.Serializer::class)
 public sealed class ArchiveDuration(
     /** The raw [Duration] used by Discord. */
     public val duration: Duration,
@@ -288,48 +246,54 @@ public sealed class ArchiveDuration(
         this === other || (other is ArchiveDuration && this.duration == other.duration)
 
     final override fun hashCode(): Int = duration.hashCode()
-    final override fun toString(): String = "ArchiveDuration.${this::class.simpleName}(duration=$duration)"
+    final override fun toString(): String =
+        if (this is Unknown) "ArchiveDuration.Unknown(duration=$duration)"
+        else "ArchiveDuration.${this::class.simpleName}"
 
     /**
      * An unknown [ArchiveDuration].
      *
      * This is used as a fallback for [ArchiveDuration]s that haven't been added to Kord yet.
      */
-    public class Unknown(duration: Duration) : ArchiveDuration(duration)
+    public class Unknown internal constructor(
+        duration: Duration,
+        @Suppress("UNUSED_PARAMETER") unused: Nothing?,
+    ) : ArchiveDuration(duration) {
+        @Deprecated(
+            "Replaced by 'ArchiveDuration.from()'.",
+            ReplaceWith("ArchiveDuration.from(duration)", imports = ["dev.kord.common.entity.ArchiveDuration"]),
+            DeprecationLevel.WARNING,
+        )
+        public constructor(duration: Duration) : this(duration, unused = null)
+    }
+
     public object Hour : ArchiveDuration(60.minutes)
     public object Day : ArchiveDuration(1440.minutes)
     public object ThreeDays : ArchiveDuration(4320.minutes)
     public object Week : ArchiveDuration(10080.minutes)
 
-    internal object NewSerializer : KSerializer<ArchiveDuration> {
-        override val descriptor get() = DurationInMinutesSerializer.descriptor
+    internal object Serializer : KSerializer<ArchiveDuration> {
+        override val descriptor =
+            PrimitiveSerialDescriptor("dev.kord.common.entity.ArchiveDuration", PrimitiveKind.LONG)
 
         override fun serialize(encoder: Encoder, value: ArchiveDuration) =
             encoder.encodeSerializableValue(DurationInMinutesSerializer, value.duration)
 
-        override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val duration = decoder.decodeSerializableValue(DurationInMinutesSerializer)
-            return entries.firstOrNull { it.duration == duration } ?: Unknown(duration)
-        }
+        override fun deserialize(decoder: Decoder) = from(decoder.decodeSerializableValue(DurationInMinutesSerializer))
     }
 
     public companion object {
         /** A [List] of all known [ArchiveDuration]s. */
-        public val entries: List<ArchiveDuration> by lazy(mode = PUBLICATION) {
-            listOf(Hour, Day, ThreeDays, Week)
-        }
+        public val entries: List<ArchiveDuration> by lazy(mode = PUBLICATION) { listOf(Hour, Day, ThreeDays, Week) }
 
-        @Deprecated("Renamed to 'entries'.", ReplaceWith("this.entries"), level = HIDDEN)
-        public val values: Set<ArchiveDuration> get() = entries.toSet()
+        private val entriesByDuration by lazy(mode = PUBLICATION) { entries.associateBy(ArchiveDuration::duration) }
+
+        /**
+         * Returns an instance of [ArchiveDuration] with [ArchiveDuration.duration] equal to the specified [duration].
+         */
+        public fun from(duration: Duration): ArchiveDuration =
+            entriesByDuration[duration] ?: Unknown(duration, unused = null)
     }
-
-    @Deprecated(
-        "Use 'ArchiveDuration.serializer()' instead.",
-        ReplaceWith("ArchiveDuration.serializer()", "dev.kord.common.entity.ArchiveDuration"),
-        level = HIDDEN,
-    )
-    // TODO rename internal `NewSerializer` to `Serializer` when this is removed
-    public object Serializer : KSerializer<ArchiveDuration> by NewSerializer
 }
 
 @Serializable

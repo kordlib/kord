@@ -40,11 +40,11 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                     joinedAt = Instant.fromEpochMilliseconds(0),
                     premiumSince = Optional.Missing(),
                     avatar = Optional.Missing(),
+                    flags = GuildMemberFlags(),
                 ),
                 userData = UserData(
                     id = userId,
                     username = "",
-                    discriminator = ""
                 )
             )
         )
@@ -67,10 +67,10 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                         user = DiscordUser(
                             id = it,
                             username = "",
-                            discriminator = "",
                             avatar = null
                         ),
                         joinedAt = Instant.fromEpochMilliseconds(0),
+                        flags = GuildMemberFlags(),
                     ),
                     0
                 )
@@ -98,7 +98,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                         user = DiscordUser(
                             id = it,
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),
@@ -128,7 +127,6 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                         user = DiscordUser(
                             id = it,
                             username = "",
-                            discriminator = "",
                             avatar = null
                         )
                     ),

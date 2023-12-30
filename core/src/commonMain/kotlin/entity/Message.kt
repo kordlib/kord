@@ -305,29 +305,17 @@ public class Message(
      */
     override suspend fun asMessage(): Message = this
 
-    /**
-     * Requests to get the [author] as a member.
-     *
-     * Returns null if the message was not send in a [TopGuildMessageChannel], or if the [author] is not a [User].
-     */
-    @Deprecated(
-        "Deprecated in favour of getAuthorAsMemberOrNull(), as it more accurately describes function",
-        ReplaceWith("getAuthorAsMemberOrNull()"),
-        DeprecationLevel.ERROR
-    )
-    public suspend fun getAuthorAsMember(): Member? {
-        val author = author ?: return null
-        val guildId = getGuildOrNull()?.id ?: return null
-        return author.asMember(guildId)
-    }
+    @Deprecated("Renamed to 'getAuthorAsMember'.", ReplaceWith("this.getAuthorAsMember()"), DeprecationLevel.HIDDEN)
+    public suspend fun getAuthorAsMemberOrThrow(): Member = getAuthorAsMember()
 
     /**
      * Requests to get the [author] as a member.
      *
+     * @throws RequestException if anything went wrong during the request.
      * @throws EntityNotFoundException if the message was not sent in a [TopGuildMessageChannel], if the member was not found
      * or if the guild was null, or if the author is not a user
      */
-    public suspend fun getAuthorAsMemberOrThrow(): Member {
+    public suspend fun getAuthorAsMember(): Member {
         val author = author ?: throw EntityNotFoundException("Author is not a Discord User")
         val guildId = getGuild().id
         return author.asMember(guildId)
@@ -338,6 +326,8 @@ public class Message(
      *
      * Returns null if the message was not sent in a [TopGuildMessageChannel], if the [author] is not a [User], or if
      * the [author] as a member is `null`.
+     *
+     * @throws RequestException if anything went wrong during the request.
      */
     public suspend fun getAuthorAsMemberOrNull(): Member? {
         val author = author ?: return null

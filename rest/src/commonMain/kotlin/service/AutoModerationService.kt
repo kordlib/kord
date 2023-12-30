@@ -72,11 +72,10 @@ public class AutoModerationService(requestHandler: RequestHandler) : RestService
         guildId: Snowflake,
         name: String,
         eventType: AutoModerationRuleEventType,
-        mentionLimit: Int,
         builder: MentionSpamAutoModerationRuleCreateBuilder.() -> Unit,
     ): DiscordAutoModerationRule {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
-        val request = MentionSpamAutoModerationRuleCreateBuilder(name, eventType, mentionLimit).apply(builder)
+        val request = MentionSpamAutoModerationRuleCreateBuilder(name, eventType).apply(builder)
         return createAutoModerationRule(guildId, request.toRequest(), request.reason)
     }
 

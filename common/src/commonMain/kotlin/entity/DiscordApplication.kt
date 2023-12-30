@@ -1,15 +1,69 @@
+@file:Generate(
+    INT_FLAGS, name = "ApplicationFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
+    hadFlagsProperty = true, builderHadFlagsFunction = true,
+    docUrl = "https://discord.com/developers/docs/resources/application#application-object-application-flags",
+    entries = [
+        Entry(
+            "ApplicationAutoModerationRuleCreateBadge", shift = 6,
+            kDoc = "Indicates if an app uses the Auto Moderation API.",
+        ),
+        Entry(
+            "GatewayPresence", shift = 12,
+            kDoc = "Intent required for bots in **100 or more servers** to receive `PresenceUpdate` events.",
+        ),
+        Entry(
+            "GatewayPresenceLimited", shift = 13,
+            kDoc = "Intent required for bots in under 100 servers to receive `PresenceUpdate` events, found on the " +
+                "**Bot** page in your app's settings.",
+        ),
+        Entry(
+            "GatewayGuildMembers", shift = 14,
+            kDoc = "Intent required for bots in **100 or more servers** to receive member-related events like " +
+                "`GuildMemberAdd`.\n\nSee the list of member-related events " +
+                "[under·`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).",
+        ),
+        Entry(
+            "GatewayGuildMembersLimited", shift = 15,
+            kDoc = "Intent required for bots in under 100 servers to receive member-related events like " +
+                "`GuildMemberAdd`, found on the **Bot** page in your app's settings.\n\nSee the list of " +
+                "member-related events " +
+                "[under·`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).",
+        ),
+        Entry(
+            "VerificationPendingGuildLimit", shift = 16,
+            kDoc = "Indicates unusual growth of an app that prevents verification.",
+        ),
+        Entry(
+            "Embedded", shift = 17,
+            kDoc = "Indicates if an app is embedded within the Discord client (currently unavailable publicly).",
+        ),
+        Entry(
+            "GatewayMessageContent", shift = 18,
+            kDoc = "Intent required for bots in **100 or more servers** to receive " +
+                "[message·content](https://support-dev.discord.com/hc/en-us/articles/4404772028055).",
+        ),
+        Entry(
+            "GatewayMessageContentLimited", shift = 19,
+            kDoc = "Intent required for bots in under 100 servers to receive " +
+                "[message·content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found on the " +
+                "**Bot** page in your app's settings.",
+        ),
+        Entry(
+            "ApplicationCommandBadge", shift = 23,
+            kDoc = "Indicates if an app has registered global application commands.",
+        ),
+    ],
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
-import kotlinx.serialization.KSerializer
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.jvm.JvmName
@@ -32,6 +86,7 @@ public sealed interface BaseDiscordApplication {
     public val tags: Optional<List<String>>
     public val installParams: Optional<InstallParams>
     public val customInstallUrl: Optional<String>
+    public val roleConnectionsVerificationUrl: Optional<String?>
 }
 
 /**
@@ -71,12 +126,14 @@ public data class DiscordApplication(
     override val installParams: Optional<InstallParams> = Optional.Missing(),
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
+    @SerialName("role_connections_verification_url")
+    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
 ) : BaseDiscordApplication
 
 /**
  * A representation of the partial
  * [Application Structure](https://discord.com/developers/docs/resources/application#application-object-application-structure)
- * sent in [invite create events](https://discord.com/developers/docs/topics/gateway#invite-create).
+ * sent in [invite create events](https://discord.com/developers/docs/topics/gateway-events#invite-create).
  */
 @Serializable
 public data class DiscordPartialApplication(
@@ -106,150 +163,38 @@ public data class DiscordPartialApplication(
     override val installParams: Optional<InstallParams> = Optional.Missing(),
     @SerialName("custom_install_url")
     override val customInstallUrl: Optional<String> = Optional.Missing(),
+    @SerialName("role_connections_verification_url")
+    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
 ) : BaseDiscordApplication
 
-public enum class ApplicationFlag(public val code: Int) {
-
-    /** Indicates if an app uses the Auto Moderation API. */
-    ApplicationAutoModerationRuleCreateBadge(1 shl 6),
-
-    /**
-     * Intent required for bots in **100 or more servers** to receive
-     * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update).
-     */
-    GatewayPresence(1 shl 12),
-
-    /**
-     * Intent required for bots in under 100 servers to receive
-     * [`PresenceUpdate` events](https://discord.com/developers/docs/topics/gateway#presence-update), found in Bot
-     * Settings.
-     */
-    GatewayPresenceLimited(1 shl 13),
-
-    /**
-     * Intent required for bots in **100 or more servers** to receive member-related events like `GuildMemberAdd`.
-     *
-     * See list of member-related events under
-     * [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
-     */
-    GatewayGuildMembers(1 shl 14),
-
-    /**
-     * Intent required for bots in under 100 servers to receive member-related events like `GuildMemberAdd`, found in
-     * Bot Settings.
-     *
-     * See list of member-related events under
-     * [`GUILD_MEMBERS`](https://discord.com/developers/docs/topics/gateway#list-of-intents).
-     */
-    GatewayGuildMembersLimited(1 shl 15),
-
-    /** Indicates unusual growth of an app that prevents verification. */
-    VerificationPendingGuildLimit(1 shl 16),
-
-    /** Indicates if an app is embedded within the Discord client (currently unavailable publicly). */
-    Embedded(1 shl 17),
-
-    /**
-     * Intent required for bots in **100 or more servers** to receive
-     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055).
-     */
-    GatewayMessageContent(1 shl 18),
-
-    /**
-     * Intent required for bots in under 100 servers to receive
-     * [message content](https://support-dev.discord.com/hc/en-us/articles/4404772028055), found in Bot Settings.
-     */
-    GatewayMessageContentLimited(1 shl 19),
-
-    /** Indicates if an app has registered global application commands. */
-    ApplicationCommandBadge(1 shl 23);
-
-    public operator fun plus(flag: ApplicationFlag): ApplicationFlags = ApplicationFlags(this.code or flag.code)
-
-    public operator fun plus(flags: ApplicationFlags): ApplicationFlags = flags + this
-}
-
-@Serializable(with = ApplicationFlags.Serializer::class)
-public data class ApplicationFlags internal constructor(val code: Int) {
-
-    val flags: List<ApplicationFlag> get() = ApplicationFlag.values().filter { this.contains(it) }
-
-    public operator fun contains(flag: ApplicationFlag): Boolean = this.code and flag.code == flag.code
-
-    public operator fun contains(flags: ApplicationFlags): Boolean = this.code and flags.code == flags.code
-
-    public operator fun plus(flag: ApplicationFlag): ApplicationFlags = ApplicationFlags(this.code or flag.code)
-
-    public operator fun plus(flags: ApplicationFlags): ApplicationFlags = ApplicationFlags(this.code or flags.code)
-
-    public operator fun minus(flag: ApplicationFlag): ApplicationFlags =
-        ApplicationFlags(this.code and flag.code.inv())
-
-    public operator fun minus(flags: ApplicationFlags): ApplicationFlags =
-        ApplicationFlags(this.code and flags.code.inv())
-
-
-    public inline fun copy(builder: Builder.() -> Unit): ApplicationFlags {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        return Builder(code).apply(builder).flags()
-    }
-
-
-    internal object Serializer : KSerializer<ApplicationFlags> {
-
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("ApplicationFlags", PrimitiveKind.INT)
-
-        override fun deserialize(decoder: Decoder): ApplicationFlags {
-            val flags = decoder.decodeInt()
-            return ApplicationFlags(flags)
-        }
-
-        override fun serialize(encoder: Encoder, value: ApplicationFlags) {
-            encoder.encodeInt(value.code)
-        }
-    }
-
-
-    public class Builder(internal var code: Int = 0) {
-        public operator fun ApplicationFlag.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ApplicationFlags.unaryPlus() {
-            this@Builder.code = this@Builder.code or this.code
-        }
-
-        public operator fun ApplicationFlag.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public operator fun ApplicationFlags.unaryMinus() {
-            this@Builder.code = this@Builder.code and this.code.inv()
-        }
-
-        public fun flags(): ApplicationFlags = ApplicationFlags(code)
-    }
-}
-
-public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit): ApplicationFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ApplicationFlags")
+public inline fun applicationFlags(builder: ApplicationFlags.Builder.() -> Unit): ApplicationFlags {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return ApplicationFlags.Builder().apply(builder).flags()
+    return ApplicationFlags.Builder().apply(builder).build()
 }
 
-public fun ApplicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ApplicationFlags")
+public fun applicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
     flags.forEach { +it }
 }
 
-public fun ApplicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ApplicationFlags")
+public fun applicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
     flags.forEach { +it }
 }
 
-public fun ApplicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags = ApplicationFlags {
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+@JvmName("ApplicationFlags")
+public fun applicationFlags(flags: Iterable<ApplicationFlag>): ApplicationFlags = ApplicationFlags {
     flags.forEach { +it }
 }
 
-@JvmName("ApplicationFlagsWithIterable")
-public fun ApplicationFlags(flags: Iterable<ApplicationFlags>): ApplicationFlags = ApplicationFlags {
+@Suppress("FunctionName")
+@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
+public fun ApplicationFlagsWithIterable(flags: Iterable<ApplicationFlags>): ApplicationFlags = ApplicationFlags {
     flags.forEach { +it }
 }
 

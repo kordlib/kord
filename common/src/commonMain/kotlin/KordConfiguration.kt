@@ -1,7 +1,7 @@
 package dev.kord.common
 
 import dev.kord.common.annotation.KordUnsafe
-import kotlinx.atomicfu.atomic
+import kotlin.concurrent.Volatile
 
 public object KordConfiguration {
 
@@ -12,8 +12,9 @@ public object KordConfiguration {
      *
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
+    @Volatile
     @set:KordUnsafe
-    public var REST_VERSION: Int by atomic(REST_GATEWAY_DEFAULT)
+    public var REST_VERSION: Int = REST_GATEWAY_DEFAULT
 
     /**
      * The
@@ -22,8 +23,9 @@ public object KordConfiguration {
      *
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
+    @Volatile
     @set:KordUnsafe
-    public var GATEWAY_VERSION: Int by atomic(REST_GATEWAY_DEFAULT)
+    public var GATEWAY_VERSION: Int = REST_GATEWAY_DEFAULT
 
     /**
      * The
@@ -32,6 +34,7 @@ public object KordConfiguration {
      *
      * Changing this version might lead to errors since Kord is designed to work with the initially set version.
      */
+    @Volatile
     @set:KordUnsafe
-    public var VOICE_GATEWAY_VERSION: Int by atomic(4)
+    public var VOICE_GATEWAY_VERSION: Int = 4
 }

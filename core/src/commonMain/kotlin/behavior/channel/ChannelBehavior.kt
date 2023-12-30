@@ -76,7 +76,7 @@ public interface ChannelBehavior : KordEntity, Strategizable {
 }
 
 /**
- * Requests to get the [Channel] represented by the [id],
+ * Requests to get the [Channel] represented by this [ChannelBehavior],
  * returns null if the [Channel] isn't present.
  *
  * @throws [RequestException] if anything went wrong during the request.
@@ -86,7 +86,7 @@ public suspend inline fun <reified T: Channel> ChannelBehavior.asChannelOfOrNull
 
 
 /**
- * Requests to get the [Channel] represented by the [id].
+ * Requests to get the [Channel] represented by this [ChannelBehavior].
  *
  * @throws [RequestException] if anything went wrong during the request.
  * @throws [EntityNotFoundException] if the [Channel] wasn't present.

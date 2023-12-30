@@ -111,6 +111,26 @@ public sealed class Route<T>(
 
 
     /*
+     * Application Role Connection Metadata:
+     * https://discord.com/developers/docs/resources/application-role-connection-metadata
+     */
+
+    public object ApplicationRoleConnectionMetadataRecordsGet :
+        Route<List<DiscordApplicationRoleConnectionMetadata>>(
+            HttpMethod.Get,
+            "/applications/$ApplicationId/role-connections/metadata",
+            ListSerializer(DiscordApplicationRoleConnectionMetadata.serializer()),
+        )
+
+    public object ApplicationRoleConnectionMetadataRecordsUpdate :
+        Route<List<DiscordApplicationRoleConnectionMetadata>>(
+            HttpMethod.Put,
+            "/applications/$ApplicationId/role-connections/metadata",
+            ListSerializer(DiscordApplicationRoleConnectionMetadata.serializer()),
+        )
+
+
+    /*
      * Audit Log:
      * https://discord.com/developers/docs/resources/audit-log
      */
@@ -572,7 +592,18 @@ public sealed class Route<T>(
         Route<DiscordGuildPreview>(HttpMethod.Get, "/guilds/$GuildId/preview", DiscordGuildPreview.serializer())
 
     public object GuildOnboardingGet :
-        Route<DiscordGuildOnboarding>(HttpMethod.Get, "/guilds/$GuildId/onboarding", DiscordGuildOnboarding.serializer())
+        Route<DiscordGuildOnboarding>(
+            HttpMethod.Get,
+            "/guilds/$GuildId/onboarding",
+            DiscordGuildOnboarding.serializer(),
+        )
+
+    public object GuildOnboardingModify :
+        Route<DiscordGuildOnboarding>(
+            HttpMethod.Put,
+            "/guilds/$GuildId/onboarding",
+            DiscordGuildOnboarding.serializer(),
+        )
 
     public object SelfVoiceStatePatch :
         Route<Unit>(HttpMethod.Patch, "/guilds/$GuildId/voice-states/@me", NoStrategy)
@@ -983,10 +1014,10 @@ public sealed class Route<T>(
         Route<DiscordMessageSticker>(HttpMethod.Get, "/stickers/$StickerId", DiscordMessageSticker.serializer())
 
     public object NitroStickerPacks :
-        Route<List<DiscordStickerPack>>(
+        Route<NitroStickerPacksResponse>(
             HttpMethod.Get,
             "/sticker-packs",
-            ListSerializer(DiscordStickerPack.serializer())
+            NitroStickerPacksResponse.serializer(),
         )
 
     public object GuildStickersGet :

@@ -8,6 +8,7 @@
       "public_flags": 64,
       "id": "695549908383432716",
       "discriminator": "9000",
+      "global_name": null,
       "avatar": "68922a048551bb4b0dda88b65e85d8f1"
     },
     "roles": [
@@ -15,6 +16,7 @@
     ],
     "premium_since": null,
     "permissions": "2147483647",
+    "flags": 3,
     "pending": false,
     "nick": null,
     "mute": false,

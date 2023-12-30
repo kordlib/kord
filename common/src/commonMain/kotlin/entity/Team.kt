@@ -1,6 +1,29 @@
-@file:GenerateKordEnum(
-    name = "TeamMembershipState", valueType = INT,
-    deprecatedSerializerName = "TeamMembershipStateSerializer",
+@file:Generate(
+    STRING_KORD_ENUM, name = "TeamMemberRole", unknownConstructorWasPublic = false,
+    docUrl = "https://discord.com/developers/docs/topics/teams#team-member-roles",
+    entries = [
+        Entry(
+            "Admin", stringValue = "admin",
+            kDoc = "Admins have similar access as owners, except they cannot take destructive actions on the team or " +
+                "team-owned apps.",
+        ),
+        Entry(
+            "Developer", stringValue = "developer",
+            kDoc = "Developers can access information about team-owned apps, like the client secret or public key. " +
+                "They can also take limited actions on team-owned apps, like configuring interaction endpoints or " +
+                "resetting the bot token. Members with the Developer role _cannot_ manage the team or its members, " +
+                "or take destructive actions on team-owned apps.",
+        ),
+        Entry(
+            "ReadOnly", stringValue = "read_only",
+            kDoc = "Read-only members can access information about a team and any team-owned apps. Some examples " +
+                "include getting the IDs of applications and exporting payout records.",
+        ),
+    ],
+)
+
+@file:Generate(
+    INT_KORD_ENUM, name = "TeamMembershipState",
     docUrl = "https://discord.com/developers/docs/topics/teams#data-models-membership-state-enum",
     entries = [
         Entry("Invited", intValue = 1),
@@ -10,10 +33,12 @@
 
 package dev.kord.common.entity
 
-import dev.kord.ksp.GenerateKordEnum
-import dev.kord.ksp.GenerateKordEnum.Entry
-import dev.kord.ksp.GenerateKordEnum.ValueType.INT
-import kotlinx.serialization.*
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.EntityType.STRING_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 /**
  * The raw developer team data gotten from the API.
@@ -23,6 +48,7 @@ public data class DiscordTeam(
     val icon: String?,
     val id: Snowflake,
     val members: List<DiscordTeamMember>,
+    val name: String,
     @SerialName("owner_user_id")
     val ownerUserId: Snowflake,
 )
@@ -39,12 +65,6 @@ public data class DiscordTeamMember(
     @SerialName("membership_state")
     val membershipState: TeamMembershipState,
     /**
-     * A collection of permissions granted to this member.
-     * At the moment, this collection will only have one element: `*`, meaning the member has all permissions.
-     * This is because right now there are no other permissions. Read mode [here](https://discord.com/developers/docs/topics/teams#data-models-team-members-object)
-     */
-    val permissions: List<String>,
-    /**
      * The unique ID that this member belongs to.
      */
     @SerialName("team_id")
@@ -53,4 +73,5 @@ public data class DiscordTeamMember(
      * Partial user data containing only the ID, username, discriminator and avatar.
      */
     val user: DiscordUser,
+    val role: TeamMemberRole,
 )

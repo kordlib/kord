@@ -1,5 +1,9 @@
 package dev.kord.ksp
 
+import com.google.devtools.ksp.KspExperimental
+import com.google.devtools.ksp.findActualType
+import com.google.devtools.ksp.getAnnotationsByType
+import com.google.devtools.ksp.isDefault
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.*
 import kotlin.reflect.KProperty1
@@ -11,25 +15,29 @@ internal fun Resolver.getNewClasses() = getNewFiles().flatMap { it.declarations.
 
 internal inline fun <reified A : Annotation> KSAnnotation.isOfType() = isOfType(A::class.qualifiedName!!)
 
-internal fun KSAnnotation.isOfType(qualifiedName: String) =
-    shortName.asString() == qualifiedName.substringAfterLast('.')
-        && annotationType.resolve().declaration.qualifiedName?.asString() == qualifiedName
+internal fun KSAnnotation.isOfType(qualifiedName: String) = annotationType.resolve()
+    .declaration.let { if (it is KSTypeAlias) it.findActualType() else it }
+    .qualifiedName?.asString() == qualifiedName
 
-internal class AnnotationArguments private constructor(private val map: Map<String, Any?>) {
-    private inline fun <reified V : Any> get(parameter: KProperty1<out Annotation, V>) = map[parameter.name] as V?
+@OptIn(KspExperimental::class)
+internal inline fun <reified A : Annotation> KSAnnotated.getAnnotationsByType() = getAnnotationsByType(A::class)
 
-    internal inline fun <reified V : Any> getSafe(parameter: KProperty1<out Annotation, V>) =
-        get(parameter) ?: error("Missing required parameter: $parameter")
+internal class AnnotationArguments<A : Annotation> private constructor(
+    private val arguments: Map<String, KSValueArgument>,
+) {
+    private fun getArgument(parameter: KProperty1<A, Any>) = arguments.getValue(parameter.name)
+    private val KProperty1<A, Any>.value get() = getArgument(this).value
 
-    // https://github.com/google/ksp/issues/885
-    internal inline fun <reified V : Any> getOrDefault(parameter: KProperty1<out Annotation, V>, defaultValue: V) =
-        get(parameter) ?: defaultValue
+    fun isDefault(parameter: KProperty1<A, Any>) = getArgument(parameter).isDefault()
 
-    internal fun getRaw(parameter: KProperty1<out Annotation, Any>) = map[parameter.name]
+    // can't return non-nullable values because of https://github.com/google/ksp/issues/885
+    operator fun get(parameter: KProperty1<A, Annotation>) = parameter.value as KSAnnotation?
+    operator fun get(parameter: KProperty1<A, Array<out Annotation>>) =
+        @Suppress("UNCHECKED_CAST") (parameter.value as List<KSAnnotation>?)
 
-    internal companion object {
-        internal val KSAnnotation.annotationArguments
-            get() = AnnotationArguments(arguments.associate { it.name!!.getShortName() to it.value })
+    companion object {
+        fun <A : Annotation> KSAnnotation.arguments() =
+            AnnotationArguments<A>(arguments.associateBy { it.name!!.asString() })
     }
 }
 

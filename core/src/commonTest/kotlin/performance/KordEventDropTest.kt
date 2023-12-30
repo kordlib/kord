@@ -87,14 +87,15 @@ class KordEventDropTest {
                 icon = null,
                 afkChannelId = null,
                 applicationId = null,
-                systemChannelFlags = SystemChannelFlags(0),
+                systemChannelFlags = SystemChannelFlags(),
                 systemChannelId = null,
                 rulesChannelId = null,
                 vanityUrlCode = null,
                 banner = null,
                 publicUpdatesChannelId = null,
                 nsfwLevel = NsfwLevel.Default,
-                premiumProgressBarEnabled = false
+                premiumProgressBarEnabled = false,
+                safetyAlertsChannelId = null,
             ), 0
         )
 
