@@ -185,7 +185,7 @@ public class DefaultVoiceGateway(
                 is Identify -> command.copy(token = "hunter2")
                 is Resume -> command.copy(token = "hunter2")
                 is SelectProtocol -> command.copy(data = command.data.copy(address = "ip"))
-                is Heartbeat, is Resume, is SendSpeaking -> null
+                is Heartbeat, is SendSpeaking -> null
             }
             val credentialFreeJson = credentialFreeCopy // re-encode copy
                 ?.let { VoiceGatewayJson.encodeToString(Command.SerializationStrategy, it) }
