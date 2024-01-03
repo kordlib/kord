@@ -184,28 +184,18 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
             defaultGatewayLogger.trace {
                 val credentialFreeJson = when (event) {
-
-                    is VoiceServerUpdate -> {
+                    is InteractionCreate, is VoiceServerUpdate -> {
                         when (val payload = GatewayJson.parseToJsonElement(json)) {
-                            is JsonObject -> {
-                                val payloadCopy = buildJsonObject {
-                                    for ((k, v) in payload) put(k, v)
-
-                                    val data = payload["d"]
-                                    if (data is JsonObject) putJsonObject("d") {
-                                        for ((k, v) in data) put(k, v)
-                                        put("token", "hunter2")
-                                    }
-                                }
-                                payloadCopy.toString()
-                            }
+                            is JsonObject -> JsonObject(payload.mapValues { (k1, v1) ->
+                                if (k1 == "d" && v1 is JsonObject) JsonObject(v1.mapValues { (k2, v2) ->
+                                    if (k2 == "token") JsonPrimitive("hunter2") else v2
+                                }) else v1
+                            }).toString()
                             else -> json
                         }
                     }
-
                     else -> json
                 }
-
                 "Gateway <<< $credentialFreeJson"
             }
 
