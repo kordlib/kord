@@ -425,7 +425,7 @@ public interface EntitySupplier {
         messageId: Snowflake,
         threadId: Snowflake? = null,
     ): Message = getWebhookMessageOrNull(webhookId, token, messageId, threadId)
-        ?: EntityNotFoundException.webhookMessageNotFound(webhookId, token, messageId, threadId)
+        ?: EntityNotFoundException.webhookMessageNotFound(webhookId, messageId, threadId)
 
     /**
      * Requests the [Template] with the given [code].
@@ -552,7 +552,7 @@ public interface EntitySupplier {
         messageId: Snowflake,
     ): FollowupMessage =
         getFollowupMessageOrNull(applicationId, interactionToken, messageId)
-            ?: EntityNotFoundException.followupMessageNotFound(interactionToken, messageId)
+            ?: EntityNotFoundException.followupMessageNotFound(messageId)
 
     public fun getGuildScheduledEvents(guildId: Snowflake): Flow<GuildScheduledEvent>
 

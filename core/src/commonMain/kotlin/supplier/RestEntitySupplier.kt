@@ -471,7 +471,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
      * @throws EntityNotFoundException if the initial interaction response is null.
      */
     public suspend fun getOriginalInteraction(applicationId: Snowflake, token: String): Message =
-        getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound(token)
+        getOriginalInteractionOrNull(applicationId, token) ?: EntityNotFoundException.interactionNotFound()
 
     override suspend fun getFollowupMessageOrNull(
         applicationId: Snowflake,

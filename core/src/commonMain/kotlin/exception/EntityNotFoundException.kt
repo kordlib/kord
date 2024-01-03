@@ -52,6 +52,15 @@ public class EntityNotFoundException : Exception {
         public inline fun webhookNotFound(webhookId: Snowflake): Nothing =
             entityNotFound("Webhook", webhookId)
 
+        @Deprecated(
+            "The message of the thrown exception will include the webhook token, use the overload that doesn't take " +
+                "a token instead.",
+            ReplaceWith(
+                "EntityNotFoundException.webhookMessageNotFound(webhookId, messageId, threadId)",
+                imports = ["dev.kord.core.exception.EntityNotFoundException"],
+            ),
+            DeprecationLevel.WARNING,
+        )
         public inline fun webhookMessageNotFound(
             webhookId: Snowflake,
             token: String,
@@ -61,6 +70,16 @@ public class EntityNotFoundException : Exception {
             "Message with id $messageId ${
                 if (threadId != null) "in thread $threadId " else ""
             }from webhook $webhookId with token $token was not found."
+        )
+
+        public inline fun webhookMessageNotFound(
+            webhookId: Snowflake,
+            messageId: Snowflake,
+            threadId: Snowflake? = null,
+        ): Nothing = throw EntityNotFoundException(
+            "Message with id $messageId ${
+                if (threadId != null) "in thread $threadId " else ""
+            }from webhook $webhookId was not found."
         )
 
         public inline fun inviteNotFound(code: String): Nothing =
@@ -93,14 +112,38 @@ public class EntityNotFoundException : Exception {
         public inline fun <reified T : ApplicationCommand> applicationCommandNotFound(commandId: Snowflake): Nothing =
             entityNotFound(T::class.simpleName!!, commandId)
 
+        @Deprecated(
+            "The message of the thrown exception will include the interaction token, use the overload that doesn't " +
+                "take a token instead.",
+            ReplaceWith(
+                "EntityNotFoundException.interactionNotFound()",
+                imports = ["dev.kord.core.exception.EntityNotFoundException"],
+            ),
+            DeprecationLevel.WARNING,
+        )
         public inline fun interactionNotFound(token: String): Nothing = throw EntityNotFoundException(
             "Initial interaction response for interaction with token $token was not found."
         )
 
+        public inline fun interactionNotFound(): Nothing =
+            throw EntityNotFoundException("Initial interaction response was not found.")
+
+        @Deprecated(
+            "The message of the thrown exception will include the interaction token, use the overload that doesn't " +
+                "take a token instead.",
+            ReplaceWith(
+                "EntityNotFoundException.followupMessageNotFound(messageId)",
+                imports = ["dev.kord.core.exception.EntityNotFoundException"],
+            ),
+            DeprecationLevel.WARNING,
+        )
         public inline fun followupMessageNotFound(token: String, messageId: Snowflake): Nothing =
             throw EntityNotFoundException(
                 "Followup message with id $messageId for interaction with token $token was not found."
             )
+
+        public inline fun followupMessageNotFound(messageId: Snowflake): Nothing =
+            throw EntityNotFoundException("Followup message with id $messageId  was not found.")
 
         public inline fun autoModerationRuleNotFound(guildId: Snowflake, ruleId: Snowflake): Nothing =
             guildEntityNotFound("Auto Moderation Rule", guildId, ruleId)
