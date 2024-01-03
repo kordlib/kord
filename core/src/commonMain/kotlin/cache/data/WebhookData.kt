@@ -22,6 +22,9 @@ public data class WebhookData(
     val token: Optional<String> = Optional.Missing(),
     val applicationId: Snowflake?
 ) {
+    override fun toString(): String = "WebhookData(id=$id, type=$type, guildId=$guildId, channelId=$channelId, " +
+        "userId=$userId, name=$name, avatar=$avatar, token=hunter2, applicationId=$applicationId)"
+
     public companion object {
         public val description: DataDescription<WebhookData, Snowflake> = description(WebhookData::id)
 

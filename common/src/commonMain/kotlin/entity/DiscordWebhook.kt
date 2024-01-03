@@ -19,6 +19,7 @@ package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.map
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
@@ -51,4 +52,7 @@ public data class DiscordWebhook(
     val token: Optional<String> = Optional.Missing(),
     @SerialName("application_id")
     val applicationId: Snowflake?,
-)
+) {
+    override fun toString(): String = "DiscordWebhook(id=$id, type=$type, guildId=$guildId, channelId=$channelId, " +
+        "user=$user, name=$name, avatar=$avatar, token=${token.map { "hunter2" }}, applicationId=$applicationId)"
+}

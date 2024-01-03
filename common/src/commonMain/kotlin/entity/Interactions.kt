@@ -283,6 +283,10 @@ public data class DiscordInteraction(
     @SerialName("guild_locale")
     val guildLocale: Optional<Locale> = Optional.Missing(),
 ) {
+    override fun toString(): String = "DiscordInteraction(id=$id, applicationId=$applicationId, type=$type, " +
+        "data=$data, guildId=$guildId, channel=$channel, channelId=$channelId, member=$member, user=$user, " +
+        "token=hunter2, version=$version, message=$message, appPermissions=$appPermissions, locale=$locale, " +
+        "guildLocale=$guildLocale)"
 
     /**
      * Serializer that handles incomplete messages in [DiscordInteraction.message]. Discards

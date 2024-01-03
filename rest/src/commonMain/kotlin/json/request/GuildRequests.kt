@@ -115,7 +115,10 @@ public data class GuildMemberAddRequest(
     val deaf: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("communication_disabled_until")
     val communicationDisabledUntil: Optional<Instant> = Optional.Missing()
-)
+) {
+    override fun toString(): String = "GuildMemberAddRequest(token=hunter2, nick=$nick, roles=$roles, mute=$mute, " +
+        "deaf=$deaf, communicationDisabledUntil=$communicationDisabledUntil)"
+}
 
 @Serializable
 public data class GuildMemberModifyRequest(

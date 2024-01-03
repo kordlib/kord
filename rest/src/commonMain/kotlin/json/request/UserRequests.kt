@@ -16,7 +16,9 @@ public data class GroupDMCreateRequest(
     @SerialName("access_tokens")
     val tokens: List<String>,
     val nick: Map<String, String>
-)
+) {
+    override fun toString(): String = "GroupDMCreateRequest(tokens=${tokens.map { "hunter2" }}, nick=$nick)"
+}
 
 @Serializable
 public data class CurrentUserModifyRequest(
@@ -29,4 +31,6 @@ public data class UserAddDMRequest(
     @SerialName("access_token")
     val token: String,
     val nick: String
-)
+) {
+    override fun toString(): String = "UserAddDMRequest(token=hunter2, nick=$nick)"
+}

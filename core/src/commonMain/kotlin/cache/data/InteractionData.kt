@@ -30,6 +30,11 @@ public data class InteractionData(
     val locale: Optional<Locale> = Optional.Missing(),
     val guildLocale: Optional<Locale> = Optional.Missing()
 ) {
+    override fun toString(): String = "InteractionData(id=$id, applicationId=$applicationId, type=$type, data=$data, " +
+        "guildId=$guildId, channel=$channel, channelId=$channelId, member=$member, user=$user, token=hunter2, " +
+        "permissions=$permissions, version=$version, message=$message, appPermissions=$appPermissions, " +
+        "locale=$locale, guildLocale=$guildLocale)"
+
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
             return with(interaction) {
