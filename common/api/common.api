@@ -141,6 +141,7 @@ public final class dev/kord/common/Locale$Companion {
 	public final fun getPORTUGUESE_BRAZIL ()Ldev/kord/common/Locale;
 	public final fun getROMANIAN ()Ldev/kord/common/Locale;
 	public final fun getRUSSIAN ()Ldev/kord/common/Locale;
+	public final fun getSPANISH_LATIN_AMERICA ()Ldev/kord/common/Locale;
 	public final fun getSPANISH_SPAIN ()Ldev/kord/common/Locale;
 	public final fun getSWEDISH ()Ldev/kord/common/Locale;
 	public final fun getTHAI ()Ldev/kord/common/Locale;

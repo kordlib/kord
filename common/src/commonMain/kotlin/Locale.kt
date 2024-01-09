@@ -49,6 +49,11 @@ public data class Locale(val language: String, val country: String? = null) {
         public val SPANISH_SPAIN: Locale = Locale("es", "ES")
 
         /**
+         * Spanish (Latin America).
+         */
+        public val SPANISH_LATIN_AMERICA: Locale = Locale("es", "419")
+
+        /**
          * French.
          */
         public val FRENCH: Locale = Locale("fr")
@@ -184,6 +189,7 @@ public data class Locale(val language: String, val country: String? = null) {
             ENGLISH_GREAT_BRITAIN,
             ENGLISH_UNITED_STATES,
             SPANISH_SPAIN,
+            SPANISH_LATIN_AMERICA,
             FRENCH,
             CROATIAN,
             ITALIAN,
@@ -211,8 +217,8 @@ public data class Locale(val language: String, val country: String? = null) {
             KOREAN,
         )
 
-        // https://regex101.com/r/KCHTj8/1
-        private val languageTagFormat = "([a-z]{2})(?:-([A-Z]{2}))?".toRegex()
+        // https://regex101.com/r/8iMEWT/1
+        private val languageTagFormat = "([a-z]{2})(?:-([A-Z]{2}|\\d{3}))?".toRegex()
 
         /**
          * Decodes the [Locale] from a `languageCode-countryCode` or `languageCode` format.
