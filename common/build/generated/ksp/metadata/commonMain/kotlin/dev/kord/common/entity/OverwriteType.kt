@@ -40,17 +40,7 @@ public sealed class OverwriteType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : OverwriteType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'OverwriteType.from()'.",
-            replaceWith = ReplaceWith(expression = "OverwriteType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.OverwriteType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : OverwriteType(value)
 
     public object Role : OverwriteType(0)
 
@@ -86,7 +76,7 @@ public sealed class OverwriteType(
         public fun from(`value`: Int): OverwriteType = when (value) {
             0 -> Role
             1 -> Member
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

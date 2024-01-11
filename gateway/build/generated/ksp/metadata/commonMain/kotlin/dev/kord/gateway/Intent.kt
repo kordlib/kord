@@ -1,3 +1,4 @@
+// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
@@ -54,8 +55,8 @@ public sealed class Intent(
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown) "Intent.Unknown(shift=$shift)" else
-            "Intent.${this::class.simpleName}"
+    final override fun toString(): String = if (this is Unknown) "Intent.Unknown(shift=$shift)"
+            else "Intent.${this::class.simpleName}"
 
     /**
      * An unknown [Intent].
@@ -98,13 +99,6 @@ public sealed class Intent(
      */
     @PrivilegedIntent
     public object GuildMembers : Intent(1)
-
-    @Deprecated(
-        "Renamed to 'GuildModeration'.",
-        ReplaceWith("Intent.GuildModeration", imports = ["dev.kord.gateway.Intent"]),
-        DeprecationLevel.HIDDEN,
-    )
-    public object GuildBans : Intent(2)
 
     /**
      * Enables the following events:
@@ -278,14 +272,6 @@ public sealed class Intent(
             )
         }
 
-        // TODO uncomment annotation in Intents.kt and delete this file when this property is removed after deprecation
-        //  cycle
-        @Deprecated(
-            "Renamed to 'entries'.",
-            ReplaceWith("Intent.entries", imports = ["dev.kord.gateway.Intent"]),
-            DeprecationLevel.HIDDEN,
-        )
-        public val values: Set<Intent> get() = entries.toSet()
 
         /**
          * Returns an instance of [Intent] with [Intent.shift] equal to the specified [shift].
@@ -432,21 +418,18 @@ public class Intents internal constructor(
     /**
      * Returns a copy of this instance of [Intents] modified with [builder].
      */
-    @JvmName("copy0") // TODO other name when deprecated overload is removed
     public inline fun copy(builder: Builder.() -> Unit): Intents {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code.copy()).apply(builder).build()
     }
 
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
     @Deprecated(
-        "'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.",
         level = DeprecationLevel.HIDDEN,
+        message = "Binary compatibility, keep for some releases.",
     )
-    @kotlin.internal.LowPriorityInOverloadResolution
-    public inline fun copy(block: IntentsBuilder.() -> Unit): Intents {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return IntentsBuilder(code.copy()).apply(block).flags()
+    public inline fun copy0(builder: Builder.() -> Unit): Intents {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return copy(builder)
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -455,37 +438,6 @@ public class Intents internal constructor(
     override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "Intents(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "Intents is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-        DeprecationLevel.HIDDEN,
-    )
-    public operator fun component1(): DiscordBitSet = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message = "Intents is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun copy(code: DiscordBitSet = this.code): Intents = Intents(code)
-
-    @Deprecated(
-        "Renamed to 'Builder'.",
-        ReplaceWith("Intents.Builder", imports = ["dev.kord.gateway.Intents"]),
-        DeprecationLevel.HIDDEN,
-    )
-    public class IntentsBuilder(code: DiscordBitSet = EmptyBitSet()) {
-        private val delegate = Builder(code)
-        public operator fun Intents.unaryPlus(): Unit = with(delegate) { unaryPlus() }
-        public operator fun Intent.unaryPlus(): Unit = with(delegate) { unaryPlus() }
-        public operator fun Intent.unaryMinus(): Unit = with(delegate) { unaryMinus() }
-        public operator fun Intents.unaryMinus(): Unit = with(delegate) { unaryMinus() }
-        public fun flags(): Intents = delegate.build()
-    }
 
     public class Builder(
         private val code: DiscordBitSet = EmptyBitSet(),
@@ -538,65 +490,24 @@ public class Intents internal constructor(
         override fun deserialize(decoder: Decoder): Intents =
                 Intents(decoder.decodeSerializableValue(delegate))
     }
-
-    public companion object {
-        @Deprecated(
-            "Renamed to 'ALL'",
-            ReplaceWith("Intents.ALL", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.ALL"]),
-            DeprecationLevel.HIDDEN,
-        )
-        @PrivilegedIntent
-        public val all: Intents get() = ALL
-
-        @Deprecated(
-            "Renamed to 'PRIVILEGED'",
-            ReplaceWith("Intents.PRIVILEGED", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.PRIVILEGED"]),
-            DeprecationLevel.HIDDEN,
-        )
-        @PrivilegedIntent
-        public val privileged: Intents get() = PRIVILEGED
-
-        @Deprecated(
-            "Renamed to 'NON_PRIVILEGED'",
-            ReplaceWith(
-                "Intents.NON_PRIVILEGED",
-                imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.NON_PRIVILEGED"],
-            ),
-            DeprecationLevel.HIDDEN,
-        )
-        public val nonPrivileged: Intents get() = NON_PRIVILEGED
-
-        @Deprecated(
-            "Renamed to 'NONE'",
-            ReplaceWith("Intents.NONE", imports = [" dev.kord.gateway.Intents", " dev.kord.gateway.NONE"]),
-            DeprecationLevel.HIDDEN,
-        )
-        public val none: Intents get() = NONE
-    }
 }
-
-@Deprecated(
-    "Replaced by 'Intents.serializer()'.",
-    ReplaceWith("Intents.serializer()", imports = ["dev.kord.gateway.Intents"]),
-    DeprecationLevel.HIDDEN,
-)
-public object IntentsSerializer : KSerializer<Intents> by Intents.Serializer
 
 /**
  * Returns an instance of [Intents] built with [Intents.Builder].
  */
-@JvmName("Intents0") // TODO other name when deprecated overload is removed
 public inline fun Intents(builder: Intents.Builder.() -> Unit = {}): Intents {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Intents.Builder().apply(builder).build()
 }
 
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
-@Deprecated("'Intents.IntentsBuilder' is deprecated, use 'Intents.Builder' instead.", level = DeprecationLevel.HIDDEN)
-@kotlin.internal.LowPriorityInOverloadResolution
-public inline fun Intents(builder: Intents.IntentsBuilder.() -> Unit = {}): Intents {
+@Suppress(names = arrayOf("FunctionName"))
+@Deprecated(
+    level = DeprecationLevel.HIDDEN,
+    message = "Binary compatibility, keep for some releases.",
+)
+public inline fun Intents0(builder: Intents.Builder.() -> Unit = {}): Intents {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
-    return Intents.IntentsBuilder().apply(builder).flags()
+    return Intents(builder)
 }
 
 /**
@@ -627,19 +538,3 @@ public fun Intents(flags: Iterable<Intent>): Intents = Intents {
 public fun Intents(flags: Iterable<Intents>): Intents = Intents {
     flags.forEach { +it }
 }
-
-// TODO uncomment annotation in Intents.kt and delete this file when these functions are removed after deprecation cycle
-@Suppress("FunctionName")
-@Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
-public fun IntentsWithIterable(flags: Iterable<Intents>): Intents = Intents(flags)
-
-@Deprecated(
-    "Don't construct an instance of 'Intents' from a raw value. Use the factory functions described in the " +
-        "documentation instead.",
-    ReplaceWith(
-        "Intents.Builder(DiscordBitSet(value)).build()",
-        imports = ["dev.kord.gateway.Intents", "dev.kord.common.DiscordBitSet"],
-    ),
-    DeprecationLevel.HIDDEN,
-)
-public fun Intents(value: String): Intents = Intents(DiscordBitSet(value))

@@ -39,17 +39,7 @@ public sealed class MFALevel(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : MFALevel(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'MFALevel.from()'.",
-            replaceWith = ReplaceWith(expression = "MFALevel.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.MFALevel")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : MFALevel(value)
 
     /**
      * Guild has no MFA/2FA requirement for moderation actions.
@@ -90,7 +80,7 @@ public sealed class MFALevel(
         public fun from(`value`: Int): MFALevel = when (value) {
             0 -> None
             1 -> Elevated
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

@@ -43,18 +43,7 @@ public sealed class AutoModerationRuleKeywordPresetType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : AutoModerationRuleKeywordPresetType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'AutoModerationRuleKeywordPresetType.from()'.",
-            replaceWith = ReplaceWith(expression =
-                        "AutoModerationRuleKeywordPresetType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.AutoModerationRuleKeywordPresetType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : AutoModerationRuleKeywordPresetType(value)
 
     /**
      * Words that may be considered forms of swearing or cursing.
@@ -105,7 +94,7 @@ public sealed class AutoModerationRuleKeywordPresetType(
             1 -> Profanity
             2 -> SexualContent
             3 -> Slurs
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

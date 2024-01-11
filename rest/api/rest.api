@@ -1089,10 +1089,8 @@ public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/ko
 
 public final class dev/kord/rest/builder/component/SelectMenuBuilderKt {
 	public static final fun channelType (Ldev/kord/rest/builder/component/ChannelSelectBuilder;Ldev/kord/common/entity/ChannelType;)V
-	public static final synthetic fun getOptions (Ldev/kord/rest/builder/component/StringSelectBuilder;)Ljava/util/List;
 	public static final fun option (Ldev/kord/rest/builder/component/StringSelectBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun option$default (Ldev/kord/rest/builder/component/StringSelectBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final synthetic fun setOptions (Ldev/kord/rest/builder/component/StringSelectBuilder;Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/component/SelectOptionBuilder {
@@ -2224,21 +2222,21 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$Def
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilderJvmKt {
-	public static final fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
+	public static final synthetic fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
-	public static final fun actionRow (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final fun allowedMentions (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun actionRow (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun allowedMentions (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final fun embed (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final fun messageFlags (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun embed (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun messageFlags (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
 	public fun getFiles ()Ljava/util/List;
-	public fun setFiles (Ljava/util/List;)V
+	public synthetic fun setFiles (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartInteractionResponseCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -2294,7 +2292,7 @@ public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModify
 	public final fun setComponents (Ljava/util/List;)V
 	public final fun setContent (Ljava/lang/String;)V
 	public final fun setEmbeds (Ljava/util/List;)V
-	public final fun setFiles (Ljava/util/List;)V
+	public final synthetic fun setFiles (Ljava/util/List;)V
 	public final fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public final fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 }
@@ -2313,7 +2311,7 @@ public final class dev/kord/rest/builder/message/modify/InteractionResponseModif
 
 public abstract interface class dev/kord/rest/builder/message/modify/MessageModifyBuilder : dev/kord/rest/builder/message/MessageBuilder {
 	public abstract fun getFiles ()Ljava/util/List;
-	public abstract fun setFiles (Ljava/util/List;)V
+	public abstract synthetic fun setFiles (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$DefaultImpls {
@@ -2321,17 +2319,17 @@ public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$Def
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderJvmKt {
-	public static final fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
+	public static final synthetic fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderKt {
-	public static final fun actionRow (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final fun allowedMentions (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun actionRow (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun allowedMentions (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final fun embed (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun embed (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun keepAttachment (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun keepAttachment$default (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final fun messageFlags (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun messageFlags (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder : dev/kord/rest/builder/message/modify/AbstractMessageModifyBuilder, dev/kord/rest/builder/RequestBuilder {
@@ -2916,7 +2914,6 @@ public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$
 
 public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-	public final synthetic fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/AutoModerationRuleCreateRequest {

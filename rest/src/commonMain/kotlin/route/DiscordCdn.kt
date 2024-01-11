@@ -23,7 +23,7 @@ public object DiscordCdn {
     @Deprecated(
         "Renamed to 'defaultUserAvatar' to align name with documentation and overload taking Snowflake.",
         ReplaceWith("DiscordCdn.defaultUserAvatar(discriminator)", imports = ["dev.kord.rest.route.DiscordCdn"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public fun defaultAvatar(discriminator: Int): CdnUrl = defaultUserAvatar(discriminator)
 

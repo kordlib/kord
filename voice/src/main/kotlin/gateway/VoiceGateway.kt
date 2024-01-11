@@ -87,7 +87,7 @@ public interface VoiceGateway {
 
 
 @Suppress("unused")
-@Deprecated("Binary compatibility, remove after deprecation cycle.", level = DeprecationLevel.WARNING)
+@Deprecated("Binary compatibility, remove after deprecation cycle.", level = DeprecationLevel.ERROR)
 @PublishedApi
 internal val voiceGatewayOnLogger: mu.KLogger = mu.KotlinLogging.logger("Gateway.on")
 

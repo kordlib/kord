@@ -39,17 +39,7 @@ public sealed class ChannelType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ChannelType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ChannelType.from()'.",
-            replaceWith = ReplaceWith(expression = "ChannelType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.ChannelType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ChannelType(value)
 
     /**
      * A text channel within a server.
@@ -175,7 +165,7 @@ public sealed class ChannelType(
             14 -> GuildDirectory
             15 -> GuildForum
             16 -> GuildMedia
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

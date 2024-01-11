@@ -46,18 +46,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ApplicationRoleConnectionMetadataType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ApplicationRoleConnectionMetadataType.from()'.",
-            replaceWith = ReplaceWith(expression =
-                        "ApplicationRoleConnectionMetadataType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.ApplicationRoleConnectionMetadataType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ApplicationRoleConnectionMetadataType(value)
 
     /**
      * The metadata value (`integer`) is less than or equal to the guild's configured value
@@ -148,7 +137,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
             6 -> DateTimeGreaterThanOrEqual
             7 -> BooleanEqual
             8 -> BooleanNotEqual
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

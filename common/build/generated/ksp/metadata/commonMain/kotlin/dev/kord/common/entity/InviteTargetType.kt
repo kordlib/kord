@@ -40,17 +40,7 @@ public sealed class InviteTargetType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : InviteTargetType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'InviteTargetType.from()'.",
-            replaceWith = ReplaceWith(expression = "InviteTargetType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.InviteTargetType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : InviteTargetType(value)
 
     public object Stream : InviteTargetType(1)
 
@@ -87,7 +77,7 @@ public sealed class InviteTargetType(
         public fun from(`value`: Int): InviteTargetType = when (value) {
             1 -> Stream
             2 -> EmbeddedApplication
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

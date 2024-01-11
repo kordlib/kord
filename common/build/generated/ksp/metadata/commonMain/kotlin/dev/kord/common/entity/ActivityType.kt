@@ -39,17 +39,7 @@ public sealed class ActivityType(
      */
     public class Unknown internal constructor(
         code: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ActivityType(code) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ActivityType.from()'.",
-            replaceWith = ReplaceWith(expression = "ActivityType.from(code)", imports =
-                        arrayOf("dev.kord.common.entity.ActivityType")),
-        )
-        public constructor(code: Int) : this(code, null)
-    }
+    ) : ActivityType(code)
 
     public object Game : ActivityType(0)
 
@@ -101,7 +91,7 @@ public sealed class ActivityType(
             3 -> Watching
             4 -> Custom
             5 -> Competing
-            else -> Unknown(code, null)
+            else -> Unknown(code)
         }
     }
 }

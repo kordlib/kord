@@ -43,17 +43,7 @@ public sealed class AutoModerationRuleTriggerType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : AutoModerationRuleTriggerType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'AutoModerationRuleTriggerType.from()'.",
-            replaceWith = ReplaceWith(expression = "AutoModerationRuleTriggerType.from(value)",
-                        imports = arrayOf("dev.kord.common.entity.AutoModerationRuleTriggerType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : AutoModerationRuleTriggerType(value)
 
     /**
      * Check if content contains words from a user defined list of keywords.
@@ -111,7 +101,7 @@ public sealed class AutoModerationRuleTriggerType(
             3 -> Spam
             4 -> KeywordPreset
             5 -> MentionSpam
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

@@ -40,17 +40,7 @@ public sealed class ExplicitContentFilter(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ExplicitContentFilter(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ExplicitContentFilter.from()'.",
-            replaceWith = ReplaceWith(expression = "ExplicitContentFilter.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.ExplicitContentFilter")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ExplicitContentFilter(value)
 
     /**
      * Media content will not be scanned.
@@ -101,7 +91,7 @@ public sealed class ExplicitContentFilter(
             0 -> Disabled
             1 -> MembersWithoutRoles
             2 -> AllMembers
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

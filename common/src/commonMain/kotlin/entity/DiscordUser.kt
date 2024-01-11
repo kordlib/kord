@@ -10,10 +10,9 @@
     ],
 )
 
-/*
 @file:Generate(
     INT_FLAGS, name = "UserFlag", valueName = "code",
-    hadFlagsProperty = true,
+    collectionHadCopy0 = true,
     docUrl = "https://discord.com/developers/docs/resources/user#user-object-user-flags",
     entries = [
         Entry("DiscordEmployee", shift = 0, kDoc = "Discord Employee"),
@@ -39,13 +38,13 @@
         ),
     ],
 )
-*/
 
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -144,14 +143,3 @@ public data class DiscordOptionallyMemberUser(
     @JsonNames("member", "guild_member")
     val member: Optional<DiscordGuildMember> = Optional.Missing(),
 )
-
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
-@Deprecated(
-    "'UserFlags.UserFlagsBuilder' is deprecated, use 'UserFlags.Builder' instead.",
-    level = DeprecationLevel.HIDDEN,
-)
-@kotlin.internal.LowPriorityInOverloadResolution
-public inline fun UserFlags(builder: UserFlags.UserFlagsBuilder.() -> Unit): UserFlags {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return UserFlags.UserFlagsBuilder().apply(builder).flags()
-}

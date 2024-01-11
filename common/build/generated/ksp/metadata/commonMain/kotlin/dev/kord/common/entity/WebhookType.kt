@@ -39,17 +39,7 @@ public sealed class WebhookType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : WebhookType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'WebhookType.from()'.",
-            replaceWith = ReplaceWith(expression = "WebhookType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.WebhookType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : WebhookType(value)
 
     /**
      * Incoming Webhooks can post messages to channels with a generated token.
@@ -99,7 +89,7 @@ public sealed class WebhookType(
             1 -> Incoming
             2 -> ChannelFollower
             3 -> Application
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

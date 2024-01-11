@@ -40,17 +40,7 @@ public sealed class SortOrderType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : SortOrderType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'SortOrderType.from()'.",
-            replaceWith = ReplaceWith(expression = "SortOrderType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.SortOrderType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : SortOrderType(value)
 
     /**
      * Sort forum posts by activity.
@@ -92,7 +82,7 @@ public sealed class SortOrderType(
         public fun from(`value`: Int): SortOrderType = when (value) {
             0 -> LatestActivity
             1 -> CreationDate
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

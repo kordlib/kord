@@ -1,4 +1,3 @@
-/*
 @file:Generate(
     INT_FLAGS, name = "GuildMemberFlag", valueName = "code",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags",
@@ -9,13 +8,15 @@
         Entry("StartedOnboarding", shift = 3, kDoc = "Member has started onboarding."),
     ],
 )
-*/
 
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

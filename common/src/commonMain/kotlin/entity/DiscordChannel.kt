@@ -45,8 +45,7 @@
 )
 
 @file:Generate(
-    INT_FLAGS, name = "ChannelFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
-    hadFlagsProperty = true,
+    INT_FLAGS, name = "ChannelFlag", valueName = "code",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-channel-flags",
     entries = [
         Entry(
@@ -60,7 +59,7 @@
                 "[GuildForum][ChannelType.GuildForum] or [GuildMedia][ChannelType.GuildMedia] channel.",
         ),
         Entry(
-            "HideMediaDownloadOptions", shift = 15, noStaticFieldIfEntityWasEnum = true,
+            "HideMediaDownloadOptions", shift = 15,
             kDoc = "When set hides the embedded media download options. Available only for " +
                 "[GuildMedia][ChannelType.GuildMedia] channels.",
         ),
@@ -122,9 +121,6 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-import kotlin.jvm.JvmName
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -191,29 +187,6 @@ public data class DiscordChannel(
     val message: Optional<DiscordMessage> = Optional.Missing(),
 )
 
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-@JvmName("ChannelFlags")
-public inline fun channelFlags(builder: ChannelFlags.Builder.() -> Unit): ChannelFlags {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return ChannelFlags.Builder().apply(builder).build()
-}
-
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-@JvmName("ChannelFlags")
-public fun channelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags { flags.forEach { +it } }
-
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-@JvmName("ChannelFlags")
-public fun channelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags { flags.forEach { +it } }
-
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-@JvmName("ChannelFlags")
-public fun channelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
-
-@Suppress("FunctionName")
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-public fun ChannelFlags0(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
-
 @Serializable
 public data class Overwrite(
     val id: Snowflake,
@@ -262,7 +235,7 @@ public sealed class ArchiveDuration(
         @Deprecated(
             "Replaced by 'ArchiveDuration.from()'.",
             ReplaceWith("ArchiveDuration.from(duration)", imports = ["dev.kord.common.entity.ArchiveDuration"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         public constructor(duration: Duration) : this(duration, unused = null)
     }

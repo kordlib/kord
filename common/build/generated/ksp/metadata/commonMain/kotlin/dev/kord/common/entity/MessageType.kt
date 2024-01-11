@@ -39,17 +39,7 @@ public sealed class MessageType(
      */
     public class Unknown internal constructor(
         code: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : MessageType(code) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'MessageType.from()'.",
-            replaceWith = ReplaceWith(expression = "MessageType.from(code)", imports =
-                        arrayOf("dev.kord.common.entity.MessageType")),
-        )
-        public constructor(code: Int) : this(code, null)
-    }
+    ) : MessageType(code)
 
     public object Default : MessageType(0)
 
@@ -201,7 +191,7 @@ public sealed class MessageType(
             29 -> StageSpeaker
             31 -> StageTopic
             32 -> GuildApplicationPremiumSubscription
-            else -> Unknown(code, null)
+            else -> Unknown(code)
         }
     }
 }

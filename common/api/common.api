@@ -190,32 +190,19 @@ public abstract interface annotation class dev/kord/common/annotation/KordVoice 
 
 public abstract class dev/kord/common/entity/ActivityFlag {
 	public static final field Companion Ldev/kord/common/entity/ActivityFlag$Companion;
-	public static final field Instance Ldev/kord/common/entity/ActivityFlag;
-	public static final field Join Ldev/kord/common/entity/ActivityFlag;
-	public static final field JoinRequest Ldev/kord/common/entity/ActivityFlag;
-	public static final field Play Ldev/kord/common/entity/ActivityFlag;
-	public static final field Spectate Ldev/kord/common/entity/ActivityFlag;
-	public static final field Sync Ldev/kord/common/entity/ActivityFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
-	public final synthetic fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun getShift ()I
 	public final fun getValue ()I
 	public final fun hashCode ()I
-	public final synthetic fun name ()Ljava/lang/String;
-	public final synthetic fun ordinal ()I
 	public final fun plus (Ldev/kord/common/entity/ActivityFlag;)Ldev/kord/common/entity/ActivityFlags;
 	public final fun plus (Ldev/kord/common/entity/ActivityFlags;)Ldev/kord/common/entity/ActivityFlags;
 	public final fun toString ()Ljava/lang/String;
-	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ActivityFlag;
-	public static synthetic fun values ()[Ldev/kord/common/entity/ActivityFlag;
 }
 
 public final class dev/kord/common/entity/ActivityFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/ActivityFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ActivityFlag;
-	public synthetic fun values ()[Ldev/kord/common/entity/ActivityFlag;
 }
 
 public final class dev/kord/common/entity/ActivityFlag$Embedded : dev/kord/common/entity/ActivityFlag {
@@ -268,12 +255,10 @@ public final class dev/kord/common/entity/ActivityFlagKt {
 
 public final class dev/kord/common/entity/ActivityFlags {
 	public static final field Companion Ldev/kord/common/entity/ActivityFlags$Companion;
-	public synthetic fun <init> (I)V
 	public final fun contains (Ldev/kord/common/entity/ActivityFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ActivityFlags;)Z
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ActivityFlags;
 	public fun equals (Ljava/lang/Object;)Z
-	public final synthetic fun getFlags ()Ljava/util/Set;
 	public final fun getValue ()I
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
@@ -335,7 +320,6 @@ public final class dev/kord/common/entity/ActivityType$Streaming : dev/kord/comm
 }
 
 public final class dev/kord/common/entity/ActivityType$Unknown : dev/kord/common/entity/ActivityType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/ActivityType$Watching : dev/kord/common/entity/ActivityType {
@@ -398,7 +382,6 @@ public final class dev/kord/common/entity/AllowedMentionType$RoleMentions : dev/
 }
 
 public final class dev/kord/common/entity/AllowedMentionType$Unknown : dev/kord/common/entity/AllowedMentionType {
-	public synthetic fun <init> (Ljava/lang/String;)V
 }
 
 public final class dev/kord/common/entity/AllowedMentionType$UserMentions : dev/kord/common/entity/AllowedMentionType {
@@ -551,7 +534,6 @@ public final class dev/kord/common/entity/ApplicationCommandOptionType$SubComman
 }
 
 public final class dev/kord/common/entity/ApplicationCommandOptionType$Unknown : dev/kord/common/entity/ApplicationCommandOptionType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/ApplicationCommandOptionType$User : dev/kord/common/entity/ApplicationCommandOptionType {
@@ -582,7 +564,6 @@ public final class dev/kord/common/entity/ApplicationCommandPermissionType$Role 
 }
 
 public final class dev/kord/common/entity/ApplicationCommandPermissionType$Unknown : dev/kord/common/entity/ApplicationCommandPermissionType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/ApplicationCommandPermissionType$User : dev/kord/common/entity/ApplicationCommandPermissionType {
@@ -613,7 +594,6 @@ public final class dev/kord/common/entity/ApplicationCommandType$Message : dev/k
 }
 
 public final class dev/kord/common/entity/ApplicationCommandType$Unknown : dev/kord/common/entity/ApplicationCommandType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/ApplicationCommandType$User : dev/kord/common/entity/ApplicationCommandType {
@@ -621,30 +601,15 @@ public final class dev/kord/common/entity/ApplicationCommandType$User : dev/kord
 }
 
 public abstract class dev/kord/common/entity/ApplicationFlag {
-	public static final field ApplicationAutoModerationRuleCreateBadge Ldev/kord/common/entity/ApplicationFlag;
-	public static final field ApplicationCommandBadge Ldev/kord/common/entity/ApplicationFlag;
 	public static final field Companion Ldev/kord/common/entity/ApplicationFlag$Companion;
-	public static final field Embedded Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayGuildMembers Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayGuildMembersLimited Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayMessageContent Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayMessageContentLimited Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayPresence Ldev/kord/common/entity/ApplicationFlag;
-	public static final field GatewayPresenceLimited Ldev/kord/common/entity/ApplicationFlag;
-	public static final field VerificationPendingGuildLimit Ldev/kord/common/entity/ApplicationFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun getShift ()I
 	public final fun hashCode ()I
-	public final synthetic fun name ()Ljava/lang/String;
-	public final synthetic fun ordinal ()I
 	public final fun plus (Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
 	public final fun plus (Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
 	public final fun toString ()Ljava/lang/String;
-	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ApplicationFlag;
-	public static synthetic fun values ()[Ldev/kord/common/entity/ApplicationFlag;
 }
 
 public final class dev/kord/common/entity/ApplicationFlag$ApplicationAutoModerationRuleCreateBadge : dev/kord/common/entity/ApplicationFlag {
@@ -658,8 +623,6 @@ public final class dev/kord/common/entity/ApplicationFlag$ApplicationCommandBadg
 public final class dev/kord/common/entity/ApplicationFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/ApplicationFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ApplicationFlag;
-	public synthetic fun values ()[Ldev/kord/common/entity/ApplicationFlag;
 }
 
 public final class dev/kord/common/entity/ApplicationFlag$Embedded : dev/kord/common/entity/ApplicationFlag {
@@ -708,15 +671,11 @@ public final class dev/kord/common/entity/ApplicationFlagKt {
 
 public final class dev/kord/common/entity/ApplicationFlags {
 	public static final field Companion Ldev/kord/common/entity/ApplicationFlags$Companion;
-	public final synthetic fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/ApplicationFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ApplicationFlags;)Z
-	public final synthetic fun copy (I)Ldev/kord/common/entity/ApplicationFlags;
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/ApplicationFlags;IILjava/lang/Object;)Ldev/kord/common/entity/ApplicationFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getFlags ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
@@ -731,7 +690,6 @@ public final class dev/kord/common/entity/ApplicationFlags$Builder {
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/common/entity/ApplicationFlags;
-	public final synthetic fun flags ()Ldev/kord/common/entity/ApplicationFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/ApplicationFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/ApplicationFlags;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/ApplicationFlag;)V
@@ -790,7 +748,6 @@ public final class dev/kord/common/entity/ApplicationRoleConnectionMetadataType$
 }
 
 public final class dev/kord/common/entity/ApplicationRoleConnectionMetadataType$Unknown : dev/kord/common/entity/ApplicationRoleConnectionMetadataType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/ArchiveDuration {
@@ -1443,7 +1400,6 @@ public final class dev/kord/common/entity/AuditLogEvent$ThreadUpdate : dev/kord/
 }
 
 public final class dev/kord/common/entity/AuditLogEvent$Unknown : dev/kord/common/entity/AuditLogEvent {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/AuditLogEvent$WebhookCreate : dev/kord/common/entity/AuditLogEvent {
@@ -1486,7 +1442,6 @@ public final class dev/kord/common/entity/AutoModerationActionType$Timeout : dev
 }
 
 public final class dev/kord/common/entity/AutoModerationActionType$Unknown : dev/kord/common/entity/AutoModerationActionType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/AutoModerationRuleEventType {
@@ -1509,7 +1464,6 @@ public final class dev/kord/common/entity/AutoModerationRuleEventType$MessageSen
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleEventType$Unknown : dev/kord/common/entity/AutoModerationRuleEventType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/AutoModerationRuleKeywordPresetType {
@@ -1540,7 +1494,6 @@ public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Sl
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleKeywordPresetType$Unknown : dev/kord/common/entity/AutoModerationRuleKeywordPresetType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/AutoModerationRuleTriggerType {
@@ -1575,7 +1528,6 @@ public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Spam : d
 }
 
 public final class dev/kord/common/entity/AutoModerationRuleTriggerType$Unknown : dev/kord/common/entity/AutoModerationRuleTriggerType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract interface class dev/kord/common/entity/BaseDiscordApplication {
@@ -1681,33 +1633,23 @@ public final class dev/kord/common/entity/ButtonStyle$Success : dev/kord/common/
 }
 
 public final class dev/kord/common/entity/ButtonStyle$Unknown : dev/kord/common/entity/ButtonStyle {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/ChannelFlag {
 	public static final field Companion Ldev/kord/common/entity/ChannelFlag$Companion;
-	public static final field Pinned Ldev/kord/common/entity/ChannelFlag;
-	public static final field RequireTag Ldev/kord/common/entity/ChannelFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun getShift ()I
 	public final fun hashCode ()I
-	public final synthetic fun name ()Ljava/lang/String;
-	public final synthetic fun ordinal ()I
 	public final fun plus (Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
 	public final fun plus (Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;
 	public final fun toString ()Ljava/lang/String;
-	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ChannelFlag;
-	public static synthetic fun values ()[Ldev/kord/common/entity/ChannelFlag;
 }
 
 public final class dev/kord/common/entity/ChannelFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/ChannelFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/ChannelFlag;
-	public synthetic fun values ()[Ldev/kord/common/entity/ChannelFlag;
 }
 
 public final class dev/kord/common/entity/ChannelFlag$HideMediaDownloadOptions : dev/kord/common/entity/ChannelFlag {
@@ -1736,15 +1678,11 @@ public final class dev/kord/common/entity/ChannelFlagKt {
 
 public final class dev/kord/common/entity/ChannelFlags {
 	public static final field Companion Ldev/kord/common/entity/ChannelFlags$Companion;
-	public final synthetic fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/ChannelFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/ChannelFlags;)Z
-	public final synthetic fun copy (I)Ldev/kord/common/entity/ChannelFlags;
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ChannelFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/ChannelFlags;IILjava/lang/Object;)Ldev/kord/common/entity/ChannelFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getFlags ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
@@ -1837,7 +1775,6 @@ public final class dev/kord/common/entity/ChannelType$PublicNewsThread : dev/kor
 }
 
 public final class dev/kord/common/entity/ChannelType$Unknown : dev/kord/common/entity/ChannelType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/Choice {
@@ -1849,7 +1786,6 @@ public abstract class dev/kord/common/entity/Choice {
 
 public final class dev/kord/common/entity/Choice$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-	public final synthetic fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/Choice$IntegerChoice : dev/kord/common/entity/Choice {
@@ -2149,7 +2085,6 @@ public final class dev/kord/common/entity/ComponentType$TextInput : dev/kord/com
 }
 
 public final class dev/kord/common/entity/ComponentType$Unknown : dev/kord/common/entity/ComponentType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/ComponentType$UserSelect : dev/kord/common/entity/ComponentType {
@@ -2180,7 +2115,6 @@ public final class dev/kord/common/entity/DefaultMessageNotificationLevel$OnlyMe
 }
 
 public final class dev/kord/common/entity/DefaultMessageNotificationLevel$Unknown : dev/kord/common/entity/DefaultMessageNotificationLevel {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/DefaultReaction {
@@ -2652,14 +2586,6 @@ public final class dev/kord/common/entity/DiscordApplicationCommand$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/DiscordApplicationKt {
-	public static final synthetic fun ApplicationFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final synthetic fun ApplicationFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final synthetic fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlag;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final synthetic fun ApplicationFlags ([Ldev/kord/common/entity/ApplicationFlags;)Ldev/kord/common/entity/ApplicationFlags;
-	public static final synthetic fun ApplicationFlagsWithIterable (Ljava/lang/Iterable;)Ldev/kord/common/entity/ApplicationFlags;
-}
-
 public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetadata {
 	public static final field Companion Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadata$Companion;
 	public fun <init> (Ldev/kord/common/entity/ApplicationRoleConnectionMetadataType;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)V
@@ -2897,7 +2823,6 @@ public final class dev/kord/common/entity/DiscordAutoComplete$$serializer : kotl
 
 public final class dev/kord/common/entity/DiscordAutoComplete$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-	public final synthetic fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/common/entity/DiscordAutoModerationAction {
@@ -3179,14 +3104,6 @@ public final class dev/kord/common/entity/DiscordChannel$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/DiscordChannelKt {
-	public static final synthetic fun ChannelFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
-	public static final synthetic fun ChannelFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/ChannelFlags;
-	public static final synthetic fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlag;)Ldev/kord/common/entity/ChannelFlags;
-	public static final synthetic fun ChannelFlags ([Ldev/kord/common/entity/ChannelFlags;)Ldev/kord/common/entity/ChannelFlags;
-	public static final synthetic fun ChannelFlags0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/ChannelFlags;
-}
-
 public final class dev/kord/common/entity/DiscordChatComponent : dev/kord/common/entity/DiscordComponent {
 	public static final field Companion Ldev/kord/common/entity/DiscordChatComponent$Companion;
 	public fun <init> (Ldev/kord/common/entity/ComponentType;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalInt;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
@@ -3375,7 +3292,6 @@ public final class dev/kord/common/entity/DiscordConnectionVisibility$None : dev
 }
 
 public final class dev/kord/common/entity/DiscordConnectionVisibility$Unknown : dev/kord/common/entity/DiscordConnectionVisibility {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/DiscordDeletedGuildRole {
@@ -4749,14 +4665,6 @@ public final class dev/kord/common/entity/DiscordMessageInteraction$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/DiscordMessageKt {
-	public static final synthetic fun MessageFlags (Ljava/lang/Iterable;)Ldev/kord/common/entity/MessageFlags;
-	public static final synthetic fun MessageFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/MessageFlags;
-	public static final synthetic fun MessageFlags ([Ldev/kord/common/entity/MessageFlag;)Ldev/kord/common/entity/MessageFlags;
-	public static final synthetic fun MessageFlags ([Ldev/kord/common/entity/MessageFlags;)Ldev/kord/common/entity/MessageFlags;
-	public static final synthetic fun MessageFlagsWithIterable (Ljava/lang/Iterable;)Ldev/kord/common/entity/MessageFlags;
-}
-
 public final class dev/kord/common/entity/DiscordMessageReference {
 	public static final field Companion Ldev/kord/common/entity/DiscordMessageReference$Companion;
 	public fun <init> ()V
@@ -5636,12 +5544,7 @@ public final class dev/kord/common/entity/DiscordShard {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/common/entity/DiscordShard$Companion : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/DiscordShard;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/DiscordShard;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/common/entity/DiscordShard$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -6209,10 +6112,6 @@ public final class dev/kord/common/entity/DiscordUser$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/DiscordUserKt {
-	public static final synthetic fun UserFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
-}
-
 public final class dev/kord/common/entity/DiscordVoiceRegion {
 	public static final field Companion Ldev/kord/common/entity/DiscordVoiceRegion$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZZZ)V
@@ -6502,7 +6401,6 @@ public final class dev/kord/common/entity/EmbedType$Rich : dev/kord/common/entit
 }
 
 public final class dev/kord/common/entity/EmbedType$Unknown : dev/kord/common/entity/EmbedType {
-	public synthetic fun <init> (Ljava/lang/String;)V
 }
 
 public final class dev/kord/common/entity/EmbedType$Video : dev/kord/common/entity/EmbedType {
@@ -6537,7 +6435,6 @@ public final class dev/kord/common/entity/ExplicitContentFilter$MembersWithoutRo
 }
 
 public final class dev/kord/common/entity/ExplicitContentFilter$Unknown : dev/kord/common/entity/ExplicitContentFilter {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/ForumLayoutType {
@@ -6568,7 +6465,6 @@ public final class dev/kord/common/entity/ForumLayoutType$NotSet : dev/kord/comm
 }
 
 public final class dev/kord/common/entity/ForumLayoutType$Unknown : dev/kord/common/entity/ForumLayoutType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/ForumTag {
@@ -6714,7 +6610,6 @@ public final class dev/kord/common/entity/GuildFeature$TicketedEventsEnabled : d
 }
 
 public final class dev/kord/common/entity/GuildFeature$Unknown : dev/kord/common/entity/GuildFeature {
-	public synthetic fun <init> (Ljava/lang/String;)V
 }
 
 public final class dev/kord/common/entity/GuildFeature$VIPRegions : dev/kord/common/entity/GuildFeature {
@@ -6734,24 +6629,15 @@ public final class dev/kord/common/entity/GuildFeature$WelcomeScreenEnabled : de
 }
 
 public abstract class dev/kord/common/entity/GuildMemberFlag {
-	public static final field BypassesVerification Ldev/kord/common/entity/GuildMemberFlag;
 	public static final field Companion Ldev/kord/common/entity/GuildMemberFlag$Companion;
-	public static final field CompletedOnboarding Ldev/kord/common/entity/GuildMemberFlag;
-	public static final field DidRejoin Ldev/kord/common/entity/GuildMemberFlag;
-	public static final field StartedOnboarding Ldev/kord/common/entity/GuildMemberFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun getShift ()I
 	public final fun hashCode ()I
-	public final synthetic fun name ()Ljava/lang/String;
-	public final synthetic fun ordinal ()I
 	public final fun plus (Ldev/kord/common/entity/GuildMemberFlag;)Ldev/kord/common/entity/GuildMemberFlags;
 	public final fun plus (Ldev/kord/common/entity/GuildMemberFlags;)Ldev/kord/common/entity/GuildMemberFlags;
 	public final fun toString ()Ljava/lang/String;
-	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlag;
-	public static synthetic fun values ()[Ldev/kord/common/entity/GuildMemberFlag;
 }
 
 public final class dev/kord/common/entity/GuildMemberFlag$BypassesVerification : dev/kord/common/entity/GuildMemberFlag {
@@ -6761,9 +6647,6 @@ public final class dev/kord/common/entity/GuildMemberFlag$BypassesVerification :
 public final class dev/kord/common/entity/GuildMemberFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/GuildMemberFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public final synthetic fun serializer ()Lkotlinx/serialization/KSerializer;
-	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/GuildMemberFlag;
-	public synthetic fun values ()[Ldev/kord/common/entity/GuildMemberFlag;
 }
 
 public final class dev/kord/common/entity/GuildMemberFlag$CompletedOnboarding : dev/kord/common/entity/GuildMemberFlag {
@@ -6792,13 +6675,9 @@ public final class dev/kord/common/entity/GuildMemberFlagKt {
 
 public final class dev/kord/common/entity/GuildMemberFlags {
 	public static final field Companion Ldev/kord/common/entity/GuildMemberFlags$Companion;
-	public synthetic fun <init> (I)V
-	public final synthetic fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/GuildMemberFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/GuildMemberFlags;)Z
-	public final synthetic fun copy (I)Ldev/kord/common/entity/GuildMemberFlags;
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/GuildMemberFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/GuildMemberFlags;IILjava/lang/Object;)Ldev/kord/common/entity/GuildMemberFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;
@@ -6874,7 +6753,6 @@ public final class dev/kord/common/entity/GuildScheduledEventPrivacyLevel$GuildO
 }
 
 public final class dev/kord/common/entity/GuildScheduledEventPrivacyLevel$Unknown : dev/kord/common/entity/GuildScheduledEventPrivacyLevel {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/GuildScheduledEventStatus {
@@ -6909,7 +6787,6 @@ public final class dev/kord/common/entity/GuildScheduledEventStatus$Scheduled : 
 }
 
 public final class dev/kord/common/entity/GuildScheduledEventStatus$Unknown : dev/kord/common/entity/GuildScheduledEventStatus {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/InstallParams {
@@ -7001,7 +6878,6 @@ public final class dev/kord/common/entity/IntegrationExpireBehavior$RemoveRole :
 }
 
 public final class dev/kord/common/entity/IntegrationExpireBehavior$Unknown : dev/kord/common/entity/IntegrationExpireBehavior {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/InteractionCallbackData {
@@ -7093,7 +6969,6 @@ public final class dev/kord/common/entity/InteractionResponseType$Pong : dev/kor
 }
 
 public final class dev/kord/common/entity/InteractionResponseType$Unknown : dev/kord/common/entity/InteractionResponseType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/InteractionResponseType$UpdateMessage : dev/kord/common/entity/InteractionResponseType {
@@ -7136,7 +7011,6 @@ public final class dev/kord/common/entity/InteractionType$Ping : dev/kord/common
 }
 
 public final class dev/kord/common/entity/InteractionType$Unknown : dev/kord/common/entity/InteractionType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/InviteTargetType {
@@ -7163,7 +7037,6 @@ public final class dev/kord/common/entity/InviteTargetType$Stream : dev/kord/com
 }
 
 public final class dev/kord/common/entity/InviteTargetType$Unknown : dev/kord/common/entity/InviteTargetType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/MFALevel {
@@ -7190,7 +7063,6 @@ public final class dev/kord/common/entity/MFALevel$None : dev/kord/common/entity
 }
 
 public final class dev/kord/common/entity/MFALevel$Unknown : dev/kord/common/entity/MFALevel {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/MessageActivity {
@@ -7255,7 +7127,6 @@ public final class dev/kord/common/entity/MessageActivityType$Spectate : dev/kor
 }
 
 public final class dev/kord/common/entity/MessageActivityType$Unknown : dev/kord/common/entity/MessageActivityType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/MessageApplication {
@@ -7296,37 +7167,19 @@ public final class dev/kord/common/entity/MessageApplication$Companion {
 
 public abstract class dev/kord/common/entity/MessageFlag {
 	public static final field Companion Ldev/kord/common/entity/MessageFlag$Companion;
-	public static final field CrossPosted Ldev/kord/common/entity/MessageFlag;
-	public static final field Ephemeral Ldev/kord/common/entity/MessageFlag;
-	public static final field FailedToMentionSomeRolesInThread Ldev/kord/common/entity/MessageFlag;
-	public static final field HasThread Ldev/kord/common/entity/MessageFlag;
-	public static final field IsCrossPost Ldev/kord/common/entity/MessageFlag;
-	public static final field IsVoiceMessage Ldev/kord/common/entity/MessageFlag;
-	public static final field Loading Ldev/kord/common/entity/MessageFlag;
-	public static final field SourceMessageDeleted Ldev/kord/common/entity/MessageFlag;
-	public static final field SuppressEmbeds Ldev/kord/common/entity/MessageFlag;
-	public static final field SuppressNotifications Ldev/kord/common/entity/MessageFlag;
-	public static final field Urgent Ldev/kord/common/entity/MessageFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun getShift ()I
 	public final fun hashCode ()I
-	public final synthetic fun name ()Ljava/lang/String;
-	public final synthetic fun ordinal ()I
 	public final fun plus (Ldev/kord/common/entity/MessageFlag;)Ldev/kord/common/entity/MessageFlags;
 	public final fun plus (Ldev/kord/common/entity/MessageFlags;)Ldev/kord/common/entity/MessageFlags;
 	public final fun toString ()Ljava/lang/String;
-	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/MessageFlag;
-	public static synthetic fun values ()[Ldev/kord/common/entity/MessageFlag;
 }
 
 public final class dev/kord/common/entity/MessageFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/MessageFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/MessageFlag;
-	public synthetic fun values ()[Ldev/kord/common/entity/MessageFlag;
 }
 
 public final class dev/kord/common/entity/MessageFlag$CrossPosted : dev/kord/common/entity/MessageFlag {
@@ -7387,15 +7240,11 @@ public final class dev/kord/common/entity/MessageFlagKt {
 
 public final class dev/kord/common/entity/MessageFlags {
 	public static final field Companion Ldev/kord/common/entity/MessageFlags$Companion;
-	public final synthetic fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/MessageFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/MessageFlags;)Z
-	public final synthetic fun copy (I)Ldev/kord/common/entity/MessageFlags;
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/MessageFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/MessageFlags;IILjava/lang/Object;)Ldev/kord/common/entity/MessageFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getFlags ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/MessageFlag;)Ldev/kord/common/entity/MessageFlags;
@@ -7410,7 +7259,6 @@ public final class dev/kord/common/entity/MessageFlags$Builder {
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Ldev/kord/common/entity/MessageFlags;
-	public final synthetic fun flags ()Ldev/kord/common/entity/MessageFlags;
 	public final fun unaryMinus (Ldev/kord/common/entity/MessageFlag;)V
 	public final fun unaryMinus (Ldev/kord/common/entity/MessageFlags;)V
 	public final fun unaryPlus (Ldev/kord/common/entity/MessageFlag;)V
@@ -7529,7 +7377,6 @@ public final class dev/kord/common/entity/MessageStickerType$PNG : dev/kord/comm
 }
 
 public final class dev/kord/common/entity/MessageStickerType$Unknown : dev/kord/common/entity/MessageStickerType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/MessageType {
@@ -7668,20 +7515,10 @@ public final class dev/kord/common/entity/MessageType$ThreadStarterMessage : dev
 }
 
 public final class dev/kord/common/entity/MessageType$Unknown : dev/kord/common/entity/MessageType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/MessageType$UserJoin : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$UserJoin;
-}
-
-public final class dev/kord/common/entity/NotSerializable : kotlinx/serialization/KSerializer {
-	public static final field INSTANCE Ldev/kord/common/entity/NotSerializable;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Void;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)Ljava/lang/Void;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 }
 
 public abstract class dev/kord/common/entity/NsfwLevel {
@@ -7716,7 +7553,6 @@ public final class dev/kord/common/entity/NsfwLevel$Safe : dev/kord/common/entit
 }
 
 public final class dev/kord/common/entity/NsfwLevel$Unknown : dev/kord/common/entity/NsfwLevel {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/OnboardingMode {
@@ -7769,7 +7605,6 @@ public final class dev/kord/common/entity/OnboardingPromptType$MultipleChoice : 
 }
 
 public final class dev/kord/common/entity/OnboardingPromptType$Unknown : dev/kord/common/entity/OnboardingPromptType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/Option {
@@ -7839,13 +7674,11 @@ public final class dev/kord/common/entity/OverwriteType$Role : dev/kord/common/e
 }
 
 public final class dev/kord/common/entity/OverwriteType$Unknown : dev/kord/common/entity/OverwriteType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/Permission {
 	public static final field Companion Ldev/kord/common/entity/Permission$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun getShift ()I
@@ -7863,10 +7696,6 @@ public final class dev/kord/common/entity/Permission$Administrator : dev/kord/co
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$Administrator;
 }
 
-public final class dev/kord/common/entity/Permission$All : dev/kord/common/entity/Permission {
-	public static final field INSTANCE Ldev/kord/common/entity/Permission$All;
-}
-
 public final class dev/kord/common/entity/Permission$AttachFiles : dev/kord/common/entity/Permission {
 	public static final field INSTANCE Ldev/kord/common/entity/Permission$AttachFiles;
 }
@@ -7882,7 +7711,6 @@ public final class dev/kord/common/entity/Permission$ChangeNickname : dev/kord/c
 public final class dev/kord/common/entity/Permission$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/Permission;
 	public final fun getEntries ()Ljava/util/List;
-	public final synthetic fun getValues ()Ljava/util/Set;
 }
 
 public final class dev/kord/common/entity/Permission$Connect : dev/kord/common/entity/Permission {
@@ -8010,8 +7838,6 @@ public final class dev/kord/common/entity/Permission$Stream : dev/kord/common/en
 }
 
 public final class dev/kord/common/entity/Permission$Unknown : dev/kord/common/entity/Permission {
-	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;)V
-	public synthetic fun <init> ([J)V
 }
 
 public final class dev/kord/common/entity/Permission$UseApplicationCommands : dev/kord/common/entity/Permission {
@@ -8059,29 +7885,23 @@ public final class dev/kord/common/entity/Permission$ViewGuildInsights : dev/kor
 }
 
 public final class dev/kord/common/entity/PermissionKt {
-	public static final synthetic fun PermissionWithIterable (Ljava/lang/Iterable;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions (Ljava/lang/Iterable;)Ldev/kord/common/entity/Permissions;
-	public static final synthetic fun Permissions (Ljava/lang/String;)Ldev/kord/common/entity/Permissions;
-	public static final synthetic fun Permissions (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
+	public static final fun Permissions (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions ([Ldev/kord/common/entity/Permission;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions ([Ldev/kord/common/entity/Permissions;)Ldev/kord/common/entity/Permissions;
 	public static synthetic fun Permissions$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
 	public static final fun Permissions0 (Ljava/lang/Iterable;)Ldev/kord/common/entity/Permissions;
-	public static final fun Permissions0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
+	public static final synthetic fun Permissions0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
 	public static synthetic fun Permissions0$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
 }
 
 public final class dev/kord/common/entity/Permissions {
 	public static final field Companion Ldev/kord/common/entity/Permissions$Companion;
 	public static final field NewCompanion Ldev/kord/common/entity/Permissions$NewCompanion;
-	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;)V
-	public final synthetic fun component1 ()Ldev/kord/common/DiscordBitSet;
 	public final fun contains (Ldev/kord/common/entity/Permission;)Z
 	public final fun contains (Ldev/kord/common/entity/Permissions;)Z
-	public final synthetic fun copy (Ldev/kord/common/DiscordBitSet;)Ldev/kord/common/entity/Permissions;
-	public final synthetic fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/Permissions;Ldev/kord/common/DiscordBitSet;ILjava/lang/Object;)Ldev/kord/common/entity/Permissions;
-	public final fun copy0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
+	public final synthetic fun copy0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/Permissions;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ldev/kord/common/DiscordBitSet;
 	public final fun getValues ()Ljava/util/Set;
@@ -8104,12 +7924,7 @@ public final class dev/kord/common/entity/Permissions$Builder {
 	public final fun unaryPlus (Ldev/kord/common/entity/Permissions;)V
 }
 
-public final class dev/kord/common/entity/Permissions$Companion : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/Permissions;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/Permissions;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/common/entity/Permissions$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -8117,16 +7932,8 @@ public final class dev/kord/common/entity/Permissions$NewCompanion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class dev/kord/common/entity/Permissions$PermissionsBuilder {
-	public fun <init> (Ldev/kord/common/DiscordBitSet;)V
-	public final fun permissions ()Ldev/kord/common/entity/Permissions;
-	public final fun unaryMinus (Ldev/kord/common/entity/Permission;)V
-	public final fun unaryMinus (Ldev/kord/common/entity/Permissions;)V
-	public final fun unaryPlus (Ldev/kord/common/entity/Permission;)V
-	public final fun unaryPlus (Ldev/kord/common/entity/Permissions;)V
-}
-
 public final class dev/kord/common/entity/PermissionsKt {
+	public static final fun getALL (Ldev/kord/common/entity/Permissions$Companion;)Ldev/kord/common/entity/Permissions;
 	public static final fun getALL (Ldev/kord/common/entity/Permissions$NewCompanion;)Ldev/kord/common/entity/Permissions;
 }
 
@@ -8162,7 +7969,6 @@ public final class dev/kord/common/entity/PremiumTier$Two : dev/kord/common/enti
 }
 
 public final class dev/kord/common/entity/PremiumTier$Unknown : dev/kord/common/entity/PremiumTier {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/PresenceStatus {
@@ -8201,7 +8007,6 @@ public final class dev/kord/common/entity/PresenceStatus$Online : dev/kord/commo
 }
 
 public final class dev/kord/common/entity/PresenceStatus$Unknown : dev/kord/common/entity/PresenceStatus {
-	public synthetic fun <init> (Ljava/lang/String;)V
 }
 
 public final class dev/kord/common/entity/Reaction {
@@ -8395,7 +8200,6 @@ public final class dev/kord/common/entity/ScheduledEntityType$StageInstance : de
 }
 
 public final class dev/kord/common/entity/ScheduledEntityType$Unknown : dev/kord/common/entity/ScheduledEntityType {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/ScheduledEntityType$Voice : dev/kord/common/entity/ScheduledEntityType {
@@ -8492,7 +8296,6 @@ public final class dev/kord/common/entity/SortOrderType$LatestActivity : dev/kor
 }
 
 public final class dev/kord/common/entity/SortOrderType$Unknown : dev/kord/common/entity/SortOrderType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/StageInstancePrivacyLevel {
@@ -8519,7 +8322,6 @@ public final class dev/kord/common/entity/StageInstancePrivacyLevel$Public : dev
 }
 
 public final class dev/kord/common/entity/StageInstancePrivacyLevel$Unknown : dev/kord/common/entity/StageInstancePrivacyLevel {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/SubCommand : dev/kord/common/entity/Option {
@@ -8555,32 +8357,19 @@ public final class dev/kord/common/entity/SubCommand$Companion {
 
 public abstract class dev/kord/common/entity/SystemChannelFlag {
 	public static final field Companion Ldev/kord/common/entity/SystemChannelFlag$Companion;
-	public static final field SuppressGuildReminderNotifications Ldev/kord/common/entity/SystemChannelFlag;
-	public static final field SuppressJoinNotificationReplies Ldev/kord/common/entity/SystemChannelFlag;
-	public static final field SuppressJoinNotifications Ldev/kord/common/entity/SystemChannelFlag;
-	public static final field SuppressPremiumSubscriptions Ldev/kord/common/entity/SystemChannelFlag;
-	public static final field SuppressRoleSubscriptionPurchaseNotificationReplies Ldev/kord/common/entity/SystemChannelFlag;
-	public static final field SuppressRoleSubscriptionPurchaseNotifications Ldev/kord/common/entity/SystemChannelFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun getShift ()I
 	public final fun hashCode ()I
-	public final synthetic fun name ()Ljava/lang/String;
-	public final synthetic fun ordinal ()I
 	public final fun plus (Ldev/kord/common/entity/SystemChannelFlag;)Ldev/kord/common/entity/SystemChannelFlags;
 	public final fun plus (Ldev/kord/common/entity/SystemChannelFlags;)Ldev/kord/common/entity/SystemChannelFlags;
 	public final fun toString ()Ljava/lang/String;
-	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/SystemChannelFlag;
-	public static synthetic fun values ()[Ldev/kord/common/entity/SystemChannelFlag;
 }
 
 public final class dev/kord/common/entity/SystemChannelFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/SystemChannelFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/SystemChannelFlag;
-	public synthetic fun values ()[Ldev/kord/common/entity/SystemChannelFlag;
 }
 
 public final class dev/kord/common/entity/SystemChannelFlag$SuppressGuildReminderNotifications : dev/kord/common/entity/SystemChannelFlag {
@@ -8622,13 +8411,9 @@ public final class dev/kord/common/entity/SystemChannelFlagKt {
 public final class dev/kord/common/entity/SystemChannelFlags {
 	public static final field Companion Ldev/kord/common/entity/SystemChannelFlags$Companion;
 	public static final field NewCompanion Ldev/kord/common/entity/SystemChannelFlags$NewCompanion;
-	public synthetic fun <init> (I)V
-	public final synthetic fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/SystemChannelFlags;)Z
-	public final synthetic fun copy (I)Ldev/kord/common/entity/SystemChannelFlags;
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/SystemChannelFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/SystemChannelFlags;IILjava/lang/Object;)Ldev/kord/common/entity/SystemChannelFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
 	public final fun getValues ()Ljava/util/Set;
@@ -8651,12 +8436,7 @@ public final class dev/kord/common/entity/SystemChannelFlags$Builder {
 	public final fun unaryPlus (Ldev/kord/common/entity/SystemChannelFlags;)V
 }
 
-public final class dev/kord/common/entity/SystemChannelFlags$Companion : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/SystemChannelFlags;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/SystemChannelFlags;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+public final class dev/kord/common/entity/SystemChannelFlags$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -8718,7 +8498,6 @@ public final class dev/kord/common/entity/TeamMembershipState$Invited : dev/kord
 }
 
 public final class dev/kord/common/entity/TeamMembershipState$Unknown : dev/kord/common/entity/TeamMembershipState {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/TextInputStyle {
@@ -8745,40 +8524,18 @@ public final class dev/kord/common/entity/TextInputStyle$Short : dev/kord/common
 }
 
 public final class dev/kord/common/entity/TextInputStyle$Unknown : dev/kord/common/entity/TextInputStyle {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/UserFlag {
-	public static final field ActiveDeveloper Ldev/kord/common/entity/UserFlag;
-	public static final field BotHttpInteractions Ldev/kord/common/entity/UserFlag;
-	public static final field BugHunterLevel1 Ldev/kord/common/entity/UserFlag;
-	public static final field BugHunterLevel2 Ldev/kord/common/entity/UserFlag;
 	public static final field Companion Ldev/kord/common/entity/UserFlag$Companion;
-	public static final field DiscordCertifiedModerator Ldev/kord/common/entity/UserFlag;
-	public static final field DiscordEmployee Ldev/kord/common/entity/UserFlag;
-	public static final field DiscordPartner Ldev/kord/common/entity/UserFlag;
-	public static final field EarlySupporter Ldev/kord/common/entity/UserFlag;
-	public static final field HouseBalance Ldev/kord/common/entity/UserFlag;
-	public static final field HouseBravery Ldev/kord/common/entity/UserFlag;
-	public static final field HouseBrilliance Ldev/kord/common/entity/UserFlag;
-	public static final field HypeSquad Ldev/kord/common/entity/UserFlag;
-	public static final field System Ldev/kord/common/entity/UserFlag;
-	public static final field TeamUser Ldev/kord/common/entity/UserFlag;
-	public static final field VerifiedBot Ldev/kord/common/entity/UserFlag;
-	public static final field VerifiedBotDeveloper Ldev/kord/common/entity/UserFlag;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getDeclaringClass ()Ljava/lang/Class;
 	public final fun getShift ()I
 	public final fun hashCode ()I
-	public final synthetic fun name ()Ljava/lang/String;
-	public final synthetic fun ordinal ()I
 	public final fun plus (Ldev/kord/common/entity/UserFlag;)Ldev/kord/common/entity/UserFlags;
 	public final fun plus (Ldev/kord/common/entity/UserFlags;)Ldev/kord/common/entity/UserFlags;
 	public final fun toString ()Ljava/lang/String;
-	public static synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/UserFlag;
-	public static synthetic fun values ()[Ldev/kord/common/entity/UserFlag;
 }
 
 public final class dev/kord/common/entity/UserFlag$ActiveDeveloper : dev/kord/common/entity/UserFlag {
@@ -8800,8 +8557,6 @@ public final class dev/kord/common/entity/UserFlag$BugHunterLevel2 : dev/kord/co
 public final class dev/kord/common/entity/UserFlag$Companion {
 	public final fun fromShift (I)Ldev/kord/common/entity/UserFlag;
 	public final fun getEntries ()Ljava/util/List;
-	public synthetic fun valueOf (Ljava/lang/String;)Ldev/kord/common/entity/UserFlag;
-	public synthetic fun values ()[Ldev/kord/common/entity/UserFlag;
 }
 
 public final class dev/kord/common/entity/UserFlag$DiscordCertifiedModerator : dev/kord/common/entity/UserFlag {
@@ -8836,10 +8591,6 @@ public final class dev/kord/common/entity/UserFlag$HypeSquad : dev/kord/common/e
 	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$HypeSquad;
 }
 
-public final class dev/kord/common/entity/UserFlag$System : dev/kord/common/entity/UserFlag {
-	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$System;
-}
-
 public final class dev/kord/common/entity/UserFlag$TeamUser : dev/kord/common/entity/UserFlag {
 	public static final field INSTANCE Ldev/kord/common/entity/UserFlag$TeamUser;
 }
@@ -8866,18 +8617,12 @@ public final class dev/kord/common/entity/UserFlagKt {
 
 public final class dev/kord/common/entity/UserFlags {
 	public static final field Companion Ldev/kord/common/entity/UserFlags$Companion;
-	public static final field UserFlagsSerializer Ldev/kord/common/entity/UserFlags$UserFlagsSerializer;
-	public synthetic fun <init> (I)V
-	public final synthetic fun component1 ()I
 	public final fun contains (Ldev/kord/common/entity/UserFlag;)Z
 	public final fun contains (Ldev/kord/common/entity/UserFlags;)Z
-	public final synthetic fun copy (I)Ldev/kord/common/entity/UserFlags;
-	public final synthetic fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
-	public static synthetic fun copy$default (Ldev/kord/common/entity/UserFlags;IILjava/lang/Object;)Ldev/kord/common/entity/UserFlags;
-	public final fun copy0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
+	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
+	public final synthetic fun copy0 (Lkotlin/jvm/functions/Function1;)Ldev/kord/common/entity/UserFlags;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final synthetic fun getFlags ()Ljava/util/List;
 	public final fun getValues ()Ljava/util/Set;
 	public fun hashCode ()I
 	public final fun minus (Ldev/kord/common/entity/UserFlag;)Ldev/kord/common/entity/UserFlags;
@@ -8899,24 +8644,6 @@ public final class dev/kord/common/entity/UserFlags$Builder {
 }
 
 public final class dev/kord/common/entity/UserFlags$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
-public final class dev/kord/common/entity/UserFlags$UserFlagsBuilder {
-	public fun <init> ()V
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun flags ()Ldev/kord/common/entity/UserFlags;
-	public final fun unaryMinus (Ldev/kord/common/entity/UserFlag;)V
-	public final fun unaryPlus (Ldev/kord/common/entity/UserFlag;)V
-}
-
-public final class dev/kord/common/entity/UserFlags$UserFlagsSerializer : kotlinx/serialization/KSerializer {
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/entity/UserFlags;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/entity/UserFlags;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -8952,7 +8679,6 @@ public final class dev/kord/common/entity/UserPremium$None : dev/kord/common/ent
 }
 
 public final class dev/kord/common/entity/UserPremium$Unknown : dev/kord/common/entity/UserPremium {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/VerificationLevel {
@@ -8987,7 +8713,6 @@ public final class dev/kord/common/entity/VerificationLevel$None : dev/kord/comm
 }
 
 public final class dev/kord/common/entity/VerificationLevel$Unknown : dev/kord/common/entity/VerificationLevel {
-	public synthetic fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/VerificationLevel$VeryHigh : dev/kord/common/entity/VerificationLevel {
@@ -9018,7 +8743,6 @@ public final class dev/kord/common/entity/VideoQualityMode$Full : dev/kord/commo
 }
 
 public final class dev/kord/common/entity/VideoQualityMode$Unknown : dev/kord/common/entity/VideoQualityMode {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/WebhookType {
@@ -9049,7 +8773,6 @@ public final class dev/kord/common/entity/WebhookType$Incoming : dev/kord/common
 }
 
 public final class dev/kord/common/entity/WebhookType$Unknown : dev/kord/common/entity/WebhookType {
-	public synthetic fun <init> (I)V
 }
 
 public abstract class dev/kord/common/entity/optional/Optional {
