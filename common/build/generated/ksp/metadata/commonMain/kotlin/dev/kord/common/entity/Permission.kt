@@ -1,3 +1,4 @@
+// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
@@ -22,77 +23,39 @@ import kotlinx.serialization.encoding.Encoder
  * See [Permission]s in the
  * [Discord Developer Documentation](https://discord.com/developers/docs/topics/permissions).
  */
-public sealed class Permission {
-    private val isProper: Boolean
-    private val _shift: Int // only use if isProper == true
-    private val _code: DiscordBitSet? // only non-null if isProper == false
-
-    private constructor(shift: Int) {
-        require(shift >= 0) { """shift has to be >= 0 but was $shift""" }
-        isProper = true
-        _shift = shift
-        _code = null
-    }
-
-    private constructor(code: DiscordBitSet) {
-        var singleBitIsSet = false
-        var shift = -1
-        for (i in 0..<code.size) {
-            if (code[i]) {
-                if (singleBitIsSet) {
-                    singleBitIsSet = false
-                    break
-                } else {
-                    singleBitIsSet = true
-                    shift = i
-                }
-            }
-        }
-        if (singleBitIsSet) {
-            isProper = true
-            _shift = shift.also { if (it < 0) throw AssertionError() }
-            _code = null
-        } else {
-            isProper = false
-            _shift = -1
-            _code = code
-        }
-    }
-
+public sealed class Permission(
     /**
      * The position of the bit that is set in this [Permission]. This is always >= 0.
      */
-    public val shift: Int
-        get() = if (isProper) _shift else throw IllegalArgumentException(
-            "$this is not a proper instance of 'Permission' because multiple bits are set."
-        )
+    public val shift: Int,
+) {
+    init {
+        require(shift >= 0) { """shift has to be >= 0 but was $shift""" }
+    }
 
     /**
      * The raw code used by Discord.
      */
     public val code: DiscordBitSet
-        get() = if (isProper) EmptyBitSet().also { it[_shift] = true } else _code!!
+        get() = EmptyBitSet().also { it[shift] = true }
 
     /**
      * Returns an instance of [Permissions] that has all bits set that are set in `this` and [flag].
      */
-    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code, null)
+    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
 
     /**
      * Returns an instance of [Permissions] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code, null)
+    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
-            (other is Permission
-                && (this.isProper == other.isProper)
-                && (if (isProper) this._shift == other._shift else this._code == other._code))
+            (other is Permission && this.shift == other.shift)
 
-    final override fun hashCode(): Int = if (isProper) _shift.hashCode() else _code.hashCode()
+    final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown)
-        (if (isProper) "Permission.Unknown(shift=$_shift)" else "Permission.Unknown(code=$_code)")
+    final override fun toString(): String = if (this is Unknown) "Permission.Unknown(shift=$shift)"
             else "Permission.${this::class.simpleName}"
 
     /**
@@ -100,25 +63,9 @@ public sealed class Permission {
      *
      * This is used as a fallback for [Permission]s that haven't been added to Kord yet.
      */
-    public class Unknown : Permission {
-        internal constructor(shift: Int) : super(shift)
-
-        // TODO uncomment annotation in Permissions.kt and delete this file when these constructors are removed after
-        //  deprecation cycle
-        @Deprecated(
-            "Construct an unknown 'Permission' with 'Permission.fromShift()' instead.",
-            ReplaceWith("Permission.fromShift(TODO())", imports = ["dev.kord.common.entity.Permission"]),
-            DeprecationLevel.HIDDEN,
-        )
-        public constructor(code: DiscordBitSet) : super(code)
-
-        @Deprecated(
-            "Construct an unknown 'Permission' with 'Permission.fromShift()' instead.",
-            ReplaceWith("Permission.fromShift(TODO())", imports = ["dev.kord.common.entity.Permission"]),
-            DeprecationLevel.HIDDEN,
-        )
-        public constructor(vararg values: Long) : super(DiscordBitSet(values))
-    }
+    public class Unknown internal constructor(
+        shift: Int,
+    ) : Permission(shift)
 
     /**
      * Allows creation of instant invites.
@@ -365,15 +312,6 @@ public sealed class Permission {
      */
     public object SendVoiceMessages : Permission(46)
 
-    // TODO uncomment annotation in Permissions.kt and delete this file when this object is removed after deprecation
-    //  cycle
-    @Deprecated(
-        "'Permission.All' is not a proper 'Permission' instance. Replace with 'Permissions.ALL'.",
-        ReplaceWith("Permissions.ALL", imports = ["dev.kord.common.entity.Permissions", "dev.kord.common.entity.ALL"]),
-        DeprecationLevel.HIDDEN,
-    )
-    public object All : Permission(Permissions.ALL.code)
-
     public companion object {
         /**
          * A [List] of all known [Permission]s.
@@ -430,14 +368,6 @@ public sealed class Permission {
             )
         }
 
-        // TODO uncomment annotation in Permissions.kt and delete this file when this property is removed after
-        //  deprecation cycle
-        @Deprecated(
-            "Renamed to 'entries'.",
-            ReplaceWith("Permission.entries", imports = ["dev.kord.common.entity.Permission"]),
-            DeprecationLevel.HIDDEN,
-        )
-        public val values: Set<Permission> get() = entries.toSet()
 
         /**
          * Returns an instance of [Permission] with [Permission.shift] equal to the specified
@@ -566,18 +496,7 @@ public class Permissions internal constructor(
      * The raw code used by Discord.
      */
     public val code: DiscordBitSet,
-    @Suppress("UNUSED_PARAMETER") unused: Nothing?,
 ) {
-    // TODO uncomment annotation in Permissions.kt and delete this file when this constructor is removed after
-    //  deprecation cycle
-    @Deprecated(
-        "Don't construct an instance of 'Permissions' from a raw code. Use the factory functions described in the " +
-            "documentation instead.",
-        ReplaceWith("Permissions.Builder(code).build()", "dev.kord.common.entity.Permissions"),
-        DeprecationLevel.HIDDEN,
-    )
-    public constructor(code: DiscordBitSet) : this(code, null)
-
     /**
      * A [Set] of all [Permission]s contained in this instance of [Permissions].
      */
@@ -601,44 +520,41 @@ public class Permissions internal constructor(
     /**
      * Returns an instance of [Permissions] that has all bits set that are set in `this` and [flag].
      */
-    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code, null)
+    public operator fun plus(flag: Permission): Permissions = Permissions(this.code + flag.code)
 
     /**
      * Returns an instance of [Permissions] that has all bits set that are set in `this` and
      * [flags].
      */
-    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code, null)
+    public operator fun plus(flags: Permissions): Permissions = Permissions(this.code + flags.code)
 
     /**
      * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
      * bits that are set in [flag].
      */
-    public operator fun minus(flag: Permission): Permissions = Permissions(this.code - flag.code, null)
+    public operator fun minus(flag: Permission): Permissions = Permissions(this.code - flag.code)
 
     /**
      * Returns an instance of [Permissions] that has all bits set that are set in `this` except the
      * bits that are set in [flags].
      */
-    public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code, null)
+    public operator fun minus(flags: Permissions): Permissions = Permissions(this.code - flags.code)
 
     /**
      * Returns a copy of this instance of [Permissions] modified with [builder].
      */
-    @JvmName("copy0") // TODO other name when deprecated overload is removed
     public inline fun copy(builder: Builder.() -> Unit): Permissions {
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code.copy()).apply(builder).build()
     }
 
-    @Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
     @Deprecated(
-        "'Permissions.PermissionsBuilder' is deprecated, use 'Permissions.Builder' instead.",
         level = DeprecationLevel.HIDDEN,
+        message = "Binary compatibility, keep for some releases.",
     )
-    @kotlin.internal.LowPriorityInOverloadResolution
-    public inline fun copy(block: PermissionsBuilder.() -> Unit): Permissions {
-        contract { callsInPlace(block, EXACTLY_ONCE) }
-        return PermissionsBuilder(code.copy()).apply(block).permissions()
+    public inline fun copy0(builder: Builder.() -> Unit): Permissions {
+        contract { callsInPlace(builder, EXACTLY_ONCE) }
+        return copy(builder)
     }
 
     override fun equals(other: Any?): Boolean = this === other ||
@@ -647,38 +563,6 @@ public class Permissions internal constructor(
     override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "Permissions(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "Permissions is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-        DeprecationLevel.HIDDEN,
-    )
-    public operator fun component1(): DiscordBitSet = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "Permissions is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun copy(code: DiscordBitSet = this.code): Permissions = Permissions(code, null)
-
-    @Deprecated(
-        "Renamed to 'Builder'.",
-        ReplaceWith("Permissions.Builder", imports = ["dev.kord.common.entity.Permissions"]),
-        DeprecationLevel.HIDDEN,
-    )
-    public class PermissionsBuilder(code: DiscordBitSet) {
-        private val delegate = Builder(code)
-        public operator fun Permissions.unaryPlus(): Unit = with(delegate) { unaryPlus() }
-        public operator fun Permissions.unaryMinus(): Unit = with(delegate) { unaryMinus() }
-        public operator fun Permission.unaryPlus(): Unit = with(delegate) { unaryPlus() }
-        public operator fun Permission.unaryMinus(): Unit = with(delegate) { unaryMinus() }
-        public fun permissions(): Permissions = delegate.build()
-    }
 
     public class Builder(
         private val code: DiscordBitSet = EmptyBitSet(),
@@ -715,7 +599,7 @@ public class Permissions internal constructor(
          * Returns an instance of [Permissions] that has all bits set that are currently set in this
          * [Builder].
          */
-        public fun build(): Permissions = Permissions(code.copy(), null)
+        public fun build(): Permissions = Permissions(code.copy())
     }
 
     internal object Serializer : KSerializer<Permissions> {
@@ -730,49 +614,46 @@ public class Permissions internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): Permissions =
-                Permissions(decoder.decodeSerializableValue(delegate), null)
+                Permissions(decoder.decodeSerializableValue(delegate))
     }
 
-    public companion object NewCompanion {
-
-        @Suppress("DEPRECATION_ERROR")
+    public companion object {
+        @Suppress(names = arrayOf("DEPRECATION"))
         @Deprecated(
-            "Renamed to 'NewCompanion', which no longer implements 'KSerializer<Permissions>'.",
-            ReplaceWith("Permissions.serializer()", imports = ["dev.kord.common.entity.Permissions"]),
-            DeprecationLevel.HIDDEN,
+            message = "Renamed to 'Companion'.",
+            replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
+                        arrayOf("dev.kord.common.entity.Permissions")),
         )
         @JvmField
-        public val Companion: Companion = Companion()
+        public val NewCompanion: NewCompanion = NewCompanion()
     }
 
     @Deprecated(
-        "Renamed to 'NewCompanion', which no longer implements 'KSerializer<Permissions>'.",
-        ReplaceWith("Permissions.serializer()", imports = ["dev.kord.common.entity.Permissions"]),
-        DeprecationLevel.HIDDEN,
+        message = "Renamed to 'Companion'.",
+        replaceWith = ReplaceWith(expression = "Permissions.Companion", imports =
+                    arrayOf("dev.kord.common.entity.Permissions")),
     )
-    public class Companion internal constructor() : KSerializer<Permissions> by Serializer {
-        public fun serializer(): KSerializer<Permissions> = this
+    public class NewCompanion internal constructor() {
+        public fun serializer(): KSerializer<Permissions> = Permissions.serializer()
     }
 }
 
 /**
  * Returns an instance of [Permissions] built with [Permissions.Builder].
  */
-@JvmName("Permissions0") // TODO other name when deprecated overload is removed
 public inline fun Permissions(builder: Permissions.Builder.() -> Unit = {}): Permissions {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return Permissions.Builder().apply(builder).build()
 }
 
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "DEPRECATION_ERROR")
+@Suppress(names = arrayOf("FunctionName"))
 @Deprecated(
-    "'Permissions.PermissionsBuilder' is deprecated, use 'Permissions.Builder' instead.",
     level = DeprecationLevel.HIDDEN,
+    message = "Binary compatibility, keep for some releases.",
 )
-@kotlin.internal.LowPriorityInOverloadResolution
-public inline fun Permissions(block: Permissions.PermissionsBuilder.() -> Unit = {}): Permissions {
-    contract { callsInPlace(block, EXACTLY_ONCE) }
-    return Permissions.PermissionsBuilder(DiscordBitSet(0)).apply(block).permissions()
+public inline fun Permissions0(builder: Permissions.Builder.() -> Unit = {}): Permissions {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    return Permissions(builder)
 }
 
 /**
@@ -807,20 +688,3 @@ public fun Permissions(flags: Iterable<Permission>): Permissions = Permissions {
 public fun Permissions(flags: Iterable<Permissions>): Permissions = Permissions {
     flags.forEach { +it }
 }
-
-// TODO uncomment annotation in Permissions.kt and delete this file when these functions are removed after deprecation
-//  cycle
-@Suppress("FunctionName")
-@Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
-public fun PermissionWithIterable(flags: Iterable<Permissions>): Permissions = Permissions(flags)
-
-@Deprecated(
-    "Don't construct an instance of 'Permissions' from a raw value. Use the factory functions described in the " +
-        "documentation instead.",
-    ReplaceWith(
-        "Permissions.Builder(DiscordBitSet(value)).build()",
-        imports = ["dev.kord.common.entity.Permissions", "dev.kord.common.DiscordBitSet"],
-    ),
-    DeprecationLevel.HIDDEN,
-)
-public fun Permissions(value: String): Permissions = Permissions(DiscordBitSet(value), null)

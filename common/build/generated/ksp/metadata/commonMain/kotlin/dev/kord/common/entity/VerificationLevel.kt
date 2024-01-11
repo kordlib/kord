@@ -40,17 +40,7 @@ public sealed class VerificationLevel(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : VerificationLevel(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'VerificationLevel.from()'.",
-            replaceWith = ReplaceWith(expression = "VerificationLevel.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.VerificationLevel")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : VerificationLevel(value)
 
     /**
      * Unrestricted.
@@ -114,7 +104,7 @@ public sealed class VerificationLevel(
             2 -> Medium
             3 -> High
             4 -> VeryHigh
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

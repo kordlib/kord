@@ -1,5 +1,5 @@
 @file:Generate(
-    INT_KORD_ENUM, name = "OnboardingMode", unknownConstructorWasPublic = false,
+    INT_KORD_ENUM, name = "OnboardingMode",
     kDoc = "Defines the criteria used to satisfy Onboarding constraints that are required for enabling.",
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode",
     entries = [

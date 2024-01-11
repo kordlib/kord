@@ -12,7 +12,7 @@ import dev.kord.rest.builder.message.addFile as addFileExtensionOnNewSupertype
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.addFile'.",
     ReplaceWith("this.addFile(path)", imports = ["dev.kord.rest.builder.message.addFile"]),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public fun MessageCreateBuilder.addFile(path: Path): NamedFile =
     addFileExtensionOnNewSupertype(path)

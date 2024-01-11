@@ -40,17 +40,7 @@ public sealed class PresenceStatus(
      */
     public class Unknown internal constructor(
         `value`: String,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : PresenceStatus(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'PresenceStatus.from()'.",
-            replaceWith = ReplaceWith(expression = "PresenceStatus.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.PresenceStatus")),
-        )
-        public constructor(`value`: String) : this(value, null)
-    }
+    ) : PresenceStatus(value)
 
     /**
      * Online.
@@ -114,7 +104,7 @@ public sealed class PresenceStatus(
             "idle" -> Idle
             "invisible" -> Invisible
             "offline" -> Offline
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

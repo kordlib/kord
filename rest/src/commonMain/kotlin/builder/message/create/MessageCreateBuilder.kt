@@ -82,7 +82,7 @@ public sealed class AbstractMessageCreateBuilder : MessageCreateBuilder {
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.embed'.",
     ReplaceWith("this.embed(block)", imports = ["dev.kord.rest.builder.message.embed"]),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public inline fun MessageCreateBuilder.embed(block: EmbedBuilder.() -> Unit) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
@@ -99,7 +99,7 @@ public inline fun MessageCreateBuilder.embed(block: EmbedBuilder.() -> Unit) {
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.allowedMentions'.",
     ReplaceWith("this.allowedMentions(block)", imports = ["dev.kord.rest.builder.message.allowedMentions"]),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public inline fun MessageCreateBuilder.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
     contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
@@ -114,7 +114,7 @@ public inline fun MessageCreateBuilder.allowedMentions(block: AllowedMentionsBui
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.actionRow'.",
     ReplaceWith("this.actionRow(builder)", imports = ["dev.kord.rest.builder.message.actionRow"]),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public inline fun MessageCreateBuilder.actionRow(builder: ActionRowBuilder.() -> Unit) {
     contract {
@@ -133,7 +133,7 @@ public inline fun MessageCreateBuilder.actionRow(builder: ActionRowBuilder.() ->
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.messageFlags'.",
     ReplaceWith("this.messageFlags(builder)", imports = ["dev.kord.rest.builder.message.messageFlags"]),
-    DeprecationLevel.ERROR,
+    DeprecationLevel.HIDDEN,
 )
 public inline fun MessageCreateBuilder.messageFlags(builder: MessageFlags.Builder.() -> Unit) {
     contract {

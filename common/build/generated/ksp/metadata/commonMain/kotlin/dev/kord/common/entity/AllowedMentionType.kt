@@ -40,17 +40,7 @@ public sealed class AllowedMentionType(
      */
     public class Unknown internal constructor(
         `value`: String,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : AllowedMentionType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'AllowedMentionType.from()'.",
-            replaceWith = ReplaceWith(expression = "AllowedMentionType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.AllowedMentionType")),
-        )
-        public constructor(`value`: String) : this(value, null)
-    }
+    ) : AllowedMentionType(value)
 
     /**
      * Controls role mentions.
@@ -101,7 +91,7 @@ public sealed class AllowedMentionType(
             "roles" -> RoleMentions
             "users" -> UserMentions
             "everyone" -> EveryoneMentions
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

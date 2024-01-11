@@ -39,17 +39,7 @@ public sealed class NsfwLevel(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : NsfwLevel(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'NsfwLevel.from()'.",
-            replaceWith = ReplaceWith(expression = "NsfwLevel.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.NsfwLevel")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : NsfwLevel(value)
 
     public object Default : NsfwLevel(0)
 
@@ -92,7 +82,7 @@ public sealed class NsfwLevel(
             1 -> Explicit
             2 -> Safe
             3 -> AgeRestricted
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

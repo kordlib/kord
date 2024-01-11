@@ -1,5 +1,5 @@
 @file:Generate(
-    STRING_KORD_ENUM, name = "SelectDefaultValueType", unknownConstructorWasPublic = false,
+    STRING_KORD_ENUM, name = "SelectDefaultValueType",
     docUrl = "https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-default-value-structure",
     entries = [
         Entry("User", stringValue = "user"),

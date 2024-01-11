@@ -40,17 +40,7 @@ public sealed class ComponentType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ComponentType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ComponentType.from()'.",
-            replaceWith = ReplaceWith(expression = "ComponentType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.ComponentType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ComponentType(value)
 
     /**
      * A container for other components.
@@ -134,7 +124,7 @@ public sealed class ComponentType(
             6 -> RoleSelect
             7 -> MentionableSelect
             8 -> ChannelSelect
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

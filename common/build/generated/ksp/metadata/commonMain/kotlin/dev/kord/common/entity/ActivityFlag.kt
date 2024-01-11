@@ -1,16 +1,13 @@
+// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
-import dev.kord.common.Class
-import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
-import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
-import kotlin.jvm.JvmStatic
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -45,60 +42,23 @@ public sealed class ActivityFlag(
      * [flag].
      */
     public operator fun plus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value or flag.value, null)
+            ActivityFlags(this.value or flag.value)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value or flags.value, null)
+            ActivityFlags(this.value or flags.value)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is ActivityFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown)
-            "ActivityFlag.Unknown(shift=$shift)" else "ActivityFlag.${this::class.simpleName}"
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ActivityFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun name(): String = this::class.simpleName!!
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "ActivityFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun ordinal(): Int = when (this) {
-        Instance -> 0
-        Join -> 1
-        Spectate -> 2
-        JoinRequest -> 3
-        Sync -> 4
-        Play -> 5
-        PartyPrivacyFriends -> 6
-        PartyPrivacyVoiceChannel -> 7
-        Embedded -> 8
-        is Unknown -> Int.MAX_VALUE
-    }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "ActivityFlag is no longer an enum class.",
-        replaceWith = ReplaceWith(expression = "ActivityFlag::class.java", imports =
-                    arrayOf("dev.kord.common.entity.ActivityFlag")),
-        DeprecationLevel.HIDDEN,
-    )
-    public fun getDeclaringClass(): Class<ActivityFlag> = ActivityFlag::class.java
+    final override fun toString(): String =
+            if (this is Unknown) "ActivityFlag.Unknown(shift=$shift)"
+            else "ActivityFlag.${this::class.simpleName}"
 
     /**
      * An unknown [ActivityFlag].
@@ -146,48 +106,6 @@ public sealed class ActivityFlag(
         }
 
 
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Instance: ActivityFlag = Instance
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Join: ActivityFlag = Join
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Spectate: ActivityFlag = Spectate
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val JoinRequest: ActivityFlag = JoinRequest
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Sync: ActivityFlag = Sync
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val Play: ActivityFlag = Play
-
         /**
          * Returns an instance of [ActivityFlag] with [ActivityFlag.shift] equal to the specified
          * [shift].
@@ -206,39 +124,6 @@ public sealed class ActivityFlag(
             8 -> Embedded
             else -> Unknown(shift)
         }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "ActivityFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-        @JvmStatic
-        public open fun valueOf(name: String): ActivityFlag = when (name) {
-            "Instance" -> Instance
-            "Join" -> Join
-            "Spectate" -> Spectate
-            "JoinRequest" -> JoinRequest
-            "Sync" -> Sync
-            "Play" -> Play
-            "PartyPrivacyFriends" -> PartyPrivacyFriends
-            "PartyPrivacyVoiceChannel" -> PartyPrivacyVoiceChannel
-            "Embedded" -> Embedded
-            else -> throw IllegalArgumentException(name)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
-        @Deprecated(
-            message = "ActivityFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "ActivityFlag.entries.toTypedArray()", imports =
-                        arrayOf("dev.kord.common.entity.ActivityFlag")),
-            DeprecationLevel.HIDDEN,
-        )
-        @JvmStatic
-        public open fun values(): Array<ActivityFlag> = entries.toTypedArray()
     }
 }
 
@@ -312,18 +197,7 @@ public class ActivityFlags internal constructor(
      * The raw value used by Discord.
      */
     public val `value`: Int,
-    @Suppress("UNUSED_PARAMETER") unused: Nothing?,
 ) {
-    // TODO uncomment annotation in DiscordActivity.kt and delete this file when this constructor is removed after
-    //  deprecation cycle
-    @Deprecated(
-        "Don't construct an instance of 'ActivityFlags' from a raw value. Use the factory functions described in the " +
-            "documentation instead.",
-        ReplaceWith("ActivityFlags.Builder(value).build()", "dev.kord.common.entity.ActivityFlags"),
-        DeprecationLevel.HIDDEN,
-    )
-    public constructor(value: Int) : this(value, null)
-
     /**
      * A [Set] of all [ActivityFlag]s contained in this instance of [ActivityFlags].
      */
@@ -337,17 +211,6 @@ public class ActivityFlags internal constructor(
                 shift++
             }
         }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "Renamed to 'values'.",
-        replaceWith = ReplaceWith(expression = "this.values", imports = arrayOf()),
-        DeprecationLevel.HIDDEN,
-    )
-    public val flags: Set<ActivityFlag>
-        get() = values
 
     /**
      * Checks if this instance of [ActivityFlags] has all bits set that are set in [flag].
@@ -366,28 +229,28 @@ public class ActivityFlags internal constructor(
      * [flag].
      */
     public operator fun plus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value or flag.value, null)
+            ActivityFlags(this.value or flag.value)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value or flags.value, null)
+            ActivityFlags(this.value or flags.value)
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flag].
      */
     public operator fun minus(flag: ActivityFlag): ActivityFlags =
-            ActivityFlags(this.value and flag.value.inv(), null)
+            ActivityFlags(this.value and flag.value.inv())
 
     /**
      * Returns an instance of [ActivityFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flags].
      */
     public operator fun minus(flags: ActivityFlags): ActivityFlags =
-            ActivityFlags(this.value and flags.value.inv(), null)
+            ActivityFlags(this.value and flags.value.inv())
 
     /**
      * Returns a copy of this instance of [ActivityFlags] modified with [builder].
@@ -439,7 +302,7 @@ public class ActivityFlags internal constructor(
          * Returns an instance of [ActivityFlags] that has all bits set that are currently set in
          * this [Builder].
          */
-        public fun build(): ActivityFlags = ActivityFlags(value, null)
+        public fun build(): ActivityFlags = ActivityFlags(value)
     }
 
     internal object Serializer : KSerializer<ActivityFlags> {
@@ -453,7 +316,7 @@ public class ActivityFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): ActivityFlags =
-                ActivityFlags(decoder.decodeSerializableValue(delegate), null)
+                ActivityFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

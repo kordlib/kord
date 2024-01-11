@@ -11,7 +11,6 @@
     ],
 )
 
-/*
 @file:Generate(
     INT_FLAGS, name = "ActivityFlag",
     docUrl = "https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags",
@@ -27,7 +26,6 @@
         Entry(name = "Embedded", shift = 8),
     ],
 )
-*/
 
 package dev.kord.common.entity
 
@@ -36,6 +34,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.InstantInEpochMilliseconds
 import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_FLAGS
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.*

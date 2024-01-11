@@ -24,12 +24,9 @@ annotation class Generate(
     val valueName: String = "value",
 
     // for migration only, will be removed eventually
-    val wasEnum: Boolean = false,
-    val collectionWasDataClass: Boolean = false,
-    val hadFlagsProperty: Boolean = false,
-    val flagsPropertyWasSet: Boolean = false,
-    val builderHadFlagsFunction: Boolean = false,
-    val unknownConstructorWasPublic: Boolean = true,
+    val collectionHadCopy0: Boolean = false,
+    val collectionHadNewCompanion: Boolean = false,
+    val hadBuilderFactoryFunction0: Boolean = false,
 ) {
     enum class EntityType { INT_KORD_ENUM, STRING_KORD_ENUM, INT_FLAGS, BIT_SET_FLAGS }
 
@@ -50,8 +47,5 @@ annotation class Generate(
         val deprecated: Deprecated = Deprecated(""),
         /** [RequiresOptIn] annotations to add to this entry. */
         val requiresOptInAnnotations: Array<String> = [],
-
-        // for migration only, will be removed eventually
-        val noStaticFieldIfEntityWasEnum: Boolean = false,
     )
 }

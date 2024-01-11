@@ -77,18 +77,6 @@ public class TeamMember(public val data: TeamMemberData, public val kord: Kord) 
     public val membershipState: TeamMembershipState get() = data.membershipState
 
     /**
-     * A collection of permissions granted to this member.
-     * At the moment, this collection will only have one element: `*`, meaning the member has all permissions.
-     * This is because right now there are no other permissions. Read mode [here](https://discord.com/developers/docs/topics/teams#data-models-team-members-object)
-     */
-    @Deprecated(
-        "'permissions' was never different from `[\"*\"]`. It is now replaced by 'role'.",
-        ReplaceWith("this.role"),
-        DeprecationLevel.HIDDEN,
-    )
-    public val permissions: List<String> get() = listOf("*")
-
-    /**
      * The unique ID that this member belongs to.
      */
     public val teamId: Snowflake get() = data.teamId

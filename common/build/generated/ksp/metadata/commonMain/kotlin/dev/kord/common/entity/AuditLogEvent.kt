@@ -40,17 +40,7 @@ public sealed class AuditLogEvent(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : AuditLogEvent(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'AuditLogEvent.from()'.",
-            replaceWith = ReplaceWith(expression = "AuditLogEvent.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.AuditLogEvent")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : AuditLogEvent(value)
 
     /**
      * Server settings were updated.
@@ -470,7 +460,7 @@ public sealed class AuditLogEvent(
             145 -> AutoModerationUserCommunicationDisabled
             150 -> CreatorMonetizationRequestCreated
             151 -> CreatorMonetizationTermsAccepted
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

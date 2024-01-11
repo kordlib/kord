@@ -26,7 +26,6 @@ internal sealed class GenerationEntity(
     class KordEnum(
         name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
         override val valueType: ValueType,
-        val unknownConstructorWasPublic: Boolean,
     ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
         enum class ValueType : GenerationEntity.ValueType { INT, STRING }
     }
@@ -34,11 +33,9 @@ internal sealed class GenerationEntity(
     class BitFlags(
         name: String, kDoc: String?, docUrl: String, valueName: String, entries: List<Entry>,
         override val valueType: ValueType,
-        val wasEnum: Boolean,
-        val collectionWasDataClass: Boolean,
-        val hadFlagsProperty: Boolean,
-        val flagsPropertyWasSet: Boolean,
-        val builderHadFlagsFunction: Boolean,
+        val collectionHadCopy0: Boolean,
+        val collectionHadNewCompanion: Boolean,
+        val hadBuilderFactoryFunction0: Boolean,
     ) : GenerationEntity(name, kDoc, docUrl, valueName, entries) {
         enum class ValueType : GenerationEntity.ValueType { INT, BIT_SET }
     }
@@ -49,7 +46,6 @@ internal sealed class GenerationEntity(
         val value: Comparable<*>,
         val deprecated: Deprecated?,
         val requiresOptInAnnotations: List<String>,
-        val noStaticFieldIfEntityWasEnum: Boolean,
     )
 }
 
@@ -70,10 +66,9 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
 
     val validParameters = when (entityType) {
         INT_KORD_ENUM, STRING_KORD_ENUM -> areNotSpecified(
-            Generate::wasEnum, Generate::collectionWasDataClass, Generate::hadFlagsProperty,
-            Generate::flagsPropertyWasSet, Generate::builderHadFlagsFunction,
+            Generate::collectionHadCopy0, Generate::collectionHadNewCompanion, Generate::hadBuilderFactoryFunction0,
         )
-        INT_FLAGS, BIT_SET_FLAGS -> areNotSpecified(Generate::unknownConstructorWasPublic)
+        INT_FLAGS, BIT_SET_FLAGS -> true
     }
 
     val mappedEntries = (entries zip args[Generate::entries]!!).mapNotNull { (entry, annotation) ->
@@ -85,19 +80,15 @@ internal fun Generate.toGenerationEntityOrNull(logger: KSPLogger, annotation: KS
     } else {
         val kDoc = kDoc.toKDoc()
         when (entityType) {
-            INT_KORD_ENUM -> KordEnum(
-                name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT, unknownConstructorWasPublic,
-            )
-            STRING_KORD_ENUM -> KordEnum(
-                name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING, unknownConstructorWasPublic,
-            )
+            INT_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.INT)
+            STRING_KORD_ENUM -> KordEnum(name, kDoc, docUrl, valueName, mappedEntries, KordEnum.ValueType.STRING)
             INT_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, wasEnum, collectionWasDataClass,
-                hadFlagsProperty, flagsPropertyWasSet, builderHadFlagsFunction,
+                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.INT, collectionHadCopy0,
+                collectionHadNewCompanion, hadBuilderFactoryFunction0,
             )
             BIT_SET_FLAGS -> BitFlags(
-                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.BIT_SET, wasEnum,
-                collectionWasDataClass, hadFlagsProperty, flagsPropertyWasSet, builderHadFlagsFunction,
+                name, kDoc, docUrl, valueName, mappedEntries, BitFlags.ValueType.BIT_SET, collectionHadCopy0,
+                collectionHadNewCompanion, hadBuilderFactoryFunction0,
             )
         }
     }
@@ -165,6 +156,5 @@ private fun Entry.toGenerationEntityEntryOrNull(
         } else {
             requiresOptInAnnotations.toList()
         },
-        noStaticFieldIfEntityWasEnum,
     )
 }

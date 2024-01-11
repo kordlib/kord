@@ -41,18 +41,7 @@ public sealed class DefaultMessageNotificationLevel(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : DefaultMessageNotificationLevel(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'DefaultMessageNotificationLevel.from()'.",
-            replaceWith = ReplaceWith(expression = "DefaultMessageNotificationLevel.from(value)",
-                        imports =
-                        arrayOf("dev.kord.common.entity.DefaultMessageNotificationLevel")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : DefaultMessageNotificationLevel(value)
 
     /**
      * Members will receive notifications for all messages by default.
@@ -96,7 +85,7 @@ public sealed class DefaultMessageNotificationLevel(
         public fun from(`value`: Int): DefaultMessageNotificationLevel = when (value) {
             0 -> AllMessages
             1 -> OnlyMentions
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

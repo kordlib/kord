@@ -40,17 +40,7 @@ public sealed class MessageActivityType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : MessageActivityType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'MessageActivityType.from()'.",
-            replaceWith = ReplaceWith(expression = "MessageActivityType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.MessageActivityType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : MessageActivityType(value)
 
     public object Join : MessageActivityType(1)
 
@@ -95,7 +85,7 @@ public sealed class MessageActivityType(
             2 -> Spectate
             3 -> Listen
             5 -> JoinRequest
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }
