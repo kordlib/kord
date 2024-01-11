@@ -1,3 +1,40 @@
+# 0.13.0
+
+This release fixes a bug where the Spanish Latin America `Locale` (es-419) couldn't be deserialized correctly, so users
+with that `Locale` couldn't interact with Kord bots via interactions.
+
+## Additions
+
+* Add `WebhookMessageCreateBuilder.appliedTags` (by @lukellmann in #899)
+
+## Changes
+
+* Bump `DeprecationLevel`s after 0.12.0 (by @lukellmann in #896)
+* Remove deprecation from `User.discriminator` and `User.tag` (by @lukellmann in #901)
+* Align `ArchiveDuration` with generated kord enums (by @lukellmann in #902)
+* Deprecate `DiscordBitSetSerializer` and `Locale.Serializer` (by @lukellmann in #903)
+
+## Fixes
+
+* Support Spanish (Latin America) (by @gdude2002 in #906)
+
+## Dependencies
+
+Updated in #900
+
+* Gradle 8.4 -> 8.5
+* Kotlin 1.9.20 -> 1.9.21
+* Ktor 2.3.6 -> 2.3.7
+* kotlinx.serialization 1.6.1 -> 1.6.2
+* kotlinx-datetime 0.4.1 -> 0.5.0
+* kotlin-logging 3.0.5 -> 6.0.1
+* Stately 2.0.5 -> 2.0.6
+* KSP 1.9.20-1.0.14 -> 1.9.21-1.0.16
+* KotlinPoet 1.15.1 -> 1.15.3
+* AtomicFU 0.23.0 -> 0.23.1
+* gradle-buildconfig-plugin 4.2.0 -> 5.1.0
+* actions/setup-java v3 -> v4
+
 # 0.12.0
 
 ## Additions
