@@ -14,11 +14,14 @@ import javax.crypto.spec.GCMParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 public sealed interface VoiceEncryption {
-    public val mode: EncryptionMode
-
     public val nonceLength: Int
 
-    public val supportsDecryption: Boolean get() = true
+    public val mode: EncryptionMode
+
+    /**
+     * Whether this encryption mode supports decryption.
+     */
+    public val supportsDecryption: Boolean
 
     public fun createBox(key: ByteArray): Box
 
@@ -27,11 +30,9 @@ public sealed interface VoiceEncryption {
     public data class XSalsaPoly1305(
         public val nonceStrategyFactory: NonceStrategy.Factory = LiteNonceStrategy,
     ) : VoiceEncryption {
-        override val mode: EncryptionMode
-            get() = nonceStrategyFactory.mode
-
-        override val nonceLength: Int
-            get() = 24
+        override val supportsDecryption: Boolean get() = true
+        override val mode: EncryptionMode get() = nonceStrategyFactory.mode
+        override val nonceLength: Int get() = 24
 
         override fun createBox(key: ByteArray): Box = object : Box {
             private val codec: XSalsa20Poly1305Codec = XSalsa20Poly1305Codec(key)
@@ -74,14 +75,9 @@ public sealed interface VoiceEncryption {
         private const val NONCE_LEN = 4
         private const val IV_LEN = 12
 
-        override val mode: EncryptionMode
-            get() = EncryptionMode.AeadAes256Gcm
-
-        override val nonceLength: Int
-            get() = 4
-
-        override val supportsDecryption: Boolean
-            get() = false
+        override val supportsDecryption: Boolean get() = false
+        override val mode: EncryptionMode get() = EncryptionMode.AeadAes256Gcm
+        override val nonceLength: Int get() = 4
 
         override fun createBox(key: ByteArray): Box = object : Box {
             private val iv = ByteArray(IV_LEN)
