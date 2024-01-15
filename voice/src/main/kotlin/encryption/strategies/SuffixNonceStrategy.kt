@@ -30,8 +30,8 @@ public class SuffixNonceStrategy : NonceStrategy {
     }
 
     public companion object Factory : NonceStrategy.Factory {
-
         override val length: Int = TweetNaclFast.SecretBox.nonceLength
+
         override val mode: EncryptionMode get() = EncryptionMode.XSalsa20Poly1305Suffix
 
         override fun create(): NonceStrategy = SuffixNonceStrategy()
