@@ -35,7 +35,7 @@ public class LiteNonceStrategy : NonceStrategy {
 
     public companion object Factory : NonceStrategy.Factory {
         override val mode: EncryptionMode get() = EncryptionMode.XSalsa20Poly1305Lite
-        override val nonceLength: Int get() = 4
+        override val length: Int get() = 4
 
         override fun create(): NonceStrategy = LiteNonceStrategy()
     }

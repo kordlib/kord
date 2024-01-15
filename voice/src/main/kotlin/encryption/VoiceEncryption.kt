@@ -24,20 +24,21 @@ public sealed interface VoiceEncryption {
 
     public fun createUnbox(key: ByteArray): Unbox
 
-    @JvmInline
-    public value class XSalsaPoly1305(public val nsf: NonceStrategy.Factory = LiteNonceStrategy) : VoiceEncryption {
+    public data class XSalsaPoly1305(
+        public val nonceStrategyFactory: NonceStrategy.Factory = LiteNonceStrategy,
+    ) : VoiceEncryption {
         override val mode: EncryptionMode
-            get() = nsf.mode
+            get() = nonceStrategyFactory.mode
 
         override val nonceLength: Int
             get() = 24
 
         override fun createBox(key: ByteArray): Box = object : Box {
             private val codec: XSalsa20Poly1305Codec = XSalsa20Poly1305Codec(key)
-            private val nonceStrategy: NonceStrategy = nsf.create()
+            private val nonceStrategy: NonceStrategy = nonceStrategyFactory.create()
 
             override val overhead: Int
-                get() = TweetNaclFast.SecretBox.boxzerobytesLength + nsf.nonceLength
+                get() = TweetNaclFast.SecretBox.boxzerobytesLength + nonceStrategyFactory.length
 
             override fun encrypt(src: ByteArray, nonce: ByteArray, dst: MutableByteArrayCursor): Boolean {
                 return codec.encrypt(src, 0, src.size, nonce, dst)
@@ -54,7 +55,7 @@ public sealed interface VoiceEncryption {
 
         override fun createUnbox(key: ByteArray): Unbox = object : Unbox {
             private val codec: XSalsa20Poly1305Codec = XSalsa20Poly1305Codec(key)
-            private val nonceStrategy: NonceStrategy = nsf.create()
+            private val nonceStrategy: NonceStrategy = nonceStrategyFactory.create()
 
             override fun decrypt(
                 src: ByteArray,
@@ -83,17 +84,14 @@ public sealed interface VoiceEncryption {
             get() = false
 
         override fun createBox(key: ByteArray): Box = object : Box {
-            //
             private val iv = ByteArray(IV_LEN)
             private val ivCursor = iv.mutableCursor()
 
-            //
             private var nonce = 0u
             private val nonceBuffer: ByteArray = ByteArray(NONCE_LEN)
             private val nonceCursor = nonceBuffer.mutableCursor()
             private val nonceView = nonceBuffer.view()
 
-            //
             val secretKey = SecretKeySpec(key, "AES")
             val cipher = Cipher.getInstance("AES/GCM/NoPadding")
 

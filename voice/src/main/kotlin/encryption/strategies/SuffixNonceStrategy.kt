@@ -9,13 +9,13 @@ import dev.kord.voice.udp.RTPPacket
 import kotlin.random.Random
 
 public class SuffixNonceStrategy : NonceStrategy {
-    private val nonceBuffer: ByteArray = ByteArray(nonceLength)
+    private val nonceBuffer: ByteArray = ByteArray(length)
     private val nonceView = nonceBuffer.view()
 
     override fun strip(packet: RTPPacket): ByteArrayView {
         return with(packet.payload) {
-            val nonce = view(dataEnd - nonceLength, dataEnd)!!
-            resize(dataStart, dataEnd - nonceLength)
+            val nonce = view(dataEnd - length, dataEnd)!!
+            resize(dataStart, dataEnd - length)
             nonce
         }
     }
@@ -31,7 +31,7 @@ public class SuffixNonceStrategy : NonceStrategy {
 
     public companion object Factory : NonceStrategy.Factory {
 
-        override val nonceLength: Int = TweetNaclFast.SecretBox.nonceLength
+        override val length: Int = TweetNaclFast.SecretBox.nonceLength
         override val mode: EncryptionMode get() = EncryptionMode.XSalsa20Poly1305Suffix
 
         override fun create(): NonceStrategy = SuffixNonceStrategy()

@@ -26,13 +26,14 @@ public sealed interface NonceStrategy {
 
     public interface Factory {
         /**
+         * The [EncryptionMode] this nonce strategy is for.
          */
         public val mode: EncryptionMode
 
         /**
          * The amount of bytes this nonce will take up.
          */
-        public val nonceLength: Int
+        public val length: Int
 
         public fun create(): NonceStrategy
     }

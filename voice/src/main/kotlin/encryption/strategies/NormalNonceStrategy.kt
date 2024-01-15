@@ -28,7 +28,7 @@ public class NormalNonceStrategy : NonceStrategy {
     }
 
     public companion object Factory : NonceStrategy.Factory {
-        override val nonceLength: Int = 0
+        override val length: Int = 0
 
         override val mode: EncryptionMode get() = EncryptionMode.XSalsa20Poly1305
 
