@@ -446,38 +446,27 @@ public abstract interface class dev/kord/voice/encryption/VoiceEncryption$Box {
 	public abstract fun getOverhead ()I
 }
 
-public final class dev/kord/voice/encryption/VoiceEncryption$DefaultImpls {
-	public static fun getSupportsDecryption (Ldev/kord/voice/encryption/VoiceEncryption;)Z
-}
-
 public abstract interface class dev/kord/voice/encryption/VoiceEncryption$Unbox {
 	public abstract fun decrypt ([BII[BLdev/kord/voice/io/MutableByteArrayCursor;)Z
 	public abstract fun getNonce (Ldev/kord/voice/udp/RTPPacket;)Ldev/kord/voice/io/ByteArrayView;
 }
 
 public final class dev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305 : dev/kord/voice/encryption/VoiceEncryption {
-	public static final synthetic fun box-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)Ldev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305;
-	public static fun constructor-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;
-	public static synthetic fun constructor-impl$default (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;ILkotlin/jvm/internal/DefaultConstructorMarker;)Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;
+	public fun <init> ()V
+	public fun <init> (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)V
+	public synthetic fun <init> (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;
+	public final fun copy (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)Ldev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305;
+	public static synthetic fun copy$default (Ldev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305;Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;ILjava/lang/Object;)Ldev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305;
 	public fun createBox ([B)Ldev/kord/voice/encryption/VoiceEncryption$Box;
-	public static fun createBox-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;[B)Ldev/kord/voice/encryption/VoiceEncryption$Box;
 	public fun createUnbox ([B)Ldev/kord/voice/encryption/VoiceEncryption$Unbox;
-	public static fun createUnbox-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;[B)Ldev/kord/voice/encryption/VoiceEncryption$Unbox;
 	public fun equals (Ljava/lang/Object;)Z
-	public static fun equals-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;Ljava/lang/Object;)Z
-	public static final fun equals-impl0 (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)Z
 	public fun getMode ()Ldev/kord/voice/EncryptionMode;
-	public static fun getMode-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)Ldev/kord/voice/EncryptionMode;
 	public fun getNonceLength ()I
-	public static fun getNonceLength-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)I
-	public final fun getNsf ()Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;
+	public final fun getNonceStrategyFactory ()Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;
 	public fun getSupportsDecryption ()Z
-	public static fun getSupportsDecryption-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)Z
 	public fun hashCode ()I
-	public static fun hashCode-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)I
 	public fun toString ()Ljava/lang/String;
-	public static fun toString-impl (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)Ljava/lang/String;
-	public final synthetic fun unbox-impl ()Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;
 }
 
 public final class dev/kord/voice/encryption/XSalsa20Poly1305Codec {
@@ -506,8 +495,8 @@ public final class dev/kord/voice/encryption/strategies/LiteNonceStrategy : dev/
 
 public final class dev/kord/voice/encryption/strategies/LiteNonceStrategy$Factory : dev/kord/voice/encryption/strategies/NonceStrategy$Factory {
 	public fun create ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
+	public fun getLength ()I
 	public fun getMode ()Ldev/kord/voice/EncryptionMode;
-	public fun getNonceLength ()I
 }
 
 public abstract interface class dev/kord/voice/encryption/strategies/NonceStrategy {
@@ -518,8 +507,8 @@ public abstract interface class dev/kord/voice/encryption/strategies/NonceStrate
 
 public abstract interface class dev/kord/voice/encryption/strategies/NonceStrategy$Factory {
 	public abstract fun create ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
+	public abstract fun getLength ()I
 	public abstract fun getMode ()Ldev/kord/voice/EncryptionMode;
-	public abstract fun getNonceLength ()I
 }
 
 public final class dev/kord/voice/encryption/strategies/NormalNonceStrategy : dev/kord/voice/encryption/strategies/NonceStrategy {
@@ -532,8 +521,8 @@ public final class dev/kord/voice/encryption/strategies/NormalNonceStrategy : de
 
 public final class dev/kord/voice/encryption/strategies/NormalNonceStrategy$Factory : dev/kord/voice/encryption/strategies/NonceStrategy$Factory {
 	public fun create ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
+	public fun getLength ()I
 	public fun getMode ()Ldev/kord/voice/EncryptionMode;
-	public fun getNonceLength ()I
 }
 
 public final class dev/kord/voice/encryption/strategies/SuffixNonceStrategy : dev/kord/voice/encryption/strategies/NonceStrategy {
@@ -546,8 +535,8 @@ public final class dev/kord/voice/encryption/strategies/SuffixNonceStrategy : de
 
 public final class dev/kord/voice/encryption/strategies/SuffixNonceStrategy$Factory : dev/kord/voice/encryption/strategies/NonceStrategy$Factory {
 	public fun create ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
+	public fun getLength ()I
 	public fun getMode ()Ldev/kord/voice/EncryptionMode;
-	public fun getNonceLength ()I
 }
 
 public final class dev/kord/voice/exception/VoiceConnectionInitializationException : java/lang/Exception {
