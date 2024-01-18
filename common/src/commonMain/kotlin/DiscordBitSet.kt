@@ -1,5 +1,6 @@
 package dev.kord.common
 
+import dev.kord.common.serialization.LongOrStringSerializer
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -16,7 +17,7 @@ private const val WIDTH = Long.SIZE_BITS
 public fun EmptyBitSet(): DiscordBitSet = DiscordBitSet()
 
 internal expect fun formatIntegerFromLittleEndianLongArray(data: LongArray): String
-internal expect fun parseIntegerToBigEndianByteArray(value: String): ByteArray
+internal expect fun parseNonNegativeIntegerToBigEndianByteArray(value: String): ByteArray
 
 @Serializable(with = DiscordBitSet.Serializer::class)
 public class DiscordBitSet(internal var data: LongArray) { // data is in little-endian order
@@ -116,7 +117,8 @@ public class DiscordBitSet(internal var data: LongArray) { // data is in little-
     internal object Serializer : KSerializer<DiscordBitSet> {
         override val descriptor = PrimitiveSerialDescriptor("dev.kord.common.DiscordBitSet", PrimitiveKind.STRING)
         override fun serialize(encoder: Encoder, value: DiscordBitSet) = encoder.encodeString(value.value)
-        override fun deserialize(decoder: Decoder) = DiscordBitSet(decoder.decodeString())
+        override fun deserialize(decoder: Decoder) =
+            DiscordBitSet(decoder.decodeSerializableValue(LongOrStringSerializer))
     }
 }
 
@@ -129,7 +131,7 @@ public fun DiscordBitSet(value: String): DiscordBitSet {
         return DiscordBitSet(longArrayOf(value.toULong().toLong()))
     }
 
-    val bytes = parseIntegerToBigEndianByteArray(value)
+    val bytes = parseNonNegativeIntegerToBigEndianByteArray(value)
 
     val longSize = (bytes.size / Long.SIZE_BYTES) + 1
     val destination = LongArray(longSize)
