@@ -1,3 +1,11 @@
+# 0.13.1
+
+This release fixes an exception when trying to deserialize `Permissions` contained in `GuildAuditLogEntryCreateEvent`s.
+Kord expected to receive JSON strings while
+[Discord is sending JSON numbers](https://github.com/discord/discord-api-docs/issues/6616).
+
+See #911 and #912.
+
 # 0.13.0
 
 This release fixes a bug where the Spanish Latin America `Locale` (es-419) couldn't be deserialized correctly, so users
