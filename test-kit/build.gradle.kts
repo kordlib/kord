@@ -23,7 +23,7 @@ kotlin {
         }
         nativeMain {
             dependencies {
-                api(libs.okio)
+                api(libs.kotlinx.io)
             }
         }
     }

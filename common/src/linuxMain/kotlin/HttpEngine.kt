@@ -6,4 +6,4 @@ import io.ktor.client.engine.curl.*
 
 /** @suppress */
 @KordInternal
-public actual object HttpEngine : HttpClientEngineFactory<HttpClientEngineConfig> by Curl
+public actual fun httpEngine(): HttpClientEngineFactory<HttpClientEngineConfig> = Curl

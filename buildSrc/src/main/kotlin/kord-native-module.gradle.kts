@@ -5,13 +5,14 @@ plugins {
 }
 
 kotlin {
+    // There are issues with compiling the linux variant on linux
+    // Please use WSL if you need to work on the linux port
     if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
         linuxX64()
         // Waiting for Ktor
-        // https://youtrack.jetbrains.com/issue/KTOR-872
+        // https://youtrack.jetbrains.com/issue/KTOR-6173
         //linuxArm64()
     }
-
 
     mingwX64()
 
