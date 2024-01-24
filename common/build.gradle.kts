@@ -58,7 +58,7 @@ kotlin {
             }
         }
 
-        findByName("linuxMain")?.apply {
+        linuxMain {
             dependencies {
                 api(libs.ktor.client.curl)
             }
