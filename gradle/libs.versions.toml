@@ -83,7 +83,6 @@ kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", versi
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
-kotlinx-resources = { module = "com.goncalossilva:resources", version.ref = "kotlinx-resources" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 # actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
@@ -94,13 +93,12 @@ dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref
 atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", version.ref = "kotlinx-atomicfu" }
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
-kordx-resources-plugin = { module = "com.goncalossilva:resources-plugin", version.ref = "kotlinx-resources" }
 
 [bundles]
 
 ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serialization-kotlinx-json"]
 
-test-common = ["kotlin-test-annotations-common", "kotlin-test", "kotlinx-coroutines-test", "kotlinx-resources"]
+test-common = ["kotlin-test-annotations-common", "kotlin-test", "kotlinx-coroutines-test"]
 test-js = ["kotlin-test-js", "kotlin-node"]
 test-jvm = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
 
@@ -111,7 +109,6 @@ pluginsForBuildSrc = [
     "atomicfu-plugin",
     "binary-compatibility-validator-plugin",
     "ksp-plugin",
-    "kordx-resources-plugin"
 ]
 
 

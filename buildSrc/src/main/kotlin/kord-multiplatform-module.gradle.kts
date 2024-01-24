@@ -24,8 +24,9 @@ apiValidation {
     applyKordBCVOptions()
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default {
+    applyDefaultHierarchyTemplate {
         common {
             group("nonJvm") {
                 withNative()
@@ -65,12 +66,6 @@ kotlin {
             dependencies {
                 implementation(project(":test-kit"))
             }
-        }
-        val nonJvmMain by creating {
-            dependsOn(commonMain.get())
-        }
-        jsMain {
-            dependsOn(nonJvmMain)
         }
     }
 }

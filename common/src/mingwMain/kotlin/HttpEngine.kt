@@ -6,4 +6,4 @@ import io.ktor.client.engine.winhttp.*
 
 /** @suppress */
 @KordInternal
-public actual object HttpEngine : HttpClientEngineFactory<HttpClientEngineConfig> by WinHttp
+public actual fun httpEngine(): HttpClientEngineFactory<HttpClientEngineConfig> = WinHttp

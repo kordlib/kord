@@ -1,6 +1,5 @@
 package dev.kord.gateway
 
-import io.ktor.utils.io.core.*
 import io.ktor.websocket.*
 import kotlinx.cinterop.*
 import platform.zlib.*
@@ -8,8 +7,10 @@ import platform.zlib.*
 private const val MAX_WBITS = 15 // Maximum window size in bits
 private const val CHUNK_SIZE = 256 * 1000
 
+internal actual fun Inflater(): Inflater = NativeInflater()
+
 @OptIn(ExperimentalForeignApi::class)
-internal actual class Inflater : Closeable {
+private class NativeInflater : Inflater {
     private val zStream = nativeHeap.alloc<z_stream>().apply {
         val initResponse = inflateInit2(ptr, MAX_WBITS)
         if (initResponse != Z_OK) {
@@ -18,7 +19,7 @@ internal actual class Inflater : Closeable {
         }
     }
 
-    actual fun Frame.inflateData(): String {
+    override fun Frame.inflateData(): String {
         val compressedData = data
         var out = ByteArray(0)
         memScoped {

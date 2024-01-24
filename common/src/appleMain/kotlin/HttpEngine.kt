@@ -6,4 +6,4 @@ import io.ktor.client.engine.darwin.*
 
 /** @suppress */
 @KordInternal
-public actual object HttpEngine: HttpClientEngineFactory<HttpClientEngineConfig> by Darwin
+public actual fun httpEngine(): HttpClientEngineFactory<HttpClientEngineConfig> = Darwin

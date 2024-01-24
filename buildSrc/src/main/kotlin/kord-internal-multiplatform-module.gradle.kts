@@ -10,7 +10,7 @@ repositories {
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    targetHierarchy.default()
+    applyDefaultHierarchyTemplate()
     jvm()
     js {
         nodejs()

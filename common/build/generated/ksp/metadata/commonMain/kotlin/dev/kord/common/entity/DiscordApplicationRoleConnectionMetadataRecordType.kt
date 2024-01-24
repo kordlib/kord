@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -32,7 +32,8 @@ public sealed class DiscordApplicationRoleConnectionMetadataRecordType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "DiscordApplicationRoleConnectionMetadataRecordType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "DiscordApplicationRoleConnectionMetadataRecordType.Unknown(value=$value)"
+            else "DiscordApplicationRoleConnectionMetadataRecordType.${this::class.simpleName}"
 
     /**
      * An unknown [DiscordApplicationRoleConnectionMetadataRecordType].
@@ -40,7 +41,7 @@ public sealed class DiscordApplicationRoleConnectionMetadataRecordType(
      * This is used as a fallback for [DiscordApplicationRoleConnectionMetadataRecordType]s that
      * haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : DiscordApplicationRoleConnectionMetadataRecordType(value)
 
@@ -98,18 +99,7 @@ public sealed class DiscordApplicationRoleConnectionMetadataRecordType(
         }
 
         override fun deserialize(decoder: Decoder):
-                DiscordApplicationRoleConnectionMetadataRecordType =
-                when (val value = decoder.decodeInt()) {
-            1 -> IntegerLessThanOrEqual
-            2 -> IntegerGreaterThanOrEqual
-            3 -> IntegerEqual
-            4 -> IntegerNotEqual
-            5 -> DateTimeLessThanOrEqual
-            6 -> DateTimeGreaterThanOrEqual
-            7 -> BooleanEqual
-            8 -> BooleanNotEqual
-            else -> Unknown(value)
-        }
+                DiscordApplicationRoleConnectionMetadataRecordType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -130,5 +120,22 @@ public sealed class DiscordApplicationRoleConnectionMetadataRecordType(
             )
         }
 
+
+        /**
+         * Returns an instance of [DiscordApplicationRoleConnectionMetadataRecordType] with
+         * [DiscordApplicationRoleConnectionMetadataRecordType.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): DiscordApplicationRoleConnectionMetadataRecordType =
+                when (value) {
+            1 -> IntegerLessThanOrEqual
+            2 -> IntegerGreaterThanOrEqual
+            3 -> IntegerEqual
+            4 -> IntegerNotEqual
+            5 -> DateTimeLessThanOrEqual
+            6 -> DateTimeGreaterThanOrEqual
+            7 -> BooleanEqual
+            8 -> BooleanNotEqual
+            else -> Unknown(value)
+        }
     }
 }

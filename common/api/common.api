@@ -2626,7 +2626,6 @@ public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetada
 
 public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecord {
 	public static final field Companion Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecord$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType;Ljava/lang/String;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType;
@@ -2646,7 +2645,6 @@ public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetada
 	public final fun getType ()Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecord;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecord$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2682,6 +2680,7 @@ public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetada
 }
 
 public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType$Companion {
+	public final fun from (I)Ldev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -2711,7 +2710,6 @@ public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetada
 }
 
 public final class dev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType$Unknown : dev/kord/common/entity/DiscordApplicationRoleConnectionMetadataRecordType {
-	public fun <init> (I)V
 }
 
 public final class dev/kord/common/entity/DiscordAttachment {
