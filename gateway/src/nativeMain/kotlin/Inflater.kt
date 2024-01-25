@@ -49,8 +49,14 @@ private class NativeInflater : Inflater {
     }
 
     override fun close() {
-        inflateEnd(zStream.ptr)
-        nativeHeap.free(zStream)
+        try {
+            val response = inflateEnd(zStream.ptr)
+            if(response != Z_OK) {
+                throw ZLibException("Could not end zstream: ${zErrorMessage(response)}")
+            }
+        } finally {
+            nativeHeap.free(zStream)
+        }
     }
 }
 
