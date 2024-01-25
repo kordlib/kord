@@ -15,7 +15,7 @@ private class NativeInflater : Inflater {
         val initResponse = inflateInit2(ptr, MAX_WBITS)
         if (initResponse != Z_OK) {
             nativeHeap.free(this)
-            throw IllegalStateException("Could not initialize zlib: $initResponse")
+            throw ZLibException("Could not initialize zlib: ${zErrorMessage(initResponse)}")
         }
     }
 
@@ -37,7 +37,9 @@ private class NativeInflater : Inflater {
                 }
                 val resultCode = inflate(zStream.ptr, Z_NO_FLUSH)
                 if (resultCode != Z_OK && resultCode != Z_STREAM_END) {
-                    throw IllegalStateException("An error occurred during decompression of frame: $resultCode")
+                    throw ZLibException(
+                        "An error occurred during decompression of frame: ${zErrorMessage(resultCode)}"
+                    )
                 }
                 out += uncompressedData.readBytes(uncompressedDataSize - zStream.avail_out.convert<Int>())
             } while (zStream.avail_out == 0u)
@@ -51,3 +53,8 @@ private class NativeInflater : Inflater {
         nativeHeap.free(zStream)
     }
 }
+
+private class ZLibException(message: String?) : IllegalStateException(message)
+
+@OptIn(ExperimentalForeignApi::class)
+private fun zErrorMessage(errorCode: Int) = zError(errorCode)?.toKString() ?: errorCode
