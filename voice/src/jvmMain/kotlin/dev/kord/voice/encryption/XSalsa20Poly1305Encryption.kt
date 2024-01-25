@@ -5,6 +5,7 @@ import com.iwebpp.crypto.TweetNaclFast.SecretBox.boxzerobytesLength
 import com.iwebpp.crypto.TweetNaclFast.SecretBox.zerobytesLength
 import dev.kord.voice.io.MutableByteArrayCursor
 
+
 // https://datatracker.ietf.org/doc/html/rfc6716#section-3.2.1
 private const val OPUS_MAX_LENGTH = 1276
 

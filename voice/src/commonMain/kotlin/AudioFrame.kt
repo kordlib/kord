@@ -1,6 +1,7 @@
 package dev.kord.voice
 
 import dev.kord.common.annotation.KordVoice
+import kotlin.jvm.JvmInline
 
 /**
  * A frame of 20ms Opus-encoded 48k stereo audio data.

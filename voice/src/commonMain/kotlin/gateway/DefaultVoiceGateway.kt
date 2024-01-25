@@ -9,6 +9,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
+import io.ktor.util.network.*
 import io.ktor.websocket.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
@@ -88,7 +89,7 @@ public class DefaultVoiceGateway(
                 if (exception is CancellationException) break
 
                 defaultVoiceGatewayLogger.error(exception) { "" }
-                if (exception is java.nio.channels.UnresolvedAddressException) {
+                if (exception is UnresolvedAddressException) {
                     data.eventFlow.emit(Close.Timeout)
                 }
 
@@ -139,7 +140,7 @@ public class DefaultVoiceGateway(
     }
 
     private suspend fun read(frame: Frame) {
-        val json = String(frame.data, Charsets.UTF_8)
+        val json = frame.data.decodeToString()
 
         try {
             val event = jsonParser.decodeFromString(VoiceEvent.DeserializationStrategy, json)

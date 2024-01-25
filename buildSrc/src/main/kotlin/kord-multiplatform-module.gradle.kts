@@ -43,8 +43,11 @@ kotlin {
     explicitApi()
 
     jvm()
-    js {
-        nodejs()
+
+    if (name != "voice" && name != "core-voice") {
+        js {
+            nodejs()
+        }
     }
     jvmToolchain(Jvm.target)
 

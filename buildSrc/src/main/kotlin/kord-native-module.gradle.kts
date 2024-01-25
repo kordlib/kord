@@ -7,14 +7,16 @@ plugins {
 kotlin {
     // There are issues with compiling the linux variant on linux
     // Please use WSL if you need to work on the linux port
-    if(!Os.isFamily(Os.FAMILY_WINDOWS)) {
+    if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
         linuxX64()
         // Waiting for Ktor
         // https://youtrack.jetbrains.com/issue/KTOR-6173
         //linuxArm64()
     }
 
-    mingwX64()
+    if (name != "voice" && name != "core-voice") {
+        mingwX64()
+    }
 
     macosArm64()
     macosX64()
@@ -23,7 +25,6 @@ kotlin {
     iosX64()
     iosSimulatorArm64()
 
-    watchosX64()
     watchosArm64()
     watchosSimulatorArm64()
 

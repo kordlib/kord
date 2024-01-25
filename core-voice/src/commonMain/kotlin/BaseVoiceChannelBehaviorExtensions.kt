@@ -7,6 +7,7 @@ import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.GatewayNotFoundException
 import dev.kord.voice.VoiceConnection
 import dev.kord.voice.VoiceConnectionBuilder
+import kotlin.jvm.JvmName
 
 /**
  * Connect to this [VoiceChannel] and create a [VoiceConnection] for this voice session.

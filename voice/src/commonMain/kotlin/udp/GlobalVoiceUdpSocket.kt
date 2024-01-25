@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.*
-import kotlin.text.String
 
 private val globalVoiceSocketLogger = KotlinLogging.logger { }
 
@@ -32,7 +31,7 @@ public object GlobalVoiceUdpSocket : VoiceUdpSocket {
     private val _incoming: MutableSharedFlow<Datagram> = MutableSharedFlow()
     override val incoming: SharedFlow<Datagram> = _incoming
 
-    private val socket = aSocket(ActorSelectorManager(socketScope.coroutineContext)).udp().bind()
+    private val socket = aSocket(SelectorManager(socketScope.coroutineContext)).udp().bind()
 
     private val EMPTY_DATA = ByteArray(DISCOVERY_DATA_SIZE)
 

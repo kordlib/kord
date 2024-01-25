@@ -8,14 +8,12 @@ import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
 
-public abstract class AudioPacketProvider(public val key: ByteArray, public val nonceStrategy: NonceStrategy) {
-    public abstract fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView
-}
+@Suppress("FunctionName")
+public actual fun DefaultAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStrategy) : AudioPacketProvider =
+    DefaultJvmAudioPacketProvider(key, nonceStrategy)
 
-private class CouldNotEncryptDataException(data: ByteArray) :
-    RuntimeException("Couldn't encrypt the following data: [${data.joinToString(", ")}]")
 
-public class DefaultAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStrategy) :
+public class DefaultJvmAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStrategy) :
     AudioPacketProvider(key, nonceStrategy) {
     private val codec = XSalsa20Poly1305Codec(key)
 
@@ -28,14 +26,6 @@ public class DefaultAudioPacketProvider(key: ByteArray, nonceStrategy: NonceStra
     private val nonceBuffer: MutableByteArrayCursor = ByteArray(TweetNaclFast.SecretBox.nonceLength).mutableCursor()
 
     private val lock: Any = Any()
-
-    private fun MutableByteArrayCursor.writeHeader(sequence: Short, timestamp: Int, ssrc: Int) {
-        writeByte(((2 shl 6) or (0x0) or (0x0)).toByte()) // first 2 bytes are version. the rest
-        writeByte(PayloadType.Audio.raw)
-        writeShort(sequence)
-        writeInt(timestamp)
-        writeInt(ssrc)
-    }
 
     override fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView =
         synchronized(lock) {

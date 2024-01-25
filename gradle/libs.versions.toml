@@ -2,7 +2,7 @@
 
 # api dependencies
 kotlin = "1.9.21" # https://github.com/JetBrains/kotlin
-ktor = "2.3.7" # https://github.com/ktorio/ktor
+ktor = "3.0.0-beta-1" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.7.3" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.6.2" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.5.0" # https://github.com/Kotlin/kotlinx-datetime
@@ -16,6 +16,7 @@ kotlin-node = "18.16.12-pre.619" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.8" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.0.6" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
+sodium = "0.9.0" # https://github.com/ionspin/kotlin-multiplatform-libsodium
 
 # code generation
 ksp = "1.9.21-1.0.16" # https://github.com/google/ksp
@@ -24,7 +25,7 @@ kotlinpoet = "1.15.3" # https://github.com/square/kotlinpoet
 # tests
 junit5 = "5.10.1" # https://github.com/junit-team/junit5
 mockk = "1.13.8" # https://github.com/mockk/mockk
-slf4j = "2.0.9" # https://www.slf4j.org
+slf4j = "2.0.11" # https://www.slf4j.org
 kotlinx-io = "0.3.0" # https://github.com/Kotlin/kotlinx-io/
 
 # plugins
@@ -69,6 +70,7 @@ kotlin-node = { module = "org.jetbrains.kotlin-wrappers:kotlin-node", version.re
 # JDK replacements
 bignum = { module = "com.ionspin.kotlin:bignum", version.ref = "bignum" }
 stately-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately" }
+libsodium = { module = "com.ionspin.kotlin:multiplatform-crypto-libsodium-bindings", version.ref = "sodium" }
 
 # code generation
 ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }

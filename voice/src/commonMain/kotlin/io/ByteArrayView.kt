@@ -24,7 +24,7 @@ public class ByteArrayView private constructor(public val data: ByteArray, start
 
     public operator fun get(index: Int): Byte {
         if (dataStart + index > dataEnd) {
-            throw ArrayIndexOutOfBoundsException(index)
+            throw IndexOutOfBoundsException("Index is out of bounds: $index")
         }
 
         return data[dataStart + index]
@@ -37,7 +37,7 @@ public class ByteArrayView private constructor(public val data: ByteArray, start
 
         fun nextByte(): Byte = try {
             view[index++]
-        } catch (e: ArrayIndexOutOfBoundsException) {
+        } catch (e: IndexOutOfBoundsException) {
             index -= 1
             throw NoSuchElementException(e.message)
         }
