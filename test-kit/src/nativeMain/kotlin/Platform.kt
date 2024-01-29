@@ -26,13 +26,13 @@ actual object Platform {
 @OptIn(ExperimentalForeignApi::class)
 actual fun getEnv(name: String) = getenv(name)?.toKString()
 
-actual suspend fun file(project: String, path: String): String = read(path, Source::readString)
+actual suspend fun file(project: String, path: String): String = read(project, path, Source::readString)
 
 actual suspend fun readFile(project: String, path: String): ByteReadChannel =
-    read(path) { ByteReadChannel(readByteArray()) }
+    read(project, path) { ByteReadChannel(readByteArray()) }
 
-private inline fun <T> read(path: String, readerAction: Source.() -> T): T {
-    val actualPath = Path(path)
+private inline fun <T> read(project: String, path: String, readerAction: Source.() -> T): T {
+    val actualPath = Path("${getEnv("PROJECT_ROOT")}/$project/src/commonTest/resources/$path")
     return try {
         SystemFileSystem.source(actualPath).buffered().readerAction()
     } catch (e: Throwable) {

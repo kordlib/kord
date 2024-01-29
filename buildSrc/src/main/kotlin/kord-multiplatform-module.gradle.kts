@@ -2,6 +2,7 @@ import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -81,6 +82,10 @@ tasks {
     }
 
     withType<KotlinJsTest>().configureEach {
+        environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
+    }
+
+    withType<KotlinNativeTest>().configureEach {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
