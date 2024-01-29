@@ -12,7 +12,7 @@ kotlin {
             group("simulator") {
                 withIos()
                 withTvos()
-                withWasm()
+                withWatchos()
             }
         }
     }
