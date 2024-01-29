@@ -1,6 +1,13 @@
+import org.jetbrains.kotlin.konan.target.KonanTarget
+
 plugins {
     id("com.vanniktech.maven.publish.base")
     dev.kord.`gradle-tools`
+}
+
+kord {
+    publicationName = "mavenCentral"
+    metadataHost = KonanTarget.MACOS_ARM64
 }
 
 mavenPublishing {
