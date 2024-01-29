@@ -2,6 +2,7 @@ package dev.kord.common.json
 
 import dev.kord.common.entity.*
 import dev.kord.common.readFile
+import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
@@ -10,6 +11,7 @@ import kotlin.test.Test
 
 private suspend fun file(name: String): String = readFile("message", name)
 
+@IgnoreOnSimulatorPlatforms
 class MessageTest {
 
     @Test

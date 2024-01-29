@@ -1,9 +1,21 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     `kord-native-module`
     `kord-internal-multiplatform-module`
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    applyDefaultHierarchyTemplate {
+        common {
+            group("simulator") {
+                withIos()
+                withTvos()
+                withWasm()
+            }
+        }
+    }
     sourceSets {
         commonMain {
             dependencies {

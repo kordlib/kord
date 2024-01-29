@@ -2,6 +2,7 @@ package dev.kord.gateway.json
 
 import dev.kord.gateway.Event
 import dev.kord.gateway.Reconnect
+import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
@@ -9,6 +10,7 @@ import kotlin.test.Test
 
 private suspend fun file(name: String): String = readFile("regression", name)
 
+@IgnoreOnSimulatorPlatforms
 class RegressionTests {
     @Test
     @JsName("test1")

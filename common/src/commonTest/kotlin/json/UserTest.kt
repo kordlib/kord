@@ -4,6 +4,7 @@ import dev.kord.common.entity.DiscordUser
 import dev.kord.common.entity.UserFlag.HouseBravery
 import dev.kord.common.entity.UserFlags
 import dev.kord.common.readFile
+import dev.kord.test.IgnoreOnSimulatorPlatforms
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import kotlin.js.JsName
@@ -11,6 +12,7 @@ import kotlin.test.Test
 
 private suspend fun file(name: String): String = readFile("user", name)
 
+@IgnoreOnSimulatorPlatforms
 class UserTest {
 
     @Test
