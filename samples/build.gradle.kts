@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.konan.target.KonanTarget
 
 plugins {
     `kord-internal-multiplatform-module`
@@ -22,8 +23,10 @@ kotlin {
     }
 
     targets.withType<KotlinNativeTarget> {
-        binaries.executable {
-            entryPoint = "dev.kord.voice.test.main"
+        if (konanTarget != KonanTarget.MINGW_X64) {
+            binaries.executable {
+                entryPoint = "dev.kord.voice.test.main"
+            }
         }
     }
 
