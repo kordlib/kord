@@ -11,7 +11,7 @@ kord {
 }
 
 mavenPublishing {
-    coordinates(Library.group, "cache-${project.name}")
+    coordinates(Library.group, "kord-${project.name}")
     publishToMavenCentral()
     signAllPublications()
 
