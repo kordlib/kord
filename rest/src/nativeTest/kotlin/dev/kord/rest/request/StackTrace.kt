@@ -13,11 +13,11 @@ actual typealias StackTraceElement = String
 //-->at 5   ???                                 7ff684fbdeca       kfun:dev.kord.rest.request.StackTraceRecoveryTest.$test stack trace<--
 actual fun currentThreadStackTrace(): StackTraceElement =
     Exception().stackTraceToString().lineSequence().filterNot(String::isBlank).drop(5).first().trim()
-        .substringAfter("???")
+        .substringAfter("0x")
 
 internal actual fun RecoveredStackTrace.validate(expected: StackTraceElement) {
     // The first few lines are artifacts from coroutines which are not present in expected
     val actual = stackTraceToString().lineSequence().drop(6).first().trim()
-        .substringAfter("???") // index is off at call site
+        .substringAfter("0x") // index is off at call site
     assertEquals(expected, actual)
 }
