@@ -1,3 +1,6 @@
+import dev.kord.gradle.tools.util.commitHash
+import dev.kord.gradle.tools.util.shortCommitHash
+
 plugins {
     `kord-native-module`
     `kord-multiplatform-module`
@@ -84,7 +87,7 @@ buildConfig {
         internalVisibility = true
     }
 
-    buildConfigField("BUILD_CONFIG_GENERATED_LIBRARY_VERSION", libraryVersion)
+    buildConfigField("BUILD_CONFIG_GENERATED_LIBRARY_VERSION", provider { project.version.toString() })
     buildConfigField("BUILD_CONFIG_GENERATED_COMMIT_HASH", commitHash)
     buildConfigField("BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", shortCommitHash)
 }

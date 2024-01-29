@@ -12,4 +12,3 @@ allprojects {
 }
 
 group = Library.group
-version = libraryVersion

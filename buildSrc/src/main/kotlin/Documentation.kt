@@ -1,3 +1,4 @@
+import dev.kord.gradle.tools.util.commitHash
 import org.gradle.kotlin.dsl.assign
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 import java.net.URI

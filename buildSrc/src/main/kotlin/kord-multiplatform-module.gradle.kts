@@ -99,36 +99,6 @@ tasks {
         }
     }
 
-
-    register("publishNonNative") {
-        dependsOn(
-            "publishKotlinMultiplatformPublicationToMavenRepository",
-            "publishJsPublicationToMavenRepository",
-            "publishJvmPublicationToMavenRepository"
-        )
-    }
-
-    register("publishLinux") {
-        dependsOn("publishLinuxX64PublicationToMavenRepository")
-    }
-
-    register("publishMingw") {
-        dependsOn("publishMingwX64PublicationToMavenRepository")
-    }
-
-    register("publishDarwin") {
-        dependsOn(
-            "publishMacosArm64PublicationToMavenRepository",
-            "publishMacosX64PublicationToMavenRepository",
-            "publishIosArm64PublicationToMavenRepository",
-            "publishIosX64PublicationToMavenRepository",
-            "publishWatchosX64PublicationToMavenRepository",
-            "publishWatchosArm64PublicationToMavenRepository",
-            "publishTvosX64PublicationToMavenRepository",
-            "publishTvosArm64PublicationToMavenRepository"
-        )
-    }
-
     afterEvaluate {
         named("sourcesJar") {
             dependsOn("kspCommonMainKotlinMetadata")
