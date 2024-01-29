@@ -7,7 +7,7 @@ kotlinx-coroutines = "1.7.3" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.6.2" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.5.0" # https://github.com/Kotlin/kotlinx-datetime
 kotlin-logging = "6.0.1" # https://github.com/oshai/kotlin-logging
-kord-cache = "0.5.0-SNAPSHOT" # https://github.com/kordlib/cache
+kord-cache = "0.5.0-20240130.022209-2" # https://github.com/kordlib/cache
 
 # implementation dependencies
 kotlin-node = "18.16.12-pre.619" # https://github.com/JetBrains/kotlin-wrappers
@@ -92,7 +92,7 @@ dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref
 atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", version.ref = "kotlinx-atomicfu" }
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
-kord-gradle-plugin = { module = "dev.kord:gradle-tools", version = "1.2.5" }
+kord-gradle-plugin = { module = "dev.kord:gradle-tools", version = "1.2.6" }
 maven-publish-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.27.0" }
 
 [bundles]
