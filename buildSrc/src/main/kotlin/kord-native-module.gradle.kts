@@ -9,9 +9,7 @@ kotlin {
     // Please use WSL if you need to work on the linux port
     if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
         linuxX64()
-        // Waiting for Ktor
-        // https://youtrack.jetbrains.com/issue/KTOR-6173
-        //linuxArm64()
+        linuxArm64()
     }
 
     if (name != "voice" && name != "core-voice") {
