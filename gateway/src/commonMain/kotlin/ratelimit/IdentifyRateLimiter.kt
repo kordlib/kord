@@ -81,7 +81,7 @@ private class IdentifyRateLimiterImpl(
         // if the coroutine that called consume() is cancelled, the CancellableContinuation makes sure the waiting is
         // stopped (the Gateway won't try to identify), so we don't need to hold the mutex and waste time for other
         // calls
-        suspendCancellableCoroutine { continuation ->
+        return suspendCancellableCoroutine { continuation ->
             val job = launchIdentifyWaiter(shardId, events, continuation)
             continuation.invokeOnCancellation { job.cancel() }
         }
