@@ -49,8 +49,7 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
             val rateLimiter = IdentifyRateLimiter(resources.maxConcurrency, defaultDispatcher)
             shards.map {
                 DefaultGateway {
-                    // Workaround for: https://github.com/ktorio/ktor/pull/3950#issuecomment-1909088751
-//                    client = resources.httpClient
+                    client = resources.httpClient
                     identifyRateLimiter = rateLimiter
                 }
             }
