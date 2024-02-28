@@ -214,14 +214,10 @@ public value class Snowflake(public val value: ULong) : Comparable<Snowflake> {
     }
 
     internal object Serializer : KSerializer<Snowflake> {
-        override val descriptor: SerialDescriptor = ULong.serializer().descriptor
-
-        override fun deserialize(decoder: Decoder): Snowflake =
-            Snowflake(decoder.decodeInline(descriptor).decodeLong().toULong())
-
-        override fun serialize(encoder: Encoder, value: Snowflake) {
-            encoder.encodeInline(descriptor).encodeLong(value.value.toLong())
-        }
+        private val delegate = ULong.serializer()
+        override val descriptor: SerialDescriptor = delegate.descriptor
+        override fun deserialize(decoder: Decoder): Snowflake = Snowflake(delegate.deserialize(decoder))
+        override fun serialize(encoder: Encoder, value: Snowflake) = delegate.serialize(encoder, value.value)
     }
 }
 

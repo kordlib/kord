@@ -22,7 +22,7 @@ kotlinpoet = "1.15.3" # https://github.com/square/kotlinpoet
 
 # tests
 junit5 = "5.10.1" # https://github.com/junit-team/junit5
-mockk = "1.13.8" # https://github.com/mockk/mockk
+mockk = "1.13.10" # https://github.com/mockk/mockk
 slf4j = "2.0.9" # https://www.slf4j.org
 
 # plugins
