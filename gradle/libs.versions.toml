@@ -92,7 +92,7 @@ dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref
 atomicfu-plugin = { module = "org.jetbrains.kotlinx:atomicfu-gradle-plugin", version.ref = "kotlinx-atomicfu" }
 binary-compatibility-validator-plugin = { module = "org.jetbrains.kotlinx:binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 ksp-plugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
-kord-gradle-plugin = { module = "dev.kord:gradle-tools", version = "1.2.9" }
+kord-gradle-plugin = { module = "dev.kord:gradle-tools", version = "1.3.0" }
 maven-publish-plugin = { module = "com.vanniktech:gradle-maven-publish-plugin", version = "0.27.0" }
 
 [bundles]
