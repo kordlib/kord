@@ -24,10 +24,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
       - name: Build docs with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: --stacktrace --info dokkaHtmlMultiModule
+        run: ./gradlew --stacktrace --info dokkaHtmlMultiModule
       - name: Deploy docs to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:

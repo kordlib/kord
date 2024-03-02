@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
-
 plugins {
     `kord-multiplatform-module`
     `kord-publishing`
@@ -48,15 +46,5 @@ kotlin {
 tasks {
     dokkaHtmlMultiModule {
         enabled = false
-    }
-    compileTestKotlinJvm {
-        compilerOptions {
-            // needed to inline MockK functions
-            jvmTarget = JVM_11
-        }
-    }
-    jvmTest {
-        // needed to run the output of compileTestKotlinJvm targeting jvm 11
-        javaLauncher = project.javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(11) }
     }
 }

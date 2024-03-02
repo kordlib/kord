@@ -1,7 +1,6 @@
 package dev.kord.test
 
 import io.ktor.utils.io.*
-import node.process.process
 
 actual object Platform {
     actual const val IS_JVM: Boolean = false
@@ -11,7 +10,7 @@ actual object Platform {
         ) as Boolean
 }
 
-actual fun getEnv(name: String) = process.env[name]
+actual fun getEnv(name: String) = js("process.env[name]") as String?
 
 actual suspend fun file(project: String, path: String): String =
     if (Platform.IS_NODE) nodeFile(project, path) else TODO("Browser JS is not supported yet")
