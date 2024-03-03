@@ -30,9 +30,8 @@ class SnowflakeTest {
 
     @Test
     @JsName("test4")
-    fun `Snowflake created from ULong MAX_VALUE has timestamp equal to endOfTime`() {
-        val snowflake = Snowflake(ULong.MAX_VALUE)
-        assertEquals(Snowflake.endOfTime, snowflake.timestamp)
+    fun `Snowflake throws if invalid value is provided`() {
+        assertFailsWith<IllegalStateException> { Snowflake(ULong.MAX_VALUE) }
     }
 
     @Test
