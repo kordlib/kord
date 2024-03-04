@@ -1,8 +1,9 @@
 plugins {
-    `kord-targets`
+    org.jetbrains.kotlin.multiplatform
 }
 
 kotlin {
+    targets()
     sourceSets {
         all {
             applyKordOptIns()

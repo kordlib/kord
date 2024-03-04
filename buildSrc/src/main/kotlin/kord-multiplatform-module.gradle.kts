@@ -36,6 +36,7 @@ kotlin {
         }
     }
 
+    targets()
     explicitApi()
     jvmToolchain(Jvm.target)
 

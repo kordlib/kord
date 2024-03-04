@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.konan.target.Family
 
 plugins {
-    `kord-targets`
+    org.jetbrains.kotlin.multiplatform
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -17,9 +17,7 @@ kotlin {
             }
         }
     }
-    js {
-        binaries.executable()
-    }
+    targets()
 
     targets.withType<KotlinNativeTarget> {
         // Voice does not target windows, so we disable it

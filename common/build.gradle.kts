@@ -2,13 +2,13 @@ import dev.kord.gradle.tools.util.commitHash
 import dev.kord.gradle.tools.util.shortCommitHash
 
 plugins {
-    `kord-targets`
     `kord-multiplatform-module`
     `kord-publishing`
     alias(libs.plugins.buildconfig)
 }
 
 kotlin {
+    targets()
     sourceSets {
         commonMain {
             dependencies {

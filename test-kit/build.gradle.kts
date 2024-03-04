@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    `kord-targets`
+    org.jetbrains.kotlin.multiplatform
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -15,6 +15,7 @@ kotlin {
             }
         }
     }
+    targets()
     sourceSets {
         commonMain {
             dependencies {
