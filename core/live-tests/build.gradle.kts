@@ -1,5 +1,5 @@
 plugins {
-    `kord-internal-multiplatform-module`
+    `kord-targets`
 }
 
 kotlin {

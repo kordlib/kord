@@ -2,7 +2,7 @@ import dev.kord.gradle.tools.util.commitHash
 import dev.kord.gradle.tools.util.shortCommitHash
 
 plugins {
-    `kord-native-module`
+    `kord-targets`
     `kord-multiplatform-module`
     `kord-publishing`
     alias(libs.plugins.buildconfig)
@@ -41,26 +41,22 @@ kotlin {
                 implementation(projects.kspAnnotations)
             }
         }
-
         nativeMain {
             dependencies {
                 // Native does not have compileOnly
                 implementation(projects.kspAnnotations)
             }
         }
-
         mingwMain {
             dependencies {
                 api(libs.ktor.client.winhttp)
             }
         }
-
         appleMain {
             dependencies {
                 api(libs.ktor.client.darwin)
             }
         }
-
         linuxMain {
             dependencies {
                 api(libs.ktor.client.curl)

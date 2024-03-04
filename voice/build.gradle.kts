@@ -1,5 +1,5 @@
 plugins {
-    `kord-native-module`
+    `kord-targets`
     `kord-multiplatform-module`
     `kord-publishing`
 }
@@ -25,6 +25,11 @@ kotlin {
         nonJvmMain {
             dependencies {
                 implementation(libs.libsodium)
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.slf4j.api)
             }
         }
     }

@@ -33,24 +33,10 @@ kotlin {
                 withNative()
                 withJs()
             }
-
-            group("nonNative") {
-                withJs()
-                withJvm()
-            }
         }
     }
 
     explicitApi()
-
-    jvm()
-
-    if (name != "voice" && name != "core-voice") {
-        js {
-            nodejs()
-            useCommonJs()
-        }
-    }
     jvmToolchain(Jvm.target)
 
     targets.all {

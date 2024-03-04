@@ -1,4 +1,4 @@
-import org.apache.tools.ant.taskdefs.condition.Os
+import org.jetbrains.kotlin.konan.target.HostManager
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -7,13 +7,19 @@ plugins {
 kotlin {
     // There are issues with compiling the linux variant on windows
     // Please use WSL if you need to work on the linux port
-    if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
+    if (!HostManager.hostIsMingw) {
         linuxX64()
         linuxArm64()
     }
 
+    jvm()
+
     if (name != "voice" && name != "core-voice") {
         mingwX64()
+        js {
+            nodejs()
+            useCommonJs()
+        }
     }
 
     macosArm64()

@@ -1,10 +1,9 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import org.jetbrains.kotlin.konan.target.KonanTarget
+import org.jetbrains.kotlin.konan.target.Family
 
 plugins {
-    `kord-internal-multiplatform-module`
-    `kord-native-module`
+    `kord-targets`
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
@@ -23,7 +22,8 @@ kotlin {
     }
 
     targets.withType<KotlinNativeTarget> {
-        if (konanTarget != KonanTarget.MINGW_X64) {
+        // Voice does not target windows, so we disable it
+        if (konanTarget.family != Family.MINGW) {
             binaries.executable {
                 entryPoint = "dev.kord.voice.test.main"
             }

@@ -1,5 +1,5 @@
 plugins {
-    `kord-native-module`
+    `kord-targets`
     `kord-multiplatform-module`
     `kord-publishing`
 }

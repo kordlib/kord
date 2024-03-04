@@ -33,11 +33,5 @@ actual suspend fun readFile(project: String, path: String): ByteReadChannel =
 
 private inline fun <T> read(project: String, path: String, readerAction: Source.() -> T): T {
     val actualPath = Path("${getEnv("PROJECT_ROOT")}/$project/src/commonTest/resources/$path")
-    return try {
-        SystemFileSystem.source(actualPath).buffered().readerAction()
-    } catch (e: Throwable) {
-        throw FileNotFoundException(actualPath.toString(), e)
-    }
+    return SystemFileSystem.source(actualPath).buffered().readerAction()
 }
-
-class FileNotFoundException(absolutePath: String, cause: Throwable) : IOException("Absolute Path: $absolutePath", cause)

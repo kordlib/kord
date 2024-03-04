@@ -1,8 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    `kord-native-module`
-    `kord-internal-multiplatform-module`
+    `kord-targets`
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
