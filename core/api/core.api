@@ -2159,9 +2159,6 @@ public final class dev/kord/core/builder/kord/KordBuilder : dev/kord/core/builde
 	public final fun setEnableShutdownHook (Z)V
 }
 
-public final class dev/kord/core/builder/kord/KordBuilderUtilKt {
-}
-
 public final class dev/kord/core/builder/kord/KordProxyBuilder : dev/kord/core/builder/kord/RestOnlyBuilder {
 	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
 	public fun getApplicationId ()Ldev/kord/common/entity/Snowflake;

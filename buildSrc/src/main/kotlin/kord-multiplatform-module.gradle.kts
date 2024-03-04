@@ -48,6 +48,7 @@ kotlin {
     if (name != "voice" && name != "core-voice") {
         js {
             nodejs()
+            useCommonJs()
         }
     }
     jvmToolchain(Jvm.target)
