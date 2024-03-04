@@ -12,7 +12,7 @@ import platform.posix.getenv
 import kotlin.experimental.ExperimentalNativeApi
 import kotlin.native.Platform
 
-private val darwinFamilies = listOf(OsFamily.WATCHOS, OsFamily.TVOS, OsFamily.MACOSX)
+private val darwinFamilies = listOf(OsFamily.WATCHOS, OsFamily.IOS, OsFamily.TVOS, OsFamily.MACOSX)
 
 actual object Platform {
     actual val IS_JVM: Boolean = false

@@ -36,7 +36,7 @@ fun main(args: Array<String>) = runBlocking {
 }
 
 private suspend fun BaseVoiceChannelBehavior.connectEcho() {
-    val buffer = ArrayList(listOf(AudioFrame.SILENCE, AudioFrame.SILENCE, AudioFrame.SILENCE, AudioFrame.SILENCE))
+    val buffer = mutableListOf(AudioFrame.SILENCE, AudioFrame.SILENCE, AudioFrame.SILENCE, AudioFrame.SILENCE)
     val connection = connect {
         receiveVoice = true
         audioProvider {

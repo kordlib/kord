@@ -7,7 +7,7 @@ public sealed class PayloadType(public val raw: Byte) {
     public object Alive : PayloadType(0x37.toByte())
     public object Audio : PayloadType(0x78.toByte())
     public class Unknown(value: Byte) : PayloadType(value) {
-        override fun toString(): String = raw.toString(16)
+        override fun toString(): String = "PayloadType.Unknown(0x${raw.toString(16)})"
     }
 
     public companion object {

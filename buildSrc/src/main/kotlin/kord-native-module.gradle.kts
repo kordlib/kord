@@ -5,7 +5,7 @@ plugins {
 }
 
 kotlin {
-    // There are issues with compiling the linux variant on linux
+    // There are issues with compiling the linux variant on windows
     // Please use WSL if you need to work on the linux port
     if (!Os.isFamily(Os.FAMILY_WINDOWS)) {
         linuxX64()
