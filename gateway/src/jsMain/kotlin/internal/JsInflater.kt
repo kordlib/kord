@@ -1,5 +1,4 @@
 @file:JsModule("fast-zlib")
-@file:JsNonModule
 
 package dev.kord.gateway.internal
 
