@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinMultiplatform
 import org.jetbrains.kotlin.konan.target.KonanTarget
 
 plugins {
@@ -14,6 +16,10 @@ mavenPublishing {
     coordinates(Library.group, "kord-${project.name}")
     publishToMavenCentral()
     signAllPublications()
+
+    if (plugins.hasPlugin("org.jetbrains.kotlin.multiplatform")) {
+        configure(KotlinMultiplatform(javadocJar = JavadocJar.Dokka("dokkaHtml")))
+    }
 
     pom {
         name = Library.name
