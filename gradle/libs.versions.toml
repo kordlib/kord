@@ -26,7 +26,7 @@ junit5 = "5.10.2" # https://github.com/junit-team/junit5
 mockk = "1.13.10" # https://github.com/mockk/mockk
 
 # plugins
-dokka = "1.9.10" # https://github.com/Kotlin/dokka
+dokka = "1.9.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.23.2" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.14.0" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.3.5" # https://github.com/gmazzo/gradle-buildconfig-plugin
