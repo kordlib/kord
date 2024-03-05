@@ -9,10 +9,7 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
+import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -33,117 +30,118 @@ public sealed class Event {
     public object DeserializationStrategy : KDeserializationStrategy<Event> {
         override val descriptor: SerialDescriptor = buildClassSerialDescriptor("dev.kord.gateway.Event") {
             element("op", OpCode.serializer().descriptor)
-            element("t", String.serializer().descriptor, isOptional = true)
-            element("s", Int.serializer().descriptor, isOptional = true)
+            element("t", String.serializer().descriptor.nullable, isOptional = true)
+            element("s", Int.serializer().descriptor.nullable, isOptional = true)
             element("d", JsonElement.serializer().descriptor, isOptional = true)
         }
 
-        @OptIn(ExperimentalSerializationApi::class)
-        override fun deserialize(decoder: Decoder): Event {
+        override fun deserialize(decoder: Decoder): Event = decoder.decodeStructure(descriptor) {
             var opCode: OpCode? = null
             var eventNameMissing = true
             var eventName: String? = null
             var sequenceMissing = true
             var sequence: Int? = null
-            var dataMissing = true
-            var rawData: JsonElement? = null // will be decoded to data when all information is available
+            var eventDataMissing = true
+            var rawEventData: JsonElement? = null // will be decoded to event when all information is available
             var event: Event? = null
-            decoder.decodeStructure(descriptor) {
-                loop@ while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        CompositeDecoder.DECODE_DONE -> break@loop
-                        0 -> {
-                            require(opCode == null) { "Gateway event can only have one opcode" }
-                            opCode = decodeSerializableElement(descriptor, index, OpCode.serializer())
-                        }
-                        1 -> {
-                            require(eventNameMissing) { "Gateway event can only have one event name" }
-                            eventNameMissing = false
-                            eventName = decodeNullableSerializableElement(descriptor, index, String.serializer())
-                        }
-                        2 -> {
-                            require(sequenceMissing) { "Gateway event can only have one sequence number" }
-                            sequenceMissing = false
-                            sequence = decodeNullableSerializableElement(descriptor, index, Int.serializer())
-                        }
-                        3 -> {
-                            require(dataMissing) { "Gateway event can only have one data field" }
-                            dataMissing = false
-
-                            fun decodeJsonElement() =
-                                decodeNullableSerializableElement(descriptor, index, JsonElement.serializer())
-
-                            when (val op = opCode) {
-                                null -> rawData = decodeJsonElement() // don't know yet how to decode this
-                                OpCode.Dispatch ->
-                                    if (eventNameMissing || sequenceMissing) {
-                                        rawData = decodeJsonElement() // name and sequence might come later
-                                    } else {
-                                        event = createDispatchEvent(eventName, sequence, object : DecodeFunction {
-                                            override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
-                                                decodeSerializableElement(descriptor, index, deserializer)
-                                        })
-                                    }
-                                OpCode.Heartbeat ->
-                                    event = decodeSerializableElement(descriptor, index, Heartbeat.serializer())
-                                OpCode.Reconnect -> {
-                                    // ignore the d field, Reconnect is supposed to have null here:
-                                    // https://discord.com/developers/docs/topics/gateway-events#reconnect
-                                    decodeJsonElement()
-                                    event = Reconnect
-                                }
-                                OpCode.InvalidSession ->
-                                    event = decodeSerializableElement(descriptor, index, InvalidSession.serializer())
-                                OpCode.Hello -> event = decodeSerializableElement(descriptor, index, Hello.serializer())
-                                OpCode.HeartbeatACK -> {
-                                    // ignore the d field, Heartbeat ACK is supposed to omit it:
-                                    // https://discord.com/developers/docs/topics/gateway#heartbeat-interval-example-heartbeat-ack
-                                    decodeJsonElement()
-                                    event = HeartbeatACK
-                                }
-                                // OpCodes for Commands (aka send events), they shouldn't be received
-                                OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
-                                OpCode.RequestGuildMembers,
-                                -> illegalOpCode(op)
-                                OpCode.Unknown -> unknownOpCode()
-                            }
-                        }
-                        else -> throw SerializationException("Unexpected index: $index")
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    CompositeDecoder.DECODE_DONE -> break
+                    0 -> {
+                        require(opCode == null) { "Gateway event can only have one opcode" }
+                        opCode = decodeSerializableElement(descriptor, index, OpCode.serializer())
                     }
+                    1 -> {
+                        require(eventNameMissing) { "Gateway event can only have one event name" }
+                        eventNameMissing = false
+                        @OptIn(ExperimentalSerializationApi::class)
+                        eventName = decodeNullableSerializableElement(descriptor, index, String.serializer())
+                    }
+                    2 -> {
+                        require(sequenceMissing) { "Gateway event can only have one sequence number" }
+                        sequenceMissing = false
+                        @OptIn(ExperimentalSerializationApi::class)
+                        sequence = decodeNullableSerializableElement(descriptor, index, Int.serializer())
+                    }
+                    3 -> {
+                        require(eventDataMissing) { "Gateway event can only have one data field" }
+                        eventDataMissing = false
+
+                        fun decodeJsonElement() = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+
+                        when (val op = opCode) {
+                            null -> rawEventData = decodeJsonElement() // don't know yet how to decode this
+                            OpCode.Dispatch ->
+                                if (eventNameMissing || sequenceMissing) {
+                                    rawEventData = decodeJsonElement() // name and sequence might come later
+                                } else {
+                                    event = createDispatchEvent(eventName, sequence, object : DecodeFunction {
+                                        override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
+                                            decodeSerializableElement(descriptor, index, deserializer)
+                                    })
+                                }
+                            OpCode.Heartbeat ->
+                                event = decodeSerializableElement(descriptor, index, Heartbeat.serializer())
+                            OpCode.Reconnect -> {
+                                // ignore the d field, Reconnect is supposed to have null here:
+                                // https://discord.com/developers/docs/topics/gateway-events#reconnect
+                                decodeJsonElement()
+                                event = Reconnect
+                            }
+                            OpCode.InvalidSession ->
+                                event = decodeSerializableElement(descriptor, index, InvalidSession.serializer())
+                            OpCode.Hello -> event = decodeSerializableElement(descriptor, index, Hello.serializer())
+                            OpCode.HeartbeatACK -> {
+                                // ignore the d field, Heartbeat ACK is supposed to omit it:
+                                // https://discord.com/developers/docs/topics/gateway#heartbeat-interval-example-heartbeat-ack
+                                decodeJsonElement()
+                                event = HeartbeatACK
+                            }
+                            // OpCodes for Commands (aka send events), they shouldn't be received
+                            OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
+                            OpCode.RequestGuildMembers,
+                            -> illegalOpCode(op)
+                            OpCode.Unknown -> unknownOpCode()
+                        }
+                    }
+                    else -> throw SerializationException("Unexpected index: $index")
                 }
             }
-            return event ?: createEvent(
+            event ?: createEventFromRawEventData(
                 decoder,
-                opCode = requireNotNull(opCode) { "Gateway event is missing opcode" },
+                opCode = opCode ?: @OptIn(ExperimentalSerializationApi::class) throw MissingFieldException(
+                    missingField = "op",
+                    serialName = descriptor.serialName,
+                ),
                 eventName,
                 sequence,
-                rawData,
+                rawEventData,
             )
         }
 
-        private fun createEvent(
+        private fun createEventFromRawEventData(
             decoder: Decoder,
             opCode: OpCode,
             eventName: String?,
             sequence: Int?,
-            rawData: JsonElement?,
+            rawEventData: JsonElement?,
         ): Event = when {
             /** this is the only dispatch event where the d field is ignored, see [createDispatchEvent] */
             opCode == OpCode.Dispatch && eventName == "RESUMED" -> Resumed(sequence)
-            // decode rawData, now that all information should be available
-            rawData != null -> {
-                // this cast will always succeed, otherwise decoder couldn't have decoded rawData
+            // decode rawEventData, now that all information should be available
+            rawEventData != null -> {
+                // this cast will always succeed, otherwise decoder couldn't have decoded rawEventData
                 val json = (decoder as JsonDecoder).json
                 when (opCode) {
                     OpCode.Dispatch -> createDispatchEvent(eventName, sequence, object : DecodeFunction {
                         override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
-                            json.decodeFromJsonElement(deserializer, rawData)
+                            json.decodeFromJsonElement(deserializer, rawEventData)
                     })
-                    OpCode.Heartbeat -> json.decodeFromJsonElement(Heartbeat.serializer(), rawData)
-                    OpCode.Reconnect -> Reconnect // ignore rawData, see above
-                    OpCode.InvalidSession -> json.decodeFromJsonElement(InvalidSession.serializer(), rawData)
-                    OpCode.Hello -> json.decodeFromJsonElement(Hello.serializer(), rawData)
-                    OpCode.HeartbeatACK -> HeartbeatACK // ignore rawData, see above
+                    OpCode.Heartbeat -> json.decodeFromJsonElement(Heartbeat.serializer(), rawEventData)
+                    OpCode.Reconnect -> Reconnect // ignore rawEventData, see above
+                    OpCode.InvalidSession -> json.decodeFromJsonElement(InvalidSession.serializer(), rawEventData)
+                    OpCode.Hello -> json.decodeFromJsonElement(Hello.serializer(), rawEventData)
+                    OpCode.HeartbeatACK -> HeartbeatACK // ignore rawEventData, see above
                     OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
                     OpCode.RequestGuildMembers,
                     -> illegalOpCode(opCode)
@@ -152,11 +150,7 @@ public sealed class Event {
             }
             // the d field was missing altogether
             else -> when (opCode) {
-                // try to create a DispatchEvent with `null` data
-                OpCode.Dispatch -> createDispatchEvent(eventName, sequence, object : DecodeFunction {
-                    override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
-                        (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, element = JsonNull)
-                })
+                OpCode.Dispatch -> createDispatchEvent(eventName, sequence, DecodeFunction.DFieldMissing(decoder))
                 OpCode.Reconnect -> Reconnect
                 OpCode.HeartbeatACK -> HeartbeatACK
                 OpCode.Heartbeat, OpCode.InvalidSession, OpCode.Hello ->
@@ -176,6 +170,11 @@ public sealed class Event {
         // can't be expressed as function type and fun interface can't have type parameters on its abstract method
         private interface DecodeFunction {
             operator fun <T> invoke(deserializer: KDeserializationStrategy<T>): T
+            class DFieldMissing(private val decoder: Decoder) : DecodeFunction {
+                // try to create a DispatchEvent as if the d field was present but null when the d field is missing
+                override fun <T> invoke(deserializer: kotlinx.serialization.DeserializationStrategy<T>) =
+                    (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, element = JsonNull)
+            }
         }
 
         private fun createDispatchEvent(eventName: String?, sequence: Int?, decode: DecodeFunction): DispatchEvent =
@@ -484,8 +483,10 @@ public sealed class Event {
 
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
-                    // consume json elements that are unknown to us
-                    val data = decode(JsonElement.serializer().nullable)
+                    val data = when (decode) {
+                        is DecodeFunction.DFieldMissing -> null // signal missing d field with null JsonElement
+                        else -> decode(JsonElement.serializer()) // gives JsonNull if d field is present but null
+                    }
                     UnknownDispatchEvent(eventName, data, sequence)
                 }
             }
