@@ -9,8 +9,13 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
+import kotlinx.serialization.json.JsonNull
+import kotlinx.serialization.json.JsonPrimitive
 import kotlin.js.JsName
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.time.Duration.Companion.seconds
 
 private suspend fun file(name: String): String = readFile("event", name)
@@ -162,4 +167,77 @@ class SerializationTest {
         }
     }
 
+    @Test
+    fun field_order_doesnt_matter() {
+        val data = mapOf(
+            OpCode.Dispatch to ("null" to UnknownDispatchEvent(name = null, data = JsonNull, sequence = null)),
+            OpCode.Heartbeat to ("1234" to Heartbeat(1234)),
+            OpCode.Reconnect to ("""{"foo":["bar"]}""" to Reconnect),
+            OpCode.InvalidSession to ("false" to InvalidSession(false)),
+            OpCode.Hello to ("""{"heartbeat_interval":1234}""" to Hello(1234)),
+            OpCode.HeartbeatACK to ("""{"foo":["bar"]}""" to HeartbeatACK),
+        )
+        for ((opCode, d) in data) {
+            val (json, event) = d
+            val opFirst = """{"op":${opCode.code},"d":$json}"""
+            val dFirst = """{"d":$json,"op":${opCode.code}}"""
+            assertEquals(event, Json.decodeFromString(Event.DeserializationStrategy, opFirst))
+            assertEquals(event, Json.decodeFromString(Event.DeserializationStrategy, dFirst))
+        }
+    }
+
+    @Test
+    fun test_UnknownDispatchEvent_deserialization() {
+        assertEquals(
+            UnknownDispatchEvent(name = null, data = null, sequence = null),
+            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0}"""),
+        )
+        assertEquals(
+            UnknownDispatchEvent(name = null, data = null, sequence = null),
+            Json.decodeFromString(Event.DeserializationStrategy, """{"t":null,"op":0}"""),
+        )
+        assertEquals(
+            UnknownDispatchEvent(name = null, data = null, sequence = null),
+            Json.decodeFromString(Event.DeserializationStrategy, """{"s":null,"op":0}"""),
+        )
+        assertEquals(
+            UnknownDispatchEvent(name = null, data = JsonNull, sequence = null),
+            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"d":null}"""),
+        )
+        assertEquals(
+            UnknownDispatchEvent(
+                name = "SOME_EVENT",
+                data = JsonArray(listOf(JsonPrimitive(1), JsonPrimitive(true), JsonPrimitive("str"))),
+                sequence = 42,
+            ),
+            Json.decodeFromString(
+                Event.DeserializationStrategy,
+                """{"op":0,"t":"SOME_EVENT""s":42,"d":[1,true,"str"]}""",
+            ),
+        )
+    }
+
+    @Test
+    fun deserializing_Event_with_illegal_or_unknown_OpCode_fails() {
+        val ops = listOf(
+            OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume, OpCode.RequestGuildMembers,
+        )
+        for (op in ops.map { it.code } + (-100..-1) + (12..100)) {
+            assertFailsWith<IllegalArgumentException> {
+                Json.decodeFromString(Event.DeserializationStrategy, """{"op":$op}""")
+            }
+            assertFailsWith<IllegalArgumentException> {
+                Json.decodeFromString(Event.DeserializationStrategy, """{"op":$op,"d":"foo"}""")
+            }
+            assertFailsWith<IllegalArgumentException> {
+                Json.decodeFromString(Event.DeserializationStrategy, """{"op":$op,"d":"foo","s":234}""")
+            }
+            assertFailsWith<IllegalArgumentException> {
+                Json.decodeFromString(Event.DeserializationStrategy, """{"d":"foo","op":$op}""")
+            }
+            assertFailsWith<IllegalArgumentException> {
+                Json.decodeFromString(Event.DeserializationStrategy, """{"d":"foo","op":$op,"s":234}""")
+            }
+        }
+    }
 }
