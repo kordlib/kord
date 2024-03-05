@@ -7,7 +7,6 @@ import dev.kord.common.serialization.DurationInSeconds
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
-import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.CompositeDecoder
@@ -182,7 +181,7 @@ public sealed class Event {
                 "RESUMED" -> {
                     // ignore the d field, the content isn't documented:
                     // https://discord.com/developers/docs/topics/gateway-events#resumed
-                    decode(JsonElement.serializer().nullable)
+                    decode(JsonElement.serializer())
                     Resumed(sequence)
                 }
                 "READY" -> Ready(decode(ReadyData.serializer()), sequence)
