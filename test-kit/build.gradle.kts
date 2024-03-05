@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
     org.jetbrains.kotlin.multiplatform
+    dev.kord.`gradle-tools`
 }
 
 @OptIn(ExperimentalKotlinGradlePluginApi::class)
