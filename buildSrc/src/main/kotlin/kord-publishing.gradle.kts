@@ -1,6 +1,6 @@
 import com.vanniktech.maven.publish.JavadocJar
 import com.vanniktech.maven.publish.KotlinMultiplatform
-import org.jetbrains.kotlin.konan.target.KonanTarget
+import org.jetbrains.kotlin.konan.target.Family
 
 plugins {
     id("com.vanniktech.maven.publish.base")
@@ -9,7 +9,7 @@ plugins {
 
 kord {
     publicationName = "mavenCentral"
-    metadataHost = KonanTarget.MACOS_ARM64
+    metadataHost = Family.OSX
 }
 
 mavenPublishing {
