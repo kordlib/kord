@@ -6,11 +6,7 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.common.serialization.DurationInSeconds
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.datetime.Instant
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.NothingSerializer
+import kotlinx.serialization.*
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -20,8 +16,10 @@ import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.encoding.decodeStructure
+import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonNull
 import kotlin.jvm.JvmField
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
@@ -32,458 +30,452 @@ public sealed class DispatchEvent : Event() {
 }
 
 public sealed class Event {
-    public object DeserializationStrategy : KDeserializationStrategy<Event?> {
-        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
+    public object DeserializationStrategy : KDeserializationStrategy<Event> {
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("dev.kord.gateway.Event") {
             element("op", OpCode.serializer().descriptor)
             element("t", String.serializer().descriptor, isOptional = true)
             element("s", Int.serializer().descriptor, isOptional = true)
-            element("d", JsonObject.serializer().descriptor, isOptional = true)
+            element("d", JsonElement.serializer().descriptor, isOptional = true)
         }
 
         @OptIn(ExperimentalSerializationApi::class)
-        override fun deserialize(decoder: Decoder): Event? {
-            var op: OpCode? = null
-            var data: Event? = null
-            var sequence: Int? = null
+        override fun deserialize(decoder: Decoder): Event {
+            var opCode: OpCode? = null
+            var eventNameMissing = true
             var eventName: String? = null
-
-            with(decoder.beginStructure(descriptor)) {
+            var sequenceMissing = true
+            var sequence: Int? = null
+            var dataMissing = true
+            var rawData: JsonElement? = null // will be decoded to data when all information is available
+            var event: Event? = null
+            decoder.decodeStructure(descriptor) {
                 loop@ while (true) {
-                    when (val index =
-                        decodeElementIndex(descriptor)) {//we assume the all fields to be present *before* the data field
+                    when (val index = decodeElementIndex(descriptor)) {
                         CompositeDecoder.DECODE_DONE -> break@loop
                         0 -> {
-                            op = decodeSerializableElement(descriptor, index, OpCode.serializer())
-                            when (op) {
-                                OpCode.HeartbeatACK -> data = HeartbeatACK
-                                OpCode.Reconnect -> data = Reconnect
-                                else -> {}
+                            require(opCode == null) { "Gateway event can only have one opcode" }
+                            opCode = decodeSerializableElement(descriptor, index, OpCode.serializer())
+                        }
+                        1 -> {
+                            require(eventNameMissing) { "Gateway event can only have one event name" }
+                            eventNameMissing = false
+                            eventName = decodeNullableSerializableElement(descriptor, index, String.serializer())
+                        }
+                        2 -> {
+                            require(sequenceMissing) { "Gateway event can only have one sequence number" }
+                            sequenceMissing = false
+                            sequence = decodeNullableSerializableElement(descriptor, index, Int.serializer())
+                        }
+                        3 -> {
+                            require(dataMissing) { "Gateway event can only have one data field" }
+                            dataMissing = false
+
+                            fun decodeJsonElement() =
+                                decodeNullableSerializableElement(descriptor, index, JsonElement.serializer())
+
+                            when (val op = opCode) {
+                                null -> rawData = decodeJsonElement() // don't know yet how to decode this
+                                OpCode.Dispatch ->
+                                    if (eventNameMissing || sequenceMissing) {
+                                        rawData = decodeJsonElement() // name and sequence might come later
+                                    } else {
+                                        event = createDispatchEvent(eventName, sequence, object : DecodeFunction {
+                                            override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
+                                                decodeSerializableElement(descriptor, index, deserializer)
+                                        })
+                                    }
+                                OpCode.Heartbeat ->
+                                    event = decodeSerializableElement(descriptor, index, Heartbeat.serializer())
+                                OpCode.Reconnect -> {
+                                    // ignore the d field, Reconnect is supposed to have null here:
+                                    // https://discord.com/developers/docs/topics/gateway-events#reconnect
+                                    decodeJsonElement()
+                                    event = Reconnect
+                                }
+                                OpCode.InvalidSession ->
+                                    event = decodeSerializableElement(descriptor, index, InvalidSession.serializer())
+                                OpCode.Hello -> event = decodeSerializableElement(descriptor, index, Hello.serializer())
+                                OpCode.HeartbeatACK -> {
+                                    // ignore the d field, Heartbeat ACK is supposed to omit it:
+                                    // https://discord.com/developers/docs/topics/gateway#heartbeat-interval-example-heartbeat-ack
+                                    decodeJsonElement()
+                                    event = HeartbeatACK
+                                }
+                                // OpCodes for Commands (aka send events), they shouldn't be received
+                                OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
+                                OpCode.RequestGuildMembers,
+                                -> illegalOpCode(op)
+                                OpCode.Unknown -> unknownOpCode()
                             }
                         }
-                        1 -> eventName =
-                            decodeNullableSerializableElement(descriptor, index, String.serializer().nullable)
-                        2 -> sequence = decodeNullableSerializableElement(descriptor, index, Int.serializer().nullable)
-                        3 -> data = when (op) {
-                            OpCode.Dispatch -> getByDispatchEvent(index, this, eventName, sequence)
-                            OpCode.Heartbeat -> decodeSerializableElement(descriptor, index, Heartbeat.serializer())
-                            OpCode.HeartbeatACK -> {
-                                @Suppress("IMPLICIT_NOTHING_TYPE_ARGUMENT_IN_RETURN_POSITION")
-                                decodeNullableSerializableElement(descriptor, index, NothingSerializer())
-                                HeartbeatACK
-                            }
-                            OpCode.InvalidSession -> decodeSerializableElement(
-                                descriptor,
-                                index,
-                                InvalidSession.serializer()
-                            )
-                            OpCode.Hello -> decodeSerializableElement(descriptor, index, Hello.serializer())
-                            //some events contain undocumented data fields, we'll only assume an unknown opcode with no data to be an error
-                            else -> if (data == null) {
-                                val element = decodeNullableSerializableElement(
-                                    descriptor,
-                                    index,
-                                    JsonElement.serializer().nullable
-                                )
-                                error("Unknown 'd' field for Op code ${op?.code}: $element")
-                            } else {
-                                decodeNullableSerializableElement(descriptor, index, JsonElement.serializer().nullable)
-                                data
-                            }
-                        }
+                        else -> throw SerializationException("Unexpected index: $index")
                     }
                 }
-                endStructure(descriptor)
-                if (op == OpCode.Dispatch && eventName == "RESUMED") return Resumed(sequence)
-                return data
+            }
+            return event ?: createEvent(
+                decoder,
+                opCode = requireNotNull(opCode) { "Gateway event is missing opcode" },
+                eventName,
+                sequence,
+                rawData,
+            )
+        }
+
+        private fun createEvent(
+            decoder: Decoder,
+            opCode: OpCode,
+            eventName: String?,
+            sequence: Int?,
+            rawData: JsonElement?,
+        ): Event = when {
+            /** this is the only dispatch event where the d field is ignored, see [createDispatchEvent] */
+            opCode == OpCode.Dispatch && eventName == "RESUMED" -> Resumed(sequence)
+            // decode rawData, now that all information should be available
+            rawData != null -> {
+                // this cast will always succeed, otherwise decoder couldn't have decoded rawData
+                val json = (decoder as JsonDecoder).json
+                when (opCode) {
+                    OpCode.Dispatch -> createDispatchEvent(eventName, sequence, object : DecodeFunction {
+                        override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
+                            json.decodeFromJsonElement(deserializer, rawData)
+                    })
+                    OpCode.Heartbeat -> json.decodeFromJsonElement(Heartbeat.serializer(), rawData)
+                    OpCode.Reconnect -> Reconnect // ignore rawData, see above
+                    OpCode.InvalidSession -> json.decodeFromJsonElement(InvalidSession.serializer(), rawData)
+                    OpCode.Hello -> json.decodeFromJsonElement(Hello.serializer(), rawData)
+                    OpCode.HeartbeatACK -> HeartbeatACK // ignore rawData, see above
+                    OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
+                    OpCode.RequestGuildMembers,
+                    -> illegalOpCode(opCode)
+                    OpCode.Unknown -> unknownOpCode()
+                }
+            }
+            // the d field was missing altogether
+            else -> when (opCode) {
+                // try to create a DispatchEvent with `null` data
+                OpCode.Dispatch -> createDispatchEvent(eventName, sequence, object : DecodeFunction {
+                    override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
+                        (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, element = JsonNull)
+                })
+                OpCode.Reconnect -> Reconnect
+                OpCode.HeartbeatACK -> HeartbeatACK
+                OpCode.Heartbeat, OpCode.InvalidSession, OpCode.Hello ->
+                    throw IllegalArgumentException("Gateway event is missing data field for opcode $opCode")
+                OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
+                OpCode.RequestGuildMembers,
+                -> illegalOpCode(opCode)
+                OpCode.Unknown -> unknownOpCode()
             }
         }
 
+        private fun illegalOpCode(opCode: OpCode): Nothing =
+            throw IllegalArgumentException("Illegal opcode for gateway event: $opCode")
 
-        @OptIn(ExperimentalSerializationApi::class)
-        private fun getByDispatchEvent(index: Int, decoder: CompositeDecoder, name: String?, sequence: Int?) =
-            when (name) {
-                "PRESENCES_REPLACE" -> {
-                    decoder.decodeNullableSerializableElement(descriptor, index, JsonElement.serializer().nullable)
-                    null //https://github.com/kordlib/kord/issues/42
-                }
+        private fun unknownOpCode(): Nothing = throw IllegalArgumentException("Unknown opcode for gateway event")
+
+        // can't be expressed as function type and fun interface can't have type parameters on its abstract method
+        private interface DecodeFunction {
+            operator fun <T> invoke(deserializer: KDeserializationStrategy<T>): T
+        }
+
+        private fun createDispatchEvent(eventName: String?, sequence: Int?, decode: DecodeFunction): DispatchEvent =
+            when (eventName) {
                 "RESUMED" -> {
-                    decoder.decodeNullableSerializableElement(descriptor, index, JsonElement.serializer().nullable)
+                    // ignore the d field, the content isn't documented:
+                    // https://discord.com/developers/docs/topics/gateway-events#resumed
+                    decode(JsonElement.serializer().nullable)
                     Resumed(sequence)
                 }
-                "READY" -> Ready(decoder.decodeSerializableElement(descriptor, index, ReadyData.serializer()), sequence)
+                "READY" -> Ready(decode(ReadyData.serializer()), sequence)
                 "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor, index, DiscordGuildApplicationCommandPermissions.serializer()
+                    decode(
+                        DiscordGuildApplicationCommandPermissions.serializer()
                     ), sequence
                 )
                 "AUTO_MODERATION_RULE_CREATE" -> AutoModerationRuleCreate(
-                    rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
+                    rule = decode(DiscordAutoModerationRule.serializer()),
                     sequence,
                 )
                 "AUTO_MODERATION_RULE_UPDATE" -> AutoModerationRuleUpdate(
-                    rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
+                    rule = decode(DiscordAutoModerationRule.serializer()),
                     sequence,
                 )
                 "AUTO_MODERATION_RULE_DELETE" -> AutoModerationRuleDelete(
-                    rule = decoder.decodeSerializableElement(descriptor, index, DiscordAutoModerationRule.serializer()),
+                    rule = decode(DiscordAutoModerationRule.serializer()),
                     sequence,
                 )
                 "AUTO_MODERATION_ACTION_EXECUTION" -> AutoModerationActionExecution(
-                    actionExecution = decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    actionExecution = decode(
                         DiscordAutoModerationActionExecution.serializer(),
                     ),
                     sequence,
                 )
                 "CHANNEL_CREATE" -> ChannelCreate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordChannel.serializer()
                     ), sequence
                 )
                 "CHANNEL_UPDATE" -> ChannelUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordChannel.serializer()
                     ), sequence
                 )
                 "CHANNEL_DELETE" -> ChannelDelete(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordChannel.serializer()
                     ), sequence
                 )
                 "CHANNEL_PINS_UPDATE" -> ChannelPinsUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordPinsUpdateData.serializer()
                     ), sequence
                 )
                 "TYPING_START" -> TypingStart(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordTyping.serializer()
                     ), sequence
                 )
                 "GUILD_AUDIT_LOG_ENTRY_CREATE" -> GuildAuditLogEntryCreate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordAuditLogEntry.serializer()
                     ), sequence
                 )
                 "GUILD_CREATE" -> GuildCreate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordGuild.serializer()
                     ), sequence
                 )
                 "GUILD_UPDATE" -> GuildUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordGuild.serializer()
                     ), sequence
                 )
                 "GUILD_DELETE" -> GuildDelete(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordUnavailableGuild.serializer()
                     ), sequence
                 )
                 "GUILD_BAN_ADD" -> GuildBanAdd(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordGuildBan.serializer()
                     ), sequence
                 )
                 "GUILD_BAN_REMOVE" -> GuildBanRemove(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordGuildBan.serializer()
                     ), sequence
                 )
                 "GUILD_EMOJIS_UPDATE" -> GuildEmojisUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordUpdatedEmojis.serializer()
                     ), sequence
                 )
                 "GUILD_INTEGRATIONS_UPDATE" -> GuildIntegrationsUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordGuildIntegrations.serializer()
                     ), sequence
                 )
                 "INTEGRATION_CREATE" -> IntegrationCreate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordIntegration.serializer()
                     ), sequence
                 )
                 "INTEGRATION_DELETE" -> IntegrationDelete(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordIntegrationDelete.serializer(),
                     ), sequence
                 )
                 "INTEGRATION_UPDATE" -> IntegrationUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordIntegration.serializer()
                     ), sequence
                 )
                 "GUILD_MEMBER_ADD" -> GuildMemberAdd(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordAddedGuildMember.serializer()
                     ), sequence
                 )
                 "GUILD_MEMBER_REMOVE" -> GuildMemberRemove(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordRemovedGuildMember.serializer()
                     ), sequence
                 )
                 "GUILD_MEMBER_UPDATE" -> GuildMemberUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordUpdatedGuildMember.serializer()
                     ), sequence
                 )
                 "GUILD_ROLE_CREATE" -> GuildRoleCreate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordGuildRole.serializer()
                     ), sequence
                 )
                 "GUILD_ROLE_UPDATE" -> GuildRoleUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordGuildRole.serializer()
                     ), sequence
                 )
                 "GUILD_ROLE_DELETE" -> GuildRoleDelete(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordDeletedGuildRole.serializer()
                     ), sequence
                 )
                 "GUILD_MEMBERS_CHUNK" -> GuildMembersChunk(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         GuildMembersChunkData.serializer()
                     ), sequence
                 )
 
                 "INVITE_CREATE" -> InviteCreate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordCreatedInvite.serializer()
                     ), sequence
                 )
                 "INVITE_DELETE" -> InviteDelete(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordDeletedInvite.serializer()
                     ), sequence
                 )
 
                 "MESSAGE_CREATE" -> MessageCreate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordMessage.serializer()
                     ), sequence
                 )
                 "MESSAGE_UPDATE" -> MessageUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordPartialMessage.serializer()
                     ), sequence
                 )
                 "MESSAGE_DELETE" -> MessageDelete(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DeletedMessage.serializer()
                     ), sequence
                 )
                 "MESSAGE_DELETE_BULK" -> MessageDeleteBulk(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         BulkDeleteData.serializer()
                     ), sequence
                 )
                 "MESSAGE_REACTION_ADD" -> MessageReactionAdd(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         MessageReactionAddData.serializer()
                     ), sequence
                 )
                 "MESSAGE_REACTION_REMOVE" -> MessageReactionRemove(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         MessageReactionRemoveData.serializer()
                     ), sequence
                 )
                 "MESSAGE_REACTION_REMOVE_EMOJI" -> MessageReactionRemoveEmoji(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordRemovedEmoji.serializer()
                     ), sequence
                 )
 
                 "MESSAGE_REACTION_REMOVE_ALL" -> MessageReactionRemoveAll(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         AllRemovedMessageReactions.serializer()
                     ), sequence
                 )
                 "PRESENCE_UPDATE" -> PresenceUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordPresenceUpdate.serializer()
                     ), sequence
                 )
                 "USER_UPDATE" -> UserUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordUser.serializer()
                     ), sequence
                 )
                 "VOICE_STATE_UPDATE" -> VoiceStateUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordVoiceState.serializer()
                     ), sequence
                 )
                 "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordVoiceServerUpdateData.serializer()
                     ), sequence
                 )
                 "WEBHOOKS_UPDATE" -> WebhooksUpdate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordWebhooksUpdateData.serializer()
                     ), sequence
                 )
                 "INTERACTION_CREATE" -> InteractionCreate(
-                    decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    decode(
                         DiscordInteraction.serializer()
                     ), sequence
                 )
                 "APPLICATION_COMMAND_CREATE" -> ApplicationCommandCreate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
+                    decode(DiscordApplicationCommand.serializer()),
                     sequence
                 )
 
                 "APPLICATION_COMMAND_UPDATE" -> ApplicationCommandUpdate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
+                    decode(DiscordApplicationCommand.serializer()),
                     sequence
                 )
 
                 "APPLICATION_COMMAND_DELETE" -> ApplicationCommandDelete(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordApplicationCommand.serializer()),
+                    decode(DiscordApplicationCommand.serializer()),
                     sequence
                 )
 
                 "THREAD_CREATE" -> ThreadCreate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
+                    decode(DiscordChannel.serializer()),
                     sequence
                 )
 
 
                 "THREAD_DELETE" -> ThreadDelete(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
+                    decode(DiscordChannel.serializer()),
                     sequence
                 )
 
 
                 "THREAD_UPDATE" -> ThreadUpdate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordChannel.serializer()),
+                    decode(DiscordChannel.serializer()),
                     sequence
                 )
 
                 "THREAD_LIST_SYNC" -> ThreadListSync(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordThreadListSync.serializer()),
+                    decode(DiscordThreadListSync.serializer()),
                     sequence
                 )
 
                 "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordThreadMember.serializer()),
+                    decode(DiscordThreadMember.serializer()),
                     sequence
                 )
 
 
                 "THREAD_MEMBERS_UPDATE" -> ThreadMembersUpdate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordThreadMembersUpdate.serializer()),
+                    decode(DiscordThreadMembersUpdate.serializer()),
                     sequence
                 )
 
                 "GUILD_SCHEDULED_EVENT_CREATE" -> GuildScheduledEventCreate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
+                    decode(DiscordGuildScheduledEvent.serializer()),
                     sequence
                 )
                 "GUILD_SCHEDULED_EVENT_UPDATE" -> GuildScheduledEventUpdate(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
+                    decode(DiscordGuildScheduledEvent.serializer()),
                     sequence
                 )
                 "GUILD_SCHEDULED_EVENT_DELETE" -> GuildScheduledEventDelete(
-                    decoder.decodeSerializableElement(descriptor, index, DiscordGuildScheduledEvent.serializer()),
+                    decode(DiscordGuildScheduledEvent.serializer()),
                     sequence
                 )
                 "GUILD_SCHEDULED_EVENT_USER_ADD" -> GuildScheduledEventUserAdd(
-                    data = decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    data = decode(
                         GuildScheduledEventUserMetadata.serializer(),
                     ),
                     sequence
                 )
                 "GUILD_SCHEDULED_EVENT_USER_REMOVE" -> GuildScheduledEventUserRemove(
-                    data = decoder.decodeSerializableElement(
-                        descriptor,
-                        index,
+                    data = decode(
                         GuildScheduledEventUserMetadata.serializer(),
                     ),
                     sequence
@@ -491,15 +483,13 @@ public sealed class Event {
 
 
                 else -> {
-                    jsonLogger.debug { "unknown gateway event name $name" }
+                    jsonLogger.debug { "Unknown gateway event name: $eventName" }
                     // consume json elements that are unknown to us
-                    val data = decoder.decodeSerializableElement(descriptor, index, JsonElement.serializer().nullable)
-                    UnknownDispatchEvent(name, data, sequence)
+                    val data = decode(JsonElement.serializer().nullable)
+                    UnknownDispatchEvent(eventName, data, sequence)
                 }
             }
-
     }
-
 }
 
 
