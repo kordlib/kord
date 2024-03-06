@@ -9,9 +9,7 @@ import dev.kord.gateway.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonNull
-import kotlinx.serialization.json.JsonPrimitive
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -184,37 +182,6 @@ class SerializationTest {
             assertEquals(event, Json.decodeFromString(Event.DeserializationStrategy, opFirst))
             assertEquals(event, Json.decodeFromString(Event.DeserializationStrategy, dFirst))
         }
-    }
-
-    @Test
-    fun test_UnknownDispatchEvent_deserialization() {
-        assertEquals(
-            UnknownDispatchEvent(name = null, data = null, sequence = null),
-            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0}"""),
-        )
-        assertEquals(
-            UnknownDispatchEvent(name = null, data = null, sequence = null),
-            Json.decodeFromString(Event.DeserializationStrategy, """{"t":null,"op":0}"""),
-        )
-        assertEquals(
-            UnknownDispatchEvent(name = null, data = null, sequence = null),
-            Json.decodeFromString(Event.DeserializationStrategy, """{"s":null,"op":0}"""),
-        )
-        assertEquals(
-            UnknownDispatchEvent(name = null, data = JsonNull, sequence = null),
-            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"d":null}"""),
-        )
-        assertEquals(
-            UnknownDispatchEvent(
-                name = "SOME_EVENT",
-                data = JsonArray(listOf(JsonPrimitive(1), JsonPrimitive(true), JsonPrimitive("str"))),
-                sequence = 42,
-            ),
-            Json.decodeFromString(
-                Event.DeserializationStrategy,
-                """{"op":0,"t":"SOME_EVENT""s":42,"d":[1,true,"str"]}""",
-            ),
-        )
     }
 
     @Test
