@@ -125,8 +125,6 @@ public sealed class Event {
             sequence: Int?,
             rawEventData: JsonElement?,
         ): Event = when {
-            /** this is the only dispatch event where the d field is ignored, see [createDispatchEvent] */
-            opCode == OpCode.Dispatch && eventName == "RESUMED" -> Resumed(sequence)
             // decode rawEventData, now that all information should be available
             rawEventData != null -> {
                 // this cast will always succeed, otherwise decoder couldn't have decoded rawEventData
