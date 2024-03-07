@@ -13,6 +13,7 @@ import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.encoding.decodeStructure
+import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonNull
@@ -40,9 +41,12 @@ public sealed class Event {
             var eventName: String? = null
             var sequenceMissing = true
             var sequence: Int? = null
+            // only one of event and rawEventData will be assigned, depending on the encounter order of the fields:
+            // - event, if ALL other fields (op, t, s) appeared before d
+            // - rawEventData, otherwise (an event will be created after all fields have been decoded)
             var eventDataMissing = true
-            var rawEventData: JsonElement? = null // will be decoded to event when all information is available
             var event: Event? = null
+            var rawEventData: JsonElement? = null
             while (true) {
                 when (val index = decodeElementIndex(descriptor)) {
                     CompositeDecoder.DECODE_DONE -> break
@@ -75,7 +79,7 @@ public sealed class Event {
                                     rawEventData = decodeJsonElement() // name and sequence might come later
                                 } else {
                                     event = createDispatchEvent(eventName, sequence, object : DecodeFunction {
-                                        override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
+                                        override fun <T> invoke(deserializer: KDeserializationStrategy<T>): T =
                                             decodeSerializableElement(descriptor, index, deserializer)
                                     })
                                 }
@@ -107,7 +111,7 @@ public sealed class Event {
                 }
             }
             event ?: createEventFromRawEventData(
-                decoder,
+                json = { (decoder as JsonDecoder).json },
                 opCode = opCode ?: @OptIn(ExperimentalSerializationApi::class) throw MissingFieldException(
                     missingField = "op",
                     serialName = descriptor.serialName,
@@ -118,45 +122,39 @@ public sealed class Event {
             )
         }
 
-        private fun createEventFromRawEventData(
-            decoder: Decoder,
+        private inline fun createEventFromRawEventData(
+            crossinline json: () -> Json,
             opCode: OpCode,
             eventName: String?,
             sequence: Int?,
             rawEventData: JsonElement?,
-        ): Event = when {
-            // decode rawEventData, now that all information should be available
-            rawEventData != null -> {
-                // this cast will always succeed, otherwise decoder couldn't have decoded rawEventData
-                val json = (decoder as JsonDecoder).json
-                when (opCode) {
-                    OpCode.Dispatch -> createDispatchEvent(eventName, sequence, object : DecodeFunction {
-                        override fun <T> invoke(deserializer: KDeserializationStrategy<T>) =
-                            json.decodeFromJsonElement(deserializer, rawEventData)
-                    })
-                    OpCode.Heartbeat -> json.decodeFromJsonElement(Heartbeat.serializer(), rawEventData)
-                    OpCode.Reconnect -> Reconnect // ignore rawEventData, see above
-                    OpCode.InvalidSession -> json.decodeFromJsonElement(InvalidSession.serializer(), rawEventData)
-                    OpCode.Hello -> json.decodeFromJsonElement(Hello.serializer(), rawEventData)
-                    OpCode.HeartbeatACK -> HeartbeatACK // ignore rawEventData, see above
-                    OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
-                    OpCode.RequestGuildMembers,
-                    -> illegalOpCode(opCode)
-                    OpCode.Unknown -> unknownOpCode()
-                }
-            }
-            // the d field was missing altogether
-            else -> when (opCode) {
-                OpCode.Dispatch -> createDispatchEvent(eventName, sequence, DecodeFunction.DFieldMissing(decoder))
-                OpCode.Reconnect -> Reconnect
-                OpCode.HeartbeatACK -> HeartbeatACK
-                OpCode.Heartbeat, OpCode.InvalidSession, OpCode.Hello ->
-                    throw IllegalArgumentException("Gateway event is missing data field for opcode $opCode")
-                OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume,
-                OpCode.RequestGuildMembers,
-                -> illegalOpCode(opCode)
-                OpCode.Unknown -> unknownOpCode()
-            }
+        ): Event = when (opCode) {
+            OpCode.Dispatch -> createDispatchEvent(eventName, sequence, object : DecodeFunction {
+                // when the d field is missing, try to create a DispatchEvent as if the d field was present but null
+                override fun <T> invoke(deserializer: KDeserializationStrategy<T>): T =
+                    json().decodeFromJsonElement(deserializer, rawEventData ?: JsonNull)
+
+                override fun <T : Any> invokeIfNotMissing(deserializer: KDeserializationStrategy<T>): T? =
+                    if (rawEventData == null) null else json().decodeFromJsonElement(deserializer, rawEventData)
+            })
+            OpCode.Heartbeat -> decodeEventIfNotMissing(json, Heartbeat::serializer, rawEventData, opCode)
+            OpCode.Reconnect -> Reconnect // ignore rawEventData, see above
+            OpCode.InvalidSession -> decodeEventIfNotMissing(json, InvalidSession::serializer, rawEventData, opCode)
+            OpCode.Hello -> decodeEventIfNotMissing(json, Hello::serializer, rawEventData, opCode)
+            OpCode.HeartbeatACK -> HeartbeatACK // ignore rawEventData, see above
+            OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume, OpCode.RequestGuildMembers ->
+                illegalOpCode(opCode)
+            OpCode.Unknown -> unknownOpCode()
+        }
+
+        private inline fun <T> decodeEventIfNotMissing(
+            json: () -> Json,
+            deserializer: () -> KDeserializationStrategy<T>,
+            rawEventData: JsonElement?,
+            opCode: OpCode,
+        ): T = when (rawEventData) {
+            null -> throw IllegalArgumentException("Gateway event is missing data field for opcode $opCode")
+            else -> json().decodeFromJsonElement(deserializer(), rawEventData)
         }
 
         private fun illegalOpCode(opCode: OpCode): Nothing =
@@ -167,11 +165,7 @@ public sealed class Event {
         // can't be expressed as function type and fun interface can't have type parameters on its abstract method
         private interface DecodeFunction {
             operator fun <T> invoke(deserializer: KDeserializationStrategy<T>): T
-            class DFieldMissing(private val decoder: Decoder) : DecodeFunction {
-                // try to create a DispatchEvent as if the d field was present but null when the d field is missing
-                override fun <T> invoke(deserializer: kotlinx.serialization.DeserializationStrategy<T>) =
-                    (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, element = JsonNull)
-            }
+            fun <T : Any> invokeIfNotMissing(deserializer: KDeserializationStrategy<T>): T? = invoke(deserializer)
         }
 
         private fun createDispatchEvent(eventName: String?, sequence: Int?, decode: DecodeFunction): DispatchEvent =
@@ -179,7 +173,7 @@ public sealed class Event {
                 "RESUMED" -> {
                     // ignore the d field, the content isn't documented:
                     // https://discord.com/developers/docs/topics/gateway-events#resumed
-                    decode(JsonElement.serializer())
+                    decode.invokeIfNotMissing(JsonElement.serializer())
                     Resumed(sequence)
                 }
                 "READY" -> Ready(decode(ReadyData.serializer()), sequence)
@@ -480,10 +474,8 @@ public sealed class Event {
 
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
-                    val data = when (decode) {
-                        is DecodeFunction.DFieldMissing -> null // signal missing d field with null JsonElement
-                        else -> decode(JsonElement.serializer()) // gives JsonNull if d field is present but null
-                    }
+                    // null if d field is missing, JsonNull if d field is present but null
+                    val data = decode.invokeIfNotMissing(JsonElement.serializer())
                     UnknownDispatchEvent(eventName, data, sequence)
                 }
             }
