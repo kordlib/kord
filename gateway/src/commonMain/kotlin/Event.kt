@@ -37,51 +37,53 @@ public sealed class Event {
 
         override fun deserialize(decoder: Decoder): Event = decoder.decodeStructure(descriptor) {
             var opCode: OpCode? = null
-            var eventNameMissing = true
+            var seenEventName = false
             var eventName: String? = null
-            var sequenceMissing = true
+            var seenSequence = false
             var sequence: Int? = null
             // only one of event and rawEventData will be assigned, depending on the encounter order of the fields:
             // - event, if ALL other fields (op, t, s) appeared before d
             // - rawEventData, otherwise (an event will be created after all fields have been decoded)
-            var eventDataMissing = true
+            var seenEventData = false
             var event: Event? = null
             var rawEventData: JsonElement? = null
             while (true) {
                 when (val index = decodeElementIndex(descriptor)) {
                     CompositeDecoder.DECODE_DONE -> break
                     0 -> {
-                        require(opCode == null) { "Gateway event can only have one opcode" }
+                        if (opCode != null) throw SerializationException("Gateway event can only have one opcode")
                         opCode = decodeSerializableElement(descriptor, index, OpCode.serializer())
                     }
                     1 -> {
-                        require(eventNameMissing) { "Gateway event can only have one event name" }
-                        eventNameMissing = false
+                        if (seenEventName) throw SerializationException("Gateway event can only have one event name")
+                        seenEventName = true
                         @OptIn(ExperimentalSerializationApi::class)
                         eventName = decodeNullableSerializableElement(descriptor, index, String.serializer())
                     }
                     2 -> {
-                        require(sequenceMissing) { "Gateway event can only have one sequence number" }
-                        sequenceMissing = false
+                        if (seenSequence) {
+                            throw SerializationException("Gateway event can only have one sequence number")
+                        }
+                        seenSequence = true
                         @OptIn(ExperimentalSerializationApi::class)
                         sequence = decodeNullableSerializableElement(descriptor, index, Int.serializer())
                     }
                     3 -> {
-                        require(eventDataMissing) { "Gateway event can only have one data field" }
-                        eventDataMissing = false
+                        if (seenEventData) throw SerializationException("Gateway event can only have one data field")
+                        seenEventData = true
 
                         fun decodeJsonElement() = decodeSerializableElement(descriptor, index, JsonElement.serializer())
 
                         when (val op = opCode) {
                             null -> rawEventData = decodeJsonElement() // don't know yet how to decode this
                             OpCode.Dispatch ->
-                                if (eventNameMissing || sequenceMissing) {
-                                    rawEventData = decodeJsonElement() // name and sequence might come later
-                                } else {
+                                if (seenEventName && seenSequence) {
                                     event = createDispatchEvent(eventName, sequence, object : DecodeFunction {
                                         override fun <T> invoke(deserializer: KDeserializationStrategy<T>): T =
                                             decodeSerializableElement(descriptor, index, deserializer)
                                     })
+                                } else {
+                                    rawEventData = decodeJsonElement() // name and/or sequence might come later
                                 }
                             OpCode.Heartbeat ->
                                 event = decodeSerializableElement(descriptor, index, Heartbeat.serializer())
