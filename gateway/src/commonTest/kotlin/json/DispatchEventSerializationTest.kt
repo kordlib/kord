@@ -523,7 +523,7 @@ class DispatchEventSerializationTest {
 
     @Test
     fun test_UnknownDispatchEvent_deserialization() {
-        val missingDataEvent = UnknownDispatchEvent(name = null, data = null, sequence = null)
+        val missingDataEvent = UnknownDispatchEvent(name = null, data = JsonNull, sequence = null)
         val missingDataJsonVariations = """
             {"op":0}
 

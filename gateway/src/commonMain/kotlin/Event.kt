@@ -143,9 +143,6 @@ public sealed class Event {
                 // when the d field is missing, try to create a DispatchEvent as if the d field was present but null
                 override fun <T> invoke(deserializer: KDeserializationStrategy<T>): T =
                     json.decodeFromJsonElement(deserializer, rawEventData ?: JsonNull)
-
-                override fun <T : Any> invokeIfNotMissing(deserializer: KDeserializationStrategy<T>): T? =
-                    if (rawEventData == null) null else json.decodeFromJsonElement(deserializer, rawEventData)
             })
             OpCode.Heartbeat -> decodeEventIfNotMissing(json, Heartbeat.serializer(), rawEventData, opCode)
             OpCode.Reconnect -> Reconnect // ignore rawEventData, see above
@@ -170,7 +167,6 @@ public sealed class Event {
         // can't be expressed as function type and fun interface can't have type parameters on its abstract method
         private interface DecodeFunction {
             operator fun <T> invoke(deserializer: KDeserializationStrategy<T>): T
-            fun <T : Any> invokeIfNotMissing(deserializer: KDeserializationStrategy<T>): T? = invoke(deserializer)
         }
 
         private fun createDispatchEvent(eventName: String?, sequence: Int?, decode: DecodeFunction): DispatchEvent =
@@ -178,7 +174,7 @@ public sealed class Event {
                 "RESUMED" -> {
                     // ignore the d field, the content isn't documented:
                     // https://discord.com/developers/docs/topics/gateway-events#resumed
-                    decode.invokeIfNotMissing(JsonElement.serializer())
+                    decode(JsonElement.serializer())
                     Resumed(sequence)
                 }
                 "READY" -> Ready(decode(ReadyData.serializer()), sequence)
@@ -479,9 +475,7 @@ public sealed class Event {
 
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
-                    // null if d field is missing, JsonNull if d field is present but null
-                    val data = decode.invokeIfNotMissing(JsonElement.serializer())
-                    UnknownDispatchEvent(eventName, data, sequence)
+                    UnknownDispatchEvent(eventName, data = decode(JsonElement.serializer()), sequence)
                 }
             }
     }
@@ -830,7 +824,7 @@ public data class GuildScheduledEventUserRemove(
 
 public data class UnknownDispatchEvent(
     val name: String?,
-    val data: JsonElement?,
+    val data: JsonElement,
     override val sequence: Int?
 ) : DispatchEvent()
 
