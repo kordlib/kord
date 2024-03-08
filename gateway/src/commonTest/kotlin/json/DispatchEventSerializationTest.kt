@@ -14,24 +14,19 @@ import kotlin.time.Duration.Companion.minutes
 class DispatchEventSerializationTest {
     private fun String.nonBlankTrimmedLines() = lines().filter(String::isNotBlank).map(String::trim)
 
-    private fun testDispatchEventDeserialization(
+    private fun <T> testDispatchEventDeserialization(
         eventName: String,
-        eventWithoutSequence: DispatchEvent,
-        jsonWithoutSequence: String,
-        eventWithSequence: DispatchEvent,
-        jsonWithSequence: String,
+        eventConstructor: (data: T, sequence: Int?) -> DispatchEvent,
+        data: T,
+        json: String,
     ) {
-        val sequence = checkNotNull(eventWithSequence.sequence)
-        check(eventWithoutSequence.sequence == null)
-        check(eventWithSequence::class == eventWithoutSequence::class)
-
         val jsonVariationsWithMissingSequence = """
-            {"op":0,"t":"$eventName","d":$jsonWithoutSequence}
-            {"op":0,"d":$jsonWithoutSequence,"t":"$eventName"}
-            {"t":"$eventName","op":0,"d":$jsonWithoutSequence}
-            {"t":"$eventName","d":$jsonWithoutSequence,"op":0}
-            {"d":$jsonWithoutSequence,"op":0,"t":"$eventName"}
-            {"d":$jsonWithoutSequence,"t":"$eventName","op":0}
+            {"op":0,"t":"$eventName","d":$json}
+            {"op":0,"d":$json,"t":"$eventName"}
+            {"t":"$eventName","op":0,"d":$json}
+            {"t":"$eventName","d":$json,"op":0}
+            {"d":$json,"op":0,"t":"$eventName"}
+            {"d":$json,"t":"$eventName","op":0}
         """.nonBlankTrimmedLines()
 
         fun variations(s: String, d: String) = """
@@ -64,20 +59,26 @@ class DispatchEventSerializationTest {
             {"d":$d,"s":$s,"t":"$eventName","op":0}
         """.nonBlankTrimmedLines()
 
-        for (json in jsonVariationsWithMissingSequence) { // missing sequence
-            assertEquals(eventWithoutSequence, Json.decodeFromString(Event.DeserializationStrategy, json))
+        val sequence = Random.nextInt()
+        val eventWithSequence = eventConstructor(data, sequence)
+        val eventWithoutSequence = eventConstructor(data, null)
+
+        for (jsonVariation in jsonVariationsWithMissingSequence) { // missing sequence
+            assertEquals(eventWithoutSequence, Json.decodeFromString(Event.DeserializationStrategy, jsonVariation))
         }
-        for (json in variations(s = "null", d = jsonWithoutSequence)) { // null sequence
-            assertEquals(eventWithoutSequence, Json.decodeFromString(Event.DeserializationStrategy, json))
+        for (jsonVariation in variations(s = "null", d = json)) { // null sequence
+            assertEquals(eventWithoutSequence, Json.decodeFromString(Event.DeserializationStrategy, jsonVariation))
         }
-        for (json in variations(s = sequence.toString(), d = jsonWithSequence)) { // sequence present
-            assertEquals(eventWithSequence, Json.decodeFromString(Event.DeserializationStrategy, json))
+        for (jsonVariation in variations(s = sequence.toString(), d = json)) { // sequence present
+            assertEquals(eventWithSequence, Json.decodeFromString(Event.DeserializationStrategy, jsonVariation))
         }
     }
 
     @Test
-    fun test_GuildCreate_deserialization() {
-        val guild = DiscordGuild(
+    fun test_GuildCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "GUILD_CREATE",
+        eventConstructor = ::GuildCreate,
+        data = DiscordGuild(
             id = Snowflake.min,
             name = "name",
             icon = null,
@@ -105,65 +106,45 @@ class DispatchEventSerializationTest {
             nsfwLevel = NsfwLevel.Default,
             premiumProgressBarEnabled = false,
             safetyAlertsChannelId = null,
-        )
-        val guildJson = """{"id":"0","name":"name","icon":null,"owner_id":"0","region":"nice-region",""" +
-            """"afk_channel_id":null,"afk_timeout":2520,"verification_level":2,"default_message_notifications":1,""" +
-            """"explicit_content_filter":1,"roles":[],"emojis":[],"features":[],"mfa_level":0,"application_id":null,""" +
-            """"system_channel_id":null,"system_channel_flags":0,"rules_channel_id":null,"vanity_url_code":null,""" +
-            """"description":null,"banner":null,"premium_tier":1,"preferred_locale":"en-US",""" +
+        ),
+        json = """{"id":"0","name":"name","icon":null,"owner_id":"0","region":"nice-region","afk_channel_id":null,""" +
+            """"afk_timeout":2520,"verification_level":2,"default_message_notifications":1,""" +
+            """"explicit_content_filter":1,"roles":[],"emojis":[],"features":[],"mfa_level":0,""" +
+            """"application_id":null,"system_channel_id":null,"system_channel_flags":0,"rules_channel_id":null,""" +
+            """"vanity_url_code":null,"description":null,"banner":null,"premium_tier":1,"preferred_locale":"en-US",""" +
             """"public_updates_channel_id":null,"nsfw_level":0,"premium_progress_bar_enabled":false,""" +
-            """"safety_alerts_channel_id":null}"""
-        testDispatchEventDeserialization(
-            eventName = "GUILD_CREATE",
-            eventWithoutSequence = GuildCreate(guild, sequence = null),
-            jsonWithoutSequence = guildJson,
-            eventWithSequence = GuildCreate(guild, sequence = Random.nextInt()),
-            jsonWithSequence = guildJson,
-        )
-    }
+            """"safety_alerts_channel_id":null}""",
+    )
 
     @Test
-    fun test_MessageReactionRemoveAll_deserialization() {
-        val removed = AllRemovedMessageReactions(channelId = Snowflake.min, messageId = Snowflake.min)
-        val removedJson = """{"channel_id":"0","message_id":"0"}"""
-        testDispatchEventDeserialization(
-            eventName = "MESSAGE_REACTION_REMOVE_ALL",
-            eventWithoutSequence = MessageReactionRemoveAll(removed, sequence = null),
-            jsonWithoutSequence = removedJson,
-            eventWithSequence = MessageReactionRemoveAll(removed, sequence = Random.nextInt()),
-            jsonWithSequence = removedJson,
-        )
-    }
+    fun test_MessageReactionRemoveAll_deserialization() = testDispatchEventDeserialization(
+        eventName = "MESSAGE_REACTION_REMOVE_ALL",
+        eventConstructor = ::MessageReactionRemoveAll,
+        data = AllRemovedMessageReactions(channelId = Snowflake.min, messageId = Snowflake.min),
+        json = """{"channel_id":"0","message_id":"0"}""",
+    )
 
     @Test
-    fun test_InviteDelete_deserialization() {
-        val deleted = DiscordDeletedInvite(channelId = Snowflake.min, code = "code")
-        val deletedJson = """{"channel_id":"0","code":"code"}"""
-        testDispatchEventDeserialization(
-            eventName = "INVITE_DELETE",
-            eventWithoutSequence = InviteDelete(deleted, sequence = null),
-            jsonWithoutSequence = deletedJson,
-            eventWithSequence = InviteDelete(deleted, sequence = Random.nextInt()),
-            jsonWithSequence = deletedJson,
-        )
-    }
+    fun test_InviteDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "INVITE_DELETE",
+        eventConstructor = ::InviteDelete,
+        data = DiscordDeletedInvite(channelId = Snowflake.min, code = "code"),
+        json = """{"channel_id":"0","code":"code"}""",
+    )
 
     @Test
-    fun test_MessageDelete_deserialization() {
-        val deleted = DeletedMessage(id = Snowflake.min, channelId = Snowflake.min)
-        val deletedJson = """{"id":"0","channel_id":"0"}"""
-        testDispatchEventDeserialization(
-            eventName = "MESSAGE_DELETE",
-            eventWithoutSequence = MessageDelete(deleted, sequence = null),
-            jsonWithoutSequence = deletedJson,
-            eventWithSequence = MessageDelete(deleted, sequence = Random.nextInt()),
-            jsonWithSequence = deletedJson,
-        )
-    }
+    fun test_MessageDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "MESSAGE_DELETE",
+        eventConstructor = ::MessageDelete,
+        data = DeletedMessage(id = Snowflake.min, channelId = Snowflake.min),
+        json = """{"id":"0","channel_id":"0"}""",
+    )
 
     @Test
-    fun test_VoiceStateUpdate_deserialization() {
-        val voiceState = DiscordVoiceState(
+    fun test_VoiceStateUpdate_deserialization() = testDispatchEventDeserialization(
+        eventName = "VOICE_STATE_UPDATE",
+        eventConstructor = ::VoiceStateUpdate,
+        data = DiscordVoiceState(
             channelId = null,
             userId = Snowflake.min,
             sessionId = "abcd",
@@ -174,31 +155,18 @@ class DispatchEventSerializationTest {
             selfVideo = false,
             suppress = false,
             requestToSpeakTimestamp = null,
-        )
-        val voiceStateJson = """{"channel_id":null,"user_id":"0","session_id":"abcd","deaf":false,"mute":false,""" +
-            """"self_deaf":false,"self_mute":false,"self_video":false,"suppress":false,""" +
-            """"request_to_speak_timestamp":null}"""
-        testDispatchEventDeserialization(
-            eventName = "VOICE_STATE_UPDATE",
-            eventWithoutSequence = VoiceStateUpdate(voiceState, sequence = null),
-            jsonWithoutSequence = voiceStateJson,
-            eventWithSequence = VoiceStateUpdate(voiceState, sequence = Random.nextInt()),
-            jsonWithSequence = voiceStateJson,
-        )
-    }
+        ),
+        json = """{"channel_id":null,"user_id":"0","session_id":"abcd","deaf":false,"mute":false,"self_deaf":false,""" +
+            """"self_mute":false,"self_video":false,"suppress":false,"request_to_speak_timestamp":null}"""
+    )
 
     @Test
-    fun test_GuildRoleDelete_deserialization() {
-        val deleted = DiscordDeletedGuildRole(guildId = Snowflake.min, id = Snowflake.min)
-        val deletedJson = """{"guild_id":"0","role_id":"0"}"""
-        testDispatchEventDeserialization(
-            eventName = "GUILD_ROLE_DELETE",
-            eventWithoutSequence = GuildRoleDelete(deleted, sequence = null),
-            jsonWithoutSequence = deletedJson,
-            eventWithSequence = GuildRoleDelete(deleted, sequence = Random.nextInt()),
-            jsonWithSequence = deletedJson,
-        )
-    }
+    fun test_GuildRoleDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "GUILD_ROLE_DELETE",
+        eventConstructor = ::GuildRoleDelete,
+        data = DiscordDeletedGuildRole(guildId = Snowflake.min, id = Snowflake.min),
+        json = """{"guild_id":"0","role_id":"0"}""",
+    )
 
     private val instant = Clock.System.now()
     private val guildScheduledEvent = DiscordGuildScheduledEvent(
@@ -221,24 +189,24 @@ class DispatchEventSerializationTest {
     @Test
     fun test_GuildScheduledEventDelete_deserialization() = testDispatchEventDeserialization(
         eventName = "GUILD_SCHEDULED_EVENT_DELETE",
-        eventWithoutSequence = GuildScheduledEventDelete(guildScheduledEvent, sequence = null),
-        jsonWithoutSequence = guildScheduledEventJson,
-        eventWithSequence = GuildScheduledEventDelete(guildScheduledEvent, sequence = Random.nextInt()),
-        jsonWithSequence = guildScheduledEventJson,
+        eventConstructor = ::GuildScheduledEventDelete,
+        data = guildScheduledEvent,
+        json = guildScheduledEventJson,
     )
 
     @Test
     fun test_GuildScheduledEventCreate_deserialization() = testDispatchEventDeserialization(
         eventName = "GUILD_SCHEDULED_EVENT_CREATE",
-        eventWithoutSequence = GuildScheduledEventCreate(guildScheduledEvent, sequence = null),
-        jsonWithoutSequence = guildScheduledEventJson,
-        eventWithSequence = GuildScheduledEventCreate(guildScheduledEvent, sequence = Random.nextInt()),
-        jsonWithSequence = guildScheduledEventJson,
+        eventConstructor = ::GuildScheduledEventCreate,
+        data = guildScheduledEvent,
+        json = guildScheduledEventJson,
     )
 
     @Test
-    fun test_GuildRoleCreate_deserialization() {
-        val role = DiscordGuildRole(
+    fun test_GuildRoleCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "GUILD_ROLE_CREATE",
+        eventConstructor = ::GuildRoleCreate,
+        data = DiscordGuildRole(
             guildId = Snowflake.min,
             role = DiscordRole(
                 id = Snowflake.min,
@@ -251,35 +219,23 @@ class DispatchEventSerializationTest {
                 mentionable = false,
                 flags = RoleFlags(),
             ),
-        )
-        val roleJson = """{"guild_id":"0","role":{"id":"0","name":"role","color":0,"hoist":false,"position":0,""" +
-            """"permissions":"0","managed":false,"mentionable":false,"flags":0}}"""
-        testDispatchEventDeserialization(
-            eventName = "GUILD_ROLE_CREATE",
-            eventWithoutSequence = GuildRoleCreate(role, sequence = null),
-            jsonWithoutSequence = roleJson,
-            eventWithSequence = GuildRoleCreate(role, sequence = Random.nextInt()),
-            jsonWithSequence = roleJson,
-        )
-    }
+        ),
+        json = """{"guild_id":"0","role":{"id":"0","name":"role","color":0,"hoist":false,"position":0,""" +
+            """"permissions":"0","managed":false,"mentionable":false,"flags":0}}""",
+    )
 
     @Test
-    fun test_ApplicationCommandPermissionsUpdate_deserialization() {
-        val permissions = DiscordGuildApplicationCommandPermissions(
+    fun test_ApplicationCommandPermissionsUpdate_deserialization() = testDispatchEventDeserialization(
+        eventName = "APPLICATION_COMMAND_PERMISSIONS_UPDATE",
+        eventConstructor = ::ApplicationCommandPermissionsUpdate,
+        data = DiscordGuildApplicationCommandPermissions(
             id = Snowflake.min,
             applicationId = Snowflake.min,
             guildId = Snowflake.min,
             permissions = emptyList(),
-        )
-        val permissionsJson = """{"id":"0","application_id":"0","guild_id":"0","permissions":[]}"""
-        testDispatchEventDeserialization(
-            eventName = "APPLICATION_COMMAND_PERMISSIONS_UPDATE",
-            eventWithoutSequence = ApplicationCommandPermissionsUpdate(permissions, sequence = null),
-            jsonWithoutSequence = permissionsJson,
-            eventWithSequence = ApplicationCommandPermissionsUpdate(permissions, sequence = Random.nextInt()),
-            jsonWithSequence = permissionsJson,
-        )
-    }
+        ),
+        json = """{"id":"0","application_id":"0","guild_id":"0","permissions":[]}""",
+    )
 
     private val thread = DiscordChannel(id = Snowflake.min, type = ChannelType.PublicGuildThread)
     private val threadJson = """{"id":"0","type":11}"""
@@ -287,186 +243,140 @@ class DispatchEventSerializationTest {
     @Test
     fun test_ThreadUpdate_deserialization() = testDispatchEventDeserialization(
         eventName = "THREAD_UPDATE",
-        eventWithoutSequence = ThreadUpdate(thread, sequence = null),
-        jsonWithoutSequence = threadJson,
-        eventWithSequence = ThreadUpdate(thread, sequence = Random.nextInt()),
-        jsonWithSequence = threadJson,
+        eventConstructor = ::ThreadUpdate,
+        data = thread,
+        json = threadJson,
     )
 
     @Test
     fun test_ThreadCreate_deserialization() = testDispatchEventDeserialization(
         eventName = "THREAD_CREATE",
-        eventWithoutSequence = ThreadCreate(thread, sequence = null),
-        jsonWithoutSequence = threadJson,
-        eventWithSequence = ThreadCreate(thread, sequence = Random.nextInt()),
-        jsonWithSequence = threadJson,
+        eventConstructor = ::ThreadCreate,
+        data = thread,
+        json = threadJson,
     )
 
     @Test
     fun test_ThreadDelete_deserialization() = testDispatchEventDeserialization(
         eventName = "THREAD_DELETE",
-        eventWithoutSequence = ThreadDelete(thread, sequence = null),
-        jsonWithoutSequence = threadJson,
-        eventWithSequence = ThreadDelete(thread, sequence = Random.nextInt()),
-        jsonWithSequence = threadJson,
+        eventConstructor = ::ThreadDelete,
+        data = thread,
+        json = threadJson,
     )
 
     @Test
-    fun test_ChannelCreate_deserialization() {
-        val channel = DiscordChannel(id = Snowflake.min, type = ChannelType.GuildText)
-        val channelJson = """{"id":"0","type":0}"""
-        testDispatchEventDeserialization(
-            eventName = "CHANNEL_CREATE",
-            eventWithoutSequence = ChannelCreate(channel, sequence = null),
-            jsonWithoutSequence = channelJson,
-            eventWithSequence = ChannelCreate(channel, sequence = Random.nextInt()),
-            jsonWithSequence = channelJson,
-        )
-    }
+    fun test_ChannelCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "CHANNEL_CREATE",
+        eventConstructor = ::ChannelCreate,
+        data = DiscordChannel(id = Snowflake.min, type = ChannelType.GuildText),
+        json = """{"id":"0","type":0}""",
+    )
 
     @Test
-    fun test_PresenceUpdate_deserialization() {
-        val presence = DiscordPresenceUpdate(
+    fun test_PresenceUpdate_deserialization() = testDispatchEventDeserialization(
+        eventName = "PRESENCE_UPDATE",
+        eventConstructor = ::PresenceUpdate,
+        data = DiscordPresenceUpdate(
             user = DiscordPresenceUser(id = Snowflake.min, details = JsonObject(emptyMap())),
             status = PresenceStatus.Online,
             activities = emptyList(),
             clientStatus = DiscordClientStatus(),
-        )
-        val presenceJson = """{"user":{"id":"0"},"status":"online","activities":[],"client_status":{}}"""
-        testDispatchEventDeserialization(
-            eventName = "PRESENCE_UPDATE",
-            eventWithoutSequence = PresenceUpdate(presence, sequence = null),
-            jsonWithoutSequence = presenceJson,
-            eventWithSequence = PresenceUpdate(presence, sequence = Random.nextInt()),
-            jsonWithSequence = presenceJson,
-        )
-    }
+        ),
+        json = """{"user":{"id":"0"},"status":"online","activities":[],"client_status":{}}""",
+    )
 
     @Test
-    fun test_InteractionCreate_deserialization() {
-        val interaction = DiscordInteraction(
+    fun test_InteractionCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "INTERACTION_CREATE",
+        eventConstructor = ::InteractionCreate,
+        data = DiscordInteraction(
             id = Snowflake.min,
             applicationId = Snowflake.min,
             type = InteractionType.Ping,
             data = InteractionCallbackData(),
             token = "hunter2",
             version = 1,
-        )
-        val interactionJson = """{"id":"0","application_id":"0","type":1,"data":{},"token":"hunter2","version":1}"""
-        testDispatchEventDeserialization(
-            eventName = "INTERACTION_CREATE",
-            eventWithoutSequence = InteractionCreate(interaction, sequence = null),
-            jsonWithoutSequence = interactionJson,
-            eventWithSequence = InteractionCreate(interaction, sequence = Random.nextInt()),
-            jsonWithSequence = interactionJson,
-        )
-    }
+        ),
+        json = """{"id":"0","application_id":"0","type":1,"data":{},"token":"hunter2","version":1}""",
+    )
 
     @Test
-    fun test_TypingStart_deserialization() {
-        val typing = DiscordTyping(
+    fun test_TypingStart_deserialization() = testDispatchEventDeserialization(
+        eventName = "TYPING_START",
+        eventConstructor = ::TypingStart,
+        data = DiscordTyping(
             channelId = Snowflake.min,
             userId = Snowflake.min,
             timestamp = Instant.fromEpochSeconds(123),
-        )
-        val typingJson = """{"channel_id":"0","user_id":"0","timestamp":123}"""
-        testDispatchEventDeserialization(
-            eventName = "TYPING_START",
-            eventWithoutSequence = TypingStart(typing, sequence = null),
-            jsonWithoutSequence = typingJson,
-            eventWithSequence = TypingStart(typing, sequence = Random.nextInt()),
-            jsonWithSequence = typingJson,
-        )
-    }
+        ),
+        json = """{"channel_id":"0","user_id":"0","timestamp":123}""",
+    )
 
     @Test
-    fun test_MessageReactionRemoveEmoji_deserialization() {
-        val removed = DiscordRemovedEmoji(
+    fun test_MessageReactionRemoveEmoji_deserialization() = testDispatchEventDeserialization(
+        eventName = "MESSAGE_REACTION_REMOVE_EMOJI",
+        eventConstructor = ::MessageReactionRemoveEmoji,
+        data = DiscordRemovedEmoji(
             channelId = Snowflake.min,
             guildId = Snowflake.min,
             messageId = Snowflake.min,
             emoji = DiscordRemovedReactionEmoji(id = null, name = null),
-        )
-        val removedJson = """{"channel_id":"0","guild_id":"0","message_id":"0","emoji":{"id":null,"name":null}}"""
-        testDispatchEventDeserialization(
-            eventName = "MESSAGE_REACTION_REMOVE_EMOJI",
-            eventWithoutSequence = MessageReactionRemoveEmoji(removed, sequence = null),
-            jsonWithoutSequence = removedJson,
-            eventWithSequence = MessageReactionRemoveEmoji(removed, sequence = Random.nextInt()),
-            jsonWithSequence = removedJson,
-        )
-    }
+        ),
+        json = """{"channel_id":"0","guild_id":"0","message_id":"0","emoji":{"id":null,"name":null}}""",
+    )
 
     @Test
-    fun test_GuildScheduledEventUserRemove_deserialization() {
-        val data = GuildScheduledEventUserMetadata(
+    fun test_GuildScheduledEventUserRemove_deserialization() = testDispatchEventDeserialization(
+        eventName = "GUILD_SCHEDULED_EVENT_USER_REMOVE",
+        eventConstructor = ::GuildScheduledEventUserRemove,
+        data = GuildScheduledEventUserMetadata(
             guildScheduledEventId = Snowflake.min,
             userId = Snowflake.min,
             guildId = Snowflake.min,
-        )
-        val dataJson = """{"guild_scheduled_event_id":"0","user_id":"0","guild_id":"0"}"""
-        testDispatchEventDeserialization(
-            eventName = "GUILD_SCHEDULED_EVENT_USER_REMOVE",
-            eventWithoutSequence = GuildScheduledEventUserRemove(data, sequence = null),
-            jsonWithoutSequence = dataJson,
-            eventWithSequence = GuildScheduledEventUserRemove(data, sequence = Random.nextInt()),
-            jsonWithSequence = dataJson,
-        )
-    }
+        ),
+        json = """{"guild_scheduled_event_id":"0","user_id":"0","guild_id":"0"}""",
+    )
 
     @Test
-    fun test_GuildBanRemove_deserialization() {
-        val ban = DiscordGuildBan(
+    fun test_GuildBanRemove_deserialization() = testDispatchEventDeserialization(
+        eventName = "GUILD_BAN_REMOVE",
+        eventConstructor = ::GuildBanRemove,
+        data = DiscordGuildBan(
             guildId = Snowflake.min,
             user = DiscordUser(id = Snowflake.min, username = "username", avatar = null),
-        )
-        val banJson = """{"guild_id":"0","user":{"id":"0","username":"username","avatar":null}}"""
-        testDispatchEventDeserialization(
-            eventName = "GUILD_BAN_REMOVE",
-            eventWithoutSequence = GuildBanRemove(ban, sequence = null),
-            jsonWithoutSequence = banJson,
-            eventWithSequence = GuildBanRemove(ban, sequence = Random.nextInt()),
-            jsonWithSequence = banJson,
-        )
-    }
+        ),
+        json = """{"guild_id":"0","user":{"id":"0","username":"username","avatar":null}}""",
+    )
 
     @Test
-    fun test_ApplicationCommandDelete_deserialization() {
-        val command = DiscordApplicationCommand(
+    fun test_ApplicationCommandDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "APPLICATION_COMMAND_DELETE",
+        eventConstructor = ::ApplicationCommandDelete,
+        data = DiscordApplicationCommand(
             id = Snowflake.min,
             applicationId = Snowflake.min,
             name = "name",
             description = null,
             defaultMemberPermissions = null,
             version = Snowflake.min,
-        )
-        val commandJson = """{"id":"0","application_id":"0","name":"name","description":null,""" +
-            """"default_member_permissions":null,"version":"0"}"""
-        testDispatchEventDeserialization(
-            eventName = "APPLICATION_COMMAND_DELETE",
-            eventWithoutSequence = ApplicationCommandDelete(command, sequence = null),
-            jsonWithoutSequence = commandJson,
-            eventWithSequence = ApplicationCommandDelete(command, sequence = Random.nextInt()),
-            jsonWithSequence = commandJson,
-        )
-    }
+        ),
+        json = """{"id":"0","application_id":"0","name":"name","description":null,""" +
+            """"default_member_permissions":null,"version":"0"}""",
+    )
 
     @Test
-    fun test_MessageUpdate_deserialization() {
-        val message = DiscordPartialMessage(id = Snowflake.min, channelId = Snowflake.min)
-        val messageJson = """{"id":"0","channel_id":"0"}"""
-        testDispatchEventDeserialization(
-            eventName = "MESSAGE_UPDATE",
-            eventWithoutSequence = MessageUpdate(message, sequence = null),
-            jsonWithoutSequence = messageJson,
-            eventWithSequence = MessageUpdate(message, sequence = Random.nextInt()),
-            jsonWithSequence = messageJson,
-        )
-    }
+    fun test_MessageUpdate_deserialization() = testDispatchEventDeserialization(
+        eventName = "MESSAGE_UPDATE",
+        eventConstructor = ::MessageUpdate,
+        data = DiscordPartialMessage(id = Snowflake.min, channelId = Snowflake.min),
+        json = """{"id":"0","channel_id":"0"}""",
+    )
 
     @Test
-    fun test_AutoModerationRuleDelete_deserialization() {
-        val rule = DiscordAutoModerationRule(
+    fun test_AutoModerationRuleDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "AUTO_MODERATION_RULE_DELETE",
+        eventConstructor = ::AutoModerationRuleDelete,
+        data = DiscordAutoModerationRule(
             id = Snowflake.min,
             guildId = Snowflake.min,
             name = "rule",
@@ -478,21 +388,16 @@ class DispatchEventSerializationTest {
             enabled = false,
             exemptRoles = emptyList(),
             exemptChannels = emptyList(),
-        )
-        val ruleJson = """{"id":"0","guild_id":"0","name":"rule","creator_id":"0","event_type":1,"trigger_type":3,""" +
-            """"trigger_metadata":{},"actions":[],"enabled":false,"exempt_roles":[],"exempt_channels":[]}"""
-        testDispatchEventDeserialization(
-            eventName = "AUTO_MODERATION_RULE_DELETE",
-            eventWithoutSequence = AutoModerationRuleDelete(rule, sequence = null),
-            jsonWithoutSequence = ruleJson,
-            eventWithSequence = AutoModerationRuleDelete(rule, sequence = Random.nextInt()),
-            jsonWithSequence = ruleJson,
-        )
-    }
+        ),
+        json = """{"id":"0","guild_id":"0","name":"rule","creator_id":"0","event_type":1,"trigger_type":3,""" +
+            """"trigger_metadata":{},"actions":[],"enabled":false,"exempt_roles":[],"exempt_channels":[]}""",
+    )
 
     @Test
-    fun test_InviteCreate_deserialization() {
-        val invite = DiscordCreatedInvite(
+    fun test_InviteCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "INVITE_CREATE",
+        eventConstructor = ::InviteCreate,
+        data = DiscordCreatedInvite(
             channelId = Snowflake.min,
             code = "code",
             createdAt = instant,
@@ -500,25 +405,17 @@ class DispatchEventSerializationTest {
             maxUses = 42,
             temporary = false,
             uses = 0,
-        )
-        val inviteJson = """{"channel_id":"0","code":"code","created_at":"$instant","max_age":360000,""" +
-            """"max_uses":42,"temporary":false,"uses":0}"""
-        testDispatchEventDeserialization(
-            eventName = "INVITE_CREATE",
-            eventWithoutSequence = InviteCreate(invite, sequence = null),
-            jsonWithoutSequence = inviteJson,
-            eventWithSequence = InviteCreate(invite, sequence = Random.nextInt()),
-            jsonWithSequence = inviteJson,
-        )
-    }
+        ),
+        json = """{"channel_id":"0","code":"code","created_at":"$instant","max_age":360000,"max_uses":42,""" +
+            """"temporary":false,"uses":0}""",
+    )
 
     @Test
     fun test_Resumed_deserialization() = testDispatchEventDeserialization(
         eventName = "RESUMED",
-        eventWithoutSequence = Resumed(sequence = null),
-        jsonWithoutSequence = "null",
-        eventWithSequence = Resumed(sequence = Random.nextInt()),
-        jsonWithSequence = "null",
+        eventConstructor = { _, sequence -> Resumed(sequence) },
+        data = null,
+        json = "null",
     )
 
     @Test
@@ -569,10 +466,9 @@ class DispatchEventSerializationTest {
         for ((json, data) in jsonAndData) {
             testDispatchEventDeserialization(
                 eventName,
-                eventWithoutSequence = UnknownDispatchEvent(eventName, data, sequence = null),
-                jsonWithoutSequence = json,
-                eventWithSequence = UnknownDispatchEvent(eventName, data, sequence = Random.nextInt()),
-                jsonWithSequence = json,
+                eventConstructor = { d, sequence -> UnknownDispatchEvent(eventName, d, sequence) },
+                data = data,
+                json = json,
             )
         }
     }
