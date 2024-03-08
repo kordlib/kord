@@ -113,7 +113,7 @@ public sealed class Event {
                 }
             }
             event ?: createEventFromRawEventData(
-                json = { (decoder as JsonDecoder).json },
+                json = (decoder as? JsonDecoder)?.json,
                 opCode = opCode ?: @OptIn(ExperimentalSerializationApi::class) throw MissingFieldException(
                     missingField = "op",
                     serialName = descriptor.serialName,
@@ -124,8 +124,13 @@ public sealed class Event {
             )
         }
 
-        private inline fun createEventFromRawEventData(
-            crossinline json: () -> Json,
+        private fun illegalOpCode(opCode: OpCode): Nothing =
+            throw IllegalArgumentException("Illegal opcode for gateway event: $opCode")
+
+        private fun unknownOpCode(): Nothing = throw IllegalArgumentException("Unknown opcode for gateway event")
+
+        private fun createEventFromRawEventData(
+            json: Json?,
             opCode: OpCode,
             eventName: String?,
             sequence: Int?,
@@ -134,35 +139,33 @@ public sealed class Event {
             OpCode.Dispatch -> createDispatchEvent(eventName, sequence, object : DecodeFunction {
                 // when the d field is missing, try to create a DispatchEvent as if the d field was present but null
                 override fun <T> invoke(deserializer: KDeserializationStrategy<T>): T =
-                    json().decodeFromJsonElement(deserializer, rawEventData ?: JsonNull)
+                    json.orThrow().decodeFromJsonElement(deserializer, rawEventData ?: JsonNull)
 
                 override fun <T : Any> invokeIfNotMissing(deserializer: KDeserializationStrategy<T>): T? =
-                    if (rawEventData == null) null else json().decodeFromJsonElement(deserializer, rawEventData)
+                    if (rawEventData == null) null else json.orThrow().decodeFromJsonElement(deserializer, rawEventData)
             })
-            OpCode.Heartbeat -> decodeEventIfNotMissing(json, Heartbeat::serializer, rawEventData, opCode)
+            OpCode.Heartbeat -> decodeEventIfNotMissing(json, Heartbeat.serializer(), rawEventData, opCode)
             OpCode.Reconnect -> Reconnect // ignore rawEventData, see above
-            OpCode.InvalidSession -> decodeEventIfNotMissing(json, InvalidSession::serializer, rawEventData, opCode)
-            OpCode.Hello -> decodeEventIfNotMissing(json, Hello::serializer, rawEventData, opCode)
+            OpCode.InvalidSession -> decodeEventIfNotMissing(json, InvalidSession.serializer(), rawEventData, opCode)
+            OpCode.Hello -> decodeEventIfNotMissing(json, Hello.serializer(), rawEventData, opCode)
             OpCode.HeartbeatACK -> HeartbeatACK // ignore rawEventData, see above
             OpCode.Identify, OpCode.StatusUpdate, OpCode.VoiceStateUpdate, OpCode.Resume, OpCode.RequestGuildMembers ->
                 illegalOpCode(opCode)
             OpCode.Unknown -> unknownOpCode()
         }
 
-        private inline fun <T> decodeEventIfNotMissing(
-            json: () -> Json,
-            deserializer: () -> KDeserializationStrategy<T>,
+        private fun Json?.orThrow(): Json =
+            this ?: throw SerializationException("This gateway event can only be deserialized with JsonDecoder")
+
+        private fun <T> decodeEventIfNotMissing(
+            json: Json?,
+            deserializer: KDeserializationStrategy<T>,
             rawEventData: JsonElement?,
             opCode: OpCode,
         ): T = when (rawEventData) {
             null -> throw IllegalArgumentException("Gateway event is missing data field for opcode $opCode")
-            else -> json().decodeFromJsonElement(deserializer(), rawEventData)
+            else -> json.orThrow().decodeFromJsonElement(deserializer, rawEventData)
         }
-
-        private fun illegalOpCode(opCode: OpCode): Nothing =
-            throw IllegalArgumentException("Illegal opcode for gateway event: $opCode")
-
-        private fun unknownOpCode(): Nothing = throw IllegalArgumentException("Unknown opcode for gateway event")
 
         // can't be expressed as function type and fun interface can't have type parameters on its abstract method
         private interface DecodeFunction {
