@@ -40,12 +40,6 @@ kotlin {
     explicitApi()
     jvmToolchain(Jvm.target)
 
-    targets.all {
-        compilations.all {
-            compilerOptions.options.applyKordCompilerOptions()
-        }
-    }
-
     sourceSets {
         all {
             applyKordOptIns()

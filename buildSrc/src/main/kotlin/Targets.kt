@@ -35,4 +35,10 @@ fun KotlinMultiplatformExtension.targets() {
     tvosX64()
     tvosArm64()
     tvosSimulatorArm64()
+
+    targets.all {
+        compilations.all {
+            compilerOptions.options.applyKordCompilerOptions()
+        }
+    }
 }
