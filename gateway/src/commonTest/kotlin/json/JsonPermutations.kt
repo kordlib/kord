@@ -1,7 +1,7 @@
 package dev.kord.gateway.json
 
 fun jsonObjectPermutations(vararg keyValuePairs: Pair<String, String>): List<String> {
-    fun recurse(pairs: List<Pair<String, String>>): List<List<Pair<String, String>>> =
+    fun <T> recurse(pairs: List<T>): List<List<T>> =
         if (pairs.isEmpty()) {
             listOf(emptyList())
         } else {
