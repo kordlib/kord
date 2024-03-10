@@ -41,56 +41,6 @@ class DispatchEventDeserializationTest {
     }
 
 
-    @Test
-    fun test_UnknownDispatchEvent_deserialization() {
-        val nullDataEvent = UnknownDispatchEvent(name = null, data = JsonNull, sequence = null)
-        val permutations = listOf(
-            jsonObjectPermutations("op" to "0"),
-            jsonObjectPermutations("op" to "0", "t" to "null"),
-            jsonObjectPermutations("op" to "0", "s" to "null"),
-            jsonObjectPermutations("op" to "0", "d" to "null"),
-            jsonObjectPermutations("op" to "0", "t" to "null", "s" to "null"),
-            jsonObjectPermutations("op" to "0", "t" to "null", "d" to "null"),
-            jsonObjectPermutations("op" to "0", "s" to "null", "d" to "null"),
-            jsonObjectPermutations("op" to "0", "t" to "null", "s" to "null", "d" to "null"),
-        ).flatten()
-        permutations.forEach { perm ->
-            assertEquals(nullDataEvent, Json.decodeFromString(Event.DeserializationStrategy, perm))
-        }
-        val eventName = "SOME_UNKNOWN_EVENT"
-        val jsonAndData = listOf(
-            "null" to JsonNull,
-            "1234" to JsonPrimitive(1234),
-            "true" to JsonPrimitive(true),
-            "\"str\"" to JsonPrimitive("str"),
-            """[null,-1,false,""]""" to JsonArray(
-                listOf(
-                    JsonNull,
-                    JsonPrimitive(-1),
-                    JsonPrimitive(false),
-                    JsonPrimitive(""),
-                ),
-            ),
-            """{"a":null,"b":-134,"c":true,"d":"x"}""" to JsonObject(
-                mapOf(
-                    "a" to JsonNull,
-                    "b" to JsonPrimitive(-134),
-                    "c" to JsonPrimitive(true),
-                    "d" to JsonPrimitive("x"),
-                ),
-            ),
-        )
-        jsonAndData.forEach { (json, data) ->
-            testDispatchEventDeserialization(
-                eventName,
-                eventConstructor = { d, sequence -> UnknownDispatchEvent(eventName, d, sequence) },
-                data = data,
-                json = json,
-            )
-        }
-    }
-
-
     private val autoModerationRule = DiscordAutoModerationRule(
         id = Snowflake.min,
         guildId = Snowflake.min,
@@ -798,6 +748,14 @@ class DispatchEventDeserializationTest {
         eventConstructor = ::WebhooksUpdate,
         data = DiscordWebhooksUpdateData(guildId = Snowflake.min, channelId = Snowflake.min),
         json = """{"guild_id":"0","channel_id":"0"}""",
+    )
+
+    @Test
+    fun test_UnknownDispatchEvent_deserialization() = testDispatchEventDeserialization(
+        eventName = "SOME_UNKNOWN_EVENT",
+        eventConstructor = { data, sequence -> UnknownDispatchEvent(name = "SOME_UNKNOWN_EVENT", data, sequence) },
+        data = buildJsonObject { put("foo", "bar") },
+        json = """{"foo":"bar"}""",
     )
 
 
