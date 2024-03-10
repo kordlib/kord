@@ -8,6 +8,9 @@ import dev.kord.common.entity.optional.value
 import dev.kord.gateway.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.MissingFieldException
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlin.js.JsName
@@ -214,6 +217,30 @@ class SerializationTest {
                     Json.decodeFromString(Event.DeserializationStrategy, perm)
                 }
             }
+        }
+    }
+
+    @Test
+    fun deserializing_Event_with_duplicate_field_fails() {
+        assertFailsWith<SerializationException> {
+            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"op":1}""")
+        }
+        assertFailsWith<SerializationException> {
+            Json.decodeFromString(Event.DeserializationStrategy, """{"s":0,"s":1}""")
+        }
+        assertFailsWith<SerializationException> {
+            Json.decodeFromString(Event.DeserializationStrategy, """{"t":"A","t":"B"}""")
+        }
+        assertFailsWith<SerializationException> {
+            Json.decodeFromString(Event.DeserializationStrategy, """{"d":true,"d":false}""")
+        }
+    }
+
+    @Test
+    fun deserializing_Event_with_missing_op_field_fails() {
+        @OptIn(ExperimentalSerializationApi::class)
+        assertFailsWith<MissingFieldException> {
+            Json.decodeFromString(Event.DeserializationStrategy, """{"s":1,"t":"EVENT_X","d":{"foo":"bar"}}""")
         }
     }
 }
