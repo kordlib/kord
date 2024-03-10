@@ -12,90 +12,50 @@ import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 class DispatchEventDeserializationTest {
-    private fun String.nonBlankTrimmedLines() = lines().filter(String::isNotBlank).map(String::trim)
-
     private fun <T> testDispatchEventDeserialization(
         eventName: String,
         eventConstructor: (data: T, sequence: Int?) -> DispatchEvent,
         data: T,
         json: String,
     ) {
-        val jsonVariationsWithMissingSequence = """
-            {"op":0,"t":"$eventName","d":$json}
-            {"op":0,"d":$json,"t":"$eventName"}
-            {"t":"$eventName","op":0,"d":$json}
-            {"t":"$eventName","d":$json,"op":0}
-            {"d":$json,"op":0,"t":"$eventName"}
-            {"d":$json,"t":"$eventName","op":0}
-        """.nonBlankTrimmedLines()
-
-        fun variations(s: String, d: String) = """
-            {"op":0,"t":"$eventName","s":$s,"d":$d}
-            {"op":0,"t":"$eventName","d":$d,"s":$s}
-            {"op":0,"s":$s,"t":"$eventName","d":$d}
-            {"op":0,"s":$s,"d":$d,"t":"$eventName"}
-            {"op":0,"d":$d,"t":"$eventName","s":$s}
-            {"op":0,"d":$d,"s":$s,"t":"$eventName"}
-
-            {"t":"$eventName","op":0,"s":$s,"d":$d}
-            {"t":"$eventName","op":0,"d":$d,"s":$s}
-            {"t":"$eventName","s":$s,"op":0,"d":$d}
-            {"t":"$eventName","s":$s,"d":$d,"op":0}
-            {"t":"$eventName","d":$d,"op":0,"s":$s}
-            {"t":"$eventName","d":$d,"s":$s,"op":0}
-
-            {"s":$s,"op":0,"t":"$eventName","d":$d}
-            {"s":$s,"op":0,"d":$d,"t":"$eventName"}
-            {"s":$s,"t":"$eventName","op":0,"d":$d}
-            {"s":$s,"t":"$eventName","d":$d,"op":0}
-            {"s":$s,"d":$d,"op":0,"t":"$eventName"}
-            {"s":$s,"d":$d,"t":"$eventName","op":0}
-
-            {"d":$d,"op":0,"t":"$eventName","s":$s}
-            {"d":$d,"op":0,"s":$s,"t":"$eventName"}
-            {"d":$d,"t":"$eventName","op":0,"s":$s}
-            {"d":$d,"t":"$eventName","s":$s,"op":0}
-            {"d":$d,"s":$s,"op":0,"t":"$eventName"}
-            {"d":$d,"s":$s,"t":"$eventName","op":0}
-        """.nonBlankTrimmedLines()
-
         val sequence = Random.nextInt()
-        val eventWithSequence = eventConstructor(data, sequence)
         val eventWithoutSequence = eventConstructor(data, null)
+        val eventWithSequence = eventConstructor(data, sequence)
 
-        for (jsonVariation in jsonVariationsWithMissingSequence) { // missing sequence
-            assertEquals(eventWithoutSequence, Json.decodeFromString(Event.DeserializationStrategy, jsonVariation))
+        val permutationsWithMissingSequence =
+            jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "d" to json)
+        val permutationsWithNullSequence =
+            jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "s" to "null", "d" to json)
+        val permutationsWithSequence =
+            jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "s" to "$sequence", "d" to json)
+
+        permutationsWithMissingSequence.forEach { perm ->
+            assertEquals(eventWithoutSequence, Json.decodeFromString(Event.DeserializationStrategy, perm))
         }
-        for (jsonVariation in variations(s = "null", d = json)) { // null sequence
-            assertEquals(eventWithoutSequence, Json.decodeFromString(Event.DeserializationStrategy, jsonVariation))
+        permutationsWithNullSequence.forEach { perm ->
+            assertEquals(eventWithoutSequence, Json.decodeFromString(Event.DeserializationStrategy, perm))
         }
-        for (jsonVariation in variations(s = sequence.toString(), d = json)) { // sequence present
-            assertEquals(eventWithSequence, Json.decodeFromString(Event.DeserializationStrategy, jsonVariation))
+        permutationsWithSequence.forEach { perm ->
+            assertEquals(eventWithSequence, Json.decodeFromString(Event.DeserializationStrategy, perm))
         }
     }
 
 
     @Test
     fun test_UnknownDispatchEvent_deserialization() {
-        val missingDataEvent = UnknownDispatchEvent(name = null, data = JsonNull, sequence = null)
-        val missingDataJsonVariations = """
-            {"op":0}
-
-            {"op":0,"t":null}
-            {"t":null,"op":0}
-
-            {"op":0,"s":null}
-            {"s":null,"op":0}
-
-            {"op":0,"t":null,"s":null}
-            {"op":0,"s":null,"t":null}
-            {"t":null,"op":0,"s":null}
-            {"t":null,"s":null,"op":0}
-            {"s":null,"op":0,"t":null}
-            {"s":null,"t":null,"op":0}
-        """.nonBlankTrimmedLines()
-        for (json in missingDataJsonVariations) {
-            assertEquals(missingDataEvent, Json.decodeFromString(Event.DeserializationStrategy, json))
+        val nullDataEvent = UnknownDispatchEvent(name = null, data = JsonNull, sequence = null)
+        val permutations = listOf(
+            jsonObjectPermutations("op" to "0"),
+            jsonObjectPermutations("op" to "0", "t" to "null"),
+            jsonObjectPermutations("op" to "0", "s" to "null"),
+            jsonObjectPermutations("op" to "0", "d" to "null"),
+            jsonObjectPermutations("op" to "0", "t" to "null", "s" to "null"),
+            jsonObjectPermutations("op" to "0", "t" to "null", "d" to "null"),
+            jsonObjectPermutations("op" to "0", "s" to "null", "d" to "null"),
+            jsonObjectPermutations("op" to "0", "t" to "null", "s" to "null", "d" to "null"),
+        ).flatten()
+        permutations.forEach { perm ->
+            assertEquals(nullDataEvent, Json.decodeFromString(Event.DeserializationStrategy, perm))
         }
         val eventName = "SOME_UNKNOWN_EVENT"
         val jsonAndData = listOf(
@@ -120,7 +80,7 @@ class DispatchEventDeserializationTest {
                 ),
             ),
         )
-        for ((json, data) in jsonAndData) {
+        jsonAndData.forEach { (json, data) ->
             testDispatchEventDeserialization(
                 eventName,
                 eventConstructor = { d, sequence -> UnknownDispatchEvent(eventName, d, sequence) },
