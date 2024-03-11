@@ -10,7 +10,6 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.MissingFieldException
-import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlin.js.JsName
@@ -217,22 +216,6 @@ class SerializationTest {
                     Json.decodeFromString(Event.DeserializationStrategy, perm)
                 }
             }
-        }
-    }
-
-    @Test
-    fun deserializing_Event_with_duplicate_field_fails() {
-        assertFailsWith<SerializationException> {
-            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"op":1}""")
-        }
-        assertFailsWith<SerializationException> {
-            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"s":0,"s":1}""")
-        }
-        assertFailsWith<SerializationException> {
-            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"t":"A","t":"B"}""")
-        }
-        assertFailsWith<SerializationException> {
-            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"d":true,"d":false}""")
         }
     }
 

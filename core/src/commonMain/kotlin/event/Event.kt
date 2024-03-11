@@ -55,12 +55,12 @@ public interface Event : KordObject {
 /**
  * Representation of an event that has not been documented / added to Kord yet.
  *
- * @property data the raw [json body][JsonElement] of this event
+ * @property data the raw [json body][JsonElement] of this event if provided
  * @property name the name of the event if provided
  */
 public class UnknownEvent(
     public val name: String?,
-    public val data: JsonElement,
+    public val data: JsonElement?,
     override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?,

@@ -30,16 +30,12 @@ class UnknownDispatchEventDeserializationTest {
 
     @Test
     fun test_empty_UnknownDispatchEvent_deserialization() {
-        val emptyEvent = UnknownDispatchEvent(name = null, data = JsonNull, sequence = null)
+        val emptyEvent = UnknownDispatchEvent(name = null, data = null, sequence = null)
         val permutations = listOf(
             jsonObjectPermutations("op" to "0"),
             jsonObjectPermutations("op" to "0", "t" to "null"),
             jsonObjectPermutations("op" to "0", "s" to "null"),
-            jsonObjectPermutations("op" to "0", "d" to "null"),
             jsonObjectPermutations("op" to "0", "t" to "null", "s" to "null"),
-            jsonObjectPermutations("op" to "0", "t" to "null", "d" to "null"),
-            jsonObjectPermutations("op" to "0", "s" to "null", "d" to "null"),
-            jsonObjectPermutations("op" to "0", "t" to "null", "s" to "null", "d" to "null"),
         ).flatten()
         permutations.forEach { perm ->
             assertEquals(emptyEvent, Json.decodeFromString(Event.DeserializationStrategy, perm))
@@ -48,12 +44,10 @@ class UnknownDispatchEventDeserializationTest {
 
     @Test
     fun test_name_only_UnknownDispatchEvent_deserialization() {
-        val nameOnlyEvent = UnknownDispatchEvent(eventName, data = JsonNull, sequence = null)
+        val nameOnlyEvent = UnknownDispatchEvent(eventName, data = null, sequence = null)
         val permutations = listOf(
             jsonObjectPermutations("op" to "0", "t" to "\"$eventName\""),
             jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "s" to "null"),
-            jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "d" to "null"),
-            jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "s" to "null", "d" to "null"),
         ).flatten()
         permutations.forEach { perm ->
             assertEquals(nameOnlyEvent, Json.decodeFromString(Event.DeserializationStrategy, perm))
@@ -63,12 +57,10 @@ class UnknownDispatchEventDeserializationTest {
     @Test
     fun test_sequence_only_UnknownDispatchEvent_deserialization() {
         val sequence = Random.nextInt()
-        val sequenceOnlyEvent = UnknownDispatchEvent(name = null, data = JsonNull, sequence)
+        val sequenceOnlyEvent = UnknownDispatchEvent(name = null, data = null, sequence)
         val permutations = listOf(
             jsonObjectPermutations("op" to "0", "s" to "$sequence"),
             jsonObjectPermutations("op" to "0", "t" to "null", "s" to "$sequence"),
-            jsonObjectPermutations("op" to "0", "s" to "$sequence", "d" to "null"),
-            jsonObjectPermutations("op" to "0", "t" to "null", "s" to "$sequence", "d" to "null"),
         ).flatten()
         permutations.forEach { perm ->
             assertEquals(sequenceOnlyEvent, Json.decodeFromString(Event.DeserializationStrategy, perm))
@@ -92,11 +84,8 @@ class UnknownDispatchEventDeserializationTest {
     @Test
     fun test_name_and_sequence_UnknownDispatchEvent_deserialization() {
         val sequence = Random.nextInt()
-        val nameAndSequenceEvent = UnknownDispatchEvent(eventName, data = JsonNull, sequence)
-        val permutations = listOf(
-            jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "s" to "$sequence"),
-            jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "s" to "$sequence", "d" to "null"),
-        ).flatten()
+        val nameAndSequenceEvent = UnknownDispatchEvent(eventName, data = null, sequence)
+        val permutations = jsonObjectPermutations("op" to "0", "t" to "\"$eventName\"", "s" to "$sequence")
         permutations.forEach { perm ->
             assertEquals(nameAndSequenceEvent, Json.decodeFromString(Event.DeserializationStrategy, perm))
         }
