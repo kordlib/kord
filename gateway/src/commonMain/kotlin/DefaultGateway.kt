@@ -22,7 +22,7 @@ import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.*
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -77,11 +77,6 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private val handshakeHandler: HandshakeHandler
 
     private lateinit var inflater: Inflater
-
-    private val jsonParser = Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
 
     private val stateMutex = Mutex()
 
@@ -185,8 +180,27 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         }
 
         try {
-            defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json) ?: return
+            val event = GatewayJson.decodeFromString(Event.DeserializationStrategy, json)
+
+            defaultGatewayLogger.trace {
+                val credentialFreeJson = when (event) {
+                    is InteractionCreate, is VoiceServerUpdate -> {
+                        when (val payload = GatewayJson.parseToJsonElement(json)) {
+                            is JsonObject -> JsonObject(payload.mapValues { (k1, v1) ->
+                                if (k1 == "d" && v1 is JsonObject) JsonObject(v1.mapValues { (k2, v2) ->
+                                    if (k2 == "token") JsonPrimitive("hunter2") else v2
+                                }) else v1
+                            }).toString()
+                            else -> json
+                        }
+                    }
+                    else -> json
+                }
+                "Gateway <<< $credentialFreeJson"
+            }
+
+            if (event == null) return
+
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception) { "" }
@@ -270,13 +284,21 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
     private suspend fun sendUnsafe(command: Command) {
         data.sendRateLimiter.consume()
-        val json = Json.encodeToString(Command.SerializationStrategy, command)
-        if (command is Identify) {
-            defaultGatewayLogger.trace {
-                val copy = command.copy(token = "token")
-                "Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
+        val json = GatewayJson.encodeToString(Command.SerializationStrategy, command)
+
+        defaultGatewayLogger.trace {
+            val credentialFreeCopy = when (command) {
+                is Identify -> command.copy(token = "hunter2")
+                is Resume -> command.copy(token = "hunter2")
+                else -> null
             }
-        } else defaultGatewayLogger.trace { "Gateway >>> $json" }
+            val credentialFreeJson = credentialFreeCopy // re-encode copy
+                ?.let { GatewayJson.encodeToString(Command.SerializationStrategy, it) }
+                ?: json
+
+            "Gateway >>> $credentialFreeJson"
+        }
+
         socket.send(Frame.Text(json))
     }
 
@@ -287,6 +309,11 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
         private const val gatewayRunningError = "The Gateway is already running, call stop() first."
         private const val gatewayDetachedError =
             "The Gateway has been detached and can no longer be used, create a new instance instead."
+
+        private val GatewayJson = Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
 
         private val gatewayCloseCodeByCode = GatewayCloseCode.entries.associateBy { it.code }
     }

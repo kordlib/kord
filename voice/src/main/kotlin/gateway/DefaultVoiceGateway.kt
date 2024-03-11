@@ -58,11 +58,6 @@ public class DefaultVoiceGateway(
     private val _ping = MutableStateFlow<Duration?>(null)
     override val ping: StateFlow<Duration?> get() = _ping
 
-    private val jsonParser = Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-    }
-
     private val stateMutex = Mutex()
 
     private val handshakeHandler: HandshakeHandler
@@ -142,7 +137,7 @@ public class DefaultVoiceGateway(
         val json = String(frame.data, Charsets.UTF_8)
 
         try {
-            val event = jsonParser.decodeFromString(VoiceEvent.DeserializationStrategy, json)
+            val event = VoiceGatewayJson.decodeFromString(VoiceEvent.DeserializationStrategy, json)
 
             if (event is SessionDescription)
                 defaultVoiceGatewayLogger.trace { "Voice Gateway <<< SESSION_DESCRIPTION" }
@@ -184,20 +179,20 @@ public class DefaultVoiceGateway(
     }
 
     private suspend fun sendUnsafe(command: Command) {
-        val json = Json.encodeToString(Command.SerializationStrategy, command)
+        val json = VoiceGatewayJson.encodeToString(Command.SerializationStrategy, command)
         defaultVoiceGatewayLogger.trace {
-            when (command) {
-                is Identify -> {
-                    val copy = command.copy(token = "token")
-                    "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
-                }
-                is SelectProtocol -> {
-                    val copy = command.copy(data = command.data.copy(address = "ip"))
-                    "Voice Gateway >>> ${Json.encodeToString(Command.SerializationStrategy, copy)}"
-                }
-                is Heartbeat, is Resume, is SendSpeaking -> "Voice Gateway >>> $json"
+            val credentialFreeCopy = when (command) {
+                is Identify -> command.copy(token = "hunter2")
+                is Resume -> command.copy(token = "hunter2")
+                is SelectProtocol -> command.copy(data = command.data.copy(address = "ip"))
+                is Heartbeat, is SendSpeaking -> null
             }
+            val credentialFreeJson = credentialFreeCopy // re-encode copy
+                ?.let { VoiceGatewayJson.encodeToString(Command.SerializationStrategy, it) }
+                ?: json
+            "Voice Gateway >>> $credentialFreeJson"
         }
+
         socket.send(Frame.Text(json))
     }
 
@@ -232,6 +227,14 @@ public class DefaultVoiceGateway(
             if (discordReason.exceptional) {
                 throw IllegalStateException("Voice Gateway (${data.guildId.value}) closed: ${reason.code} ${reason.message}")
             }
+        }
+    }
+
+
+    private companion object {
+        private val VoiceGatewayJson = Json {
+            ignoreUnknownKeys = true
+            isLenient = true
         }
     }
 }

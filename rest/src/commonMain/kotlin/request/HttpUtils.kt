@@ -1,6 +1,7 @@
 package dev.kord.rest.request
 
 import dev.kord.rest.ratelimit.BucketKey
+import dev.kord.rest.route.Route
 import io.ktor.client.statement.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -61,8 +62,14 @@ public suspend fun HttpResponse.errorString(): String {
 public fun Request<*, *>.logString(body: String): String {
     val method = route.method.value
     val path = route.path
-    val params = routeParams.entries
-        .joinToString(",", "[", "]") { (key, value) -> "$key=$value" }
+    val params = routeParams.entries.joinToString(",", "[", "]") { (key, value) ->
+        "$key=${
+            when (key) {
+                is Route.InteractionToken, is Route.WebhookToken -> "hunter2"
+                else -> value
+            }
+        }"
+    }
 
     return "[REQUEST]:$method:$path params:$params body:$body"
 }

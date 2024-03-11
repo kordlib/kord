@@ -391,7 +391,10 @@ public data class DiscordVoiceServerUpdateData(
     val token: String,
     @SerialName("guild_id") val guildId: Snowflake,
     val endpoint: String?,
-)
+) {
+    override fun toString(): String =
+        "DiscordVoiceServerUpdateData(token=hunter2, guildId=$guildId, endpoint=$endpoint)"
+}
 
 @Serializable
 public data class DiscordWebhooksUpdateData(

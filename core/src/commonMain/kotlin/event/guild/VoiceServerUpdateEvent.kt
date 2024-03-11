@@ -28,7 +28,6 @@ public class VoiceServerUpdateEvent(
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): VoiceServerUpdateEvent =
         VoiceServerUpdateEvent(token, guildId, endpoint, kord, shard, customContext, strategy.supply(kord))
 
-    override fun toString(): String {
-        return "VoiceServerUpdateEvent(token='$token', guildId=$guildId, endpoint='$endpoint', kord=$kord, shard=$shard, supplier=$supplier)"
-    }
+    override fun toString(): String = "VoiceServerUpdateEvent(token=hunter2, guildId=$guildId, endpoint=$endpoint, " +
+        "kord=$kord, shard=$shard, customContext=$customContext, supplier=$supplier)"
 }

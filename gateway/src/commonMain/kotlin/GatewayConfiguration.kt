@@ -15,7 +15,10 @@ public data class GatewayConfiguration(
     val presence: Optional<DiscordPresence> = Optional.Missing(),
     val threshold: Int,
     val intents: Intents
-)
+) {
+    override fun toString(): String = "GatewayConfiguration(token=hunter2, name=$name, shard=$shard, " +
+            "presence=$presence, threshold=$threshold, intents=$intents)"
+}
 
 public class GatewayConfigurationBuilder(
     /**

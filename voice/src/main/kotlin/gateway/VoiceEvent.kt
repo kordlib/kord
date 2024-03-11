@@ -95,7 +95,9 @@ public data class SessionDescription(
     val mode: EncryptionMode,
     @SerialName("secret_key")
     val secretKey: List<UByte>
-) : VoiceEvent()
+) : VoiceEvent() {
+    override fun toString(): String = "SessionDescription(mode=$mode, secretKey=hunter2)"
+}
 
 @Serializable
 public data class Speaking(
