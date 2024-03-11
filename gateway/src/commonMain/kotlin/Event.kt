@@ -52,16 +52,15 @@ public sealed class Event {
             when (op) {
                 null ->
                     throw @OptIn(ExperimentalSerializationApi::class) MissingFieldException("op", descriptor.serialName)
-                OpCode.Dispatch -> createDispatchEvent(decoder, eventName = t, sequence = s, eventData = d)
-                OpCode.Heartbeat -> decodeEventIfEventDataIsPresent(decoder, op, Heartbeat.serializer(), eventData = d)
+                OpCode.Dispatch -> decodeDispatchEvent(decoder, eventName = t, sequence = s, eventData = d)
+                OpCode.Heartbeat -> decodeNonDispatchEvent(decoder, op, Heartbeat.serializer(), eventData = d)
                 OpCode.Reconnect -> {
                     // ignore the d field, Reconnect is supposed to have null here:
                     // https://discord.com/developers/docs/topics/gateway-events#reconnect
                     Reconnect
                 }
-                OpCode.InvalidSession ->
-                    decodeEventIfEventDataIsPresent(decoder, op, InvalidSession.serializer(), eventData = d)
-                OpCode.Hello -> decodeEventIfEventDataIsPresent(decoder, op, Hello.serializer(), eventData = d)
+                OpCode.InvalidSession -> decodeNonDispatchEvent(decoder, op, InvalidSession.serializer(), eventData = d)
+                OpCode.Hello -> decodeNonDispatchEvent(decoder, op, Hello.serializer(), eventData = d)
                 OpCode.HeartbeatACK -> {
                     // ignore the d field, Heartbeat ACK is supposed to omit it:
                     // https://discord.com/developers/docs/topics/gateway#heartbeat-interval-example-heartbeat-ack
@@ -75,7 +74,7 @@ public sealed class Event {
             }
         }
 
-        private fun <T> decodeEventIfEventDataIsPresent(
+        private fun <T> decodeNonDispatchEvent(
             decoder: Decoder,
             op: OpCode,
             deserializer: KDeserializationStrategy<T>,
@@ -86,7 +85,7 @@ public sealed class Event {
             return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
         }
 
-        private fun createDispatchEvent(
+        private fun decodeDispatchEvent(
             decoder: Decoder,
             eventName: String?,
             sequence: Int?,
