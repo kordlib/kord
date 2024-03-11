@@ -36,17 +36,21 @@ public sealed class Event {
         }
 
         override fun deserialize(decoder: Decoder): Event = decoder.decodeStructure(descriptor) {
+            // Correctly interpreting the d field depends on the value of the other fields. If we wanted to allow
+            // duplicated fields by letting the last value win (like generated serializers seem to do), we would have to
+            // make a tradeoff. Because it could be the case that op, t or s are duplicated, we would always have to
+            // defer interpreting d until all fields are decoded. This would mean always decoding d to a JsonElement and
+            // then again to the appropriate Event subtype.
+            // By disallowing duplicated fields, this intermediate step can be skipped in the case that op, t and s
+            // appear before d.
             var opCode: OpCode? = null
             var seenEventName = false
             var eventName: String? = null
             var seenSequence = false
             var sequence: Int? = null
-            // only one of event and rawEventData will be assigned, depending on the encounter order of the fields:
-            // - event, if ALL other fields (op, t, s) appeared before d
-            // - rawEventData, otherwise (an event will be created after all fields have been decoded)
             var seenEventData = false
-            var event: Event? = null
-            var rawEventData: JsonElement? = null
+            var event: Event? = null // assigned if op, t and s appear before d
+            var rawEventData: JsonElement? = null // assigned otherwise
             while (true) {
                 when (val index = decodeElementIndex(descriptor)) {
                     CompositeDecoder.DECODE_DONE -> break

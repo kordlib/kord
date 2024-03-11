@@ -226,13 +226,13 @@ class SerializationTest {
             Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"op":1}""")
         }
         assertFailsWith<SerializationException> {
-            Json.decodeFromString(Event.DeserializationStrategy, """{"s":0,"s":1}""")
+            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"s":0,"s":1}""")
         }
         assertFailsWith<SerializationException> {
-            Json.decodeFromString(Event.DeserializationStrategy, """{"t":"A","t":"B"}""")
+            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"t":"A","t":"B"}""")
         }
         assertFailsWith<SerializationException> {
-            Json.decodeFromString(Event.DeserializationStrategy, """{"d":true,"d":false}""")
+            Json.decodeFromString(Event.DeserializationStrategy, """{"op":0,"d":true,"d":false}""")
         }
     }
 
