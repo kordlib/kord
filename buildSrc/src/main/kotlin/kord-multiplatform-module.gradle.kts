@@ -1,5 +1,8 @@
+import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -22,23 +25,20 @@ apiValidation {
     applyKordBCVOptions()
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
-    explicitApi()
-
-    jvm()
-    js {
-        nodejs()
-        useCommonJs()
-    }
-    jvmToolchain(Jvm.target)
-
-    targets.all {
-        compilations.all {
-            compilerOptions.options.applyKordCompilerOptions()
+    applyDefaultHierarchyTemplate {
+        common {
+            group("nonJvm") {
+                withNative()
+                withJs()
+            }
         }
     }
 
-    applyDefaultHierarchyTemplate()
+    targets()
+    explicitApi()
+    jvmToolchain(Jvm.target)
 
     sourceSets {
         all {
@@ -52,12 +52,6 @@ kotlin {
             dependencies {
                 implementation(project(":test-kit"))
             }
-        }
-        val nonJvmMain by creating {
-            dependsOn(commonMain.get())
-        }
-        jsMain {
-            dependsOn(nonJvmMain)
         }
     }
 }
@@ -73,9 +67,18 @@ tasks {
         environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
     }
 
-    for (task in listOf("compileKotlinJvm", "compileKotlinJs", "jvmSourcesJar", "jsSourcesJar")) {
-        named(task) {
-            dependsOn("kspCommonMainKotlinMetadata")
+    withType<KotlinNativeTest>().configureEach {
+        environment("PROJECT_ROOT", rootProject.projectDir.absolutePath)
+    }
+
+    afterEvaluate {
+        val compilationTasks = kotlin.targets.flatMap {
+            listOf("compileKotlin${it.name.capitalized()}", "${it.name}SourcesJar")
+        }
+        for (task in compilationTasks) {
+            named(task) {
+                dependsOn("kspCommonMainKotlinMetadata")
+            }
         }
     }
 

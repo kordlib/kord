@@ -1,6 +1,7 @@
+import dev.kord.gradle.tools.util.commitHash
 import org.gradle.kotlin.dsl.assign
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
-import java.net.URL
+import java.net.URI
 
 fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
 
@@ -16,7 +17,7 @@ fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
 
         sourceLink {
             localDirectory = project.projectDir
-            remoteUrl = URL("https://github.com/kordlib/kord/blob/${project.commitHash}/${project.name}")
+            remoteUrl = URI("https://github.com/kordlib/kord/blob/${project.commitHash}/${project.name}").toURL()
             remoteLineSuffix = "#L"
         }
 

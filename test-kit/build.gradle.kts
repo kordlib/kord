@@ -1,8 +1,22 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
-    `kord-internal-multiplatform-module`
+    org.jetbrains.kotlin.multiplatform
+    dev.kord.`gradle-tools`
 }
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 kotlin {
+    applyDefaultHierarchyTemplate {
+        common {
+            group("simulator") {
+                withIos()
+                withTvos()
+                withWatchos()
+            }
+        }
+    }
+    targets()
     sourceSets {
         commonMain {
             dependencies {
@@ -18,6 +32,11 @@ kotlin {
         jvmMain {
             dependencies {
                 api(libs.bundles.test.jvm)
+            }
+        }
+        nativeMain {
+            dependencies {
+                api(libs.kotlinx.io)
             }
         }
     }

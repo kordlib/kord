@@ -1,6 +1,6 @@
 plugins {
     `java-platform`
-    `maven-publish`
+    `kord-publishing`
 }
 
 val me = project
@@ -31,5 +31,3 @@ publishing {
         from(components["javaPlatform"])
     }
 }
-
-apply(plugin = "kord-publishing")

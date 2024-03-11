@@ -668,7 +668,6 @@ public final class dev/kord/gateway/GatewayConfigurationBuilder {
 
 public final class dev/kord/gateway/GatewayKt {
 	public static final fun editPresence (Ldev/kord/gateway/Gateway;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static final fun getGatewayOnLogger ()Lmu/KLogger;
 	public static final fun logCaughtThrowable (Ljava/lang/Throwable;)V
 	public static final fun requestGuildMembers (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/flow/Flow;
 	public static final fun requestGuildMembers (Ldev/kord/gateway/Gateway;Ldev/kord/gateway/RequestGuildMembers;)Lkotlinx/coroutines/flow/Flow;
@@ -1873,10 +1872,6 @@ public final class dev/kord/gateway/UserUpdate : dev/kord/gateway/DispatchEvent 
 	public final fun getUser ()Ldev/kord/common/entity/DiscordUser;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/gateway/UtilsKt {
-	public static final fun error (Lmu/KLogger;Ljava/lang/Throwable;)V
 }
 
 public final class dev/kord/gateway/VoiceServerUpdate : dev/kord/gateway/DispatchEvent {

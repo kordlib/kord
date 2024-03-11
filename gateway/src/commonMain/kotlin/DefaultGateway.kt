@@ -180,7 +180,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
     private suspend fun read(frame: Frame) {
         defaultGatewayLogger.trace { "Received raw frame: $frame" }
         val json = when {
-            compression -> with(inflater) { frame.inflateData() }
+            compression -> with(inflater) { frame.inflateData() } ?: return
             else -> frame.data.decodeToString()
         }
 
