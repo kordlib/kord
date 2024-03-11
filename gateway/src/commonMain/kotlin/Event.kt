@@ -41,10 +41,10 @@ public sealed class Event {
             while (true) {
                 @OptIn(ExperimentalSerializationApi::class)
                 when (val index = decodeElementIndex(descriptor)) {
-                    0 -> op = decodeSerializableElement(descriptor, index, OpCode.serializer())
-                    1 -> t = decodeNullableSerializableElement(descriptor, index, String.serializer())
-                    2 -> s = decodeNullableSerializableElement(descriptor, index, Int.serializer())
-                    3 -> d = decodeSerializableElement(descriptor, index, JsonElement.serializer())
+                    0 -> op = decodeSerializableElement(descriptor, index, OpCode.serializer(), op)
+                    1 -> t = decodeNullableSerializableElement(descriptor, index, String.serializer(), t)
+                    2 -> s = decodeNullableSerializableElement(descriptor, index, Int.serializer(), s)
+                    3 -> d = decodeSerializableElement(descriptor, index, JsonElement.serializer(), d)
                     CompositeDecoder.DECODE_DONE -> break
                     else -> throw SerializationException("Unexpected index: $index")
                 }
