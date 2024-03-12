@@ -759,7 +759,8 @@ class DispatchEventDeserializationTest {
     )
 
 
-    // The following events aren't documented and might not even exist - they probably should be removed
+    // The following events have been removed from Discord's documentation, we should probably remove them too.
+    // See https://github.com/discord/discord-api-docs/pull/3691
 
     private val applicationCommand = DiscordApplicationCommand(
         id = Snowflake.min,
