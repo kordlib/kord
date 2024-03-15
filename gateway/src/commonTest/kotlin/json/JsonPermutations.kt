@@ -9,7 +9,7 @@ fun jsonObjectPermutations(vararg keyValuePairs: Pair<String, String>): List<Str
             val tail = list.subList(1, list.size)
             permutations(tail).flatMap { perm ->
                 val len = perm.size
-                (0..len).map { i -> perm.subList(0, i) + head + perm.subList(i, len) }
+                List(len) { i -> perm.subList(0, i) + head + perm.subList(i, len) }
             }
         }
     return permutations(keyValuePairs.toList()).map { pairs ->
