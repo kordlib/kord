@@ -3,70 +3,67 @@ package dev.kord.voice.gateway
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
-import io.github.oshai.kotlinlogging.KotlinLogging
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.nullable
+import kotlinx.serialization.*
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.buildClassSerialDescriptor
 import kotlinx.serialization.encoding.CompositeDecoder
 import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlinx.serialization.encoding.decodeStructure
+import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
-private val jsonLogger = KotlinLogging.logger { }
-
 public sealed class VoiceEvent {
     public object DeserializationStrategy : KDeserializationStrategy<VoiceEvent?> {
-        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("Event") {
-            element("op", OpCode.Serializer.descriptor)
-            element("d", JsonElement.serializer().descriptor)
+        override val descriptor: SerialDescriptor = buildClassSerialDescriptor("dev.kord.voice.gateway.Event") {
+            element("op", OpCode.serializer().descriptor)
+            element("d", JsonElement.serializer().descriptor, isOptional = true)
         }
 
-        @OptIn(ExperimentalSerializationApi::class)
-        override fun deserialize(decoder: Decoder): VoiceEvent? {
+        override fun deserialize(decoder: Decoder): VoiceEvent? = decoder.decodeStructure(descriptor) {
             var op: OpCode? = null
-            var data: VoiceEvent? = null
-
-            with(decoder.beginStructure(descriptor)) {
-                loop@ while (true) {
-                    when (val index = decodeElementIndex(descriptor)) {
-                        CompositeDecoder.DECODE_DONE -> break@loop
-                        0 -> op = OpCode.Serializer.deserialize(decoder)
-                        1 -> data = when (op) {
-                            OpCode.Hello -> decodeSerializableElement(
-                                descriptor,
-                                index,
-                                Hello.serializer()
-                            )
-                            OpCode.HeartbeatAck -> {
-                                HeartbeatAck(decodeInlineElement(HeartbeatAck.serializer().descriptor, 0).decodeLong())
-                            }
-                            OpCode.Ready -> decodeSerializableElement(descriptor, index, Ready.serializer())
-                            OpCode.SessionDescription -> decodeSerializableElement(
-                                descriptor,
-                                index,
-                                SessionDescription.serializer()
-                            )
-                            OpCode.Speaking -> decodeSerializableElement(descriptor, index, Speaking.serializer())
-                            OpCode.Resumed -> Resumed
-                            else -> {
-                                val element = decodeNullableSerializableElement(
-                                    descriptor,
-                                    index,
-                                    JsonElement.serializer().nullable
-                                )
-
-                                jsonLogger.debug { "Unknown event with Opcode $op : $element" }
-                                null
-                            }
-                        }
-                    }
+            var d: JsonElement? = null
+            while (true) {
+                when (val index = decodeElementIndex(descriptor)) {
+                    0 -> op = decodeSerializableElement(descriptor, index, OpCode.serializer(), op)
+                    1 -> d = decodeSerializableElement(descriptor, index, JsonElement.serializer(), d)
+                    CompositeDecoder.DECODE_DONE -> break
+                    else -> throw SerializationException("Unexpected index: $index")
                 }
-                endStructure(descriptor)
-                return data
             }
+            when (op) {
+                null ->
+                    throw @OptIn(ExperimentalSerializationApi::class) MissingFieldException("op", descriptor.serialName)
+                OpCode.Ready -> decodeEvent(decoder, op, Ready.serializer(), d)
+                OpCode.SessionDescription -> decodeEvent(decoder, op, SessionDescription.serializer(), d)
+                OpCode.Speaking -> decodeEvent(decoder, op, Speaking.serializer(), d)
+                OpCode.HeartbeatAck -> decodeEvent(decoder, op, HeartbeatAck.serializer(), d)
+                OpCode.Hello -> decodeEvent(decoder, op, Hello.serializer(), d)
+                OpCode.Resumed -> {
+                    // ignore the d field, Resumed is supposed to have null here:
+                    // https://discord.com/developers/docs/topics/voice-connections#resuming-voice-connection-example-resumed-payload
+                    Resumed
+                }
+                OpCode.ClientDisconnect -> null // TODO what should we do with this event?
+                // OpCodes for Commands, they shouldn't be received
+                OpCode.Identify, OpCode.SelectProtocol, OpCode.Heartbeat, OpCode.Resume ->
+                    throw IllegalArgumentException("Illegal opcode for voice gateway event: $op")
+                OpCode.Unknown -> null // TODO should we throw an exception instead?
+            }
+        }
+
+        private fun <T> decodeEvent(
+            decoder: Decoder,
+            op: OpCode,
+            deserializer: KDeserializationStrategy<T>,
+            d: JsonElement?,
+        ): T {
+            requireNotNull(d) { "Voice gateway event is missing 'd' field for opcode $op" }
+            // this cast will always succeed, otherwise decoder couldn't have decoded d
+            return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, d)
         }
     }
 }
@@ -87,8 +84,14 @@ public data class Hello(
     val heartbeatInterval: Double
 ) : VoiceEvent()
 
-@Serializable
-public data class HeartbeatAck(val nonce: Long) : VoiceEvent()
+@Serializable(with = HeartbeatAck.Serializer::class)
+public data class HeartbeatAck(val nonce: Long) : VoiceEvent() {
+    internal object Serializer : KSerializer<HeartbeatAck> {
+        override val descriptor = PrimitiveSerialDescriptor("dev.kord.voice.gateway.HeartbeatAck", PrimitiveKind.LONG)
+        override fun serialize(encoder: Encoder, value: HeartbeatAck) = encoder.encodeLong(value.nonce)
+        override fun deserialize(decoder: Decoder) = HeartbeatAck(nonce = decoder.decodeLong())
+    }
+}
 
 @Serializable
 public data class SessionDescription(
@@ -105,8 +108,23 @@ public data class Speaking(
     val speaking: SpeakingFlags
 ) : VoiceEvent()
 
-@Serializable
-public object Resumed : VoiceEvent()
+public object Resumed : VoiceEvent() {
+    @Deprecated(
+        "'Resumed' is no longer serializable, deserialize it with 'VoiceEvent.DeserializationStrategy' instead. " +
+            "Deprecated without a replacement.",
+        level = DeprecationLevel.WARNING,
+    )
+    public fun serializer(): KSerializer<Resumed> = serializer
+
+    private val serializer: KSerializer<Resumed> by lazy(LazyThreadSafetyMode.PUBLICATION) {
+        @Suppress("INVISIBLE_MEMBER")
+        kotlinx.serialization.internal.ObjectSerializer(
+            serialName = "dev.kord.voice.gateway.Resumed",
+            objectInstance = Resumed,
+            classAnnotations = arrayOf(),
+        )
+    }
+}
 
 public sealed class Close : VoiceEvent() {
     /**
