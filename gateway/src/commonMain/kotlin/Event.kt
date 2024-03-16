@@ -96,309 +96,104 @@ public sealed class Event {
                 // this cast will always succeed, otherwise decoder couldn't have decoded eventData
                 return (decoder as JsonDecoder).json.decodeFromJsonElement(deserializer, eventData)
             }
-
+            /*
+             * Keep ordered like this table: https://discord.com/developers/docs/topics/gateway-events#receive-events
+             * (Hello, Reconnect and Invalid Session are decoded above, they are no DispatchEvents)
+             *
+             * The names are sent in SCREAMING_SNAKE_CASE:
+             * https://discord.com/developers/docs/topics/gateway-events#event-names
+             */
             return when (eventName) {
+                "READY" -> Ready(decode(ReadyData.serializer()), sequence)
                 "RESUMED" -> {
                     // ignore the d field, the content isn't documented:
                     // https://discord.com/developers/docs/topics/gateway-events#resumed
                     Resumed(sequence)
                 }
-                "READY" -> Ready(decode(ReadyData.serializer()), sequence)
                 "APPLICATION_COMMAND_PERMISSIONS_UPDATE" -> ApplicationCommandPermissionsUpdate(
-                    decode(
-                        DiscordGuildApplicationCommandPermissions.serializer()
-                    ), sequence
+                    decode(DiscordGuildApplicationCommandPermissions.serializer()), sequence,
                 )
-                "AUTO_MODERATION_RULE_CREATE" -> AutoModerationRuleCreate(
-                    rule = decode(DiscordAutoModerationRule.serializer()),
-                    sequence,
-                )
-                "AUTO_MODERATION_RULE_UPDATE" -> AutoModerationRuleUpdate(
-                    rule = decode(DiscordAutoModerationRule.serializer()),
-                    sequence,
-                )
-                "AUTO_MODERATION_RULE_DELETE" -> AutoModerationRuleDelete(
-                    rule = decode(DiscordAutoModerationRule.serializer()),
-                    sequence,
-                )
-                "AUTO_MODERATION_ACTION_EXECUTION" -> AutoModerationActionExecution(
-                    actionExecution = decode(
-                        DiscordAutoModerationActionExecution.serializer(),
-                    ),
-                    sequence,
-                )
-                "CHANNEL_CREATE" -> ChannelCreate(
-                    decode(
-                        DiscordChannel.serializer()
-                    ), sequence
-                )
-                "CHANNEL_UPDATE" -> ChannelUpdate(
-                    decode(
-                        DiscordChannel.serializer()
-                    ), sequence
-                )
-                "CHANNEL_DELETE" -> ChannelDelete(
-                    decode(
-                        DiscordChannel.serializer()
-                    ), sequence
-                )
-                "CHANNEL_PINS_UPDATE" -> ChannelPinsUpdate(
-                    decode(
-                        DiscordPinsUpdateData.serializer()
-                    ), sequence
-                )
-                "TYPING_START" -> TypingStart(
-                    decode(
-                        DiscordTyping.serializer()
-                    ), sequence
-                )
-                "GUILD_AUDIT_LOG_ENTRY_CREATE" -> GuildAuditLogEntryCreate(
-                    decode(
-                        DiscordAuditLogEntry.serializer()
-                    ), sequence
-                )
-                "GUILD_CREATE" -> GuildCreate(
-                    decode(
-                        DiscordGuild.serializer()
-                    ), sequence
-                )
-                "GUILD_UPDATE" -> GuildUpdate(
-                    decode(
-                        DiscordGuild.serializer()
-                    ), sequence
-                )
-                "GUILD_DELETE" -> GuildDelete(
-                    decode(
-                        DiscordUnavailableGuild.serializer()
-                    ), sequence
-                )
-                "GUILD_BAN_ADD" -> GuildBanAdd(
-                    decode(
-                        DiscordGuildBan.serializer()
-                    ), sequence
-                )
-                "GUILD_BAN_REMOVE" -> GuildBanRemove(
-                    decode(
-                        DiscordGuildBan.serializer()
-                    ), sequence
-                )
-                "GUILD_EMOJIS_UPDATE" -> GuildEmojisUpdate(
-                    decode(
-                        DiscordUpdatedEmojis.serializer()
-                    ), sequence
-                )
-                "GUILD_INTEGRATIONS_UPDATE" -> GuildIntegrationsUpdate(
-                    decode(
-                        DiscordGuildIntegrations.serializer()
-                    ), sequence
-                )
-                "INTEGRATION_CREATE" -> IntegrationCreate(
-                    decode(
-                        DiscordIntegration.serializer()
-                    ), sequence
-                )
-                "INTEGRATION_DELETE" -> IntegrationDelete(
-                    decode(
-                        DiscordIntegrationDelete.serializer(),
-                    ), sequence
-                )
-                "INTEGRATION_UPDATE" -> IntegrationUpdate(
-                    decode(
-                        DiscordIntegration.serializer()
-                    ), sequence
-                )
-                "GUILD_MEMBER_ADD" -> GuildMemberAdd(
-                    decode(
-                        DiscordAddedGuildMember.serializer()
-                    ), sequence
-                )
-                "GUILD_MEMBER_REMOVE" -> GuildMemberRemove(
-                    decode(
-                        DiscordRemovedGuildMember.serializer()
-                    ), sequence
-                )
-                "GUILD_MEMBER_UPDATE" -> GuildMemberUpdate(
-                    decode(
-                        DiscordUpdatedGuildMember.serializer()
-                    ), sequence
-                )
-                "GUILD_ROLE_CREATE" -> GuildRoleCreate(
-                    decode(
-                        DiscordGuildRole.serializer()
-                    ), sequence
-                )
-                "GUILD_ROLE_UPDATE" -> GuildRoleUpdate(
-                    decode(
-                        DiscordGuildRole.serializer()
-                    ), sequence
-                )
-                "GUILD_ROLE_DELETE" -> GuildRoleDelete(
-                    decode(
-                        DiscordDeletedGuildRole.serializer()
-                    ), sequence
-                )
-                "GUILD_MEMBERS_CHUNK" -> GuildMembersChunk(
-                    decode(
-                        GuildMembersChunkData.serializer()
-                    ), sequence
-                )
-
-                "INVITE_CREATE" -> InviteCreate(
-                    decode(
-                        DiscordCreatedInvite.serializer()
-                    ), sequence
-                )
-                "INVITE_DELETE" -> InviteDelete(
-                    decode(
-                        DiscordDeletedInvite.serializer()
-                    ), sequence
-                )
-
-                "MESSAGE_CREATE" -> MessageCreate(
-                    decode(
-                        DiscordMessage.serializer()
-                    ), sequence
-                )
-                "MESSAGE_UPDATE" -> MessageUpdate(
-                    decode(
-                        DiscordPartialMessage.serializer()
-                    ), sequence
-                )
-                "MESSAGE_DELETE" -> MessageDelete(
-                    decode(
-                        DeletedMessage.serializer()
-                    ), sequence
-                )
-                "MESSAGE_DELETE_BULK" -> MessageDeleteBulk(
-                    decode(
-                        BulkDeleteData.serializer()
-                    ), sequence
-                )
-                "MESSAGE_REACTION_ADD" -> MessageReactionAdd(
-                    decode(
-                        MessageReactionAddData.serializer()
-                    ), sequence
-                )
-                "MESSAGE_REACTION_REMOVE" -> MessageReactionRemove(
-                    decode(
-                        MessageReactionRemoveData.serializer()
-                    ), sequence
-                )
-                "MESSAGE_REACTION_REMOVE_EMOJI" -> MessageReactionRemoveEmoji(
-                    decode(
-                        DiscordRemovedEmoji.serializer()
-                    ), sequence
-                )
-
-                "MESSAGE_REACTION_REMOVE_ALL" -> MessageReactionRemoveAll(
-                    decode(
-                        AllRemovedMessageReactions.serializer()
-                    ), sequence
-                )
-                "PRESENCE_UPDATE" -> PresenceUpdate(
-                    decode(
-                        DiscordPresenceUpdate.serializer()
-                    ), sequence
-                )
-                "USER_UPDATE" -> UserUpdate(
-                    decode(
-                        DiscordUser.serializer()
-                    ), sequence
-                )
-                "VOICE_STATE_UPDATE" -> VoiceStateUpdate(
-                    decode(
-                        DiscordVoiceState.serializer()
-                    ), sequence
-                )
-                "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(
-                    decode(
-                        DiscordVoiceServerUpdateData.serializer()
-                    ), sequence
-                )
-                "WEBHOOKS_UPDATE" -> WebhooksUpdate(
-                    decode(
-                        DiscordWebhooksUpdateData.serializer()
-                    ), sequence
-                )
-                "INTERACTION_CREATE" -> InteractionCreate(
-                    decode(
-                        DiscordInteraction.serializer()
-                    ), sequence
-                )
-                "APPLICATION_COMMAND_CREATE" -> ApplicationCommandCreate(
-                    decode(DiscordApplicationCommand.serializer()),
-                    sequence
-                )
-
-                "APPLICATION_COMMAND_UPDATE" -> ApplicationCommandUpdate(
-                    decode(DiscordApplicationCommand.serializer()),
-                    sequence
-                )
-
-                "APPLICATION_COMMAND_DELETE" -> ApplicationCommandDelete(
-                    decode(DiscordApplicationCommand.serializer()),
-                    sequence
-                )
-
-                "THREAD_CREATE" -> ThreadCreate(
-                    decode(DiscordChannel.serializer()),
-                    sequence
-                )
-
-
-                "THREAD_DELETE" -> ThreadDelete(
-                    decode(DiscordChannel.serializer()),
-                    sequence
-                )
-
-
-                "THREAD_UPDATE" -> ThreadUpdate(
-                    decode(DiscordChannel.serializer()),
-                    sequence
-                )
-
-                "THREAD_LIST_SYNC" -> ThreadListSync(
-                    decode(DiscordThreadListSync.serializer()),
-                    sequence
-                )
-
-                "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(
-                    decode(DiscordThreadMember.serializer()),
-                    sequence
-                )
-
-
-                "THREAD_MEMBERS_UPDATE" -> ThreadMembersUpdate(
-                    decode(DiscordThreadMembersUpdate.serializer()),
-                    sequence
-                )
-
-                "GUILD_SCHEDULED_EVENT_CREATE" -> GuildScheduledEventCreate(
-                    decode(DiscordGuildScheduledEvent.serializer()),
-                    sequence
-                )
-                "GUILD_SCHEDULED_EVENT_UPDATE" -> GuildScheduledEventUpdate(
-                    decode(DiscordGuildScheduledEvent.serializer()),
-                    sequence
-                )
-                "GUILD_SCHEDULED_EVENT_DELETE" -> GuildScheduledEventDelete(
-                    decode(DiscordGuildScheduledEvent.serializer()),
-                    sequence
-                )
-                "GUILD_SCHEDULED_EVENT_USER_ADD" -> GuildScheduledEventUserAdd(
-                    data = decode(
-                        GuildScheduledEventUserMetadata.serializer(),
-                    ),
-                    sequence
-                )
-                "GUILD_SCHEDULED_EVENT_USER_REMOVE" -> GuildScheduledEventUserRemove(
-                    data = decode(
-                        GuildScheduledEventUserMetadata.serializer(),
-                    ),
-                    sequence
-                )
-
-
+                "AUTO_MODERATION_RULE_CREATE" ->
+                    AutoModerationRuleCreate(decode(DiscordAutoModerationRule.serializer()), sequence)
+                "AUTO_MODERATION_RULE_UPDATE" ->
+                    AutoModerationRuleUpdate(decode(DiscordAutoModerationRule.serializer()), sequence)
+                "AUTO_MODERATION_RULE_DELETE" ->
+                    AutoModerationRuleDelete(decode(DiscordAutoModerationRule.serializer()), sequence)
+                "AUTO_MODERATION_ACTION_EXECUTION" ->
+                    AutoModerationActionExecution(decode(DiscordAutoModerationActionExecution.serializer()), sequence)
+                "CHANNEL_CREATE" -> ChannelCreate(decode(DiscordChannel.serializer()), sequence)
+                "CHANNEL_UPDATE" -> ChannelUpdate(decode(DiscordChannel.serializer()), sequence)
+                "CHANNEL_DELETE" -> ChannelDelete(decode(DiscordChannel.serializer()), sequence)
+                "CHANNEL_PINS_UPDATE" -> ChannelPinsUpdate(decode(DiscordPinsUpdateData.serializer()), sequence)
+                "THREAD_CREATE" -> ThreadCreate(decode(DiscordChannel.serializer()), sequence)
+                "THREAD_UPDATE" -> ThreadUpdate(decode(DiscordChannel.serializer()), sequence)
+                "THREAD_DELETE" -> ThreadDelete(decode(DiscordChannel.serializer()), sequence)
+                "THREAD_LIST_SYNC" -> ThreadListSync(decode(DiscordThreadListSync.serializer()), sequence)
+                "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(decode(DiscordThreadMember.serializer()), sequence)
+                "THREAD_MEMBERS_UPDATE" ->
+                    ThreadMembersUpdate(decode(DiscordThreadMembersUpdate.serializer()), sequence)
+                // Missing: Entitlement Create, Entitlement Update, Entitlement Delete
+                "GUILD_CREATE" -> GuildCreate(decode(DiscordGuild.serializer()), sequence)
+                "GUILD_UPDATE" -> GuildUpdate(decode(DiscordGuild.serializer()), sequence)
+                "GUILD_DELETE" -> GuildDelete(decode(DiscordUnavailableGuild.serializer()), sequence)
+                "GUILD_AUDIT_LOG_ENTRY_CREATE" ->
+                    GuildAuditLogEntryCreate(decode(DiscordAuditLogEntry.serializer()), sequence)
+                "GUILD_BAN_ADD" -> GuildBanAdd(decode(DiscordGuildBan.serializer()), sequence)
+                "GUILD_BAN_REMOVE" -> GuildBanRemove(decode(DiscordGuildBan.serializer()), sequence)
+                "GUILD_EMOJIS_UPDATE" -> GuildEmojisUpdate(decode(DiscordUpdatedEmojis.serializer()), sequence)
+                // Missing: GuildStickers Update
+                "GUILD_INTEGRATIONS_UPDATE" ->
+                    GuildIntegrationsUpdate(decode(DiscordGuildIntegrations.serializer()), sequence)
+                "GUILD_MEMBER_ADD" -> GuildMemberAdd(decode(DiscordAddedGuildMember.serializer()), sequence)
+                "GUILD_MEMBER_REMOVE" -> GuildMemberRemove(decode(DiscordRemovedGuildMember.serializer()), sequence)
+                "GUILD_MEMBER_UPDATE" -> GuildMemberUpdate(decode(DiscordUpdatedGuildMember.serializer()), sequence)
+                "GUILD_MEMBERS_CHUNK" -> GuildMembersChunk(decode(GuildMembersChunkData.serializer()), sequence)
+                "GUILD_ROLE_CREATE" -> GuildRoleCreate(decode(DiscordGuildRole.serializer()), sequence)
+                "GUILD_ROLE_UPDATE" -> GuildRoleUpdate(decode(DiscordGuildRole.serializer()), sequence)
+                "GUILD_ROLE_DELETE" -> GuildRoleDelete(decode(DiscordDeletedGuildRole.serializer()), sequence)
+                "GUILD_SCHEDULED_EVENT_CREATE" ->
+                    GuildScheduledEventCreate(decode(DiscordGuildScheduledEvent.serializer()), sequence)
+                "GUILD_SCHEDULED_EVENT_UPDATE" ->
+                    GuildScheduledEventUpdate(decode(DiscordGuildScheduledEvent.serializer()), sequence)
+                "GUILD_SCHEDULED_EVENT_DELETE" ->
+                    GuildScheduledEventDelete(decode(DiscordGuildScheduledEvent.serializer()), sequence)
+                "GUILD_SCHEDULED_EVENT_USER_ADD" ->
+                    GuildScheduledEventUserAdd(decode(GuildScheduledEventUserMetadata.serializer()), sequence)
+                "GUILD_SCHEDULED_EVENT_USER_REMOVE" ->
+                    GuildScheduledEventUserRemove(decode(GuildScheduledEventUserMetadata.serializer()), sequence)
+                "INTEGRATION_CREATE" -> IntegrationCreate(decode(DiscordIntegration.serializer()), sequence)
+                "INTEGRATION_UPDATE" -> IntegrationUpdate(decode(DiscordIntegration.serializer()), sequence)
+                "INTEGRATION_DELETE" -> IntegrationDelete(decode(DiscordIntegrationDelete.serializer()), sequence)
+                "INTERACTION_CREATE" -> InteractionCreate(decode(DiscordInteraction.serializer()), sequence)
+                "INVITE_CREATE" -> InviteCreate(decode(DiscordCreatedInvite.serializer()), sequence)
+                "INVITE_DELETE" -> InviteDelete(decode(DiscordDeletedInvite.serializer()), sequence)
+                "MESSAGE_CREATE" -> MessageCreate(decode(DiscordMessage.serializer()), sequence)
+                "MESSAGE_UPDATE" -> MessageUpdate(decode(DiscordPartialMessage.serializer()), sequence)
+                "MESSAGE_DELETE" -> MessageDelete(decode(DeletedMessage.serializer()), sequence)
+                "MESSAGE_DELETE_BULK" -> MessageDeleteBulk(decode(BulkDeleteData.serializer()), sequence)
+                "MESSAGE_REACTION_ADD" -> MessageReactionAdd(decode(MessageReactionAddData.serializer()), sequence)
+                "MESSAGE_REACTION_REMOVE" ->
+                    MessageReactionRemove(decode(MessageReactionRemoveData.serializer()), sequence)
+                "MESSAGE_REACTION_REMOVE_ALL" ->
+                    MessageReactionRemoveAll(decode(AllRemovedMessageReactions.serializer()), sequence)
+                "MESSAGE_REACTION_REMOVE_EMOJI" ->
+                    MessageReactionRemoveEmoji(decode(DiscordRemovedEmoji.serializer()), sequence)
+                "PRESENCE_UPDATE" -> PresenceUpdate(decode(DiscordPresenceUpdate.serializer()), sequence)
+                //  Missing: Stage Instance Create, Stage Instance Update, Stage Instance Delete
+                "TYPING_START" -> TypingStart(decode(DiscordTyping.serializer()), sequence)
+                "USER_UPDATE" -> UserUpdate(decode(DiscordUser.serializer()), sequence)
+                "VOICE_STATE_UPDATE" -> VoiceStateUpdate(decode(DiscordVoiceState.serializer()), sequence)
+                "VOICE_SERVER_UPDATE" -> VoiceServerUpdate(decode(DiscordVoiceServerUpdateData.serializer()), sequence)
+                "WEBHOOKS_UPDATE" -> WebhooksUpdate(decode(DiscordWebhooksUpdateData.serializer()), sequence)
+                // The following three events have been removed from Discord's documentation, we should probably remove
+                // them too.
+                // See https://github.com/discord/discord-api-docs/pull/3691
+                "APPLICATION_COMMAND_CREATE" ->
+                    ApplicationCommandCreate(decode(DiscordApplicationCommand.serializer()), sequence)
+                "APPLICATION_COMMAND_UPDATE" ->
+                    ApplicationCommandUpdate(decode(DiscordApplicationCommand.serializer()), sequence)
+                "APPLICATION_COMMAND_DELETE" ->
+                    ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
                     UnknownDispatchEvent(eventName, eventData, sequence)
