@@ -3,6 +3,7 @@ package dev.kord.voice.gateway
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.serialization.*
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -15,6 +16,8 @@ import kotlinx.serialization.encoding.decodeStructure
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
+
+private val jsonLogger = KotlinLogging.logger { }
 
 public sealed class VoiceEvent {
     public object DeserializationStrategy : KDeserializationStrategy<VoiceEvent?> {
@@ -47,11 +50,12 @@ public sealed class VoiceEvent {
                     // https://discord.com/developers/docs/topics/voice-connections#resuming-voice-connection-example-resumed-payload
                     Resumed
                 }
-                OpCode.ClientDisconnect -> null // TODO what should we do with this event?
-                // OpCodes for Commands, they shouldn't be received
-                OpCode.Identify, OpCode.SelectProtocol, OpCode.Heartbeat, OpCode.Resume ->
-                    throw IllegalArgumentException("Illegal opcode for voice gateway event: $op")
-                OpCode.Unknown -> null // TODO should we throw an exception instead?
+                OpCode.Identify, OpCode.SelectProtocol, OpCode.Heartbeat, OpCode.Resume, OpCode.ClientDisconnect,
+                OpCode.Unknown,
+                -> {
+                    jsonLogger.debug { "Unknown voice gateway event with opcode $op : $d" }
+                    null
+                }
             }
         }
 
