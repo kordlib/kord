@@ -189,10 +189,13 @@ public sealed class Event {
                 // them too.
                 // See https://github.com/discord/discord-api-docs/pull/3691
                 "APPLICATION_COMMAND_CREATE" ->
+                    @Suppress("DEPRECATION")
                     ApplicationCommandCreate(decode(DiscordApplicationCommand.serializer()), sequence)
                 "APPLICATION_COMMAND_UPDATE" ->
+                    @Suppress("DEPRECATION")
                     ApplicationCommandUpdate(decode(DiscordApplicationCommand.serializer()), sequence)
                 "APPLICATION_COMMAND_DELETE" ->
+                    @Suppress("DEPRECATION")
                     ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
@@ -501,14 +504,29 @@ public data class WebhooksUpdate(val webhooksUpdateData: DiscordWebhooksUpdateDa
 public data class InteractionCreate(val interaction: DiscordInteraction, override val sequence: Int?) : DispatchEvent()
 
 
+@Deprecated(
+    "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
+        "details.",
+    level = DeprecationLevel.WARNING,
+)
 public data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
 
 
+@Deprecated(
+    "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
+        "details.",
+    level = DeprecationLevel.WARNING,
+)
 public data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
 
 
+@Deprecated(
+    "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
+        "details.",
+    level = DeprecationLevel.WARNING,
+)
 public data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
 
