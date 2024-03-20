@@ -22,7 +22,7 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                api(libs.ktor.client.okhttp)
+                api(libs.ktor.client.cio)
             }
         }
         nonJvmMain {
