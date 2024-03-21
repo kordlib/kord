@@ -7,8 +7,8 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
+import dev.kord.voice.encryption.VoiceEncryption
 import dev.kord.voice.encryption.strategies.LiteNonceStrategy
-import dev.kord.voice.encryption.strategies.NonceStrategy
 import dev.kord.voice.exception.VoiceConnectionInitializationException
 import dev.kord.voice.gateway.DefaultVoiceGatewayBuilder
 import dev.kord.voice.gateway.VoiceGateway
@@ -31,7 +31,7 @@ public class VoiceConnectionBuilder(
     public var gateway: Gateway,
     public var selfId: Snowflake,
     public var channelId: Snowflake,
-    public var guildId: Snowflake
+    public var guildId: Snowflake,
 ) {
     /**
      * The amount in milliseconds to wait for the events required to create a [VoiceConnection]. Default is 5000, or 5 seconds.
@@ -65,9 +65,10 @@ public class VoiceConnectionBuilder(
 
     /**
      * The nonce strategy to be used for the encryption of audio packets.
-     * If `null`, [dev.kord.voice.encryption.strategies.LiteNonceStrategy] will be used.
+     * If `null` & voice receive if disabled, [VoiceEncryption.AeadAes256Gcm] will be used,
+     * otherwise [VoiceEncryption.XSalsaPoly1305] with the Lite strategy will be used.
      */
-    public var nonceStrategy: NonceStrategy? = null
+    public var encryption: VoiceEncryption? = null
 
     /**
      * A boolean indicating whether your voice state will be muted.
@@ -166,7 +167,11 @@ public class VoiceConnectionBuilder(
             .build()
         val udpSocket = udpSocket ?: GlobalVoiceUdpSocket
         val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
-        val nonceStrategy = nonceStrategy ?: LiteNonceStrategy()
+        val encryption = if ((receiveVoice || streams != null) && encryption?.supportsDecryption != true) {
+            VoiceEncryption.XSalsaPoly1305()
+        } else {
+            encryption ?: VoiceEncryption.AeadAes256Gcm
+        }
         val frameInterceptor = frameInterceptor ?: DefaultFrameInterceptor()
         val audioSender =
             audioSender ?: DefaultAudioFrameSender(
@@ -174,11 +179,11 @@ public class VoiceConnectionBuilder(
                     udpSocket,
                     frameInterceptor,
                     audioProvider,
-                    nonceStrategy
+                    encryption
                 )
             )
         val streams =
-            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy) else NOPStreams
+            streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, encryption) else NOPStreams
 
         return VoiceConnection(
             voiceConnectionData,
@@ -190,7 +195,7 @@ public class VoiceConnectionBuilder(
             audioProvider,
             frameInterceptor,
             audioSender,
-            nonceStrategy,
+            encryption,
             connectionDetachDuration
         )
     }

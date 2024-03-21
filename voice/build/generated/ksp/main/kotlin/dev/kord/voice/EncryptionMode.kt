@@ -42,6 +42,10 @@ public sealed class EncryptionMode(
         `value`: String,
     ) : EncryptionMode(value)
 
+    public object AeadAes256Gcm : EncryptionMode("aead_aes256_gcm")
+
+    public object AeadAes256GcmRtpSize : EncryptionMode("aead_aes256_gcm_rtpsize")
+
     public object XSalsa20Poly1305 : EncryptionMode("xsalsa20_poly1305")
 
     public object XSalsa20Poly1305Suffix : EncryptionMode("xsalsa20_poly1305_suffix")
@@ -65,6 +69,8 @@ public sealed class EncryptionMode(
          */
         public val entries: List<EncryptionMode> by lazy(mode = PUBLICATION) {
             listOf(
+                AeadAes256Gcm,
+                AeadAes256GcmRtpSize,
                 XSalsa20Poly1305,
                 XSalsa20Poly1305Suffix,
                 XSalsa20Poly1305Lite,
@@ -77,6 +83,8 @@ public sealed class EncryptionMode(
          * specified [value].
          */
         public fun from(`value`: String): EncryptionMode = when (value) {
+            "aead_aes256_gcm" -> AeadAes256Gcm
+            "aead_aes256_gcm_rtpsize" -> AeadAes256GcmRtpSize
             "xsalsa20_poly1305" -> XSalsa20Poly1305
             "xsalsa20_poly1305_suffix" -> XSalsa20Poly1305Suffix
             "xsalsa20_poly1305_lite" -> XSalsa20Poly1305Lite

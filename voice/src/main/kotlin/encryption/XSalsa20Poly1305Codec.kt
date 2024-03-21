@@ -12,7 +12,7 @@ public class XSalsa20Poly1305Codec(public val key: ByteArray) {
         mOffset: Int = 0,
         mLength: Int = message.size,
         nonce: ByteArray,
-        output: MutableByteArrayCursor
+        output: MutableByteArrayCursor,
     ): Boolean =
         encryption.box(message, mOffset, mLength, nonce, output)
 
@@ -21,16 +21,15 @@ public class XSalsa20Poly1305Codec(public val key: ByteArray) {
         boxOffset: Int = 0,
         boxLength: Int = box.size,
         nonce: ByteArray,
-        output: MutableByteArrayCursor
-    ): Boolean =
-        encryption.open(box, boxOffset, boxLength, nonce, output)
+        output: MutableByteArrayCursor,
+    ): Boolean = encryption.open(box, boxOffset, boxLength, nonce, output)
 }
 
 public fun XSalsa20Poly1305Codec.encrypt(
     message: ByteArray,
     mOffset: Int = 0,
     mLength: Int = message.size,
-    nonce: ByteArray
+    nonce: ByteArray,
 ): ByteArray? {
     val buffer = ByteArray(mLength + TweetNaclFast.SecretBox.boxzerobytesLength)
     if (!encrypt(message, mOffset, mLength, nonce, buffer.mutableCursor())) return null
@@ -41,7 +40,7 @@ public fun XSalsa20Poly1305Codec.decrypt(
     box: ByteArray,
     boxOffset: Int = 0,
     boxLength: Int = box.size,
-    nonce: ByteArray
+    nonce: ByteArray,
 ): ByteArray? {
     val buffer = ByteArray(boxLength - TweetNaclFast.SecretBox.boxzerobytesLength)
     if (!decrypt(box, boxOffset, boxLength, nonce, buffer.mutableCursor())) return null

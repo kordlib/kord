@@ -204,6 +204,14 @@ public abstract class dev/kord/voice/EncryptionMode {
 	public final fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/voice/EncryptionMode$AeadAes256Gcm : dev/kord/voice/EncryptionMode {
+	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$AeadAes256Gcm;
+}
+
+public final class dev/kord/voice/EncryptionMode$AeadAes256GcmRtpSize : dev/kord/voice/EncryptionMode {
+	public static final field INSTANCE Ldev/kord/voice/EncryptionMode$AeadAes256GcmRtpSize;
+}
+
 public final class dev/kord/voice/EncryptionMode$Companion {
 	public final fun from (Ljava/lang/String;)Ldev/kord/voice/EncryptionMode;
 	public final fun getEntries ()Ljava/util/List;
@@ -317,16 +325,16 @@ public final class dev/kord/voice/SpeakingFlags$Companion {
 }
 
 public final class dev/kord/voice/VoiceConnection {
-	public synthetic fun <init> (Ldev/kord/voice/VoiceConnectionData;Ldev/kord/gateway/Gateway;Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/gateway/VoiceGatewayConfiguration;Ldev/kord/voice/streams/Streams;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/udp/AudioFrameSender;Ldev/kord/voice/encryption/strategies/NonceStrategy;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ldev/kord/voice/VoiceConnectionData;Ldev/kord/gateway/Gateway;Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/gateway/VoiceGatewayConfiguration;Ldev/kord/voice/streams/Streams;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/udp/AudioFrameSender;Ldev/kord/voice/encryption/VoiceEncryption;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun connect (Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun connect$default (Ldev/kord/voice/VoiceConnection;Lkotlinx/coroutines/CoroutineScope;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun disconnect (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAudioProvider ()Ldev/kord/voice/AudioProvider;
 	public final fun getData ()Ldev/kord/voice/VoiceConnectionData;
+	public final fun getEncryption ()Ldev/kord/voice/encryption/VoiceEncryption;
 	public final fun getFrameInterceptor ()Ldev/kord/voice/FrameInterceptor;
 	public final fun getFrameSender ()Ldev/kord/voice/udp/AudioFrameSender;
 	public final fun getGateway ()Ldev/kord/gateway/Gateway;
-	public final fun getNonceStrategy ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
 	public final fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public final fun getSocket ()Ldev/kord/voice/udp/VoiceUdpSocket;
 	public final fun getStreams ()Ldev/kord/voice/streams/Streams;
@@ -348,10 +356,10 @@ public final class dev/kord/voice/VoiceConnectionBuilder {
 	public final fun getAudioSender ()Ldev/kord/voice/udp/AudioFrameSender;
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getConnectionDetachDuration-UwyO8pc ()J
+	public final fun getEncryption ()Ldev/kord/voice/encryption/VoiceEncryption;
 	public final fun getFrameInterceptor ()Ldev/kord/voice/FrameInterceptor;
 	public final fun getGateway ()Ldev/kord/gateway/Gateway;
 	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
-	public final fun getNonceStrategy ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
 	public final fun getReceiveVoice ()Z
 	public final fun getSelfDeaf ()Z
 	public final fun getSelfId ()Ldev/kord/common/entity/Snowflake;
@@ -363,10 +371,10 @@ public final class dev/kord/voice/VoiceConnectionBuilder {
 	public final fun setAudioSender (Ldev/kord/voice/udp/AudioFrameSender;)V
 	public final fun setChannelId (Ldev/kord/common/entity/Snowflake;)V
 	public final fun setConnectionDetachDuration-LRDsOJo (J)V
+	public final fun setEncryption (Ldev/kord/voice/encryption/VoiceEncryption;)V
 	public final fun setFrameInterceptor (Ldev/kord/voice/FrameInterceptor;)V
 	public final fun setGateway (Ldev/kord/gateway/Gateway;)V
 	public final fun setGuildId (Ldev/kord/common/entity/Snowflake;)V
-	public final fun setNonceStrategy (Ldev/kord/voice/encryption/strategies/NonceStrategy;)V
 	public final fun setReceiveVoice (Z)V
 	public final fun setSelfDeaf (Z)V
 	public final fun setSelfId (Ldev/kord/common/entity/Snowflake;)V
@@ -397,6 +405,56 @@ public final class dev/kord/voice/VoiceConnectionKt {
 	public static synthetic fun VoiceConnection$default (Ldev/kord/gateway/Gateway;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public abstract interface class dev/kord/voice/encryption/VoiceEncryption {
+	public abstract fun createBox ([B)Ldev/kord/voice/encryption/VoiceEncryption$Box;
+	public abstract fun createUnbox ([B)Ldev/kord/voice/encryption/VoiceEncryption$Unbox;
+	public abstract fun getMode ()Ldev/kord/voice/EncryptionMode;
+	public abstract fun getNonceLength ()I
+	public abstract fun getSupportsDecryption ()Z
+}
+
+public final class dev/kord/voice/encryption/VoiceEncryption$AeadAes256Gcm : dev/kord/voice/encryption/VoiceEncryption {
+	public static final field INSTANCE Ldev/kord/voice/encryption/VoiceEncryption$AeadAes256Gcm;
+	public fun createBox ([B)Ldev/kord/voice/encryption/VoiceEncryption$Box;
+	public fun createUnbox ([B)Ldev/kord/voice/encryption/VoiceEncryption$Unbox;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getMode ()Ldev/kord/voice/EncryptionMode;
+	public fun getNonceLength ()I
+	public fun getSupportsDecryption ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class dev/kord/voice/encryption/VoiceEncryption$Box {
+	public abstract fun appendNonce (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;)V
+	public abstract fun encrypt ([B[BLdev/kord/voice/io/MutableByteArrayCursor;)Z
+	public abstract fun generateNonce (Lkotlin/jvm/functions/Function0;)Ldev/kord/voice/io/ByteArrayView;
+	public abstract fun getOverhead ()I
+}
+
+public abstract interface class dev/kord/voice/encryption/VoiceEncryption$Unbox {
+	public abstract fun decrypt ([BII[BLdev/kord/voice/io/MutableByteArrayCursor;)Z
+	public abstract fun getNonce (Ldev/kord/voice/udp/RTPPacket;)Ldev/kord/voice/io/ByteArrayView;
+}
+
+public final class dev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305 : dev/kord/voice/encryption/VoiceEncryption {
+	public fun <init> ()V
+	public fun <init> (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)V
+	public synthetic fun <init> (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;
+	public final fun copy (Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;)Ldev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305;
+	public static synthetic fun copy$default (Ldev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305;Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;ILjava/lang/Object;)Ldev/kord/voice/encryption/VoiceEncryption$XSalsaPoly1305;
+	public fun createBox ([B)Ldev/kord/voice/encryption/VoiceEncryption$Box;
+	public fun createUnbox ([B)Ldev/kord/voice/encryption/VoiceEncryption$Unbox;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getMode ()Ldev/kord/voice/EncryptionMode;
+	public fun getNonceLength ()I
+	public final fun getNonceStrategyFactory ()Ldev/kord/voice/encryption/strategies/NonceStrategy$Factory;
+	public fun getSupportsDecryption ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/voice/encryption/XSalsa20Poly1305Codec {
 	public fun <init> ([B)V
 	public final fun decrypt ([BII[BLdev/kord/voice/io/MutableByteArrayCursor;)Z
@@ -414,34 +472,57 @@ public final class dev/kord/voice/encryption/XSalsa20Poly1305CodecKt {
 }
 
 public final class dev/kord/voice/encryption/strategies/LiteNonceStrategy : dev/kord/voice/encryption/strategies/NonceStrategy {
+	public static final field Factory Ldev/kord/voice/encryption/strategies/LiteNonceStrategy$Factory;
 	public fun <init> ()V
 	public fun append (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;)V
 	public fun generate (Lkotlin/jvm/functions/Function0;)Ldev/kord/voice/io/ByteArrayView;
-	public fun getNonceLength ()I
 	public fun strip (Ldev/kord/voice/udp/RTPPacket;)Ldev/kord/voice/io/ByteArrayView;
+}
+
+public final class dev/kord/voice/encryption/strategies/LiteNonceStrategy$Factory : dev/kord/voice/encryption/strategies/NonceStrategy$Factory {
+	public fun create ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
+	public fun getLength ()I
+	public fun getMode ()Ldev/kord/voice/EncryptionMode;
 }
 
 public abstract interface class dev/kord/voice/encryption/strategies/NonceStrategy {
 	public abstract fun append (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;)V
 	public abstract fun generate (Lkotlin/jvm/functions/Function0;)Ldev/kord/voice/io/ByteArrayView;
-	public abstract fun getNonceLength ()I
 	public abstract fun strip (Ldev/kord/voice/udp/RTPPacket;)Ldev/kord/voice/io/ByteArrayView;
 }
 
+public abstract interface class dev/kord/voice/encryption/strategies/NonceStrategy$Factory {
+	public abstract fun create ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
+	public abstract fun getLength ()I
+	public abstract fun getMode ()Ldev/kord/voice/EncryptionMode;
+}
+
 public final class dev/kord/voice/encryption/strategies/NormalNonceStrategy : dev/kord/voice/encryption/strategies/NonceStrategy {
+	public static final field Factory Ldev/kord/voice/encryption/strategies/NormalNonceStrategy$Factory;
 	public fun <init> ()V
 	public fun append (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;)V
 	public fun generate (Lkotlin/jvm/functions/Function0;)Ldev/kord/voice/io/ByteArrayView;
-	public fun getNonceLength ()I
 	public fun strip (Ldev/kord/voice/udp/RTPPacket;)Ldev/kord/voice/io/ByteArrayView;
 }
 
+public final class dev/kord/voice/encryption/strategies/NormalNonceStrategy$Factory : dev/kord/voice/encryption/strategies/NonceStrategy$Factory {
+	public fun create ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
+	public fun getLength ()I
+	public fun getMode ()Ldev/kord/voice/EncryptionMode;
+}
+
 public final class dev/kord/voice/encryption/strategies/SuffixNonceStrategy : dev/kord/voice/encryption/strategies/NonceStrategy {
+	public static final field Factory Ldev/kord/voice/encryption/strategies/SuffixNonceStrategy$Factory;
 	public fun <init> ()V
 	public fun append (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;)V
 	public fun generate (Lkotlin/jvm/functions/Function0;)Ldev/kord/voice/io/ByteArrayView;
-	public fun getNonceLength ()I
 	public fun strip (Ldev/kord/voice/udp/RTPPacket;)Ldev/kord/voice/io/ByteArrayView;
+}
+
+public final class dev/kord/voice/encryption/strategies/SuffixNonceStrategy$Factory : dev/kord/voice/encryption/strategies/NonceStrategy$Factory {
+	public fun create ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
+	public fun getLength ()I
+	public fun getMode ()Ldev/kord/voice/EncryptionMode;
 }
 
 public final class dev/kord/voice/exception/VoiceConnectionInitializationException : java/lang/Exception {
@@ -1062,7 +1143,7 @@ public final class dev/kord/voice/io/ReadableByteArrayCursor {
 }
 
 public final class dev/kord/voice/streams/DefaultStreams : dev/kord/voice/streams/Streams {
-	public fun <init> (Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/encryption/strategies/NonceStrategy;)V
+	public fun <init> (Ldev/kord/voice/gateway/VoiceGateway;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/encryption/VoiceEncryption;)V
 	public fun getIncomingAudioFrames ()Lkotlinx/coroutines/flow/Flow;
 	public synthetic fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/Flow;
 	public fun getIncomingAudioPackets ()Lkotlinx/coroutines/flow/SharedFlow;
@@ -1111,9 +1192,9 @@ public final class dev/kord/voice/udp/AudioFrameSenderConfiguration {
 }
 
 public abstract class dev/kord/voice/udp/AudioPacketProvider {
-	public fun <init> ([BLdev/kord/voice/encryption/strategies/NonceStrategy;)V
+	public fun <init> ([BLdev/kord/voice/encryption/VoiceEncryption;)V
+	public final fun getEncryption ()Ldev/kord/voice/encryption/VoiceEncryption;
 	public final fun getKey ()[B
-	public final fun getNonceStrategy ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
 	public abstract fun provide-jfaDVJw (SII[B)Ldev/kord/voice/io/ByteArrayView;
 }
 
@@ -1124,16 +1205,16 @@ public final class dev/kord/voice/udp/DefaultAudioFrameSender : dev/kord/voice/u
 }
 
 public final class dev/kord/voice/udp/DefaultAudioFrameSenderData {
-	public fun <init> (Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/encryption/strategies/NonceStrategy;)V
+	public fun <init> (Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/encryption/VoiceEncryption;)V
 	public final fun component1 ()Ldev/kord/voice/udp/VoiceUdpSocket;
 	public final fun component2 ()Ldev/kord/voice/FrameInterceptor;
 	public final fun component3 ()Ldev/kord/voice/AudioProvider;
-	public final fun component4 ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
-	public final fun copy (Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/encryption/strategies/NonceStrategy;)Ldev/kord/voice/udp/DefaultAudioFrameSenderData;
-	public static synthetic fun copy$default (Ldev/kord/voice/udp/DefaultAudioFrameSenderData;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/encryption/strategies/NonceStrategy;ILjava/lang/Object;)Ldev/kord/voice/udp/DefaultAudioFrameSenderData;
+	public final fun component4 ()Ldev/kord/voice/encryption/VoiceEncryption;
+	public final fun copy (Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/encryption/VoiceEncryption;)Ldev/kord/voice/udp/DefaultAudioFrameSenderData;
+	public static synthetic fun copy$default (Ldev/kord/voice/udp/DefaultAudioFrameSenderData;Ldev/kord/voice/udp/VoiceUdpSocket;Ldev/kord/voice/FrameInterceptor;Ldev/kord/voice/AudioProvider;Ldev/kord/voice/encryption/VoiceEncryption;ILjava/lang/Object;)Ldev/kord/voice/udp/DefaultAudioFrameSenderData;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEncryption ()Ldev/kord/voice/encryption/VoiceEncryption;
 	public final fun getInterceptor ()Ldev/kord/voice/FrameInterceptor;
-	public final fun getNonceStrategy ()Ldev/kord/voice/encryption/strategies/NonceStrategy;
 	public final fun getProvider ()Ldev/kord/voice/AudioProvider;
 	public final fun getUdp ()Ldev/kord/voice/udp/VoiceUdpSocket;
 	public fun hashCode ()I
@@ -1141,7 +1222,7 @@ public final class dev/kord/voice/udp/DefaultAudioFrameSenderData {
 }
 
 public final class dev/kord/voice/udp/DefaultAudioPacketProvider : dev/kord/voice/udp/AudioPacketProvider {
-	public fun <init> ([BLdev/kord/voice/encryption/strategies/NonceStrategy;)V
+	public fun <init> ([BLdev/kord/voice/encryption/VoiceEncryption;)V
 	public fun provide-jfaDVJw (SII[B)Ldev/kord/voice/io/ByteArrayView;
 }
 

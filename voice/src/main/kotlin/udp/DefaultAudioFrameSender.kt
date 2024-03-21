@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.AudioFrame
 import dev.kord.voice.AudioProvider
 import dev.kord.voice.FrameInterceptor
+import dev.kord.voice.encryption.VoiceEncryption
 import dev.kord.voice.encryption.strategies.NonceStrategy
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.network.sockets.*
@@ -21,7 +22,7 @@ public data class DefaultAudioFrameSenderData(
     val udp: VoiceUdpSocket,
     val interceptor: FrameInterceptor,
     val provider: AudioProvider,
-    val nonceStrategy: NonceStrategy,
+    val encryption: VoiceEncryption,
 )
 
 @KordVoice
@@ -31,7 +32,7 @@ public class DefaultAudioFrameSender(
     override suspend fun start(configuration: AudioFrameSenderConfiguration): Unit = coroutineScope {
         var sequence: UShort = Random.nextBits(UShort.SIZE_BITS).toUShort()
 
-        val packetProvider = DefaultAudioPacketProvider(configuration.key, data.nonceStrategy)
+        val packetProvider = DefaultAudioPacketProvider(configuration.key, data.encryption)
 
         val frames = Channel<AudioFrame?>(Channel.RENDEZVOUS)
         with(data.provider) { launch { provideFrames(frames) } }

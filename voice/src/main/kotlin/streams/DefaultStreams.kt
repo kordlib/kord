@@ -4,8 +4,7 @@ import com.iwebpp.crypto.TweetNaclFast
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.AudioFrame
-import dev.kord.voice.encryption.XSalsa20Poly1305Codec
-import dev.kord.voice.encryption.strategies.NonceStrategy
+import dev.kord.voice.encryption.VoiceEncryption
 import dev.kord.voice.gateway.Speaking
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.io.*
@@ -28,14 +27,14 @@ private val defaultStreamsLogger = KotlinLogging.logger { }
 public class DefaultStreams(
     private val voiceGateway: VoiceGateway,
     private val udp: VoiceUdpSocket,
-    private val nonceStrategy: NonceStrategy
+    private val encryption: VoiceEncryption,
 ) : Streams {
     private fun CoroutineScope.listenForIncoming(key: ByteArray, server: SocketAddress) {
         udp.incoming
             .filter { it.address == server }
             .mapNotNull { RTPPacket.fromPacket(it.packet) }
             .filter { it.payloadType == PayloadType.Audio.raw }
-            .decrypt(nonceStrategy, key)
+            .decrypt(encryption, key)
             .clean()
             .onEach { _incomingAudioPackets.emit(it) }
             .launchIn(this)
@@ -86,36 +85,36 @@ public class DefaultStreams(
     override val ssrcToUser: Map<UInt, Snowflake> get() = _ssrcToUser.value
 }
 
-private fun Flow<RTPPacket>.decrypt(nonceStrategy: NonceStrategy, key: ByteArray): Flow<RTPPacket> {
-    val codec = XSalsa20Poly1305Codec(key)
-    val nonceBuffer = ByteArray(TweetNaclFast.SecretBox.nonceLength).mutableCursor()
+private fun Flow<RTPPacket>.decrypt(encryption: VoiceEncryption, key: ByteArray): Flow<RTPPacket> {
+    val unbox = encryption.createUnbox(key)
+    val nonceBuffer = ByteArray(encryption.nonceLength).mutableCursor()
 
     val decryptedBuffer = ByteArray(512)
     val decryptedCursor = decryptedBuffer.mutableCursor()
     val decryptedView = decryptedBuffer.view()
 
-    return mapNotNull {
+    return mapNotNull { packet ->
         nonceBuffer.reset()
         decryptedCursor.reset()
 
-        nonceBuffer.writeByteView(nonceStrategy.strip(it))
+        nonceBuffer.writeByteView(unbox.getNonce(packet))
 
-        val decrypted = with(it.payload) {
-            codec.decrypt(data, dataStart, viewSize, nonceBuffer.data, decryptedCursor)
+        val decrypted = with(packet.payload) {
+            unbox.decrypt(data, dataStart, viewSize, nonceBuffer.data, decryptedCursor)
         }
 
         if (!decrypted) {
-            defaultStreamsLogger.trace { "failed to decrypt the packet with data ${it.payload.data.contentToString()} at offset ${it.payload.dataStart} and length ${it.payload.viewSize - 4}" }
+            defaultStreamsLogger.trace { "failed to decrypt the packet with data ${packet.payload.data.contentToString()} at offset ${packet.payload.dataStart} and length ${packet.payload.viewSize - 4}" }
             return@mapNotNull null
         }
 
         decryptedView.resize(0, decryptedCursor.cursor)
 
         // mutate the payload data and update the view
-        it.payload.data.mutableCursor().writeByteViewOrResize(decryptedView)
-        it.payload.resize(0, decryptedView.viewSize)
+        packet.payload.data.mutableCursor().writeByteViewOrResize(decryptedView)
+        packet.payload.resize(0, decryptedView.viewSize)
 
-        it
+        packet
     }
 }
 
