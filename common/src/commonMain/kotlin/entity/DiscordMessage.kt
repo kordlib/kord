@@ -246,7 +246,7 @@ public data class DiscordMessage(
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val thread: Optional<DiscordChannel> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
-    val poll: Optional<Poll> = Optional.Missing()
+    val poll: Optional<DiscordPoll> = Optional.Missing()
 )
 
 /**

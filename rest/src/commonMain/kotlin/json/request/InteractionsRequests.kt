@@ -96,6 +96,7 @@ public data class InteractionApplicationCommandCallbackData(
     val flags: Optional<MessageFlags> = Optional.Missing(),
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
+    val poll: Optional<CreatablePoll> = Optional.Missing()
 )
 
 public data class MultipartFollowupMessageCreateRequest(
@@ -113,6 +114,7 @@ public data class FollowupMessageCreateRequest(
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
     val flags: Optional<MessageFlags> = Optional.Missing(),
+    val poll: Optional<CreatablePoll> = Optional.Missing()
 )
 
 @Serializable
