@@ -23,7 +23,8 @@ public data class MessageCreateRequest(
     @SerialName("sticker_ids")
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val flags: Optional<MessageFlags> = Optional.Missing(),
+    val poll: Optional<DiscordPoll> = Optional.Missing()
 )
 
 public data class MultipartMessageCreateRequest(
