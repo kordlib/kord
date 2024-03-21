@@ -121,6 +121,14 @@
     ],
 )
 
+@file:Generate(
+    INT_KORD_ENUM, name = "PollLayoutType",
+    docUrl = "https://discord.com/developers/docs/resources/poll#layout-type",
+    entries =  [
+        Entry("DEFAULT", intValue = 1, kDoc = "The, uhm, default layout type.")
+    ]
+)
+
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
@@ -184,6 +192,7 @@ import kotlinx.serialization.Serializable
  * @param roleSubscriptionData [RoleSubscription] object data of the role subscription purchase or renewal that prompted this message.
  * @param applicationId if the message is a response to an [Interaction][DiscordInteraction], this is the id of the interaction's application
  * @param components a list of [components][DiscordComponent] which have been added to this message
+ * @param poll the poll in this message if any
  */
 
 @Serializable
@@ -236,7 +245,8 @@ public data class DiscordMessage(
     val components: Optional<List<DiscordComponent>> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
     val thread: Optional<DiscordChannel> = Optional.Missing(),
-    val position: OptionalInt = OptionalInt.Missing
+    val position: OptionalInt = OptionalInt.Missing,
+    val poll: Optional<Poll> = Optional.Missing()
 )
 
 /**
@@ -691,3 +701,84 @@ public data class RoleSubscription(
     @SerialName("is_renewal")
     val isRenewal: Boolean
 )
+
+/**
+ * Representation of a poll.
+ *
+ * @property question the question
+ * @property answers a list of [answers][Answer]
+ * @property expiry the [Instant] of the polls end
+ * @property allowMultiselect Whether a user can select multiple answers
+ * @property layoutType the [layout type][PollLayoutType] of the poll
+ */
+@Serializable
+public data class DiscordPoll(
+    val question: Media,
+    val answers: List<Answer>,
+    val expiry: Instant,
+    @SerialName("allow_multiselect")
+    val allowMultiselect: Boolean,
+    @SerialName("layout_type")
+    val layoutType: PollLayoutType,
+    val results: Results
+) {
+    /**
+     * Shared object between answers and questions.
+     *
+     * @property text the text
+     * @property emoji the emoji
+     */
+    @Serializable
+    public data class Media(
+        val text: Optional<String> = Optional.Missing(),
+        val emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
+    )
+
+    /**
+     * Representation of a possible answer to a poll
+     *
+     * @property answerId the ID of the answer
+     * @property pollMedia the data of the answer
+     */
+    @Serializable
+    public data class Answer(
+        @SerialName("answer_id")
+        val answerId: Int,
+        @SerialName("poll_media")
+        val pollMedia: Media
+    )
+
+    @Serializable
+    public data class Results(
+        @SerialName("is_finalized")
+        val isFinalized: Boolean,
+        @SerialName("answer_counts")
+        val answerCounts: List<AnswerCount>
+    ) {
+        /**
+         * In a nutshell, this contains the number of votes for each answer.
+         *
+         * Due to the intricacies of counting at scale, while a poll is in progress the results may not
+         * be perfectly accurate.
+         * They usually are accurate, and shouldn't deviate significantly -- it's just difficult to make guarantees.
+         *
+         * To compensate for this, after a poll is finished there is a background job which performs a final,
+         * accurate tally of votes.
+         * This tally has concluded once [dev.kord.common.entity.Poll.Results.isFinalized] is `true`.
+         *
+         * If [dev.kord.common.entity.Poll.Results.answerCounts] does not contain an entry for a particular answer,
+         * then there are no votes for that answer.
+         *
+         * @property id the [Answer.answerId]
+         * @property count the number of votes for this answer
+         * @property meVoted whether the current user voted for this answer
+         */
+        @Serializable
+        public data class AnswerCount(
+            val id: Int,
+            val count: Int,
+            @SerialName("me_voted")
+            val meVoted: Boolean
+        )
+    }
+}
