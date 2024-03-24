@@ -301,6 +301,12 @@ public class Message(
         get() = data.components.orEmpty().map { ActionRowComponent(it) }
 
     /**
+     * The [poll][DiscordPoll] of this message if any.
+     */
+    public val poll: DiscordPoll?
+        get() = data.poll.value
+
+    /**
      * Returns itself.
      */
     override suspend fun asMessage(): Message = this
