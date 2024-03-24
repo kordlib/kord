@@ -626,6 +626,21 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Cannot update onboarding while below requirements. */
     CannotUpdateOnboarding(350001),
 
+    /**
+     * Poll voting is blocked.
+     */
+    PollVotingBlocked(520000),
+
+    /**
+     * Poll has expired.
+     */
+    PollExpired(5200001),
+
+    /**
+     * Invalid channel type for poll creation.
+     */
+    PollInvalidChannelType(520002)
+
     ;
 
     internal object Serializer : KSerializer<JsonErrorCode> {
