@@ -81,6 +81,7 @@ public sealed class Route<T>(
     public object ScheduledEventId : Key("{event.id}", true)
     public object StickerId : Key("{sticker.id}")
     public object AutoModerationRuleId : Key("{auto_moderation_rule.id}")
+    public object PollAnswerId : Key("{poll.answer.id}")
 
 
     protected constructor(
@@ -1046,4 +1047,16 @@ public sealed class Route<T>(
             "/guilds/$GuildId/stickers/$StickerId",
             DiscordMessageSticker.serializer()
         )
+
+    public object GetVoteAnswer : Route<List<DiscordUser>>(
+        HttpMethod.Get,
+        "/channels/$ChannelId/polls/$MessageId/answers/$PollAnswerId",
+        ListSerializer(DiscordUser.serializer())
+    )
+
+    public object PostExpirePoll : Route<DiscordMessage>(
+        HttpMethod.Post,
+        "/channels/$ChannelId/polls/$MessageId/expire",
+        DiscordMessage.serializer()
+    )
 }
