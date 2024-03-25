@@ -4,7 +4,6 @@ import io.ktor.websocket.*
 import kotlinx.cinterop.*
 import platform.zlib.*
 
-private const val MAX_WBITS = 15 // Maximum window size in bits
 private const val CHUNK_SIZE = 256 * 1000
 private val ZLIB_SUFFIX = ubyteArrayOf(0x00u, 0x00u, 0xffu, 0xffu)
 
@@ -12,11 +11,26 @@ internal actual fun Inflater(): Inflater = NativeInflater()
 
 @OptIn(ExperimentalForeignApi::class)
 private class NativeInflater : Inflater {
+    // see https://www.zlib.net/manual.html
+
     private var frameBuffer = UByteArray(0)
 
-    private val zStream = nativeHeap.alloc<z_stream>().apply {
-        inflateInit2(ptr, MAX_WBITS).check {
-            nativeHeap.free(this)
+    private val zStream = nativeHeap.alloc<z_stream>().also { zStream ->
+        // next_in, avail_in, zalloc, zfree and opaque must be initialized before calling inflateInit
+        zStream.next_in = null
+        zStream.avail_in = 0u
+        zStream.zalloc = null
+        zStream.zfree = null
+        zStream.opaque = null
+        // initialize msg just in case, we use it for throwing exceptions
+        zStream.msg = null
+        val ret = inflateInit(zStream.ptr)
+        if (ret != Z_OK) {
+            try {
+                throwZlibException(zStream.msg, ret)
+            } finally {
+                nativeHeap.free(zStream)
+            }
         }
     }
 
@@ -54,21 +68,31 @@ private class NativeInflater : Inflater {
     }
 
     override fun close() {
-        inflateEnd(zStream.ptr).check { nativeHeap.free(zStream) }
+        val ret = inflateEnd(zStream.ptr)
+        try {
+            if (ret != Z_OK) throwZlibException(zStream.msg, ret)
+        } finally {
+            nativeHeap.free(zStream)
+        }
     }
 }
 
+@ExperimentalForeignApi
 private fun Int.check(validCodes: List<Int> = listOf(Z_OK), cleanup: () -> Unit = {}) {
     if (this !in validCodes) {
         try {
-            throw ZLibException(zErrorMessage(this).toString())
+            throw ZlibException(zErrorMessage(this).toString())
         } finally {
             cleanup()
         }
     }
 }
 
-private class ZLibException(message: String?) : IllegalStateException(message)
+private class ZlibException(message: String?) : IllegalStateException(message)
 
-@OptIn(ExperimentalForeignApi::class)
+@ExperimentalForeignApi
 private fun zErrorMessage(errorCode: Int) = zError(errorCode)?.toKString() ?: errorCode
+
+@ExperimentalForeignApi
+private fun throwZlibException(msg: CPointer<ByteVar>?, ret: Int): Nothing =
+    throw ZlibException(msg?.toKString() ?: zError(ret)?.toKString() ?: ret.toString())
