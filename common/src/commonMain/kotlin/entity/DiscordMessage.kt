@@ -720,7 +720,7 @@ public data class DiscordPoll(
     val allowMultiselect: Boolean,
     @SerialName("layout_type")
     val layoutType: PollLayoutType,
-    val results: Results
+    val results: Results?
 ) {
     /**
      * Shared object between answers and questions.
