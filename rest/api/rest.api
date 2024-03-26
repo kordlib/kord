@@ -2626,6 +2626,9 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field OwnerCannotBePendingMember Ldev/kord/rest/json/JsonErrorCode;
 	public static final field OwnershipCannotBeTransferredToBot Ldev/kord/rest/json/JsonErrorCode;
 	public static final field PermissionLack Ldev/kord/rest/json/JsonErrorCode;
+	public static final field PollExpired Ldev/kord/rest/json/JsonErrorCode;
+	public static final field PollInvalidChannelType Ldev/kord/rest/json/JsonErrorCode;
+	public static final field PollVotingBlocked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ProvidedMessageCountInsufficient Ldev/kord/rest/json/JsonErrorCode;
 	public static final field RasterizedImagesInLotties Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ReactionBlocked Ldev/kord/rest/json/JsonErrorCode;
@@ -6510,6 +6513,10 @@ public final class dev/kord/rest/route/Route$GatewayGet : dev/kord/rest/route/Ro
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GatewayGet;
 }
 
+public final class dev/kord/rest/route/Route$GetVoteAnswer : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$GetVoteAnswer;
+}
+
 public final class dev/kord/rest/route/Route$GetWebhookMessage : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$GetWebhookMessage;
 }
@@ -6958,6 +6965,14 @@ public final class dev/kord/rest/route/Route$PinsGet : dev/kord/rest/route/Route
 	public static final field INSTANCE Ldev/kord/rest/route/Route$PinsGet;
 }
 
+public final class dev/kord/rest/route/Route$PollAnswerId : dev/kord/rest/route/Route$Key {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$PollAnswerId;
+}
+
+public final class dev/kord/rest/route/Route$PostExpirePoll : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$PostExpirePoll;
+}
+
 public final class dev/kord/rest/route/Route$PrivateArchivedThreadsGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$PrivateArchivedThreadsGet;
 }
@@ -7181,6 +7196,7 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MultipartMessagePatchRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/MultipartWebhookEditMessageRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun editMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun expirePoll (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun followNewsChannel (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/ChannelFollowRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChannel (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChannelInvites (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -7188,6 +7204,8 @@ public final class dev/kord/rest/service/ChannelService : dev/kord/rest/service/
 	public final fun getMessage (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getMessages (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getMessages$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/route/Position;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getPollUsersByAnswer (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/Snowflake;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun getPollUsersByAnswer$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;ILdev/kord/common/entity/Snowflake;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getReactions (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/route/Position$After;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getReactions$default (Ldev/kord/rest/service/ChannelService;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ldev/kord/rest/route/Position$After;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun joinThread (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
