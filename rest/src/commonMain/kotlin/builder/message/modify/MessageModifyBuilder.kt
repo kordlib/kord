@@ -77,8 +77,7 @@ public sealed class AbstractMessageModifyBuilder : MessageModifyBuilder {
 }
 
 
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "RemoveRedundantQualifierName")
-@kotlin.internal.LowPriorityInOverloadResolution
+@Suppress("RemoveRedundantQualifierName")
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.embed'.",
     ReplaceWith("this.embed(block)", imports = ["dev.kord.rest.builder.message.embed"]),
@@ -96,8 +95,7 @@ public inline fun MessageModifyBuilder.embed(block: EmbedBuilder.() -> Unit) {
  * (ping everything), calling this function but not configuring it before the request is build will result in all
  * pings being ignored.
  */
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "RemoveRedundantQualifierName")
-@kotlin.internal.LowPriorityInOverloadResolution
+@Suppress("RemoveRedundantQualifierName")
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.allowedMentions'.",
     ReplaceWith("this.allowedMentions(block)", imports = ["dev.kord.rest.builder.message.allowedMentions"]),
@@ -110,8 +108,7 @@ public inline fun MessageModifyBuilder.allowedMentions(block: AllowedMentionsBui
     allowedMentionsExtensionOnNewSupertype(block)
 }
 
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "RemoveRedundantQualifierName")
-@kotlin.internal.LowPriorityInOverloadResolution
+@Suppress("RemoveRedundantQualifierName")
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.actionRow'.",
     ReplaceWith("this.actionRow(builder)", imports = ["dev.kord.rest.builder.message.actionRow"]),
@@ -129,8 +126,7 @@ public inline fun MessageModifyBuilder.actionRow(builder: ActionRowBuilder.() ->
  *
  * **Only supports [MessageFlag.SuppressEmbeds]**
  */
-@Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE", "RemoveRedundantQualifierName")
-@kotlin.internal.LowPriorityInOverloadResolution
+@Suppress("RemoveRedundantQualifierName")
 @Deprecated(
     "Replaced by extension on 'MessageBuilder'. Change import to 'dev.kord.rest.builder.message.messageFlags'.",
     ReplaceWith("this.messageFlags(builder)", imports = ["dev.kord.rest.builder.message.messageFlags"]),

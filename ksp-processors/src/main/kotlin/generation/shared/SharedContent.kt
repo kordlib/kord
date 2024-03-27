@@ -32,7 +32,7 @@ internal fun TypeSpec.Builder.addUnknownClass(constructorParameterName: String, 
 
 context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addEntityEntries() {
-    for (entry in entries) {
+    for (entry in this@GenerationEntity.entries) {
         addObject(entry.name) {
             entry.kDoc?.let { addKdoc(it) }
             @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`

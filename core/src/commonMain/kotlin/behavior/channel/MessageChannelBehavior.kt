@@ -316,9 +316,6 @@ public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder
  * @throws RestRequestException if something went wrong during a [type][MessageChannelBehavior.type] request.
  */
 public suspend fun <T : MessageChannelBehavior, R> T.withTyping(block: suspend T.() -> R): R {
-    // see contract in `coroutineScope {}`
-    contract { callsInPlace(block, InvocationKind.EXACTLY_ONCE) }
-
     type() // guarantees that the typing indicator is triggered before `block` is called
     return coroutineScope {
         val typingJob = launch {

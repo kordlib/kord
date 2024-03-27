@@ -1,9 +1,12 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     org.jetbrains.kotlin.multiplatform
 }
 
 repositories {
     mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap")
 }
 
 kotlin {
@@ -14,9 +17,8 @@ kotlin {
     }
     jvmToolchain(Jvm.target)
 
-    targets.all {
-        compilations.all {
-            compilerOptions.options.applyKordCompilerOptions()
-        }
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        applyKordCompilerOptions()
     }
 }
