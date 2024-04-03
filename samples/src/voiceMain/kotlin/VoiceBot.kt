@@ -10,37 +10,43 @@ import dev.kord.core.behavior.interaction.respondPublic
 import dev.kord.core.event.interaction.GuildChatInputCommandInteractionCreateEvent
 import dev.kord.core.on
 import dev.kord.voice.AudioFrame
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
-fun main(args: Array<String>) = runBlocking {
-    val kord = Kord(args.firstOrNull() ?: error("Missing token"))
+@OptIn(DelicateCoroutinesApi::class)
+fun main(args: Array<String>) {
+    GlobalScope.launch {
+        val kord =
+            Kord(args.firstOrNull() ?: error("Missing token"))
 
-    kord.createGlobalApplicationCommands {
-        input("join", "Test command") {
-            dmPermission = false
+        kord.createGlobalApplicationCommands {
+            input("join", "Test command") {
+                dmPermission = false
+            }
         }
-    }
 
-    kord.on<GuildChatInputCommandInteractionCreateEvent> {
-        val channel = interaction.user.asMember(interaction.guildId).getVoiceState().getChannelOrNull()
-        if (channel == null) {
-            interaction.respondPublic { content = "not in channel" }
-            return@on
+        kord.on<GuildChatInputCommandInteractionCreateEvent> {
+            val channel = interaction.user.asMember(interaction.guildId).getVoiceState().getChannelOrNull()
+            if (channel == null) {
+                interaction.respondPublic { content = "not in channel" }
+                return@on
+            }
+            interaction.respondPublic { content = "success" }
+            channel.connectEcho()
         }
-        interaction.respondPublic { content = "success" }
-        channel.connectEcho()
-    }
 
-    kord.login()
+        kord.login()
+    }
 }
 
+@OptIn(KordVoice::class)
 private suspend fun BaseVoiceChannelBehavior.connectEcho() {
     val buffer = mutableListOf(AudioFrame.SILENCE, AudioFrame.SILENCE, AudioFrame.SILENCE, AudioFrame.SILENCE)
     val connection = connect {
         receiveVoice = true
         audioProvider {
-            buffer.removeLastOrNull() ?: AudioFrame.SILENCE
+            buffer.removeFirstOrNull() ?: AudioFrame.SILENCE
         }
     }
     connection.scope.launch {
