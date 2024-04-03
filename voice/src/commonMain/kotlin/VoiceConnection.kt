@@ -58,7 +58,7 @@ public class VoiceConnection(
     connectionDetachDuration: Duration
 ) {
     public val scope: CoroutineScope =
-        CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))
+        CoroutineScope(Dispatchers.Default + SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))
 
     init {
         with(scope) {

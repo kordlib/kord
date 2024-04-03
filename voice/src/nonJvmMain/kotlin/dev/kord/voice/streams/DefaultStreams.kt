@@ -9,6 +9,7 @@ import dev.kord.voice.udp.RTPPacket
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapNotNull
 
+@OptIn(ExperimentalUnsignedTypes::class)
 internal actual fun Flow<RTPPacket>.decrypt(nonceStrategy: NonceStrategy, key: ByteArray): Flow<RTPPacket> {
     val nonceBuffer = ByteArray(crypto_secretbox_NONCEBYTES).mutableCursor()
     val uKey = key.asUByteArray()

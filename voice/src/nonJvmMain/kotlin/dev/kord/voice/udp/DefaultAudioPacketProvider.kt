@@ -27,6 +27,7 @@ public class DefaultNativeAudioPacketProvider(key: ByteArray, nonceStrategy: Non
 
     private val lock = SynchronizedObject()
 
+    @OptIn(ExperimentalUnsignedTypes::class)
     override fun provide(sequence: UShort, timestamp: UInt, ssrc: UInt, data: ByteArray): ByteArrayView =
         synchronized(lock) {
             with(packetBufferCursor) {

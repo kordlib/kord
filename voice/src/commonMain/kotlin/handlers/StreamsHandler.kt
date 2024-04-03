@@ -6,7 +6,7 @@ import dev.kord.voice.gateway.SessionDescription
 import dev.kord.voice.gateway.VoiceEvent
 import dev.kord.voice.gateway.handler.GatewayEventHandler
 import dev.kord.voice.streams.Streams
-import io.ktor.network.sockets.*
+import dev.kord.voice.udp.SocketAddress
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.Job
@@ -25,7 +25,7 @@ internal class StreamsHandler(
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun start() = coroutineScope {
         on<Ready> {
-            server.value = InetSocketAddress(it.ip, it.port)
+            server.value = SocketAddress(it.ip, it.port)
         }
 
         on<SessionDescription> {

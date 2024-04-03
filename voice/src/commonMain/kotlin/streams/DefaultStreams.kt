@@ -8,11 +8,11 @@ import dev.kord.voice.gateway.Speaking
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.readableCursor
+import dev.kord.voice.udp.SocketAddress
 import dev.kord.voice.udp.PayloadType
 import dev.kord.voice.udp.RTPPacket
 import dev.kord.voice.udp.VoiceUdpSocket
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.network.sockets.*
 import kotlinx.atomicfu.AtomicRef
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.update
@@ -30,9 +30,8 @@ public class DefaultStreams(
     private val nonceStrategy: NonceStrategy
 ) : Streams {
     private fun CoroutineScope.listenForIncoming(key: ByteArray, server: SocketAddress) {
-        udp.incoming
-            .filter { it.address == server }
-            .mapNotNull { RTPPacket.fromPacket(it.packet) }
+        udp.all(server)
+            .mapNotNull { RTPPacket.fromPacket(it) }
             .filter { it.payloadType == PayloadType.Audio.raw }
             .decrypt(nonceStrategy, key)
             .clean()

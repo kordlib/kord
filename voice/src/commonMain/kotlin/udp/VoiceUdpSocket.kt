@@ -1,31 +1,37 @@
 package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
-import io.ktor.network.sockets.*
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.first
+import dev.kord.voice.io.ByteArrayView
+import io.ktor.utils.io.core.*
+import kotlinx.coroutines.flow.*
+
+@KordVoice
+public expect class SocketAddress(hostname: String, port: Int) {
+    public val hostname: String
+
+    public val port: Int
+}
+
+/**
+ * A global [VoiceUdpSocket] for all [dev.kord.voice.VoiceConnection]s, unless specified otherwise.
+ * Initiated once and kept open for the lifetime of this process.
+ */
+@KordVoice
+public expect val GlobalVoiceUdpSocket: VoiceUdpSocket
 
 @KordVoice
 public interface VoiceUdpSocket {
-    public val incoming: SharedFlow<Datagram>
+    public fun all(address: SocketAddress): Flow<ByteReadPacket>
 
-    public suspend fun discoverIp(address: InetSocketAddress, ssrc: Int): InetSocketAddress
-
-    public suspend fun send(packet: Datagram)
+    public suspend fun send(address: SocketAddress, packet: ByteArrayView): Unit
 
     public suspend fun stop()
 
     public companion object {
         private object None : VoiceUdpSocket {
-            override val incoming: SharedFlow<Datagram> = MutableSharedFlow()
+            override fun all(address: SocketAddress): Flow<ByteReadPacket> = emptyFlow()
 
-            override suspend fun discoverIp(address: InetSocketAddress, ssrc: Int): InetSocketAddress {
-                return address
-            }
-
-            override suspend fun send(packet: Datagram) {}
+            override suspend fun send(address: SocketAddress, packet: ByteArrayView) {}
 
             override suspend fun stop() {}
         }
@@ -34,6 +40,4 @@ public interface VoiceUdpSocket {
     }
 }
 
-@KordVoice
-public suspend fun VoiceUdpSocket.receiveFrom(address: InetSocketAddress): Datagram =
-    incoming.filter { it.address == address }.first()
+public suspend fun VoiceUdpSocket.recv(address: SocketAddress): ByteReadPacket = all(address).first()
