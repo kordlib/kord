@@ -5,7 +5,7 @@ plugins {
 
 kotlin {
     jvm {
-       withJava()
+        withJava()
     }
 
     sourceSets {
@@ -23,7 +23,7 @@ kotlin {
         }
 
         jsMain.dependencies {
-            implementation("org.jetbrains.kotlin-wrappers:kotlin-node:20.11.30-pre.723")
+            implementation(libs.kotlin.node)
         }
 
         nonJvmMain.dependencies {

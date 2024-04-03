@@ -4,13 +4,11 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.io.ByteArrayView
 import io.ktor.utils.io.core.*
 import js.typedarrays.toUint8Array
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import node.dgram.SocketEvent
 import node.dgram.SocketType
 import node.dgram.createSocket
@@ -24,17 +22,19 @@ public actual data class SocketAddress actual constructor(
     public actual val port: Int,
 )
 
-@OptIn(DelicateCoroutinesApi::class)
-public actual val GlobalVoiceUdpSocket : VoiceUdpSocket = object : VoiceUdpSocket {
+public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket {
+    private val socketScope =
+        CoroutineScope(Dispatchers.Default + SupervisorJob() + CoroutineName("kord-voice-global-socket"))
+
     private val incoming = MutableSharedFlow<Pair<SocketAddress, ByteArray>>()
 
     private val socket = createSocket(SocketType.udp4)
 
     init {
-        socket.on(SocketEvent.MESSAGE) { message, rinfo ->
+        socket.on(SocketEvent.MESSAGE) { message, info ->
             //
-            GlobalScope.launch {
-                incoming.emit(SocketAddress(rinfo.address, rinfo.port.toInt()) to message.toByteArray())
+            socketScope.launch {
+                incoming.emit(SocketAddress(info.address, info.port.toInt()) to message.toByteArray())
             }
         }
     }

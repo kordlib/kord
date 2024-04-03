@@ -10,34 +10,30 @@ import dev.kord.core.behavior.interaction.respondPublic
 import dev.kord.core.event.interaction.GuildChatInputCommandInteractionCreateEvent
 import dev.kord.core.on
 import dev.kord.voice.AudioFrame
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import runMain
 
-@OptIn(DelicateCoroutinesApi::class)
-fun main(args: Array<String>) {
-    GlobalScope.launch {
-        val kord =
-            Kord(args.firstOrNull() ?: error("Missing token"))
+fun main(args: Array<String>) = runMain {
+    val kord =
+        Kord(args.firstOrNull() ?: error("Missing token"))
 
-        kord.createGlobalApplicationCommands {
-            input("join", "Test command") {
-                dmPermission = false
-            }
+    kord.createGlobalApplicationCommands {
+        input("join", "Test command") {
+            dmPermission = false
         }
-
-        kord.on<GuildChatInputCommandInteractionCreateEvent> {
-            val channel = interaction.user.asMember(interaction.guildId).getVoiceState().getChannelOrNull()
-            if (channel == null) {
-                interaction.respondPublic { content = "not in channel" }
-                return@on
-            }
-            interaction.respondPublic { content = "success" }
-            channel.connectEcho()
-        }
-
-        kord.login()
     }
+
+    kord.on<GuildChatInputCommandInteractionCreateEvent> {
+        val channel = interaction.user.asMember(interaction.guildId).getVoiceState().getChannelOrNull()
+        if (channel == null) {
+            interaction.respondPublic { content = "not in channel" }
+            return@on
+        }
+        interaction.respondPublic { content = "success" }
+        channel.connectEcho()
+    }
+
+    kord.login()
 }
 
 @OptIn(KordVoice::class)
