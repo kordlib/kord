@@ -1,6 +1,7 @@
 package dev.kord.voice.udp
 
 import com.ionspin.kotlin.crypto.secretbox.SecretBox
+import com.ionspin.kotlin.crypto.secretbox.crypto_secretbox_NONCEBYTES
 import dev.kord.voice.encryption.strategies.NonceStrategy
 import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.MutableByteArrayCursor
@@ -22,7 +23,7 @@ public class DefaultNativeAudioPacketProvider(key: ByteArray, nonceStrategy: Non
 
     private val rtpHeaderView: ByteArrayView = packetBuffer.view(0, RTP_HEADER_LENGTH)!!
 
-    private val nonceBuffer: MutableByteArrayCursor = ByteArray(4).mutableCursor()
+    private val nonceBuffer: MutableByteArrayCursor = ByteArray(crypto_secretbox_NONCEBYTES).mutableCursor()
 
     private val lock = SynchronizedObject()
 
