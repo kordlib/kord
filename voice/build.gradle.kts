@@ -9,27 +9,29 @@ kotlin {
     }
 
     sourceSets {
-        commonMain {
-            dependencies {
-                api(projects.common)
-                api(projects.gateway)
+        commonMain.dependencies {
+            api(projects.common)
+            api(projects.gateway)
 
-                api(libs.ktor.network)
-                implementation(libs.kotlin.logging)
+            implementation(libs.kotlin.logging)
 
-                compileOnly(projects.kspAnnotations)
-            }
+            compileOnly(projects.kspAnnotations)
         }
 
-        nonJvmMain {
-            dependencies {
-                implementation(libs.libsodium)
-            }
+        nonJsMain.dependencies {
+            api(libs.ktor.network)
         }
-        jvmMain {
-            dependencies {
-                implementation(libs.slf4j.api)
-            }
+
+        jsMain.dependencies {
+            implementation("org.jetbrains.kotlin-wrappers:kotlin-node:20.11.30-pre.723")
+        }
+
+        nonJvmMain.dependencies {
+            implementation(libs.libsodium)
+        }
+
+        jvmMain.dependencies {
+            implementation(libs.slf4j.api)
         }
     }
 }

@@ -15,11 +15,13 @@ fun KotlinMultiplatformExtension.targets() {
     jvm()
 
     if (project.name != "voice" && project.name != "core-voice") {
+        // https://youtrack.jetbrains.com/issue/KTOR-4080
         mingwX64()
-        js {
-            nodejs()
-            useCommonJs()
-        }
+    }
+
+    js {
+        nodejs()
+        useCommonJs()
     }
 
     macosArm64()
