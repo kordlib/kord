@@ -1250,17 +1250,11 @@ public abstract interface class dev/kord/voice/udp/VoiceUdpSocket {
 	public static final field Companion Ldev/kord/voice/udp/VoiceUdpSocket$Companion;
 	public abstract fun all (Lio/ktor/network/sockets/InetSocketAddress;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun send (Lio/ktor/network/sockets/InetSocketAddress;Ldev/kord/voice/io/ByteArrayView;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun send (Lio/ktor/network/sockets/InetSocketAddress;Lio/ktor/utils/io/core/ByteReadPacket;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun stop (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/udp/VoiceUdpSocket$Companion {
 	public final fun none ()Ldev/kord/voice/udp/VoiceUdpSocket;
-}
-
-public final class dev/kord/voice/udp/VoiceUdpSocket$DefaultImpls {
-	public static fun send (Ldev/kord/voice/udp/VoiceUdpSocket;Lio/ktor/network/sockets/InetSocketAddress;Ldev/kord/voice/io/ByteArrayView;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun send (Ldev/kord/voice/udp/VoiceUdpSocket;Lio/ktor/network/sockets/InetSocketAddress;Lio/ktor/utils/io/core/ByteReadPacket;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class dev/kord/voice/udp/VoiceUdpSocketKt {
