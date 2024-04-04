@@ -8,7 +8,6 @@ plugins {
 }
 
 kotlin {
-    targets()
     sourceSets {
         commonMain {
             dependencies {
@@ -22,7 +21,7 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                api(libs.ktor.client.cio)
+                api(libs.ktor.client.okhttp)
             }
         }
         nonJvmMain {

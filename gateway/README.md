@@ -9,7 +9,7 @@ suspend fun main(args: Array<String>) {
     val token = args.firstOrNull() ?: error("token required")
 
     val gateway = DefaultGateway { // optional builder for custom configuration
-        client = HttpClient(CIO) {
+        client = HttpClient {
             install(WebSockets)
             install(JsonFeature)
         }

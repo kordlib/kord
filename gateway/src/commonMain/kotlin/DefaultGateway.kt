@@ -186,7 +186,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json) ?: return
+            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json)
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
             defaultGatewayLogger.error(exception) { "" }
