@@ -20,7 +20,15 @@ fun KotlinMultiplatformExtension.targets() {
     }
 
     js {
-        nodejs()
+        nodejs {
+            testTask {
+                useMocha {
+                    // disable timeouts, some tests are too slow for default 2-second timeout:
+                    // https://mochajs.org/#-timeout-ms-t-ms
+                    timeout = "0"
+                }
+            }
+        }
         useCommonJs()
     }
 

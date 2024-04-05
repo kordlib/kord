@@ -579,17 +579,6 @@ public final class dev/kord/voice/gateway/HeartbeatAck : dev/kord/voice/gateway/
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/voice/gateway/HeartbeatAck$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/voice/gateway/HeartbeatAck$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/HeartbeatAck;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/HeartbeatAck;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
 public final class dev/kord/voice/gateway/HeartbeatAck$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
@@ -658,6 +647,7 @@ public final class dev/kord/voice/gateway/Identify$Companion {
 
 public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static final field ClientDisconnect Ldev/kord/voice/gateway/OpCode;
+	public static final field Companion Ldev/kord/voice/gateway/OpCode$Companion;
 	public static final field Heartbeat Ldev/kord/voice/gateway/OpCode;
 	public static final field HeartbeatAck Ldev/kord/voice/gateway/OpCode;
 	public static final field Hello Ldev/kord/voice/gateway/OpCode;
@@ -673,6 +663,10 @@ public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/gateway/OpCode;
 	public static fun values ()[Ldev/kord/voice/gateway/OpCode;
+}
+
+public final class dev/kord/voice/gateway/OpCode$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/Ready : dev/kord/voice/gateway/VoiceEvent {
