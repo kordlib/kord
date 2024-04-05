@@ -7,6 +7,9 @@ import dev.kord.core.entity.channel.VoiceChannel
 import dev.kord.core.exception.GatewayNotFoundException
 import dev.kord.voice.VoiceConnection
 import dev.kord.voice.VoiceConnectionBuilder
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.job
+import kotlinx.coroutines.plus
 import kotlin.jvm.JvmName
 
 /**
@@ -24,8 +27,10 @@ public suspend fun BaseVoiceChannelBehavior.connect(builder: VoiceConnectionBuil
         kord.selfId,
         id,
         guildId,
-        builder
-    )
+    ) {
+        scope { guild.kord + SupervisorJob(guild.kord.coroutineContext.job) }
+        builder()
+    }
 
     voiceConnection.connect()
 

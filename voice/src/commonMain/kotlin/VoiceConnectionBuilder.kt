@@ -1,6 +1,7 @@
 package dev.kord.voice
 
 import dev.kord.common.KordConfiguration
+import dev.kord.common.annotation.KordInternal
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
@@ -17,12 +18,10 @@ import dev.kord.voice.streams.DefaultStreams
 import dev.kord.voice.streams.NOPStreams
 import dev.kord.voice.streams.Streams
 import dev.kord.voice.udp.*
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withTimeoutOrNull
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -37,6 +36,22 @@ public class VoiceConnectionBuilder(
      * The amount in milliseconds to wait for the events required to create a [VoiceConnection]. Default is 5000, or 5 seconds.
      */
     public var timeout: Long = 5000
+
+    /**
+     *
+     */
+    public var dispatcher: CoroutineDispatcher = Dispatchers.Default
+
+    /**
+     * The [CoroutineScope] to use. By default, the scope will be created using the given [dispatcher] when [build] is called.
+     */
+    @KordInternal
+    public var scopeFactory: () -> CoroutineScope = { CoroutineScope(dispatcher + SupervisorJob()) }
+
+    @KordInternal
+    public fun scope(factory: () -> CoroutineScope) {
+        this.scopeFactory = factory
+    }
 
     /**
      * The [AudioProvider] for this [VoiceConnection]. No audio will be provided when one is not set.
@@ -181,6 +196,7 @@ public class VoiceConnectionBuilder(
             streams ?: if (receiveVoice) DefaultStreams(voiceGateway, udpSocket, nonceStrategy) else NOPStreams
 
         return VoiceConnection(
+            scopeFactory() + CoroutineName("kord-voice-connection[${guildId.value}]"),
             voiceConnectionData,
             gateway,
             voiceGateway,

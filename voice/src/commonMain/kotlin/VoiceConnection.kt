@@ -45,6 +45,7 @@ public data class VoiceConnectionData(
  */
 @KordVoice
 public class VoiceConnection(
+    public val scope: CoroutineScope,
     public val data: VoiceConnectionData,
     public val gateway: Gateway,
     public val voiceGateway: VoiceGateway,
@@ -57,9 +58,6 @@ public class VoiceConnection(
     public val nonceStrategy: NonceStrategy,
     connectionDetachDuration: Duration
 ) {
-    public val scope: CoroutineScope =
-        CoroutineScope(Dispatchers.Default + SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))
-
     init {
         with(scope) {
             launch { VoiceUpdateEventHandler(gateway.events, connectionDetachDuration, this@VoiceConnection).start() }
