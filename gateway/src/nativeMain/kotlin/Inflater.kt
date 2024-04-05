@@ -1,19 +1,16 @@
 package dev.kord.gateway
 
-import io.ktor.websocket.*
 import kotlinx.cinterop.*
 import platform.zlib.*
 
-private const val CHUNK_SIZE = 256 * 1000
-private val ZLIB_SUFFIX = ubyteArrayOf(0x00u, 0x00u, 0xffu, 0xffu)
-
-internal actual fun Inflater(): Inflater = NativeInflater()
+private class ZlibException(message: String) : IllegalStateException(message)
 
 @OptIn(ExperimentalForeignApi::class)
-private class NativeInflater : Inflater {
-    // see https://www.zlib.net/manual.html
+internal actual fun Inflater(): Inflater = object : Inflater {
+    // see https://zlib.net/manual.html
 
-    private var frameBuffer = UByteArray(0)
+    private var decompressed = UByteArray(1024) // buffer only grows, is reused for every zlib inflate call
+    private var decompressedLen = 0
 
     private val zStream = nativeHeap.alloc<z_stream>().also { zStream ->
         // next_in, avail_in, zalloc, zfree and opaque must be initialized before calling inflateInit
@@ -34,38 +31,30 @@ private class NativeInflater : Inflater {
         }
     }
 
-    override fun Frame.inflateData(): String? {
-        frameBuffer += data.asUByteArray()
-        // check if the last four bytes are equal to ZLIB_SUFFIX
-        if (frameBuffer.size < 4 ||
-            !frameBuffer.copyOfRange(frameBuffer.size - 4, frameBuffer.size).contentEquals(ZLIB_SUFFIX)
-        ) {
-            return null
-        }
-        var out = ByteArray(0)
-        memScoped {
-            val uncompressedDataSize = CHUNK_SIZE // allocate enough space for the uncompressed data
-            val uncompressedData = allocArray<uByteVar>(uncompressedDataSize)
-            zStream.apply {
-                next_in = frameBuffer.refTo(0).getPointer(memScope)
-                avail_in = frameBuffer.size.convert()
+    private fun throwZlibException(msg: CPointer<ByteVar>?, ret: Int): Nothing =
+        throw ZlibException(msg?.toKString() ?: zError(ret)?.toKString() ?: ret.toString())
+
+    override fun inflate(compressed: ByteArray, compressedLen: Int): String =
+        compressed.asUByteArray().usePinned { compressedPinned ->
+            zStream.next_in = compressedPinned.addressOf(0)
+            zStream.avail_in = compressedLen.convert()
+            decompressedLen = 0
+            while (true) {
+                val ret = decompressed.usePinned { decompressedPinned ->
+                    zStream.next_out = decompressedPinned.addressOf(decompressedLen)
+                    zStream.avail_out = (decompressed.size - decompressedLen).convert()
+                    inflate(zStream.ptr, Z_NO_FLUSH)
+                }
+                if (ret != Z_OK && ret != Z_STREAM_END) {
+                    throwZlibException(zStream.msg, ret)
+                }
+                if (zStream.avail_in == 0u || zStream.avail_out != 0u) break
+                // grow decompressed buffer
+                decompressedLen = decompressed.size
+                decompressed = decompressed.copyOf(decompressed.size * 2)
             }
-
-            do {
-                zStream.apply {
-                    next_out = uncompressedData
-                    avail_out = uncompressedDataSize.convert()
-                }
-                inflate(zStream.ptr, Z_NO_FLUSH).check(listOf(Z_OK, Z_STREAM_END)) {
-                    frameBuffer = UByteArray(0)
-                }
-                out += uncompressedData.readBytes(uncompressedDataSize - zStream.avail_out.convert<Int>())
-            } while (zStream.avail_out == 0u)
+            decompressed.asByteArray().decodeToString(endIndex = decompressed.size - zStream.avail_out.convert<Int>())
         }
-
-        frameBuffer = UByteArray(0)
-        return out.decodeToString()
-    }
 
     override fun close() {
         val ret = inflateEnd(zStream.ptr)
@@ -76,23 +65,3 @@ private class NativeInflater : Inflater {
         }
     }
 }
-
-@ExperimentalForeignApi
-private fun Int.check(validCodes: List<Int> = listOf(Z_OK), cleanup: () -> Unit = {}) {
-    if (this !in validCodes) {
-        try {
-            throw ZlibException(zErrorMessage(this).toString())
-        } finally {
-            cleanup()
-        }
-    }
-}
-
-private class ZlibException(message: String?) : IllegalStateException(message)
-
-@ExperimentalForeignApi
-private fun zErrorMessage(errorCode: Int) = zError(errorCode)?.toKString() ?: errorCode
-
-@ExperimentalForeignApi
-private fun throwZlibException(msg: CPointer<ByteVar>?, ret: Int): Nothing =
-    throw ZlibException(msg?.toKString() ?: zError(ret)?.toKString() ?: ret.toString())

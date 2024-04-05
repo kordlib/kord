@@ -168,30 +168,28 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
 
     private suspend fun readSocket() {
-        socket.incoming.asFlow().buffer(Channel.UNLIMITED).collect {
-            when (it) {
-                is Frame.Binary, is Frame.Text -> read(it)
-                else -> { /*ignore*/
+        val frames = socket.incoming.asFlow()
+            .buffer(Channel.UNLIMITED)
+            .onEach { frame -> defaultGatewayLogger.trace { "Received raw frame: $frame" } }
+        val eventsJson = if (compression) {
+            frames.decompressFrames(inflater)
+        } else {
+            frames.mapNotNull { frame ->
+                when (frame) {
+                    is Frame.Binary, is Frame.Text -> frame.data.decodeToString()
+                    else -> null // ignore other frame types
                 }
             }
         }
-    }
-
-    private suspend fun read(frame: Frame) {
-        defaultGatewayLogger.trace { "Received raw frame: $frame" }
-        val json = when {
-            compression -> with(inflater) { frame.inflateData() } ?: return
-            else -> frame.data.decodeToString()
+        eventsJson.collect { json ->
+            try {
+                defaultGatewayLogger.trace { "Gateway <<< $json" }
+                val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json)
+                data.eventFlow.emit(event)
+            } catch (exception: Exception) {
+                defaultGatewayLogger.error(exception) { "" }
+            }
         }
-
-        try {
-            defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json)
-            data.eventFlow.emit(event)
-        } catch (exception: Exception) {
-            defaultGatewayLogger.error(exception) { "" }
-        }
-
     }
 
     private suspend fun handleClose() {
