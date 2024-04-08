@@ -185,9 +185,6 @@ public abstract interface annotation class dev/kord/common/annotation/KordUnsafe
 public abstract interface annotation class dev/kord/common/annotation/KordVoice : java/lang/annotation/Annotation {
 }
 
-public abstract interface annotation class dev/kord/common/annotation/RequiresMonetization : java/lang/annotation/Annotation {
-}
-
 public abstract class dev/kord/common/entity/ActivityFlag {
 	public static final field Companion Ldev/kord/common/entity/ActivityFlag$Companion;
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
