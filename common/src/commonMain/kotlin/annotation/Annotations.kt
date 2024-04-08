@@ -56,17 +56,6 @@ public annotation class KordExperimental
 public annotation class KordVoice
 
 /**
- * Marks a Kord-related API that requires your application to have monetization enabled.
- *
- * Not all applications are eligible for monetization, and this annotation marks functionality that requires it.
- */
-@MustBeDocumented
-@RequiresOptIn(level = WARNING)
-@Retention(BINARY)
-@Target(CLASS, PROPERTY, FUNCTION, TYPEALIAS)
-public annotation class RequiresMonetization
-
-/**
  * Marks a Kord-related API as potentially unsafe.
  *
  * Kord marks targets as unsafe if it exposes functionality in a way that is more error-prone than alternatives
