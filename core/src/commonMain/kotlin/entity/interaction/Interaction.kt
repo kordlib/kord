@@ -4,9 +4,12 @@ import dev.kord.common.Locale
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.entity.Entitlement
 import dev.kord.core.entity.User
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -27,6 +30,9 @@ public sealed interface Interaction : InteractionBehavior {
     override val channelId: Snowflake get() = data.channel.value?.id ?: data.channelId.value!!
 
     override val token: String get() = data.token
+
+    public val entitlements: List<Entitlement>
+        get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
 
     /**
      * The type of the interaction.

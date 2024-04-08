@@ -656,7 +656,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     override suspend fun getEntitlements(
         applicationId: Snowflake,
-        skuId: Snowflake,
+        skuId: Snowflake?,
         limit: Int?,
         userId: Snowflake?,
         guildId: Snowflake?
@@ -666,7 +666,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
                 applicationId = applicationId,
                 position = position,
                 limit = batchSize,
-                skuIDs = listOf(skuId),
+                skuIDs = listOfNotNull(skuId),
                 userId = userId,
                 guildId = guildId
             )

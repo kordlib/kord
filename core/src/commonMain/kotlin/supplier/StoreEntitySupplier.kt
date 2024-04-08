@@ -318,7 +318,7 @@ public class StoreEntitySupplier(
 
     override suspend fun getEntitlements(
         applicationId: Snowflake,
-        skuId: Snowflake,
+        skuId: Snowflake?,
         limit: Int?,
         userId: Snowflake?,
         guildId: Snowflake?

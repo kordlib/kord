@@ -665,7 +665,7 @@ public interface EntitySupplier {
      */
     public suspend fun getEntitlements(
         applicationId: Snowflake,
-        skuId: Snowflake,
+        skuId: Snowflake? = null,
         limit: Int? = null,
         userId: Snowflake? = null,
         guildId: Snowflake? = null

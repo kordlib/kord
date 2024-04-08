@@ -610,7 +610,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override suspend fun getEntitlements(
         applicationId: Snowflake,
-        skuId: Snowflake,
+        skuId: Snowflake?,
         limit: Int?,
         userId: Snowflake?,
         guildId: Snowflake?
@@ -619,7 +619,7 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return cache
             .query {
                 idEq(EntitlementData::applicationId, applicationId)
-                idEq(EntitlementData::skuId, skuId)
+                skuId?.let { idEq(EntitlementData::skuId, it) }
                 userId?.let { idEq(EntitlementData::userId, it) }
                 guildId?.let { idEq(EntitlementData::guildId, it) }
             }

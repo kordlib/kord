@@ -380,6 +380,19 @@ public class Kord(
     public suspend fun getSkus(): List<SKU> = with(EntitySupplyStrategy.rest).getSKUs(selfId)
 
     /**
+     * Requests to get a list of [Entitlement]s with the given [skuId], [userId], or [guildId].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getEntitlements(
+        limit: Int? = null,
+        skuId: Snowflake? = null,
+        userId: Snowflake? = null,
+        guildId: Snowflake? = null,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+    ): Flow<Entitlement> = strategy.supply(this).getEntitlements(selfId, skuId, limit, userId, guildId)
+
+    /**
      * Requests to get the [Entitlement] with the given [id]
      *
      * @throws [RequestException] if anything went wrong during the request.

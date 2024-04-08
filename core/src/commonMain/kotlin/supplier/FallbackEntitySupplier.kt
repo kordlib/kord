@@ -282,7 +282,7 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
 
     override suspend fun getEntitlements(
         applicationId: Snowflake,
-        skuId: Snowflake,
+        skuId: Snowflake?,
         limit: Int?,
         userId: Snowflake?,
         guildId: Snowflake?
