@@ -488,6 +488,18 @@ public sealed class Event {
                     ),
                     sequence
                 )
+                "ENTITLEMENT_CREATE" -> EntitlementCreate(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordEntitlement.serializer()),
+                    sequence
+                )
+                "ENTITLEMENT_DELETE" -> EntitlementDelete(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordEntitlement.serializer()),
+                    sequence
+                )
+                "ENTITLEMENT_UPDATE" -> EntitlementUpdate(
+                    decoder.decodeSerializableElement(descriptor, index, DiscordEntitlement.serializer()),
+                    sequence
+                )
 
 
                 else -> {
@@ -881,3 +893,12 @@ public data class DiscordThreadMembersUpdate(
     @SerialName("removed_member_ids")
     val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
 )
+
+@Serializable
+public data class EntitlementCreate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+@Serializable
+public data class EntitlementUpdate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
+
+@Serializable
+public data class EntitlementDelete(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()

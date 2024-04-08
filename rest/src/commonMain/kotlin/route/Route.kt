@@ -74,6 +74,7 @@ public sealed class Route<T>(
     public object WebhookId : Key("{webhook.id}", true)
     public object WebhookToken : Key("{webhook.token}")
     public object TemplateCode : Key("{template.code}")
+    public object EntitlementId : Key("{entitlement.id}")
     public object ApplicationId : Key("{application.id}", true)
     public object CommandId : Key("{command.id}", true)
     public object InteractionId : Key("{interaction.id}", true)
@@ -737,6 +738,43 @@ public sealed class Route<T>(
     public object CurrentApplicationInfo :
         Route<DiscordApplication>(HttpMethod.Get, "/oauth2/applications/@me", DiscordApplication.serializer())
 
+    /*
+     * Entitlements:
+     * https://discord.com/developers/docs/monetization/entitlements
+     */
+
+    public object EntitlementsGet :
+        Route<List<DiscordEntitlement>>(
+            HttpMethod.Get,
+            "/applications/$ApplicationId/entitlements",
+            ListSerializer(DiscordEntitlement.serializer())
+        )
+
+    public object TestEntitlementPost :
+        Route<DiscordEntitlement>(
+            HttpMethod.Post,
+            "/applications/$ApplicationId/entitlements",
+            DiscordEntitlement.serializer()
+        )
+
+    public object TestEntitlementDelete :
+        Route<Unit>(
+            HttpMethod.Delete,
+            "/applications/$ApplicationId/entitlements/$EntitlementId",
+            NoStrategy
+        )
+
+    /*
+     * SKUs:
+     * https://discord.com/developers/docs/monetization/skus
+     */
+
+    public object SkusGet :
+        Route<List<DiscordSKU>>(
+            HttpMethod.Get,
+            "/applications/$ApplicationId/skus",
+            ListSerializer(DiscordSKU.serializer())
+        )
 
     /*
      * Guild Template:

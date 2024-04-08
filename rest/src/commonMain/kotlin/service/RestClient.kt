@@ -35,6 +35,9 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     // topics
     public val application: ApplicationService = ApplicationService(requestHandler)
 
+    // monetization
+    public val entitlement: EntitlementService = EntitlementService(requestHandler)
+
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows
      * the user to send a custom [RequestBuilder.body].

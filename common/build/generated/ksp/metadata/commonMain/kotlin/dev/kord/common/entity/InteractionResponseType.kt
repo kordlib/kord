@@ -89,6 +89,11 @@ public sealed class InteractionResponseType(
      */
     public object Modal : InteractionResponseType(9)
 
+    /**
+     * Respond to interactions with 
+     */
+    public object PremiumRequired : InteractionResponseType(10)
+
     internal object Serializer : KSerializer<InteractionResponseType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.InteractionResponseType",
@@ -115,6 +120,7 @@ public sealed class InteractionResponseType(
                 UpdateMessage,
                 ApplicationCommandAutoCompleteResult,
                 Modal,
+                PremiumRequired,
             )
         }
 
@@ -131,6 +137,7 @@ public sealed class InteractionResponseType(
             7 -> UpdateMessage
             8 -> ApplicationCommandAutoCompleteResult
             9 -> Modal
+            10 -> PremiumRequired
             else -> Unknown(type, null)
         }
     }
