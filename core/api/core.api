@@ -108,6 +108,7 @@ public final class dev/kord/core/KordKt {
 	public static final fun Kord (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun Kord$default (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static final fun getKordLogger ()Lmu/KLogger;
+	public static final fun logCaughtThrowable (Ljava/lang/Throwable;)V
 }
 
 public abstract interface class dev/kord/core/KordObject {
@@ -158,11 +159,8 @@ public final class dev/kord/core/Unsafe {
 
 public final class dev/kord/core/UtilKt {
 	public static final fun enableEvent (Ldev/kord/gateway/Intents$Builder;Lkotlin/reflect/KClass;)V
-	public static final synthetic fun enableEvent (Ldev/kord/gateway/Intents$IntentsBuilder;Lkotlin/reflect/KClass;)V
 	public static final fun enableEvents (Ldev/kord/gateway/Intents$Builder;Ljava/lang/Iterable;)V
 	public static final fun enableEvents (Ldev/kord/gateway/Intents$Builder;[Lkotlin/reflect/KClass;)V
-	public static final synthetic fun enableEvents (Ldev/kord/gateway/Intents$IntentsBuilder;Ljava/lang/Iterable;)V
-	public static final synthetic fun enableEvents (Ldev/kord/gateway/Intents$IntentsBuilder;[Lkotlin/reflect/KClass;)V
 }
 
 public abstract interface class dev/kord/core/behavior/ApplicationCommandBehavior : dev/kord/core/entity/Entity {
@@ -2184,9 +2182,6 @@ public final class dev/kord/core/builder/kord/KordBuilder : dev/kord/core/builde
 	public fun build (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getEnableShutdownHook ()Z
 	public final fun setEnableShutdownHook (Z)V
-}
-
-public final class dev/kord/core/builder/kord/KordBuilderUtilKt {
 }
 
 public final class dev/kord/core/builder/kord/KordProxyBuilder : dev/kord/core/builder/kord/RestOnlyBuilder {
@@ -6680,7 +6675,6 @@ public final class dev/kord/core/entity/Message : dev/kord/core/behavior/Message
 	public final fun getAuthor ()Ldev/kord/core/entity/User;
 	public final fun getAuthorAsMember (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getAuthorAsMemberOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final synthetic fun getAuthorAsMemberOrThrow (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannel ()Ldev/kord/core/behavior/channel/MessageChannelBehavior;
 	public fun getChannel (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getChannelId ()Ldev/kord/common/entity/Snowflake;
@@ -7192,7 +7186,6 @@ public final class dev/kord/core/entity/TeamMember {
 	public final fun getData ()Ldev/kord/core/cache/data/TeamMemberData;
 	public final fun getKord ()Ldev/kord/core/Kord;
 	public final fun getMembershipState ()Ldev/kord/common/entity/TeamMembershipState;
-	public final synthetic fun getPermissions ()Ljava/util/List;
 	public final fun getRole ()Ldev/kord/common/entity/TeamMemberRole;
 	public final fun getTeamId ()Ldev/kord/common/entity/Snowflake;
 	public final fun getUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -9182,10 +9175,6 @@ public abstract class dev/kord/core/entity/component/SelectMenuComponent : dev/k
 	public fun getType ()Ldev/kord/common/entity/ComponentType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/core/entity/component/SelectMenuComponentKt {
-	public static final synthetic fun getOptions (Ldev/kord/core/entity/component/StringSelectComponent;)Ljava/util/List;
 }
 
 public final class dev/kord/core/entity/component/SelectOption {

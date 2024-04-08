@@ -39,17 +39,7 @@ public sealed class SkuType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : SkuType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'SkuType.from()'.",
-            replaceWith = ReplaceWith(expression = "SkuType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.SkuType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : SkuType(value)
 
     /**
      * Represents a recurring subscription
@@ -90,7 +80,7 @@ public sealed class SkuType(
         public fun from(`value`: Int): SkuType = when (value) {
             5 -> Subscription
             6 -> SubscriptionGroup
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

@@ -1,7 +1,6 @@
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.DelicateKotlinPoetApi
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.TypeSpec
 import dev.kord.ksp.*
@@ -46,21 +45,6 @@ internal fun TypeSpec.Builder.addBuilder() = addClass(builderCN) {
             BIT_SET -> ".copy()"
         }
         addStatement("return %T($valueName$valueCopy)", collectionCN)
-    }
-    if (builderHadFlagsFunction) {
-        addFunction("flags") {
-            addKdoc("@suppress")
-            @OptIn(DelicateKotlinPoetApi::class)
-            addAnnotation(
-                Deprecated(
-                    "Renamed to 'build'",
-                    ReplaceWith("this.build()", imports = emptyArray()),
-                    DeprecationLevel.HIDDEN,
-                )
-            )
-            returns(collectionCN)
-            addStatement("return build()")
-        }
     }
 }
 

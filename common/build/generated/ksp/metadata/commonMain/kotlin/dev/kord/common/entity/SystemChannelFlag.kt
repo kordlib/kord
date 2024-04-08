@@ -1,16 +1,14 @@
+// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
-import dev.kord.common.Class
-import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
-import kotlin.jvm.JvmStatic
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -45,58 +43,23 @@ public sealed class SystemChannelFlag(
      * [flag].
      */
     public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code or flag.code, null)
+            SystemChannelFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code or flags.code, null)
+            SystemChannelFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is SystemChannelFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown)
-            "SystemChannelFlag.Unknown(shift=$shift)" else
-            "SystemChannelFlag.${this::class.simpleName}"
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun name(): String = this::class.simpleName!!
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun ordinal(): Int = when (this) {
-        SuppressJoinNotifications -> 0
-        SuppressPremiumSubscriptions -> 1
-        SuppressGuildReminderNotifications -> 2
-        SuppressJoinNotificationReplies -> 3
-        SuppressRoleSubscriptionPurchaseNotifications -> 4
-        SuppressRoleSubscriptionPurchaseNotificationReplies -> 5
-        is Unknown -> Int.MAX_VALUE
-    }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "SystemChannelFlag is no longer an enum class.",
-        replaceWith = ReplaceWith(expression = "SystemChannelFlag::class.java", imports =
-                    arrayOf("dev.kord.common.entity.SystemChannelFlag")),
-        DeprecationLevel.HIDDEN,
-    )
-    public fun getDeclaringClass(): Class<SystemChannelFlag> = SystemChannelFlag::class.java
+    final override fun toString(): String =
+            if (this is Unknown) "SystemChannelFlag.Unknown(shift=$shift)"
+            else "SystemChannelFlag.${this::class.simpleName}"
 
     /**
      * An unknown [SystemChannelFlag].
@@ -153,52 +116,6 @@ public sealed class SystemChannelFlag(
         }
 
 
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val SuppressJoinNotifications: SystemChannelFlag = SuppressJoinNotifications
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val SuppressPremiumSubscriptions: SystemChannelFlag = SuppressPremiumSubscriptions
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val SuppressGuildReminderNotifications: SystemChannelFlag =
-                SuppressGuildReminderNotifications
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val SuppressJoinNotificationReplies: SystemChannelFlag =
-                SuppressJoinNotificationReplies
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val SuppressRoleSubscriptionPurchaseNotifications: SystemChannelFlag =
-                SuppressRoleSubscriptionPurchaseNotifications
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val SuppressRoleSubscriptionPurchaseNotificationReplies: SystemChannelFlag =
-                SuppressRoleSubscriptionPurchaseNotificationReplies
-
         /**
          * Returns an instance of [SystemChannelFlag] with [SystemChannelFlag.shift] equal to the
          * specified [shift].
@@ -214,36 +131,6 @@ public sealed class SystemChannelFlag(
             5 -> SuppressRoleSubscriptionPurchaseNotificationReplies
             else -> Unknown(shift)
         }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "SystemChannelFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-        @JvmStatic
-        public open fun valueOf(name: String): SystemChannelFlag = when (name) {
-            "SuppressJoinNotifications" -> SuppressJoinNotifications
-            "SuppressPremiumSubscriptions" -> SuppressPremiumSubscriptions
-            "SuppressGuildReminderNotifications" -> SuppressGuildReminderNotifications
-            "SuppressJoinNotificationReplies" -> SuppressJoinNotificationReplies
-            "SuppressRoleSubscriptionPurchaseNotifications" -> SuppressRoleSubscriptionPurchaseNotifications
-            "SuppressRoleSubscriptionPurchaseNotificationReplies" -> SuppressRoleSubscriptionPurchaseNotificationReplies
-            else -> throw IllegalArgumentException(name)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
-        @Deprecated(
-            message = "SystemChannelFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "SystemChannelFlag.entries.toTypedArray()",
-                        imports = arrayOf("dev.kord.common.entity.SystemChannelFlag")),
-            DeprecationLevel.HIDDEN,
-        )
-        @JvmStatic
-        public open fun values(): Array<SystemChannelFlag> = entries.toTypedArray()
     }
 }
 
@@ -255,8 +142,7 @@ public sealed class SystemChannelFlag(
  * You can create an instance of [SystemChannelFlags] using the following methods:
  * ```kotlin
  * // from individual SystemChannelFlags
- * val systemChannelFlags1 = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications,
- * SystemChannelFlag.SuppressPremiumSubscriptions)
+ * val systemChannelFlags1 = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications, SystemChannelFlag.SuppressPremiumSubscriptions)
  *
  * // from an Iterable
  * val iterable: Iterable<SystemChannelFlag> = TODO()
@@ -295,8 +181,7 @@ public sealed class SystemChannelFlag(
  * specific [SystemChannelFlag]s:
  * ```kotlin
  * val hasSystemChannelFlag = SystemChannelFlag.SuppressJoinNotifications in systemChannelFlags
- * val hasSystemChannelFlags = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications,
- * SystemChannelFlag.SuppressPremiumSubscriptions) in systemChannelFlags
+ * val hasSystemChannelFlags = SystemChannelFlags(SystemChannelFlag.SuppressJoinNotifications, SystemChannelFlag.SuppressPremiumSubscriptions) in systemChannelFlags
  * ```
  *
  * ## Unknown [SystemChannelFlag]s
@@ -319,18 +204,7 @@ public class SystemChannelFlags internal constructor(
      * The raw code used by Discord.
      */
     public val code: Int,
-    @Suppress("UNUSED_PARAMETER") unused: Nothing?,
 ) {
-    // TODO uncomment annotation in DiscordGuild.kt and delete this file when this constructor is removed after
-    //  deprecation cycle
-    @Deprecated(
-        "Don't construct an instance of 'SystemChannelFlags' from a raw code. Use the factory functions described in " +
-            "the documentation instead.",
-        ReplaceWith("SystemChannelFlags.Builder(code).build()", "dev.kord.common.entity.SystemChannelFlags"),
-        DeprecationLevel.HIDDEN,
-    )
-    public constructor(code: Int) : this(code, null)
-
     /**
      * A [Set] of all [SystemChannelFlag]s contained in this instance of [SystemChannelFlags].
      */
@@ -362,28 +236,28 @@ public class SystemChannelFlags internal constructor(
      * [flag].
      */
     public operator fun plus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code or flag.code, null)
+            SystemChannelFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code or flags.code, null)
+            SystemChannelFlags(this.code or flags.code)
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this`
      * except the bits that are set in [flag].
      */
     public operator fun minus(flag: SystemChannelFlag): SystemChannelFlags =
-            SystemChannelFlags(this.code and flag.code.inv(), null)
+            SystemChannelFlags(this.code and flag.code.inv())
 
     /**
      * Returns an instance of [SystemChannelFlags] that has all bits set that are set in `this`
      * except the bits that are set in [flags].
      */
     public operator fun minus(flags: SystemChannelFlags): SystemChannelFlags =
-            SystemChannelFlags(this.code and flags.code.inv(), null)
+            SystemChannelFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [SystemChannelFlags] modified with [builder].
@@ -399,24 +273,6 @@ public class SystemChannelFlags internal constructor(
     override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "SystemChannelFlags(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "SystemChannelFlags is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-        DeprecationLevel.HIDDEN,
-    )
-    public operator fun component1(): Int = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "SystemChannelFlags is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun copy(code: Int = this.code): SystemChannelFlags = SystemChannelFlags(code, null)
 
     public class Builder(
         private var code: Int = 0,
@@ -453,7 +309,7 @@ public class SystemChannelFlags internal constructor(
          * Returns an instance of [SystemChannelFlags] that has all bits set that are currently set
          * in this [Builder].
          */
-        public fun build(): SystemChannelFlags = SystemChannelFlags(code, null)
+        public fun build(): SystemChannelFlags = SystemChannelFlags(code)
     }
 
     internal object Serializer : KSerializer<SystemChannelFlags> {
@@ -468,27 +324,27 @@ public class SystemChannelFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): SystemChannelFlags =
-                SystemChannelFlags(decoder.decodeSerializableValue(delegate), null)
+                SystemChannelFlags(decoder.decodeSerializableValue(delegate))
     }
 
-    public companion object NewCompanion {
-        @Suppress("DEPRECATION_ERROR")
+    public companion object {
+        @Suppress(names = arrayOf("DEPRECATION"))
         @Deprecated(
-            "Renamed to 'NewCompanion', which no longer implements 'KSerializer<SystemChannelFlags>'.",
-            ReplaceWith("SystemChannelFlags.serializer()", imports = ["dev.kord.common.entity.SystemChannelFlags"]),
-            DeprecationLevel.HIDDEN,
+            message = "Renamed to 'Companion'.",
+            replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports =
+                        arrayOf("dev.kord.common.entity.SystemChannelFlags")),
         )
         @JvmField
-        public val Companion: Companion = Companion()
+        public val NewCompanion: NewCompanion = NewCompanion()
     }
 
     @Deprecated(
-        "Renamed to 'NewCompanion', which no longer implements 'KSerializer<SystemChannelFlags>'.",
-        ReplaceWith("SystemChannelFlags.serializer()", imports = ["dev.kord.common.entity.SystemChannelFlags"]),
-        DeprecationLevel.HIDDEN,
+        message = "Renamed to 'Companion'.",
+        replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports =
+                    arrayOf("dev.kord.common.entity.SystemChannelFlags")),
     )
-    public class Companion internal constructor() : KSerializer<SystemChannelFlags> by Serializer {
-        public fun serializer(): KSerializer<SystemChannelFlags> = this
+    public class NewCompanion internal constructor() {
+        public fun serializer(): KSerializer<SystemChannelFlags> = SystemChannelFlags.serializer()
     }
 }
 

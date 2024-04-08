@@ -41,17 +41,7 @@ public sealed class ApplicationCommandOptionType(
      */
     public class Unknown internal constructor(
         type: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ApplicationCommandOptionType(type) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ApplicationCommandOptionType.from()'.",
-            replaceWith = ReplaceWith(expression = "ApplicationCommandOptionType.from(type)",
-                        imports = arrayOf("dev.kord.common.entity.ApplicationCommandOptionType")),
-        )
-        public constructor(type: Int) : this(type, null)
-    }
+    ) : ApplicationCommandOptionType(type)
 
     public object SubCommand : ApplicationCommandOptionType(1)
 
@@ -137,7 +127,7 @@ public sealed class ApplicationCommandOptionType(
             9 -> Mentionable
             10 -> Number
             11 -> Attachment
-            else -> Unknown(type, null)
+            else -> Unknown(type)
         }
     }
 }

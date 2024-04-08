@@ -40,17 +40,7 @@ public sealed class ApplicationCommandType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ApplicationCommandType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ApplicationCommandType.from()'.",
-            replaceWith = ReplaceWith(expression = "ApplicationCommandType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.ApplicationCommandType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ApplicationCommandType(value)
 
     /**
      * A text-based command that shows up when a user types `/`.
@@ -101,7 +91,7 @@ public sealed class ApplicationCommandType(
             1 -> ChatInput
             2 -> User
             3 -> Message
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

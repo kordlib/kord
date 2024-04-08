@@ -43,17 +43,7 @@ public sealed class AutoModerationRuleEventType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : AutoModerationRuleEventType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'AutoModerationRuleEventType.from()'.",
-            replaceWith = ReplaceWith(expression = "AutoModerationRuleEventType.from(value)",
-                        imports = arrayOf("dev.kord.common.entity.AutoModerationRuleEventType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : AutoModerationRuleEventType(value)
 
     /**
      * When a member sends or edits a message in the guild.
@@ -90,7 +80,7 @@ public sealed class AutoModerationRuleEventType(
          */
         public fun from(`value`: Int): AutoModerationRuleEventType = when (value) {
             1 -> MessageSend
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

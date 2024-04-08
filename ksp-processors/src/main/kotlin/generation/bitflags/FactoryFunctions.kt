@@ -4,6 +4,7 @@ import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.jvm.jvmName
+import dev.kord.ksp.addAnnotation
 import dev.kord.ksp.addFunction
 import dev.kord.ksp.addParameter
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
@@ -27,6 +28,21 @@ internal fun FileSpec.Builder.addFactoryFunctions() {
         returns(collectionCN)
         addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
         addStatement("return·%T().apply(builder).build()", builderCN)
+    }
+    // TODO remove eventually
+    if (hadBuilderFactoryFunction0) {
+        @OptIn(DelicateKotlinPoetApi::class)
+        addFunction(factoryFunctionName + '0') {
+            addAnnotation(Suppress("FunctionName"))
+            addAnnotation(Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN))
+            addModifiers(PUBLIC, INLINE)
+            addParameter("builder", type = LambdaTypeName.get(receiver = builderCN, returnType = UNIT)) {
+                defaultValue("{}")
+            }
+            returns(collectionCN)
+            addStatement("%M·{·callsInPlace(builder,·%M)·}", CONTRACT, EXACTLY_ONCE)
+            addStatement("return·$factoryFunctionName(builder)", builderCN)
+        }
     }
     addFactoryFunctionForIterable(baseParameterType = entityCN, IterableType.VARARG)
     addFactoryFunctionForIterable(baseParameterType = collectionCN, IterableType.VARARG)

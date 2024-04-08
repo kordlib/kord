@@ -9,7 +9,6 @@
 @file:Generate(
     Generate.EntityType.INT_KORD_ENUM, name = "EntitlementOwnerType",
     docUrl = "https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement",
-    unknownConstructorWasPublic = false,
     entries = [
         Generate.Entry("Guild", intValue = 1, kDoc = "Entitlement is owned by a guild."),
         Generate.Entry("User", intValue = 2, kDoc = "Entitlement is owned by a user."),

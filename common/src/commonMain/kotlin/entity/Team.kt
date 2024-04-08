@@ -1,5 +1,5 @@
 @file:Generate(
-    STRING_KORD_ENUM, name = "TeamMemberRole", unknownConstructorWasPublic = false,
+    STRING_KORD_ENUM, name = "TeamMemberRole",
     docUrl = "https://discord.com/developers/docs/topics/teams#team-member-roles",
     entries = [
         Entry(

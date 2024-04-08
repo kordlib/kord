@@ -38,16 +38,21 @@ import dev.kord.rest.builder.user.CurrentUserModifyBuilder
 import dev.kord.rest.json.request.TestEntitlementCreateRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import mu.KLogger
-import mu.KotlinLogging
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
-public val kordLogger: KLogger = KotlinLogging.logger { }
+@Deprecated("Use your own logger instead, this will be removed in the future.", level = DeprecationLevel.ERROR)
+public val kordLogger: mu.KLogger = mu.KotlinLogging.logger { }
+
+private val logger = KotlinLogging.logger { }
+
+@PublishedApi
+internal fun logCaughtThrowable(throwable: Throwable): Unit = logger.catching(throwable)
 
 
 /**
@@ -685,6 +690,6 @@ public inline fun <reified T : Event> Kord.on(
 ): Job =
     events.buffer(CoroutineChannel.UNLIMITED).filterIsInstance<T>()
         .onEach { event ->
-            scope.launch { runCatching { consumer(event) }.onFailure { kordLogger.catching(it) } }
+            scope.launch { runCatching { consumer(event) }.onFailure(::logCaughtThrowable) }
         }
         .launchIn(scope)

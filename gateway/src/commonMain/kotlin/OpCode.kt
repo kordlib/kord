@@ -6,7 +6,6 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlin.jvm.JvmField
 
 @Serializable(with = OpCode.Serializer::class)
 public enum class OpCode(public val code: Int) {
@@ -73,25 +72,5 @@ public enum class OpCode(public val code: Int) {
         override fun serialize(encoder: Encoder, value: OpCode) = encoder.encodeInt(value.code)
         private val entriesByCode = entries.associateBy { it.code }
         override fun deserialize(decoder: Decoder) = entriesByCode[decoder.decodeInt()] ?: Unknown
-    }
-
-    public companion object {
-        @Suppress("DEPRECATION_ERROR")
-        @Deprecated(
-            "Renamed to 'Companion', which no longer implements 'KSerializer<OpCode>'.",
-            ReplaceWith("OpCode.serializer()", imports = ["dev.kord.gateway.OpCode"]),
-            DeprecationLevel.HIDDEN,
-        )
-        @JvmField
-        public val OpCodeSerializer: OpCodeSerializer = OpCodeSerializer()
-    }
-
-    @Deprecated(
-        "Renamed to 'Companion', which no longer implements 'KSerializer<OpCode>'.",
-        ReplaceWith("OpCode.serializer()", imports = ["dev.kord.gateway.OpCode"]),
-        DeprecationLevel.HIDDEN,
-    )
-    public class OpCodeSerializer internal constructor() : KSerializer<OpCode> by Serializer {
-        public fun serializer(): KSerializer<OpCode> = this
     }
 }

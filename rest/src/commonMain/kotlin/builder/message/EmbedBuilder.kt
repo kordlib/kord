@@ -23,7 +23,7 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
          * Utility default value for fields.
          * While blank values are not allowed, this value can be used to trick Discord into rendering a Field as empty.
          */
-        public const val ZERO_WIDTH_SPACE: String = "\u200E"
+        public const val ZERO_WIDTH_SPACE: String = "\u200B"
     }
 
     private var _title: Optional<String> = Optional.Missing()

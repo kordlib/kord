@@ -40,17 +40,7 @@ public sealed class ForumLayoutType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ForumLayoutType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ForumLayoutType.from()'.",
-            replaceWith = ReplaceWith(expression = "ForumLayoutType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.ForumLayoutType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ForumLayoutType(value)
 
     /**
      * No default has been set for forum channel.
@@ -100,7 +90,7 @@ public sealed class ForumLayoutType(
             0 -> NotSet
             1 -> ListView
             2 -> GalleryView
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

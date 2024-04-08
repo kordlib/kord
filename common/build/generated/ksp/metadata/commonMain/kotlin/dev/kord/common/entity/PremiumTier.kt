@@ -39,17 +39,7 @@ public sealed class PremiumTier(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : PremiumTier(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'PremiumTier.from()'.",
-            replaceWith = ReplaceWith(expression = "PremiumTier.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.PremiumTier")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : PremiumTier(value)
 
     /**
      * Guild has not unlocked any Server Boost perks.
@@ -105,7 +95,7 @@ public sealed class PremiumTier(
             1 -> One
             2 -> Two
             3 -> Three
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

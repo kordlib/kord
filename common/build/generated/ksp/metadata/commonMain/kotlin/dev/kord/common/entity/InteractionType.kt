@@ -40,17 +40,7 @@ public sealed class InteractionType(
      */
     public class Unknown internal constructor(
         type: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : InteractionType(type) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'InteractionType.from()'.",
-            replaceWith = ReplaceWith(expression = "InteractionType.from(type)", imports =
-                        arrayOf("dev.kord.common.entity.InteractionType")),
-        )
-        public constructor(type: Int) : this(type, null)
-    }
+    ) : InteractionType(type)
 
     public object Ping : InteractionType(1)
 
@@ -99,7 +89,7 @@ public sealed class InteractionType(
             3 -> Component
             4 -> AutoComplete
             5 -> ModalSubmit
-            else -> Unknown(type, null)
+            else -> Unknown(type)
         }
     }
 }

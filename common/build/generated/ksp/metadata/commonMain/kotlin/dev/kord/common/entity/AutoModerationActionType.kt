@@ -43,17 +43,7 @@ public sealed class AutoModerationActionType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : AutoModerationActionType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'AutoModerationActionType.from()'.",
-            replaceWith = ReplaceWith(expression = "AutoModerationActionType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.AutoModerationActionType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : AutoModerationActionType(value)
 
     /**
      * Blocks a member's message and prevents it from being posted.
@@ -112,7 +102,7 @@ public sealed class AutoModerationActionType(
             1 -> BlockMessage
             2 -> SendAlertMessage
             3 -> Timeout
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

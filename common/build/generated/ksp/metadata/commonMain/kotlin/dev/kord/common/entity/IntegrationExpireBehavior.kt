@@ -41,17 +41,7 @@ public sealed class IntegrationExpireBehavior(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : IntegrationExpireBehavior(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'IntegrationExpireBehavior.from()'.",
-            replaceWith = ReplaceWith(expression = "IntegrationExpireBehavior.from(value)", imports
-                        = arrayOf("dev.kord.common.entity.IntegrationExpireBehavior")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : IntegrationExpireBehavior(value)
 
     public object RemoveRole : IntegrationExpireBehavior(0)
 
@@ -89,7 +79,7 @@ public sealed class IntegrationExpireBehavior(
         public fun from(`value`: Int): IntegrationExpireBehavior = when (value) {
             0 -> RemoveRole
             1 -> Kick
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

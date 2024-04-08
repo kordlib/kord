@@ -1,6 +1,7 @@
 .fleet/
 .gradle/
-.idea/
+.idea/*
+!.idea/icon.png
 out/
 
 **/build/*

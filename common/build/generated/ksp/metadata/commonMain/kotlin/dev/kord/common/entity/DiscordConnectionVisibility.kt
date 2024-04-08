@@ -41,17 +41,7 @@ public sealed class DiscordConnectionVisibility(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : DiscordConnectionVisibility(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'DiscordConnectionVisibility.from()'.",
-            replaceWith = ReplaceWith(expression = "DiscordConnectionVisibility.from(value)",
-                        imports = arrayOf("dev.kord.common.entity.DiscordConnectionVisibility")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : DiscordConnectionVisibility(value)
 
     /**
      * Invisible to everyone except the user themselves.
@@ -95,7 +85,7 @@ public sealed class DiscordConnectionVisibility(
         public fun from(`value`: Int): DiscordConnectionVisibility = when (value) {
             0 -> None
             1 -> Everyone
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

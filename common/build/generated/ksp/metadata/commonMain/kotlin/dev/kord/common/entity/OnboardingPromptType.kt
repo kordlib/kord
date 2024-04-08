@@ -40,17 +40,7 @@ public sealed class OnboardingPromptType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : OnboardingPromptType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'OnboardingPromptType.from()'.",
-            replaceWith = ReplaceWith(expression = "OnboardingPromptType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.OnboardingPromptType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : OnboardingPromptType(value)
 
     public object MultipleChoice : OnboardingPromptType(0)
 
@@ -87,7 +77,7 @@ public sealed class OnboardingPromptType(
         public fun from(`value`: Int): OnboardingPromptType = when (value) {
             0 -> MultipleChoice
             1 -> Dropdown
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

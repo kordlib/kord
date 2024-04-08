@@ -7,6 +7,7 @@ import dev.kord.gateway.GatewayCloseCode.*
 import dev.kord.gateway.handler.*
 import dev.kord.gateway.ratelimit.IdentifyRateLimiter
 import dev.kord.gateway.retry.Retry
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.client.request.*
@@ -22,7 +23,6 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
-import mu.KotlinLogging
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -119,7 +119,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
                  */
                 inflater = Inflater()
             } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
+                defaultGatewayLogger.error(exception) { "" }
                 if (exception.isTimeout()) {
                     data.eventFlow.emit(Close.Timeout)
                 }
@@ -131,7 +131,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             try {
                 readSocket()
             } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
+                defaultGatewayLogger.error(exception) { "" }
             }
 
             defaultGatewayLogger.trace { "gateway connection closing" }
@@ -139,7 +139,7 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
             try {
                 handleClose()
             } catch (exception: Exception) {
-                defaultGatewayLogger.error(exception)
+                defaultGatewayLogger.error(exception) { "" }
             }
 
             defaultGatewayLogger.trace { "handled gateway connection closed" }
@@ -186,10 +186,10 @@ public class DefaultGateway(private val data: DefaultGatewayData) : Gateway {
 
         try {
             defaultGatewayLogger.trace { "Gateway <<< $json" }
-            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json) ?: return
+            val event = jsonParser.decodeFromString(Event.DeserializationStrategy, json)
             data.eventFlow.emit(event)
         } catch (exception: Exception) {
-            defaultGatewayLogger.error(exception)
+            defaultGatewayLogger.error(exception) { "" }
         }
 
     }

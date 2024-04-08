@@ -41,17 +41,7 @@ public sealed class InteractionResponseType(
      */
     public class Unknown internal constructor(
         type: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : InteractionResponseType(type) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'InteractionResponseType.from()'.",
-            replaceWith = ReplaceWith(expression = "InteractionResponseType.from(type)", imports =
-                        arrayOf("dev.kord.common.entity.InteractionResponseType")),
-        )
-        public constructor(type: Int) : this(type, null)
-    }
+    ) : InteractionResponseType(type)
 
     /**
      * ACK a [Ping][dev.kord.common.entity.InteractionType.Ping].
@@ -138,7 +128,7 @@ public sealed class InteractionResponseType(
             8 -> ApplicationCommandAutoCompleteResult
             9 -> Modal
             10 -> PremiumRequired
-            else -> Unknown(type, null)
+            else -> Unknown(type)
         }
     }
 }

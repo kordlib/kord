@@ -40,17 +40,7 @@ public sealed class ScheduledEntityType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ScheduledEntityType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ScheduledEntityType.from()'.",
-            replaceWith = ReplaceWith(expression = "ScheduledEntityType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.ScheduledEntityType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ScheduledEntityType(value)
 
     public object StageInstance : ScheduledEntityType(1)
 
@@ -91,7 +81,7 @@ public sealed class ScheduledEntityType(
             1 -> StageInstance
             2 -> Voice
             3 -> External
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

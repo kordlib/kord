@@ -41,17 +41,7 @@ public sealed class UserPremium(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : UserPremium(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'UserPremium.from()'.",
-            replaceWith = ReplaceWith(expression = "UserPremium.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.UserPremium")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : UserPremium(value)
 
     public object None : UserPremium(0)
 
@@ -95,7 +85,7 @@ public sealed class UserPremium(
             1 -> NitroClassic
             2 -> Nitro
             3 -> NitroBasic
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

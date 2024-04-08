@@ -40,17 +40,7 @@ public sealed class EntitlementType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : EntitlementType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'EntitlementType.from()'.",
-            replaceWith = ReplaceWith(expression = "EntitlementType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.EntitlementType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : EntitlementType(value)
 
     /**
      * Entitlement was purchased as an app subscription.
@@ -86,7 +76,7 @@ public sealed class EntitlementType(
          */
         public fun from(`value`: Int): EntitlementType = when (value) {
             8 -> ApplicationSubscription
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

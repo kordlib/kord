@@ -40,17 +40,7 @@ public sealed class MessageStickerType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : MessageStickerType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'MessageStickerType.from()'.",
-            replaceWith = ReplaceWith(expression = "MessageStickerType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.MessageStickerType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : MessageStickerType(value)
 
     public object PNG : MessageStickerType(1)
 
@@ -95,7 +85,7 @@ public sealed class MessageStickerType(
             2 -> APNG
             3 -> LOTTIE
             4 -> GIF
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

@@ -1,16 +1,13 @@
+// THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
                 "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
-import dev.kord.common.Class
-import dev.kord.common.java
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
-import kotlin.jvm.JvmField
 import kotlin.jvm.JvmName
-import kotlin.jvm.JvmStatic
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -45,56 +42,23 @@ public sealed class GuildMemberFlag(
      * [flag].
      */
     public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code or flag.code, null)
+            GuildMemberFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code or flags.code, null)
+            GuildMemberFlags(this.code or flags.code)
 
     final override fun equals(other: Any?): Boolean = this === other ||
             (other is GuildMemberFlag && this.shift == other.shift)
 
     final override fun hashCode(): Int = shift.hashCode()
 
-    final override fun toString(): String = if (this is Unknown)
-            "GuildMemberFlag.Unknown(shift=$shift)" else "GuildMemberFlag.${this::class.simpleName}"
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun name(): String = name
-    private val name get() = this::class.simpleName!!
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun ordinal(): Int = when (this) {
-        DidRejoin -> 0
-        CompletedOnboarding -> 1
-        BypassesVerification -> 2
-        StartedOnboarding -> 3
-        is Unknown -> Int.MAX_VALUE
-    }
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "GuildMemberFlag is no longer an enum class.",
-        replaceWith = ReplaceWith(expression = "GuildMemberFlag::class.java", imports =
-                    arrayOf("dev.kord.common.entity.GuildMemberFlag")),
-        DeprecationLevel.HIDDEN,
-    )
-    public fun getDeclaringClass(): Class<GuildMemberFlag> = GuildMemberFlag::class.java
+    final override fun toString(): String =
+            if (this is Unknown) "GuildMemberFlag.Unknown(shift=$shift)"
+            else "GuildMemberFlag.${this::class.simpleName}"
 
     /**
      * An unknown [GuildMemberFlag].
@@ -138,50 +102,6 @@ public sealed class GuildMemberFlag(
             )
         }
 
-        // TODO uncomment annotation in Member.kt and delete this file when this function is removed after deprecation
-        //  cycle
-        @Deprecated(
-            "'GuildMemberFlag' is no longer serializable, serialize 'GuildMemberFlags' instead. Deprecated without a " +
-                "replacement.",
-            level = DeprecationLevel.HIDDEN,
-        )
-        public fun serializer(): KSerializer<GuildMemberFlag> = Serializer
-
-        private object Serializer : KSerializer<GuildMemberFlag> {
-            override val descriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildMemberFlag", PrimitiveKind.STRING)
-
-            override fun serialize(encoder: Encoder, value: GuildMemberFlag) = encoder.encodeString(value.name)
-            override fun deserialize(decoder: Decoder) = valueOf0(decoder.decodeString())
-        }
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val DidRejoin: GuildMemberFlag = DidRejoin
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val CompletedOnboarding: GuildMemberFlag = CompletedOnboarding
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val BypassesVerification: GuildMemberFlag = BypassesVerification
-
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Binary compatibility",
-        )
-        @JvmField
-        public val StartedOnboarding: GuildMemberFlag = StartedOnboarding
 
         /**
          * Returns an instance of [GuildMemberFlag] with [GuildMemberFlag.shift] equal to the
@@ -196,35 +116,6 @@ public sealed class GuildMemberFlag(
             3 -> StartedOnboarding
             else -> Unknown(shift)
         }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT", "DeprecatedCallableAddReplaceWith"))
-        @Deprecated(message =
-                "GuildMemberFlag is no longer an enum class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-        @JvmStatic
-        public open fun valueOf(name: String): GuildMemberFlag = valueOf0(name)
-        private fun valueOf0(name: String) = when (name) {
-            "DidRejoin" -> DidRejoin
-            "CompletedOnboarding" -> CompletedOnboarding
-            "BypassesVerification" -> BypassesVerification
-            "StartedOnboarding" -> StartedOnboarding
-            else -> throw IllegalArgumentException(name)
-        }
-
-        /**
-         * @suppress
-         */
-        @Suppress(names = arrayOf("NON_FINAL_MEMBER_IN_OBJECT"))
-        @Deprecated(
-            message = "GuildMemberFlag is no longer an enum class.",
-            replaceWith = ReplaceWith(expression = "GuildMemberFlag.entries.toTypedArray()", imports
-                        = arrayOf("dev.kord.common.entity.GuildMemberFlag")),
-            DeprecationLevel.HIDDEN,
-        )
-        @JvmStatic
-        public open fun values(): Array<GuildMemberFlag> = entries.toTypedArray()
     }
 }
 
@@ -236,8 +127,7 @@ public sealed class GuildMemberFlag(
  * You can create an instance of [GuildMemberFlags] using the following methods:
  * ```kotlin
  * // from individual GuildMemberFlags
- * val guildMemberFlags1 = GuildMemberFlags(GuildMemberFlag.DidRejoin,
- * GuildMemberFlag.CompletedOnboarding)
+ * val guildMemberFlags1 = GuildMemberFlags(GuildMemberFlag.DidRejoin, GuildMemberFlag.CompletedOnboarding)
  *
  * // from an Iterable
  * val iterable: Iterable<GuildMemberFlag> = TODO()
@@ -276,8 +166,7 @@ public sealed class GuildMemberFlag(
  * specific [GuildMemberFlag]s:
  * ```kotlin
  * val hasGuildMemberFlag = GuildMemberFlag.DidRejoin in guildMemberFlags
- * val hasGuildMemberFlags = GuildMemberFlags(GuildMemberFlag.DidRejoin,
- * GuildMemberFlag.CompletedOnboarding) in guildMemberFlags
+ * val hasGuildMemberFlags = GuildMemberFlags(GuildMemberFlag.DidRejoin, GuildMemberFlag.CompletedOnboarding) in guildMemberFlags
  * ```
  *
  * ## Unknown [GuildMemberFlag]s
@@ -300,18 +189,7 @@ public class GuildMemberFlags internal constructor(
      * The raw code used by Discord.
      */
     public val code: Int,
-    @Suppress("UNUSED_PARAMETER") unused: Nothing?,
 ) {
-    // TODO uncomment annotation in Member.kt and delete this file when this constructor is removed after deprecation
-    //  cycle
-    @Deprecated(
-        "Don't construct an instance of 'GuildMemberFlags' from a raw code. Use the factory functions described in " +
-            "the documentation instead.",
-        ReplaceWith("GuildMemberFlags.Builder(code).build()", "dev.kord.common.entity.GuildMemberFlags"),
-        DeprecationLevel.HIDDEN,
-    )
-    public constructor(code: Int) : this(code, null)
-
     /**
      * A [Set] of all [GuildMemberFlag]s contained in this instance of [GuildMemberFlags].
      */
@@ -343,28 +221,28 @@ public class GuildMemberFlags internal constructor(
      * [flag].
      */
     public operator fun plus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code or flag.code, null)
+            GuildMemberFlags(this.code or flag.code)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` and
      * [flags].
      */
     public operator fun plus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code or flags.code, null)
+            GuildMemberFlags(this.code or flags.code)
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flag].
      */
     public operator fun minus(flag: GuildMemberFlag): GuildMemberFlags =
-            GuildMemberFlags(this.code and flag.code.inv(), null)
+            GuildMemberFlags(this.code and flag.code.inv())
 
     /**
      * Returns an instance of [GuildMemberFlags] that has all bits set that are set in `this` except
      * the bits that are set in [flags].
      */
     public operator fun minus(flags: GuildMemberFlags): GuildMemberFlags =
-            GuildMemberFlags(this.code and flags.code.inv(), null)
+            GuildMemberFlags(this.code and flags.code.inv())
 
     /**
      * Returns a copy of this instance of [GuildMemberFlags] modified with [builder].
@@ -380,24 +258,6 @@ public class GuildMemberFlags internal constructor(
     override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "GuildMemberFlags(values=$values)"
-
-    /**
-     * @suppress
-     */
-    @Deprecated(
-        message = "GuildMemberFlags is no longer a data class.",
-        replaceWith = ReplaceWith(expression = "this.code", imports = arrayOf()),
-        DeprecationLevel.HIDDEN,
-    )
-    public operator fun component1(): Int = code
-
-    /**
-     * @suppress
-     */
-    @Suppress(names = arrayOf("DeprecatedCallableAddReplaceWith"))
-    @Deprecated(message =
-            "GuildMemberFlags is no longer a data class. Deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-    public fun copy(code: Int = this.code): GuildMemberFlags = GuildMemberFlags(code, null)
 
     public class Builder(
         private var code: Int = 0,
@@ -434,7 +294,7 @@ public class GuildMemberFlags internal constructor(
          * Returns an instance of [GuildMemberFlags] that has all bits set that are currently set in
          * this [Builder].
          */
-        public fun build(): GuildMemberFlags = GuildMemberFlags(code, null)
+        public fun build(): GuildMemberFlags = GuildMemberFlags(code)
     }
 
     internal object Serializer : KSerializer<GuildMemberFlags> {
@@ -449,7 +309,7 @@ public class GuildMemberFlags internal constructor(
         }
 
         override fun deserialize(decoder: Decoder): GuildMemberFlags =
-                GuildMemberFlags(decoder.decodeSerializableValue(delegate), null)
+                GuildMemberFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

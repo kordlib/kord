@@ -929,6 +929,10 @@ public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilder 
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
 
+public final class dev/kord/rest/builder/channel/thread/StartForumThreadBuilderKt {
+	public static final fun applyTag (Ldev/kord/rest/builder/channel/thread/StartForumThreadBuilder;Ldev/kord/common/entity/Snowflake;)V
+}
+
 public final class dev/kord/rest/builder/channel/thread/StartThreadBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ChannelType;)V
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
@@ -982,6 +986,10 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ChannelModifyPatchRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilderKt {
+	public static final fun applyTag (Ldev/kord/rest/builder/channel/thread/ThreadModifyBuilder;Ldev/kord/common/entity/Snowflake;)V
 }
 
 public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/rest/builder/component/MessageComponentBuilder {
@@ -1081,10 +1089,8 @@ public abstract class dev/kord/rest/builder/component/SelectMenuBuilder : dev/ko
 
 public final class dev/kord/rest/builder/component/SelectMenuBuilderKt {
 	public static final fun channelType (Ldev/kord/rest/builder/component/ChannelSelectBuilder;Ldev/kord/common/entity/ChannelType;)V
-	public static final synthetic fun getOptions (Ldev/kord/rest/builder/component/StringSelectBuilder;)Ljava/util/List;
 	public static final fun option (Ldev/kord/rest/builder/component/StringSelectBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun option$default (Ldev/kord/rest/builder/component/StringSelectBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final synthetic fun setOptions (Ldev/kord/rest/builder/component/StringSelectBuilder;Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/component/SelectOptionBuilder {
@@ -2216,21 +2222,21 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$Def
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilderJvmKt {
-	public static final fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
+	public static final synthetic fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
 }
 
 public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
-	public static final fun actionRow (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final fun allowedMentions (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun actionRow (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun allowedMentions (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final fun embed (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final fun messageFlags (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun embed (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun messageFlags (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
 	public fun getFiles ()Ljava/util/List;
-	public fun setFiles (Ljava/util/List;)V
+	public synthetic fun setFiles (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartInteractionResponseCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -2255,14 +2261,20 @@ public final class dev/kord/rest/builder/message/create/UserMessageCreateBuilder
 
 public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
+	public final fun getAppliedTags ()Ljava/util/List;
 	public final fun getAvatarUrl ()Ljava/lang/String;
 	public final fun getThreadName ()Ljava/lang/String;
 	public final fun getUsername ()Ljava/lang/String;
+	public final fun setAppliedTags (Ljava/util/List;)V
 	public final fun setAvatarUrl (Ljava/lang/String;)V
 	public final fun setThreadName (Ljava/lang/String;)V
 	public final fun setUsername (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultiPartWebhookExecuteRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
+public final class dev/kord/rest/builder/message/create/WebhookMessageCreateBuilderKt {
+	public static final fun applyTag (Ldev/kord/rest/builder/message/create/WebhookMessageCreateBuilder;Ldev/kord/common/entity/Snowflake;)V
 }
 
 public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModifyBuilder : dev/kord/rest/builder/message/modify/MessageModifyBuilder {
@@ -2280,7 +2292,7 @@ public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModify
 	public final fun setComponents (Ljava/util/List;)V
 	public final fun setContent (Ljava/lang/String;)V
 	public final fun setEmbeds (Ljava/util/List;)V
-	public final fun setFiles (Ljava/util/List;)V
+	public final synthetic fun setFiles (Ljava/util/List;)V
 	public final fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public final fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 }
@@ -2299,7 +2311,7 @@ public final class dev/kord/rest/builder/message/modify/InteractionResponseModif
 
 public abstract interface class dev/kord/rest/builder/message/modify/MessageModifyBuilder : dev/kord/rest/builder/message/MessageBuilder {
 	public abstract fun getFiles ()Ljava/util/List;
-	public abstract fun setFiles (Ljava/util/List;)V
+	public abstract synthetic fun setFiles (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$DefaultImpls {
@@ -2307,17 +2319,17 @@ public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$Def
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderJvmKt {
-	public static final fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
+	public static final synthetic fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderKt {
-	public static final fun actionRow (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final fun allowedMentions (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun actionRow (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun allowedMentions (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final fun embed (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun embed (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun keepAttachment (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun keepAttachment$default (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final fun messageFlags (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
+	public static final synthetic fun messageFlags (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder : dev/kord/rest/builder/message/modify/AbstractMessageModifyBuilder, dev/kord/rest/builder/RequestBuilder {
@@ -2902,7 +2914,6 @@ public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$
 
 public final class dev/kord/rest/json/request/AutoCompleteResponseCreateRequest$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-	public final synthetic fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/rest/json/request/AutoModerationRuleCreateRequest {
@@ -5466,10 +5477,11 @@ public final class dev/kord/rest/json/request/WebhookEditMessageRequest$Companio
 public final class dev/kord/rest/json/request/WebhookExecuteRequest {
 	public static final field Companion Ldev/kord/rest/json/request/WebhookExecuteRequest$Companion;
 	public fun <init> ()V
-	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
-	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)V
+	public synthetic fun <init> (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component10 ()Ldev/kord/common/entity/optional/Optional;
+	public final fun component11 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalBoolean;
@@ -5478,10 +5490,11 @@ public final class dev/kord/rest/json/request/WebhookExecuteRequest {
 	public final fun component7 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component8 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component9 ()Ldev/kord/common/entity/optional/Optional;
-	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/WebhookExecuteRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/WebhookExecuteRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/WebhookExecuteRequest;
+	public final fun copy (Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;)Ldev/kord/rest/json/request/WebhookExecuteRequest;
+	public static synthetic fun copy$default (Ldev/kord/rest/json/request/WebhookExecuteRequest;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/OptionalBoolean;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;Ldev/kord/common/entity/optional/Optional;ILjava/lang/Object;)Ldev/kord/rest/json/request/WebhookExecuteRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowedMentions ()Ldev/kord/common/entity/optional/Optional;
+	public final fun getAppliedTags ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getAttachments ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getAvatar ()Ldev/kord/common/entity/optional/Optional;
 	public final fun getComponents ()Ldev/kord/common/entity/optional/Optional;
@@ -6337,6 +6350,7 @@ public final class dev/kord/rest/route/DiscordCdn {
 	public final fun applicationCover (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun applicationIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun defaultAvatar (I)Ldev/kord/rest/route/CdnUrl;
+	public final fun defaultUserAvatar (I)Ldev/kord/rest/route/CdnUrl;
 	public final fun defaultUserAvatar (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
 	public final fun emoji (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
 	public final fun guildBanner (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;

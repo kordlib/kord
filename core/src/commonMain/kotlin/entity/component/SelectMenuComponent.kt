@@ -58,11 +58,6 @@ public class StringSelectComponent(data: ComponentData) : SelectMenuComponent(da
     public val options: List<SelectOption> get() = data.options.orEmpty().map { SelectOption(it) }
 }
 
-/** The possible options to choose from. */
-@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
-@Deprecated("Replaced by member in StringSelectComponent.", ReplaceWith("this.options"), DeprecationLevel.HIDDEN)
-public val StringSelectComponent.options: List<SelectOption> get() = options
-
 public class UserSelectComponent(data: ComponentData) : SelectMenuComponent(data) {
     override val type: ComponentType.UserSelect get() = ComponentType.UserSelect
 

@@ -41,18 +41,7 @@ public sealed class ApplicationCommandPermissionType(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ApplicationCommandPermissionType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ApplicationCommandPermissionType.from()'.",
-            replaceWith = ReplaceWith(expression = "ApplicationCommandPermissionType.from(value)",
-                        imports =
-                        arrayOf("dev.kord.common.entity.ApplicationCommandPermissionType")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ApplicationCommandPermissionType(value)
 
     public object Role : ApplicationCommandPermissionType(1)
 
@@ -94,7 +83,7 @@ public sealed class ApplicationCommandPermissionType(
             1 -> Role
             2 -> User
             3 -> Channel
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

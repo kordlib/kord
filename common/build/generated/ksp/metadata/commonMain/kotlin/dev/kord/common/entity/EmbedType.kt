@@ -39,17 +39,7 @@ public sealed class EmbedType(
      */
     public class Unknown internal constructor(
         `value`: String,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : EmbedType(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'EmbedType.from()'.",
-            replaceWith = ReplaceWith(expression = "EmbedType.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.EmbedType")),
-        )
-        public constructor(`value`: String) : this(value, null)
-    }
+    ) : EmbedType(value)
 
     /**
      * Generic embed rendered from embed attributes.
@@ -118,7 +108,7 @@ public sealed class EmbedType(
             "gifv" -> Gifv
             "article" -> Article
             "link" -> Link
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }
