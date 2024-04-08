@@ -11,8 +11,8 @@
     docUrl = "https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement",
     unknownConstructorWasPublic = false,
     entries = [
-        Generate.Entry("User", intValue = 1, kDoc = "Entitlement is owned by a user."),
-        Generate.Entry("Guild", intValue = 2, kDoc = "Entitlement is owned by a guild.")
+        Generate.Entry("Guild", intValue = 1, kDoc = "Entitlement is owned by a guild."),
+        Generate.Entry("User", intValue = 2, kDoc = "Entitlement is owned by a user."),
     ]
 )
 
@@ -40,9 +40,9 @@ public data class DiscordEntitlement(
     val type: EntitlementType,
     val deleted: Boolean,
     @SerialName("starts_at")
-    val startsAt: Optional<Instant>,
+    val startsAt: Optional<Instant> = Optional.Missing(),
     @SerialName("ends_at")
-    val endsAt: Optional<Instant>,
+    val endsAt: Optional<Instant> = Optional.Missing(),
     @SerialName("guild_Id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 )

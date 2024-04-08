@@ -18,10 +18,7 @@ import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
-import dev.kord.rest.json.request.AuditLogGetRequest
-import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
-import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
-import dev.kord.rest.json.request.ListThreadsByTimestampRequest
+import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import dev.kord.rest.service.RestClient
@@ -63,6 +60,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     // topics
     private inline val application get() = kord.rest.application
+
+    // monetization
+    private inline val entitlements get() = kord.rest.entitlement
+    private inline val skus get() = kord.rest.skus
 
 
     // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
@@ -647,6 +648,36 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GuildApplicationCommand(data, interaction)
     }
 
+    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? = catchNotFound {
+        val response = entitlements.getEntitlement(applicationId, entitlementId)
+        val data = EntitlementData.from(response)
+        Entitlement(data, kord)
+    }
+
+    override suspend fun getEntitlements(
+        applicationId: Snowflake,
+        skuId: Snowflake,
+        limit: Int?,
+        userId: Snowflake?,
+        guildId: Snowflake?
+    ): Flow<Entitlement> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
+        paginateForwards(batchSize, idSelector = { it.id }) { position ->
+            entitlements.getEntitlements(
+                applicationId = applicationId,
+                position = position,
+                limit = batchSize,
+                skuIDs = listOf(skuId),
+                userId = userId,
+                guildId = guildId
+            )
+        }.map {
+            val data = EntitlementData.from(it)
+            Entitlement(data, kord)
+        }
+    }
+
+    public suspend fun getSKUs(applicationId: Snowflake): List<SKU> =
+        skus.getSkus(applicationId).map { SKU(SkuData.from(it), kord) }
 
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
 }

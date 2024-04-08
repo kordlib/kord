@@ -18,7 +18,7 @@ public data class EntitlementsListRequest(
 @Serializable
 public data class TestEntitlementCreateRequest(
     @SerialName("sku_id")
-    val skuId: String,
+    val skuId: Snowflake,
     @SerialName("owner_id")
     val ownerId: Snowflake,
     @SerialName("owner_type")

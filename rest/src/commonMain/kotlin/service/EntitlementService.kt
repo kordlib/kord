@@ -3,25 +3,39 @@ package dev.kord.rest.service
 import dev.kord.common.entity.DiscordEntitlement
 import dev.kord.common.entity.Snowflake
 import dev.kord.rest.json.request.TestEntitlementCreateRequest
-import dev.kord.rest.json.request.EntitlementsListRequest
 import dev.kord.rest.request.RequestHandler
+import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 
 public class EntitlementService(handler: RequestHandler) : RestService(handler) {
 
     public suspend fun getEntitlements(
         applicationId: Snowflake,
-        request: EntitlementsListRequest,
+        position: Position? = null,
+        limit: Int? = null,
+        guildId: Snowflake? = null,
+        userId: Snowflake? = null,
+        skuIDs: List<Snowflake>? = null,
+        excludeEnded: Boolean? = null,
     ): List<DiscordEntitlement> = call(Route.EntitlementsGet) {
         keys[Route.ApplicationId] = applicationId
-        request.userId?.let { parameter("user_id", it) }
-        request.skuIds.joinToString(",").ifBlank { null }
+        userId?.let { parameter("user_id", it) }
+        skuIDs
+            ?.joinToString(",")
+            ?.ifBlank { null }
             ?.let { parameter("sku_ids", it) }
-        request.before?.let { parameter("before", it) }
-        request.after?.let { parameter("after", it) }
-        request.limit?.let { parameter("limit", it) }
-        request.guildId?.let { parameter("guild_id", it) }
-        request.excludeEnded?.let { parameter("exclude_ended", it) }
+        limit?.let { parameter("limit", it) }
+        guildId?.let { parameter("guild_id", it) }
+        excludeEnded?.let { parameter("exclude_ended", it) }
+        position?.let { parameter(it.key, it.value) }
+    }
+
+    public suspend fun getEntitlement(
+        applicationId: Snowflake,
+        entitlementId: Snowflake,
+    ): DiscordEntitlement = call(Route.EntitlementGet) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.EntitlementId] = entitlementId
     }
 
     public suspend fun createTestEntitlement(

@@ -277,6 +277,17 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
     override suspend fun getAutoModerationRuleOrNull(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule? =
         first.getAutoModerationRuleOrNull(guildId, ruleId) ?: second.getAutoModerationRuleOrNull(guildId, ruleId)
 
+    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? =
+        first.getEntitlementOrNull(applicationId, entitlementId) ?: second.getEntitlementOrNull(applicationId, entitlementId)
+
+    override suspend fun getEntitlements(
+        applicationId: Snowflake,
+        skuId: Snowflake,
+        limit: Int?,
+        userId: Snowflake?,
+        guildId: Snowflake?
+    ): Flow<Entitlement> = first.getEntitlements(applicationId, skuId, limit, userId, guildId)
+        .switchIfEmpty(second.getEntitlements(applicationId, skuId, limit, userId, guildId))
 
     override fun toString(): String = "FallbackEntitySupplier(first=$first, second=$second)"
 }

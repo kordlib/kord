@@ -10,6 +10,7 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
@@ -748,6 +749,13 @@ public sealed class Route<T>(
             HttpMethod.Get,
             "/applications/$ApplicationId/entitlements",
             ListSerializer(DiscordEntitlement.serializer())
+        )
+
+    public object EntitlementGet :
+        Route<DiscordEntitlement>(
+            HttpMethod.Get,
+            "/applications/$ApplicationId/entitlements/$EntitlementId",
+            DiscordEntitlement.serializer()
         )
 
     public object TestEntitlementPost :

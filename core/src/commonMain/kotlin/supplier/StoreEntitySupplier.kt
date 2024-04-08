@@ -312,6 +312,18 @@ public class StoreEntitySupplier(
         }
     }
 
+    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? {
+        return storeAndReturn(supplier.getEntitlementOrNull(applicationId, entitlementId)) { it.data }
+    }
+
+    override suspend fun getEntitlements(
+        applicationId: Snowflake,
+        skuId: Snowflake,
+        limit: Int?,
+        userId: Snowflake?,
+        guildId: Snowflake?
+    ): Flow<Entitlement> = storeOnEach(supplier.getEntitlements(applicationId, skuId, limit, userId, guildId)) { it.data }
+
     private suspend inline fun <T, reified R : Any> storeAndReturn(value: T?, transform: (T) -> R): T? {
         if (value == null) return null
         cache.put(transform(value))

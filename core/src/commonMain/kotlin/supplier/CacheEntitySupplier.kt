@@ -599,6 +599,34 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .singleOrNull()
             ?.let { AutoModerationRule(it, kord) }
 
+    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? =
+        cache
+            .query {
+                idEq(EntitlementData::id, entitlementId)
+                idEq(EntitlementData::applicationId, applicationId)
+            }
+            .singleOrNull()
+            ?.let { Entitlement(it, kord) }
+
+    override suspend fun getEntitlements(
+        applicationId: Snowflake,
+        skuId: Snowflake,
+        limit: Int?,
+        userId: Snowflake?,
+        guildId: Snowflake?
+    ): Flow<Entitlement> {
+        checkLimit(limit)
+        return cache
+            .query {
+                idEq(EntitlementData::applicationId, applicationId)
+                idEq(EntitlementData::skuId, skuId)
+                userId?.let { idEq(EntitlementData::userId, it) }
+                guildId?.let { idEq(EntitlementData::guildId, it) }
+            }
+            .asFlow()
+            .map { Entitlement(it, kord) }
+            .limit(limit)
+    }
 
     override fun toString(): String = "CacheEntitySupplier(cache=$cache)"
 }

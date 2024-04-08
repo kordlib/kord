@@ -642,6 +642,35 @@ public interface EntitySupplier {
     public suspend fun getAutoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRule =
         getAutoModerationRuleOrNull(guildId, ruleId)
             ?: EntityNotFoundException.autoModerationRuleNotFound(guildId, ruleId)
+
+    /**
+     * Requests an [Entitlement] by its [id][entitlementId]. Returns `null` if it wasn't found.
+     *
+     * @throws RequestException if something went wrong during the request.
+     */
+    public suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement?
+
+    /**
+     * Requests an [Entitlement] by its [id][entitlementId].
+     *
+     * @throws RequestException if something went wrong during the request.
+     * @throws EntityNotFoundException if the [Entitlement] wasn't found.
+     */
+    public suspend fun getEntitlement(applicationId: Snowflake, entitlementId: Snowflake): Entitlement =
+        getEntitlementOrNull(applicationId, entitlementId)
+            ?: EntityNotFoundException.entitlementNotFound(applicationId, entitlementId)
+
+    /**
+     * Requests all [Entitlement]s for the [Application] with the given [applicationId].
+     */
+    public suspend fun getEntitlements(
+        applicationId: Snowflake,
+        skuId: Snowflake,
+        limit: Int? = null,
+        userId: Snowflake? = null,
+        guildId: Snowflake? = null
+    ): Flow<Entitlement>
+
 }
 
 

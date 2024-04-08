@@ -581,6 +581,93 @@ public abstract class dev/kord/gateway/DispatchEvent : dev/kord/gateway/Event {
 	public abstract fun getSequence ()Ljava/lang/Integer;
 }
 
+public final class dev/kord/gateway/EntitlementCreate : dev/kord/gateway/DispatchEvent {
+	public static final field Companion Ldev/kord/gateway/EntitlementCreate$Companion;
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementCreate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementCreate;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementCreate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/EntitlementCreate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/EntitlementCreate$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/EntitlementCreate;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/EntitlementCreate;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/EntitlementCreate$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/EntitlementDelete : dev/kord/gateway/DispatchEvent {
+	public static final field Companion Ldev/kord/gateway/EntitlementDelete$Companion;
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementDelete;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementDelete;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementDelete;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/EntitlementDelete$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/EntitlementDelete$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/EntitlementDelete;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/EntitlementDelete;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/EntitlementDelete$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/EntitlementUpdate : dev/kord/gateway/DispatchEvent {
+	public static final field Companion Ldev/kord/gateway/EntitlementUpdate$Companion;
+	public fun <init> (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/common/entity/DiscordEntitlement;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;)Ldev/kord/gateway/EntitlementUpdate;
+	public static synthetic fun copy$default (Ldev/kord/gateway/EntitlementUpdate;Ldev/kord/common/entity/DiscordEntitlement;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/EntitlementUpdate;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntitlement ()Ldev/kord/common/entity/DiscordEntitlement;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/EntitlementUpdate$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/EntitlementUpdate$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/EntitlementUpdate;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/EntitlementUpdate;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/EntitlementUpdate$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public abstract class dev/kord/gateway/Event {
 }
 

@@ -43,14 +43,14 @@ public sealed class EntitlementOwnerType(
     ) : EntitlementOwnerType(value)
 
     /**
-     * Entitlement is owned by a user.
-     */
-    public object User : EntitlementOwnerType(1)
-
-    /**
      * Entitlement is owned by a guild.
      */
-    public object Guild : EntitlementOwnerType(2)
+    public object Guild : EntitlementOwnerType(1)
+
+    /**
+     * Entitlement is owned by a user.
+     */
+    public object User : EntitlementOwnerType(2)
 
     internal object Serializer : KSerializer<EntitlementOwnerType> {
         override val descriptor: SerialDescriptor =
@@ -70,8 +70,8 @@ public sealed class EntitlementOwnerType(
          */
         public val entries: List<EntitlementOwnerType> by lazy(mode = PUBLICATION) {
             listOf(
-                User,
                 Guild,
+                User,
             )
         }
 
@@ -81,8 +81,8 @@ public sealed class EntitlementOwnerType(
          * the specified [value].
          */
         public fun from(`value`: Int): EntitlementOwnerType = when (value) {
-            1 -> User
-            2 -> Guild
+            1 -> Guild
+            2 -> User
             else -> Unknown(value)
         }
     }
