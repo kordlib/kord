@@ -15,7 +15,7 @@ kotlin-node = "20.11.5-pre.706" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.9" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.0.6" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
-sodium = "0.9.0" # https://github.com/ionspin/kotlin-multiplatform-libsodium
+sodium = "0.9.1" # https://github.com/ionspin/kotlin-multiplatform-libsodium
 
 # code generation
 ksp = "1.9.22-1.0.17" # https://github.com/google/ksp
