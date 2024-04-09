@@ -2,10 +2,7 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.*
 import dev.kord.common.entity.MessageType.RoleSubscriptionPurchase
-import dev.kord.common.entity.optional.mapNullable
-import dev.kord.common.entity.optional.orEmpty
-import dev.kord.common.entity.optional.unwrap
-import dev.kord.common.entity.optional.value
+import dev.kord.common.entity.optional.*
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.behavior.MessageBehavior
@@ -23,22 +20,19 @@ import dev.kord.core.entity.component.ActionRowComponent
 import dev.kord.core.entity.interaction.ActionInteraction
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.getChannelOf
 import dev.kord.core.supplier.getChannelOfOrNull
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
-import dev.kord.core.hash
 
 /**
  * An instance of a [Discord Message][https://discord.com/developers/docs/resources/channel#message-object].
  */
-public class Message(
-    public val data: MessageData,
-    override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : MessageBehavior {
+public interface Message : MessageBehavior {
+    public val data: MessageData
 
     /**
      * An instance of [MessageInteraction](https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object)
@@ -301,12 +295,6 @@ public class Message(
         get() = data.components.orEmpty().map { ActionRowComponent(it) }
 
     /**
-     * The [poll][DiscordPoll] of this message if any.
-     */
-    public val poll: DiscordPoll?
-        get() = data.poll.value
-
-    /**
      * Returns itself.
      */
     override suspend fun asMessage(): Message = this
@@ -355,10 +343,38 @@ public class Message(
      */
     public suspend fun getGuildOrNull(): Guild? = supplier.getChannelOfOrNull<GuildChannel>(channelId)?.getGuildOrNull()
 
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message
+}
+
+public class DefaultMessage(
+    override val data: MessageData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : Message {
+    override fun hashCode(): Int = hash(id)
+
+    override fun equals(other: Any?): Boolean = when (other) {
+        is MessageBehavior -> other.id == id && other.channelId == channelId
+        else -> false
+    }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): DefaultMessage =
+        DefaultMessage(data, kord, strategy.supply(kord))
+}
+
+/**
+ * A message which has a [poll].
+ */
+public class Poll(
+    override val data: MessageData,
+    override val kord: Kord,
+    override val supplier: EntitySupplier = kord.defaultSupplier,
+) : Message {
     /**
-     * Returns a new [Message] with the given [strategy].
+     * The [poll][DiscordPoll].
      */
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Message = Message(data, kord, strategy.supply(kord))
+    public val poll: DiscordPoll
+        get() = data.poll.value!!
 
     override fun hashCode(): Int = hash(id)
 
@@ -367,8 +383,22 @@ public class Message(
         else -> false
     }
 
-    override fun toString(): String {
-        return "Message(data=$data, kord=$kord, supplier=$supplier)"
-    }
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Poll =
+        Poll(data, kord, strategy.supply(kord))
 
+    override fun toString(): String {
+        return "Poll(data=$data, kord=$kord, supplier=$supplier)"
+    }
+}
+
+/**
+ * Constructor for [Message]
+ */
+public fun Message(
+    data: MessageData,
+    kord: Kord,
+    supplier: EntitySupplier = kord.defaultSupplier
+): Message = when {
+    data.poll is Optional.Value<*> -> Poll(data, kord, supplier)
+    else -> DefaultMessage(data, kord, supplier)
 }
