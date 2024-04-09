@@ -49,10 +49,11 @@ internal class EntitlementEventHandler : BaseGatewayEventHandler() {
         delete: Boolean = false
     ): Entitlement {
         val entitlement = Entitlement(EntitlementData.from(entity), kord)
-        if (delete) kord.cache.remove {
-            idEq(EntitlementData::id, entitlement.id)
-            idEq(EntitlementData::userId, entitlement.userId)
-        } else kord.cache.put(entitlement)
+        if (delete) {
+            kord.cache.remove { idEq(EntitlementData::id, entitlement.id) }
+        } else {
+            kord.cache.put(entitlement)
+        }
 
         return entitlement
     }
