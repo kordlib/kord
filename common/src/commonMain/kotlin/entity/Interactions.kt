@@ -62,7 +62,10 @@
             kDoc = "Respond to an autocomplete interaction with suggested choices.",
         ),
         Entry("Modal", intValue = 9, kDoc = "Respond to an interaction with a popup modal."),
-        Entry("PremiumRequired", intValue = 10, kDoc = "Respond to interactions with ")
+        Entry(
+            "PremiumRequired", intValue = 10,
+            kDoc = "Respond to an interaction with an upgrade button, only available for apps with monetization enabled."
+        ),
     ],
 )
 
