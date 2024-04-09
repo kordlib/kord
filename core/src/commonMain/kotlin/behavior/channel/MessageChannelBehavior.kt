@@ -303,19 +303,6 @@ public suspend inline fun MessageChannelBehavior.createEmbed(block: EmbedBuilder
 }
 
 /**
- * Requests to create a message with only a [poll][MessageCreateBuilder.poll].
- *
- * @throws [RestRequestException] if something went wrong during the request.
- */
-public suspend inline fun MessageChannelBehavior.createPoll(block: PollBuilder.() -> Unit): Message {
-    contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-    }
-
-    return createMessage { poll(block) }
-}
-
-/**
  * Requests to trigger the typing indicator for the bot in this channel.
  * The typing status will be refreshed until the [block] has been completed.
  *

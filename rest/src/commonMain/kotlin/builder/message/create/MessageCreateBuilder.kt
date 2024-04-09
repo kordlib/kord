@@ -1,6 +1,8 @@
 package dev.kord.rest.builder.message.create
 
 import dev.kord.common.annotation.KordDsl
+import dev.kord.rest.json.request.CreatablePoll
+import dev.kord.common.entity.DiscordPoll
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.optional.Optional
@@ -13,6 +15,7 @@ import dev.kord.rest.builder.message.AllowedMentionsBuilder
 import dev.kord.rest.builder.message.AttachmentBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
 import dev.kord.rest.builder.message.MessageBuilder
+import dev.kord.rest.builder.message.PollBuilder
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import dev.kord.rest.builder.message.actionRow as actionRowExtensionOnNewSupertype
@@ -29,6 +32,7 @@ public sealed interface MessageCreateBuilder : MessageBuilder {
     /**
      * The poll of this message.
      */
+    @set:KordUnsafe
     public var poll: CreatablePoll?
 
     /** Whether this message should be played as a text-to-speech message. */
@@ -154,8 +158,9 @@ public inline fun MessageCreateBuilder.messageFlags(builder: MessageFlags.Builde
  * Set's the [poll][dev.kord.common.entity.DiscordMessage.poll] of this message.
  *
  * **Please note that if poll is set, you currently cannot set [MessageBuilder.content],
- * [MessageBuilder.attachments], [MessageBuilder.embeds] or [MessageBuilder.components]
+ * [MessageBuilder.attachments], [MessageBuilder.embeds] or [MessageBuilder.components]**
  */
+@KordUnsafe
 public inline fun MessageCreateBuilder.poll(builder: PollBuilder.() -> Unit) {
     contract {
         callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

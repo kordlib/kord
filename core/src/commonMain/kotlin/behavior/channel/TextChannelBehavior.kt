@@ -26,7 +26,7 @@ import kotlinx.datetime.Instant
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateThreadParentChannelBehavior {
+public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateThreadParentChannelBehavior, PollParentChannelBehavior {
 
     override val activeThreads: Flow<TextChannelThread>
         get() = super.activeThreads.filterIsInstance()
