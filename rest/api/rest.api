@@ -2595,6 +2595,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field InvalidRecipients Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidRequestOrigin Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidRole Ldev/kord/rest/json/JsonErrorCode;
+	public static final field InvalidSku Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidStickerFrameRate Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidStickerSent Ldev/kord/rest/json/JsonErrorCode;
 	public static final field InvalidThreadNotificationSettings Ldev/kord/rest/json/JsonErrorCode;
@@ -2657,6 +2658,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field ReactionBlocked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field RequestEntityTooLarge Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Require2FA Ldev/kord/rest/json/JsonErrorCode;
+	public static final field ResourceHasEntitlement Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ResourceIsRateLimited Ldev/kord/rest/json/JsonErrorCode;
 	public static final field SendMessagesTemporarilyDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ServerNeedsMonetizationEnabled Ldev/kord/rest/json/JsonErrorCode;

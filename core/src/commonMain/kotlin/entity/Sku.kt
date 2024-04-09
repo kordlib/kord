@@ -10,7 +10,7 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 
-public class SKU(
+public class Sku(
     public val data: SkuData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
@@ -49,5 +49,5 @@ public class SKU(
         guildId: Snowflake? = null,
     ): Flow<Entitlement> = supplier.getEntitlements(applicationId, id, limit, userId, guildId)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable = SKU(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable = Sku(data, kord, strategy.supply(kord))
 }

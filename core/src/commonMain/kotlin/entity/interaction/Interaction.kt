@@ -32,7 +32,7 @@ public sealed interface Interaction : InteractionBehavior {
     override val token: String get() = data.token
 
     public val entitlements: List<Entitlement>
-        get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
+        get() = data.entitlements.map { Entitlement(it, kord) }
 
     /**
      * The type of the interaction.

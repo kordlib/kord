@@ -1,6 +1,6 @@
 package dev.kord.core.cache.data
 
-import dev.kord.common.entity.DiscordSKU
+import dev.kord.common.entity.DiscordSku
 import dev.kord.common.entity.SkuFlags
 import dev.kord.common.entity.SkuType
 import dev.kord.common.entity.Snowflake
@@ -14,7 +14,7 @@ public data class SkuData(
     val flags: SkuFlags,
 ) {
     public companion object {
-        public fun from(entity: DiscordSKU): SkuData = with (entity) {
+        public fun from(entity: DiscordSku): SkuData = with (entity) {
             SkuData(id, applicationId, type, name, slug, flags)
         }
     }

@@ -42,12 +42,12 @@ public sealed class SkuType(
     ) : SkuType(value)
 
     /**
-     * Represents a recurring subscription
+     * Represents a recurring subscription.
      */
     public object Subscription : SkuType(5)
 
     /**
-     * System-generated group for each [Subscription] SKU created
+     * System-generated group for each [Subscription] SKU created.
      */
     public object SubscriptionGroup : SkuType(6)
 

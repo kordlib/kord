@@ -1,17 +1,17 @@
 @file:Generate(
-    Generate.EntityType.INT_KORD_ENUM, name = "EntitlementType",
+    INT_KORD_ENUM, name = "EntitlementType",
     docUrl = "https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types",
     entries = [
-        Generate.Entry("ApplicationSubscription", intValue = 8, kDoc = "Entitlement was purchased as an app subscription.")
+        Entry("ApplicationSubscription", intValue = 8, kDoc = "Entitlement was purchased as an app subscription.")
     ]
 )
 
 @file:Generate(
-    Generate.EntityType.INT_KORD_ENUM, name = "EntitlementOwnerType",
+    INT_KORD_ENUM, name = "EntitlementOwnerType",
     docUrl = "https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement",
     entries = [
-        Generate.Entry("Guild", intValue = 1, kDoc = "Entitlement is owned by a guild."),
-        Generate.Entry("User", intValue = 2, kDoc = "Entitlement is owned by a user."),
+        Entry("Guild", intValue = 1, kDoc = "Entitlement is owned by a guild."),
+        Entry("User", intValue = 2, kDoc = "Entitlement is owned by a user."),
     ]
 )
 
@@ -20,12 +20,14 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
+import dev.kord.ksp.Generate.Entry
 import kotlinx.datetime.Instant
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * https://discord.com/developers/docs/monetization/entitlements#entitlement-object
+ * An instance of a [Discord Entitlement](https://discord.com/developers/docs/monetization/entitlements#entitlement-object)
  */
 @Serializable
 public data class DiscordEntitlement(

@@ -20,14 +20,12 @@ import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.event.Event
-import dev.kord.core.event.entitlement.EntitlementCreateEvent
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
 import dev.kord.core.gateway.MasterGateway
 import dev.kord.core.gateway.handler.GatewayEventInterceptor
 import dev.kord.core.gateway.start
 import dev.kord.core.supplier.*
-import dev.kord.gateway.EntitlementCreate
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
@@ -373,11 +371,11 @@ public class Kord(
     ): Invite? = with(EntitySupplyStrategy.rest).getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
 
     /**
-     * Requests to get all [SKU]s for this application.
+     * Requests to get all [Sku]s for this application.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getSkus(): List<SKU> = with(EntitySupplyStrategy.rest).getSKUs(selfId)
+    public suspend fun getSkus(): List<Sku> = with(EntitySupplyStrategy.rest).getSKUs(selfId)
 
     /**
      * Requests to get a list of [Entitlement]s with the given [skuId], [userId], or [guildId].

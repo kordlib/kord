@@ -10,7 +10,6 @@ import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
@@ -778,10 +777,10 @@ public sealed class Route<T>(
      */
 
     public object SkusGet :
-        Route<List<DiscordSKU>>(
+        Route<List<DiscordSku>>(
             HttpMethod.Get,
             "/applications/$ApplicationId/skus",
-            ListSerializer(DiscordSKU.serializer())
+            ListSerializer(DiscordSku.serializer())
         )
 
     /*

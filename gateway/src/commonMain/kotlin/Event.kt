@@ -132,7 +132,9 @@ public sealed class Event {
                 "THREAD_MEMBER_UPDATE" -> ThreadMemberUpdate(decode(DiscordThreadMember.serializer()), sequence)
                 "THREAD_MEMBERS_UPDATE" ->
                     ThreadMembersUpdate(decode(DiscordThreadMembersUpdate.serializer()), sequence)
-                // Missing: Entitlement Create, Entitlement Update, Entitlement Delete
+                "ENTITLEMENT_CREATE" -> EntitlementCreate(decode(DiscordEntitlement.serializer()), sequence)
+                "ENTITLEMENT_UPDATE" -> EntitlementUpdate(decode(DiscordEntitlement.serializer()), sequence)
+                "ENTITLEMENT_DELETE" -> EntitlementDelete(decode(DiscordEntitlement.serializer()), sequence)
                 "GUILD_CREATE" -> GuildCreate(decode(DiscordGuild.serializer()), sequence)
                 "GUILD_UPDATE" -> GuildUpdate(decode(DiscordGuild.serializer()), sequence)
                 "GUILD_DELETE" -> GuildDelete(decode(DiscordUnavailableGuild.serializer()), sequence)
@@ -197,9 +199,6 @@ public sealed class Event {
                 "APPLICATION_COMMAND_DELETE" ->
                     @Suppress("DEPRECATION")
                     ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
-                "ENTITLEMENT_CREATE" -> EntitlementCreate(decode(DiscordEntitlement.serializer()), sequence)
-                "ENTITLEMENT_UPDATE" -> EntitlementUpdate(decode(DiscordEntitlement.serializer()), sequence)
-                "ENTITLEMENT_DELETE" -> EntitlementDelete(decode(DiscordEntitlement.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
                     UnknownDispatchEvent(eventName, eventData, sequence)
@@ -604,11 +603,8 @@ public data class DiscordThreadMembersUpdate(
     val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
 )
 
-@Serializable
 public data class EntitlementCreate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
 
-@Serializable
 public data class EntitlementUpdate(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
 
-@Serializable
 public data class EntitlementDelete(val entitlement: DiscordEntitlement, override val sequence: Int?) : DispatchEvent()
