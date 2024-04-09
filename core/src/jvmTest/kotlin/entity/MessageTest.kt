@@ -1,5 +1,6 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.optional.Optional
 import dev.kord.core.behavior.MessageBehavior
 import dev.kord.core.cache.data.MessageData
 import dev.kord.core.equality.BehaviorEqualityTest
@@ -13,6 +14,7 @@ internal class MessageTest : EntityEqualityTest<Message> by EntityEqualityTest({
     val data = mockk<MessageData>()
     every { data.id } returns it
     every { data.channelId } returns it
+    every { data.poll } returns Optional.Missing()
     Message(data, kord)
 }), BehaviorEqualityTest<Message> {
     override fun Message.behavior(): KordEntity = MessageBehavior(messageId = id, channelId = id, kord = kord)
