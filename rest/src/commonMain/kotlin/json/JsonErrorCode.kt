@@ -337,6 +337,9 @@ public enum class JsonErrorCode(public val code: Int) {
     /** A tag is required to create a forum post in this channel. */
     TagRequired(40067),
 
+    /** An entitlement has already been granted for this resource. */
+    ResourceHasEntitlement(40074),
+
     /** Missing access. */
     MissingAccess(50001),
 
@@ -446,6 +449,9 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Invalid Guild. */
     InvalidGuild(50055),
+
+    /** Invalid Sku. */
+    InvalidSku(50057),
 
     /** Invalid request origin. */
     InvalidRequestOrigin(50067),
