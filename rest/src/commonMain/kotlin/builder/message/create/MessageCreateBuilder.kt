@@ -82,6 +82,7 @@ public sealed class AbstractMessageCreateBuilder : MessageCreateBuilder {
     final override var suppressNotifications: Boolean? = null
 
     internal var _poll: Optional<CreatablePoll> = Optional.Missing()
+    @KordUnsafe
     final override var poll: CreatablePoll? by ::_poll.delegate()
 }
 
