@@ -450,7 +450,7 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Invalid Guild. */
     InvalidGuild(50055),
 
-    /** Invalid Sku. */
+    /** Invalid SKU. */
     InvalidSku(50057),
 
     /** Invalid request origin. */

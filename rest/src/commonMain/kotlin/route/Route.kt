@@ -738,6 +738,7 @@ public sealed class Route<T>(
     public object CurrentApplicationInfo :
         Route<DiscordApplication>(HttpMethod.Get, "/oauth2/applications/@me", DiscordApplication.serializer())
 
+
     /*
      * Entitlements:
      * https://discord.com/developers/docs/monetization/entitlements
@@ -770,6 +771,7 @@ public sealed class Route<T>(
             "/applications/$ApplicationId/entitlements/$EntitlementId",
             NoStrategy
         )
+
 
     /*
      * SKUs:

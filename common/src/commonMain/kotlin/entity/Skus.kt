@@ -11,7 +11,7 @@
     INT_FLAGS, name = "SkuFlag",
     docUrl = "https://discord.com/developers/docs/monetization/skus#sku-object-sku-flags",
     entries = [
-        Entry("Available", shift = 2, kDoc = "SKU is available for purchase"),
+        Entry("Available", shift = 2, kDoc = "SKU is available for purchase."),
         Entry("GuildSubscription", shift = 7,
             kDoc = "Recurring SKU that can be purchased by a user and applied to a single server. Grants access to every user in that server."),
         Entry("UserSubscription", shift = 8,

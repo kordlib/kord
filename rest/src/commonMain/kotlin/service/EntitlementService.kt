@@ -7,7 +7,7 @@ import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 
-public class EntitlementService(handler: RequestHandler) : RestService(handler) {
+public class EntitlementService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
     public suspend fun getEntitlements(
         applicationId: Snowflake,
