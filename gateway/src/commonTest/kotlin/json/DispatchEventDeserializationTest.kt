@@ -318,12 +318,38 @@ class DispatchEventDeserializationTest {
         json = """{"id":"0","guild_id":"0","member_count":42}""",
     )
 
-    /*
-     * Missing:
-     * - EntitlementCreate
-     * - EntitlementUpdate
-     * - EntitlementDelete
-     */
+    private val entitlement = DiscordEntitlement(
+        id = Snowflake.min,
+        applicationId = Snowflake.min,
+        deleted = false,
+        skuId = Snowflake.min,
+        type = EntitlementType.ApplicationSubscription,
+    )
+    private val entitlementJson = """{"id":"0","application_id":"0","sku_id":"0","type":8,"deleted":false}"""
+
+    @Test
+    fun test_EntitlementCreate_deserialization() = testDispatchEventDeserialization(
+        eventName = "ENTITLEMENT_CREATE",
+        eventConstructor = ::EntitlementCreate,
+        data = entitlement,
+        json = entitlementJson,
+    )
+
+    @Test
+    fun test_EntitlementUpdate_deserialization() = testDispatchEventDeserialization(
+        eventName = "ENTITLEMENT_UPDATE",
+        eventConstructor = ::EntitlementUpdate,
+        data = entitlement,
+        json = entitlementJson,
+    )
+
+    @Test
+    fun test_EntitlementDelete_deserialization() = testDispatchEventDeserialization(
+        eventName = "ENTITLEMENT_DELETE",
+        eventConstructor = ::EntitlementDelete,
+        data = entitlement,
+        json = entitlementJson,
+    )
 
     @Test
     fun test_GuildCreate_deserialization() = testDispatchEventDeserialization(
@@ -799,4 +825,6 @@ class DispatchEventDeserializationTest {
         data = applicationCommand,
         json = applicationCommandJson,
     )
+
+
 }
