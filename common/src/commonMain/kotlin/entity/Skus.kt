@@ -1,5 +1,5 @@
 @file:Generate(
-    Generate.EntityType.INT_KORD_ENUM, name =  "SkuType",
+    INT_KORD_ENUM, name =  "SkuType",
     docUrl = "https://discord.com/developers/docs/monetization/skus#sku-object-sku-types",
     entries = [
         Entry("Subscription", intValue = 5, kDoc = "Represents a recurring subscription."),
@@ -23,6 +23,7 @@ package dev.kord.common.entity
 
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_FLAGS
+import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
