@@ -7,7 +7,7 @@ import dev.kord.rest.route.Route
 
 public class SkuService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    public suspend fun getSkus(applicationId: Snowflake): List<DiscordSku> = call(Route.SkusGet) {
+    public suspend fun listSkus(applicationId: Snowflake): List<DiscordSku> = call(Route.SkusGet) {
         keys[Route.ApplicationId] = applicationId
     }
 
