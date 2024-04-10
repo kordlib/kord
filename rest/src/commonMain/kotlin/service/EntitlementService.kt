@@ -2,32 +2,24 @@ package dev.kord.rest.service
 
 import dev.kord.common.entity.DiscordEntitlement
 import dev.kord.common.entity.Snowflake
+import dev.kord.rest.json.request.EntitlementsListRequest
 import dev.kord.rest.json.request.TestEntitlementCreateRequest
 import dev.kord.rest.request.RequestHandler
-import dev.kord.rest.route.Position
 import dev.kord.rest.route.Route
 
 public class EntitlementService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
-    public suspend fun getEntitlements(
+    public suspend fun listEntitlements(
         applicationId: Snowflake,
-        position: Position? = null,
-        limit: Int? = null,
-        guildId: Snowflake? = null,
-        userId: Snowflake? = null,
-        skuIDs: List<Snowflake>? = null,
-        excludeEnded: Boolean? = null,
-    ): List<DiscordEntitlement> = call(Route.EntitlementsGet) {
+        request: EntitlementsListRequest,
+    ): List<DiscordEntitlement> = call(Route.EntitlementsList) {
         keys[Route.ApplicationId] = applicationId
-        userId?.let { parameter("user_id", it) }
-        skuIDs
-            ?.joinToString(",")
-            ?.ifBlank { null }
-            ?.let { parameter("sku_ids", it) }
-        limit?.let { parameter("limit", it) }
-        guildId?.let { parameter("guild_id", it) }
-        excludeEnded?.let { parameter("exclude_ended", it) }
-        position?.let { parameter(it.key, it.value) }
+        request.userId?.let { parameter("user_id", it) }
+        request.skuIds.joinToString(",").ifBlank { null }?.let { parameter("sku_ids", it) }
+        request.limit?.let { parameter("limit", it) }
+        request.guildId?.let { parameter("guild_id", it) }
+        request.excludeEnded?.let { parameter("exclude_ended", it) }
+        request.position?.let { parameter(it.key, it.value) }
     }
 
     public suspend fun getEntitlement(
@@ -41,7 +33,7 @@ public class EntitlementService(requestHandler: RequestHandler) : RestService(re
     public suspend fun createTestEntitlement(
         applicationId: Snowflake,
         request: TestEntitlementCreateRequest,
-    ): DiscordEntitlement = call(Route.TestEntitlementPost) {
+    ): DiscordEntitlement = call(Route.TestEntitlementCreate) {
         keys[Route.ApplicationId] = applicationId
         body(TestEntitlementCreateRequest.serializer(), request)
     }

@@ -662,13 +662,15 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         guildId: Snowflake?
     ): Flow<Entitlement> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
         paginateForwards(batchSize, idSelector = { it.id }) { position ->
-            entitlement.getEntitlements(
+            entitlement.listEntitlements(
                 applicationId = applicationId,
-                position = position,
-                limit = batchSize,
-                skuIDs = listOfNotNull(skuId),
-                userId = userId,
-                guildId = guildId
+                request = EntitlementsListRequest(
+                    position = position,
+                    limit = batchSize,
+                    skuIds = listOfNotNull(skuId),
+                    userId = userId,
+                    guildId = guildId
+                )
             )
         }.map {
             val data = EntitlementData.from(it)

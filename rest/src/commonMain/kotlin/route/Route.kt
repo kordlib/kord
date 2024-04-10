@@ -744,7 +744,7 @@ public sealed class Route<T>(
      * https://discord.com/developers/docs/monetization/entitlements
      */
 
-    public object EntitlementsGet :
+    public object EntitlementsList :
         Route<List<DiscordEntitlement>>(
             HttpMethod.Get,
             "/applications/$ApplicationId/entitlements",
@@ -758,7 +758,7 @@ public sealed class Route<T>(
             DiscordEntitlement.serializer()
         )
 
-    public object TestEntitlementPost :
+    public object TestEntitlementCreate :
         Route<DiscordEntitlement>(
             HttpMethod.Post,
             "/applications/$ApplicationId/entitlements",
@@ -778,7 +778,7 @@ public sealed class Route<T>(
      * https://discord.com/developers/docs/monetization/skus
      */
 
-    public object SkusGet :
+    public object SkusList :
         Route<List<DiscordSku>>(
             HttpMethod.Get,
             "/applications/$ApplicationId/skus",

@@ -2,14 +2,14 @@ package dev.kord.rest.json.request
 
 import dev.kord.common.entity.EntitlementOwnerType
 import dev.kord.common.entity.Snowflake
+import dev.kord.rest.route.Position
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 public data class EntitlementsListRequest(
     val userId: Snowflake? = null,
     val skuIds: List<Snowflake> = emptyList(),
-    val before: Snowflake? = null,
-    val after: Snowflake? = null,
+    val position: Position? = null,
     val limit: Int? = null,
     val guildId: Snowflake? = null,
     val excludeEnded: Boolean? = null,
