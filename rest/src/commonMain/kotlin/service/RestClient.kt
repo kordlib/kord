@@ -36,8 +36,8 @@ public class RestClient(requestHandler: RequestHandler) : RestService(requestHan
     public val application: ApplicationService = ApplicationService(requestHandler)
 
     // monetization
+    public val sku: SkuService = SkuService(requestHandler)
     public val entitlement: EntitlementService = EntitlementService(requestHandler)
-    public val skus: SkuService = SkuService(requestHandler)
 
     /**
      * Sends a request to the given [route]. This function exposes a direct call to the Discord api and allows
