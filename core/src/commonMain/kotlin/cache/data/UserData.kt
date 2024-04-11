@@ -10,6 +10,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
+private val EntitlementData.nullableUserId get() = userId.value
 private val WebhookData.nullableUserId get() = userId.value
 
 @Serializable
@@ -32,6 +33,7 @@ public data class UserData(
             link(UserData::id to WebhookData::nullableUserId)
             link(UserData::id to VoiceStateData::userId)
             link(UserData::id to PresenceData::userId)
+            link(UserData::id to EntitlementData::nullableUserId)
         }
 
         public fun from(entity: DiscordUser): UserData = with(entity) {
