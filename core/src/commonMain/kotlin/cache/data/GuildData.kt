@@ -83,6 +83,7 @@ public data class GuildData(
             link(GuildData::id to VoiceStateData::guildId)
             link(GuildData::id to PresenceData::guildId)
             link(GuildData::id to StickerData::nullableGuildId)
+            link(GuildData::id to EmojiData::guildId)
             link(GuildData::id to AutoModerationRuleData::guildId)
         }
 

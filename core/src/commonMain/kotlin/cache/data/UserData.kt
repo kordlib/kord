@@ -10,6 +10,7 @@ import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
+private val ThreadMemberData.nullableUserId get() = userId.value
 
 @Serializable
 public data class UserData(
@@ -28,6 +29,7 @@ public data class UserData(
 
         public val description: DataDescription<UserData, Snowflake> = description(UserData::id) {
             link(UserData::id to MemberData::userId)
+            link(UserData::id to ThreadMemberData::nullableUserId)
             link(UserData::id to VoiceStateData::userId)
             link(UserData::id to PresenceData::userId)
         }
