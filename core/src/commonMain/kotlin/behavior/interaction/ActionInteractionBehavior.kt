@@ -4,7 +4,6 @@ import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
-import dev.kord.common.entity.optional.Optional
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.response.*
 import dev.kord.core.entity.Message
@@ -15,7 +14,6 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
-import dev.kord.rest.json.request.InteractionApplicationCommandCallbackData
 import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
@@ -25,14 +23,16 @@ import kotlin.contracts.contract
 public interface ActionInteractionBehavior : InteractionBehavior {
 
     /**
-     * Responds to the interaction with an ephemeral message.
+     * Responds to the interaction with an upgrade button, only available for apps with monetization enabled.
      *
-     * There will be a message that explains that the [user][Interaction.user] is required to have premium to get access
-     * to features, there's a button that opens an in-app purchase flow.
+     * This will create an ephemeral message shown to the [user][Interaction.user] who invoked the interaction, instructing
+     * them that whatever they tried to do requires the premium benefits of your app. It also contains an "Upgrade"
+     * button to subscribe via an in-app purchase flow. The response message is static, but will be automatically
+     * updated with the name of your premium SKU.
      *
      * @throws RestRequestException if something went wrong during the request.
      */
-    public suspend fun respondPremiumRequired() {
+    public suspend fun respondWithPremiumRequired() {
         kord.rest.interaction.createInteractionResponse(
             id,
             token,

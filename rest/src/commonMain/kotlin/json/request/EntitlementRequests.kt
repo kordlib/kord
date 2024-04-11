@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 public data class EntitlementsListRequest(
     val userId: Snowflake? = null,
     val skuIds: List<Snowflake> = emptyList(),
-    val position: Position? = null,
+    val position: Position.BeforeOrAfter? = null,
     val limit: Int? = null,
     val guildId: Snowflake? = null,
     val excludeEnded: Boolean? = null,

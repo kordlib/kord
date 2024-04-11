@@ -1,6 +1,7 @@
 package dev.kord.core.gateway.handler
 
 import dev.kord.cache.api.put
+import dev.kord.cache.api.query
 import dev.kord.cache.api.remove
 import dev.kord.common.entity.DiscordEntitlement
 import dev.kord.core.Kord
@@ -29,13 +30,16 @@ internal class EntitlementEventHandler : BaseGatewayEventHandler() {
         )
 
         is EntitlementUpdate -> EntitlementUpdateEvent(
-            entitlement = handleEntitlement(event.entitlement, kord),
+            old = kord.cache.query { idEq(EntitlementData::id, event.entitlement.id) }
+                .singleOrNull()
+                ?.let { Entitlement(it, kord) },
             shard = shard,
+            entitlement = handleEntitlement(event.entitlement, kord),
             customContext = context?.get(),
         )
 
         is EntitlementDelete -> EntitlementDeleteEvent(
-            entitlement = handleEntitlement(event.entitlement, kord, delete = true),
+            entitlement = handleDeletedEntitlement(event.entitlement, kord),
             shard = shard,
             customContext = context?.get(),
         )
@@ -43,18 +47,15 @@ internal class EntitlementEventHandler : BaseGatewayEventHandler() {
         else -> null
     }
 
-    private suspend fun handleEntitlement(
-        entity: DiscordEntitlement,
-        kord: Kord,
-        delete: Boolean = false
-    ): Entitlement {
+    private suspend fun handleDeletedEntitlement(entity: DiscordEntitlement, kord: Kord): Entitlement {
         val entitlement = Entitlement(EntitlementData.from(entity), kord)
-        if (delete) {
-            kord.cache.remove { idEq(EntitlementData::id, entitlement.id) }
-        } else {
-            kord.cache.put(entitlement)
-        }
+        kord.cache.remove{ idEq(EntitlementData::id, entitlement.id) }
+        return entitlement
+    }
 
+    private suspend fun handleEntitlement(entity: DiscordEntitlement, kord: Kord): Entitlement {
+        val entitlement = Entitlement(EntitlementData.from(entity), kord)
+        kord.cache.put(entitlement.data)
         return entitlement
     }
 }

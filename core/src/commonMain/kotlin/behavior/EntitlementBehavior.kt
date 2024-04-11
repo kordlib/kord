@@ -49,7 +49,7 @@ public interface EntitlementBehavior : KordEntity, Strategizable {
 
     /**
      * Requests to delete this entitlement.
-     * This request fill fail if this is not a test entitlement.
+     * This request will fail if this is not a test entitlement.
      *
      * @throws [RestRequestException] if something went wrong during the request.
      */

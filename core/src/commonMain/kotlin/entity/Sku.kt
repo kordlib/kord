@@ -1,17 +1,17 @@
 package dev.kord.core.entity
 
+import dev.kord.common.entity.DiscordSku
 import dev.kord.common.entity.SkuFlags
 import dev.kord.common.entity.SkuType
-import dev.kord.common.exception.RequestException
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
-import dev.kord.core.cache.data.SkuData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 
 public class Sku(
-    public val data: SkuData,
+    public val data: DiscordSku,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : KordEntity, Strategizable {

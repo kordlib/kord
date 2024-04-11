@@ -9,6 +9,7 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.EntitlementData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import kotlinx.datetime.Instant
 
 public class Entitlement(
     public val data: EntitlementData,
@@ -20,6 +21,31 @@ public class Entitlement(
 
     override val id: Snowflake
         get() = data.id
+
+    /**
+     * Whether this entitlement has been deleted.
+     */
+    public val deleted: Boolean
+        get() = data.deleted
+
+    /**
+     * Date at which the entitlement is no longer valid
+     */
+    public val startsAt: Instant?
+        get() = data.startsAt.value
+
+    /**
+     * Start date at which the entitlement is valid.
+     */
+    public val endsAt: Instant?
+        get() = data.endsAt.value
+
+    /**
+     * Whether this entitlement is a test entitlement.
+     */
+    public val isTest: Boolean
+        // see https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-structure
+        get() = endsAt == null && startsAt == null
 
     /**
      * The type of entitlement.

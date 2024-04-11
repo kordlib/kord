@@ -4,10 +4,6 @@
 
 package dev.kord.common.entity
 
-import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.contracts.InvocationKind.EXACTLY_ONCE
-import kotlin.contracts.contract
-import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.serializer
@@ -16,6 +12,10 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import kotlin.LazyThreadSafetyMode.PUBLICATION
+import kotlin.contracts.InvocationKind.EXACTLY_ONCE
+import kotlin.contracts.contract
+import kotlin.jvm.JvmName
 
 /**
  * See [SkuFlag]s in the
@@ -65,7 +65,7 @@ public sealed class SkuFlag(
     ) : SkuFlag(shift)
 
     /**
-     * SKU is available for purchase
+     * SKU is available for purchase.
      */
     public object Available : SkuFlag(2)
 

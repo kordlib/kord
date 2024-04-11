@@ -679,7 +679,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
     }
 
     public suspend fun getSKUs(applicationId: Snowflake): List<Sku> =
-        sku.listSkus(applicationId).map { Sku(SkuData.from(it), kord) }
+        sku.listSkus(applicationId).map { Sku(it, kord) }
 
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
 }

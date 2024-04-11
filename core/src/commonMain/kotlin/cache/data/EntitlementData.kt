@@ -5,7 +5,9 @@ import dev.kord.cache.api.data.description
 import dev.kord.common.entity.DiscordEntitlement
 import dev.kord.common.entity.EntitlementType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalSnowflake
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,16 +17,16 @@ public data class EntitlementData(
     val type: EntitlementType,
     val skuId: Snowflake,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val userId: OptionalSnowflake = OptionalSnowflake.Missing
+    val userId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val deleted: Boolean,
+    val endsAt: Optional<Instant>,
+    val startsAt: Optional<Instant>,
 ) {
     public companion object {
-        public val description: DataDescription<EntitlementData, Snowflake> = description(EntitlementData::id) {
-            link(EntitlementData::guildId to GuildData::id)
-            link(EntitlementData::userId to UserData::id)
-        }
+        public val description: DataDescription<EntitlementData, Snowflake> = description(EntitlementData::id)
 
         public fun from(entity: DiscordEntitlement): EntitlementData = with(entity) {
-            EntitlementData(id, applicationId, type, skuId, guildId, userId)
+            EntitlementData(id, applicationId, type, skuId, guildId, userId, deleted, endsAt, startsAt)
         }
     }
 }
