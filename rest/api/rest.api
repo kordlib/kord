@@ -2568,6 +2568,7 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field Companion Ldev/kord/rest/json/JsonErrorCode$Companion;
 	public static final field ConnectionRevoked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field DisallowedName Ldev/kord/rest/json/JsonErrorCode;
+	public static final field EntitlementAlreadyGranted Ldev/kord/rest/json/JsonErrorCode;
 	public static final field EntityOfEventDifferentFromEventEntity Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FailedToCreateStage Ldev/kord/rest/json/JsonErrorCode;
 	public static final field FailedToResizeAssetBelowMaximumSize Ldev/kord/rest/json/JsonErrorCode;
@@ -2658,7 +2659,6 @@ public final class dev/kord/rest/json/JsonErrorCode : java/lang/Enum {
 	public static final field ReactionBlocked Ldev/kord/rest/json/JsonErrorCode;
 	public static final field RequestEntityTooLarge Ldev/kord/rest/json/JsonErrorCode;
 	public static final field Require2FA Ldev/kord/rest/json/JsonErrorCode;
-	public static final field ResourceHasEntitlement Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ResourceIsRateLimited Ldev/kord/rest/json/JsonErrorCode;
 	public static final field SendMessagesTemporarilyDisabled Ldev/kord/rest/json/JsonErrorCode;
 	public static final field ServerNeedsMonetizationEnabled Ldev/kord/rest/json/JsonErrorCode;

@@ -338,7 +338,7 @@ public enum class JsonErrorCode(public val code: Int) {
     TagRequired(40067),
 
     /** An entitlement has already been granted for this resource. */
-    ResourceHasEntitlement(40074),
+    EntitlementAlreadyGranted(40074),
 
     /** Missing access. */
     MissingAccess(50001),
