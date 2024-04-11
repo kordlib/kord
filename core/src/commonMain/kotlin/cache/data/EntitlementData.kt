@@ -19,8 +19,8 @@ public data class EntitlementData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,
     val deleted: Boolean,
-    val endsAt: Optional<Instant>,
-    val startsAt: Optional<Instant>,
+    val endsAt: Optional<Instant> = Optional.Missing(),
+    val startsAt: Optional<Instant> = Optional.Missing(),
 ) {
     public companion object {
         public val description: DataDescription<EntitlementData, Snowflake> = description(EntitlementData::id)
