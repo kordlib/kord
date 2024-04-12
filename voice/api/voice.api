@@ -1257,7 +1257,7 @@ public final class dev/kord/voice/udp/VoiceUdpSocketKt {
 	public static final fun recv (Ldev/kord/voice/udp/VoiceUdpSocket;Lio/ktor/network/sockets/InetSocketAddress;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class dev/kord/voice/udp/VoiceUdpSocket_nonJsKt {
+public final class dev/kord/voice/udp/VoiceUdpSocket_ktorKt {
 	public static final fun getGlobalVoiceUdpSocket ()Ldev/kord/voice/udp/VoiceUdpSocket;
 }
 

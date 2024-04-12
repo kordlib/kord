@@ -1,5 +1,5 @@
 // Klib ABI Dump
-// Targets: [js]
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm64, watchosSimulatorArm64]
 // Rendering settings:
 // - Signature version: 2
 // - Show manifest properties: true
@@ -1740,7 +1740,6 @@ final enum class dev.kord.gateway/OpCode : kotlin/Enum<dev.kord.gateway/OpCode> 
 }
 final fun (dev.kord.gateway/Gateway).dev.kord.gateway/requestGuildMembers(dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.gateway.builder/RequestGuildMembersBuilder, kotlin/Unit> =...): kotlinx.coroutines.flow/Flow<dev.kord.gateway/GuildMembersChunk> // dev.kord.gateway/requestGuildMembers|requestGuildMembers@dev.kord.gateway.Gateway(dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.gateway.builder.RequestGuildMembersBuilder,kotlin.Unit>){}[0]
 final fun (dev.kord.gateway/Gateway).dev.kord.gateway/requestGuildMembers(dev.kord.gateway/RequestGuildMembers): kotlinx.coroutines.flow/Flow<dev.kord.gateway/GuildMembersChunk> // dev.kord.gateway/requestGuildMembers|requestGuildMembers@dev.kord.gateway.Gateway(dev.kord.gateway.RequestGuildMembers){}[0]
-final fun (mu/KLogger).dev.kord.gateway/error(kotlin/Throwable) // dev.kord.gateway/error|error@mu.KLogger(kotlin.Throwable){}[0]
 final fun dev.kord.gateway.ratelimit/IdentifyRateLimiter(kotlin/Int, kotlinx.coroutines/CoroutineDispatcher =...): dev.kord.gateway.ratelimit/IdentifyRateLimiter // dev.kord.gateway.ratelimit/IdentifyRateLimiter|IdentifyRateLimiter(kotlin.Int;kotlinx.coroutines.CoroutineDispatcher){}[0]
 final fun dev.kord.gateway/Intents(kotlin.collections/Iterable<dev.kord.gateway/Intent>): dev.kord.gateway/Intents // dev.kord.gateway/Intents|Intents(kotlin.collections.Iterable<dev.kord.gateway.Intent>){}[0]
 final fun dev.kord.gateway/Intents(kotlin.collections/Iterable<dev.kord.gateway/Intents>): dev.kord.gateway/Intents // dev.kord.gateway/Intents|Intents(kotlin.collections.Iterable<dev.kord.gateway.Intents>){}[0]
@@ -1763,8 +1762,6 @@ final val dev.kord.gateway/NON_PRIVILEGED // dev.kord.gateway/NON_PRIVILEGED|@de
     final fun (dev.kord.gateway/Intents.Companion).<get-NON_PRIVILEGED>(): dev.kord.gateway/Intents // dev.kord.gateway/NON_PRIVILEGED.<get-NON_PRIVILEGED>|<get-NON_PRIVILEGED>@dev.kord.gateway.Intents.Companion(){}[0]
 final val dev.kord.gateway/PRIVILEGED // dev.kord.gateway/PRIVILEGED|<get-PRIVILEGED>@dev.kord.gateway.Intents.Companion(){}[0]
     final fun (dev.kord.gateway/Intents.Companion).<get-PRIVILEGED>(): dev.kord.gateway/Intents // dev.kord.gateway/PRIVILEGED.<get-PRIVILEGED>|<get-PRIVILEGED>@dev.kord.gateway.Intents.Companion(){}[0]
-final val dev.kord.gateway/gatewayOnLogger // dev.kord.gateway/gatewayOnLogger|{}gatewayOnLogger[0]
-    final fun <get-gatewayOnLogger>(): mu/KLogger // dev.kord.gateway/gatewayOnLogger.<get-gatewayOnLogger>|<get-gatewayOnLogger>(){}[0]
 open annotation class dev.kord.gateway/PrivilegedIntent : kotlin/Annotation { // dev.kord.gateway/PrivilegedIntent|null[0]
     constructor <init>() // dev.kord.gateway/PrivilegedIntent.<init>|<init>(){}[0]
 }
