@@ -769,8 +769,8 @@ final class dev.kord.rest.builder.channel/MediaChannelCreateBuilder : dev.kord.r
 }
 final class dev.kord.rest.builder.channel/MediaChannelModifyBuilder : dev.kord.rest.builder.channel/PermissionOverwritesModifyBuilder, dev.kord.rest.builder/AuditRequestBuilder<dev.kord.rest.json.request/ChannelModifyPatchRequest> { // dev.kord.rest.builder.channel/MediaChannelModifyBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.<init>|<init>(){}[0]
-    final fun tag(kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/ForumTagBuilder, kotlin/Unit> =...) // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.tag|tag(kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.ForumTagBuilder,kotlin.Unit>){}[0]
     final fun toRequest(): dev.kord.rest.json.request/ChannelModifyPatchRequest // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.toRequest|toRequest(){}[0]
+    final inline fun tag(kotlin/String, kotlin/Function1<dev.kord.rest.builder.channel/ForumTagBuilder, kotlin/Unit> =...) // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.tag|tag(kotlin.String;kotlin.Function1<dev.kord.rest.builder.channel.ForumTagBuilder,kotlin.Unit>){}[0]
     final var availableTags // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.availableTags|{}availableTags[0]
         final fun <get-availableTags>(): kotlin.collections/MutableList<dev.kord.rest.json.request/ForumTagRequest>? // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.availableTags.<get-availableTags>|<get-availableTags>(){}[0]
         final fun <set-availableTags>(kotlin.collections/MutableList<dev.kord.rest.json.request/ForumTagRequest>?) // dev.kord.rest.builder.channel/MediaChannelModifyBuilder.availableTags.<set-availableTags>|<set-availableTags>(kotlin.collections.MutableList<dev.kord.rest.json.request.ForumTagRequest>?){}[0]
