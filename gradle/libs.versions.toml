@@ -11,7 +11,7 @@ kord-cache = "0.5.0-20240130.022209-2" # https://github.com/kordlib/cache
 # implementation dependencies
 kotlin-logging = "6.0.3" # https://github.com/oshai/kotlin-logging
 slf4j = "2.0.12" # https://www.slf4j.org
-kotlin-node = "20.11.5-pre.706" # https://github.com/JetBrains/kotlin-wrappers
+kotlin-node = "20.11.30-pre.723" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.9" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.0.6" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib

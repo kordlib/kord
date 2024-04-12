@@ -6,7 +6,6 @@ import dev.kord.voice.AudioProvider
 import dev.kord.voice.FrameInterceptor
 import dev.kord.voice.encryption.strategies.NonceStrategy
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.network.sockets.*
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
@@ -44,8 +43,7 @@ public class DefaultAudioFrameSender(
                     .intercept(configuration.interceptorConfiguration)
                     .filterNotNull()
                     .map { packetProvider.provide(sequence, sequence * 960u, configuration.ssrc, it.data) }
-                    .map { Datagram(ByteReadPacket(it.data, it.dataStart, it.viewSize), configuration.server) }
-                    .onEach(data.udp::send)
+                    .map { data.udp.send(configuration.server, it) }
                     .onEach { sequence++ }
                     .collect()
             }

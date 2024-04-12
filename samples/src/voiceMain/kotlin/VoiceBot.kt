@@ -11,10 +11,11 @@ import dev.kord.core.event.interaction.GuildChatInputCommandInteractionCreateEve
 import dev.kord.core.on
 import dev.kord.voice.AudioFrame
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import runMain
 
-fun main(args: Array<String>) = runBlocking {
-    val kord = Kord(args.firstOrNull() ?: error("Missing token"))
+fun main(args: Array<String>) = runMain {
+    val kord =
+        Kord(args.firstOrNull() ?: error("Missing token"))
 
     kord.createGlobalApplicationCommands {
         input("join", "Test command") {
@@ -35,12 +36,13 @@ fun main(args: Array<String>) = runBlocking {
     kord.login()
 }
 
+@OptIn(KordVoice::class)
 private suspend fun BaseVoiceChannelBehavior.connectEcho() {
     val buffer = mutableListOf(AudioFrame.SILENCE, AudioFrame.SILENCE, AudioFrame.SILENCE, AudioFrame.SILENCE)
     val connection = connect {
         receiveVoice = true
         audioProvider {
-            buffer.removeLastOrNull() ?: AudioFrame.SILENCE
+            buffer.removeFirstOrNull() ?: AudioFrame.SILENCE
         }
     }
     connection.scope.launch {

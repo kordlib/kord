@@ -4,7 +4,6 @@ package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.FrameInterceptorConfiguration
-import io.ktor.network.sockets.*
 
 @KordVoice
 public data class AudioFrameSenderConfiguration(

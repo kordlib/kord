@@ -14,10 +14,16 @@ kotlin {
                 withLinux()
                 withMacos()
                 withJvm()
+                withJs()
             }
         }
     }
+
     targets()
+
+    js {
+        binaries.executable()
+    }
 
     targets.withType<KotlinNativeTarget> {
         // Voice does not target windows, so we disable it

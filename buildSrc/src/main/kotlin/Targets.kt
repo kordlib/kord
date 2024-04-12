@@ -15,19 +15,21 @@ fun KotlinMultiplatformExtension.targets() {
     jvm()
 
     if (project.name != "voice" && project.name != "core-voice") {
+        // https://youtrack.jetbrains.com/issue/KTOR-4080
         mingwX64()
-        js {
-            nodejs {
-                testTask {
-                    useMocha {
-                        // disable timeouts, some tests are too slow for default 2-second timeout:
-                        // https://mochajs.org/#-timeout-ms-t-ms
-                        timeout = "0"
-                    }
+    }
+
+    js {
+        nodejs {
+            testTask {
+                useMocha {
+                    // disable timeouts, some tests are too slow for default 2-second timeout:
+                    // https://mochajs.org/#-timeout-ms-t-ms
+                    timeout = "0"
                 }
             }
-            useCommonJs()
         }
+        useCommonJs()
     }
 
     macosArm64()

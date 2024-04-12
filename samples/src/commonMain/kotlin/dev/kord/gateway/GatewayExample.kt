@@ -19,7 +19,7 @@ suspend fun main(args: Array<String>) {
     gateway.events.filterIsInstance<MessageCreate>().onEach {
         val words = it.message.content.split(' ')
         when (words.firstOrNull()) {
-            "!close" -> gateway.stop()
+            "!close"  -> gateway.stop()
             "!detach" -> gateway.detach()
             "!status" -> when (words.getOrNull(1)) {
                 "playing" -> gateway.editPresence {
@@ -29,7 +29,7 @@ suspend fun main(args: Array<String>) {
                 }
             }
 
-            "!ping" -> gateway.editPresence {
+            "!ping"   -> gateway.editPresence {
                 status = PresenceStatus.Online
                 afk = false
                 listening("a ${gateway.ping.value?.inWholeMilliseconds} ms ping")

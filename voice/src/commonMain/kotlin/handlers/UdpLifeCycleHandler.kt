@@ -8,8 +8,9 @@ import dev.kord.voice.encryption.strategies.NormalNonceStrategy
 import dev.kord.voice.encryption.strategies.SuffixNonceStrategy
 import dev.kord.voice.gateway.*
 import dev.kord.voice.udp.AudioFrameSenderConfiguration
+import dev.kord.voice.udp.SocketAddress
+import dev.kord.voice.udp.discoverIP
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.network.sockets.*
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
@@ -22,18 +23,18 @@ internal class UdpLifeCycleHandler(
     flow: Flow<VoiceEvent>,
     private val connection: VoiceConnection
 ) : ConnectionEventHandler<VoiceEvent>(flow, "UdpInterceptor") {
-    private var ssrc: UInt? by atomic(null)
-    private var server: InetSocketAddress? by atomic(null)
+    private val ssrc = atomic<UInt?>(null)
+    private val server = atomic<SocketAddress?>(null)
 
     private var audioSenderJob: Job? by atomic(null)
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun start() = coroutineScope {
         on<Ready> {
-            ssrc = it.ssrc
-            server = InetSocketAddress(it.ip, it.port)
+            ssrc.value = it.ssrc
+            server.value = SocketAddress(it.ip, it.port)
 
-            val ip: InetSocketAddress = connection.socket.discoverIp(server!!, ssrc!!.toInt())
+            val ip: SocketAddress = connection.socket.discoverIP(server.value!!, ssrc.value!!.toInt())
 
             udpLifeCycleLogger.trace { "ip discovered for voice successfully" }
 
@@ -58,10 +59,10 @@ internal class UdpLifeCycleHandler(
         on<SessionDescription> {
             with(connection) {
                 val config = AudioFrameSenderConfiguration(
-                    ssrc = ssrc!!,
+                    ssrc = ssrc.value!!,
                     key = it.secretKey.toUByteArray().toByteArray(),
-                    server = server!!,
-                    interceptorConfiguration = FrameInterceptorConfiguration(gateway, voiceGateway, ssrc!!)
+                    server = server.value!!,
+                    interceptorConfiguration = FrameInterceptorConfiguration(gateway, voiceGateway, ssrc.value!!)
                 )
 
                 audioSenderJob?.cancel()
