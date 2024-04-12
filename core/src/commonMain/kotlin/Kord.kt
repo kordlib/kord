@@ -373,7 +373,7 @@ public class Kord(
     /**
      * Requests to get all [Sku]s for this application.
      *
-     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [RestRequestException] if anything went wrong during the request.
      */
     public suspend fun getSkus(): List<Sku> =
         rest.sku.listSkus(selfId).map { Sku(it, this) }
@@ -410,7 +410,7 @@ public class Kord(
     /**
      * Requests to create a new [test entitlement][Entitlement] with the given [skuId], [ownerId] and [ownerType].
      *
-     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [RestRequestException] if anything went wrong during the request.
      */
     public suspend fun createTestEntitlement(
         skuId: Snowflake,
