@@ -25,6 +25,8 @@ import kotlinx.coroutines.flow.first
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
+internal expect val isSupported: Boolean
+
 @KordVoice
 public class VoiceConnectionBuilder(
     public var gateway: Gateway,
@@ -32,6 +34,14 @@ public class VoiceConnectionBuilder(
     public var channelId: Snowflake,
     public var guildId: Snowflake
 ) {
+    init {
+        if(!isSupported) {
+            throw UnsupportedOperationException("""
+                Voice is currently not supported on Windows, if you're developing on Windows we recommend using
+                WSL: https://aka.ms/wsl
+            """.trimIndent())
+        }
+    }
     /**
      * The amount in milliseconds to wait for the events required to create a [VoiceConnection]. Default is 5000, or 5 seconds.
      */

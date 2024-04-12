@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.kpm.external.ExternalVariantApi
-import org.jetbrains.kotlin.gradle.kpm.external.project
 import org.jetbrains.kotlin.konan.target.HostManager
 
 @OptIn(ExternalVariantApi::class)
@@ -14,10 +13,7 @@ fun KotlinMultiplatformExtension.targets() {
 
     jvm()
 
-    if (project.name != "voice" && project.name != "core-voice") {
-        // https://youtrack.jetbrains.com/issue/KTOR-4080
-        mingwX64()
-    }
+    mingwX64()
 
     js {
         nodejs {

@@ -1,6 +1,5 @@
 package dev.kord.voice.udp
 
-import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.io.ByteArrayView
 import io.ktor.utils.io.core.*
 import js.typedarrays.toUint8Array
@@ -15,12 +14,6 @@ import node.dgram.createSocket
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-
-@KordVoice
-public actual data class SocketAddress actual constructor(
-    public actual val hostname: String,
-    public actual val port: Int,
-)
 
 public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket {
     private val socketScope =
