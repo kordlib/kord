@@ -16,12 +16,6 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-@KordVoice
-public actual data class SocketAddress actual constructor(
-    public actual val hostname: String,
-    public actual val port: Int,
-)
-
 public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket {
     private val socketScope =
         CoroutineScope(Dispatchers.Default + SupervisorJob() + CoroutineName("kord-voice-global-socket"))
