@@ -29,8 +29,10 @@ import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
 internal inline fun <T> catchNotFound(block: () -> T): T? {
+    // block is called exactly once, but might not be executed fully, even if catchNotFound returns normally
+    // -> AT_MOST_ONCE, see https://youtrack.jetbrains.com/issue/KT-63414
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     return try {
         block()
@@ -41,8 +43,10 @@ internal inline fun <T> catchNotFound(block: () -> T): T? {
 }
 
 internal inline fun <T> catchDiscordError(vararg codes: JsonErrorCode, block: () -> T): T? {
+    // block is called exactly once, but might not be executed fully, even if catchDiscordError returns normally
+    // -> AT_MOST_ONCE, see https://youtrack.jetbrains.com/issue/KT-63414
     contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+        callsInPlace(block, InvocationKind.AT_MOST_ONCE)
     }
     return try {
         block()

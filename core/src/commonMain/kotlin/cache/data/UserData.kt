@@ -11,7 +11,7 @@ import dev.kord.common.entity.optional.OptionalBoolean
 import kotlinx.serialization.Serializable
 
 private val EntitlementData.nullableUserId get() = userId.value
-private val WebhookData.nullableUserId get() = userId.value
+private val ThreadMemberData.nullableUserId get() = userId.value
 
 @Serializable
 public data class UserData(
@@ -30,7 +30,7 @@ public data class UserData(
 
         public val description: DataDescription<UserData, Snowflake> = description(UserData::id) {
             link(UserData::id to MemberData::userId)
-            link(UserData::id to WebhookData::nullableUserId)
+            link(UserData::id to ThreadMemberData::nullableUserId)
             link(UserData::id to VoiceStateData::userId)
             link(UserData::id to PresenceData::userId)
             link(UserData::id to EntitlementData::nullableUserId)
@@ -48,3 +48,4 @@ public data class UserData(
 }
 
 public fun DiscordUser.toData(): UserData = UserData.from(this)
+
