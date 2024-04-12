@@ -7061,7 +7061,8 @@ public final class dev/kord/core/entity/Sku : dev/kord/core/entity/KordEntity, d
 	public final fun getSlug ()Ljava/lang/String;
 	public fun getSupplier ()Ldev/kord/core/supplier/EntitySupplier;
 	public final fun getType ()Ldev/kord/common/entity/SkuType;
-	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
+	public fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Sku;
+	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
 }
 
 public final class dev/kord/core/entity/StageInstance : dev/kord/core/behavior/StageInstanceBehavior {
@@ -11766,7 +11767,6 @@ public final class dev/kord/core/event/channel/thread/UnknownChannelThreadUpdate
 
 public final class dev/kord/core/event/entitlement/EntitlementCreateEvent : dev/kord/core/event/Event {
 	public fun <init> (Ldev/kord/core/entity/Entitlement;ILjava/lang/Object;Ldev/kord/core/Kord;)V
-	public synthetic fun <init> (Ldev/kord/core/entity/Entitlement;ILjava/lang/Object;Ldev/kord/core/Kord;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCustomContext ()Ljava/lang/Object;
 	public final fun getEntitlement ()Ldev/kord/core/entity/Entitlement;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
@@ -11777,7 +11777,6 @@ public final class dev/kord/core/event/entitlement/EntitlementCreateEvent : dev/
 
 public final class dev/kord/core/event/entitlement/EntitlementDeleteEvent : dev/kord/core/event/Event {
 	public fun <init> (Ldev/kord/core/entity/Entitlement;ILjava/lang/Object;Ldev/kord/core/Kord;)V
-	public synthetic fun <init> (Ldev/kord/core/entity/Entitlement;ILjava/lang/Object;Ldev/kord/core/Kord;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCustomContext ()Ljava/lang/Object;
 	public final fun getEntitlement ()Ldev/kord/core/entity/Entitlement;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
@@ -11788,7 +11787,6 @@ public final class dev/kord/core/event/entitlement/EntitlementDeleteEvent : dev/
 
 public final class dev/kord/core/event/entitlement/EntitlementUpdateEvent : dev/kord/core/event/Event {
 	public fun <init> (Ldev/kord/core/entity/Entitlement;Ldev/kord/core/entity/Entitlement;ILjava/lang/Object;Ldev/kord/core/Kord;)V
-	public synthetic fun <init> (Ldev/kord/core/entity/Entitlement;Ldev/kord/core/entity/Entitlement;ILjava/lang/Object;Ldev/kord/core/Kord;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCustomContext ()Ljava/lang/Object;
 	public final fun getEntitlement ()Ldev/kord/core/entity/Entitlement;
 	public fun getGateway ()Ldev/kord/gateway/Gateway;
@@ -13988,7 +13986,6 @@ public final class dev/kord/core/supplier/RestEntitySupplier : dev/kord/core/sup
 	public fun getRegions ()Lkotlinx/coroutines/flow/Flow;
 	public fun getRole (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getRoleOrNull (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getSKUs (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSelf (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSelfOrNull (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getStageInstance (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

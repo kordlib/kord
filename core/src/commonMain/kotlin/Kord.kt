@@ -375,7 +375,8 @@ public class Kord(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getSkus(): List<Sku> = with(EntitySupplyStrategy.rest).getSKUs(selfId)
+    public suspend fun getSkus(): List<Sku> =
+        rest.sku.listSkus(selfId).map { Sku(it, this) }
 
     /**
      * Requests to get a list of [Entitlement]s with the given [skuId], [userId], or [guildId].

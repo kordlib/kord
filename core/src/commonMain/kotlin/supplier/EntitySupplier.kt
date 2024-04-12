@@ -661,7 +661,10 @@ public interface EntitySupplier {
             ?: EntityNotFoundException.entitlementNotFound(applicationId, entitlementId)
 
     /**
-     * Requests all [Entitlement]s for the [Application] with the given [applicationId].
+     * Requests to get all [Entitlement]s for the [Application] with the given [applicationId].
+     *
+     * The returned flow is lazily executed, any [RequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
      */
     public suspend fun getEntitlements(
         applicationId: Snowflake,

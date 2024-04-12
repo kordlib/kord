@@ -654,6 +654,7 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         Entitlement(data, kord)
     }
 
+    // maxBatchSize: see https://discord.com/developers/docs/monetization/entitlements#list-entitlements
     override suspend fun getEntitlements(
         applicationId: Snowflake,
         skuId: Snowflake?,
@@ -677,9 +678,6 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
             Entitlement(data, kord)
         }
     }
-
-    public suspend fun getSKUs(applicationId: Snowflake): List<Sku> =
-        sku.listSkus(applicationId).map { Sku(it, kord) }
 
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
 }

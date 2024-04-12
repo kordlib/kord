@@ -39,14 +39,5 @@
     "name": "testsubcommands",
     "id": "792107855418490901"
   },
-  "channel_id": "587324906702766226",
-    "entitlements": [
-        {
-            "id":"0",
-            "application_id":"0",
-            "sku_id":"0",
-            "type":8,
-            "deleted":false
-        }
-    ]
+  "channel_id": "587324906702766226"
 }

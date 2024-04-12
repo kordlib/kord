@@ -27,21 +27,26 @@ internal class EntitlementEventHandler : BaseGatewayEventHandler() {
             entitlement = handleEntitlement(event.entitlement, kord),
             shard = shard,
             customContext = context?.get(),
+            kord = kord,
         )
 
         is EntitlementUpdate -> EntitlementUpdateEvent(
-            old = kord.cache.query { idEq(EntitlementData::id, event.entitlement.id) }
-                .singleOrNull()
+            old = kord.cache.query {
+                idEq(EntitlementData::id, event.entitlement.id)
+                idEq(EntitlementData::applicationId, event.entitlement.applicationId)
+            }.singleOrNull()
                 ?.let { Entitlement(it, kord) },
             shard = shard,
             entitlement = handleEntitlement(event.entitlement, kord),
             customContext = context?.get(),
+            kord = kord,
         )
 
         is EntitlementDelete -> EntitlementDeleteEvent(
             entitlement = handleDeletedEntitlement(event.entitlement, kord),
             shard = shard,
             customContext = context?.get(),
+            kord = kord,
         )
 
         else -> null
@@ -49,7 +54,11 @@ internal class EntitlementEventHandler : BaseGatewayEventHandler() {
 
     private suspend fun handleDeletedEntitlement(entity: DiscordEntitlement, kord: Kord): Entitlement {
         val entitlement = Entitlement(EntitlementData.from(entity), kord)
-        kord.cache.remove{ idEq(EntitlementData::id, entitlement.id) }
+        kord.cache.remove{
+            idEq(EntitlementData::id, entitlement.id)
+            idEq(EntitlementData::applicationId, entitlement.applicationId)
+        }
+
         return entitlement
     }
 

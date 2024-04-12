@@ -12,10 +12,11 @@ import dev.kord.core.event.Event
  * An [Entitlement] is created when a [User] subscribes to a [Sku].
  */
 public class EntitlementCreateEvent(
+    /** The [Entitlement] that was created. */
     public val entitlement: Entitlement,
     override val shard: Int,
     override val customContext: Any?,
-    override val kord: Kord = entitlement.kord
+    override val kord: Kord
 ) : Event {
 
     override fun toString(): String {
@@ -36,15 +37,17 @@ public class EntitlementCreateEvent(
  * end of the billing period.
  */
 public class EntitlementUpdateEvent(
+    /** The [Entitlement] that was updated. */
     public val entitlement: Entitlement,
+    /** The [entitlement] as found in [cache][Kord.cache] before the update. */
     public val old: Entitlement?,
     override val shard: Int,
     override val customContext: Any?,
-    override val kord: Kord = entitlement.kord
+    override val kord: Kord
 ) : Event {
 
     override fun toString(): String {
-        return "EntitlementUpdateEvent(entitlement=$entitlement, customContext=$customContext, kord=$kord, shard=$shard)"
+        return "EntitlementUpdateEvent(entitlement=$entitlement, old=$old, customContext=$customContext, kord=$kord, shard=$shard)"
     }
 
 }
@@ -61,10 +64,11 @@ public class EntitlementUpdateEvent(
  * end of the billing period.
  */
 public class EntitlementDeleteEvent(
+    /** The [Entitlement] that was deleted */
     public val entitlement: Entitlement,
     override val shard: Int,
     override val customContext: Any?,
-    override val kord: Kord = entitlement.kord,
+    override val kord: Kord
 ) : Event {
     override fun toString(): String {
         return "EntitlementDeleteEvent(entitlement=$entitlement, customContext=$customContext, kord=$kord, shard=$shard)"

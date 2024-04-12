@@ -49,5 +49,5 @@ public class Sku(
         guildId: Snowflake? = null,
     ): Flow<Entitlement> = supplier.getEntitlements(applicationId, id, limit, userId, guildId)
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Strategizable = Sku(data, kord, strategy.supply(kord))
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Sku = Sku(data, kord, strategy.supply(kord))
 }
