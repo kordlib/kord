@@ -8,14 +8,5 @@
       "type": 1,
       "permission": true
     }
-  ],
-  "entitlements": [
-    {
-      "id":"0",
-      "application_id":"0",
-      "sku_id":"0",
-      "type":8,
-      "deleted":false
-    }
   ]
 }
