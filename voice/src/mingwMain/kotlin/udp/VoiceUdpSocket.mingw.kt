@@ -15,4 +15,3 @@ public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket
 }
 
 private fun unsupported(): Nothing = TODO("Voice is not supported on windows")
-
