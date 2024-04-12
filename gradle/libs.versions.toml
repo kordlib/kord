@@ -28,7 +28,7 @@ mockk = "1.13.10" # https://github.com/mockk/mockk
 # plugins
 dokka = "1.9.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.23.2" # https://github.com/Kotlin/kotlinx-atomicfu
-binary-compatibility-validator = "0.14.0" # https://github.com/Kotlin/binary-compatibility-validator
+binary-compatibility-validator = "0.15.0-Beta.2" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.3.5" # https://github.com/gmazzo/gradle-buildconfig-plugin
 
 
