@@ -24,6 +24,8 @@ kotlinpoet = "1.16.0" # https://github.com/square/kotlinpoet
 # tests
 junit5 = "5.10.2" # https://github.com/junit-team/junit5
 mockk = "1.13.10" # https://github.com/mockk/mockk
+bson = "5.0.1" # https://github.com/mongodb/mongo-java-driver
+kbson = "0.5.0" # https://github.com/jershell/kbson
 
 # plugins
 dokka = "1.9.20" # https://github.com/Kotlin/dokka
@@ -78,6 +80,8 @@ kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", versi
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+bson = { module = "org.mongodb:bson", version.ref = "bson" }
+kbson = { module = "com.github.jershell:kbson", version.ref = "kbson" }
 
 # actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
 # https://docs.gradle.org/current/userguide/custom_plugins.html#applying_external_plugins_in_precompiled_script_plugins
