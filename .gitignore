@@ -2,7 +2,6 @@
 .gradle/
 .idea/*
 !.idea/icon.png
-out/
 
 **/build/*
 !**/build/generated/
