@@ -242,7 +242,7 @@ public class Message(
     public val interaction: Interaction? get() = data.interaction.mapNullable { Interaction(it, kord) }.value
 
     /**
-     * The [thread][ThreadChannel] created by this message.
+     * The [thread][ThreadChannel] that was started from this message.
      */
     public val thread: ThreadChannel? get() = data.thread.mapNullable { ThreadChannel(it, kord) }.value
 
