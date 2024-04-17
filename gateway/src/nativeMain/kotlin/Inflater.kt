@@ -17,23 +17,27 @@ internal actual fun Inflater(): Inflater = object : Inflater {
     private var decompressed = UByteArray(1024) // buffer only grows, is reused for every zlib inflate call
     private var decompressedLen = 0
     private var closed = false
+    private val zStream = nativeHeap.alloc<z_stream>()
 
-    private val zStream = nativeHeap.alloc<z_stream>().also { zStream ->
-        // next_in, avail_in, zalloc, zfree and opaque must be initialized before calling inflateInit
-        zStream.next_in = null
-        zStream.avail_in = 0u
-        zStream.zalloc = null
-        zStream.zfree = null
-        zStream.opaque = null
-        // initialize msg just in case, we use it for throwing exceptions
-        zStream.msg = null
-        val ret = inflateInit(zStream.ptr)
-        if (ret != Z_OK) {
+    init {
+        try {
+            // next_in, avail_in, zalloc, zfree and opaque must be initialized before calling inflateInit
+            zStream.next_in = null
+            zStream.avail_in = 0u
+            zStream.zalloc = null
+            zStream.zfree = null
+            zStream.opaque = null
+            // initialize msg to null in case inflateInit doesn't, we use it for throwing exceptions
+            zStream.msg = null
+            val ret = inflateInit(zStream.ptr)
+            if (ret != Z_OK) throw ZlibException(zStream.msg, ret)
+        } catch (e: Throwable) {
             try {
-                throw ZlibException(zStream.msg, ret)
-            } finally {
                 nativeHeap.free(zStream)
+            } catch (freeException: Throwable) {
+                e.addSuppressed(freeException)
             }
+            throw e
         }
     }
 
@@ -66,11 +70,17 @@ internal actual fun Inflater(): Inflater = object : Inflater {
     override fun close() {
         if (closed) return
         closed = true
-        val ret = inflateEnd(zStream.ptr)
         try {
+            val ret = inflateEnd(zStream.ptr)
             if (ret != Z_OK) throw ZlibException(zStream.msg, ret)
-        } finally {
-            nativeHeap.free(zStream)
+        } catch (e: Throwable) {
+            try {
+                nativeHeap.free(zStream)
+            } catch (freeException: Throwable) {
+                e.addSuppressed(freeException)
+            }
+            throw e
         }
+        nativeHeap.free(zStream)
     }
 }
