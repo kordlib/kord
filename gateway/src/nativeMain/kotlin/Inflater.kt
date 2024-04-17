@@ -16,6 +16,7 @@ internal actual fun Inflater(): Inflater = object : Inflater {
 
     private var decompressed = UByteArray(1024) // buffer only grows, is reused for every zlib inflate call
     private var decompressedLen = 0
+    private var closed = false
 
     private val zStream = nativeHeap.alloc<z_stream>().also { zStream ->
         // next_in, avail_in, zalloc, zfree and opaque must be initialized before calling inflateInit
@@ -36,7 +37,8 @@ internal actual fun Inflater(): Inflater = object : Inflater {
         }
     }
 
-    override fun inflate(compressed: ByteArray, compressedLen: Int): String =
+    override fun inflate(compressed: ByteArray, compressedLen: Int): String {
+        check(!closed) { "Inflater has already been closed." }
         compressed.asUByteArray().usePinned { compressedPinned ->
             zStream.next_in = compressedPinned.addressOf(0)
             zStream.avail_in = compressedLen.convert()
@@ -55,10 +57,15 @@ internal actual fun Inflater(): Inflater = object : Inflater {
                 decompressedLen = decompressed.size
                 decompressed = decompressed.copyOf(decompressed.size * 2)
             }
-            decompressed.asByteArray().decodeToString(endIndex = decompressed.size - zStream.avail_out.convert<Int>())
         }
+        return decompressed
+            .asByteArray()
+            .decodeToString(endIndex = decompressed.size - zStream.avail_out.convert<Int>())
+    }
 
     override fun close() {
+        if (closed) return
+        closed = true
         val ret = inflateEnd(zStream.ptr)
         try {
             if (ret != Z_OK) throw ZlibException(zStream.msg, ret)
