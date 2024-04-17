@@ -97,4 +97,6 @@ tasks {
         applyKordDokkaOptions()
         dependsOn("kspCommonMainKotlinMetadata")
     }
+
+    disableLinuxLinkTestTasksOnWindows()
 }

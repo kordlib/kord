@@ -1,23 +1,9 @@
+import org.gradle.api.tasks.TaskContainer
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.kpm.external.ExternalVariantApi
-import org.jetbrains.kotlin.gradle.kpm.external.project
 import org.jetbrains.kotlin.konan.target.HostManager
 
-@OptIn(ExternalVariantApi::class)
 fun KotlinMultiplatformExtension.targets() {
-    // There are issues with compiling the linux variant on windows
-    // Please use WSL if you need to work on the linux port
-    if (!HostManager.hostIsMingw) {
-        linuxX64()
-        linuxArm64()
-    }
-
     jvm()
-
-    if (project.name != "voice" && project.name != "core-voice") {
-        // https://youtrack.jetbrains.com/issue/KTOR-4080
-        mingwX64()
-    }
 
     js {
         nodejs {
@@ -31,6 +17,11 @@ fun KotlinMultiplatformExtension.targets() {
         }
         useCommonJs()
     }
+
+    linuxX64()
+    linuxArm64()
+
+    mingwX64()
 
     macosArm64()
     macosX64()
@@ -49,6 +40,19 @@ fun KotlinMultiplatformExtension.targets() {
     targets.all {
         compilations.all {
             compilerOptions.options.applyKordCompilerOptions()
+        }
+    }
+}
+
+// There are issues with linking the linux variant on windows.
+// Please use WSL if you need to work on the linux port.
+fun TaskContainer.disableLinuxLinkTestTasksOnWindows() {
+    if (HostManager.hostIsMingw) {
+        val linuxLinkTestTasks = listOf("linkDebugTestLinuxX64", "linkDebugTestLinuxArm64")
+        for (task in linuxLinkTestTasks) {
+            named(task) {
+                enabled = false
+            }
         }
     }
 }

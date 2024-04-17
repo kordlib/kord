@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.konan.target.Family
+import org.jetbrains.kotlin.konan.target.HostManager
 
 plugins {
     org.jetbrains.kotlin.multiplatform
@@ -55,6 +56,25 @@ kotlin {
         named("voiceMain") {
             dependencies {
                 implementation(projects.coreVoice)
+            }
+        }
+    }
+}
+
+tasks {
+    // There are issues with linking the linux variant on windows.
+    // Please use WSL if you need to work on the linux port.
+    /** see [disableLinuxLinkTestTasksOnWindows] */
+    if (HostManager.hostIsMingw) {
+        val linuxLinkExecutableTasks = listOf(
+            "linkDebugExecutableLinuxX64",
+            "linkDebugExecutableLinuxArm64",
+            "linkReleaseExecutableLinuxX64",
+            "linkReleaseExecutableLinuxArm64",
+        )
+        for (task in linuxLinkExecutableTasks) {
+            named(task) {
+                enabled = false
             }
         }
     }

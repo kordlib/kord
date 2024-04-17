@@ -14,4 +14,5 @@ public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket
     override suspend fun stop() = unsupported()
 }
 
+// https://youtrack.jetbrains.com/issue/KTOR-4080
 private fun unsupported(): Nothing = TODO("Voice is not supported on windows")
