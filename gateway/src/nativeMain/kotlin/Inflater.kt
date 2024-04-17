@@ -3,7 +3,12 @@ package dev.kord.gateway
 import kotlinx.cinterop.*
 import platform.zlib.*
 
-private class ZlibException(message: String) : IllegalStateException(message)
+@ExperimentalForeignApi
+private class ZlibException(msg: CPointer<ByteVar>?, ret: Int) : IllegalStateException(
+    message = msg?.toKString()
+        ?: zError(ret)?.toKString()?.ifEmpty { null } // zError returns empty string for unknown codes
+        ?: "unexpected return code: $ret"
+)
 
 @OptIn(ExperimentalForeignApi::class)
 internal actual fun Inflater(): Inflater = object : Inflater {
@@ -24,15 +29,12 @@ internal actual fun Inflater(): Inflater = object : Inflater {
         val ret = inflateInit(zStream.ptr)
         if (ret != Z_OK) {
             try {
-                throwZlibException(zStream.msg, ret)
+                throw ZlibException(zStream.msg, ret)
             } finally {
                 nativeHeap.free(zStream)
             }
         }
     }
-
-    private fun throwZlibException(msg: CPointer<ByteVar>?, ret: Int): Nothing =
-        throw ZlibException(msg?.toKString() ?: zError(ret)?.toKString() ?: ret.toString())
 
     override fun inflate(compressed: ByteArray, compressedLen: Int): String =
         compressed.asUByteArray().usePinned { compressedPinned ->
@@ -46,7 +48,7 @@ internal actual fun Inflater(): Inflater = object : Inflater {
                     inflate(zStream.ptr, Z_NO_FLUSH)
                 }
                 if (ret != Z_OK && ret != Z_STREAM_END) {
-                    throwZlibException(zStream.msg, ret)
+                    throw ZlibException(zStream.msg, ret)
                 }
                 if (zStream.avail_in == 0u || zStream.avail_out != 0u) break
                 // grow decompressed buffer
@@ -59,7 +61,7 @@ internal actual fun Inflater(): Inflater = object : Inflater {
     override fun close() {
         val ret = inflateEnd(zStream.ptr)
         try {
-            if (ret != Z_OK) throwZlibException(zStream.msg, ret)
+            if (ret != Z_OK) throw ZlibException(zStream.msg, ret)
         } finally {
             nativeHeap.free(zStream)
         }
