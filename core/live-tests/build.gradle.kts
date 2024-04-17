@@ -21,4 +21,7 @@ tasks {
     withType<AbstractTestTask>().configureEach {
         enabled = !System.getenv("KORD_TEST_TOKEN").isNullOrBlank()
     }
+    withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
 }
