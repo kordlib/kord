@@ -22,8 +22,11 @@ ksp = "1.9.22-1.0.17" # https://github.com/google/ksp
 kotlinpoet = "1.16.0" # https://github.com/square/kotlinpoet
 
 # tests
-junit5 = "5.10.2" # https://github.com/junit-team/junit5
+junit-jupiter = "5.10.2" # https://github.com/junit-team/junit5
+junit-platform = "1.10.2"
 mockk = "1.13.10" # https://github.com/mockk/mockk
+bson = "5.0.1" # https://github.com/mongodb/mongo-java-driver
+kbson = "0.5.0" # https://github.com/jershell/kbson
 kotlinx-io = "0.3.0" # https://github.com/Kotlin/kotlinx-io
 
 # plugins
@@ -80,9 +83,13 @@ kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-an
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
 kotlin-test-js = { module = "org.jetbrains.kotlin:kotlin-test-js", version.ref = "kotlin" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit5" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version = "junit-platform" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+bson = { module = "org.mongodb:bson", version.ref = "bson" }
+kbson = { module = "com.github.jershell:kbson", version.ref = "kbson" }
 kotlinx-io = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinx-io" }
 
 # actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
@@ -103,7 +110,8 @@ ktor-client-serialization = ["ktor-client-content-negotiation", "ktor-serializat
 
 test-common = ["kotlin-test-annotations-common", "kotlin-test", "kotlinx-coroutines-test"]
 test-js = ["kotlin-test-js", "kotlin-node"]
-test-jvm = ["kotlin-test-junit5", "junit-jupiter-engine", "slf4j-simple"]
+test-jvm = ["kotlin-test-junit5", "junit-jupiter-api"]
+test-jvm-runtime = ["junit-jupiter-engine", "junit-platform-launcher", "slf4j-simple"]
 
 pluginsForBuildSrc = [
     "kotlin-jvm-plugin",

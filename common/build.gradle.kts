@@ -61,6 +61,12 @@ kotlin {
                 api(libs.ktor.client.curl)
             }
         }
+        jvmTest {
+            dependencies {
+                implementation(libs.bson)
+                implementation(libs.kbson)
+            }
+        }
     }
 }
 

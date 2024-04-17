@@ -32,6 +32,7 @@ kotlin {
         jvmMain {
             dependencies {
                 api(libs.bundles.test.jvm)
+                runtimeOnly(libs.bundles.test.jvm.runtime)
             }
         }
         nativeMain {
