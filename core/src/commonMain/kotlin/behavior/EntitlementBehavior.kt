@@ -48,7 +48,11 @@ public interface EntitlementBehavior : KordEntity, Strategizable {
     public suspend fun fetchEntitlementOrNull(): Entitlement? = supplier.getEntitlementOrNull(applicationId, id)
 
     /**
-     * Requests to delete this entitlement.
+     * Requests to delete this currently-active [test entitlement][Entitlement.isTest].
+     *
+     * Discord will act as though that [user][Entitlement.user] or [guild][Entitlement.guild] *no longer* has
+     * entitlement to your premium offering.
+     *
      * This request will fail if this is not a test entitlement.
      *
      * @throws [RestRequestException] if something went wrong during the request.

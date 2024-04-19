@@ -11,41 +11,42 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.datetime.Instant
 
+/**
+ * An instance of a [Discord Entitlement](https://discord.com/developers/docs/monetization/entitlements#entitlement-resource).
+ *
+ * Entitlements represent that a [User] or [Guild] has access to a premium offering in your [Application].
+ */
 public class Entitlement(
     public val data: EntitlementData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
 ) : EntitlementBehavior {
-    override val applicationId: Snowflake
-        get() = data.applicationId
-
     override val id: Snowflake
         get() = data.id
 
     /**
-     * Whether this entitlement has been deleted.
+     * The ID of the [Sku] this entitlement is for.
      */
-    public val deleted: Boolean
-        get() = data.deleted
+    public val skuId: Snowflake
+        get() = data.skuId
 
     /**
-     * Date at which the entitlement is no longer valid
+     * The ID of the [Application] this entitlement is for.
      */
-    public val startsAt: Instant?
-        get() = data.startsAt.value
+    override val applicationId: Snowflake
+        get() = data.applicationId
 
     /**
-     * Start date at which the entitlement is valid.
+     * The ID of the [User] that is granted access to this entitlement's [Sku].
      */
-    public val endsAt: Instant?
-        get() = data.endsAt.value
+    public val userId: Snowflake?
+        get() = data.userId.value
 
     /**
-     * Whether this entitlement is a test entitlement.
+     * The behavior of the [User] that is granted access to this entitlement's [Sku].
      */
-    public val isTest: Boolean
-        // see https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-structure
-        get() = endsAt == null && startsAt == null
+    public val user: UserBehavior?
+        get() = userId?.let { UserBehavior(it, kord) }
 
     /**
      * The type of entitlement.
@@ -54,28 +55,41 @@ public class Entitlement(
         get() = data.type
 
     /**
-     * The ID of the sku this entitlement is for.
+     * Whether this entitlement has been deleted.
      */
-    public val skuId: Snowflake
-        get() = data.skuId
+    public val deleted: Boolean
+        get() = data.deleted
 
     /**
-     * The ID of the guild this entitlement's sku is granted to.
+     * Start date at which the entitlement is valid.
+     */
+    public val startsAt: Instant?
+        get() = data.startsAt.value
+
+    /**
+     * Date at which the entitlement is no longer valid
+     */
+    public val endsAt: Instant?
+        get() = data.endsAt.value
+
+    /**
+     * The ID of the [Guild] that is granted access to this entitlement's [Sku].
      */
     public val guildId: Snowflake?
         get() = data.guildId.value
 
+    /**
+     * The behavior of the [Guild] that is granted access to this entitlement's [Sku].
+     */
     public val guild: GuildBehavior?
         get() = guildId?.let { GuildBehavior(it, kord) }
 
     /**
-     * The ID of the user this entitlement's sku is granted to.
+     * Whether this entitlement is a test entitlement.
      */
-    public val userId: Snowflake?
-        get() = data.userId.value
-
-    public val user: UserBehavior?
-        get() = userId?.let { UserBehavior(it, kord) }
+    public val isTest: Boolean
+        // see https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-structure
+        get() = endsAt == null && startsAt == null
 
     override suspend fun asEntitlement(): Entitlement = this
 

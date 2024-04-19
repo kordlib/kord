@@ -2257,6 +2257,7 @@ public final class dev/kord/core/cache/KordCacheBuilder {
 	public final fun channels (Lkotlin/jvm/functions/Function2;)V
 	public final fun disableAll ()V
 	public final fun emojis (Lkotlin/jvm/functions/Function2;)V
+	public final fun entitlements (Lkotlin/jvm/functions/Function2;)V
 	public final fun forDescription (Ldev/kord/cache/api/data/DataDescription;Lkotlin/jvm/functions/Function2;)V
 	public final fun getDefaultGenerator ()Lkotlin/jvm/functions/Function2;
 	public final fun guilds (Lkotlin/jvm/functions/Function2;)V

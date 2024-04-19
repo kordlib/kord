@@ -10,6 +10,12 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * An instance of a [Discord Sku](https://discord.com/developers/docs/monetization/skus).
+ *
+ * SKUs (or stock-keeping units) represent premium offerings that can be made available to your [Application]'s [User]s or
+ * [Guild]s.
+ */
 public class Sku(
     public val data: DiscordSku,
     override val kord: Kord,
@@ -18,9 +24,15 @@ public class Sku(
     override val id: Snowflake
         get() = data.id
 
-    public val applicationId: Snowflake get() = data.applicationId
-
+    /**
+     * The type of this SKU.
+     */
     public val type: SkuType get() = data.type
+
+    /**
+     * The ID of the [Application] this SKU is for.
+     */
+    public val applicationId: Snowflake get() = data.applicationId
 
     /**
      * Customer-facing name of the premium offering.
@@ -32,6 +44,9 @@ public class Sku(
      */
     public val slug: String get() = data.slug
 
+    /**
+     * The flags of this SKU.
+     */
     public val flags: SkuFlags get() = data.flags
 
     /**
