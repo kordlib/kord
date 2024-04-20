@@ -3,12 +3,13 @@ package dev.kord.core.entity
 import dev.kord.common.entity.EntitlementType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import dev.kord.core.behavior.EntitlementBehavior
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.EntitlementData
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
+import dev.kord.rest.request.RestRequestException
 import kotlinx.datetime.Instant
 
 /**
@@ -20,7 +21,7 @@ public class Entitlement(
     public val data: EntitlementData,
     override val kord: Kord,
     override val supplier: EntitySupplier = kord.defaultSupplier,
-) : EntitlementBehavior {
+) : KordEntity, Strategizable {
     override val id: Snowflake
         get() = data.id
 
@@ -33,7 +34,7 @@ public class Entitlement(
     /**
      * The ID of the [Application] this entitlement is for.
      */
-    override val applicationId: Snowflake
+    public val applicationId: Snowflake
         get() = data.applicationId
 
     /**
@@ -49,7 +50,7 @@ public class Entitlement(
         get() = userId?.let { UserBehavior(it, kord) }
 
     /**
-     * The type of entitlement.
+     * The [type of entitlement][EntitlementType].
      */
     public val type: EntitlementType
         get() = data.type
@@ -91,12 +92,29 @@ public class Entitlement(
         // see https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-structure
         get() = endsAt == null && startsAt == null
 
-    override suspend fun asEntitlement(): Entitlement = this
-
-    override suspend fun asEntitlementOrNull(): Entitlement = this
+    /**
+     * Requests to delete this currently-active [test entitlement][Entitlement.isTest].
+     *
+     * Discord will act as though that [user][Entitlement.user] or [guild][Entitlement.guild] *no longer* has
+     * entitlement to your premium offering.
+     *
+     * This request will fail if this is not a test entitlement.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    public suspend fun delete() {
+        kord.rest.entitlement.deleteTestEntitlement(applicationId, id)
+    }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Entitlement =
         Entitlement(data, kord, strategy.supply(kord))
+
+    override fun hashCode(): Int = hash(id, applicationId)
+
+    override fun equals(other: Any?): Boolean = when (other)  {
+        is Entitlement -> other.id == id && other.applicationId == applicationId
+        else -> false
+    }
 
     override fun toString(): String {
         return "Entitlement(data=$data, kord=$kord, supplier=$supplier)"

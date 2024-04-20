@@ -6,6 +6,7 @@ import dev.kord.common.entity.SkuType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
+import dev.kord.core.hash
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import kotlinx.coroutines.flow.Flow
@@ -65,4 +66,15 @@ public class Sku(
     ): Flow<Entitlement> = supplier.getEntitlements(applicationId, id, limit, userId, guildId)
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Sku = Sku(data, kord, strategy.supply(kord))
+
+    override fun hashCode(): Int = hash(id, applicationId)
+
+    override fun equals(other: Any?): Boolean = when (other)  {
+        is Sku -> other.id == id && other.applicationId == applicationId
+        else -> false
+    }
+
+    override fun toString(): String {
+        return "Sku(data=$data, kord=$kord, supplier=$supplier)"
+    }
 }
