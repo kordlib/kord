@@ -15,7 +15,6 @@ internal actual fun Inflater(): Inflater = object : Inflater {
     // see https://zlib.net/manual.html
 
     private var decompressed = UByteArray(1024) // buffer only grows, is reused for every zlib inflate call
-    private var decompressedLen = 0
     private var closed = false
     private val zStream = nativeHeap.alloc<z_stream>()
 
@@ -46,7 +45,7 @@ internal actual fun Inflater(): Inflater = object : Inflater {
         compressed.asUByteArray().usePinned { compressedPinned ->
             zStream.next_in = compressedPinned.addressOf(0)
             zStream.avail_in = compressedLen.convert()
-            decompressedLen = 0
+            var decompressedLen = 0
             while (true) {
                 val ret = decompressed.usePinned { decompressedPinned ->
                     zStream.next_out = decompressedPinned.addressOf(decompressedLen)
