@@ -14,7 +14,8 @@ private class ZlibException(msg: CPointer<ByteVar>?, ret: Int) : IllegalStateExc
 internal actual fun Inflater(): Inflater = object : Inflater {
     // see https://zlib.net/manual.html
 
-    private var decompressed = UByteArray(1024) // buffer only grows, is reused for every zlib inflate call
+    // buffer for decompressed data, only grows, reused for every zlib inflate call
+    private var decompressed = UByteArray(1024)
     private var closed = false
     private val zStream = nativeHeap.alloc<z_stream>()
 
@@ -50,15 +51,24 @@ internal actual fun Inflater(): Inflater = object : Inflater {
                 val ret = decompressed.usePinned { decompressedPinned ->
                     zStream.next_out = decompressedPinned.addressOf(decompressedLen)
                     zStream.avail_out = (decompressed.size - decompressedLen).convert()
-                    inflate(zStream.ptr, Z_NO_FLUSH)
+                    inflate(zStream.ptr, Z_SYNC_FLUSH)
                 }
-                if (ret != Z_OK && ret != Z_STREAM_END) {
-                    throw ZlibException(zStream.msg, ret)
+                when {
+                    ret == Z_OK && zStream.avail_out == 0u -> {
+                        // grow decompressed buffer and call inflate again, there might be more output pending
+                        decompressedLen = decompressed.size
+                        decompressed = decompressed.copyOf(decompressed.size * 2)
+                    }
+                    // Z_BUF_ERROR is no real error after the first inflate call:
+                    // It means the previous inflate call did exactly fill the decompressed buffer (avail_out == 0).
+                    // Because of that, we grew the buffer and called inflate again. However, it couldn't make any
+                    // progress this time (everything is already decompressed), so it returns Z_BUF_ERROR.
+                    ret == Z_OK || ret == Z_STREAM_END || (decompressedLen != 0 && ret == Z_BUF_ERROR) -> {
+                        check(zStream.avail_in == 0u) { "Inflater did not decompress all available data." }
+                        break
+                    }
+                    else -> throw ZlibException(zStream.msg, ret)
                 }
-                if (zStream.avail_in == 0u || zStream.avail_out != 0u) break
-                // grow decompressed buffer
-                decompressedLen = decompressed.size
-                decompressed = decompressed.copyOf(decompressed.size * 2)
             }
         }
         return decompressed
