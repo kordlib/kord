@@ -121,7 +121,7 @@ pluginsForBuildSrc = [
     "binary-compatibility-validator-plugin",
     "ksp-plugin",
     "kord-gradle-plugin",
-    "maven-publish-plugin"
+    "maven-publish-plugin",
 ]
 
 
