@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     org.jetbrains.kotlin.multiplatform
 }
@@ -14,10 +16,9 @@ kotlin {
     }
     jvmToolchain(Jvm.target)
 
-    targets.all {
-        compilations.all {
-            compilerOptions.options.applyKordCompilerOptions()
-        }
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        applyKordCompilerOptions()
     }
 }
 

@@ -1,12 +1,15 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
     `kord-internal-multiplatform-module`
 }
 
 kotlin {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        optIn.addAll(kordOptIns)
+    }
     sourceSets {
-        all {
-            applyKordOptIns()
-        }
         commonTest {
             dependencies {
                 implementation(projects.core)
