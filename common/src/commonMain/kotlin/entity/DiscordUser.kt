@@ -51,8 +51,6 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 /**
  * A representation of the [Discord User structure](https://discord.com/developers/docs/resources/user).
