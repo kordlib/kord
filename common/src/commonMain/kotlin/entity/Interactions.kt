@@ -156,19 +156,19 @@ public sealed class Choice {
 
     public data class IntegerChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
         override val value: Long,
     ) : Choice()
 
     public data class NumberChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
         override val value: Double
     ) : Choice()
 
     public data class StringChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>?>,
+        override val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
         override val value: String
     ) : Choice()
 
@@ -527,7 +527,7 @@ public sealed class CommandArgument<out T> : Option() {
         override val name: String,
         override val type: ApplicationCommandOptionType,
         override val value: String,
-        override val focused: OptionalBoolean
+        override val focused: OptionalBoolean = OptionalBoolean.Missing
     ) : CommandArgument<String>()
 
     internal object Serializer : KSerializer<CommandArgument<*>> {

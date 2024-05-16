@@ -13,8 +13,8 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-@Suppress("PropertyName")
 @KordDsl
+@Suppress("PropertyName")
 public sealed class OptionsBuilder(
     override var name: String,
     override var description: String,
@@ -96,7 +96,6 @@ public sealed class BaseChoiceBuilder<T>(
  *
  * @see LocalizedNameCreateBuilder
  */
-@KordDsl
 public class ChoiceLocalizationsBuilder(override var name: String) : LocalizedNameCreateBuilder {
     @Suppress("PropertyName")
     @PublishedApi
