@@ -156,19 +156,19 @@ public sealed class Choice {
 
     public data class IntegerChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: Long,
     ) : Choice()
 
     public data class NumberChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: Double
     ) : Choice()
 
     public data class StringChoice(
         override val name: String,
-        override val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+        override val nameLocalizations: Optional<Map<Locale, String>?>,
         override val value: String
     ) : Choice()
 

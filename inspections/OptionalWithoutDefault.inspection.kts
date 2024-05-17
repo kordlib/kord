@@ -3,6 +3,8 @@ import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.openapi.project.Project
 import org.intellij.lang.annotations.Language
 import org.jetbrains.kotlin.idea.base.psi.setDefaultValue
+import org.jetbrains.kotlin.idea.util.findAnnotation
+import org.jetbrains.kotlin.name.ClassId
 import org.jetbrains.kotlin.psi.*
 
 private val optionalTypes =
@@ -41,8 +43,11 @@ private class AddDefaultQuickfix(private val optionalClassName: String) : LocalQ
 }
 
 val optionalWithoutDefaultInspection = localInspection { psiFile, inspection ->
+    val serializable = ClassId.fromString("kotlinx/serialization/Serializable")
+
     psiFile
         .descendantsOfType<KtClass>()
+        .filter { it.findAnnotation(serializable, withResolve = true) != null }
         .flatMap(KtClass::allConstructors)
         .flatMap(KtConstructor<*>::getValueParameters)
         .filterNot(KtParameter::hasDefaultValue)
