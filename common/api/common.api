@@ -1787,6 +1787,7 @@ public final class dev/kord/common/entity/Choice$Companion {
 
 public final class dev/kord/common/entity/Choice$IntegerChoice : dev/kord/common/entity/Choice {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;J)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()J
@@ -1803,6 +1804,7 @@ public final class dev/kord/common/entity/Choice$IntegerChoice : dev/kord/common
 
 public final class dev/kord/common/entity/Choice$NumberChoice : dev/kord/common/entity/Choice {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;D)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;DILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()D
@@ -1819,6 +1821,7 @@ public final class dev/kord/common/entity/Choice$NumberChoice : dev/kord/common/
 
 public final class dev/kord/common/entity/Choice$StringChoice : dev/kord/common/entity/Choice {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/optional/Optional;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/optional/Optional;
 	public final fun component3 ()Ljava/lang/String;
@@ -1859,6 +1862,7 @@ public final class dev/kord/common/entity/CommandArgument$AttachmentArgument : d
 
 public final class dev/kord/common/entity/CommandArgument$AutoCompleteArgument : dev/kord/common/entity/CommandArgument {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;)V
+	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/ApplicationCommandOptionType;
 	public final fun component3 ()Ljava/lang/String;
