@@ -527,7 +527,7 @@ public sealed class CommandArgument<out T> : Option() {
         override val name: String,
         override val type: ApplicationCommandOptionType,
         override val value: String,
-        override val focused: OptionalBoolean = OptionalBoolean.Missing
+        override val focused: OptionalBoolean
     ) : CommandArgument<String>()
 
     internal object Serializer : KSerializer<CommandArgument<*>> {
