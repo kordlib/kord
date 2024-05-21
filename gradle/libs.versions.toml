@@ -4,7 +4,7 @@
 kotlin = "2.0.0" # https://github.com/JetBrains/kotlin
 ktor = "2.3.11" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
-kotlinx-serialization = "1.7.0-RC" # https://github.com/Kotlin/kotlinx.serialization
+kotlinx-serialization = "1.6.3" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.6.0" # https://github.com/Kotlin/kotlinx-datetime
 kord-cache = "0.4.0" # https://github.com/kordlib/cache
 
