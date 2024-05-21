@@ -12,7 +12,7 @@ kord-cache = "0.4.0" # https://github.com/kordlib/cache
 kotlin-logging = "6.0.9" # https://github.com/oshai/kotlin-logging
 kotlin-logging-old = "3.0.5" # TODO remove after dependency is removed in rest, gateway, voice and core
 slf4j = "2.0.13" # https://www.slf4j.org
-kotlin-node = "20.11.30-pre.750" # https://github.com/JetBrains/kotlin-wrappers
+kotlin-node = "20.11.30-pre.751" # https://github.com/JetBrains/kotlin-wrappers
 bignum = "0.3.9" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.0.7" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
@@ -30,7 +30,7 @@ kbson = "0.5.0" # https://github.com/jershell/kbson
 
 # plugins
 dokka = "1.9.20" # https://github.com/Kotlin/dokka
-kotlinx-atomicfu = "0.23.2" # https://github.com/Kotlin/kotlinx-atomicfu
+kotlinx-atomicfu = "0.24.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.15.0-Beta.2" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.3.5" # https://github.com/gmazzo/gradle-buildconfig-plugin
 
