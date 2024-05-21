@@ -70,8 +70,6 @@ kotlin {
     }
 }
 
-configureAtomicFU()
-
 tasks {
     withType<Test>().configureEach {
         useJUnitPlatform()
