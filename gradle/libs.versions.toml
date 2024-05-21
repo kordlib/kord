@@ -18,7 +18,7 @@ stately = "2.0.7" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
-ksp = "2.0.0-RC3-1.0.20" # https://github.com/google/ksp
+ksp = "2.0.0-1.0.21" # https://github.com/google/ksp
 kotlinpoet = "1.16.0" # https://github.com/square/kotlinpoet
 
 # tests
