@@ -16,7 +16,7 @@ import dev.kord.core.event.Event as CoreEvent
 
 internal class InteractionEventHandler : BaseGatewayEventHandler() {
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     override suspend fun handle(event: Event, shard: Int, kord: Kord, context: LazyContext?): CoreEvent? =
         when (event) {
             is InteractionCreate -> handle(event, shard, kord, context)
@@ -54,7 +54,7 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
         return coreEvent
     }
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     private suspend fun handle(
         event: ApplicationCommandCreate,
         shard: Int,
@@ -73,7 +73,7 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
     }
 
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     private suspend fun handle(
         event: ApplicationCommandUpdate,
         shard: Int,
@@ -92,7 +92,7 @@ internal class InteractionEventHandler : BaseGatewayEventHandler() {
         return coreEvent
     }
 
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     private suspend fun handle(
         event: ApplicationCommandDelete,
         shard: Int,

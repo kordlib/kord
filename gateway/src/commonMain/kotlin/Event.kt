@@ -189,13 +189,13 @@ public sealed class Event {
                 // them too.
                 // See https://github.com/discord/discord-api-docs/pull/3691
                 "APPLICATION_COMMAND_CREATE" ->
-                    @Suppress("DEPRECATION")
+                    @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandCreate(decode(DiscordApplicationCommand.serializer()), sequence)
                 "APPLICATION_COMMAND_UPDATE" ->
-                    @Suppress("DEPRECATION")
+                    @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandUpdate(decode(DiscordApplicationCommand.serializer()), sequence)
                 "APPLICATION_COMMAND_DELETE" ->
-                    @Suppress("DEPRECATION")
+                    @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
@@ -296,11 +296,11 @@ public data class Heartbeat(val data: Long) : Event() {
     }
 
     public companion object {
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         @Deprecated(
             "Renamed to 'Companion'.",
             ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         @JvmField
         public val NewCompanion: NewCompanion = NewCompanion()
@@ -309,7 +309,7 @@ public data class Heartbeat(val data: Long) : Event() {
     @Deprecated(
         "Renamed to 'Companion'.",
         ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class NewCompanion internal constructor() {
         public fun serializer(): KSerializer<Heartbeat> = Heartbeat.serializer()
@@ -507,7 +507,7 @@ public data class InteractionCreate(val interaction: DiscordInteraction, overrid
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -516,7 +516,7 @@ public data class ApplicationCommandCreate(val application: DiscordApplicationCo
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -525,7 +525,7 @@ public data class ApplicationCommandUpdate(val application: DiscordApplicationCo
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()

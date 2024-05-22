@@ -2164,7 +2164,7 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 	public final fun getComponents ()Ljava/util/List;
 	public final fun getContent ()Ljava/lang/String;
 	public final fun getEmbeds ()Ljava/util/List;
-	public fun getFiles ()Ljava/util/List;
+	public final fun getFiles ()Ljava/util/List;
 	public final fun getFlags ()Ldev/kord/common/entity/MessageFlags;
 	public final fun getSuppressEmbeds ()Ljava/lang/Boolean;
 	public final fun getSuppressNotifications ()Ljava/lang/Boolean;
@@ -2221,22 +2221,8 @@ public final class dev/kord/rest/builder/message/create/MessageCreateBuilder$Def
 	public static fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
 }
 
-public final class dev/kord/rest/builder/message/create/MessageCreateBuilderJvmKt {
-	public static final synthetic fun addFile (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
-}
-
-public final class dev/kord/rest/builder/message/create/MessageCreateBuilderKt {
-	public static final synthetic fun actionRow (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final synthetic fun allowedMentions (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final synthetic fun embed (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final synthetic fun messageFlags (Ldev/kord/rest/builder/message/create/MessageCreateBuilder;Lkotlin/jvm/functions/Function1;)V
-}
-
 public final class dev/kord/rest/builder/message/create/UpdateMessageInteractionResponseCreateBuilder : dev/kord/rest/builder/message/create/AbstractMessageCreateBuilder, dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
-	public fun getFiles ()Ljava/util/List;
-	public synthetic fun setFiles (Ljava/util/List;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/MultipartInteractionResponseCreateRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
 }
@@ -2292,7 +2278,6 @@ public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModify
 	public final fun setComponents (Ljava/util/List;)V
 	public final fun setContent (Ljava/lang/String;)V
 	public final fun setEmbeds (Ljava/util/List;)V
-	public final synthetic fun setFiles (Ljava/util/List;)V
 	public final fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
 	public final fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 }
@@ -2310,26 +2295,15 @@ public final class dev/kord/rest/builder/message/modify/InteractionResponseModif
 }
 
 public abstract interface class dev/kord/rest/builder/message/modify/MessageModifyBuilder : dev/kord/rest/builder/message/MessageBuilder {
-	public abstract fun getFiles ()Ljava/util/List;
-	public abstract synthetic fun setFiles (Ljava/util/List;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilder$DefaultImpls {
 	public static fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
 }
 
-public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderJvmKt {
-	public static final synthetic fun addFile (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
-}
-
 public final class dev/kord/rest/builder/message/modify/MessageModifyBuilderKt {
-	public static final synthetic fun actionRow (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static final synthetic fun allowedMentions (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
-	public static synthetic fun allowedMentions$default (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final synthetic fun embed (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 	public static final fun keepAttachment (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun keepAttachment$default (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public static final synthetic fun messageFlags (Ldev/kord/rest/builder/message/modify/MessageModifyBuilder;Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class dev/kord/rest/builder/message/modify/UserMessageModifyBuilder : dev/kord/rest/builder/message/modify/AbstractMessageModifyBuilder, dev/kord/rest/builder/RequestBuilder {
@@ -6293,7 +6267,7 @@ public final class dev/kord/rest/route/DiscordCdn {
 	public static final field INSTANCE Ldev/kord/rest/route/DiscordCdn;
 	public final fun applicationCover (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
 	public final fun applicationIcon (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;)Ldev/kord/rest/route/CdnUrl;
-	public final fun defaultAvatar (I)Ldev/kord/rest/route/CdnUrl;
+	public final synthetic fun defaultAvatar (I)Ldev/kord/rest/route/CdnUrl;
 	public final fun defaultUserAvatar (I)Ldev/kord/rest/route/CdnUrl;
 	public final fun defaultUserAvatar (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
 	public final fun emoji (Ldev/kord/common/entity/Snowflake;)Ldev/kord/rest/route/CdnUrl;
@@ -7527,9 +7501,7 @@ public final class dev/kord/rest/service/UserService : dev/kord/rest/service/Res
 	public final fun createGroupDM (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getCurrentUser (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getCurrentUserGuilds (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final synthetic fun getCurrentUserGuilds (Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getCurrentUserGuilds$default (Ldev/kord/rest/service/UserService;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Ljava/lang/Boolean;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun getCurrentUserGuilds$default (Ldev/kord/rest/service/UserService;Ldev/kord/rest/route/Position$BeforeOrAfter;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getUser (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getUserConnections (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun leaveGuild (Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
