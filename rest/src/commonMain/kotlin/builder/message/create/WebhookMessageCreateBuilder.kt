@@ -59,6 +59,7 @@ public class WebhookMessageCreateBuilder :
             flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
             threadName = _threadName,
             appliedTags = _appliedTags.mapCopy(),
+            poll = _poll
         ),
         files = files.toList(),
     )

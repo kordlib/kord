@@ -197,6 +197,8 @@ public sealed class Event {
                 "APPLICATION_COMMAND_DELETE" ->
                     @Suppress("DEPRECATION")
                     ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
+                "MESSAGE_POLL_VOTE_ADD" -> MessagePollVoteAdd(decode(MessagePollEventData.serializer()), sequence)
+                "MESSAGE_POLL_VOTE_REMOVE" -> MessagePollVoteRemove(decode(MessagePollEventData.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
                     UnknownDispatchEvent(eventName, eventData, sequence)
@@ -599,4 +601,21 @@ public data class DiscordThreadMembersUpdate(
     val addedMembers: Optional<List<DiscordThreadMember>> = Optional.Missing(),
     @SerialName("removed_member_ids")
     val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
+)
+
+public data class MessagePollVoteAdd(val data: MessagePollEventData, override val sequence: Int?) : DispatchEvent()
+public data class MessagePollVoteRemove(val data: MessagePollEventData, override val sequence: Int?) : DispatchEvent()
+
+@Serializable
+public data class MessagePollEventData(
+    @SerialName("user_id")
+    val userId: Snowflake,
+    @SerialName("channel_id")
+    val channelId: Snowflake,
+    @SerialName("message_id")
+    val messageId: Snowflake,
+    @SerialName("guild_id")
+    val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    @SerialName("answer_id")
+    val answerId: Int
 )

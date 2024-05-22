@@ -414,6 +414,34 @@ public class ChannelService(requestHandler: RequestHandler) : RestService(reques
     ): ListThreadsResponse = call(Route.JoinedPrivateArchivedThreadsGet) {
         listThreadsConfig(channelId, request.before, request.limit)
     }
+
+    public suspend fun getPollUsersByAnswer(
+        channelId: Snowflake,
+        messageId: Snowflake,
+        answerId: Int,
+        after: Snowflake? = null,
+        limit: Int? = null
+    ): List<DiscordUser> = call(Route.GetVoteAnswer) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.MessageId] = messageId
+        keys[Route.PollAnswerId] = answerId.toString()
+
+        if (after != null) {
+            parameter("after", after)
+        }
+
+        if (limit != null) {
+            parameter("limit", limit)
+        }
+    }
+
+    public suspend fun expirePoll(
+        channelId: Snowflake,
+        messageId: Snowflake,
+    ): DiscordMessage = call(Route.PostExpirePoll) {
+        keys[Route.ChannelId] = channelId
+        keys[Route.MessageId] = messageId
+    }
 }
 
 private fun RequestBuilder<ListThreadsResponse>.listThreadsConfig(channelId: Snowflake, before: Any?, limit: Int?) {

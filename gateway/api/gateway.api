@@ -1410,6 +1410,68 @@ public final class dev/kord/gateway/MessageDeleteBulk : dev/kord/gateway/Dispatc
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class dev/kord/gateway/MessagePollEventData {
+	public static final field Companion Ldev/kord/gateway/MessagePollEventData$Companion;
+	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;I)V
+	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component3 ()Ldev/kord/common/entity/Snowflake;
+	public final fun component4 ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun component5 ()I
+	public final fun copy (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;I)Ldev/kord/gateway/MessagePollEventData;
+	public static synthetic fun copy$default (Ldev/kord/gateway/MessagePollEventData;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/optional/OptionalSnowflake;IILjava/lang/Object;)Ldev/kord/gateway/MessagePollEventData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnswerId ()I
+	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getGuildId ()Ldev/kord/common/entity/optional/OptionalSnowflake;
+	public final fun getMessageId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/MessagePollEventData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/MessagePollEventData$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/gateway/MessagePollEventData;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/gateway/MessagePollEventData;)V
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/MessagePollEventData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class dev/kord/gateway/MessagePollVoteAdd : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/gateway/MessagePollEventData;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/gateway/MessagePollEventData;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/gateway/MessagePollEventData;Ljava/lang/Integer;)Ldev/kord/gateway/MessagePollVoteAdd;
+	public static synthetic fun copy$default (Ldev/kord/gateway/MessagePollVoteAdd;Ldev/kord/gateway/MessagePollEventData;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/MessagePollVoteAdd;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Ldev/kord/gateway/MessagePollEventData;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/gateway/MessagePollVoteRemove : dev/kord/gateway/DispatchEvent {
+	public fun <init> (Ldev/kord/gateway/MessagePollEventData;Ljava/lang/Integer;)V
+	public final fun component1 ()Ldev/kord/gateway/MessagePollEventData;
+	public final fun component2 ()Ljava/lang/Integer;
+	public final fun copy (Ldev/kord/gateway/MessagePollEventData;Ljava/lang/Integer;)Ldev/kord/gateway/MessagePollVoteRemove;
+	public static synthetic fun copy$default (Ldev/kord/gateway/MessagePollVoteRemove;Ldev/kord/gateway/MessagePollEventData;Ljava/lang/Integer;ILjava/lang/Object;)Ldev/kord/gateway/MessagePollVoteRemove;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getData ()Ldev/kord/gateway/MessagePollEventData;
+	public fun getSequence ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class dev/kord/gateway/MessageReactionAdd : dev/kord/gateway/DispatchEvent {
 	public fun <init> (Ldev/kord/common/entity/MessageReactionAddData;Ljava/lang/Integer;)V
 	public final fun component1 ()Ldev/kord/common/entity/MessageReactionAddData;

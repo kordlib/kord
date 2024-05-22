@@ -19,7 +19,7 @@ import kotlin.contracts.contract
 /**
  * The behavior of a Discord Voice Channel associated to a guild.
  */
-public interface VoiceChannelBehavior : TopGuildMessageChannelBehavior, BaseVoiceChannelBehavior {
+public interface VoiceChannelBehavior : TopGuildMessageChannelBehavior, BaseVoiceChannelBehavior, PollParentChannelBehavior {
 
     /**
      * Requests to get the this behavior as a [VoiceChannel].

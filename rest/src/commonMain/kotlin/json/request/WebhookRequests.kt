@@ -1,6 +1,7 @@
 package dev.kord.rest.json.request
 
 import dev.kord.common.entity.AllowedMentions
+import dev.kord.rest.json.request.CreatablePoll
 import dev.kord.common.entity.DiscordComponent
 import dev.kord.common.entity.MessageFlags
 import dev.kord.common.entity.Snowflake
@@ -39,6 +40,7 @@ public data class WebhookExecuteRequest(
     val threadName: Optional<String> = Optional.Missing(),
     @SerialName("applied_tags")
     val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    val poll: Optional<CreatablePoll> = Optional.Missing()
 )
 
 public data class MultiPartWebhookExecuteRequest(

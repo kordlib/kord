@@ -33,6 +33,7 @@ public class ForumMessageCreateBuilder :
             stickerIds = _stickerIds.mapCopy(),
             attachments = _attachments.mapList { it.toRequest() },
             flags = buildMessageFlags(flags, suppressEmbeds, suppressNotifications),
+            poll = _poll
         ),
         files = files.toList(),
     )

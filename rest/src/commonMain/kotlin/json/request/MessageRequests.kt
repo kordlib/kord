@@ -23,7 +23,8 @@ public data class MessageCreateRequest(
     @SerialName("sticker_ids")
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val flags: Optional<MessageFlags> = Optional.Missing(),
+    val poll: Optional<CreatablePoll> = Optional.Missing()
 )
 
 public data class MultipartMessageCreateRequest(
@@ -111,10 +112,23 @@ public data class ForumThreadMessageRequest(
     @SerialName("sticker_ids")
     val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
     val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val flags: Optional<MessageFlags> = Optional.Missing(),
+    val poll: Optional<CreatablePoll> = Optional.Missing()
 )
 
 public data class MultipartForumThreadMessageCreateRequest(
     val request: ForumThreadMessageRequest,
     val files: List<NamedFile> = emptyList(),
+)
+
+
+@Serializable
+public data class CreatablePoll(
+    val question: DiscordPoll.Media,
+    val answers: List<DiscordPoll.Answer>,
+    val expiry: Instant,
+    @SerialName("allow_multiselect")
+    val allowMultiselect: Optional<Boolean> = Optional.Missing(),
+    @SerialName("layout_type")
+    val layoutType: PollLayoutType,
 )
