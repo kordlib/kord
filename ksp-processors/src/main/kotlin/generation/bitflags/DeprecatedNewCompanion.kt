@@ -11,7 +11,7 @@ import dev.kord.ksp.generation.shared.GenerationContext
 import dev.kord.ksp.generation.shared.K_SERIALIZER
 
 // TODO bump LEVEL and remove this file eventually
-private val LEVEL = DeprecationLevel.WARNING
+private val LEVEL = DeprecationLevel.ERROR
 
 context(BitFlags, GenerationContext)
 @OptIn(DelicateKotlinPoetApi::class)
@@ -24,7 +24,7 @@ internal fun TypeSpec.Builder.addDeprecatedNewCompanion() {
     )
     addCompanionObject {
         addProperty(newCompanion.simpleName, type = newCompanion) {
-            addAnnotation(Suppress("DEPRECATION"))
+            addAnnotation(Suppress("DEPRECATION_ERROR"))
             addAnnotation(deprecated)
             jvmField()
             initializer("%T()", newCompanion)

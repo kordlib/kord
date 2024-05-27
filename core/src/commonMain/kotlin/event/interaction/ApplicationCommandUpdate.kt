@@ -8,17 +8,17 @@ import dev.kord.core.event.Event
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public sealed interface ApplicationCommandUpdateEvent : Event {
     public val command: GuildApplicationCommand
 }
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public class ChatInputCommandUpdateEvent(
     override val command: GuildChatInputCommand,
@@ -28,11 +28,11 @@ public class ChatInputCommandUpdateEvent(
 ) : ApplicationCommandUpdateEvent
 
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public class UserCommandUpdateEvent(
     override val command: GuildUserCommand,
@@ -42,11 +42,11 @@ public class UserCommandUpdateEvent(
 ) : ApplicationCommandUpdateEvent
 
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public class MessageCommandUpdateEvent(
     override val command: GuildMessageCommand,
@@ -55,11 +55,11 @@ public class MessageCommandUpdateEvent(
     override val customContext: Any?,
 ) : ApplicationCommandUpdateEvent
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION_ERROR")
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public class UnknownApplicationCommandUpdateEvent(
     override val command: UnknownGuildApplicationCommand,
