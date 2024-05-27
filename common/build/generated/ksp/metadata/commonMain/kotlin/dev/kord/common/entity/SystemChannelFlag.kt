@@ -328,8 +328,9 @@ public class SystemChannelFlags internal constructor(
     }
 
     public companion object {
-        @Suppress(names = arrayOf("DEPRECATION"))
+        @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
+            level = DeprecationLevel.ERROR,
             message = "Renamed to 'Companion'.",
             replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports =
                         arrayOf("dev.kord.common.entity.SystemChannelFlags")),
@@ -339,6 +340,7 @@ public class SystemChannelFlags internal constructor(
     }
 
     @Deprecated(
+        level = DeprecationLevel.ERROR,
         message = "Renamed to 'Companion'.",
         replaceWith = ReplaceWith(expression = "SystemChannelFlags.Companion", imports =
                     arrayOf("dev.kord.common.entity.SystemChannelFlags")),

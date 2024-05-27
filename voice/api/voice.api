@@ -988,7 +988,7 @@ public final class dev/kord/voice/gateway/VoiceGatewayConfiguration {
 }
 
 public final class dev/kord/voice/gateway/VoiceGatewayKt {
-	public static final fun getVoiceGatewayOnLogger ()Lmu/KLogger;
+	public static final synthetic fun getVoiceGatewayOnLogger ()Lmu/KLogger;
 	public static final fun logCaughtThrowable (Ljava/lang/Throwable;)V
 }
 
