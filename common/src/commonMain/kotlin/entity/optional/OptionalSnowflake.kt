@@ -3,7 +3,6 @@ package dev.kord.common.entity.optional
 import dev.kord.common.entity.Snowflake
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
@@ -68,14 +67,12 @@ public sealed class OptionalSnowflake {
      * Represents a [Snowflake] field that was assigned a non-null value in the serialized entity.
      * Equality and hashcode is implemented through its [value].
      *
-     * @param uLongValue the raw value this optional wraps.
+     * @param snowflake the raw value this optional wraps.
      * See [Snowflake.value] and [Snowflake.validValues] for more details.
      */
-    public class Value(private val uLongValue: ULong) : OptionalSnowflake() {
+    public class Value(private val snowflake: Snowflake) : OptionalSnowflake() {
 
-        public constructor(value: Snowflake) : this(value.value)
-
-        override val value: Snowflake get() = Snowflake(uLongValue)
+        override val value: Snowflake get() = snowflake
 
         /**
          * Destructures this optional to its [value].
@@ -93,14 +90,15 @@ public sealed class OptionalSnowflake {
     }
 
     internal object Serializer : KSerializer<OptionalSnowflake> {
-        override val descriptor: SerialDescriptor = ULong.serializer().descriptor
+        private val delegate = Snowflake.serializer()
 
-        override fun deserialize(decoder: Decoder): OptionalSnowflake =
-            Value(decoder.decodeInline(descriptor).decodeLong().toULong())
+        override val descriptor: SerialDescriptor = delegate.descriptor
+
+        override fun deserialize(decoder: Decoder): OptionalSnowflake = Value(delegate.deserialize(decoder))
 
         override fun serialize(encoder: Encoder, value: OptionalSnowflake) = when (value) {
             Missing -> Unit // ignore value
-            is Value -> encoder.encodeInline(descriptor).encodeLong(value.value.value.toLong())
+            is Value -> delegate.serialize(encoder, value.value)
         }
     }
 }
@@ -114,7 +112,7 @@ public val OptionalSnowflake?.value: Snowflake?
         OptionalSnowflake.Missing, null -> null
     }
 
-public fun Snowflake.optionalSnowflake(): OptionalSnowflake.Value = OptionalSnowflake.Value(this.value)
+public fun Snowflake.optionalSnowflake(): OptionalSnowflake.Value = OptionalSnowflake.Value(this)
 
 @JvmName("optionalNullable")
 public fun Snowflake?.optionalSnowflake(): OptionalSnowflake.Value? = this?.optionalSnowflake()

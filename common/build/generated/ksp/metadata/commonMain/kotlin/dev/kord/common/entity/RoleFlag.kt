@@ -7,15 +7,9 @@ package dev.kord.common.entity
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [RoleFlag]s in the
@@ -154,8 +148,9 @@ public sealed class RoleFlag(
  * @see RoleFlag
  * @see RoleFlags.Builder
  */
-@Serializable(with = RoleFlags.Serializer::class)
-public class RoleFlags internal constructor(
+@JvmInline
+@Serializable
+public value class RoleFlags internal constructor(
     /**
      * The raw value used by Discord.
      */
@@ -218,11 +213,6 @@ public class RoleFlags internal constructor(
         return Builder(value).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is RoleFlags && this.value == other.value)
-
-    override fun hashCode(): Int = value.hashCode()
-
     override fun toString(): String = "RoleFlags(values=$values)"
 
     public class Builder(
@@ -262,20 +252,6 @@ public class RoleFlags internal constructor(
          */
         public fun build(): RoleFlags = RoleFlags(value)
     }
-
-    internal object Serializer : KSerializer<RoleFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.RoleFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: RoleFlags) {
-            encoder.encodeSerializableValue(delegate, value.value)
-        }
-
-        override fun deserialize(decoder: Decoder): RoleFlags =
-                RoleFlags(decoder.decodeSerializableValue(delegate))
-    }
 }
 
 /**
@@ -290,13 +266,6 @@ public inline fun RoleFlags(builder: RoleFlags.Builder.() -> Unit = {}): RoleFla
  * Returns an instance of [RoleFlags] that has all bits set that are set in any element of [flags].
  */
 public fun RoleFlags(vararg flags: RoleFlag): RoleFlags = RoleFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [RoleFlags] that has all bits set that are set in any element of [flags].
- */
-public fun RoleFlags(vararg flags: RoleFlags): RoleFlags = RoleFlags {
     flags.forEach { +it }
 }
 

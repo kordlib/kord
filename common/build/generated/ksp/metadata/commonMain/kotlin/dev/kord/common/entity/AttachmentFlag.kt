@@ -7,15 +7,9 @@ package dev.kord.common.entity
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [AttachmentFlag]s in the
@@ -162,8 +156,9 @@ public sealed class AttachmentFlag(
  * @see AttachmentFlag
  * @see AttachmentFlags.Builder
  */
-@Serializable(with = AttachmentFlags.Serializer::class)
-public class AttachmentFlags internal constructor(
+@JvmInline
+@Serializable
+public value class AttachmentFlags internal constructor(
     /**
      * The raw value used by Discord.
      */
@@ -231,11 +226,6 @@ public class AttachmentFlags internal constructor(
         return Builder(value).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is AttachmentFlags && this.value == other.value)
-
-    override fun hashCode(): Int = value.hashCode()
-
     override fun toString(): String = "AttachmentFlags(values=$values)"
 
     public class Builder(
@@ -275,21 +265,6 @@ public class AttachmentFlags internal constructor(
          */
         public fun build(): AttachmentFlags = AttachmentFlags(value)
     }
-
-    internal object Serializer : KSerializer<AttachmentFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.AttachmentFlags",
-                PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: AttachmentFlags) {
-            encoder.encodeSerializableValue(delegate, value.value)
-        }
-
-        override fun deserialize(decoder: Decoder): AttachmentFlags =
-                AttachmentFlags(decoder.decodeSerializableValue(delegate))
-    }
 }
 
 /**
@@ -306,14 +281,6 @@ public inline fun AttachmentFlags(builder: AttachmentFlags.Builder.() -> Unit = 
  * [flags].
  */
 public fun AttachmentFlags(vararg flags: AttachmentFlag): AttachmentFlags = AttachmentFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun AttachmentFlags(vararg flags: AttachmentFlags): AttachmentFlags = AttachmentFlags {
     flags.forEach { +it }
 }
 

@@ -7,15 +7,9 @@ package dev.kord.common.entity
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [UserFlag]s in the
@@ -252,8 +246,9 @@ public sealed class UserFlag(
  * @see UserFlag
  * @see UserFlags.Builder
  */
-@Serializable(with = UserFlags.Serializer::class)
-public class UserFlags internal constructor(
+@JvmInline
+@Serializable
+public value class UserFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -323,11 +318,6 @@ public class UserFlags internal constructor(
         return copy(builder)
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is UserFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
     override fun toString(): String = "UserFlags(values=$values)"
 
     public class Builder(
@@ -367,20 +357,6 @@ public class UserFlags internal constructor(
          */
         public fun build(): UserFlags = UserFlags(code)
     }
-
-    internal object Serializer : KSerializer<UserFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.UserFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: UserFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): UserFlags =
-                UserFlags(decoder.decodeSerializableValue(delegate))
-    }
 }
 
 /**
@@ -395,13 +371,6 @@ public inline fun UserFlags(builder: UserFlags.Builder.() -> Unit = {}): UserFla
  * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
  */
 public fun UserFlags(vararg flags: UserFlag): UserFlags = UserFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [UserFlags] that has all bits set that are set in any element of [flags].
- */
-public fun UserFlags(vararg flags: UserFlags): UserFlags = UserFlags {
     flags.forEach { +it }
 }
 

@@ -9,14 +9,9 @@ import dev.kord.common.EmptyBitSet
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * Values that enable a group of events as defined by Discord.
@@ -366,8 +361,9 @@ public sealed class Intent(
  * @see Intent
  * @see Intents.Builder
  */
-@Serializable(with = Intents.Serializer::class)
-public class Intents internal constructor(
+@JvmInline
+@Serializable
+public value class Intents internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -432,11 +428,6 @@ public class Intents internal constructor(
         return copy(builder)
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is Intents && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
     override fun toString(): String = "Intents(values=$values)"
 
     public class Builder(
@@ -476,20 +467,6 @@ public class Intents internal constructor(
          */
         public fun build(): Intents = Intents(code.copy())
     }
-
-    internal object Serializer : KSerializer<Intents> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.gateway.Intents", PrimitiveKind.STRING)
-
-        private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: Intents) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): Intents =
-                Intents(decoder.decodeSerializableValue(delegate))
-    }
 }
 
 /**
@@ -514,13 +491,6 @@ public inline fun Intents0(builder: Intents.Builder.() -> Unit = {}): Intents {
  * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
  */
 public fun Intents(vararg flags: Intent): Intents = Intents {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
- */
-public fun Intents(vararg flags: Intents): Intents = Intents {
     flags.forEach { +it }
 }
 

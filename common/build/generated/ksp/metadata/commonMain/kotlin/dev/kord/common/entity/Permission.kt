@@ -10,14 +10,10 @@ import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.jvm.JvmField
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [Permission]s in the
@@ -490,8 +486,9 @@ public sealed class Permission(
  * @see Permission
  * @see Permissions.Builder
  */
-@Serializable(with = Permissions.Serializer::class)
-public class Permissions internal constructor(
+@JvmInline
+@Serializable
+public value class Permissions internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -557,11 +554,6 @@ public class Permissions internal constructor(
         return copy(builder)
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is Permissions && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
     override fun toString(): String = "Permissions(values=$values)"
 
     public class Builder(
@@ -600,21 +592,6 @@ public class Permissions internal constructor(
          * [Builder].
          */
         public fun build(): Permissions = Permissions(code.copy())
-    }
-
-    internal object Serializer : KSerializer<Permissions> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.Permissions",
-                PrimitiveKind.STRING)
-
-        private val `delegate`: KSerializer<DiscordBitSet> = DiscordBitSet.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: Permissions) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): Permissions =
-                Permissions(decoder.decodeSerializableValue(delegate))
     }
 
     public companion object {
@@ -663,14 +640,6 @@ public inline fun Permissions0(builder: Permissions.Builder.() -> Unit = {}): Pe
  * [flags].
  */
 public fun Permissions(vararg flags: Permission): Permissions = Permissions {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Permissions] that has all bits set that are set in any element of
- * [flags].
- */
-public fun Permissions(vararg flags: Permissions): Permissions = Permissions {
     flags.forEach { +it }
 }
 

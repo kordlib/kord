@@ -7,15 +7,9 @@ package dev.kord.voice
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [SpeakingFlag]s in the
@@ -176,8 +170,9 @@ public sealed class SpeakingFlag(
  * @see SpeakingFlag
  * @see SpeakingFlags.Builder
  */
-@Serializable(with = SpeakingFlags.Serializer::class)
-public class SpeakingFlags internal constructor(
+@JvmInline
+@Serializable
+public value class SpeakingFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -244,11 +239,6 @@ public class SpeakingFlags internal constructor(
         return Builder(code).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is SpeakingFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
     override fun toString(): String = "SpeakingFlags(values=$values)"
 
     public class Builder(
@@ -288,20 +278,6 @@ public class SpeakingFlags internal constructor(
          */
         public fun build(): SpeakingFlags = SpeakingFlags(code)
     }
-
-    internal object Serializer : KSerializer<SpeakingFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.voice.SpeakingFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: SpeakingFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): SpeakingFlags =
-                SpeakingFlags(decoder.decodeSerializableValue(delegate))
-    }
 }
 
 /**
@@ -317,14 +293,6 @@ public inline fun SpeakingFlags(builder: SpeakingFlags.Builder.() -> Unit = {}):
  * [flags].
  */
 public fun SpeakingFlags(vararg flags: SpeakingFlag): SpeakingFlags = SpeakingFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [SpeakingFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun SpeakingFlags(vararg flags: SpeakingFlags): SpeakingFlags = SpeakingFlags {
     flags.forEach { +it }
 }
 

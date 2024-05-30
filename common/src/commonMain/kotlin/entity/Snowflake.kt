@@ -1,44 +1,36 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.Snowflake.Companion.validValues
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
+import kotlin.jvm.JvmInline
 import kotlin.time.Duration
 import kotlin.time.TimeMark
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.serialization.Serializable
 
 /**
  * A unique identifier for entities [used by Discord](https://discord.com/developers/docs/reference#snowflakes).
  *
  * Snowflakes are IDs with a [timestamp], which makes them [comparable][compareTo] based on their timestamp.
+ *
+ * @param value The raw value of this Snowflake as specified by the
+ * [Discord Developer Documentation](https://discord.com/developers/docs/reference#snowflakes).
+ * @throws IllegalArgumentException if provided value isn't in [validValues]
  */
-@Serializable(with = Snowflake.Serializer::class)
-public class Snowflake : Comparable<Snowflake> {
+@JvmInline
+@Serializable
+public value class Snowflake(public val value: ULong) : Comparable<Snowflake> {
 
-    /**
-     * The raw value of this Snowflake as specified by the
-     * [Discord Developer Documentation](https://discord.com/developers/docs/reference#snowflakes).
-     */
-    public val value: ULong
-
-    /**
-     * Creates a Snowflake from a given ULong [value].
-     *
-     * Values are [coerced in][coerceIn] [validValues].
-     */
-    public constructor(value: ULong) {
-        this.value = value.coerceIn(validValues)
+    init {
+        require(value in validValues) {
+            "Value must be in $validValues, but gave $value"
+        }
     }
 
     /**
      * Creates a Snowflake from a given String [value], parsing it as a [ULong] value.
      *
-     * Values are [coerced in][coerceIn] [validValues].
+     * @throws IllegalArgumentException if provided value isn't in [validValues]
      */
     public constructor(value: String) : this(value.toULong())
 
@@ -146,10 +138,7 @@ public class Snowflake : Comparable<Snowflake> {
         return this.value.compareTo(other.value)
     }
 
-    override fun equals(other: Any?): Boolean = other is Snowflake && this.value == other.value
-    override fun hashCode(): Int = value.hashCode()
     override fun toString(): String = value.toString()
-
 
     public companion object {
         // see https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
@@ -218,21 +207,9 @@ public class Snowflake : Comparable<Snowflake> {
 
         private val maxMillisecondsSinceDiscordEpoch = max.millisecondsSinceDiscordEpoch
     }
-
-    internal object Serializer : KSerializer<Snowflake> {
-        override val descriptor: SerialDescriptor = ULong.serializer().descriptor
-
-        override fun deserialize(decoder: Decoder): Snowflake =
-            Snowflake(decoder.decodeInline(descriptor).decodeLong().toULong())
-
-        override fun serialize(encoder: Encoder, value: Snowflake) {
-            encoder.encodeInline(descriptor).encodeLong(value.value.toLong())
-        }
-    }
 }
 
 private class SnowflakeTimeMark(private val timestamp: Instant) : TimeMark {
-
     override fun elapsedNow(): Duration = Clock.System.now() - timestamp
 }
 
