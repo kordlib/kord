@@ -1,12 +1,13 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.common.entity
 
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -237,8 +238,9 @@ public sealed class ApplicationFlag(
  * @see ApplicationFlag
  * @see ApplicationFlags.Builder
  */
+@JvmInline
 @Serializable(with = ApplicationFlags.Serializer::class)
-public class ApplicationFlags internal constructor(
+public value class ApplicationFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -305,11 +307,6 @@ public class ApplicationFlags internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code).apply(builder).build()
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is ApplicationFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "ApplicationFlags(values=$values)"
 
@@ -381,14 +378,6 @@ public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit 
  * [flags].
  */
 public fun ApplicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ApplicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
     flags.forEach { +it }
 }
 

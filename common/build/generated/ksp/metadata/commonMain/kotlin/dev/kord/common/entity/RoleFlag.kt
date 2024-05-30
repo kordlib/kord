@@ -1,12 +1,13 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.common.entity
 
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -154,8 +155,9 @@ public sealed class RoleFlag(
  * @see RoleFlag
  * @see RoleFlags.Builder
  */
+@JvmInline
 @Serializable(with = RoleFlags.Serializer::class)
-public class RoleFlags internal constructor(
+public value class RoleFlags internal constructor(
     /**
      * The raw value used by Discord.
      */
@@ -217,11 +219,6 @@ public class RoleFlags internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(value).apply(builder).build()
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is RoleFlags && this.value == other.value)
-
-    override fun hashCode(): Int = value.hashCode()
 
     override fun toString(): String = "RoleFlags(values=$values)"
 
@@ -290,13 +287,6 @@ public inline fun RoleFlags(builder: RoleFlags.Builder.() -> Unit = {}): RoleFla
  * Returns an instance of [RoleFlags] that has all bits set that are set in any element of [flags].
  */
 public fun RoleFlags(vararg flags: RoleFlag): RoleFlags = RoleFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [RoleFlags] that has all bits set that are set in any element of [flags].
- */
-public fun RoleFlags(vararg flags: RoleFlags): RoleFlags = RoleFlags {
     flags.forEach { +it }
 }
 

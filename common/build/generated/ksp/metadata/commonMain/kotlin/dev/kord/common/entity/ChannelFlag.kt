@@ -1,12 +1,13 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.common.entity
 
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -176,8 +177,9 @@ public sealed class ChannelFlag(
  * @see ChannelFlag
  * @see ChannelFlags.Builder
  */
+@JvmInline
 @Serializable(with = ChannelFlags.Serializer::class)
-public class ChannelFlags internal constructor(
+public value class ChannelFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -242,11 +244,6 @@ public class ChannelFlags internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code).apply(builder).build()
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is ChannelFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "ChannelFlags(values=$values)"
 
@@ -316,14 +313,6 @@ public inline fun ChannelFlags(builder: ChannelFlags.Builder.() -> Unit = {}): C
  * [flags].
  */
 public fun ChannelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ChannelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags {
     flags.forEach { +it }
 }
 

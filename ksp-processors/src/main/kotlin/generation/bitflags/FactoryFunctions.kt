@@ -45,7 +45,6 @@ internal fun FileSpec.Builder.addFactoryFunctions() {
         }
     }
     addFactoryFunctionForIterable(baseParameterType = entityCN, IterableType.VARARG)
-    addFactoryFunctionForIterable(baseParameterType = collectionCN, IterableType.VARARG)
     addFactoryFunctionForIterable(baseParameterType = entityCN, IterableType.ITERABLE)
     addFactoryFunctionForIterable(baseParameterType = collectionCN, IterableType.ITERABLE, jvmName = true)
 }

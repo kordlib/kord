@@ -431,11 +431,11 @@ public final class dev/kord/rest/builder/channel/CategoryModifyBuilder : dev/kor
 
 public final class dev/kord/rest/builder/channel/ChannelPermissionModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> (Ldev/kord/common/entity/OverwriteType;)V
-	public final fun getAllowed ()Ldev/kord/common/entity/Permissions;
-	public final fun getDenied ()Ldev/kord/common/entity/Permissions;
+	public final fun getAllowed-1GAEPLc ()Ldev/kord/common/DiscordBitSet;
+	public final fun getDenied-1GAEPLc ()Ldev/kord/common/DiscordBitSet;
 	public fun getReason ()Ljava/lang/String;
-	public final fun setAllowed (Ldev/kord/common/entity/Permissions;)V
-	public final fun setDenied (Ldev/kord/common/entity/Permissions;)V
+	public final fun setAllowed-TIECnVQ (Ldev/kord/common/DiscordBitSet;)V
+	public final fun setDenied-TIECnVQ (Ldev/kord/common/DiscordBitSet;)V
 	public fun setReason (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/ChannelPermissionEditRequest;
 	public synthetic fun toRequest ()Ljava/lang/Object;
@@ -452,7 +452,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev
 	public final fun getDefaultReactionEmojiName ()Ljava/lang/String;
 	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
 	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
-	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
+	public final fun getFlags-n1abr94 ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
@@ -469,7 +469,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelCreateBuilder : dev
 	public final fun setDefaultReactionEmojiName (Ljava/lang/String;)V
 	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
 	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
-	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
+	public final fun setFlags-GAtcWwQ (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
@@ -495,7 +495,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelModifyBuilder : dev
 	public final fun getDefaultReactionEmojiName ()Ljava/lang/String;
 	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
 	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
-	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
+	public final fun getFlags-n1abr94 ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
@@ -512,7 +512,7 @@ public final class dev/kord/rest/builder/channel/ForumChannelModifyBuilder : dev
 	public final fun setDefaultReactionEmojiName (Ljava/lang/String;)V
 	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
 	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
-	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
+	public final fun setFlags-GAtcWwQ (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
@@ -597,7 +597,7 @@ public final class dev/kord/rest/builder/channel/MediaChannelCreateBuilder : dev
 	public final fun getDefaultReactionEmojiName ()Ljava/lang/String;
 	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
 	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
-	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
+	public final fun getFlags-n1abr94 ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
@@ -613,7 +613,7 @@ public final class dev/kord/rest/builder/channel/MediaChannelCreateBuilder : dev
 	public final fun setDefaultReactionEmojiName (Ljava/lang/String;)V
 	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
 	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
-	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
+	public final fun setFlags-GAtcWwQ (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
@@ -638,7 +638,7 @@ public final class dev/kord/rest/builder/channel/MediaChannelModifyBuilder : dev
 	public final fun getDefaultReactionEmojiName ()Ljava/lang/String;
 	public final fun getDefaultSortOrder ()Ldev/kord/common/entity/SortOrderType;
 	public final fun getDefaultThreadRateLimitPerUser-FghU774 ()Lkotlin/time/Duration;
-	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
+	public final fun getFlags-n1abr94 ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getNsfw ()Ljava/lang/Boolean;
 	public final fun getParentId ()Ldev/kord/common/entity/Snowflake;
@@ -654,7 +654,7 @@ public final class dev/kord/rest/builder/channel/MediaChannelModifyBuilder : dev
 	public final fun setDefaultReactionEmojiName (Ljava/lang/String;)V
 	public final fun setDefaultSortOrder (Ldev/kord/common/entity/SortOrderType;)V
 	public final fun setDefaultThreadRateLimitPerUser-BwNAW2A (Lkotlin/time/Duration;)V
-	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
+	public final fun setFlags-GAtcWwQ (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun setName (Ljava/lang/String;)V
 	public final fun setNsfw (Ljava/lang/Boolean;)V
 	public final fun setParentId (Ldev/kord/common/entity/Snowflake;)V
@@ -719,10 +719,10 @@ public final class dev/kord/rest/builder/channel/NewsChannelModifyBuilder : dev/
 
 public final class dev/kord/rest/builder/channel/PermissionOverwriteBuilder {
 	public fun <init> (Ldev/kord/common/entity/OverwriteType;Ldev/kord/common/entity/Snowflake;)V
-	public final fun getAllowed ()Ldev/kord/common/entity/Permissions;
-	public final fun getDenied ()Ldev/kord/common/entity/Permissions;
-	public final fun setAllowed (Ldev/kord/common/entity/Permissions;)V
-	public final fun setDenied (Ldev/kord/common/entity/Permissions;)V
+	public final fun getAllowed-1GAEPLc ()Ldev/kord/common/DiscordBitSet;
+	public final fun getDenied-1GAEPLc ()Ldev/kord/common/DiscordBitSet;
+	public final fun setAllowed-TIECnVQ (Ldev/kord/common/DiscordBitSet;)V
+	public final fun setDenied-TIECnVQ (Ldev/kord/common/DiscordBitSet;)V
 	public final fun toOverwrite ()Ldev/kord/common/entity/Overwrite;
 }
 
@@ -969,7 +969,7 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public final fun getAppliedTags ()Ljava/util/List;
 	public final fun getArchived ()Ljava/lang/Boolean;
 	public final fun getAutoArchiveDuration ()Ldev/kord/common/entity/ArchiveDuration;
-	public final fun getFlags ()Ldev/kord/common/entity/ChannelFlags;
+	public final fun getFlags-n1abr94 ()Ldev/kord/common/entity/ChannelFlags;
 	public final fun getInvitable ()Ljava/lang/Boolean;
 	public final fun getLocked ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
@@ -978,7 +978,7 @@ public final class dev/kord/rest/builder/channel/thread/ThreadModifyBuilder : de
 	public final fun setAppliedTags (Ljava/util/List;)V
 	public final fun setArchived (Ljava/lang/Boolean;)V
 	public final fun setAutoArchiveDuration (Ldev/kord/common/entity/ArchiveDuration;)V
-	public final fun setFlags (Ldev/kord/common/entity/ChannelFlags;)V
+	public final fun setFlags-GAtcWwQ (Ldev/kord/common/entity/ChannelFlags;)V
 	public final fun setInvitable (Ljava/lang/Boolean;)V
 	public final fun setLocked (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V
@@ -1420,11 +1420,11 @@ public final class dev/kord/rest/builder/integration/IntegrationModifyBuilder : 
 
 public abstract interface class dev/kord/rest/builder/interaction/ApplicationCommandCreateBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedNameCreateBuilder {
 	public abstract fun disableCommandInGuilds ()V
-	public abstract fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
+	public abstract fun getDefaultMemberPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public abstract fun getDefaultPermission ()Ljava/lang/Boolean;
 	public abstract fun getNsfw ()Ljava/lang/Boolean;
 	public abstract fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
-	public abstract fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
+	public abstract fun setDefaultMemberPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public abstract fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public abstract fun setNsfw (Ljava/lang/Boolean;)V
 }
@@ -1435,10 +1435,10 @@ public final class dev/kord/rest/builder/interaction/ApplicationCommandCreateBui
 }
 
 public abstract interface class dev/kord/rest/builder/interaction/ApplicationCommandModifyBuilder : dev/kord/rest/builder/RequestBuilder, dev/kord/rest/builder/interaction/LocalizedNameModifyBuilder {
-	public abstract fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
+	public abstract fun getDefaultMemberPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public abstract fun getDefaultPermission ()Ljava/lang/Boolean;
 	public abstract fun getNsfw ()Ljava/lang/Boolean;
-	public abstract fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
+	public abstract fun setDefaultMemberPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public abstract fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public abstract fun setNsfw (Ljava/lang/Boolean;)V
 }
@@ -1500,7 +1500,7 @@ public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilderImpl 
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
-	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
+	public fun getDefaultMemberPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getDescriptionLocalizations ()Ljava/util/Map;
@@ -1511,7 +1511,7 @@ public final class dev/kord/rest/builder/interaction/ChatInputCreateBuilderImpl 
 	public fun getOptions ()Ljava/util/List;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
-	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
+	public fun setDefaultMemberPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDescription (Ljava/lang/String;)V
 	public fun setDescriptionLocalizations (Ljava/util/Map;)V
@@ -1535,7 +1535,7 @@ public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilder$Defa
 public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalChatInputModifyBuilder {
 	public fun <init> ()V
 	public fun description (Ldev/kord/common/Locale;Ljava/lang/String;)V
-	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
+	public fun getDefaultMemberPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getDescriptionLocalizations ()Ljava/util/Map;
@@ -1545,7 +1545,7 @@ public final class dev/kord/rest/builder/interaction/ChatInputModifyBuilderImpl 
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getOptions ()Ljava/util/List;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
-	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
+	public fun setDefaultMemberPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDescription (Ljava/lang/String;)V
 	public fun setDescriptionLocalizations (Ljava/util/Map;)V
@@ -1764,7 +1764,7 @@ public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilder
 public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalMessageCommandCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
-	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
+	public fun getDefaultMemberPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
@@ -1772,7 +1772,7 @@ public final class dev/kord/rest/builder/interaction/MessageCommandCreateBuilder
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
-	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
+	public fun setDefaultMemberPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
@@ -1791,14 +1791,14 @@ public final class dev/kord/rest/builder/interaction/MessageCommandModifyBuilder
 
 public final class dev/kord/rest/builder/interaction/MessageCommandModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalMessageCommandModifyBuilder {
 	public fun <init> ()V
-	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
+	public fun getDefaultMemberPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
-	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
+	public fun setDefaultMemberPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
@@ -1911,7 +1911,7 @@ public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilder$De
 public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilderImpl : dev/kord/rest/builder/interaction/GlobalUserCommandCreateBuilder {
 	public fun <init> (Ljava/lang/String;)V
 	public fun disableCommandInGuilds ()V
-	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
+	public fun getDefaultMemberPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
@@ -1919,7 +1919,7 @@ public final class dev/kord/rest/builder/interaction/UserCommandCreateBuilderImp
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun getType ()Ldev/kord/common/entity/ApplicationCommandType;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
-	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
+	public fun setDefaultMemberPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
@@ -1938,14 +1938,14 @@ public final class dev/kord/rest/builder/interaction/UserCommandModifyBuilder$De
 
 public final class dev/kord/rest/builder/interaction/UserCommandModifyBuilderImpl : dev/kord/rest/builder/interaction/GlobalUserCommandModifyBuilder {
 	public fun <init> ()V
-	public fun getDefaultMemberPermissions ()Ldev/kord/common/entity/Permissions;
+	public fun getDefaultMemberPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public fun getDefaultPermission ()Ljava/lang/Boolean;
 	public fun getDmPermission ()Ljava/lang/Boolean;
 	public fun getName ()Ljava/lang/String;
 	public fun getNameLocalizations ()Ljava/util/Map;
 	public fun getNsfw ()Ljava/lang/Boolean;
 	public fun name (Ldev/kord/common/Locale;Ljava/lang/String;)V
-	public fun setDefaultMemberPermissions (Ldev/kord/common/entity/Permissions;)V
+	public fun setDefaultMemberPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public fun setDefaultPermission (Ljava/lang/Boolean;)V
 	public fun setDmPermission (Ljava/lang/Boolean;)V
 	public fun setName (Ljava/lang/String;)V
@@ -1975,7 +1975,7 @@ public final class dev/kord/rest/builder/member/MemberModifyBuilder : dev/kord/r
 	public fun <init> ()V
 	public final fun getCommunicationDisabledUntil ()Lkotlinx/datetime/Instant;
 	public final fun getDeafened ()Ljava/lang/Boolean;
-	public final fun getFlags ()Ldev/kord/common/entity/GuildMemberFlags;
+	public final fun getFlags-Njc6kbo ()Ldev/kord/common/entity/GuildMemberFlags;
 	public final fun getMuted ()Ljava/lang/Boolean;
 	public final fun getNickname ()Ljava/lang/String;
 	public fun getReason ()Ljava/lang/String;
@@ -1983,7 +1983,7 @@ public final class dev/kord/rest/builder/member/MemberModifyBuilder : dev/kord/r
 	public final fun getVoiceChannelId ()Ldev/kord/common/entity/Snowflake;
 	public final fun setCommunicationDisabledUntil (Lkotlinx/datetime/Instant;)V
 	public final fun setDeafened (Ljava/lang/Boolean;)V
-	public final fun setFlags (Ldev/kord/common/entity/GuildMemberFlags;)V
+	public final fun setFlags-cbgrptU (Ldev/kord/common/entity/GuildMemberFlags;)V
 	public final fun setMuted (Ljava/lang/Boolean;)V
 	public final fun setNickname (Ljava/lang/String;)V
 	public fun setReason (Ljava/lang/String;)V
@@ -2025,7 +2025,7 @@ public final class dev/kord/rest/builder/message/EmbedBuilder : dev/kord/rest/bu
 	public static synthetic fun field$default (Ldev/kord/rest/builder/message/EmbedBuilder;Ljava/lang/String;ZLkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
 	public final fun footer (Lkotlin/jvm/functions/Function1;)V
 	public final fun getAuthor ()Ldev/kord/rest/builder/message/EmbedBuilder$Author;
-	public final fun getColor ()Ldev/kord/common/Color;
+	public final fun getColor-dwQ27Ak ()Ldev/kord/common/Color;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getFields ()Ljava/util/List;
 	public final fun getFooter ()Ldev/kord/rest/builder/message/EmbedBuilder$Footer;
@@ -2035,7 +2035,7 @@ public final class dev/kord/rest/builder/message/EmbedBuilder : dev/kord/rest/bu
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun getUrl ()Ljava/lang/String;
 	public final fun setAuthor (Ldev/kord/rest/builder/message/EmbedBuilder$Author;)V
-	public final fun setColor (Ldev/kord/common/Color;)V
+	public final fun setColor-zTPyAUw (Ldev/kord/common/Color;)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setFields (Ljava/util/List;)V
 	public final fun setFooter (Ldev/kord/rest/builder/message/EmbedBuilder$Footer;)V
@@ -2128,14 +2128,14 @@ public abstract interface class dev/kord/rest/builder/message/MessageBuilder {
 	public abstract fun getContent ()Ljava/lang/String;
 	public abstract fun getEmbeds ()Ljava/util/List;
 	public abstract fun getFiles ()Ljava/util/List;
-	public abstract fun getFlags ()Ldev/kord/common/entity/MessageFlags;
+	public abstract fun getFlags-SLqyyVw ()Ldev/kord/common/entity/MessageFlags;
 	public abstract fun getSuppressEmbeds ()Ljava/lang/Boolean;
 	public abstract fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public abstract fun setAttachments (Ljava/util/List;)V
 	public abstract fun setComponents (Ljava/util/List;)V
 	public abstract fun setContent (Ljava/lang/String;)V
 	public abstract fun setEmbeds (Ljava/util/List;)V
-	public abstract fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
+	public abstract fun setFlags-1ex9kFU (Ldev/kord/common/entity/MessageFlags;)V
 	public abstract fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 }
 
@@ -2165,7 +2165,7 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 	public final fun getContent ()Ljava/lang/String;
 	public final fun getEmbeds ()Ljava/util/List;
 	public final fun getFiles ()Ljava/util/List;
-	public final fun getFlags ()Ldev/kord/common/entity/MessageFlags;
+	public final fun getFlags-SLqyyVw ()Ldev/kord/common/entity/MessageFlags;
 	public final fun getSuppressEmbeds ()Ljava/lang/Boolean;
 	public final fun getSuppressNotifications ()Ljava/lang/Boolean;
 	public final fun getTts ()Ljava/lang/Boolean;
@@ -2174,7 +2174,7 @@ public abstract class dev/kord/rest/builder/message/create/AbstractMessageCreate
 	public final fun setComponents (Ljava/util/List;)V
 	public final fun setContent (Ljava/lang/String;)V
 	public final fun setEmbeds (Ljava/util/List;)V
-	public final fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
+	public final fun setFlags-1ex9kFU (Ldev/kord/common/entity/MessageFlags;)V
 	public final fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 	public final fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public final fun setTts (Ljava/lang/Boolean;)V
@@ -2209,10 +2209,10 @@ public final class dev/kord/rest/builder/message/create/InteractionResponseCreat
 }
 
 public abstract interface class dev/kord/rest/builder/message/create/MessageCreateBuilder : dev/kord/rest/builder/message/MessageBuilder {
-	public abstract fun getFlags ()Ldev/kord/common/entity/MessageFlags;
+	public abstract fun getFlags-SLqyyVw ()Ldev/kord/common/entity/MessageFlags;
 	public abstract fun getSuppressNotifications ()Ljava/lang/Boolean;
 	public abstract fun getTts ()Ljava/lang/Boolean;
-	public abstract fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
+	public abstract fun setFlags-1ex9kFU (Ldev/kord/common/entity/MessageFlags;)V
 	public abstract fun setSuppressNotifications (Ljava/lang/Boolean;)V
 	public abstract fun setTts (Ljava/lang/Boolean;)V
 }
@@ -2271,14 +2271,14 @@ public abstract class dev/kord/rest/builder/message/modify/AbstractMessageModify
 	public final fun getContent ()Ljava/lang/String;
 	public final fun getEmbeds ()Ljava/util/List;
 	public final fun getFiles ()Ljava/util/List;
-	public final fun getFlags ()Ldev/kord/common/entity/MessageFlags;
+	public final fun getFlags-SLqyyVw ()Ldev/kord/common/entity/MessageFlags;
 	public final fun getSuppressEmbeds ()Ljava/lang/Boolean;
 	public final fun setAllowedMentions (Ldev/kord/rest/builder/message/AllowedMentionsBuilder;)V
 	public final fun setAttachments (Ljava/util/List;)V
 	public final fun setComponents (Ljava/util/List;)V
 	public final fun setContent (Ljava/lang/String;)V
 	public final fun setEmbeds (Ljava/util/List;)V
-	public final fun setFlags (Ldev/kord/common/entity/MessageFlags;)V
+	public final fun setFlags-1ex9kFU (Ldev/kord/common/entity/MessageFlags;)V
 	public final fun setSuppressEmbeds (Ljava/lang/Boolean;)V
 }
 
@@ -2320,20 +2320,20 @@ public final class dev/kord/rest/builder/message/modify/WebhookMessageModifyBuil
 
 public final class dev/kord/rest/builder/role/RoleCreateBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
-	public final fun getColor ()Ldev/kord/common/Color;
+	public final fun getColor-dwQ27Ak ()Ldev/kord/common/Color;
 	public final fun getHoist ()Ljava/lang/Boolean;
 	public final fun getIcon ()Ldev/kord/rest/Image;
 	public final fun getMentionable ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getPermissions ()Ldev/kord/common/entity/Permissions;
+	public final fun getPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getUnicodeEmoji ()Ljava/lang/String;
-	public final fun setColor (Ldev/kord/common/Color;)V
+	public final fun setColor-zTPyAUw (Ldev/kord/common/Color;)V
 	public final fun setHoist (Ljava/lang/Boolean;)V
 	public final fun setIcon (Ldev/kord/rest/Image;)V
 	public final fun setMentionable (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V
-	public final fun setPermissions (Ldev/kord/common/entity/Permissions;)V
+	public final fun setPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setUnicodeEmoji (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildRoleCreateRequest;
@@ -2342,20 +2342,20 @@ public final class dev/kord/rest/builder/role/RoleCreateBuilder : dev/kord/rest/
 
 public final class dev/kord/rest/builder/role/RoleModifyBuilder : dev/kord/rest/builder/AuditRequestBuilder {
 	public fun <init> ()V
-	public final fun getColor ()Ldev/kord/common/Color;
+	public final fun getColor-dwQ27Ak ()Ldev/kord/common/Color;
 	public final fun getHoist ()Ljava/lang/Boolean;
 	public final fun getIcon ()Ldev/kord/rest/Image;
 	public final fun getMentionable ()Ljava/lang/Boolean;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getPermissions ()Ldev/kord/common/entity/Permissions;
+	public final fun getPermissions-hXs3ujQ ()Ldev/kord/common/DiscordBitSet;
 	public fun getReason ()Ljava/lang/String;
 	public final fun getUnicodeEmoji ()Ljava/lang/String;
-	public final fun setColor (Ldev/kord/common/Color;)V
+	public final fun setColor-zTPyAUw (Ldev/kord/common/Color;)V
 	public final fun setHoist (Ljava/lang/Boolean;)V
 	public final fun setIcon (Ldev/kord/rest/Image;)V
 	public final fun setMentionable (Ljava/lang/Boolean;)V
 	public final fun setName (Ljava/lang/String;)V
-	public final fun setPermissions (Ldev/kord/common/entity/Permissions;)V
+	public final fun setPermissions-VcIKrZU (Ldev/kord/common/DiscordBitSet;)V
 	public fun setReason (Ljava/lang/String;)V
 	public final fun setUnicodeEmoji (Ljava/lang/String;)V
 	public fun toRequest ()Ldev/kord/rest/json/request/GuildRoleModifyRequest;
@@ -3146,15 +3146,15 @@ public final class dev/kord/rest/json/request/ChannelModifyPutRequest$Companion 
 
 public final class dev/kord/rest/json/request/ChannelPermissionEditRequest {
 	public static final field Companion Ldev/kord/rest/json/request/ChannelPermissionEditRequest$Companion;
-	public fun <init> (Ldev/kord/common/entity/Permissions;Ldev/kord/common/entity/Permissions;Ldev/kord/common/entity/OverwriteType;)V
-	public final fun component1 ()Ldev/kord/common/entity/Permissions;
-	public final fun component2 ()Ldev/kord/common/entity/Permissions;
+	public synthetic fun <init> (Ldev/kord/common/DiscordBitSet;Ldev/kord/common/DiscordBitSet;Ldev/kord/common/entity/OverwriteType;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-1GAEPLc ()Ldev/kord/common/DiscordBitSet;
+	public final fun component2-1GAEPLc ()Ldev/kord/common/DiscordBitSet;
 	public final fun component3 ()Ldev/kord/common/entity/OverwriteType;
-	public final fun copy (Ldev/kord/common/entity/Permissions;Ldev/kord/common/entity/Permissions;Ldev/kord/common/entity/OverwriteType;)Ldev/kord/rest/json/request/ChannelPermissionEditRequest;
-	public static synthetic fun copy$default (Ldev/kord/rest/json/request/ChannelPermissionEditRequest;Ldev/kord/common/entity/Permissions;Ldev/kord/common/entity/Permissions;Ldev/kord/common/entity/OverwriteType;ILjava/lang/Object;)Ldev/kord/rest/json/request/ChannelPermissionEditRequest;
+	public final fun copy-tddCUmg (Ldev/kord/common/DiscordBitSet;Ldev/kord/common/DiscordBitSet;Ldev/kord/common/entity/OverwriteType;)Ldev/kord/rest/json/request/ChannelPermissionEditRequest;
+	public static synthetic fun copy-tddCUmg$default (Ldev/kord/rest/json/request/ChannelPermissionEditRequest;Ldev/kord/common/DiscordBitSet;Ldev/kord/common/DiscordBitSet;Ldev/kord/common/entity/OverwriteType;ILjava/lang/Object;)Ldev/kord/rest/json/request/ChannelPermissionEditRequest;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAllow ()Ldev/kord/common/entity/Permissions;
-	public final fun getDeny ()Ldev/kord/common/entity/Permissions;
+	public final fun getAllow-1GAEPLc ()Ldev/kord/common/DiscordBitSet;
+	public final fun getDeny-1GAEPLc ()Ldev/kord/common/DiscordBitSet;
 	public final fun getType ()Ldev/kord/common/entity/OverwriteType;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

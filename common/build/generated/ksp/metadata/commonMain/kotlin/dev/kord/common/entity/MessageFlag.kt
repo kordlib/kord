@@ -1,12 +1,13 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.common.entity
 
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -229,8 +230,9 @@ public sealed class MessageFlag(
  * @see MessageFlag
  * @see MessageFlags.Builder
  */
+@JvmInline
 @Serializable(with = MessageFlags.Serializer::class)
-public class MessageFlags internal constructor(
+public value class MessageFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -295,11 +297,6 @@ public class MessageFlags internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code).apply(builder).build()
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is MessageFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "MessageFlags(values=$values)"
 
@@ -369,14 +366,6 @@ public inline fun MessageFlags(builder: MessageFlags.Builder.() -> Unit = {}): M
  * [flags].
  */
 public fun MessageFlags(vararg flags: MessageFlag): MessageFlags = MessageFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [MessageFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun MessageFlags(vararg flags: MessageFlags): MessageFlags = MessageFlags {
     flags.forEach { +it }
 }
 

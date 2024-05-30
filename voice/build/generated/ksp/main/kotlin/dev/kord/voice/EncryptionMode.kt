@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.voice
 

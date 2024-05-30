@@ -1,12 +1,13 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.common.entity
 
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -183,8 +184,9 @@ public sealed class GuildMemberFlag(
  * @see GuildMemberFlag
  * @see GuildMemberFlags.Builder
  */
+@JvmInline
 @Serializable(with = GuildMemberFlags.Serializer::class)
-public class GuildMemberFlags internal constructor(
+public value class GuildMemberFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -251,11 +253,6 @@ public class GuildMemberFlags internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code).apply(builder).build()
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is GuildMemberFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "GuildMemberFlags(values=$values)"
 
@@ -327,14 +324,6 @@ public inline fun GuildMemberFlags(builder: GuildMemberFlags.Builder.() -> Unit 
  * [flags].
  */
 public fun GuildMemberFlags(vararg flags: GuildMemberFlag): GuildMemberFlags = GuildMemberFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [GuildMemberFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun GuildMemberFlags(vararg flags: GuildMemberFlags): GuildMemberFlags = GuildMemberFlags {
     flags.forEach { +it }
 }
 

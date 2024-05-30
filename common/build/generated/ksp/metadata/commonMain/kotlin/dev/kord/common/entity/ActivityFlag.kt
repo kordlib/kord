@@ -1,12 +1,13 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.common.entity
 
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -191,8 +192,9 @@ public sealed class ActivityFlag(
  * @see ActivityFlag
  * @see ActivityFlags.Builder
  */
+@JvmInline
 @Serializable(with = ActivityFlags.Serializer::class)
-public class ActivityFlags internal constructor(
+public value class ActivityFlags internal constructor(
     /**
      * The raw value used by Discord.
      */
@@ -259,11 +261,6 @@ public class ActivityFlags internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(value).apply(builder).build()
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is ActivityFlags && this.value == other.value)
-
-    override fun hashCode(): Int = value.hashCode()
 
     override fun toString(): String = "ActivityFlags(values=$values)"
 
@@ -333,14 +330,6 @@ public inline fun ActivityFlags(builder: ActivityFlags.Builder.() -> Unit = {}):
  * [flags].
  */
 public fun ActivityFlags(vararg flags: ActivityFlag): ActivityFlags = ActivityFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ActivityFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ActivityFlags(vararg flags: ActivityFlags): ActivityFlags = ActivityFlags {
     flags.forEach { +it }
 }
 

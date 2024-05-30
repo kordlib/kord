@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.gateway
 
@@ -9,6 +9,7 @@ import dev.kord.common.EmptyBitSet
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -366,8 +367,9 @@ public sealed class Intent(
  * @see Intent
  * @see Intents.Builder
  */
+@JvmInline
 @Serializable(with = Intents.Serializer::class)
-public class Intents internal constructor(
+public value class Intents internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -431,11 +433,6 @@ public class Intents internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return copy(builder)
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is Intents && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "Intents(values=$values)"
 
@@ -514,13 +511,6 @@ public inline fun Intents0(builder: Intents.Builder.() -> Unit = {}): Intents {
  * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
  */
 public fun Intents(vararg flags: Intent): Intents = Intents {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [Intents] that has all bits set that are set in any element of [flags].
- */
-public fun Intents(vararg flags: Intents): Intents = Intents {
     flags.forEach { +it }
 }
 

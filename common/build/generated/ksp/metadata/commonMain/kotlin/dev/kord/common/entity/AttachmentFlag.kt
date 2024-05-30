@@ -1,12 +1,13 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.common.entity
 
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -162,8 +163,9 @@ public sealed class AttachmentFlag(
  * @see AttachmentFlag
  * @see AttachmentFlags.Builder
  */
+@JvmInline
 @Serializable(with = AttachmentFlags.Serializer::class)
-public class AttachmentFlags internal constructor(
+public value class AttachmentFlags internal constructor(
     /**
      * The raw value used by Discord.
      */
@@ -230,11 +232,6 @@ public class AttachmentFlags internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(value).apply(builder).build()
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is AttachmentFlags && this.value == other.value)
-
-    override fun hashCode(): Int = value.hashCode()
 
     override fun toString(): String = "AttachmentFlags(values=$values)"
 
@@ -306,14 +303,6 @@ public inline fun AttachmentFlags(builder: AttachmentFlags.Builder.() -> Unit = 
  * [flags].
  */
 public fun AttachmentFlags(vararg flags: AttachmentFlag): AttachmentFlags = AttachmentFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [AttachmentFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun AttachmentFlags(vararg flags: AttachmentFlags): AttachmentFlags = AttachmentFlags {
     flags.forEach { +it }
 }
 

@@ -1,12 +1,13 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
 @file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
-                "SpellCheckingInspection", "GrazieInspection"))
+                "SpellCheckingInspection", "GrazieInspection", "MemberVisibilityCanBePrivate"))
 
 package dev.kord.voice
 
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -176,8 +177,9 @@ public sealed class SpeakingFlag(
  * @see SpeakingFlag
  * @see SpeakingFlags.Builder
  */
+@JvmInline
 @Serializable(with = SpeakingFlags.Serializer::class)
-public class SpeakingFlags internal constructor(
+public value class SpeakingFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -243,11 +245,6 @@ public class SpeakingFlags internal constructor(
         contract { callsInPlace(builder, EXACTLY_ONCE) }
         return Builder(code).apply(builder).build()
     }
-
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is SpeakingFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
 
     override fun toString(): String = "SpeakingFlags(values=$values)"
 
@@ -317,14 +314,6 @@ public inline fun SpeakingFlags(builder: SpeakingFlags.Builder.() -> Unit = {}):
  * [flags].
  */
 public fun SpeakingFlags(vararg flags: SpeakingFlag): SpeakingFlags = SpeakingFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [SpeakingFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun SpeakingFlags(vararg flags: SpeakingFlags): SpeakingFlags = SpeakingFlags {
     flags.forEach { +it }
 }
 
