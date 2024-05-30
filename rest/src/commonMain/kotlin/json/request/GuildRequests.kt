@@ -22,19 +22,19 @@ import kotlinx.serialization.encoding.Encoder
 @Serializable
 public data class GuildCreateRequest(
     val name: String,
-    val region: Optional<String> = Optional.Missing(),
-    val icon: Optional<String> = Optional.Missing(),
+    val region: Optional<String> = Optional.Missing,
+    val icon: Optional<String> = Optional.Missing,
     @SerialName("verification_level")
-    val verificationLevel: Optional<VerificationLevel> = Optional.Missing(),
+    val verificationLevel: Optional<VerificationLevel> = Optional.Missing,
     @SerialName("default_message_notifications")
-    val defaultNotificationLevel: Optional<DefaultMessageNotificationLevel> = Optional.Missing(),
-    val explicitContentFilter: Optional<ExplicitContentFilter> = Optional.Missing(),
-    val roles: Optional<List<GuildRoleCreateRequest>> = Optional.Missing(),
-    val channels: Optional<List<GuildChannelCreateRequest>> = Optional.Missing(),
+    val defaultNotificationLevel: Optional<DefaultMessageNotificationLevel> = Optional.Missing,
+    val explicitContentFilter: Optional<ExplicitContentFilter> = Optional.Missing,
+    val roles: Optional<List<GuildRoleCreateRequest>> = Optional.Missing,
+    val channels: Optional<List<GuildChannelCreateRequest>> = Optional.Missing,
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing(),
+    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing,
     @SerialName("system_channel_id")
     val systemChannelId: OptionalSnowflake = OptionalSnowflake.Missing
 )
@@ -43,32 +43,32 @@ public data class GuildCreateRequest(
 public data class GuildChannelCreateRequest(
     val name: String,
     val type: ChannelType,
-    val topic: Optional<String> = Optional.Missing(),
+    val topic: Optional<String> = Optional.Missing,
     val bitrate: OptionalInt = OptionalInt.Missing,
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing,
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
-    val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing(),
+    val permissionOverwrite: Optional<Set<Overwrite>> = Optional.Missing,
     @SerialName("parent_id")
     val parentId: OptionalSnowflake = OptionalSnowflake.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("default_auto_archive_duration")
-    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing,
     @SerialName("default_reaction_emoji")
-    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing(),
+    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing,
     @SerialName("default_thread_rate_limit_per_user")
-    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
-    val flags: Optional<ChannelFlags> = Optional.Missing(),
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing,
+    val flags: Optional<ChannelFlags> = Optional.Missing,
     @SerialName("available_tags")
-    val availableTags: Optional<List<ForumTagRequest>?> = Optional.Missing(),
+    val availableTags: Optional<List<ForumTagRequest>?> = Optional.Missing,
     @SerialName("default_sort_order")
-    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing,
     @SerialName("default_forum_layout")
-    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing,
 )
 
 @Serializable
@@ -109,43 +109,43 @@ public data class GuildChannelPositionModifyRequest(
 public data class GuildMemberAddRequest(
     @SerialName("access_token")
     val token: String,
-    val nick: Optional<String> = Optional.Missing(),
-    val roles: Optional<Set<Snowflake>> = Optional.Missing(),
+    val nick: Optional<String> = Optional.Missing,
+    val roles: Optional<Set<Snowflake>> = Optional.Missing,
     val mute: OptionalBoolean = OptionalBoolean.Missing,
     val deaf: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("communication_disabled_until")
-    val communicationDisabledUntil: Optional<Instant> = Optional.Missing()
+    val communicationDisabledUntil: Optional<Instant> = Optional.Missing
 )
 
 @Serializable
 public data class GuildMemberModifyRequest(
-    val nick: Optional<String?> = Optional.Missing(),
-    val roles: Optional<Set<Snowflake>?> = Optional.Missing(),
+    val nick: Optional<String?> = Optional.Missing,
+    val roles: Optional<Set<Snowflake>?> = Optional.Missing,
     val mute: OptionalBoolean? = OptionalBoolean.Missing,
     val deaf: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("channel_id")
     val channelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("communication_disabled_until")
-    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing(),
-    val flags: Optional<GuildMemberFlags?> = Optional.Missing(),
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing,
+    val flags: Optional<GuildMemberFlags?> = Optional.Missing,
 )
 
 
 @Serializable
 public data class GuildBanCreateRequest(
     @SerialName("delete_message_seconds")
-    val deleteMessageSeconds: Optional<DurationInSeconds> = Optional.Missing(),
+    val deleteMessageSeconds: Optional<DurationInSeconds> = Optional.Missing,
 )
 
 @Serializable
 public data class GuildRoleCreateRequest(
-    val name: Optional<String> = Optional.Missing(),
-    val permissions: Optional<Permissions> = Optional.Missing(),
-    val color: Optional<Color> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
+    val permissions: Optional<Permissions> = Optional.Missing,
+    val color: Optional<Color> = Optional.Missing,
     val hoist: OptionalBoolean = OptionalBoolean.Missing,
-    val icon: Optional<String?> = Optional.Missing(),
+    val icon: Optional<String?> = Optional.Missing,
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String?> = Optional.Missing(),
+    val unicodeEmoji: Optional<String?> = Optional.Missing,
     val mentionable: OptionalBoolean = OptionalBoolean.Missing,
     /** Only use this when creating a guild with roles. */
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
@@ -179,13 +179,13 @@ public data class GuildRolePositionModifyRequest(val swaps: List<Pair<Snowflake,
 
 @Serializable
 public data class GuildRoleModifyRequest(
-    val name: Optional<String?> = Optional.Missing(),
-    val permissions: Optional<Permissions?> = Optional.Missing(),
-    val color: Optional<Color?> = Optional.Missing(),
+    val name: Optional<String?> = Optional.Missing,
+    val permissions: Optional<Permissions?> = Optional.Missing,
+    val color: Optional<Color?> = Optional.Missing,
     val hoist: OptionalBoolean? = OptionalBoolean.Missing,
-    val icon: Optional<String?> = Optional.Missing(),
+    val icon: Optional<String?> = Optional.Missing,
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String?> = Optional.Missing(),
+    val unicodeEmoji: Optional<String?> = Optional.Missing,
     val mentionable: OptionalBoolean? = OptionalBoolean.Missing,
 )
 
@@ -198,7 +198,7 @@ public data class GuildIntegrationCreateRequest(val type: Int, val id: String)
 @Serializable
 public data class GuildIntegrationModifyRequest(
     @SerialName("expire_behavior")
-    val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing(),
+    val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing,
     @SerialName("expire_grace_period")
     val expirePeriod: OptionalInt? = OptionalInt.Missing,
     @SerialName("enable_emoticons")
@@ -214,28 +214,28 @@ public data class GuildWidgetModifyRequest(
 
 @Serializable
 public data class CurrentUserNicknameModifyRequest(
-    val nick: Optional<String?> = Optional.Missing()
+    val nick: Optional<String?> = Optional.Missing
 )
 
 @Serializable
 public data class GuildModifyRequest(
-    val name: Optional<String> = Optional.Missing(),
-    val region: Optional<String?> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
+    val region: Optional<String?> = Optional.Missing,
     @SerialName("verification_level")
-    val verificationLevel: Optional<VerificationLevel?> = Optional.Missing(),
+    val verificationLevel: Optional<VerificationLevel?> = Optional.Missing,
     @SerialName("default_message_notifications")
-    val defaultMessageNotificationLevel: Optional<DefaultMessageNotificationLevel?> = Optional.Missing(),
+    val defaultMessageNotificationLevel: Optional<DefaultMessageNotificationLevel?> = Optional.Missing,
     @SerialName("explicit_content_filter")
-    val contentFilter: Optional<ExplicitContentFilter?> = Optional.Missing(),
+    val contentFilter: Optional<ExplicitContentFilter?> = Optional.Missing,
     @SerialName("afk_channel_id")
     val afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("afk_timeout")
-    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing(),
-    val icon: Optional<String?> = Optional.Missing(),
+    val afkTimeout: Optional<DurationInSeconds> = Optional.Missing,
+    val icon: Optional<String?> = Optional.Missing,
     @SerialName("owner_id")
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val splash: Optional<String?> = Optional.Missing(),
-    val banner: Optional<String?> = Optional.Missing(),
+    val splash: Optional<String?> = Optional.Missing,
+    val banner: Optional<String?> = Optional.Missing,
     @SerialName("system_channel_id")
     val systemChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("rules_channel_id")
@@ -243,8 +243,8 @@ public data class GuildModifyRequest(
     @SerialName("public_updates_channel_id")
     val publicUpdatesChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("preferred_locale")
-    val preferredLocale: Optional<String?> = Optional.Missing(),
-    val features: Optional<Set<GuildFeature>> = Optional.Missing(),
+    val preferredLocale: Optional<String?> = Optional.Missing,
+    val features: Optional<Set<GuildFeature>> = Optional.Missing,
     @SerialName("safety_alerts_channel_id")
     val safetyAlertsChannelId: OptionalSnowflake? = OptionalSnowflake.Missing,
 )
@@ -252,8 +252,8 @@ public data class GuildModifyRequest(
 @Serializable
 public data class GuildWelcomeScreenModifyRequest(
     val enabled: OptionalBoolean = OptionalBoolean.Missing,
-    val welcomeScreenChannels: Optional<List<DiscordWelcomeScreenChannel>> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing()
+    val welcomeScreenChannels: Optional<List<DiscordWelcomeScreenChannel>> = Optional.Missing,
+    val description: Optional<String> = Optional.Missing
 )
 
 
@@ -262,5 +262,5 @@ public data class GuildScheduledEventUsersResponse(
     @SerialName("guild_scheduled_event_id")
     val guildScheduledEventId: Snowflake,
     val user: DiscordUser,
-    val member: Optional<DiscordGuildMember> = Optional.Missing(),
+    val member: Optional<DiscordGuildMember> = Optional.Missing,
 )

@@ -8,19 +8,19 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class EmbedData(
-    val title: Optional<String> = Optional.Missing(),
-    val type: Optional<EmbedType> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
-    val url: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<Instant> = Optional.Missing(),
+    val title: Optional<String> = Optional.Missing,
+    val type: Optional<EmbedType> = Optional.Missing,
+    val description: Optional<String> = Optional.Missing,
+    val url: Optional<String> = Optional.Missing,
+    val timestamp: Optional<Instant> = Optional.Missing,
     val color: OptionalInt = OptionalInt.Missing,
-    val footer: Optional<EmbedFooterData> = Optional.Missing(),
-    val image: Optional<EmbedImageData> = Optional.Missing(),
-    val thumbnail: Optional<EmbedThumbnailData> = Optional.Missing(),
-    val video: Optional<EmbedVideoData> = Optional.Missing(),
-    val provider: Optional<EmbedProviderData> = Optional.Missing(),
-    val author: Optional<EmbedAuthorData> = Optional.Missing(),
-    val fields: Optional<List<EmbedFieldData>> = Optional.Missing(),
+    val footer: Optional<EmbedFooterData> = Optional.Missing,
+    val image: Optional<EmbedImageData> = Optional.Missing,
+    val thumbnail: Optional<EmbedThumbnailData> = Optional.Missing,
+    val video: Optional<EmbedVideoData> = Optional.Missing,
+    val provider: Optional<EmbedProviderData> = Optional.Missing,
+    val author: Optional<EmbedAuthorData> = Optional.Missing,
+    val fields: Optional<List<EmbedFieldData>> = Optional.Missing,
 ) {
     public companion object {
         public fun from(entity: DiscordEmbed): EmbedData = with(entity) {
@@ -46,8 +46,8 @@ public data class EmbedData(
 @Serializable
 public data class EmbedFooterData(
     val text: String,
-    val iconUrl: Optional<String> = Optional.Missing(),
-    val proxyIconUrl: Optional<String> = Optional.Missing(),
+    val iconUrl: Optional<String> = Optional.Missing,
+    val proxyIconUrl: Optional<String> = Optional.Missing,
 ) {
     public companion object {
         public fun from(entity: DiscordEmbed.Footer): EmbedFooterData = with(entity) {
@@ -58,8 +58,8 @@ public data class EmbedFooterData(
 
 @Serializable
 public data class EmbedImageData(
-    val url: Optional<String> = Optional.Missing(),
-    val proxyUrl: Optional<String> = Optional.Missing(),
+    val url: Optional<String> = Optional.Missing,
+    val proxyUrl: Optional<String> = Optional.Missing,
     val height: OptionalInt = OptionalInt.Missing,
     val width: OptionalInt = OptionalInt.Missing,
 ) {
@@ -72,8 +72,8 @@ public data class EmbedImageData(
 
 @Serializable
 public data class EmbedThumbnailData(
-    val url: Optional<String> = Optional.Missing(),
-    val proxyUrl: Optional<String> = Optional.Missing(),
+    val url: Optional<String> = Optional.Missing,
+    val proxyUrl: Optional<String> = Optional.Missing,
     val height: OptionalInt = OptionalInt.Missing,
     val width: OptionalInt = OptionalInt.Missing,
 ) {
@@ -86,7 +86,7 @@ public data class EmbedThumbnailData(
 
 @Serializable
 public data class EmbedVideoData(
-    val url: Optional<String> = Optional.Missing(),
+    val url: Optional<String> = Optional.Missing,
     val height: OptionalInt = OptionalInt.Missing,
     val width: OptionalInt = OptionalInt.Missing,
 ) {
@@ -99,8 +99,8 @@ public data class EmbedVideoData(
 
 @Serializable
 public data class EmbedProviderData(
-    val name: Optional<String> = Optional.Missing(),
-    val url: Optional<String?> = Optional.Missing(), //see https://github.com/kordlib/kord/issues/149
+    val name: Optional<String> = Optional.Missing,
+    val url: Optional<String?> = Optional.Missing, //see https://github.com/kordlib/kord/issues/149
 ) {
     public companion object {
         public fun from(entity: DiscordEmbed.Provider): EmbedProviderData = with(entity) {
@@ -111,10 +111,10 @@ public data class EmbedProviderData(
 
 @Serializable
 public data class EmbedAuthorData(
-    val name: Optional<String> = Optional.Missing(),
-    val url: Optional<String?> = Optional.Missing(),
-    val iconUrl: Optional<String> = Optional.Missing(),
-    val proxyIconUrl: Optional<String> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
+    val url: Optional<String?> = Optional.Missing,
+    val iconUrl: Optional<String> = Optional.Missing,
+    val proxyIconUrl: Optional<String> = Optional.Missing,
 ) {
     public companion object {
         public fun from(entity: DiscordEmbed.Author): EmbedAuthorData = with(entity) {

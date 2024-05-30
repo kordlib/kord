@@ -18,7 +18,7 @@ public class ForumMessageCreateBuilder :
     RequestBuilder<MultipartForumThreadMessageCreateRequest> {
     // see https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel
 
-    private var _stickerIds: Optional<MutableList<Snowflake>> = Optional.Missing()
+    private var _stickerIds: Optional<MutableList<Snowflake>> = Optional.Missing
 
     /** The IDs of up to three stickers to send in the message. */
     public var stickerIds: MutableList<Snowflake>? by ::_stickerIds.delegate()

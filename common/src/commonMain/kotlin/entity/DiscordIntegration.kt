@@ -33,17 +33,17 @@ public data class DiscordIntegration(
     @SerialName("enable_emoticons")
     val enableEmoticons: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("expire_behavior")
-    val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing(),
+    val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing,
     @SerialName("expire_grace_period")
-    val expireGracePeriod: Optional<DurationInDays> = Optional.Missing(),
-    val user: Optional<DiscordUser> = Optional.Missing(),
+    val expireGracePeriod: Optional<DurationInDays> = Optional.Missing,
+    val user: Optional<DiscordUser> = Optional.Missing,
     val account: DiscordIntegrationsAccount,
     @SerialName("synced_at")
-    val syncedAt: Optional<Instant> = Optional.Missing(),
+    val syncedAt: Optional<Instant> = Optional.Missing,
     @SerialName("subscriber_count")
     val subscriberCount: OptionalInt = OptionalInt.Missing,
     val revoked: OptionalBoolean = OptionalBoolean.Missing,
-    val application: Optional<IntegrationApplication> = Optional.Missing(),
+    val application: Optional<IntegrationApplication> = Optional.Missing,
     @SerialName("guild_id") // available in Integration Create and Integration Update events
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
 )
@@ -62,7 +62,7 @@ public data class IntegrationApplication(
     val name: String,
     val icon: String?,
     val description: String,
-    val bot: Optional<DiscordUser> = Optional.Missing(),
+    val bot: Optional<DiscordUser> = Optional.Missing,
 )
 
 @Serializable

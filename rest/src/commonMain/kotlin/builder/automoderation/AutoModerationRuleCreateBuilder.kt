@@ -28,7 +28,7 @@ public sealed class AutoModerationRuleCreateBuilder(
         this.eventType = eventType
     }
 
-    protected open fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> = Optional.Missing()
+    protected open fun buildTriggerMetadata(): Optional<DiscordAutoModerationRuleTriggerMetadata> = Optional.Missing
 
     final override var actions: MutableList<AutoModerationActionBuilder> = mutableListOf()
 
@@ -40,10 +40,10 @@ public sealed class AutoModerationRuleCreateBuilder(
     private var _enabled: OptionalBoolean = OptionalBoolean.Missing
     final override var enabled: Boolean? by ::_enabled.delegate()
 
-    private var _exemptRoles: Optional<MutableList<Snowflake>> = Optional.Missing()
+    private var _exemptRoles: Optional<MutableList<Snowflake>> = Optional.Missing
     final override var exemptRoles: MutableList<Snowflake>? by ::_exemptRoles.delegate()
 
-    private var _exemptChannels: Optional<MutableList<Snowflake>> = Optional.Missing()
+    private var _exemptChannels: Optional<MutableList<Snowflake>> = Optional.Missing
     final override var exemptChannels: MutableList<Snowflake>? by ::_exemptChannels.delegate()
 
     final override fun toRequest(): AutoModerationRuleCreateRequest = AutoModerationRuleCreateRequest(
@@ -65,13 +65,13 @@ public class KeywordAutoModerationRuleCreateBuilder(
     eventType: AutoModerationRuleEventType,
 ) : AutoModerationRuleCreateBuilder(name, eventType), KeywordAutoModerationRuleBuilder {
 
-    private var _keywords: Optional<MutableList<String>> = Optional.Missing()
+    private var _keywords: Optional<MutableList<String>> = Optional.Missing
     override var keywords: MutableList<String>? by ::_keywords.delegate()
 
-    private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing()
+    private var _regexPatterns: Optional<MutableList<String>> = Optional.Missing
     override var regexPatterns: MutableList<String>? by ::_regexPatterns.delegate()
 
-    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing
     override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
 
     // one of keywords or regexPatterns is required, don't bother to send missing trigger metadata if both are missing
@@ -104,7 +104,7 @@ public class KeywordPresetAutoModerationRuleCreateBuilder(
         this.presets = presets
     }
 
-    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing()
+    private var _allowedKeywords: Optional<MutableList<String>> = Optional.Missing
     override var allowedKeywords: MutableList<String>? by ::_allowedKeywords.delegate()
 
     override fun buildTriggerMetadata(): Optional.Value<DiscordAutoModerationRuleTriggerMetadata> =

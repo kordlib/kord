@@ -9,8 +9,8 @@ public class ThreadMembersUpdateEventData(
     public val id: Snowflake,
     public val guildId: Snowflake,
     public val memberCount: Int,
-    public val addedMembers: Optional<List<ThreadMemberData>> = Optional.Missing(),
-    public val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
+    public val addedMembers: Optional<List<ThreadMemberData>> = Optional.Missing,
+    public val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing
 ) {
     public companion object {
         public fun from(event: ThreadMembersUpdate): ThreadMembersUpdateEventData = with(event.members) {

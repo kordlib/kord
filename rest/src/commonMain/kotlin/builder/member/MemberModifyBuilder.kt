@@ -24,16 +24,16 @@ public class MemberModifyBuilder : AuditRequestBuilder<GuildMemberModifyRequest>
     private var _deafened: OptionalBoolean? = OptionalBoolean.Missing
     public var deafened: Boolean? by ::_deafened.delegate()
 
-    private var _nickname: Optional<String?> = Optional.Missing()
+    private var _nickname: Optional<String?> = Optional.Missing
     public var nickname: String? by ::_nickname.delegate()
 
-    private var _communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
+    private var _communicationDisabledUntil: Optional<Instant?> = Optional.Missing
     public var communicationDisabledUntil: Instant? by ::_communicationDisabledUntil.delegate()
 
-    private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing()
+    private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing
     public var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
-    private var _flags: Optional<GuildMemberFlags?> = Optional.Missing()
+    private var _flags: Optional<GuildMemberFlags?> = Optional.Missing
     public var flags: GuildMemberFlags? by ::_flags.delegate()
 
     override fun toRequest(): GuildMemberModifyRequest = GuildMemberModifyRequest(

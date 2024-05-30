@@ -16,13 +16,13 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String?> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
     private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
@@ -31,13 +31,13 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
-    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing
 
     /**
      * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
@@ -45,7 +45,7 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
      */
     public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
 
-    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing
     public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
@@ -66,13 +66,13 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String?> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
     private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
@@ -81,13 +81,13 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
-    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing
 
     /**
      * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
@@ -95,15 +95,15 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
      */
     public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
 
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    private var _flags: Optional<ChannelFlags> = Optional.Missing
     public var flags: ChannelFlags? by ::_flags.delegate()
 
-    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing()
+    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing
     public var defaultReactionEmoji: DefaultReaction? by ::_defaultReactionEmoji.delegate()
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
-    private var _availableTags: Optional<MutableList<ForumTagRequest>> = Optional.Missing()
+    private var _availableTags: Optional<MutableList<ForumTagRequest>> = Optional.Missing
     public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
 
     public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
@@ -115,13 +115,13 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         availableTags?.add(tagBuilder.toRequest())
     }
 
-    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing
     public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
 
-    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
+    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
 
-    private var _defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing()
+    private var _defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing
     public var defaultForumLayout: ForumLayoutType? by ::_defaultForumLayout.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
@@ -155,13 +155,13 @@ public class MediaChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String?> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
     private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
@@ -170,13 +170,13 @@ public class MediaChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
-    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing
 
     /**
      * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
@@ -184,15 +184,15 @@ public class MediaChannelModifyBuilder : PermissionOverwritesModifyBuilder,
      */
     public var defaultAutoArchiveDuration: ArchiveDuration? by ::_defaultAutoArchiveDuration.delegate()
 
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    private var _flags: Optional<ChannelFlags> = Optional.Missing
     public var flags: ChannelFlags? by ::_flags.delegate()
 
-    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing()
+    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing
     public var defaultReactionEmoji: DefaultReaction? by ::_defaultReactionEmoji.delegate()
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
-    private var _availableTags: Optional<MutableList<ForumTagRequest>> = Optional.Missing()
+    private var _availableTags: Optional<MutableList<ForumTagRequest>> = Optional.Missing
     public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
 
     public inline fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
@@ -201,10 +201,10 @@ public class MediaChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         availableTags?.add(tag) ?: run { availableTags = mutableListOf(tag) }
     }
 
-    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing
     public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
 
-    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
+    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest = ChannelModifyPatchRequest(
@@ -236,16 +236,16 @@ public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
-    private var _rtcRegion: Optional<String?> = Optional.Missing()
+    private var _rtcRegion: Optional<String?> = Optional.Missing
     public var rtcRegion: String? by ::_rtcRegion.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String?> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
     private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
@@ -254,7 +254,7 @@ public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     private var _bitrate: OptionalInt? = OptionalInt.Missing
@@ -263,7 +263,7 @@ public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _userLimit: OptionalInt? = OptionalInt.Missing
     public var userLimit: Int? by ::_userLimit.delegate()
 
-    private var _videoQualityMode: Optional<VideoQualityMode?> = Optional.Missing()
+    private var _videoQualityMode: Optional<VideoQualityMode?> = Optional.Missing
 
     /** The camera [video quality mode][VideoQualityMode] of the voice channel. */
     public var videoQualityMode: VideoQualityMode? by ::_videoQualityMode.delegate()
@@ -289,22 +289,22 @@ public class StageVoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
-    private var _rtcRegion: Optional<String?> = Optional.Missing()
+    private var _rtcRegion: Optional<String?> = Optional.Missing
     public var rtcRegion: String? by ::_rtcRegion.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String?> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
     private var _bitrate: OptionalInt? = OptionalInt.Missing
@@ -327,13 +327,13 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     AuditRequestBuilder<ChannelModifyPatchRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
     private var _position: OptionalInt? = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
-    private var _topic: Optional<String?> = Optional.Missing()
+    private var _topic: Optional<String?> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
     private var _nsfw: OptionalBoolean? = OptionalBoolean.Missing
@@ -342,13 +342,13 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
     private var _parentId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var parentId: Snowflake? by ::_parentId.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing
     override var permissionOverwrites: MutableSet<Overwrite>? by ::_permissionOverwrites.delegate()
 
-    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing()
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing
 
     /**
      * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the

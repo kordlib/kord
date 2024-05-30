@@ -8774,7 +8774,7 @@ public final class dev/kord/common/entity/WebhookType$Unknown : dev/kord/common/
 
 public abstract class dev/kord/common/entity/optional/Optional {
 	public static final field Companion Ldev/kord/common/entity/optional/Optional$Companion;
-	public fun getValue ()Ljava/lang/Object;
+	public abstract fun getValue ()Ljava/lang/Object;
 }
 
 public final class dev/kord/common/entity/optional/Optional$Companion {
@@ -8786,32 +8786,30 @@ public final class dev/kord/common/entity/optional/Optional$Companion {
 }
 
 public final class dev/kord/common/entity/optional/Optional$Missing : dev/kord/common/entity/optional/Optional {
-	public static final field Companion Ldev/kord/common/entity/optional/Optional$Missing$Companion;
+	public static final field INSTANCE Ldev/kord/common/entity/optional/Optional$Missing;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Ljava/lang/Object;
+	public synthetic fun getValue ()Ljava/lang/Object;
+	public fun getValue ()Ljava/lang/Void;
 	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/common/entity/optional/Optional$Missing$Companion {
 	public final fun invoke ()Ldev/kord/common/entity/optional/Optional$Missing;
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/optional/Optional$Null : dev/kord/common/entity/optional/Optional {
-	public static final field Companion Ldev/kord/common/entity/optional/Optional$Null$Companion;
+	public static final field INSTANCE Ldev/kord/common/entity/optional/Optional$Null;
 	public fun equals (Ljava/lang/Object;)Z
-	public fun getValue ()Ljava/lang/Object;
+	public synthetic fun getValue ()Ljava/lang/Object;
+	public fun getValue ()Ljava/lang/Void;
 	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class dev/kord/common/entity/optional/Optional$Null$Companion {
 	public final fun invoke ()Ldev/kord/common/entity/optional/Optional$Null;
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class dev/kord/common/entity/optional/Optional$Value : dev/kord/common/entity/optional/Optional {
 	public fun <init> (Ljava/lang/Object;)V
 	public final fun component1 ()Ljava/lang/Object;
+	public final fun copy (Ljava/lang/Object;)Ldev/kord/common/entity/optional/Optional$Value;
+	public static synthetic fun copy$default (Ldev/kord/common/entity/optional/Optional$Value;Ljava/lang/Object;ILjava/lang/Object;)Ldev/kord/common/entity/optional/Optional$Value;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getValue ()Ljava/lang/Object;
 	public fun hashCode ()I
@@ -8833,6 +8831,8 @@ public final class dev/kord/common/entity/optional/OptionalBoolean$Companion {
 
 public final class dev/kord/common/entity/optional/OptionalBoolean$Missing : dev/kord/common/entity/optional/OptionalBoolean {
 	public static final field INSTANCE Ldev/kord/common/entity/optional/OptionalBoolean$Missing;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -8865,6 +8865,8 @@ public final class dev/kord/common/entity/optional/OptionalInt$Companion {
 
 public final class dev/kord/common/entity/optional/OptionalInt$Missing : dev/kord/common/entity/optional/OptionalInt {
 	public static final field INSTANCE Ldev/kord/common/entity/optional/OptionalInt$Missing;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -8926,6 +8928,8 @@ public final class dev/kord/common/entity/optional/OptionalLong$Companion {
 
 public final class dev/kord/common/entity/optional/OptionalLong$Missing : dev/kord/common/entity/optional/OptionalLong {
 	public static final field INSTANCE Ldev/kord/common/entity/optional/OptionalLong$Missing;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -8958,6 +8962,8 @@ public final class dev/kord/common/entity/optional/OptionalSnowflake$Companion {
 
 public final class dev/kord/common/entity/optional/OptionalSnowflake$Missing : dev/kord/common/entity/optional/OptionalSnowflake {
 	public static final field INSTANCE Ldev/kord/common/entity/optional/OptionalSnowflake$Missing;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 

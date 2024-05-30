@@ -93,12 +93,12 @@ public data class DiscordAutoModerationRule(
 @Serializable
 public data class DiscordAutoModerationRuleTriggerMetadata(
     @SerialName("keyword_filter")
-    val keywordFilter: Optional<List<String>> = Optional.Missing(),
+    val keywordFilter: Optional<List<String>> = Optional.Missing,
     @SerialName("regex_patterns")
-    val regexPatterns: Optional<List<String>> = Optional.Missing(),
-    val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing(),
+    val regexPatterns: Optional<List<String>> = Optional.Missing,
+    val presets: Optional<List<AutoModerationRuleKeywordPresetType>> = Optional.Missing,
     @SerialName("allow_list")
-    val allowList: Optional<List<String>> = Optional.Missing(),
+    val allowList: Optional<List<String>> = Optional.Missing,
     @SerialName("mention_total_limit")
     val mentionTotalLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("mention_raid_protection_enabled")
@@ -108,7 +108,7 @@ public data class DiscordAutoModerationRuleTriggerMetadata(
 @Serializable
 public data class DiscordAutoModerationAction(
     val type: AutoModerationActionType,
-    val metadata: Optional<DiscordAutoModerationActionMetadata> = Optional.Missing(),
+    val metadata: Optional<DiscordAutoModerationActionMetadata> = Optional.Missing,
 )
 
 @Serializable
@@ -116,7 +116,7 @@ public data class DiscordAutoModerationActionMetadata(
     @SerialName("channel_id")
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("duration_seconds")
-    val durationSeconds: Optional<DurationInSeconds> = Optional.Missing(),
+    val durationSeconds: Optional<DurationInSeconds> = Optional.Missing,
     @SerialName("custom_message")
-    val customMessage: Optional<String> = Optional.Missing(),
+    val customMessage: Optional<String> = Optional.Missing,
 )

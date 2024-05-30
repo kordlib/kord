@@ -26,16 +26,16 @@ public sealed interface BaseInviteData {
 @Serializable
 public data class InviteData(
     override val code: String,
-    override val guild: Optional<PartialGuildData> = Optional.Missing(),
+    override val guild: Optional<PartialGuildData> = Optional.Missing,
     override val channelId: Snowflake?,
     override val inviterId: OptionalSnowflake = OptionalSnowflake.Missing,
-    override val targetType: Optional<InviteTargetType> = Optional.Missing(),
+    override val targetType: Optional<InviteTargetType> = Optional.Missing,
     override val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
-    override val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
+    override val targetApplication: Optional<PartialApplicationData> = Optional.Missing,
     override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     override val approximateMemberCount: OptionalInt = OptionalInt.Missing,
-    override val expiresAt: Optional<Instant?> = Optional.Missing(),
-    override val guildScheduledEvent: Optional<GuildScheduledEventData> = Optional.Missing(),
+    override val expiresAt: Optional<Instant?> = Optional.Missing,
+    override val guildScheduledEvent: Optional<GuildScheduledEventData> = Optional.Missing,
 ) : BaseInviteData {
 
     public companion object {
@@ -61,16 +61,16 @@ public data class InviteData(
 @Serializable
 public data class InviteWithMetadataData(
     override val code: String,
-    override val guild: Optional<PartialGuildData> = Optional.Missing(),
+    override val guild: Optional<PartialGuildData> = Optional.Missing,
     override val channelId: Snowflake?,
     override val inviterId: OptionalSnowflake = OptionalSnowflake.Missing,
-    override val targetType: Optional<InviteTargetType> = Optional.Missing(),
+    override val targetType: Optional<InviteTargetType> = Optional.Missing,
     override val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
-    override val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
+    override val targetApplication: Optional<PartialApplicationData> = Optional.Missing,
     override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     override val approximateMemberCount: OptionalInt = OptionalInt.Missing,
-    override val expiresAt: Optional<Instant?> = Optional.Missing(),
-    override val guildScheduledEvent: Optional<GuildScheduledEventData> = Optional.Missing(),
+    override val expiresAt: Optional<Instant?> = Optional.Missing,
+    override val guildScheduledEvent: Optional<GuildScheduledEventData> = Optional.Missing,
     val uses: Int,
     val maxUses: Int,
     val maxAge: DurationInSeconds,

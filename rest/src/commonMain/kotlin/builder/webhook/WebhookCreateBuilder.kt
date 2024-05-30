@@ -12,7 +12,7 @@ import dev.kord.rest.json.request.WebhookCreateRequest
 public class WebhookCreateBuilder(public var name: String) : AuditRequestBuilder<WebhookCreateRequest> {
     override var reason: String? = null
 
-    private var _avatar: Optional<Image> = Optional.Missing()
+    private var _avatar: Optional<Image> = Optional.Missing
     public var avatar: Image? by ::_avatar.delegate()
 
     override fun toRequest(): WebhookCreateRequest = WebhookCreateRequest(name, _avatar.map { it.dataUri })

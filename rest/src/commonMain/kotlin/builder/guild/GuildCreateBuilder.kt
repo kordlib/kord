@@ -45,22 +45,22 @@ public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildC
      */
     public fun newUniqueSnowflake(): Snowflake = snowflakeGenerator.next()
 
-    private var _region: Optional<String> = Optional.Missing()
+    private var _region: Optional<String> = Optional.Missing
     public var region: String? by ::_region.delegate()
 
-    private var _icon: Optional<Image> = Optional.Missing()
+    private var _icon: Optional<Image> = Optional.Missing
     public var icon: Image? by ::_icon.delegate()
 
-    private var _verificationLevel: Optional<VerificationLevel> = Optional.Missing()
+    private var _verificationLevel: Optional<VerificationLevel> = Optional.Missing
     public var verificationLevel: VerificationLevel? by ::_verificationLevel.delegate()
 
-    private var _defaultMessageNotificationLevel: Optional<DefaultMessageNotificationLevel> = Optional.Missing()
+    private var _defaultMessageNotificationLevel: Optional<DefaultMessageNotificationLevel> = Optional.Missing
     public var defaultMessageNotificationLevel: DefaultMessageNotificationLevel? by ::_defaultMessageNotificationLevel.delegate()
 
-    private var _explicitContentFilter: Optional<ExplicitContentFilter> = Optional.Missing()
+    private var _explicitContentFilter: Optional<ExplicitContentFilter> = Optional.Missing
     public var explicitContentFilter: ExplicitContentFilter? by ::_explicitContentFilter.delegate()
 
-    private var _everyoneRole: Optional<RoleCreateBuilder> = Optional.Missing()
+    private var _everyoneRole: Optional<RoleCreateBuilder> = Optional.Missing
     public var everyoneRole: RoleCreateBuilder? by ::_everyoneRole.delegate()
 
     public val roles: MutableList<GuildRoleCreateRequest> = mutableListOf()
@@ -73,7 +73,7 @@ public class GuildCreateBuilder(public var name: String) : RequestBuilder<GuildC
      */
     public var afkChannelId: Snowflake? by ::_afkChannelId.delegate()
 
-    private var _afkTimeout: Optional<Duration> = Optional.Missing()
+    private var _afkTimeout: Optional<Duration> = Optional.Missing
 
     /**
      * The afk timeout.

@@ -23,59 +23,59 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class DiscordGuildMember(
-    val user: Optional<DiscordUser> = Optional.Missing(),
-    val nick: Optional<String?> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing,
+    val nick: Optional<String?> = Optional.Missing,
     val roles: List<Snowflake>,
     @SerialName("joined_at")
     val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<Instant?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing,
     val deaf: OptionalBoolean = OptionalBoolean.Missing,
     val mute: OptionalBoolean = OptionalBoolean.Missing,
     val flags: GuildMemberFlags,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
-    val avatar: Optional<String?> = Optional.Missing(),
+    val avatar: Optional<String?> = Optional.Missing,
     @SerialName("communication_disabled_until")
-    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing
 )
 
 
 @Serializable
 public data class DiscordInteractionGuildMember(
-    val user: Optional<DiscordUser> = Optional.Missing(),
-    val nick: Optional<String?> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing,
+    val nick: Optional<String?> = Optional.Missing,
     val roles: List<Snowflake>,
     @SerialName("joined_at")
     val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<Instant?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing,
     val permissions: Permissions,
     val flags: GuildMemberFlags,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
-    val avatar: Optional<String?> = Optional.Missing(),
+    val avatar: Optional<String?> = Optional.Missing,
     @SerialName("communication_disabled_until")
-    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing
 )
 
 
 @Serializable
 public data class DiscordAddedGuildMember(
-    val user: Optional<DiscordUser> = Optional.Missing(),
-    val nick: Optional<String?> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing,
+    val nick: Optional<String?> = Optional.Missing,
     val roles: List<Snowflake>,
     @SerialName("joined_at")
     val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<Instant?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing,
     val deaf: Boolean,
     val mute: Boolean,
     val flags: GuildMemberFlags,
     @SerialName("guild_id")
     val guildId: Snowflake,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
-    val avatar: Optional<String?> = Optional.Missing(),
+    val avatar: Optional<String?> = Optional.Missing,
     @SerialName("communication_disabled_until")
-    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing
 )
 
 @Serializable
@@ -91,16 +91,16 @@ public data class DiscordUpdatedGuildMember(
     val guildId: Snowflake,
     val roles: List<Snowflake>,
     val user: DiscordUser,
-    val nick: Optional<String?> = Optional.Missing(),
+    val nick: Optional<String?> = Optional.Missing,
     @SerialName("joined_at")
     val joinedAt: Instant,
     @SerialName("premium_since")
-    val premiumSince: Optional<Instant?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing,
     val flags: GuildMemberFlags,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
-    val avatar: Optional<String?> = Optional.Missing(),
+    val avatar: Optional<String?> = Optional.Missing,
     @SerialName("communication_disabled_until")
-    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing
 )
 
 @Serializable

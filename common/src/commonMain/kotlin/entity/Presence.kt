@@ -77,7 +77,7 @@ public data class DiscordPresenceUser(
 
 @Serializable
 public data class DiscordClientStatus(
-    val desktop: Optional<PresenceStatus> = Optional.Missing(),
-    val mobile: Optional<PresenceStatus> = Optional.Missing(),
-    val web: Optional<PresenceStatus> = Optional.Missing(),
+    val desktop: Optional<PresenceStatus> = Optional.Missing,
+    val mobile: Optional<PresenceStatus> = Optional.Missing,
+    val web: Optional<PresenceStatus> = Optional.Missing,
 )

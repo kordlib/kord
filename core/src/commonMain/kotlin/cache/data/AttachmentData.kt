@@ -13,17 +13,17 @@ import kotlinx.serialization.Serializable
 public data class AttachmentData(
     val id: Snowflake,
     val filename: String,
-    val description: Optional<String> = Optional.Missing(),
-    val contentType: Optional<String> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing,
+    val contentType: Optional<String> = Optional.Missing,
     val size: Int,
     val url: String,
     val proxyUrl: String,
     val height: OptionalInt? = OptionalInt.Missing,
     val width: OptionalInt? = OptionalInt.Missing,
     val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
-    val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing(),
-    val waveform: Optional<String> = Optional.Missing(),
-    val flags: Optional<AttachmentFlags> = Optional.Missing(),
+    val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing,
+    val waveform: Optional<String> = Optional.Missing,
+    val flags: Optional<AttachmentFlags> = Optional.Missing,
 ) {
     public companion object {
         public fun from(entity: DiscordAttachment): AttachmentData = with(entity) {

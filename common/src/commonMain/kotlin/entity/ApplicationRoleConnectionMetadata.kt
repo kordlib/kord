@@ -59,8 +59,8 @@ public data class DiscordApplicationRoleConnectionMetadata(
     val key: String,
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing(),
+    val nameLocalizations: Optional<Map<Locale, String>> = Optional.Missing,
     val description: String,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Optional<Map<Locale, String>> = Optional.Missing(),
+    val descriptionLocalizations: Optional<Map<Locale, String>> = Optional.Missing,
 )

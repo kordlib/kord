@@ -19,7 +19,7 @@ public data class WebhookData(
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: String? = null,
     val avatar: String? = null,
-    val token: Optional<String> = Optional.Missing(),
+    val token: Optional<String> = Optional.Missing,
     val applicationId: Snowflake?
 ) {
     public companion object {

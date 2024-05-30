@@ -14,7 +14,7 @@ public data class TypingStartEventData(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val userId: Snowflake,
     val timestamp: InstantInEpochSeconds,
-    val member: Optional<DiscordGuildMember> = Optional.Missing()
+    val member: Optional<DiscordGuildMember> = Optional.Missing
 ) {
     public companion object {
         public fun from(entity: DiscordTyping): TypingStartEventData = with(entity) {

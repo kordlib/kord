@@ -15,7 +15,7 @@ class MemberModifyBuilderTest {
 
         val request = builder.toRequest()
 
-        assertEquals(Optional.Missing(), request.roles)
+        assertEquals(Optional.Missing, request.roles)
     }
 
 }

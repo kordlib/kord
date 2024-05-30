@@ -17,7 +17,7 @@ public class IntegrationModifyBuilder : AuditRequestBuilder<GuildIntegrationModi
 
     override var reason: String? = null
 
-    private var _expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing()
+    private var _expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing
 
     /**
      * the behavior when an integration subscription lapses.

@@ -55,10 +55,10 @@ public class ApplicationRoleConnectionMetadataBuilder(
     LocalizedNameCreateBuilder,
     LocalizedDescriptionCreateBuilder {
 
-    private var _nameLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing()
+    private var _nameLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing
     override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations.delegate()
 
-    private var _descriptionLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing()
+    private var _descriptionLocalizations: Optional<MutableMap<Locale, String>> = Optional.Missing
     override var descriptionLocalizations: MutableMap<Locale, String>? by ::_descriptionLocalizations.delegate()
 
     override fun toRequest(): DiscordApplicationRoleConnectionMetadata = DiscordApplicationRoleConnectionMetadata(

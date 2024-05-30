@@ -14,26 +14,26 @@ public data class AutoModerationRuleCreateRequest(
     @SerialName("trigger_type")
     val triggerType: AutoModerationRuleTriggerType,
     @SerialName("trigger_metadata")
-    val triggerMetadata: Optional<DiscordAutoModerationRuleTriggerMetadata> = Optional.Missing(),
+    val triggerMetadata: Optional<DiscordAutoModerationRuleTriggerMetadata> = Optional.Missing,
     val actions: List<DiscordAutoModerationAction>,
     val enabled: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("exempt_roles")
-    val exemptRoles: Optional<List<Snowflake>> = Optional.Missing(),
+    val exemptRoles: Optional<List<Snowflake>> = Optional.Missing,
     @SerialName("exempt_channels")
-    val exemptChannels: Optional<List<Snowflake>> = Optional.Missing(),
+    val exemptChannels: Optional<List<Snowflake>> = Optional.Missing,
 )
 
 @Serializable
 public data class AutoModerationRuleModifyRequest(
-    val name: Optional<String> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
     @SerialName("event_type")
-    val eventType: Optional<AutoModerationRuleEventType> = Optional.Missing(),
+    val eventType: Optional<AutoModerationRuleEventType> = Optional.Missing,
     @SerialName("trigger_metadata")
-    val triggerMetadata: Optional<DiscordAutoModerationRuleTriggerMetadata> = Optional.Missing(),
-    val actions: Optional<List<DiscordAutoModerationAction>> = Optional.Missing(),
+    val triggerMetadata: Optional<DiscordAutoModerationRuleTriggerMetadata> = Optional.Missing,
+    val actions: Optional<List<DiscordAutoModerationAction>> = Optional.Missing,
     val enabled: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("exempt_roles")
-    val exemptRoles: Optional<List<Snowflake>> = Optional.Missing(),
+    val exemptRoles: Optional<List<Snowflake>> = Optional.Missing,
     @SerialName("exempt_channels")
-    val exemptChannels: Optional<List<Snowflake>> = Optional.Missing(),
+    val exemptChannels: Optional<List<Snowflake>> = Optional.Missing,
 )

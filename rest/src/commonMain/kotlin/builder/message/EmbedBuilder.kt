@@ -26,14 +26,14 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
         public const val ZERO_WIDTH_SPACE: String = "\u200B"
     }
 
-    private var _title: Optional<String> = Optional.Missing()
+    private var _title: Optional<String> = Optional.Missing
 
     /**
      * The title of the embed. Limited to the length of [Limits.title].
      */
     public var title: String? by ::_title.delegate()
 
-    private var _description: Optional<String> = Optional.Missing()
+    private var _description: Optional<String> = Optional.Missing
 
     /**
      * The description of the embed. Limited to the length of [Limits.description].
@@ -41,21 +41,21 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
     public var description: String? by ::_description.delegate()
 
 
-    private var _url: Optional<String> = Optional.Missing()
+    private var _url: Optional<String> = Optional.Missing
 
     /**
      * The url of the embed's [title].
      */
     public var url: String? by ::_url.delegate()
 
-    private var _timestamp: Optional<Instant> = Optional.Missing()
+    private var _timestamp: Optional<Instant> = Optional.Missing
 
     /**
      * The timestamp displayed at the bottom of the embed.
      */
     public var timestamp: Instant? by ::_timestamp.delegate()
 
-    private var _color: Optional<Color> = Optional.Missing()
+    private var _color: Optional<Color> = Optional.Missing
 
     /**
      * The color of the embed.
@@ -63,28 +63,28 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
     public var color: Color? by ::_color.delegate()
 
 
-    private var _image: Optional<String> = Optional.Missing()
+    private var _image: Optional<String> = Optional.Missing
 
     /**
      * The image url of the embed.
      */
     public var image: String? by ::_image.delegate()
 
-    private var _footer: Optional<Footer> = Optional.Missing()
+    private var _footer: Optional<Footer> = Optional.Missing
 
     /**
      * The footer of the embed.
      */
     public var footer: Footer? by ::_footer.delegate()
 
-    private var _thumbnail: Optional<Thumbnail> = Optional.Missing()
+    private var _thumbnail: Optional<Thumbnail> = Optional.Missing
 
     /**
      * The thumbnail of the embed.
      */
     public var thumbnail: Thumbnail? by ::_thumbnail.delegate()
 
-    private var _author: Optional<Author> = Optional.Missing()
+    private var _author: Optional<Author> = Optional.Missing
 
     /**
      * The author of the embed.
@@ -193,14 +193,14 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
     @KordDsl
     public class Author : RequestBuilder<EmbedAuthorRequest> {
 
-        private var _name: Optional<String> = Optional.Missing()
+        private var _name: Optional<String> = Optional.Missing
 
         /**
          * The name of the author. This field is required if [url] is not null.
          */
         public var name: String? by ::_name.delegate()
 
-        private var _url: Optional<String> = Optional.Missing()
+        private var _url: Optional<String> = Optional.Missing
 
         /**
          * The link that will be applied to the author's [name]. [name] is a mandatory field if [url] is not null.
@@ -208,7 +208,7 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
         public var url: String? by ::_url.delegate()
 
 
-        private var _icon: Optional<String> = Optional.Missing()
+        private var _icon: Optional<String> = Optional.Missing
 
         /**
          * The image url that will be displayed next to the author's name.

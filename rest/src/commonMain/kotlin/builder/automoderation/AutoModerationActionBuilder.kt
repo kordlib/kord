@@ -23,7 +23,7 @@ public sealed class AutoModerationActionBuilder : RequestBuilder<DiscordAutoMode
     /** The type of action. */
     public abstract val type: AutoModerationActionType
 
-    protected open fun buildMetadata(): Optional<DiscordAutoModerationActionMetadata> = Optional.Missing()
+    protected open fun buildMetadata(): Optional<DiscordAutoModerationActionMetadata> = Optional.Missing
 
     final override fun toRequest(): DiscordAutoModerationAction = DiscordAutoModerationAction(
         type = type,
@@ -37,7 +37,7 @@ public class BlockMessageAutoModerationActionBuilder : AutoModerationActionBuild
 
     override val type: BlockMessage get() = BlockMessage
 
-    private var _customMessage: Optional<String> = Optional.Missing()
+    private var _customMessage: Optional<String> = Optional.Missing
 
     /**
      * Additional explanation that will be shown to members whenever their message is blocked (maximum of 150
@@ -50,7 +50,7 @@ public class BlockMessageAutoModerationActionBuilder : AutoModerationActionBuild
         return if (customMessage is Optional.Value) {
             DiscordAutoModerationActionMetadata(customMessage = customMessage).optional()
         } else {
-            Optional.Missing()
+            Optional.Missing
         }
     }
 }

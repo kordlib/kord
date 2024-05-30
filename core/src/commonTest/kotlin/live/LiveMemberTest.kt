@@ -38,8 +38,8 @@ class LiveMemberTest : AbstractLiveEntityTest<LiveMember>() {
                     guildId = guildId,
                     roles = emptyList(),
                     joinedAt = Instant.fromEpochMilliseconds(0),
-                    premiumSince = Optional.Missing(),
-                    avatar = Optional.Missing(),
+                    premiumSince = Optional.Missing,
+                    avatar = Optional.Missing,
                     flags = GuildMemberFlags(),
                 ),
                 userData = UserData(

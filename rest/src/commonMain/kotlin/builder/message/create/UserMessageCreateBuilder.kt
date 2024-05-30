@@ -20,7 +20,7 @@ import dev.kord.rest.json.request.MultipartMessageCreateRequest
 public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestBuilder<MultipartMessageCreateRequest> {
     // see https://discord.com/developers/docs/resources/channel#create-message
 
-    private var _nonce: Optional<String> = Optional.Missing()
+    private var _nonce: Optional<String> = Optional.Missing
 
     /** A value that can be used to verify a message was sent (up to 25 characters). */
     public var nonce: String? by ::_nonce.delegate()
@@ -47,7 +47,7 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
      */
     public var failIfNotExists: Boolean? by ::_failIfNotExists.delegate()
 
-    private var _stickerIds: Optional<MutableList<Snowflake>> = Optional.Missing()
+    private var _stickerIds: Optional<MutableList<Snowflake>> = Optional.Missing
 
     /** The IDs of up to three stickers to send in the message. */
     public var stickerIds: MutableList<Snowflake>? by ::_stickerIds.delegate()
@@ -62,7 +62,7 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
             messageReference = when (val id = _messageReference) {
                 is OptionalSnowflake.Value ->
                     Optional.Value(DiscordMessageReference(id = id, failIfNotExists = _failIfNotExists))
-                is OptionalSnowflake.Missing -> Optional.Missing()
+                is OptionalSnowflake.Missing -> Optional.Missing
             },
             components = _components.mapList { it.build() },
             stickerIds = _stickerIds.mapCopy(),

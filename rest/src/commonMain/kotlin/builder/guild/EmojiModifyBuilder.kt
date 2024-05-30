@@ -11,10 +11,10 @@ import dev.kord.rest.json.request.EmojiModifyRequest
 public class EmojiModifyBuilder : AuditRequestBuilder<EmojiModifyRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
-    private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing()
+    private var _roles: Optional<MutableSet<Snowflake>?> = Optional.Missing
     public var roles: MutableSet<Snowflake>? by ::_roles.delegate()
 
     override fun toRequest(): EmojiModifyRequest = EmojiModifyRequest(

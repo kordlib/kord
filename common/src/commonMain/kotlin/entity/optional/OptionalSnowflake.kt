@@ -45,7 +45,7 @@ public sealed class OptionalSnowflake {
 
     public val asOptional: Optional<Snowflake>
         get() = when (this) {
-            Missing -> Optional.Missing()
+            Missing -> Optional.Missing
             is Value -> Optional.Value(value)
         }
 
@@ -60,7 +60,7 @@ public sealed class OptionalSnowflake {
     /**
      * Represents a [Snowflake] field that was not present in the serialized entity.
      */
-    public object Missing : OptionalSnowflake() {
+    public data object Missing : OptionalSnowflake() {
         override fun toString(): String = "OptionalSnowflake.Missing"
     }
 
@@ -120,6 +120,6 @@ public fun Snowflake.optionalSnowflake(): OptionalSnowflake.Value = OptionalSnow
 public fun Snowflake?.optionalSnowflake(): OptionalSnowflake.Value? = this?.optionalSnowflake()
 
 public inline fun <T : Any> OptionalSnowflake.map(mapper: (Snowflake) -> T): Optional<T> = when (this) {
-    OptionalSnowflake.Missing -> Optional.Missing()
+    OptionalSnowflake.Missing -> Optional.Missing
     is OptionalSnowflake.Value -> Optional.Value(mapper(value))
 }

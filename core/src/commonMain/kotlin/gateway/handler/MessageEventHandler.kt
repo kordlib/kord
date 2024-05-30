@@ -260,7 +260,7 @@ internal class MessageEventHandler : BaseGatewayEventHandler() {
     ): ReactionRemoveAllEvent =
         with(event.reactions) {
             kord.cache.query { idEq(MessageData::id, messageId) }
-                .update { it.copy(reactions = Optional.Missing()) }
+                .update { it.copy(reactions = Optional.Missing) }
 
             ReactionRemoveAllEvent(
                 channelId,

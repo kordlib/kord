@@ -10,12 +10,12 @@ import dev.kord.rest.json.request.AttachmentRequest
 @KordDsl
 public class AttachmentBuilder(private val id: Snowflake) : RequestBuilder<AttachmentRequest> {
 
-    private var _filename: Optional<String> = Optional.Missing()
+    private var _filename: Optional<String> = Optional.Missing
 
     /** The name of the attached file. */
     public var filename: String? by ::_filename.delegate()
 
-    private var _description: Optional<String> = Optional.Missing()
+    private var _description: Optional<String> = Optional.Missing
 
     /** The description for the file (max 1024 characters). */
     public var description: String? by ::_description.delegate()

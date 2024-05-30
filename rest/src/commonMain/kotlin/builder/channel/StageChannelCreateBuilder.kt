@@ -25,7 +25,7 @@ public class StageChannelCreateBuilder(public var name: String) :
     private var _userLimit: OptionalInt = OptionalInt.Missing
     public var userLimit: Int? by ::_userLimit.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _position: OptionalInt = OptionalInt.Missing

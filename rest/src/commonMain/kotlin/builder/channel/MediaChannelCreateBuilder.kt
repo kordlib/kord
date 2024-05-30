@@ -17,10 +17,10 @@ public class MediaChannelCreateBuilder(public var name: String) :
     AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
-    private var _topic: Optional<String> = Optional.Missing()
+    private var _topic: Optional<String> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _position: OptionalInt = OptionalInt.Missing
@@ -32,7 +32,7 @@ public class MediaChannelCreateBuilder(public var name: String) :
     private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
     public var nsfw: Boolean? by ::_nsfw.delegate()
 
-    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing
 
     /**
      * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
@@ -42,12 +42,12 @@ public class MediaChannelCreateBuilder(public var name: String) :
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
-    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing()
+    private var _defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing
     public var defaultReactionEmoji: DefaultReaction? by ::_defaultReactionEmoji.delegate()
     public var defaultReactionEmojiId: Snowflake? = null
     public var defaultReactionEmojiName: String? = null
 
-    private var _availableTags: Optional<MutableList<ForumTagRequest>?> = Optional.Missing()
+    private var _availableTags: Optional<MutableList<ForumTagRequest>?> = Optional.Missing
     public var availableTags: MutableList<ForumTagRequest>? by ::_availableTags.delegate()
 
     public fun tag(name: String, builder: ForumTagBuilder.() -> Unit = {}) {
@@ -59,13 +59,13 @@ public class MediaChannelCreateBuilder(public var name: String) :
         availableTags?.add(tagBuilder.toRequest())
     }
 
-    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing
     public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
 
-    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing()
+    private var _defaultSortOrder: Optional<SortOrderType?> = Optional.Missing
     public var defaultSortOrder: SortOrderType? by ::_defaultSortOrder.delegate()
 
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    private var _flags: Optional<ChannelFlags> = Optional.Missing
     public var flags: ChannelFlags? by ::_flags.delegate()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(

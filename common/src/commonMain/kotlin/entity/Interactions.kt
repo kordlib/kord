@@ -95,21 +95,21 @@ import kotlinx.serialization.json.*
 @Serializable
 public data class DiscordApplicationCommand(
     val id: Snowflake,
-    val type: Optional<ApplicationCommandType> = Optional.Missing(),
+    val type: Optional<ApplicationCommandType> = Optional.Missing,
     @SerialName("application_id")
     val applicationId: Snowflake,
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
     /**
      * Don't trust the docs: This is nullable on non chat input commands.
      */
     val description: String?,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing,
     @SerialName("default_member_permissions")
     val defaultMemberPermissions: Permissions?,
     @SerialName("dm_permission")
@@ -126,21 +126,21 @@ public data class ApplicationCommandOption(
     val type: ApplicationCommandOptionType,
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
     val description: String,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    val choices: Optional<List<Choice>> = Optional.Missing(),
+    val choices: Optional<List<Choice>> = Optional.Missing,
     val autocomplete: OptionalBoolean = OptionalBoolean.Missing,
-    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing,
     @SerialName("channel_types")
-    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing,
     @SerialName("min_value")
-    val minValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val minValue: Optional<JsonPrimitive> = Optional.Missing,
     @SerialName("max_value")
-    val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val maxValue: Optional<JsonPrimitive> = Optional.Missing,
     @SerialName("min_length")
     val minLength: OptionalInt = OptionalInt.Missing,
     @SerialName("max_length")
@@ -195,7 +195,7 @@ public sealed class Choice {
 
         override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
             var name: String? = null
-            var nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing()
+            var nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing
             var value: JsonPrimitive? = null
 
             while (true) {
@@ -229,12 +229,12 @@ public sealed class Choice {
 
 @Serializable
 public data class ResolvedObjects(
-    val members: Optional<Map<Snowflake, DiscordInteractionGuildMember>> = Optional.Missing(),
-    val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing(),
-    val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing(),
-    val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing(),
-    val messages: Optional<Map<Snowflake, DiscordMessage>> = Optional.Missing(),
-    val attachments: Optional<Map<Snowflake, DiscordAttachment>> = Optional.Missing()
+    val members: Optional<Map<Snowflake, DiscordInteractionGuildMember>> = Optional.Missing,
+    val users: Optional<Map<Snowflake, DiscordUser>> = Optional.Missing,
+    val roles: Optional<Map<Snowflake, DiscordRole>> = Optional.Missing,
+    val channels: Optional<Map<Snowflake, DiscordChannel>> = Optional.Missing,
+    val messages: Optional<Map<Snowflake, DiscordMessage>> = Optional.Missing,
+    val attachments: Optional<Map<Snowflake, DiscordAttachment>> = Optional.Missing
 )
 
 @Serializable
@@ -246,20 +246,20 @@ public data class DiscordInteraction(
     val data: InteractionCallbackData,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val channel: Optional<DiscordChannel> = Optional.Missing(),
+    val channel: Optional<DiscordChannel> = Optional.Missing,
     @SerialName("channel_id")
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val member: Optional<DiscordInteractionGuildMember> = Optional.Missing(),
-    val user: Optional<DiscordUser> = Optional.Missing(),
+    val member: Optional<DiscordInteractionGuildMember> = Optional.Missing,
+    val user: Optional<DiscordUser> = Optional.Missing,
     val token: String,
     val version: Int,
     @Serializable(with = MaybeMessageSerializer::class)
-    val message: Optional<DiscordMessage> = Optional.Missing(),
+    val message: Optional<DiscordMessage> = Optional.Missing,
     @SerialName("app_permissions")
-    val appPermissions: Optional<Permissions> = Optional.Missing(),
-    val locale: Optional<Locale> = Optional.Missing(),
+    val appPermissions: Optional<Permissions> = Optional.Missing,
+    val locale: Optional<Locale> = Optional.Missing,
     @SerialName("guild_locale")
-    val guildLocale: Optional<Locale> = Optional.Missing(),
+    val guildLocale: Optional<Locale> = Optional.Missing,
 ) {
 
     /**
@@ -279,7 +279,7 @@ public data class DiscordInteraction(
                 element["channel_id"] == null ||
                 element["author"] == null
             ) {
-                Optional.Missing()
+                Optional.Missing
             } else {
                 decoder.json.decodeFromJsonElement(
                     Optional.serializer(DiscordMessage.serializer()), element
@@ -295,20 +295,20 @@ public data class DiscordInteraction(
 @Serializable
 public data class InteractionCallbackData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
-    val type: Optional<ApplicationCommandType> = Optional.Missing(),
+    val type: Optional<ApplicationCommandType> = Optional.Missing,
     @SerialName("target_id")
     val targetId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val name: Optional<String> = Optional.Missing(),
-    val resolved: Optional<ResolvedObjects> = Optional.Missing(),
-    val options: Optional<List<Option>> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
+    val resolved: Optional<ResolvedObjects> = Optional.Missing,
+    val options: Optional<List<Option>> = Optional.Missing,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("custom_id")
-    val customId: Optional<String> = Optional.Missing(),
+    val customId: Optional<String> = Optional.Missing,
     @SerialName("component_type")
-    val componentType: Optional<ComponentType> = Optional.Missing(),
-    val values: Optional<List<String>> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing()
+    val componentType: Optional<ComponentType> = Optional.Missing,
+    val values: Optional<List<String>> = Optional.Missing,
+    val components: Optional<List<DiscordComponent>> = Optional.Missing
 )
 
 @Serializable(with = Option.Serializer::class)
@@ -355,7 +355,7 @@ public sealed class Option {
 
             return when (type) {
                 ApplicationCommandOptionType.SubCommand -> {
-                    val options = if (jsonOptions == null) Optional.Missing()
+                    val options = if (jsonOptions == null) Optional.Missing
                     else Optional.Value(jsonOptions!!.map {
                         json.decodeFromJsonElement(serializer(), it) as CommandArgument<*>
                     })
@@ -364,7 +364,7 @@ public sealed class Option {
                 }
 
                 ApplicationCommandOptionType.SubCommandGroup -> {
-                    val options = if (jsonOptions == null) Optional.Missing()
+                    val options = if (jsonOptions == null) Optional.Missing
                     else Optional.Value(jsonOptions!!.map {
                         json.decodeFromJsonElement(serializer(), it) as SubCommand
                     })
@@ -421,7 +421,7 @@ public sealed class Option {
 @Serializable
 public data class SubCommand(
     override val name: String,
-    val options: Optional<List<CommandArgument<@Contextual Any?>>> = Optional.Missing()
+    val options: Optional<List<CommandArgument<@Contextual Any?>>> = Optional.Missing
 ) : Option() {
     override val type: ApplicationCommandOptionType
         get() = ApplicationCommandOptionType.SubCommand
@@ -664,7 +664,7 @@ public sealed class CommandArgument<out T> : Option() {
 
 public data class CommandGroup(
     override val name: String,
-    val options: Optional<List<SubCommand>> = Optional.Missing(),
+    val options: Optional<List<SubCommand>> = Optional.Missing,
 ) : Option() {
     override val type: ApplicationCommandOptionType
         get() = ApplicationCommandOptionType.SubCommandGroup

@@ -11,7 +11,7 @@ import dev.kord.rest.json.request.GuildMemberAddRequest
 @KordDsl
 public class MemberAddBuilder(public var token: String) : RequestBuilder<GuildMemberAddRequest> {
 
-    private var _nickname: Optional<String> = Optional.Missing()
+    private var _nickname: Optional<String> = Optional.Missing
     public var nickname: String? by ::_nickname.delegate()
 
     public var roles: MutableSet<Snowflake> = mutableSetOf()

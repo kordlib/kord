@@ -32,22 +32,22 @@ public class ScheduledEventCreateBuilder(
     /** The channel id of the scheduled event. */
     public var channelId: Snowflake? by ::_channelId.delegate()
 
-    private var _description: Optional<String> = Optional.Missing()
+    private var _description: Optional<String> = Optional.Missing
 
     /** The description of the scheduled event. */
     public var description: String? by ::_description.delegate()
 
-    private var _entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing()
+    private var _entityMetadata: Optional<GuildScheduledEventEntityMetadata> = Optional.Missing
 
     /** The [entity metadata][GuildScheduledEventEntityMetadata] of the scheduled event. */
     public var entityMetadata: GuildScheduledEventEntityMetadata? by ::_entityMetadata.delegate()
 
-    private var _scheduledEndTime: Optional<Instant> = Optional.Missing()
+    private var _scheduledEndTime: Optional<Instant> = Optional.Missing
 
     /** The [Instant] when the scheduled event is scheduled to end. */
     public var scheduledEndTime: Instant? by ::_scheduledEndTime.delegate()
 
-    private var _image: Optional<Image> = Optional.Missing()
+    private var _image: Optional<Image> = Optional.Missing
 
     /** The cover image of the scheduled event. */
     public var image: Image? by ::_image.delegate()

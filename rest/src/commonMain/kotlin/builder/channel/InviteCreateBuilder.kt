@@ -14,7 +14,7 @@ import kotlin.time.Duration
 public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
     override var reason: String? = null
 
-    private var _maxAge: Optional<Duration> = Optional.Missing()
+    private var _maxAge: Optional<Duration> = Optional.Missing
 
     /**
      * The duration before invite expiry, or 0 for never. Between 0 and 604800 seconds (7 days). 24 hours by default.
@@ -40,7 +40,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
      */
     public var unique: Boolean? by ::_unique.delegate()
 
-    private var _targetType: Optional<InviteTargetType> = Optional.Missing()
+    private var _targetType: Optional<InviteTargetType> = Optional.Missing
 
     /**
      * The [type of target][InviteTargetType] for this voice channel invite.
@@ -75,7 +75,7 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
                     InviteTargetType.Stream.optional()
                 _targetUserId.isMissing && _targetApplicationId.isPresent ->
                     InviteTargetType.EmbeddedApplication.optional()
-                else -> Optional.Missing() // both missing or both present, we should not decide in this case
+                else -> Optional.Missing // both missing or both present, we should not decide in this case
             }
         )
 

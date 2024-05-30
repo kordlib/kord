@@ -18,7 +18,7 @@ public data class MultipartGuildStickerCreateRequest(
 
 @Serializable
 public data class GuildStickerModifyRequest(
-    val name: Optional<String> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
-    val tags: Optional<String> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
+    val description: Optional<String> = Optional.Missing,
+    val tags: Optional<String> = Optional.Missing,
 )

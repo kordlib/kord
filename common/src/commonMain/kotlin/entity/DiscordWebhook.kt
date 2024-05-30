@@ -45,10 +45,10 @@ public data class DiscordWebhook(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id")
     val channelId: Snowflake,
-    val user: Optional<DiscordUser> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing,
     val name: String?,
     val avatar: String?,
-    val token: Optional<String> = Optional.Missing(),
+    val token: Optional<String> = Optional.Missing,
     @SerialName("application_id")
     val applicationId: Snowflake?,
 )

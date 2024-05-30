@@ -19,7 +19,7 @@ public class NewsChannelCreateBuilder(public var name: String) :
     AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
-    private var _topic: Optional<String> = Optional.Missing()
+    private var _topic: Optional<String> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
     private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
@@ -31,7 +31,7 @@ public class NewsChannelCreateBuilder(public var name: String) :
     private var _position: OptionalInt = OptionalInt.Missing
     public var position: Int? by ::_position.delegate()
 
-    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing
 
     /**
      * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the

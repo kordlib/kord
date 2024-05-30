@@ -18,17 +18,17 @@ public data class InteractionData(
     val type: InteractionType,
     val data: ApplicationInteractionData,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val channel: Optional<ChannelData> = Optional.Missing(),
+    val channel: Optional<ChannelData> = Optional.Missing,
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val member: Optional<MemberData> = Optional.Missing(),
-    val user: Optional<UserData> = Optional.Missing(),
+    val member: Optional<MemberData> = Optional.Missing,
+    val user: Optional<UserData> = Optional.Missing,
     val token: String,
-    val permissions: Optional<Permissions> = Optional.Missing(),
+    val permissions: Optional<Permissions> = Optional.Missing,
     val version: Int,
-    val message: Optional<MessageData> = Optional.Missing(),
-    val appPermissions: Optional<Permissions> = Optional.Missing(),
-    val locale: Optional<Locale> = Optional.Missing(),
-    val guildLocale: Optional<Locale> = Optional.Missing()
+    val message: Optional<MessageData> = Optional.Missing,
+    val appPermissions: Optional<Permissions> = Optional.Missing,
+    val locale: Optional<Locale> = Optional.Missing,
+    val guildLocale: Optional<Locale> = Optional.Missing
 ) {
     public companion object {
         public fun from(interaction: DiscordInteraction): InteractionData {
@@ -61,12 +61,12 @@ public data class InteractionData(
 
 @Serializable
 public data class ResolvedObjectsData(
-    val members: Optional<Map<Snowflake, MemberData>> = Optional.Missing(),
-    val users: Optional<Map<Snowflake, UserData>> = Optional.Missing(),
-    val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing(),
-    val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing(),
-    val messages: Optional<Map<Snowflake, MessageData>> = Optional.Missing(),
-    val attachments: Optional<Map<Snowflake, AttachmentData>> = Optional.Missing()
+    val members: Optional<Map<Snowflake, MemberData>> = Optional.Missing,
+    val users: Optional<Map<Snowflake, UserData>> = Optional.Missing,
+    val roles: Optional<Map<Snowflake, RoleData>> = Optional.Missing,
+    val channels: Optional<Map<Snowflake, ChannelData>> = Optional.Missing,
+    val messages: Optional<Map<Snowflake, MessageData>> = Optional.Missing,
+    val attachments: Optional<Map<Snowflake, AttachmentData>> = Optional.Missing
 ) {
     public companion object {
         public fun from(data: ResolvedObjects, guildId: Snowflake?): ResolvedObjectsData {
@@ -85,16 +85,16 @@ public data class ResolvedObjectsData(
 @Serializable
 public data class ApplicationInteractionData(
     val id: OptionalSnowflake = OptionalSnowflake.Missing,
-    val type: Optional<ApplicationCommandType> = Optional.Missing(),
+    val type: Optional<ApplicationCommandType> = Optional.Missing,
     val targetId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val name: Optional<String> = Optional.Missing(),
-    val options: Optional<List<OptionData>> = Optional.Missing(),
-    val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
+    val options: Optional<List<OptionData>> = Optional.Missing,
+    val resolvedObjectsData: Optional<ResolvedObjectsData> = Optional.Missing,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val customId: Optional<String> = Optional.Missing(),
-    val componentType: Optional<ComponentType> = Optional.Missing(),
-    val values: Optional<List<String>> = Optional.Missing(),
-    val components: Optional<List<ComponentData>> = Optional.Missing()
+    val customId: Optional<String> = Optional.Missing,
+    val componentType: Optional<ComponentType> = Optional.Missing,
+    val values: Optional<List<String>> = Optional.Missing,
+    val components: Optional<List<ComponentData>> = Optional.Missing
 ) {
     public companion object {
 
@@ -125,9 +125,9 @@ public data class ApplicationInteractionData(
 @Serializable
 public data class OptionData(
     val name: String,
-    val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing(),
-    val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing(),
-    val subCommands: Optional<List<SubCommand>> = Optional.Missing(),
+    val value: Optional<CommandArgument<@Serializable(NotSerializable::class) Any?>> = Optional.Missing,
+    val values: Optional<List<CommandArgument<@Serializable(NotSerializable::class) Any?>>> = Optional.Missing,
+    val subCommands: Optional<List<SubCommand>> = Optional.Missing,
     val focused: OptionalBoolean = OptionalBoolean.Missing
 ) {
     public companion object {

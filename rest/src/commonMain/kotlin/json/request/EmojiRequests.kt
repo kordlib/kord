@@ -13,6 +13,6 @@ public data class EmojiCreateRequest(
 
 @Serializable
 public data class EmojiModifyRequest(
-    val name: Optional<String> = Optional.Missing(),
-    val roles: Optional<Set<Snowflake>?> = Optional.Missing()
+    val name: Optional<String> = Optional.Missing,
+    val roles: Optional<Set<Snowflake>?> = Optional.Missing
 )

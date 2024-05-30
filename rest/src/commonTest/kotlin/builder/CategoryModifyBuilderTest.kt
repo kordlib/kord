@@ -15,7 +15,7 @@ class CategoryModifyBuilderTest {
 
         val request = builder.toRequest()
 
-        assertEquals(Optional.Missing(), request.permissionOverwrites)
+        assertEquals(Optional.Missing, request.permissionOverwrites)
     }
 
 }

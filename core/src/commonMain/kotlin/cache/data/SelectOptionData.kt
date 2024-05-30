@@ -10,8 +10,8 @@ import kotlinx.serialization.Serializable
 public data class SelectOptionData(
     val label: String,
     val value: String,
-    val description: Optional<String> = Optional.Missing(),
-    val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing,
+    val emoji: Optional<DiscordPartialEmoji> = Optional.Missing,
     val default: OptionalBoolean = OptionalBoolean.Missing
 ) {
     public companion object {

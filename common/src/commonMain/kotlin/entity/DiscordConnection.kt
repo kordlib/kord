@@ -37,7 +37,7 @@ public data class DiscordConnection(
     val name: String,
     val type: String,
     val revoked: OptionalBoolean = OptionalBoolean.Missing,
-    val integrations: Optional<List<DiscordIntegration>> = Optional.Missing(),
+    val integrations: Optional<List<DiscordIntegration>> = Optional.Missing,
     val verified: Boolean,
     @SerialName("friend_sync")
     val friendSync: Boolean,

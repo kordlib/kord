@@ -13,7 +13,7 @@ public class CategoryModifyBuilder : PermissionOverwritesModifyBuilder, AuditReq
 
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
 
     /**
      * The name of the category.
@@ -27,7 +27,7 @@ public class CategoryModifyBuilder : PermissionOverwritesModifyBuilder, AuditReq
      */
     public var position: Int? by ::_position.delegate()
 
-    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing()
+    private var _permissionOverwrites: Optional<MutableSet<Overwrite>?> = Optional.Missing
 
     /**
      *  The permission overwrites for this category.

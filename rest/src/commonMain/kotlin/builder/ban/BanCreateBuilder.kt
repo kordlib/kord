@@ -12,7 +12,7 @@ public class BanCreateBuilder : AuditRequestBuilder<GuildBanCreateRequest> {
 
     override var reason: String? = null
 
-    private var _deleteMessageDuration: Optional<Duration> = Optional.Missing()
+    private var _deleteMessageDuration: Optional<Duration> = Optional.Missing
 
     /** [Duration] to delete messages for, between 0 and 604800 seconds (7 days). */
     public var deleteMessageDuration: Duration? by ::_deleteMessageDuration.delegate()

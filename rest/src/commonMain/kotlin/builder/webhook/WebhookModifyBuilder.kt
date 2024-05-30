@@ -14,10 +14,10 @@ import dev.kord.rest.json.request.WebhookModifyRequest
 public class WebhookModifyBuilder : AuditRequestBuilder<WebhookModifyRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
-    private var _avatar: Optional<Image?> = Optional.Missing()
+    private var _avatar: Optional<Image?> = Optional.Missing
     public var avatar: Image? by ::_avatar.delegate()
 
     private var _channelId: OptionalSnowflake = OptionalSnowflake.Missing

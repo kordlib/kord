@@ -49,7 +49,7 @@ public sealed class OptionalBoolean {
 
     public val asOptional: Optional<Boolean>
         get() = when (this) {
-            Missing -> Optional.Missing()
+            Missing -> Optional.Missing
             is Value -> Optional.Value(value)
         }
 
@@ -64,7 +64,7 @@ public sealed class OptionalBoolean {
     /**
      * Represents a Boolean field that was not present in the serialized entity.
      */
-    public object Missing : OptionalBoolean() {
+    public data object Missing : OptionalBoolean() {
         override fun toString(): String = "OptionalBoolean.Missing"
     }
 

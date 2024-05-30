@@ -13,12 +13,12 @@ public data class StickerData(
     val packId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: String,
     val description: String?,
-    val tags: Optional<String> = Optional.Missing(),
+    val tags: Optional<String> = Optional.Missing,
     val formatType: MessageStickerType,
     val available: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val user: Optional<UserData> = Optional.Missing(),
+    val user: Optional<UserData> = Optional.Missing,
     @SerialName("sort_value")
     val sortValue: OptionalInt = OptionalInt.Missing
 ) {

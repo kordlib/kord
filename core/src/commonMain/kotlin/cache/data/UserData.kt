@@ -16,14 +16,14 @@ private val ThreadMemberData.nullableUserId get() = userId.value
 public data class UserData(
     val id: Snowflake,
     val username: String,
-    val discriminator: Optional<String> = Optional.Missing(),
-    val globalName: Optional<String?> = Optional.Missing(),
+    val discriminator: Optional<String> = Optional.Missing,
+    val globalName: Optional<String?> = Optional.Missing,
     val avatar: String? = null,
     val bot: OptionalBoolean = OptionalBoolean.Missing,
-    val publicFlags: Optional<UserFlags> = Optional.Missing(),
+    val publicFlags: Optional<UserFlags> = Optional.Missing,
     val banner: String? = null,
     val accentColor: Int? = null,
-    val avatarDecoration: Optional<String?> = Optional.Missing()
+    val avatarDecoration: Optional<String?> = Optional.Missing
 ) {
     public companion object {
 

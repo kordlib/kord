@@ -402,8 +402,8 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             when (withLocalizations) {
                 true, null -> it
                 false -> it.copy(
-                    nameLocalizations = Optional.Missing(),
-                    descriptionLocalizations = Optional.Missing(),
+                    nameLocalizations = Optional.Missing,
+                    descriptionLocalizations = Optional.Missing,
                 )
             }
         }
@@ -446,8 +446,8 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
                 when (withLocalizations) {
                     true, null -> it
                     false -> it.copy(
-                        nameLocalizations = Optional.Missing(),
-                        descriptionLocalizations = Optional.Missing(),
+                        nameLocalizations = Optional.Missing,
+                        descriptionLocalizations = Optional.Missing,
                     )
                 }
             }
