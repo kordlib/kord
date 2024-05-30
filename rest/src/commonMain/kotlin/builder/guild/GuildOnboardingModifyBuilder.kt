@@ -21,12 +21,12 @@ import kotlin.contracts.contract
 public class GuildOnboardingModifyBuilder : AuditRequestBuilder<GuildOnboardingModifyRequest> {
     override var reason: String? = null
 
-    private var _prompts: Optional<MutableList<OnboardingPromptBuilder>> = Optional.Missing()
+    private var _prompts: Optional<MutableList<OnboardingPromptBuilder>> = Optional.Missing
 
     /** The prompts shown during onboarding and in customize community. */
     public var prompts: MutableList<OnboardingPromptBuilder>? by ::_prompts.delegate()
 
-    private var _defaultChannelIds: Optional<MutableList<Snowflake>> = Optional.Missing()
+    private var _defaultChannelIds: Optional<MutableList<Snowflake>> = Optional.Missing
 
     /** The IDs of the channels that members get opted into automatically. */
     public var defaultChannelIds: MutableList<Snowflake>? by ::_defaultChannelIds.delegate()
@@ -36,7 +36,7 @@ public class GuildOnboardingModifyBuilder : AuditRequestBuilder<GuildOnboardingM
     /** Whether onboarding is enabled in the guild. */
     public var enabled: Boolean? by ::_enabled.delegate()
 
-    private var _mode: Optional<OnboardingMode> = Optional.Missing()
+    private var _mode: Optional<OnboardingMode> = Optional.Missing
 
     /** Current [mode][OnboardingMode] of onboarding. */
     public var mode: OnboardingMode? by ::_mode.delegate()

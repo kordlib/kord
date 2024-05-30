@@ -96,16 +96,16 @@ public data class DiscordApplication(
     override val icon: String?,
     override val description: String,
     @SerialName("rpc_origins")
-    override val rpcOrigins: Optional<List<String>> = Optional.Missing(),
+    override val rpcOrigins: Optional<List<String>> = Optional.Missing,
     @SerialName("bot_public")
     val botPublic: Boolean,
     @SerialName("bot_require_code_grant")
     val botRequireCodeGrant: Boolean,
     @SerialName("terms_of_service_url")
-    override val termsOfServiceUrl: Optional<String> = Optional.Missing(),
+    override val termsOfServiceUrl: Optional<String> = Optional.Missing,
     @SerialName("privacy_policy_url")
-    override val privacyPolicyUrl: Optional<String> = Optional.Missing(),
-    override val owner: Optional<DiscordUser> = Optional.Missing(),
+    override val privacyPolicyUrl: Optional<String> = Optional.Missing,
+    override val owner: Optional<DiscordUser> = Optional.Missing,
     @SerialName("verify_key")
     override val verifyKey: String,
     val team: DiscordTeam?,
@@ -113,17 +113,17 @@ public data class DiscordApplication(
     override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("primary_sku_id")
     override val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
-    override val slug: Optional<String> = Optional.Missing(),
+    override val slug: Optional<String> = Optional.Missing,
     @SerialName("cover_image")
-    override val coverImage: Optional<String> = Optional.Missing(),
-    override val flags: Optional<ApplicationFlags> = Optional.Missing(),
-    override val tags: Optional<List<String>> = Optional.Missing(),
+    override val coverImage: Optional<String> = Optional.Missing,
+    override val flags: Optional<ApplicationFlags> = Optional.Missing,
+    override val tags: Optional<List<String>> = Optional.Missing,
     @SerialName("install_params")
-    override val installParams: Optional<InstallParams> = Optional.Missing(),
+    override val installParams: Optional<InstallParams> = Optional.Missing,
     @SerialName("custom_install_url")
-    override val customInstallUrl: Optional<String> = Optional.Missing(),
+    override val customInstallUrl: Optional<String> = Optional.Missing,
     @SerialName("role_connections_verification_url")
-    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
+    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing,
 ) : BaseDiscordApplication
 
 /**
@@ -138,29 +138,29 @@ public data class DiscordPartialApplication(
     override val icon: String?,
     override val description: String,
     @SerialName("rpc_origins")
-    override val rpcOrigins: Optional<List<String>> = Optional.Missing(),
+    override val rpcOrigins: Optional<List<String>> = Optional.Missing,
     @SerialName("terms_of_service_url")
-    override val termsOfServiceUrl: Optional<String> = Optional.Missing(),
+    override val termsOfServiceUrl: Optional<String> = Optional.Missing,
     @SerialName("privacy_policy_url")
-    override val privacyPolicyUrl: Optional<String> = Optional.Missing(),
-    override val owner: Optional<DiscordUser> = Optional.Missing(),
+    override val privacyPolicyUrl: Optional<String> = Optional.Missing,
+    override val owner: Optional<DiscordUser> = Optional.Missing,
     @SerialName("verify_key")
     override val verifyKey: String,
     @SerialName("guild_id")
     override val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("primary_sku_id")
     override val primarySkuId: OptionalSnowflake = OptionalSnowflake.Missing,
-    override val slug: Optional<String> = Optional.Missing(),
+    override val slug: Optional<String> = Optional.Missing,
     @SerialName("cover_image")
-    override val coverImage: Optional<String> = Optional.Missing(),
-    override val flags: Optional<ApplicationFlags> = Optional.Missing(),
-    override val tags: Optional<List<String>> = Optional.Missing(),
+    override val coverImage: Optional<String> = Optional.Missing,
+    override val flags: Optional<ApplicationFlags> = Optional.Missing,
+    override val tags: Optional<List<String>> = Optional.Missing,
     @SerialName("install_params")
-    override val installParams: Optional<InstallParams> = Optional.Missing(),
+    override val installParams: Optional<InstallParams> = Optional.Missing,
     @SerialName("custom_install_url")
-    override val customInstallUrl: Optional<String> = Optional.Missing(),
+    override val customInstallUrl: Optional<String> = Optional.Missing,
     @SerialName("role_connections_verification_url")
-    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing(),
+    override val roleConnectionsVerificationUrl: Optional<String?> = Optional.Missing,
 ) : BaseDiscordApplication
 
 @Serializable

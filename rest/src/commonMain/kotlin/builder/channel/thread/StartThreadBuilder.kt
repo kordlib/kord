@@ -19,10 +19,10 @@ public class StartThreadBuilder(
 
     override var reason: String? = null
 
-    private var _autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
+    private var _autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing
     public var autoArchiveDuration: ArchiveDuration? by ::_autoArchiveDuration.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _invitable: OptionalBoolean = OptionalBoolean.Missing

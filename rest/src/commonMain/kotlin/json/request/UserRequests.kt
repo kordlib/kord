@@ -20,8 +20,8 @@ public data class GroupDMCreateRequest(
 
 @Serializable
 public data class CurrentUserModifyRequest(
-    val username: Optional<String> = Optional.Missing(),
-    val avatar: Optional<String?> = Optional.Missing()
+    val username: Optional<String> = Optional.Missing,
+    val avatar: Optional<String?> = Optional.Missing
 )
 
 @Serializable

@@ -24,7 +24,7 @@ public class CurrentVoiceStateModifyBuilder : RequestBuilder<CurrentVoiceStateMo
     /** Toggles the current user's suppress state. */
     public var suppress: Boolean? by ::_suppress.delegate()
 
-    private var _requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing()
+    private var _requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing
 
     /**
      * Sets the current user's request to speak.

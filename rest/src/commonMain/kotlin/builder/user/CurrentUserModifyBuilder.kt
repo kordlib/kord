@@ -11,10 +11,10 @@ import dev.kord.rest.json.request.CurrentUserModifyRequest
 @KordDsl
 public class CurrentUserModifyBuilder : RequestBuilder<CurrentUserModifyRequest> {
 
-    private var _username: Optional<String> = Optional.Missing()
+    private var _username: Optional<String> = Optional.Missing
     public var username: String? by ::_username.delegate()
 
-    private var _avatar: Optional<Image?> = Optional.Missing()
+    private var _avatar: Optional<Image?> = Optional.Missing
     public var avatar: Image? by ::_avatar.delegate()
 
     override fun toRequest(): CurrentUserModifyRequest = CurrentUserModifyRequest(

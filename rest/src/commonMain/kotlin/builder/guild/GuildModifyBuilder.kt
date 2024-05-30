@@ -16,37 +16,37 @@ import kotlin.time.Duration
 public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
     override var reason: String? = null
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
-    private var _region: Optional<String?> = Optional.Missing()
+    private var _region: Optional<String?> = Optional.Missing
     public var region: String? by ::_region.delegate()
 
-    private var _verificationLevel: Optional<VerificationLevel?> = Optional.Missing()
+    private var _verificationLevel: Optional<VerificationLevel?> = Optional.Missing
     public var verificationLevel: VerificationLevel? by ::_verificationLevel.delegate()
 
-    private var _notificationLevel: Optional<DefaultMessageNotificationLevel?> = Optional.Missing()
+    private var _notificationLevel: Optional<DefaultMessageNotificationLevel?> = Optional.Missing
     public var notificationLevel: DefaultMessageNotificationLevel? by ::_notificationLevel.delegate()
 
-    private var _explicitContentFilter: Optional<ExplicitContentFilter?> = Optional.Missing()
+    private var _explicitContentFilter: Optional<ExplicitContentFilter?> = Optional.Missing
     public var explicitContentFilter: ExplicitContentFilter? by ::_explicitContentFilter.delegate()
 
     private var _afkChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
     public var afkChannelId: Snowflake? by ::_afkChannelId.delegate()
 
-    private var _afkTimeout: Optional<Duration> = Optional.Missing()
+    private var _afkTimeout: Optional<Duration> = Optional.Missing
     public var afkTimeout: Duration? by ::_afkTimeout.delegate()
 
-    private var _icon: Optional<Image?> = Optional.Missing()
+    private var _icon: Optional<Image?> = Optional.Missing
     public var icon: Image? by ::_icon.delegate()
 
     private var _ownerId: OptionalSnowflake = OptionalSnowflake.Missing
     public var ownerId: Snowflake? by ::_ownerId.delegate()
 
-    private var _splash: Optional<Image?> = Optional.Missing()
+    private var _splash: Optional<Image?> = Optional.Missing
     public var splash: Image? by ::_splash.delegate()
 
-    private var _banner: Optional<Image?> = Optional.Missing()
+    private var _banner: Optional<Image?> = Optional.Missing
     public var banner: Image? by ::_banner.delegate()
 
     private var _systemChannelId: OptionalSnowflake? = OptionalSnowflake.Missing
@@ -67,14 +67,14 @@ public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
      */
     public var publicUpdatesChannelId: Snowflake? by ::_publicUpdatesChannelId.delegate()
 
-    private var _preferredLocale: Optional<Locale?> = Optional.Missing()
+    private var _preferredLocale: Optional<Locale?> = Optional.Missing
 
     /**
      * The preferred locale of a "PUBLIC" guild used in server discovery and notices from Discord; defaults to "en-US".
      */
     public var preferredLocale: Locale? by ::_preferredLocale.delegate()
 
-    private var _features: Optional<Set<GuildFeature>> = Optional.Missing()
+    private var _features: Optional<Set<GuildFeature>> = Optional.Missing
 
     /** The enabled [GuildFeature]s. */
     public var features: Set<GuildFeature>? by ::_features.delegate()

@@ -14,15 +14,15 @@ private val MemberData.id get() = "$userId$guildId"
 public data class MemberData(
     val userId: Snowflake,
     val guildId: Snowflake,
-    val nick: Optional<String?> = Optional.Missing(),
+    val nick: Optional<String?> = Optional.Missing,
     val roles: List<Snowflake>,
     val joinedAt: Instant,
-    val premiumSince: Optional<Instant?> = Optional.Missing(),
+    val premiumSince: Optional<Instant?> = Optional.Missing,
     val flags: GuildMemberFlags,
-    val permissions: Optional<Permissions> = Optional.Missing(),
+    val permissions: Optional<Permissions> = Optional.Missing,
     val pending: OptionalBoolean = OptionalBoolean.Missing,
-    val avatar: Optional<String?> = Optional.Missing(),
-    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing()
+    val avatar: Optional<String?> = Optional.Missing,
+    val communicationDisabledUntil: Optional<Instant?> = Optional.Missing
 ) {
 
     public companion object {

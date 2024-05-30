@@ -21,8 +21,8 @@ import kotlinx.serialization.Serializable
 public data class DiscordEmoji(
     val id: Snowflake?,
     val name: String?,
-    val roles: Optional<List<Snowflake>> = Optional.Missing(),
-    val user: Optional<DiscordUser> = Optional.Missing(),
+    val roles: Optional<List<Snowflake>> = Optional.Missing,
+    val user: Optional<DiscordUser> = Optional.Missing,
     @SerialName("require_colons")
     val requireColons: OptionalBoolean = OptionalBoolean.Missing,
     val managed: OptionalBoolean = OptionalBoolean.Missing,

@@ -11,19 +11,19 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class MessageCreateRequest(
-    val content: Optional<String> = Optional.Missing(),
-    val nonce: Optional<String> = Optional.Missing(),
+    val content: Optional<String> = Optional.Missing,
+    val nonce: Optional<String> = Optional.Missing,
     val tts: OptionalBoolean = OptionalBoolean.Missing,
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing,
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing,
     @SerialName("message_reference")
-    val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val messageReference: Optional<DiscordMessageReference> = Optional.Missing,
+    val components: Optional<List<DiscordComponent>> = Optional.Missing,
     @SerialName("sticker_ids")
-    val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
-    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val stickerIds: Optional<List<Snowflake>> = Optional.Missing,
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing,
+    val flags: Optional<MessageFlags> = Optional.Missing
 )
 
 public data class MultipartMessageCreateRequest(
@@ -33,17 +33,17 @@ public data class MultipartMessageCreateRequest(
 
 @Serializable
 public data class EmbedRequest(
-    val title: Optional<String> = Optional.Missing(),
-    val type: Optional<String> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
-    val url: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<Instant> = Optional.Missing(),
-    val color: Optional<Color> = Optional.Missing(),
-    val footer: Optional<EmbedFooterRequest> = Optional.Missing(),
-    val image: Optional<EmbedImageRequest> = Optional.Missing(),
-    val thumbnail: Optional<EmbedThumbnailRequest> = Optional.Missing(),
-    val author: Optional<EmbedAuthorRequest> = Optional.Missing(),
-    val fields: Optional<List<EmbedFieldRequest>> = Optional.Missing(),
+    val title: Optional<String> = Optional.Missing,
+    val type: Optional<String> = Optional.Missing,
+    val description: Optional<String> = Optional.Missing,
+    val url: Optional<String> = Optional.Missing,
+    val timestamp: Optional<Instant> = Optional.Missing,
+    val color: Optional<Color> = Optional.Missing,
+    val footer: Optional<EmbedFooterRequest> = Optional.Missing,
+    val image: Optional<EmbedImageRequest> = Optional.Missing,
+    val thumbnail: Optional<EmbedThumbnailRequest> = Optional.Missing,
+    val author: Optional<EmbedAuthorRequest> = Optional.Missing,
+    val fields: Optional<List<EmbedFieldRequest>> = Optional.Missing,
 )
 
 @Serializable
@@ -61,10 +61,10 @@ public data class EmbedThumbnailRequest(val url: String)
 
 @Serializable
 public data class EmbedAuthorRequest(
-    val name: Optional<String> = Optional.Missing(),
-    val url: Optional<String> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
+    val url: Optional<String> = Optional.Missing,
     @SerialName("icon_url")
-    val iconUrl: Optional<String> = Optional.Missing(),
+    val iconUrl: Optional<String> = Optional.Missing,
 )
 
 @Serializable
@@ -77,19 +77,19 @@ public data class EmbedFieldRequest(
 @Serializable
 public data class AttachmentRequest(
     val id: Snowflake,
-    val filename: Optional<String> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
+    val filename: Optional<String> = Optional.Missing,
+    val description: Optional<String> = Optional.Missing,
 )
 
 @Serializable
 public data class MessageEditPatchRequest(
-    val content: Optional<String?> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
-    val flags: Optional<MessageFlags?> = Optional.Missing(),
+    val content: Optional<String?> = Optional.Missing,
+    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing,
+    val flags: Optional<MessageFlags?> = Optional.Missing,
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
-    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing,
+    val components: Optional<List<DiscordComponent>?> = Optional.Missing,
+    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing,
 )
 
 public data class MultipartMessagePatchRequest(
@@ -102,16 +102,16 @@ public data class BulkDeleteRequest(val messages: List<Snowflake>)
 
 @Serializable
 public data class ForumThreadMessageRequest(
-    val content: Optional<String> = Optional.Missing(),
+    val content: Optional<String> = Optional.Missing,
     val tts: OptionalBoolean = OptionalBoolean.Missing,
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing,
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing,
+    val components: Optional<List<DiscordComponent>> = Optional.Missing,
     @SerialName("sticker_ids")
-    val stickerIds: Optional<List<Snowflake>> = Optional.Missing(),
-    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing()
+    val stickerIds: Optional<List<Snowflake>> = Optional.Missing,
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing,
+    val flags: Optional<MessageFlags> = Optional.Missing
 )
 
 public data class MultipartForumThreadMessageCreateRequest(

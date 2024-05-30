@@ -28,12 +28,12 @@ internal class OptionalTest {
         val value: Int? = null
         val optional = Optional(value)
 
-        assertIs<Optional.Null<*>>(optional)
+        assertIs<Optional.Null>(optional)
     }
 
 
     @Serializable
-    private class NullOptionalEntity(val value: Optional<String?> = Optional.Missing())
+    private class NullOptionalEntity(val value: Optional<String?> = Optional.Missing)
 
     @Test
     @JsName("test3")
@@ -43,12 +43,12 @@ internal class OptionalTest {
 
         val entity = Json.decodeFromString<NullOptionalEntity>(json)
 
-        assertIs<Optional.Null<*>>(entity.value)
+        assertIs<Optional.Null>(entity.value)
     }
 
 
     @Serializable
-    class EmptyOptionalEntity(val value: Optional<String?> = Optional.Missing())
+    class EmptyOptionalEntity(val value: Optional<String?> = Optional.Missing)
 
     @Test
     @JsName("test4")
@@ -58,12 +58,12 @@ internal class OptionalTest {
 
         val entity = Json.decodeFromString<EmptyOptionalEntity>(json)
 
-        assertIs<Optional.Missing<*>>(entity.value)
+        assertIs<Optional.Missing>(entity.value)
     }
 
 
     @Serializable
-    class UnexpectedEmptyOptionalEntity(val value: Optional<String> = Optional.Missing())
+    class UnexpectedEmptyOptionalEntity(val value: Optional<String> = Optional.Missing)
 
     @Test
     @JsName("test5")
@@ -73,12 +73,12 @@ internal class OptionalTest {
 
         val entity = Json.decodeFromString<UnexpectedEmptyOptionalEntity>(json)
 
-        assertIs<Optional.Missing<*>>(entity.value)
+        assertIs<Optional.Missing>(entity.value)
     }
 
 
     @Serializable
-    private class UnexpectedNullOptionalEntity(@Suppress("unused") val value: Optional<String> = Optional.Missing())
+    private class UnexpectedNullOptionalEntity(@Suppress("unused") val value: Optional<String> = Optional.Missing)
 
     @Test
     @JsName("test6")

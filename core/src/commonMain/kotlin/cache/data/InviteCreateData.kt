@@ -20,9 +20,9 @@ public data class InviteCreateData(
     val inviterId: OptionalSnowflake = OptionalSnowflake.Missing,
     val maxAge: DurationInSeconds,
     val maxUses: Int,
-    val targetType: Optional<InviteTargetType> = Optional.Missing(),
+    val targetType: Optional<InviteTargetType> = Optional.Missing,
     val targetUserId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val targetApplication: Optional<PartialApplicationData> = Optional.Missing(),
+    val targetApplication: Optional<PartialApplicationData> = Optional.Missing,
     val temporary: Boolean,
     val uses: Int,
 ) {

@@ -13,7 +13,7 @@ public data class EmojiData(
     val guildId: Snowflake,
     val name: String? = null,
     val userId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val roles: Optional<List<Snowflake>> = Optional.Missing(),
+    val roles: Optional<List<Snowflake>> = Optional.Missing,
     val requireColons: OptionalBoolean = OptionalBoolean.Missing,
     val managed: OptionalBoolean = OptionalBoolean.Missing,
     val animated: OptionalBoolean = OptionalBoolean.Missing,

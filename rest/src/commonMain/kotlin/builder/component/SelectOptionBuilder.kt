@@ -20,14 +20,14 @@ public class SelectOptionBuilder(
     public var value: String,
 ) {
 
-    private var _description: Optional<String> = Optional.Missing()
+    private var _description: Optional<String> = Optional.Missing
 
     /**
      * An additional description of the option, max 100 characters.
      */
     public var description: String? by ::_description.delegate()
 
-    private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
+    private var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing
 
     /**
      * An emoji to display in the option.

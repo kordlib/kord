@@ -23,22 +23,22 @@ public class WebhookMessageCreateBuilder :
     RequestBuilder<MultiPartWebhookExecuteRequest> {
     // see https://discord.com/developers/docs/resources/webhook#execute-webhook
 
-    private var _username: Optional<String> = Optional.Missing()
+    private var _username: Optional<String> = Optional.Missing
 
     /** Overrides the default username of the webhook. */
     public var username: String? by ::_username.delegate()
 
-    private var _avatarUrl: Optional<String> = Optional.Missing()
+    private var _avatarUrl: Optional<String> = Optional.Missing
 
     /** Overrides the default avatar of the webhook. */
     public var avatarUrl: String? by ::_avatarUrl.delegate()
 
-    private var _threadName: Optional<String> = Optional.Missing()
+    private var _threadName: Optional<String> = Optional.Missing
 
     /** Name of the thread to create (requires the webhook channel to be a [GuildForum] or [GuildMedia] channel). */
     public var threadName: String? by ::_threadName.delegate()
 
-    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
+    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing
 
     /**
      * List of tag ids to apply to the thread (requires the webhook channel to be a [GuildForum] or [GuildMedia]

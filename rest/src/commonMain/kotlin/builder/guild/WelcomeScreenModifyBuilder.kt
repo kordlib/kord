@@ -21,10 +21,10 @@ public class WelcomeScreenModifyBuilder : AuditRequestBuilder<GuildWelcomeScreen
     private var _enabled: OptionalBoolean = OptionalBoolean.Missing
 
     public var enabled: Boolean? by ::_enabled.delegate()
-    private var _description: Optional<String> = Optional.Missing()
+    private var _description: Optional<String> = Optional.Missing
 
     public var description: String? by ::_description.delegate()
-    private var _welcomeScreenChannels: Optional<MutableList<WelcomeScreenChannelBuilder>> = Optional.Missing()
+    private var _welcomeScreenChannels: Optional<MutableList<WelcomeScreenChannelBuilder>> = Optional.Missing
 
     public var welcomeScreenChannels: MutableList<WelcomeScreenChannelBuilder>? by ::_welcomeScreenChannels.delegate()
 

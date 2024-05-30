@@ -20,7 +20,7 @@ import dev.kord.gateway.RequestGuildMembers
 @KordDsl
 public class RequestGuildMembersBuilder(public var guildId: Snowflake) {
 
-    private var _query: Optional<String> = Optional.Missing()
+    private var _query: Optional<String> = Optional.Missing
 
     /**
      * The prefix to match usernames against. Use an empty string to match against all members.
@@ -50,7 +50,7 @@ public class RequestGuildMembersBuilder(public var guildId: Snowflake) {
      */
     public var userIds: MutableSet<Snowflake> = mutableSetOf()
 
-    private var _nonce: Optional<String> = Optional.Missing()
+    private var _nonce: Optional<String> = Optional.Missing
 
     /**
      * A nonce to identify the [GuildMembersChunkData.nonce] responses.

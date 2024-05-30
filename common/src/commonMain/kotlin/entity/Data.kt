@@ -14,7 +14,7 @@ public data class DiscordPinsUpdateData(
     @SerialName("channel_id")
     val channelId: Snowflake,
     @SerialName("last_pin_timestamp")
-    val lastPinTimestamp: Optional<Instant?> = Optional.Missing(),
+    val lastPinTimestamp: Optional<Instant?> = Optional.Missing,
 )
 
 @Serializable
@@ -26,5 +26,5 @@ public data class DiscordTyping(
     @SerialName("user_id")
     val userId: Snowflake,
     val timestamp: InstantInEpochSeconds,
-    val member: Optional<DiscordGuildMember> = Optional.Missing()
+    val member: Optional<DiscordGuildMember> = Optional.Missing
 )

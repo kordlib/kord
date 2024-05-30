@@ -14,7 +14,7 @@ import kotlin.time.Duration
 @KordDsl
 public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest> {
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
     public var name: String? by ::_name.delegate()
 
     private var _archived: OptionalBoolean = OptionalBoolean.Missing
@@ -23,19 +23,19 @@ public class ThreadModifyBuilder : AuditRequestBuilder<ChannelModifyPatchRequest
     private var _locked: OptionalBoolean = OptionalBoolean.Missing
     public var locked: Boolean? by ::_locked.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
+    private var _autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing
     public var autoArchiveDuration: ArchiveDuration? by ::_autoArchiveDuration.delegate()
 
     private var _invitable: OptionalBoolean = OptionalBoolean.Missing
     public var invitable: Boolean? by ::_invitable.delegate()
 
-    private var _flags: Optional<ChannelFlags> = Optional.Missing()
+    private var _flags: Optional<ChannelFlags> = Optional.Missing
     public var flags: ChannelFlags? by ::_flags.delegate()
 
-    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
+    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing
     public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
     override fun toRequest(): ChannelModifyPatchRequest {

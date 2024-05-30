@@ -42,7 +42,7 @@ public sealed class OptionalLong {
 
     public val asOptional: Optional<Long>
         get() = when (this) {
-            Missing -> Optional.Missing()
+            Missing -> Optional.Missing
             is Value -> Optional.Value(value)
         }
 
@@ -57,7 +57,7 @@ public sealed class OptionalLong {
     /**
      * Represents a Long field that was not present in the serialized entity.
      */
-    public object Missing : OptionalLong() {
+    public data object Missing : OptionalLong() {
         override fun toString(): String = "OptionalLong.Missing"
     }
 

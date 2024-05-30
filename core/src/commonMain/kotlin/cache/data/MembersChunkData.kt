@@ -13,9 +13,9 @@ public data class MembersChunkData(
     val users: Set<UserData>,
     val chunkIndex: Int,
     val chunkCount: Int,
-    val notFound: Optional<Set<Snowflake>> = Optional.Missing(),
-    val presences: Optional<List<PresenceData>> = Optional.Missing(),
-    val nonce: Optional<String> = Optional.Missing(),
+    val notFound: Optional<Set<Snowflake>> = Optional.Missing,
+    val presences: Optional<List<PresenceData>> = Optional.Missing,
+    val nonce: Optional<String> = Optional.Missing,
 ) {
     public companion object {
 

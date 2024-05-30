@@ -19,14 +19,14 @@ public data class IntegrationData(
     val syncing: OptionalBoolean = OptionalBoolean.Missing,
     val roleId: OptionalSnowflake = OptionalSnowflake.Missing,
     val enableEmoticons: OptionalBoolean = OptionalBoolean.Missing,
-    val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing(),
-    val expireGracePeriod: Optional<DurationInDays> = Optional.Missing(),
-    val user: Optional<DiscordUser> = Optional.Missing(),
+    val expireBehavior: Optional<IntegrationExpireBehavior> = Optional.Missing,
+    val expireGracePeriod: Optional<DurationInDays> = Optional.Missing,
+    val user: Optional<DiscordUser> = Optional.Missing,
     val account: IntegrationsAccountData,
-    val syncedAt: Optional<Instant> = Optional.Missing(),
+    val syncedAt: Optional<Instant> = Optional.Missing,
     val subscriberCount: OptionalInt = OptionalInt.Missing,
     val revoked: OptionalBoolean = OptionalBoolean.Missing,
-    val application: Optional<IntegrationApplication> = Optional.Missing(),
+    val application: Optional<IntegrationApplication> = Optional.Missing,
 ) {
 
     public companion object {

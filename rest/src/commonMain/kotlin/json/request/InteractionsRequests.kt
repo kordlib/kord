@@ -12,14 +12,14 @@ import kotlinx.serialization.Serializable
 public data class ApplicationCommandCreateRequest(
     val name: String,
     @SerialName("name_localizations")
-    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
     val type: ApplicationCommandType,
-    val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing,
     @SerialName("default_member_permissions")
-    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing,
     @SerialName("dm_permission")
     public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
@@ -30,15 +30,15 @@ public data class ApplicationCommandCreateRequest(
 
 @Serializable
 public data class ApplicationCommandModifyRequest(
-    val name: Optional<String> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
     @SerialName("name_localizations")
-    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
+    val description: Optional<String> = Optional.Missing,
     @SerialName("description_localizations")
-    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing(),
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
+    val options: Optional<List<ApplicationCommandOption>> = Optional.Missing,
     @SerialName("default_member_permissions")
-    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing(),
+    public val defaultMemberPermissions: Optional<Permissions?> = Optional.Missing,
     @SerialName("dm_permission")
     public val dmPermission: OptionalBoolean? = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'. Setting 'defaultPermission' to false can be replaced by setting 'defaultMemberPermissions' to empty Permissions and 'dmPermission' to false ('dmPermission' is only available for global commands).")
@@ -49,13 +49,13 @@ public data class ApplicationCommandModifyRequest(
 
 @Serializable
 public data class InteractionResponseModifyRequest(
-    val content: Optional<String?> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
+    val content: Optional<String?> = Optional.Missing,
+    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing,
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
-    val flags: Optional<MessageFlags?> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
-    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing,
+    val flags: Optional<MessageFlags?> = Optional.Missing,
+    val components: Optional<List<DiscordComponent>?> = Optional.Missing,
+    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing,
 )
 
 public data class MultipartInteractionResponseModifyRequest(
@@ -66,7 +66,7 @@ public data class MultipartInteractionResponseModifyRequest(
 @Serializable
 public data class InteractionResponseCreateRequest(
     val type: InteractionResponseType,
-    val data: Optional<InteractionApplicationCommandCallbackData> = Optional.Missing()
+    val data: Optional<InteractionApplicationCommandCallbackData> = Optional.Missing
 )
 
 @Serializable
@@ -89,13 +89,13 @@ public data class MultipartInteractionResponseCreateRequest(
 @Serializable
 public data class InteractionApplicationCommandCallbackData(
     val tts: OptionalBoolean = OptionalBoolean.Missing,
-    val content: Optional<String> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val content: Optional<String> = Optional.Missing,
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing,
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing,
+    val flags: Optional<MessageFlags> = Optional.Missing,
+    val components: Optional<List<DiscordComponent>> = Optional.Missing,
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing,
 )
 
 public data class MultipartFollowupMessageCreateRequest(
@@ -105,25 +105,25 @@ public data class MultipartFollowupMessageCreateRequest(
 
 @Serializable
 public data class FollowupMessageCreateRequest(
-    val content: Optional<String> = Optional.Missing(),
+    val content: Optional<String> = Optional.Missing,
     val tts: OptionalBoolean = OptionalBoolean.Missing,
-    val embeds: Optional<List<EmbedRequest>> = Optional.Missing(),
+    val embeds: Optional<List<EmbedRequest>> = Optional.Missing,
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions> = Optional.Missing,
+    val components: Optional<List<DiscordComponent>> = Optional.Missing,
+    val attachments: Optional<List<AttachmentRequest>> = Optional.Missing,
+    val flags: Optional<MessageFlags> = Optional.Missing,
 )
 
 @Serializable
 public data class FollowupMessageModifyRequest(
-    val content: Optional<String?> = Optional.Missing(),
-    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing(),
+    val content: Optional<String?> = Optional.Missing,
+    val embeds: Optional<List<EmbedRequest>?> = Optional.Missing,
     @SerialName("allowed_mentions")
-    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing(),
-    val components: Optional<List<DiscordComponent>?> = Optional.Missing(),
-    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing(),
-    val flags: Optional<MessageFlags?> = Optional.Missing(),
+    val allowedMentions: Optional<AllowedMentions?> = Optional.Missing,
+    val components: Optional<List<DiscordComponent>?> = Optional.Missing,
+    val attachments: Optional<List<AttachmentRequest>?> = Optional.Missing,
+    val flags: Optional<MessageFlags?> = Optional.Missing,
 )
 
 public data class MultipartFollowupMessageModifyRequest(

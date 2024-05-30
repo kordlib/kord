@@ -12,7 +12,7 @@ public data class GatewayConfiguration(
     val token: String,
     val name: String,
     val shard: DiscordShard,
-    val presence: Optional<DiscordPresence> = Optional.Missing(),
+    val presence: Optional<DiscordPresence> = Optional.Missing,
     val threshold: Int,
     val intents: Intents
 )

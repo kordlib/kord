@@ -132,9 +132,9 @@ public data class DiscordChannel(
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val position: OptionalInt = OptionalInt.Missing,
     @SerialName("permission_overwrites")
-    val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing(),
-    val name: Optional<String?> = Optional.Missing(),
-    val topic: Optional<String?> = Optional.Missing(),
+    val permissionOverwrites: Optional<List<Overwrite>> = Optional.Missing,
+    val name: Optional<String?> = Optional.Missing,
+    val topic: Optional<String?> = Optional.Missing,
     val nsfw: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("last_message_id")
     val lastMessageId: OptionalSnowflake? = OptionalSnowflake.Missing,
@@ -142,9 +142,9 @@ public data class DiscordChannel(
     @SerialName("user_limit")
     val userLimit: OptionalInt = OptionalInt.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
-    val recipients: Optional<List<DiscordUser>> = Optional.Missing(),
-    val icon: Optional<String?> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing,
+    val recipients: Optional<List<DiscordUser>> = Optional.Missing,
+    val icon: Optional<String?> = Optional.Missing,
     @SerialName("owner_id")
     val ownerId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("application_id")
@@ -152,39 +152,39 @@ public data class DiscordChannel(
     @SerialName("parent_id")
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     @SerialName("last_pin_timestamp")
-    val lastPinTimestamp: Optional<Instant?> = Optional.Missing(),
+    val lastPinTimestamp: Optional<Instant?> = Optional.Missing,
     @SerialName("rtc_region")
-    val rtcRegion: Optional<String?> = Optional.Missing(),
+    val rtcRegion: Optional<String?> = Optional.Missing,
     @SerialName("video_quality_mode")
-    val videoQualityMode: Optional<VideoQualityMode> = Optional.Missing(),
-    val permissions: Optional<Permissions> = Optional.Missing(),
+    val videoQualityMode: Optional<VideoQualityMode> = Optional.Missing,
+    val permissions: Optional<Permissions> = Optional.Missing,
     @SerialName("message_count")
     val messageCount: OptionalInt = OptionalInt.Missing,
     @SerialName("member_count")
     val memberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("thread_metadata")
-    val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing(),
+    val threadMetadata: Optional<DiscordThreadMetadata> = Optional.Missing,
     @SerialName("default_auto_archive_duration")
-    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
-    val member: Optional<DiscordThreadMember> = Optional.Missing(),
-    val flags: Optional<ChannelFlags> = Optional.Missing(),
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing,
+    val member: Optional<DiscordThreadMember> = Optional.Missing,
+    val flags: Optional<ChannelFlags> = Optional.Missing,
     @SerialName("total_message_sent")
     val totalMessageSent: OptionalInt = OptionalInt.Missing,
     @SerialName("available_tags")
-    val availableTags: Optional<List<ForumTag>> = Optional.Missing(),
+    val availableTags: Optional<List<ForumTag>> = Optional.Missing,
     @SerialName("applied_tags")
-    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing,
     @SerialName("default_reaction_emoji")
-    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing(),
+    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing,
     @SerialName("default_thread_rate_limit_per_user")
-    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing,
     @SerialName("default_sort_order")
-    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing,
     @SerialName("default_forum_layout")
-    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing,
     // original message when starting thread in forum or media channel, see
     // https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel
-    val message: Optional<DiscordMessage> = Optional.Missing(),
+    val message: Optional<DiscordMessage> = Optional.Missing,
 )
 
 @Serializable
@@ -205,7 +205,7 @@ public data class DiscordThreadMetadata(
     val locked: OptionalBoolean = OptionalBoolean.Missing,
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("create_timestamp")
-    val createTimestamp: Optional<Instant?> = Optional.Missing(),
+    val createTimestamp: Optional<Instant?> = Optional.Missing,
 )
 
 // this should actually be generated with @file:Generate,

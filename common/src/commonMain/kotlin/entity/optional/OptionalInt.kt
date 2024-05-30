@@ -45,7 +45,7 @@ public sealed class OptionalInt {
 
     public val asOptional: Optional<Int>
         get() = when (this) {
-            Missing -> Optional.Missing()
+            Missing -> Optional.Missing
             is Value -> Optional.Value(value)
         }
 
@@ -60,7 +60,7 @@ public sealed class OptionalInt {
     /**
      * Represents an Int field that was not present in the serialized entity.
      */
-    public object Missing : OptionalInt() {
+    public data object Missing : OptionalInt() {
         override fun toString(): String = "OptionalInt.Missing"
     }
 

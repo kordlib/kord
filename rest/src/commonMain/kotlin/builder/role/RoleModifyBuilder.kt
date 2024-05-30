@@ -16,7 +16,7 @@ import dev.kord.rest.json.request.GuildRoleModifyRequest
 public class RoleModifyBuilder : AuditRequestBuilder<GuildRoleModifyRequest> {
     override var reason: String? = null
 
-    private var _color: Optional<Color?> = Optional.Missing()
+    private var _color: Optional<Color?> = Optional.Missing
 
     /** Color of the role. */
     public var color: Color? by ::_color.delegate()
@@ -26,12 +26,12 @@ public class RoleModifyBuilder : AuditRequestBuilder<GuildRoleModifyRequest> {
     /** Whether the role should be displayed separately in the sidebar. */
     public var hoist: Boolean? by ::_hoist.delegate()
 
-    private var _icon: Optional<Image?> = Optional.Missing()
+    private var _icon: Optional<Image?> = Optional.Missing
 
     /** The role's icon image (if the guild has the [RoleIcons][GuildFeature.RoleIcons] feature). */
     public var icon: Image? by ::_icon.delegate()
 
-    private var _unicodeEmoji: Optional<String?> = Optional.Missing()
+    private var _unicodeEmoji: Optional<String?> = Optional.Missing
 
     /**
      * The role's unicode emoji as a [standard emoji](https://discord.com/developers/docs/reference#message-formatting)
@@ -39,7 +39,7 @@ public class RoleModifyBuilder : AuditRequestBuilder<GuildRoleModifyRequest> {
      */
     public var unicodeEmoji: String? by ::_unicodeEmoji.delegate()
 
-    private var _name: Optional<String?> = Optional.Missing()
+    private var _name: Optional<String?> = Optional.Missing
 
     /** Name of the role. */
     public var name: String? by ::_name.delegate()
@@ -49,7 +49,7 @@ public class RoleModifyBuilder : AuditRequestBuilder<GuildRoleModifyRequest> {
     /** Whether the role should be mentionable. */
     public var mentionable: Boolean? by ::_mentionable.delegate()
 
-    private var _permissions: Optional<Permissions?> = Optional.Missing()
+    private var _permissions: Optional<Permissions?> = Optional.Missing
 
     /** Permissions for the role. */
     public var permissions: Permissions? by ::_permissions.delegate()

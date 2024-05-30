@@ -16,7 +16,7 @@ public class PresenceBuilder {
     public var status: PresenceStatus = PresenceStatus.Online
     public var afk: Boolean = false
     public var since: Instant? = null
-    private var _state: Optional<String?> = Optional.Missing()
+    private var _state: Optional<String?> = Optional.Missing
     public var state: String? by ::_state.delegate()
 
     public fun playing(name: String) {

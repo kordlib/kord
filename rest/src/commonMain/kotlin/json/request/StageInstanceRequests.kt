@@ -14,7 +14,7 @@ public data class StageInstanceCreateRequest(
     val channelId: Snowflake,
     val topic: String,
     @SerialName("privacy_level")
-    val privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing(),
+    val privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing,
     @SerialName("send_start_notification")
     val sendStartNotification: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("guild_scheduled_event_id")
@@ -23,7 +23,7 @@ public data class StageInstanceCreateRequest(
 
 @Serializable
 public data class StageInstanceModifyRequest(
-    val topic: Optional<String> = Optional.Missing(),
+    val topic: Optional<String> = Optional.Missing,
     @SerialName("privacy_level")
-    val privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing(),
+    val privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing,
 )

@@ -22,9 +22,9 @@ public sealed class OptionsBuilder(
 ) : LocalizedNameCreateBuilder, LocalizedDescriptionCreateBuilder, RequestBuilder<ApplicationCommandOption> {
     internal var _default: OptionalBoolean = OptionalBoolean.Missing
     public var default: Boolean? by ::_default.delegate()
-    internal var _nameLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing()
+    internal var _nameLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing
     override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations.delegate()
-    internal var _descriptionLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing()
+    internal var _descriptionLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing
     override var descriptionLocalizations: MutableMap<Locale, String>? by ::_descriptionLocalizations.delegate()
 
     internal var _required: OptionalBoolean = OptionalBoolean.Missing
@@ -63,10 +63,10 @@ public sealed class BaseChoiceBuilder<T>(
     //  once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
     //  The bug from that issue prevents you from setting BaseChoiceBuilder<*, *>.choices to `null`.
     @Suppress("PropertyName")
-    internal var _choices: Optional<MutableList<Choice>> = Optional.Missing()
+    internal var _choices: Optional<MutableList<Choice>> = Optional.Missing
     public var choices: MutableList<Choice>? by ::_choices.delegate()
 
-    public abstract fun choice(name: String, value: T, nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing())
+    public abstract fun choice(name: String, value: T, nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing)
 
     /**
      * Registers a new choice with [name] representing value and applies [localizationsBuilder] to it
@@ -100,7 +100,7 @@ public sealed class BaseChoiceBuilder<T>(
 public class ChoiceLocalizationsBuilder(override var name: String) : LocalizedNameCreateBuilder {
     @Suppress("PropertyName")
     @PublishedApi
-    internal var _nameLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing()
+    internal var _nameLocalizations: Optional<MutableMap<Locale, String>?> = Optional.Missing
     override var nameLocalizations: MutableMap<Locale, String>? by ::_nameLocalizations.delegate()
 }
 
@@ -114,14 +114,14 @@ public sealed class NumericOptionBuilder<T : Number>(
     type: ApplicationCommandOptionType
 ) : BaseChoiceBuilder<T>(name, description, type) {
 
-    private var _minValue: Optional<T> = Optional.Missing()
+    private var _minValue: Optional<T> = Optional.Missing
 
     /**
      * The minimum value permitted.
      */
     public var minValue: T? by ::_minValue.delegate()
 
-    private var _maxValue: Optional<T> = Optional.Missing()
+    private var _maxValue: Optional<T> = Optional.Missing
 
     /**
      * The maximum value permitted.
@@ -217,7 +217,7 @@ public class RoleBuilder(name: String, description: String) :
 @KordDsl
 public class ChannelBuilder(name: String, description: String) :
     OptionsBuilder(name, description, ApplicationCommandOptionType.Channel) {
-    private var _channelTypes: Optional<List<ChannelType>> = Optional.Missing()
+    private var _channelTypes: Optional<List<ChannelType>> = Optional.Missing
     public var channelTypes: List<ChannelType>? by ::_channelTypes.delegate()
     override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(
         type,
@@ -247,7 +247,7 @@ public sealed class BaseCommandOptionBuilder(
     type: ApplicationCommandOptionType,
 ) : OptionsBuilder(name, description, type) {
 
-    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing()
+    private var _options: Optional<MutableList<OptionsBuilder>> = Optional.Missing
     public var options: MutableList<OptionsBuilder>? by ::_options.delegate()
 
     override fun toRequest(): ApplicationCommandOption = ApplicationCommandOption(

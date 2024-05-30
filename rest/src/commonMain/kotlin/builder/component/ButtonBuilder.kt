@@ -13,7 +13,7 @@ import dev.kord.common.entity.optional.delegate.delegate
 @KordDsl
 public sealed class ButtonBuilder : ActionRowComponentBuilder() {
 
-    protected var _label: Optional<String> = Optional.Missing()
+    protected var _label: Optional<String> = Optional.Missing
         private set
 
     /**
@@ -22,7 +22,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
      */
     public var label: String? by ::_label.delegate()
 
-    protected var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing()
+    protected var _emoji: Optional<DiscordPartialEmoji> = Optional.Missing
         private set
 
     /**
@@ -50,7 +50,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
             _label,
             _emoji,
             Optional(customId),
-            Optional.Missing(),
+            Optional.Missing,
             _disabled,
         )
     }
@@ -69,7 +69,7 @@ public sealed class ButtonBuilder : ActionRowComponentBuilder() {
             Optional(ButtonStyle.Link),
             _label,
             _emoji,
-            Optional.Missing(),
+            Optional.Missing,
             Optional.Value(url),
             _disabled,
         )

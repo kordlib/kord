@@ -6,7 +6,7 @@ import dev.kord.gateway.ThreadListSync
 
 public class ThreadListSyncData(
     public val guildId: Snowflake,
-    public val channelIds: Optional<List<Snowflake>> = Optional.Missing(),
+    public val channelIds: Optional<List<Snowflake>> = Optional.Missing,
     public val threads: List<ChannelData>,
     public val members: List<ThreadMemberData>
 ) {

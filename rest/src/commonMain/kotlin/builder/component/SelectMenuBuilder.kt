@@ -26,7 +26,7 @@ public sealed class SelectMenuBuilder(public var customId: String) : ActionRowCo
     public var allowedValues: ClosedRange<Int> = 1..1
 
 
-    private var _placeholder: Optional<String> = Optional.Missing()
+    private var _placeholder: Optional<String> = Optional.Missing
 
     /**
      * Custom placeholder if no value is selected, max 150 characters.
@@ -37,9 +37,9 @@ public sealed class SelectMenuBuilder(public var customId: String) : ActionRowCo
     public var placeholder: String? by ::_placeholder.delegate()
 
     protected abstract val type: ComponentType
-    protected open fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional.Missing()
-    protected open fun buildChannelTypes(): Optional<List<ChannelType>> = Optional.Missing()
-    protected open fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> = Optional.Missing()
+    protected open fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional.Missing
+    protected open fun buildChannelTypes(): Optional<List<ChannelType>> = Optional.Missing
+    protected open fun buildDefaultValues(): Optional<List<DiscordSelectDefaultValue>> = Optional.Missing
     final override fun build(): DiscordChatComponent = DiscordChatComponent(
         type = type,
         customId = Optional(customId),
@@ -137,7 +137,7 @@ public class MentionableSelectBuilder(customId: String) : SelectMenuBuilder(cust
 public class ChannelSelectBuilder(customId: String) : SelectMenuBuilder(customId) {
     override val type: ComponentType get() = ComponentType.ChannelSelect
 
-    private var _channelTypes: Optional<MutableList<ChannelType>> = Optional.Missing()
+    private var _channelTypes: Optional<MutableList<ChannelType>> = Optional.Missing
     public var channelTypes: MutableList<ChannelType>? by ::_channelTypes.delegate()
 
     /**

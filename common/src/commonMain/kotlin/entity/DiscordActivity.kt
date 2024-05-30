@@ -48,35 +48,35 @@ import kotlinx.serialization.encoding.Encoder
 public data class DiscordBotActivity(
     val name: String,
     val type: ActivityType,
-    val url: Optional<String?> = Optional.Missing(),
-    val state: Optional<String?> = Optional.Missing(),
+    val url: Optional<String?> = Optional.Missing,
+    val state: Optional<String?> = Optional.Missing,
 )
 
 @Serializable
 public data class DiscordActivity(
     val name: String,
     val type: ActivityType,
-    val url: Optional<String?> = Optional.Missing(),
+    val url: Optional<String?> = Optional.Missing,
     @SerialName("created_at")
     val createdAt: InstantInEpochMilliseconds,
-    val timestamps: Optional<DiscordActivityTimestamps> = Optional.Missing(),
+    val timestamps: Optional<DiscordActivityTimestamps> = Optional.Missing,
     @SerialName("application_id")
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val details: Optional<String?> = Optional.Missing(),
-    val state: Optional<String?> = Optional.Missing(),
-    val emoji: Optional<DiscordActivityEmoji?> = Optional.Missing(),
-    val party: Optional<DiscordActivityParty> = Optional.Missing(),
-    val assets: Optional<DiscordActivityAssets> = Optional.Missing(),
-    val secrets: Optional<DiscordActivitySecrets> = Optional.Missing(),
+    val details: Optional<String?> = Optional.Missing,
+    val state: Optional<String?> = Optional.Missing,
+    val emoji: Optional<DiscordActivityEmoji?> = Optional.Missing,
+    val party: Optional<DiscordActivityParty> = Optional.Missing,
+    val assets: Optional<DiscordActivityAssets> = Optional.Missing,
+    val secrets: Optional<DiscordActivitySecrets> = Optional.Missing,
     val instance: OptionalBoolean = OptionalBoolean.Missing,
-    val flags: Optional<ActivityFlags> = Optional.Missing(),
-    val buttons: Optional<List<String>> = Optional.Missing()
+    val flags: Optional<ActivityFlags> = Optional.Missing,
+    val buttons: Optional<List<String>> = Optional.Missing
 )
 
 @Serializable
 public data class DiscordActivityTimestamps(
-    val start: Optional<InstantInEpochMilliseconds> = Optional.Missing(),
-    val end: Optional<InstantInEpochMilliseconds> = Optional.Missing(),
+    val start: Optional<InstantInEpochMilliseconds> = Optional.Missing,
+    val end: Optional<InstantInEpochMilliseconds> = Optional.Missing,
 )
 
 @Serializable
@@ -88,8 +88,8 @@ public data class DiscordActivityEmoji(
 
 @Serializable
 public data class DiscordActivityParty(
-    val id: Optional<String> = Optional.Missing(),
-    val size: Optional<DiscordActivityPartySize> = Optional.Missing()
+    val id: Optional<String> = Optional.Missing,
+    val size: Optional<DiscordActivityPartySize> = Optional.Missing
 )
 
 @Serializable(DiscordActivityPartySize.Serializer::class)
@@ -118,18 +118,18 @@ public data class DiscordActivityPartySize(
 @Serializable
 public data class DiscordActivityAssets(
     @SerialName("large_image")
-    val largeImage: Optional<String> = Optional.Missing(),
+    val largeImage: Optional<String> = Optional.Missing,
     @SerialName("large_text")
-    val largeText: Optional<String> = Optional.Missing(),
+    val largeText: Optional<String> = Optional.Missing,
     @SerialName("small_image")
-    val smallImage: Optional<String> = Optional.Missing(),
+    val smallImage: Optional<String> = Optional.Missing,
     @SerialName("small_text")
-    val smallText: Optional<String> = Optional.Missing()
+    val smallText: Optional<String> = Optional.Missing
 )
 
 @Serializable
 public data class DiscordActivitySecrets(
-    val join: Optional<String> = Optional.Missing(),
-    val spectate: Optional<String> = Optional.Missing(),
-    val match: Optional<String> = Optional.Missing()
+    val join: Optional<String> = Optional.Missing,
+    val spectate: Optional<String> = Optional.Missing,
+    val match: Optional<String> = Optional.Missing
 )

@@ -11,14 +11,14 @@ import kotlinx.serialization.json.JsonPrimitive
 @Serializable
 public data class ApplicationCommandData(
     val id: Snowflake,
-    val type: Optional<ApplicationCommandType> = Optional.Missing(),
+    val type: Optional<ApplicationCommandType> = Optional.Missing,
     val applicationId: Snowflake,
     val name: String,
-    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
     val description: String?,
-    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing(),
+    val descriptionLocalizations: Optional<Map<Locale, String>?> = Optional.Missing,
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
+    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing,
     val defaultMemberPermissions: Permissions?,
     val dmPermission: OptionalBoolean = OptionalBoolean.Missing,
     @Deprecated("'defaultPermission' is deprecated in favor of 'defaultMemberPermissions' and 'dmPermission'.")
@@ -62,11 +62,11 @@ public data class ApplicationCommandOptionData(
     val description: String,
     val default: OptionalBoolean = OptionalBoolean.Missing,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
-    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing(),
-    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
-    val minValue: Optional<JsonPrimitive> = Optional.Missing(),
-    val maxValue: Optional<JsonPrimitive> = Optional.Missing(),
+    val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing,
+    val options: Optional<List<ApplicationCommandOptionData>> = Optional.Missing,
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing,
+    val minValue: Optional<JsonPrimitive> = Optional.Missing,
+    val maxValue: Optional<JsonPrimitive> = Optional.Missing,
     val minLength: OptionalInt = OptionalInt.Missing,
     val maxLength: OptionalInt = OptionalInt.Missing
 ) {
@@ -114,7 +114,7 @@ public data class ApplicationCommandSubcommandData(
     val name: String,
     val description: String,
     val isDefault: OptionalBoolean = OptionalBoolean.Missing,
-    val parameters: Optional<List<ApplicationCommandParameterData>> = Optional.Missing(),
+    val parameters: Optional<List<ApplicationCommandParameterData>> = Optional.Missing,
 )
 
 
@@ -135,8 +135,8 @@ public data class ApplicationCommandParameterData(
     val name: String,
     val description: String,
     val required: OptionalBoolean = OptionalBoolean.Missing,
-    val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing(),
-    val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+    val choices: Optional<List<ApplicationCommandOptionChoiceData>> = Optional.Missing,
+    val channelTypes: Optional<List<ChannelType>> = Optional.Missing,
 )
 
 

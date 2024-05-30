@@ -23,47 +23,47 @@ public class ScheduledEventModifyBuilder : AuditRequestBuilder<ScheduledEventMod
      */
     public var channelId: Snowflake? by ::_channelId.delegate()
 
-    private var _name: Optional<String> = Optional.Missing()
+    private var _name: Optional<String> = Optional.Missing
 
     /** The name of the scheduled event. */
     public var name: String? by ::_name.delegate()
 
-    private var _privacyLevel: Optional<GuildScheduledEventPrivacyLevel> = Optional.Missing()
+    private var _privacyLevel: Optional<GuildScheduledEventPrivacyLevel> = Optional.Missing
 
     /** The [privacy level][GuildScheduledEventPrivacyLevel] of the scheduled event. */
     public var privacyLevel: GuildScheduledEventPrivacyLevel? by ::_privacyLevel.delegate()
 
-    private var _scheduledStartTime: Optional<Instant> = Optional.Missing()
+    private var _scheduledStartTime: Optional<Instant> = Optional.Missing
 
     /** The [Instant] to schedule the scheduled event. */
     public var scheduledStartTime: Instant? by ::_scheduledStartTime.delegate()
 
-    private var _description: Optional<String?> = Optional.Missing()
+    private var _description: Optional<String?> = Optional.Missing
 
     /** The description of the scheduled event. */
     public var description: String? by ::_description.delegate()
 
-    private var _entityType: Optional<ScheduledEntityType> = Optional.Missing()
+    private var _entityType: Optional<ScheduledEntityType> = Optional.Missing
 
     /** The [entity type][ScheduledEntityType] of the scheduled event. */
     public var entityType: ScheduledEntityType? by ::_entityType.delegate()
 
-    private var _entityMetadata: Optional<GuildScheduledEventEntityMetadata?> = Optional.Missing()
+    private var _entityMetadata: Optional<GuildScheduledEventEntityMetadata?> = Optional.Missing
 
     /** The [entity metadata][GuildScheduledEventEntityMetadata] of the scheduled event. */
     public var entityMetadata: GuildScheduledEventEntityMetadata? by ::_entityMetadata.delegate()
 
-    private var _scheduledEndTime: Optional<Instant> = Optional.Missing()
+    private var _scheduledEndTime: Optional<Instant> = Optional.Missing
 
     /** The [Instant] when the scheduled event is scheduled to end. */
     public var scheduledEndTime: Instant? by ::_scheduledEndTime.delegate()
 
-    private var _status: Optional<GuildScheduledEventStatus> = Optional.Missing()
+    private var _status: Optional<GuildScheduledEventStatus> = Optional.Missing
 
     /** The [status][GuildScheduledEventStatus] of the scheduled event. */
     public var status: GuildScheduledEventStatus? by ::_status.delegate()
 
-    private var _image: Optional<Image> = Optional.Missing()
+    private var _image: Optional<Image> = Optional.Missing
 
     /** The cover image of the scheduled event. */
     public var image: Image? by ::_image.delegate()

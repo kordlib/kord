@@ -36,48 +36,48 @@ public sealed interface BaseDiscordInvite {
 @Serializable
 public data class DiscordInvite(
     override val code: String,
-    override val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
+    override val guild: Optional<DiscordPartialGuild> = Optional.Missing,
     override val channel: DiscordChannel?,
-    override val inviter: Optional<DiscordUser> = Optional.Missing(),
+    override val inviter: Optional<DiscordUser> = Optional.Missing,
     @SerialName("target_type")
-    override val targetType: Optional<InviteTargetType> = Optional.Missing(),
+    override val targetType: Optional<InviteTargetType> = Optional.Missing,
     @SerialName("target_user")
-    override val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    override val targetUser: Optional<DiscordUser> = Optional.Missing,
     @SerialName("target_application")
-    override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
+    override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing,
     @SerialName("approximate_presence_count")
     override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_member_count")
     override val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("expires_at")
-    override val expiresAt: Optional<Instant?> = Optional.Missing(),
+    override val expiresAt: Optional<Instant?> = Optional.Missing,
     @SerialName("stage_instance")
     @Deprecated("Stages are no longer discoverable")
-    val stageInstance: Optional<DiscordStageInstance> = Optional.Missing(),
+    val stageInstance: Optional<DiscordStageInstance> = Optional.Missing,
     @SerialName("guild_scheduled_event")
-    override val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing(),
+    override val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing,
 ) : BaseDiscordInvite
 
 @Serializable
 public data class DiscordInviteWithMetadata(
     override val code: String,
-    override val guild: Optional<DiscordPartialGuild> = Optional.Missing(),
+    override val guild: Optional<DiscordPartialGuild> = Optional.Missing,
     override val channel: DiscordChannel?,
-    override val inviter: Optional<DiscordUser> = Optional.Missing(),
+    override val inviter: Optional<DiscordUser> = Optional.Missing,
     @SerialName("target_type")
-    override val targetType: Optional<InviteTargetType> = Optional.Missing(),
+    override val targetType: Optional<InviteTargetType> = Optional.Missing,
     @SerialName("target_user")
-    override val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    override val targetUser: Optional<DiscordUser> = Optional.Missing,
     @SerialName("target_application")
-    override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
+    override val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing,
     @SerialName("approximate_presence_count")
     override val approximatePresenceCount: OptionalInt = OptionalInt.Missing,
     @SerialName("approximate_member_count")
     override val approximateMemberCount: OptionalInt = OptionalInt.Missing,
     @SerialName("expires_at")
-    override val expiresAt: Optional<Instant?> = Optional.Missing(),
+    override val expiresAt: Optional<Instant?> = Optional.Missing,
     @SerialName("guild_scheduled_event")
-    override val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing(),
+    override val guildScheduledEvent: Optional<DiscordGuildScheduledEvent> = Optional.Missing,
     val uses: Int,
     @SerialName("max_uses")
     val maxUses: Int,

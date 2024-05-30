@@ -73,8 +73,8 @@ public data class Identify(
     val compress: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("large_threshold")
     val largeThreshold: OptionalInt = OptionalInt.Missing,
-    val shard: Optional<DiscordShard> = Optional.Missing(),
-    val presence: Optional<DiscordPresence> = Optional.Missing(),
+    val shard: Optional<DiscordShard> = Optional.Missing,
+    val presence: Optional<DiscordPresence> = Optional.Missing,
     val intents: Intents,
 ) : Command() {
     override fun toString(): String =
@@ -99,9 +99,9 @@ public data class GuildMembersChunkData(
     @SerialName("chunk_count")
     val chunkCount: Int,
     @SerialName("not_found")
-    val notFound: Optional<Set<Snowflake>> = Optional.Missing(),
-    val presences: Optional<List<DiscordPresenceUpdate>> = Optional.Missing(),
-    val nonce: Optional<String> = Optional.Missing()
+    val notFound: Optional<Set<Snowflake>> = Optional.Missing,
+    val presences: Optional<List<DiscordPresenceUpdate>> = Optional.Missing,
+    val nonce: Optional<String> = Optional.Missing
 )
 
 @Serializable
@@ -152,12 +152,12 @@ public data class Resume(
 public data class RequestGuildMembers(
     @SerialName("guild_id")
     val guildId: Snowflake,
-    val query: Optional<String> = Optional.Missing(),
+    val query: Optional<String> = Optional.Missing,
     val limit: OptionalInt = OptionalInt.Missing,
     val presences: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("user_ids")
-    val userIds: Optional<Set<Snowflake>> = Optional.Missing(),
-    val nonce: Optional<String> = Optional.Missing()
+    val userIds: Optional<Set<Snowflake>> = Optional.Missing,
+    val nonce: Optional<String> = Optional.Missing
 ) : Command() {
 
     public object Nonce {

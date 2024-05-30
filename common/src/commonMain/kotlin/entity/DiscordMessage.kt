@@ -194,7 +194,7 @@ public data class DiscordMessage(
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     val author: DiscordUser,
-    val member: Optional<DiscordGuildMember> = Optional.Missing(),
+    val member: Optional<DiscordGuildMember> = Optional.Missing,
     val content: String,
     val timestamp: Instant,
     @SerialName("edited_timestamp")
@@ -206,36 +206,36 @@ public data class DiscordMessage(
     @SerialName("mention_roles")
     val mentionRoles: List<Snowflake>,
     @SerialName("mention_channels")
-    val mentionedChannels: Optional<List<DiscordMentionedChannel>> = Optional.Missing(),
+    val mentionedChannels: Optional<List<DiscordMentionedChannel>> = Optional.Missing,
     val attachments: List<DiscordAttachment>,
     val embeds: List<DiscordEmbed>,
-    val reactions: Optional<List<Reaction>> = Optional.Missing(),
-    val nonce: Optional<@Serializable(with = LongOrStringSerializer::class) String> = Optional.Missing(),
+    val reactions: Optional<List<Reaction>> = Optional.Missing,
+    val nonce: Optional<@Serializable(with = LongOrStringSerializer::class) String> = Optional.Missing,
     val pinned: Boolean,
     @SerialName("webhook_id")
     val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
     val type: MessageType,
-    val activity: Optional<MessageActivity> = Optional.Missing(),
-    val application: Optional<MessageApplication> = Optional.Missing(),
+    val activity: Optional<MessageActivity> = Optional.Missing,
+    val application: Optional<MessageApplication> = Optional.Missing,
     @SerialName("application_id")
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("message_reference")
-    val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing(),
+    val messageReference: Optional<DiscordMessageReference> = Optional.Missing,
+    val flags: Optional<MessageFlags> = Optional.Missing,
     @SerialName("sticker_items")
-    val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
+    val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing,
     @SerialName("referenced_message")
-    val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
+    val referencedMessage: Optional<DiscordMessage?> = Optional.Missing,
     @SerialName("role_subscription_data")
-    val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing(),
+    val roleSubscriptionData: Optional<RoleSubscription> = Optional.Missing,
 
     /*
      * don't trust the docs:
      * This is a list even though the docs say it's a component
      */
-    val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
-    val thread: Optional<DiscordChannel> = Optional.Missing(),
+    val components: Optional<List<DiscordComponent>> = Optional.Missing,
+    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing,
+    val thread: Optional<DiscordChannel> = Optional.Missing,
     val position: OptionalInt = OptionalInt.Missing
 )
 
@@ -254,13 +254,13 @@ public data class DiscordMessageSticker(
     val packId: OptionalSnowflake = OptionalSnowflake.Missing,
     val name: String,
     val description: String?,
-    val tags: Optional<String> = Optional.Missing(),
+    val tags: Optional<String> = Optional.Missing,
     @SerialName("format_type")
     val formatType: MessageStickerType,
     val available: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val user: Optional<DiscordUser> = Optional.Missing(),
+    val user: Optional<DiscordUser> = Optional.Missing,
     @SerialName("sort_value")
     val sortValue: OptionalInt = OptionalInt.Missing
 )
@@ -340,37 +340,37 @@ public data class DiscordPartialMessage(
     val channelId: Snowflake,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val author: Optional<DiscordUser> = Optional.Missing(),
-    val member: Optional<DiscordGuildMember> = Optional.Missing(),
-    val content: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<Instant> = Optional.Missing(),
+    val author: Optional<DiscordUser> = Optional.Missing,
+    val member: Optional<DiscordGuildMember> = Optional.Missing,
+    val content: Optional<String> = Optional.Missing,
+    val timestamp: Optional<Instant> = Optional.Missing,
     @SerialName("edited_timestamp")
-    val editedTimestamp: Optional<Instant?> = Optional.Missing(),
+    val editedTimestamp: Optional<Instant?> = Optional.Missing,
     val tts: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("mention_everyone")
     val mentionEveryone: OptionalBoolean = OptionalBoolean.Missing,
-    val mentions: Optional<List<DiscordOptionallyMemberUser>> = Optional.Missing(),
+    val mentions: Optional<List<DiscordOptionallyMemberUser>> = Optional.Missing,
     @SerialName("mention_roles")
-    val mentionRoles: Optional<List<Snowflake>> = Optional.Missing(),
+    val mentionRoles: Optional<List<Snowflake>> = Optional.Missing,
     @SerialName("mention_channels")
-    val mentionedChannels: Optional<List<DiscordMentionedChannel>> = Optional.Missing(),
-    val attachments: Optional<List<DiscordAttachment>> = Optional.Missing(),
-    val embeds: Optional<List<DiscordEmbed>> = Optional.Missing(),
-    val reactions: Optional<List<Reaction>> = Optional.Missing(),
-    val nonce: Optional<String> = Optional.Missing(),
+    val mentionedChannels: Optional<List<DiscordMentionedChannel>> = Optional.Missing,
+    val attachments: Optional<List<DiscordAttachment>> = Optional.Missing,
+    val embeds: Optional<List<DiscordEmbed>> = Optional.Missing,
+    val reactions: Optional<List<Reaction>> = Optional.Missing,
+    val nonce: Optional<String> = Optional.Missing,
     val pinned: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("webhook_id")
     val webhookId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val type: Optional<MessageType> = Optional.Missing(),
-    val activity: Optional<MessageActivity> = Optional.Missing(),
-    val application: Optional<MessageApplication> = Optional.Missing(),
+    val type: Optional<MessageType> = Optional.Missing,
+    val activity: Optional<MessageActivity> = Optional.Missing,
+    val application: Optional<MessageApplication> = Optional.Missing,
     @SerialName("message_reference")
-    val messageReference: Optional<DiscordMessageReference> = Optional.Missing(),
-    val flags: Optional<MessageFlags> = Optional.Missing(),
-    val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing(),
+    val messageReference: Optional<DiscordMessageReference> = Optional.Missing,
+    val flags: Optional<MessageFlags> = Optional.Missing,
+    val stickers: Optional<List<DiscordStickerItem>> = Optional.Missing,
     @SerialName("referenced_message")
-    val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
-    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
+    val referencedMessage: Optional<DiscordMessage?> = Optional.Missing,
+    val interaction: Optional<DiscordMessageInteraction> = Optional.Missing,
     val position: OptionalInt = OptionalInt.Missing,
 )
 
@@ -423,9 +423,9 @@ public data class DiscordMentionedChannel(
 public data class DiscordAttachment(
     val id: Snowflake,
     val filename: String,
-    val description: Optional<String> = Optional.Missing(),
+    val description: Optional<String> = Optional.Missing,
     @SerialName("content_type")
-    val contentType: Optional<String> = Optional.Missing(),
+    val contentType: Optional<String> = Optional.Missing,
     val size: Int,
     val url: String,
     @SerialName("proxy_url")
@@ -434,9 +434,9 @@ public data class DiscordAttachment(
     val width: OptionalInt? = OptionalInt.Missing,
     val ephemeral: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("duration_secs")
-    val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing(),
-    val waveform: Optional<String> = Optional.Missing(),
-    val flags: Optional<AttachmentFlags> = Optional.Missing(),
+    val durationSecs: Optional<DurationInDoubleSeconds> = Optional.Missing,
+    val waveform: Optional<String> = Optional.Missing,
+    val flags: Optional<AttachmentFlags> = Optional.Missing,
 )
 
 /**
@@ -458,19 +458,19 @@ public data class DiscordAttachment(
  */
 @Serializable
 public data class DiscordEmbed(
-    val title: Optional<String> = Optional.Missing(),
-    val type: Optional<EmbedType> = Optional.Missing(),
-    val description: Optional<String> = Optional.Missing(),
-    val url: Optional<String> = Optional.Missing(),
-    val timestamp: Optional<Instant> = Optional.Missing(),
+    val title: Optional<String> = Optional.Missing,
+    val type: Optional<EmbedType> = Optional.Missing,
+    val description: Optional<String> = Optional.Missing,
+    val url: Optional<String> = Optional.Missing,
+    val timestamp: Optional<Instant> = Optional.Missing,
     val color: OptionalInt = OptionalInt.Missing,
-    val footer: Optional<Footer> = Optional.Missing(),
-    val image: Optional<Image> = Optional.Missing(),
-    val thumbnail: Optional<Thumbnail> = Optional.Missing(),
-    val video: Optional<Video> = Optional.Missing(),
-    val provider: Optional<Provider> = Optional.Missing(),
-    val author: Optional<Author> = Optional.Missing(),
-    val fields: Optional<List<Field>> = Optional.Missing(),
+    val footer: Optional<Footer> = Optional.Missing,
+    val image: Optional<Image> = Optional.Missing,
+    val thumbnail: Optional<Thumbnail> = Optional.Missing,
+    val video: Optional<Video> = Optional.Missing,
+    val provider: Optional<Provider> = Optional.Missing,
+    val author: Optional<Author> = Optional.Missing,
+    val fields: Optional<List<Field>> = Optional.Missing,
 ) {
 
     /**
@@ -484,9 +484,9 @@ public data class DiscordEmbed(
     public data class Footer(
         val text: String,
         @SerialName("icon_url")
-        val iconUrl: Optional<String> = Optional.Missing(),
+        val iconUrl: Optional<String> = Optional.Missing,
         @SerialName("proxy_icon_url")
-        val proxyIconUrl: Optional<String> = Optional.Missing(),
+        val proxyIconUrl: Optional<String> = Optional.Missing,
     )
 
     /**
@@ -499,9 +499,9 @@ public data class DiscordEmbed(
      */
     @Serializable
     public data class Image(
-        val url: Optional<String> = Optional.Missing(),
+        val url: Optional<String> = Optional.Missing,
         @SerialName("proxy_url")
-        val proxyUrl: Optional<String> = Optional.Missing(),
+        val proxyUrl: Optional<String> = Optional.Missing,
         val height: OptionalInt = OptionalInt.Missing,
         val width: OptionalInt = OptionalInt.Missing,
     )
@@ -516,9 +516,9 @@ public data class DiscordEmbed(
      */
     @Serializable
     public data class Thumbnail(
-        val url: Optional<String> = Optional.Missing(),
+        val url: Optional<String> = Optional.Missing,
         @SerialName("proxy_url")
-        val proxyUrl: Optional<String> = Optional.Missing(),
+        val proxyUrl: Optional<String> = Optional.Missing,
         val height: OptionalInt = OptionalInt.Missing,
         val width: OptionalInt = OptionalInt.Missing,
     )
@@ -532,7 +532,7 @@ public data class DiscordEmbed(
      */
     @Serializable
     public data class Video(
-        val url: Optional<String> = Optional.Missing(),
+        val url: Optional<String> = Optional.Missing,
         val height: OptionalInt = OptionalInt.Missing,
         val width: OptionalInt = OptionalInt.Missing,
     )
@@ -545,8 +545,8 @@ public data class DiscordEmbed(
      */
     @Serializable
     public data class Provider(
-        val name: Optional<String> = Optional.Missing(),
-        val url: Optional<String?> = Optional.Missing(), //see https://github.com/kordlib/kord/issues/149
+        val name: Optional<String> = Optional.Missing,
+        val url: Optional<String?> = Optional.Missing, //see https://github.com/kordlib/kord/issues/149
     )
 
     /**
@@ -559,12 +559,12 @@ public data class DiscordEmbed(
      */
     @Serializable
     public data class Author(
-        val name: Optional<String> = Optional.Missing(),
-        val url: Optional<String?> = Optional.Missing(), // see https://github.com/kordlib/kord/issues/838
+        val name: Optional<String> = Optional.Missing,
+        val url: Optional<String?> = Optional.Missing, // see https://github.com/kordlib/kord/issues/838
         @SerialName("icon_url")
-        val iconUrl: Optional<String> = Optional.Missing(),
+        val iconUrl: Optional<String> = Optional.Missing,
         @SerialName("proxy_icon_url")
-        val proxyIconUrl: Optional<String> = Optional.Missing(),
+        val proxyIconUrl: Optional<String> = Optional.Missing,
     )
 
     /**
@@ -593,14 +593,14 @@ public data class Reaction(
 public data class MessageActivity(
     val type: MessageActivityType,
     @SerialName("party_id")
-    val partyId: Optional<String> = Optional.Missing(),
+    val partyId: Optional<String> = Optional.Missing,
 )
 
 @Serializable
 public data class MessageApplication(
     val id: Snowflake,
     @SerialName("cover_image")
-    val coverImage: Optional<String> = Optional.Missing(),
+    val coverImage: Optional<String> = Optional.Missing,
     val description: String,
     val icon: String? = null,
     val name: String,
@@ -634,7 +634,7 @@ public data class MessageReactionAddData(
     val messageId: Snowflake,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val member: Optional<DiscordGuildMember> = Optional.Missing(),
+    val member: Optional<DiscordGuildMember> = Optional.Missing,
     val emoji: DiscordPartialEmoji,
     @SerialName("message_author_id")
     val messageAuthorId: OptionalSnowflake = OptionalSnowflake.Missing,

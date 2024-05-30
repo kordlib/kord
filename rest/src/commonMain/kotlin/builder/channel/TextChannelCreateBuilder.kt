@@ -20,10 +20,10 @@ public class TextChannelCreateBuilder(public var name: String) :
     AuditRequestBuilder<GuildChannelCreateRequest> {
     override var reason: String? = null
 
-    private var _topic: Optional<String> = Optional.Missing()
+    private var _topic: Optional<String> = Optional.Missing
     public var topic: String? by ::_topic.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
     private var _position: OptionalInt = OptionalInt.Missing
@@ -35,7 +35,7 @@ public class TextChannelCreateBuilder(public var name: String) :
     private var _nsfw: OptionalBoolean = OptionalBoolean.Missing
     public var nsfw: Boolean? by ::_nsfw.delegate()
 
-    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
+    private var _defaultAutoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing
 
     /**
      * The default [duration][ArchiveDuration] that the clients use (not the API) for newly created threads in the
@@ -45,7 +45,7 @@ public class TextChannelCreateBuilder(public var name: String) :
 
     override var permissionOverwrites: MutableSet<Overwrite> = mutableSetOf()
 
-    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing()
+    private var _defaultThreadRateLimitPerUser: Optional<Duration> = Optional.Missing
     public var defaultThreadRateLimitPerUser: Duration? by ::_defaultThreadRateLimitPerUser.delegate()
 
     override fun toRequest(): GuildChannelCreateRequest = GuildChannelCreateRequest(

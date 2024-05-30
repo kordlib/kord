@@ -32,26 +32,26 @@ public inline fun MessageModifyBuilder.keepAttachment(id: Snowflake, builder: At
 @KordDsl
 public sealed class AbstractMessageModifyBuilder : MessageModifyBuilder {
 
-    internal var _content: Optional<String?> = Optional.Missing()
+    internal var _content: Optional<String?> = Optional.Missing
     final override var content: String? by ::_content.delegate()
 
-    internal var _embeds: Optional<MutableList<EmbedBuilder>?> = Optional.Missing()
+    internal var _embeds: Optional<MutableList<EmbedBuilder>?> = Optional.Missing
     final override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
 
-    private var _flags: Optional<MessageFlags?> = Optional.Missing()
+    private var _flags: Optional<MessageFlags?> = Optional.Missing
     final override var flags: MessageFlags? by ::_flags.delegate()
     final override var suppressEmbeds: Boolean? = null
     internal fun buildFlags(): Optional<MessageFlags?> =
         suppressEmbeds?.let { buildMessageFlags(flags, suppressEmbeds = it) } ?: _flags
 
-    internal var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
+    internal var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing
     final override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
 
-    internal var _components: Optional<MutableList<MessageComponentBuilder>?> = Optional.Missing()
+    internal var _components: Optional<MutableList<MessageComponentBuilder>?> = Optional.Missing
     final override var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
 
     final override val files: MutableList<NamedFile> = mutableListOf()
 
-    internal var _attachments: Optional<MutableList<AttachmentBuilder>?> = Optional.Missing()
+    internal var _attachments: Optional<MutableList<AttachmentBuilder>?> = Optional.Missing
     final override var attachments: MutableList<AttachmentBuilder>? by ::_attachments.delegate()
 }

@@ -130,7 +130,7 @@ internal fun buildMessageFlags(
     ephemeral: Boolean? = null,
 ): Optional<MessageFlags> =
     if (base == null && suppressEmbeds == null && suppressNotifications == null && ephemeral == null) {
-        Optional.Missing()
+        Optional.Missing
     } else {
         val flags = MessageFlags {
             if (base != null) +base

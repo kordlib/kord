@@ -12,12 +12,12 @@ public class StageInstanceModifyBuilder : AuditRequestBuilder<StageInstanceModif
 
     override var reason: String? = null
 
-    private var _topic: Optional<String> = Optional.Missing()
+    private var _topic: Optional<String> = Optional.Missing
 
     /** The topic of the Stage instance (1-120 characters). */
     public var topic: String? by ::_topic.delegate()
 
-    private var _privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing()
+    private var _privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing
 
     /** The [privacy level][StageInstancePrivacyLevel] of the Stage instance. */
     public var privacyLevel: StageInstancePrivacyLevel? by ::_privacyLevel.delegate()

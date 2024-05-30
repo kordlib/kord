@@ -107,7 +107,7 @@ public class LiveMessage(
     override fun update(event: Event): Unit = when (event) {
         is ReactionAddEvent -> process(event)
         is ReactionRemoveEvent -> process(event)
-        is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = Optional.Missing()), kord)
+        is ReactionRemoveAllEvent -> message = Message(message.data.copy(reactions = Optional.Missing), kord)
 
         is MessageUpdateEvent -> message = Message(message.data + event.new, kord)
         is MessageDeleteEvent, is MessageBulkDeleteEvent -> shutDown(

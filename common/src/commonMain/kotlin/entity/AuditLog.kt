@@ -106,14 +106,14 @@ public data class DiscordAuditLog(
 public data class DiscordAuditLogEntry(
     @SerialName("target_id")
     val targetId: Snowflake?,
-    val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing(),
+    val changes: Optional<List<AuditLogChange<in @Contextual Any?>>> = Optional.Missing,
     @SerialName("user_id")
     val userId: Snowflake?,
     val id: Snowflake,
     @SerialName("action_type")
     val actionType: AuditLogEvent,
-    val options: Optional<AuditLogEntryOptionalInfo> = Optional.Missing(),
-    val reason: Optional<String> = Optional.Missing(),
+    val options: Optional<AuditLogEntryOptionalInfo> = Optional.Missing,
+    val reason: Optional<String> = Optional.Missing,
 ) {
 
     @Suppress("UNCHECKED_CAST")
@@ -127,21 +127,21 @@ public data class AuditLogEntryOptionalInfo(
     @SerialName("application_id")
     val applicationId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("auto_moderation_rule_name")
-    val autoModerationRuleName: Optional<String> = Optional.Missing(),
+    val autoModerationRuleName: Optional<String> = Optional.Missing,
     @SerialName("auto_moderation_rule_trigger_type")
-    val autoModerationRuleTriggerType: Optional<String> = Optional.Missing(),
+    val autoModerationRuleTriggerType: Optional<String> = Optional.Missing,
     /*
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional
      */
     @SerialName("delete_member_days")
-    val deleteMemberDays: Optional<String> = Optional.Missing(),
+    val deleteMemberDays: Optional<String> = Optional.Missing,
     /*
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional
      */
     @SerialName("members_removed")
-    val membersRemoved: Optional<String> = Optional.Missing(),
+    val membersRemoved: Optional<String> = Optional.Missing,
     /*
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional
@@ -158,7 +158,7 @@ public data class AuditLogEntryOptionalInfo(
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional
      */
-    val count: Optional<String> = Optional.Missing(),
+    val count: Optional<String> = Optional.Missing,
     /*
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional
@@ -168,15 +168,15 @@ public data class AuditLogEntryOptionalInfo(
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional
      */
-    val type: Optional<OverwriteType> = Optional.Missing(),
+    val type: Optional<OverwriteType> = Optional.Missing,
     /*
     Do not trust the docs:
     2020-11-12 field is described as present but is in fact optional
      */
     @SerialName("role_name")
-    val roleName: Optional<String> = Optional.Missing(),
+    val roleName: Optional<String> = Optional.Missing,
     @SerialName("integration_type")
-    val integrationType: Optional<String> = Optional.Missing(),
+    val integrationType: Optional<String> = Optional.Missing,
 )
 
 @Serializable(with = AuditLogChange.Serializer::class)

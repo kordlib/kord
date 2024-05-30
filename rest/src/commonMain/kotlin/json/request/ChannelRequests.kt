@@ -30,43 +30,43 @@ public data class ChannelModifyPutRequest(
 
 @Serializable
 public data class ChannelModifyPatchRequest(
-    val name: Optional<String> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
     val position: OptionalInt? = OptionalInt.Missing,
-    val topic: Optional<String?> = Optional.Missing(),
+    val topic: Optional<String?> = Optional.Missing,
     val nsfw: OptionalBoolean? = OptionalBoolean.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing,
     val bitrate: OptionalInt? = OptionalInt.Missing,
     @SerialName("user_limit")
     val userLimit: OptionalInt? = OptionalInt.Missing,
     @SerialName("permission_overwrites")
-    val permissionOverwrites: Optional<Set<Overwrite>?> = Optional.Missing(),
+    val permissionOverwrites: Optional<Set<Overwrite>?> = Optional.Missing,
     @SerialName("parent_id")
     val parentId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val archived: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("auto_archive_duration")
-    val autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
+    val autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing,
     val locked: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("rtc_region")
-    val rtcRegion: Optional<String?> = Optional.Missing(),
+    val rtcRegion: Optional<String?> = Optional.Missing,
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("video_quality_mode")
-    val videoQualityMode: Optional<VideoQualityMode?> = Optional.Missing(),
+    val videoQualityMode: Optional<VideoQualityMode?> = Optional.Missing,
     @SerialName("default_auto_archive_duration")
-    val defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing(),
+    val defaultAutoArchiveDuration: Optional<ArchiveDuration?> = Optional.Missing,
     @SerialName("default_reaction_emoji")
-    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing(),
+    val defaultReactionEmoji: Optional<DefaultReaction?> = Optional.Missing,
     @SerialName("default_thread_rate_limit_per_user")
-    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing(),
-    val flags: Optional<ChannelFlags> = Optional.Missing(),
+    val defaultThreadRateLimitPerUser: Optional<DurationInSeconds> = Optional.Missing,
+    val flags: Optional<ChannelFlags> = Optional.Missing,
     @SerialName("available_tags")
-    val availableTags: Optional<List<ForumTagRequest>> = Optional.Missing(),
+    val availableTags: Optional<List<ForumTagRequest>> = Optional.Missing,
     @SerialName("applied_tags")
-    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing,
     @SerialName("default_sort_order")
-    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
+    val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing,
     @SerialName("default_forum_layout")
-    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
+    val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing,
 )
 
 @Serializable
@@ -80,14 +80,14 @@ public data class ChannelPermissionEditRequest(
 public data class StartThreadRequest(
     val name: String,
     @SerialName("auto_archive_duration")
-    val autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing(),
-    val type: Optional<ChannelType> = Optional.Missing(),
+    val autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing,
+    val type: Optional<ChannelType> = Optional.Missing,
     val invitable: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("rate_limit_per_user")
-    val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing(),
-    val message: Optional<ForumThreadMessageRequest> = Optional.Missing(),
+    val rateLimitPerUser: Optional<DurationInSeconds?> = Optional.Missing,
+    val message: Optional<ForumThreadMessageRequest> = Optional.Missing,
     @SerialName("applied_tags")
-    val appliedTags: Optional<List<Snowflake>> = Optional.Missing(),
+    val appliedTags: Optional<List<Snowflake>> = Optional.Missing,
 )
 
 public data class MultipartStartThreadRequest(
@@ -110,7 +110,7 @@ public data class ForumTagRequest(
     val name: String,
     val moderated: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("emoji_id")
-    val emojiId: Optional<Snowflake?> = Optional.Missing(),
+    val emojiId: Optional<Snowflake?> = Optional.Missing,
     @SerialName("emoji_name")
-    val emojiName: Optional<String?> = Optional.Missing()
+    val emojiName: Optional<String?> = Optional.Missing
 )

@@ -17,13 +17,13 @@ import kotlin.time.Duration
 public class StartForumThreadBuilder(public var name: String) : AuditRequestBuilder<MultipartStartThreadRequest> {
     override var reason: String? = null
 
-    private var _autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing()
+    private var _autoArchiveDuration: Optional<ArchiveDuration> = Optional.Missing
     public var autoArchiveDuration: ArchiveDuration? by ::_autoArchiveDuration.delegate()
 
-    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing()
+    private var _rateLimitPerUser: Optional<Duration?> = Optional.Missing
     public var rateLimitPerUser: Duration? by ::_rateLimitPerUser.delegate()
 
-    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing()
+    private var _appliedTags: Optional<MutableList<Snowflake>> = Optional.Missing
     public var appliedTags: MutableList<Snowflake>? by ::_appliedTags.delegate()
 
     public var message: ForumMessageCreateBuilder = ForumMessageCreateBuilder()

@@ -7,9 +7,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class ClientStatusData(
-    val desktop: Optional<PresenceStatus> = Optional.Missing(),
-    val mobile: Optional<PresenceStatus> = Optional.Missing(),
-    val web: Optional<PresenceStatus> = Optional.Missing()
+    val desktop: Optional<PresenceStatus> = Optional.Missing,
+    val mobile: Optional<PresenceStatus> = Optional.Missing,
+    val web: Optional<PresenceStatus> = Optional.Missing
 ) {
     public companion object {
         public fun from(entity: DiscordClientStatus): ClientStatusData = with(entity) {

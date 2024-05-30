@@ -111,18 +111,18 @@ public sealed class DiscordComponent {
 @Serializable
 public data class DiscordChatComponent(
      override val type: ComponentType,
-     val style: Optional<ButtonStyle> = Optional.Missing(),
-     override val label: Optional<String> = Optional.Missing(),
-     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+     val style: Optional<ButtonStyle> = Optional.Missing,
+     override val label: Optional<String> = Optional.Missing,
+     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing,
     @SerialName("custom_id")
-     override val customId: Optional<String> = Optional.Missing(),
-     override val url: Optional<String> = Optional.Missing(),
+     override val customId: Optional<String> = Optional.Missing,
+     override val url: Optional<String> = Optional.Missing,
      override val disabled: OptionalBoolean = OptionalBoolean.Missing,
-     override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-     override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
-     override val placeholder: Optional<String> = Optional.Missing(),
+     override val components: Optional<List<DiscordComponent>> = Optional.Missing,
+     override val options: Optional<List<DiscordSelectOption>> = Optional.Missing,
+     override val placeholder: Optional<String> = Optional.Missing,
     @SerialName("default_values")
-    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing,
     @SerialName("min_values")
      override val minValues: OptionalInt = OptionalInt.Missing,
     @SerialName("max_values")
@@ -132,26 +132,26 @@ public data class DiscordChatComponent(
     @SerialName("max_length")
      override val maxLength: OptionalInt = OptionalInt.Missing,
      override val required: OptionalBoolean = OptionalBoolean.Missing,
-     override val value: Optional<String> = Optional.Missing(),
+     override val value: Optional<String> = Optional.Missing,
      @SerialName("channel_types")
-     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing,
 ) : DiscordComponent()
 
 @Serializable
 public data class DiscordTextInputComponent(
      override val type: ComponentType,
-     public val style: Optional<TextInputStyle> = Optional.Missing(),
-     override val label: Optional<String> = Optional.Missing(),
-     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
+     public val style: Optional<TextInputStyle> = Optional.Missing,
+     override val label: Optional<String> = Optional.Missing,
+     override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing,
     @SerialName("custom_id")
-     override val customId: Optional<String> = Optional.Missing(),
-     override val url: Optional<String> = Optional.Missing(),
+     override val customId: Optional<String> = Optional.Missing,
+     override val url: Optional<String> = Optional.Missing,
      override val disabled: OptionalBoolean = OptionalBoolean.Missing,
-     override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
-     override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
-     override val placeholder: Optional<String> = Optional.Missing(),
+     override val components: Optional<List<DiscordComponent>> = Optional.Missing,
+     override val options: Optional<List<DiscordSelectOption>> = Optional.Missing,
+     override val placeholder: Optional<String> = Optional.Missing,
     @SerialName("default_values")
-    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
+    override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing,
     @SerialName("min_values")
      override val minValues: OptionalInt = OptionalInt.Missing,
     @SerialName("max_values")
@@ -161,7 +161,7 @@ public data class DiscordTextInputComponent(
     @SerialName("max_length")
      override val maxLength: OptionalInt = OptionalInt.Missing,
      override val required: OptionalBoolean = OptionalBoolean.Missing,
-     override val value: Optional<String> = Optional.Missing(),
+     override val value: Optional<String> = Optional.Missing,
      @SerialName("channel_types")
-     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+     override val channelTypes: Optional<List<ChannelType>> = Optional.Missing,
 ) : DiscordComponent()

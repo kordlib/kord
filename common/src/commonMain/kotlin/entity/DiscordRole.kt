@@ -24,14 +24,14 @@ public data class DiscordRole(
     val name: String,
     val color: Int,
     val hoist: Boolean,
-    val icon: Optional<String?> = Optional.Missing(),
+    val icon: Optional<String?> = Optional.Missing,
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String?> = Optional.Missing(),
+    val unicodeEmoji: Optional<String?> = Optional.Missing,
     val position: Int,
     val permissions: Permissions,
     val managed: Boolean,
     val mentionable: Boolean,
-    val tags: Optional<DiscordRoleTags> = Optional.Missing(),
+    val tags: Optional<DiscordRoleTags> = Optional.Missing,
     val flags: RoleFlags,
 )
 
@@ -42,29 +42,29 @@ public data class DiscordRoleTags(
     @SerialName("integration_id")
     val integrationId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("premium_subscriber")
-    val premiumSubscriber: Optional<Nothing?> = Optional.Missing(),
+    val premiumSubscriber: Optional<Nothing?> = Optional.Missing,
     @SerialName("subscription_listing_id")
     val subscriptionListingId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("available_for_purchase")
-    val availableForPurchase: Optional<Nothing?> = Optional.Missing(),
+    val availableForPurchase: Optional<Nothing?> = Optional.Missing,
     @SerialName("guild_connections")
-    val guildConnections: Optional<Nothing?> = Optional.Missing(),
+    val guildConnections: Optional<Nothing?> = Optional.Missing,
 )
 
 @Serializable
 public data class DiscordPartialRole(
     val id: Snowflake,
-    val name: Optional<String> = Optional.Missing(),
+    val name: Optional<String> = Optional.Missing,
     val color: OptionalInt = OptionalInt.Missing,
     val hoist: OptionalBoolean = OptionalBoolean.Missing,
-    val icon: Optional<String?> = Optional.Missing(),
+    val icon: Optional<String?> = Optional.Missing,
     @SerialName("unicode_emoji")
-    val unicodeEmoji: Optional<String?> = Optional.Missing(),
+    val unicodeEmoji: Optional<String?> = Optional.Missing,
     val position: OptionalInt = OptionalInt.Missing,
-    val permissions: Optional<Permissions> = Optional.Missing(),
+    val permissions: Optional<Permissions> = Optional.Missing,
     val managed: OptionalBoolean = OptionalBoolean.Missing,
     val mentionable: OptionalBoolean = OptionalBoolean.Missing,
-    val tags: Optional<DiscordRoleTags> = Optional.Missing(),
+    val tags: Optional<DiscordRoleTags> = Optional.Missing,
 )
 
 @Serializable

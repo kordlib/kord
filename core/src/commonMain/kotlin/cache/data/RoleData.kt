@@ -14,13 +14,13 @@ public data class RoleData(
     val name: String,
     val color: Int,
     val hoisted: Boolean,
-    val icon: Optional<String?> = Optional.Missing(),
-    val unicodeEmoji: Optional<String?> = Optional.Missing(),
+    val icon: Optional<String?> = Optional.Missing,
+    val unicodeEmoji: Optional<String?> = Optional.Missing,
     val position: Int,
     val permissions: Permissions,
     val managed: Boolean,
     val mentionable: Boolean,
-    val tags: Optional<RoleTagsData> = Optional.Missing(),
+    val tags: Optional<RoleTagsData> = Optional.Missing,
     val flags: RoleFlags,
 ) {
     public companion object {

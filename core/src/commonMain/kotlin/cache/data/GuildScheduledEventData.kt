@@ -15,7 +15,7 @@ public data class GuildScheduledEventData(
     val channelId: Snowflake?,
     val creatorId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val name: String,
-    val description: Optional<String?> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing,
     val scheduledStartTime: Instant,
     val scheduledEndTime: Instant?,
     val privacyLevel: GuildScheduledEventPrivacyLevel,
@@ -23,9 +23,9 @@ public data class GuildScheduledEventData(
     val entityId: Snowflake?,
     val entityType: ScheduledEntityType,
     val entityMetadata: GuildScheduledEventEntityMetadata?,
-    val creator: Optional<UserData> = Optional.Missing(),
+    val creator: Optional<UserData> = Optional.Missing,
     val userCount: OptionalInt = OptionalInt.Missing,
-    val image: Optional<String?> = Optional.Missing(),
+    val image: Optional<String?> = Optional.Missing,
 ) {
     public companion object {
         public fun from(event: DiscordGuildScheduledEvent): GuildScheduledEventData = with(event) {

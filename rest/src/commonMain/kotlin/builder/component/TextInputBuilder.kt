@@ -27,14 +27,14 @@ public class TextInputBuilder(
      */
     public var allowedLength: ClosedRange<Int>? = null
 
-    private var _placeholder: Optional<String> = Optional.Missing()
+    private var _placeholder: Optional<String> = Optional.Missing
 
     /**
      * Custom placeholder if no value is selected, max 100 characters.
      */
     public var placeholder: String? by ::_placeholder.delegate()
 
-    private var _value: Optional<String> = Optional.Missing()
+    private var _value: Optional<String> = Optional.Missing
 
     /**
      * A pre-filled value for this component, max 4000 characters.

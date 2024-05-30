@@ -8,11 +8,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 public data class GuildOnboardingModifyRequest(
-    val prompts: Optional<List<OnboardingPromptRequest>> = Optional.Missing(),
+    val prompts: Optional<List<OnboardingPromptRequest>> = Optional.Missing,
     @SerialName("default_channel_ids")
-    val defaultChannelIds: Optional<List<Snowflake>> = Optional.Missing(),
+    val defaultChannelIds: Optional<List<Snowflake>> = Optional.Missing,
     val enabled: OptionalBoolean = OptionalBoolean.Missing,
-    val mode: Optional<OnboardingMode> = Optional.Missing(),
+    val mode: Optional<OnboardingMode> = Optional.Missing,
 )
 
 @Serializable

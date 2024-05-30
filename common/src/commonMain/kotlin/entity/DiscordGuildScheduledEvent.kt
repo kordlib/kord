@@ -70,7 +70,7 @@ public data class DiscordGuildScheduledEvent(
     @SerialName("creator_id")
     val creatorId: OptionalSnowflake? = OptionalSnowflake.Missing,
     val name: String,
-    val description: Optional<String?> = Optional.Missing(),
+    val description: Optional<String?> = Optional.Missing,
     @SerialName("scheduled_start_time")
     val scheduledStartTime: Instant,
     @SerialName("scheduled_end_time")
@@ -84,10 +84,10 @@ public data class DiscordGuildScheduledEvent(
     val entityId: Snowflake?,
     @SerialName("entity_metadata")
     val entityMetadata: GuildScheduledEventEntityMetadata?,
-    val creator: Optional<DiscordUser> = Optional.Missing(),
+    val creator: Optional<DiscordUser> = Optional.Missing,
     @SerialName("user_count")
     val userCount: OptionalInt = OptionalInt.Missing,
-    val image: Optional<String?> = Optional.Missing(),
+    val image: Optional<String?> = Optional.Missing,
 )
 
 /**
@@ -97,5 +97,5 @@ public data class DiscordGuildScheduledEvent(
  */
 @Serializable
 public data class GuildScheduledEventEntityMetadata(
-    val location: Optional<String> = Optional.Missing()
+    val location: Optional<String> = Optional.Missing
 )

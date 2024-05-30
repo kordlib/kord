@@ -278,13 +278,13 @@ public data class ReadyData(
     @SerialName("resume_gateway_url")
     val resumeGatewayUrl: String,
     @SerialName("geo_ordered_rtc_regions")
-    val geoOrderedRtcRegions: Optional<JsonElement?> = Optional.Missing(),
+    val geoOrderedRtcRegions: Optional<JsonElement?> = Optional.Missing,
     @SerialName("guild_hashes")
-    val guildHashes: Optional<JsonElement?> = Optional.Missing(),
-    val application: Optional<JsonElement?> = Optional.Missing(),
+    val guildHashes: Optional<JsonElement?> = Optional.Missing,
+    val application: Optional<JsonElement?> = Optional.Missing,
     @SerialName("_trace")
     val traces: List<String>,
-    val shard: Optional<DiscordShard> = Optional.Missing(),
+    val shard: Optional<DiscordShard> = Optional.Missing,
 )
 
 @Serializable(with = Heartbeat.Serializer::class)
@@ -441,17 +441,17 @@ public data class DiscordCreatedInvite(
     val createdAt: Instant,
     @SerialName("guild_id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
-    val inviter: Optional<DiscordUser> = Optional.Missing(),
+    val inviter: Optional<DiscordUser> = Optional.Missing,
     @SerialName("max_age")
     val maxAge: DurationInSeconds,
     @SerialName("max_uses")
     val maxUses: Int,
     @SerialName("target_type")
-    val targetType: Optional<InviteTargetType> = Optional.Missing(),
+    val targetType: Optional<InviteTargetType> = Optional.Missing,
     @SerialName("target_user")
-    val targetUser: Optional<DiscordUser> = Optional.Missing(),
+    val targetUser: Optional<DiscordUser> = Optional.Missing,
     @SerialName("target_application")
-    val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing(),
+    val targetApplication: Optional<DiscordPartialApplication> = Optional.Missing,
     val temporary: Boolean,
     val uses: Int,
 )
@@ -583,7 +583,7 @@ public data class DiscordThreadListSync(
     @SerialName("guild_id")
     val guildId: Snowflake,
     @SerialName("channel_ids")
-    val channelIds: Optional<List<Snowflake>> = Optional.Missing(),
+    val channelIds: Optional<List<Snowflake>> = Optional.Missing,
     val threads: List<DiscordChannel>,
     val members: List<DiscordThreadMember>
 )
@@ -596,7 +596,7 @@ public data class DiscordThreadMembersUpdate(
     @SerialName("member_count")
     val memberCount: Int,
     @SerialName("added_members")
-    val addedMembers: Optional<List<DiscordThreadMember>> = Optional.Missing(),
+    val addedMembers: Optional<List<DiscordThreadMember>> = Optional.Missing,
     @SerialName("removed_member_ids")
-    val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing()
+    val removedMemberIds: Optional<List<Snowflake>> = Optional.Missing
 )

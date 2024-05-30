@@ -12,7 +12,7 @@ public data class CurrentVoiceStateModifyRequest(
     val channelId: OptionalSnowflake = OptionalSnowflake.Missing,
     val suppress: OptionalBoolean = OptionalBoolean.Missing,
     @SerialName("request_to_speak_timestamp")
-    val requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing(),
+    val requestToSpeakTimestamp: Optional<Instant?> = Optional.Missing,
 )
 
 @Serializable

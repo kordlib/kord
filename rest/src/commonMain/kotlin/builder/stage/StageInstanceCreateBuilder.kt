@@ -21,7 +21,7 @@ public class StageInstanceCreateBuilder(
 
     override var reason: String? = null
 
-    private var _privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing()
+    private var _privacyLevel: Optional<StageInstancePrivacyLevel> = Optional.Missing
 
     /** The [privacy level][StageInstancePrivacyLevel] of the Stage instance (default [GuildOnly]). */
     public var privacyLevel: StageInstancePrivacyLevel? by ::_privacyLevel.delegate()
