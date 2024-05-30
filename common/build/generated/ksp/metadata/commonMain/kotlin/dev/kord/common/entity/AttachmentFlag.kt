@@ -9,14 +9,7 @@ import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [AttachmentFlag]s in the
@@ -164,7 +157,7 @@ public sealed class AttachmentFlag(
  * @see AttachmentFlags.Builder
  */
 @JvmInline
-@Serializable(with = AttachmentFlags.Serializer::class)
+@Serializable
 public value class AttachmentFlags internal constructor(
     /**
      * The raw value used by Discord.
@@ -271,21 +264,6 @@ public value class AttachmentFlags internal constructor(
          * this [Builder].
          */
         public fun build(): AttachmentFlags = AttachmentFlags(value)
-    }
-
-    internal object Serializer : KSerializer<AttachmentFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.AttachmentFlags",
-                PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: AttachmentFlags) {
-            encoder.encodeSerializableValue(delegate, value.value)
-        }
-
-        override fun deserialize(decoder: Decoder): AttachmentFlags =
-                AttachmentFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

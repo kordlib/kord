@@ -1756,6 +1756,13 @@ final value class dev.kord.gateway/Intents { // dev.kord.gateway/Intents|null[0]
     final fun toString(): kotlin/String // dev.kord.gateway/Intents.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>): dev.kord.gateway/Intents // dev.kord.gateway/Intents.copy|copy(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
     final inline fun copy0(kotlin/Function1<dev.kord.gateway/Intents.Builder, kotlin/Unit>): dev.kord.gateway/Intents // dev.kord.gateway/Intents.copy0|copy0(kotlin.Function1<dev.kord.gateway.Intents.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.gateway/Intents> { // dev.kord.gateway/Intents.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.gateway/Intents.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.gateway/Intents // dev.kord.gateway/Intents.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.gateway/Intents) // dev.kord.gateway/Intents.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.gateway.Intents){}[0]
+        final val descriptor // dev.kord.gateway/Intents.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.gateway/Intents.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.gateway/Intents.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.gateway/Intents> // dev.kord.gateway/Intents.Companion.serializer|serializer(){}[0]
     }

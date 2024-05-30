@@ -12,12 +12,6 @@ import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [SystemChannelFlag]s in the
@@ -200,7 +194,7 @@ public sealed class SystemChannelFlag(
  * @see SystemChannelFlags.Builder
  */
 @JvmInline
-@Serializable(with = SystemChannelFlags.Serializer::class)
+@Serializable
 public value class SystemChannelFlags internal constructor(
     /**
      * The raw code used by Discord.
@@ -307,21 +301,6 @@ public value class SystemChannelFlags internal constructor(
          * in this [Builder].
          */
         public fun build(): SystemChannelFlags = SystemChannelFlags(code)
-    }
-
-    internal object Serializer : KSerializer<SystemChannelFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.SystemChannelFlags",
-                PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: SystemChannelFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): SystemChannelFlags =
-                SystemChannelFlags(decoder.decodeSerializableValue(delegate))
     }
 
     public companion object {

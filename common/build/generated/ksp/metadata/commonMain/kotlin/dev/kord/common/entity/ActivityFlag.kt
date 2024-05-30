@@ -9,14 +9,7 @@ import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [ActivityFlag]s in the
@@ -193,7 +186,7 @@ public sealed class ActivityFlag(
  * @see ActivityFlags.Builder
  */
 @JvmInline
-@Serializable(with = ActivityFlags.Serializer::class)
+@Serializable
 public value class ActivityFlags internal constructor(
     /**
      * The raw value used by Discord.
@@ -300,20 +293,6 @@ public value class ActivityFlags internal constructor(
          * this [Builder].
          */
         public fun build(): ActivityFlags = ActivityFlags(value)
-    }
-
-    internal object Serializer : KSerializer<ActivityFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ActivityFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: ActivityFlags) {
-            encoder.encodeSerializableValue(delegate, value.value)
-        }
-
-        override fun deserialize(decoder: Decoder): ActivityFlags =
-                ActivityFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

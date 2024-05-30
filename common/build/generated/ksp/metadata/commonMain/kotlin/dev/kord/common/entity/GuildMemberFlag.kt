@@ -9,14 +9,7 @@ import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [GuildMemberFlag]s in the
@@ -185,7 +178,7 @@ public sealed class GuildMemberFlag(
  * @see GuildMemberFlags.Builder
  */
 @JvmInline
-@Serializable(with = GuildMemberFlags.Serializer::class)
+@Serializable
 public value class GuildMemberFlags internal constructor(
     /**
      * The raw code used by Discord.
@@ -292,21 +285,6 @@ public value class GuildMemberFlags internal constructor(
          * this [Builder].
          */
         public fun build(): GuildMemberFlags = GuildMemberFlags(code)
-    }
-
-    internal object Serializer : KSerializer<GuildMemberFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.GuildMemberFlags",
-                PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: GuildMemberFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): GuildMemberFlags =
-                GuildMemberFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

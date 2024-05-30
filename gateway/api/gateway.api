@@ -1299,6 +1299,17 @@ public final class dev/kord/gateway/Intents {
 	public final synthetic fun unbox-impl ()Ldev/kord/common/DiscordBitSet;
 }
 
+public final class dev/kord/gateway/Intents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Ldev/kord/gateway/Intents$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize-4g_-1Vw (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/common/DiscordBitSet;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize-uMStZ6M (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/common/DiscordBitSet;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/gateway/Intents$Builder {
 	public fun <init> ()V
 	public fun <init> (Ldev/kord/common/DiscordBitSet;)V

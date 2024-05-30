@@ -5238,6 +5238,13 @@ final value class dev.kord.common.entity/ActivityFlags { // dev.kord.common.enti
     final fun plus(dev.kord.common.entity/ActivityFlags): dev.kord.common.entity/ActivityFlags // dev.kord.common.entity/ActivityFlags.plus|plus(dev.kord.common.entity.ActivityFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/ActivityFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/ActivityFlags.Builder, kotlin/Unit>): dev.kord.common.entity/ActivityFlags // dev.kord.common.entity/ActivityFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.ActivityFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/ActivityFlags> { // dev.kord.common.entity/ActivityFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/ActivityFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/ActivityFlags // dev.kord.common.entity/ActivityFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/ActivityFlags) // dev.kord.common.entity/ActivityFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.ActivityFlags){}[0]
+        final val descriptor // dev.kord.common.entity/ActivityFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/ActivityFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/ActivityFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/ActivityFlags> // dev.kord.common.entity/ActivityFlags.Companion.serializer|serializer(){}[0]
     }
@@ -5265,6 +5272,13 @@ final value class dev.kord.common.entity/ApplicationFlags { // dev.kord.common.e
     final fun plus(dev.kord.common.entity/ApplicationFlags): dev.kord.common.entity/ApplicationFlags // dev.kord.common.entity/ApplicationFlags.plus|plus(dev.kord.common.entity.ApplicationFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/ApplicationFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/ApplicationFlags.Builder, kotlin/Unit>): dev.kord.common.entity/ApplicationFlags // dev.kord.common.entity/ApplicationFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.ApplicationFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/ApplicationFlags> { // dev.kord.common.entity/ApplicationFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/ApplicationFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/ApplicationFlags // dev.kord.common.entity/ApplicationFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/ApplicationFlags) // dev.kord.common.entity/ApplicationFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.ApplicationFlags){}[0]
+        final val descriptor // dev.kord.common.entity/ApplicationFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/ApplicationFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/ApplicationFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/ApplicationFlags> // dev.kord.common.entity/ApplicationFlags.Companion.serializer|serializer(){}[0]
     }
@@ -5292,6 +5306,13 @@ final value class dev.kord.common.entity/AttachmentFlags { // dev.kord.common.en
     final fun plus(dev.kord.common.entity/AttachmentFlags): dev.kord.common.entity/AttachmentFlags // dev.kord.common.entity/AttachmentFlags.plus|plus(dev.kord.common.entity.AttachmentFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/AttachmentFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/AttachmentFlags.Builder, kotlin/Unit>): dev.kord.common.entity/AttachmentFlags // dev.kord.common.entity/AttachmentFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.AttachmentFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/AttachmentFlags> { // dev.kord.common.entity/AttachmentFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/AttachmentFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/AttachmentFlags // dev.kord.common.entity/AttachmentFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/AttachmentFlags) // dev.kord.common.entity/AttachmentFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.AttachmentFlags){}[0]
+        final val descriptor // dev.kord.common.entity/AttachmentFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/AttachmentFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/AttachmentFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/AttachmentFlags> // dev.kord.common.entity/AttachmentFlags.Companion.serializer|serializer(){}[0]
     }
@@ -5319,6 +5340,13 @@ final value class dev.kord.common.entity/ChannelFlags { // dev.kord.common.entit
     final fun plus(dev.kord.common.entity/ChannelFlags): dev.kord.common.entity/ChannelFlags // dev.kord.common.entity/ChannelFlags.plus|plus(dev.kord.common.entity.ChannelFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/ChannelFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/ChannelFlags.Builder, kotlin/Unit>): dev.kord.common.entity/ChannelFlags // dev.kord.common.entity/ChannelFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.ChannelFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/ChannelFlags> { // dev.kord.common.entity/ChannelFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/ChannelFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/ChannelFlags // dev.kord.common.entity/ChannelFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/ChannelFlags) // dev.kord.common.entity/ChannelFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.ChannelFlags){}[0]
+        final val descriptor // dev.kord.common.entity/ChannelFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/ChannelFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/ChannelFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/ChannelFlags> // dev.kord.common.entity/ChannelFlags.Companion.serializer|serializer(){}[0]
     }
@@ -5346,6 +5374,13 @@ final value class dev.kord.common.entity/GuildMemberFlags { // dev.kord.common.e
     final fun plus(dev.kord.common.entity/GuildMemberFlags): dev.kord.common.entity/GuildMemberFlags // dev.kord.common.entity/GuildMemberFlags.plus|plus(dev.kord.common.entity.GuildMemberFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/GuildMemberFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/GuildMemberFlags.Builder, kotlin/Unit>): dev.kord.common.entity/GuildMemberFlags // dev.kord.common.entity/GuildMemberFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.GuildMemberFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/GuildMemberFlags> { // dev.kord.common.entity/GuildMemberFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/GuildMemberFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/GuildMemberFlags // dev.kord.common.entity/GuildMemberFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/GuildMemberFlags) // dev.kord.common.entity/GuildMemberFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.GuildMemberFlags){}[0]
+        final val descriptor // dev.kord.common.entity/GuildMemberFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/GuildMemberFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/GuildMemberFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/GuildMemberFlags> // dev.kord.common.entity/GuildMemberFlags.Companion.serializer|serializer(){}[0]
     }
@@ -5373,6 +5408,13 @@ final value class dev.kord.common.entity/MessageFlags { // dev.kord.common.entit
     final fun plus(dev.kord.common.entity/MessageFlags): dev.kord.common.entity/MessageFlags // dev.kord.common.entity/MessageFlags.plus|plus(dev.kord.common.entity.MessageFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/MessageFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/MessageFlags.Builder, kotlin/Unit>): dev.kord.common.entity/MessageFlags // dev.kord.common.entity/MessageFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.MessageFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/MessageFlags> { // dev.kord.common.entity/MessageFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/MessageFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/MessageFlags // dev.kord.common.entity/MessageFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/MessageFlags) // dev.kord.common.entity/MessageFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.MessageFlags){}[0]
+        final val descriptor // dev.kord.common.entity/MessageFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/MessageFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/MessageFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/MessageFlags> // dev.kord.common.entity/MessageFlags.Companion.serializer|serializer(){}[0]
     }
@@ -5404,6 +5446,13 @@ final value class dev.kord.common.entity/Permissions { // dev.kord.common.entity
     final fun toString(): kotlin/String // dev.kord.common.entity/Permissions.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/Permissions.Builder, kotlin/Unit>): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions.copy|copy(kotlin.Function1<dev.kord.common.entity.Permissions.Builder,kotlin.Unit>){}[0]
     final inline fun copy0(kotlin/Function1<dev.kord.common.entity/Permissions.Builder, kotlin/Unit>): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions.copy0|copy0(kotlin.Function1<dev.kord.common.entity.Permissions.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/Permissions> { // dev.kord.common.entity/Permissions.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/Permissions.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/Permissions // dev.kord.common.entity/Permissions.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/Permissions) // dev.kord.common.entity/Permissions.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.Permissions){}[0]
+        final val descriptor // dev.kord.common.entity/Permissions.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/Permissions.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/Permissions.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/Permissions> // dev.kord.common.entity/Permissions.Companion.serializer|serializer(){}[0]
         final val NewCompanion // dev.kord.common.entity/Permissions.Companion.NewCompanion|{}NewCompanion[0]
@@ -5433,6 +5482,13 @@ final value class dev.kord.common.entity/RoleFlags { // dev.kord.common.entity/R
     final fun plus(dev.kord.common.entity/RoleFlags): dev.kord.common.entity/RoleFlags // dev.kord.common.entity/RoleFlags.plus|plus(dev.kord.common.entity.RoleFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/RoleFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/RoleFlags.Builder, kotlin/Unit>): dev.kord.common.entity/RoleFlags // dev.kord.common.entity/RoleFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.RoleFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/RoleFlags> { // dev.kord.common.entity/RoleFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/RoleFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/RoleFlags // dev.kord.common.entity/RoleFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/RoleFlags) // dev.kord.common.entity/RoleFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.RoleFlags){}[0]
+        final val descriptor // dev.kord.common.entity/RoleFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/RoleFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/RoleFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/RoleFlags> // dev.kord.common.entity/RoleFlags.Companion.serializer|serializer(){}[0]
     }
@@ -5463,6 +5519,13 @@ final value class dev.kord.common.entity/SystemChannelFlags { // dev.kord.common
     final fun plus(dev.kord.common.entity/SystemChannelFlags): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags.plus|plus(dev.kord.common.entity.SystemChannelFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.common.entity/SystemChannelFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/SystemChannelFlags.Builder, kotlin/Unit>): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.SystemChannelFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/SystemChannelFlags> { // dev.kord.common.entity/SystemChannelFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/SystemChannelFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/SystemChannelFlags // dev.kord.common.entity/SystemChannelFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/SystemChannelFlags) // dev.kord.common.entity/SystemChannelFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.SystemChannelFlags){}[0]
+        final val descriptor // dev.kord.common.entity/SystemChannelFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/SystemChannelFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/SystemChannelFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/SystemChannelFlags> // dev.kord.common.entity/SystemChannelFlags.Companion.serializer|serializer(){}[0]
         final val NewCompanion // dev.kord.common.entity/SystemChannelFlags.Companion.NewCompanion|{}NewCompanion[0]
@@ -5493,6 +5556,13 @@ final value class dev.kord.common.entity/UserFlags { // dev.kord.common.entity/U
     final fun toString(): kotlin/String // dev.kord.common.entity/UserFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.common.entity/UserFlags.Builder, kotlin/Unit>): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags.copy|copy(kotlin.Function1<dev.kord.common.entity.UserFlags.Builder,kotlin.Unit>){}[0]
     final inline fun copy0(kotlin/Function1<dev.kord.common.entity/UserFlags.Builder, kotlin/Unit>): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags.copy0|copy0(kotlin.Function1<dev.kord.common.entity.UserFlags.Builder,kotlin.Unit>){}[0]
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.common.entity/UserFlags> { // dev.kord.common.entity/UserFlags.$serializer|null[0]
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.common.entity/UserFlags.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.common.entity/UserFlags // dev.kord.common.entity/UserFlags.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.common.entity/UserFlags) // dev.kord.common.entity/UserFlags.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.common.entity.UserFlags){}[0]
+        final val descriptor // dev.kord.common.entity/UserFlags.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.common.entity/UserFlags.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+    }
     final object Companion { // dev.kord.common.entity/UserFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.common.entity/UserFlags> // dev.kord.common.entity/UserFlags.Companion.serializer|serializer(){}[0]
     }

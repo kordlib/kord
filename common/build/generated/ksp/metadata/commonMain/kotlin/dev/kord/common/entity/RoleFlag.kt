@@ -9,14 +9,7 @@ import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [RoleFlag]s in the
@@ -156,7 +149,7 @@ public sealed class RoleFlag(
  * @see RoleFlags.Builder
  */
 @JvmInline
-@Serializable(with = RoleFlags.Serializer::class)
+@Serializable
 public value class RoleFlags internal constructor(
     /**
      * The raw value used by Discord.
@@ -258,20 +251,6 @@ public value class RoleFlags internal constructor(
          * [Builder].
          */
         public fun build(): RoleFlags = RoleFlags(value)
-    }
-
-    internal object Serializer : KSerializer<RoleFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.RoleFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: RoleFlags) {
-            encoder.encodeSerializableValue(delegate, value.value)
-        }
-
-        override fun deserialize(decoder: Decoder): RoleFlags =
-                RoleFlags(decoder.decodeSerializableValue(delegate))
     }
 }
 

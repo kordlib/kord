@@ -80,10 +80,8 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
     addClass(collectionCN) {
         addCollectionKDoc()
         addAnnotation<JvmInline> {}
-        addAnnotation<Serializable> {
-            addMember("with·=·%T.Serializer::class", collectionCN)
-        }
-        addModifiers(PUBLIC, VALUE)
+        addAnnotation<Serializable> {}
+        addModifiers(VALUE)
         primaryConstructor {
             addModifiers(INTERNAL)
             addParameter(valueName, valueCN)
@@ -129,7 +127,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
             addStatement("return \"${collectionCN.simpleName}(values=\$values)\"")
         }
         addBuilder()
-        addSerializer()
         if (collectionHadNewCompanion) {
             addDeprecatedNewCompanion()
         }
