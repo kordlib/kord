@@ -13,8 +13,8 @@ import kotlinx.serialization.json.JsonPrimitive
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
-@KordDsl
 @Suppress("PropertyName")
+@KordDsl
 public sealed class OptionsBuilder(
     override var name: String,
     override var description: String,
@@ -66,11 +66,7 @@ public sealed class BaseChoiceBuilder<T>(
     internal var _choices: Optional<MutableList<Choice>> = Optional.Missing()
     public var choices: MutableList<Choice>? by ::_choices.delegate()
 
-    public abstract fun choice(
-        name: String,
-        value: T,
-        nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing()
-    )
+    public abstract fun choice(name: String, value: T, nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing())
 
     /**
      * Registers a new choice with [name] representing value and applies [localizationsBuilder] to it
