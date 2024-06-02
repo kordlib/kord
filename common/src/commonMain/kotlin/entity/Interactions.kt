@@ -382,7 +382,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
-                null, is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")
+                is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")
             }
         }
 
@@ -579,7 +579,7 @@ public sealed class CommandArgument<out T> : Option() {
                     is AutoCompleteArgument, is StringArgument -> encodeStringElement(
                         descriptor,
                         1,
-                        value.value as String
+                        value.value
                     )
                 }
             }

@@ -1,7 +1,7 @@
 [versions]
 
 # api dependencies
-kotlin = "1.9.24" # https://github.com/JetBrains/kotlin
+kotlin = "2.0.0" # https://github.com/JetBrains/kotlin
 ktor = "2.3.11" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.6.3" # https://github.com/Kotlin/kotlinx.serialization
@@ -18,7 +18,7 @@ stately = "2.0.7" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
-ksp = "1.9.24-1.0.20" # https://github.com/google/ksp
+ksp = "2.0.0-1.0.21" # https://github.com/google/ksp
 kotlinpoet = "1.16.0" # https://github.com/square/kotlinpoet
 
 # tests
