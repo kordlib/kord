@@ -1,0 +1,13 @@
+version: "1.0"
+
+profile:
+  name: qodana.recommended
+
+exclude:
+  - name: All
+    paths:
+      - voice/src/main/java/com/iwebpp/crypto/TweetNaclFast.java
+
+projectJDK: "8"
+
+linter: jetbrains/qodana-jvm
