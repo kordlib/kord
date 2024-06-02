@@ -5693,7 +5693,7 @@ sealed class <#A: out kotlin/Any?> dev.kord.common.entity/CommandArgument : dev.
             final fun <get-value>(): dev.kord.common.entity/Snowflake // dev.kord.common.entity/CommandArgument.AttachmentArgument.value.<get-value>|<get-value>(){}[0]
     }
     final class AutoCompleteArgument : dev.kord.common.entity/CommandArgument<kotlin/String> { // dev.kord.common.entity/CommandArgument.AutoCompleteArgument|null[0]
-        constructor <init>(kotlin/String, dev.kord.common.entity/ApplicationCommandOptionType, kotlin/String, dev.kord.common.entity.optional/OptionalBoolean =...) // dev.kord.common.entity/CommandArgument.AutoCompleteArgument.<init>|<init>(kotlin.String;dev.kord.common.entity.ApplicationCommandOptionType;kotlin.String;dev.kord.common.entity.optional.OptionalBoolean){}[0]
+        constructor <init>(kotlin/String, dev.kord.common.entity/ApplicationCommandOptionType, kotlin/String, dev.kord.common.entity.optional/OptionalBoolean) // dev.kord.common.entity/CommandArgument.AutoCompleteArgument.<init>|<init>(kotlin.String;dev.kord.common.entity.ApplicationCommandOptionType;kotlin.String;dev.kord.common.entity.optional.OptionalBoolean){}[0]
         final fun component1(): kotlin/String // dev.kord.common.entity/CommandArgument.AutoCompleteArgument.component1|component1(){}[0]
         final fun component2(): dev.kord.common.entity/ApplicationCommandOptionType // dev.kord.common.entity/CommandArgument.AutoCompleteArgument.component2|component2(){}[0]
         final fun component3(): kotlin/String // dev.kord.common.entity/CommandArgument.AutoCompleteArgument.component3|component3(){}[0]

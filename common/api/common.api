@@ -1859,7 +1859,6 @@ public final class dev/kord/common/entity/CommandArgument$AttachmentArgument : d
 
 public final class dev/kord/common/entity/CommandArgument$AutoCompleteArgument : dev/kord/common/entity/CommandArgument {
 	public fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;)V
-	public synthetic fun <init> (Ljava/lang/String;Ldev/kord/common/entity/ApplicationCommandOptionType;Ljava/lang/String;Ldev/kord/common/entity/optional/OptionalBoolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/common/entity/ApplicationCommandOptionType;
 	public final fun component3 ()Ljava/lang/String;
