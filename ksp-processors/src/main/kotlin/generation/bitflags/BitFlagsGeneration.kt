@@ -5,6 +5,7 @@ import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.SET
+import com.squareup.kotlinpoet.jvm.jvmInline
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
@@ -79,7 +80,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
     }
     addClass(collectionCN) {
         addCollectionKDoc()
-        addAnnotation<JvmInline>()
+        jvmInline()
         addAnnotation<Serializable>()
         addModifiers(VALUE)
         primaryConstructor {
