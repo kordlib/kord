@@ -88,18 +88,26 @@ private fun Flow<RTPPacket>.decrypt(encryption: VoiceEncryption, key: ByteArray)
     val unbox = encryption.createUnbox(key)
     val nonceBuffer = ByteArray(encryption.nonceLength).mutableCursor()
 
+    val aeadBuffer = ByteArray(12)
+    val aeadCursor = aeadBuffer.mutableCursor()
+    val aeadView = aeadBuffer.view()
+
     val decryptedBuffer = ByteArray(512)
     val decryptedCursor = decryptedBuffer.mutableCursor()
     val decryptedView = decryptedBuffer.view()
 
     return mapNotNull { packet ->
+        // strip and write the nonce.
         nonceBuffer.reset()
-        decryptedCursor.reset()
-
         nonceBuffer.writeByteView(unbox.getNonce(packet))
 
-        val decrypted = unbox.apply(packet.payload, nonceBuffer.data, decryptedCursor)
-        if (!decrypted) {
+        // write the RTP packet header to the AEAD buffer.
+        aeadCursor.reset()
+        packet.writeHeader(aeadCursor)
+
+        // decrypt the RTP packet payload.
+        decryptedCursor.reset()
+        if (!unbox.apply(packet.payload, decryptedCursor, aeadView, nonceBuffer.data)) {
             defaultStreamsLogger.trace { "failed to decrypt the packet with data ${packet.payload.data.contentToString()} at offset ${packet.payload.dataStart} and length ${packet.payload.viewSize - 4}" }
             return@mapNotNull null
         }

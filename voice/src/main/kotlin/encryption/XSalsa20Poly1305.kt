@@ -37,7 +37,7 @@ public data class XSalsa20Poly1305(public val nonceStrategyFactory: NonceStrateg
             override val overhead: Int
                 get() = boxzerobytesLength + nonceStrategyFactory.length
 
-            override fun apply(src: ByteArrayView, nonce: ByteArray, dst: MutableByteArrayCursor): Boolean {
+            override fun apply(src: ByteArrayView, dst: MutableByteArrayCursor, aead: ByteArrayView, nonce: ByteArray): Boolean {
                 m.fill(0)
                 c.fill(0)
 
@@ -65,7 +65,7 @@ public data class XSalsa20Poly1305(public val nonceStrategyFactory: NonceStrateg
             private val key: ByteArray,
             nonceStrategyFactory: NonceStrategy.Factory,
         ) : VoiceEncryption.Unbox, Impl(nonceStrategyFactory) {
-            override fun apply(src: ByteArrayView, nonce: ByteArray, dst: MutableByteArrayCursor): Boolean {
+            override fun apply(src: ByteArrayView, dst: MutableByteArrayCursor, aead: ByteArrayView, nonce: ByteArray): Boolean {
                 c.fill(0)
                 m.fill(0)
 

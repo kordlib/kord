@@ -53,7 +53,7 @@ public class DefaultAudioPacketProvider(key: ByteArray, encryption: VoiceEncrypt
                 nonceBuffer.writeByteView(rawNonce)
 
                 // encrypt data and write into our buffer
-                val encrypted = box.apply(data.view(), nonceBuffer.data, this)
+                val encrypted = box.apply(data.view(), this, rtpHeaderView, nonceBuffer.data)
                 if (!encrypted) throw CouldNotEncryptDataException(data)
 
                 box.appendNonce(rawNonce, this)

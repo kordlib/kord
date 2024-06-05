@@ -36,7 +36,7 @@ public interface VoiceEncryption {
      */
     public sealed interface Method {
 
-        public fun apply(src: ByteArrayView, nonce: ByteArray, dst: MutableByteArrayCursor): Boolean
+        public fun apply(src: ByteArrayView, dst: MutableByteArrayCursor, aead: ByteArrayView, nonce: ByteArray): Boolean
     }
 
     public interface Box : Method {
