@@ -1,12 +1,12 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.Snowflake.Companion.validValues
-import kotlin.jvm.JvmInline
-import kotlin.time.Duration
-import kotlin.time.TimeMark
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmInline
+import kotlin.time.Duration
+import kotlin.time.TimeMark
 
 /**
  * A unique identifier for entities [used by Discord](https://discord.com/developers/docs/reference#snowflakes).
@@ -140,6 +140,7 @@ public value class Snowflake(public val value: ULong) : Comparable<Snowflake> {
 
     override fun toString(): String = value.toString()
 
+
     public companion object {
         // see https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
 
@@ -210,6 +211,7 @@ public value class Snowflake(public val value: ULong) : Comparable<Snowflake> {
 }
 
 private class SnowflakeTimeMark(private val timestamp: Instant) : TimeMark {
+
     override fun elapsedNow(): Duration = Clock.System.now() - timestamp
 }
 

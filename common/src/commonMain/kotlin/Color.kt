@@ -37,8 +37,8 @@ public value class Color(private val packedRGB: Int) {
             requireInRange("Blue", blue, acceptableComponentRange)
 
             return red and 0xFF shl 16 or
-                    (green and 0xFF shl 8) or
-                    (blue and 0xFF) shl 0
+                (green and 0xFF shl 8) or
+                (blue and 0xFF) shl 0
         }
 
         private fun requireInRange(name: String, value: Int, range: IntRange) {
@@ -48,7 +48,11 @@ public value class Color(private val packedRGB: Int) {
 
     internal object Serializer : KSerializer<Color> {
         override val descriptor = PrimitiveSerialDescriptor("dev.kord.common.Color", PrimitiveKind.INT)
+
         override fun deserialize(decoder: Decoder): Color = Color(decoder.decodeInt())
-        override fun serialize(encoder: Encoder, value: Color) = encoder.encodeInt(value.rgb)
+
+        override fun serialize(encoder: Encoder, value: Color) {
+            encoder.encodeInt(value.rgb)
+        }
     }
 }

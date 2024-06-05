@@ -1,16 +1,11 @@
 package dev.kord.common.entity
 
-import kotlin.js.JsName
-import kotlin.test.Test
-import kotlin.test.assertContains
-import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
-import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.nanoseconds
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlin.js.JsName
+import kotlin.test.*
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.nanoseconds
 
 class SnowflakeTest {
 

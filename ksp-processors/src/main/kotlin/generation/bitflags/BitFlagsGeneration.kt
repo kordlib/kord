@@ -1,42 +1,18 @@
 package dev.kord.ksp.generation.bitflags
 
-import com.squareup.kotlinpoet.INT as INT_CN
 import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.ClassName
-import com.squareup.kotlinpoet.KModifier.INTERNAL
-import com.squareup.kotlinpoet.KModifier.OVERRIDE
-import com.squareup.kotlinpoet.KModifier.PUBLIC
-import com.squareup.kotlinpoet.KModifier.SEALED
-import com.squareup.kotlinpoet.KModifier.VALUE
+import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.SET
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
-import dev.kord.ksp.addAnnotation
-import dev.kord.ksp.addClass
-import dev.kord.ksp.addCompanionObject
-import dev.kord.ksp.addFunction
-import dev.kord.ksp.addInitializerBlock
-import dev.kord.ksp.addParameter
-import dev.kord.ksp.addProperty
+import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
-import dev.kord.ksp.generation.shared.EMPTY_BIT_SET
-import dev.kord.ksp.generation.shared.GenerationContext
-import dev.kord.ksp.generation.shared.addEntityEntries
-import dev.kord.ksp.generation.shared.addEntityKDoc
-import dev.kord.ksp.generation.shared.addEntityToString
-import dev.kord.ksp.generation.shared.addEntryOptIns
-import dev.kord.ksp.generation.shared.addEqualsAndHashCodeBasedOnClassAndSingleProperty
-import dev.kord.ksp.generation.shared.addSharedCompanionObjectContent
-import dev.kord.ksp.generation.shared.addUnknownClass
-import dev.kord.ksp.generation.shared.fileSpecForGenerationEntity
-import dev.kord.ksp.generation.shared.nameWithSuppressedDeprecation
-import dev.kord.ksp.getter
-import dev.kord.ksp.primaryConstructor
-import dev.kord.ksp.returns
-import dev.kord.ksp.withControlFlow
+import dev.kord.ksp.generation.shared.*
 import kotlinx.serialization.Serializable
+import com.squareup.kotlinpoet.INT as INT_CN
 
 context(GenerationContext)
 internal val BitFlags.collectionCN
