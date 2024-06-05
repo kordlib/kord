@@ -15,18 +15,24 @@ internal fun TypeSpec.Builder.addEntityKDoc() {
 }
 
 context(GenerationEntity, GenerationContext)
-internal fun TypeSpec.Builder.addSharedUnknownClassContent() {
-    addKdoc(
-        "An unknown [%1T].\n\nThis is used as a fallback for [%1T]s that haven't been added to Kord yet.",
-        entityCN,
-    )
-    addModifiers(PUBLIC)
-    superclass(entityCN)
-}
+internal fun TypeSpec.Builder.addUnknownClass(constructorParameterName: String, constructorParameterType: TypeName) =
+    addClass("Unknown") {
+        addKdoc(
+            "An unknown [%1T].\n\nThis is used as a fallback for [%1T]s that haven't been added to Kord yet.",
+            entityCN,
+        )
+        addModifiers(PUBLIC)
+        primaryConstructor {
+            addModifiers(INTERNAL)
+            addParameter(constructorParameterName, constructorParameterType)
+        }
+        superclass(entityCN)
+        addSuperclassConstructorParameter(constructorParameterName)
+    }
 
 context(GenerationEntity, GenerationContext)
 internal fun TypeSpec.Builder.addEntityEntries() {
-    for (entry in entries) {
+    for (entry in this@GenerationEntity.entries) {
         addObject(entry.name) {
             entry.kDoc?.let { addKdoc(it) }
             @OptIn(DelicateKotlinPoetApi::class) // `AnnotationSpec.get` is ok for `Deprecated`

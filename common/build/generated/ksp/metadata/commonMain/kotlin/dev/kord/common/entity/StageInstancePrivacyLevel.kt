@@ -41,17 +41,7 @@ public sealed class StageInstancePrivacyLevel(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : StageInstancePrivacyLevel(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'StageInstancePrivacyLevel.from()'.",
-            replaceWith = ReplaceWith(expression = "StageInstancePrivacyLevel.from(value)", imports
-                        = arrayOf("dev.kord.common.entity.StageInstancePrivacyLevel")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : StageInstancePrivacyLevel(value)
 
     /**
      * The Stage instance is visible publicly.
@@ -96,7 +86,7 @@ public sealed class StageInstancePrivacyLevel(
         public fun from(`value`: Int): StageInstancePrivacyLevel = when (value) {
             1 -> @Suppress("DEPRECATION") Public
             2 -> GuildOnly
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

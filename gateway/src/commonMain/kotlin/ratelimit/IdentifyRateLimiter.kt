@@ -1,6 +1,7 @@
 package dev.kord.gateway.ratelimit
 
 import dev.kord.gateway.*
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.atomicfu.atomic
 import kotlinx.atomicfu.getAndUpdate
 import kotlinx.atomicfu.loop
@@ -11,7 +12,6 @@ import kotlinx.coroutines.channels.onSuccess
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.selects.onTimeout
 import kotlinx.coroutines.selects.select
-import mu.KotlinLogging
 import kotlin.jvm.JvmField
 import kotlin.time.Duration.Companion.seconds
 

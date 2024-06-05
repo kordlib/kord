@@ -40,17 +40,7 @@ public sealed class TeamMembershipState(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : TeamMembershipState(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'TeamMembershipState.from()'.",
-            replaceWith = ReplaceWith(expression = "TeamMembershipState.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.TeamMembershipState")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : TeamMembershipState(value)
 
     public object Invited : TeamMembershipState(1)
 
@@ -87,7 +77,7 @@ public sealed class TeamMembershipState(
         public fun from(`value`: Int): TeamMembershipState = when (value) {
             1 -> Invited
             2 -> Accepted
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

@@ -40,17 +40,7 @@ public sealed class VideoQualityMode(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : VideoQualityMode(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'VideoQualityMode.from()'.",
-            replaceWith = ReplaceWith(expression = "VideoQualityMode.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.VideoQualityMode")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : VideoQualityMode(value)
 
     /**
      * Discord chooses the quality for optimal performance.
@@ -93,7 +83,7 @@ public sealed class VideoQualityMode(
         public fun from(`value`: Int): VideoQualityMode = when (value) {
             1 -> Auto
             2 -> Full
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

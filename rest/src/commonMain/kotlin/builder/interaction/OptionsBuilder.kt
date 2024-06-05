@@ -54,17 +54,14 @@ public sealed class OptionsBuilder(
 }
 
 @KordDsl
-public sealed class BaseChoiceBuilder<T>(
+public sealed class BaseChoiceBuilder<T, C : Choice>(
     name: String,
     description: String,
     type: ApplicationCommandOptionType
 ) : OptionsBuilder(name, description, type) {
-    // TODO We can add another generic C : Choice and change these types to Optional<MutableList<C>> and MutableList<C>?
-    //  once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
-    //  The bug from that issue prevents you from setting BaseChoiceBuilder<*, *>.choices to `null`.
     @Suppress("PropertyName")
-    internal var _choices: Optional<MutableList<Choice>> = Optional.Missing()
-    public var choices: MutableList<Choice>? by ::_choices.delegate()
+    internal var _choices: Optional<MutableList<C>> = Optional.Missing()
+    public var choices: MutableList<C>? by ::_choices.delegate()
 
     public abstract fun choice(name: String, value: T, nameLocalizations: Optional<Map<Locale, String>?> = Optional.Missing())
 
@@ -108,11 +105,11 @@ public class ChoiceLocalizationsBuilder(override var name: String) : LocalizedNa
  * Builder for numeric options.
  */
 @KordDsl
-public sealed class NumericOptionBuilder<T : Number>(
+public sealed class NumericOptionBuilder<T : Number, C : Choice>(
     name: String,
     description: String,
     type: ApplicationCommandOptionType
-) : BaseChoiceBuilder<T>(name, description, type) {
+) : BaseChoiceBuilder<T, C>(name, description, type) {
 
     private var _minValue: Optional<T> = Optional.Missing()
 
@@ -145,7 +142,7 @@ public sealed class NumericOptionBuilder<T : Number>(
 
 @KordDsl
 public class IntegerOptionBuilder(name: String, description: String) :
-    NumericOptionBuilder<Long>(name, description, ApplicationCommandOptionType.Integer) {
+    NumericOptionBuilder<Long, Choice.IntegerChoice>(name, description, ApplicationCommandOptionType.Integer) {
 
     override fun choice(name: String, value: Long, nameLocalizations: Optional<Map<Locale, String>?>) {
         if (choices == null) choices = mutableListOf()
@@ -155,7 +152,7 @@ public class IntegerOptionBuilder(name: String, description: String) :
 
 @KordDsl
 public class NumberOptionBuilder(name: String, description: String) :
-    NumericOptionBuilder<Double>(name, description, ApplicationCommandOptionType.Number) {
+    NumericOptionBuilder<Double, Choice.NumberChoice>(name, description, ApplicationCommandOptionType.Number) {
 
     override fun choice(name: String, value: Double, nameLocalizations: Optional<Map<Locale, String>?>) {
         if (choices == null) choices = mutableListOf()
@@ -166,7 +163,7 @@ public class NumberOptionBuilder(name: String, description: String) :
 
 @KordDsl
 public class StringChoiceBuilder(name: String, description: String) :
-    BaseChoiceBuilder<String>(name, description, ApplicationCommandOptionType.String) {
+    BaseChoiceBuilder<String, Choice.StringChoice>(name, description, ApplicationCommandOptionType.String) {
 
     private var _minLength: OptionalInt = OptionalInt.Missing
 

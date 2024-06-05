@@ -42,17 +42,7 @@ public sealed class TextInputStyle(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : TextInputStyle(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'TextInputStyle.from()'.",
-            replaceWith = ReplaceWith(expression = "TextInputStyle.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.TextInputStyle")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : TextInputStyle(value)
 
     /**
      * A single-line input.
@@ -95,7 +85,7 @@ public sealed class TextInputStyle(
         public fun from(`value`: Int): TextInputStyle = when (value) {
             1 -> Short
             2 -> Paragraph
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

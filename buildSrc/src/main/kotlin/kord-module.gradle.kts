@@ -33,12 +33,9 @@ kotlin {
     }
 
     sourceSets {
-        // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
-        test { languageSettings.optIn(OptIns.coroutines) }
+        applyKordTestOptIns()
     }
 }
-
-configureAtomicFU()
 
 tasks {
     withType<Test>().configureEach {

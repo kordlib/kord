@@ -1,9 +1,10 @@
 package dev.kord.ksp.generation.bitflags
 
 import com.google.devtools.ksp.symbol.KSFile
-import com.squareup.kotlinpoet.*
+import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import com.squareup.kotlinpoet.SET
 import com.squareup.kotlinpoet.ksp.addOriginatingKSFile
 import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
@@ -11,6 +12,7 @@ import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
 import dev.kord.ksp.generation.shared.*
 import kotlinx.serialization.Serializable
+import com.squareup.kotlinpoet.INT as INT_CN
 
 context(GenerationContext)
 internal val BitFlags.collectionCN
@@ -53,17 +55,7 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addPlus(parameterName = "flags", parameterType = collectionCN)
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(entityCN, property = "shift", isFinal = true)
         addEntityToString(property = "shift")
-        if (wasEnum) {
-            addDeprecatedEntityEnumArtifacts()
-        }
-        addClass("Unknown") {
-            addSharedUnknownClassContent()
-            primaryConstructor {
-                addModifiers(INTERNAL)
-                addParameter<Int>("shift")
-            }
-            addSuperclassConstructorParameter("shift")
-        }
+        addUnknownClass(constructorParameterName = "shift", constructorParameterType = INT_CN)
         addEntityEntries()
         addCompanionObject {
             addSharedCompanionObjectContent()
@@ -82,9 +74,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                     }
                     addStatement("else·->·Unknown(shift)")
                 }
-            }
-            if (wasEnum) {
-                addDeprecatedEntityCompanionObjectEnumArtifacts()
             }
         }
     }
@@ -122,23 +111,6 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
                 }
             }
         }
-        if (hadFlagsProperty) {
-            val type = (if (flagsPropertyWasSet) SET else LIST).parameterizedBy(entityCN)
-            addProperty("flags", type, PUBLIC) {
-                addKdoc("@suppress")
-                @OptIn(DelicateKotlinPoetApi::class)
-                addAnnotation(
-                    Deprecated(
-                        "Renamed to 'values'.",
-                        ReplaceWith("this.values", imports = emptyArray()),
-                        DeprecationLevel.HIDDEN,
-                    )
-                )
-                getter {
-                    addStatement(if (flagsPropertyWasSet) "return values" else "return values.toList()")
-                }
-            }
-        }
         addContains(parameterName = "flag", parameterType = entityCN)
         addContains(parameterName = "flags", parameterType = collectionCN)
         addPlus(parameterName = "flag", parameterType = entityCN)
@@ -146,17 +118,20 @@ internal fun BitFlags.generateFileSpec(originatingFile: KSFile) = fileSpecForGen
         addMinus(parameterName = "flag", parameterType = entityCN)
         addMinus(parameterName = "flags", parameterType = collectionCN)
         addCopy()
+        if (collectionHadCopy0) {
+            addCopy0()
+        }
         addEqualsAndHashCodeBasedOnClassAndSingleProperty(collectionCN, property = valueName)
         addFunction("toString") {
             addModifiers(OVERRIDE)
             returns<String>()
             addStatement("return \"${collectionCN.simpleName}(values=\$values)\"")
         }
-        if (collectionWasDataClass) {
-            addDeprecatedDataClassArtifacts()
-        }
         addBuilder()
         addSerializer()
+        if (collectionHadNewCompanion) {
+            addDeprecatedNewCompanion()
+        }
     }
     addFactoryFunctions()
 }

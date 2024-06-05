@@ -4,13 +4,13 @@ import dev.kord.voice.FrameInterceptorConfiguration
 import dev.kord.voice.VoiceConnection
 import dev.kord.voice.gateway.*
 import dev.kord.voice.udp.AudioFrameSenderConfiguration
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.network.sockets.*
 import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import mu.KotlinLogging
 
 private val udpLifeCycleLogger = KotlinLogging.logger { }
 

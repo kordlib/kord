@@ -63,15 +63,6 @@ public class StringSelectBuilder(customId: String) : SelectMenuBuilder(customId)
     override fun buildOptions(): Optional<List<DiscordSelectOption>> = Optional(options.map { it.build() })
 }
 
-/** The choices in the select, max 25. */
-@Suppress("EXTENSION_SHADOWED_BY_MEMBER")
-@Deprecated("Replaced by member in StringSelectBuilder.", ReplaceWith("this.options"), DeprecationLevel.HIDDEN)
-public var StringSelectBuilder.options: MutableList<SelectOptionBuilder>
-    get() = options
-    set(value) {
-        options = value
-    }
-
 /**
  * Adds a new option to the select menu with the given [label] and [value] that can be configured by the [builder].
  *

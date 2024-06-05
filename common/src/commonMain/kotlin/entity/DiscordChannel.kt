@@ -45,8 +45,7 @@
 )
 
 @file:Generate(
-    INT_FLAGS, name = "ChannelFlag", valueName = "code", wasEnum = true, collectionWasDataClass = true,
-    hadFlagsProperty = true,
+    INT_FLAGS, name = "ChannelFlag", valueName = "code",
     docUrl = "https://discord.com/developers/docs/resources/channel#channel-object-channel-flags",
     entries = [
         Entry(
@@ -60,7 +59,7 @@
                 "[GuildForum][ChannelType.GuildForum] or [GuildMedia][ChannelType.GuildMedia] channel.",
         ),
         Entry(
-            "HideMediaDownloadOptions", shift = 15, noStaticFieldIfEntityWasEnum = true,
+            "HideMediaDownloadOptions", shift = 15,
             kDoc = "When set hides the embedded media download options. Available only for " +
                 "[GuildMedia][ChannelType.GuildMedia] channels.",
         ),
@@ -117,12 +116,11 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlin.LazyThreadSafetyMode.PUBLICATION
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
-import kotlin.jvm.JvmName
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -184,33 +182,10 @@ public data class DiscordChannel(
     val defaultSortOrder: Optional<SortOrderType?> = Optional.Missing(),
     @SerialName("default_forum_layout")
     val defaultForumLayout: Optional<ForumLayoutType> = Optional.Missing(),
-    // Forum thread original message
-    // see in: https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
+    // original message when starting thread in forum or media channel, see
+    // https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel
     val message: Optional<DiscordMessage> = Optional.Missing(),
 )
-
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-@JvmName("ChannelFlags")
-public inline fun channelFlags(builder: ChannelFlags.Builder.() -> Unit): ChannelFlags {
-    contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-    return ChannelFlags.Builder().apply(builder).build()
-}
-
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-@JvmName("ChannelFlags")
-public fun channelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags { flags.forEach { +it } }
-
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-@JvmName("ChannelFlags")
-public fun channelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags { flags.forEach { +it } }
-
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-@JvmName("ChannelFlags")
-public fun channelFlags(flags: Iterable<ChannelFlag>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
-
-@Suppress("FunctionName")
-@Deprecated("Binary compatibility. Keep for some releases.", level = DeprecationLevel.HIDDEN)
-public fun ChannelFlags0(flags: Iterable<ChannelFlags>): ChannelFlags = ChannelFlags { flags.forEach { +it } }
 
 @Serializable
 public data class Overwrite(
@@ -244,36 +219,53 @@ public sealed class ArchiveDuration(
         this === other || (other is ArchiveDuration && this.duration == other.duration)
 
     final override fun hashCode(): Int = duration.hashCode()
-    final override fun toString(): String = "ArchiveDuration.${this::class.simpleName}(duration=$duration)"
+    final override fun toString(): String =
+        if (this is Unknown) "ArchiveDuration.Unknown(duration=$duration)"
+        else "ArchiveDuration.${this::class.simpleName}"
 
     /**
      * An unknown [ArchiveDuration].
      *
      * This is used as a fallback for [ArchiveDuration]s that haven't been added to Kord yet.
      */
-    public class Unknown(duration: Duration) : ArchiveDuration(duration)
+    public class Unknown internal constructor(
+        duration: Duration,
+        @Suppress("UNUSED_PARAMETER") unused: Nothing?,
+    ) : ArchiveDuration(duration) {
+        @Deprecated(
+            "Replaced by 'ArchiveDuration.from()'.",
+            ReplaceWith("ArchiveDuration.from(duration)", imports = ["dev.kord.common.entity.ArchiveDuration"]),
+            DeprecationLevel.HIDDEN,
+        )
+        public constructor(duration: Duration) : this(duration, unused = null)
+    }
+
     public object Hour : ArchiveDuration(60.minutes)
     public object Day : ArchiveDuration(1440.minutes)
     public object ThreeDays : ArchiveDuration(4320.minutes)
     public object Week : ArchiveDuration(10080.minutes)
 
     internal object Serializer : KSerializer<ArchiveDuration> {
-        override val descriptor get() = DurationInMinutesSerializer.descriptor
+        override val descriptor =
+            PrimitiveSerialDescriptor("dev.kord.common.entity.ArchiveDuration", PrimitiveKind.LONG)
 
         override fun serialize(encoder: Encoder, value: ArchiveDuration) =
             encoder.encodeSerializableValue(DurationInMinutesSerializer, value.duration)
 
-        override fun deserialize(decoder: Decoder): ArchiveDuration {
-            val duration = decoder.decodeSerializableValue(DurationInMinutesSerializer)
-            return entries.firstOrNull { it.duration == duration } ?: Unknown(duration)
-        }
+        override fun deserialize(decoder: Decoder) = from(decoder.decodeSerializableValue(DurationInMinutesSerializer))
     }
 
     public companion object {
         /** A [List] of all known [ArchiveDuration]s. */
-        public val entries: List<ArchiveDuration> by lazy(mode = PUBLICATION) {
-            listOf(Hour, Day, ThreeDays, Week)
-        }
+        public val entries: List<ArchiveDuration> by lazy(mode = PUBLICATION) { listOf(Hour, Day, ThreeDays, Week) }
+
+        private val entriesByDuration by lazy(mode = PUBLICATION) { entries.associateBy(ArchiveDuration::duration) }
+
+        /**
+         * Returns an instance of [ArchiveDuration] with [ArchiveDuration.duration] equal to the specified [duration].
+         */
+        public fun from(duration: Duration): ArchiveDuration =
+            entriesByDuration[duration] ?: Unknown(duration, unused = null)
     }
 }
 

@@ -78,7 +78,6 @@
 package dev.kord.common.entity
 
 import dev.kord.common.Locale
-import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.entity.optional.*
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
@@ -147,21 +146,6 @@ public data class ApplicationCommandOption(
     @SerialName("max_length")
     val maxLength: OptionalInt = OptionalInt.Missing
 )
-
-/**
- * A serializer whose sole purpose is to provide a No-Op serializer for [Any].
- * The serializer is used when the generic type is neither known nor relevant to the serialization process
- *
- * e.g: `Choice<@Serializable(NotSerializable::class) Any?>`
- * The serialization is handled by [Choice] serializer instead where we don't care about the generic type.
- */
-@Deprecated("This is no longer used, deprecated without a replacement.", level = DeprecationLevel.HIDDEN)
-@KordExperimental
-public object NotSerializable : KSerializer<Any?> {
-    override fun deserialize(decoder: Decoder): Nothing = error("This operation is not supported.")
-    override val descriptor: SerialDescriptor = String.serializer().descriptor
-    override fun serialize(encoder: Encoder, value: Any?): Nothing = error("This operation is not supported.")
-}
 
 
 @Serializable(Choice.Serializer::class)
@@ -240,12 +224,6 @@ public sealed class Choice {
                     ?: throw SerializationException("Illegal choice value: $value")
             }
         }
-    }
-
-    public companion object {
-        @Suppress("UNUSED_PARAMETER")
-        @Deprecated("Choice is no longer generic", ReplaceWith("this.serializer()"), DeprecationLevel.HIDDEN)
-        public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<Choice> = serializer()
     }
 }
 
@@ -404,7 +382,7 @@ public sealed class Option {
                 ApplicationCommandOptionType.User -> CommandArgument.Serializer.deserialize(
                     json, jsonValue!!, name, type!!, focused
                 )
-                null, is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")
+                is ApplicationCommandOptionType.Unknown -> error("unknown ApplicationCommandOptionType $type")
             }
         }
 
@@ -601,7 +579,7 @@ public sealed class CommandArgument<out T> : Option() {
                     is AutoCompleteArgument, is StringArgument -> encodeStringElement(
                         descriptor,
                         1,
-                        value.value as String
+                        value.value
                     )
                 }
             }
@@ -712,17 +690,7 @@ public data class DiscordGuildApplicationCommandPermission(
 @Serializable
 public data class DiscordAutoComplete(
     val choices: List<Choice>,
-) {
-    public companion object {
-        @Suppress("UNUSED_PARAMETER")
-        @Deprecated(
-            "DiscordAutoComplete is no longer generic",
-            ReplaceWith("this.serializer()"),
-            DeprecationLevel.HIDDEN,
-        )
-        public fun <T0> serializer(typeSerial0: KSerializer<T0>): KSerializer<DiscordAutoComplete> = serializer()
-    }
-}
+)
 
 @Serializable
 public data class DiscordModal(

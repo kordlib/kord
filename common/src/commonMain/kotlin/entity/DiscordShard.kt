@@ -32,23 +32,23 @@ public data class DiscordShard(val index: Int, val count: Int) {
         }
     }
 
-    public companion object NewCompanion {
+    public companion object {
         @Suppress("DEPRECATION_ERROR")
         @Deprecated(
-            "Renamed to 'NewCompanion', which no longer implements 'KSerializer<DiscordShard>'.",
-            ReplaceWith("DiscordShard.serializer()", imports = ["dev.kord.common.entity.DiscordShard"]),
-            DeprecationLevel.HIDDEN,
+            "Renamed to 'Companion'.",
+            ReplaceWith("DiscordShard.Companion", imports = ["dev.kord.common.entity.DiscordShard"]),
+            DeprecationLevel.ERROR,
         )
         @JvmField
-        public val Companion: Companion = Companion()
+        public val NewCompanion: NewCompanion = NewCompanion()
     }
 
     @Deprecated(
-        "Renamed to 'NewCompanion', which no longer implements 'KSerializer<DiscordShard>'.",
-        ReplaceWith("DiscordShard.serializer()", imports = ["dev.kord.common.entity.DiscordShard"]),
-        DeprecationLevel.HIDDEN,
+        "Renamed to 'Companion'.",
+        ReplaceWith("DiscordShard.Companion", imports = ["dev.kord.common.entity.DiscordShard"]),
+        DeprecationLevel.ERROR,
     )
-    public class Companion internal constructor() : KSerializer<DiscordShard> by Serializer {
-        public fun serializer(): KSerializer<DiscordShard> = this
+    public class NewCompanion internal constructor() {
+        public fun serializer(): KSerializer<DiscordShard> = DiscordShard.serializer()
     }
 }

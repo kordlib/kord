@@ -1,6 +1,6 @@
-/*
 @file:Generate(
     BIT_SET_FLAGS, name = "Intent", valueName = "code",
+    collectionHadCopy0 = true, hadBuilderFactoryFunction0 = true,
     kDoc = "Values that enable a group of events as defined by Discord.",
     docUrl = "https://discord.com/developers/docs/topics/gateway#gateway-intents",
     entries = [
@@ -204,14 +204,7 @@ import kotlin.annotation.AnnotationRetention.BINARY
 import kotlin.annotation.AnnotationTarget.*
 
 private const val privilegedIntentAnnotation = "dev.kord.gateway.PrivilegedIntent"
-*/
 
-package dev.kord.gateway
-
-import dev.kord.gateway.Intent.*
-import kotlin.RequiresOptIn.Level.ERROR
-import kotlin.annotation.AnnotationRetention.BINARY
-import kotlin.annotation.AnnotationTarget.*
 
 /**
  * Some [Intent]s are defined as "privileged" due to the sensitive nature of the data and cannot be used by Kord without

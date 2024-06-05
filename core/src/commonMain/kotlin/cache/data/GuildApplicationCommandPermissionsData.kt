@@ -14,10 +14,7 @@ public data class GuildApplicationCommandPermissionsData(
 
     public companion object {
         public val description: DataDescription<GuildApplicationCommandPermissionsData, Snowflake> =
-            description(GuildApplicationCommandPermissionsData::id) {
-                link(GuildApplicationCommandPermissionsData::guildId to GuildData::id)
-                link(GuildApplicationCommandPermissionsData::id to ApplicationCommandData::id)
-            }
+            description(GuildApplicationCommandPermissionsData::id)
 
         public fun from(permissions: DiscordGuildApplicationCommandPermissions): GuildApplicationCommandPermissionsData =
             with(permissions) {

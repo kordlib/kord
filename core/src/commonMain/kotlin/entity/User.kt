@@ -8,7 +8,6 @@ import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
-import kotlin.DeprecationLevel.WARNING
 
 /**
  * The user's effective name, prioritizing [globalName][User.globalName] over [username][User.username].
@@ -46,7 +45,7 @@ public open class User(
     public val defaultAvatar: Asset
         get() =
             if (migratedToNewUsernameSystem) Asset.defaultUserAvatar(userId = id, kord)
-            else @Suppress("DEPRECATION") Asset.defaultUserAvatar(discriminator.toInt(), kord)
+            else Asset.defaultUserAvatar(discriminator.toInt(), kord)
 
     public val avatarDecorationHash: String? get() = data.avatarDecoration.value
 
@@ -67,16 +66,9 @@ public open class User(
     // "0" when data.discriminator is missing: if the field is missing, all users were migrated,
     // see https://discord.com/developers/docs/change-log#identifying-migrated-users:
     // "After migration of all users is complete, the `discriminator` field may be removed."
-    @Suppress("DEPRECATION", "DeprecatedCallableAddReplaceWith")
-    @Deprecated(
-        "Discord's username system is changing and discriminators are being removed, see " +
-            "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
-        level = WARNING,
-    )
     public val discriminator: String get() = data.discriminator.value ?: "0"
 
     // see https://discord.com/developers/docs/change-log#identifying-migrated-users
-    @Suppress("DEPRECATION")
     private val migratedToNewUsernameSystem get() = discriminator == "0"
 
     /** The user's display name, if it is set. For bots, this is the application name. */
@@ -97,14 +89,10 @@ public open class User(
 
     /**
      * The complete user tag.
+     *
+     * If this user [has been migrated to the new username system][discriminator], this is the same as [username],
+     * otherwise a [String] of the form `"username#discriminator"` is returned.
      */
-    @Suppress("DEPRECATION")
-    @Deprecated(
-        "Discord's username system is changing and discriminators are being removed, see " +
-            "https://discord.com/developers/docs/change-log#unique-usernames-on-discord for details.",
-        ReplaceWith("this.username"),
-        level = WARNING,
-    )
     public val tag: String get() = if (migratedToNewUsernameSystem) username else "$username#$discriminator"
 
     /**

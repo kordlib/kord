@@ -41,17 +41,7 @@ public sealed class ButtonStyle(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : ButtonStyle(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'ButtonStyle.from()'.",
-            replaceWith = ReplaceWith(expression = "ButtonStyle.from(value)", imports =
-                        arrayOf("dev.kord.common.entity.ButtonStyle")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : ButtonStyle(value)
 
     /**
      * Blurple.
@@ -114,7 +104,7 @@ public sealed class ButtonStyle(
             3 -> Success
             4 -> Danger
             5 -> Link
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

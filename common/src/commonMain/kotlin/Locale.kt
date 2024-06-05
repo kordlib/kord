@@ -4,7 +4,6 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
@@ -14,7 +13,7 @@ import kotlinx.serialization.encoding.Encoder
  * @property language A language code representing the language.
  * @property country A country code representing the country.
  */
-@Serializable(with = Locale.Serializer::class)
+@Serializable(with = Locale.NewSerializer::class)
 public data class Locale(val language: String, val country: String? = null) {
     public companion object {
 
@@ -47,6 +46,11 @@ public data class Locale(val language: String, val country: String? = null) {
          * Spanish (Spain).
          */
         public val SPANISH_SPAIN: Locale = Locale("es", "ES")
+
+        /**
+         * Spanish (Latin America).
+         */
+        public val SPANISH_LATIN_AMERICA: Locale = Locale("es", "419")
 
         /**
          * French.
@@ -184,6 +188,7 @@ public data class Locale(val language: String, val country: String? = null) {
             ENGLISH_GREAT_BRITAIN,
             ENGLISH_UNITED_STATES,
             SPANISH_SPAIN,
+            SPANISH_LATIN_AMERICA,
             FRENCH,
             CROATIAN,
             ITALIAN,
@@ -211,8 +216,8 @@ public data class Locale(val language: String, val country: String? = null) {
             KOREAN,
         )
 
-        // https://regex101.com/r/KCHTj8/1
-        private val languageTagFormat = "([a-z]{2})(?:-([A-Z]{2}))?".toRegex()
+        // https://regex101.com/r/8iMEWT/1
+        private val languageTagFormat = "([a-z]{2})(?:-([A-Z]{2}|\\d{3}))?".toRegex()
 
         /**
          * Decodes the [Locale] from a `languageCode-countryCode` or `languageCode` format.
@@ -231,13 +236,20 @@ public data class Locale(val language: String, val country: String? = null) {
         }
     }
 
-    public object Serializer : KSerializer<Locale> {
-        override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Locale", PrimitiveKind.STRING)
+    @Deprecated(
+        "Replaced by 'Locale.serializer()'.",
+        ReplaceWith("Locale.serializer()", imports = ["dev.kord.common.Locale"]),
+        DeprecationLevel.HIDDEN,
+    )
+    public object Serializer : KSerializer<Locale> by NewSerializer
 
-        override fun serialize(encoder: Encoder, value: Locale) {
+    // TODO rename to 'Serializer' once deprecated public serializer is removed
+    internal object NewSerializer : KSerializer<Locale> {
+        override val descriptor = PrimitiveSerialDescriptor("dev.kord.common.Locale", PrimitiveKind.STRING)
+
+        override fun serialize(encoder: Encoder, value: Locale) =
             encoder.encodeString("${value.language}${value.country?.let { "-$it" } ?: ""}")
-        }
 
-        override fun deserialize(decoder: Decoder): Locale = fromString(decoder.decodeString())
+        override fun deserialize(decoder: Decoder) = fromString(decoder.decodeString())
     }
 }

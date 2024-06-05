@@ -49,7 +49,12 @@ public data class ChannelData(
 
 
     public companion object {
-        public val description: DataDescription<ChannelData, Snowflake> = description(ChannelData::id)
+        public val description: DataDescription<ChannelData, Snowflake> = description(ChannelData::id) {
+            link(ChannelData::id to MessageData::channelId)
+            link(ChannelData::id to ThreadMemberData::id)
+            link(ChannelData::id to WebhookData::channelId)
+            link(ChannelData::id to VoiceStateData::channelId)
+        }
 
         public fun from(entity: DiscordChannel): ChannelData = with(entity) {
             ChannelData(

@@ -40,17 +40,7 @@ public sealed class EncryptionMode(
      */
     public class Unknown internal constructor(
         `value`: String,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : EncryptionMode(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'EncryptionMode.from()'.",
-            replaceWith = ReplaceWith(expression = "EncryptionMode.from(value)", imports =
-                        arrayOf("dev.kord.voice.EncryptionMode")),
-        )
-        public constructor(`value`: String) : this(value, null)
-    }
+    ) : EncryptionMode(value)
 
     public object AeadAes256Gcm : EncryptionMode("aead_aes256_gcm")
 
@@ -98,7 +88,7 @@ public sealed class EncryptionMode(
             "xsalsa20_poly1305" -> XSalsa20Poly1305
             "xsalsa20_poly1305_suffix" -> XSalsa20Poly1305Suffix
             "xsalsa20_poly1305_lite" -> XSalsa20Poly1305Lite
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

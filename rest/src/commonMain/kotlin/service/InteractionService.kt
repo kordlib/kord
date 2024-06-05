@@ -13,9 +13,7 @@ import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.serializer
 import kotlin.collections.set
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -122,19 +120,6 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         body(InteractionResponseCreateRequest.serializer(), request)
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    @Deprecated(
-        "DiscordAutoComplete is no longer generic and the typeSerializer argument is no longer needed.",
-        ReplaceWith("this.createAutoCompleteInteractionResponse(interactionId, interactionToken, autoComplete)"),
-        DeprecationLevel.HIDDEN,
-    )
-    public suspend inline fun <reified T> createAutoCompleteInteractionResponse(
-        interactionId: Snowflake,
-        interactionToken: String,
-        autoComplete: DiscordAutoComplete,
-        typeSerializer: KSerializer<T> = serializer(),
-    ): Unit = createAutoCompleteInteractionResponse(interactionId, interactionToken, autoComplete)
-
     public suspend fun createAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
@@ -234,7 +219,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun <Builder : BaseChoiceBuilder<*>> createBuilderAutoCompleteInteractionResponse(
+    public suspend inline fun <Builder : BaseChoiceBuilder<*, *>> createBuilderAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builder: Builder,

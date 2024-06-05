@@ -74,7 +74,7 @@ public inline fun MessageBuilder.embed(builder: EmbedBuilder.() -> Unit) {
  * Configures the mentions in the message that are allowed to trigger a ping.
  *
  * Not calling this function will result in the default behavior (ping for all mentions), calling this function but not
- * configuring it before the request is build will result in all mentions being ignored.
+ * configuring it before the request is built will result in all mentions being ignored.
  */
 public inline fun MessageBuilder.allowedMentions(builder: AllowedMentionsBuilder.() -> Unit = {}) {
     contract { callsInPlace(builder, EXACTLY_ONCE) }

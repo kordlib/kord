@@ -11,8 +11,6 @@ kotlin {
                 api(libs.kotlinx.coroutines.core)
                 api(libs.kotlinx.serialization.json)
                 api(libs.kotlinx.datetime)
-                api(libs.kotlin.logging)
-
                 api(libs.ktor.client.core)
 
                 compileOnly(projects.kspAnnotations)
@@ -20,7 +18,7 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                api(libs.ktor.client.cio)
+                api(libs.ktor.client.okhttp)
             }
         }
         nonJvmMain {
@@ -39,6 +37,12 @@ kotlin {
                 implementation(projects.kspAnnotations)
             }
         }
+        jvmTest {
+            dependencies {
+                implementation(libs.bson)
+                implementation(libs.kbson)
+            }
+        }
     }
 }
 
@@ -52,15 +56,15 @@ internal const val BUILD_CONFIG_GENERATED_COMMIT_HASH: String = "<commit hash>"
 internal const val BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH: String = "<short commit hash>"
 */
 buildConfig {
-    packageName("dev.kord.common")
-    className("BuildConfigGenerated")
+    packageName = "dev.kord.common"
+    className = "BuildConfigGenerated"
 
     useKotlinOutput {
         topLevelConstants = true
         internalVisibility = true
     }
 
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_LIBRARY_VERSION", "\"$libraryVersion\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_COMMIT_HASH", "\"$commitHash\"")
-    buildConfigField("String", "BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", "\"$shortCommitHash\"")
+    buildConfigField("BUILD_CONFIG_GENERATED_LIBRARY_VERSION", libraryVersion)
+    buildConfigField("BUILD_CONFIG_GENERATED_COMMIT_HASH", commitHash)
+    buildConfigField("BUILD_CONFIG_GENERATED_SHORT_COMMIT_HASH", shortCommitHash)
 }

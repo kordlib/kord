@@ -1,5 +1,6 @@
 package dev.kord.gateway
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -7,7 +8,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import mu.KotlinLogging
 import kotlin.coroutines.CoroutineContext
 
 private val logger = KotlinLogging.logger { }
@@ -33,7 +33,7 @@ public class Ticker(private val dispatcher: CoroutineDispatcher = Dispatchers.De
                 try {
                     block()
                 } catch (exception: Exception) {
-                    logger.error(exception)
+                    logger.error(exception) { "" }
                 }
             }.launchIn(this)
         }

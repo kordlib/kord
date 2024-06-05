@@ -41,18 +41,7 @@ public sealed class GuildScheduledEventPrivacyLevel(
      */
     public class Unknown internal constructor(
         `value`: Int,
-        @Suppress(names = arrayOf("UNUSED_PARAMETER"))
-        unused: Nothing?,
-    ) : GuildScheduledEventPrivacyLevel(value) {
-        @Deprecated(
-            level = DeprecationLevel.HIDDEN,
-            message = "Replaced by 'GuildScheduledEventPrivacyLevel.from()'.",
-            replaceWith = ReplaceWith(expression = "GuildScheduledEventPrivacyLevel.from(value)",
-                        imports =
-                        arrayOf("dev.kord.common.entity.GuildScheduledEventPrivacyLevel")),
-        )
-        public constructor(`value`: Int) : this(value, null)
-    }
+    ) : GuildScheduledEventPrivacyLevel(value)
 
     /**
      * The scheduled event is only accessible to guild members.
@@ -89,7 +78,7 @@ public sealed class GuildScheduledEventPrivacyLevel(
          */
         public fun from(`value`: Int): GuildScheduledEventPrivacyLevel = when (value) {
             2 -> GuildOnly
-            else -> Unknown(value, null)
+            else -> Unknown(value)
         }
     }
 }

@@ -150,9 +150,9 @@
     ],
 )
 
-/*
 @file:Generate(
     INT_FLAGS, name = "SystemChannelFlag", valueName = "code",
+    collectionHadNewCompanion = true,
     docUrl = "https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags",
     entries = [
         Entry("SuppressJoinNotifications", shift = 0, kDoc = "Suppress member join notifications."),
@@ -169,7 +169,6 @@
         ),
     ],
 )
-*/
 
 package dev.kord.common.entity
 
@@ -423,7 +422,7 @@ public data class DiscordVoiceState(
     @SerialName("guild_id") val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
     @SerialName("channel_id") val channelId: Snowflake?,
     @SerialName("user_id") val userId: Snowflake,
-    @SerialName("guild_member") val member: Optional<DiscordGuildMember> = Optional.Missing(),
+    val member: Optional<DiscordGuildMember> = Optional.Missing(),
     @SerialName("session_id") val sessionId: String,
     val deaf: Boolean,
     val mute: Boolean,
