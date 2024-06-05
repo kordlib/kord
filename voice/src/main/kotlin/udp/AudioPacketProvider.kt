@@ -13,7 +13,10 @@ public abstract class AudioPacketProvider(public val key: ByteArray, public val 
 private class CouldNotEncryptDataException(data: ByteArray) :
     RuntimeException("Couldn't encrypt the following data: [${data.joinToString(", ")}]")
 
-public class DefaultAudioPacketProvider(key: ByteArray, encryption: VoiceEncryption) : AudioPacketProvider(key, encryption) {
+public class DefaultAudioPacketProvider(key: ByteArray, encryption: VoiceEncryption) : AudioPacketProvider(
+    key,
+    encryption
+) {
     private val box = encryption.createBox(key)
 
     private val packetBuffer = ByteArray(2048)
@@ -50,8 +53,7 @@ public class DefaultAudioPacketProvider(key: ByteArray, encryption: VoiceEncrypt
                 nonceBuffer.writeByteView(rawNonce)
 
                 // encrypt data and write into our buffer
-                val encrypted = box.encrypt(data, nonceBuffer.data, this)
-
+                val encrypted = box.apply(data.view(), nonceBuffer.data, this)
                 if (!encrypted) throw CouldNotEncryptDataException(data)
 
                 box.appendNonce(rawNonce, this)

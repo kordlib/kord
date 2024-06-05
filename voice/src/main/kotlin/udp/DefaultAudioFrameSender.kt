@@ -5,7 +5,6 @@ import dev.kord.voice.AudioFrame
 import dev.kord.voice.AudioProvider
 import dev.kord.voice.FrameInterceptor
 import dev.kord.voice.encryption.VoiceEncryption
-import dev.kord.voice.encryption.strategies.NonceStrategy
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.network.sockets.*
 import io.ktor.utils.io.core.*

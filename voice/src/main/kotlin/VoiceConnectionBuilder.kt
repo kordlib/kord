@@ -7,8 +7,8 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
 import dev.kord.gateway.VoiceServerUpdate
 import dev.kord.gateway.VoiceStateUpdate
+import dev.kord.voice.encryption.AeadAes256Gcm
 import dev.kord.voice.encryption.VoiceEncryption
-import dev.kord.voice.encryption.strategies.LiteNonceStrategy
 import dev.kord.voice.exception.VoiceConnectionInitializationException
 import dev.kord.voice.gateway.DefaultVoiceGatewayBuilder
 import dev.kord.voice.gateway.VoiceGateway
@@ -65,8 +65,8 @@ public class VoiceConnectionBuilder(
 
     /**
      * The nonce strategy to be used for the encryption of audio packets.
-     * If `null` & voice receive if disabled, [VoiceEncryption.AeadAes256Gcm] will be used,
-     * otherwise [VoiceEncryption.XSalsaPoly1305] with the Lite strategy will be used.
+     * If `null` & voice receive if disabled, [dev.kord.voice.encryption.AeadAes256Gcm] will be used,
+     * otherwise [dev.kord.voice.encryption.XSalsa20Poly1305] with the Lite strategy will be used.
      */
     public var encryption: VoiceEncryption? = null
 
@@ -112,49 +112,50 @@ public class VoiceConnectionBuilder(
         this.voiceGatewayBuilder = builder
     }
 
-    private suspend fun Gateway.updateVoiceState(): Pair<VoiceConnectionData, VoiceGatewayConfiguration> = coroutineScope {
-        val voiceStateDeferred = async {
-            withTimeoutOrNull(timeout) {
-                gateway.events.filterIsInstance<VoiceStateUpdate>()
-                    .filter { it.voiceState.guildId.value == guildId && it.voiceState.userId == selfId }
-                    .first()
-                    .voiceState
+    private suspend fun Gateway.updateVoiceState(): Pair<VoiceConnectionData, VoiceGatewayConfiguration> =
+        coroutineScope {
+            val voiceStateDeferred = async {
+                withTimeoutOrNull(timeout) {
+                    gateway.events.filterIsInstance<VoiceStateUpdate>()
+                        .filter { it.voiceState.guildId.value == guildId && it.voiceState.userId == selfId }
+                        .first()
+                        .voiceState
+                }
             }
-        }
 
-        val voiceServerDeferred = async {
-            withTimeoutOrNull(timeout) {
-                gateway.events.filterIsInstance<VoiceServerUpdate>()
-                    .filter { it.voiceServerUpdateData.guildId == guildId }
-                    .first()
-                    .voiceServerUpdateData
+            val voiceServerDeferred = async {
+                withTimeoutOrNull(timeout) {
+                    gateway.events.filterIsInstance<VoiceServerUpdate>()
+                        .filter { it.voiceServerUpdateData.guildId == guildId }
+                        .first()
+                        .voiceServerUpdateData
+                }
             }
-        }
 
-        send(
-            UpdateVoiceStatus(
-                guildId = guildId,
-                channelId = channelId,
-                selfMute = selfMute,
-                selfDeaf = selfDeaf,
+            send(
+                UpdateVoiceStatus(
+                    guildId = guildId,
+                    channelId = channelId,
+                    selfMute = selfMute,
+                    selfDeaf = selfDeaf,
+                )
             )
-        )
 
-        val voiceServer = voiceServerDeferred.await()
-        val voiceState = voiceStateDeferred.await()
+            val voiceServer = voiceServerDeferred.await()
+            val voiceState = voiceStateDeferred.await()
 
-        if (voiceServer == null || voiceState == null)
-            throw VoiceConnectionInitializationException("Did not receive a VoiceStateUpdate and or a VoiceServerUpdate in time!")
+            if (voiceServer == null || voiceState == null)
+                throw VoiceConnectionInitializationException("Did not receive a VoiceStateUpdate and or a VoiceServerUpdate in time!")
 
-        VoiceConnectionData(
-            selfId,
-            guildId,
-            voiceState.sessionId
-        ) to VoiceGatewayConfiguration(
-            voiceServer.token,
-            "wss://${voiceServer.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
-        )
-    }
+            VoiceConnectionData(
+                selfId,
+                guildId,
+                voiceState.sessionId
+            ) to VoiceGatewayConfiguration(
+                voiceServer.token,
+                "wss://${voiceServer.endpoint}/?v=${KordConfiguration.VOICE_GATEWAY_VERSION}",
+            )
+        }
 
     /**
      * @throws dev.kord.voice.exception.VoiceConnectionInitializationException when there was a problem retrieving voice information from Discord.
@@ -167,11 +168,7 @@ public class VoiceConnectionBuilder(
             .build()
         val udpSocket = udpSocket ?: GlobalVoiceUdpSocket
         val audioProvider = audioProvider ?: EmptyAudioPlayerProvider
-        val encryption = if ((receiveVoice || streams != null) && encryption?.supportsDecryption != true) {
-            VoiceEncryption.XSalsaPoly1305()
-        } else {
-            encryption ?: VoiceEncryption.AeadAes256Gcm
-        }
+        val encryption = encryption ?: AeadAes256Gcm
         val frameInterceptor = frameInterceptor ?: DefaultFrameInterceptor()
         val audioSender =
             audioSender ?: DefaultAudioFrameSender(

@@ -1,6 +1,5 @@
 package dev.kord.voice.streams
 
-import com.iwebpp.crypto.TweetNaclFast
 import dev.kord.common.annotation.KordVoice
 import dev.kord.common.entity.Snowflake
 import dev.kord.voice.AudioFrame
@@ -99,10 +98,7 @@ private fun Flow<RTPPacket>.decrypt(encryption: VoiceEncryption, key: ByteArray)
 
         nonceBuffer.writeByteView(unbox.getNonce(packet))
 
-        val decrypted = with(packet.payload) {
-            unbox.decrypt(data, dataStart, viewSize, nonceBuffer.data, decryptedCursor)
-        }
-
+        val decrypted = unbox.apply(packet.payload, nonceBuffer.data, decryptedCursor)
         if (!decrypted) {
             defaultStreamsLogger.trace { "failed to decrypt the packet with data ${packet.payload.data.contentToString()} at offset ${packet.payload.dataStart} and length ${packet.payload.viewSize - 4}" }
             return@mapNotNull null

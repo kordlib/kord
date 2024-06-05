@@ -5,7 +5,6 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.gateway.Gateway
 import dev.kord.gateway.UpdateVoiceStatus
 import dev.kord.voice.encryption.VoiceEncryption
-import dev.kord.voice.encryption.strategies.NonceStrategy
 import dev.kord.voice.gateway.VoiceGateway
 import dev.kord.voice.gateway.VoiceGatewayConfiguration
 import dev.kord.voice.handlers.StreamsHandler
@@ -42,7 +41,6 @@ public data class VoiceConnectionData(
  * @param audioProvider a [AudioProvider] that will provide [AudioFrame] when required.
  * @param frameInterceptor a [FrameInterceptor] that will intercept all outgoing [AudioFrame]s.
  * @param frameSender the [AudioFrameSender] that will handle the sending of audio packets.
- * @param nonceStrategy the [NonceStrategy] that is used during encryption of audio.
  */
 @KordVoice
 public class VoiceConnection(
@@ -56,7 +54,7 @@ public class VoiceConnection(
     public val frameInterceptor: FrameInterceptor,
     public val frameSender: AudioFrameSender,
     public val encryption: VoiceEncryption,
-    connectionDetachDuration: Duration
+    connectionDetachDuration: Duration,
 ) {
     public val scope: CoroutineScope =
         CoroutineScope(SupervisorJob() + CoroutineName("kord-voice-connection[${data.guildId.value}]"))
@@ -149,7 +147,7 @@ public suspend inline fun VoiceConnection(
     selfId: Snowflake,
     channelId: Snowflake,
     guildId: Snowflake,
-    builder: VoiceConnectionBuilder.() -> Unit = {}
+    builder: VoiceConnectionBuilder.() -> Unit = {},
 ): VoiceConnection {
     contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
     return VoiceConnectionBuilder(gateway, selfId, channelId, guildId).apply(builder).build()
