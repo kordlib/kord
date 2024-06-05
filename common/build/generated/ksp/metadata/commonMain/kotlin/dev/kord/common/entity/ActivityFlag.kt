@@ -7,15 +7,9 @@ package dev.kord.common.entity
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [ActivityFlag]s in the
@@ -191,8 +185,9 @@ public sealed class ActivityFlag(
  * @see ActivityFlag
  * @see ActivityFlags.Builder
  */
-@Serializable(with = ActivityFlags.Serializer::class)
-public class ActivityFlags internal constructor(
+@JvmInline
+@Serializable
+public value class ActivityFlags internal constructor(
     /**
      * The raw value used by Discord.
      */
@@ -260,11 +255,6 @@ public class ActivityFlags internal constructor(
         return Builder(value).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is ActivityFlags && this.value == other.value)
-
-    override fun hashCode(): Int = value.hashCode()
-
     override fun toString(): String = "ActivityFlags(values=$values)"
 
     public class Builder(
@@ -304,20 +294,6 @@ public class ActivityFlags internal constructor(
          */
         public fun build(): ActivityFlags = ActivityFlags(value)
     }
-
-    internal object Serializer : KSerializer<ActivityFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ActivityFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: ActivityFlags) {
-            encoder.encodeSerializableValue(delegate, value.value)
-        }
-
-        override fun deserialize(decoder: Decoder): ActivityFlags =
-                ActivityFlags(decoder.decodeSerializableValue(delegate))
-    }
 }
 
 /**
@@ -333,14 +309,6 @@ public inline fun ActivityFlags(builder: ActivityFlags.Builder.() -> Unit = {}):
  * [flags].
  */
 public fun ActivityFlags(vararg flags: ActivityFlag): ActivityFlags = ActivityFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ActivityFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ActivityFlags(vararg flags: ActivityFlags): ActivityFlags = ActivityFlags {
     flags.forEach { +it }
 }
 

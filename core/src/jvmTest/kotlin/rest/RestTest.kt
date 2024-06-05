@@ -51,15 +51,15 @@ class RestServiceTest {
     private lateinit var kord: Kord
 
     //created guild id
-    private lateinit var guildId: Snowflake
+    private var guildId: Snowflake = Snowflake.min
     private lateinit var guild: Guild
 
     //created channel id
-    private lateinit var channelId: Snowflake
+    private var channelId: Snowflake = Snowflake.min
     private lateinit var channel: TextChannel
 
 
-    private lateinit var userId: Snowflake
+    private var userId: Snowflake = Snowflake.min
 
     @BeforeAll
     fun setup() = runBlocking {

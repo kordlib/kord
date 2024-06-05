@@ -8,15 +8,10 @@ import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 import kotlin.jvm.JvmField
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [SystemChannelFlag]s in the
@@ -198,8 +193,9 @@ public sealed class SystemChannelFlag(
  * @see SystemChannelFlag
  * @see SystemChannelFlags.Builder
  */
-@Serializable(with = SystemChannelFlags.Serializer::class)
-public class SystemChannelFlags internal constructor(
+@JvmInline
+@Serializable
+public value class SystemChannelFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -267,11 +263,6 @@ public class SystemChannelFlags internal constructor(
         return Builder(code).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is SystemChannelFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
     override fun toString(): String = "SystemChannelFlags(values=$values)"
 
     public class Builder(
@@ -312,21 +303,6 @@ public class SystemChannelFlags internal constructor(
         public fun build(): SystemChannelFlags = SystemChannelFlags(code)
     }
 
-    internal object Serializer : KSerializer<SystemChannelFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.SystemChannelFlags",
-                PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: SystemChannelFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): SystemChannelFlags =
-                SystemChannelFlags(decoder.decodeSerializableValue(delegate))
-    }
-
     public companion object {
         @Suppress(names = arrayOf("DEPRECATION_ERROR"))
         @Deprecated(
@@ -364,15 +340,6 @@ public inline fun SystemChannelFlags(builder: SystemChannelFlags.Builder.() -> U
  * [flags].
  */
 public fun SystemChannelFlags(vararg flags: SystemChannelFlag): SystemChannelFlags =
-        SystemChannelFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [SystemChannelFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun SystemChannelFlags(vararg flags: SystemChannelFlags): SystemChannelFlags =
         SystemChannelFlags {
     flags.forEach { +it }
 }

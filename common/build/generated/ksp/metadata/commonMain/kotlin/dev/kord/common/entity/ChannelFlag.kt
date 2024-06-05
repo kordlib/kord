@@ -7,15 +7,9 @@ package dev.kord.common.entity
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [ChannelFlag]s in the
@@ -176,8 +170,9 @@ public sealed class ChannelFlag(
  * @see ChannelFlag
  * @see ChannelFlags.Builder
  */
-@Serializable(with = ChannelFlags.Serializer::class)
-public class ChannelFlags internal constructor(
+@JvmInline
+@Serializable
+public value class ChannelFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -243,11 +238,6 @@ public class ChannelFlags internal constructor(
         return Builder(code).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is ChannelFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
     override fun toString(): String = "ChannelFlags(values=$values)"
 
     public class Builder(
@@ -287,20 +277,6 @@ public class ChannelFlags internal constructor(
          */
         public fun build(): ChannelFlags = ChannelFlags(code)
     }
-
-    internal object Serializer : KSerializer<ChannelFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelFlags", PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: ChannelFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): ChannelFlags =
-                ChannelFlags(decoder.decodeSerializableValue(delegate))
-    }
 }
 
 /**
@@ -316,14 +292,6 @@ public inline fun ChannelFlags(builder: ChannelFlags.Builder.() -> Unit = {}): C
  * [flags].
  */
 public fun ChannelFlags(vararg flags: ChannelFlag): ChannelFlags = ChannelFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ChannelFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ChannelFlags(vararg flags: ChannelFlags): ChannelFlags = ChannelFlags {
     flags.forEach { +it }
 }
 

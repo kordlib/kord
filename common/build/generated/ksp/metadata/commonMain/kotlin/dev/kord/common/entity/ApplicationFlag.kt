@@ -7,15 +7,9 @@ package dev.kord.common.entity
 import kotlin.LazyThreadSafetyMode.PUBLICATION
 import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
+import kotlin.jvm.JvmInline
 import kotlin.jvm.JvmName
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.serializer
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 
 /**
  * See [ApplicationFlag]s in the
@@ -237,8 +231,9 @@ public sealed class ApplicationFlag(
  * @see ApplicationFlag
  * @see ApplicationFlags.Builder
  */
-@Serializable(with = ApplicationFlags.Serializer::class)
-public class ApplicationFlags internal constructor(
+@JvmInline
+@Serializable
+public value class ApplicationFlags internal constructor(
     /**
      * The raw code used by Discord.
      */
@@ -306,11 +301,6 @@ public class ApplicationFlags internal constructor(
         return Builder(code).apply(builder).build()
     }
 
-    override fun equals(other: Any?): Boolean = this === other ||
-            (other is ApplicationFlags && this.code == other.code)
-
-    override fun hashCode(): Int = code.hashCode()
-
     override fun toString(): String = "ApplicationFlags(values=$values)"
 
     public class Builder(
@@ -350,21 +340,6 @@ public class ApplicationFlags internal constructor(
          */
         public fun build(): ApplicationFlags = ApplicationFlags(code)
     }
-
-    internal object Serializer : KSerializer<ApplicationFlags> {
-        override val descriptor: SerialDescriptor =
-                PrimitiveSerialDescriptor("dev.kord.common.entity.ApplicationFlags",
-                PrimitiveKind.INT)
-
-        private val `delegate`: KSerializer<Int> = Int.serializer()
-
-        override fun serialize(encoder: Encoder, `value`: ApplicationFlags) {
-            encoder.encodeSerializableValue(delegate, value.code)
-        }
-
-        override fun deserialize(decoder: Decoder): ApplicationFlags =
-                ApplicationFlags(decoder.decodeSerializableValue(delegate))
-    }
 }
 
 /**
@@ -381,14 +356,6 @@ public inline fun ApplicationFlags(builder: ApplicationFlags.Builder.() -> Unit 
  * [flags].
  */
 public fun ApplicationFlags(vararg flags: ApplicationFlag): ApplicationFlags = ApplicationFlags {
-    flags.forEach { +it }
-}
-
-/**
- * Returns an instance of [ApplicationFlags] that has all bits set that are set in any element of
- * [flags].
- */
-public fun ApplicationFlags(vararg flags: ApplicationFlags): ApplicationFlags = ApplicationFlags {
     flags.forEach { +it }
 }
 

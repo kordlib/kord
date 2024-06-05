@@ -1,11 +1,16 @@
 package dev.kord.common.entity
 
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlin.js.JsName
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertContains
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.nanoseconds
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 
 class SnowflakeTest {
 
@@ -30,9 +35,8 @@ class SnowflakeTest {
 
     @Test
     @JsName("test4")
-    fun `Snowflake created from ULong MAX_VALUE has timestamp equal to endOfTime`() {
-        val snowflake = Snowflake(ULong.MAX_VALUE)
-        assertEquals(Snowflake.endOfTime, snowflake.timestamp)
+    fun `Snowflake throws if invalid value is provided`() {
+        assertFailsWith<IllegalArgumentException> { Snowflake(ULong.MAX_VALUE) }
     }
 
     @Test
