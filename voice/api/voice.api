@@ -430,7 +430,7 @@ public abstract interface class dev/kord/voice/encryption/VoiceEncryption$Box : 
 }
 
 public abstract interface class dev/kord/voice/encryption/VoiceEncryption$Method {
-	public abstract fun apply (Ldev/kord/voice/io/ByteArrayView;[BLdev/kord/voice/io/MutableByteArrayCursor;)Z
+	public abstract fun apply (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;Ldev/kord/voice/io/ByteArrayView;[B)Z
 }
 
 public abstract interface class dev/kord/voice/encryption/VoiceEncryption$Unbox : dev/kord/voice/encryption/VoiceEncryption$Method {
@@ -469,14 +469,14 @@ public abstract class dev/kord/voice/encryption/XSalsa20Poly1305$Impl {
 public final class dev/kord/voice/encryption/XSalsa20Poly1305$Impl$Box : dev/kord/voice/encryption/XSalsa20Poly1305$Impl, dev/kord/voice/encryption/VoiceEncryption$Box {
 	public fun <init> ([BLdev/kord/voice/encryption/strategies/NonceStrategy$Factory;)V
 	public fun appendNonce (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;)V
-	public fun apply (Ldev/kord/voice/io/ByteArrayView;[BLdev/kord/voice/io/MutableByteArrayCursor;)Z
+	public fun apply (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;Ldev/kord/voice/io/ByteArrayView;[B)Z
 	public fun generateNonce (Lkotlin/jvm/functions/Function0;)Ldev/kord/voice/io/ByteArrayView;
 	public fun getOverhead ()I
 }
 
 public final class dev/kord/voice/encryption/XSalsa20Poly1305$Impl$Unbox : dev/kord/voice/encryption/XSalsa20Poly1305$Impl, dev/kord/voice/encryption/VoiceEncryption$Unbox {
 	public fun <init> ([BLdev/kord/voice/encryption/strategies/NonceStrategy$Factory;)V
-	public fun apply (Ldev/kord/voice/io/ByteArrayView;[BLdev/kord/voice/io/MutableByteArrayCursor;)Z
+	public fun apply (Ldev/kord/voice/io/ByteArrayView;Ldev/kord/voice/io/MutableByteArrayCursor;Ldev/kord/voice/io/ByteArrayView;[B)Z
 	public fun getNonce (Ldev/kord/voice/udp/RTPPacket;)Ldev/kord/voice/io/ByteArrayView;
 }
 
