@@ -18,4 +18,6 @@ dependencies {
     compileOnly(projects.kspAnnotations)
 
     api(libs.ktor.network)
+
+    kotlinCompilerPluginClasspathMain(projects.compilerPlugins)
 }

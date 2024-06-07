@@ -69,6 +69,7 @@ bignum = { module = "com.ionspin.kotlin:bignum", version.ref = "bignum" }
 stately-collections = { module = "co.touchlab:stately-concurrent-collections", version.ref = "stately" }
 
 # code generation
+kotlin-compiler = { module = "org.jetbrains.kotlin:kotlin-compiler", version.ref = "kotlin" }
 ksp-api = { module = "com.google.devtools.ksp:symbol-processing-api", version.ref = "ksp" }
 kotlinpoet = { module = "com.squareup:kotlinpoet", version.ref = "kotlinpoet" }
 kotlinpoet-ksp = { module = "com.squareup:kotlinpoet-ksp", version.ref = "kotlinpoet" }

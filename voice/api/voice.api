@@ -183,12 +183,19 @@ public final class dev/kord/voice/DefaultFrameInterceptor : dev/kord/voice/Frame
 }
 
 public final class dev/kord/voice/DefaultFrameInterceptorData {
+	public synthetic fun <init> ()V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ldev/kord/voice/SpeakingFlags;)V
+	public synthetic fun <init> (Ldev/kord/voice/SpeakingFlags;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final synthetic fun component1 ()Ldev/kord/voice/SpeakingFlags;
 	public final fun component1-jIm6Qs8 ()I
+	public final synthetic fun copy (Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/DefaultFrameInterceptorData;
+	public static synthetic fun copy$default (Ldev/kord/voice/DefaultFrameInterceptorData;Ldev/kord/voice/SpeakingFlags;ILjava/lang/Object;)Ldev/kord/voice/DefaultFrameInterceptorData;
 	public final fun copy-tttCGww (I)Ldev/kord/voice/DefaultFrameInterceptorData;
 	public static synthetic fun copy-tttCGww$default (Ldev/kord/voice/DefaultFrameInterceptorData;IILjava/lang/Object;)Ldev/kord/voice/DefaultFrameInterceptorData;
 	public fun equals (Ljava/lang/Object;)Z
+	public final synthetic fun getSpeakingState ()Ldev/kord/voice/SpeakingFlags;
 	public final fun getSpeakingState-jIm6Qs8 ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

@@ -8,6 +8,7 @@ rootProject.name = "kord"
 include(
     "bom",
     "common",
+    "compiler-plugins",
     "core",
     "core:live-tests",
     "core-voice",
