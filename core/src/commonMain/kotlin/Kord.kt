@@ -6,6 +6,7 @@ import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
+import dev.kord.core.behavior.channel.asChannelOfOrNull
 import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
@@ -15,6 +16,7 @@ import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
 import dev.kord.core.entity.application.*
 import dev.kord.core.entity.channel.Channel
+import dev.kord.core.entity.channel.MessageChannel
 import dev.kord.core.event.Event
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.exception.KordInitializationException
@@ -43,6 +45,17 @@ import kotlinx.coroutines.channels.Channel as CoroutineChannel
 public val kordLogger: mu.KLogger = mu.KotlinLogging.logger { }
 
 private val logger = KotlinLogging.logger { }
+private val messageLinkRegex = """(?x)                             # enable comments
+|                                 (?i)                             # allow ignore case
+|                                 (?:https?+://)?+                 # https:// (or also http:// or an empty string)
+|                                 (?:(?:canary|ptb)\\.)?+          # canary. or ptb.
+|                                 discord(?:app)?+\\.com/channels/ # discord(app).com/channels/
+|                                 (?:(?<server>[0-9]++)|@me)       # @me or the server id
+|                                 /                                # '/' 
+|                                 (?<channel>[0-9]++)              # the channel id (should only be a message channel)
+|                                 /                                # '/'
+|                                 (?<message>[0-9]++)              # the message id
+|                                 """.trimMargin().toRegex()
 
 @PublishedApi
 internal fun logCaughtThrowable(throwable: Throwable): Unit = logger.catching(throwable)
@@ -257,6 +270,27 @@ public class Kord(
         id: Snowflake,
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
     ): Guild = strategy.supply(this).getGuild(id)
+
+    /**
+     * Returns the [Message] that is fetched by the given [messageLink].
+     * If either the channel or the message id found in the link is invalid, null is returned.
+     *
+     * @throws IllegalArgumentException if the message link doesn't match the format found in [messageLinkRegex]
+     */
+    public suspend fun getMessageByLink(
+        messageLink: String
+    ): Message? {
+        val matches = messageLinkRegex.matchEntire(messageLink)
+
+        require(matches != null) { "The message link has an invalid format." }
+
+        val channel = matches.groups["channel"]?.value
+            ?.let { getChannel(Snowflake(it)) }
+            ?.asChannelOfOrNull<MessageChannel>()
+
+        return matches.groups["message"]?.value
+            ?.let { channel?.getMessageOrNull(Snowflake(it)) }
+    }
 
     /**
      * Requests to get the [Webhook] in this guild.

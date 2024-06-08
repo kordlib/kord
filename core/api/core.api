@@ -62,6 +62,7 @@ public final class dev/kord/core/Kord : kotlinx/coroutines/CoroutineScope {
 	public static synthetic fun getInvite$default (Ldev/kord/core/Kord;Ljava/lang/String;ZZLdev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun getInviteOrNull (Ljava/lang/String;ZZLdev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun getInviteOrNull$default (Ldev/kord/core/Kord;Ljava/lang/String;ZZLdev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getMessageByLink (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getNitroStickerPacks ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getRegions ()Lkotlinx/coroutines/flow/Flow;
 	public final fun getResources ()Ldev/kord/core/ClientResources;
