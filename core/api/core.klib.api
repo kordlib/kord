@@ -9761,6 +9761,8 @@ open class dev.kord.core.entity/User : dev.kord.core.behavior/UserBehavior { // 
         final fun <get-globalName>(): kotlin/String? // dev.kord.core.entity/User.globalName.<get-globalName>|<get-globalName>(){}[0]
     final val isBot // dev.kord.core.entity/User.isBot|{}isBot[0]
         final fun <get-isBot>(): kotlin/Boolean // dev.kord.core.entity/User.isBot.<get-isBot>|<get-isBot>(){}[0]
+    final val isSelf // dev.kord.core.entity/User.isSelf|{}isSelf[0]
+        final fun <get-isSelf>(): kotlin/Boolean // dev.kord.core.entity/User.isSelf.<get-isSelf>|<get-isSelf>(){}[0]
     final val publicFlags // dev.kord.core.entity/User.publicFlags|{}publicFlags[0]
         final fun <get-publicFlags>(): dev.kord.common.entity/UserFlags? // dev.kord.core.entity/User.publicFlags.<get-publicFlags>|<get-publicFlags>(){}[0]
     final val tag // dev.kord.core.entity/User.tag|{}tag[0]

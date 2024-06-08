@@ -7113,6 +7113,7 @@ public class dev/kord/core/entity/User : dev/kord/core/behavior/UserBehavior {
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
 	public final fun isBot ()Z
+	public final fun isSelf ()Z
 	public fun toString ()Ljava/lang/String;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/behavior/UserBehavior;
 	public synthetic fun withStrategy (Ldev/kord/core/supplier/EntitySupplyStrategy;)Ldev/kord/core/entity/Strategizable;
