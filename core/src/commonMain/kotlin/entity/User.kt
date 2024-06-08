@@ -40,7 +40,8 @@ public open class User(
     /**
      * Returns true if the user is the same as the bot.
      */
-public val isSelf: Boolean get() = id == kord.selfId
+   public val isSelf: Boolean get() = id == kord.selfId
+   
     public val avatarHash: String? get() = data.avatar
 
     /** The avatar of this user as an [Asset]. */
