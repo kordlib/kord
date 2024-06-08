@@ -45,17 +45,18 @@ import kotlinx.coroutines.channels.Channel as CoroutineChannel
 public val kordLogger: mu.KLogger = mu.KotlinLogging.logger { }
 
 private val logger = KotlinLogging.logger { }
-private val messageLinkRegex = """(?x)                             # enable comments
-|                                 (?i)                             # allow ignore case
-|                                 (?:https?+://)?+                 # https:// (or also http:// or an empty string)
-|                                 (?:(?:canary|ptb)\\.)?+          # canary. or ptb.
-|                                 discord(?:app)?+\\.com/channels/ # discord(app).com/channels/
-|                                 (?:(?<server>[0-9]++)|@me)       # @me or the server id
-|                                 /                                # '/' 
-|                                 (?<channel>[0-9]++)              # the channel id (should only be a message channel)
-|                                 /                                # '/'
-|                                 (?<message>[0-9]++)              # the message id
-|                                 """.trimMargin().toRegex()
+private val messageLinkRegex = """
+                                |(?x)                             # enable comments
+                                |(?i)                             # allow ignore case
+                                |(?:https?+://)?+                 # https:// (or also http:// or an empty string)
+                                |(?:(?:canary|ptb)\.)?+          # canary. or ptb.
+                                |discord(?:app)?+\.com/channels/ # discord(app).com/channels/
+                                |(?:(?<server>[0-9]++)|@me)       # @me or the server id
+                                |/                                # '/' 
+                                |(?<channel>[0-9]++)              # the channel id (should only be a message channel)
+                                |/                                # '/'
+                                |(?<message>[0-9]++)              # the message id
+                                 """.trimMargin().toRegex()
 
 @PublishedApi
 internal fun logCaughtThrowable(throwable: Throwable): Unit = logger.catching(throwable)
