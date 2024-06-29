@@ -105,7 +105,6 @@ public sealed class ActivityFlag(
             )
         }
 
-
         /**
          * Returns an instance of [ActivityFlag] with [ActivityFlag.shift] equal to the specified
          * [shift].

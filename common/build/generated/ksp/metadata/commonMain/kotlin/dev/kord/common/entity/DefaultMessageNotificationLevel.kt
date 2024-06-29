@@ -77,7 +77,6 @@ public sealed class DefaultMessageNotificationLevel(
             )
         }
 
-
         /**
          * Returns an instance of [DefaultMessageNotificationLevel] with
          * [DefaultMessageNotificationLevel.value] equal to the specified [value].

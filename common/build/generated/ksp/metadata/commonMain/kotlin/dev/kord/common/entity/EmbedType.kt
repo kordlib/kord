@@ -97,7 +97,6 @@ public sealed class EmbedType(
             )
         }
 
-
         /**
          * Returns an instance of [EmbedType] with [EmbedType.value] equal to the specified [value].
          */

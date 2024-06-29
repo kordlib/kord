@@ -74,7 +74,6 @@ public sealed class ApplicationCommandPermissionType(
             )
         }
 
-
         /**
          * Returns an instance of [ApplicationCommandPermissionType] with
          * [ApplicationCommandPermissionType.value] equal to the specified [value].

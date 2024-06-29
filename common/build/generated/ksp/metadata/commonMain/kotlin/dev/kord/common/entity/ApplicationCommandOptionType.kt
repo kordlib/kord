@@ -110,7 +110,6 @@ public sealed class ApplicationCommandOptionType(
             )
         }
 
-
         /**
          * Returns an instance of [ApplicationCommandOptionType] with
          * [ApplicationCommandOptionType.type] equal to the specified [type].

@@ -73,7 +73,6 @@ public sealed class MFALevel(
             )
         }
 
-
         /**
          * Returns an instance of [MFALevel] with [MFALevel.value] equal to the specified [value].
          */

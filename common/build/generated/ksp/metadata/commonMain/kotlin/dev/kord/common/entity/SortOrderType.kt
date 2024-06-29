@@ -74,7 +74,6 @@ public sealed class SortOrderType(
             )
         }
 
-
         /**
          * Returns an instance of [SortOrderType] with [SortOrderType.value] equal to the specified
          * [value].

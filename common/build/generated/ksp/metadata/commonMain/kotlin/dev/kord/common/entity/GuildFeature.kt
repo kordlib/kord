@@ -228,7 +228,6 @@ public sealed class GuildFeature(
             )
         }
 
-
         /**
          * Returns an instance of [GuildFeature] with [GuildFeature.value] equal to the specified
          * [value].

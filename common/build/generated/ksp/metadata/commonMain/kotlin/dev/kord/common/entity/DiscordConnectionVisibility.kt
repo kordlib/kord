@@ -77,7 +77,6 @@ public sealed class DiscordConnectionVisibility(
             )
         }
 
-
         /**
          * Returns an instance of [DiscordConnectionVisibility] with
          * [DiscordConnectionVisibility.value] equal to the specified [value].

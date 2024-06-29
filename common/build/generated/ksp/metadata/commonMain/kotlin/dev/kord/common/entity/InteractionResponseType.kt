@@ -108,7 +108,6 @@ public sealed class InteractionResponseType(
             )
         }
 
-
         /**
          * Returns an instance of [InteractionResponseType] with [InteractionResponseType.type]
          * equal to the specified [type].

@@ -142,7 +142,6 @@ public sealed class MessageFlag(
             )
         }
 
-
         /**
          * Returns an instance of [MessageFlag] with [MessageFlag.shift] equal to the specified
          * [shift].

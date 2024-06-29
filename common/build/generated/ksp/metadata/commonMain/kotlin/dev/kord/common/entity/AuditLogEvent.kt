@@ -398,7 +398,6 @@ public sealed class AuditLogEvent(
             )
         }
 
-
         /**
          * Returns an instance of [AuditLogEvent] with [AuditLogEvent.value] equal to the specified
          * [value].

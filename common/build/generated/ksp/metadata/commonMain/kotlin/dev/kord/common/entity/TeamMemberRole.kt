@@ -86,7 +86,6 @@ public sealed class TeamMemberRole(
             )
         }
 
-
         /**
          * Returns an instance of [TeamMemberRole] with [TeamMemberRole.value] equal to the
          * specified [value].

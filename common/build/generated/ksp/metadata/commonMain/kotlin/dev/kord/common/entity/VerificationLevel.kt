@@ -93,7 +93,6 @@ public sealed class VerificationLevel(
             )
         }
 
-
         /**
          * Returns an instance of [VerificationLevel] with [VerificationLevel.value] equal to the
          * specified [value].

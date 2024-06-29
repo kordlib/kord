@@ -75,7 +75,6 @@ public sealed class UserPremium(
             )
         }
 
-
         /**
          * Returns an instance of [UserPremium] with [UserPremium.value] equal to the specified
          * [value].
