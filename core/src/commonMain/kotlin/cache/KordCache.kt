@@ -119,6 +119,10 @@ public class KordCacheBuilder {
     public fun autoModerationRules(generator: Generator<AutoModerationRuleData, Snowflake>): Unit =
         forDescription(AutoModerationRuleData.description, generator)
 
+    /** Configures the caching for [EntitlementData]. */
+    public fun entitlements(generator: Generator<EntitlementData, Snowflake>): Unit =
+        forDescription(EntitlementData.description, generator)
+
     public fun build(): DataCache = DelegatingDataCache(EntrySupplier.invoke { cache, description ->
         val generator = descriptionGenerators[description] ?: defaultGenerator
         generator(cache, description)

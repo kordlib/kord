@@ -62,6 +62,10 @@
             kDoc = "Respond to an autocomplete interaction with suggested choices.",
         ),
         Entry("Modal", intValue = 9, kDoc = "Respond to an interaction with a popup modal."),
+        Entry(
+            "PremiumRequired", intValue = 10,
+            kDoc = "Respond to an interaction with an upgrade button, only available for apps with monetization enabled."
+        ),
     ],
 )
 
@@ -260,6 +264,7 @@ public data class DiscordInteraction(
     val locale: Optional<Locale> = Optional.Missing(),
     @SerialName("guild_locale")
     val guildLocale: Optional<Locale> = Optional.Missing(),
+    val entitlements: List<DiscordEntitlement>
 ) {
 
     /**

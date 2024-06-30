@@ -4,12 +4,16 @@ import dev.kord.cache.api.DataCache
 import dev.kord.common.annotation.KordExperimental
 import dev.kord.common.annotation.KordUnsafe
 import dev.kord.common.entity.DiscordShard
+import dev.kord.common.entity.EntitlementOwnerType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.exception.RequestException
+import dev.kord.core.behavior.GuildBehavior
+import dev.kord.core.behavior.UserBehavior
 import dev.kord.core.builder.kord.KordBuilder
 import dev.kord.core.builder.kord.KordProxyBuilder
 import dev.kord.core.builder.kord.KordRestOnlyBuilder
 import dev.kord.core.cache.data.ApplicationCommandData
+import dev.kord.core.cache.data.EntitlementData
 import dev.kord.core.cache.data.GuildData
 import dev.kord.core.cache.data.UserData
 import dev.kord.core.entity.*
@@ -29,6 +33,7 @@ import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecord
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
+import dev.kord.rest.json.request.TestEntitlementCreateRequest
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.service.RestClient
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -365,6 +370,64 @@ public class Kord(
         scheduledEventId: Snowflake? = null,
     ): Invite? = with(EntitySupplyStrategy.rest).getInviteOrNull(code, withCounts, withExpiration, scheduledEventId)
 
+    /**
+     * Requests to get all [Sku]s for this application.
+     *
+     * @throws [RestRequestException] if anything went wrong during the request.
+     */
+    public suspend fun getSkus(): List<Sku> =
+        rest.sku.listSkus(selfId).map { Sku(it, this) }
+
+    /**
+     * Requests to get a list of [Entitlement]s with the given [skuId], [userId], or [guildId].
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getEntitlements(
+        limit: Int? = null,
+        skuId: Snowflake? = null,
+        userId: Snowflake? = null,
+        guildId: Snowflake? = null,
+        strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
+    ): Flow<Entitlement> = strategy.supply(this).getEntitlements(selfId, skuId, limit, userId, guildId)
+
+    /**
+     * Requests to get the [Entitlement] with the given [id]
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the entitlement wasn't present.
+     */
+    public suspend fun getEntitlement(id: Snowflake): Entitlement = defaultSupplier.getEntitlement(selfId, id)
+
+    /**
+     * Requests to get the [Entitlement] with the given [id].
+     * returns null if it wasn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
+    public suspend fun getEntitlementOrNull(id: Snowflake): Entitlement? = defaultSupplier.getEntitlementOrNull(selfId, id)
+
+    /**
+     * Requests to create a new [test entitlement][Entitlement] with the given [skuId], [ownerId] and [ownerType].
+     *
+     * @throws [RestRequestException] if anything went wrong during the request.
+     */
+    public suspend fun createTestEntitlement(
+        skuId: Snowflake,
+        ownerId: Snowflake,
+        ownerType: EntitlementOwnerType,
+    ): Entitlement {
+        val response = rest.entitlement.createTestEntitlement(selfId, TestEntitlementCreateRequest(skuId, ownerId, ownerType))
+        val data = EntitlementData.from(response)
+
+        return Entitlement(data, this)
+    }
+
+    public suspend fun createTestEntitlement(skuId: Snowflake, user: UserBehavior): Entitlement =
+        createTestEntitlement(skuId, user.id, EntitlementOwnerType.User)
+
+    public suspend fun createTestEntitlement(skuId: Snowflake, guild: GuildBehavior): Entitlement =
+        createTestEntitlement(skuId, guild.id, EntitlementOwnerType.Guild)
 
     public suspend fun getSticker(id: Snowflake): Sticker = defaultSupplier.getSticker(id)
 

@@ -7,6 +7,8 @@ import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
+import dev.kord.core.entity.Entitlement
+import dev.kord.core.entity.Sku
 import dev.kord.core.entity.User
 import dev.kord.core.supplier.EntitySupplyStrategy
 
@@ -27,6 +29,13 @@ public sealed interface Interaction : InteractionBehavior {
     override val channelId: Snowflake get() = data.channel.value?.id ?: data.channelId.value!!
 
     override val token: String get() = data.token
+
+    /**
+     * For [monetized apps](https://discord.com/developers/docs/monetization/overview), any entitlements for the
+     * invoking user, representing access to premium [Sku]s.
+     */
+    public val entitlements: List<Entitlement>
+        get() = data.entitlements.map { Entitlement(it, kord) }
 
     /**
      * The type of the interaction.

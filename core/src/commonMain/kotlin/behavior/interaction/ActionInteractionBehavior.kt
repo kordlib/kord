@@ -1,6 +1,7 @@
 package dev.kord.core.behavior.interaction
 
 import dev.kord.common.annotation.KordUnsafe
+import dev.kord.common.entity.InteractionResponseType
 import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
@@ -13,12 +14,31 @@ import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.core.supplier.EntitySupplyStrategy.Companion.rest
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
+import dev.kord.rest.json.request.InteractionResponseCreateRequest
 import dev.kord.rest.request.RestRequestException
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /** The behavior of an [ActionInteraction]. */
 public interface ActionInteractionBehavior : InteractionBehavior {
+
+    /**
+     * Responds to the interaction with an upgrade button, only available for apps with monetization enabled.
+     *
+     * This will create an ephemeral message shown to the [user][Interaction.user] who invoked the interaction, instructing
+     * them that whatever they tried to do requires the premium benefits of your app. It also contains an "Upgrade"
+     * button to subscribe via an in-app purchase flow. The response message is static, but will be automatically
+     * updated with the name of your premium SKU.
+     *
+     * @throws RestRequestException if something went wrong during the request.
+     */
+    public suspend fun respondWithPremiumRequired() {
+        kord.rest.interaction.createInteractionResponse(
+            id,
+            token,
+            InteractionResponseCreateRequest(InteractionResponseType.PremiumRequired)
+        )
+    }
 
     /**
      * Acknowledges the interaction with the intent of responding with an [ephemeral][MessageFlag.Ephemeral] message
@@ -104,7 +124,6 @@ public interface ActionInteractionBehavior : InteractionBehavior {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ActionInteractionBehavior =
         ActionInteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 }
-
 
 /**
  * Responds to the interaction with a public message.
