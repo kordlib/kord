@@ -371,6 +371,7 @@ public data class DiscordPartialMessage(
     @SerialName("referenced_message")
     val referencedMessage: Optional<DiscordMessage?> = Optional.Missing(),
     val interaction: Optional<DiscordMessageInteraction> = Optional.Missing(),
+    val thread: Optional<DiscordChannel> = Optional.Missing(),
     val position: OptionalInt = OptionalInt.Missing,
 )
 
