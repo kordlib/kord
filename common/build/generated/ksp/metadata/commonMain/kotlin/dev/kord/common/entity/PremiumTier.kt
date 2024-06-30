@@ -85,7 +85,6 @@ public sealed class PremiumTier(
             )
         }
 
-
         /**
          * Returns an instance of [PremiumTier] with [PremiumTier.value] equal to the specified
          * [value].

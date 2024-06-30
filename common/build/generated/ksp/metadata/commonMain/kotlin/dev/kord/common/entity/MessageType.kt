@@ -154,7 +154,6 @@ public sealed class MessageType(
             )
         }
 
-
         /**
          * Returns an instance of [MessageType] with [MessageType.code] equal to the specified
          * [code].

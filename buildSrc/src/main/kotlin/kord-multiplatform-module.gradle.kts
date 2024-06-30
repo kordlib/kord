@@ -6,7 +6,7 @@ plugins {
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
-    `kotlinx-atomicfu`
+    org.jetbrains.kotlinx.atomicfu
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
 }

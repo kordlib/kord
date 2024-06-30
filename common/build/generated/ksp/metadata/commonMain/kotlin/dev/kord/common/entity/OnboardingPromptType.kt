@@ -69,7 +69,6 @@ public sealed class OnboardingPromptType(
             )
         }
 
-
         /**
          * Returns an instance of [OnboardingPromptType] with [OnboardingPromptType.value] equal to
          * the specified [value].

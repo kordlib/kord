@@ -146,7 +146,6 @@ public sealed class ChannelType(
             )
         }
 
-
         /**
          * Returns an instance of [ChannelType] with [ChannelType.value] equal to the specified
          * [value].

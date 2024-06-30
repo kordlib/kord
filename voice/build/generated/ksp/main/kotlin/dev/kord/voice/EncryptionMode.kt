@@ -71,7 +71,6 @@ public sealed class EncryptionMode(
             )
         }
 
-
         /**
          * Returns an instance of [EncryptionMode] with [EncryptionMode.value] equal to the
          * specified [value].

@@ -78,7 +78,6 @@ public sealed class InteractionType(
             )
         }
 
-
         /**
          * Returns an instance of [InteractionType] with [InteractionType.type] equal to the
          * specified [type].

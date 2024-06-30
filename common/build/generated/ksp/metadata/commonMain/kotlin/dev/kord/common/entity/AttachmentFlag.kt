@@ -84,7 +84,6 @@ public sealed class AttachmentFlag(
             )
         }
 
-
         /**
          * Returns an instance of [AttachmentFlag] with [AttachmentFlag.shift] equal to the
          * specified [shift].
