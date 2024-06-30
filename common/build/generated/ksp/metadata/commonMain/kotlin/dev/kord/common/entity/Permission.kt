@@ -364,7 +364,6 @@ public sealed class Permission(
             )
         }
 
-
         /**
          * Returns an instance of [Permission] with [Permission.shift] equal to the specified
          * [shift].

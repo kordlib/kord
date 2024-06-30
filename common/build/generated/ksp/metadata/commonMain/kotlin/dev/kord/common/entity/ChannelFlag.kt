@@ -91,7 +91,6 @@ public sealed class ChannelFlag(
             )
         }
 
-
         /**
          * Returns an instance of [ChannelFlag] with [ChannelFlag.shift] equal to the specified
          * [shift].

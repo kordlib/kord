@@ -110,7 +110,6 @@ public sealed class SystemChannelFlag(
             )
         }
 
-
         /**
          * Returns an instance of [SystemChannelFlag] with [SystemChannelFlag.shift] equal to the
          * specified [shift].

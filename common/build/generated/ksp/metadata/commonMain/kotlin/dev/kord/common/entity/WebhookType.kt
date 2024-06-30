@@ -80,7 +80,6 @@ public sealed class WebhookType(
             )
         }
 
-
         /**
          * Returns an instance of [WebhookType] with [WebhookType.value] equal to the specified
          * [value].

@@ -69,7 +69,6 @@ public sealed class TeamMembershipState(
             )
         }
 
-
         /**
          * Returns an instance of [TeamMembershipState] with [TeamMembershipState.value] equal to
          * the specified [value].

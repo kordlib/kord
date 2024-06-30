@@ -144,7 +144,6 @@ public sealed class ApplicationFlag(
             )
         }
 
-
         /**
          * Returns an instance of [ApplicationFlag] with [ApplicationFlag.shift] equal to the
          * specified [shift].

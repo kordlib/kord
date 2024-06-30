@@ -90,7 +90,6 @@ public sealed class SpeakingFlag(
             )
         }
 
-
         /**
          * Returns an instance of [SpeakingFlag] with [SpeakingFlag.shift] equal to the specified
          * [shift].

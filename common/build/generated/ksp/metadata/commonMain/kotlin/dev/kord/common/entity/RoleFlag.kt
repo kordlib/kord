@@ -73,7 +73,6 @@ public sealed class RoleFlag(
             )
         }
 
-
         /**
          * Returns an instance of [RoleFlag] with [RoleFlag.shift] equal to the specified [shift].
          *

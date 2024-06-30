@@ -96,7 +96,6 @@ public sealed class GuildMemberFlag(
             )
         }
 
-
         /**
          * Returns an instance of [GuildMemberFlag] with [GuildMemberFlag.shift] equal to the
          * specified [shift].

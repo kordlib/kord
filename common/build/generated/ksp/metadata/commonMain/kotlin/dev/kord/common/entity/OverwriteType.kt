@@ -68,7 +68,6 @@ public sealed class OverwriteType(
             )
         }
 
-
         /**
          * Returns an instance of [OverwriteType] with [OverwriteType.value] equal to the specified
          * [value].

@@ -82,7 +82,6 @@ public sealed class ExplicitContentFilter(
             )
         }
 
-
         /**
          * Returns an instance of [ExplicitContentFilter] with [ExplicitContentFilter.value] equal
          * to the specified [value].

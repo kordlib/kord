@@ -73,7 +73,6 @@ public sealed class SelectDefaultValueType(
             )
         }
 
-
         /**
          * Returns an instance of [SelectDefaultValueType] with [SelectDefaultValueType.value] equal
          * to the specified [value].

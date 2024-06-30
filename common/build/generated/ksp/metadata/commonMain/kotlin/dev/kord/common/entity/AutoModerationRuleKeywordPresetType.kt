@@ -85,7 +85,6 @@ public sealed class AutoModerationRuleKeywordPresetType(
             )
         }
 
-
         /**
          * Returns an instance of [AutoModerationRuleKeywordPresetType] with
          * [AutoModerationRuleKeywordPresetType.value] equal to the specified [value].
