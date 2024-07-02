@@ -55,10 +55,23 @@ internal inline fun <T : TypeSpecHolder.Builder<T>> T.addObject(name: String, bu
     addType(TypeSpec.objectBuilder(name).apply(builder).build())
 
 
-// extensions for `FileSpec.Builder`
+// extensions for `MemberSpecHolder.Builder`
 
-internal inline fun FileSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
+internal inline fun <T : MemberSpecHolder.Builder<T>> T.addFunction(name: String, builder: FunSpecBuilder) =
     addFunction(FunSpec.builder(name).apply(builder).build())
+
+internal inline fun <reified T> MemberSpecHolder.Builder<*>.addProperty(
+    name: String,
+    vararg modifiers: KModifier,
+    builder: PropertySpecBuilder,
+) = addProperty(PropertySpec.builder(name, typeNameOf<T>(), *modifiers).apply(builder).build())
+
+internal inline fun <T : MemberSpecHolder.Builder<T>> T.addProperty(
+    name: String,
+    type: TypeName,
+    vararg modifiers: KModifier,
+    builder: PropertySpecBuilder,
+) = addProperty(PropertySpec.builder(name, type, *modifiers).apply(builder).build())
 
 
 // extensions for `TypeSpec.Builder`
@@ -66,30 +79,11 @@ internal inline fun FileSpec.Builder.addFunction(name: String, builder: FunSpecB
 internal inline fun TypeSpec.Builder.addCompanionObject(name: String? = null, builder: TypeSpecBuilder) =
     addType(TypeSpec.companionObjectBuilder(name).apply(builder).build())
 
-internal inline fun TypeSpec.Builder.addFunction(name: String, builder: FunSpecBuilder) =
-    addFunction(FunSpec.builder(name).apply(builder).build())
-
-internal inline fun <reified T> TypeSpec.Builder.addProperty(
-    name: String,
-    vararg modifiers: KModifier,
-    builder: PropertySpecBuilder,
-) = addProperty(PropertySpec.builder(name, typeNameOf<T>(), *modifiers).apply(builder).build())
-
-internal inline fun TypeSpec.Builder.addProperty(
-    name: String,
-    type: TypeName,
-    vararg modifiers: KModifier,
-    builder: PropertySpecBuilder,
-) = addProperty(PropertySpec.builder(name, type, *modifiers).apply(builder).build())
-
 internal inline fun TypeSpec.Builder.primaryConstructor(builder: FunSpecBuilder) =
     primaryConstructor(FunSpec.constructorBuilder().apply(builder).build())
 
 internal inline fun TypeSpec.Builder.addInitializerBlock(builder: CodeBlockBuilder) =
     addInitializerBlock(CodeBlock.builder().apply(builder).build())
-
-internal inline fun TypeSpec.Builder.addConstructor(builder: FunSpecBuilder) =
-    addFunction(FunSpec.constructorBuilder().apply(builder).build())
 
 
 // extensions for `FunSpec.Builder`

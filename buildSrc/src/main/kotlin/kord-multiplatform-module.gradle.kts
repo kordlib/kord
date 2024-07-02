@@ -8,7 +8,7 @@ plugins {
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
-    `kotlinx-atomicfu`
+    org.jetbrains.kotlinx.atomicfu
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
 }
@@ -45,6 +45,11 @@ kotlin {
     explicitApi()
     jvmToolchain(Jvm.target)
 
+    compilerOptions {
+        applyKordCompilerOptions()
+        optIn.addAll(kordOptIns)
+    }
+
     sourceSets {
         all {
             applyKordOptIns()
@@ -60,8 +65,6 @@ kotlin {
         }
     }
 }
-
-configureAtomicFU()
 
 tasks {
     withType<Test>().configureEach {

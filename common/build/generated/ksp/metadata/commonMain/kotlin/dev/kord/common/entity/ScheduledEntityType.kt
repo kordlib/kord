@@ -72,7 +72,6 @@ public sealed class ScheduledEntityType(
             )
         }
 
-
         /**
          * Returns an instance of [ScheduledEntityType] with [ScheduledEntityType.value] equal to
          * the specified [value].

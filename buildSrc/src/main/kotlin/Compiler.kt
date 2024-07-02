@@ -1,15 +1,7 @@
-import kotlinx.atomicfu.plugin.gradle.AtomicFUPluginExtension
-import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
+import org.gradle.api.NamedDomainObjectSet
 import org.gradle.kotlin.dsl.assign
-import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.getByType
 import org.jetbrains.kotlin.gradle.dsl.KotlinCommonCompilerOptions
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
-
-object OptIns {
-    const val coroutines = "kotlinx.coroutines.ExperimentalCoroutinesApi"
-}
 
 val kordOptIns = listOf(
     "kotlin.contracts.ExperimentalContracts",
@@ -30,18 +22,9 @@ fun KotlinCommonCompilerOptions.applyKordCompilerOptions() {
     freeCompilerArgs.add("-Xexpect-actual-classes")
 }
 
-fun KotlinSourceSet.applyKordOptIns() {
-    languageSettings {
+internal fun NamedDomainObjectSet<KotlinSourceSet>.applyKordTestOptIns() {
+    named { it.contains("test", ignoreCase = true) }.configureEach {
         // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
-        if ("Test" in name) optIn(OptIns.coroutines)
-        kordOptIns.forEach(::optIn)
-    }
-}
-
-fun Project.configureAtomicFU() {
-    // https://github.com/Kotlin/kotlinx-atomicfu/issues/210
-    configure<AtomicFUPluginExtension> {
-        val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
-        dependenciesVersion = libs.findVersion("kotlinx-atomicfu").get().requiredVersion
+        languageSettings.optIn("kotlinx.coroutines.ExperimentalCoroutinesApi")
     }
 }

@@ -79,7 +79,6 @@ public sealed class ActivityType(
             )
         }
 
-
         /**
          * Returns an instance of [ActivityType] with [ActivityType.code] equal to the specified
          * [code].

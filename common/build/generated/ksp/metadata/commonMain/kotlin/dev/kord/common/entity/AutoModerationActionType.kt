@@ -93,7 +93,6 @@ public sealed class AutoModerationActionType(
             )
         }
 
-
         /**
          * Returns an instance of [AutoModerationActionType] with [AutoModerationActionType.value]
          * equal to the specified [value].

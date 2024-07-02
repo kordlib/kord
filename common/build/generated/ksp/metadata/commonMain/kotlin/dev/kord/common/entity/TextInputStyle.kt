@@ -77,7 +77,6 @@ public sealed class TextInputStyle(
             )
         }
 
-
         /**
          * Returns an instance of [TextInputStyle] with [TextInputStyle.value] equal to the
          * specified [value].

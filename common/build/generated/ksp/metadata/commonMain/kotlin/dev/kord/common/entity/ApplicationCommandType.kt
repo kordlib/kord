@@ -82,7 +82,6 @@ public sealed class ApplicationCommandType(
             )
         }
 
-
         /**
          * Returns an instance of [ApplicationCommandType] with [ApplicationCommandType.value] equal
          * to the specified [value].

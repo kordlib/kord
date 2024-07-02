@@ -5,14 +5,8 @@ import dev.kord.voice.EncryptionMode
 import dev.kord.voice.SpeakingFlags
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.serialization.*
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.descriptors.SerialDescriptor
-import kotlinx.serialization.descriptors.buildClassSerialDescriptor
-import kotlinx.serialization.encoding.CompositeDecoder
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.encoding.decodeStructure
+import kotlinx.serialization.descriptors.*
+import kotlinx.serialization.encoding.*
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
@@ -116,17 +110,19 @@ public object Resumed : VoiceEvent() {
     @Deprecated(
         "'Resumed' is no longer serializable, deserialize it with 'VoiceEvent.DeserializationStrategy' instead. " +
             "Deprecated without a replacement.",
-        level = DeprecationLevel.WARNING,
+        level = DeprecationLevel.ERROR,
     )
-    public fun serializer(): KSerializer<Resumed> = serializer
+    public fun serializer(): KSerializer<Resumed> = Serializer
 
-    private val serializer: KSerializer<Resumed> by lazy(LazyThreadSafetyMode.PUBLICATION) {
-        @Suppress("INVISIBLE_MEMBER")
-        kotlinx.serialization.internal.ObjectSerializer(
-            serialName = "dev.kord.voice.gateway.Resumed",
-            objectInstance = Resumed,
-            classAnnotations = arrayOf(),
-        )
+    private object Serializer : KSerializer<Resumed> {
+        @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
+        override val descriptor = buildSerialDescriptor("dev.kord.voice.gateway.Resumed", StructureKind.OBJECT)
+        override fun serialize(encoder: Encoder, value: Resumed) = encoder.encodeStructure(descriptor) {}
+        override fun deserialize(decoder: Decoder) = decoder.decodeStructure(descriptor) {
+            val index = decodeElementIndex(descriptor)
+            if (index != CompositeDecoder.DECODE_DONE) throw SerializationException("Unexpected index $index")
+            Resumed
+        }
     }
 }
 

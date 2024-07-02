@@ -110,7 +110,6 @@ public sealed class ComponentType(
             )
         }
 
-
         /**
          * Returns an instance of [ComponentType] with [ComponentType.value] equal to the specified
          * [value].

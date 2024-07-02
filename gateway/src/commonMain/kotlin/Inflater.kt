@@ -1,11 +1,10 @@
 package dev.kord.gateway
 
-import io.ktor.utils.io.core.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transform
 
-internal interface Inflater : Closeable {
+internal interface Inflater : AutoCloseable {
     /** Decompresses [compressedLen] bytes from [compressed] and decodes them to a [String]. */
     fun inflate(compressed: ByteArray, compressedLen: Int): String
 }

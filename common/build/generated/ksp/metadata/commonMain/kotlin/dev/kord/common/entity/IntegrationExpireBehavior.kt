@@ -71,7 +71,6 @@ public sealed class IntegrationExpireBehavior(
             )
         }
 
-
         /**
          * Returns an instance of [IntegrationExpireBehavior] with [IntegrationExpireBehavior.value]
          * equal to the specified [value].

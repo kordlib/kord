@@ -77,7 +77,6 @@ public sealed class GuildScheduledEventStatus(
             )
         }
 
-
         /**
          * Returns an instance of [GuildScheduledEventStatus] with [GuildScheduledEventStatus.value]
          * equal to the specified [value].
