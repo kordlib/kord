@@ -34,7 +34,7 @@ dokka = "1.9.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.25.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.15.0-Beta.3" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.3.5" # https://github.com/gmazzo/gradle-buildconfig-plugin
-kord-gradle-tools = "1.6.0" # https://github.com/kordlib/gradle-tools
+kord-gradle-tools = "1.6.1" # https://github.com/kordlib/gradle-tools
 maven-publish-plugin = "0.27.0" # https://github.com/vanniktech/gradle-maven-publish-plugin
 
 [libraries]
