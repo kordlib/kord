@@ -8,36 +8,61 @@
 // - Show declarations: true
 
 // Library unique name: <kord:voice>
-abstract class dev.kord.voice.udp/AudioPacketProvider { // dev.kord.voice.udp/AudioPacketProvider|null[0]
-    abstract fun provide(kotlin/UShort, kotlin/UInt, kotlin/UInt, kotlin/ByteArray): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/AudioPacketProvider.provide|provide(kotlin.UShort;kotlin.UInt;kotlin.UInt;kotlin.ByteArray){}[0]
-    constructor <init>(kotlin/ByteArray, dev.kord.voice.encryption.strategies/NonceStrategy) // dev.kord.voice.udp/AudioPacketProvider.<init>|<init>(kotlin.ByteArray;dev.kord.voice.encryption.strategies.NonceStrategy){}[0]
-    final val key // dev.kord.voice.udp/AudioPacketProvider.key|{}key[0]
-        final fun <get-key>(): kotlin/ByteArray // dev.kord.voice.udp/AudioPacketProvider.key.<get-key>|<get-key>(){}[0]
-    final val nonceStrategy // dev.kord.voice.udp/AudioPacketProvider.nonceStrategy|{}nonceStrategy[0]
-        final fun <get-nonceStrategy>(): dev.kord.voice.encryption.strategies/NonceStrategy // dev.kord.voice.udp/AudioPacketProvider.nonceStrategy.<get-nonceStrategy>|<get-nonceStrategy>(){}[0]
+final enum class dev.kord.voice.gateway/OpCode : kotlin/Enum<dev.kord.voice.gateway/OpCode> { // dev.kord.voice.gateway/OpCode|null[0]
+    enum entry ClientDisconnect // dev.kord.voice.gateway/OpCode.ClientDisconnect|null[0]
+    enum entry Heartbeat // dev.kord.voice.gateway/OpCode.Heartbeat|null[0]
+    enum entry HeartbeatAck // dev.kord.voice.gateway/OpCode.HeartbeatAck|null[0]
+    enum entry Hello // dev.kord.voice.gateway/OpCode.Hello|null[0]
+    enum entry Identify // dev.kord.voice.gateway/OpCode.Identify|null[0]
+    enum entry Ready // dev.kord.voice.gateway/OpCode.Ready|null[0]
+    enum entry Resume // dev.kord.voice.gateway/OpCode.Resume|null[0]
+    enum entry Resumed // dev.kord.voice.gateway/OpCode.Resumed|null[0]
+    enum entry SelectProtocol // dev.kord.voice.gateway/OpCode.SelectProtocol|null[0]
+    enum entry SessionDescription // dev.kord.voice.gateway/OpCode.SessionDescription|null[0]
+    enum entry Speaking // dev.kord.voice.gateway/OpCode.Speaking|null[0]
+    enum entry Unknown // dev.kord.voice.gateway/OpCode.Unknown|null[0]
+
+    final val code // dev.kord.voice.gateway/OpCode.code|{}code[0]
+        final fun <get-code>(): kotlin/Int // dev.kord.voice.gateway/OpCode.code.<get-code>|<get-code>(){}[0]
+    final val entries // dev.kord.voice.gateway/OpCode.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.kord.voice.gateway/OpCode> // dev.kord.voice.gateway/OpCode.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): dev.kord.voice.gateway/OpCode // dev.kord.voice.gateway/OpCode.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<dev.kord.voice.gateway/OpCode> // dev.kord.voice.gateway/OpCode.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // dev.kord.voice.gateway/OpCode.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/OpCode> // dev.kord.voice.gateway/OpCode.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // dev.kord.voice.gateway/OpCode.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
 }
+
 abstract fun interface dev.kord.voice/AudioProvider { // dev.kord.voice/AudioProvider|null[0]
     abstract suspend fun provide(): dev.kord.voice/AudioFrame? // dev.kord.voice/AudioProvider.provide|provide(){}[0]
     open suspend fun (kotlinx.coroutines/CoroutineScope).provideFrames(kotlinx.coroutines.channels/SendChannel<dev.kord.voice/AudioFrame?>) // dev.kord.voice/AudioProvider.provideFrames|provideFrames@kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.channels.SendChannel<dev.kord.voice.AudioFrame?>){}[0]
 }
+
 abstract fun interface dev.kord.voice/FrameInterceptor { // dev.kord.voice/FrameInterceptor|null[0]
     abstract fun (kotlinx.coroutines.flow/Flow<dev.kord.voice/AudioFrame?>).intercept(dev.kord.voice/FrameInterceptorConfiguration): kotlinx.coroutines.flow/Flow<dev.kord.voice/AudioFrame?> // dev.kord.voice/FrameInterceptor.intercept|intercept@kotlinx.coroutines.flow.Flow<dev.kord.voice.AudioFrame?>(dev.kord.voice.FrameInterceptorConfiguration){}[0]
 }
+
 abstract interface dev.kord.voice.gateway/VoiceGateway { // dev.kord.voice.gateway/VoiceGateway|null[0]
-    abstract suspend fun detach() // dev.kord.voice.gateway/VoiceGateway.detach|detach(){}[0]
-    abstract suspend fun send(dev.kord.voice.gateway/Command) // dev.kord.voice.gateway/VoiceGateway.send|send(dev.kord.voice.gateway.Command){}[0]
-    abstract suspend fun start(dev.kord.voice.gateway/VoiceGatewayConfiguration) // dev.kord.voice.gateway/VoiceGateway.start|start(dev.kord.voice.gateway.VoiceGatewayConfiguration){}[0]
-    abstract suspend fun stop() // dev.kord.voice.gateway/VoiceGateway.stop|stop(){}[0]
     abstract val events // dev.kord.voice.gateway/VoiceGateway.events|{}events[0]
         abstract fun <get-events>(): kotlinx.coroutines.flow/SharedFlow<dev.kord.voice.gateway/VoiceEvent> // dev.kord.voice.gateway/VoiceGateway.events.<get-events>|<get-events>(){}[0]
     abstract val ping // dev.kord.voice.gateway/VoiceGateway.ping|{}ping[0]
         abstract fun <get-ping>(): kotlinx.coroutines.flow/StateFlow<kotlin.time/Duration?> // dev.kord.voice.gateway/VoiceGateway.ping.<get-ping>|<get-ping>(){}[0]
     abstract val scope // dev.kord.voice.gateway/VoiceGateway.scope|{}scope[0]
         abstract fun <get-scope>(): kotlinx.coroutines/CoroutineScope // dev.kord.voice.gateway/VoiceGateway.scope.<get-scope>|<get-scope>(){}[0]
+
+    abstract suspend fun detach() // dev.kord.voice.gateway/VoiceGateway.detach|detach(){}[0]
+    abstract suspend fun send(dev.kord.voice.gateway/Command) // dev.kord.voice.gateway/VoiceGateway.send|send(dev.kord.voice.gateway.Command){}[0]
+    abstract suspend fun start(dev.kord.voice.gateway/VoiceGatewayConfiguration) // dev.kord.voice.gateway/VoiceGateway.start|start(dev.kord.voice.gateway.VoiceGatewayConfiguration){}[0]
+    abstract suspend fun stop() // dev.kord.voice.gateway/VoiceGateway.stop|stop(){}[0]
+
     final object Companion { // dev.kord.voice.gateway/VoiceGateway.Companion|null[0]
         final fun none(): dev.kord.voice.gateway/VoiceGateway // dev.kord.voice.gateway/VoiceGateway.Companion.none|none(){}[0]
     }
 }
+
 abstract interface dev.kord.voice.streams/Streams { // dev.kord.voice.streams/Streams|null[0]
     abstract val incomingAudioFrames // dev.kord.voice.streams/Streams.incomingAudioFrames|{}incomingAudioFrames[0]
         abstract fun <get-incomingAudioFrames>(): kotlinx.coroutines.flow/Flow<kotlin/Pair<kotlin/UInt, dev.kord.voice/AudioFrame>> // dev.kord.voice.streams/Streams.incomingAudioFrames.<get-incomingAudioFrames>|<get-incomingAudioFrames>(){}[0]
@@ -47,79 +72,123 @@ abstract interface dev.kord.voice.streams/Streams { // dev.kord.voice.streams/St
         abstract fun <get-incomingUserStreams>(): kotlinx.coroutines.flow/Flow<kotlin/Pair<dev.kord.common.entity/Snowflake, dev.kord.voice/AudioFrame>> // dev.kord.voice.streams/Streams.incomingUserStreams.<get-incomingUserStreams>|<get-incomingUserStreams>(){}[0]
     abstract val ssrcToUser // dev.kord.voice.streams/Streams.ssrcToUser|{}ssrcToUser[0]
         abstract fun <get-ssrcToUser>(): kotlin.collections/Map<kotlin/UInt, dev.kord.common.entity/Snowflake> // dev.kord.voice.streams/Streams.ssrcToUser.<get-ssrcToUser>|<get-ssrcToUser>(){}[0]
+
     // Targets: [apple, linux]
     abstract suspend fun listen(kotlin/ByteArray, io.ktor.network.sockets/InetSocketAddress) // dev.kord.voice.streams/Streams.listen|listen(kotlin.ByteArray;io.ktor.network.sockets.InetSocketAddress){}[0]
+
     // Targets: [js, mingwX64]
     abstract suspend fun listen(kotlin/ByteArray, dev.kord.voice.udp/SocketAddress) // dev.kord.voice.streams/Streams.listen|listen(kotlin.ByteArray;dev.kord.voice.udp.SocketAddress){}[0]
 }
+
 abstract interface dev.kord.voice.udp/AudioFrameSender { // dev.kord.voice.udp/AudioFrameSender|null[0]
     abstract suspend fun start(dev.kord.voice.udp/AudioFrameSenderConfiguration) // dev.kord.voice.udp/AudioFrameSender.start|start(dev.kord.voice.udp.AudioFrameSenderConfiguration){}[0]
 }
+
 abstract interface dev.kord.voice.udp/VoiceUdpSocket { // dev.kord.voice.udp/VoiceUdpSocket|null[0]
     abstract suspend fun stop() // dev.kord.voice.udp/VoiceUdpSocket.stop|stop(){}[0]
+
     final object Companion { // dev.kord.voice.udp/VoiceUdpSocket.Companion|null[0]
         final fun none(): dev.kord.voice.udp/VoiceUdpSocket // dev.kord.voice.udp/VoiceUdpSocket.Companion.none|none(){}[0]
     }
+
     // Targets: [apple, linux]
     abstract fun all(io.ktor.network.sockets/InetSocketAddress): kotlinx.coroutines.flow/Flow<io.ktor.utils.io.core/ByteReadPacket> // dev.kord.voice.udp/VoiceUdpSocket.all|all(io.ktor.network.sockets.InetSocketAddress){}[0]
+
     // Targets: [apple, linux]
     abstract suspend fun send(io.ktor.network.sockets/InetSocketAddress, dev.kord.voice.io/ByteArrayView) // dev.kord.voice.udp/VoiceUdpSocket.send|send(io.ktor.network.sockets.InetSocketAddress;dev.kord.voice.io.ByteArrayView){}[0]
+
     // Targets: [js, mingwX64]
     abstract fun all(dev.kord.voice.udp/SocketAddress): kotlinx.coroutines.flow/Flow<io.ktor.utils.io.core/ByteReadPacket> // dev.kord.voice.udp/VoiceUdpSocket.all|all(dev.kord.voice.udp.SocketAddress){}[0]
+
     // Targets: [js, mingwX64]
     abstract suspend fun send(dev.kord.voice.udp/SocketAddress, dev.kord.voice.io/ByteArrayView) // dev.kord.voice.udp/VoiceUdpSocket.send|send(dev.kord.voice.udp.SocketAddress;dev.kord.voice.io.ByteArrayView){}[0]
 }
+
+sealed interface dev.kord.voice.encryption.strategies/NonceStrategy { // dev.kord.voice.encryption.strategies/NonceStrategy|null[0]
+    abstract val nonceLength // dev.kord.voice.encryption.strategies/NonceStrategy.nonceLength|{}nonceLength[0]
+        abstract fun <get-nonceLength>(): kotlin/Int // dev.kord.voice.encryption.strategies/NonceStrategy.nonceLength.<get-nonceLength>|<get-nonceLength>(){}[0]
+
+    abstract fun append(dev.kord.voice.io/ByteArrayView, dev.kord.voice.io/MutableByteArrayCursor) // dev.kord.voice.encryption.strategies/NonceStrategy.append|append(dev.kord.voice.io.ByteArrayView;dev.kord.voice.io.MutableByteArrayCursor){}[0]
+    abstract fun generate(kotlin/Function0<dev.kord.voice.io/ByteArrayView>): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/NonceStrategy.generate|generate(kotlin.Function0<dev.kord.voice.io.ByteArrayView>){}[0]
+    abstract fun strip(dev.kord.voice.udp/RTPPacket): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/NonceStrategy.strip|strip(dev.kord.voice.udp.RTPPacket){}[0]
+}
+
+abstract class dev.kord.voice.udp/AudioPacketProvider { // dev.kord.voice.udp/AudioPacketProvider|null[0]
+    constructor <init>(kotlin/ByteArray, dev.kord.voice.encryption.strategies/NonceStrategy) // dev.kord.voice.udp/AudioPacketProvider.<init>|<init>(kotlin.ByteArray;dev.kord.voice.encryption.strategies.NonceStrategy){}[0]
+
+    final val key // dev.kord.voice.udp/AudioPacketProvider.key|{}key[0]
+        final fun <get-key>(): kotlin/ByteArray // dev.kord.voice.udp/AudioPacketProvider.key.<get-key>|<get-key>(){}[0]
+    final val nonceStrategy // dev.kord.voice.udp/AudioPacketProvider.nonceStrategy|{}nonceStrategy[0]
+        final fun <get-nonceStrategy>(): dev.kord.voice.encryption.strategies/NonceStrategy // dev.kord.voice.udp/AudioPacketProvider.nonceStrategy.<get-nonceStrategy>|<get-nonceStrategy>(){}[0]
+
+    abstract fun provide(kotlin/UShort, kotlin/UInt, kotlin/UInt, kotlin/ByteArray): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/AudioPacketProvider.provide|provide(kotlin.UShort;kotlin.UInt;kotlin.UInt;kotlin.ByteArray){}[0]
+}
+
 final class dev.kord.voice.encryption.strategies/LiteNonceStrategy : dev.kord.voice.encryption.strategies/NonceStrategy { // dev.kord.voice.encryption.strategies/LiteNonceStrategy|null[0]
     constructor <init>() // dev.kord.voice.encryption.strategies/LiteNonceStrategy.<init>|<init>(){}[0]
+
+    final val nonceLength // dev.kord.voice.encryption.strategies/LiteNonceStrategy.nonceLength|{}nonceLength[0]
+        final fun <get-nonceLength>(): kotlin/Int // dev.kord.voice.encryption.strategies/LiteNonceStrategy.nonceLength.<get-nonceLength>|<get-nonceLength>(){}[0]
+
     final fun append(dev.kord.voice.io/ByteArrayView, dev.kord.voice.io/MutableByteArrayCursor) // dev.kord.voice.encryption.strategies/LiteNonceStrategy.append|append(dev.kord.voice.io.ByteArrayView;dev.kord.voice.io.MutableByteArrayCursor){}[0]
     final fun generate(kotlin/Function0<dev.kord.voice.io/ByteArrayView>): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/LiteNonceStrategy.generate|generate(kotlin.Function0<dev.kord.voice.io.ByteArrayView>){}[0]
     final fun strip(dev.kord.voice.udp/RTPPacket): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/LiteNonceStrategy.strip|strip(dev.kord.voice.udp.RTPPacket){}[0]
-    final val nonceLength // dev.kord.voice.encryption.strategies/LiteNonceStrategy.nonceLength|{}nonceLength[0]
-        final fun <get-nonceLength>(): kotlin/Int // dev.kord.voice.encryption.strategies/LiteNonceStrategy.nonceLength.<get-nonceLength>|<get-nonceLength>(){}[0]
 }
+
 final class dev.kord.voice.encryption.strategies/NormalNonceStrategy : dev.kord.voice.encryption.strategies/NonceStrategy { // dev.kord.voice.encryption.strategies/NormalNonceStrategy|null[0]
     constructor <init>() // dev.kord.voice.encryption.strategies/NormalNonceStrategy.<init>|<init>(){}[0]
+
+    final val nonceLength // dev.kord.voice.encryption.strategies/NormalNonceStrategy.nonceLength|{}nonceLength[0]
+        final fun <get-nonceLength>(): kotlin/Int // dev.kord.voice.encryption.strategies/NormalNonceStrategy.nonceLength.<get-nonceLength>|<get-nonceLength>(){}[0]
+
     final fun append(dev.kord.voice.io/ByteArrayView, dev.kord.voice.io/MutableByteArrayCursor) // dev.kord.voice.encryption.strategies/NormalNonceStrategy.append|append(dev.kord.voice.io.ByteArrayView;dev.kord.voice.io.MutableByteArrayCursor){}[0]
     final fun generate(kotlin/Function0<dev.kord.voice.io/ByteArrayView>): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/NormalNonceStrategy.generate|generate(kotlin.Function0<dev.kord.voice.io.ByteArrayView>){}[0]
     final fun strip(dev.kord.voice.udp/RTPPacket): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/NormalNonceStrategy.strip|strip(dev.kord.voice.udp.RTPPacket){}[0]
-    final val nonceLength // dev.kord.voice.encryption.strategies/NormalNonceStrategy.nonceLength|{}nonceLength[0]
-        final fun <get-nonceLength>(): kotlin/Int // dev.kord.voice.encryption.strategies/NormalNonceStrategy.nonceLength.<get-nonceLength>|<get-nonceLength>(){}[0]
 }
+
 final class dev.kord.voice.encryption.strategies/SuffixNonceStrategy : dev.kord.voice.encryption.strategies/NonceStrategy { // dev.kord.voice.encryption.strategies/SuffixNonceStrategy|null[0]
     constructor <init>() // dev.kord.voice.encryption.strategies/SuffixNonceStrategy.<init>|<init>(){}[0]
+
+    final val nonceLength // dev.kord.voice.encryption.strategies/SuffixNonceStrategy.nonceLength|{}nonceLength[0]
+        final fun <get-nonceLength>(): kotlin/Int // dev.kord.voice.encryption.strategies/SuffixNonceStrategy.nonceLength.<get-nonceLength>|<get-nonceLength>(){}[0]
+
     final fun append(dev.kord.voice.io/ByteArrayView, dev.kord.voice.io/MutableByteArrayCursor) // dev.kord.voice.encryption.strategies/SuffixNonceStrategy.append|append(dev.kord.voice.io.ByteArrayView;dev.kord.voice.io.MutableByteArrayCursor){}[0]
     final fun generate(kotlin/Function0<dev.kord.voice.io/ByteArrayView>): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/SuffixNonceStrategy.generate|generate(kotlin.Function0<dev.kord.voice.io.ByteArrayView>){}[0]
     final fun strip(dev.kord.voice.udp/RTPPacket): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/SuffixNonceStrategy.strip|strip(dev.kord.voice.udp.RTPPacket){}[0]
-    final val nonceLength // dev.kord.voice.encryption.strategies/SuffixNonceStrategy.nonceLength|{}nonceLength[0]
-        final fun <get-nonceLength>(): kotlin/Int // dev.kord.voice.encryption.strategies/SuffixNonceStrategy.nonceLength.<get-nonceLength>|<get-nonceLength>(){}[0]
 }
+
 final class dev.kord.voice.exception/VoiceConnectionInitializationException : kotlin/Exception { // dev.kord.voice.exception/VoiceConnectionInitializationException|null[0]
     constructor <init>(kotlin/String) // dev.kord.voice.exception/VoiceConnectionInitializationException.<init>|<init>(kotlin.String){}[0]
     constructor <init>(kotlin/String, kotlin/Throwable) // dev.kord.voice.exception/VoiceConnectionInitializationException.<init>|<init>(kotlin.String;kotlin.Throwable){}[0]
     constructor <init>(kotlin/Throwable) // dev.kord.voice.exception/VoiceConnectionInitializationException.<init>|<init>(kotlin.Throwable){}[0]
 }
+
 final class dev.kord.voice.gateway/DefaultVoiceGateway : dev.kord.voice.gateway/VoiceGateway { // dev.kord.voice.gateway/DefaultVoiceGateway|null[0]
     constructor <init>(dev.kord.voice.gateway/DefaultVoiceGatewayData) // dev.kord.voice.gateway/DefaultVoiceGateway.<init>|<init>(dev.kord.voice.gateway.DefaultVoiceGatewayData){}[0]
-    final suspend fun detach() // dev.kord.voice.gateway/DefaultVoiceGateway.detach|detach(){}[0]
-    final suspend fun send(dev.kord.voice.gateway/Command) // dev.kord.voice.gateway/DefaultVoiceGateway.send|send(dev.kord.voice.gateway.Command){}[0]
-    final suspend fun start(dev.kord.voice.gateway/VoiceGatewayConfiguration) // dev.kord.voice.gateway/DefaultVoiceGateway.start|start(dev.kord.voice.gateway.VoiceGatewayConfiguration){}[0]
-    final suspend fun stop() // dev.kord.voice.gateway/DefaultVoiceGateway.stop|stop(){}[0]
+
     final val events // dev.kord.voice.gateway/DefaultVoiceGateway.events|{}events[0]
         final fun <get-events>(): kotlinx.coroutines.flow/SharedFlow<dev.kord.voice.gateway/VoiceEvent> // dev.kord.voice.gateway/DefaultVoiceGateway.events.<get-events>|<get-events>(){}[0]
     final val ping // dev.kord.voice.gateway/DefaultVoiceGateway.ping|{}ping[0]
         final fun <get-ping>(): kotlinx.coroutines.flow/StateFlow<kotlin.time/Duration?> // dev.kord.voice.gateway/DefaultVoiceGateway.ping.<get-ping>|<get-ping>(){}[0]
     final val scope // dev.kord.voice.gateway/DefaultVoiceGateway.scope|{}scope[0]
         final fun <get-scope>(): kotlinx.coroutines/CoroutineScope // dev.kord.voice.gateway/DefaultVoiceGateway.scope.<get-scope>|<get-scope>(){}[0]
+
+    final suspend fun detach() // dev.kord.voice.gateway/DefaultVoiceGateway.detach|detach(){}[0]
+    final suspend fun send(dev.kord.voice.gateway/Command) // dev.kord.voice.gateway/DefaultVoiceGateway.send|send(dev.kord.voice.gateway.Command){}[0]
+    final suspend fun start(dev.kord.voice.gateway/VoiceGatewayConfiguration) // dev.kord.voice.gateway/DefaultVoiceGateway.start|start(dev.kord.voice.gateway.VoiceGatewayConfiguration){}[0]
+    final suspend fun stop() // dev.kord.voice.gateway/DefaultVoiceGateway.stop|stop(){}[0]
 }
+
 final class dev.kord.voice.gateway/DefaultVoiceGatewayBuilder { // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String) // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String){}[0]
-    final fun build(): dev.kord.voice.gateway/DefaultVoiceGateway // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.build|build(){}[0]
+
     final val guildId // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.guildId|{}guildId[0]
         final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val selfId // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.selfId|{}selfId[0]
         final fun <get-selfId>(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.selfId.<get-selfId>|<get-selfId>(){}[0]
     final val sessionId // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.sessionId|{}sessionId[0]
         final fun <get-sessionId>(): kotlin/String // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.sessionId.<get-sessionId>|<get-sessionId>(){}[0]
+
     final var client // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.client|{}client[0]
         final fun <get-client>(): io.ktor.client/HttpClient? // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.client.<get-client>|<get-client>(){}[0]
         final fun <set-client>(io.ktor.client/HttpClient?) // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.client.<set-client>|<set-client>(io.ktor.client.HttpClient?){}[0]
@@ -129,19 +198,13 @@ final class dev.kord.voice.gateway/DefaultVoiceGatewayBuilder { // dev.kord.voic
     final var reconnectRetry // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.reconnectRetry|{}reconnectRetry[0]
         final fun <get-reconnectRetry>(): dev.kord.gateway.retry/Retry? // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.reconnectRetry.<get-reconnectRetry>|<get-reconnectRetry>(){}[0]
         final fun <set-reconnectRetry>(dev.kord.gateway.retry/Retry?) // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.reconnectRetry.<set-reconnectRetry>|<set-reconnectRetry>(dev.kord.gateway.retry.Retry?){}[0]
+
+    final fun build(): dev.kord.voice.gateway/DefaultVoiceGateway // dev.kord.voice.gateway/DefaultVoiceGatewayBuilder.build|build(){}[0]
 }
+
 final class dev.kord.voice.gateway/DefaultVoiceGatewayData { // dev.kord.voice.gateway/DefaultVoiceGatewayData|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String, io.ktor.client/HttpClient, dev.kord.gateway.retry/Retry, kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.voice.gateway/VoiceEvent>) // dev.kord.voice.gateway/DefaultVoiceGatewayData.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;io.ktor.client.HttpClient;dev.kord.gateway.retry.Retry;kotlinx.coroutines.flow.MutableSharedFlow<dev.kord.voice.gateway.VoiceEvent>){}[0]
-    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/DefaultVoiceGatewayData.component1|component1(){}[0]
-    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/DefaultVoiceGatewayData.component2|component2(){}[0]
-    final fun component3(): kotlin/String // dev.kord.voice.gateway/DefaultVoiceGatewayData.component3|component3(){}[0]
-    final fun component4(): io.ktor.client/HttpClient // dev.kord.voice.gateway/DefaultVoiceGatewayData.component4|component4(){}[0]
-    final fun component5(): dev.kord.gateway.retry/Retry // dev.kord.voice.gateway/DefaultVoiceGatewayData.component5|component5(){}[0]
-    final fun component6(): kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.voice.gateway/VoiceEvent> // dev.kord.voice.gateway/DefaultVoiceGatewayData.component6|component6(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake =..., dev.kord.common.entity/Snowflake =..., kotlin/String =..., io.ktor.client/HttpClient =..., dev.kord.gateway.retry/Retry =..., kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.voice.gateway/VoiceEvent> =...): dev.kord.voice.gateway/DefaultVoiceGatewayData // dev.kord.voice.gateway/DefaultVoiceGatewayData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;io.ktor.client.HttpClient;dev.kord.gateway.retry.Retry;kotlinx.coroutines.flow.MutableSharedFlow<dev.kord.voice.gateway.VoiceEvent>){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/DefaultVoiceGatewayData.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/DefaultVoiceGatewayData.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/DefaultVoiceGatewayData.toString|toString(){}[0]
+
     final val client // dev.kord.voice.gateway/DefaultVoiceGatewayData.client|{}client[0]
         final fun <get-client>(): io.ktor.client/HttpClient // dev.kord.voice.gateway/DefaultVoiceGatewayData.client.<get-client>|<get-client>(){}[0]
     final val eventFlow // dev.kord.voice.gateway/DefaultVoiceGatewayData.eventFlow|{}eventFlow[0]
@@ -154,83 +217,94 @@ final class dev.kord.voice.gateway/DefaultVoiceGatewayData { // dev.kord.voice.g
         final fun <get-selfId>(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/DefaultVoiceGatewayData.selfId.<get-selfId>|<get-selfId>(){}[0]
     final val sessionId // dev.kord.voice.gateway/DefaultVoiceGatewayData.sessionId|{}sessionId[0]
         final fun <get-sessionId>(): kotlin/String // dev.kord.voice.gateway/DefaultVoiceGatewayData.sessionId.<get-sessionId>|<get-sessionId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/DefaultVoiceGatewayData.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/DefaultVoiceGatewayData.component2|component2(){}[0]
+    final fun component3(): kotlin/String // dev.kord.voice.gateway/DefaultVoiceGatewayData.component3|component3(){}[0]
+    final fun component4(): io.ktor.client/HttpClient // dev.kord.voice.gateway/DefaultVoiceGatewayData.component4|component4(){}[0]
+    final fun component5(): dev.kord.gateway.retry/Retry // dev.kord.voice.gateway/DefaultVoiceGatewayData.component5|component5(){}[0]
+    final fun component6(): kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.voice.gateway/VoiceEvent> // dev.kord.voice.gateway/DefaultVoiceGatewayData.component6|component6(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., kotlin/String = ..., io.ktor.client/HttpClient = ..., dev.kord.gateway.retry/Retry = ..., kotlinx.coroutines.flow/MutableSharedFlow<dev.kord.voice.gateway/VoiceEvent> = ...): dev.kord.voice.gateway/DefaultVoiceGatewayData // dev.kord.voice.gateway/DefaultVoiceGatewayData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;io.ktor.client.HttpClient;dev.kord.gateway.retry.Retry;kotlinx.coroutines.flow.MutableSharedFlow<dev.kord.voice.gateway.VoiceEvent>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/DefaultVoiceGatewayData.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/DefaultVoiceGatewayData.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/DefaultVoiceGatewayData.toString|toString(){}[0]
 }
+
 final class dev.kord.voice.gateway/Heartbeat : dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/Heartbeat|null[0]
     constructor <init>(kotlin/Long) // dev.kord.voice.gateway/Heartbeat.<init>|<init>(kotlin.Long){}[0]
+
+    final val nonce // dev.kord.voice.gateway/Heartbeat.nonce|{}nonce[0]
+        final fun <get-nonce>(): kotlin/Long // dev.kord.voice.gateway/Heartbeat.nonce.<get-nonce>|<get-nonce>(){}[0]
+
     final fun component1(): kotlin/Long // dev.kord.voice.gateway/Heartbeat.component1|component1(){}[0]
-    final fun copy(kotlin/Long =...): dev.kord.voice.gateway/Heartbeat // dev.kord.voice.gateway/Heartbeat.copy|copy(kotlin.Long){}[0]
+    final fun copy(kotlin/Long = ...): dev.kord.voice.gateway/Heartbeat // dev.kord.voice.gateway/Heartbeat.copy|copy(kotlin.Long){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Heartbeat.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Heartbeat.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.voice.gateway/Heartbeat.toString|toString(){}[0]
+
     final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Heartbeat> { // dev.kord.voice.gateway/Heartbeat.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/Heartbeat.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Heartbeat.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
         final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Heartbeat.$serializer.childSerializers|childSerializers(){}[0]
         final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Heartbeat // dev.kord.voice.gateway/Heartbeat.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
         final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Heartbeat) // dev.kord.voice.gateway/Heartbeat.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Heartbeat){}[0]
-        final val descriptor // dev.kord.voice.gateway/Heartbeat.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Heartbeat.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
     }
+
     final object Companion { // dev.kord.voice.gateway/Heartbeat.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Heartbeat> // dev.kord.voice.gateway/Heartbeat.Companion.serializer|serializer(){}[0]
     }
-    final val nonce // dev.kord.voice.gateway/Heartbeat.nonce|<get-nonce>(){}[0]
-        final fun <get-nonce>(): kotlin/Long // dev.kord.voice.gateway/Heartbeat.nonce.<get-nonce>|<get-nonce>(){}[0]
 }
+
 final class dev.kord.voice.gateway/HeartbeatAck : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/HeartbeatAck|null[0]
     constructor <init>(kotlin/Long) // dev.kord.voice.gateway/HeartbeatAck.<init>|<init>(kotlin.Long){}[0]
+
+    final val nonce // dev.kord.voice.gateway/HeartbeatAck.nonce|{}nonce[0]
+        final fun <get-nonce>(): kotlin/Long // dev.kord.voice.gateway/HeartbeatAck.nonce.<get-nonce>|<get-nonce>(){}[0]
+
     final fun component1(): kotlin/Long // dev.kord.voice.gateway/HeartbeatAck.component1|component1(){}[0]
-    final fun copy(kotlin/Long =...): dev.kord.voice.gateway/HeartbeatAck // dev.kord.voice.gateway/HeartbeatAck.copy|copy(kotlin.Long){}[0]
+    final fun copy(kotlin/Long = ...): dev.kord.voice.gateway/HeartbeatAck // dev.kord.voice.gateway/HeartbeatAck.copy|copy(kotlin.Long){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/HeartbeatAck.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/HeartbeatAck.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.voice.gateway/HeartbeatAck.toString|toString(){}[0]
+
     final object Companion { // dev.kord.voice.gateway/HeartbeatAck.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/HeartbeatAck> // dev.kord.voice.gateway/HeartbeatAck.Companion.serializer|serializer(){}[0]
     }
-    final val nonce // dev.kord.voice.gateway/HeartbeatAck.nonce|{}nonce[0]
-        final fun <get-nonce>(): kotlin/Long // dev.kord.voice.gateway/HeartbeatAck.nonce.<get-nonce>|<get-nonce>(){}[0]
 }
+
 final class dev.kord.voice.gateway/Hello : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Hello|null[0]
     constructor <init>(kotlin/Short, kotlin/Double) // dev.kord.voice.gateway/Hello.<init>|<init>(kotlin.Short;kotlin.Double){}[0]
-    final fun component1(): kotlin/Short // dev.kord.voice.gateway/Hello.component1|component1(){}[0]
-    final fun component2(): kotlin/Double // dev.kord.voice.gateway/Hello.component2|component2(){}[0]
-    final fun copy(kotlin/Short =..., kotlin/Double =...): dev.kord.voice.gateway/Hello // dev.kord.voice.gateway/Hello.copy|copy(kotlin.Short;kotlin.Double){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Hello.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Hello.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/Hello.toString|toString(){}[0]
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Hello> { // dev.kord.voice.gateway/Hello.$serializer|null[0]
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Hello.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Hello // dev.kord.voice.gateway/Hello.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Hello) // dev.kord.voice.gateway/Hello.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Hello){}[0]
-        final val descriptor // dev.kord.voice.gateway/Hello.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Hello.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-    final object Companion { // dev.kord.voice.gateway/Hello.Companion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Hello> // dev.kord.voice.gateway/Hello.Companion.serializer|serializer(){}[0]
-    }
+
     final val heartbeatInterval // dev.kord.voice.gateway/Hello.heartbeatInterval|{}heartbeatInterval[0]
         final fun <get-heartbeatInterval>(): kotlin/Double // dev.kord.voice.gateway/Hello.heartbeatInterval.<get-heartbeatInterval>|<get-heartbeatInterval>(){}[0]
     final val version // dev.kord.voice.gateway/Hello.version|{}version[0]
         final fun <get-version>(): kotlin/Short // dev.kord.voice.gateway/Hello.version.<get-version>|<get-version>(){}[0]
+
+    final fun component1(): kotlin/Short // dev.kord.voice.gateway/Hello.component1|component1(){}[0]
+    final fun component2(): kotlin/Double // dev.kord.voice.gateway/Hello.component2|component2(){}[0]
+    final fun copy(kotlin/Short = ..., kotlin/Double = ...): dev.kord.voice.gateway/Hello // dev.kord.voice.gateway/Hello.copy|copy(kotlin.Short;kotlin.Double){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Hello.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Hello.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/Hello.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Hello> { // dev.kord.voice.gateway/Hello.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/Hello.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Hello.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Hello.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Hello // dev.kord.voice.gateway/Hello.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Hello) // dev.kord.voice.gateway/Hello.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Hello){}[0]
+    }
+
+    final object Companion { // dev.kord.voice.gateway/Hello.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Hello> // dev.kord.voice.gateway/Hello.Companion.serializer|serializer(){}[0]
+    }
 }
+
 final class dev.kord.voice.gateway/Identify : dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/Identify|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String, kotlin/String) // dev.kord.voice.gateway/Identify.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String){}[0]
-    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Identify.component1|component1(){}[0]
-    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Identify.component2|component2(){}[0]
-    final fun component3(): kotlin/String // dev.kord.voice.gateway/Identify.component3|component3(){}[0]
-    final fun component4(): kotlin/String // dev.kord.voice.gateway/Identify.component4|component4(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake =..., dev.kord.common.entity/Snowflake =..., kotlin/String =..., kotlin/String =...): dev.kord.voice.gateway/Identify // dev.kord.voice.gateway/Identify.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Identify.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Identify.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/Identify.toString|toString(){}[0]
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Identify> { // dev.kord.voice.gateway/Identify.$serializer|null[0]
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Identify.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Identify // dev.kord.voice.gateway/Identify.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Identify) // dev.kord.voice.gateway/Identify.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Identify){}[0]
-        final val descriptor // dev.kord.voice.gateway/Identify.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Identify.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-    final object Companion { // dev.kord.voice.gateway/Identify.Companion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Identify> // dev.kord.voice.gateway/Identify.Companion.serializer|serializer(){}[0]
-    }
+
     final val serverId // dev.kord.voice.gateway/Identify.serverId|{}serverId[0]
         final fun <get-serverId>(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Identify.serverId.<get-serverId>|<get-serverId>(){}[0]
     final val sessionId // dev.kord.voice.gateway/Identify.sessionId|{}sessionId[0]
@@ -239,28 +313,33 @@ final class dev.kord.voice.gateway/Identify : dev.kord.voice.gateway/Command { /
         final fun <get-token>(): kotlin/String // dev.kord.voice.gateway/Identify.token.<get-token>|<get-token>(){}[0]
     final val userId // dev.kord.voice.gateway/Identify.userId|{}userId[0]
         final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Identify.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Identify.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Identify.component2|component2(){}[0]
+    final fun component3(): kotlin/String // dev.kord.voice.gateway/Identify.component3|component3(){}[0]
+    final fun component4(): kotlin/String // dev.kord.voice.gateway/Identify.component4|component4(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., kotlin/String = ..., kotlin/String = ...): dev.kord.voice.gateway/Identify // dev.kord.voice.gateway/Identify.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Identify.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Identify.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/Identify.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Identify> { // dev.kord.voice.gateway/Identify.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/Identify.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Identify.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Identify.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Identify // dev.kord.voice.gateway/Identify.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Identify) // dev.kord.voice.gateway/Identify.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Identify){}[0]
+    }
+
+    final object Companion { // dev.kord.voice.gateway/Identify.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Identify> // dev.kord.voice.gateway/Identify.Companion.serializer|serializer(){}[0]
+    }
 }
+
 final class dev.kord.voice.gateway/Ready : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Ready|null[0]
     constructor <init>(kotlin/UInt, kotlin/String, kotlin/Int, kotlin.collections/List<dev.kord.voice/EncryptionMode>) // dev.kord.voice.gateway/Ready.<init>|<init>(kotlin.UInt;kotlin.String;kotlin.Int;kotlin.collections.List<dev.kord.voice.EncryptionMode>){}[0]
-    final fun component1(): kotlin/UInt // dev.kord.voice.gateway/Ready.component1|component1(){}[0]
-    final fun component2(): kotlin/String // dev.kord.voice.gateway/Ready.component2|component2(){}[0]
-    final fun component3(): kotlin/Int // dev.kord.voice.gateway/Ready.component3|component3(){}[0]
-    final fun component4(): kotlin.collections/List<dev.kord.voice/EncryptionMode> // dev.kord.voice.gateway/Ready.component4|component4(){}[0]
-    final fun copy(kotlin/UInt =..., kotlin/String =..., kotlin/Int =..., kotlin.collections/List<dev.kord.voice/EncryptionMode> =...): dev.kord.voice.gateway/Ready // dev.kord.voice.gateway/Ready.copy|copy(kotlin.UInt;kotlin.String;kotlin.Int;kotlin.collections.List<dev.kord.voice.EncryptionMode>){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Ready.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Ready.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/Ready.toString|toString(){}[0]
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Ready> { // dev.kord.voice.gateway/Ready.$serializer|null[0]
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Ready.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Ready // dev.kord.voice.gateway/Ready.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Ready) // dev.kord.voice.gateway/Ready.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Ready){}[0]
-        final val descriptor // dev.kord.voice.gateway/Ready.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Ready.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-    final object Companion { // dev.kord.voice.gateway/Ready.Companion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Ready> // dev.kord.voice.gateway/Ready.Companion.serializer|serializer(){}[0]
-        final val $childSerializers // dev.kord.voice.gateway/Ready.Companion.$childSerializers|{}$childSerializers[0]
-    }
+
     final val ip // dev.kord.voice.gateway/Ready.ip|{}ip[0]
         final fun <get-ip>(): kotlin/String // dev.kord.voice.gateway/Ready.ip.<get-ip>|<get-ip>(){}[0]
     final val modes // dev.kord.voice.gateway/Ready.modes|{}modes[0]
@@ -269,230 +348,308 @@ final class dev.kord.voice.gateway/Ready : dev.kord.voice.gateway/VoiceEvent { /
         final fun <get-port>(): kotlin/Int // dev.kord.voice.gateway/Ready.port.<get-port>|<get-port>(){}[0]
     final val ssrc // dev.kord.voice.gateway/Ready.ssrc|{}ssrc[0]
         final fun <get-ssrc>(): kotlin/UInt // dev.kord.voice.gateway/Ready.ssrc.<get-ssrc>|<get-ssrc>(){}[0]
+
+    final fun component1(): kotlin/UInt // dev.kord.voice.gateway/Ready.component1|component1(){}[0]
+    final fun component2(): kotlin/String // dev.kord.voice.gateway/Ready.component2|component2(){}[0]
+    final fun component3(): kotlin/Int // dev.kord.voice.gateway/Ready.component3|component3(){}[0]
+    final fun component4(): kotlin.collections/List<dev.kord.voice/EncryptionMode> // dev.kord.voice.gateway/Ready.component4|component4(){}[0]
+    final fun copy(kotlin/UInt = ..., kotlin/String = ..., kotlin/Int = ..., kotlin.collections/List<dev.kord.voice/EncryptionMode> = ...): dev.kord.voice.gateway/Ready // dev.kord.voice.gateway/Ready.copy|copy(kotlin.UInt;kotlin.String;kotlin.Int;kotlin.collections.List<dev.kord.voice.EncryptionMode>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Ready.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Ready.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/Ready.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Ready> { // dev.kord.voice.gateway/Ready.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/Ready.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Ready.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Ready.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Ready // dev.kord.voice.gateway/Ready.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Ready) // dev.kord.voice.gateway/Ready.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Ready){}[0]
+    }
+
+    final object Companion { // dev.kord.voice.gateway/Ready.Companion|null[0]
+        final val $childSerializers // dev.kord.voice.gateway/Ready.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Ready> // dev.kord.voice.gateway/Ready.Companion.serializer|serializer(){}[0]
+    }
 }
+
 final class dev.kord.voice.gateway/Resume : dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/Resume|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, kotlin/String, kotlin/String) // dev.kord.voice.gateway/Resume.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String){}[0]
-    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Resume.component1|component1(){}[0]
-    final fun component2(): kotlin/String // dev.kord.voice.gateway/Resume.component2|component2(){}[0]
-    final fun component3(): kotlin/String // dev.kord.voice.gateway/Resume.component3|component3(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake =..., kotlin/String =..., kotlin/String =...): dev.kord.voice.gateway/Resume // dev.kord.voice.gateway/Resume.copy|copy(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Resume.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Resume.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/Resume.toString|toString(){}[0]
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Resume> { // dev.kord.voice.gateway/Resume.$serializer|null[0]
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Resume.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Resume // dev.kord.voice.gateway/Resume.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Resume) // dev.kord.voice.gateway/Resume.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Resume){}[0]
-        final val descriptor // dev.kord.voice.gateway/Resume.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Resume.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-    final object Companion { // dev.kord.voice.gateway/Resume.Companion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Resume> // dev.kord.voice.gateway/Resume.Companion.serializer|serializer(){}[0]
-    }
+
     final val serverId // dev.kord.voice.gateway/Resume.serverId|{}serverId[0]
         final fun <get-serverId>(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Resume.serverId.<get-serverId>|<get-serverId>(){}[0]
     final val sessionId // dev.kord.voice.gateway/Resume.sessionId|{}sessionId[0]
         final fun <get-sessionId>(): kotlin/String // dev.kord.voice.gateway/Resume.sessionId.<get-sessionId>|<get-sessionId>(){}[0]
     final val token // dev.kord.voice.gateway/Resume.token|{}token[0]
         final fun <get-token>(): kotlin/String // dev.kord.voice.gateway/Resume.token.<get-token>|<get-token>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Resume.component1|component1(){}[0]
+    final fun component2(): kotlin/String // dev.kord.voice.gateway/Resume.component2|component2(){}[0]
+    final fun component3(): kotlin/String // dev.kord.voice.gateway/Resume.component3|component3(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., kotlin/String = ..., kotlin/String = ...): dev.kord.voice.gateway/Resume // dev.kord.voice.gateway/Resume.copy|copy(dev.kord.common.entity.Snowflake;kotlin.String;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Resume.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Resume.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/Resume.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Resume> { // dev.kord.voice.gateway/Resume.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/Resume.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Resume.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Resume.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Resume // dev.kord.voice.gateway/Resume.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Resume) // dev.kord.voice.gateway/Resume.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Resume){}[0]
+    }
+
+    final object Companion { // dev.kord.voice.gateway/Resume.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Resume> // dev.kord.voice.gateway/Resume.Companion.serializer|serializer(){}[0]
+    }
 }
+
 final class dev.kord.voice.gateway/SelectProtocol : dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/SelectProtocol|null[0]
     constructor <init>(kotlin/String, dev.kord.voice.gateway/SelectProtocol.Data) // dev.kord.voice.gateway/SelectProtocol.<init>|<init>(kotlin.String;dev.kord.voice.gateway.SelectProtocol.Data){}[0]
+
+    final val data // dev.kord.voice.gateway/SelectProtocol.data|{}data[0]
+        final fun <get-data>(): dev.kord.voice.gateway/SelectProtocol.Data // dev.kord.voice.gateway/SelectProtocol.data.<get-data>|<get-data>(){}[0]
+    final val protocol // dev.kord.voice.gateway/SelectProtocol.protocol|{}protocol[0]
+        final fun <get-protocol>(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.protocol.<get-protocol>|<get-protocol>(){}[0]
+
+    final fun component1(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.component1|component1(){}[0]
+    final fun component2(): dev.kord.voice.gateway/SelectProtocol.Data // dev.kord.voice.gateway/SelectProtocol.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., dev.kord.voice.gateway/SelectProtocol.Data = ...): dev.kord.voice.gateway/SelectProtocol // dev.kord.voice.gateway/SelectProtocol.copy|copy(kotlin.String;dev.kord.voice.gateway.SelectProtocol.Data){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/SelectProtocol.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/SelectProtocol.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.toString|toString(){}[0]
+
     final class Data { // dev.kord.voice.gateway/SelectProtocol.Data|null[0]
         constructor <init>(kotlin/String, kotlin/Int, dev.kord.voice/EncryptionMode) // dev.kord.voice.gateway/SelectProtocol.Data.<init>|<init>(kotlin.String;kotlin.Int;dev.kord.voice.EncryptionMode){}[0]
-        final fun component1(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.Data.component1|component1(){}[0]
-        final fun component2(): kotlin/Int // dev.kord.voice.gateway/SelectProtocol.Data.component2|component2(){}[0]
-        final fun component3(): dev.kord.voice/EncryptionMode // dev.kord.voice.gateway/SelectProtocol.Data.component3|component3(){}[0]
-        final fun copy(kotlin/String =..., kotlin/Int =..., dev.kord.voice/EncryptionMode =...): dev.kord.voice.gateway/SelectProtocol.Data // dev.kord.voice.gateway/SelectProtocol.Data.copy|copy(kotlin.String;kotlin.Int;dev.kord.voice.EncryptionMode){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/SelectProtocol.Data.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/SelectProtocol.Data.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.Data.toString|toString(){}[0]
-        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/SelectProtocol.Data> { // dev.kord.voice.gateway/SelectProtocol.Data.$serializer|null[0]
-            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.childSerializers|childSerializers(){}[0]
-            final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/SelectProtocol.Data // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-            final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/SelectProtocol.Data) // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.SelectProtocol.Data){}[0]
-            final val descriptor // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.descriptor|{}descriptor[0]
-                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-        }
-        final object Companion { // dev.kord.voice.gateway/SelectProtocol.Data.Companion|null[0]
-            final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/SelectProtocol.Data> // dev.kord.voice.gateway/SelectProtocol.Data.Companion.serializer|serializer(){}[0]
-        }
+
         final val address // dev.kord.voice.gateway/SelectProtocol.Data.address|{}address[0]
             final fun <get-address>(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.Data.address.<get-address>|<get-address>(){}[0]
         final val mode // dev.kord.voice.gateway/SelectProtocol.Data.mode|{}mode[0]
             final fun <get-mode>(): dev.kord.voice/EncryptionMode // dev.kord.voice.gateway/SelectProtocol.Data.mode.<get-mode>|<get-mode>(){}[0]
         final val port // dev.kord.voice.gateway/SelectProtocol.Data.port|{}port[0]
             final fun <get-port>(): kotlin/Int // dev.kord.voice.gateway/SelectProtocol.Data.port.<get-port>|<get-port>(){}[0]
+
+        final fun component1(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.Data.component1|component1(){}[0]
+        final fun component2(): kotlin/Int // dev.kord.voice.gateway/SelectProtocol.Data.component2|component2(){}[0]
+        final fun component3(): dev.kord.voice/EncryptionMode // dev.kord.voice.gateway/SelectProtocol.Data.component3|component3(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/Int = ..., dev.kord.voice/EncryptionMode = ...): dev.kord.voice.gateway/SelectProtocol.Data // dev.kord.voice.gateway/SelectProtocol.Data.copy|copy(kotlin.String;kotlin.Int;dev.kord.voice.EncryptionMode){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/SelectProtocol.Data.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/SelectProtocol.Data.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.Data.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/SelectProtocol.Data> { // dev.kord.voice.gateway/SelectProtocol.Data.$serializer|null[0]
+            final val descriptor // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/SelectProtocol.Data // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/SelectProtocol.Data) // dev.kord.voice.gateway/SelectProtocol.Data.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.SelectProtocol.Data){}[0]
+        }
+
+        final object Companion { // dev.kord.voice.gateway/SelectProtocol.Data.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/SelectProtocol.Data> // dev.kord.voice.gateway/SelectProtocol.Data.Companion.serializer|serializer(){}[0]
+        }
     }
-    final fun component1(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.component1|component1(){}[0]
-    final fun component2(): dev.kord.voice.gateway/SelectProtocol.Data // dev.kord.voice.gateway/SelectProtocol.component2|component2(){}[0]
-    final fun copy(kotlin/String =..., dev.kord.voice.gateway/SelectProtocol.Data =...): dev.kord.voice.gateway/SelectProtocol // dev.kord.voice.gateway/SelectProtocol.copy|copy(kotlin.String;dev.kord.voice.gateway.SelectProtocol.Data){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/SelectProtocol.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/SelectProtocol.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.toString|toString(){}[0]
+
     final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/SelectProtocol> { // dev.kord.voice.gateway/SelectProtocol.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/SelectProtocol.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/SelectProtocol.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
         final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/SelectProtocol.$serializer.childSerializers|childSerializers(){}[0]
         final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/SelectProtocol // dev.kord.voice.gateway/SelectProtocol.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
         final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/SelectProtocol) // dev.kord.voice.gateway/SelectProtocol.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.SelectProtocol){}[0]
-        final val descriptor // dev.kord.voice.gateway/SelectProtocol.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/SelectProtocol.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
     }
+
     final object Companion { // dev.kord.voice.gateway/SelectProtocol.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/SelectProtocol> // dev.kord.voice.gateway/SelectProtocol.Companion.serializer|serializer(){}[0]
     }
-    final val data // dev.kord.voice.gateway/SelectProtocol.data|{}data[0]
-        final fun <get-data>(): dev.kord.voice.gateway/SelectProtocol.Data // dev.kord.voice.gateway/SelectProtocol.data.<get-data>|<get-data>(){}[0]
-    final val protocol // dev.kord.voice.gateway/SelectProtocol.protocol|{}protocol[0]
-        final fun <get-protocol>(): kotlin/String // dev.kord.voice.gateway/SelectProtocol.protocol.<get-protocol>|<get-protocol>(){}[0]
 }
+
 final class dev.kord.voice.gateway/SendSpeaking : dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/SendSpeaking|null[0]
     constructor <init>(dev.kord.voice/SpeakingFlags, kotlin/Int, kotlin/UInt) // dev.kord.voice.gateway/SendSpeaking.<init>|<init>(dev.kord.voice.SpeakingFlags;kotlin.Int;kotlin.UInt){}[0]
-    final fun component1(): dev.kord.voice/SpeakingFlags // dev.kord.voice.gateway/SendSpeaking.component1|component1(){}[0]
-    final fun component2(): kotlin/Int // dev.kord.voice.gateway/SendSpeaking.component2|component2(){}[0]
-    final fun component3(): kotlin/UInt // dev.kord.voice.gateway/SendSpeaking.component3|component3(){}[0]
-    final fun copy(dev.kord.voice/SpeakingFlags =..., kotlin/Int =..., kotlin/UInt =...): dev.kord.voice.gateway/SendSpeaking // dev.kord.voice.gateway/SendSpeaking.copy|copy(dev.kord.voice.SpeakingFlags;kotlin.Int;kotlin.UInt){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/SendSpeaking.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/SendSpeaking.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/SendSpeaking.toString|toString(){}[0]
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/SendSpeaking> { // dev.kord.voice.gateway/SendSpeaking.$serializer|null[0]
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/SendSpeaking.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/SendSpeaking // dev.kord.voice.gateway/SendSpeaking.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/SendSpeaking) // dev.kord.voice.gateway/SendSpeaking.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.SendSpeaking){}[0]
-        final val descriptor // dev.kord.voice.gateway/SendSpeaking.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/SendSpeaking.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-    final object Companion { // dev.kord.voice.gateway/SendSpeaking.Companion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/SendSpeaking> // dev.kord.voice.gateway/SendSpeaking.Companion.serializer|serializer(){}[0]
-    }
+
     final val delay // dev.kord.voice.gateway/SendSpeaking.delay|{}delay[0]
         final fun <get-delay>(): kotlin/Int // dev.kord.voice.gateway/SendSpeaking.delay.<get-delay>|<get-delay>(){}[0]
     final val speaking // dev.kord.voice.gateway/SendSpeaking.speaking|{}speaking[0]
         final fun <get-speaking>(): dev.kord.voice/SpeakingFlags // dev.kord.voice.gateway/SendSpeaking.speaking.<get-speaking>|<get-speaking>(){}[0]
     final val ssrc // dev.kord.voice.gateway/SendSpeaking.ssrc|{}ssrc[0]
         final fun <get-ssrc>(): kotlin/UInt // dev.kord.voice.gateway/SendSpeaking.ssrc.<get-ssrc>|<get-ssrc>(){}[0]
+
+    final fun component1(): dev.kord.voice/SpeakingFlags // dev.kord.voice.gateway/SendSpeaking.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // dev.kord.voice.gateway/SendSpeaking.component2|component2(){}[0]
+    final fun component3(): kotlin/UInt // dev.kord.voice.gateway/SendSpeaking.component3|component3(){}[0]
+    final fun copy(dev.kord.voice/SpeakingFlags = ..., kotlin/Int = ..., kotlin/UInt = ...): dev.kord.voice.gateway/SendSpeaking // dev.kord.voice.gateway/SendSpeaking.copy|copy(dev.kord.voice.SpeakingFlags;kotlin.Int;kotlin.UInt){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/SendSpeaking.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/SendSpeaking.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/SendSpeaking.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/SendSpeaking> { // dev.kord.voice.gateway/SendSpeaking.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/SendSpeaking.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/SendSpeaking.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/SendSpeaking.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/SendSpeaking // dev.kord.voice.gateway/SendSpeaking.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/SendSpeaking) // dev.kord.voice.gateway/SendSpeaking.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.SendSpeaking){}[0]
+    }
+
+    final object Companion { // dev.kord.voice.gateway/SendSpeaking.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/SendSpeaking> // dev.kord.voice.gateway/SendSpeaking.Companion.serializer|serializer(){}[0]
+    }
 }
+
 final class dev.kord.voice.gateway/SessionDescription : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/SessionDescription|null[0]
     constructor <init>(dev.kord.voice/EncryptionMode, kotlin.collections/List<kotlin/UByte>) // dev.kord.voice.gateway/SessionDescription.<init>|<init>(dev.kord.voice.EncryptionMode;kotlin.collections.List<kotlin.UByte>){}[0]
-    final fun component1(): dev.kord.voice/EncryptionMode // dev.kord.voice.gateway/SessionDescription.component1|component1(){}[0]
-    final fun component2(): kotlin.collections/List<kotlin/UByte> // dev.kord.voice.gateway/SessionDescription.component2|component2(){}[0]
-    final fun copy(dev.kord.voice/EncryptionMode =..., kotlin.collections/List<kotlin/UByte> =...): dev.kord.voice.gateway/SessionDescription // dev.kord.voice.gateway/SessionDescription.copy|copy(dev.kord.voice.EncryptionMode;kotlin.collections.List<kotlin.UByte>){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/SessionDescription.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/SessionDescription.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/SessionDescription.toString|toString(){}[0]
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/SessionDescription> { // dev.kord.voice.gateway/SessionDescription.$serializer|null[0]
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/SessionDescription.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/SessionDescription // dev.kord.voice.gateway/SessionDescription.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/SessionDescription) // dev.kord.voice.gateway/SessionDescription.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.SessionDescription){}[0]
-        final val descriptor // dev.kord.voice.gateway/SessionDescription.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/SessionDescription.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-    final object Companion { // dev.kord.voice.gateway/SessionDescription.Companion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/SessionDescription> // dev.kord.voice.gateway/SessionDescription.Companion.serializer|serializer(){}[0]
-        final val $childSerializers // dev.kord.voice.gateway/SessionDescription.Companion.$childSerializers|{}$childSerializers[0]
-    }
+
     final val mode // dev.kord.voice.gateway/SessionDescription.mode|{}mode[0]
         final fun <get-mode>(): dev.kord.voice/EncryptionMode // dev.kord.voice.gateway/SessionDescription.mode.<get-mode>|<get-mode>(){}[0]
     final val secretKey // dev.kord.voice.gateway/SessionDescription.secretKey|{}secretKey[0]
         final fun <get-secretKey>(): kotlin.collections/List<kotlin/UByte> // dev.kord.voice.gateway/SessionDescription.secretKey.<get-secretKey>|<get-secretKey>(){}[0]
+
+    final fun component1(): dev.kord.voice/EncryptionMode // dev.kord.voice.gateway/SessionDescription.component1|component1(){}[0]
+    final fun component2(): kotlin.collections/List<kotlin/UByte> // dev.kord.voice.gateway/SessionDescription.component2|component2(){}[0]
+    final fun copy(dev.kord.voice/EncryptionMode = ..., kotlin.collections/List<kotlin/UByte> = ...): dev.kord.voice.gateway/SessionDescription // dev.kord.voice.gateway/SessionDescription.copy|copy(dev.kord.voice.EncryptionMode;kotlin.collections.List<kotlin.UByte>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/SessionDescription.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/SessionDescription.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/SessionDescription.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/SessionDescription> { // dev.kord.voice.gateway/SessionDescription.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/SessionDescription.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/SessionDescription.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/SessionDescription.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/SessionDescription // dev.kord.voice.gateway/SessionDescription.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/SessionDescription) // dev.kord.voice.gateway/SessionDescription.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.SessionDescription){}[0]
+    }
+
+    final object Companion { // dev.kord.voice.gateway/SessionDescription.Companion|null[0]
+        final val $childSerializers // dev.kord.voice.gateway/SessionDescription.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/SessionDescription> // dev.kord.voice.gateway/SessionDescription.Companion.serializer|serializer(){}[0]
+    }
 }
+
 final class dev.kord.voice.gateway/Speaking : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Speaking|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, kotlin/UInt, dev.kord.voice/SpeakingFlags) // dev.kord.voice.gateway/Speaking.<init>|<init>(dev.kord.common.entity.Snowflake;kotlin.UInt;dev.kord.voice.SpeakingFlags){}[0]
-    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Speaking.component1|component1(){}[0]
-    final fun component2(): kotlin/UInt // dev.kord.voice.gateway/Speaking.component2|component2(){}[0]
-    final fun component3(): dev.kord.voice/SpeakingFlags // dev.kord.voice.gateway/Speaking.component3|component3(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake =..., kotlin/UInt =..., dev.kord.voice/SpeakingFlags =...): dev.kord.voice.gateway/Speaking // dev.kord.voice.gateway/Speaking.copy|copy(dev.kord.common.entity.Snowflake;kotlin.UInt;dev.kord.voice.SpeakingFlags){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Speaking.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Speaking.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/Speaking.toString|toString(){}[0]
-    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Speaking> { // dev.kord.voice.gateway/Speaking.$serializer|null[0]
-        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Speaking.$serializer.childSerializers|childSerializers(){}[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Speaking // dev.kord.voice.gateway/Speaking.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Speaking) // dev.kord.voice.gateway/Speaking.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Speaking){}[0]
-        final val descriptor // dev.kord.voice.gateway/Speaking.$serializer.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Speaking.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-    final object Companion { // dev.kord.voice.gateway/Speaking.Companion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Speaking> // dev.kord.voice.gateway/Speaking.Companion.serializer|serializer(){}[0]
-    }
+
     final val speaking // dev.kord.voice.gateway/Speaking.speaking|{}speaking[0]
         final fun <get-speaking>(): dev.kord.voice/SpeakingFlags // dev.kord.voice.gateway/Speaking.speaking.<get-speaking>|<get-speaking>(){}[0]
     final val ssrc // dev.kord.voice.gateway/Speaking.ssrc|{}ssrc[0]
         final fun <get-ssrc>(): kotlin/UInt // dev.kord.voice.gateway/Speaking.ssrc.<get-ssrc>|<get-ssrc>(){}[0]
     final val userId // dev.kord.voice.gateway/Speaking.userId|{}userId[0]
         final fun <get-userId>(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Speaking.userId.<get-userId>|<get-userId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice.gateway/Speaking.component1|component1(){}[0]
+    final fun component2(): kotlin/UInt // dev.kord.voice.gateway/Speaking.component2|component2(){}[0]
+    final fun component3(): dev.kord.voice/SpeakingFlags // dev.kord.voice.gateway/Speaking.component3|component3(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., kotlin/UInt = ..., dev.kord.voice/SpeakingFlags = ...): dev.kord.voice.gateway/Speaking // dev.kord.voice.gateway/Speaking.copy|copy(dev.kord.common.entity.Snowflake;kotlin.UInt;dev.kord.voice.SpeakingFlags){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Speaking.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Speaking.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/Speaking.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<dev.kord.voice.gateway/Speaking> { // dev.kord.voice.gateway/Speaking.$serializer|null[0]
+        final val descriptor // dev.kord.voice.gateway/Speaking.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Speaking.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // dev.kord.voice.gateway/Speaking.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/Speaking // dev.kord.voice.gateway/Speaking.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Speaking) // dev.kord.voice.gateway/Speaking.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Speaking){}[0]
+    }
+
+    final object Companion { // dev.kord.voice.gateway/Speaking.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Speaking> // dev.kord.voice.gateway/Speaking.Companion.serializer|serializer(){}[0]
+    }
 }
+
 final class dev.kord.voice.gateway/VoiceGatewayConfiguration { // dev.kord.voice.gateway/VoiceGatewayConfiguration|null[0]
     constructor <init>(kotlin/String, kotlin/String) // dev.kord.voice.gateway/VoiceGatewayConfiguration.<init>|<init>(kotlin.String;kotlin.String){}[0]
-    final fun component1(): kotlin/String // dev.kord.voice.gateway/VoiceGatewayConfiguration.component1|component1(){}[0]
-    final fun component2(): kotlin/String // dev.kord.voice.gateway/VoiceGatewayConfiguration.component2|component2(){}[0]
-    final fun copy(kotlin/String =..., kotlin/String =...): dev.kord.voice.gateway/VoiceGatewayConfiguration // dev.kord.voice.gateway/VoiceGatewayConfiguration.copy|copy(kotlin.String;kotlin.String){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/VoiceGatewayConfiguration.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/VoiceGatewayConfiguration.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.gateway/VoiceGatewayConfiguration.toString|toString(){}[0]
+
     final val endpoint // dev.kord.voice.gateway/VoiceGatewayConfiguration.endpoint|{}endpoint[0]
         final fun <get-endpoint>(): kotlin/String // dev.kord.voice.gateway/VoiceGatewayConfiguration.endpoint.<get-endpoint>|<get-endpoint>(){}[0]
     final val token // dev.kord.voice.gateway/VoiceGatewayConfiguration.token|{}token[0]
         final fun <get-token>(): kotlin/String // dev.kord.voice.gateway/VoiceGatewayConfiguration.token.<get-token>|<get-token>(){}[0]
+
+    final fun component1(): kotlin/String // dev.kord.voice.gateway/VoiceGatewayConfiguration.component1|component1(){}[0]
+    final fun component2(): kotlin/String // dev.kord.voice.gateway/VoiceGatewayConfiguration.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ...): dev.kord.voice.gateway/VoiceGatewayConfiguration // dev.kord.voice.gateway/VoiceGatewayConfiguration.copy|copy(kotlin.String;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/VoiceGatewayConfiguration.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/VoiceGatewayConfiguration.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.gateway/VoiceGatewayConfiguration.toString|toString(){}[0]
 }
+
 final class dev.kord.voice.io/ByteArrayView : kotlin.collections/Iterable<kotlin/Byte> { // dev.kord.voice.io/ByteArrayView|null[0]
+    final val data // dev.kord.voice.io/ByteArrayView.data|{}data[0]
+        final fun <get-data>(): kotlin/ByteArray // dev.kord.voice.io/ByteArrayView.data.<get-data>|<get-data>(){}[0]
+    final val viewSize // dev.kord.voice.io/ByteArrayView.viewSize|{}viewSize[0]
+        final fun <get-viewSize>(): kotlin/Int // dev.kord.voice.io/ByteArrayView.viewSize.<get-viewSize>|<get-viewSize>(){}[0]
+
+    final var dataEnd // dev.kord.voice.io/ByteArrayView.dataEnd|{}dataEnd[0]
+        final fun <get-dataEnd>(): kotlin/Int // dev.kord.voice.io/ByteArrayView.dataEnd.<get-dataEnd>|<get-dataEnd>(){}[0]
+    final var dataStart // dev.kord.voice.io/ByteArrayView.dataStart|{}dataStart[0]
+        final fun <get-dataStart>(): kotlin/Int // dev.kord.voice.io/ByteArrayView.dataStart.<get-dataStart>|<get-dataStart>(){}[0]
+
     final fun asInt(): kotlin/Int // dev.kord.voice.io/ByteArrayView.asInt|asInt(){}[0]
     final fun asShort(): kotlin/Short // dev.kord.voice.io/ByteArrayView.asShort|asShort(){}[0]
     final fun clone(): dev.kord.voice.io/ByteArrayView // dev.kord.voice.io/ByteArrayView.clone|clone(){}[0]
     final fun get(kotlin/Int): kotlin/Byte // dev.kord.voice.io/ByteArrayView.get|get(kotlin.Int){}[0]
     final fun iterator(): kotlin.collections/Iterator<kotlin/Byte> // dev.kord.voice.io/ByteArrayView.iterator|iterator(){}[0]
-    final fun resize(kotlin/Int =..., kotlin/Int =...): kotlin/Boolean // dev.kord.voice.io/ByteArrayView.resize|resize(kotlin.Int;kotlin.Int){}[0]
+    final fun resize(kotlin/Int = ..., kotlin/Int = ...): kotlin/Boolean // dev.kord.voice.io/ByteArrayView.resize|resize(kotlin.Int;kotlin.Int){}[0]
     final fun toByteArray(): kotlin/ByteArray // dev.kord.voice.io/ByteArrayView.toByteArray|toByteArray(){}[0]
-    final fun view(kotlin/Int =..., kotlin/Int =...): dev.kord.voice.io/ByteArrayView? // dev.kord.voice.io/ByteArrayView.view|view(kotlin.Int;kotlin.Int){}[0]
+    final fun view(kotlin/Int = ..., kotlin/Int = ...): dev.kord.voice.io/ByteArrayView? // dev.kord.voice.io/ByteArrayView.view|view(kotlin.Int;kotlin.Int){}[0]
+
     final object Companion { // dev.kord.voice.io/ByteArrayView.Companion|null[0]
         final fun from(kotlin/ByteArray, kotlin/Int, kotlin/Int): dev.kord.voice.io/ByteArrayView? // dev.kord.voice.io/ByteArrayView.Companion.from|from(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
     }
-    final val data // dev.kord.voice.io/ByteArrayView.data|{}data[0]
-        final fun <get-data>(): kotlin/ByteArray // dev.kord.voice.io/ByteArrayView.data.<get-data>|<get-data>(){}[0]
-    final val viewSize // dev.kord.voice.io/ByteArrayView.viewSize|{}viewSize[0]
-        final fun <get-viewSize>(): kotlin/Int // dev.kord.voice.io/ByteArrayView.viewSize.<get-viewSize>|<get-viewSize>(){}[0]
-    final var dataEnd // dev.kord.voice.io/ByteArrayView.dataEnd|{}dataEnd[0]
-        final fun <get-dataEnd>(): kotlin/Int // dev.kord.voice.io/ByteArrayView.dataEnd.<get-dataEnd>|<get-dataEnd>(){}[0]
-    final var dataStart // dev.kord.voice.io/ByteArrayView.dataStart|{}dataStart[0]
-        final fun <get-dataStart>(): kotlin/Int // dev.kord.voice.io/ByteArrayView.dataStart.<get-dataStart>|<get-dataStart>(){}[0]
 }
+
 final class dev.kord.voice.io/MutableByteArrayCursor { // dev.kord.voice.io/MutableByteArrayCursor|null[0]
     constructor <init>(kotlin/ByteArray) // dev.kord.voice.io/MutableByteArrayCursor.<init>|<init>(kotlin.ByteArray){}[0]
-    final fun reset() // dev.kord.voice.io/MutableByteArrayCursor.reset|reset(){}[0]
-    final fun resize(kotlin/Int, kotlin/Boolean =...): kotlin/Boolean // dev.kord.voice.io/MutableByteArrayCursor.resize|resize(kotlin.Int;kotlin.Boolean){}[0]
-    final fun writeByte(kotlin/Byte) // dev.kord.voice.io/MutableByteArrayCursor.writeByte|writeByte(kotlin.Byte){}[0]
-    final fun writeByteArray(kotlin/ByteArray, kotlin/Int =..., kotlin/Int =...) // dev.kord.voice.io/MutableByteArrayCursor.writeByteArray|writeByteArray(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
-    final fun writeByteView(dev.kord.voice.io/ByteArrayView) // dev.kord.voice.io/MutableByteArrayCursor.writeByteView|writeByteView(dev.kord.voice.io.ByteArrayView){}[0]
-    final fun writeInt(kotlin/Int) // dev.kord.voice.io/MutableByteArrayCursor.writeInt|writeInt(kotlin.Int){}[0]
-    final fun writeShort(kotlin/Short) // dev.kord.voice.io/MutableByteArrayCursor.writeShort|writeShort(kotlin.Short){}[0]
+
     final val isExhausted // dev.kord.voice.io/MutableByteArrayCursor.isExhausted|{}isExhausted[0]
         final fun <get-isExhausted>(): kotlin/Boolean // dev.kord.voice.io/MutableByteArrayCursor.isExhausted.<get-isExhausted>|<get-isExhausted>(){}[0]
     final val remaining // dev.kord.voice.io/MutableByteArrayCursor.remaining|{}remaining[0]
         final fun <get-remaining>(): kotlin/Int // dev.kord.voice.io/MutableByteArrayCursor.remaining.<get-remaining>|<get-remaining>(){}[0]
+
     final var cursor // dev.kord.voice.io/MutableByteArrayCursor.cursor|{}cursor[0]
         final fun <get-cursor>(): kotlin/Int // dev.kord.voice.io/MutableByteArrayCursor.cursor.<get-cursor>|<get-cursor>(){}[0]
         final fun <set-cursor>(kotlin/Int) // dev.kord.voice.io/MutableByteArrayCursor.cursor.<set-cursor>|<set-cursor>(kotlin.Int){}[0]
     final var data // dev.kord.voice.io/MutableByteArrayCursor.data|{}data[0]
         final fun <get-data>(): kotlin/ByteArray // dev.kord.voice.io/MutableByteArrayCursor.data.<get-data>|<get-data>(){}[0]
+
+    final fun reset() // dev.kord.voice.io/MutableByteArrayCursor.reset|reset(){}[0]
+    final fun resize(kotlin/Int, kotlin/Boolean = ...): kotlin/Boolean // dev.kord.voice.io/MutableByteArrayCursor.resize|resize(kotlin.Int;kotlin.Boolean){}[0]
+    final fun writeByte(kotlin/Byte) // dev.kord.voice.io/MutableByteArrayCursor.writeByte|writeByte(kotlin.Byte){}[0]
+    final fun writeByteArray(kotlin/ByteArray, kotlin/Int = ..., kotlin/Int = ...) // dev.kord.voice.io/MutableByteArrayCursor.writeByteArray|writeByteArray(kotlin.ByteArray;kotlin.Int;kotlin.Int){}[0]
+    final fun writeByteView(dev.kord.voice.io/ByteArrayView) // dev.kord.voice.io/MutableByteArrayCursor.writeByteView|writeByteView(dev.kord.voice.io.ByteArrayView){}[0]
+    final fun writeInt(kotlin/Int) // dev.kord.voice.io/MutableByteArrayCursor.writeInt|writeInt(kotlin.Int){}[0]
+    final fun writeShort(kotlin/Short) // dev.kord.voice.io/MutableByteArrayCursor.writeShort|writeShort(kotlin.Short){}[0]
 }
+
 final class dev.kord.voice.io/ReadableByteArrayCursor { // dev.kord.voice.io/ReadableByteArrayCursor|null[0]
     constructor <init>(dev.kord.voice.io/ByteArrayView) // dev.kord.voice.io/ReadableByteArrayCursor.<init>|<init>(dev.kord.voice.io.ByteArrayView){}[0]
+
+    final val remaining // dev.kord.voice.io/ReadableByteArrayCursor.remaining|{}remaining[0]
+        final fun <get-remaining>(): kotlin/Int // dev.kord.voice.io/ReadableByteArrayCursor.remaining.<get-remaining>|<get-remaining>(){}[0]
+    final val view // dev.kord.voice.io/ReadableByteArrayCursor.view|{}view[0]
+        final fun <get-view>(): dev.kord.voice.io/ByteArrayView // dev.kord.voice.io/ReadableByteArrayCursor.view.<get-view>|<get-view>(){}[0]
+
+    final var cursor // dev.kord.voice.io/ReadableByteArrayCursor.cursor|{}cursor[0]
+        final fun <get-cursor>(): kotlin/Int // dev.kord.voice.io/ReadableByteArrayCursor.cursor.<get-cursor>|<get-cursor>(){}[0]
+        final fun <set-cursor>(kotlin/Int) // dev.kord.voice.io/ReadableByteArrayCursor.cursor.<set-cursor>|<set-cursor>(kotlin.Int){}[0]
+
     final fun consume(kotlin/Int) // dev.kord.voice.io/ReadableByteArrayCursor.consume|consume(kotlin.Int){}[0]
     final fun readByte(): kotlin/Byte // dev.kord.voice.io/ReadableByteArrayCursor.readByte|readByte(){}[0]
     final fun readBytes(kotlin/Int): dev.kord.voice.io/ByteArrayView // dev.kord.voice.io/ReadableByteArrayCursor.readBytes|readBytes(kotlin.Int){}[0]
     final fun readInt(): kotlin/Int // dev.kord.voice.io/ReadableByteArrayCursor.readInt|readInt(){}[0]
     final fun readRemaining(): dev.kord.voice.io/ByteArrayView // dev.kord.voice.io/ReadableByteArrayCursor.readRemaining|readRemaining(){}[0]
     final fun readShort(): kotlin/Short // dev.kord.voice.io/ReadableByteArrayCursor.readShort|readShort(){}[0]
-    final val remaining // dev.kord.voice.io/ReadableByteArrayCursor.remaining|{}remaining[0]
-        final fun <get-remaining>(): kotlin/Int // dev.kord.voice.io/ReadableByteArrayCursor.remaining.<get-remaining>|<get-remaining>(){}[0]
-    final val view // dev.kord.voice.io/ReadableByteArrayCursor.view|{}view[0]
-        final fun <get-view>(): dev.kord.voice.io/ByteArrayView // dev.kord.voice.io/ReadableByteArrayCursor.view.<get-view>|<get-view>(){}[0]
-    final var cursor // dev.kord.voice.io/ReadableByteArrayCursor.cursor|{}cursor[0]
-        final fun <get-cursor>(): kotlin/Int // dev.kord.voice.io/ReadableByteArrayCursor.cursor.<get-cursor>|<get-cursor>(){}[0]
-        final fun <set-cursor>(kotlin/Int) // dev.kord.voice.io/ReadableByteArrayCursor.cursor.<set-cursor>|<set-cursor>(kotlin.Int){}[0]
 }
+
 final class dev.kord.voice.streams/DefaultStreams : dev.kord.voice.streams/Streams { // dev.kord.voice.streams/DefaultStreams|null[0]
     constructor <init>(dev.kord.voice.gateway/VoiceGateway, dev.kord.voice.udp/VoiceUdpSocket, dev.kord.voice.encryption.strategies/NonceStrategy) // dev.kord.voice.streams/DefaultStreams.<init>|<init>(dev.kord.voice.gateway.VoiceGateway;dev.kord.voice.udp.VoiceUdpSocket;dev.kord.voice.encryption.strategies.NonceStrategy){}[0]
-    final val incomingAudioFrames // dev.kord.voice.streams/DefaultStreams.incomingAudioFrames|<get-incomingAudioFrames>(){}[0]
+
+    final val incomingAudioFrames // dev.kord.voice.streams/DefaultStreams.incomingAudioFrames|{}incomingAudioFrames[0]
         final fun <get-incomingAudioFrames>(): kotlinx.coroutines.flow/Flow<kotlin/Pair<kotlin/UInt, dev.kord.voice/AudioFrame>> // dev.kord.voice.streams/DefaultStreams.incomingAudioFrames.<get-incomingAudioFrames>|<get-incomingAudioFrames>(){}[0]
     final val incomingAudioPackets // dev.kord.voice.streams/DefaultStreams.incomingAudioPackets|{}incomingAudioPackets[0]
         final fun <get-incomingAudioPackets>(): kotlinx.coroutines.flow/SharedFlow<dev.kord.voice.udp/RTPPacket> // dev.kord.voice.streams/DefaultStreams.incomingAudioPackets.<get-incomingAudioPackets>|<get-incomingAudioPackets>(){}[0]
@@ -500,18 +657,15 @@ final class dev.kord.voice.streams/DefaultStreams : dev.kord.voice.streams/Strea
         final fun <get-incomingUserStreams>(): kotlinx.coroutines.flow/SharedFlow<kotlin/Pair<dev.kord.common.entity/Snowflake, dev.kord.voice/AudioFrame>> // dev.kord.voice.streams/DefaultStreams.incomingUserStreams.<get-incomingUserStreams>|<get-incomingUserStreams>(){}[0]
     final val ssrcToUser // dev.kord.voice.streams/DefaultStreams.ssrcToUser|{}ssrcToUser[0]
         final fun <get-ssrcToUser>(): kotlin.collections/Map<kotlin/UInt, dev.kord.common.entity/Snowflake> // dev.kord.voice.streams/DefaultStreams.ssrcToUser.<get-ssrcToUser>|<get-ssrcToUser>(){}[0]
+
     // Targets: [apple, linux]
     final suspend fun listen(kotlin/ByteArray, io.ktor.network.sockets/InetSocketAddress) // dev.kord.voice.streams/DefaultStreams.listen|listen(kotlin.ByteArray;io.ktor.network.sockets.InetSocketAddress){}[0]
+
     // Targets: [js, mingwX64]
     final suspend fun listen(kotlin/ByteArray, dev.kord.voice.udp/SocketAddress) // dev.kord.voice.streams/DefaultStreams.listen|listen(kotlin.ByteArray;dev.kord.voice.udp.SocketAddress){}[0]
 }
+
 final class dev.kord.voice.udp/AudioFrameSenderConfiguration { // dev.kord.voice.udp/AudioFrameSenderConfiguration|null[0]
-    final fun component2(): kotlin/UInt // dev.kord.voice.udp/AudioFrameSenderConfiguration.component2|component2(){}[0]
-    final fun component3(): kotlin/ByteArray // dev.kord.voice.udp/AudioFrameSenderConfiguration.component3|component3(){}[0]
-    final fun component4(): dev.kord.voice/FrameInterceptorConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.component4|component4(){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/AudioFrameSenderConfiguration.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/AudioFrameSenderConfiguration.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.udp/AudioFrameSenderConfiguration.toString|toString(){}[0]
     final val interceptorConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.interceptorConfiguration|{}interceptorConfiguration[0]
         final fun <get-interceptorConfiguration>(): dev.kord.voice/FrameInterceptorConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.interceptorConfiguration.<get-interceptorConfiguration>|<get-interceptorConfiguration>(){}[0]
     final val key // dev.kord.voice.udp/AudioFrameSenderConfiguration.key|{}key[0]
@@ -519,39 +673,53 @@ final class dev.kord.voice.udp/AudioFrameSenderConfiguration { // dev.kord.voice
     final val server // dev.kord.voice.udp/AudioFrameSenderConfiguration.server|{}server[0]
         // Targets: [apple, linux]
         final fun <get-server>(): io.ktor.network.sockets/InetSocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.server.<get-server>|<get-server>(){}[0]
+
         // Targets: [js, mingwX64]
         final fun <get-server>(): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.server.<get-server>|<get-server>(){}[0]
     final val ssrc // dev.kord.voice.udp/AudioFrameSenderConfiguration.ssrc|{}ssrc[0]
         final fun <get-ssrc>(): kotlin/UInt // dev.kord.voice.udp/AudioFrameSenderConfiguration.ssrc.<get-ssrc>|<get-ssrc>(){}[0]
+
+    final fun component2(): kotlin/UInt // dev.kord.voice.udp/AudioFrameSenderConfiguration.component2|component2(){}[0]
+    final fun component3(): kotlin/ByteArray // dev.kord.voice.udp/AudioFrameSenderConfiguration.component3|component3(){}[0]
+    final fun component4(): dev.kord.voice/FrameInterceptorConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.component4|component4(){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/AudioFrameSenderConfiguration.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/AudioFrameSenderConfiguration.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.udp/AudioFrameSenderConfiguration.toString|toString(){}[0]
+
     // Targets: [apple, linux]
     constructor <init>(io.ktor.network.sockets/InetSocketAddress, kotlin/UInt, kotlin/ByteArray, dev.kord.voice/FrameInterceptorConfiguration) // dev.kord.voice.udp/AudioFrameSenderConfiguration.<init>|<init>(io.ktor.network.sockets.InetSocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
+
     // Targets: [apple, linux]
     final fun component1(): io.ktor.network.sockets/InetSocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.component1|component1(){}[0]
-    // Targets: [apple, linux]
+
+    // Targets: [apple]
     final fun copy(io.ktor.network.sockets/InetSocketAddress =..., kotlin/UInt =..., kotlin/ByteArray =..., dev.kord.voice/FrameInterceptorConfiguration =...): dev.kord.voice.udp/AudioFrameSenderConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.copy|copy(io.ktor.network.sockets.InetSocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
+
     // Targets: [js, mingwX64]
     constructor <init>(dev.kord.voice.udp/SocketAddress, kotlin/UInt, kotlin/ByteArray, dev.kord.voice/FrameInterceptorConfiguration) // dev.kord.voice.udp/AudioFrameSenderConfiguration.<init>|<init>(dev.kord.voice.udp.SocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
+
     // Targets: [js, mingwX64]
     final fun component1(): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/AudioFrameSenderConfiguration.component1|component1(){}[0]
+
     // Targets: [js, mingwX64]
-    final fun copy(dev.kord.voice.udp/SocketAddress =..., kotlin/UInt =..., kotlin/ByteArray =..., dev.kord.voice/FrameInterceptorConfiguration =...): dev.kord.voice.udp/AudioFrameSenderConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.copy|copy(dev.kord.voice.udp.SocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
+    final fun copy(dev.kord.voice.udp/SocketAddress = ..., kotlin/UInt = ..., kotlin/ByteArray = ..., dev.kord.voice/FrameInterceptorConfiguration = ...): dev.kord.voice.udp/AudioFrameSenderConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.copy|copy(dev.kord.voice.udp.SocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
+
+    // Targets: [linux]
+    final fun copy(io.ktor.network.sockets/InetSocketAddress = ..., kotlin/UInt = ..., kotlin/ByteArray = ..., dev.kord.voice/FrameInterceptorConfiguration = ...): dev.kord.voice.udp/AudioFrameSenderConfiguration // dev.kord.voice.udp/AudioFrameSenderConfiguration.copy|copy(io.ktor.network.sockets.InetSocketAddress;kotlin.UInt;kotlin.ByteArray;dev.kord.voice.FrameInterceptorConfiguration){}[0]
 }
+
 final class dev.kord.voice.udp/DefaultAudioFrameSender : dev.kord.voice.udp/AudioFrameSender { // dev.kord.voice.udp/DefaultAudioFrameSender|null[0]
     constructor <init>(dev.kord.voice.udp/DefaultAudioFrameSenderData) // dev.kord.voice.udp/DefaultAudioFrameSender.<init>|<init>(dev.kord.voice.udp.DefaultAudioFrameSenderData){}[0]
-    final suspend fun start(dev.kord.voice.udp/AudioFrameSenderConfiguration) // dev.kord.voice.udp/DefaultAudioFrameSender.start|start(dev.kord.voice.udp.AudioFrameSenderConfiguration){}[0]
+
     final val data // dev.kord.voice.udp/DefaultAudioFrameSender.data|{}data[0]
         final fun <get-data>(): dev.kord.voice.udp/DefaultAudioFrameSenderData // dev.kord.voice.udp/DefaultAudioFrameSender.data.<get-data>|<get-data>(){}[0]
+
+    final suspend fun start(dev.kord.voice.udp/AudioFrameSenderConfiguration) // dev.kord.voice.udp/DefaultAudioFrameSender.start|start(dev.kord.voice.udp.AudioFrameSenderConfiguration){}[0]
 }
+
 final class dev.kord.voice.udp/DefaultAudioFrameSenderData { // dev.kord.voice.udp/DefaultAudioFrameSenderData|null[0]
     constructor <init>(dev.kord.voice.udp/VoiceUdpSocket, dev.kord.voice/FrameInterceptor, dev.kord.voice/AudioProvider, dev.kord.voice.encryption.strategies/NonceStrategy) // dev.kord.voice.udp/DefaultAudioFrameSenderData.<init>|<init>(dev.kord.voice.udp.VoiceUdpSocket;dev.kord.voice.FrameInterceptor;dev.kord.voice.AudioProvider;dev.kord.voice.encryption.strategies.NonceStrategy){}[0]
-    final fun component1(): dev.kord.voice.udp/VoiceUdpSocket // dev.kord.voice.udp/DefaultAudioFrameSenderData.component1|component1(){}[0]
-    final fun component2(): dev.kord.voice/FrameInterceptor // dev.kord.voice.udp/DefaultAudioFrameSenderData.component2|component2(){}[0]
-    final fun component3(): dev.kord.voice/AudioProvider // dev.kord.voice.udp/DefaultAudioFrameSenderData.component3|component3(){}[0]
-    final fun component4(): dev.kord.voice.encryption.strategies/NonceStrategy // dev.kord.voice.udp/DefaultAudioFrameSenderData.component4|component4(){}[0]
-    final fun copy(dev.kord.voice.udp/VoiceUdpSocket =..., dev.kord.voice/FrameInterceptor =..., dev.kord.voice/AudioProvider =..., dev.kord.voice.encryption.strategies/NonceStrategy =...): dev.kord.voice.udp/DefaultAudioFrameSenderData // dev.kord.voice.udp/DefaultAudioFrameSenderData.copy|copy(dev.kord.voice.udp.VoiceUdpSocket;dev.kord.voice.FrameInterceptor;dev.kord.voice.AudioProvider;dev.kord.voice.encryption.strategies.NonceStrategy){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/DefaultAudioFrameSenderData.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/DefaultAudioFrameSenderData.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.udp/DefaultAudioFrameSenderData.toString|toString(){}[0]
+
     final val interceptor // dev.kord.voice.udp/DefaultAudioFrameSenderData.interceptor|{}interceptor[0]
         final fun <get-interceptor>(): dev.kord.voice/FrameInterceptor // dev.kord.voice.udp/DefaultAudioFrameSenderData.interceptor.<get-interceptor>|<get-interceptor>(){}[0]
     final val nonceStrategy // dev.kord.voice.udp/DefaultAudioFrameSenderData.nonceStrategy|{}nonceStrategy[0]
@@ -560,16 +728,67 @@ final class dev.kord.voice.udp/DefaultAudioFrameSenderData { // dev.kord.voice.u
         final fun <get-provider>(): dev.kord.voice/AudioProvider // dev.kord.voice.udp/DefaultAudioFrameSenderData.provider.<get-provider>|<get-provider>(){}[0]
     final val udp // dev.kord.voice.udp/DefaultAudioFrameSenderData.udp|{}udp[0]
         final fun <get-udp>(): dev.kord.voice.udp/VoiceUdpSocket // dev.kord.voice.udp/DefaultAudioFrameSenderData.udp.<get-udp>|<get-udp>(){}[0]
+
+    final fun component1(): dev.kord.voice.udp/VoiceUdpSocket // dev.kord.voice.udp/DefaultAudioFrameSenderData.component1|component1(){}[0]
+    final fun component2(): dev.kord.voice/FrameInterceptor // dev.kord.voice.udp/DefaultAudioFrameSenderData.component2|component2(){}[0]
+    final fun component3(): dev.kord.voice/AudioProvider // dev.kord.voice.udp/DefaultAudioFrameSenderData.component3|component3(){}[0]
+    final fun component4(): dev.kord.voice.encryption.strategies/NonceStrategy // dev.kord.voice.udp/DefaultAudioFrameSenderData.component4|component4(){}[0]
+    final fun copy(dev.kord.voice.udp/VoiceUdpSocket = ..., dev.kord.voice/FrameInterceptor = ..., dev.kord.voice/AudioProvider = ..., dev.kord.voice.encryption.strategies/NonceStrategy = ...): dev.kord.voice.udp/DefaultAudioFrameSenderData // dev.kord.voice.udp/DefaultAudioFrameSenderData.copy|copy(dev.kord.voice.udp.VoiceUdpSocket;dev.kord.voice.FrameInterceptor;dev.kord.voice.AudioProvider;dev.kord.voice.encryption.strategies.NonceStrategy){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/DefaultAudioFrameSenderData.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/DefaultAudioFrameSenderData.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.udp/DefaultAudioFrameSenderData.toString|toString(){}[0]
 }
+
 final class dev.kord.voice.udp/DefaultNativeAudioPacketProvider : dev.kord.voice.udp/AudioPacketProvider { // dev.kord.voice.udp/DefaultNativeAudioPacketProvider|null[0]
     constructor <init>(kotlin/ByteArray, dev.kord.voice.encryption.strategies/NonceStrategy) // dev.kord.voice.udp/DefaultNativeAudioPacketProvider.<init>|<init>(kotlin.ByteArray;dev.kord.voice.encryption.strategies.NonceStrategy){}[0]
+
     final fun provide(kotlin/UShort, kotlin/UInt, kotlin/UInt, kotlin/ByteArray): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/DefaultNativeAudioPacketProvider.provide|provide(kotlin.UShort;kotlin.UInt;kotlin.UInt;kotlin.ByteArray){}[0]
 }
+
 final class dev.kord.voice.udp/RTPPacket { // dev.kord.voice.udp/RTPPacket|null[0]
     constructor <init>(kotlin/UByte, kotlin/Byte, kotlin/UShort, kotlin/UInt, kotlin/UInt, kotlin/UIntArray, kotlin/Boolean, kotlin/Boolean, dev.kord.voice.io/ByteArrayView) // dev.kord.voice.udp/RTPPacket.<init>|<init>(kotlin.UByte;kotlin.Byte;kotlin.UShort;kotlin.UInt;kotlin.UInt;kotlin.UIntArray;kotlin.Boolean;kotlin.Boolean;dev.kord.voice.io.ByteArrayView){}[0]
+
+    final val csrcIdentifiers // dev.kord.voice.udp/RTPPacket.csrcIdentifiers|{}csrcIdentifiers[0]
+        final fun <get-csrcIdentifiers>(): kotlin/UIntArray // dev.kord.voice.udp/RTPPacket.csrcIdentifiers.<get-csrcIdentifiers>|<get-csrcIdentifiers>(){}[0]
+    final val hasExtension // dev.kord.voice.udp/RTPPacket.hasExtension|{}hasExtension[0]
+        final fun <get-hasExtension>(): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.hasExtension.<get-hasExtension>|<get-hasExtension>(){}[0]
+    final val hasMarker // dev.kord.voice.udp/RTPPacket.hasMarker|{}hasMarker[0]
+        final fun <get-hasMarker>(): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.hasMarker.<get-hasMarker>|<get-hasMarker>(){}[0]
+    final val paddingBytes // dev.kord.voice.udp/RTPPacket.paddingBytes|{}paddingBytes[0]
+        final fun <get-paddingBytes>(): kotlin/UByte // dev.kord.voice.udp/RTPPacket.paddingBytes.<get-paddingBytes>|<get-paddingBytes>(){}[0]
+    final val payload // dev.kord.voice.udp/RTPPacket.payload|{}payload[0]
+        final fun <get-payload>(): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/RTPPacket.payload.<get-payload>|<get-payload>(){}[0]
+    final val payloadType // dev.kord.voice.udp/RTPPacket.payloadType|{}payloadType[0]
+        final fun <get-payloadType>(): kotlin/Byte // dev.kord.voice.udp/RTPPacket.payloadType.<get-payloadType>|<get-payloadType>(){}[0]
+    final val sequence // dev.kord.voice.udp/RTPPacket.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/UShort // dev.kord.voice.udp/RTPPacket.sequence.<get-sequence>|<get-sequence>(){}[0]
+    final val ssrc // dev.kord.voice.udp/RTPPacket.ssrc|{}ssrc[0]
+        final fun <get-ssrc>(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.ssrc.<get-ssrc>|<get-ssrc>(){}[0]
+    final val timestamp // dev.kord.voice.udp/RTPPacket.timestamp|{}timestamp[0]
+        final fun <get-timestamp>(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.timestamp.<get-timestamp>|<get-timestamp>(){}[0]
+
+    final fun asByteArray(): kotlin/ByteArray // dev.kord.voice.udp/RTPPacket.asByteArray|asByteArray(){}[0]
+    final fun asByteArrayView(dev.kord.voice.io/MutableByteArrayCursor): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/RTPPacket.asByteArrayView|asByteArrayView(dev.kord.voice.io.MutableByteArrayCursor){}[0]
+    final fun clone(): dev.kord.voice.udp/RTPPacket // dev.kord.voice.udp/RTPPacket.clone|clone(){}[0]
+    final fun component1(): kotlin/UByte // dev.kord.voice.udp/RTPPacket.component1|component1(){}[0]
+    final fun component2(): kotlin/Byte // dev.kord.voice.udp/RTPPacket.component2|component2(){}[0]
+    final fun component3(): kotlin/UShort // dev.kord.voice.udp/RTPPacket.component3|component3(){}[0]
+    final fun component4(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.component4|component4(){}[0]
+    final fun component5(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.component5|component5(){}[0]
+    final fun component6(): kotlin/UIntArray // dev.kord.voice.udp/RTPPacket.component6|component6(){}[0]
+    final fun component7(): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.component7|component7(){}[0]
+    final fun component8(): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.component8|component8(){}[0]
+    final fun component9(): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/RTPPacket.component9|component9(){}[0]
+    final fun copy(kotlin/UByte = ..., kotlin/Byte = ..., kotlin/UShort = ..., kotlin/UInt = ..., kotlin/UInt = ..., kotlin/UIntArray = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., dev.kord.voice.io/ByteArrayView = ...): dev.kord.voice.udp/RTPPacket // dev.kord.voice.udp/RTPPacket.copy|copy(kotlin.UByte;kotlin.Byte;kotlin.UShort;kotlin.UInt;kotlin.UInt;kotlin.UIntArray;kotlin.Boolean;kotlin.Boolean;dev.kord.voice.io.ByteArrayView){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/RTPPacket.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.udp/RTPPacket.toString|toString(){}[0]
+    final fun writeHeader(): kotlin/ByteArray // dev.kord.voice.udp/RTPPacket.writeHeader|writeHeader(){}[0]
+    final fun writeHeader(dev.kord.voice.io/MutableByteArrayCursor) // dev.kord.voice.udp/RTPPacket.writeHeader|writeHeader(dev.kord.voice.io.MutableByteArrayCursor){}[0]
+
     final class Builder { // dev.kord.voice.udp/RTPPacket.Builder|null[0]
         constructor <init>(kotlin/UInt, kotlin/UInt, kotlin/UShort, kotlin/Byte, kotlin/ByteArray) // dev.kord.voice.udp/RTPPacket.Builder.<init>|<init>(kotlin.UInt;kotlin.UInt;kotlin.UShort;kotlin.Byte;kotlin.ByteArray){}[0]
-        final fun build(): dev.kord.voice.udp/RTPPacket // dev.kord.voice.udp/RTPPacket.Builder.build|build(){}[0]
+
         final var csrcIdentifiers // dev.kord.voice.udp/RTPPacket.Builder.csrcIdentifiers|{}csrcIdentifiers[0]
             final fun <get-csrcIdentifiers>(): kotlin/UIntArray // dev.kord.voice.udp/RTPPacket.Builder.csrcIdentifiers.<get-csrcIdentifiers>|<get-csrcIdentifiers>(){}[0]
             final fun <set-csrcIdentifiers>(kotlin/UIntArray) // dev.kord.voice.udp/RTPPacket.Builder.csrcIdentifiers.<set-csrcIdentifiers>|<set-csrcIdentifiers>(kotlin.UIntArray){}[0]
@@ -597,86 +816,59 @@ final class dev.kord.voice.udp/RTPPacket { // dev.kord.voice.udp/RTPPacket|null[
         final var timestamp // dev.kord.voice.udp/RTPPacket.Builder.timestamp|{}timestamp[0]
             final fun <get-timestamp>(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.Builder.timestamp.<get-timestamp>|<get-timestamp>(){}[0]
             final fun <set-timestamp>(kotlin/UInt) // dev.kord.voice.udp/RTPPacket.Builder.timestamp.<set-timestamp>|<set-timestamp>(kotlin.UInt){}[0]
+
+        final fun build(): dev.kord.voice.udp/RTPPacket // dev.kord.voice.udp/RTPPacket.Builder.build|build(){}[0]
     }
-    final fun asByteArray(): kotlin/ByteArray // dev.kord.voice.udp/RTPPacket.asByteArray|asByteArray(){}[0]
-    final fun asByteArrayView(dev.kord.voice.io/MutableByteArrayCursor): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/RTPPacket.asByteArrayView|asByteArrayView(dev.kord.voice.io.MutableByteArrayCursor){}[0]
-    final fun clone(): dev.kord.voice.udp/RTPPacket // dev.kord.voice.udp/RTPPacket.clone|clone(){}[0]
-    final fun component1(): kotlin/UByte // dev.kord.voice.udp/RTPPacket.component1|component1(){}[0]
-    final fun component2(): kotlin/Byte // dev.kord.voice.udp/RTPPacket.component2|component2(){}[0]
-    final fun component3(): kotlin/UShort // dev.kord.voice.udp/RTPPacket.component3|component3(){}[0]
-    final fun component4(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.component4|component4(){}[0]
-    final fun component5(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.component5|component5(){}[0]
-    final fun component6(): kotlin/UIntArray // dev.kord.voice.udp/RTPPacket.component6|component6(){}[0]
-    final fun component7(): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.component7|component7(){}[0]
-    final fun component8(): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.component8|component8(){}[0]
-    final fun component9(): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/RTPPacket.component9|component9(){}[0]
-    final fun copy(kotlin/UByte =..., kotlin/Byte =..., kotlin/UShort =..., kotlin/UInt =..., kotlin/UInt =..., kotlin/UIntArray =..., kotlin/Boolean =..., kotlin/Boolean =..., dev.kord.voice.io/ByteArrayView =...): dev.kord.voice.udp/RTPPacket // dev.kord.voice.udp/RTPPacket.copy|copy(kotlin.UByte;kotlin.Byte;kotlin.UShort;kotlin.UInt;kotlin.UInt;kotlin.UIntArray;kotlin.Boolean;kotlin.Boolean;dev.kord.voice.io.ByteArrayView){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/RTPPacket.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.udp/RTPPacket.toString|toString(){}[0]
-    final fun writeHeader(): kotlin/ByteArray // dev.kord.voice.udp/RTPPacket.writeHeader|writeHeader(){}[0]
-    final fun writeHeader(dev.kord.voice.io/MutableByteArrayCursor) // dev.kord.voice.udp/RTPPacket.writeHeader|writeHeader(dev.kord.voice.io.MutableByteArrayCursor){}[0]
+
     final object Companion { // dev.kord.voice.udp/RTPPacket.Companion|null[0]
         final fun fromPacket(io.ktor.utils.io.core/ByteReadPacket): dev.kord.voice.udp/RTPPacket? // dev.kord.voice.udp/RTPPacket.Companion.fromPacket|fromPacket(io.ktor.utils.io.core.ByteReadPacket){}[0]
     }
-    final val csrcIdentifiers // dev.kord.voice.udp/RTPPacket.csrcIdentifiers|{}csrcIdentifiers[0]
-        final fun <get-csrcIdentifiers>(): kotlin/UIntArray // dev.kord.voice.udp/RTPPacket.csrcIdentifiers.<get-csrcIdentifiers>|<get-csrcIdentifiers>(){}[0]
-    final val hasExtension // dev.kord.voice.udp/RTPPacket.hasExtension|{}hasExtension[0]
-        final fun <get-hasExtension>(): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.hasExtension.<get-hasExtension>|<get-hasExtension>(){}[0]
-    final val hasMarker // dev.kord.voice.udp/RTPPacket.hasMarker|{}hasMarker[0]
-        final fun <get-hasMarker>(): kotlin/Boolean // dev.kord.voice.udp/RTPPacket.hasMarker.<get-hasMarker>|<get-hasMarker>(){}[0]
-    final val paddingBytes // dev.kord.voice.udp/RTPPacket.paddingBytes|{}paddingBytes[0]
-        final fun <get-paddingBytes>(): kotlin/UByte // dev.kord.voice.udp/RTPPacket.paddingBytes.<get-paddingBytes>|<get-paddingBytes>(){}[0]
-    final val payload // dev.kord.voice.udp/RTPPacket.payload|{}payload[0]
-        final fun <get-payload>(): dev.kord.voice.io/ByteArrayView // dev.kord.voice.udp/RTPPacket.payload.<get-payload>|<get-payload>(){}[0]
-    final val payloadType // dev.kord.voice.udp/RTPPacket.payloadType|{}payloadType[0]
-        final fun <get-payloadType>(): kotlin/Byte // dev.kord.voice.udp/RTPPacket.payloadType.<get-payloadType>|<get-payloadType>(){}[0]
-    final val sequence // dev.kord.voice.udp/RTPPacket.sequence|{}sequence[0]
-        final fun <get-sequence>(): kotlin/UShort // dev.kord.voice.udp/RTPPacket.sequence.<get-sequence>|<get-sequence>(){}[0]
-    final val ssrc // dev.kord.voice.udp/RTPPacket.ssrc|{}ssrc[0]
-        final fun <get-ssrc>(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.ssrc.<get-ssrc>|<get-ssrc>(){}[0]
-    final val timestamp // dev.kord.voice.udp/RTPPacket.timestamp|{}timestamp[0]
-        final fun <get-timestamp>(): kotlin/UInt // dev.kord.voice.udp/RTPPacket.timestamp.<get-timestamp>|<get-timestamp>(){}[0]
 }
+
 final class dev.kord.voice/DefaultFrameInterceptor : dev.kord.voice/FrameInterceptor { // dev.kord.voice/DefaultFrameInterceptor|null[0]
-    constructor <init>(dev.kord.voice/DefaultFrameInterceptorData =...) // dev.kord.voice/DefaultFrameInterceptor.<init>|<init>(dev.kord.voice.DefaultFrameInterceptorData){}[0]
+    constructor <init>(dev.kord.voice/DefaultFrameInterceptorData = ...) // dev.kord.voice/DefaultFrameInterceptor.<init>|<init>(dev.kord.voice.DefaultFrameInterceptorData){}[0]
+
     final fun (kotlinx.coroutines.flow/Flow<dev.kord.voice/AudioFrame?>).intercept(dev.kord.voice/FrameInterceptorConfiguration): kotlinx.coroutines.flow/Flow<dev.kord.voice/AudioFrame?> // dev.kord.voice/DefaultFrameInterceptor.intercept|intercept@kotlinx.coroutines.flow.Flow<dev.kord.voice.AudioFrame?>(dev.kord.voice.FrameInterceptorConfiguration){}[0]
 }
+
 final class dev.kord.voice/DefaultFrameInterceptorData { // dev.kord.voice/DefaultFrameInterceptorData|null[0]
-    constructor <init>(dev.kord.voice/SpeakingFlags =...) // dev.kord.voice/DefaultFrameInterceptorData.<init>|<init>(dev.kord.voice.SpeakingFlags){}[0]
+    constructor <init>(dev.kord.voice/SpeakingFlags = ...) // dev.kord.voice/DefaultFrameInterceptorData.<init>|<init>(dev.kord.voice.SpeakingFlags){}[0]
+
+    final val speakingState // dev.kord.voice/DefaultFrameInterceptorData.speakingState|{}speakingState[0]
+        final fun <get-speakingState>(): dev.kord.voice/SpeakingFlags // dev.kord.voice/DefaultFrameInterceptorData.speakingState.<get-speakingState>|<get-speakingState>(){}[0]
+
     final fun component1(): dev.kord.voice/SpeakingFlags // dev.kord.voice/DefaultFrameInterceptorData.component1|component1(){}[0]
-    final fun copy(dev.kord.voice/SpeakingFlags =...): dev.kord.voice/DefaultFrameInterceptorData // dev.kord.voice/DefaultFrameInterceptorData.copy|copy(dev.kord.voice.SpeakingFlags){}[0]
+    final fun copy(dev.kord.voice/SpeakingFlags = ...): dev.kord.voice/DefaultFrameInterceptorData // dev.kord.voice/DefaultFrameInterceptorData.copy|copy(dev.kord.voice.SpeakingFlags){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/DefaultFrameInterceptorData.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.voice/DefaultFrameInterceptorData.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.voice/DefaultFrameInterceptorData.toString|toString(){}[0]
-    final val speakingState // dev.kord.voice/DefaultFrameInterceptorData.speakingState|{}speakingState[0]
-        final fun <get-speakingState>(): dev.kord.voice/SpeakingFlags // dev.kord.voice/DefaultFrameInterceptorData.speakingState.<get-speakingState>|<get-speakingState>(){}[0]
 }
+
 final class dev.kord.voice/FrameInterceptorConfiguration { // dev.kord.voice/FrameInterceptorConfiguration|null[0]
     constructor <init>(dev.kord.gateway/Gateway, dev.kord.voice.gateway/VoiceGateway, kotlin/UInt) // dev.kord.voice/FrameInterceptorConfiguration.<init>|<init>(dev.kord.gateway.Gateway;dev.kord.voice.gateway.VoiceGateway;kotlin.UInt){}[0]
-    final fun component1(): dev.kord.gateway/Gateway // dev.kord.voice/FrameInterceptorConfiguration.component1|component1(){}[0]
-    final fun component2(): dev.kord.voice.gateway/VoiceGateway // dev.kord.voice/FrameInterceptorConfiguration.component2|component2(){}[0]
-    final fun component3(): kotlin/UInt // dev.kord.voice/FrameInterceptorConfiguration.component3|component3(){}[0]
-    final fun copy(dev.kord.gateway/Gateway =..., dev.kord.voice.gateway/VoiceGateway =..., kotlin/UInt =...): dev.kord.voice/FrameInterceptorConfiguration // dev.kord.voice/FrameInterceptorConfiguration.copy|copy(dev.kord.gateway.Gateway;dev.kord.voice.gateway.VoiceGateway;kotlin.UInt){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/FrameInterceptorConfiguration.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice/FrameInterceptorConfiguration.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice/FrameInterceptorConfiguration.toString|toString(){}[0]
+
     final val gateway // dev.kord.voice/FrameInterceptorConfiguration.gateway|{}gateway[0]
         final fun <get-gateway>(): dev.kord.gateway/Gateway // dev.kord.voice/FrameInterceptorConfiguration.gateway.<get-gateway>|<get-gateway>(){}[0]
     final val ssrc // dev.kord.voice/FrameInterceptorConfiguration.ssrc|{}ssrc[0]
         final fun <get-ssrc>(): kotlin/UInt // dev.kord.voice/FrameInterceptorConfiguration.ssrc.<get-ssrc>|<get-ssrc>(){}[0]
     final val voiceGateway // dev.kord.voice/FrameInterceptorConfiguration.voiceGateway|{}voiceGateway[0]
         final fun <get-voiceGateway>(): dev.kord.voice.gateway/VoiceGateway // dev.kord.voice/FrameInterceptorConfiguration.voiceGateway.<get-voiceGateway>|<get-voiceGateway>(){}[0]
+
+    final fun component1(): dev.kord.gateway/Gateway // dev.kord.voice/FrameInterceptorConfiguration.component1|component1(){}[0]
+    final fun component2(): dev.kord.voice.gateway/VoiceGateway // dev.kord.voice/FrameInterceptorConfiguration.component2|component2(){}[0]
+    final fun component3(): kotlin/UInt // dev.kord.voice/FrameInterceptorConfiguration.component3|component3(){}[0]
+    final fun copy(dev.kord.gateway/Gateway = ..., dev.kord.voice.gateway/VoiceGateway = ..., kotlin/UInt = ...): dev.kord.voice/FrameInterceptorConfiguration // dev.kord.voice/FrameInterceptorConfiguration.copy|copy(dev.kord.gateway.Gateway;dev.kord.voice.gateway.VoiceGateway;kotlin.UInt){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/FrameInterceptorConfiguration.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice/FrameInterceptorConfiguration.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice/FrameInterceptorConfiguration.toString|toString(){}[0]
 }
+
 final class dev.kord.voice/SpeakingFlags { // dev.kord.voice/SpeakingFlags|null[0]
-    final class Builder { // dev.kord.voice/SpeakingFlags.Builder|null[0]
-        constructor <init>(kotlin/Int =...) // dev.kord.voice/SpeakingFlags.Builder.<init>|<init>(kotlin.Int){}[0]
-        final fun (dev.kord.voice/SpeakingFlag).unaryMinus() // dev.kord.voice/SpeakingFlags.Builder.unaryMinus|unaryMinus@dev.kord.voice.SpeakingFlag(){}[0]
-        final fun (dev.kord.voice/SpeakingFlag).unaryPlus() // dev.kord.voice/SpeakingFlags.Builder.unaryPlus|unaryPlus@dev.kord.voice.SpeakingFlag(){}[0]
-        final fun (dev.kord.voice/SpeakingFlags).unaryMinus() // dev.kord.voice/SpeakingFlags.Builder.unaryMinus|unaryMinus@dev.kord.voice.SpeakingFlags(){}[0]
-        final fun (dev.kord.voice/SpeakingFlags).unaryPlus() // dev.kord.voice/SpeakingFlags.Builder.unaryPlus|unaryPlus@dev.kord.voice.SpeakingFlags(){}[0]
-        final fun build(): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags.Builder.build|build(){}[0]
-    }
+    final val code // dev.kord.voice/SpeakingFlags.code|{}code[0]
+        final fun <get-code>(): kotlin/Int // dev.kord.voice/SpeakingFlags.code.<get-code>|<get-code>(){}[0]
+    final val values // dev.kord.voice/SpeakingFlags.values|{}values[0]
+        final fun <get-values>(): kotlin.collections/Set<dev.kord.voice/SpeakingFlag> // dev.kord.voice/SpeakingFlags.values.<get-values>|<get-values>(){}[0]
+
     final fun contains(dev.kord.voice/SpeakingFlag): kotlin/Boolean // dev.kord.voice/SpeakingFlags.contains|contains(dev.kord.voice.SpeakingFlag){}[0]
     final fun contains(dev.kord.voice/SpeakingFlags): kotlin/Boolean // dev.kord.voice/SpeakingFlags.contains|contains(dev.kord.voice.SpeakingFlags){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/SpeakingFlags.equals|equals(kotlin.Any?){}[0]
@@ -687,21 +879,25 @@ final class dev.kord.voice/SpeakingFlags { // dev.kord.voice/SpeakingFlags|null[
     final fun plus(dev.kord.voice/SpeakingFlags): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags.plus|plus(dev.kord.voice.SpeakingFlags){}[0]
     final fun toString(): kotlin/String // dev.kord.voice/SpeakingFlags.toString|toString(){}[0]
     final inline fun copy(kotlin/Function1<dev.kord.voice/SpeakingFlags.Builder, kotlin/Unit>): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags.copy|copy(kotlin.Function1<dev.kord.voice.SpeakingFlags.Builder,kotlin.Unit>){}[0]
+
+    final class Builder { // dev.kord.voice/SpeakingFlags.Builder|null[0]
+        constructor <init>(kotlin/Int = ...) // dev.kord.voice/SpeakingFlags.Builder.<init>|<init>(kotlin.Int){}[0]
+
+        final fun (dev.kord.voice/SpeakingFlag).unaryMinus() // dev.kord.voice/SpeakingFlags.Builder.unaryMinus|unaryMinus@dev.kord.voice.SpeakingFlag(){}[0]
+        final fun (dev.kord.voice/SpeakingFlag).unaryPlus() // dev.kord.voice/SpeakingFlags.Builder.unaryPlus|unaryPlus@dev.kord.voice.SpeakingFlag(){}[0]
+        final fun (dev.kord.voice/SpeakingFlags).unaryMinus() // dev.kord.voice/SpeakingFlags.Builder.unaryMinus|unaryMinus@dev.kord.voice.SpeakingFlags(){}[0]
+        final fun (dev.kord.voice/SpeakingFlags).unaryPlus() // dev.kord.voice/SpeakingFlags.Builder.unaryPlus|unaryPlus@dev.kord.voice.SpeakingFlags(){}[0]
+        final fun build(): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags.Builder.build|build(){}[0]
+    }
+
     final object Companion { // dev.kord.voice/SpeakingFlags.Companion|null[0]
         final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice/SpeakingFlags> // dev.kord.voice/SpeakingFlags.Companion.serializer|serializer(){}[0]
     }
-    final val code // dev.kord.voice/SpeakingFlags.code|<get-code>(){}[0]
-        final fun <get-code>(): kotlin/Int // dev.kord.voice/SpeakingFlags.code.<get-code>|<get-code>(){}[0]
-    final val values // dev.kord.voice/SpeakingFlags.values|{}values[0]
-        final fun <get-values>(): kotlin.collections/Set<dev.kord.voice/SpeakingFlag> // dev.kord.voice/SpeakingFlags.values.<get-values>|<get-values>(){}[0]
 }
+
 final class dev.kord.voice/VoiceConnection { // dev.kord.voice/VoiceConnection|null[0]
     constructor <init>(kotlinx.coroutines/CoroutineScope, dev.kord.voice/VoiceConnectionData, dev.kord.gateway/Gateway, dev.kord.voice.gateway/VoiceGateway, dev.kord.voice.udp/VoiceUdpSocket, dev.kord.voice.gateway/VoiceGatewayConfiguration, dev.kord.voice.streams/Streams, dev.kord.voice/AudioProvider, dev.kord.voice/FrameInterceptor, dev.kord.voice.udp/AudioFrameSender, dev.kord.voice.encryption.strategies/NonceStrategy, kotlin.time/Duration) // dev.kord.voice/VoiceConnection.<init>|<init>(kotlinx.coroutines.CoroutineScope;dev.kord.voice.VoiceConnectionData;dev.kord.gateway.Gateway;dev.kord.voice.gateway.VoiceGateway;dev.kord.voice.udp.VoiceUdpSocket;dev.kord.voice.gateway.VoiceGatewayConfiguration;dev.kord.voice.streams.Streams;dev.kord.voice.AudioProvider;dev.kord.voice.FrameInterceptor;dev.kord.voice.udp.AudioFrameSender;dev.kord.voice.encryption.strategies.NonceStrategy;kotlin.time.Duration){}[0]
-    final suspend fun connect(kotlinx.coroutines/CoroutineScope =...) // dev.kord.voice/VoiceConnection.connect|connect(kotlinx.coroutines.CoroutineScope){}[0]
-    final suspend fun disconnect() // dev.kord.voice/VoiceConnection.disconnect|disconnect(){}[0]
-    final suspend fun leave() // dev.kord.voice/VoiceConnection.leave|leave(){}[0]
-    final suspend fun move(dev.kord.common.entity/Snowflake, kotlin/Boolean =..., kotlin/Boolean =...) // dev.kord.voice/VoiceConnection.move|move(dev.kord.common.entity.Snowflake;kotlin.Boolean;kotlin.Boolean){}[0]
-    final suspend fun shutdown() // dev.kord.voice/VoiceConnection.shutdown|shutdown(){}[0]
+
     final val audioProvider // dev.kord.voice/VoiceConnection.audioProvider|{}audioProvider[0]
         final fun <get-audioProvider>(): dev.kord.voice/AudioProvider // dev.kord.voice/VoiceConnection.audioProvider.<get-audioProvider>|<get-audioProvider>(){}[0]
     final val data // dev.kord.voice/VoiceConnection.data|{}data[0]
@@ -722,16 +918,21 @@ final class dev.kord.voice/VoiceConnection { // dev.kord.voice/VoiceConnection|n
         final fun <get-streams>(): dev.kord.voice.streams/Streams // dev.kord.voice/VoiceConnection.streams.<get-streams>|<get-streams>(){}[0]
     final val voiceGateway // dev.kord.voice/VoiceConnection.voiceGateway|{}voiceGateway[0]
         final fun <get-voiceGateway>(): dev.kord.voice.gateway/VoiceGateway // dev.kord.voice/VoiceConnection.voiceGateway.<get-voiceGateway>|<get-voiceGateway>(){}[0]
+
     final var voiceGatewayConfiguration // dev.kord.voice/VoiceConnection.voiceGatewayConfiguration|{}voiceGatewayConfiguration[0]
         final fun <get-voiceGatewayConfiguration>(): dev.kord.voice.gateway/VoiceGatewayConfiguration // dev.kord.voice/VoiceConnection.voiceGatewayConfiguration.<get-voiceGatewayConfiguration>|<get-voiceGatewayConfiguration>(){}[0]
         final fun <set-voiceGatewayConfiguration>(dev.kord.voice.gateway/VoiceGatewayConfiguration) // dev.kord.voice/VoiceConnection.voiceGatewayConfiguration.<set-voiceGatewayConfiguration>|<set-voiceGatewayConfiguration>(dev.kord.voice.gateway.VoiceGatewayConfiguration){}[0]
+
+    final suspend fun connect(kotlinx.coroutines/CoroutineScope = ...) // dev.kord.voice/VoiceConnection.connect|connect(kotlinx.coroutines.CoroutineScope){}[0]
+    final suspend fun disconnect() // dev.kord.voice/VoiceConnection.disconnect|disconnect(){}[0]
+    final suspend fun leave() // dev.kord.voice/VoiceConnection.leave|leave(){}[0]
+    final suspend fun move(dev.kord.common.entity/Snowflake, kotlin/Boolean = ..., kotlin/Boolean = ...) // dev.kord.voice/VoiceConnection.move|move(dev.kord.common.entity.Snowflake;kotlin.Boolean;kotlin.Boolean){}[0]
+    final suspend fun shutdown() // dev.kord.voice/VoiceConnection.shutdown|shutdown(){}[0]
 }
+
 final class dev.kord.voice/VoiceConnectionBuilder { // dev.kord.voice/VoiceConnectionBuilder|null[0]
     constructor <init>(dev.kord.gateway/Gateway, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake) // dev.kord.voice/VoiceConnectionBuilder.<init>|<init>(dev.kord.gateway.Gateway;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake){}[0]
-    final fun audioProvider(dev.kord.voice/AudioProvider) // dev.kord.voice/VoiceConnectionBuilder.audioProvider|audioProvider(dev.kord.voice.AudioProvider){}[0]
-    final fun frameInterceptor(dev.kord.voice/FrameInterceptor) // dev.kord.voice/VoiceConnectionBuilder.frameInterceptor|frameInterceptor(dev.kord.voice.FrameInterceptor){}[0]
-    final fun voiceGateway(kotlin/Function1<dev.kord.voice.gateway/DefaultVoiceGatewayBuilder, kotlin/Unit>) // dev.kord.voice/VoiceConnectionBuilder.voiceGateway|voiceGateway(kotlin.Function1<dev.kord.voice.gateway.DefaultVoiceGatewayBuilder,kotlin.Unit>){}[0]
-    final suspend fun build(): dev.kord.voice/VoiceConnection // dev.kord.voice/VoiceConnectionBuilder.build|build(){}[0]
+
     final var audioProvider // dev.kord.voice/VoiceConnectionBuilder.audioProvider|{}audioProvider[0]
         final fun <get-audioProvider>(): dev.kord.voice/AudioProvider? // dev.kord.voice/VoiceConnectionBuilder.audioProvider.<get-audioProvider>|<get-audioProvider>(){}[0]
         final fun <set-audioProvider>(dev.kord.voice/AudioProvider?) // dev.kord.voice/VoiceConnectionBuilder.audioProvider.<set-audioProvider>|<set-audioProvider>(dev.kord.voice.AudioProvider?){}[0]
@@ -780,47 +981,241 @@ final class dev.kord.voice/VoiceConnectionBuilder { // dev.kord.voice/VoiceConne
     final var udpSocket // dev.kord.voice/VoiceConnectionBuilder.udpSocket|{}udpSocket[0]
         final fun <get-udpSocket>(): dev.kord.voice.udp/VoiceUdpSocket? // dev.kord.voice/VoiceConnectionBuilder.udpSocket.<get-udpSocket>|<get-udpSocket>(){}[0]
         final fun <set-udpSocket>(dev.kord.voice.udp/VoiceUdpSocket?) // dev.kord.voice/VoiceConnectionBuilder.udpSocket.<set-udpSocket>|<set-udpSocket>(dev.kord.voice.udp.VoiceUdpSocket?){}[0]
+
+    final fun audioProvider(dev.kord.voice/AudioProvider) // dev.kord.voice/VoiceConnectionBuilder.audioProvider|audioProvider(dev.kord.voice.AudioProvider){}[0]
+    final fun frameInterceptor(dev.kord.voice/FrameInterceptor) // dev.kord.voice/VoiceConnectionBuilder.frameInterceptor|frameInterceptor(dev.kord.voice.FrameInterceptor){}[0]
+    final fun voiceGateway(kotlin/Function1<dev.kord.voice.gateway/DefaultVoiceGatewayBuilder, kotlin/Unit>) // dev.kord.voice/VoiceConnectionBuilder.voiceGateway|voiceGateway(kotlin.Function1<dev.kord.voice.gateway.DefaultVoiceGatewayBuilder,kotlin.Unit>){}[0]
+    final suspend fun build(): dev.kord.voice/VoiceConnection // dev.kord.voice/VoiceConnectionBuilder.build|build(){}[0]
 }
+
 final class dev.kord.voice/VoiceConnectionData { // dev.kord.voice/VoiceConnectionData|null[0]
     constructor <init>(dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/String) // dev.kord.voice/VoiceConnectionData.<init>|<init>(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String){}[0]
-    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice/VoiceConnectionData.component1|component1(){}[0]
-    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.voice/VoiceConnectionData.component2|component2(){}[0]
-    final fun component3(): kotlin/String // dev.kord.voice/VoiceConnectionData.component3|component3(){}[0]
-    final fun copy(dev.kord.common.entity/Snowflake =..., dev.kord.common.entity/Snowflake =..., kotlin/String =...): dev.kord.voice/VoiceConnectionData // dev.kord.voice/VoiceConnectionData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/VoiceConnectionData.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice/VoiceConnectionData.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice/VoiceConnectionData.toString|toString(){}[0]
+
     final val guildId // dev.kord.voice/VoiceConnectionData.guildId|{}guildId[0]
         final fun <get-guildId>(): dev.kord.common.entity/Snowflake // dev.kord.voice/VoiceConnectionData.guildId.<get-guildId>|<get-guildId>(){}[0]
     final val selfId // dev.kord.voice/VoiceConnectionData.selfId|{}selfId[0]
         final fun <get-selfId>(): dev.kord.common.entity/Snowflake // dev.kord.voice/VoiceConnectionData.selfId.<get-selfId>|<get-selfId>(){}[0]
     final val sessionId // dev.kord.voice/VoiceConnectionData.sessionId|{}sessionId[0]
         final fun <get-sessionId>(): kotlin/String // dev.kord.voice/VoiceConnectionData.sessionId.<get-sessionId>|<get-sessionId>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/Snowflake // dev.kord.voice/VoiceConnectionData.component1|component1(){}[0]
+    final fun component2(): dev.kord.common.entity/Snowflake // dev.kord.voice/VoiceConnectionData.component2|component2(){}[0]
+    final fun component3(): kotlin/String // dev.kord.voice/VoiceConnectionData.component3|component3(){}[0]
+    final fun copy(dev.kord.common.entity/Snowflake = ..., dev.kord.common.entity/Snowflake = ..., kotlin/String = ...): dev.kord.voice/VoiceConnectionData // dev.kord.voice/VoiceConnectionData.copy|copy(dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.String){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/VoiceConnectionData.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice/VoiceConnectionData.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice/VoiceConnectionData.toString|toString(){}[0]
 }
-final enum class dev.kord.voice.gateway/OpCode : kotlin/Enum<dev.kord.voice.gateway/OpCode> { // dev.kord.voice.gateway/OpCode|null[0]
-    enum entry ClientDisconnect // dev.kord.voice.gateway/OpCode.ClientDisconnect|null[0]
-    enum entry Heartbeat // dev.kord.voice.gateway/OpCode.Heartbeat|null[0]
-    enum entry HeartbeatAck // dev.kord.voice.gateway/OpCode.HeartbeatAck|null[0]
-    enum entry Hello // dev.kord.voice.gateway/OpCode.Hello|null[0]
-    enum entry Identify // dev.kord.voice.gateway/OpCode.Identify|null[0]
-    enum entry Ready // dev.kord.voice.gateway/OpCode.Ready|null[0]
-    enum entry Resume // dev.kord.voice.gateway/OpCode.Resume|null[0]
-    enum entry Resumed // dev.kord.voice.gateway/OpCode.Resumed|null[0]
-    enum entry SelectProtocol // dev.kord.voice.gateway/OpCode.SelectProtocol|null[0]
-    enum entry SessionDescription // dev.kord.voice.gateway/OpCode.SessionDescription|null[0]
-    enum entry Speaking // dev.kord.voice.gateway/OpCode.Speaking|null[0]
-    enum entry Unknown // dev.kord.voice.gateway/OpCode.Unknown|null[0]
-    final fun valueOf(kotlin/String): dev.kord.voice.gateway/OpCode // dev.kord.voice.gateway/OpCode.valueOf|valueOf#static(kotlin.String){}[0]
-    final fun values(): kotlin/Array<dev.kord.voice.gateway/OpCode> // dev.kord.voice.gateway/OpCode.values|values#static(){}[0]
-    final object Companion : kotlinx.serialization.internal/SerializerFactory { // dev.kord.voice.gateway/OpCode.Companion|null[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/OpCode> // dev.kord.voice.gateway/OpCode.Companion.serializer|serializer(){}[0]
-        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // dev.kord.voice.gateway/OpCode.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+
+final value class dev.kord.voice/AudioFrame { // dev.kord.voice/AudioFrame|null[0]
+    constructor <init>(kotlin/ByteArray) // dev.kord.voice/AudioFrame.<init>|<init>(kotlin.ByteArray){}[0]
+
+    final val data // dev.kord.voice/AudioFrame.data|{}data[0]
+        final fun <get-data>(): kotlin/ByteArray // dev.kord.voice/AudioFrame.data.<get-data>|<get-data>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/AudioFrame.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice/AudioFrame.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice/AudioFrame.toString|toString(){}[0]
+
+    final object Companion { // dev.kord.voice/AudioFrame.Companion|null[0]
+        final val SILENCE // dev.kord.voice/AudioFrame.Companion.SILENCE|{}SILENCE[0]
+            final fun <get-SILENCE>(): dev.kord.voice/AudioFrame // dev.kord.voice/AudioFrame.Companion.SILENCE.<get-SILENCE>|<get-SILENCE>(){}[0]
+
+        final fun fromData(kotlin/ByteArray?): dev.kord.voice/AudioFrame? // dev.kord.voice/AudioFrame.Companion.fromData|fromData(kotlin.ByteArray?){}[0]
     }
-    final val code // dev.kord.voice.gateway/OpCode.code|{}code[0]
-        final fun <get-code>(): kotlin/Int // dev.kord.voice.gateway/OpCode.code.<get-code>|<get-code>(){}[0]
-    final val entries // dev.kord.voice.gateway/OpCode.entries|<get-entries>#static(){}[0]
-        final fun <get-entries>(): kotlin.enums/EnumEntries<dev.kord.voice.gateway/OpCode> // dev.kord.voice.gateway/OpCode.entries.<get-entries>|<get-entries>#static(){}[0]
 }
+
+sealed class dev.kord.voice.gateway/Close : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Close|null[0]
+    constructor <init>() // dev.kord.voice.gateway/Close.<init>|<init>(){}[0]
+
+    final class DiscordClose : dev.kord.voice.gateway/Close { // dev.kord.voice.gateway/Close.DiscordClose|null[0]
+        constructor <init>(dev.kord.voice.gateway/VoiceGatewayCloseCode, kotlin/Boolean) // dev.kord.voice.gateway/Close.DiscordClose.<init>|<init>(dev.kord.voice.gateway.VoiceGatewayCloseCode;kotlin.Boolean){}[0]
+
+        final val closeCode // dev.kord.voice.gateway/Close.DiscordClose.closeCode|{}closeCode[0]
+            final fun <get-closeCode>(): dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/Close.DiscordClose.closeCode.<get-closeCode>|<get-closeCode>(){}[0]
+        final val recoverable // dev.kord.voice.gateway/Close.DiscordClose.recoverable|{}recoverable[0]
+            final fun <get-recoverable>(): kotlin/Boolean // dev.kord.voice.gateway/Close.DiscordClose.recoverable.<get-recoverable>|<get-recoverable>(){}[0]
+
+        final fun component1(): dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/Close.DiscordClose.component1|component1(){}[0]
+        final fun component2(): kotlin/Boolean // dev.kord.voice.gateway/Close.DiscordClose.component2|component2(){}[0]
+        final fun copy(dev.kord.voice.gateway/VoiceGatewayCloseCode = ..., kotlin/Boolean = ...): dev.kord.voice.gateway/Close.DiscordClose // dev.kord.voice.gateway/Close.DiscordClose.copy|copy(dev.kord.voice.gateway.VoiceGatewayCloseCode;kotlin.Boolean){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Close.DiscordClose.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Close.DiscordClose.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // dev.kord.voice.gateway/Close.DiscordClose.toString|toString(){}[0]
+    }
+
+    final object Reconnecting : dev.kord.voice.gateway/Close // dev.kord.voice.gateway/Close.Reconnecting|null[0]
+
+    final object RetryLimitReached : dev.kord.voice.gateway/Close // dev.kord.voice.gateway/Close.RetryLimitReached|null[0]
+
+    final object Timeout : dev.kord.voice.gateway/Close // dev.kord.voice.gateway/Close.Timeout|null[0]
+
+    final object UserClose : dev.kord.voice.gateway/Close // dev.kord.voice.gateway/Close.UserClose|null[0]
+}
+
+sealed class dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/Command|null[0]
+    constructor <init>() // dev.kord.voice.gateway/Command.<init>|<init>(){}[0]
+
+    final object SerializationStrategy : kotlinx.serialization/SerializationStrategy<dev.kord.voice.gateway/Command> { // dev.kord.voice.gateway/Command.SerializationStrategy|null[0]
+        final val descriptor // dev.kord.voice.gateway/Command.SerializationStrategy.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Command.SerializationStrategy.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Command) // dev.kord.voice.gateway/Command.SerializationStrategy.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Command){}[0]
+    }
+}
+
+sealed class dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/VoiceEvent|null[0]
+    constructor <init>() // dev.kord.voice.gateway/VoiceEvent.<init>|<init>(){}[0]
+
+    final object DeserializationStrategy : kotlinx.serialization/DeserializationStrategy<dev.kord.voice.gateway/VoiceEvent?> { // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy|null[0]
+        final val descriptor // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/VoiceEvent? // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+    }
+}
+
+sealed class dev.kord.voice.gateway/VoiceGatewayCloseCode { // dev.kord.voice.gateway/VoiceGatewayCloseCode|null[0]
+    constructor <init>(kotlin/Int) // dev.kord.voice.gateway/VoiceGatewayCloseCode.<init>|<init>(kotlin.Int){}[0]
+
+    final val code // dev.kord.voice.gateway/VoiceGatewayCloseCode.code|{}code[0]
+        final fun <get-code>(): kotlin/Int // dev.kord.voice.gateway/VoiceGatewayCloseCode.code.<get-code>|<get-code>(){}[0]
+
+    final class Unknown : dev.kord.voice.gateway/VoiceGatewayCloseCode { // dev.kord.voice.gateway/VoiceGatewayCloseCode.Unknown|null[0]
+        constructor <init>(kotlin/Int) // dev.kord.voice.gateway/VoiceGatewayCloseCode.Unknown.<init>|<init>(kotlin.Int){}[0]
+    }
+
+    final object AlreadyAuthenticated : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.AlreadyAuthenticated|null[0]
+
+    final object AuthenticationFailed : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.AuthenticationFailed|null[0]
+
+    final object Companion { // dev.kord.voice.gateway/VoiceGatewayCloseCode.Companion|null[0]
+        final fun of(kotlin/Int): dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.Companion.of|of(kotlin.Int){}[0]
+    }
+
+    final object Disconnect : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.Disconnect|null[0]
+
+    final object FailedToDecodePayload : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.FailedToDecodePayload|null[0]
+
+    final object NotAuthenticated : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.NotAuthenticated|null[0]
+
+    final object ServerNotFound : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.ServerNotFound|null[0]
+
+    final object SessionNoLongerValid : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.SessionNoLongerValid|null[0]
+
+    final object SessionTimeout : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.SessionTimeout|null[0]
+
+    final object UnknownEncryptionMode : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.UnknownEncryptionMode|null[0]
+
+    final object UnknownOpcode : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.UnknownOpcode|null[0]
+
+    final object UnknownProtocol : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.UnknownProtocol|null[0]
+
+    final object VoiceServerCrashed : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.VoiceServerCrashed|null[0]
+}
+
+sealed class dev.kord.voice.udp/PayloadType { // dev.kord.voice.udp/PayloadType|null[0]
+    constructor <init>(kotlin/Byte) // dev.kord.voice.udp/PayloadType.<init>|<init>(kotlin.Byte){}[0]
+
+    final val raw // dev.kord.voice.udp/PayloadType.raw|{}raw[0]
+        final fun <get-raw>(): kotlin/Byte // dev.kord.voice.udp/PayloadType.raw.<get-raw>|<get-raw>(){}[0]
+
+    final class Unknown : dev.kord.voice.udp/PayloadType { // dev.kord.voice.udp/PayloadType.Unknown|null[0]
+        constructor <init>(kotlin/Byte) // dev.kord.voice.udp/PayloadType.Unknown.<init>|<init>(kotlin.Byte){}[0]
+
+        final fun toString(): kotlin/String // dev.kord.voice.udp/PayloadType.Unknown.toString|toString(){}[0]
+    }
+
+    final object Alive : dev.kord.voice.udp/PayloadType // dev.kord.voice.udp/PayloadType.Alive|null[0]
+
+    final object Audio : dev.kord.voice.udp/PayloadType // dev.kord.voice.udp/PayloadType.Audio|null[0]
+
+    final object Companion { // dev.kord.voice.udp/PayloadType.Companion|null[0]
+        final fun from(kotlin/Byte): dev.kord.voice.udp/PayloadType // dev.kord.voice.udp/PayloadType.Companion.from|from(kotlin.Byte){}[0]
+    }
+}
+
+sealed class dev.kord.voice/EncryptionMode { // dev.kord.voice/EncryptionMode|null[0]
+    constructor <init>(kotlin/String) // dev.kord.voice/EncryptionMode.<init>|<init>(kotlin.String){}[0]
+
+    final val value // dev.kord.voice/EncryptionMode.value|{}value[0]
+        final fun <get-value>(): kotlin/String // dev.kord.voice/EncryptionMode.value.<get-value>|<get-value>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/EncryptionMode.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice/EncryptionMode.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice/EncryptionMode.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.Unknown|null[0]
+
+    final object Companion { // dev.kord.voice/EncryptionMode.Companion|null[0]
+        final val entries // dev.kord.voice/EncryptionMode.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.voice/EncryptionMode> // dev.kord.voice/EncryptionMode.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun from(kotlin/String): dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.Companion.from|from(kotlin.String){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice/EncryptionMode> // dev.kord.voice/EncryptionMode.Companion.serializer|serializer(){}[0]
+    }
+
+    final object XSalsa20Poly1305 : dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.XSalsa20Poly1305|null[0]
+
+    final object XSalsa20Poly1305Lite : dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.XSalsa20Poly1305Lite|null[0]
+
+    final object XSalsa20Poly1305Suffix : dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.XSalsa20Poly1305Suffix|null[0]
+}
+
+sealed class dev.kord.voice/SpeakingFlag { // dev.kord.voice/SpeakingFlag|null[0]
+    constructor <init>(kotlin/Int) // dev.kord.voice/SpeakingFlag.<init>|<init>(kotlin.Int){}[0]
+
+    final val code // dev.kord.voice/SpeakingFlag.code|{}code[0]
+        final fun <get-code>(): kotlin/Int // dev.kord.voice/SpeakingFlag.code.<get-code>|<get-code>(){}[0]
+    final val shift // dev.kord.voice/SpeakingFlag.shift|{}shift[0]
+        final fun <get-shift>(): kotlin/Int // dev.kord.voice/SpeakingFlag.shift.<get-shift>|<get-shift>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/SpeakingFlag.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice/SpeakingFlag.hashCode|hashCode(){}[0]
+    final fun plus(dev.kord.voice/SpeakingFlag): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlag.plus|plus(dev.kord.voice.SpeakingFlag){}[0]
+    final fun plus(dev.kord.voice/SpeakingFlags): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlag.plus|plus(dev.kord.voice.SpeakingFlags){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice/SpeakingFlag.toString|toString(){}[0]
+
+    final class Unknown : dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Unknown|null[0]
+
+    final object Companion { // dev.kord.voice/SpeakingFlag.Companion|null[0]
+        final val entries // dev.kord.voice/SpeakingFlag.Companion.entries|{}entries[0]
+            final fun <get-entries>(): kotlin.collections/List<dev.kord.voice/SpeakingFlag> // dev.kord.voice/SpeakingFlag.Companion.entries.<get-entries>|<get-entries>(){}[0]
+
+        final fun fromShift(kotlin/Int): dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Companion.fromShift|fromShift(kotlin.Int){}[0]
+    }
+
+    final object Microphone : dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Microphone|null[0]
+
+    final object Priority : dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Priority|null[0]
+
+    final object Soundshare : dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Soundshare|null[0]
+}
+
+final object dev.kord.voice.gateway/Resumed : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Resumed|null[0]
+    final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Resumed> // dev.kord.voice.gateway/Resumed.serializer|serializer(){}[0]
+}
+
+final object dev.kord.voice.streams/NOPStreams : dev.kord.voice.streams/Streams { // dev.kord.voice.streams/NOPStreams|null[0]
+    final val incomingAudioFrames // dev.kord.voice.streams/NOPStreams.incomingAudioFrames|{}incomingAudioFrames[0]
+        final fun <get-incomingAudioFrames>(): kotlinx.coroutines.flow/Flow<kotlin/Pair<kotlin/UInt, dev.kord.voice/AudioFrame>> // dev.kord.voice.streams/NOPStreams.incomingAudioFrames.<get-incomingAudioFrames>|<get-incomingAudioFrames>(){}[0]
+    final val incomingAudioPackets // dev.kord.voice.streams/NOPStreams.incomingAudioPackets|{}incomingAudioPackets[0]
+        final fun <get-incomingAudioPackets>(): kotlinx.coroutines.flow/Flow<dev.kord.voice.udp/RTPPacket> // dev.kord.voice.streams/NOPStreams.incomingAudioPackets.<get-incomingAudioPackets>|<get-incomingAudioPackets>(){}[0]
+    final val incomingUserStreams // dev.kord.voice.streams/NOPStreams.incomingUserStreams|{}incomingUserStreams[0]
+        final fun <get-incomingUserStreams>(): kotlinx.coroutines.flow/Flow<kotlin/Pair<dev.kord.common.entity/Snowflake, dev.kord.voice/AudioFrame>> // dev.kord.voice.streams/NOPStreams.incomingUserStreams.<get-incomingUserStreams>|<get-incomingUserStreams>(){}[0]
+    final val ssrcToUser // dev.kord.voice.streams/NOPStreams.ssrcToUser|{}ssrcToUser[0]
+        final fun <get-ssrcToUser>(): kotlin.collections/Map<kotlin/UInt, dev.kord.common.entity/Snowflake> // dev.kord.voice.streams/NOPStreams.ssrcToUser.<get-ssrcToUser>|<get-ssrcToUser>(){}[0]
+
+    // Targets: [apple, linux]
+    final suspend fun listen(kotlin/ByteArray, io.ktor.network.sockets/InetSocketAddress) // dev.kord.voice.streams/NOPStreams.listen|listen(kotlin.ByteArray;io.ktor.network.sockets.InetSocketAddress){}[0]
+
+    // Targets: [js, mingwX64]
+    final suspend fun listen(kotlin/ByteArray, dev.kord.voice.udp/SocketAddress) // dev.kord.voice.streams/NOPStreams.listen|listen(kotlin.ByteArray;dev.kord.voice.udp.SocketAddress){}[0]
+}
+
+final val dev.kord.voice.udp/GlobalVoiceUdpSocket // dev.kord.voice.udp/GlobalVoiceUdpSocket|{}GlobalVoiceUdpSocket[0]
+    final fun <get-GlobalVoiceUdpSocket>(): dev.kord.voice.udp/VoiceUdpSocket // dev.kord.voice.udp/GlobalVoiceUdpSocket.<get-GlobalVoiceUdpSocket>|<get-GlobalVoiceUdpSocket>(){}[0]
+
 final fun (dev.kord.voice.io/ByteArrayView).dev.kord.voice.io/mutableCursor(): dev.kord.voice.io/MutableByteArrayCursor // dev.kord.voice.io/mutableCursor|mutableCursor@dev.kord.voice.io.ByteArrayView(){}[0]
 final fun (dev.kord.voice.io/ByteArrayView).dev.kord.voice.io/readableCursor(): dev.kord.voice.io/ReadableByteArrayCursor // dev.kord.voice.io/readableCursor|readableCursor@dev.kord.voice.io.ByteArrayView(){}[0]
 final fun (dev.kord.voice.io/MutableByteArrayCursor).dev.kord.voice.io/writeByteArrayOrResize(kotlin/ByteArray) // dev.kord.voice.io/writeByteArrayOrResize|writeByteArrayOrResize@dev.kord.voice.io.MutableByteArrayCursor(kotlin.ByteArray){}[0]
@@ -831,184 +1226,40 @@ final fun (kotlin/ByteArray).dev.kord.voice.io/view(): dev.kord.voice.io/ByteArr
 final fun (kotlin/ByteArray).dev.kord.voice.io/view(kotlin/Int, kotlin/Int): dev.kord.voice.io/ByteArrayView? // dev.kord.voice.io/view|view@kotlin.ByteArray(kotlin.Int;kotlin.Int){}[0]
 final fun dev.kord.voice.gateway/logCaughtThrowable(kotlin/Throwable) // dev.kord.voice.gateway/logCaughtThrowable|logCaughtThrowable(kotlin.Throwable){}[0]
 final fun dev.kord.voice.udp/DefaultAudioPacketProvider(kotlin/ByteArray, dev.kord.voice.encryption.strategies/NonceStrategy): dev.kord.voice.udp/AudioPacketProvider // dev.kord.voice.udp/DefaultAudioPacketProvider|DefaultAudioPacketProvider(kotlin.ByteArray;dev.kord.voice.encryption.strategies.NonceStrategy){}[0]
-final fun dev.kord.voice.udp/RTPPacket(kotlin/UInt, kotlin/UInt, kotlin/UShort, kotlin/Byte, kotlin/ByteArray, kotlin/Function1<dev.kord.voice.udp/RTPPacket.Builder, kotlin/Unit> =...): dev.kord.voice.udp/RTPPacket // dev.kord.voice.udp/RTPPacket|RTPPacket(kotlin.UInt;kotlin.UInt;kotlin.UShort;kotlin.Byte;kotlin.ByteArray;kotlin.Function1<dev.kord.voice.udp.RTPPacket.Builder,kotlin.Unit>){}[0]
+final fun dev.kord.voice.udp/RTPPacket(kotlin/UInt, kotlin/UInt, kotlin/UShort, kotlin/Byte, kotlin/ByteArray, kotlin/Function1<dev.kord.voice.udp/RTPPacket.Builder, kotlin/Unit> = ...): dev.kord.voice.udp/RTPPacket // dev.kord.voice.udp/RTPPacket|RTPPacket(kotlin.UInt;kotlin.UInt;kotlin.UShort;kotlin.Byte;kotlin.ByteArray;kotlin.Function1<dev.kord.voice.udp.RTPPacket.Builder,kotlin.Unit>){}[0]
 final fun dev.kord.voice/SpeakingFlags(kotlin.collections/Iterable<dev.kord.voice/SpeakingFlag>): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags|SpeakingFlags(kotlin.collections.Iterable<dev.kord.voice.SpeakingFlag>){}[0]
 final fun dev.kord.voice/SpeakingFlags(kotlin.collections/Iterable<dev.kord.voice/SpeakingFlags>): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags|SpeakingFlags(kotlin.collections.Iterable<dev.kord.voice.SpeakingFlags>){}[0]
 final fun dev.kord.voice/SpeakingFlags(kotlin/Array<out dev.kord.voice/SpeakingFlag>...): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags|SpeakingFlags(kotlin.Array<out|dev.kord.voice.SpeakingFlag>...){}[0]
 final fun dev.kord.voice/SpeakingFlags(kotlin/Array<out dev.kord.voice/SpeakingFlags>...): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags|SpeakingFlags(kotlin.Array<out|dev.kord.voice.SpeakingFlags>...){}[0]
-final inline fun <#A: reified dev.kord.voice.gateway/VoiceEvent> (dev.kord.voice.gateway/VoiceGateway).dev.kord.voice.gateway/on(kotlinx.coroutines/CoroutineScope =..., crossinline kotlin.coroutines/SuspendFunction1<#A, kotlin/Unit>): kotlinx.coroutines/Job // dev.kord.voice.gateway/on|on@dev.kord.voice.gateway.VoiceGateway(kotlinx.coroutines.CoroutineScope;kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<dev.kord.voice.gateway.VoiceEvent>}[0]
-final inline fun dev.kord.voice/SpeakingFlags(kotlin/Function1<dev.kord.voice/SpeakingFlags.Builder, kotlin/Unit> =...): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags|SpeakingFlags(kotlin.Function1<dev.kord.voice.SpeakingFlags.Builder,kotlin.Unit>){}[0]
-final object dev.kord.voice.gateway/Resumed : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Resumed|null[0]
-    final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice.gateway/Resumed> // dev.kord.voice.gateway/Resumed.serializer|serializer(){}[0]
-}
-final object dev.kord.voice.streams/NOPStreams : dev.kord.voice.streams/Streams { // dev.kord.voice.streams/NOPStreams|null[0]
-    final val incomingAudioFrames // dev.kord.voice.streams/NOPStreams.incomingAudioFrames|{}incomingAudioFrames[0]
-        final fun <get-incomingAudioFrames>(): kotlinx.coroutines.flow/Flow<kotlin/Pair<kotlin/UInt, dev.kord.voice/AudioFrame>> // dev.kord.voice.streams/NOPStreams.incomingAudioFrames.<get-incomingAudioFrames>|<get-incomingAudioFrames>(){}[0]
-    final val incomingAudioPackets // dev.kord.voice.streams/NOPStreams.incomingAudioPackets|{}incomingAudioPackets[0]
-        final fun <get-incomingAudioPackets>(): kotlinx.coroutines.flow/Flow<dev.kord.voice.udp/RTPPacket> // dev.kord.voice.streams/NOPStreams.incomingAudioPackets.<get-incomingAudioPackets>|<get-incomingAudioPackets>(){}[0]
-    final val incomingUserStreams // dev.kord.voice.streams/NOPStreams.incomingUserStreams|{}incomingUserStreams[0]
-        final fun <get-incomingUserStreams>(): kotlinx.coroutines.flow/Flow<kotlin/Pair<dev.kord.common.entity/Snowflake, dev.kord.voice/AudioFrame>> // dev.kord.voice.streams/NOPStreams.incomingUserStreams.<get-incomingUserStreams>|<get-incomingUserStreams>(){}[0]
-    final val ssrcToUser // dev.kord.voice.streams/NOPStreams.ssrcToUser|{}ssrcToUser[0]
-        final fun <get-ssrcToUser>(): kotlin.collections/Map<kotlin/UInt, dev.kord.common.entity/Snowflake> // dev.kord.voice.streams/NOPStreams.ssrcToUser.<get-ssrcToUser>|<get-ssrcToUser>(){}[0]
-    // Targets: [apple, linux]
-    final suspend fun listen(kotlin/ByteArray, io.ktor.network.sockets/InetSocketAddress) // dev.kord.voice.streams/NOPStreams.listen|listen(kotlin.ByteArray;io.ktor.network.sockets.InetSocketAddress){}[0]
-    // Targets: [js, mingwX64]
-    final suspend fun listen(kotlin/ByteArray, dev.kord.voice.udp/SocketAddress) // dev.kord.voice.streams/NOPStreams.listen|listen(kotlin.ByteArray;dev.kord.voice.udp.SocketAddress){}[0]
-}
-final suspend inline fun dev.kord.voice/VoiceConnection(dev.kord.gateway/Gateway, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.voice/VoiceConnectionBuilder, kotlin/Unit> =...): dev.kord.voice/VoiceConnection // dev.kord.voice/VoiceConnection|VoiceConnection(dev.kord.gateway.Gateway;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.voice.VoiceConnectionBuilder,kotlin.Unit>){}[0]
-final val dev.kord.voice.udp/GlobalVoiceUdpSocket // dev.kord.voice.udp/GlobalVoiceUdpSocket|{}GlobalVoiceUdpSocket[0]
-    final fun <get-GlobalVoiceUdpSocket>(): dev.kord.voice.udp/VoiceUdpSocket // dev.kord.voice.udp/GlobalVoiceUdpSocket.<get-GlobalVoiceUdpSocket>|<get-GlobalVoiceUdpSocket>(){}[0]
-final value class dev.kord.voice/AudioFrame { // dev.kord.voice/AudioFrame|null[0]
-    constructor <init>(kotlin/ByteArray) // dev.kord.voice/AudioFrame.<init>|<init>(kotlin.ByteArray){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/AudioFrame.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice/AudioFrame.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice/AudioFrame.toString|toString(){}[0]
-    final object Companion { // dev.kord.voice/AudioFrame.Companion|null[0]
-        final fun fromData(kotlin/ByteArray?): dev.kord.voice/AudioFrame? // dev.kord.voice/AudioFrame.Companion.fromData|fromData(kotlin.ByteArray?){}[0]
-        final val SILENCE // dev.kord.voice/AudioFrame.Companion.SILENCE|{}SILENCE[0]
-            final fun <get-SILENCE>(): dev.kord.voice/AudioFrame // dev.kord.voice/AudioFrame.Companion.SILENCE.<get-SILENCE>|<get-SILENCE>(){}[0]
-    }
-    final val data // dev.kord.voice/AudioFrame.data|{}data[0]
-        final fun <get-data>(): kotlin/ByteArray // dev.kord.voice/AudioFrame.data.<get-data>|<get-data>(){}[0]
-}
-sealed class dev.kord.voice.gateway/Close : dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/Close|null[0]
-    constructor <init>() // dev.kord.voice.gateway/Close.<init>|<init>(){}[0]
-    final class DiscordClose : dev.kord.voice.gateway/Close { // dev.kord.voice.gateway/Close.DiscordClose|null[0]
-        constructor <init>(dev.kord.voice.gateway/VoiceGatewayCloseCode, kotlin/Boolean) // dev.kord.voice.gateway/Close.DiscordClose.<init>|<init>(dev.kord.voice.gateway.VoiceGatewayCloseCode;kotlin.Boolean){}[0]
-        final fun component1(): dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/Close.DiscordClose.component1|component1(){}[0]
-        final fun component2(): kotlin/Boolean // dev.kord.voice.gateway/Close.DiscordClose.component2|component2(){}[0]
-        final fun copy(dev.kord.voice.gateway/VoiceGatewayCloseCode =..., kotlin/Boolean =...): dev.kord.voice.gateway/Close.DiscordClose // dev.kord.voice.gateway/Close.DiscordClose.copy|copy(dev.kord.voice.gateway.VoiceGatewayCloseCode;kotlin.Boolean){}[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.gateway/Close.DiscordClose.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // dev.kord.voice.gateway/Close.DiscordClose.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // dev.kord.voice.gateway/Close.DiscordClose.toString|toString(){}[0]
-        final val closeCode // dev.kord.voice.gateway/Close.DiscordClose.closeCode|{}closeCode[0]
-            final fun <get-closeCode>(): dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/Close.DiscordClose.closeCode.<get-closeCode>|<get-closeCode>(){}[0]
-        final val recoverable // dev.kord.voice.gateway/Close.DiscordClose.recoverable|{}recoverable[0]
-            final fun <get-recoverable>(): kotlin/Boolean // dev.kord.voice.gateway/Close.DiscordClose.recoverable.<get-recoverable>|<get-recoverable>(){}[0]
-    }
-    final object Reconnecting : dev.kord.voice.gateway/Close // dev.kord.voice.gateway/Close.Reconnecting|null[0]
-    final object RetryLimitReached : dev.kord.voice.gateway/Close // dev.kord.voice.gateway/Close.RetryLimitReached|null[0]
-    final object Timeout : dev.kord.voice.gateway/Close // dev.kord.voice.gateway/Close.Timeout|null[0]
-    final object UserClose : dev.kord.voice.gateway/Close // dev.kord.voice.gateway/Close.UserClose|null[0]
-}
-sealed class dev.kord.voice.gateway/Command { // dev.kord.voice.gateway/Command|null[0]
-    constructor <init>() // dev.kord.voice.gateway/Command.<init>|<init>(){}[0]
-    final object SerializationStrategy : kotlinx.serialization/SerializationStrategy<dev.kord.voice.gateway/Command> { // dev.kord.voice.gateway/Command.SerializationStrategy|null[0]
-        final fun serialize(kotlinx.serialization.encoding/Encoder, dev.kord.voice.gateway/Command) // dev.kord.voice.gateway/Command.SerializationStrategy.serialize|serialize(kotlinx.serialization.encoding.Encoder;dev.kord.voice.gateway.Command){}[0]
-        final val descriptor // dev.kord.voice.gateway/Command.SerializationStrategy.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/Command.SerializationStrategy.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-}
-sealed class dev.kord.voice.gateway/VoiceEvent { // dev.kord.voice.gateway/VoiceEvent|null[0]
-    constructor <init>() // dev.kord.voice.gateway/VoiceEvent.<init>|<init>(){}[0]
-    final object DeserializationStrategy : kotlinx.serialization/DeserializationStrategy<dev.kord.voice.gateway/VoiceEvent?> { // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy|null[0]
-        final fun deserialize(kotlinx.serialization.encoding/Decoder): dev.kord.voice.gateway/VoiceEvent? // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
-        final val descriptor // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy.descriptor|{}descriptor[0]
-            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // dev.kord.voice.gateway/VoiceEvent.DeserializationStrategy.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
-    }
-}
-sealed class dev.kord.voice.gateway/VoiceGatewayCloseCode { // dev.kord.voice.gateway/VoiceGatewayCloseCode|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.voice.gateway/VoiceGatewayCloseCode.<init>|<init>(kotlin.Int){}[0]
-    final class Unknown : dev.kord.voice.gateway/VoiceGatewayCloseCode { // dev.kord.voice.gateway/VoiceGatewayCloseCode.Unknown|null[0]
-        constructor <init>(kotlin/Int) // dev.kord.voice.gateway/VoiceGatewayCloseCode.Unknown.<init>|<init>(kotlin.Int){}[0]
-    }
-    final object AlreadyAuthenticated : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.AlreadyAuthenticated|null[0]
-    final object AuthenticationFailed : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.AuthenticationFailed|null[0]
-    final object Companion { // dev.kord.voice.gateway/VoiceGatewayCloseCode.Companion|null[0]
-        final fun of(kotlin/Int): dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.Companion.of|of(kotlin.Int){}[0]
-    }
-    final object Disconnect : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.Disconnect|null[0]
-    final object FailedToDecodePayload : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.FailedToDecodePayload|null[0]
-    final object NotAuthenticated : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.NotAuthenticated|null[0]
-    final object ServerNotFound : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.ServerNotFound|null[0]
-    final object SessionNoLongerValid : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.SessionNoLongerValid|null[0]
-    final object SessionTimeout : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.SessionTimeout|null[0]
-    final object UnknownEncryptionMode : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.UnknownEncryptionMode|null[0]
-    final object UnknownOpcode : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.UnknownOpcode|null[0]
-    final object UnknownProtocol : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.UnknownProtocol|null[0]
-    final object VoiceServerCrashed : dev.kord.voice.gateway/VoiceGatewayCloseCode // dev.kord.voice.gateway/VoiceGatewayCloseCode.VoiceServerCrashed|null[0]
-    final val code // dev.kord.voice.gateway/VoiceGatewayCloseCode.code|{}code[0]
-        final fun <get-code>(): kotlin/Int // dev.kord.voice.gateway/VoiceGatewayCloseCode.code.<get-code>|<get-code>(){}[0]
-}
-sealed class dev.kord.voice.udp/PayloadType { // dev.kord.voice.udp/PayloadType|null[0]
-    constructor <init>(kotlin/Byte) // dev.kord.voice.udp/PayloadType.<init>|<init>(kotlin.Byte){}[0]
-    final class Unknown : dev.kord.voice.udp/PayloadType { // dev.kord.voice.udp/PayloadType.Unknown|null[0]
-        constructor <init>(kotlin/Byte) // dev.kord.voice.udp/PayloadType.Unknown.<init>|<init>(kotlin.Byte){}[0]
-        final fun toString(): kotlin/String // dev.kord.voice.udp/PayloadType.Unknown.toString|toString(){}[0]
-    }
-    final object Alive : dev.kord.voice.udp/PayloadType // dev.kord.voice.udp/PayloadType.Alive|null[0]
-    final object Audio : dev.kord.voice.udp/PayloadType // dev.kord.voice.udp/PayloadType.Audio|null[0]
-    final object Companion { // dev.kord.voice.udp/PayloadType.Companion|null[0]
-        final fun from(kotlin/Byte): dev.kord.voice.udp/PayloadType // dev.kord.voice.udp/PayloadType.Companion.from|from(kotlin.Byte){}[0]
-    }
-    final val raw // dev.kord.voice.udp/PayloadType.raw|{}raw[0]
-        final fun <get-raw>(): kotlin/Byte // dev.kord.voice.udp/PayloadType.raw.<get-raw>|<get-raw>(){}[0]
-}
-sealed class dev.kord.voice/EncryptionMode { // dev.kord.voice/EncryptionMode|null[0]
-    constructor <init>(kotlin/String) // dev.kord.voice/EncryptionMode.<init>|<init>(kotlin.String){}[0]
-    final class Unknown : dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.Unknown|null[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/EncryptionMode.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice/EncryptionMode.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice/EncryptionMode.toString|toString(){}[0]
-    final object Companion { // dev.kord.voice/EncryptionMode.Companion|null[0]
-        final fun from(kotlin/String): dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.Companion.from|from(kotlin.String){}[0]
-        final fun serializer(): kotlinx.serialization/KSerializer<dev.kord.voice/EncryptionMode> // dev.kord.voice/EncryptionMode.Companion.serializer|serializer(){}[0]
-        final val entries // dev.kord.voice/EncryptionMode.Companion.entries|{}entries[0]
-            final fun <get-entries>(): kotlin.collections/List<dev.kord.voice/EncryptionMode> // dev.kord.voice/EncryptionMode.Companion.entries.<get-entries>|<get-entries>(){}[0]
-    }
-    final object XSalsa20Poly1305 : dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.XSalsa20Poly1305|null[0]
-    final object XSalsa20Poly1305Lite : dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.XSalsa20Poly1305Lite|null[0]
-    final object XSalsa20Poly1305Suffix : dev.kord.voice/EncryptionMode // dev.kord.voice/EncryptionMode.XSalsa20Poly1305Suffix|null[0]
-    final val value // dev.kord.voice/EncryptionMode.value|{}value[0]
-        final fun <get-value>(): kotlin/String // dev.kord.voice/EncryptionMode.value.<get-value>|<get-value>(){}[0]
-}
-sealed class dev.kord.voice/SpeakingFlag { // dev.kord.voice/SpeakingFlag|null[0]
-    constructor <init>(kotlin/Int) // dev.kord.voice/SpeakingFlag.<init>|<init>(kotlin.Int){}[0]
-    final class Unknown : dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Unknown|null[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice/SpeakingFlag.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice/SpeakingFlag.hashCode|hashCode(){}[0]
-    final fun plus(dev.kord.voice/SpeakingFlag): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlag.plus|plus(dev.kord.voice.SpeakingFlag){}[0]
-    final fun plus(dev.kord.voice/SpeakingFlags): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlag.plus|plus(dev.kord.voice.SpeakingFlags){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice/SpeakingFlag.toString|toString(){}[0]
-    final object Companion { // dev.kord.voice/SpeakingFlag.Companion|null[0]
-        final fun fromShift(kotlin/Int): dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Companion.fromShift|fromShift(kotlin.Int){}[0]
-        final val entries // dev.kord.voice/SpeakingFlag.Companion.entries|{}entries[0]
-            final fun <get-entries>(): kotlin.collections/List<dev.kord.voice/SpeakingFlag> // dev.kord.voice/SpeakingFlag.Companion.entries.<get-entries>|<get-entries>(){}[0]
-    }
-    final object Microphone : dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Microphone|null[0]
-    final object Priority : dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Priority|null[0]
-    final object Soundshare : dev.kord.voice/SpeakingFlag // dev.kord.voice/SpeakingFlag.Soundshare|null[0]
-    final val code // dev.kord.voice/SpeakingFlag.code|{}code[0]
-        final fun <get-code>(): kotlin/Int // dev.kord.voice/SpeakingFlag.code.<get-code>|<get-code>(){}[0]
-    final val shift // dev.kord.voice/SpeakingFlag.shift|{}shift[0]
-        final fun <get-shift>(): kotlin/Int // dev.kord.voice/SpeakingFlag.shift.<get-shift>|<get-shift>(){}[0]
-}
-sealed interface dev.kord.voice.encryption.strategies/NonceStrategy { // dev.kord.voice.encryption.strategies/NonceStrategy|null[0]
-    abstract fun append(dev.kord.voice.io/ByteArrayView, dev.kord.voice.io/MutableByteArrayCursor) // dev.kord.voice.encryption.strategies/NonceStrategy.append|append(dev.kord.voice.io.ByteArrayView;dev.kord.voice.io.MutableByteArrayCursor){}[0]
-    abstract fun generate(kotlin/Function0<dev.kord.voice.io/ByteArrayView>): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/NonceStrategy.generate|generate(kotlin.Function0<dev.kord.voice.io.ByteArrayView>){}[0]
-    abstract fun strip(dev.kord.voice.udp/RTPPacket): dev.kord.voice.io/ByteArrayView // dev.kord.voice.encryption.strategies/NonceStrategy.strip|strip(dev.kord.voice.udp.RTPPacket){}[0]
-    abstract val nonceLength // dev.kord.voice.encryption.strategies/NonceStrategy.nonceLength|{}nonceLength[0]
-        abstract fun <get-nonceLength>(): kotlin/Int // dev.kord.voice.encryption.strategies/NonceStrategy.nonceLength.<get-nonceLength>|<get-nonceLength>(){}[0]
-}
+final inline fun <#A: reified dev.kord.voice.gateway/VoiceEvent> (dev.kord.voice.gateway/VoiceGateway).dev.kord.voice.gateway/on(kotlinx.coroutines/CoroutineScope = ..., crossinline kotlin.coroutines/SuspendFunction1<#A, kotlin/Unit>): kotlinx.coroutines/Job // dev.kord.voice.gateway/on|on@dev.kord.voice.gateway.VoiceGateway(kotlinx.coroutines.CoroutineScope;kotlin.coroutines.SuspendFunction1<0:0,kotlin.Unit>){0§<dev.kord.voice.gateway.VoiceEvent>}[0]
+final inline fun dev.kord.voice/SpeakingFlags(kotlin/Function1<dev.kord.voice/SpeakingFlags.Builder, kotlin/Unit> = ...): dev.kord.voice/SpeakingFlags // dev.kord.voice/SpeakingFlags|SpeakingFlags(kotlin.Function1<dev.kord.voice.SpeakingFlags.Builder,kotlin.Unit>){}[0]
+final suspend inline fun dev.kord.voice/VoiceConnection(dev.kord.gateway/Gateway, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, dev.kord.common.entity/Snowflake, kotlin/Function1<dev.kord.voice/VoiceConnectionBuilder, kotlin/Unit> = ...): dev.kord.voice/VoiceConnection // dev.kord.voice/VoiceConnection|VoiceConnection(dev.kord.gateway.Gateway;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;dev.kord.common.entity.Snowflake;kotlin.Function1<dev.kord.voice.VoiceConnectionBuilder,kotlin.Unit>){}[0]
+
 // Targets: [apple, linux]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/discoverIP(io.ktor.network.sockets/InetSocketAddress, kotlin/Int): io.ktor.network.sockets/InetSocketAddress // dev.kord.voice.udp/discoverIP|discoverIP@dev.kord.voice.udp.VoiceUdpSocket(io.ktor.network.sockets.InetSocketAddress;kotlin.Int){}[0]
+
 // Targets: [apple, linux]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(io.ktor.network.sockets/InetSocketAddress): io.ktor.utils.io.core/ByteReadPacket // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(io.ktor.network.sockets.InetSocketAddress){}[0]
+
 // Targets: [js, mingwX64]
 final class dev.kord.voice.udp/SocketAddress { // dev.kord.voice.udp/SocketAddress|null[0]
     constructor <init>(kotlin/String, kotlin/Int) // dev.kord.voice.udp/SocketAddress.<init>|<init>(kotlin.String;kotlin.Int){}[0]
-    final fun component1(): kotlin/String // dev.kord.voice.udp/SocketAddress.component1|component1(){}[0]
-    final fun component2(): kotlin/Int // dev.kord.voice.udp/SocketAddress.component2|component2(){}[0]
-    final fun copy(kotlin/String =..., kotlin/Int =...): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/SocketAddress.copy|copy(kotlin.String;kotlin.Int){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/SocketAddress.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/SocketAddress.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // dev.kord.voice.udp/SocketAddress.toString|toString(){}[0]
+
     final val hostname // dev.kord.voice.udp/SocketAddress.hostname|{}hostname[0]
         final fun <get-hostname>(): kotlin/String // dev.kord.voice.udp/SocketAddress.hostname.<get-hostname>|<get-hostname>(){}[0]
     final val port // dev.kord.voice.udp/SocketAddress.port|{}port[0]
         final fun <get-port>(): kotlin/Int // dev.kord.voice.udp/SocketAddress.port.<get-port>|<get-port>(){}[0]
+
+    final fun component1(): kotlin/String // dev.kord.voice.udp/SocketAddress.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // dev.kord.voice.udp/SocketAddress.component2|component2(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/Int = ...): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/SocketAddress.copy|copy(kotlin.String;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.voice.udp/SocketAddress.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.voice.udp/SocketAddress.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.voice.udp/SocketAddress.toString|toString(){}[0]
 }
+
 // Targets: [js, mingwX64]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/discoverIP(dev.kord.voice.udp/SocketAddress, kotlin/Int): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/discoverIP|discoverIP@dev.kord.voice.udp.VoiceUdpSocket(dev.kord.voice.udp.SocketAddress;kotlin.Int){}[0]
+
 // Targets: [js, mingwX64]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(dev.kord.voice.udp/SocketAddress): io.ktor.utils.io.core/ByteReadPacket // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(dev.kord.voice.udp.SocketAddress){}[0]

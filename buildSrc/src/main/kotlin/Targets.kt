@@ -1,7 +1,9 @@
 import org.gradle.api.tasks.TaskContainer
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.konan.target.HostManager
 
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
 fun KotlinMultiplatformExtension.targets() {
     jvm()
 
@@ -37,10 +39,8 @@ fun KotlinMultiplatformExtension.targets() {
     tvosArm64()
     tvosSimulatorArm64()
 
-    targets.all {
-        compilations.all {
-            compilerOptions.options.applyKordCompilerOptions()
-        }
+    compilerOptions {
+        applyKordCompilerOptions()
     }
 }
 

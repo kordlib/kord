@@ -51,9 +51,6 @@ kotlin {
     }
 
     sourceSets {
-        all {
-            applyKordOptIns()
-        }
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")

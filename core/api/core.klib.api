@@ -1,5 +1,5 @@
 // Klib ABI Dump
-// Targets: [js]
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, watchosArm64, watchosSimulatorArm64]
 // Rendering settings:
 // - Signature version: 2
 // - Show manifest properties: true
@@ -11962,8 +11962,6 @@ final val dev.kord.core.cache.data/id // dev.kord.core.cache.data/id|@dev.kord.c
     final fun (dev.kord.core.cache.data/VoiceStateData).<get-id>(): kotlin/String // dev.kord.core.cache.data/id.<get-id>|<get-id>@dev.kord.core.cache.data.VoiceStateData(){}[0]
 final val dev.kord.core.entity/effectiveName // dev.kord.core.entity/effectiveName|@dev.kord.core.entity.User{}effectiveName[0]
     final fun (dev.kord.core.entity/User).<get-effectiveName>(): kotlin/String // dev.kord.core.entity/effectiveName.<get-effectiveName>|<get-effectiveName>@dev.kord.core.entity.User(){}[0]
-final val dev.kord.core/kordLogger // dev.kord.core/kordLogger|{}kordLogger[0]
-    final fun <get-kordLogger>(): mu/KLogger // dev.kord.core/kordLogger.<get-kordLogger>|<get-kordLogger>(){}[0]
 
 final fun (dev.kord.cache.api/DataCache).dev.kord.core.cache/createView(): dev.kord.core.cache/DataCacheView // dev.kord.core.cache/createView|createView@dev.kord.cache.api.DataCache(){}[0]
 final fun (dev.kord.common.entity/DiscordChannel).dev.kord.core.cache.data/toData(): dev.kord.core.cache.data/ChannelData // dev.kord.core.cache.data/toData|toData@dev.kord.common.entity.DiscordChannel(){}[0]
