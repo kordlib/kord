@@ -44,13 +44,13 @@ kotlin {
     targets()
     explicitApi()
     jvmToolchain(Jvm.target)
-
     compilerOptions {
         applyKordCompilerOptions()
         optIn.addAll(kordOptIns)
     }
 
     sourceSets {
+        applyKordTestOptIns()
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
