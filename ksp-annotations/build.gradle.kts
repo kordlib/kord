@@ -1,11 +1,14 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
 
 plugins {
-    `kord-internal-multiplatform-module`
-
+    org.jetbrains.kotlin.multiplatform
     // workaround for https://youtrack.jetbrains.com/issue/KT-43500 (not intended to be published)
     org.jetbrains.dokka
     `kord-publishing`
+}
+
+kotlin {
+    targets()
 }
 
 tasks.withType<AbstractDokkaLeafTask>().configureEach {

@@ -1,38 +1,12 @@
-# This workflow will build and deploy docs to GitHub Pages whenever something is pushed to the main branch
-
-name: Docs
-
+name: Documentation CI
 on:
   push:
-    branches:
-      - main
+  pull_request:
 
 permissions:
-  contents: write
+  id-token: write
+  pages: write
 
 jobs:
   docs:
-    name: Build and deploy docs
-    runs-on: ubuntu-latest
-    concurrency: # Allow one concurrent deployment
-      group: pages
-      cancel-in-progress: true
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 11
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
-      - name: Build docs with Gradle
-        run: ./gradlew --stacktrace --info dokkaHtmlMultiModule
-      - name: Deploy docs to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: build/dokka/htmlMultiModule
-          branch: gh-pages
-          git-config-name: GitHub Actions
-          git-config-email: actions@github.com
-          commit-message: Update docs
+    uses: kordlib/.teamcity/.github/workflows/documentation.yml@main

@@ -1,21 +1,54 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+
 plugins {
-    java // for TweetNaclFast
-    `kord-module`
-    `kord-sampled-module`
+    `kord-multiplatform-module`
     `kord-publishing`
 }
 
-dependencies {
-    api(projects.common)
-    api(projects.gateway)
+@OptIn(ExperimentalKotlinGradlePluginApi::class)
+kotlin {
+    applyDefaultHierarchyTemplate {
+        common {
+            group("ktor") {
+                withJvm()
+                withApple()
+                withLinux()
+            }
 
-    implementation(libs.kotlin.logging)
-    implementation(libs.slf4j.api)
+            group("nonKtor") {
+                withJs()
+                withMingw()
+            }
+        }
+    }
+    jvm {
+        withJava()
+    }
 
-    // TODO remove when voiceGatewayOnLogger is removed
-    implementation(libs.kotlin.logging.old)
+    sourceSets {
+        commonMain.dependencies {
+            api(projects.common)
+            api(projects.gateway)
 
-    compileOnly(projects.kspAnnotations)
+            implementation(libs.kotlin.logging)
 
-    api(libs.ktor.network)
+            compileOnly(projects.kspAnnotations)
+        }
+
+        named("ktorMain").dependencies {
+            api(libs.ktor.network)
+        }
+
+        jsMain.dependencies {
+            implementation(libs.kotlin.node)
+        }
+
+        nonJvmMain.dependencies {
+            implementation(libs.libsodium)
+        }
+
+        jvmMain.dependencies {
+            implementation(libs.slf4j.api)
+        }
+    }
 }
