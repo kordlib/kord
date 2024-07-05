@@ -1,3 +1,5 @@
+@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
+
 package dev.kord.ksp.generation.shared
 
 import com.squareup.kotlinpoet.ClassName

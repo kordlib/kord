@@ -6,6 +6,8 @@ plugins {
 
 repositories {
     mavenCentral()
+    mavenLocal()
+    maven("https://maven.pkg.jetbrains.space/kotlin/p/kotlin/bootstrap")
 }
 
 kotlin {
