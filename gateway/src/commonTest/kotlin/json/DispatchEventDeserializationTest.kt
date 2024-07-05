@@ -1,6 +1,7 @@
 package dev.kord.gateway.json
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.optional.optional
 import dev.kord.gateway.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -117,13 +118,13 @@ class DispatchEventDeserializationTest {
     )
     private val guildRoleJson = """{"guild_id":"0","role":{"id":"0","name":"role","color":0,"hoist":false,""" +
         """"position":0,"permissions":"0","managed":false,"mentionable":false,"flags":0}}"""
-    private val instant = Clock.System.now()
+    private val instant = Clock.System.now().optional()
     private val guildScheduledEvent = DiscordGuildScheduledEvent(
         id = Snowflake.min,
         guildId = Snowflake.min,
         channelId = null,
         name = "event",
-        scheduledStartTime = instant,
+        scheduledStartTime = instant.value,
         scheduledEndTime = null,
         privacyLevel = GuildScheduledEventPrivacyLevel.GuildOnly,
         status = GuildScheduledEventStatus.Active,
@@ -306,7 +307,7 @@ class DispatchEventDeserializationTest {
     fun test_ThreadMemberUpdate_deserialization() = testDispatchEventDeserialization(
         eventName = "THREAD_MEMBER_UPDATE",
         eventConstructor = ::ThreadMemberUpdate,
-        data = DiscordThreadMember(joinTimestamp = instant, flags = 0),
+        data = DiscordThreadMember(joinTimestamp = instant.value, flags = 0),
         json = """{"join_timestamp":"$instant","flags":0}""",
     )
 
@@ -560,7 +561,7 @@ class DispatchEventDeserializationTest {
         data = DiscordCreatedInvite(
             channelId = Snowflake.min,
             code = "code",
-            createdAt = instant,
+            createdAt = instant.value,
             maxAge = 100.hours,
             maxUses = 42,
             temporary = false,
@@ -587,7 +588,7 @@ class DispatchEventDeserializationTest {
             channelId = Snowflake.min,
             author = user,
             content = "hi",
-            timestamp = instant,
+            timestamp = instant.value,
             editedTimestamp = null,
             tts = false,
             mentionEveryone = false,
