@@ -42,6 +42,16 @@ public sealed class SkuType(
     ) : SkuType(value)
 
     /**
+     * A durable, one-time purchase.
+     */
+    public object Durable : SkuType(2)
+
+    /**
+     * A consumable, one-time purchase.
+     */
+    public object Consumable : SkuType(3)
+
+    /**
      * Represents a recurring subscription.
      */
     public object Subscription : SkuType(5)
@@ -68,6 +78,8 @@ public sealed class SkuType(
          */
         public val entries: List<SkuType> by lazy(mode = PUBLICATION) {
             listOf(
+                Durable,
+                Consumable,
                 Subscription,
                 SubscriptionGroup,
             )
@@ -78,6 +90,8 @@ public sealed class SkuType(
          * Returns an instance of [SkuType] with [SkuType.value] equal to the specified [value].
          */
         public fun from(`value`: Int): SkuType = when (value) {
+            2 -> Durable
+            3 -> Consumable
             5 -> Subscription
             6 -> SubscriptionGroup
             else -> Unknown(value)

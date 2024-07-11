@@ -2,6 +2,13 @@
     INT_KORD_ENUM, name = "EntitlementType",
     docUrl = "https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types",
     entries = [
+        Entry("Purchase", intValue = 1, kDoc = "Entitlement that was purchased by a user."),
+        Entry("PremiumSubscription", intValue = 2, kDoc = "Entitlement for a Discord Nitro subscription."),
+        Entry("DeveloperGift", intValue = 3, kDoc = "Entitlement that was gifted to a user by the developer."),
+        Entry("TestModePurchase", intValue = 4, kDoc = "Entitlement that was purchased by a dev in application test mode."),
+        Entry("FreePurchase", intValue = 5, kDoc = "Entitlement that was purchased when the [Sku][DiscordSku] was free."),
+        Entry("UserGift", intValue = 6, kDoc = "Entitlement that was gifted to a user by another user."),
+        Entry("PremiumPurchase", intValue = 7, kDoc = "Entitlement that was claimed for free as a Nitro subscriber."),
         Entry("ApplicationSubscription", intValue = 8, kDoc = "Entitlement was purchased as an app subscription.")
     ]
 )
@@ -18,6 +25,7 @@
 package dev.kord.common.entity
 
 import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
@@ -46,4 +54,5 @@ public data class DiscordEntitlement(
     val endsAt: Optional<Instant> = Optional.Missing(),
     @SerialName("guild_Id")
     val guildId: OptionalSnowflake = OptionalSnowflake.Missing,
+    val consumed: OptionalBoolean = OptionalBoolean.Missing,
 )

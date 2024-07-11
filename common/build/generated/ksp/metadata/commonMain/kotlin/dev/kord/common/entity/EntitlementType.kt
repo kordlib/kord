@@ -43,6 +43,41 @@ public sealed class EntitlementType(
     ) : EntitlementType(value)
 
     /**
+     * Entitlement that was purchased by a user.
+     */
+    public object Purchase : EntitlementType(1)
+
+    /**
+     * Entitlement for a Discord Nitro subscription.
+     */
+    public object PremiumSubscription : EntitlementType(2)
+
+    /**
+     * Entitlement that was gifted to a user by the developer.
+     */
+    public object DeveloperGift : EntitlementType(3)
+
+    /**
+     * Entitlement that was purchased by a dev in application test mode.
+     */
+    public object TestModePurchase : EntitlementType(4)
+
+    /**
+     * Entitlement that was purchased when the [Sku][DiscordSku] was free.
+     */
+    public object FreePurchase : EntitlementType(5)
+
+    /**
+     * Entitlement that was gifted to a user by another user.
+     */
+    public object UserGift : EntitlementType(6)
+
+    /**
+     * Entitlement that was claimed for free as a Nitro subscriber.
+     */
+    public object PremiumPurchase : EntitlementType(7)
+
+    /**
      * Entitlement was purchased as an app subscription.
      */
     public object ApplicationSubscription : EntitlementType(8)
@@ -65,6 +100,13 @@ public sealed class EntitlementType(
          */
         public val entries: List<EntitlementType> by lazy(mode = PUBLICATION) {
             listOf(
+                Purchase,
+                PremiumSubscription,
+                DeveloperGift,
+                TestModePurchase,
+                FreePurchase,
+                UserGift,
+                PremiumPurchase,
                 ApplicationSubscription,
             )
         }
@@ -75,6 +117,13 @@ public sealed class EntitlementType(
          * specified [value].
          */
         public fun from(`value`: Int): EntitlementType = when (value) {
+            1 -> Purchase
+            2 -> PremiumSubscription
+            3 -> DeveloperGift
+            4 -> TestModePurchase
+            5 -> FreePurchase
+            6 -> UserGift
+            7 -> PremiumPurchase
             8 -> ApplicationSubscription
             else -> Unknown(value)
         }

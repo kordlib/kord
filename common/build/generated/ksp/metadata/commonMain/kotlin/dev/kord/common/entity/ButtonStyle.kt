@@ -68,6 +68,11 @@ public sealed class ButtonStyle(
      */
     public object Link : ButtonStyle(5)
 
+    /**
+     * Blurple, prompts to purchase a premium offering.
+     */
+    public object Premium : ButtonStyle(6)
+
     internal object Serializer : KSerializer<ButtonStyle> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ButtonStyle", PrimitiveKind.INT)
@@ -90,6 +95,7 @@ public sealed class ButtonStyle(
                 Success,
                 Danger,
                 Link,
+                Premium,
             )
         }
 
@@ -104,6 +110,7 @@ public sealed class ButtonStyle(
             3 -> Success
             4 -> Danger
             5 -> Link
+            6 -> Premium
             else -> Unknown(value)
         }
     }

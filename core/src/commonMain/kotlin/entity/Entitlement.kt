@@ -2,6 +2,7 @@ package dev.kord.core.entity
 
 import dev.kord.common.entity.EntitlementType
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.value
 import dev.kord.core.Kord
 import dev.kord.core.behavior.GuildBehavior
 import dev.kord.core.behavior.UserBehavior
@@ -62,7 +63,7 @@ public class Entitlement(
         get() = data.deleted
 
     /**
-     * Start date at which the entitlement is valid.
+     * The start date at which the entitlement is valid.
      */
     public val startsAt: Instant?
         get() = data.startsAt.value
@@ -72,6 +73,12 @@ public class Entitlement(
      */
     public val endsAt: Instant?
         get() = data.endsAt.value
+
+    /**
+     * For consumable items, whether the entitlement has been consumed.
+     */
+    public val consumed: Boolean?
+        get() = data.consumed.value
 
     /**
      * The ID of the [Guild] that is granted access to this entitlement's [Sku].
@@ -93,7 +100,7 @@ public class Entitlement(
         get() = endsAt == null && startsAt == null
 
     /**
-     * Requests to delete this currently-active [test entitlement][Entitlement.isTest].
+     * Requests to delete this currently active [test entitlement][Entitlement.isTest].
      *
      * Discord will act as though that [user][Entitlement.user] or [guild][Entitlement.guild] *no longer* has
      * entitlement to your premium offering.
@@ -111,7 +118,7 @@ public class Entitlement(
 
     override fun hashCode(): Int = hash(id, applicationId)
 
-    override fun equals(other: Any?): Boolean = when (other)  {
+    override fun equals(other: Any?): Boolean = when (other) {
         is Entitlement -> other.id == id && other.applicationId == applicationId
         else -> false
     }

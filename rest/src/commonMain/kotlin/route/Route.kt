@@ -744,6 +744,13 @@ public sealed class Route<T>(
      * https://discord.com/developers/docs/monetization/entitlements
      */
 
+    public object EntitlementConsume :
+        Route<Unit>(
+            HttpMethod.Post,
+            "/applications/$ApplicationId/entitlements/$EntitlementId/consume",
+            NoStrategy
+        )
+
     public object EntitlementsList :
         Route<List<DiscordEntitlement>>(
             HttpMethod.Get,

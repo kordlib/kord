@@ -9,6 +9,30 @@ import dev.kord.rest.route.Route
 
 public class EntitlementService(requestHandler: RequestHandler) : RestService(requestHandler) {
 
+    public suspend fun consumeEntitlement(
+        applicationId: Snowflake,
+        entitlementId: Snowflake,
+    ): Unit = call(Route.EntitlementConsume) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.EntitlementId] = entitlementId
+    }
+
+    public suspend fun createTestEntitlement(
+        applicationId: Snowflake,
+        request: TestEntitlementCreateRequest,
+    ): DiscordEntitlement = call(Route.TestEntitlementCreate) {
+        keys[Route.ApplicationId] = applicationId
+        body(TestEntitlementCreateRequest.serializer(), request)
+    }
+
+    public suspend fun deleteTestEntitlement(
+        applicationId: Snowflake,
+        entitlementId: Snowflake,
+    ): Unit = call(Route.TestEntitlementDelete) {
+        keys[Route.ApplicationId] = applicationId
+        keys[Route.EntitlementId] = entitlementId
+    }
+
     public suspend fun listEntitlements(
         applicationId: Snowflake,
         request: EntitlementsListRequest,
@@ -26,22 +50,6 @@ public class EntitlementService(requestHandler: RequestHandler) : RestService(re
         applicationId: Snowflake,
         entitlementId: Snowflake,
     ): DiscordEntitlement = call(Route.EntitlementGet) {
-        keys[Route.ApplicationId] = applicationId
-        keys[Route.EntitlementId] = entitlementId
-    }
-
-    public suspend fun createTestEntitlement(
-        applicationId: Snowflake,
-        request: TestEntitlementCreateRequest,
-    ): DiscordEntitlement = call(Route.TestEntitlementCreate) {
-        keys[Route.ApplicationId] = applicationId
-        body(TestEntitlementCreateRequest.serializer(), request)
-    }
-
-    public suspend fun deleteTestEntitlement(
-        applicationId: Snowflake,
-        entitlementId: Snowflake,
-    ): Unit = call(Route.TestEntitlementDelete) {
         keys[Route.ApplicationId] = applicationId
         keys[Route.EntitlementId] = entitlementId
     }

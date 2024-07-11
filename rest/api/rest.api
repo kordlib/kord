@@ -1003,6 +1003,7 @@ public final class dev/kord/rest/builder/component/ActionRowBuilder : dev/kord/r
 	public final fun linkButton (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public final fun mentionableSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun mentionableSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun premiumButton (Ldev/kord/common/entity/Snowflake;Lkotlin/jvm/functions/Function1;)V
 	public final fun roleSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun roleSelect$default (Ldev/kord/rest/builder/component/ActionRowBuilder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun stringSelect (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
@@ -1064,6 +1065,14 @@ public final class dev/kord/rest/builder/component/MentionableSelectBuilder : de
 }
 
 public abstract interface class dev/kord/rest/builder/component/MessageComponentBuilder : dev/kord/rest/builder/component/ComponentBuilder {
+}
+
+public final class dev/kord/rest/builder/component/PremiumButtonBuilder : dev/kord/rest/builder/component/ActionRowComponentBuilder {
+	public fun <init> (Ldev/kord/common/entity/Snowflake;)V
+	public fun build ()Ldev/kord/common/entity/DiscordChatComponent;
+	public synthetic fun build ()Ldev/kord/common/entity/DiscordComponent;
+	public final fun getSkuId ()Ldev/kord/common/entity/Snowflake;
+	public final fun setSkuId (Ldev/kord/common/entity/Snowflake;)V
 }
 
 public final class dev/kord/rest/builder/component/RoleSelectBuilder : dev/kord/rest/builder/component/SelectMenuBuilder {
@@ -6556,6 +6565,10 @@ public final class dev/kord/rest/route/Route$EmojiId : dev/kord/rest/route/Route
 	public static final field INSTANCE Ldev/kord/rest/route/Route$EmojiId;
 }
 
+public final class dev/kord/rest/route/Route$EntitlementConsume : dev/kord/rest/route/Route {
+	public static final field INSTANCE Ldev/kord/rest/route/Route$EntitlementConsume;
+}
+
 public final class dev/kord/rest/route/Route$EntitlementGet : dev/kord/rest/route/Route {
 	public static final field INSTANCE Ldev/kord/rest/route/Route$EntitlementGet;
 }
@@ -7351,6 +7364,7 @@ public final class dev/kord/rest/service/EmojiService : dev/kord/rest/service/Re
 
 public final class dev/kord/rest/service/EntitlementService : dev/kord/rest/service/RestService {
 	public fun <init> (Ldev/kord/rest/request/RequestHandler;)V
+	public final fun consumeEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun createTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/rest/json/request/TestEntitlementCreateRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun deleteTestEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getEntitlement (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

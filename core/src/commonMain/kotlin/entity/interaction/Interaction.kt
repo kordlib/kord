@@ -4,6 +4,8 @@ import dev.kord.common.Locale
 import dev.kord.common.entity.InteractionType
 import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.OptionalSnowflake
+import dev.kord.common.entity.optional.mapList
+import dev.kord.common.entity.optional.orEmpty
 import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.InteractionBehavior
 import dev.kord.core.cache.data.InteractionData
@@ -35,14 +37,16 @@ public sealed interface Interaction : InteractionBehavior {
      * invoking user, representing access to premium [Sku]s.
      */
     public val entitlements: List<Entitlement>
-        get() = data.entitlements.map { Entitlement(it, kord) }
+        get() = data.entitlements.mapList { Entitlement(it, kord) }.orEmpty()
 
     /**
      * The type of the interaction.
      */
     public val type: InteractionType get() = data.type
 
-    /** The invoker of the interaction. */
+    /**
+     * The invoker of the interaction.
+     */
     public val user: User
 
     /**
@@ -80,6 +84,7 @@ public sealed interface Interaction : InteractionBehavior {
                     GlobalApplicationCommandInteraction(data, kord, strategy.supply(kord))
                 }
             }
+
             InteractionType.Ping, is InteractionType.Unknown -> error("Unsupported interaction type: $type")
         }
     }
