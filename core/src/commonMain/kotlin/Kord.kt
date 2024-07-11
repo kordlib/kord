@@ -45,7 +45,7 @@ import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.channels.Channel as CoroutineChannel
 
-@Deprecated("Use your own logger instead, this will be removed in the future.", level = DeprecationLevel.ERROR)
+@Deprecated("Use your own logger instead, this will be removed in the future.", level = DeprecationLevel.HIDDEN)
 public val kordLogger: mu.KLogger = mu.KotlinLogging.logger { }
 
 private val logger = KotlinLogging.logger { }

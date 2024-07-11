@@ -75,7 +75,6 @@ public sealed class VideoQualityMode(
             )
         }
 
-
         /**
          * Returns an instance of [VideoQualityMode] with [VideoQualityMode.value] equal to the
          * specified [value].

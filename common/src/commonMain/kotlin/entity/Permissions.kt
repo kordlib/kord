@@ -110,10 +110,10 @@ private val ALL_PERMISSIONS = Permissions(flags = Permission.entries)
 /** All known [Permission]s (as contained in [Permission.entries]) combined into a single [Permissions] instance. */
 public val Permissions.Companion.ALL: Permissions get() = ALL_PERMISSIONS
 
-@Suppress("UnusedReceiverParameter", "DEPRECATION")
+@Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
 @Deprecated(
     "'Permissions.NewCompanion' was renamed to 'Permissions.Companion'. Use 'Permissions.Companion.ALL' instead.",
     ReplaceWith("Permissions.ALL", imports = ["dev.kord.common.entity.Permissions", "dev.kord.common.entity.ALL"]),
-    DeprecationLevel.WARNING,
+    DeprecationLevel.ERROR,
 )
 public val Permissions.NewCompanion.ALL: Permissions get() = ALL_PERMISSIONS

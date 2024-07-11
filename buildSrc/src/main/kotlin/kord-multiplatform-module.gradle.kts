@@ -1,11 +1,12 @@
 import org.jetbrains.dokka.gradle.AbstractDokkaLeafTask
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
 
 plugins {
     org.jetbrains.kotlin.multiplatform
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
-    `kotlinx-atomicfu`
+    org.jetbrains.kotlinx.atomicfu
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
 }
@@ -40,18 +41,16 @@ kotlin {
     }
     jvmToolchain(Jvm.target)
 
-    targets.all {
-        compilations.all {
-            compilerOptions.options.applyKordCompilerOptions()
-        }
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    compilerOptions {
+        applyKordCompilerOptions()
+        optIn.addAll(kordOptIns)
     }
 
     applyDefaultHierarchyTemplate()
 
     sourceSets {
-        all {
-            applyKordOptIns()
-        }
+        applyKordTestOptIns()
         commonMain {
             // mark ksp src dir
             kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
@@ -69,8 +68,6 @@ kotlin {
         }
     }
 }
-
-configureAtomicFU()
 
 tasks {
     withType<Test>().configureEach {

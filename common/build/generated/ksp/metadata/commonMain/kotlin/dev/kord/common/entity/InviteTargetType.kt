@@ -69,7 +69,6 @@ public sealed class InviteTargetType(
             )
         }
 
-
         /**
          * Returns an instance of [InviteTargetType] with [InviteTargetType.value] equal to the
          * specified [value].

@@ -24,12 +24,6 @@ public class UserService(requestHandler: RequestHandler) : RestService(requestHa
         keys[Route.UserId] = userId
     }
 
-    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
-    public suspend fun getCurrentUserGuilds(
-        position: Position.BeforeOrAfter? = null,
-        limit: Int? = null,
-    ): List<DiscordPartialGuild> = getCurrentUserGuilds(position, limit, withCounts = null)
-
     public suspend fun getCurrentUserGuilds(
         position: Position.BeforeOrAfter? = null,
         limit: Int? = null,

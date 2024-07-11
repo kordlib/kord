@@ -7,6 +7,7 @@ import dev.kord.common.serialization.DurationInSeconds
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.datetime.Instant
 import kotlinx.serialization.*
+import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.*
 import kotlinx.serialization.encoding.CompositeDecoder
@@ -16,6 +17,7 @@ import kotlinx.serialization.encoding.decodeStructure
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonElement
 import kotlin.jvm.JvmField
+import kotlin.jvm.JvmName
 import kotlinx.serialization.DeserializationStrategy as KDeserializationStrategy
 
 private val jsonLogger = KotlinLogging.logger { }
@@ -191,13 +193,13 @@ public sealed class Event {
                 // them too.
                 // See https://github.com/discord/discord-api-docs/pull/3691
                 "APPLICATION_COMMAND_CREATE" ->
-                    @Suppress("DEPRECATION")
+                    @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandCreate(decode(DiscordApplicationCommand.serializer()), sequence)
                 "APPLICATION_COMMAND_UPDATE" ->
-                    @Suppress("DEPRECATION")
+                    @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandUpdate(decode(DiscordApplicationCommand.serializer()), sequence)
                 "APPLICATION_COMMAND_DELETE" ->
-                    @Suppress("DEPRECATION")
+                    @Suppress("DEPRECATION_ERROR")
                     ApplicationCommandDelete(decode(DiscordApplicationCommand.serializer()), sequence)
                 else -> {
                     jsonLogger.debug { "Unknown gateway event name: $eventName" }
@@ -290,19 +292,46 @@ public data class ReadyData(
 )
 
 @Serializable(with = Heartbeat.Serializer::class)
-public data class Heartbeat(val data: Long) : Event() {
+public data class Heartbeat(val data: Long?) : Event() {
     internal object Serializer : KSerializer<Heartbeat> {
-        override val descriptor = PrimitiveSerialDescriptor("dev.kord.gateway.Heartbeat", PrimitiveKind.LONG)
-        override fun serialize(encoder: Encoder, value: Heartbeat) = encoder.encodeLong(value.data)
-        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeLong())
+        private val delegate = Long.serializer().nullable
+
+        override val descriptor = PrimitiveSerialDescriptor("dev.kord.gateway.Heartbeat", PrimitiveKind.LONG).nullable
+
+        override fun serialize(encoder: Encoder, value: Heartbeat) =
+            encoder.encodeSerializableValue(delegate, value.data)
+
+        override fun deserialize(decoder: Decoder) = Heartbeat(decoder.decodeSerializableValue(delegate))
     }
 
+    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    public constructor(data: Long) : this(data as Long?)
+
+    @Suppress("PropertyName")
+    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    @get:JvmName("getData")
+    public val data_: Long
+        get() = data ?: throw NullPointerException("This heartbeat request contains a null sequence number")
+
+    @Suppress("FunctionName")
+    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    @JvmName("component1")
+    public fun component1_(): Long =
+        component1() ?: throw NullPointerException("This heartbeat request contains a null sequence number")
+
+    @Suppress("FunctionName")
+    @Deprecated("Binary compatibility, keep for some releases.", level = DeprecationLevel.HIDDEN)
+    @JvmName("copy")
+    public fun copy_(
+        data: Long = this.data ?: throw NullPointerException("This heartbeat request contains a null sequence number"),
+    ): Heartbeat = Heartbeat(data as Long?)
+
     public companion object {
-        @Suppress("DEPRECATION")
+        @Suppress("DEPRECATION_ERROR")
         @Deprecated(
             "Renamed to 'Companion'.",
             ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-            DeprecationLevel.WARNING,
+            DeprecationLevel.ERROR,
         )
         @JvmField
         public val NewCompanion: NewCompanion = NewCompanion()
@@ -311,7 +340,7 @@ public data class Heartbeat(val data: Long) : Event() {
     @Deprecated(
         "Renamed to 'Companion'.",
         ReplaceWith("Heartbeat.Companion", imports = ["dev.kord.gateway.Heartbeat"]),
-        DeprecationLevel.WARNING,
+        DeprecationLevel.ERROR,
     )
     public class NewCompanion internal constructor() {
         public fun serializer(): KSerializer<Heartbeat> = Heartbeat.serializer()
@@ -509,7 +538,7 @@ public data class InteractionCreate(val interaction: DiscordInteraction, overrid
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandCreate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -518,7 +547,7 @@ public data class ApplicationCommandCreate(val application: DiscordApplicationCo
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandUpdate(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()
@@ -527,7 +556,7 @@ public data class ApplicationCommandUpdate(val application: DiscordApplicationCo
 @Deprecated(
     "This event is not supposed to be sent to bots. See https://github.com/discord/discord-api-docs/issues/3690 for " +
         "details.",
-    level = DeprecationLevel.WARNING,
+    level = DeprecationLevel.ERROR,
 )
 public data class ApplicationCommandDelete(val application: DiscordApplicationCommand, override val sequence: Int?) :
     DispatchEvent()

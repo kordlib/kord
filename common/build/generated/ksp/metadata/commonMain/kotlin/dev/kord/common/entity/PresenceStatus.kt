@@ -93,7 +93,6 @@ public sealed class PresenceStatus(
             )
         }
 
-
         /**
          * Returns an instance of [PresenceStatus] with [PresenceStatus.value] equal to the
          * specified [value].

@@ -37,6 +37,12 @@ kotlin {
                 implementation(projects.kspAnnotations)
             }
         }
+        jvmTest {
+            dependencies {
+                implementation(libs.bson)
+                implementation(libs.kbson)
+            }
+        }
     }
 }
 

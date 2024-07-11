@@ -16,7 +16,7 @@ public data class MemberData(
     val guildId: Snowflake,
     val nick: Optional<String?> = Optional.Missing(),
     val roles: List<Snowflake>,
-    val joinedAt: Instant,
+    val joinedAt: Instant?,
     val premiumSince: Optional<Instant?> = Optional.Missing(),
     val flags: GuildMemberFlags,
     val permissions: Optional<Permissions> = Optional.Missing(),

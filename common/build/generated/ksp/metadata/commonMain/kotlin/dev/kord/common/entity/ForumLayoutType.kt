@@ -81,7 +81,6 @@ public sealed class ForumLayoutType(
             )
         }
 
-
         /**
          * Returns an instance of [ForumLayoutType] with [ForumLayoutType.value] equal to the
          * specified [value].

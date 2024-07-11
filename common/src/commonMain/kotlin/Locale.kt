@@ -239,7 +239,7 @@ public data class Locale(val language: String, val country: String? = null) {
     @Deprecated(
         "Replaced by 'Locale.serializer()'.",
         ReplaceWith("Locale.serializer()", imports = ["dev.kord.common.Locale"]),
-        DeprecationLevel.ERROR,
+        DeprecationLevel.HIDDEN,
     )
     public object Serializer : KSerializer<Locale> by NewSerializer
 

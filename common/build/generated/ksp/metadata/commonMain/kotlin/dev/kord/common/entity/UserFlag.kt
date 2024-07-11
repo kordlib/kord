@@ -163,7 +163,6 @@ public sealed class UserFlag(
             )
         }
 
-
         /**
          * Returns an instance of [UserFlag] with [UserFlag.shift] equal to the specified [shift].
          *

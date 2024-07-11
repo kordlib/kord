@@ -75,7 +75,6 @@ public sealed class MessageStickerType(
             )
         }
 
-
         /**
          * Returns an instance of [MessageStickerType] with [MessageStickerType.value] equal to the
          * specified [value].

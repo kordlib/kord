@@ -800,7 +800,7 @@ class DispatchEventDeserializationTest {
         """"default_member_permissions":null,"version":"0"}"""
 
     @Test
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     fun test_ApplicationCommandCreate_deserialization() = testDispatchEventDeserialization(
         eventName = "APPLICATION_COMMAND_CREATE",
         eventConstructor = ::ApplicationCommandCreate,
@@ -809,7 +809,7 @@ class DispatchEventDeserializationTest {
     )
 
     @Test
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     fun test_ApplicationCommandUpdate_deserialization() = testDispatchEventDeserialization(
         eventName = "APPLICATION_COMMAND_UPDATE",
         eventConstructor = ::ApplicationCommandUpdate,
@@ -818,7 +818,7 @@ class DispatchEventDeserializationTest {
     )
 
     @Test
-    @Suppress("DEPRECATION")
+    @Suppress("DEPRECATION_ERROR")
     fun test_ApplicationCommandDelete_deserialization() = testDispatchEventDeserialization(
         eventName = "APPLICATION_COMMAND_DELETE",
         eventConstructor = ::ApplicationCommandDelete,

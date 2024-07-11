@@ -73,7 +73,6 @@ public sealed class AutoModerationRuleEventType(
             )
         }
 
-
         /**
          * Returns an instance of [AutoModerationRuleEventType] with
          * [AutoModerationRuleEventType.value] equal to the specified [value].

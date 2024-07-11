@@ -4,7 +4,7 @@ plugins {
     org.jetbrains.kotlin.jvm
     org.jetbrains.kotlin.plugin.serialization
     org.jetbrains.dokka
-    `kotlinx-atomicfu`
+    org.jetbrains.kotlinx.atomicfu
     org.jetbrains.kotlinx.`binary-compatibility-validator`
     com.google.devtools.ksp
     `maven-publish`
@@ -33,12 +33,9 @@ kotlin {
     }
 
     sourceSets {
-        // allow `ExperimentalCoroutinesApi` for `TestScope.currentTime`
-        test { languageSettings.optIn(OptIns.coroutines) }
+        applyKordTestOptIns()
     }
 }
-
-configureAtomicFU()
 
 tasks {
     withType<Test>().configureEach {

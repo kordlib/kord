@@ -99,7 +99,6 @@ public sealed class ButtonStyle(
             )
         }
 
-
         /**
          * Returns an instance of [ButtonStyle] with [ButtonStyle.value] equal to the specified
          * [value].

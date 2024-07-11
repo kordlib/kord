@@ -77,7 +77,6 @@ public sealed class OnboardingMode(
             )
         }
 
-
         /**
          * Returns an instance of [OnboardingMode] with [OnboardingMode.value] equal to the
          * specified [value].

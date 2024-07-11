@@ -16,7 +16,7 @@ fun AbstractDokkaLeafTask.applyKordDokkaOptions() {
 
         sourceLink {
             localDirectory = project.projectDir
-            remoteUrl = URI.create("https://github.com/kordlib/kord/blob/${project.commitHash}/${project.name}").toURL()
+            remoteUrl = URI("https://github.com/kordlib/kord/blob/${project.commitHash}/${project.name}").toURL()
             remoteLineSuffix = "#L"
         }
 
