@@ -30,6 +30,7 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.builder.LoginBuilder
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.rest.builder.application.ApplicationRoleConnectionMetadataRecordsBuilder
+import dev.kord.rest.builder.entitlement.EntitlementsListRequestBuilder
 import dev.kord.rest.builder.guild.GuildCreateBuilder
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.user.CurrentUserModifyBuilder
@@ -379,17 +380,22 @@ public class Kord(
         rest.sku.listSkus(selfId).map { Sku(it, this) }
 
     /**
-     * Requests to get a list of [Entitlement]s with the given [skuId], [userId], or [guildId].
+     * Requests to get a list of [Entitlement]s.
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getEntitlements(
-        limit: Int? = null,
-        skuId: Snowflake? = null,
-        userId: Snowflake? = null,
-        guildId: Snowflake? = null,
+    public suspend inline fun getEntitlements(
         strategy: EntitySupplyStrategy<*> = resources.defaultStrategy,
-    ): Flow<Entitlement> = strategy.supply(this).getEntitlements(selfId, skuId, limit, userId, guildId)
+        builder: EntitlementsListRequestBuilder.() -> Unit = {},
+    ): Flow<Entitlement> {
+        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
+
+        val request = EntitlementsListRequestBuilder()
+            .apply(builder)
+            .toRequest()
+
+        return strategy.supply(this).getEntitlements(selfId, request)
+    }
 
     /**
      * Requests to get the [Entitlement] with the given [id]
@@ -405,7 +411,8 @@ public class Kord(
      *
      * @throws [RequestException] if anything went wrong during the request.
      */
-    public suspend fun getEntitlementOrNull(id: Snowflake): Entitlement? = defaultSupplier.getEntitlementOrNull(selfId, id)
+    public suspend fun getEntitlementOrNull(id: Snowflake): Entitlement? =
+        defaultSupplier.getEntitlementOrNull(selfId, id)
 
     /**
      * Requests to create a new [test entitlement][Entitlement] with the given [skuId], [ownerId] and [ownerType].
@@ -417,7 +424,8 @@ public class Kord(
         ownerId: Snowflake,
         ownerType: EntitlementOwnerType,
     ): Entitlement {
-        val response = rest.entitlement.createTestEntitlement(selfId, TestEntitlementCreateRequest(skuId, ownerId, ownerType))
+        val response =
+            rest.entitlement.createTestEntitlement(selfId, TestEntitlementCreateRequest(skuId, ownerId, ownerType))
         val data = EntitlementData.from(response)
 
         return Entitlement(data, this)

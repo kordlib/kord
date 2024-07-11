@@ -24,6 +24,8 @@ import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.gateway.Gateway
+import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
 import kotlinx.datetime.Instant
 
@@ -437,7 +439,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
         return GlobalApplicationCommand(data, kord.rest.interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
+    override fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GlobalApplicationCommand> =
         cache.query {
             idEq(ApplicationCommandData::guildId, null)
             idEq(ApplicationCommandData::applicationId, applicationId)
@@ -610,22 +615,23 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
     override suspend fun getEntitlements(
         applicationId: Snowflake,
-        skuId: Snowflake?,
-        limit: Int?,
-        userId: Snowflake?,
-        guildId: Snowflake?
+        request: EntitlementsListRequest
     ): Flow<Entitlement> {
-        checkLimit(limit)
+        checkLimit(request.limit)
         return cache
             .query {
                 idEq(EntitlementData::applicationId, applicationId)
-                skuId?.let { idEq(EntitlementData::skuId, it) }
-                userId?.let { idEq(EntitlementData::userId, it) }
-                guildId?.let { idEq(EntitlementData::guildId, it) }
+                request.userId?.let { idEq(EntitlementData::userId, it) }
+                request.guildId?.let { idEq(EntitlementData::guildId, it) }
             }
             .asFlow()
+            .filter {
+                val containsSku = request.skuIds.isEmpty() || it.skuId in request.skuIds
+                val excludeEnded = request.excludeEnded == true && it.ended
+                containsSku && !excludeEnded && followsPosition(request.position, it.id)
+            }
             .map { Entitlement(it, kord) }
-            .limit(limit)
+            .limit(request.limit)
     }
 
     override fun toString(): String = "CacheEntitySupplier(cache=$cache)"
@@ -634,6 +640,13 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
 
 private fun checkLimit(limit: Int?) {
     require(limit == null || limit > 0) { "At least 1 item should be requested, but got $limit." }
+}
+
+private fun followsPosition(position: Position?, id: Snowflake): Boolean = when (position) {
+    is Position.Before -> id < position.value
+    is Position.After -> id > position.value
+    is Position.Around -> throw UnsupportedOperationException("Around is not supported for this operation.")
+    else -> true
 }
 
 private fun <T> Flow<T>.limit(limit: Int?): Flow<T> = if (limit == null) this else take(limit)

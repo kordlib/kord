@@ -447,7 +447,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GlobalApplicationCommand(data, interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> = flow {
+    override fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GlobalApplicationCommand> = flow {
         for (command in interaction.getGlobalApplicationCommands(applicationId, withLocalizations)) {
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, interaction))
@@ -648,30 +651,22 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GuildApplicationCommand(data, interaction)
     }
 
-    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? = catchNotFound {
-        val response = entitlement.getEntitlement(applicationId, entitlementId)
-        val data = EntitlementData.from(response)
-        Entitlement(data, kord)
-    }
+    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? =
+        catchNotFound {
+            val response = entitlement.getEntitlement(applicationId, entitlementId)
+            val data = EntitlementData.from(response)
+            Entitlement(data, kord)
+        }
 
     // maxBatchSize: see https://discord.com/developers/docs/monetization/entitlements#list-entitlements
     override suspend fun getEntitlements(
         applicationId: Snowflake,
-        skuId: Snowflake?,
-        limit: Int?,
-        userId: Snowflake?,
-        guildId: Snowflake?
-    ): Flow<Entitlement> = limitedPagination(limit, maxBatchSize = 100) { batchSize ->
+        request: EntitlementsListRequest
+    ): Flow<Entitlement> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->
         paginateForwards(batchSize, idSelector = { it.id }) { position ->
             entitlement.listEntitlements(
                 applicationId = applicationId,
-                request = EntitlementsListRequest(
-                    position = position,
-                    limit = batchSize,
-                    skuIds = listOfNotNull(skuId),
-                    userId = userId,
-                    guildId = guildId
-                )
+                request = request.copy(position = position, limit = batchSize)
             )
         }.map {
             val data = EntitlementData.from(it)

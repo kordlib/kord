@@ -12,6 +12,7 @@ import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.switchIfEmpty
+import dev.kord.rest.json.request.EntitlementsListRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.Instant
 
@@ -185,7 +186,10 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         )
 
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> =
+    override fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GlobalApplicationCommand> =
         first.getGlobalApplicationCommands(applicationId, withLocalizations)
             .switchIfEmpty(second.getGlobalApplicationCommands(applicationId, withLocalizations))
 
@@ -278,16 +282,16 @@ private class FallbackEntitySupplier(val first: EntitySupplier, val second: Enti
         first.getAutoModerationRuleOrNull(guildId, ruleId) ?: second.getAutoModerationRuleOrNull(guildId, ruleId)
 
     override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? =
-        first.getEntitlementOrNull(applicationId, entitlementId) ?: second.getEntitlementOrNull(applicationId, entitlementId)
+        first.getEntitlementOrNull(applicationId, entitlementId) ?: second.getEntitlementOrNull(
+            applicationId,
+            entitlementId
+        )
 
     override suspend fun getEntitlements(
         applicationId: Snowflake,
-        skuId: Snowflake?,
-        limit: Int?,
-        userId: Snowflake?,
-        guildId: Snowflake?
-    ): Flow<Entitlement> = first.getEntitlements(applicationId, skuId, limit, userId, guildId)
-        .switchIfEmpty(second.getEntitlements(applicationId, skuId, limit, userId, guildId))
+        request: EntitlementsListRequest
+    ): Flow<Entitlement> = first.getEntitlements(applicationId, request)
+        .switchIfEmpty(second.getEntitlements(applicationId, request))
 
     override fun toString(): String = "FallbackEntitySupplier(first=$first, second=$second)"
 }

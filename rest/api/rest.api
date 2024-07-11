@@ -1148,6 +1148,26 @@ public final class dev/kord/rest/builder/component/UserSelectBuilder : dev/kord/
 	public final fun getDefaultUsers ()Ljava/util/List;
 }
 
+public final class dev/kord/rest/builder/entitlement/EntitlementsListRequestBuilder : dev/kord/rest/builder/RequestBuilder {
+	public fun <init> ()V
+	public final fun after (Ldev/kord/common/entity/Snowflake;)V
+	public final fun before (Ldev/kord/common/entity/Snowflake;)V
+	public final fun getExcludeEnded ()Ljava/lang/Boolean;
+	public final fun getGuildId ()Ldev/kord/common/entity/Snowflake;
+	public final fun getLimit ()Ljava/lang/Integer;
+	public final fun getPosition ()Ldev/kord/rest/route/Position$BeforeOrAfter;
+	public final fun getSkuIds ()Ljava/util/List;
+	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
+	public final fun setExcludeEnded (Ljava/lang/Boolean;)V
+	public final fun setGuildId (Ldev/kord/common/entity/Snowflake;)V
+	public final fun setLimit (Ljava/lang/Integer;)V
+	public final fun setPosition (Ldev/kord/rest/route/Position$BeforeOrAfter;)V
+	public final fun setSkuIds (Ljava/util/List;)V
+	public final fun setUserId (Ldev/kord/common/entity/Snowflake;)V
+	public fun toRequest ()Ldev/kord/rest/json/request/EntitlementsListRequest;
+	public synthetic fun toRequest ()Ljava/lang/Object;
+}
+
 public final class dev/kord/rest/builder/guild/CurrentVoiceStateModifyBuilder : dev/kord/rest/builder/RequestBuilder {
 	public fun <init> ()V
 	public final fun getChannelId ()Ldev/kord/common/entity/Snowflake;
