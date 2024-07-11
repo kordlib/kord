@@ -75,7 +75,6 @@ public sealed class EntitlementOwnerType(
             )
         }
 
-
         /**
          * Returns an instance of [EntitlementOwnerType] with [EntitlementOwnerType.value] equal to
          * the specified [value].

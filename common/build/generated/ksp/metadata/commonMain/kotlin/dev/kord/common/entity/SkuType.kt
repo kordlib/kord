@@ -85,7 +85,6 @@ public sealed class SkuType(
             )
         }
 
-
         /**
          * Returns an instance of [SkuType] with [SkuType.value] equal to the specified [value].
          */

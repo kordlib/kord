@@ -93,7 +93,6 @@ public sealed class SkuFlag(
             )
         }
 
-
         /**
          * Returns an instance of [SkuFlag] with [SkuFlag.shift] equal to the specified [shift].
          *
