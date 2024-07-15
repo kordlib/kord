@@ -1,9 +1,10 @@
 package dev.kord.common.serialization
 
-import com.github.jershell.kbson.KBson
 import dev.kord.common.entity.Permission.*
 import dev.kord.common.entity.Permissions
 import kotlinx.serialization.Serializable
+import org.mongodb.kbson.ExperimentalKBsonSerializerApi
+import org.mongodb.kbson.serialization.EJson
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -23,16 +24,23 @@ class LongOrStringSerializerBsonTest {
         somePermissions = Permissions(DeafenMembers, ManageThreads, SendTTSMessages, ModerateMembers),
     )
 
+    @OptIn(ExperimentalKBsonSerializerApi::class)
     @Test
     fun `test Bson serialization and deserialization with LongOrStringSerializer`() {
-        val kBson = KBson.default
+        val kBson = EJson.Default
         assertEquals(
             expected = someObject,
-            actual = kBson.load(SomeObject.serializer(), kBson.stringify(SomeObject.serializer(), someObject)),
+            actual = kBson.decodeFromString(
+                SomeObject.serializer(),
+                kBson.encodeToString(SomeObject.serializer(), someObject)
+            ),
         )
         assertEquals(
             expected = someObject,
-            actual = kBson.load(SomeObject.serializer(), kBson.dump(SomeObject.serializer(), someObject)),
+            actual = kBson.decodeFromBsonValue(
+                SomeObject.serializer(),
+                kBson.encodeToBsonValue(SomeObject.serializer(), someObject)
+            ),
         )
     }
 }
