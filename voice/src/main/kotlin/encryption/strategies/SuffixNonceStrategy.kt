@@ -1,23 +1,21 @@
 package dev.kord.voice.encryption.strategies
 
+import com.iwebpp.crypto.TweetNaclFast
+import dev.kord.voice.EncryptionMode
 import dev.kord.voice.io.ByteArrayView
 import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.view
 import dev.kord.voice.udp.RTPPacket
 import kotlin.random.Random
 
-private const val SUFFIX_NONCE_LENGTH = 24
-
 public class SuffixNonceStrategy : NonceStrategy {
-    override val nonceLength: Int = SUFFIX_NONCE_LENGTH
-
-    private val nonceBuffer: ByteArray = ByteArray(SUFFIX_NONCE_LENGTH)
+    private val nonceBuffer: ByteArray = ByteArray(length)
     private val nonceView = nonceBuffer.view()
 
     override fun strip(packet: RTPPacket): ByteArrayView {
         return with(packet.payload) {
-            val nonce = view(dataEnd - SUFFIX_NONCE_LENGTH, dataEnd)!!
-            resize(dataStart, dataEnd - SUFFIX_NONCE_LENGTH)
+            val nonce = view(dataEnd - length, dataEnd)!!
+            resize(dataStart, dataEnd - length)
             nonce
         }
     }
@@ -29,5 +27,13 @@ public class SuffixNonceStrategy : NonceStrategy {
 
     override fun append(nonce: ByteArrayView, cursor: MutableByteArrayCursor) {
         cursor.writeByteView(nonce)
+    }
+
+    public companion object Factory : NonceStrategy.Factory {
+        override val length: Int = TweetNaclFast.SecretBox.nonceLength
+
+        override val mode: EncryptionMode get() = EncryptionMode.XSalsa20Poly1305Suffix
+
+        override fun create(): NonceStrategy = SuffixNonceStrategy()
     }
 }
