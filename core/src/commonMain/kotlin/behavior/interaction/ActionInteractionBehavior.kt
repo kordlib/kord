@@ -105,7 +105,6 @@ public interface ActionInteractionBehavior : InteractionBehavior {
         ActionInteractionBehavior(id, channelId, token, applicationId, kord, strategy)
 }
 
-
 /**
  * Responds to the interaction with a public message.
  *

@@ -1,10 +1,7 @@
 package dev.kord.rest.builder.component
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.ButtonStyle
-import dev.kord.common.entity.ComponentType
-import dev.kord.common.entity.DiscordChatComponent
-import dev.kord.common.entity.TextInputStyle
+import dev.kord.common.entity.*
 import dev.kord.common.entity.optional.Optional
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -12,6 +9,19 @@ import kotlin.contracts.contract
 @KordDsl
 public class ActionRowBuilder : MessageComponentBuilder {
     public val components: MutableList<ActionRowComponentBuilder> = mutableListOf()
+
+    public inline fun premiumButton(
+        skuId: Snowflake,
+        builder: PremiumButtonBuilder.() -> Unit
+    ) {
+        contract {
+            callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
+        }
+
+        components.add(
+            PremiumButtonBuilder(skuId).apply(builder)
+        )
+    }
 
     public inline fun interactionButton(
         style: ButtonStyle,

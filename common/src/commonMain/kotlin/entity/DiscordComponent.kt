@@ -23,6 +23,7 @@
         Entry("Success", intValue = 3, kDoc = "Green."),
         Entry("Danger", intValue = 4, kDoc = "Red."),
         Entry("Link", intValue = 5, kDoc = "Grey, navigates to a URL."),
+        Entry("Premium", intValue = 6, kDoc = "Blurple, prompts to purchase a premium offering."),
     ],
 )
 
@@ -41,6 +42,7 @@ package dev.kord.common.entity
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.OptionalBoolean
 import dev.kord.common.entity.optional.OptionalInt
+import dev.kord.common.entity.optional.OptionalSnowflake
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType.INT_KORD_ENUM
 import dev.kord.ksp.Generate.Entry
@@ -114,27 +116,29 @@ public data class DiscordChatComponent(
      val style: Optional<ButtonStyle> = Optional.Missing(),
      override val label: Optional<String> = Optional.Missing(),
      override val emoji: Optional<DiscordPartialEmoji> = Optional.Missing(),
-    @SerialName("custom_id")
+     @SerialName("custom_id")
      override val customId: Optional<String> = Optional.Missing(),
      override val url: Optional<String> = Optional.Missing(),
      override val disabled: OptionalBoolean = OptionalBoolean.Missing,
      override val components: Optional<List<DiscordComponent>> = Optional.Missing(),
      override val options: Optional<List<DiscordSelectOption>> = Optional.Missing(),
      override val placeholder: Optional<String> = Optional.Missing(),
-    @SerialName("default_values")
+     @SerialName("default_values")
     override val defaultValues: Optional<List<DiscordSelectDefaultValue>> = Optional.Missing(),
-    @SerialName("min_values")
+     @SerialName("min_values")
      override val minValues: OptionalInt = OptionalInt.Missing,
-    @SerialName("max_values")
+     @SerialName("max_values")
      override val maxValues: OptionalInt = OptionalInt.Missing,
-    @SerialName("min_length")
+     @SerialName("min_length")
      override val minLength: OptionalInt = OptionalInt.Missing,
-    @SerialName("max_length")
+     @SerialName("max_length")
      override val maxLength: OptionalInt = OptionalInt.Missing,
      override val required: OptionalBoolean = OptionalBoolean.Missing,
      override val value: Optional<String> = Optional.Missing(),
      @SerialName("channel_types")
      override val channelTypes: Optional<List<ChannelType>> = Optional.Missing(),
+     @SerialName("sku_id")
+     val skuId: OptionalSnowflake = OptionalSnowflake.Missing,
 ) : DiscordComponent()
 
 @Serializable

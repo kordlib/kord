@@ -1,0 +1,51 @@
+package dev.kord.rest.builder.entitlement
+
+import dev.kord.common.annotation.KordDsl
+import dev.kord.common.entity.Snowflake
+import dev.kord.rest.builder.RequestBuilder
+import dev.kord.rest.json.request.EntitlementsListRequest
+import dev.kord.rest.route.Position
+
+@KordDsl
+public class EntitlementsListRequestBuilder : RequestBuilder<EntitlementsListRequest> {
+    /**
+     * User ID to look up entitlements for.
+     */
+    public var userId: Snowflake? = null
+
+    /**
+     * An optional list of SKU iDs to check entitlements for.
+     */
+    public var skuIds: MutableList<Snowflake> = mutableListOf()
+
+    /**
+     * Retrieve entitlements before or after a specific entitlement ID.
+     */
+    public var position: Position.BeforeOrAfter? = null
+
+    /**
+     * The maximum number of entitlements to return.
+     */
+    public var limit: Int? = null
+
+    /**
+     * The guild ID to check entitlements for.
+     */
+    public var guildId: Snowflake? = null
+
+    /**
+     * Whether to exclude ended entitlements.
+     */
+    public var excludeEnded: Boolean? = null
+
+    public fun after(id: Snowflake) {
+        position = Position.After(id)
+    }
+
+    public fun before(id: Snowflake) {
+        position = Position.Before(id)
+    }
+
+    override fun toRequest(): EntitlementsListRequest =
+        EntitlementsListRequest(userId, skuIds, position, limit, guildId, excludeEnded)
+}

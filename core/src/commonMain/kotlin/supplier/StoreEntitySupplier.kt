@@ -13,6 +13,7 @@ import dev.kord.core.entity.channel.TopGuildChannel
 import dev.kord.core.entity.channel.thread.ThreadChannel
 import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
+import dev.kord.rest.json.request.EntitlementsListRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.datetime.Instant
@@ -311,6 +312,15 @@ public class StoreEntitySupplier(
             storeAndReturn(fetchedEntity) { transform(it) }
         }
     }
+
+    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? {
+        return storeAndReturn(supplier.getEntitlementOrNull(applicationId, entitlementId)) { it.data }
+    }
+
+    override suspend fun getEntitlements(
+        applicationId: Snowflake,
+        request: EntitlementsListRequest
+    ): Flow<Entitlement> = storeOnEach(supplier.getEntitlements(applicationId, request)) { it.data }
 
     private suspend inline fun <T, reified R : Any> storeAndReturn(value: T?, transform: (T) -> R): T? {
         if (value == null) return null

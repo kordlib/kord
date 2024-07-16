@@ -783,6 +783,54 @@ final class dev.kord.gateway/DiscordThreadMembersUpdate { // dev.kord.gateway/Di
     }
 }
 
+final class dev.kord.gateway/EntitlementCreate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/EntitlementCreate|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordEntitlement, kotlin/Int?) // dev.kord.gateway/EntitlementCreate.<init>|<init>(dev.kord.common.entity.DiscordEntitlement;kotlin.Int?){}[0]
+
+    final val entitlement // dev.kord.gateway/EntitlementCreate.entitlement|{}entitlement[0]
+        final fun <get-entitlement>(): dev.kord.common.entity/DiscordEntitlement // dev.kord.gateway/EntitlementCreate.entitlement.<get-entitlement>|<get-entitlement>(){}[0]
+    final val sequence // dev.kord.gateway/EntitlementCreate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/EntitlementCreate.sequence.<get-sequence>|<get-sequence>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordEntitlement // dev.kord.gateway/EntitlementCreate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/EntitlementCreate.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordEntitlement = ..., kotlin/Int? = ...): dev.kord.gateway/EntitlementCreate // dev.kord.gateway/EntitlementCreate.copy|copy(dev.kord.common.entity.DiscordEntitlement;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/EntitlementCreate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/EntitlementCreate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/EntitlementCreate.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/EntitlementDelete : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/EntitlementDelete|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordEntitlement, kotlin/Int?) // dev.kord.gateway/EntitlementDelete.<init>|<init>(dev.kord.common.entity.DiscordEntitlement;kotlin.Int?){}[0]
+
+    final val entitlement // dev.kord.gateway/EntitlementDelete.entitlement|{}entitlement[0]
+        final fun <get-entitlement>(): dev.kord.common.entity/DiscordEntitlement // dev.kord.gateway/EntitlementDelete.entitlement.<get-entitlement>|<get-entitlement>(){}[0]
+    final val sequence // dev.kord.gateway/EntitlementDelete.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/EntitlementDelete.sequence.<get-sequence>|<get-sequence>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordEntitlement // dev.kord.gateway/EntitlementDelete.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/EntitlementDelete.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordEntitlement = ..., kotlin/Int? = ...): dev.kord.gateway/EntitlementDelete // dev.kord.gateway/EntitlementDelete.copy|copy(dev.kord.common.entity.DiscordEntitlement;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/EntitlementDelete.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/EntitlementDelete.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/EntitlementDelete.toString|toString(){}[0]
+}
+
+final class dev.kord.gateway/EntitlementUpdate : dev.kord.gateway/DispatchEvent { // dev.kord.gateway/EntitlementUpdate|null[0]
+    constructor <init>(dev.kord.common.entity/DiscordEntitlement, kotlin/Int?) // dev.kord.gateway/EntitlementUpdate.<init>|<init>(dev.kord.common.entity.DiscordEntitlement;kotlin.Int?){}[0]
+
+    final val entitlement // dev.kord.gateway/EntitlementUpdate.entitlement|{}entitlement[0]
+        final fun <get-entitlement>(): dev.kord.common.entity/DiscordEntitlement // dev.kord.gateway/EntitlementUpdate.entitlement.<get-entitlement>|<get-entitlement>(){}[0]
+    final val sequence // dev.kord.gateway/EntitlementUpdate.sequence|{}sequence[0]
+        final fun <get-sequence>(): kotlin/Int? // dev.kord.gateway/EntitlementUpdate.sequence.<get-sequence>|<get-sequence>(){}[0]
+
+    final fun component1(): dev.kord.common.entity/DiscordEntitlement // dev.kord.gateway/EntitlementUpdate.component1|component1(){}[0]
+    final fun component2(): kotlin/Int? // dev.kord.gateway/EntitlementUpdate.component2|component2(){}[0]
+    final fun copy(dev.kord.common.entity/DiscordEntitlement = ..., kotlin/Int? = ...): dev.kord.gateway/EntitlementUpdate // dev.kord.gateway/EntitlementUpdate.copy|copy(dev.kord.common.entity.DiscordEntitlement;kotlin.Int?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/EntitlementUpdate.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // dev.kord.gateway/EntitlementUpdate.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // dev.kord.gateway/EntitlementUpdate.toString|toString(){}[0]
+}
+
 final class dev.kord.gateway/GatewayConfiguration { // dev.kord.gateway/GatewayConfiguration|null[0]
     constructor <init>(kotlin/String, kotlin/String, dev.kord.common.entity/DiscordShard, dev.kord.common.entity.optional/Optional<dev.kord.gateway/DiscordPresence> = ..., kotlin/Int, dev.kord.gateway/Intents) // dev.kord.gateway/GatewayConfiguration.<init>|<init>(kotlin.String;kotlin.String;dev.kord.common.entity.DiscordShard;dev.kord.common.entity.optional.Optional<dev.kord.gateway.DiscordPresence>;kotlin.Int;dev.kord.gateway.Intents){}[0]
 

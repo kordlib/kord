@@ -9,6 +9,7 @@ import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 private val ApplicationCommandData.nullableGuildId get() = guildId.value
+private val EntitlementData.nullableGuildId get() = guildId.value
 private val MessageData.nullableGuildId get() = guildId.value
 private val ChannelData.nullableGuildId get() = guildId.value
 private val WebhookData.nullableGuildId get() = guildId.value
@@ -85,6 +86,8 @@ public data class GuildData(
             link(GuildData::id to StickerData::nullableGuildId)
             link(GuildData::id to EmojiData::guildId)
             link(GuildData::id to AutoModerationRuleData::guildId)
+            link(GuildData::id to EntitlementData::nullableGuildId)
+
         }
 
         public fun from(entity: DiscordGuild): GuildData = with(entity) {

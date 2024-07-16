@@ -18,10 +18,7 @@ import dev.kord.core.entity.channel.thread.ThreadMember
 import dev.kord.core.entity.interaction.followup.FollowupMessage
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.rest.builder.auditlog.AuditLogGetRequestBuilder
-import dev.kord.rest.json.request.AuditLogGetRequest
-import dev.kord.rest.json.request.GuildScheduledEventUsersResponse
-import dev.kord.rest.json.request.ListThreadsBySnowflakeRequest
-import dev.kord.rest.json.request.ListThreadsByTimestampRequest
+import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RestRequestException
 import dev.kord.rest.route.Position
 import dev.kord.rest.service.RestClient
@@ -63,6 +60,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
 
     // topics
     private inline val application get() = kord.rest.application
+
+    // monetization
+    private inline val sku get() = kord.rest.sku
+    private inline val entitlement get() = kord.rest.entitlement
 
 
     // max batchSize/limit: see https://discord.com/developers/docs/resources/user#get-current-user-guilds
@@ -446,7 +447,10 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GlobalApplicationCommand(data, interaction)
     }
 
-    override fun getGlobalApplicationCommands(applicationId: Snowflake, withLocalizations: Boolean?): Flow<GlobalApplicationCommand> = flow {
+    override fun getGlobalApplicationCommands(
+        applicationId: Snowflake,
+        withLocalizations: Boolean?
+    ): Flow<GlobalApplicationCommand> = flow {
         for (command in interaction.getGlobalApplicationCommands(applicationId, withLocalizations)) {
             val data = ApplicationCommandData.from(command)
             emit(GlobalApplicationCommand(data, interaction))
@@ -647,6 +651,28 @@ public class RestEntitySupplier(public val kord: Kord) : EntitySupplier {
         GuildApplicationCommand(data, interaction)
     }
 
+    override suspend fun getEntitlementOrNull(applicationId: Snowflake, entitlementId: Snowflake): Entitlement? =
+        catchNotFound {
+            val response = entitlement.getEntitlement(applicationId, entitlementId)
+            val data = EntitlementData.from(response)
+            Entitlement(data, kord)
+        }
+
+    // maxBatchSize: see https://discord.com/developers/docs/monetization/entitlements#list-entitlements
+    override suspend fun getEntitlements(
+        applicationId: Snowflake,
+        request: EntitlementsListRequest
+    ): Flow<Entitlement> = limitedPagination(request.limit, maxBatchSize = 100) { batchSize ->
+        paginateForwards(batchSize, idSelector = { it.id }) { position ->
+            entitlement.listEntitlements(
+                applicationId = applicationId,
+                request = request.copy(position = position, limit = batchSize)
+            )
+        }.map {
+            val data = EntitlementData.from(it)
+            Entitlement(data, kord)
+        }
+    }
 
     override fun toString(): String = "RestEntitySupplier(rest=${kord.rest})"
 }
