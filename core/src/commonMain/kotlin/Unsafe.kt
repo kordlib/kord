@@ -25,7 +25,7 @@ import dev.kord.rest.service.InteractionService
  */
 @KordUnsafe
 @KordExperimental
-public class Unsafe(private val kord: Kord) {
+public class Unsafe(private val kord: Kord): WebhookUnsafe {
 
     public fun autoModerationRule(guildId: Snowflake, ruleId: Snowflake): AutoModerationRuleBehavior =
         AutoModerationRuleBehaviorImpl(guildId, ruleId, kord)
@@ -107,7 +107,7 @@ public class Unsafe(private val kord: Kord) {
     public fun member(guildId: Snowflake, id: Snowflake): MemberBehavior =
         MemberBehavior(guildId = guildId, id = id, kord = kord)
 
-    public fun webhook(id: Snowflake): WebhookBehavior =
+    public override fun webhook(id: Snowflake): WebhookBehavior =
         WebhookBehavior(id, kord)
 
     public fun stageInstance(id: Snowflake, channelId: Snowflake): StageInstanceBehavior = StageInstanceBehavior(
