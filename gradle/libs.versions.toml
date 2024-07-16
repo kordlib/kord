@@ -19,7 +19,7 @@ fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 
 # code generation
 ksp = "2.0.0-1.0.23" # https://github.com/google/ksp
-kotlinpoet = "1.18.0" # https://github.com/square/kotlinpoet
+kotlinpoet = "1.18.1" # https://github.com/square/kotlinpoet
 
 # tests
 junit-jupiter = "5.10.3" # https://github.com/junit-team/junit5
