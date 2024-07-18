@@ -4,6 +4,8 @@ import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.utils.io.core.*
+import kotlinx.io.readByteArray
+import kotlinx.io.readUShort
 
 private val ipDiscoveryLogger = KotlinLogging.logger { }
 
@@ -15,7 +17,6 @@ private const val DISCOVERY_MESSAGE_SIZE = DISCOVERY_HEADER_SIZE + DISCOVERY_DAT
 private const val REQUEST: Short = 0x01
 private const val RESPONSE: Short = 0x02
 
-@OptIn(ExperimentalUnsignedTypes::class)
 public suspend fun VoiceUdpSocket.discoverIP(address: SocketAddress, ssrc: Int): SocketAddress {
     ipDiscoveryLogger.trace { "discovering ip" }
 
@@ -31,9 +32,9 @@ public suspend fun VoiceUdpSocket.discoverIP(address: SocketAddress, ssrc: Int):
     return with(recv(address)) {
         require(readShort() == RESPONSE) { "did not receive a response." }
         require(readShort() == MESSAGE_LENGTH) { "expected $MESSAGE_LENGTH bytes of data."}
-        discardExact(4) // ssrc
+        skip(4) // ssrc
 
-        val ip = String(readBytes(64)).trimEnd(0.toChar())
+        val ip = readByteArray(64).decodeToString().trimEnd(0.toChar())
         val port = readUShort().toInt()
 
         SocketAddress(ip, port)

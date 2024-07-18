@@ -2,12 +2,12 @@ package dev.kord.voice.udp
 
 import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.io.ByteArrayView
-import io.ktor.utils.io.core.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.io.Source
 
 @KordVoice
 public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket {
-    override fun all(address: SocketAddress): Flow<ByteReadPacket> = unsupported()
+    override fun all(address: SocketAddress): Flow<Source> = unsupported()
 
     override suspend fun send(address: SocketAddress, packet: ByteArrayView) = unsupported()
 

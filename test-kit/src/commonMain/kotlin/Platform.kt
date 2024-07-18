@@ -13,4 +13,5 @@ expect object Platform {
 
 expect fun getEnv(name: String): String?
 expect suspend fun file(project: String, path: String): String
-expect suspend fun readFile(project: String, path: String): ByteReadChannel
+suspend fun readFile(project: String, path: String) = readFile0(project, path).counted()
+expect suspend fun readFile0(project: String, path: String): ByteReadChannel

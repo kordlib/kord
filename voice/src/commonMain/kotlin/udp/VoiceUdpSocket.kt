@@ -4,6 +4,7 @@ import dev.kord.common.annotation.KordVoice
 import dev.kord.voice.io.ByteArrayView
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.flow.*
+import kotlinx.io.Source
 
 @KordVoice
 public expect class SocketAddress(hostname: String, port: Int) {
@@ -21,7 +22,7 @@ public expect val GlobalVoiceUdpSocket: VoiceUdpSocket
 
 @KordVoice
 public interface VoiceUdpSocket {
-    public fun all(address: SocketAddress): Flow<ByteReadPacket>
+    public fun all(address: SocketAddress): Flow<Source>
 
     public suspend fun send(address: SocketAddress, packet: ByteArrayView): Unit
 
@@ -29,7 +30,7 @@ public interface VoiceUdpSocket {
 
     public companion object {
         private object None : VoiceUdpSocket {
-            override fun all(address: SocketAddress): Flow<ByteReadPacket> = emptyFlow()
+            override fun all(address: SocketAddress): Flow<Source> = emptyFlow()
 
             override suspend fun send(address: SocketAddress, packet: ByteArrayView) {}
 
@@ -40,4 +41,4 @@ public interface VoiceUdpSocket {
     }
 }
 
-public suspend fun VoiceUdpSocket.recv(address: SocketAddress): ByteReadPacket = all(address).first()
+public suspend fun VoiceUdpSocket.recv(address: SocketAddress): Source = all(address).first()

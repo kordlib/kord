@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.io.Source
 import node.dgram.SocketEvent
 import node.dgram.SocketType
 import node.dgram.createSocket
@@ -33,7 +34,7 @@ public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket
         }
     }
 
-    override fun all(address: SocketAddress): Flow<ByteReadPacket> = incoming
+    override fun all(address: SocketAddress): Flow<Source> = incoming
         .filter { it.first == address }
         .map { ByteReadPacket(it.second) }
 

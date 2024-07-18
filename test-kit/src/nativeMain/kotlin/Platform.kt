@@ -28,7 +28,7 @@ actual fun getEnv(name: String) = getenv(name)?.toKString()
 
 actual suspend fun file(project: String, path: String): String = read(project, path, Source::readString)
 
-actual suspend fun readFile(project: String, path: String): ByteReadChannel =
+actual suspend fun readFile0(project: String, path: String): ByteReadChannel =
     read(project, path) { ByteReadChannel(readByteArray()) }
 
 private inline fun <T> read(project: String, path: String, readerAction: Source.() -> T): T {

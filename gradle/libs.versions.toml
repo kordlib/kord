@@ -9,6 +9,7 @@ kotlinx-datetime = "0.6.0" # https://github.com/Kotlin/kotlinx-datetime
 kord-cache = "0.5.4" # https://github.com/kordlib/cache
 
 # implementation dependencies
+kotlinx-io = "0.5.1" # https://github.com/Kotlin/kotlinx-io
 kotlin-logging = "7.0.0" # https://github.com/oshai/kotlin-logging
 slf4j = "2.0.13" # https://www.slf4j.org
 kotlin-node = "20.14.10-pre.773" # https://github.com/JetBrains/kotlin-wrappers
@@ -32,7 +33,8 @@ dokka = "1.9.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.25.0" # https://github.com/Kotlin/kotlinx-atomicfu
 binary-compatibility-validator = "0.15.1" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.4.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
-
+kord-gradle-tools = "1.6.2" # https://github.com/kordlib/gradle-tools/blob/main/build.gradle.kts#L10
+maven-publish-plugin = "0.29.0" # https://github.com/vanniktech/gradle-maven-publish-plugin
 
 [libraries]
 

@@ -5,6 +5,9 @@ import dev.kord.voice.io.MutableByteArrayCursor
 import dev.kord.voice.io.mutableCursor
 import dev.kord.voice.io.view
 import io.ktor.utils.io.core.*
+import kotlinx.io.Source
+import kotlinx.io.readByteArray
+import kotlinx.io.readUInt
 import kotlin.experimental.and
 
 internal const val RTP_HEADER_LENGTH = 12
@@ -38,7 +41,7 @@ public data class RTPPacket(
     public companion object {
         internal const val VERSION = 2
 
-        public fun fromPacket(packet: ByteReadPacket): RTPPacket? = with(packet) base@{
+        public fun fromPacket(packet: Source): RTPPacket? = with(packet) base@{
             if (remaining <= 13) return@base null
 
             /*
@@ -80,7 +83,7 @@ public data class RTPPacket(
             if (remaining <= csrcCount * 4 + 1) return@base null
             val csrcIdentifiers = UIntArray(csrcCount.toInt()) { readUInt() }
 
-            val payload = readBytes().view()
+            val payload = readByteArray().view()
 
             val paddingBytes = if (hasPadding) { payload[payload.viewSize - 1] } else 0
 

@@ -92,16 +92,19 @@ abstract interface dev.kord.voice.udp/VoiceUdpSocket { // dev.kord.voice.udp/Voi
     }
 
     // Targets: [apple, linux]
-    abstract fun all(io.ktor.network.sockets/InetSocketAddress): kotlinx.coroutines.flow/Flow<io.ktor.utils.io.core/ByteReadPacket> // dev.kord.voice.udp/VoiceUdpSocket.all|all(io.ktor.network.sockets.InetSocketAddress){}[0]
-
-    // Targets: [apple, linux]
     abstract suspend fun send(io.ktor.network.sockets/InetSocketAddress, dev.kord.voice.io/ByteArrayView) // dev.kord.voice.udp/VoiceUdpSocket.send|send(io.ktor.network.sockets.InetSocketAddress;dev.kord.voice.io.ByteArrayView){}[0]
 
+    // Targets: [apple]
+    abstract fun all(io.ktor.network.sockets/InetSocketAddress): kotlinx.coroutines.flow/Flow<io.ktor.utils.io.core/ByteReadPacket> // dev.kord.voice.udp/VoiceUdpSocket.all|all(io.ktor.network.sockets.InetSocketAddress){}[0]
+
     // Targets: [js, mingwX64]
-    abstract fun all(dev.kord.voice.udp/SocketAddress): kotlinx.coroutines.flow/Flow<io.ktor.utils.io.core/ByteReadPacket> // dev.kord.voice.udp/VoiceUdpSocket.all|all(dev.kord.voice.udp.SocketAddress){}[0]
+    abstract fun all(dev.kord.voice.udp/SocketAddress): kotlinx.coroutines.flow/Flow<kotlinx.io/Source> // dev.kord.voice.udp/VoiceUdpSocket.all|all(dev.kord.voice.udp.SocketAddress){}[0]
 
     // Targets: [js, mingwX64]
     abstract suspend fun send(dev.kord.voice.udp/SocketAddress, dev.kord.voice.io/ByteArrayView) // dev.kord.voice.udp/VoiceUdpSocket.send|send(dev.kord.voice.udp.SocketAddress;dev.kord.voice.io.ByteArrayView){}[0]
+
+    // Targets: [linux]
+    abstract fun all(io.ktor.network.sockets/InetSocketAddress): kotlinx.coroutines.flow/Flow<kotlinx.io/Source> // dev.kord.voice.udp/VoiceUdpSocket.all|all(io.ktor.network.sockets.InetSocketAddress){}[0]
 }
 
 sealed interface dev.kord.voice.encryption.strategies/NonceStrategy { // dev.kord.voice.encryption.strategies/NonceStrategy|null[0]
@@ -821,7 +824,7 @@ final class dev.kord.voice.udp/RTPPacket { // dev.kord.voice.udp/RTPPacket|null[
     }
 
     final object Companion { // dev.kord.voice.udp/RTPPacket.Companion|null[0]
-        final fun fromPacket(io.ktor.utils.io.core/ByteReadPacket): dev.kord.voice.udp/RTPPacket? // dev.kord.voice.udp/RTPPacket.Companion.fromPacket|fromPacket(io.ktor.utils.io.core.ByteReadPacket){}[0]
+        final fun fromPacket(kotlinx.io/Source): dev.kord.voice.udp/RTPPacket? // dev.kord.voice.udp/RTPPacket.Companion.fromPacket|fromPacket(kotlinx.io.Source){}[0]
     }
 }
 
@@ -1238,7 +1241,7 @@ final suspend inline fun dev.kord.voice/VoiceConnection(dev.kord.gateway/Gateway
 // Targets: [apple, linux]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/discoverIP(io.ktor.network.sockets/InetSocketAddress, kotlin/Int): io.ktor.network.sockets/InetSocketAddress // dev.kord.voice.udp/discoverIP|discoverIP@dev.kord.voice.udp.VoiceUdpSocket(io.ktor.network.sockets.InetSocketAddress;kotlin.Int){}[0]
 
-// Targets: [apple, linux]
+// Targets: [apple]
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(io.ktor.network.sockets/InetSocketAddress): io.ktor.utils.io.core/ByteReadPacket // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(io.ktor.network.sockets.InetSocketAddress){}[0]
 
 // Targets: [js, mingwX64]
@@ -1262,4 +1265,7 @@ final class dev.kord.voice.udp/SocketAddress { // dev.kord.voice.udp/SocketAddre
 final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/discoverIP(dev.kord.voice.udp/SocketAddress, kotlin/Int): dev.kord.voice.udp/SocketAddress // dev.kord.voice.udp/discoverIP|discoverIP@dev.kord.voice.udp.VoiceUdpSocket(dev.kord.voice.udp.SocketAddress;kotlin.Int){}[0]
 
 // Targets: [js, mingwX64]
-final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(dev.kord.voice.udp/SocketAddress): io.ktor.utils.io.core/ByteReadPacket // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(dev.kord.voice.udp.SocketAddress){}[0]
+final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(dev.kord.voice.udp/SocketAddress): kotlinx.io/Source // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(dev.kord.voice.udp.SocketAddress){}[0]
+
+// Targets: [linux]
+final suspend fun (dev.kord.voice.udp/VoiceUdpSocket).dev.kord.voice.udp/recv(io.ktor.network.sockets/InetSocketAddress): kotlinx.io/Source // dev.kord.voice.udp/recv|recv@dev.kord.voice.udp.VoiceUdpSocket(io.ktor.network.sockets.InetSocketAddress){}[0]

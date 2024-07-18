@@ -8,6 +8,7 @@ import io.ktor.network.sockets.Datagram
 import io.ktor.utils.io.core.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.io.Source
 import io.ktor.network.sockets.Datagram as KtorDatagram
 
 @KordVoice
@@ -29,7 +30,7 @@ public actual val GlobalVoiceUdpSocket: VoiceUdpSocket = object : VoiceUdpSocket
             .launchIn(socketScope)
     }
 
-    override fun all(address: SocketAddress): Flow<ByteReadPacket> {
+    override fun all(address: SocketAddress): Flow<Source> {
         return incoming
             .filter { it.address == address }
             .map { it.packet }

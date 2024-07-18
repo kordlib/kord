@@ -1,3 +1,4 @@
+@file:JvmName("PlatformJvm")
 package dev.kord.test
 
 import io.ktor.utils.io.*
@@ -14,5 +15,5 @@ actual object Platform {
 
 actual fun getEnv(name: String): String? = System.getenv(name)
 actual suspend fun file(project: String, path: String): String = ClassLoader.getSystemResource(path).readText()
-actual suspend fun readFile(project: String, path: String): ByteReadChannel =
+actual suspend fun readFile0(project: String, path: String): ByteReadChannel =
     ClassLoader.getSystemResourceAsStream(path)!!.toByteReadChannel()

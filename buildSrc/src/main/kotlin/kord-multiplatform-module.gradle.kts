@@ -78,7 +78,7 @@ tasks {
 
     afterEvaluate {
         val compilationTasks = kotlin.targets.flatMap {
-            listOf("compileKotlin${it.name.capitalized()}", "${it.name}SourcesJar")
+            listOf("compileKotlin${it.name.replaceFirstChar(Char::titlecase)}", "${it.name}SourcesJar")
         }
         for (task in compilationTasks) {
             named(task) {
