@@ -1010,12 +1010,17 @@ public final class dev/kord/gateway/GuildUpdate : dev/kord/gateway/DispatchEvent
 public final class dev/kord/gateway/Heartbeat : dev/kord/gateway/Event {
 	public static final field Companion Ldev/kord/gateway/Heartbeat$Companion;
 	public static final field NewCompanion Ldev/kord/gateway/Heartbeat$NewCompanion;
-	public fun <init> (J)V
-	public final fun component1 ()J
-	public final fun copy (J)Ldev/kord/gateway/Heartbeat;
+	public synthetic fun <init> (J)V
+	public fun <init> (Ljava/lang/Long;)V
+	public final synthetic fun component1 ()J
+	public final fun component1 ()Ljava/lang/Long;
+	public final synthetic fun copy (J)Ldev/kord/gateway/Heartbeat;
+	public final fun copy (Ljava/lang/Long;)Ldev/kord/gateway/Heartbeat;
 	public static synthetic fun copy$default (Ldev/kord/gateway/Heartbeat;JILjava/lang/Object;)Ldev/kord/gateway/Heartbeat;
+	public static synthetic fun copy$default (Ldev/kord/gateway/Heartbeat;Ljava/lang/Long;ILjava/lang/Object;)Ldev/kord/gateway/Heartbeat;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getData ()J
+	public final synthetic fun getData ()J
+	public final fun getData ()Ljava/lang/Long;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

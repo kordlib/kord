@@ -14,6 +14,7 @@ import kotlinx.serialization.MissingFieldException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNull
 import kotlin.js.JsName
+import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -166,6 +167,23 @@ class SerializationTest {
             topic.value shouldBe "24/7 chat about how to gank Mike #2"
             lastMessageId.value?.toString() shouldBe "155117677105512449"
             parentId?.value?.toString() shouldBe "399942396007890945"
+        }
+    }
+
+    @Test
+    fun test_Heartbeat_Event_serialization() {
+        val sequenceNumbers = listOf(null, 0, -1, 1, Random.nextLong(), Long.MIN_VALUE, Long.MAX_VALUE)
+        sequenceNumbers.forEach { sequenceNumber ->
+            val heartbeat = Heartbeat(sequenceNumber)
+            val permutations = listOf(
+                jsonObjectPermutations("op" to "1", "d" to "$sequenceNumber"),
+                jsonObjectPermutations("op" to "1", "t" to "null", "d" to "$sequenceNumber"),
+                jsonObjectPermutations("op" to "1", "s" to "null", "d" to "$sequenceNumber"),
+                jsonObjectPermutations("op" to "1", "t" to "null", "s" to "null", "d" to "$sequenceNumber"),
+            ).flatten()
+            permutations.forEach { perm ->
+                assertEquals(heartbeat, Json.decodeFromString(Event.DeserializationStrategy, perm))
+            }
         }
     }
 

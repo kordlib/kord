@@ -2,7 +2,7 @@
 
 # api dependencies
 kotlin = "2.0.0" # https://github.com/JetBrains/kotlin
-ktor = "3.0.0-beta-1" # https://github.com/ktorio/ktor
+ktor = "3.0.0-beta-2" # https://github.com/ktorio/ktor
 kotlinx-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
 kotlinx-serialization = "1.7.1" # https://github.com/Kotlin/kotlinx.serialization
 kotlinx-datetime = "0.6.0" # https://github.com/Kotlin/kotlinx-datetime
@@ -11,31 +11,28 @@ kord-cache = "0.5.4" # https://github.com/kordlib/cache
 # implementation dependencies
 kotlin-logging = "7.0.0" # https://github.com/oshai/kotlin-logging
 slf4j = "2.0.13" # https://www.slf4j.org
-kotlin-node = "20.11.30-pre.765" # https://github.com/JetBrains/kotlin-wrappers
-bignum = "0.3.9" # https://github.com/ionspin/kotlin-multiplatform-bignum
+kotlin-node = "20.14.10-pre.773" # https://github.com/JetBrains/kotlin-wrappers
+bignum = "0.3.10" # https://github.com/ionspin/kotlin-multiplatform-bignum
 stately = "2.0.7" # https://github.com/touchlab/Stately
 fastZlib = "2.0.1" # https://github.com/timotejroiko/fast-zlib
 sodium = "0.9.2" # https://github.com/ionspin/kotlin-multiplatform-libsodium
 
 # code generation
-ksp = "2.0.0-1.0.22" # https://github.com/google/ksp
-kotlinpoet = "1.17.0" # https://github.com/square/kotlinpoet
+ksp = "2.0.0-1.0.23" # https://github.com/google/ksp
+kotlinpoet = "1.18.1" # https://github.com/square/kotlinpoet
 
 # tests
 junit-jupiter = "5.10.3" # https://github.com/junit-team/junit5
 junit-platform = "1.10.3"
 mockk = "1.13.11" # https://github.com/mockk/mockk
-bson = "5.1.1" # https://github.com/mongodb/mongo-java-driver
-kbson = "0.5.0" # https://github.com/jershell/kbson
-kotlinx-io = "0.4.0" # https://github.com/Kotlin/kotlinx-io
+kbson = "0.4.0" # https://github.com/mongodb/kbson
 
 # plugins
 dokka = "1.9.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.25.0" # https://github.com/Kotlin/kotlinx-atomicfu
-binary-compatibility-validator = "0.15.0-Beta.3" # https://github.com/Kotlin/binary-compatibility-validator
-buildconfig = "5.3.5" # https://github.com/gmazzo/gradle-buildconfig-plugin
-kord-gradle-tools = "1.6.2" # https://github.com/kordlib/gradle-tools
-maven-publish-plugin = "0.27.0" # https://github.com/vanniktech/gradle-maven-publish-plugin
+binary-compatibility-validator = "0.15.1" # https://github.com/Kotlin/binary-compatibility-validator
+buildconfig = "5.4.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
+
 
 [libraries]
 
@@ -88,8 +85,7 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version = "junit-platform" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
-bson = { module = "org.mongodb:bson", version.ref = "bson" }
-kbson = { module = "com.github.jershell:kbson", version.ref = "kbson" }
+kbson = { module = "org.mongodb.kbson:kbson", version.ref = "kbson" }
 kotlinx-io = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinx-io" }
 
 # actually plugins, not libraries, but used is 'buildSrc/build.gradle.kts' as implementation dependencies:
