@@ -30,7 +30,7 @@ kbson = "0.4.0" # https://github.com/mongodb/kbson
 # plugins
 dokka = "1.9.20" # https://github.com/Kotlin/dokka
 kotlinx-atomicfu = "0.25.0" # https://github.com/Kotlin/kotlinx-atomicfu
-binary-compatibility-validator = "0.15.1" # https://github.com/Kotlin/binary-compatibility-validator
+binary-compatibility-validator = "0.16.2" # https://github.com/Kotlin/binary-compatibility-validator
 buildconfig = "5.4.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
 
 
