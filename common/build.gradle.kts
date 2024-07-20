@@ -33,14 +33,13 @@ kotlin {
                 api(libs.ktor.client.js)
 
                 // workaround for https://youtrack.jetbrains.com/issue/KT-43500 /
-                // https://youtrack.jetbrains.com/issue/KT-64109#focus=Comments-27-10064206.0-0
-                // (intended to be compileOnly in commonMain only)
+                // https://youtrack.jetbrains.com/issue/KT-64109#focus=Comments-27-10064206.0-0 /
+                // https://youtrack.jetbrains.com/issue/KT-61096 (intended to be compileOnly in commonMain only)
                 implementation(projects.kspAnnotations)
             }
         }
         jvmTest {
             dependencies {
-                implementation(libs.bson)
                 implementation(libs.kbson)
             }
         }
