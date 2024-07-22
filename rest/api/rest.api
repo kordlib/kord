@@ -2143,6 +2143,12 @@ public final class dev/kord/rest/builder/message/MessageBuilder$DefaultImpls {
 	public static fun addFile (Ldev/kord/rest/builder/message/MessageBuilder;Ljava/lang/String;Lio/ktor/client/request/forms/ChannelProvider;)Ldev/kord/rest/NamedFile;
 }
 
+public final class dev/kord/rest/builder/message/MessageBuilder$Limits {
+	public static final field INSTANCE Ldev/kord/rest/builder/message/MessageBuilder$Limits;
+	public static final field content I
+	public static final field embedCount I
+}
+
 public final class dev/kord/rest/builder/message/MessageBuilderJvmKt {
 	public static final fun addFile (Ldev/kord/rest/builder/message/MessageBuilder;Ljava/nio/file/Path;)Ldev/kord/rest/NamedFile;
 	public static final fun addFile (Ldev/kord/rest/builder/message/MessageBuilder;Ljava/nio/file/Path;Lkotlin/jvm/functions/Function1;)Ldev/kord/rest/NamedFile;
