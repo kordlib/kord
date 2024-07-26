@@ -1,5 +1,3 @@
-@file:Suppress("CONTEXT_RECEIVERS_DEPRECATED")
-
 package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.*

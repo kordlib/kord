@@ -4,7 +4,10 @@ plugins {
 
 kotlin {
     compilerOptions {
-        freeCompilerArgs.add("-Xcontext-receivers")
+        freeCompilerArgs.addAll(
+            "-Xcontext-receivers",
+            "-Xsuppress-warning=CONTEXT_RECEIVERS_DEPRECATED",
+        )
     }
 }
 
