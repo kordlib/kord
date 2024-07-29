@@ -68,6 +68,17 @@ publishing {
                 password = getenv("NEXUS_PASSWORD")
             }
         }
+
+        if (!isRelease) {
+            maven {
+                name = "kordexSnapshots"
+                url = uri("https://repo.kordex.dev/snapshots")
+                credentials {
+                    username = getenv("KORDEX_REPO_USER")
+                    password = getenv("KORDEX_REPO_PASSWORD")
+                }
+            }
+        }
     }
 }
 

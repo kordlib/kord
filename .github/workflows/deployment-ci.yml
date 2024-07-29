@@ -42,6 +42,8 @@ jobs:
       KORD_TEST_TOKEN: ${{ secrets.KORD_TEST_TOKEN }}
       NEXUS_USER: ${{ secrets.NEXUS_USER }}
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      KORDEX_REPO_USER: ${{ secrets.KORDEX_REPO_USER }}
+      KORDEX_REPO_PASSWORD: ${{ secrets.KORDEX_REPO_PASSWORD }}
       SIGNING_KEY: ${{ secrets.signingKey }}
       SIGNING_PASSWORD: ${{ secrets.signingPassword }}
     steps:
