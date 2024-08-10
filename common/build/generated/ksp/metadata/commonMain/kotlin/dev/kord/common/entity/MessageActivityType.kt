@@ -75,7 +75,6 @@ public sealed class MessageActivityType(
             )
         }
 
-
         /**
          * Returns an instance of [MessageActivityType] with [MessageActivityType.value] equal to
          * the specified [value].

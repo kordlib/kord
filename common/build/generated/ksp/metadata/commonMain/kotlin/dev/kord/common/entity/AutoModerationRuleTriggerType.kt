@@ -91,7 +91,6 @@ public sealed class AutoModerationRuleTriggerType(
             )
         }
 
-
         /**
          * Returns an instance of [AutoModerationRuleTriggerType] with
          * [AutoModerationRuleTriggerType.value] equal to the specified [value].

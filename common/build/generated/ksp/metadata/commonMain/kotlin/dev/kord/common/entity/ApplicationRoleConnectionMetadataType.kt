@@ -123,7 +123,6 @@ public sealed class ApplicationRoleConnectionMetadataType(
             )
         }
 
-
         /**
          * Returns an instance of [ApplicationRoleConnectionMetadataType] with
          * [ApplicationRoleConnectionMetadataType.value] equal to the specified [value].

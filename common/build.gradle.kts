@@ -18,7 +18,7 @@ kotlin {
         }
         jvmMain {
             dependencies {
-                api(libs.ktor.client.cio)
+                api(libs.ktor.client.okhttp)
             }
         }
         nonJvmMain {
@@ -35,6 +35,11 @@ kotlin {
                 // workaround for https://youtrack.jetbrains.com/issue/KT-43500
                 // (intended to be compileOnly in commonMain only)
                 implementation(projects.kspAnnotations)
+            }
+        }
+        jvmTest {
+            dependencies {
+                implementation(libs.kbson)
             }
         }
     }

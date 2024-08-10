@@ -71,7 +71,6 @@ public sealed class GuildScheduledEventPrivacyLevel(
             )
         }
 
-
         /**
          * Returns an instance of [GuildScheduledEventPrivacyLevel] with
          * [GuildScheduledEventPrivacyLevel.value] equal to the specified [value].

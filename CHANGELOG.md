@@ -1,3 +1,59 @@
+# 0.14.0
+
+## Additions
+
+* Support other `SerialFormat`s in `LongOrStringSerializer` (#937)
+
+## Changes
+
+* Bump `DeprecationLevel`s after 0.13.0 (#908)
+* Rewrite `Event.DeserializationStrategy` (#923)
+* Deprecate application command events (#927)
+* Rewrite `VoiceEvent.DeserializationStrategy` (#925)
+* Switch to OkHttp as http client on jvm (by @DRSchlaubi in #928)
+
+## Fixes
+
+* `DiscordVoiceState.member` uses incorrect serial name (by @viztea in #914)
+* Use actual zero width space in `EmbedBuilder` (by @matytyma in #917)
+* Fix some cache links (#934)
+
+## Dependencies
+
+Updated in #920, #929 and #943
+
+* Gradle 8.5 -> 8.7
+* Kotlin 1.9.21 -> 1.9.24
+* Ktor 2.3.7 -> 2.3.11
+* kotlinx.coroutines 1.7.3 -> 1.8.1
+* kotlinx.serialization 1.6.2 -> 1.6.3
+* kotlinx-datetime 0.5.0 -> 0.6.0
+* kotlin-logging 6.0.1 -> 6.0.9
+* SLF4J 2.0.9 -> 2.0.13
+* kotlin-node 18.16.12-pre.619 -> 20.11.5-pre.751
+* kotlin-multiplatform-bignum 0.3.8 -> 0.3.9
+* Stately 2.0.6 -> 2.0.7
+* KSP 1.9.21-1.0.16 -> 1.9.24-1.0.20
+* KotlinPoet 1.15.3 -> 1.16.0
+* JUnit Jupiter 5.10.1 -> 5.10.2
+* MockK 1.13.8 -> 1.13.11
+* Dokka 1.9.10 -> 1.9.20
+* AtomicFU 0.23.1 -> 0.24.0
+* Binary compatibility validator 0.13.2 -> 0.15.0-Beta.2
+* gradle-buildconfig-plugin 5.1.0 -> 5.3.5
+* Foojay Toolchains Plugin 0.7.0 -> 0.8.0
+* Replace gradle/gradle-build-action with gradle/actions/setup-gradle
+* Replace gradle/wrapper-validation-action with gradle/actions/wrapper-validation
+
+## House-keeping
+
+* Update README (#915)
+* Disable timeouts for Kotlin/JS tests (#926)
+* Remove unused resource files (#935)
+* Enable binary compatibility validation for KLibs (#929)
+* Fix test related Gradle deprecation warnings (#936)
+* Create `sourceLink` `URL` with non-deprecated `URI` constructor (by @SebastianAigner in #938)
+
 # 0.13.1
 
 This release fixes an exception when trying to deserialize `Permissions` contained in `GuildAuditLogEntryCreateEvent`s.

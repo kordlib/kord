@@ -272,7 +272,6 @@ public sealed class Intent(
             )
         }
 
-
         /**
          * Returns an instance of [Intent] with [Intent.shift] equal to the specified [shift].
          *

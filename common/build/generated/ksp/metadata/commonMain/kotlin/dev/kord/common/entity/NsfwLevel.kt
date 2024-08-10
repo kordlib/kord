@@ -73,7 +73,6 @@ public sealed class NsfwLevel(
             )
         }
 
-
         /**
          * Returns an instance of [NsfwLevel] with [NsfwLevel.value] equal to the specified [value].
          */

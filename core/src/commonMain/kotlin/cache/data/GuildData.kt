@@ -8,9 +8,11 @@ import dev.kord.common.serialization.DurationInSeconds
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
+private val ApplicationCommandData.nullableGuildId get() = guildId.value
 private val MessageData.nullableGuildId get() = guildId.value
 private val ChannelData.nullableGuildId get() = guildId.value
 private val WebhookData.nullableGuildId get() = guildId.value
+private val StickerData.nullableGuildId get() = guildId.value
 
 @Serializable
 public data class GuildData(
@@ -71,7 +73,8 @@ public data class GuildData(
     public companion object {
 
         public val description: DataDescription<GuildData, Snowflake> = description(GuildData::id) {
-
+            link(GuildData::id to ApplicationCommandData::nullableGuildId)
+            link(GuildData::id to GuildApplicationCommandPermissionsData::guildId)
             link(GuildData::id to RoleData::guildId)
             link(GuildData::id to ChannelData::nullableGuildId)
             link(GuildData::id to MemberData::guildId)
@@ -79,6 +82,8 @@ public data class GuildData(
             link(GuildData::id to WebhookData::nullableGuildId)
             link(GuildData::id to VoiceStateData::guildId)
             link(GuildData::id to PresenceData::guildId)
+            link(GuildData::id to StickerData::nullableGuildId)
+            link(GuildData::id to EmojiData::guildId)
             link(GuildData::id to AutoModerationRuleData::guildId)
         }
 

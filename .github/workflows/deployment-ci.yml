@@ -28,10 +28,10 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: --stacktrace --info build
+        run: ./gradlew --stacktrace --info build
   release:
     name: Publish artifacts
     runs-on: ubuntu-latest
@@ -53,11 +53,9 @@ jobs:
         with:
           distribution: temurin
           java-version: 11
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: --stacktrace --info build
+        run: ./gradlew --stacktrace --info build
       - name: Publish with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: --no-parallel -x test publish
+        run: ./gradlew --no-parallel -x test publish

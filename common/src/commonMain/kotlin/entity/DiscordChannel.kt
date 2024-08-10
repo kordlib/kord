@@ -235,7 +235,7 @@ public sealed class ArchiveDuration(
         @Deprecated(
             "Replaced by 'ArchiveDuration.from()'.",
             ReplaceWith("ArchiveDuration.from(duration)", imports = ["dev.kord.common.entity.ArchiveDuration"]),
-            DeprecationLevel.ERROR,
+            DeprecationLevel.HIDDEN,
         )
         public constructor(duration: Duration) : this(duration, unused = null)
     }

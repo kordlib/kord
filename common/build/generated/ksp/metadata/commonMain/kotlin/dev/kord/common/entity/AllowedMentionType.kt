@@ -82,7 +82,6 @@ public sealed class AllowedMentionType(
             )
         }
 
-
         /**
          * Returns an instance of [AllowedMentionType] with [AllowedMentionType.value] equal to the
          * specified [value].

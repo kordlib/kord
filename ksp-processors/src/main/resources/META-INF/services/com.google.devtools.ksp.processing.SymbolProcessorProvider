@@ -1,3 +1,1 @@
 dev.kord.ksp.generation.GenerationProcessorProvider
-dev.kord.ksp.inspection.BuilderDslMarkerInspectionProcessorProvider
-dev.kord.ksp.inspection.OptionalDefaultInspectionProcessorProvider

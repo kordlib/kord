@@ -34,8 +34,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.serialization.json.Json
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
 
 private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
 
@@ -169,7 +167,6 @@ public abstract class BaseKordBuilder internal constructor(public val token: Str
      * ```
      */
     public fun cache(builder: KordCacheBuilder.(resources: ClientResources) -> Unit) {
-        contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         val old = cacheBuilder
         cacheBuilder = { resources: ClientResources ->
             old(resources)

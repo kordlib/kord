@@ -24,11 +24,7 @@ public data class StickerData(
 ) {
     public companion object {
 
-        public val description: DataDescription<StickerData, Snowflake> = description(StickerData::id) {
-            link(StickerData::guildId to GuildData::id)
-            link(StickerData::packId to StickerPackData::id)
-        }
-
+        public val description: DataDescription<StickerData, Snowflake> = description(StickerData::id)
 
         public fun from(entity: DiscordMessageSticker): StickerData = with(entity) {
             StickerData(id, packId, name, description, tags, formatType, available, guildId, user.map { it.toData() }, sortValue)
@@ -49,6 +45,7 @@ public data class StickerItemData(
     }
 }
 
+private val StickerData.nullablePackId get() = packId.value
 
 public data class StickerPackData(
     val id: Snowflake,
@@ -58,10 +55,12 @@ public data class StickerPackData(
     val coverStickerId: OptionalSnowflake = OptionalSnowflake.Missing,
     val description: String,
     val bannerAssetId: Snowflake
-    ) {
+) {
     public companion object {
 
-        public val description: DataDescription<StickerPackData, Snowflake> = description(StickerPackData::id)
+        public val description: DataDescription<StickerPackData, Snowflake> = description(StickerPackData::id) {
+            link(StickerPackData::id to StickerData::nullablePackId)
+        }
 
         public fun from(entity: DiscordStickerPack): StickerPackData = with(entity) {
             StickerPackData(id, stickers.map { StickerData.from(it) }, name, skuId, coverStickerId, description, bannerAssetId)

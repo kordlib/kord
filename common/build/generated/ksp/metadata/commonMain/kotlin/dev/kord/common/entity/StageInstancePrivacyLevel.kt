@@ -78,7 +78,6 @@ public sealed class StageInstancePrivacyLevel(
             )
         }
 
-
         /**
          * Returns an instance of [StageInstancePrivacyLevel] with [StageInstancePrivacyLevel.value]
          * equal to the specified [value].
