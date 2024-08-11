@@ -60,23 +60,12 @@ publishing {
     }
 
     repositories {
-        if(isRelease) {
-            maven {
-                url = uri(Repo.releasesUrl)
+        maven {
+            url = uri(if (isRelease) Repo.releasesUrl else Repo.snapshotsUrl)
 
-                credentials {
-                    username = getenv("NEXUS_USER")
-                    password = getenv("NEXUS_PASSWORD")
-                }
-            }
-        } else {
-            maven {
-                url = uri(Repo.snapshotsUrl)
-
-                credentials {
-                    username = getenv("REPOSILITE_USER")
-                    password = getenv("REPOSILITE_PASSWORD")
-                }
+            credentials {
+                username = getenv("NEXUS_USER")
+                password = getenv("NEXUS_PASSWORD")
             }
         }
     }
@@ -86,5 +75,5 @@ signing {
     val secretKey = getenv("SIGNING_KEY")?.let { String(Base64.getDecoder().decode(it)) }
     val password = getenv("SIGNING_PASSWORD")
     useInMemoryPgpKeys(secretKey, password)
-//    sign(publishing.publications)
+    sign(publishing.publications)
 }
