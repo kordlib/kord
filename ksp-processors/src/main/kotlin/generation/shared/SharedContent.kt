@@ -3,6 +3,14 @@ package dev.kord.ksp.generation.shared
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
+import dev.kord.codegen.kotlinpoet.addClass
+import dev.kord.codegen.kotlinpoet.addObject
+import dev.kord.codegen.kotlinpoet.addProperty
+import dev.kord.codegen.kotlinpoet.addAnnotation
+import dev.kord.codegen.kotlinpoet.asMemberName
+import dev.kord.codegen.kotlinpoet.delegate
+import dev.kord.codegen.kotlinpoet.withControlFlow
+import dev.kord.codegen.kotlinpoet.primaryConstructor
 import dev.kord.ksp.*
 import dev.kord.ksp.generation.GenerationEntity
 import kotlinx.serialization.descriptors.SerialDescriptor

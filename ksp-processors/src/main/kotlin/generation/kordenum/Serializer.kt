@@ -2,9 +2,9 @@ package dev.kord.ksp.generation.kordenum
 
 import com.squareup.kotlinpoet.KModifier.OVERRIDE
 import com.squareup.kotlinpoet.TypeSpec
-import dev.kord.ksp.addFunction
-import dev.kord.ksp.addObject
-import dev.kord.ksp.addParameter
+import dev.kord.codegen.kotlinpoet.addFunction
+import dev.kord.codegen.kotlinpoet.addObject
+import dev.kord.codegen.kotlinpoet.addParameter
 import dev.kord.ksp.generation.GenerationEntity.KordEnum
 import dev.kord.ksp.generation.GenerationEntity.KordEnum.ValueType
 import dev.kord.ksp.generation.GenerationEntity.KordEnum.ValueType.INT

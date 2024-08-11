@@ -2,15 +2,15 @@ package dev.kord.ksp.generation.bitflags
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.KModifier.*
-import dev.kord.ksp.addAnnotation
-import dev.kord.ksp.addFunction
+import dev.kord.codegen.kotlinpoet.addAnnotation
+import dev.kord.codegen.kotlinpoet.addFunction
+import dev.kord.codegen.kotlinpoet.returns
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT
 import dev.kord.ksp.generation.shared.CONTRACT
 import dev.kord.ksp.generation.shared.EXACTLY_ONCE
 import dev.kord.ksp.generation.shared.GenerationContext
-import dev.kord.ksp.returns
 
 context(BitFlags, GenerationContext)
 internal fun TypeSpec.Builder.addContains(parameterName: String, parameterType: TypeName) = addFunction("contains") {

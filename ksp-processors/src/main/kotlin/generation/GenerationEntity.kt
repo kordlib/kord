@@ -2,7 +2,7 @@ package dev.kord.ksp.generation
 
 import com.google.devtools.ksp.processing.KSPLogger
 import com.google.devtools.ksp.symbol.KSAnnotation
-import dev.kord.ksp.AnnotationArguments.Companion.arguments
+import dev.kord.codegen.ksp.annotations.AnnotationArguments.Companion.arguments
 import dev.kord.ksp.Generate
 import dev.kord.ksp.Generate.EntityType
 import dev.kord.ksp.Generate.EntityType.*

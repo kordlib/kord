@@ -5,10 +5,10 @@ import com.squareup.kotlinpoet.KModifier.PRIVATE
 import com.squareup.kotlinpoet.MemberName
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import com.squareup.kotlinpoet.TypeSpec
-import dev.kord.ksp.addFunction
-import dev.kord.ksp.addObject
-import dev.kord.ksp.addParameter
-import dev.kord.ksp.addProperty
+import dev.kord.codegen.kotlinpoet.addFunction
+import dev.kord.codegen.kotlinpoet.addObject
+import dev.kord.codegen.kotlinpoet.addParameter
+import dev.kord.codegen.kotlinpoet.addProperty
 import dev.kord.ksp.generation.GenerationEntity.BitFlags
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.BIT_SET
 import dev.kord.ksp.generation.GenerationEntity.BitFlags.ValueType.INT

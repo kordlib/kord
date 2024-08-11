@@ -29,5 +29,5 @@ val Project.isRelease get() = tag != null
 
 object Repo {
     const val releasesUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-    const val snapshotsUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+    const val snapshotsUrl = "https://repo.kord.dev/snapshots"
 }

@@ -4,8 +4,8 @@ import com.google.devtools.ksp.symbol.KSFile
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.DelicateKotlinPoetApi
 import com.squareup.kotlinpoet.FileSpec
-import dev.kord.ksp.FileSpec
-import dev.kord.ksp.addAnnotation
+import dev.kord.codegen.kotlinpoet.FileSpec
+import dev.kord.codegen.kotlinpoet.addAnnotation
 import dev.kord.ksp.generation.GenerationEntity
 
 internal class GenerationContext(

@@ -4,7 +4,7 @@ import com.squareup.kotlinpoet.Annotatable
 import com.squareup.kotlinpoet.ClassName
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.joinToCode
-import dev.kord.ksp.addAnnotation
+import dev.kord.codegen.kotlinpoet.addAnnotation
 
 context(GenerationContext)
 internal fun Annotatable.Builder<*>.addEntryOptIns() {
