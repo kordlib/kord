@@ -61,7 +61,7 @@ public class StoreEntitySupplier(
     }
 
     override suspend fun getMemberOrNull(guildId: Snowflake, userId: Snowflake): Member? {
-        return storeAndReturn(supplier.getMemberOrNull(guildId, userId)) { it.data }
+        return storeAndReturn(supplier.getMemberOrNull(guildId, userId)) { it.memberData }
     }
 
     override suspend fun getMessageOrNull(channelId: Snowflake, messageId: Snowflake): Message? {
@@ -105,7 +105,7 @@ public class StoreEntitySupplier(
     }
 
     override fun getGuildMembers(guildId: Snowflake, limit: Int?): Flow<Member> {
-        return storeOnEach(supplier.getGuildMembers(guildId, limit)) { it.data }
+        return storeOnEach(supplier.getGuildMembers(guildId, limit)) { it.memberData }
     }
 
     override fun getGuildVoiceRegions(guildId: Snowflake): Flow<Region> {
