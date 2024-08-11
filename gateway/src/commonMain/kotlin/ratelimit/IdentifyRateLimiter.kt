@@ -77,12 +77,17 @@ private class IdentifyRateLimiterImpl(
     override suspend fun consume(shardId: Int, events: SharedFlow<Event>) {
         require(shardId >= 0) { "shardId must be non-negative but was $shardId" }
 
-        // if the coroutine that called consume() is cancelled, the CancellableContinuation makes sure the waiting is
-        // stopped (the Gateway won't try to identify), so we don't need to hold the mutex and waste time for other
-        // calls
         return suspendCancellableCoroutine { continuation ->
-            val job = launchIdentifyWaiter(shardId, events, continuation)
-            continuation.invokeOnCancellation { job.cancel() }
+            val waiter = launchIdentifyWaiter(shardId, events, continuation)
+            // this will be invoked if the coroutine that called consume() is cancelled
+            continuation.invokeOnCancellation { cause ->
+                // stop the waiter, so we don't hold the mutex and waste time for other consume() calls (the Gateway
+                // won't try to identify if it was cancelled at this point)
+                waiter.cancel("Identify waiter was cancelled because consume() was cancelled", cause)
+                logger.debug(cause) {
+                    "Identifying on shard $shardId with rate_limit_key ${shardId % maxConcurrency} was cancelled"
+                }
+            }
         }
     }
 
