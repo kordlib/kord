@@ -1,12 +1,15 @@
 package dev.kord.core.behavior.channel
 
 import dev.kord.common.entity.Snowflake
+import dev.kord.common.exception.RequestException
 import dev.kord.core.Kord
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.cache.data.StageInstanceData
 import dev.kord.core.entity.StageInstance
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.StageChannel
+import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.supplier.EntitySupplier
 import dev.kord.core.supplier.EntitySupplyStrategy
 import dev.kord.rest.builder.channel.StageVoiceChannelModifyBuilder
@@ -31,12 +34,37 @@ public interface StageChannelBehavior : BaseVoiceChannelBehavior, TopGuildMessag
         return StageChannelBehavior(id, guildId, kord, strategy.supply(kord))
     }
 
+    /**
+     * Requests to get [StageInstance] for the given channel id. Returns null when the instance is not present.
+     *
+     * @return A nullable [StageInstance] for the given channel
+     *
+     * @throws [RequestException] if something went wrong during the request
+     */
     public suspend fun getStageInstanceOrNull(): StageInstance? = supplier.getStageInstanceOrNull(id)
 
+    /**
+     * Requests the [StageInstance]s for a channel.
+     *
+     * @return a [StageInstance] for the given channel.
+     *
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the state instance was null
+     */
     public suspend fun getStageInstance(): StageInstance = supplier.getStageInstance(id)
 
 }
 
+/**
+ * Requests to create a new stage instance.
+ *
+ * @param topic The stage instance topic
+ * @param builder The builder for the stage instance
+ *
+ * @return The created [StageInstance].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
 public suspend inline fun StageChannelBehavior.createStageInstance(
     topic: String,
     builder: StageInstanceCreateBuilder.() -> Unit = {},

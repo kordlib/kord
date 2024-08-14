@@ -61,7 +61,7 @@ public interface ThreadChannelBehavior : GuildMessageChannelBehavior {
     }
 
     /**
-     * Join the the current thread.
+     * Join the current thread.
      * Requires the thread is not locked.
      * or current bot has [Manage Threads][dev.kord.common.entity.Permission.ManageThreads] permission
      *

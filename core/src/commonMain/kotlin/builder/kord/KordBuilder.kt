@@ -44,6 +44,7 @@ private val gatewayInfoJson = Json { ignoreUnknownKeys = true }
  */
 public expect class KordBuilder(token: String) : BaseKordBuilder
 
+/** @see KordBuilder */
 public abstract class BaseKordBuilder internal constructor(public val token: String) {
     private var shardsBuilder: (recommended: Int) -> Shards = { Shards(it) }
     private var gatewayBuilder: (resources: ClientResources, shards: List<Int>) -> List<Gateway> =

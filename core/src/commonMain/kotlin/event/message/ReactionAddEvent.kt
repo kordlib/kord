@@ -27,6 +27,7 @@ import dev.kord.core.supplier.getChannelOfOrNull
  * @param messageId The ID of the message the event happen on
  * @param guildId The ID of the guild the event occurred on. It may be `null` if it was not stored in the cache
  * @param emoji The [ReactionEmoji] added to the [message]
+ * @param messageAuthorId The ID of the user who authored the message that was reacted too.
  */
 public class ReactionAddEvent(
     public val userId: Snowflake,
@@ -65,7 +66,14 @@ public class ReactionAddEvent(
      */
     public val userAsMember: MemberBehavior? get() = guildId?.let { MemberBehavior(it, userId, kord) }
 
+    /**
+     * The original message author as a [UserBehavior] who's message was reacted too.
+     */
     public val messageAuthor: UserBehavior? get() = messageAuthorId?.let { UserBehavior(it, kord) }
+
+    /**
+     * The [original message author][messageAuthor] as a [Member][MemberBehavior].
+     */
     public val messageAuthorAsMember: MemberBehavior?
         get() = guildId?.let { guildId ->
             messageAuthorId?.let { messageAuthorId ->
@@ -137,7 +145,18 @@ public class ReactionAddEvent(
      */
     public suspend fun getUserAsMember(): Member? = guildId?.let { supplier.getMemberOrNull(it, userId) }
 
+    /**
+     * Requests to get the message author as a [User]
+     *
+     * @throws [RequestException] if anything went wrong during the request
+     */
     public suspend fun getMessageAuthorOrNull(): User? = messageAuthorId?.let { supplier.getUserOrNull(it) }
+
+    /**
+     * Requests to get the message author as a [Member]
+     *
+     * @throws [RequestException] if anything went wrong during the request
+     */
     public suspend fun getMessageAuthorAsMemberOrNull(): Member? = guildId?.let { guildId ->
         messageAuthorId?.let { messageAuthorId ->
             supplier.getMemberOrNull(guildId, messageAuthorId)

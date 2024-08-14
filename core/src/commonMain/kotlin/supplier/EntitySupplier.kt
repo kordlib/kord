@@ -437,7 +437,7 @@ public interface EntitySupplier {
 
     /**
      * Requests the [Template] with the given [code].
-     * returns null when the webhook isn't present.
+     * returns null when the template isn't present.
      *
      * @throws RequestException if something went wrong while retrieving the template.
      * @throws EntityNotFoundException if template was null.

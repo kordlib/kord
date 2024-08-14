@@ -15,12 +15,12 @@ import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 
 /**
- * The behavior of a [Discord Emoij](https://discord.com/developers/docs/resources/emoji).
+ * The behavior of a [Discord Emoji](https://discord.com/developers/docs/resources/emoji).
  */
 public interface GuildEmojiBehavior : KordEntity, Strategizable {
 
     /**
-     * The id of the guild this emojis is part of.
+     * The id of the guild this emoji is part of.
      */
     public val guildId: Snowflake
 

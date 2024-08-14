@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 
 /**
- * A Gateway recieved an event.
+ * A Gateway received an event.
  */
 public sealed class GatewayEvent : Event
 
@@ -145,6 +145,12 @@ public sealed class DisconnectEvent : GatewayEvent() {
 
 /**
  * The event sent after the bot sends a valid `Identify` payload.
+ *
+ * @property gatewayVersion The current API version in use
+ * @property guildIds A [Set] of guild IDs for guilds the bot is a member of. These guild objects are unavailable to the bot
+ * @property self The [User] object for the bot
+ * @property sessionId The ID of the session. This is used for resuming connections
+ * @property resumeGatewayUrl The URL of the gateway to use for resuming connections
  */
 public class ReadyEvent(
     public val gatewayVersion: Int,

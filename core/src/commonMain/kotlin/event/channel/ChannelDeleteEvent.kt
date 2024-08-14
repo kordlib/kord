@@ -105,6 +105,11 @@ public class StageChannelDeleteEvent(
     }
 }
 
+/**
+ * The event dispatched when a [ForumChannel] is deleted in a guild.
+ *
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
+ */
 public class ForumChannelDeleteEvent(
     override val channel: ForumChannel,
     override val shard: Int,
@@ -115,6 +120,11 @@ public class ForumChannelDeleteEvent(
     }
 }
 
+/**
+ * The event dispatched when a [MediaChannel] is deleted in a guild.
+ *
+ * See [Channel Delete](https://discord.com/developers/docs/topics/gateway-events#channel-delete)
+ */
 public class MediaChannelDeleteEvent(
     override val channel: MediaChannel,
     override val shard: Int,

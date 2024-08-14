@@ -130,6 +130,13 @@ public class StageChannelUpdateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [ForumChannel] is updated.
+ *
+ * The [old] [ForumChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class ForumChannelUpdateEvent(
     override val channel: ForumChannel,
     override val old: ForumChannel?,
@@ -141,6 +148,13 @@ public class ForumChannelUpdateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [MediaChannel] is updated.
+ *
+ * The [old] [MediaChannel] may be null unless it has been stored in the cache.
+ *
+ * See [Channel Update](https://discord.com/developers/docs/topics/gateway-events#channel-update)
+ */
 public class MediaChannelUpdateEvent(
     override val channel: MediaChannel,
     override val old: MediaChannel?,

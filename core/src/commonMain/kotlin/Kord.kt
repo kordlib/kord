@@ -71,7 +71,7 @@ public class Kord(
 
     /**
      * The default supplier, obtained through Kord's [resources] and configured through [KordBuilder.defaultStrategy].
-     * By default a strategy from [EntitySupplyStrategy.rest].
+     * By default, a strategy from [EntitySupplyStrategy.rest].
      *
      * All [strategizable][Strategizable] [entities][KordEntity] created through this instance will use this supplier by default.
      */
@@ -651,6 +651,8 @@ public class Kord(
      * @param name The name of the command
      * @param description The description of the command
      * @param builder A [ChatInputCreateBuilder] to modify the command
+     *
+     * @return a [GuildChatInputCommand] object for the command
      */
     public suspend inline fun createGuildChatInputCommand(
         guildId: Snowflake,
@@ -678,6 +680,8 @@ public class Kord(
      * @param guildId The ID of the guild to create the command
      * @param name The name of the command
      * @param builder A [MessageCommandCreateBuilder] to modify the command
+     *
+     * @return a [GuildMessageCommand] object for the command
      */
     public suspend inline fun createGuildMessageCommand(
         guildId: Snowflake,
@@ -701,6 +705,8 @@ public class Kord(
      * @param guildId The ID of the guild to create the command
      * @param name The name of the command
      * @param builder A [UserCommandCreateBuilder] to modify the command
+     *
+     * @return a [GuildUserCommand] object for the command
      */
     public suspend inline fun createGuildUserCommand(
         guildId: Snowflake,

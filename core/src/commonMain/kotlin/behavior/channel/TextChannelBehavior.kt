@@ -10,6 +10,7 @@ import dev.kord.core.behavior.channel.threads.unsafeStartThread
 import dev.kord.core.cache.data.ChannelData
 import dev.kord.core.entity.channel.Channel
 import dev.kord.core.entity.channel.TextChannel
+import dev.kord.core.entity.channel.thread.NewsChannelThread
 import dev.kord.core.entity.channel.thread.TextChannelThread
 import dev.kord.core.exception.EntityNotFoundException
 import dev.kord.core.hash
@@ -65,6 +66,16 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
      */
     override suspend fun fetchChannelOrNull(): TextChannel? = super<TopGuildMessageChannelBehavior>.fetchChannelOrNull() as? TextChannel
 
+    /**
+     * Starts a public [TextChannelThread] with  a given [name] and properties provided from the [builder]
+     *
+     * @param name The name of the thread
+     * @param builder The [StartThreadBuilder] for the thread
+     *
+     * @return A [TextChannelThread] object for the thread.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     public suspend fun startPublicThread(
         name: String,
         builder: StartThreadBuilder.() -> Unit = {},
@@ -72,6 +83,16 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
         return unsafeStartThread(name, type = ChannelType.PublicGuildThread, builder) as TextChannelThread
     }
 
+    /**
+     * Starts a private [TextChannelThread] with  a given [name] and properties provided from the [builder]
+     *
+     * @param name The name of the thread
+     * @param builder The [StartThreadBuilder] for the thread
+     *
+     * @return A [TextChannelThread] object for the thread.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     public suspend fun startPrivateThread(
         name: String,
         builder: StartThreadBuilder.() -> Unit = {},
@@ -79,6 +100,17 @@ public interface TextChannelBehavior : TopGuildMessageChannelBehavior, PrivateTh
         return unsafeStartThread(name, type = ChannelType.PrivateThread, builder) as TextChannelThread
     }
 
+    /**
+     * Starts a [TextChannelThread] with a message from a [messageId], a given [name] and properties provided from the [builder]
+     *
+     * @param messageId The ID of the message that starts the thread
+     * @param name The name of the thread
+     * @param builder The [StartThreadWithMessageBuilder] for the thread
+     *
+     * @return A [TextChannelThread] object for the thread.
+     *
+     * @throws [RequestException] if something went wrong during the request.
+     */
     public suspend fun startPublicThreadWithMessage(
         messageId: Snowflake,
         name: String,

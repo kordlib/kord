@@ -5,10 +5,16 @@ import dev.kord.core.entity.application.ChatInputCommandCommand
 import dev.kord.core.entity.application.GlobalChatInputCommand
 import dev.kord.core.entity.application.GuildChatInputCommand
 import dev.kord.rest.builder.interaction.ChatInputModifyBuilder
+import dev.kord.rest.request.RestRequestException
 
 
 public interface ChatInputCommandBehavior : ApplicationCommandBehavior {
 
+    /**
+     * Requests to edit this command
+     *
+     * @throws [RestRequestException] when something goes wrong during the request.
+     */
     public suspend fun edit(builder: suspend ChatInputModifyBuilder.() -> Unit): ChatInputCommandCommand
 
 }

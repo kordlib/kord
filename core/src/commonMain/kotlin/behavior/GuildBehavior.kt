@@ -160,6 +160,13 @@ public interface GuildBehavior : KordEntity, Strategizable {
     public val members: Flow<Member>
         get() = supplier.getGuildMembers(id)
 
+    // TODO verify kdoc
+    /**
+     * Requests to get all present stickers for this guild.
+     *
+     * The returned flow is lazily executed, any [RestRequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
     public val stickers: Flow<GuildSticker>
         get() = supplier.getGuildStickers(id)
 
@@ -211,6 +218,13 @@ public interface GuildBehavior : KordEntity, Strategizable {
             }
         }
 
+    // TODO verify kdoc
+    /**
+     * Requests to get all present templates for this guild.
+     *
+     * The returned flow is lazily executed, any [RestRequestException] will be thrown on
+     * [terminal operators](https://kotlinlang.org/docs/reference/coroutines/flow.html#terminal-flow-operators) instead.
+     */
     public val templates: Flow<Template>
         get() = supplier.getTemplates(id)
 
@@ -259,12 +273,36 @@ public interface GuildBehavior : KordEntity, Strategizable {
             }
     }
 
+    /**
+     * Gets the [GuildApplicationCommand]s for the application.
+     *
+     * @param withLocalizations Whether to get the commands with localizations or not. Defaults to `null`
+     * @return a [Flow] of [GuildApplicationCommand]s for the application.
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the flow was null
+     */
     public fun getApplicationCommands(withLocalizations: Boolean? = null): Flow<GuildApplicationCommand> =
         supplier.getGuildApplicationCommands(kord.resources.applicationId, id, withLocalizations)
 
+    /**
+     * Gets a [GuildApplicationCommand] for the application based on the [commandId].
+     *
+     * @param commandId The ID of the command
+     * @return a [GuildApplicationCommand] for the given [commandId].
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the flow was null
+     */
     public suspend fun getApplicationCommand(commandId: Snowflake): GuildApplicationCommand =
         supplier.getGuildApplicationCommand(kord.resources.applicationId, id, commandId)
 
+    /**
+     * Gets a [GuildApplicationCommand] for the application based on the [commandId].
+     * returns `null` if the command was not found
+     *
+     * @param commandId The ID of the command to get
+     * @return The [GuildApplicationCommand] or `null` if it was not found.
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getApplicationCommandOrNull(commandId: Snowflake): GuildApplicationCommand? =
         supplier.getGuildApplicationCommandOrNull(kord.resources.applicationId, id, commandId)
 
@@ -535,12 +573,34 @@ public interface GuildBehavior : KordEntity, Strategizable {
         return kord.rest.guild.beginGuildPrune(id, days, true, reason).pruned!!
     }
 
+    /**
+     * Gets the [WelcomeScreen] for the entity.
+     * returns `null` if the screen was not found
+     *
+     * @return The [WelcomeScreen] or `null`
+     * @throws RestRequestException when the request failed.
+     */
     public suspend fun getWelcomeScreenOrNull(): WelcomeScreen? =
         rest.supply(kord).getGuildWelcomeScreenOrNull(id)
 
+    /**
+     * Gets the [WelcomeScreen] for the entity.
+     *
+     * @return The [WelcomeScreen]
+     * @throws RestRequestException when the request failed.
+     * @throws EntityNotFoundException if the screen was null
+     */
     public suspend fun getWelcomeScreen(): WelcomeScreen =
         rest.supply(kord).getGuildWelcomeScreen(id)
 
+    /**
+     * Requests to edit the [WelcomeScreen].
+     *
+     * @param builder The [WelcomeScreenModifyBuilder] for the [WelcomeScreen]
+     *
+     * @return the updated [WelcomeScreen]
+     */
+    // This likely throws, what though?
     public suspend fun editWelcomeScreen(builder: WelcomeScreenModifyBuilder.() -> Unit): WelcomeScreen {
         val request = kord.rest.guild.modifyGuildWelcomeScreen(id, builder)
         val data = WelcomeScreenData.from(request)
@@ -599,19 +659,71 @@ public interface GuildBehavior : KordEntity, Strategizable {
     public suspend fun getGuildScheduledEventOrNull(eventId: Snowflake): GuildScheduledEvent? =
         supplier.getGuildScheduledEventOrNull(id, eventId)
 
+    /**
+     * Requests to get the widget of a [Guild] for the entity.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     * @throws [EntityNotFoundException] if the [GuildWidget] wasn't present.
+     */
     public suspend fun getWidget(): GuildWidget = supplier.getGuildWidget(id)
 
+    /**
+     * Requests to get the widget of a [Guild] for the entity,
+     * returns null if the [GuildWidget] isn't present.
+     *
+     * @throws [RequestException] if anything went wrong during the request.
+     */
     public suspend fun getWidgetOrNull(): GuildWidget? = supplier.getGuildWidgetOrNull(id)
 
+    /**
+     * Requests the [Template] with the given [code].
+     * returns null when the template isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the template.
+     * @throws EntityNotFoundException if template was null.
+     */
     public suspend fun getTemplate(code: String): Template = supplier.getTemplate(code)
 
+    /**
+     * Requests the [Template] with the given [code].
+     * returns null when the template isn't present.
+     *
+     * @throws RequestException if something went wrong while retrieving the template.
+     */
     public suspend fun getTemplateOrNull(code: String): Template? = supplier.getTemplateOrNull(code)
 
+    /**
+     * Gets a [GuildSticker] from a given [stickerId].
+     *
+     * @param stickerId The ID of the sticker to get
+     * @return The [GuildSticker] or throws an [EntityNotFoundException] if the sticker was not found
+     * @throws RequestException if something went wrong during the request
+     * @throws EntityNotFoundException if the sticker was null
+     */
     public suspend fun getSticker(stickerId: Snowflake): GuildSticker = supplier.getGuildSticker(id, stickerId)
 
+    /**
+     * Gets a [GuildSticker] from a given [stickerId].
+     * returns `null` if the sticker was not found
+     *
+     * @param stickerId The ID of the sticker to get
+     * @return The [GuildSticker] or null
+     * @throws RequestException if something went wrong during the request
+     */
     public suspend fun getStickerOrNull(stickerId: Snowflake): GuildSticker? =
         supplier.getGuildStickerOrNull(id, stickerId)
 
+    /**
+     * Requests to create a sticker for a guild.
+     *
+     * @param name The name of the sticker
+     * @param description The description of the sticker
+     * @param tags Any tags applied to the sticker
+     * @param file the sticker file.
+     *
+     * @return A [GuildSticker] object for the created sticker
+     */
+    // This likely throws, what?
     public suspend fun createSticker(name: String, description: String, tags: String, file: NamedFile): GuildSticker {
         val request = MultipartGuildStickerCreateRequest(GuildStickerCreateRequest(name, description, tags), file)
         val response = kord.rest.sticker.createGuildSticker(id, request)
@@ -658,11 +770,23 @@ public interface GuildBehavior : KordEntity, Strategizable {
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): GuildBehavior = GuildBehavior(id, kord, strategy)
 }
 
+/**
+ * Requests the [GuildApplicationCommand] with the given [id] as type [T], returns null if the
+ * command application isn't present or if the channel is not of type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the application command.
+ */
 public suspend inline fun <reified T : GuildApplicationCommand> GuildBehavior.getApplicationCommandOfOrNull(commandId: Snowflake): T? {
     return supplier.getGuildApplicationCommandOfOrNull(kord.resources.applicationId, id, commandId)
 }
 
-
+/**
+ * Requests the [GuildApplicationCommand] with the given [id] as type [T].
+ *
+ * @throws RequestException if something went wrong while retrieving the guild application.
+ * @throws EntityNotFoundException if the guild application is null.
+ * @throws ClassCastException if the returned GuildApplication is not of type [T].
+ */
 public suspend inline fun <reified T : GuildApplicationCommand> GuildBehavior.getApplicationCommandOf(commandId: Snowflake): T {
     return supplier.getGuildApplicationCommandOf(kord.resources.applicationId, id, commandId)
 }
@@ -689,7 +813,15 @@ public fun GuildBehavior(
     }
 }
 
-
+/**
+ * Creates a [GuildChatInputCommand] for a given [id]
+ *
+ * @param name The name of the command
+ * @param description The description of the command
+ * @param builder A [ChatInputCreateBuilder] to modify the command
+ *
+ * @return a [GuildChatInputCommand] object for the command
+ */
 public suspend inline fun GuildBehavior.createChatInputCommand(
     name: String,
     description: String,
@@ -699,7 +831,14 @@ public suspend inline fun GuildBehavior.createChatInputCommand(
     return kord.createGuildChatInputCommand(id, name, description, builder)
 }
 
-
+/**
+ * Creates a [GuildMessageCommand] for a given [id]
+ *
+ * @param name The name of the command
+ * @param builder A [MessageCommandCreateBuilder] to modify the command
+ *
+ * @return a [GuildMessageCommand] object for the command
+ */
 public suspend inline fun GuildBehavior.createMessageCommand(
     name: String,
     builder: MessageCommandCreateBuilder.() -> Unit = {},
@@ -708,7 +847,14 @@ public suspend inline fun GuildBehavior.createMessageCommand(
     return kord.createGuildMessageCommand(id, name, builder)
 }
 
-
+/**
+ * Creates a [GuildUserCommand] for a given [id]
+ *
+ * @param name The name of the command
+ * @param builder A [UserCommandCreateBuilder] to modify the command
+ *
+ * @return a [GuildUserCommand] object for the command
+ */
 public suspend inline fun GuildBehavior.createUserCommand(
     name: String,
     builder: UserCommandCreateBuilder.() -> Unit = {},
@@ -717,7 +863,12 @@ public suspend inline fun GuildBehavior.createUserCommand(
     return kord.createGuildUserCommand(id, name, builder)
 }
 
-
+/**
+ * Creates multiple [GuildApplicationCommand]s.
+ *
+ * @param builder A [GuildMultiApplicationCommandBuilder] to create the commands in.
+ * @return A [Flow] of [GuildApplicationCommand]s for the bot.
+ */
 public suspend inline fun GuildBehavior.createApplicationCommands(
     builder: GuildMultiApplicationCommandBuilder.() -> Unit
 ): Flow<GuildApplicationCommand> {
@@ -742,6 +893,15 @@ public suspend inline fun GuildBehavior.edit(builder: GuildModifyBuilder.() -> U
     return Guild(data, kord)
 }
 
+/**
+ * Requests to create an emoji for the given guild [id].
+ *
+ * @param name The name of the emoji
+ * @param image The [Image] for the emoji
+ * @param builder The [EmojiCreateBuilder] for the emoji
+ *
+ * @return A [GuildEmoji] object for the emoji
+ */
 public suspend inline fun GuildBehavior.createEmoji(
     name: String,
     image: Image,
@@ -761,7 +921,6 @@ public suspend inline fun GuildBehavior.createEmoji(
  *
  * @throws [RestRequestException] if something went wrong during the request.
  */
-
 public suspend inline fun GuildBehavior.createTextChannel(
     name: String,
     builder: TextChannelCreateBuilder.() -> Unit = {}
@@ -775,6 +934,13 @@ public suspend inline fun GuildBehavior.createTextChannel(
     return Channel.from(data, kord) as TextChannel
 }
 
+/**
+ * Requests to create a new forum channel.
+ *
+ * @return The created [ForumChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
 public suspend inline fun GuildBehavior.createForumChannel(
     name: String,
     builder: ForumChannelCreateBuilder.() -> Unit = {}
@@ -785,6 +951,13 @@ public suspend inline fun GuildBehavior.createForumChannel(
     return Channel.from(data, kord) as ForumChannel
 }
 
+/**
+ * Requests to create a new media channel.
+ *
+ * @return The created [MediaChannel].
+ *
+ * @throws [RestRequestException] if something went wrong during the request.
+ */
 public suspend inline fun GuildBehavior.createMediaChannel(
     name: String,
     builder: MediaChannelCreateBuilder.() -> Unit = {},
@@ -854,7 +1027,6 @@ public suspend inline fun GuildBehavior.createStageChannel(
 
     return Channel.from(data, kord) as StageChannel
 }
-
 
 /**
  * Requests to create a new category.
@@ -964,6 +1136,11 @@ public suspend inline fun <reified T : GuildChannel> GuildBehavior.getChannelOfO
     return channel
 }
 
+/**
+ * Requests to edit the [GuildWidget] object of the guild and returns the edited widget object.
+ *
+ * @throws RestRequestException if something went wrong during the request
+ */
 public suspend inline fun GuildBehavior.editWidget(builder: GuildWidgetModifyBuilder.() -> Unit): GuildWidget {
     contract { callsInPlace(builder, EXACTLY_ONCE) }
     return GuildWidget(GuildWidgetData.from(kord.rest.guild.modifyGuildWidget(id, builder)), id, kord)

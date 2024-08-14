@@ -105,6 +105,11 @@ public class StageChannelCreateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [ForumChannel] is created in a guild.
+ *
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
+ */
 public class ForumChannelCreateEvent(
     override val channel: ForumChannel,
     override val shard: Int,
@@ -115,6 +120,11 @@ public class ForumChannelCreateEvent(
     }
 }
 
+/**
+ * The event dispatched when a [MediaChannel] is created in a guild.
+ *
+ * See [Channel Create](https://discord.com/developers/docs/topics/gateway-events#channel-create)
+ */
 public class MediaChannelCreateEvent(
     override val channel: MediaChannel,
     override val shard: Int,
