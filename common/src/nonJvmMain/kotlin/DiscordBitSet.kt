@@ -11,5 +11,7 @@ internal actual fun formatIntegerFromLittleEndianLongArray(data: LongArray) =
         BigInteger.fromByteArray(readBytes(), Sign.POSITIVE).toString()
     }
 
-internal actual fun parseIntegerToBigEndianByteArray(value: String): ByteArray =
-    BigInteger.parseString(value).toByteArray()
+internal actual fun parseNonNegativeIntegerToBigEndianByteArray(value: String): ByteArray = BigInteger
+    .parseString(value)
+    .also { if (it.isNegative) throw NumberFormatException("Invalid DiscordBitSet format: '$value'") }
+    .toByteArray()

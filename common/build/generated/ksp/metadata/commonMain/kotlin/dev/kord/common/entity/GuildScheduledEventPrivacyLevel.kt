@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,7 +30,8 @@ public sealed class GuildScheduledEventPrivacyLevel(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "GuildScheduledEventPrivacyLevel.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "GuildScheduledEventPrivacyLevel.Unknown(value=$value)"
+            else "GuildScheduledEventPrivacyLevel.${this::class.simpleName}"
 
     /**
      * An unknown [GuildScheduledEventPrivacyLevel].
@@ -38,7 +39,7 @@ public sealed class GuildScheduledEventPrivacyLevel(
      * This is used as a fallback for [GuildScheduledEventPrivacyLevel]s that haven't been added to
      * Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : GuildScheduledEventPrivacyLevel(value)
 
@@ -57,10 +58,7 @@ public sealed class GuildScheduledEventPrivacyLevel(
         }
 
         override fun deserialize(decoder: Decoder): GuildScheduledEventPrivacyLevel =
-                when (val value = decoder.decodeInt()) {
-            2 -> GuildOnly
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -73,5 +71,13 @@ public sealed class GuildScheduledEventPrivacyLevel(
             )
         }
 
+        /**
+         * Returns an instance of [GuildScheduledEventPrivacyLevel] with
+         * [GuildScheduledEventPrivacyLevel.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): GuildScheduledEventPrivacyLevel = when (value) {
+            2 -> GuildOnly
+            else -> Unknown(value)
+        }
     }
 }

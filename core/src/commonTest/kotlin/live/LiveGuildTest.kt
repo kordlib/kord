@@ -44,7 +44,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                     mfaLevel = MFALevel.None,
                     premiumTier = PremiumTier.None,
                     preferredLocale = "",
-                    systemChannelFlags = SystemChannelFlags(0),
+                    systemChannelFlags = SystemChannelFlags(),
                     nsfwLevel = NsfwLevel.Default,
                     premiumProgressBarEnabled = false,
                     safetyAlertsChannelId = null,
@@ -267,7 +267,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             position = 0,
                             permissions = Permissions(Permission.BanMembers),
                             managed = false,
-                            mentionable = false
+                            mentionable = false,
+                            flags = RoleFlags(),
                         )
                     ),
                     0
@@ -299,7 +300,8 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             position = 0,
                             permissions = Permissions(Permission.BanMembers),
                             managed = false,
-                            mentionable = false
+                            mentionable = false,
+                            flags = RoleFlags(),
                         )
                     ),
                     0
@@ -353,6 +355,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         deaf = false,
                         mute = false,
                         joinedAt = Instant.fromEpochMilliseconds(0),
+                        flags = GuildMemberFlags(),
                     ),
                     0
                 )
@@ -380,6 +383,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                             avatar = null
                         ),
                         joinedAt = Instant.fromEpochMilliseconds(0),
+                        flags = GuildMemberFlags(),
                     ),
                     0
                 )
@@ -723,7 +727,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         mfaLevel = MFALevel.None,
                         applicationId = null,
                         systemChannelId = null,
-                        systemChannelFlags = SystemChannelFlags(0),
+                        systemChannelFlags = SystemChannelFlags(),
                         rulesChannelId = null,
                         vanityUrlCode = null,
                         description = null,
@@ -769,7 +773,7 @@ class LiveGuildTest : AbstractLiveEntityTest<LiveGuild>() {
                         mfaLevel = MFALevel.None,
                         applicationId = null,
                         systemChannelId = null,
-                        systemChannelFlags = SystemChannelFlags(0),
+                        systemChannelFlags = SystemChannelFlags(),
                         rulesChannelId = null,
                         vanityUrlCode = null,
                         description = null,

@@ -115,6 +115,14 @@ public class ForumChannelDeleteEvent(
     }
 }
 
+public class MediaChannelDeleteEvent(
+    override val channel: MediaChannel,
+    override val shard: Int,
+    override val customContext: Any?,
+) : ChannelDeleteEvent {
+    override fun toString(): String =
+        "MediaChannelDeleteEvent(channel=$channel, shard=$shard, customContext=$customContext)"
+}
 
 /**
  * The event dispatched when an Unknown [Channel] is deleted in a guild.

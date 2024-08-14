@@ -27,9 +27,11 @@ public data class ApplicationCommandData(
     val version: Snowflake
 ) {
     public companion object {
-        public val description: DataDescription<ApplicationCommandData, Snowflake> = description(ApplicationCommandData::id) {
-            link(ApplicationCommandData::guildId to GuildData::id)
-        }
+        public val description: DataDescription<ApplicationCommandData, Snowflake> =
+            description(ApplicationCommandData::id) {
+                link(ApplicationCommandData::id to GuildApplicationCommandPermissionsData::id)
+            }
+
         public fun from(command: DiscordApplicationCommand): ApplicationCommandData {
             return with(command) {
                 ApplicationCommandData(
@@ -155,7 +157,7 @@ public data class ApplicationCommandOptionChoiceData(
     val value: String
 ) {
     public companion object {
-        public fun from(choice: Choice<*>): ApplicationCommandOptionChoiceData {
+        public fun from(choice: Choice): ApplicationCommandOptionChoiceData {
             return with(choice) {
                 ApplicationCommandOptionChoiceData(name, value.toString())
             }

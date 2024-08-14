@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,14 +30,15 @@ public sealed class OnboardingPromptType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "OnboardingPromptType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "OnboardingPromptType.Unknown(value=$value)"
+            else "OnboardingPromptType.${this::class.simpleName}"
 
     /**
      * An unknown [OnboardingPromptType].
      *
      * This is used as a fallback for [OnboardingPromptType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : OnboardingPromptType(value)
 
@@ -54,12 +55,7 @@ public sealed class OnboardingPromptType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): OnboardingPromptType =
-                when (val value = decoder.decodeInt()) {
-            0 -> MultipleChoice
-            1 -> Dropdown
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): OnboardingPromptType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -73,5 +69,14 @@ public sealed class OnboardingPromptType(
             )
         }
 
+        /**
+         * Returns an instance of [OnboardingPromptType] with [OnboardingPromptType.value] equal to
+         * the specified [value].
+         */
+        public fun from(`value`: Int): OnboardingPromptType = when (value) {
+            0 -> MultipleChoice
+            1 -> Dropdown
+            else -> Unknown(value)
+        }
     }
 }

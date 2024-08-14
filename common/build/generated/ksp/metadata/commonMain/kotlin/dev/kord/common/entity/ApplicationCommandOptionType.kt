@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,7 +30,8 @@ public sealed class ApplicationCommandOptionType(
     final override fun hashCode(): Int = type.hashCode()
 
     final override fun toString(): kotlin.String =
-            "ApplicationCommandOptionType.${this::class.simpleName}(type=$type)"
+            if (this is Unknown) "ApplicationCommandOptionType.Unknown(type=$type)"
+            else "ApplicationCommandOptionType.${this::class.simpleName}"
 
     /**
      * An unknown [ApplicationCommandOptionType].
@@ -38,7 +39,7 @@ public sealed class ApplicationCommandOptionType(
      * This is used as a fallback for [ApplicationCommandOptionType]s that haven't been added to
      * Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         type: Int,
     ) : ApplicationCommandOptionType(type)
 
@@ -86,20 +87,7 @@ public sealed class ApplicationCommandOptionType(
         }
 
         override fun deserialize(decoder: Decoder): ApplicationCommandOptionType =
-                when (val type = decoder.decodeInt()) {
-            1 -> SubCommand
-            2 -> SubCommandGroup
-            3 -> String
-            4 -> Integer
-            5 -> Boolean
-            6 -> User
-            7 -> Channel
-            8 -> Role
-            9 -> Mentionable
-            10 -> Number
-            11 -> Attachment
-            else -> Unknown(type)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -122,5 +110,23 @@ public sealed class ApplicationCommandOptionType(
             )
         }
 
+        /**
+         * Returns an instance of [ApplicationCommandOptionType] with
+         * [ApplicationCommandOptionType.type] equal to the specified [type].
+         */
+        public fun from(type: Int): ApplicationCommandOptionType = when (type) {
+            1 -> SubCommand
+            2 -> SubCommandGroup
+            3 -> String
+            4 -> Integer
+            5 -> Boolean
+            6 -> User
+            7 -> Channel
+            8 -> Role
+            9 -> Mentionable
+            10 -> Number
+            11 -> Attachment
+            else -> Unknown(type)
+        }
     }
 }

@@ -1,99 +1,57 @@
 package dev.kord.rest.builder.message.modify
 
 import dev.kord.common.annotation.KordDsl
-import dev.kord.common.entity.DiscordAttachment
-import dev.kord.common.entity.MessageFlag
 import dev.kord.common.entity.MessageFlags
+import dev.kord.common.entity.Snowflake
+import dev.kord.common.entity.optional.Optional
+import dev.kord.common.entity.optional.delegate.delegate
 import dev.kord.rest.NamedFile
-import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
-import dev.kord.rest.builder.message.AllowedMentionsBuilder
-import dev.kord.rest.builder.message.EmbedBuilder
-import io.ktor.client.request.forms.*
-import kotlin.contracts.InvocationKind
+import dev.kord.rest.builder.message.*
+import kotlin.contracts.InvocationKind.EXACTLY_ONCE
 import kotlin.contracts.contract
 
 @KordDsl
-public sealed interface MessageModifyBuilder {
-
-    public var content: String?
-
-    public var embeds: MutableList<EmbedBuilder>?
-
-    public var allowedMentions: AllowedMentionsBuilder?
-
-    public var components: MutableList<MessageComponentBuilder>?
-
-
-    /**
-     * The files to include as attachments
-     */
-    public var files: MutableList<NamedFile>?
-
-    public var attachments: MutableList<DiscordAttachment>?
-
-    /**
-     * Optional custom [MessageFlags] to update in this message.
-     *
-     * @see suppressEmbeds
-     */
-    public var flags: MessageFlags?
-
-    /**
-     * Do not include any embeds when serializing this message.
-     */
-    public var suppressEmbeds: Boolean?
-
-    /**
-     * Adds a file with the [name] and [contentProvider] to the attachments.
-     */
-    public fun addFile(name: String, contentProvider: ChannelProvider): NamedFile =
-        NamedFile(name, contentProvider).also { file ->
-            files = (files ?: mutableListOf()).also {
-                it.add(file)
-            }
-        }
-}
-
-public inline fun MessageModifyBuilder.embed(block: EmbedBuilder.() -> Unit) {
-    contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-    }
-    embeds = (embeds ?: mutableListOf()).also {
-        it.add(EmbedBuilder().apply(block))
-    }
-}
+public sealed interface MessageModifyBuilder : MessageBuilder
 
 /**
- * Configures the mentions that should trigger a ping. Not calling this function will result in the default behavior
- * (ping everything), calling this function but not configuring it before the request is build will result in all
- * pings being ignored.
- */
-public inline fun MessageModifyBuilder.allowedMentions(block: AllowedMentionsBuilder.() -> Unit = {}) {
-    contract {
-        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
-    }
-    allowedMentions = (allowedMentions ?: AllowedMentionsBuilder()).apply(block)
-}
-
-
-public inline fun MessageModifyBuilder.actionRow(builder: ActionRowBuilder.() -> Unit) {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    components = (components ?: mutableListOf()).also {
-        it.add(ActionRowBuilder().apply(builder))
-    }
-}
-
-/**
- * Sets/Unsets the [MessageFlags] for this message.
+ * Keeps the attachment with the given [id], so it will be present after editing the message.
  *
- * **Only supports [MessageFlag.SuppressEmbeds]**
+ * The attachment object can optionally be edited with [builder].
  */
-public inline fun MessageModifyBuilder.messageFlags(builder: MessageFlags.Builder.() -> Unit) {
-    contract {
-        callsInPlace(builder, InvocationKind.EXACTLY_ONCE)
-    }
-    flags = MessageFlags(builder)
+public inline fun MessageModifyBuilder.keepAttachment(id: Snowflake, builder: AttachmentBuilder.() -> Unit = {}) {
+    contract { callsInPlace(builder, EXACTLY_ONCE) }
+    val attachment = AttachmentBuilder(id).apply(builder)
+    attachments?.add(attachment) ?: run { attachments = mutableListOf(attachment) }
+}
+
+
+// this could have been combined with MessageModifyBuilder into a single sealed class, but it would have broken binary
+// compatibility, because MessageModifyBuilder would have changed from interface to class
+@Suppress("PropertyName")
+@KordDsl
+public sealed class AbstractMessageModifyBuilder : MessageModifyBuilder {
+
+    internal var _content: Optional<String?> = Optional.Missing()
+    final override var content: String? by ::_content.delegate()
+
+    internal var _embeds: Optional<MutableList<EmbedBuilder>?> = Optional.Missing()
+    final override var embeds: MutableList<EmbedBuilder>? by ::_embeds.delegate()
+
+    private var _flags: Optional<MessageFlags?> = Optional.Missing()
+    final override var flags: MessageFlags? by ::_flags.delegate()
+    final override var suppressEmbeds: Boolean? = null
+    internal fun buildFlags(): Optional<MessageFlags?> =
+        suppressEmbeds?.let { buildMessageFlags(flags, suppressEmbeds = it) } ?: _flags
+
+    internal var _allowedMentions: Optional<AllowedMentionsBuilder?> = Optional.Missing()
+    final override var allowedMentions: AllowedMentionsBuilder? by ::_allowedMentions.delegate()
+
+    internal var _components: Optional<MutableList<MessageComponentBuilder>?> = Optional.Missing()
+    final override var components: MutableList<MessageComponentBuilder>? by ::_components.delegate()
+
+    final override val files: MutableList<NamedFile> = mutableListOf()
+
+    internal var _attachments: Optional<MutableList<AttachmentBuilder>?> = Optional.Missing()
+    final override var attachments: MutableList<AttachmentBuilder>? by ::_attachments.delegate()
 }

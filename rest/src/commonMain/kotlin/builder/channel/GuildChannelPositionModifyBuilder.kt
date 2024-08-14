@@ -27,8 +27,11 @@ public class GuildChannelPositionModifyBuilder : RequestBuilder<GuildChannelPosi
 
     public inline fun move(channel: Snowflake, builder: GuildChannelSwapBuilder.() -> Unit) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
-        swaps.firstOrNull { it.channelId == channel }?.builder() ?: run {
-            swaps.add(GuildChannelSwapBuilder(channel).also(builder))
+        val swap = swaps.firstOrNull { it.channelId == channel }
+        if (swap != null) {
+            swap.builder()
+        } else {
+            swaps.add(GuildChannelSwapBuilder(channel).apply(builder))
         }
     }
 

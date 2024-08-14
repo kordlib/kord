@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,7 +30,8 @@ public sealed class InteractionResponseType(
     final override fun hashCode(): Int = type.hashCode()
 
     final override fun toString(): String =
-            "InteractionResponseType.${this::class.simpleName}(type=$type)"
+            if (this is Unknown) "InteractionResponseType.Unknown(type=$type)"
+            else "InteractionResponseType.${this::class.simpleName}"
 
     /**
      * An unknown [InteractionResponseType].
@@ -38,7 +39,7 @@ public sealed class InteractionResponseType(
      * This is used as a fallback for [InteractionResponseType]s that haven't been added to Kord
      * yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         type: Int,
     ) : InteractionResponseType(type)
 
@@ -88,16 +89,7 @@ public sealed class InteractionResponseType(
         }
 
         override fun deserialize(decoder: Decoder): InteractionResponseType =
-                when (val type = decoder.decodeInt()) {
-            1 -> Pong
-            4 -> ChannelMessageWithSource
-            5 -> DeferredChannelMessageWithSource
-            6 -> DeferredUpdateMessage
-            7 -> UpdateMessage
-            8 -> ApplicationCommandAutoCompleteResult
-            9 -> Modal
-            else -> Unknown(type)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -116,5 +108,19 @@ public sealed class InteractionResponseType(
             )
         }
 
+        /**
+         * Returns an instance of [InteractionResponseType] with [InteractionResponseType.type]
+         * equal to the specified [type].
+         */
+        public fun from(type: Int): InteractionResponseType = when (type) {
+            1 -> Pong
+            4 -> ChannelMessageWithSource
+            5 -> DeferredChannelMessageWithSource
+            6 -> DeferredUpdateMessage
+            7 -> UpdateMessage
+            8 -> ApplicationCommandAutoCompleteResult
+            9 -> Modal
+            else -> Unknown(type)
+        }
     }
 }

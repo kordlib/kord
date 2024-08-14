@@ -4,11 +4,10 @@ import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.Optional
 import dev.kord.gateway.builder.PresenceBuilder
 import dev.kord.gateway.builder.RequestGuildMembersBuilder
+import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import mu.KLogger
-import mu.KotlinLogging
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.coroutines.CoroutineContext
@@ -18,15 +17,15 @@ import kotlin.time.Duration
 /**
  * An implementation of the Discord [Gateway](https://discord.com/developers/docs/topics/gateway) and its lifecycle.
  *
- * Allows consumers to receive [events](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events)
- * through [events] and send [commands](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-commands)
+ * Allows consumers to receive [events](https://discord.com/developers/docs/topics/gateway-events#receive-events)
+ * through [events] and send [commands](https://discord.com/developers/docs/topics/gateway-events#send-events)
  * through [send].
  */
 public interface Gateway : CoroutineScope {
     /**
-     * The incoming [events](https://discord.com/developers/docs/topics/gateway#commands-and-events-gateway-events)
-     * of the Gateway. Users should expect these [Flows](Flow) to be hot and remain open for the entire lifecycle of the
-     * Gateway.
+     * The incoming [events](https://discord.com/developers/docs/topics/gateway-events) of the Gateway.
+     *
+     * Users should expect these [Flows](Flow) to be hot and remain open for the entire lifecycle of the Gateway.
      */
     public val events: SharedFlow<Event>
 
@@ -140,11 +139,18 @@ public suspend inline fun Gateway.start(token: String, config: GatewayConfigurat
     start(builder.build())
 }
 
-/**
- * Logger used to report throwables caught in [Gateway.on].
- */
+@Suppress("unused")
+@Deprecated("Binary compatibility, remove after deprecation cycle.", level = DeprecationLevel.HIDDEN)
 @PublishedApi
-internal val gatewayOnLogger: KLogger = KotlinLogging.logger("Gateway.on")
+internal val gatewayOnLogger: mu.KLogger = mu.KotlinLogging.logger("Gateway.on")
+
+/**
+ * Logger used to report [Throwable]s caught in [Gateway.on].
+ */
+private val logger = KotlinLogging.logger("Gateway.on")
+
+@PublishedApi
+internal fun logCaughtThrowable(throwable: Throwable): Unit = logger.catching(throwable)
 
 /**
  * Convenience method that will invoke the [consumer] on every event [T] created by [Gateway.events].
@@ -162,7 +168,7 @@ public inline fun <reified T : Event> Gateway.on(
     crossinline consumer: suspend T.() -> Unit
 ): Job {
     return this.events.buffer(Channel.UNLIMITED).filterIsInstance<T>().onEach {
-        launch { it.runCatching { it.consumer() }.onFailure(gatewayOnLogger::error) }
+        launch { it.runCatching { it.consumer() }.onFailure(::logCaughtThrowable) }
     }.launchIn(scope)
 }
 

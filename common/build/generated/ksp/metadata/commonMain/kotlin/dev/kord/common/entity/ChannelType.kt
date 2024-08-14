@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,14 +29,15 @@ public sealed class ChannelType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "ChannelType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "ChannelType.Unknown(value=$value)"
+            else "ChannelType.${this::class.simpleName}"
 
     /**
      * An unknown [ChannelType].
      *
      * This is used as a fallback for [ChannelType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : ChannelType(value)
 
@@ -107,6 +108,11 @@ public sealed class ChannelType(
      */
     public object GuildForum : ChannelType(15)
 
+    /**
+     * A channel that can only contain threads, similar to [GuildForum] channels.
+     */
+    public object GuildMedia : ChannelType(16)
+
     internal object Serializer : KSerializer<ChannelType> {
         override val descriptor: SerialDescriptor =
                 PrimitiveSerialDescriptor("dev.kord.common.entity.ChannelType", PrimitiveKind.INT)
@@ -115,22 +121,7 @@ public sealed class ChannelType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): ChannelType =
-                when (val value = decoder.decodeInt()) {
-            0 -> GuildText
-            1 -> DM
-            2 -> GuildVoice
-            3 -> GroupDM
-            4 -> GuildCategory
-            5 -> GuildNews
-            10 -> PublicNewsThread
-            11 -> PublicGuildThread
-            12 -> PrivateThread
-            13 -> GuildStageVoice
-            14 -> GuildDirectory
-            15 -> GuildForum
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): ChannelType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -151,8 +142,29 @@ public sealed class ChannelType(
                 GuildStageVoice,
                 GuildDirectory,
                 GuildForum,
+                GuildMedia,
             )
         }
 
+        /**
+         * Returns an instance of [ChannelType] with [ChannelType.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): ChannelType = when (value) {
+            0 -> GuildText
+            1 -> DM
+            2 -> GuildVoice
+            3 -> GroupDM
+            4 -> GuildCategory
+            5 -> GuildNews
+            10 -> PublicNewsThread
+            11 -> PublicGuildThread
+            12 -> PrivateThread
+            13 -> GuildStageVoice
+            14 -> GuildDirectory
+            15 -> GuildForum
+            16 -> GuildMedia
+            else -> Unknown(value)
+        }
     }
 }

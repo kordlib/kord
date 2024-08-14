@@ -7,7 +7,9 @@ internal actual fun formatIntegerFromLittleEndianLongArray(data: LongArray): Str
     // need to convert from little-endian data to big-endian expected by BigInteger
     val buffer = ByteBuffer.allocate(data.size * Long.SIZE_BYTES)
     buffer.asLongBuffer().put(data.reversedArray())
-    return BigInteger(buffer.array()).toString()
+    return BigInteger(/* signum = */ 1, /* magnitude = */ buffer.array()).toString()
 }
 
-internal actual fun parseIntegerToBigEndianByteArray(value: String): ByteArray = BigInteger(value).toByteArray()
+internal actual fun parseNonNegativeIntegerToBigEndianByteArray(value: String): ByteArray = BigInteger(value)
+    .also { if (it.signum() < 0) throw NumberFormatException("Invalid DiscordBitSet format: '$value'") }
+    .toByteArray()

@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,14 +30,15 @@ public sealed class TeamMembershipState(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "TeamMembershipState.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "TeamMembershipState.Unknown(value=$value)"
+            else "TeamMembershipState.${this::class.simpleName}"
 
     /**
      * An unknown [TeamMembershipState].
      *
      * This is used as a fallback for [TeamMembershipState]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : TeamMembershipState(value)
 
@@ -54,12 +55,7 @@ public sealed class TeamMembershipState(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): TeamMembershipState =
-                when (val value = decoder.decodeInt()) {
-            1 -> Invited
-            2 -> Accepted
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): TeamMembershipState = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -73,5 +69,14 @@ public sealed class TeamMembershipState(
             )
         }
 
+        /**
+         * Returns an instance of [TeamMembershipState] with [TeamMembershipState.value] equal to
+         * the specified [value].
+         */
+        public fun from(`value`: Int): TeamMembershipState = when (value) {
+            1 -> Invited
+            2 -> Accepted
+            else -> Unknown(value)
+        }
     }
 }

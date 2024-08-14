@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,14 +29,16 @@ public sealed class InteractionType(
 
     final override fun hashCode(): Int = type.hashCode()
 
-    final override fun toString(): String = "InteractionType.${this::class.simpleName}(type=$type)"
+    final override fun toString(): String =
+            if (this is Unknown) "InteractionType.Unknown(type=$type)"
+            else "InteractionType.${this::class.simpleName}"
 
     /**
      * An unknown [InteractionType].
      *
      * This is used as a fallback for [InteractionType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         type: Int,
     ) : InteractionType(type)
 
@@ -59,15 +61,7 @@ public sealed class InteractionType(
             encoder.encodeInt(value.type)
         }
 
-        override fun deserialize(decoder: Decoder): InteractionType =
-                when (val type = decoder.decodeInt()) {
-            1 -> Ping
-            2 -> ApplicationCommand
-            3 -> Component
-            4 -> AutoComplete
-            5 -> ModalSubmit
-            else -> Unknown(type)
-        }
+        override fun deserialize(decoder: Decoder): InteractionType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -84,5 +78,17 @@ public sealed class InteractionType(
             )
         }
 
+        /**
+         * Returns an instance of [InteractionType] with [InteractionType.type] equal to the
+         * specified [type].
+         */
+        public fun from(type: Int): InteractionType = when (type) {
+            1 -> Ping
+            2 -> ApplicationCommand
+            3 -> Component
+            4 -> AutoComplete
+            5 -> ModalSubmit
+            else -> Unknown(type)
+        }
     }
 }

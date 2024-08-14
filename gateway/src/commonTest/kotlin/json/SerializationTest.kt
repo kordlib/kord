@@ -1,5 +1,6 @@
 package dev.kord.gateway.json
 
+import dev.kord.common.entity.UserFlag.HouseBravery
 import dev.kord.common.entity.UserFlags
 import dev.kord.common.entity.UserPremium
 import dev.kord.common.entity.optional.Optional
@@ -7,9 +8,15 @@ import dev.kord.common.entity.optional.value
 import dev.kord.gateway.*
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.MissingFieldException
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNull
 import kotlin.js.JsName
+import kotlin.random.Random
 import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.time.Duration.Companion.seconds
 
 private suspend fun file(name: String): String = readFile("event", name)
@@ -55,13 +62,12 @@ class SerializationTest {
                 with(user) {
                     id.toString() shouldBe "80351110224678912"
                     username shouldBe "Nelly"
-                    @Suppress("DEPRECATION")
                     discriminator shouldBe Optional("1337")
                     globalName shouldBe Optional(null)
                     avatar shouldBe "8342729096ea3675442027381ff50dfe"
                     verified.value shouldBe true
                     email.value shouldBe "nelly@discordapp.com"
-                    flags.value shouldBe UserFlags(64)
+                    flags.value shouldBe UserFlags(HouseBravery)
                     premiumType.value shouldBe UserPremium.NitroClassic
                 }
                 privateChannels shouldBe listOf()
@@ -162,4 +168,80 @@ class SerializationTest {
         }
     }
 
+    @Test
+    fun test_Heartbeat_Event_serialization() {
+        val sequenceNumbers = listOf(null, 0, -1, 1, Random.nextLong(), Long.MIN_VALUE, Long.MAX_VALUE)
+        sequenceNumbers.forEach { sequenceNumber ->
+            val heartbeat = Heartbeat(sequenceNumber)
+            val permutations = listOf(
+                jsonObjectPermutations("op" to "1", "d" to "$sequenceNumber"),
+                jsonObjectPermutations("op" to "1", "t" to "null", "d" to "$sequenceNumber"),
+                jsonObjectPermutations("op" to "1", "s" to "null", "d" to "$sequenceNumber"),
+                jsonObjectPermutations("op" to "1", "t" to "null", "s" to "null", "d" to "$sequenceNumber"),
+            ).flatten()
+            permutations.forEach { perm ->
+                assertEquals(heartbeat, Json.decodeFromString(Event.DeserializationStrategy, perm))
+            }
+        }
+    }
+
+    @Test
+    fun field_order_doesnt_matter() {
+        val data = listOf(
+            Triple(OpCode.Dispatch, "null", UnknownDispatchEvent(name = null, data = JsonNull, sequence = null)),
+            Triple(OpCode.Heartbeat, "1234", Heartbeat(1234)),
+            Triple(OpCode.Reconnect, """{"foo":["bar"]}""", Reconnect),
+            Triple(OpCode.InvalidSession, "false", InvalidSession(false)),
+            Triple(OpCode.Hello, """{"heartbeat_interval":1234}""", Hello(1234)),
+            Triple(OpCode.HeartbeatACK, """{"foo":["bar"]}""", HeartbeatACK),
+        )
+        data.forEach { (opCode, json, event) ->
+            val permutations = listOf(
+                jsonObjectPermutations("op" to "${opCode.code}", "d" to json),
+                jsonObjectPermutations("op" to "${opCode.code}", "t" to "null", "d" to json),
+                jsonObjectPermutations("op" to "${opCode.code}", "s" to "null", "d" to json),
+                jsonObjectPermutations("op" to "${opCode.code}", "t" to "null", "s" to "null", "d" to json),
+            ).flatten()
+            permutations.forEach { perm ->
+                assertEquals(event, Json.decodeFromString(Event.DeserializationStrategy, perm))
+            }
+        }
+    }
+
+    @Test
+    fun deserializing_Event_with_illegal_or_unknown_OpCode_fails() {
+        val ops = listOf(
+            OpCode.Identify,
+            OpCode.StatusUpdate,
+            OpCode.VoiceStateUpdate,
+            OpCode.Resume,
+            OpCode.RequestGuildMembers,
+            OpCode.Unknown,
+        )
+        for (op in ops.map { it.code } + (-100..-1) + (12..100)) {
+            val permutations = listOf(
+                jsonObjectPermutations("op" to "$op"),
+                jsonObjectPermutations("op" to "$op", "t" to "null"),
+                jsonObjectPermutations("op" to "$op", "s" to "null"),
+                jsonObjectPermutations("op" to "$op", "d" to "\"foo\""),
+                jsonObjectPermutations("op" to "$op", "t" to "null", "s" to "null"),
+                jsonObjectPermutations("op" to "$op", "t" to "null", "d" to "\"foo\""),
+                jsonObjectPermutations("op" to "$op", "s" to "null", "d" to "\"foo\""),
+                jsonObjectPermutations("op" to "$op", "t" to "null", "s" to "null", "d" to "\"foo\""),
+            ).flatten()
+            permutations.forEach { perm ->
+                assertFailsWith<IllegalArgumentException> {
+                    Json.decodeFromString(Event.DeserializationStrategy, perm)
+                }
+            }
+        }
+    }
+
+    @Test
+    fun deserializing_Event_with_missing_op_field_fails() {
+        @OptIn(ExperimentalSerializationApi::class)
+        assertFailsWith<MissingFieldException> {
+            Json.decodeFromString(Event.DeserializationStrategy, """{"s":1,"t":"EVENT_X","d":{"foo":"bar"}}""")
+        }
+    }
 }

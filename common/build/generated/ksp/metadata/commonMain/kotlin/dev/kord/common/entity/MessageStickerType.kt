@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -30,14 +30,15 @@ public sealed class MessageStickerType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "MessageStickerType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "MessageStickerType.Unknown(value=$value)"
+            else "MessageStickerType.${this::class.simpleName}"
 
     /**
      * An unknown [MessageStickerType].
      *
      * This is used as a fallback for [MessageStickerType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : MessageStickerType(value)
 
@@ -58,14 +59,7 @@ public sealed class MessageStickerType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): MessageStickerType =
-                when (val value = decoder.decodeInt()) {
-            1 -> PNG
-            2 -> APNG
-            3 -> LOTTIE
-            4 -> GIF
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): MessageStickerType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -81,5 +75,16 @@ public sealed class MessageStickerType(
             )
         }
 
+        /**
+         * Returns an instance of [MessageStickerType] with [MessageStickerType.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: Int): MessageStickerType = when (value) {
+            1 -> PNG
+            2 -> APNG
+            3 -> LOTTIE
+            4 -> GIF
+            else -> Unknown(value)
+        }
     }
 }

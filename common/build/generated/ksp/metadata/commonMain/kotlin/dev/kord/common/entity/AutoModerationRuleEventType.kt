@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -32,7 +32,8 @@ public sealed class AutoModerationRuleEventType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "AutoModerationRuleEventType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "AutoModerationRuleEventType.Unknown(value=$value)"
+            else "AutoModerationRuleEventType.${this::class.simpleName}"
 
     /**
      * An unknown [AutoModerationRuleEventType].
@@ -40,7 +41,7 @@ public sealed class AutoModerationRuleEventType(
      * This is used as a fallback for [AutoModerationRuleEventType]s that haven't been added to Kord
      * yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : AutoModerationRuleEventType(value)
 
@@ -59,10 +60,7 @@ public sealed class AutoModerationRuleEventType(
         }
 
         override fun deserialize(decoder: Decoder): AutoModerationRuleEventType =
-                when (val value = decoder.decodeInt()) {
-            1 -> MessageSend
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -75,5 +73,13 @@ public sealed class AutoModerationRuleEventType(
             )
         }
 
+        /**
+         * Returns an instance of [AutoModerationRuleEventType] with
+         * [AutoModerationRuleEventType.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): AutoModerationRuleEventType = when (value) {
+            1 -> MessageSend
+            else -> Unknown(value)
+        }
     }
 }

@@ -235,10 +235,10 @@ public enum class JsonErrorCode(public val code: Int) {
     /** Maximum number of application commands reached. */
     MaxApplicationCommands(30032),
 
-    /** Max number of thread participants has been reached (1000). */
+    /** Maximum number of thread participants has been reached (1000). */
     MaxThreadParticipants(30033),
 
-    /** Max number of daily application command creates has been reached (200). */
+    /** Maximum number of daily application command creates has been reached (200). */
     MaxDailyApplicationCommandCreates(30034),
 
     /** Maximum number of bans for non-guild members have been exceeded. */
@@ -619,6 +619,12 @@ public enum class JsonErrorCode(public val code: Int) {
 
     /** Message blocked by harmful links filter. */
     MessageBlockedByHarmfulLinksFilter(240000),
+
+    /** Cannot enable onboarding, requirements are not met. */
+    CannotEnableOnboarding(350000),
+
+    /** Cannot update onboarding while below requirements. */
+    CannotUpdateOnboarding(350001),
 
     ;
 

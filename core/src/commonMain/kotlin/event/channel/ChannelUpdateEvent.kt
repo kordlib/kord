@@ -141,6 +141,15 @@ public class ForumChannelUpdateEvent(
     }
 }
 
+public class MediaChannelUpdateEvent(
+    override val channel: MediaChannel,
+    override val old: MediaChannel?,
+    override val shard: Int,
+    override val customContext: Any?,
+) : ChannelUpdateEvent {
+    override fun toString(): String =
+        "MediaChannelUpdateEvent(channel=$channel, old=$old, shard=$shard, customContext=$customContext)"
+}
 
 /**
  * The event dispatched when an Unknown [Channel] is updated.

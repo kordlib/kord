@@ -47,6 +47,9 @@ public class GuildOnboarding(
     /** Whether onboarding is enabled in the [guild]. */
     public val isEnabled: Boolean get() = data.enabled
 
+    /** Current [mode][OnboardingMode] of onboarding. */
+    public val mode: OnboardingMode get() = data.mode
+
     /**
      * Requests the [Guild] this onboarding is part of.
      *

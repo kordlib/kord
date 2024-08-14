@@ -1,10 +1,11 @@
 package dev.kord.ksp
 
+import com.google.devtools.ksp.KspExperimental
 import com.google.devtools.ksp.findActualType
+import com.google.devtools.ksp.getAnnotationsByType
 import com.google.devtools.ksp.isDefault
 import com.google.devtools.ksp.processing.Resolver
 import com.google.devtools.ksp.symbol.*
-import com.google.devtools.ksp.symbol.ClassKind.ENUM_ENTRY
 import kotlin.reflect.KProperty1
 
 internal inline fun <reified A : Annotation> Resolver.getSymbolsWithAnnotation(inDepth: Boolean = false) =
@@ -18,6 +19,9 @@ internal fun KSAnnotation.isOfType(qualifiedName: String) = annotationType.resol
     .declaration.let { if (it is KSTypeAlias) it.findActualType() else it }
     .qualifiedName?.asString() == qualifiedName
 
+@OptIn(KspExperimental::class)
+internal inline fun <reified A : Annotation> KSAnnotated.getAnnotationsByType() = getAnnotationsByType(A::class)
+
 internal class AnnotationArguments<A : Annotation> private constructor(
     private val arguments: Map<String, KSValueArgument>,
 ) {
@@ -27,17 +31,7 @@ internal class AnnotationArguments<A : Annotation> private constructor(
     fun isDefault(parameter: KProperty1<A, Any>) = getArgument(parameter).isDefault()
 
     // can't return non-nullable values because of https://github.com/google/ksp/issues/885
-    operator fun get(parameter: KProperty1<A, Int>) = parameter.value as Int?
-    operator fun get(parameter: KProperty1<A, String>) = parameter.value as String?
     operator fun get(parameter: KProperty1<A, Annotation>) = parameter.value as KSAnnotation?
-    inline operator fun <reified E : Enum<E>> get(parameter: KProperty1<A, E>) =
-        (parameter.value as KSType?)?.toEnumEntry<E>()
-
-    @JvmName("getStrings")
-    operator fun get(parameter: KProperty1<A, Array<out String>>) =
-        @Suppress("UNCHECKED_CAST") (parameter.value as List<String>?)
-
-    @JvmName("getAnnotations")
     operator fun get(parameter: KProperty1<A, Array<out Annotation>>) =
         @Suppress("UNCHECKED_CAST") (parameter.value as List<KSAnnotation>?)
 
@@ -45,15 +39,6 @@ internal class AnnotationArguments<A : Annotation> private constructor(
         fun <A : Annotation> KSAnnotation.arguments() =
             AnnotationArguments<A>(arguments.associateBy { it.name!!.asString() })
     }
-}
-
-/** Maps [KSType] to an entry of the enum class [E]. */
-private inline fun <reified E : Enum<E>> KSType.toEnumEntry(): E {
-    val decl = declaration
-    require(decl is KSClassDeclaration && decl.classKind == ENUM_ENTRY)
-    val name = decl.qualifiedName!!
-    require(name.getQualifier() == E::class.qualifiedName)
-    return enumValueOf(name.getShortName())
 }
 
 @Suppress("RecursivePropertyAccessor")

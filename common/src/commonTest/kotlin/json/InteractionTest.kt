@@ -1,6 +1,7 @@
 package dev.kord.common.json
 
 import dev.kord.common.entity.*
+import dev.kord.common.entity.Permission.*
 import dev.kord.common.entity.optional.orEmpty
 import dev.kord.common.readFile
 import kotlinx.coroutines.test.runTest
@@ -10,6 +11,14 @@ import kotlin.test.Test
 import kotlin.test.assertIs
 
 private suspend fun file(name: String): String = readFile("interaction", name)
+
+private val perms = Permissions(
+    CreateInstantInvite, KickMembers, BanMembers, Administrator, ManageChannels, ManageGuild, AddReactions,
+    ViewAuditLog, PrioritySpeaker, Stream, ViewChannel, SendMessages, SendTTSMessages, ManageMessages, EmbedLinks,
+    AttachFiles, ReadMessageHistory, MentionEveryone, UseExternalEmojis, ViewGuildInsights, Connect, Speak, MuteMembers,
+    DeafenMembers, MoveMembers, UseVAD, ChangeNickname, ManageNicknames, ManageRoles, ManageWebhooks,
+    ManageGuildExpressions,
+)
 
 class InteractionTest {
 
@@ -41,7 +50,7 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe perms
         }
     }
 
@@ -67,7 +76,7 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe perms
         }
     }
 
@@ -92,7 +101,7 @@ class InteractionTest {
             arg.type shouldBe ApplicationCommandOptionType.Integer
             arg.name shouldBe "testint"
             arg.value shouldBe 1L
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe perms
         }
     }
 
@@ -132,7 +141,7 @@ class InteractionTest {
             }
             guildId shouldBe "772904309264089089"
             id shouldBe "847587388497854464"
-            appPermissions shouldBe Permissions("2147483647")
+            appPermissions shouldBe perms
         }
     }
 

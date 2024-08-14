@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -32,7 +32,8 @@ public sealed class AutoModerationActionType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "AutoModerationActionType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "AutoModerationActionType.Unknown(value=$value)"
+            else "AutoModerationActionType.${this::class.simpleName}"
 
     /**
      * An unknown [AutoModerationActionType].
@@ -40,7 +41,7 @@ public sealed class AutoModerationActionType(
      * This is used as a fallback for [AutoModerationActionType]s that haven't been added to Kord
      * yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : AutoModerationActionType(value)
 
@@ -77,12 +78,7 @@ public sealed class AutoModerationActionType(
         }
 
         override fun deserialize(decoder: Decoder): AutoModerationActionType =
-                when (val value = decoder.decodeInt()) {
-            1 -> BlockMessage
-            2 -> SendAlertMessage
-            3 -> Timeout
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -97,5 +93,15 @@ public sealed class AutoModerationActionType(
             )
         }
 
+        /**
+         * Returns an instance of [AutoModerationActionType] with [AutoModerationActionType.value]
+         * equal to the specified [value].
+         */
+        public fun from(`value`: Int): AutoModerationActionType = when (value) {
+            1 -> BlockMessage
+            2 -> SendAlertMessage
+            3 -> Timeout
+            else -> Unknown(value)
+        }
     }
 }

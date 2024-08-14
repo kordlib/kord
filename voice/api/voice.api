@@ -205,12 +205,12 @@ public abstract class dev/kord/voice/EncryptionMode {
 }
 
 public final class dev/kord/voice/EncryptionMode$Companion {
+	public final fun from (Ljava/lang/String;)Ldev/kord/voice/EncryptionMode;
 	public final fun getEntries ()Ljava/util/List;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/EncryptionMode$Unknown : dev/kord/voice/EncryptionMode {
-	public fun <init> (Ljava/lang/String;)V
 }
 
 public final class dev/kord/voice/EncryptionMode$XSalsa20Poly1305 : dev/kord/voice/EncryptionMode {
@@ -244,14 +244,36 @@ public final class dev/kord/voice/FrameInterceptorConfiguration {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class dev/kord/voice/SpeakingFlag : java/lang/Enum {
-	public static final field Microphone Ldev/kord/voice/SpeakingFlag;
-	public static final field Priority Ldev/kord/voice/SpeakingFlag;
-	public static final field Soundshare Ldev/kord/voice/SpeakingFlag;
+public abstract class dev/kord/voice/SpeakingFlag {
+	public static final field Companion Ldev/kord/voice/SpeakingFlag$Companion;
+	public synthetic fun <init> (ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Ldev/kord/voice/SpeakingFlag;
-	public static fun values ()[Ldev/kord/voice/SpeakingFlag;
+	public final fun getShift ()I
+	public final fun hashCode ()I
+	public final fun plus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
+	public final fun plus (Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/SpeakingFlags;
+	public final fun toString ()Ljava/lang/String;
+}
+
+public final class dev/kord/voice/SpeakingFlag$Companion {
+	public final fun fromShift (I)Ldev/kord/voice/SpeakingFlag;
+	public final fun getEntries ()Ljava/util/List;
+}
+
+public final class dev/kord/voice/SpeakingFlag$Microphone : dev/kord/voice/SpeakingFlag {
+	public static final field INSTANCE Ldev/kord/voice/SpeakingFlag$Microphone;
+}
+
+public final class dev/kord/voice/SpeakingFlag$Priority : dev/kord/voice/SpeakingFlag {
+	public static final field INSTANCE Ldev/kord/voice/SpeakingFlag$Priority;
+}
+
+public final class dev/kord/voice/SpeakingFlag$Soundshare : dev/kord/voice/SpeakingFlag {
+	public static final field INSTANCE Ldev/kord/voice/SpeakingFlag$Soundshare;
+}
+
+public final class dev/kord/voice/SpeakingFlag$Unknown : dev/kord/voice/SpeakingFlag {
 }
 
 public final class dev/kord/voice/SpeakingFlagKt {
@@ -259,7 +281,8 @@ public final class dev/kord/voice/SpeakingFlagKt {
 	public static final fun SpeakingFlags (Lkotlin/jvm/functions/Function1;)Ldev/kord/voice/SpeakingFlags;
 	public static final fun SpeakingFlags ([Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
 	public static final fun SpeakingFlags ([Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/SpeakingFlags;
-	public static final fun SpeakingFlagsWithIterable (Ljava/lang/Iterable;)Ldev/kord/voice/SpeakingFlags;
+	public static synthetic fun SpeakingFlags$default (Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Ldev/kord/voice/SpeakingFlags;
+	public static final fun SpeakingFlags0 (Ljava/lang/Iterable;)Ldev/kord/voice/SpeakingFlags;
 }
 
 public final class dev/kord/voice/SpeakingFlags {
@@ -267,8 +290,10 @@ public final class dev/kord/voice/SpeakingFlags {
 	public final fun contains (Ldev/kord/voice/SpeakingFlag;)Z
 	public final fun contains (Ldev/kord/voice/SpeakingFlags;)Z
 	public final fun copy (Lkotlin/jvm/functions/Function1;)Ldev/kord/voice/SpeakingFlags;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()I
-	public final fun getFlags ()Ljava/util/List;
+	public final fun getValues ()Ljava/util/Set;
+	public fun hashCode ()I
 	public final fun minus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
 	public final fun minus (Ldev/kord/voice/SpeakingFlags;)Ldev/kord/voice/SpeakingFlags;
 	public final fun plus (Ldev/kord/voice/SpeakingFlag;)Ldev/kord/voice/SpeakingFlags;
@@ -280,7 +305,7 @@ public final class dev/kord/voice/SpeakingFlags$Builder {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public synthetic fun <init> (IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun flags ()Ldev/kord/voice/SpeakingFlags;
+	public final fun build ()Ldev/kord/voice/SpeakingFlags;
 	public final fun unaryMinus (Ldev/kord/voice/SpeakingFlag;)V
 	public final fun unaryMinus (Ldev/kord/voice/SpeakingFlags;)V
 	public final fun unaryPlus (Ldev/kord/voice/SpeakingFlag;)V
@@ -515,7 +540,6 @@ public final class dev/kord/voice/gateway/DefaultVoiceGatewayData {
 
 public final class dev/kord/voice/gateway/Heartbeat : dev/kord/voice/gateway/Command {
 	public static final field Companion Ldev/kord/voice/gateway/Heartbeat$Companion;
-	public synthetic fun <init> (IJLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (J)V
 	public final fun component1 ()J
 	public final fun copy (J)Ldev/kord/voice/gateway/Heartbeat;
@@ -524,16 +548,15 @@ public final class dev/kord/voice/gateway/Heartbeat : dev/kord/voice/gateway/Com
 	public final fun getNonce ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Heartbeat;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/Heartbeat$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/Heartbeat$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Heartbeat$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Heartbeat;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Heartbeat;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Heartbeat;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Heartbeat;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -544,7 +567,6 @@ public final class dev/kord/voice/gateway/Heartbeat$Companion {
 
 public final class dev/kord/voice/gateway/HeartbeatAck : dev/kord/voice/gateway/VoiceEvent {
 	public static final field Companion Ldev/kord/voice/gateway/HeartbeatAck$Companion;
-	public synthetic fun <init> (IJLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (J)V
 	public final fun component1 ()J
 	public final fun copy (J)Ldev/kord/voice/gateway/HeartbeatAck;
@@ -553,18 +575,6 @@ public final class dev/kord/voice/gateway/HeartbeatAck : dev/kord/voice/gateway/
 	public final fun getNonce ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/HeartbeatAck;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class dev/kord/voice/gateway/HeartbeatAck$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Ldev/kord/voice/gateway/HeartbeatAck$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/HeartbeatAck;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/HeartbeatAck;)V
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class dev/kord/voice/gateway/HeartbeatAck$Companion {
@@ -573,7 +583,6 @@ public final class dev/kord/voice/gateway/HeartbeatAck$Companion {
 
 public final class dev/kord/voice/gateway/Hello : dev/kord/voice/gateway/VoiceEvent {
 	public static final field Companion Ldev/kord/voice/gateway/Hello$Companion;
-	public synthetic fun <init> (ISDLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (SD)V
 	public final fun component1 ()S
 	public final fun component2 ()D
@@ -584,16 +593,15 @@ public final class dev/kord/voice/gateway/Hello : dev/kord/voice/gateway/VoiceEv
 	public final fun getVersion ()S
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Hello;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/Hello$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Hello$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Hello;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Hello;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Hello;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Hello;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -604,7 +612,6 @@ public final class dev/kord/voice/gateway/Hello$Companion {
 
 public final class dev/kord/voice/gateway/Identify : dev/kord/voice/gateway/Command {
 	public static final field Companion Ldev/kord/voice/gateway/Identify$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ldev/kord/common/entity/Snowflake;
@@ -619,16 +626,15 @@ public final class dev/kord/voice/gateway/Identify : dev/kord/voice/gateway/Comm
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Identify;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/Identify$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Identify$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Identify;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Identify;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Identify;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Identify;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -639,6 +645,7 @@ public final class dev/kord/voice/gateway/Identify$Companion {
 
 public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static final field ClientDisconnect Ldev/kord/voice/gateway/OpCode;
+	public static final field Companion Ldev/kord/voice/gateway/OpCode$Companion;
 	public static final field Heartbeat Ldev/kord/voice/gateway/OpCode;
 	public static final field HeartbeatAck Ldev/kord/voice/gateway/OpCode;
 	public static final field Hello Ldev/kord/voice/gateway/OpCode;
@@ -656,10 +663,13 @@ public final class dev/kord/voice/gateway/OpCode : java/lang/Enum {
 	public static fun values ()[Ldev/kord/voice/gateway/OpCode;
 }
 
+public final class dev/kord/voice/gateway/OpCode$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class dev/kord/voice/gateway/Ready : dev/kord/voice/gateway/VoiceEvent {
 	public static final field Companion Ldev/kord/voice/gateway/Ready$Companion;
 	public synthetic fun <init> (ILjava/lang/String;ILjava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (ILkotlin/UInt;Ljava/lang/String;ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-pVg5ArA ()I
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()I
@@ -673,16 +683,15 @@ public final class dev/kord/voice/gateway/Ready : dev/kord/voice/gateway/VoiceEv
 	public final fun getSsrc-pVg5ArA ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Ready;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/Ready$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/Ready$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Ready$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Ready;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Ready;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Ready;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Ready;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -693,7 +702,6 @@ public final class dev/kord/voice/gateway/Ready$Companion {
 
 public final class dev/kord/voice/gateway/Resume : dev/kord/voice/gateway/Command {
 	public static final field Companion Ldev/kord/voice/gateway/Resume$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/common/entity/Snowflake;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2 ()Ljava/lang/String;
@@ -706,16 +714,15 @@ public final class dev/kord/voice/gateway/Resume : dev/kord/voice/gateway/Comman
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Resume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/Resume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Resume$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Resume;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Resume;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Resume;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Resume;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -731,7 +738,6 @@ public final class dev/kord/voice/gateway/Resumed : dev/kord/voice/gateway/Voice
 
 public final class dev/kord/voice/gateway/SelectProtocol : dev/kord/voice/gateway/Command {
 	public static final field Companion Ldev/kord/voice/gateway/SelectProtocol$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ldev/kord/voice/gateway/SelectProtocol$Data;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ldev/kord/voice/gateway/SelectProtocol$Data;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ldev/kord/voice/gateway/SelectProtocol$Data;
@@ -742,16 +748,15 @@ public final class dev/kord/voice/gateway/SelectProtocol : dev/kord/voice/gatewa
 	public final fun getProtocol ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/SelectProtocol;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/SelectProtocol$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/SelectProtocol$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/SelectProtocol$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SelectProtocol;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SelectProtocol;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SelectProtocol;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SelectProtocol;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -762,7 +767,6 @@ public final class dev/kord/voice/gateway/SelectProtocol$Companion {
 
 public final class dev/kord/voice/gateway/SelectProtocol$Data {
 	public static final field Companion Ldev/kord/voice/gateway/SelectProtocol$Data$Companion;
-	public synthetic fun <init> (ILjava/lang/String;ILdev/kord/voice/EncryptionMode;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;ILdev/kord/voice/EncryptionMode;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
@@ -775,16 +779,15 @@ public final class dev/kord/voice/gateway/SelectProtocol$Data {
 	public final fun getPort ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/SelectProtocol$Data;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/SelectProtocol$Data$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/SelectProtocol$Data$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/SelectProtocol$Data$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SelectProtocol$Data;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SelectProtocol$Data;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SelectProtocol$Data;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SelectProtocol$Data;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -795,7 +798,6 @@ public final class dev/kord/voice/gateway/SelectProtocol$Data$Companion {
 
 public final class dev/kord/voice/gateway/SendSpeaking : dev/kord/voice/gateway/Command {
 	public static final field Companion Ldev/kord/voice/gateway/SendSpeaking$Companion;
-	public synthetic fun <init> (ILdev/kord/voice/SpeakingFlags;ILkotlin/UInt;Lkotlinx/serialization/internal/SerializationConstructorMarker;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ldev/kord/voice/SpeakingFlags;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/voice/SpeakingFlags;
 	public final fun component2 ()I
@@ -808,16 +810,15 @@ public final class dev/kord/voice/gateway/SendSpeaking : dev/kord/voice/gateway/
 	public final fun getSsrc-pVg5ArA ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/SendSpeaking;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/SendSpeaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/SendSpeaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/SendSpeaking$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SendSpeaking;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SendSpeaking;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SendSpeaking;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SendSpeaking;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -828,7 +829,6 @@ public final class dev/kord/voice/gateway/SendSpeaking$Companion {
 
 public final class dev/kord/voice/gateway/SessionDescription : dev/kord/voice/gateway/VoiceEvent {
 	public static final field Companion Ldev/kord/voice/gateway/SessionDescription$Companion;
-	public synthetic fun <init> (ILdev/kord/voice/EncryptionMode;Ljava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ldev/kord/voice/EncryptionMode;Ljava/util/List;)V
 	public final fun component1 ()Ldev/kord/voice/EncryptionMode;
 	public final fun component2 ()Ljava/util/List;
@@ -839,16 +839,15 @@ public final class dev/kord/voice/gateway/SessionDescription : dev/kord/voice/ga
 	public final fun getSecretKey ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/SessionDescription;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/SessionDescription$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/SessionDescription$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/SessionDescription$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SessionDescription;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/SessionDescription;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SessionDescription;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/SessionDescription;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -859,7 +858,6 @@ public final class dev/kord/voice/gateway/SessionDescription$Companion {
 
 public final class dev/kord/voice/gateway/Speaking : dev/kord/voice/gateway/VoiceEvent {
 	public static final field Companion Ldev/kord/voice/gateway/Speaking$Companion;
-	public synthetic fun <init> (ILdev/kord/common/entity/Snowflake;Lkotlin/UInt;Ldev/kord/voice/SpeakingFlags;Lkotlinx/serialization/internal/SerializationConstructorMarker;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Ldev/kord/common/entity/Snowflake;ILdev/kord/voice/SpeakingFlags;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ldev/kord/common/entity/Snowflake;
 	public final fun component2-pVg5ArA ()I
@@ -872,16 +870,15 @@ public final class dev/kord/voice/gateway/Speaking : dev/kord/voice/gateway/Voic
 	public final fun getUserId ()Ldev/kord/common/entity/Snowflake;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Ldev/kord/voice/gateway/Speaking;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class dev/kord/voice/gateway/Speaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+public synthetic class dev/kord/voice/gateway/Speaking$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
 	public static final field INSTANCE Ldev/kord/voice/gateway/Speaking$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Speaking;
+	public final fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public final fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ldev/kord/voice/gateway/Speaking;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Speaking;)V
+	public final fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public final fun serialize (Lkotlinx/serialization/encoding/Encoder;Ldev/kord/voice/gateway/Speaking;)V
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
@@ -991,7 +988,8 @@ public final class dev/kord/voice/gateway/VoiceGatewayConfiguration {
 }
 
 public final class dev/kord/voice/gateway/VoiceGatewayKt {
-	public static final fun getVoiceGatewayOnLogger ()Lmu/KLogger;
+	public static final synthetic fun getVoiceGatewayOnLogger ()Lmu/KLogger;
+	public static final fun logCaughtThrowable (Ljava/lang/Throwable;)V
 }
 
 public final class dev/kord/voice/io/ByteArrayCursorsKt {

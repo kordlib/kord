@@ -4,7 +4,6 @@ import dev.kord.common.entity.*
 import dev.kord.common.entity.MessageFlag.Ephemeral
 import dev.kord.common.entity.optional.Optional
 import dev.kord.common.entity.optional.coerceToMissing
-import dev.kord.common.entity.optional.orEmpty
 import dev.kord.rest.builder.interaction.*
 import dev.kord.rest.builder.message.create.FollowupMessageCreateBuilder
 import dev.kord.rest.builder.message.create.InteractionResponseCreateBuilder
@@ -14,9 +13,7 @@ import dev.kord.rest.json.request.*
 import dev.kord.rest.request.RequestBuilder
 import dev.kord.rest.request.RequestHandler
 import dev.kord.rest.route.Route
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.serializer
 import kotlin.collections.set
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -111,7 +108,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     ): Unit = call(Route.InteractionResponseCreate) {
         interactionIdInteractionToken(interactionId, interactionToken)
         body(InteractionResponseCreateRequest.serializer(), request.request)
-        request.files.orEmpty().onEach { file(it) }
+        request.files.onEach { file(it) }
     }
 
     public suspend fun createInteractionResponse(
@@ -123,15 +120,14 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         body(InteractionResponseCreateRequest.serializer(), request)
     }
 
-    public suspend inline fun <reified T> createAutoCompleteInteractionResponse(
+    public suspend fun createAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
-        autoComplete: DiscordAutoComplete<T>,
-        typeSerializer: KSerializer<T> = serializer(),
+        autoComplete: DiscordAutoComplete,
     ): Unit = call(Route.InteractionResponseCreate) {
         interactionIdInteractionToken(interactionId, interactionToken)
         body(
-            AutoCompleteResponseCreateRequest.serializer(typeSerializer),
+            AutoCompleteResponseCreateRequest.serializer(),
             AutoCompleteResponseCreateRequest(
                 InteractionResponseType.ApplicationCommandAutoCompleteResult,
                 autoComplete
@@ -223,18 +219,15 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
         )
     }
 
-    public suspend inline fun <reified T, Builder : BaseChoiceBuilder<T>> createBuilderAutoCompleteInteractionResponse(
+    public suspend inline fun <Builder : BaseChoiceBuilder<*, *>> createBuilderAutoCompleteInteractionResponse(
         interactionId: Snowflake,
         interactionToken: String,
         builder: Builder,
         builderFunction: Builder.() -> Unit
     ) {
-        // TODO We can remove this cast when we change the type of BaseChoiceBuilder.choices to MutableList<Choice<T>>.
-        //  This can be done once https://youtrack.jetbrains.com/issue/KT-51045 is fixed.
-        //  Until then this cast is necessary to get the right serializer through reified generics.
-        @Suppress("UNCHECKED_CAST")
-        val choices = (builder.apply(builderFunction).choices ?: emptyList()) as List<Choice<T>>
+        contract { callsInPlace(builderFunction, InvocationKind.EXACTLY_ONCE) }
 
+        val choices = builder.apply(builderFunction).choices ?: emptyList()
         return createAutoCompleteInteractionResponse(interactionId, interactionToken, DiscordAutoComplete(choices))
     }
 
@@ -250,7 +243,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     ): DiscordMessage = call(Route.OriginalInteractionResponseModify) {
         applicationIdInteractionToken(applicationId, interactionToken)
         body(InteractionResponseModifyRequest.serializer(), multipartRequest.request)
-        multipartRequest.files.orEmpty().forEach { file(it) }
+        multipartRequest.files.forEach { file(it) }
     }
 
     public suspend fun modifyInteractionResponse(
@@ -301,7 +294,7 @@ public class InteractionService(requestHandler: RequestHandler) : RestService(re
     ): DiscordMessage = call(Route.FollowupMessageModify) {
         applicationIdInteractionTokenMessageId(applicationId, interactionToken, messageId)
         body(FollowupMessageModifyRequest.serializer(), request.request)
-        request.files.orEmpty().forEach { file(it) }
+        request.files.forEach { file(it) }
     }
 
     public suspend fun modifyFollowupMessage(

@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -35,7 +35,8 @@ public sealed class ApplicationRoleConnectionMetadataType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "ApplicationRoleConnectionMetadataType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "ApplicationRoleConnectionMetadataType.Unknown(value=$value)"
+            else "ApplicationRoleConnectionMetadataType.${this::class.simpleName}"
 
     /**
      * An unknown [ApplicationRoleConnectionMetadataType].
@@ -43,7 +44,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
      * This is used as a fallback for [ApplicationRoleConnectionMetadataType]s that haven't been
      * added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : ApplicationRoleConnectionMetadataType(value)
 
@@ -101,17 +102,7 @@ public sealed class ApplicationRoleConnectionMetadataType(
         }
 
         override fun deserialize(decoder: Decoder): ApplicationRoleConnectionMetadataType =
-                when (val value = decoder.decodeInt()) {
-            1 -> IntegerLessThanOrEqual
-            2 -> IntegerGreaterThanOrEqual
-            3 -> IntegerEqual
-            4 -> IntegerNotEqual
-            5 -> DateTimeLessThanOrEqual
-            6 -> DateTimeGreaterThanOrEqual
-            7 -> BooleanEqual
-            8 -> BooleanNotEqual
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -132,5 +123,20 @@ public sealed class ApplicationRoleConnectionMetadataType(
             )
         }
 
+        /**
+         * Returns an instance of [ApplicationRoleConnectionMetadataType] with
+         * [ApplicationRoleConnectionMetadataType.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): ApplicationRoleConnectionMetadataType = when (value) {
+            1 -> IntegerLessThanOrEqual
+            2 -> IntegerGreaterThanOrEqual
+            3 -> IntegerEqual
+            4 -> IntegerNotEqual
+            5 -> DateTimeLessThanOrEqual
+            6 -> DateTimeGreaterThanOrEqual
+            7 -> BooleanEqual
+            8 -> BooleanNotEqual
+            else -> Unknown(value)
+        }
     }
 }

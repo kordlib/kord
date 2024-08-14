@@ -4,16 +4,6 @@ plugins {
 }
 
 kotlin {
-    js {
-        nodejs {
-            testTask(Action {
-                useMocha {
-                    timeout = "10000" // KordEventDropTest is too slow for default 2 seconds timeout
-                }
-            })
-        }
-    }
-
     sourceSets {
         commonMain {
             dependencies {
@@ -23,6 +13,16 @@ kotlin {
 
                 api(libs.kord.cache.api)
                 api(libs.kord.cache.map)
+
+                implementation(libs.kotlin.logging)
+
+                // TODO remove when kordLogger is removed
+                implementation(libs.kotlin.logging.old)
+            }
+        }
+        jvmMain {
+            dependencies {
+                implementation(libs.slf4j.api)
             }
         }
         jvmTest {
@@ -31,6 +31,11 @@ kotlin {
             }
         }
     }
+}
+
+apiValidation {
+    // https://github.com/Kotlin/binary-compatibility-validator/issues/88
+    ignoredProjects += "live-tests"
 }
 
 tasks {

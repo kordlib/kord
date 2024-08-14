@@ -24,7 +24,7 @@ public sealed interface Interaction : InteractionBehavior {
 
     override val applicationId: Snowflake get() = data.applicationId
 
-    override val channelId: Snowflake get() = data.channelId
+    override val channelId: Snowflake get() = data.channel.value?.id ?: data.channelId.value!!
 
     override val token: String get() = data.token
 

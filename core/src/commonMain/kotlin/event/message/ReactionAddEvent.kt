@@ -34,6 +34,7 @@ public class ReactionAddEvent(
     public val messageId: Snowflake,
     public val guildId: Snowflake?,
     public val emoji: ReactionEmoji,
+    public val messageAuthorId: Snowflake?,
     override val kord: Kord,
     override val shard: Int,
     override val customContext: Any?,
@@ -63,6 +64,14 @@ public class ReactionAddEvent(
      * The user as a [MemberBehavior] that triggered the event
      */
     public val userAsMember: MemberBehavior? get() = guildId?.let { MemberBehavior(it, userId, kord) }
+
+    public val messageAuthor: UserBehavior? get() = messageAuthorId?.let { UserBehavior(it, kord) }
+    public val messageAuthorAsMember: MemberBehavior?
+        get() = guildId?.let { guildId ->
+            messageAuthorId?.let { messageAuthorId ->
+                MemberBehavior(guildId, messageAuthorId, kord)
+            }
+        }
 
     /**
      * Requests to get the channel triggering the event as a [MessageChannel]
@@ -128,10 +137,27 @@ public class ReactionAddEvent(
      */
     public suspend fun getUserAsMember(): Member? = guildId?.let { supplier.getMemberOrNull(it, userId) }
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionAddEvent =
-        ReactionAddEvent(userId, channelId, messageId, guildId, emoji, kord, shard, customContext, strategy.supply(kord))
-
-    override fun toString(): String {
-        return "ReactionAddEvent(userId=$userId, channelId=$channelId, messageId=$messageId, guildId=$guildId, emoji=$emoji, kord=$kord, shard=$shard, supplier=$supplier)"
+    public suspend fun getMessageAuthorOrNull(): User? = messageAuthorId?.let { supplier.getUserOrNull(it) }
+    public suspend fun getMessageAuthorAsMemberOrNull(): Member? = guildId?.let { guildId ->
+        messageAuthorId?.let { messageAuthorId ->
+            supplier.getMemberOrNull(guildId, messageAuthorId)
+        }
     }
+
+    override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReactionAddEvent = ReactionAddEvent(
+        userId,
+        channelId,
+        messageId,
+        guildId,
+        emoji,
+        messageAuthorId,
+        kord,
+        shard,
+        customContext,
+        strategy.supply(kord)
+    )
+
+    override fun toString(): String = "ReactionAddEvent(userId=$userId, channelId=$channelId, messageId=$messageId, " +
+        "guildId=$guildId, emoji=$emoji, messageAuthorId=$messageAuthorId, kord=$kord, shard=$shard, " +
+        "customContext=$customContext, supplier=$supplier)"
 }

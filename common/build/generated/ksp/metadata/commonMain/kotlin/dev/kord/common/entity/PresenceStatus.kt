@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,14 +29,16 @@ public sealed class PresenceStatus(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "PresenceStatus.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "PresenceStatus.Unknown(value=$value)"
+            else "PresenceStatus.${this::class.simpleName}"
 
     /**
      * An unknown [PresenceStatus].
      *
      * This is used as a fallback for [PresenceStatus]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: String,
     ) : PresenceStatus(value)
 
@@ -74,15 +76,7 @@ public sealed class PresenceStatus(
             encoder.encodeString(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): PresenceStatus =
-                when (val value = decoder.decodeString()) {
-            "online" -> Online
-            "dnd" -> DoNotDisturb
-            "idle" -> Idle
-            "invisible" -> Invisible
-            "offline" -> Offline
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): PresenceStatus = from(decoder.decodeString())
     }
 
     public companion object {
@@ -99,5 +93,17 @@ public sealed class PresenceStatus(
             )
         }
 
+        /**
+         * Returns an instance of [PresenceStatus] with [PresenceStatus.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: String): PresenceStatus = when (value) {
+            "online" -> Online
+            "dnd" -> DoNotDisturb
+            "idle" -> Idle
+            "invisible" -> Invisible
+            "offline" -> Offline
+            else -> Unknown(value)
+        }
     }
 }

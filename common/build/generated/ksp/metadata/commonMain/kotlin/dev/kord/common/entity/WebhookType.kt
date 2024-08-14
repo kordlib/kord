@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,14 +29,15 @@ public sealed class WebhookType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "WebhookType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "WebhookType.Unknown(value=$value)"
+            else "WebhookType.${this::class.simpleName}"
 
     /**
      * An unknown [WebhookType].
      *
      * This is used as a fallback for [WebhookType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : WebhookType(value)
 
@@ -64,13 +65,7 @@ public sealed class WebhookType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): WebhookType =
-                when (val value = decoder.decodeInt()) {
-            1 -> Incoming
-            2 -> ChannelFollower
-            3 -> Application
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): WebhookType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -85,5 +80,15 @@ public sealed class WebhookType(
             )
         }
 
+        /**
+         * Returns an instance of [WebhookType] with [WebhookType.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): WebhookType = when (value) {
+            1 -> Incoming
+            2 -> ChannelFollower
+            3 -> Application
+            else -> Unknown(value)
+        }
     }
 }

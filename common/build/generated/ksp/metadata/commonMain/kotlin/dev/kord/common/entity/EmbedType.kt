@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,14 +29,15 @@ public sealed class EmbedType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "EmbedType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "EmbedType.Unknown(value=$value)"
+            else "EmbedType.${this::class.simpleName}"
 
     /**
      * An unknown [EmbedType].
      *
      * This is used as a fallback for [EmbedType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: String,
     ) : EmbedType(value)
 
@@ -78,16 +79,7 @@ public sealed class EmbedType(
             encoder.encodeString(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): EmbedType =
-                when (val value = decoder.decodeString()) {
-            "rich" -> Rich
-            "image" -> Image
-            "video" -> Video
-            "gifv" -> Gifv
-            "article" -> Article
-            "link" -> Link
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): EmbedType = from(decoder.decodeString())
     }
 
     public companion object {
@@ -105,5 +97,17 @@ public sealed class EmbedType(
             )
         }
 
+        /**
+         * Returns an instance of [EmbedType] with [EmbedType.value] equal to the specified [value].
+         */
+        public fun from(`value`: String): EmbedType = when (value) {
+            "rich" -> Rich
+            "image" -> Image
+            "video" -> Video
+            "gifv" -> Gifv
+            "article" -> Article
+            "link" -> Link
+            else -> Unknown(value)
+        }
     }
 }

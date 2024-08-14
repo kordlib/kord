@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,14 +29,16 @@ public sealed class OverwriteType(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "OverwriteType.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "OverwriteType.Unknown(value=$value)"
+            else "OverwriteType.${this::class.simpleName}"
 
     /**
      * An unknown [OverwriteType].
      *
      * This is used as a fallback for [OverwriteType]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : OverwriteType(value)
 
@@ -52,12 +54,7 @@ public sealed class OverwriteType(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): OverwriteType =
-                when (val value = decoder.decodeInt()) {
-            0 -> Role
-            1 -> Member
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): OverwriteType = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -71,5 +68,14 @@ public sealed class OverwriteType(
             )
         }
 
+        /**
+         * Returns an instance of [OverwriteType] with [OverwriteType.value] equal to the specified
+         * [value].
+         */
+        public fun from(`value`: Int): OverwriteType = when (value) {
+            0 -> Role
+            1 -> Member
+            else -> Unknown(value)
+        }
     }
 }

@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -32,7 +32,8 @@ public sealed class AutoModerationRuleKeywordPresetType(
     final override fun hashCode(): Int = value.hashCode()
 
     final override fun toString(): String =
-            "AutoModerationRuleKeywordPresetType.${this::class.simpleName}(value=$value)"
+            if (this is Unknown) "AutoModerationRuleKeywordPresetType.Unknown(value=$value)"
+            else "AutoModerationRuleKeywordPresetType.${this::class.simpleName}"
 
     /**
      * An unknown [AutoModerationRuleKeywordPresetType].
@@ -40,7 +41,7 @@ public sealed class AutoModerationRuleKeywordPresetType(
      * This is used as a fallback for [AutoModerationRuleKeywordPresetType]s that haven't been added
      * to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : AutoModerationRuleKeywordPresetType(value)
 
@@ -69,12 +70,7 @@ public sealed class AutoModerationRuleKeywordPresetType(
         }
 
         override fun deserialize(decoder: Decoder): AutoModerationRuleKeywordPresetType =
-                when (val value = decoder.decodeInt()) {
-            1 -> Profanity
-            2 -> SexualContent
-            3 -> Slurs
-            else -> Unknown(value)
-        }
+                from(decoder.decodeInt())
     }
 
     public companion object {
@@ -89,5 +85,15 @@ public sealed class AutoModerationRuleKeywordPresetType(
             )
         }
 
+        /**
+         * Returns an instance of [AutoModerationRuleKeywordPresetType] with
+         * [AutoModerationRuleKeywordPresetType.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): AutoModerationRuleKeywordPresetType = when (value) {
+            1 -> Profanity
+            2 -> SexualContent
+            3 -> Slurs
+            else -> Unknown(value)
+        }
     }
 }

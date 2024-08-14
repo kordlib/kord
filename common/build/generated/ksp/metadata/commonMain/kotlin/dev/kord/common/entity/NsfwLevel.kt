@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -29,14 +29,15 @@ public sealed class NsfwLevel(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "NsfwLevel.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String = if (this is Unknown) "NsfwLevel.Unknown(value=$value)"
+            else "NsfwLevel.${this::class.simpleName}"
 
     /**
      * An unknown [NsfwLevel].
      *
      * This is used as a fallback for [NsfwLevel]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : NsfwLevel(value)
 
@@ -56,14 +57,7 @@ public sealed class NsfwLevel(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): NsfwLevel =
-                when (val value = decoder.decodeInt()) {
-            0 -> Default
-            1 -> Explicit
-            2 -> Safe
-            3 -> AgeRestricted
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): NsfwLevel = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -79,5 +73,15 @@ public sealed class NsfwLevel(
             )
         }
 
+        /**
+         * Returns an instance of [NsfwLevel] with [NsfwLevel.value] equal to the specified [value].
+         */
+        public fun from(`value`: Int): NsfwLevel = when (value) {
+            0 -> Default
+            1 -> Explicit
+            2 -> Safe
+            3 -> AgeRestricted
+            else -> Unknown(value)
+        }
     }
 }

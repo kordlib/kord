@@ -1,6 +1,6 @@
 // THIS FILE IS AUTO-GENERATED, DO NOT EDIT!
-@file:Suppress(names = arrayOf("RedundantVisibilityModifier", "IncorrectFormatting",
-                "ReplaceArrayOfWithLiteral", "SpellCheckingInspection", "GrazieInspection"))
+@file:Suppress(names = arrayOf("IncorrectFormatting", "ReplaceArrayOfWithLiteral",
+                "SpellCheckingInspection", "GrazieInspection"))
 
 package dev.kord.common.entity
 
@@ -17,7 +17,7 @@ import kotlinx.serialization.encoding.Encoder
  * Style of a [text input][dev.kord.common.entity.ComponentType.TextInput].
  *
  * See [TextInputStyle]s in the
- * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles).
+ * [Discord Developer Documentation](https://discord.com/developers/docs/interactions/message-components#text-input-object-text-input-styles).
  */
 @Serializable(with = TextInputStyle.Serializer::class)
 public sealed class TextInputStyle(
@@ -31,14 +31,16 @@ public sealed class TextInputStyle(
 
     final override fun hashCode(): Int = value.hashCode()
 
-    final override fun toString(): String = "TextInputStyle.${this::class.simpleName}(value=$value)"
+    final override fun toString(): String =
+            if (this is Unknown) "TextInputStyle.Unknown(value=$value)"
+            else "TextInputStyle.${this::class.simpleName}"
 
     /**
      * An unknown [TextInputStyle].
      *
      * This is used as a fallback for [TextInputStyle]s that haven't been added to Kord yet.
      */
-    public class Unknown(
+    public class Unknown internal constructor(
         `value`: Int,
     ) : TextInputStyle(value)
 
@@ -61,12 +63,7 @@ public sealed class TextInputStyle(
             encoder.encodeInt(value.value)
         }
 
-        override fun deserialize(decoder: Decoder): TextInputStyle =
-                when (val value = decoder.decodeInt()) {
-            1 -> Short
-            2 -> Paragraph
-            else -> Unknown(value)
-        }
+        override fun deserialize(decoder: Decoder): TextInputStyle = from(decoder.decodeInt())
     }
 
     public companion object {
@@ -80,5 +77,14 @@ public sealed class TextInputStyle(
             )
         }
 
+        /**
+         * Returns an instance of [TextInputStyle] with [TextInputStyle.value] equal to the
+         * specified [value].
+         */
+        public fun from(`value`: Int): TextInputStyle = when (value) {
+            1 -> Short
+            2 -> Paragraph
+            else -> Unknown(value)
+        }
     }
 }

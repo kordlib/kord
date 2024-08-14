@@ -14,8 +14,6 @@ import dev.kord.gateway.Gateway
 import dev.kord.gateway.GatewayCloseCode
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
-import kotlin.DeprecationLevel.HIDDEN
-import kotlin.jvm.JvmName
 
 /**
  * A Gateway recieved an event.
@@ -171,11 +169,6 @@ public class ReadyEvent(
      * @return A flow of [Guild]s the bot is in
      */
     public fun getGuilds(): Flow<Guild> = supplier.guilds.filter { it.id in guildIds }
-
-    @Suppress("RedundantSuspendModifier")
-    @Deprecated("Binary compatibility, keep for some releases.", level = HIDDEN)
-    @JvmName("getGuilds")
-    public suspend fun getGuilds0(): Flow<Guild> = getGuilds()
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): ReadyEvent =
         ReadyEvent(gatewayVersion, guildIds, self, sessionId, resumeGatewayUrl, kord, shard, customContext, strategy.supply(kord))
