@@ -1237,12 +1237,17 @@ final class dev.kord.gateway/GuildUpdate : dev.kord.gateway/DispatchEvent { // d
 
 final class dev.kord.gateway/Heartbeat : dev.kord.gateway/Event { // dev.kord.gateway/Heartbeat|null[0]
     constructor <init>(kotlin/Long) // dev.kord.gateway/Heartbeat.<init>|<init>(kotlin.Long){}[0]
+    constructor <init>(kotlin/Long?) // dev.kord.gateway/Heartbeat.<init>|<init>(kotlin.Long?){}[0]
 
     final val data // dev.kord.gateway/Heartbeat.data|{}data[0]
-        final fun <get-data>(): kotlin/Long // dev.kord.gateway/Heartbeat.data.<get-data>|<get-data>(){}[0]
+        final fun <get-data>(): kotlin/Long? // dev.kord.gateway/Heartbeat.data.<get-data>|<get-data>(){}[0]
+    final val data_ // dev.kord.gateway/Heartbeat.data_|{}data_[0]
+        final fun <get-data_>(): kotlin/Long // dev.kord.gateway/Heartbeat.data_.<get-data_>|<get-data_>(){}[0]
 
-    final fun component1(): kotlin/Long // dev.kord.gateway/Heartbeat.component1|component1(){}[0]
-    final fun copy(kotlin/Long = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy|copy(kotlin.Long){}[0]
+    final fun component1(): kotlin/Long? // dev.kord.gateway/Heartbeat.component1|component1(){}[0]
+    final fun component1_(): kotlin/Long // dev.kord.gateway/Heartbeat.component1_|component1_(){}[0]
+    final fun copy(kotlin/Long? = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy|copy(kotlin.Long?){}[0]
+    final fun copy_(kotlin/Long = ...): dev.kord.gateway/Heartbeat // dev.kord.gateway/Heartbeat.copy_|copy_(kotlin.Long){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.gateway/Heartbeat.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // dev.kord.gateway/Heartbeat.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // dev.kord.gateway/Heartbeat.toString|toString(){}[0]
