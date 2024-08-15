@@ -108,7 +108,7 @@ public class UntypedAutoModerationRuleModifyBuilder : AutoModerationRuleModifyBu
 
         other as UntypedAutoModerationRuleModifyBuilder
 
-        return triggerType == other.triggerType
+        return true
     }
 
     override fun hashCode(): Int {

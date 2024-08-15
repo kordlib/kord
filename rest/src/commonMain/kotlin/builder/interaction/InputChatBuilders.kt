@@ -185,7 +185,6 @@ internal class ChatInputCreateBuilderImpl(
         if (options != other.options) return false
         if (defaultMemberPermissions != other.defaultMemberPermissions) return false
         if (dmPermission != other.dmPermission) return false
-        if (defaultPermission != other.defaultPermission) return false
         if (nsfw != other.nsfw) return false
 
         return true
@@ -201,7 +200,6 @@ internal class ChatInputCreateBuilderImpl(
         result = 31 * result + (options?.hashCode() ?: 0)
         result = 31 * result + (defaultMemberPermissions?.hashCode() ?: 0)
         result = 31 * result + (dmPermission?.hashCode() ?: 0)
-        result = 31 * result + (defaultPermission?.hashCode() ?: 0)
         result = 31 * result + (nsfw?.hashCode() ?: 0)
         return result
     }
@@ -264,7 +262,6 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
         if (options != other.options) return false
         if (defaultMemberPermissions != other.defaultMemberPermissions) return false
         if (dmPermission != other.dmPermission) return false
-        if (defaultPermission != other.defaultPermission) return false
         if (nsfw != other.nsfw) return false
 
         return true
@@ -279,7 +276,6 @@ internal class ChatInputModifyBuilderImpl : GlobalChatInputModifyBuilder {
         result = 31 * result + (options?.hashCode() ?: 0)
         result = 31 * result + (defaultMemberPermissions?.hashCode() ?: 0)
         result = 31 * result + (dmPermission?.hashCode() ?: 0)
-        result = 31 * result + (defaultPermission?.hashCode() ?: 0)
         result = 31 * result + (nsfw?.hashCode() ?: 0)
         return result
     }

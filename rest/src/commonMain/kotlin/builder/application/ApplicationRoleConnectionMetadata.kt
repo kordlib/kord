@@ -83,4 +83,32 @@ public class ApplicationRoleConnectionMetadataBuilder(
         description = description,
         descriptionLocalizations = _descriptionLocalizations.mapCopy(),
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ApplicationRoleConnectionMetadataBuilder
+
+        if (type != other.type) return false
+        if (key != other.key) return false
+        if (name != other.name) return false
+        if (description != other.description) return false
+        if (nameLocalizations != other.nameLocalizations) return false
+        if (descriptionLocalizations != other.descriptionLocalizations) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = type.hashCode()
+        result = 31 * result + key.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + (nameLocalizations?.hashCode() ?: 0)
+        result = 31 * result + (descriptionLocalizations?.hashCode() ?: 0)
+        return result
+    }
+
+
 }
