@@ -1772,7 +1772,6 @@ public final class dev/kord/rest/builder/interaction/GlobalMessageCommandModifyB
 
 public final class dev/kord/rest/builder/interaction/GlobalMultiApplicationCommandBuilder : dev/kord/rest/builder/interaction/MultiApplicationCommandBuilder {
 	public fun <init> ()V
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun input (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun input$default (Ldev/kord/rest/builder/interaction/GlobalMultiApplicationCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun message (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
@@ -1803,7 +1802,6 @@ public final class dev/kord/rest/builder/interaction/GroupCommandBuilder : dev/k
 
 public final class dev/kord/rest/builder/interaction/GuildMultiApplicationCommandBuilder : dev/kord/rest/builder/interaction/MultiApplicationCommandBuilder {
 	public fun <init> ()V
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun input (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun input$default (Ldev/kord/rest/builder/interaction/GuildMultiApplicationCommandBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
 	public final fun message (Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
@@ -1841,7 +1839,6 @@ public final class dev/kord/rest/builder/interaction/IntegerOptionBuilder : dev/
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public fun choice (Ljava/lang/String;JLdev/kord/common/entity/optional/Optional;)V
 	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
-	public fun equals (Ljava/lang/Object;)Z
 }
 
 public abstract interface class dev/kord/rest/builder/interaction/LocalizedDescriptionBuilder {
@@ -1999,7 +1996,6 @@ public final class dev/kord/rest/builder/interaction/NumberOptionBuilder : dev/k
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public fun choice (Ljava/lang/String;DLdev/kord/common/entity/optional/Optional;)V
 	public synthetic fun choice (Ljava/lang/String;Ljava/lang/Object;Ldev/kord/common/entity/optional/Optional;)V
-	public fun equals (Ljava/lang/Object;)Z
 }
 
 public abstract class dev/kord/rest/builder/interaction/NumericOptionBuilder : dev/kord/rest/builder/interaction/BaseChoiceBuilder {

@@ -2349,7 +2349,6 @@ final class dev.kord.rest.builder.interaction/ChoiceLocalizationsBuilder : dev.k
 final class dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder : dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder { // dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder.<init>|<init>(){}[0]
 
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder.equals|equals(kotlin.Any?){}[0]
     final inline fun input(kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/GlobalChatInputCreateBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder.input|input(kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.GlobalChatInputCreateBuilder,kotlin.Unit>){}[0]
     final inline fun message(kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/GlobalMessageCommandCreateBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder.message|message(kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.GlobalMessageCommandCreateBuilder,kotlin.Unit>){}[0]
     final inline fun user(kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/GlobalUserCommandCreateBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/GlobalMultiApplicationCommandBuilder.user|user(kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.GlobalUserCommandCreateBuilder,kotlin.Unit>){}[0]
@@ -2364,7 +2363,6 @@ final class dev.kord.rest.builder.interaction/GroupCommandBuilder : dev.kord.res
 final class dev.kord.rest.builder.interaction/GuildMultiApplicationCommandBuilder : dev.kord.rest.builder.interaction/MultiApplicationCommandBuilder { // dev.kord.rest.builder.interaction/GuildMultiApplicationCommandBuilder|null[0]
     constructor <init>() // dev.kord.rest.builder.interaction/GuildMultiApplicationCommandBuilder.<init>|<init>(){}[0]
 
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/GuildMultiApplicationCommandBuilder.equals|equals(kotlin.Any?){}[0]
     final inline fun input(kotlin/String, kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/ChatInputCreateBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/GuildMultiApplicationCommandBuilder.input|input(kotlin.String;kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.ChatInputCreateBuilder,kotlin.Unit>){}[0]
     final inline fun message(kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/MessageCommandCreateBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/GuildMultiApplicationCommandBuilder.message|message(kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.MessageCommandCreateBuilder,kotlin.Unit>){}[0]
     final inline fun user(kotlin/String, kotlin/Function1<dev.kord.rest.builder.interaction/UserCommandCreateBuilder, kotlin/Unit> = ...) // dev.kord.rest.builder.interaction/GuildMultiApplicationCommandBuilder.user|user(kotlin.String;kotlin.Function1<dev.kord.rest.builder.interaction.UserCommandCreateBuilder,kotlin.Unit>){}[0]
@@ -2374,7 +2372,6 @@ final class dev.kord.rest.builder.interaction/IntegerOptionBuilder : dev.kord.re
     constructor <init>(kotlin/String, kotlin/String) // dev.kord.rest.builder.interaction/IntegerOptionBuilder.<init>|<init>(kotlin.String;kotlin.String){}[0]
 
     final fun choice(kotlin/String, kotlin/Long, dev.kord.common.entity.optional/Optional<kotlin.collections/Map<dev.kord.common/Locale, kotlin/String>?>) // dev.kord.rest.builder.interaction/IntegerOptionBuilder.choice|choice(kotlin.String;kotlin.Long;dev.kord.common.entity.optional.Optional<kotlin.collections.Map<dev.kord.common.Locale,kotlin.String>?>){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/IntegerOptionBuilder.equals|equals(kotlin.Any?){}[0]
 }
 
 final class dev.kord.rest.builder.interaction/MentionableBuilder : dev.kord.rest.builder.interaction/OptionsBuilder { // dev.kord.rest.builder.interaction/MentionableBuilder|null[0]
@@ -2461,7 +2458,6 @@ final class dev.kord.rest.builder.interaction/NumberOptionBuilder : dev.kord.res
     constructor <init>(kotlin/String, kotlin/String) // dev.kord.rest.builder.interaction/NumberOptionBuilder.<init>|<init>(kotlin.String;kotlin.String){}[0]
 
     final fun choice(kotlin/String, kotlin/Double, dev.kord.common.entity.optional/Optional<kotlin.collections/Map<dev.kord.common/Locale, kotlin/String>?>) // dev.kord.rest.builder.interaction/NumberOptionBuilder.choice|choice(kotlin.String;kotlin.Double;dev.kord.common.entity.optional.Optional<kotlin.collections.Map<dev.kord.common.Locale,kotlin.String>?>){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // dev.kord.rest.builder.interaction/NumberOptionBuilder.equals|equals(kotlin.Any?){}[0]
 }
 
 final class dev.kord.rest.builder.interaction/RoleBuilder : dev.kord.rest.builder.interaction/OptionsBuilder { // dev.kord.rest.builder.interaction/RoleBuilder|null[0]

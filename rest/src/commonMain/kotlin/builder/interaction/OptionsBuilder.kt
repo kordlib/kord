@@ -237,13 +237,6 @@ public class IntegerOptionBuilder(name: String, description: String) :
         choices!!.add(Choice.IntegerChoice(name, nameLocalizations, value))
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || this::class != other::class) return false
-        if (!super.equals(other)) return false
-        return true
-    }
-
 }
 
 @KordDsl
@@ -253,13 +246,6 @@ public class NumberOptionBuilder(name: String, description: String) :
     override fun choice(name: String, value: Double, nameLocalizations: Optional<Map<Locale, String>?>) {
         if (choices == null) choices = mutableListOf()
         choices!!.add(Choice.NumberChoice(name, nameLocalizations, value))
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || this::class != other::class) return false
-        if (!super.equals(other)) return false
-        return true
     }
 
 }

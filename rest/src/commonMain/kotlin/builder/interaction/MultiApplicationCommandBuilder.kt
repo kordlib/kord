@@ -69,13 +69,6 @@ public class GlobalMultiApplicationCommandBuilder : MultiApplicationCommandBuild
         commands += UserCommandCreateBuilderImpl(name).apply(builder)
     }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || this::class != other::class) return false
-        if (!super.equals(other)) return false
-        return true
-    }
-
 }
 
 @KordDsl
@@ -94,13 +87,6 @@ public class GuildMultiApplicationCommandBuilder : MultiApplicationCommandBuilde
     public inline fun user(name: String, builder: UserCommandCreateBuilder.() -> Unit = {}) {
         contract { callsInPlace(builder, InvocationKind.EXACTLY_ONCE) }
         commands += UserCommandCreateBuilderImpl(name).apply(builder)
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other == null || this::class != other::class) return false
-        if (!super.equals(other)) return false
-        return true
     }
 
 }
