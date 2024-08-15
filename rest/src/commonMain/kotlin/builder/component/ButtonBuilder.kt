@@ -88,5 +88,6 @@ public class PremiumButtonBuilder(
         ComponentType.Button,
         style = Optional(ButtonStyle.Premium),
         skuId = skuId.optionalSnowflake(),
+        disabled = _disabled
     )
 }

@@ -7638,6 +7638,10 @@ public final class dev/kord/common/entity/MessageType$InteractionPremiumUpsell :
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$InteractionPremiumUpsell;
 }
 
+public final class dev/kord/common/entity/MessageType$PurchaseNotification : dev/kord/common/entity/MessageType {
+	public static final field INSTANCE Ldev/kord/common/entity/MessageType$PurchaseNotification;
+}
+
 public final class dev/kord/common/entity/MessageType$RecipientAdd : dev/kord/common/entity/MessageType {
 	public static final field INSTANCE Ldev/kord/common/entity/MessageType$RecipientAdd;
 }

@@ -2,9 +2,11 @@ package dev.kord.core.entity.component
 
 import dev.kord.common.entity.ButtonStyle
 import dev.kord.common.entity.ComponentType
+import dev.kord.common.entity.Snowflake
 import dev.kord.common.entity.optional.value
 import dev.kord.core.cache.data.ChatComponentData
 import dev.kord.core.entity.ReactionEmoji
+import dev.kord.core.entity.Sku
 import dev.kord.core.entity.interaction.ButtonInteraction
 import dev.kord.core.entity.interaction.ComponentInteraction
 import dev.kord.core.event.interaction.InteractionCreateEvent
@@ -61,6 +63,11 @@ public class ButtonComponent(override val data: ChatComponentData) : Component {
      * Whether this button can be clicked.
      */
     public val disabled: Boolean get() = data.disabled.discordBoolean
+
+    /**
+     * The [Sku] id of this button, if present.
+     */
+    public val skuId: Snowflake? get() = data.skuId.value
 
     override fun toString(): String = "ButtonComponent(data=$data)"
 

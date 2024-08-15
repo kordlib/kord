@@ -8520,6 +8520,8 @@ sealed class dev.kord.common.entity/MessageType { // dev.kord.common.entity/Mess
 
     final object InteractionPremiumUpsell : dev.kord.common.entity/MessageType // dev.kord.common.entity/MessageType.InteractionPremiumUpsell|null[0]
 
+    final object PurchaseNotification : dev.kord.common.entity/MessageType // dev.kord.common.entity/MessageType.PurchaseNotification|null[0]
+
     final object RecipientAdd : dev.kord.common.entity/MessageType // dev.kord.common.entity/MessageType.RecipientAdd|null[0]
 
     final object RecipientRemove : dev.kord.common.entity/MessageType // dev.kord.common.entity/MessageType.RecipientRemove|null[0]

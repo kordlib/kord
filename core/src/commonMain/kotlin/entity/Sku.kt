@@ -6,8 +6,6 @@ import dev.kord.common.entity.SkuType
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import dev.kord.core.hash
-import dev.kord.core.supplier.EntitySupplier
-import dev.kord.core.supplier.EntitySupplyStrategy
 
 /**
  * An instance of a [Discord Sku](https://discord.com/developers/docs/monetization/skus).
@@ -18,8 +16,7 @@ import dev.kord.core.supplier.EntitySupplyStrategy
 public class Sku(
     public val data: DiscordSku,
     override val kord: Kord,
-    override val supplier: EntitySupplier = kord.defaultSupplier,
-) : KordEntity, Strategizable {
+) : KordEntity {
     override val id: Snowflake
         get() = data.id
 
@@ -48,8 +45,6 @@ public class Sku(
      */
     public val flags: SkuFlags get() = data.flags
 
-    override fun withStrategy(strategy: EntitySupplyStrategy<*>): Sku = Sku(data, kord, strategy.supply(kord))
-
     override fun hashCode(): Int = hash(id, applicationId)
 
     override fun equals(other: Any?): Boolean = when (other) {
@@ -58,6 +53,6 @@ public class Sku(
     }
 
     override fun toString(): String {
-        return "Sku(data=$data, kord=$kord, supplier=$supplier)"
+        return "Sku(data=$data, kord=$kord)"
     }
 }

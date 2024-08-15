@@ -27,6 +27,7 @@ import dev.kord.gateway.Gateway
 import dev.kord.rest.json.request.EntitlementsListRequest
 import dev.kord.rest.route.Position
 import kotlinx.coroutines.flow.*
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 /**
@@ -613,6 +614,10 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .singleOrNull()
             ?.let { Entitlement(it, kord) }
 
+    /**
+     * Queries that use [EntitlementsListRequest.excludeEnded] may be susceptible to Clock drift as
+     * the [System Clock][Clock.System] is required.
+     */
     override suspend fun getEntitlements(
         applicationId: Snowflake,
         request: EntitlementsListRequest
@@ -627,12 +632,16 @@ public class CacheEntitySupplier(private val kord: Kord) : EntitySupplier {
             .asFlow()
             .filter {
                 val containsSku = request.skuIds.isEmpty() || it.skuId in request.skuIds
-                val excludeEnded = request.excludeEnded == true && it.ended
+                val excludeEnded = request.excludeEnded == true && it.hasEnded
                 containsSku && !excludeEnded && followsPosition(request.position, it.id)
             }
             .map { Entitlement(it, kord) }
             .limit(request.limit)
     }
+
+    private val EntitlementData.hasEnded: Boolean
+        get() = endsAt.value?.let { Clock.System.now() >= it } ?: false
+
 
     override fun toString(): String = "CacheEntitySupplier(cache=$cache)"
 }

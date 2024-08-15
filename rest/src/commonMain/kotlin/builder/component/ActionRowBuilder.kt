@@ -12,7 +12,7 @@ public class ActionRowBuilder : MessageComponentBuilder {
 
     public inline fun premiumButton(
         skuId: Snowflake,
-        builder: PremiumButtonBuilder.() -> Unit
+        builder: PremiumButtonBuilder.() -> Unit = {}
     ) {
         contract {
             callsInPlace(builder, InvocationKind.EXACTLY_ONCE)

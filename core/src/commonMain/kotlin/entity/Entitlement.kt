@@ -59,7 +59,7 @@ public class Entitlement(
     /**
      * Whether this entitlement has been deleted.
      */
-    public val deleted: Boolean
+    public val isDeleted: Boolean
         get() = data.deleted
 
     /**
@@ -77,7 +77,7 @@ public class Entitlement(
     /**
      * For consumable items, whether the entitlement has been consumed.
      */
-    public val consumed: Boolean?
+    public val isConsumed: Boolean?
         get() = data.consumed.value
 
     /**
@@ -111,6 +111,15 @@ public class Entitlement(
      */
     public suspend fun delete() {
         kord.rest.entitlement.deleteTestEntitlement(applicationId, id)
+    }
+
+    /**
+     * For One-Time Purchase consumable SKUs, marks a given entitlement for the user as consumed.
+     *
+     * @throws [RestRequestException] if something went wrong during the request.
+     */
+    public suspend fun consume() {
+        kord.rest.entitlement.consumeEntitlement(applicationId, id)
     }
 
     override fun withStrategy(strategy: EntitySupplyStrategy<*>): Entitlement =
