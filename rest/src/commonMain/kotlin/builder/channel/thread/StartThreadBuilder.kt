@@ -37,4 +37,31 @@ public class StartThreadBuilder(
             rateLimitPerUser = _rateLimitPerUser
         )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as StartThreadBuilder
+
+        if (name != other.name) return false
+        if (type != other.type) return false
+        if (reason != other.reason) return false
+        if (autoArchiveDuration != other.autoArchiveDuration) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+        if (invitable != other.invitable) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + (autoArchiveDuration?.hashCode() ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (invitable?.hashCode() ?: 0)
+        return result
+    }
+
 }

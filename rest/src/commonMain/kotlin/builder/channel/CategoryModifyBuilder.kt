@@ -39,4 +39,27 @@ public class CategoryModifyBuilder : PermissionOverwritesModifyBuilder, AuditReq
         position = _position,
         permissionOverwrites = _permissionOverwrites
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as CategoryModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (position != other.position) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (permissionOverwrites?.hashCode() ?: 0)
+        return result
+    }
+
 }

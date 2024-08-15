@@ -28,4 +28,21 @@ public class FollowupMessageCreateBuilder(public val ephemeral: Boolean) :
         ),
         files = files.toList(),
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as FollowupMessageCreateBuilder
+
+        return ephemeral == other.ephemeral
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + ephemeral.hashCode()
+        return result
+    }
+
 }

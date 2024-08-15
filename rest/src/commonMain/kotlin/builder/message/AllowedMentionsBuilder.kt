@@ -62,4 +62,27 @@ public class AllowedMentionsBuilder {
         repliedUser = _repliedUser
     )
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as AllowedMentionsBuilder
+
+        if (roles != other.roles) return false
+        if (users != other.users) return false
+        if (types != other.types) return false
+        if (repliedUser != other.repliedUser) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = roles.hashCode()
+        result = 31 * result + users.hashCode()
+        result = 31 * result + types.hashCode()
+        result = 31 * result + (repliedUser?.hashCode() ?: 0)
+        return result
+    }
+
+
 }

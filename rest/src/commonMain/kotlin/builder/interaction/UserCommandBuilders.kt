@@ -40,6 +40,35 @@ internal class UserCommandModifyBuilderImpl : GlobalUserCommandModifyBuilder {
             nsfw = state.nsfw,
         )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as UserCommandModifyBuilderImpl
+
+        if (state != other.state) return false
+        if (name != other.name) return false
+        if (nameLocalizations != other.nameLocalizations) return false
+        if (defaultMemberPermissions != other.defaultMemberPermissions) return false
+        if (dmPermission != other.dmPermission) return false
+        if (defaultPermission != other.defaultPermission) return false
+        if (nsfw != other.nsfw) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = state.hashCode()
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (nameLocalizations?.hashCode() ?: 0)
+        result = 31 * result + (defaultMemberPermissions?.hashCode() ?: 0)
+        result = 31 * result + (dmPermission?.hashCode() ?: 0)
+        result = 31 * result + (defaultPermission?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -75,4 +104,35 @@ internal class UserCommandCreateBuilderImpl(override var name: String) : GlobalU
             nsfw = state.nsfw,
         )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as UserCommandCreateBuilderImpl
+
+        if (name != other.name) return false
+        if (type != other.type) return false
+        if (state != other.state) return false
+        if (nameLocalizations != other.nameLocalizations) return false
+        if (defaultMemberPermissions != other.defaultMemberPermissions) return false
+        if (dmPermission != other.dmPermission) return false
+        if (defaultPermission != other.defaultPermission) return false
+        if (nsfw != other.nsfw) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + type.hashCode()
+        result = 31 * result + state.hashCode()
+        result = 31 * result + (nameLocalizations?.hashCode() ?: 0)
+        result = 31 * result + (defaultMemberPermissions?.hashCode() ?: 0)
+        result = 31 * result + (dmPermission?.hashCode() ?: 0)
+        result = 31 * result + (defaultPermission?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        return result
+    }
+
 }

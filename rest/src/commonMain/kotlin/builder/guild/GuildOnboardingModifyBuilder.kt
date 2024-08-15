@@ -47,6 +47,31 @@ public class GuildOnboardingModifyBuilder : AuditRequestBuilder<GuildOnboardingM
         enabled = _enabled,
         mode = _mode,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildOnboardingModifyBuilder
+
+        if (reason != other.reason) return false
+        if (prompts != other.prompts) return false
+        if (defaultChannelIds != other.defaultChannelIds) return false
+        if (enabled != other.enabled) return false
+        if (mode != other.mode) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (prompts?.hashCode() ?: 0)
+        result = 31 * result + (defaultChannelIds?.hashCode() ?: 0)
+        result = 31 * result + (enabled?.hashCode() ?: 0)
+        result = 31 * result + (mode?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** Add a [channelId] to [defaultChannelIds][GuildOnboardingModifyBuilder.defaultChannelIds]. */
@@ -110,6 +135,35 @@ public class OnboardingPromptBuilder(
         required = required,
         inOnboarding = inOnboarding,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as OnboardingPromptBuilder
+
+        if (type != other.type) return false
+        if (title != other.title) return false
+        if (singleSelect != other.singleSelect) return false
+        if (required != other.required) return false
+        if (inOnboarding != other.inOnboarding) return false
+        if (id != other.id) return false
+        if (options != other.options) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = type.hashCode()
+        result = 31 * result + title.hashCode()
+        result = 31 * result + singleSelect.hashCode()
+        result = 31 * result + required.hashCode()
+        result = 31 * result + inOnboarding.hashCode()
+        result = 31 * result + (id?.hashCode() ?: 0)
+        result = 31 * result + options.hashCode()
+        return result
+    }
+
 }
 
 /**
@@ -147,4 +201,27 @@ public class OnboardingPromptOptionBuilder(
         title = title,
         description = description,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as OnboardingPromptOptionBuilder
+
+        if (title != other.title) return false
+        if (channelIds != other.channelIds) return false
+        if (roleIds != other.roleIds) return false
+        if (description != other.description) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = title.hashCode()
+        result = 31 * result + channelIds.hashCode()
+        result = 31 * result + roleIds.hashCode()
+        result = 31 * result + (description?.hashCode() ?: 0)
+        return result
+    }
+
 }

@@ -59,6 +59,41 @@ public class TextChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
         defaultThreadRateLimitPerUser = _defaultThreadRateLimitPerUser,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as TextChannelModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (position != other.position) return false
+        if (topic != other.topic) return false
+        if (nsfw != other.nsfw) return false
+        if (parentId != other.parentId) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+        if (defaultAutoArchiveDuration != other.defaultAutoArchiveDuration) return false
+        if (defaultThreadRateLimitPerUser != other.defaultThreadRateLimitPerUser) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (topic?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        result = 31 * result + (parentId?.hashCode() ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (permissionOverwrites?.hashCode() ?: 0)
+        result = 31 * result + (defaultAutoArchiveDuration?.hashCode() ?: 0)
+        result = 31 * result + (defaultThreadRateLimitPerUser?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -148,6 +183,54 @@ public class ForumChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         flags = _flags
     )
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ForumChannelModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (position != other.position) return false
+        if (topic != other.topic) return false
+        if (nsfw != other.nsfw) return false
+        if (parentId != other.parentId) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+        if (defaultAutoArchiveDuration != other.defaultAutoArchiveDuration) return false
+        if (flags != other.flags) return false
+        if (defaultReactionEmoji != other.defaultReactionEmoji) return false
+        if (defaultReactionEmojiId != other.defaultReactionEmojiId) return false
+        if (defaultReactionEmojiName != other.defaultReactionEmojiName) return false
+        if (availableTags != other.availableTags) return false
+        if (defaultThreadRateLimitPerUser != other.defaultThreadRateLimitPerUser) return false
+        if (defaultSortOrder != other.defaultSortOrder) return false
+        if (defaultForumLayout != other.defaultForumLayout) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (topic?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        result = 31 * result + (parentId?.hashCode() ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (permissionOverwrites?.hashCode() ?: 0)
+        result = 31 * result + (defaultAutoArchiveDuration?.hashCode() ?: 0)
+        result = 31 * result + (flags?.hashCode() ?: 0)
+        result = 31 * result + (defaultReactionEmoji?.hashCode() ?: 0)
+        result = 31 * result + (defaultReactionEmojiId?.hashCode() ?: 0)
+        result = 31 * result + (defaultReactionEmojiName?.hashCode() ?: 0)
+        result = 31 * result + (availableTags?.hashCode() ?: 0)
+        result = 31 * result + (defaultThreadRateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (defaultSortOrder?.hashCode() ?: 0)
+        result = 31 * result + (defaultForumLayout?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -229,6 +312,53 @@ public class MediaChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         defaultSortOrder = _defaultSortOrder,
         flags = _flags
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as MediaChannelModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (position != other.position) return false
+        if (topic != other.topic) return false
+        if (nsfw != other.nsfw) return false
+        if (parentId != other.parentId) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+        if (defaultAutoArchiveDuration != other.defaultAutoArchiveDuration) return false
+        if (flags != other.flags) return false
+        if (defaultReactionEmoji != other.defaultReactionEmoji) return false
+        if (defaultReactionEmojiId != other.defaultReactionEmojiId) return false
+        if (defaultReactionEmojiName != other.defaultReactionEmojiName) return false
+        if (availableTags != other.availableTags) return false
+        if (defaultThreadRateLimitPerUser != other.defaultThreadRateLimitPerUser) return false
+        if (defaultSortOrder != other.defaultSortOrder) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (topic?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        result = 31 * result + (parentId?.hashCode() ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (permissionOverwrites?.hashCode() ?: 0)
+        result = 31 * result + (defaultAutoArchiveDuration?.hashCode() ?: 0)
+        result = 31 * result + (flags?.hashCode() ?: 0)
+        result = 31 * result + (defaultReactionEmoji?.hashCode() ?: 0)
+        result = 31 * result + (defaultReactionEmojiId?.hashCode() ?: 0)
+        result = 31 * result + (defaultReactionEmojiName?.hashCode() ?: 0)
+        result = 31 * result + (availableTags?.hashCode() ?: 0)
+        result = 31 * result + (defaultThreadRateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (defaultSortOrder?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 @KordDsl
@@ -281,8 +411,43 @@ public class VoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         videoQualityMode = _videoQualityMode,
     )
 
-}
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
 
+        other as VoiceChannelModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (rtcRegion != other.rtcRegion) return false
+        if (position != other.position) return false
+        if (topic != other.topic) return false
+        if (nsfw != other.nsfw) return false
+        if (parentId != other.parentId) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+        if (bitrate != other.bitrate) return false
+        if (userLimit != other.userLimit) return false
+        if (videoQualityMode != other.videoQualityMode) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (rtcRegion?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (topic?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        result = 31 * result + (parentId?.hashCode() ?: 0)
+        result = 31 * result + (permissionOverwrites?.hashCode() ?: 0)
+        result = 31 * result + (bitrate ?: 0)
+        result = 31 * result + (userLimit ?: 0)
+        result = 31 * result + (videoQualityMode?.hashCode() ?: 0)
+        return result
+    }
+
+}
 
 @KordDsl
 public class StageVoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
@@ -319,6 +484,36 @@ public class StageVoiceChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         permissionOverwrites = _permissionOverwrites,
         rtcRegion = _rtcRegion,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as StageVoiceChannelModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (rtcRegion != other.rtcRegion) return false
+        if (position != other.position) return false
+        if (topic != other.topic) return false
+        if (parentId != other.parentId) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+        if (bitrate != other.bitrate) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (rtcRegion?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (topic?.hashCode() ?: 0)
+        result = 31 * result + (parentId?.hashCode() ?: 0)
+        result = 31 * result + (permissionOverwrites?.hashCode() ?: 0)
+        result = 31 * result + (bitrate ?: 0)
+        return result
+    }
 
 }
 
@@ -366,4 +561,37 @@ public class NewsChannelModifyBuilder : PermissionOverwritesModifyBuilder,
         permissionOverwrites = _permissionOverwrites,
         defaultAutoArchiveDuration = _defaultAutoArchiveDuration,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as NewsChannelModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (position != other.position) return false
+        if (topic != other.topic) return false
+        if (nsfw != other.nsfw) return false
+        if (parentId != other.parentId) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+        if (defaultAutoArchiveDuration != other.defaultAutoArchiveDuration) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + (topic?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        result = 31 * result + (parentId?.hashCode() ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (permissionOverwrites?.hashCode() ?: 0)
+        result = 31 * result + (defaultAutoArchiveDuration?.hashCode() ?: 0)
+        return result
+    }
+
 }

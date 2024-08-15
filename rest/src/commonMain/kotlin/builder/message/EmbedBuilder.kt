@@ -159,6 +159,41 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
         Optional.missingOnEmpty(fields).mapList { it.toRequest() }
     )
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as EmbedBuilder
+
+        if (title != other.title) return false
+        if (description != other.description) return false
+        if (url != other.url) return false
+        if (timestamp != other.timestamp) return false
+        if (color != other.color) return false
+        if (image != other.image) return false
+        if (footer != other.footer) return false
+        if (thumbnail != other.thumbnail) return false
+        if (author != other.author) return false
+        if (fields != other.fields) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = title?.hashCode() ?: 0
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (url?.hashCode() ?: 0)
+        result = 31 * result + (timestamp?.hashCode() ?: 0)
+        result = 31 * result + (color?.hashCode() ?: 0)
+        result = 31 * result + (image?.hashCode() ?: 0)
+        result = 31 * result + (footer?.hashCode() ?: 0)
+        result = 31 * result + (thumbnail?.hashCode() ?: 0)
+        result = 31 * result + (author?.hashCode() ?: 0)
+        result = 31 * result + fields.hashCode()
+        return result
+    }
+
+
     @KordDsl
     public class Thumbnail : RequestBuilder<EmbedThumbnailRequest> {
 
@@ -168,6 +203,21 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
         public lateinit var url: String
 
         override fun toRequest(): EmbedThumbnailRequest = EmbedThumbnailRequest(url)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other == null || this::class != other::class) return false
+
+            other as Thumbnail
+
+            if(!this::url.isInitialized && !other::url.isInitialized) return true
+            return url == other.url
+        }
+
+        override fun hashCode(): Int {
+            return url.hashCode()
+        }
+
     }
 
     @KordDsl
@@ -184,6 +234,26 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
         public var icon: String? = null
 
         override fun toRequest(): EmbedFooterRequest = EmbedFooterRequest(text, icon)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other == null || this::class != other::class) return false
+
+            other as Footer
+
+            if (icon != other.icon) return false
+            if (!this::text.isInitialized && !other::text.isInitialized) return true
+            if (text != other.text) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = text.hashCode()
+            result = 31 * result + (icon?.hashCode() ?: 0)
+            return result
+        }
+
 
         public object Limits {
             public const val text: Int = 2048
@@ -216,6 +286,26 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
         public var icon: String? by ::_icon.delegate()
 
         override fun toRequest(): EmbedAuthorRequest = EmbedAuthorRequest(_name, _url, _icon)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other == null || this::class != other::class) return false
+
+            other as Author
+
+            if (name != other.name) return false
+            if (url != other.url) return false
+            if (icon != other.icon) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = name?.hashCode() ?: 0
+            result = 31 * result + (url?.hashCode() ?: 0)
+            result = 31 * result + (icon?.hashCode() ?: 0)
+            return result
+        }
 
         public object Limits {
             /**
@@ -255,6 +345,27 @@ public class EmbedBuilder : RequestBuilder<EmbedRequest> {
         public var inline: Boolean? by ::_inline.delegate()
 
         override fun toRequest(): EmbedFieldRequest = EmbedFieldRequest(name, value, _inline)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other == null || this::class != other::class) return false
+
+            other as Field
+
+            if (value != other.value) return false
+            if (name != other.name) return false
+            if (inline != other.inline) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = value.hashCode()
+            result = 31 * result + name.hashCode()
+            result = 31 * result + (inline?.hashCode() ?: 0)
+            return result
+        }
+
 
         public object Limits {
             /**

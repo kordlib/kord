@@ -71,6 +71,31 @@ public class UserMessageCreateBuilder : AbstractMessageCreateBuilder(), RequestB
         ),
         files = files.toList(),
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as UserMessageCreateBuilder
+
+        if (nonce != other.nonce) return false
+        if (messageReference != other.messageReference) return false
+        if (failIfNotExists != other.failIfNotExists) return false
+        if (stickerIds != other.stickerIds) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (nonce?.hashCode() ?: 0)
+        result = 31 * result + (messageReference?.hashCode() ?: 0)
+        result = 31 * result + (failIfNotExists?.hashCode() ?: 0)
+        result = 31 * result + (stickerIds?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** Add a [stickerId] to [stickerIds][UserMessageCreateBuilder.stickerIds]. */

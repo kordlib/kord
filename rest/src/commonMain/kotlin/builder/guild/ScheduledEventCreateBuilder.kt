@@ -63,4 +63,39 @@ public class ScheduledEventCreateBuilder(
         entityType = entityType,
         image = _image.map { it.dataUri },
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ScheduledEventCreateBuilder
+
+        if (name != other.name) return false
+        if (privacyLevel != other.privacyLevel) return false
+        if (scheduledStartTime != other.scheduledStartTime) return false
+        if (entityType != other.entityType) return false
+        if (reason != other.reason) return false
+        if (channelId != other.channelId) return false
+        if (description != other.description) return false
+        if (entityMetadata != other.entityMetadata) return false
+        if (scheduledEndTime != other.scheduledEndTime) return false
+        if (image != other.image) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + privacyLevel.hashCode()
+        result = 31 * result + scheduledStartTime.hashCode()
+        result = 31 * result + entityType.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + (channelId?.hashCode() ?: 0)
+        result = 31 * result + (description?.hashCode() ?: 0)
+        result = 31 * result + (entityMetadata?.hashCode() ?: 0)
+        result = 31 * result + (scheduledEndTime?.hashCode() ?: 0)
+        result = 31 * result + (image?.hashCode() ?: 0)
+        return result
+    }
+
 }

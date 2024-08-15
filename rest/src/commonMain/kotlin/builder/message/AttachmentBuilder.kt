@@ -25,4 +25,25 @@ public class AttachmentBuilder(private val id: Snowflake) : RequestBuilder<Attac
         filename = _filename,
         description = _description,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as AttachmentBuilder
+
+        if (id != other.id) return false
+        if (filename != other.filename) return false
+        if (description != other.description) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + (filename?.hashCode() ?: 0)
+        result = 31 * result + (description?.hashCode() ?: 0)
+        return result
+    }
+
 }

@@ -39,6 +39,20 @@ public class ApplicationRoleConnectionMetadataRecordsBuilder :
     }
 
     override fun toRequest(): List<DiscordApplicationRoleConnectionMetadata> = records.map { it.toRequest() }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ApplicationRoleConnectionMetadataRecordsBuilder
+
+        return records == other.records
+    }
+
+    override fun hashCode(): Int {
+        return records.hashCode()
+    }
+
 }
 
 @KordDsl

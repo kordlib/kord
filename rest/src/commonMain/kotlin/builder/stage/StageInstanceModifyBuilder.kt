@@ -26,4 +26,25 @@ public class StageInstanceModifyBuilder : AuditRequestBuilder<StageInstanceModif
         _topic,
         _privacyLevel,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as StageInstanceModifyBuilder
+
+        if (reason != other.reason) return false
+        if (topic != other.topic) return false
+        if (privacyLevel != other.privacyLevel) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (topic?.hashCode() ?: 0)
+        result = 31 * result + (privacyLevel?.hashCode() ?: 0)
+        return result
+    }
+
 }

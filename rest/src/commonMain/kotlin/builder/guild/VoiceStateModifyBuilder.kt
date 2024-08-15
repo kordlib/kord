@@ -43,6 +43,27 @@ public class CurrentVoiceStateModifyBuilder : RequestBuilder<CurrentVoiceStateMo
         suppress = _suppress,
         requestToSpeakTimestamp = _requestToSpeakTimestamp,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as CurrentVoiceStateModifyBuilder
+
+        if (channelId != other.channelId) return false
+        if (suppress != other.suppress) return false
+        if (requestToSpeakTimestamp != other.requestToSpeakTimestamp) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = channelId?.hashCode() ?: 0
+        result = 31 * result + (suppress?.hashCode() ?: 0)
+        result = 31 * result + (requestToSpeakTimestamp?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 
@@ -61,4 +82,23 @@ public class VoiceStateModifyBuilder(
         channelId = channelId,
         suppress = _suppress,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as VoiceStateModifyBuilder
+
+        if (channelId != other.channelId) return false
+        if (suppress != other.suppress) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = channelId.hashCode()
+        result = 31 * result + (suppress?.hashCode() ?: 0)
+        return result
+    }
+
 }

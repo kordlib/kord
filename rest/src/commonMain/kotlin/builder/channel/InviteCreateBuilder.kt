@@ -89,6 +89,37 @@ public class InviteCreateBuilder : AuditRequestBuilder<InviteCreateRequest> {
             targetApplicationId = _targetApplicationId,
         )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as InviteCreateBuilder
+
+        if (reason != other.reason) return false
+        if (maxAge != other.maxAge) return false
+        if (maxUses != other.maxUses) return false
+        if (temporary != other.temporary) return false
+        if (unique != other.unique) return false
+        if (targetType != other.targetType) return false
+        if (targetUserId != other.targetUserId) return false
+        if (targetApplicationId != other.targetApplicationId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (maxAge?.hashCode() ?: 0)
+        result = 31 * result + (maxUses ?: 0)
+        result = 31 * result + (temporary?.hashCode() ?: 0)
+        result = 31 * result + (unique?.hashCode() ?: 0)
+        result = 31 * result + (targetType?.hashCode() ?: 0)
+        result = 31 * result + (targetUserId?.hashCode() ?: 0)
+        result = 31 * result + (targetApplicationId?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 private inline val OptionalSnowflake.isMissing get() = this == OptionalSnowflake.Missing

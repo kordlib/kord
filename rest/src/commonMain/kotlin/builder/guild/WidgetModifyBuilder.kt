@@ -21,4 +21,25 @@ public class GuildWidgetModifyBuilder : AuditRequestBuilder<GuildWidgetModifyReq
 
     override fun toRequest(): GuildWidgetModifyRequest =
         GuildWidgetModifyRequest(_enabled, _channelId)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildWidgetModifyBuilder
+
+        if (reason != other.reason) return false
+        if (enabled != other.enabled) return false
+        if (channelId != other.channelId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (enabled?.hashCode() ?: 0)
+        result = 31 * result + (channelId?.hashCode() ?: 0)
+        return result
+    }
+
 }

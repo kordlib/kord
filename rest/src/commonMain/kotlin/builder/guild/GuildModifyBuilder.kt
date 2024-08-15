@@ -103,4 +103,55 @@ public class GuildModifyBuilder : AuditRequestBuilder<GuildModifyRequest> {
         features = _features,
         safetyAlertsChannelId = _safetyAlertsChannelId,
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GuildModifyBuilder
+
+        if (reason != other.reason) return false
+        if (name != other.name) return false
+        if (region != other.region) return false
+        if (verificationLevel != other.verificationLevel) return false
+        if (notificationLevel != other.notificationLevel) return false
+        if (explicitContentFilter != other.explicitContentFilter) return false
+        if (afkChannelId != other.afkChannelId) return false
+        if (afkTimeout != other.afkTimeout) return false
+        if (icon != other.icon) return false
+        if (ownerId != other.ownerId) return false
+        if (splash != other.splash) return false
+        if (banner != other.banner) return false
+        if (systemChannelId != other.systemChannelId) return false
+        if (rulesChannelId != other.rulesChannelId) return false
+        if (publicUpdatesChannelId != other.publicUpdatesChannelId) return false
+        if (preferredLocale != other.preferredLocale) return false
+        if (features != other.features) return false
+        if (safetyAlertsChannelId != other.safetyAlertsChannelId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = reason?.hashCode() ?: 0
+        result = 31 * result + (name?.hashCode() ?: 0)
+        result = 31 * result + (region?.hashCode() ?: 0)
+        result = 31 * result + (verificationLevel?.hashCode() ?: 0)
+        result = 31 * result + (notificationLevel?.hashCode() ?: 0)
+        result = 31 * result + (explicitContentFilter?.hashCode() ?: 0)
+        result = 31 * result + (afkChannelId?.hashCode() ?: 0)
+        result = 31 * result + (afkTimeout?.hashCode() ?: 0)
+        result = 31 * result + (icon?.hashCode() ?: 0)
+        result = 31 * result + (ownerId?.hashCode() ?: 0)
+        result = 31 * result + (splash?.hashCode() ?: 0)
+        result = 31 * result + (banner?.hashCode() ?: 0)
+        result = 31 * result + (systemChannelId?.hashCode() ?: 0)
+        result = 31 * result + (rulesChannelId?.hashCode() ?: 0)
+        result = 31 * result + (publicUpdatesChannelId?.hashCode() ?: 0)
+        result = 31 * result + (preferredLocale?.hashCode() ?: 0)
+        result = 31 * result + (features?.hashCode() ?: 0)
+        result = 31 * result + (safetyAlertsChannelId?.hashCode() ?: 0)
+        return result
+    }
+
 }

@@ -15,4 +15,23 @@ public class GroupDMCreateBuilder : RequestBuilder<GroupDMCreateRequest> {
         tokens.toList(),
         nicknames.mapKeys { it.value }
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as GroupDMCreateBuilder
+
+        if (tokens != other.tokens) return false
+        if (nicknames != other.nicknames) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = tokens.hashCode()
+        result = 31 * result + nicknames.hashCode()
+        return result
+    }
+
 }

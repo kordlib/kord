@@ -30,4 +30,37 @@ internal class ApplicationCommandModifyStateHolder {
     var defaultPermission: OptionalBoolean = OptionalBoolean.Missing
 
     var nsfw: OptionalBoolean = OptionalBoolean.Missing
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ApplicationCommandModifyStateHolder
+
+        if (name != other.name) return false
+        if (nameLocalizations != other.nameLocalizations) return false
+        if (description != other.description) return false
+        if (descriptionLocalizations != other.descriptionLocalizations) return false
+        if (options != other.options) return false
+        if (defaultMemberPermissions != other.defaultMemberPermissions) return false
+        if (dmPermission != other.dmPermission) return false
+        if (defaultPermission != other.defaultPermission) return false
+        if (nsfw != other.nsfw) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + nameLocalizations.hashCode()
+        result = 31 * result + description.hashCode()
+        result = 31 * result + descriptionLocalizations.hashCode()
+        result = 31 * result + options.hashCode()
+        result = 31 * result + defaultMemberPermissions.hashCode()
+        result = 31 * result + (dmPermission?.hashCode() ?: 0)
+        result = 31 * result + defaultPermission.hashCode()
+        result = 31 * result + nsfw.hashCode()
+        return result
+    }
+
 }

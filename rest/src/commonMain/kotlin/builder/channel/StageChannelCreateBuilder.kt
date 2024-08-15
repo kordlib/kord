@@ -50,4 +50,37 @@ public class StageChannelCreateBuilder(public var name: String) :
         parentId = _parentId,
         nsfw = _nsfw
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as StageChannelCreateBuilder
+
+        if (name != other.name) return false
+        if (reason != other.reason) return false
+        if (bitrate != other.bitrate) return false
+        if (userLimit != other.userLimit) return false
+        if (rateLimitPerUser != other.rateLimitPerUser) return false
+        if (position != other.position) return false
+        if (permissionOverwrites != other.permissionOverwrites) return false
+        if (parentId != other.parentId) return false
+        if (nsfw != other.nsfw) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + (bitrate ?: 0)
+        result = 31 * result + (userLimit ?: 0)
+        result = 31 * result + (rateLimitPerUser?.hashCode() ?: 0)
+        result = 31 * result + (position ?: 0)
+        result = 31 * result + permissionOverwrites.hashCode()
+        result = 31 * result + (parentId?.hashCode() ?: 0)
+        result = 31 * result + (nsfw?.hashCode() ?: 0)
+        return result
+    }
+
 }

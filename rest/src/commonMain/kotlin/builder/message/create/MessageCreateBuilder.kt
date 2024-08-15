@@ -63,4 +63,39 @@ public sealed class AbstractMessageCreateBuilder : MessageCreateBuilder {
     final override var flags: MessageFlags? = null
     final override var suppressEmbeds: Boolean? = null
     final override var suppressNotifications: Boolean? = null
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as AbstractMessageCreateBuilder
+
+        if (content != other.content) return false
+        if (tts != other.tts) return false
+        if (embeds != other.embeds) return false
+        if (allowedMentions != other.allowedMentions) return false
+        if (components != other.components) return false
+        if (files != other.files) return false
+        if (attachments != other.attachments) return false
+        if (flags != other.flags) return false
+        if (suppressEmbeds != other.suppressEmbeds) return false
+        if (suppressNotifications != other.suppressNotifications) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = content?.hashCode() ?: 0
+        result = 31 * result + (tts?.hashCode() ?: 0)
+        result = 31 * result + (embeds?.hashCode() ?: 0)
+        result = 31 * result + (allowedMentions?.hashCode() ?: 0)
+        result = 31 * result + (components?.hashCode() ?: 0)
+        result = 31 * result + files.hashCode()
+        result = 31 * result + (attachments?.hashCode() ?: 0)
+        result = 31 * result + (flags?.hashCode() ?: 0)
+        result = 31 * result + (suppressEmbeds?.hashCode() ?: 0)
+        result = 31 * result + (suppressNotifications?.hashCode() ?: 0)
+        return result
+    }
+
 }

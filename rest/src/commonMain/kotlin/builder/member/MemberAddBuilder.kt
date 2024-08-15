@@ -26,4 +26,28 @@ public class MemberAddBuilder(public var token: String) : RequestBuilder<GuildMe
         token, _nickname, Optional.missingOnEmpty(roles), mute = _muted, deaf = _deafened
     )
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as MemberAddBuilder
+
+        if (token != other.token) return false
+        if (nickname != other.nickname) return false
+        if (roles != other.roles) return false
+        if (muted != other.muted) return false
+        if (deafened != other.deafened) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = token.hashCode()
+        result = 31 * result + (nickname?.hashCode() ?: 0)
+        result = 31 * result + roles.hashCode()
+        result = 31 * result + (muted?.hashCode() ?: 0)
+        result = 31 * result + (deafened?.hashCode() ?: 0)
+        return result
+    }
+
 }

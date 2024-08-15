@@ -20,6 +20,20 @@ public sealed class ActionRowComponentBuilder : ComponentBuilder {
 
     /** Whether the component is disabled. Defaults to `false`. */
     public var disabled: Boolean? by ::_disabled.delegate()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as ActionRowComponentBuilder
+
+        return disabled == other.disabled
+    }
+
+    override fun hashCode(): Int {
+        return disabled?.hashCode() ?: 0
+    }
+
 }
 
 @KordDsl

@@ -56,6 +56,35 @@ public sealed class AutoModerationRuleCreateBuilder(
         exemptRoles = _exemptRoles.mapCopy(),
         exemptChannels = _exemptChannels.mapCopy(),
     )
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as AutoModerationRuleCreateBuilder
+
+        if (name != other.name) return false
+        if (eventType != other.eventType) return false
+        if (reason != other.reason) return false
+        if (actions != other.actions) return false
+        if (enabled != other.enabled) return false
+        if (exemptRoles != other.exemptRoles) return false
+        if (exemptChannels != other.exemptChannels) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + eventType.hashCode()
+        result = 31 * result + (reason?.hashCode() ?: 0)
+        result = 31 * result + actions.hashCode()
+        result = 31 * result + (enabled?.hashCode() ?: 0)
+        result = 31 * result + (exemptRoles?.hashCode() ?: 0)
+        result = 31 * result + (exemptChannels?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** A [KeywordAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
@@ -81,6 +110,29 @@ public class KeywordAutoModerationRuleCreateBuilder(
             regexPatterns = _regexPatterns.mapCopy(),
             allowList = _allowedKeywords.mapCopy(),
         ).optional()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as KeywordAutoModerationRuleCreateBuilder
+
+        if (keywords != other.keywords) return false
+        if (regexPatterns != other.regexPatterns) return false
+        if (allowedKeywords != other.allowedKeywords) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (keywords?.hashCode() ?: 0)
+        result = 31 * result + (regexPatterns?.hashCode() ?: 0)
+        result = 31 * result + (allowedKeywords?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** A [SpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
@@ -112,6 +164,27 @@ public class KeywordPresetAutoModerationRuleCreateBuilder(
             presets = presets.toList().optional(),
             allowList = _allowedKeywords.mapCopy(),
         ).optional()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as KeywordPresetAutoModerationRuleCreateBuilder
+
+        if (presets != other.presets) return false
+        if (allowedKeywords != other.allowedKeywords) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + presets.hashCode()
+        result = 31 * result + (allowedKeywords?.hashCode() ?: 0)
+        return result
+    }
+
 }
 
 /** A [MentionSpamAutoModerationRuleBuilder] for building [AutoModerationRuleCreateRequest]s. */
@@ -134,4 +207,25 @@ public class MentionSpamAutoModerationRuleCreateBuilder(
             mentionTotalLimit = _mentionLimit,
             mentionRaidProtectionEnabled = _mentionRaidProtectionEnabled,
         ).optional()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+        if (!super.equals(other)) return false
+
+        other as MentionSpamAutoModerationRuleCreateBuilder
+
+        if (mentionLimit != other.mentionLimit) return false
+        if (mentionRaidProtectionEnabled != other.mentionRaidProtectionEnabled) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = super.hashCode()
+        result = 31 * result + (mentionLimit ?: 0)
+        result = 31 * result + (mentionRaidProtectionEnabled?.hashCode() ?: 0)
+        return result
+    }
+
 }
